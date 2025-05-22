@@ -10,13 +10,13 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
     copy_associations(recent_job_application.employments)
     copy_associations(recent_job_application.training_and_cpds)
     copy_associations(recent_job_application.professional_body_memberships)
-    copy_associations(recent_job_application.references)
+    copy_associations(recent_job_application.referees)
     set_status_of_each_step
     new_job_application.save
     new_job_application
   end
 
-  PLAIN_STEPS = %w[personal_details personal_statement references ask_for_support qualifications training_and_cpds professional_body_memberships following_religion religion_details].freeze
+  PLAIN_STEPS = %w[personal_details personal_statement referees ask_for_support qualifications training_and_cpds professional_body_memberships following_religion religion_details].freeze
 
   private
 

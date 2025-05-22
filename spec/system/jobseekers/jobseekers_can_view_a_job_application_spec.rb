@@ -14,34 +14,34 @@ RSpec.describe "Jobseekers can view a job application" do
 
   context "when the vacancy is for a teaching role" do
     let(:vacancy) { create(:vacancy, organisations: [build(:school)], job_roles: ["teacher"]) }
+    let(:sections) do
+      %i[personal_details
+         professional_status
+         qualifications
+         training_and_cpds
+         professional_body_memberships
+         employment_history
+         personal_statement
+         referees
+         ask_for_support
+         declarations]
+    end
 
     it "displays all the relevant job application information (including professional status data)" do
       expect(page).to have_content(vacancy.job_title)
       expect(page).to have_content(job_application.status)
 
       within ".navigation-list-component", text: I18n.t("jobseekers.job_applications.show.application_sections") do
-        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.personal_details.heading"), href: "#personal_details")
-        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.professional_status.heading"), href: "#professional_status")
-        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.qualifications.heading"), href: "#qualifications")
-        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.training_and_cpds.heading"), href: "#training_and_cpds")
-        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.professional_body_memberships.heading"), href: "#professional_body_memberships")
-        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.employment_history.heading"), href: "#employment_history")
-        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.personal_statement.heading"), href: "#personal_statement")
-        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.references.heading"), href: "#references")
-        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.ask_for_support.heading"), href: "#ask_for_support")
-        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.declarations.heading"), href: "#declarations")
+        sections.each do |section|
+          expect(page).to have_link(I18n.t("jobseekers.job_applications.show.#{section}.heading"), href: "##{section}")
+        end
       end
 
-      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.personal_details.heading"))
-      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.professional_status.heading"))
-      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.qualifications.heading"))
-      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.training_and_cpds.heading"))
-      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.professional_body_memberships.heading"))
-      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.employment_history.heading"))
-      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.personal_statement.heading"))
-      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.references.heading"))
-      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.ask_for_support.heading"))
-      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.declarations.heading"))
+      sections.each do |section|
+        # make sure href points to an id on the page
+        expect(page).to have_css("##{section}")
+        expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.#{section}.heading"))
+      end
 
       expect_work_history_to_be_ordered_most_recent_first
 
@@ -66,7 +66,7 @@ RSpec.describe "Jobseekers can view a job application" do
         expect(page).to have_link(I18n.t("jobseekers.job_applications.show.professional_body_memberships.heading"), href: "#professional_body_memberships")
         expect(page).to have_link(I18n.t("jobseekers.job_applications.show.employment_history.heading"), href: "#employment_history")
         expect(page).to have_link(I18n.t("jobseekers.job_applications.show.personal_statement.heading"), href: "#personal_statement")
-        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.references.heading"), href: "#references")
+        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.referees.heading"), href: "#referees")
         expect(page).to have_link(I18n.t("jobseekers.job_applications.show.ask_for_support.heading"), href: "#ask_for_support")
         expect(page).to have_link(I18n.t("jobseekers.job_applications.show.declarations.heading"), href: "#declarations")
       end
@@ -78,7 +78,7 @@ RSpec.describe "Jobseekers can view a job application" do
       expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.professional_body_memberships.heading"))
       expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.employment_history.heading"))
       expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.personal_statement.heading"))
-      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.references.heading"))
+      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.referees.heading"))
       expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.ask_for_support.heading"))
       expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.declarations.heading"))
 

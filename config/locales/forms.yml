@@ -148,7 +148,7 @@ en:
       jobseekers_job_application_details_qualifications_degree_form:
         institution: Awarding body
         year: Year qualification was awarded
-      jobseekers_job_application_details_reference_form:
+      jobseekers_job_application_details_referee_form:
         phone_number: Please only give a phone number that your referee is happy to be contacted on.
         is_most_recent_employer_hints:
           hint1: One of your referees should be your current or most recent employer.
@@ -360,13 +360,13 @@ en:
         subject: Subject
         year: Year awarded
         month: Month awarded
-      jobseekers_job_application_details_reference_form:
+      jobseekers_job_application_details_referee_form:
         email: Email address
         job_title: Job title
         name: Name
         organisation: Organisation
         relationship: Relationship to applicant
-        phone_number_html: Phone number (optional)
+        phone_number: Phone number (optional)
         is_most_recent_employer_options:
           "true": "Yes"
           "false": "No"
@@ -690,7 +690,7 @@ en:
 
       jobseekers_close_account_feedback_form:
         reason: Tell us why you are closing your account
-      jobseekers_job_application_details_reference_form:
+      jobseekers_job_application_details_referee_form:
         phone_number: Phone number
         is_most_recent_employer: Is this your current or most recent employer?
       jobseekers_job_application_employment_history_form:

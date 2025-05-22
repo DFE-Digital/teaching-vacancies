@@ -12,6 +12,7 @@ module PageObjects
         publisher_applications_awaiting_feedback: "Publisher::JobApplicationsAwaitingFeedbackPage",
         publisher_vacancy: "Publisher::VacancyPage",
         publisher_ats_applications: "Publisher::Ats::JobApplicationsPage",
+        publisher_ats_interviewing: "Publisher::Ats::InterviewingApplicationsPage",
         publisher_include_additional_documents: "Publisher::IncludeAdditionalDocumentsPage",
         publisher_job_title: "Publisher::JobTitlePage",
         publisher_pay_package: "Publisher::PayPackagePage",
