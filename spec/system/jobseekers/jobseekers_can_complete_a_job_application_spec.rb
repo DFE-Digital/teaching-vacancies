@@ -167,7 +167,7 @@ RSpec.describe "Jobseekers can complete a job application" do
       within(".govuk-error-summary__body") do
         expect(page).to have_link("Select the completed job application form")
       end
-      allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
+      allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(instance_double(Publishers::DocumentVirusCheck, safe?: true))
       attach_file(
         "jobseekers_uploaded_job_application_upload_application_form_form[application_form]",
         Rails.root.join("spec/fixtures/files/blank_baptism_cert.pdf"),
