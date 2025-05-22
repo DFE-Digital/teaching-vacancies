@@ -20,10 +20,10 @@ class Jobseekers::JobApplications::QuickApply
 
   def new_job_application
     @new_job_application = if @vacancy.has_uploaded_form?
-      jobseeker.uploaded_job_applications.create(vacancy: vacancy)
-    else
-      jobseeker.native_job_applications.create(vacancy: vacancy)
-    end
+                             jobseeker.uploaded_job_applications.create!(vacancy: vacancy)
+                           else
+                             jobseeker.native_job_applications.create!(vacancy: vacancy)
+                           end
   end
 
   def previously_submitted_application?

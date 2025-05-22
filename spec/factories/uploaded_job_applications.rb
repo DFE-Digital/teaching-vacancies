@@ -14,18 +14,18 @@ FactoryBot.define do
     trait :with_uploaded_application_form do
       after(:build) do |uploaded_job_application|
         uploaded_job_application.application_form.attach(
-          io: File.open(Rails.root.join("spec/fixtures/files/blank_baptism_cert.pdf")),
+          io: Rails.root.join("spec/fixtures/files/blank_baptism_cert.pdf").open,
           filename: "application_form.pdf",
-          content_type: "application/pdf"
+          content_type: "application/pdf",
         )
       end
     end
-    
+
     trait :status_submitted do
       transient do
         submitted_at { 4.days.ago }
       end
-  
+
       status { :submitted }
     end
   end
