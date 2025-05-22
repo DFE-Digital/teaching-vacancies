@@ -26,10 +26,10 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def create
     new_job_application = if vacancy.has_uploaded_form?
-      current_jobseeker.uploaded_job_applications.create!(vacancy:)
-    else
-      current_jobseeker.native_job_applications.create!(vacancy:)
-    end
+                            current_jobseeker.uploaded_job_applications.create!(vacancy:)
+                          else
+                            current_jobseeker.native_job_applications.create!(vacancy:)
+                          end
 
     redirect_to jobseekers_job_application_apply_path(new_job_application.id)
   end

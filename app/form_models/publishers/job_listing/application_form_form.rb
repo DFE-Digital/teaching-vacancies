@@ -6,7 +6,6 @@ class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::Vaca
     []
   end
 
-
   attr_accessor(:application_form, :application_form_staged_for_replacement)
 
   def params_to_save
