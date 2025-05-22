@@ -628,6 +628,8 @@ en:
           hint_salary_text: Different salary rules apply for support roles in schools.
           learn_more_link_text: Learn more about Skilled Worker visa requirements for teaching jobs (opens in new tab).
           eligibility_link_text: Find out about eligible support roles and salary requirements (opens in new tab).
+        download_pdf:
+          no_file: "No file has been uploaded."
       live:
         notice: You can only view active jobs
       review:
