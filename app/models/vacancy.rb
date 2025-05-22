@@ -63,7 +63,8 @@ class Vacancy < ApplicationRecord
   enum :hired_status, { hired_tvs: 0, hired_other_free: 1, hired_paid: 2, hired_no_listing: 3, not_filled_ongoing: 4, not_filled_not_looking: 5, hired_dont_know: 6 }
   enum :listed_elsewhere, { listed_paid: 0, listed_free: 1, listed_mix: 2, not_listed: 3, listed_dont_know: 4 }
   enum :start_date_type, { specific_date: 0, date_range: 1, other: 2, undefined: 3, asap: 4 }
-  enum :status, { published: 0, draft: 1, trashed: 2, removed_from_external_system: 3 }
+  # trashed: 2 and removed_from_external_system: 3 removed in discard_soft_deletes 29/4/25
+  enum :status, { published: 0, draft: 1 }
   enum :receive_applications, { email: 0, website: 1 }
   enum :extension_reason, { no_applications: 0, didnt_find_right_candidate: 1, other_extension_reason: 2 }
 
@@ -98,11 +99,12 @@ class Vacancy < ApplicationRecord
   scope :expired_yesterday, -> { where("DATE(expires_at) = ?", 1.day.ago.to_date) }
   scope :expires_within_data_access_period, -> { where("expires_at >= ?", Time.current - DATA_ACCESS_PERIOD_FOR_PUBLISHERS) }
   scope :in_organisation_ids, ->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).distinct }
-  scope :listed, -> { published.where("publish_on <= ?", Date.current) }
+  scope :non_draft, -> { kept.published }
+  scope :listed, -> { non_draft.where("publish_on <= ?", Date.current) }
   scope :live, -> { listed.applicable }
-  scope :pending, -> { published.where("publish_on > ?", Date.current) }
+  scope :pending, -> { non_draft.where("publish_on > ?", Date.current) }
   scope :quick_apply, -> { where(enable_job_applications: true) }
-  scope :published_on_count, ->(date) { published.where(publish_on: date.all_day).count }
+  scope :published_on_count, ->(date) { non_draft.where(publish_on: date.all_day).count }
   scope :visa_sponsorship_available, -> { where(visa_sponsorship_available: true) }
 
   scope :internal, -> { where(external_source: nil, publisher_ats_api_client_id: nil) }
