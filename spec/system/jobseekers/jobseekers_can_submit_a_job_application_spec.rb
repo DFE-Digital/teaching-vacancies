@@ -42,34 +42,34 @@ RSpec.describe "Jobseekers can submit a job application" do
 
     context "when the application is incomplete" do
       let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
-  
+
       it "does not allow jobseekers to submit application" do
         check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
         check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
-  
+
         click_on I18n.t("buttons.submit_application")
-  
+
         expect(JobApplication.first.status).to eq("draft")
         expect(page).to have_content("There is a problem")
       end
-  
+
       it "allows jobseekers to cancel and go to my applications tab" do
         click_on I18n.t("buttons.cancel_and_return_to_account")
-  
+
         expect(JobApplication.first.status).to eq("draft")
         expect(current_path).to eq(jobseekers_job_applications_path)
       end
     end
-  
+
     context "when the application is complete but invalid" do
       let(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy, is_statutory_induction_complete: nil) }
-  
+
       it "does not allow jobseekers to submit application, and informs jobseeker of invalid value" do
         check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
         check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
-  
+
         click_on I18n.t("buttons.submit_application")
-  
+
         expect(JobApplication.first.status).to eq("draft")
         expect(page).not_to have_content("There is a problem")
         expect(page).to have_content(I18n.t("messages.jobs.action_required.message.jobseeker"))
@@ -80,12 +80,14 @@ RSpec.describe "Jobseekers can submit a job application" do
   end
 
   context "when it is uploaded job application" do
-    let(:uploaded_job_application) { create(:uploaded_job_application, :with_uploaded_application_form, jobseeker: jobseeker, vacancy: vacancy, completed_steps: ["personal_details", "upload_application_form"]) }
+    let(:uploaded_job_application) { create(:uploaded_job_application, :with_uploaded_application_form, jobseeker: jobseeker, vacancy: vacancy, completed_steps: %w[personal_details upload_application_form]) }
+
     before do
       visit jobseekers_job_application_review_path(uploaded_job_application)
     end
+
     context "when the application is complete" do
-      it "allows jobseekers to submit application and receive confirmation email" do  
+      it "allows jobseekers to submit application and receive confirmation email" do
         click_on I18n.t("buttons.submit_application")
         expect(page).to have_content("There is a problem")
 
@@ -105,37 +107,36 @@ RSpec.describe "Jobseekers can submit a job application" do
 
     context "when the application is incomplete" do
       let(:uploaded_job_application) { create(:uploaded_job_application, jobseeker: jobseeker, vacancy: vacancy, status: "draft") }
-  
+
       it "does not allow jobseekers to submit application" do
         check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
         check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
-  
+
         click_on I18n.t("buttons.submit_application")
-  
+
         expect(JobApplication.first.status).to eq("draft")
         within(".govuk-error-summary__body") do
           expect(page).to have_link("Complete your personal details")
-        end  
+        end
       end
-  
+
       it "allows jobseekers to cancel and go to my applications tab" do
         click_on I18n.t("buttons.cancel_and_return_to_account")
-  
+
         expect(JobApplication.first.status).to eq("draft")
         expect(current_path).to eq(jobseekers_job_applications_path)
       end
     end
 
-      
     context "when the application is complete but invalid" do
-      let(:uploaded_job_application) { create(:uploaded_job_application, jobseeker: jobseeker, vacancy: vacancy, status: "draft", completed_steps: ["personal_details", "upload_application_form"], first_name: nil) }
-  
+      let(:uploaded_job_application) { create(:uploaded_job_application, jobseeker: jobseeker, vacancy: vacancy, status: "draft", completed_steps: %w[personal_details upload_application_form], first_name: nil) }
+
       it "does not allow jobseekers to submit application, and informs jobseeker of invalid value" do
         check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
         check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
-  
+
         click_on I18n.t("buttons.submit_application")
-  
+
         expect(JobApplication.first.status).to eq("draft")
         expect(page).not_to have_content("There is a problem")
         within(".govuk-error-summary__body") do
