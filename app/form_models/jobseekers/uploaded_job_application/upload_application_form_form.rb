@@ -18,7 +18,7 @@ module Jobseekers
         end
 
         def load_form(model)
-          (completed_attrs(model, :upload_application_form)).merge(application_form: model.application_form)
+          completed_attrs(model, :upload_application_form).merge(application_form: model.application_form)
         end
       end
 

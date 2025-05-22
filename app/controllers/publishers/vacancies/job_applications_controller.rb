@@ -36,12 +36,12 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       redirect_to edit_jobseekers_uploaded_job_application_upload_form_path(@job_application), alert: "No file has been uploaded."
       return
     end
-  
+
     send_data(
       job_application.application_form.download,
       filename: job_application.application_form.filename.to_s,
       type: job_application.application_form.content_type,
-      disposition: "inline"
+      disposition: "inline",
     )
   end
 

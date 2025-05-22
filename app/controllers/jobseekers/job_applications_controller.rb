@@ -34,8 +34,16 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def create
+<<<<<<< HEAD
     if quick_apply?
       new_job_application = prefill_job_application_with_available_data
+=======
+    new_job_application = if vacancy.has_uploaded_form?
+                            current_jobseeker.uploaded_job_applications.create!(vacancy:)
+                          else
+                            current_jobseeker.native_job_applications.create!(vacancy:)
+                          end
+>>>>>>> 30d93306e (Linting)
 
       redirect_to jobseekers_job_application_apply_path(new_job_application), notice: t("jobseekers.job_applications.new.import_from_previous_application")
     else
@@ -231,13 +239,4 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def quick_apply?
     previous_application? || profile.present?
   end
-<<<<<<< HEAD
 end
-=======
-
-  def all_steps
-    Jobseekers::JobApplications::JobApplicationHandler.new(job_application, step_process).all_steps
-  end
-end
-# rubocop:enable Metrics/ClassLength
->>>>>>> 175df9a00 (Refactor job applications controller)
