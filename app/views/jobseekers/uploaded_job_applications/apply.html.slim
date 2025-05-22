@@ -11,14 +11,14 @@
 
     - unless @form.errors.any?
       = render "shared/error_messages", model: @job_application, presenter: ErrorSummaryPresenter.new(@job_application.errors)
-  
+
   h2.govuk-heading-m = t("jobseekers.job_applications.apply.heading")
 
   = govuk_task_list do |task_list|
     - task_list.with_item(title: t("jobseekers.job_applications.build.personal_details.heading"), href: jobseekers_job_application_build_path(job_application, :personal_details),
       html_attributes: { id: :personal_details },
       status: review_section_tag(job_application, :personal_details))
-  
+
   h2.govuk-heading-m = t("jobseekers.job_applications.apply.review_and_submit")
 
   p.govuk-body = t(".you_will_have")
