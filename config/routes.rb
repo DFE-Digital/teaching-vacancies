@@ -85,8 +85,8 @@ Rails.application.routes.draw do
     end
 
     resources :uploaded_job_applications, only: [] do
-      resource :personal_details, only: [:edit, :update], module: :uploaded_job_applications
-      resource :upload_application_form, only: [:edit, :update], module: :uploaded_job_applications
+      resource :personal_details, only: %i[edit update], module: :uploaded_job_applications
+      resource :upload_application_form, only: %i[edit update], module: :uploaded_job_applications
     end
 
     resources :job_applications, only: %i[index show destroy] do

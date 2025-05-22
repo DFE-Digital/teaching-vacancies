@@ -39,9 +39,9 @@ class Jobseekers::UploadedJobApplications::UploadApplicationFormsController < Jo
 
   def update_params
     if form_params["upload_application_form_section_completed"] == "false"
-      { completed_steps: job_application.completed_steps - ["upload_application_form"] }
+      { completed_steps: job_application.completed_steps - %w[upload_application_form] }
     else
-      { completed_steps: (@job_application.completed_steps + ["upload_application_form"]).uniq }
+      { completed_steps: (@job_application.completed_steps + %w[upload_application_form]).uniq }
     end
   end
 

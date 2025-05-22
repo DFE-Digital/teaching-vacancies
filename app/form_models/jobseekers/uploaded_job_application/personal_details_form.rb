@@ -13,7 +13,7 @@ module Jobseekers
         teacher_reference_number
       ].freeze
 
-      attr_accessor(*(FIELDS))
+      attr_accessor(*FIELDS)
 
       class << self
         def storable_fields
