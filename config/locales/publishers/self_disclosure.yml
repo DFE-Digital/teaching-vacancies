@@ -1,0 +1,8 @@
+en:
+  publishers:
+    vacancies:
+      job_applications:
+        self_disclosure:
+          communication_history: Communication history
+          show:
+            page_title: Self disclosure form
