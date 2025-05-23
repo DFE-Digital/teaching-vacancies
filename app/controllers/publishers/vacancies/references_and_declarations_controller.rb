@@ -72,7 +72,7 @@ module Publishers
       end
 
       def job_applications
-        ::JobApplication.find @batch.batchable_job_applications.map(&:job_application_id)
+        vacancy.job_applications.find @batch.batchable_job_applications.map(&:job_application)
       end
 
       def create_reference_request(referee)
@@ -86,7 +86,7 @@ module Publishers
       end
 
       def set_batch
-        @batch = JobApplicationBatch.find params[:job_application_batch_id] unless step == Wicked::FINISH_STEP
+        @batch = JobApplicationBatch.where(vacancy: vacancy).find params[:job_application_batch_id] unless step == Wicked::FINISH_STEP
       end
 
       def finish_wizard_path
