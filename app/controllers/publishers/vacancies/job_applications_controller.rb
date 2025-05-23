@@ -2,9 +2,10 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   include Jobseekers::QualificationFormConcerns
   include DatesHelper
 
-  helper_method :job_applications
+  helper_method :job_applications, :job_application
+  attr_reader :job_application
 
-  before_action :set_job_application, only: %i[show download_pdf]
+  before_action :set_job_application, only: %i[show download_pdf pre_interview_checks]
 
   def index
     @form = Publishers::JobApplication::TagForm.new

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_05_03_075718) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_15_123831) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -606,6 +606,42 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_03_075718) do
     t.index ["school_id", "school_group_id"], name: "index_school_group_memberships_on_school_id_and_school_group_id", unique: true
   end
 
+  create_table "self_disclosure_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "job_application_id", null: false
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_application_id"], name: "index_self_disclosure_requests_on_job_application_id", unique: true
+  end
+
+  create_table "self_disclosures", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name_ciphertext"
+    t.string "previous_names_ciphertext"
+    t.string "address_line_1_ciphertext"
+    t.string "address_line_2_ciphertext"
+    t.string "city_ciphertext"
+    t.string "country_ciphertext"
+    t.string "postcode_ciphertext"
+    t.string "phone_number_ciphertext"
+    t.string "date_of_birth_ciphertext"
+    t.string "has_unspent_convictions_ciphertext"
+    t.string "has_spent_convictions_ciphertext"
+    t.string "is_barred_ciphertext"
+    t.string "has_been_referred_ciphertext"
+    t.string "is_known_to_children_services_ciphertext"
+    t.string "has_been_dismissed_ciphertext"
+    t.string "has_been_disciplined_ciphertext"
+    t.string "has_been_disciplined_by_regulatory_body_ciphertext"
+    t.string "agreed_for_processing_ciphertext"
+    t.string "agreed_for_criminal_record_ciphertext"
+    t.string "agreed_for_organisation_update_ciphertext"
+    t.string "agreed_for_information_sharing_ciphertext"
+    t.uuid "self_disclosure_request_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["self_disclosure_request_id"], name: "index_self_disclosures_on_self_disclosure_request_id", unique: true
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.string "session_id", null: false
     t.text "data"
@@ -809,6 +845,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_03_075718) do
   add_foreign_key "saved_jobs", "vacancies"
   add_foreign_key "school_group_memberships", "organisations", column: "school_group_id"
   add_foreign_key "school_group_memberships", "organisations", column: "school_id"
+  add_foreign_key "self_disclosure_requests", "job_applications"
+  add_foreign_key "self_disclosures", "self_disclosure_requests"
   add_foreign_key "training_and_cpds", "job_applications"
   add_foreign_key "training_and_cpds", "jobseeker_profiles"
   add_foreign_key "vacancies", "organisations", column: "publisher_organisation_id"

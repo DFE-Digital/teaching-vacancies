@@ -1,0 +1,26 @@
+en:
+  jobseekers:
+    job_applications:
+      self_disclosure:
+        barred_list:
+          page_title: Self-disclosure form
+          heading: Self-disclosure form
+          barred_list_declaration: Barred list declaration
+          description:
+            html: >-
+              <p class="govuk-hint">If this role has been defined as regulated activity or work it will also be subject to an enhanced with barred list check in England, Northern Ireland and Wales or checks under the Protecting Vulnerable Groups scheme in Scotland.</p>
+              <p class="govuk-hint"><It is a criminal offence to apply for or accept a position working with children if you have been barred from/listed as unsuitable to engage in regulated activity/work with children.</p>
+
+  helpers:
+    legend:
+      jobseekers_job_applications_self_disclosure_barred_list_form:
+        is_barred: Are you included on the list of people barred from/listed as unsuitable to engage in regulated activity/work with children?
+        has_been_referred: If you are not currently barred from working with children, have you been referred to the Disclosure and Baring Service (DBS) or Disclosure Scotland for consideration to be added to one of the lists?
+    label:
+      jobseekers_job_applications_self_disclosure_barred_list_form:
+        is_barred_options:
+          "true": "Yes"
+          "false": "No"
+        has_been_referred_options:
+          "true": "Yes"
+          "false": "No"
