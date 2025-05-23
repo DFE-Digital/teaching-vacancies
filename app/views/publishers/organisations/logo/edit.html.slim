@@ -33,6 +33,7 @@
           = govuk_link_to t(".delete_logo_link"), confirm_destroy_publishers_organisation_logo_path(@organisation)
 
       = f.govuk_file_field :logo,
+        javascript: true,
         label: { text: (@organisation.logo.attached? ? t(".change_your_logo") : t("publishers.organisations.upload_a_file")), size: "m", class: "govuk-!-padding-top-2" },
         enctype: "multipart/form-data"
 
