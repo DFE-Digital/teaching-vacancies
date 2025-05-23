@@ -72,7 +72,7 @@ module Publishers
       end
 
       def job_applications
-        vacancy.job_applications.find @batch.batchable_job_applications.map(&:job_application)
+        @batch.batchable_job_applications.map(&:job_application)
       end
 
       def create_reference_request(referee)
