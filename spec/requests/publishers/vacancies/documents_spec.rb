@@ -126,10 +126,10 @@ RSpec.describe "Documents" do
       request
       perform_enqueued_jobs
       expect(:delete_entity).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
-                                  with_data: { filename: "blank_job_spec.pdf",
-                                               byte_size: vacancy.supporting_documents.first.byte_size,
-                                               content_type: "application/pdf" },
-                                  )
+        with_data: { filename: "blank_job_spec.pdf",
+                     byte_size: vacancy.supporting_documents.first.byte_size,
+                     content_type: "application/pdf" },
+      )
     end
 
     context "when the vacancy has been copied" do
@@ -141,10 +141,10 @@ RSpec.describe "Documents" do
         request
         perform_enqueued_jobs
         expect(:delete_entity).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
-                                    with_data: { filename: "blank_job_spec.pdf",
-                                                 byte_size: vacancy.supporting_documents.first.byte_size,
-                                                 content_type: "application/pdf" },
-                                    )
+          with_data: { filename: "blank_job_spec.pdf",
+                       byte_size: vacancy.supporting_documents.first.byte_size,
+                       content_type: "application/pdf" },
+        )
       end
     end
 
