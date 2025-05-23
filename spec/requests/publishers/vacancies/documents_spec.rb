@@ -107,8 +107,7 @@ RSpec.describe "Documents" do
   end
 
   describe "DELETE #destroy" do
-    let(:vacancy) { create(:vacancy, :with_supporting_documents, organisations: [organisation]) }
-    let(:document) { vacancy.supporting_documents.first }
+    let!(:document) { vacancy.supporting_documents.first }
     let(:request) { delete organisation_job_document_path(id: document.id, job_id: vacancy.id) }
 
     it "triggers an event", :dfe_analytics do
@@ -123,10 +122,19 @@ RSpec.describe "Documents" do
     end
 
     it "triggers the delete entity event", :dfe_analytics do
-      request
       perform_enqueued_jobs
+      request
+      # perform_enqueued_jobs
+      #  these events disappear after perform_enqueued_jobs is run
+      # ["initialise_analytics", "create_entity", "update_entity", nil, "supporting_document_deleted", "web_request"]
+      # expect(:xxx).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
+      #   with_data: { filename: "blank_job_spec.pdf",
+      #                byte_size: vacancy.supporting_documents.first.byte_size,
+      #                content_type: "application/pdf" },
+      # )
       expect(:delete_entity).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
         with_data: { filename: "blank_job_spec.pdf",
+                     id: document.blob_id,
                      byte_size: vacancy.supporting_documents.first.byte_size,
                      content_type: "application/pdf" },
       )
