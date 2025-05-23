@@ -26,20 +26,30 @@ module Publishers
         if @form.valid?
           case step
           when :collect_references
-            if @form.collect_references_and_declarations
-              redirect_to next_wizard_path
-            else
-              job_applications.each do |job_application|
-                job_application.update!(status: :interviewing)
-              end
-              @batch.destroy!
-              redirect_to organisation_job_job_applications_path(vacancy.id, anchor: :interviewing)
-            end
-          else
-            redirect_to next_wizard_path
+            update_for_collect_references
+          when :ask_references_email
+            update_for_ask_references_email
           end
+
+          destination = (next_step == Wicked::FINISH_STEP ? nil : next_step)
+          redirect_to_next(destination)
         else
           render step
+        end
+      end
+
+      def update_for_collect_references
+        return if @form.collect_references_and_declarations
+
+        SelfDisclosureRequest.create_all!(job_applications)
+        @next_step = Wicked::FINISH_STEP
+      end
+
+      def update_for_ask_references_email
+        if @form.contact_applicants
+          SelfDisclosureRequest.create_and_notify_all!(job_applications)
+        else
+          SelfDisclosureRequest.create_all!(job_applications)
         end
       end
 
@@ -62,6 +72,11 @@ module Publishers
       end
 
       def finish_wizard_path
+        job_applications.each do |job_application|
+          job_application.update!(status: :interviewing)
+        end
+
+        @batch.destroy!
         organisation_job_job_applications_path(vacancy.id, anchor: :interviewing)
       end
     end
