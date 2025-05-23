@@ -122,6 +122,32 @@ RSpec.describe "Documents" do
       )
     end
 
+    it "triggers the delete entity event", :dfe_analytics do
+      request
+      perform_enqueued_jobs
+      expect(:delete_entity).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
+                                  with_data: { filename: "blank_job_spec.pdf",
+                                               byte_size: vacancy.supporting_documents.first.byte_size,
+                                               content_type: "application/pdf" },
+                                  )
+    end
+
+    context "when the vacancy has been copied" do
+      before do
+        CopyVacancyAsaTemplate.call(vacancy)
+      end
+
+      it "triggers the delete entity event", :dfe_analytics do
+        request
+        perform_enqueued_jobs
+        expect(:delete_entity).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
+                                    with_data: { filename: "blank_job_spec.pdf",
+                                                 byte_size: vacancy.supporting_documents.first.byte_size,
+                                                 content_type: "application/pdf" },
+                                    )
+      end
+    end
+
     it "removes the document" do
       request
       follow_redirect!
