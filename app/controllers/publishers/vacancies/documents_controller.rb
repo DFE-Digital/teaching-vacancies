@@ -1,16 +1,21 @@
 require "google/apis/drive_v3"
 
 class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseController
-  helper_method :documents_form, :confirmation_form
+  skip_before_action :verify_authenticity_token,
+                     only: %i[upload_file delete_uploaded_file]
+
+  def index
+    @documents_form = Publishers::JobListing::DocumentsForm.new(documents_form_params, vacancy)
+  end
+
+  def new
+    @documents_form = Publishers::JobListing::DocumentsForm.new(documents_form_params, vacancy)
+  end
 
   def create
-    if documents_form.valid?
-      documents_form.supporting_documents.each do |document|
-        vacancy.supporting_documents.attach(document)
-        send_dfe_analytics_event(:supporting_document_created, document.original_filename, document.size, document.content_type)
-      end
-
-      vacancy.update(documents_form.params_to_save)
+    @documents_form = Publishers::JobListing::DocumentsForm.new(documents_form_params.merge(supporting_documents: vacancy.supporting_documents), vacancy)
+    if @documents_form.valid?
+      vacancy.update(@documents_form.params_to_save)
 
       render :index
     else
@@ -26,14 +31,28 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     redirect_to after_document_delete_path, flash: { success: t("jobs.file_delete_success_message", filename: document.filename) }
   end
 
-  def confirm
-    return render :index unless confirmation_form.valid?
+  # These 2 methods support that MoJ multi-document upload component
+  def upload_file
+    @document = params.require(:documents)
 
-    if uploading_more_documents?
-      redirect_to new_organisation_job_document_path(vacancy.id)
-    else
-      redirect_to_next_step
+    respond_to do |format|
+      if vacancy.supporting_documents.attach(@document)
+        send_dfe_analytics_event(:supporting_document_created, @document.original_filename, @document.size, @document.content_type)
+        format.json { render "upload_success" }
+      else
+        format.json { render "upload_error" }
+      end
     end
+  end
+
+  def delete_uploaded_file
+    filename = params.require(:delete)
+    vacancy.supporting_documents.select { |d| d.filename == filename }.each do |document|
+      document.purge
+      send_dfe_analytics_event(:supporting_document_deleted, document.filename, document.byte_size, document.content_type)
+    end
+
+    respond_to(&:json)
   end
 
   private
@@ -42,26 +61,10 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     :documents
   end
 
-  def documents_form
-    @documents_form ||= Publishers::JobListing::DocumentsForm.new(documents_form_params, vacancy)
-  end
-
   def documents_form_params
     (params[:publishers_job_listing_documents_form] || params)
       .permit(supporting_documents: [])
       .merge(completed_steps: completed_steps)
-  end
-
-  def confirmation_form
-    @confirmation_form ||= Publishers::JobListing::DocumentsConfirmationForm.new(confirmation_form_params, vacancy)
-  end
-
-  def confirmation_form_params
-    (params[:publishers_job_listing_documents_confirmation_form] || params)&.permit(:upload_additional_document)
-  end
-
-  def uploading_more_documents?
-    confirmation_form_params[:upload_additional_document] == "true"
   end
 
   def after_document_delete_path

@@ -24,37 +24,28 @@ RSpec.describe "Publishers can add additional documents to a vacancy" do
     click_on I18n.t("buttons.save_and_continue")
     expect(publisher_add_document_page).to be_displayed
 
-    add_document
-    expect(publisher_vacancy_documents_page).to be_displayed
-
-    # Having a first additional document, cannot submit an empty form for a second additional document
-    publisher_vacancy_documents_page.add_another_document_yes_radio.click
-    click_on I18n.t("buttons.save_and_continue")
     expect(publisher_add_document_page).to be_displayed
-
     click_on I18n.t("buttons.save_and_continue")
+
     expect(publisher_vacancy_documents_page).to be_displayed
     expect(page).to have_content("There is a problem")
     expect(publisher_vacancy_documents_page.errors.map(&:text)).to eq(["Select an additional document"])
 
-    # Can continue after attaching a document
-    add_document
-    expect(publisher_vacancy_documents_page).to be_displayed
+    click_on "Back"
 
     # Once decided not to include additional documents, can continue to the next step
-    publisher_vacancy_documents_page.add_another_document_no_radio.click
-    click_on I18n.t("buttons.save_and_continue")
-    expect(current_path).to eq(organisation_job_review_path(vacancy.id))
+    answer_include_additional_documents(false)
+
+    expect(page).to have_current_path(organisation_job_review_path(vacancy.id), ignore_query: true)
     expect(page).to have_content(vacancy.job_roles.first.humanize)
 
     # Can publish the job listing
     click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
-    expect(current_path).to eq(organisation_job_summary_path(vacancy.id))
+    expect(page).to have_current_path(organisation_job_summary_path(vacancy.id), ignore_query: true)
   end
 
-  def add_document
-    page.attach_file("publishers_job_listing_documents_form[supporting_documents][]",
-                     Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"))
+  def answer_include_additional_documents(include_additional_documents)
+    fill_in_include_additional_documents_form_fields(include_additional_documents)
     click_on I18n.t("buttons.save_and_continue")
   end
 end

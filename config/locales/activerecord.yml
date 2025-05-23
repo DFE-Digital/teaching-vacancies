@@ -333,6 +333,7 @@ en:
       taken: has already been taken
       blank: can't be blank
       incomplete_qualification_result: Enter a %{attribute} for Subject %{result_idx}
+      contains_a_virus: contains a virus
   activemodel:
     errors:
       models:
