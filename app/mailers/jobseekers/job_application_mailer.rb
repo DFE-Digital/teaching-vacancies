@@ -15,4 +15,12 @@ class Jobseekers::JobApplicationMailer < Jobseekers::BaseMailer
 
     send_email(to: job_application.jobseeker.email, subject: t(".subject", job_title: @vacancy.job_title, organisation_name: @vacancy.organisation_name))
   end
+
+  def declarations(job_application)
+    @job_application = job_application
+    @vacancy = @job_application.vacancy
+    @organisation_name = @vacancy.organisation_name
+
+    send_email(to: job_application.jobseeker.email, subject: t(".subject"))
+  end
 end
