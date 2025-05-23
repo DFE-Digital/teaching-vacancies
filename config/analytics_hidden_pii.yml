@@ -88,4 +88,22 @@ shared:
     - first_name
     - last_name
     - phone_number
-
+  job_references:
+    - employment_start_date
+    - punctuality
+    - working_relationships
+    - customer_care
+    - adapt_to_change
+    - deal_with_conflict
+    - prioritise_workload
+    - team_working
+    - communication
+    - problem_solving
+    - general_attitude
+    - technical_competence
+    - leadership
+    - under_investigation
+    - warnings
+    - allegations
+    - not_fit_to_practice
+    - able_to_undertake_role
