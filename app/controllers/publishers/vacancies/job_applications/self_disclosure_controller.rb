@@ -1,8 +1,15 @@
 class Publishers::Vacancies::JobApplications::SelfDisclosureController < Publishers::Vacancies::JobApplications::BaseController
   before_action :not_enabled
 
+  helper_method :job_application
+
   def show
     @self_disclosure = SelfDisclosurePresenter.new(job_application)
+    if @self_disclosure.request.manual?
+      @batch = JobApplicationBatch.create!(vacancy_id: job_application.vacancy.id).tap do
+        it.batchable_job_applications.create!(job_application: job_application)
+      end
+    end
 
     respond_to do |format|
       format.html
@@ -28,6 +35,10 @@ class Publishers::Vacancies::JobApplications::SelfDisclosureController < Publish
       type: "application/pdf",
       disposition: "inline",
     )
+  end
+
+  def job_application
+    @job_application ||= JobApplication.includes(:self_disclosure_request).find(params[:job_application_id])
   end
 
   def not_enabled
