@@ -2,16 +2,16 @@ class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::Vaca
   validate :application_form_presence
   validates :application_form, form_file: Vacancy::DOCUMENT_VALIDATION_OPTIONS
 
-  def self.fields
-    []
-  end
-
   attr_accessor(:application_form, :application_form_staged_for_replacement)
 
   def params_to_save
     {
       completed_steps: params[:completed_steps],
     }
+  end
+
+  def self.fields
+    []
   end
 
   private

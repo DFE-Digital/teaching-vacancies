@@ -20,10 +20,6 @@ module Jobseekers
           FIELDS + %i[has_right_to_work_in_uk]
         end
 
-        def unstorable_fields
-          %i[personal_details_section_completed]
-        end
-
         def load_form(model)
           super.merge(completed_attrs(model, :personal_details))
         end

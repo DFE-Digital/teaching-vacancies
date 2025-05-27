@@ -16,6 +16,7 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
 
   APPLICATION_METHOD_TO_STEP = {
     uploaded_form: :application_form,
+    email: :application_form,
     website: :application_link,
   }.freeze
 
