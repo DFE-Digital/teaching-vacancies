@@ -123,7 +123,7 @@ group :development, :test do
   gem "rspec-rails"
   gem "rswag-specs"
   gem "slim_lint", require: false
-    # https://github.com/grodowski/undercover/issues/220
+  # https://github.com/grodowski/undercover/issues/220
   # v 0.6 doesn't respect :nocov: tags properly
   gem "undercover", "< 0.6", require: false
 end
