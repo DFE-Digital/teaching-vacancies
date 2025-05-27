@@ -5,7 +5,7 @@ class Jobseekers::JobApplications::QuickApply
   end
 
   def job_application
-    return new_job_application unless previously_submitted_application? || jobseeker_profile || !@vacancy.has_uploaded_form?
+    return new_job_application if @vacancy.has_uploaded_form? || !has_data_available_to_prefill_with?
 
     if previously_submitted_application?
       return Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication.new(jobseeker, new_job_application).call
@@ -32,5 +32,9 @@ class Jobseekers::JobApplications::QuickApply
 
   def jobseeker_profile
     @jobseeker_profile ||= jobseeker.jobseeker_profile
+  end
+
+  def has_data_available_to_prefill_with?
+    previously_submitted_application? || jobseeker_profile
   end
 end

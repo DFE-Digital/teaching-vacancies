@@ -27,7 +27,9 @@ RSpec.describe "Publishers can view a job application" do
 
   context "when job application is not an uploaded job application" do
     it "allows hiring staff to view the jobseekers personal details on the job application" do
-      visit organisation_job_job_application_path(vacancy.id, job_application)
+      visit organisation_jobs_with_type_path(:expired)
+      click_link "View 1 applicant"
+      first(:link, "#{job_application.first_name} #{job_application.last_name}").click
 
       expect(page).to have_content "Personal details"
       expect(page).to have_css(".govuk-summary-list__key", text: "First name")
