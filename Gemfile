@@ -120,6 +120,9 @@ group :development, :test do
   gem "rspec-rails"
   gem "rswag-specs"
   gem "slim_lint", require: false
+    # https://github.com/grodowski/undercover/issues/220
+  # v 0.6 doesn't respect :nocov: tags properly
+  gem "undercover", "< 0.6", require: false
 end
 
 group :test do
@@ -131,6 +134,8 @@ group :test do
   gem "redis-client"
   gem "selenium-webdriver"
   gem "shoulda-matchers"
+  gem "simplecov", require: false
+  gem "simplecov-lcov", require: false
   gem "site_prism"
   gem "uri-query_params"
   gem "vcr"
