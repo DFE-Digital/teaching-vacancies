@@ -122,10 +122,10 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
     context "when a point location outside the UK search is carried out" do
       let(:search_with_polygons?) { false }
       let(:location) { "Dublin" }
+      let(:geocoding_stub) { instance_double(Geocoding, coordinates: Geocoding::COORDINATES_NO_MATCH) }
 
       before do
-        mock_response = [double(country: "Ireland")]
-        allow(Geocoder).to receive(:search).and_return(mock_response)
+        allow(Geocoding).to receive(:new).with("Dublin").and_return(geocoding_stub)
       end
 
       scenario "does not creates a job alert" do

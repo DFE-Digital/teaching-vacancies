@@ -4,13 +4,9 @@ RSpec.describe "Jobseekers can manage their profile" do
   let(:jobseeker) { create(:jobseeker) }
 
   before do
-    allow(Geocoder).to receive(:search) do |location|
-      if %w[London Manchester].include?(location)
-        [double(country: "United Kingdom")]
-      else
-        [double(country: "United States")]
-      end
-    end
+    allow(Geocoding).to receive(:new).with(anything).and_call_original
+    allow(Geocoding).to receive(:new).with("San Francisco")
+      .and_return(instance_double(Geocoding, coordinates: Geocoding::COORDINATES_NO_MATCH))
   end
 
   context "with a jobseeker" do

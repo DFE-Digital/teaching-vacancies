@@ -5,6 +5,9 @@ class Geocoding
   # the cache refresh period significantly impacts our Google Geocoding API usage and billing.
   CACHE_DURATION = 180.days
 
+  COORDINATES_UK_CENTROID = [55.378051, -3.435973].freeze
+  COORDINATES_NO_MATCH = [0, 0].freeze
+
   attr_reader :location
 
   def self.test_coordinates
@@ -19,6 +22,8 @@ class Geocoding
     return self.class.test_coordinates if Rails.application.config.geocoder_lookup == :test
 
     Rails.cache.fetch([:geocoding, location], expires_in: CACHE_DURATION, skip_nil: true) do
+      # 'components: "country:gb"' is used to restrict the results to within the UK.
+      # When searching for a location outside the UK, the Google Geocoding API returns the UK centroid coordinates.
       Geocoder.coordinates(location, lookup: :google, components: "country:gb").tap do |coords|
         trigger_google_geocoding_api_hit_event(type: :coordinates, location:, result: coords)
       end
@@ -71,7 +76,7 @@ class Geocoding
 
   def no_coordinates_match
     Rails.logger.info("The Geocoder API returned no coordinates match (0, 0) for '#{location}'. This was not cached.")
-    [0, 0]
+    COORDINATES_NO_MATCH
   end
 
   def no_postcode_match
