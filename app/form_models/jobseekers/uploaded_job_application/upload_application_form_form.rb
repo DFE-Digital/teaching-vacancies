@@ -13,10 +13,6 @@ module Jobseekers
       attr_accessor :application_form
 
       class << self
-        def fields
-          [:application_form]
-        end
-
         def load_form(model)
           completed_attrs(model, :upload_application_form).merge(application_form: model.application_form)
         end

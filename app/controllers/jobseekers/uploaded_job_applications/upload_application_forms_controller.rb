@@ -12,7 +12,6 @@ class Jobseekers::UploadedJobApplications::UploadApplicationFormsController < Jo
     @job_application.application_form.attach(form_params[:upload_application_form])
     if @form.valid?
       if @form.application_form
-        @job_application.application_form.purge if @job_application.application_form.attached?
         @job_application.application_form.attach(@form.application_form)
       end
       @job_application.update!(update_params)
