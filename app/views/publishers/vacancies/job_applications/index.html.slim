@@ -12,29 +12,29 @@
       - interviewing = applications.fetch("interviewing", [])
       = govuk_tabs do |tabs|
         / set id property so that anchors are '#shortlisted' rather than '#shortlisted-4'
-        - tabs.with_tab(label: "All (#{job_applications.size})") do
+        - tabs.with_tab(label: "All (#{job_applications.size})", id: "all") do
           - if job_applications.any?
-            = render "candidates", form: @form, vacancy: vacancy, candidates: job_applications, heading: "All Applications", multi_select: "all"
+            = render "candidates", form: @form, vacancy: vacancy, candidates: job_applications, heading: "All Applications", multi_select: "all", origin: :all
           - else
             = render EmptySectionComponent.new title: t(".no_applicants")
         - tabs.with_tab(label: "New (#{new_ones.size})", id: "submitted")
           - if new_ones.any?
-            = render "candidates", form: @form, vacancy: vacancy, candidates: new_ones, heading: "New Applications", multi_select: "new"
+            = render "candidates", form: @form, vacancy: vacancy, candidates: new_ones, heading: "New Applications", multi_select: "new", origin: :submitted
           - else
             = render EmptySectionComponent.new title: t(".no_new")
         - tabs.with_tab(label: "Not Considering (#{rejected.size})", id: "not_considering")
           - if rejected.any?
-            = render "candidates", form: @form, vacancy: vacancy, candidates: rejected, heading: "Not being considered", multi_select: "rej"
+            = render "candidates", form: @form, vacancy: vacancy, candidates: rejected, heading: "Not being considered", multi_select: "rej", origin: :not_considering
           - else
             = render EmptySectionComponent.new title: t(".no_rejected")
         - tabs.with_tab(label: "Shortlisted (#{shortlisted.size})", id: "shortlisted")
           - if shortlisted.any?
-            = render "candidates", form: @form, vacancy: vacancy, candidates: shortlisted, heading: "Shortlisted Applications", multi_select: "short"
+            = render "candidates", form: @form, vacancy: vacancy, candidates: shortlisted, heading: "Shortlisted Applications", multi_select: "short", origin: :shortlisted
           - else
             = render EmptySectionComponent.new title: t(".no_shortlisted")
         - tabs.with_tab(label: "Interviewing (#{interviewing.size})", id: "interviewing")
           - if interviewing.any?
-            = render "candidates", form: @form, vacancy: vacancy, candidates: interviewing, heading: "Interviewing Applications", multi_select: "inter"
+            = render "candidates", form: @form, vacancy: vacancy, candidates: interviewing, heading: "Interviewing Applications", multi_select: "inter", origin: :interviewing
           - else
             = render EmptySectionComponent.new title: t(".no_interviewing")
     - else
