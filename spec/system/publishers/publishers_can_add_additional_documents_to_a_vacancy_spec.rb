@@ -24,7 +24,6 @@ RSpec.describe "Publishers can add additional documents to a vacancy" do
     click_on I18n.t("buttons.save_and_continue")
     expect(publisher_add_document_page).to be_displayed
 
-    expect(publisher_add_document_page).to be_displayed
     click_on I18n.t("buttons.save_and_continue")
 
     expect(publisher_vacancy_documents_page).to be_displayed
