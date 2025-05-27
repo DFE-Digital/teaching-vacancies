@@ -327,6 +327,10 @@ class Vacancy < ApplicationRecord
     receive_applications == "uploaded_form"
   end
 
+  def uses_either_native_or_uploaded_job_application_form?
+    enable_job_applications? || has_uploaded_form?
+  end
+
   def calculate_distance(search_coordinates, geolocation)
     Geocoder::Calculations.distance_between(search_coordinates, [geolocation.latitude, geolocation.longitude])
   end
