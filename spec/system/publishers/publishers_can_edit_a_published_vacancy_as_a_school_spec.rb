@@ -162,7 +162,6 @@ RSpec.describe "Publishers can edit a vacancy" do
 
         allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
         page.attach_file("publishers_job_listing_application_form_form[application_form]", Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"))
-        choose publisher.email
         click_on I18n.t("buttons.save_and_continue")
 
         expect(vacancy.reload.application_form.id).not_to eq(old_file_id)
