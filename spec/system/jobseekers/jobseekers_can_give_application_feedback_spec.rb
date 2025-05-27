@@ -5,7 +5,7 @@ RSpec.describe "Jobseekers can give job application feedback after submitting th
   let(:jobseeker_profile) { create(:jobseeker_profile, :with_trn) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let(:job_application) { create(:job_application, create_details: true, jobseeker: jobseeker, vacancy: vacancy) }
-  let(:uploaded_job_application) { create(:uploaded_job_application, jobseeker: jobseeker, vacancy: vacancy) }
+  let(:uploaded_job_application) { create(:uploaded_job_application, :with_uploaded_application_form, jobseeker: jobseeker, vacancy: vacancy, completed_steps: %w[personal_details upload_application_form]) }
   let(:comment) { "I will never use any other website again" }
   let(:occupation) { "teacher" }
 
