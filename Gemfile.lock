@@ -201,9 +201,13 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+<<<<<<< HEAD
     diff-lcs (1.6.2)
     discard (1.4.0)
       activerecord (>= 4.2, < 9.0)
+=======
+    diff-lcs (1.6.1)
+>>>>>>> 28f23d8c3 (add coverage gem back)
     docile (1.4.1)
     dotenv (3.1.8)
     dotenv-rails (3.1.8)
@@ -335,6 +339,8 @@ GEM
       mutex_m
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
+    imagen (0.2.0)
+      parser (>= 2.5, != 2.5.1.1)
     inflection (1.0.0)
     io-console (0.8.0)
     ipaddr (1.2.7)
@@ -711,6 +717,7 @@ GEM
     ruby-progressbar (1.13.0)
     ruby-rc4 (0.1.5)
     rubyzip (2.4.1)
+    rugged (1.7.2)
     sanitize (7.0.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.16.8)
@@ -749,6 +756,13 @@ GEM
       faraday (>= 0.17.5, < 3.a)
       jwt (>= 1.5, < 3.0)
       multi_json (~> 1.10)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.13.1)
+    simplecov-lcov (0.8.0)
+    simplecov_json_formatter (0.1.4)
     site_prism (5.1)
       addressable (~> 2.8, >= 2.8.4)
       capybara (~> 3.34)
@@ -802,6 +816,11 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
+    undercover (0.5.0)
+      bigdecimal
+      imagen (>= 0.1.8)
+      rainbow (>= 2.1, < 4.0)
+      rugged (>= 0.27, < 1.8)
     unicode (0.4.4.5)
     unicode-display_width (3.1.4)
       unicode-emoji (~> 4.0, >= 4.0.4)
@@ -978,12 +997,15 @@ DEPENDENCIES
   shoulda-matchers
   sidekiq (< 7)
   sidekiq-cron
+  simplecov
+  simplecov-lcov
   site_prism
   skylight
   slim-rails
   slim_lint
   solargraph
   tzinfo-data
+  undercover (< 0.6)
   uri-query_params
   valid_email2
   validate_url
