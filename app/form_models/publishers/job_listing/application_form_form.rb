@@ -1,6 +1,6 @@
 class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::VacancyForm
   validate :application_form_presence
-  validates :application_form, form_file: DOCUMENT_VALIDATION_OPTIONS
+  validates :application_form, form_file: Vacancy::DOCUMENT_VALIDATION_OPTIONS
 
   validates :application_email, presence: true
   validate :other_application_email_presence
