@@ -609,10 +609,6 @@ en:
           what_application_status_single: What application status do you want to assign to %{name}?
           what_application_status_multiple: What application status do you want to assign to these applicants?
           applicants: Applicants
-        collect_references:
-          page_title: Collect references and declarations
-        ask_references_email:
-          page_title: Contact applicant for references
         update_status:
           unsuccessful: "%{name} has been sent an email telling them their application has not been successful"
           shortlisted: "%{name} has been sent an email telling them that they have been shortlisted"
@@ -630,6 +626,11 @@ en:
           hint_salary_text: Different salary rules apply for support roles in schools.
           learn_more_link_text: Learn more about Skilled Worker visa requirements for teaching jobs (opens in new tab).
           eligibility_link_text: Find out about eligible support roles and salary requirements (opens in new tab).
+      references_and_declarations:
+        collect_references:
+          page_title: Collect references and declarations
+        ask_references_email:
+          page_title: Contact applicant for references
       live:
         notice: You can only view active jobs
       review:
