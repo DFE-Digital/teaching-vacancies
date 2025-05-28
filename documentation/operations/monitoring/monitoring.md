@@ -4,15 +4,39 @@
 
 ### Application logs
 
-- [Sidekiq](https://teaching-vacancies.service.gov.uk/sidekiq)
-- [Check the Sentry dashboard](https://sentry.io/organizations/teaching-vacancies/issues) to see if any Errors are being logged.
-- [Check the Logit event log](https://dashboard.logit.io) - Open Teaching Vacancy stack.
+- [The Logit dashboard](https://dashboard.logit.io/a/7ef698e1-d0ae-46c6-8d1e-a1088f5e034e) gives us access to the logs in Kibana for different stacks:
+  - For Production logs, the stack is `TEACHER SERVICES CLOUD PRODUCTION`
+  - For other environments (review, QA, Staging), the stack is `TEACHER SERVICES CLOUD TEST`
+
+#### Filtering logs in Kibana
+  - Filter the app and environment. Add and PIN a filter with:
+    - Field: `kubernetes.deployment.name`
+    - Operator: `is`
+    - Value: `teaching-vacancies-production` / `teaching-vacancies-staging` / `teaching-vacancies-qa` / `teaching-vacancies-review-pr-xxxx`
+  - If filtering particular routes, you can filter by the URL path:
+    - Field: `url.path`
+    - Value: (EG For the ATS API) `/ats-api/v1/vacancies`
+  - To remove the noise and focus the logs in the relevant info. You can specify the "Selected fields" in the left bar. Some useful fields to include in the log results:
+    - `app.message`
+    - `app.payload.params_json`
+    - `url.path`
+    - `app.payload.status_message`
+  - You can also filter the logs by particular field values.
+  - If you don't see expected results. Be sure the time window of the logs is big enough, as it defaults to the last 15 minutes.
 
 ### Deployment logs
 
 - [Check the GitHub Deploy workflow](https://github.com/DFE-Digital/teaching-vacancies/actions?query=workflow%3ADeploy) to see recent deployments.
 
 ## Monitoring, Metrics and Usage
+
+### Error monitoring
+
+- [Check the Sentry dashboard](https://teaching-vacancies.sentry.io/issues/?environment=production&project=6212514&statsPeriod=7d) to see if any Errors are being logged.
+
+### Background jobs
+
+- [The Sidekiq dashboard](https://teaching-vacancies.service.gov.uk/sidekiq) allows us to monitor and trigger background and scheduled jobs.
 
 ### Grafana Dashboards
 
@@ -30,13 +54,6 @@
 ### AKS
 
 - Check the Teaching Vacancies `s189-teacher-services-cloud-production` [subscription resources](https://portal.azure.com/)
-
-### Logs
-
-- Azure logs can be accessed/queried from the Azure Long resources `s189p01-tv-pd-rg` under `s189-teacher-services-cloud-production` subscription.
-
-
-For the moment, AKS logs are not sent to Logit. There are plans to change this in the future.
 
 
 ### Billing
