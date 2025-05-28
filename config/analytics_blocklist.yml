@@ -160,4 +160,14 @@
   - referrer_counts
   - created_at
   - updated_at
-
+  :job_application_batches:
+    - id
+    - vacancy_id
+    - created_at
+    - updated_at
+  :batchable_job_applications:
+    - id
+    - job_application_id
+    - created_at
+    - updated_at
+    - job_application_batch_id
