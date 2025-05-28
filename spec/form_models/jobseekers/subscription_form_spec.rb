@@ -192,10 +192,9 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
 
     context "when location outside of the UK is entered" do
       let(:params) { { keyword: "Maths", location: "Ecuador" } }
-      let(:geocoding_stub) { instance_double(Geocoding, coordinates: Geocoding::COORDINATES_NO_MATCH) }
 
       before do
-        allow(Geocoding).to receive(:new).with("Ecuador").and_return(geocoding_stub)
+        allow(Geocoding).to receive(:new).with("Ecuador").and_return(instance_double(Geocoding, uk_coordinates?: false))
       end
 
       it "validates that the location is not within the uk" do

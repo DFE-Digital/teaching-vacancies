@@ -90,6 +90,48 @@ RSpec.describe Geocoding, :dfe_analytics, geocode: true do
     end
   end
 
+  describe "#uk_coordinates?" do
+    let(:geocoding_instance) { described_class.new(location) }
+
+    before do
+      allow(geocoding_instance).to receive(:coordinates).and_return(coordinates)
+    end
+
+    subject { geocoding_instance.uk_coordinates? }
+
+    context "when location is within the United Kingdom" do
+      let(:location) { "London" }
+      let(:coordinates) { [51.5074, -0.1278] }
+
+      it { is_expected.to be true }
+    end
+
+    context "when location returns no coordinates" do
+      let(:location) { "Madrid" }
+      let(:coordinates) { Geocoding::COORDINATES_NO_MATCH }
+
+      it { is_expected.to be false }
+    end
+
+    context "when the location returns the default GB centroid coordinates" do
+      let(:coordinates) { Geocoding::COORDINATES_UK_CENTROID }
+
+      context "when the provided location is outside the UK" do
+        let(:location) { "Madrid" }
+
+        it { is_expected.to be false }
+      end
+
+      (described_class::ACCEPTED_UK_CENTROID_LOCATIONS + ["U.K.", "G.B.", "U.K", "G.B"]).each do |uk_name|
+        context "when the location is '#{uk_name}'" do
+          let(:location) { uk_name }
+
+          it { is_expected.to be true }
+        end
+      end
+    end
+  end
+
   describe "#postcode_from_coordinates" do
     let(:coordinates) { google_coordinates }
     let(:postcode) { "TS14 6RE" }

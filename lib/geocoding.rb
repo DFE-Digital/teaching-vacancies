@@ -5,6 +5,7 @@ class Geocoding
   # the cache refresh period significantly impacts our Google Geocoding API usage and billing.
   CACHE_DURATION = 180.days
 
+  ACCEPTED_UK_CENTROID_LOCATIONS = ["united kingdom", "uk", "gb", "great britain", "britain"].freeze
   COORDINATES_UK_CENTROID = [55.378051, -3.435973].freeze
   COORDINATES_NO_MATCH = [0, 0].freeze
 
@@ -32,6 +33,28 @@ class Geocoding
       Rails.logger.error("Google Geocoding API responded with OVER_QUERY_LIMIT")
       Geocoder.coordinates(location, lookup: :uk_ordnance_survey_names)
     end || no_coordinates_match
+  end
+
+  # Why not use: 'Geocoder.search(value).map(&:country).include?("United Kingdom")'?
+  #
+  # This would always trigger a new API call to Geocoder, which is not ideal.
+  # We are already caching all the search location coordinates to avoid unnecessary API calls and costs.
+  # We want to avoid triggering API calls when possible and reduce costs.
+  #
+  # The search call also marks some legitimate UK location terms (suggested by Google Place Autocomplete) as outside the UK.
+  # We prefer to have a more relaxed check rather than to reject valid UK locations.
+  def uk_coordinates?
+    coordinates = self.coordinates
+    return false if coordinates.blank? || coordinates == Geocoding::COORDINATES_NO_MATCH
+
+    if coordinates == Geocoding::COORDINATES_UK_CENTROID
+      # Google Geocode API returns the UK centroid coordinates when the search options restrict the results to within the UK
+      # and the location is outside the UK.
+      # Checks if the location is one of the UK locations that should return the centroid coordinates
+      location.strip.downcase.delete(".").in?(ACCEPTED_UK_CENTROID_LOCATIONS)
+    else
+      true # Coordinates are valid and not the UK centroid, so it's in the UK.
+    end
   end
 
   def postcode_from_coordinates

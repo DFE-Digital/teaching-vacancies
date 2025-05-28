@@ -5,8 +5,7 @@ RSpec.describe "Jobseekers can manage their profile" do
 
   before do
     allow(Geocoding).to receive(:new).with(anything).and_call_original
-    allow(Geocoding).to receive(:new).with("San Francisco")
-      .and_return(instance_double(Geocoding, coordinates: Geocoding::COORDINATES_NO_MATCH))
+    allow(Geocoding).to receive(:new).with("San Francisco").and_return(instance_double(Geocoding, uk_coordinates?: false))
   end
 
   context "with a jobseeker" do
