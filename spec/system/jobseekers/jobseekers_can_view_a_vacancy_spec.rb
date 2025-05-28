@@ -145,7 +145,7 @@ RSpec.describe "Viewing a single published vacancy" do
   end
 
   context "when the vacancy status is draft" do
-    let(:vacancy) { create(:vacancy, :draft, organisations: [school]) }
+    let(:vacancy) { create(:draft_vacancy, organisations: [school]) }
 
     scenario "jobseekers cannot view the vacancy" do
       visit job_path(vacancy)

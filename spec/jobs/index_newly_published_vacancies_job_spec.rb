@@ -9,7 +9,7 @@ RSpec.describe IndexNewlyPublishedVacanciesJob do
 
   it "enqueues UpdateGoogleIndexQueueJob for each vacancy published today" do
     published_today_vacancy = create(:vacancy, :published, publish_on: Time.zone.today)
-    create(:vacancy, :draft, publish_on: Time.zone.today)
+    create(:draft_vacancy, publish_on: Time.zone.today)
     create(:vacancy, :published, publish_on: Time.zone.today - 1.day)
 
     described_class.perform_now

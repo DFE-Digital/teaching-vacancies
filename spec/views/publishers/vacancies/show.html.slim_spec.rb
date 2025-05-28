@@ -91,7 +91,7 @@ RSpec.describe "publishers/vacancies/show" do
       let(:application_process) { rendered.html.css("#application_process") }
 
       context "with a minimal vacancy" do
-        let(:vacancy) { create(:vacancy, :without_contract_details) }
+        let(:vacancy) { create(:draft_vacancy, :without_contract_details) }
         let(:next_invalid_step) { :job_role }
 
         it "show first section as in-progress, and the rest as not startable" do
@@ -103,7 +103,7 @@ RSpec.describe "publishers/vacancies/show" do
       end
 
       context "with just a complete first section" do
-        let(:vacancy) { create(:vacancy, :with_contract_details) }
+        let(:vacancy) { create(:draft_vacancy, :with_contract_details) }
         let(:next_invalid_step) { :working_patterns }
 
         it "show first section as complete" do
@@ -115,7 +115,7 @@ RSpec.describe "publishers/vacancies/show" do
       end
 
       context "with a plain draft" do
-        let(:vacancy) { create(:vacancy, :draft, phases: %w[secondary], organisations: [school]) }
+        let(:vacancy) { create(:draft_vacancy, phases: %w[secondary], organisations: [school]) }
         let(:next_invalid_step) { nil }
 
         it "has publish buttons" do
@@ -133,7 +133,7 @@ RSpec.describe "publishers/vacancies/show" do
       end
 
       context "with a complete future published draft" do
-        let(:vacancy) { create(:vacancy, :draft, phases: %w[secondary], publish_on: Date.current + 6.months, organisations: [school]) }
+        let(:vacancy) { create(:draft_vacancy, phases: %w[secondary], publish_on: Date.current + 6.months, organisations: [school]) }
         let(:next_invalid_step) { nil }
 
         it "displays schedule information" do

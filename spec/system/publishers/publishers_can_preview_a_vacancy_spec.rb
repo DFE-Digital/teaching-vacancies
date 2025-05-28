@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Publishers can preview a vacancy" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }
-  let(:vacancy) { create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) }
+  let(:vacancy) { create(:draft_vacancy, :ect_suitable, job_roles: ["teacher"], organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) }
 
   before { login_publisher(publisher: publisher, organisation: school) }
 
