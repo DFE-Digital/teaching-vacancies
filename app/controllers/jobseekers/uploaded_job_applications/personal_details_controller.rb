@@ -1,4 +1,3 @@
-# app/controllers/jobseekers/uploaded_job_applications/personal_details_controller.rb
 class Jobseekers::UploadedJobApplications::PersonalDetailsController < Jobseekers::JobApplications::BaseController
   before_action :set_job_application
 

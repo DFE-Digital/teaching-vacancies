@@ -291,12 +291,16 @@ RSpec.describe DashboardComponent, type: :component do
       let(:uses_either_native_or_uploaded_job_application_form) { false }
       let(:include_applications) { true }
 
-      it "renders the link to view applicants" do
+      it "does not renders the link to view applicants" do
         render_inline(subject)
         expect(page).not_to have_link(
           I18n.t("jobs.manage.view_applicants", count: 1),
           href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id),
         )
+      end
+
+      it "returns nil" do
+        expect(subject.view_applicants(vacancy)).to be_nil
       end
     end
   end
