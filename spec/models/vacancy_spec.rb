@@ -23,6 +23,10 @@ RSpec.describe Vacancy do
       expect { subject.trash! }.to have_enqueued_job(RemoveGoogleIndexQueueJob).with(url)
     end
 
+    it "doesnt remove google index when expensive jobs are disabled", :disable_expensive_jobs do
+      expect { subject.trash! }.not_to have_enqueued_job(RemoveGoogleIndexQueueJob)
+    end
+
     it "removes attachements" do
       subject.trash!
       expect(subject.supporting_documents).to be_blank
@@ -34,21 +38,6 @@ RSpec.describe Vacancy do
       it "does nothing" do
         expect { subject.trash! }.not_to have_enqueued_job(RemoveGoogleIndexQueueJob)
       end
-    end
-  end
-
-  describe "#remove_google_index" do
-    let(:vacancy) { create(:vacancy) }
-    subject(:remove_google_index) { vacancy.remove_google_index }
-
-    context "when disable expensive jobs enabled is enabled", :disable_expensive_jobs do
-      it { expect { remove_google_index }.not_to have_enqueued_job(RemoveGoogleIndexQueueJob) }
-    end
-
-    context "when disable expensive jobs enabled is disabled" do
-      let(:url) { Rails.application.routes.url_helpers.job_url(vacancy) }
-
-      it { expect { remove_google_index }.to have_enqueued_job(RemoveGoogleIndexQueueJob).with(url) }
     end
   end
 
