@@ -5,7 +5,8 @@ class Jobseekers::JobApplications::QuickApply
   end
 
   def job_application
-    return new_job_application if @vacancy.has_uploaded_form? || !has_data_available_to_prefill_with?
+    return new_job_application if @vacancy.has_uploaded_form?
+    return new_job_application unless has_data_available_to_prefill_with?
 
     if previously_submitted_application?
       return Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication.new(jobseeker, new_job_application).call

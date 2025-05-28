@@ -128,6 +128,10 @@ RSpec.describe "Jobseekers can complete a job application" do
       visit job_path(vacancy)
       all("button", text: "Apply for this job").last.click
       click_button "Review application"
+      within(".govuk-error-summary__body") do
+        expect(page).to have_link("Complete your personal details")
+      end
+
       click_link(I18n.t("jobseekers.job_applications.build.personal_details.heading"))
       validates_step_complete
       choose I18n.t("helpers.label.jobseekers_job_application_personal_details_form.personal_details_section_completed_options.false")
