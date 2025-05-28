@@ -92,7 +92,5 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
         end
       end
     end
-
-    context "when vacancy"
   end
 end
