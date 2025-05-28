@@ -6,7 +6,6 @@ RSpec.describe "Publishers can view a job application" do
   let(:vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
   let(:uploaded_form_vacancy) { create(:vacancy, :expired, organisations: [organisation], receive_applications: "uploaded_form") }
   let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy, working_patterns: %w[full_time part_time]) }
-  let(:uploaded_job_application) { create(:uploaded_job_application, :status_submitted, :with_uploaded_application_form, vacancy: uploaded_form_vacancy) }
 
   before do
     login_publisher(publisher: publisher, organisation: organisation)
@@ -68,8 +67,12 @@ RSpec.describe "Publishers can view a job application" do
   end
 
   context "when job application is an uploaded job application" do
+    let!(:uploaded_job_application) { create(:uploaded_job_application, :status_submitted, :with_uploaded_application_form, vacancy: uploaded_form_vacancy) }
+
     it "allows hiring staff to see jobseeker personal details" do
-      visit organisation_job_job_application_path(uploaded_form_vacancy.id, uploaded_job_application)
+      visit organisation_jobs_with_type_path(:expired)
+      click_link "View 1 applicant for #{uploaded_form_vacancy.job_title}"
+      first(:link, "#{uploaded_job_application.first_name} #{uploaded_job_application.last_name}").click
 
       expect(page).to have_content "Personal details"
       expect(page).to have_css(".govuk-summary-list__key", text: "First name")
