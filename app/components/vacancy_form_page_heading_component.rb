@@ -26,7 +26,7 @@ class VacancyFormPageHeadingComponent < ViewComponent::Base
 
   private
 
-  attr_reader :vacancy, :copy, :step_process, :back_path
+  attr_reader :vacancy, :step_process, :back_path
 
   def page_title_from_vacancy_organisations
     return current_organisation.name if vacancy.organisations.none?
