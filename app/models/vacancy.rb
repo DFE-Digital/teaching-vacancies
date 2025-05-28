@@ -303,7 +303,27 @@ class Vacancy < ApplicationRecord
     job_roles.intersect?(%w[teacher head_of_year_or_phase head_of_department_or_curriculum sendco other_leadership])
   end
 
+  def find_conflicting_vacancy
+    find_conflict_vacancy || find_duplicate_vacancy
+  end
+
+  # soft delete so that all the stats etc are kept even after the vacancy no longer exists
+  def trash!
+    return if discarded?
+
+    supporting_documents.purge_later
+    discard!
+    remove_google_index
+  end
+
   private
+
+  def remove_google_index
+    return if DisableExpensiveJobs.enabled?
+
+    url = Rails.application.routes.url_helpers.job_url(self)
+    RemoveGoogleIndexQueueJob.perform_later(url)
+  end
 
   def calculate_distance(search_coordinates, geolocation)
     Geocoder::Calculations.distance_between(search_coordinates, [geolocation.latitude, geolocation.longitude])
