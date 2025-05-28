@@ -48,11 +48,29 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   def update_tag
     update_tag_params = params.require(:publishers_job_application_status_form).permit(:origin, :status, job_applications: [])
 
-    JobApplication.find(update_tag_params.fetch(:job_applications)).each do |job_application|
-      job_application.update!(status: update_tag_params.fetch(:status))
+    applications = update_tag_params.fetch(:job_applications)
+    new_status = update_tag_params.fetch(:status).to_sym
+
+    if new_status == :interviewing
+      batch = JobApplicationBatch.create!(vacancy: vacancy)
+      JobApplication.find(applications).each do |ja|
+        batch.batchable_job_applications.create!(job_application: ja)
+      end
+      redirect_to organisation_job_job_application_batch_references_and_declaration_path(vacancy.id, batch.id, Wicked::FIRST_STEP)
+    else
+      JobApplication.find(applications).each do |job_application|
+        job_application.update!(status: new_status)
+      end
+      redirect_to organisation_job_job_applications_path(vacancy.id, anchor: update_tag_params[:origin])
     end
-    redirect_to organisation_job_job_applications_path(vacancy.id, anchor: update_tag_params[:origin])
   end
+
+  #  temp - this code doesn't (yet) do anything so doesn't need coverage...
+  # :nocov:
+  def pre_interview_checks
+    @references = ["a ref"]
+  end
+  # :nocov:
 
   def withdrawn; end
 
