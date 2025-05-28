@@ -4,15 +4,17 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
   helper_method :documents_form, :confirmation_form
 
   def create
-    if documents_form.valid?
-      documents_form.supporting_documents.each do |document|
-        vacancy.supporting_documents.attach(document)
-        send_dfe_analytics_event(:supporting_document_created, document.original_filename, document.size, document.content_type)
+    @documents_form = Publishers::JobListing::DocumentsForm.new(documents_form_params, vacancy)
+    if @documents_form.valid?
+      if @documents_form.supporting_documents.reject { |document| vacancy.supporting_documents.attach(document) }.any?
+        vacancy.errors.each do |error|
+          @documents_form.errors.add error.attribute, error.message
+        end
+        render :new
+      else
+        vacancy.update(@documents_form.params_to_save)
+        render :index
       end
-
-      vacancy.update(documents_form.params_to_save)
-
-      render :index
     else
       render :new
     end

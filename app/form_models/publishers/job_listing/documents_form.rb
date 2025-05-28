@@ -1,5 +1,4 @@
 class Publishers::JobListing::DocumentsForm < Publishers::JobListing::VacancyForm
-  validates :supporting_documents, form_file: Vacancy::DOCUMENT_VALIDATION_OPTIONS
   validates :supporting_documents, presence: true, if: -> { vacancy.include_additional_documents }
 
   attr_accessor :supporting_documents
