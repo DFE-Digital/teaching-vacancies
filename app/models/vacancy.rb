@@ -319,8 +319,6 @@ class Vacancy < ApplicationRecord
     job_roles.intersect?(%w[teacher head_of_year_or_phase head_of_department_or_curriculum sendco other_leadership])
   end
 
-  private
-
   def new_application_path
     if has_uploaded_form?
       Rails.application.routes.url_helpers.jobseekers_job_job_application_path(id)
@@ -336,6 +334,8 @@ class Vacancy < ApplicationRecord
   def uses_either_native_or_uploaded_job_application_form?
     enable_job_applications? || has_uploaded_form?
   end
+
+  private
 
   def calculate_distance(search_coordinates, geolocation)
     Geocoder::Calculations.distance_between(search_coordinates, [geolocation.latitude, geolocation.longitude])
