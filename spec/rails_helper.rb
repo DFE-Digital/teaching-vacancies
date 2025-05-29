@@ -71,8 +71,6 @@ RSpec.configure do |config|
       double("BigQuery", dataset: double("BigQuery dataset", table: double.as_null_object)),
     )
 
-    mock_response = [double(country: "United Kingdom")]
-    allow(Geocoder).to receive(:search).and_return(mock_response)
     stub_request(:get, %r{maps.googleapis.com/maps/api/place/autocomplete}).to_return(status: 200, body: '{"predictions": []}', headers: {})
   end
 

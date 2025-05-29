@@ -194,8 +194,7 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
       let(:params) { { keyword: "Maths", location: "Ecuador" } }
 
       before do
-        mock_response = [double(country: "Ecuador")]
-        allow(Geocoder).to receive(:search).and_return(mock_response)
+        allow(Geocoding).to receive(:new).with("Ecuador").and_return(instance_double(Geocoding, uk_coordinates?: false))
       end
 
       it "validates that the location is not within the uk" do
