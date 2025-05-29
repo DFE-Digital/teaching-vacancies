@@ -1,8 +1,10 @@
 class OrganisationsController < ApplicationController
   before_action :strip_empty_filter_checkboxes, only: %i[index]
 
+  before_action :set_organisation, only: %i[show]
+
   def show
-    organisation
+    @vacancies = @organisation.vacancies.live
   end
 
   def index
@@ -20,8 +22,8 @@ class OrganisationsController < ApplicationController
     Organisation.visible_to_jobseekers.order(:name)
   end
 
-  def organisation
-    @organisation ||= Organisation.friendly.find(params[:id] || params[:organisation_id])
+  def set_organisation
+    @organisation = Organisation.friendly.find(params[:id] || params[:organisation_id])
   end
 
   def strip_empty_filter_checkboxes

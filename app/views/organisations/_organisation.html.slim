@@ -85,12 +85,12 @@
 
       = map(markers: organisation_map_marker(organisation), marker: { type: "organisation", tracking: { link: "school_website_from_map" } })
 
-- if organisation.vacancies.live.any?
+- if vacancies.any?
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       h2.govuk-heading-m = t("organisations.show.vacancies.heading")
 
-      - organisation.vacancies.live.each do |vacancy|
+      - vacancies.each do |vacancy|
         h3.govuk-heading-s class="govuk-!-margin-bottom-0"
           span class="govuk-!-margin-right-2" = results_link(vacancy, class: "view-vacancy-link")
           = govuk_tag(text: t("vacancies.listing.enable_job_applications_tag"), colour: "green") if vacancy.enable_job_applications?
