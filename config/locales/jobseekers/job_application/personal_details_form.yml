@@ -143,6 +143,8 @@ en:
         first_name: Or given names
         last_name: Or family name
         phone_number: Enter a phone number you are happy to be contacted on. For example, 01632 960 001, 07700 900 982 or +44 0808 157 0192.
+      jobseekers_uploaded_job_application_personal_details_form:
+        phone_number: Enter a phone number you are happy to be contacted on. For example, 01632 960 001, 07700 900 982 or +44 0808 157 0192.
 
       jobseekers_job_application_personal_details_form:
         has_ni_number: >-
