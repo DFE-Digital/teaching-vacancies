@@ -3,13 +3,14 @@ require "rails_helper"
 RSpec.describe "Jobseekers can complete a job application" do
   let(:jobseeker) { create(:jobseeker) }
   let(:organisation) { create(:school) }
-  let(:vacancy) { create(:vacancy, job_roles: ["teacher"], organisations: [organisation]) }
 
   before { login_as(jobseeker, scope: :jobseeker) }
 
   after { logout }
 
   context "when job application is a using the native job application" do
+    let(:vacancy) { create(:vacancy, job_roles: ["teacher"], organisations: [organisation]) }
+
     it "allows jobseekers to complete an application and go to review page" do
       visit job_path(vacancy)
       all("button", text: "Apply for this job").last.click
@@ -116,6 +117,8 @@ RSpec.describe "Jobseekers can complete a job application" do
   end
 
   context "when job application has a custom uploaded job application" do
+    let(:vacancy) { create(:vacancy, :with_application_form, job_roles: ["teacher"], organisations: [organisation]) }
+
     before do
       vacancy.receive_applications = "uploaded_form"
       vacancy.save!
