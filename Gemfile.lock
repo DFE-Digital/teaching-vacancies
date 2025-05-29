@@ -192,13 +192,9 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-<<<<<<< HEAD
     diff-lcs (1.6.2)
     discard (1.4.0)
       activerecord (>= 4.2, < 9.0)
-=======
-    diff-lcs (1.6.1)
->>>>>>> 28f23d8c3 (add coverage gem back)
     docile (1.4.1)
     dotenv (3.1.8)
     dotenv-rails (3.1.8)

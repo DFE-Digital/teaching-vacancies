@@ -4,7 +4,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   helper_method :job_applications
 
-  before_action :set_job_application, only: %i[show download_pdf]
+  before_action :set_job_application, only: %i[show download_pdf download_application_form]
 
   def index
     @form = Publishers::JobApplication::TagForm.new
@@ -32,15 +32,15 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def download_application_form
-    unless job_application.application_form.attached?
+    unless @job_application.application_form.attached?
       redirect_to edit_jobseekers_uploaded_job_application_upload_application_form_path(@job_application), alert: I18n.t("publishers.vacancies.job_applications.download_pdf.no_file")
       return
     end
 
     send_data(
-      job_application.application_form.download,
-      filename: job_application.application_form.filename.to_s,
-      type: job_application.application_form.content_type,
+      @job_application.application_form.download,
+      filename: @job_application.application_form.filename.to_s,
+      type: @job_application.application_form.content_type,
       disposition: "inline",
     )
   end

@@ -81,15 +81,9 @@ RSpec.describe "Jobseekers can complete a job application" do
       validates_step_complete
       fill_in_personal_statement
       click_on I18n.t("buttons.save_and_continue")
-<<<<<<< HEAD
-  
+
       click_on(I18n.t("jobseekers.job_applications.build.referees.heading"))
-  
-=======
 
-      click_on(I18n.t("jobseekers.job_applications.build.references.heading"))
-
->>>>>>> 542a14904 (Linting)
       click_on I18n.t("buttons.add_reference")
       click_on I18n.t("buttons.save_reference")
       expect(page).to have_content("There is a problem")
