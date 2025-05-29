@@ -310,15 +310,6 @@ class Vacancy < ApplicationRecord
     remove_google_index
   end
 
-  private
-
-  def remove_google_index
-    return if DisableExpensiveJobs.enabled?
-
-    url = Rails.application.routes.url_helpers.job_url(self)
-    RemoveGoogleIndexQueueJob.perform_later(url)
-  end
-
   def new_application_path
     if has_uploaded_form?
       Rails.application.routes.url_helpers.jobseekers_job_job_application_path(id)
@@ -333,6 +324,15 @@ class Vacancy < ApplicationRecord
 
   def uses_either_native_or_uploaded_job_application_form?
     enable_job_applications? || has_uploaded_form?
+  end
+
+  private
+
+  def remove_google_index
+    return if DisableExpensiveJobs.enabled?
+
+    url = Rails.application.routes.url_helpers.job_url(self)
+    RemoveGoogleIndexQueueJob.perform_later(url)
   end
 
   def calculate_distance(search_coordinates, geolocation)
