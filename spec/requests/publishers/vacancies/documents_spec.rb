@@ -27,6 +27,17 @@ RSpec.describe "Documents" do
         }
       end
 
+      it "triggers an event", :dfe_analytics do
+        request
+        expect(:supporting_document_created).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
+          with_data: { vacancy_id: vacancy.id,
+                       document_type: "supporting_document",
+                       name: "blank_job_spec.pdf",
+                       size: vacancy.supporting_documents.first.byte_size,
+                       content_type: "application/pdf" },
+        )
+      end
+
       it "renders the index page" do
         expect(request).to render_template(:index)
       end
@@ -39,11 +50,9 @@ RSpec.describe "Documents" do
     end
 
     context "when the form is invalid" do
-      let(:vacancy) { create(:vacancy, include_additional_documents: true, organisations: [organisation]) }
-
       let(:request) do
         post organisation_job_documents_path(vacancy.id), params: {
-          publishers_job_listing_documents_form: { documents: [] },
+          publishers_job_listing_documents_form: { documents: [fixture_file_upload("mime_types/invalid_plain_text_file.txt")] },
         }
       end
 
@@ -65,17 +74,11 @@ RSpec.describe "Documents" do
       let(:valid_file_types) { "PDF, DOC or DOCX" }
       let(:virus_free) { true }
 
-      # before do
-      #   post organisation_job_documents_path(vacancy.id), params: {
-      #     publishers_job_listing_documents_form: { supporting_documents: [file] },
-      #   }
-      # end
-
       context "with a valid PDF file" do
         let(:file) { fixture_file_upload("blank_job_spec.pdf") }
 
         it "is accepted" do
-          expect(response.body).not_to include(I18n.t("jobs.file_type_error_message", valid_file_types: valid_file_types))
+          expect(response.body).not_to include(I18n.t("jobs.file_type_error_message", filename: "blank_job_spec.pdf", valid_file_types: valid_file_types))
         end
       end
 
@@ -85,7 +88,7 @@ RSpec.describe "Documents" do
         let(:file) { fixture_file_upload("mime_types/valid_word_document.docx") }
 
         it "is accepted" do
-          expect(response.body).not_to include("has an invalid content type")
+          expect(response.body).not_to include(I18n.t("jobs.file_type_error_message", filename: "valid_word_document.docx", valid_file_types: valid_file_types))
         end
       end
 
