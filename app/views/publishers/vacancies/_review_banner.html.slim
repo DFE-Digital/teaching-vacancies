@@ -12,7 +12,7 @@
       = render "publishers/vacancies/review_banners/incomplete_draft"
 
     - elsif vacancy.expired?
-      = render "publishers/vacancies/review_banners/closed"
+      = render "publishers/vacancies/review_banners/closed", vacancy: vacancy
 
     - elsif vacancy.pending?
       = render "publishers/vacancies/review_banners/scheduled", vacancy: vacancy

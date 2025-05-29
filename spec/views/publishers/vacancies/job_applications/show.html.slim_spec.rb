@@ -1,11 +1,15 @@
 require "rails_helper"
 
 RSpec.describe "publishers/vacancies/job_applications/show" do
-  let(:vacancy) { create(:vacancy, :expired, organisations: build_list(:school, 1)) }
+  let(:vacancy) do
+    build_stubbed(:vacancy, :expired, organisations: build_stubbed_list(:school, 1),
+                                      job_applications:
+                                  build_stubbed_list(:job_application, 1, :status_submitted,
+                                                     training_and_cpds: build_stubbed_list(:training_and_cpd, 1),
+                                                     working_patterns: %w[full_time part_time]))
+  end
   let(:job_application) do
-    create(:job_application, :status_submitted, vacancy: vacancy,
-                                                training_and_cpds: build_list(:training_and_cpd, 1),
-                                                working_patterns: %w[full_time part_time])
+    vacancy.job_applications.first
   end
 
   before do
@@ -50,5 +54,21 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
 
     expect(rendered).to have_css(".govuk-summary-list__key", text: "Working pattern preference details")
     expect(rendered).to have_css(".govuk-summary-list__value", text: job_application.working_pattern_details)
+  end
+
+  it "has the application status of 'unread'" do
+    expect(rendered).to have_css(".application-status.govuk-tag", text: "unread")
+  end
+
+  it "does not show the section status indicators" do
+    expect(rendered).to have_no_css(".review-component__section__heading .govuk-tag")
+  end
+
+  it "does not allow the jobseeker to edit or update any sections" do
+    expect(rendered).to have_no_css(".review-component__section__heading a")
+  end
+
+  it "removes the 'submit application' section" do
+    expect(rendered).to have_no_css(".new_jobseekers_job_application_review_form")
   end
 end
