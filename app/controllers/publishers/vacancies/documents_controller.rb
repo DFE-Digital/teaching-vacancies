@@ -12,6 +12,10 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
         end
         render :new
       else
+        @documents_form.supporting_documents.each do |document|
+          send_dfe_analytics_event(:supporting_document_created, document.original_filename, document.size, document.content_type)
+        end
+
         vacancy.update(@documents_form.params_to_save)
         render :index
       end
