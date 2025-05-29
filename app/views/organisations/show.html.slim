@@ -16,4 +16,4 @@
       - tabs.with_navigation_item text: t("organisations.show.tabs.organisation"), link: organisation_path(@organisation)
       - tabs.with_navigation_item text: t("organisations.show.tabs.schools"), link: organisation_schools_path(@organisation)
 
-= render "organisation", preview: false, organisation: @organisation
+= render "organisation", preview: false, organisation: @organisation, vacancies: @vacancies
