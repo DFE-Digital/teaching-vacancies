@@ -1,6 +1,6 @@
 class Publishers::Vacancies::FeedbacksController < Publishers::Vacancies::BaseController
   def create
-    @vacancy = VacancyPresenter.new(Vacancy.published.find(params[:job_id]))
+    @vacancy = VacancyPresenter.new(Vacancy.non_draft.find(params[:job_id]))
     @feedback_form = Publishers::JobListing::FeedbackForm.new(feedback_form_params)
 
     if @feedback_form.valid?
