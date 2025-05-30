@@ -97,4 +97,43 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
   it "removes the 'submit application' section" do
     expect(rendered).to have_no_css(".new_jobseekers_job_application_review_form")
   end
+
+  context "when the job application is an uploaded job application" do
+    let(:uploaded_form_vacancy) { create(:vacancy, :expired, receive_applications: :uploaded_form) }
+    let(:uploaded_job_application) do
+      create(:uploaded_job_application, :status_submitted, :with_uploaded_application_form, vacancy: uploaded_form_vacancy)
+    end
+
+    before do
+      assign :vacancy, uploaded_form_vacancy
+      assign :job_application, uploaded_job_application
+      assign :notes_form, Publishers::JobApplication::NotesForm.new
+
+      render
+    end
+
+    it "shows jobseeker details and a download link for the application form" do
+      expect(rendered).to have_content "Personal details"
+
+      expect(rendered).to have_css(".govuk-summary-list__key", text: "First name")
+      expect(rendered).to have_css(".govuk-summary-list__value", text: uploaded_job_application.first_name)
+
+      expect(rendered).to have_css(".govuk-summary-list__key", text: "Last name")
+      expect(rendered).to have_css(".govuk-summary-list__value", text: uploaded_job_application.last_name)
+
+      expect(rendered).to have_css(".govuk-summary-list__key", text: "Phone number")
+      expect(rendered).to have_css(".govuk-summary-list__value", text: uploaded_job_application.phone_number)
+
+      expect(rendered).to have_css(".govuk-summary-list__key", text: "Email address")
+      expect(rendered).to have_css(".govuk-summary-list__value", text: uploaded_job_application.email)
+
+      expect(rendered).to have_css(".govuk-summary-list__key", text: "Do you need Skilled Worker visa sponsorship?")
+      expect(rendered).to have_css(".govuk-summary-list__value", text: I18n.t("jobseekers.profiles.personal_details.work.options.true"))
+
+      expect(rendered).to have_css(".govuk-summary-list__key", text: "Teacher reference number (TRN)")
+      expect(rendered).to have_css(".govuk-summary-list__value", text: uploaded_job_application.teacher_reference_number)
+
+      expect(rendered).to have_link("Download application", href: organisation_job_job_application_download_application_form_path(uploaded_job_application.vacancy.id, uploaded_job_application))
+    end
+  end
 end
