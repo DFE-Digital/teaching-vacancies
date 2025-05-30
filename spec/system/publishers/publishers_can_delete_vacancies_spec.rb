@@ -23,8 +23,8 @@ RSpec.describe "School deleting vacancies" do
       click_on I18n.t("buttons.confirm_deletion")
 
       expect(page).to have_content(
-        strip_tags(I18n.t("publishers.vacancies.destroy.success_html", job_title: vacancy.job_title)),
-      )
+                        strip_tags(I18n.t("publishers.vacancies.destroy.success_html", job_title: vacancy.job_title)),
+                        )
       expect(vacancy.supporting_documents.count).to be_zero
     end
   end
