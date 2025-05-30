@@ -121,8 +121,6 @@ Rails.application.routes.draw do
         get :new_quick_apply
         post :quick_apply
       end
-
-      resource :uploaded_job_application, only: %i[create], controller: "uploaded_job_applications"
     end
 
     resource :profile, only: %i[show] do
