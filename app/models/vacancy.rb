@@ -135,6 +135,8 @@ class Vacancy < ApplicationRecord
   validates :application_email, email_address: true, if: -> { application_email_changed? } # Allows data created prior to validation to still be valid
   validates :contact_email, email_address: true, if: -> { contact_email_changed? }
 
+  validates :publish_on, presence: true, if: -> { status == "published" }
+
   has_noticed_notifications
   has_paper_trail on: [:update],
                   only: ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG,
