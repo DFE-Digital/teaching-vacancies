@@ -9,7 +9,6 @@ class Jobseekers::UploadedJobApplications::UploadApplicationFormsController < Jo
 
   def update
     @form = Jobseekers::UploadedJobApplication::UploadApplicationFormForm.new(form_params)
-    @job_application.application_form.attach(form_params[:upload_application_form])
     if @form.valid?
       if @form.application_form
         @job_application.application_form.attach(@form.application_form)
