@@ -245,6 +245,7 @@ en:
     supporting_documents_accessibility: If you need these documents in an accessible format, please contact the school.
     no_files_message: No files selected
     no_supporting_documents: No documents uploaded
+    file_upload_success_message: '%{filename} uploaded'
     file_delete_success_message: '%{filename} deleted'
     file_google_error_message: '%{filename} could not be uploaded - try again'
     file_input_error_message: The selected file(s) could not be uploaded
