@@ -4,10 +4,6 @@ RSpec.describe "Publishers can preview an organisation or school profile" do
   let(:publisher) { create(:publisher, organisations: [organisation]) }
 
   before do
-    Organisation.subclasses.each do |klass|
-      allow_any_instance_of(klass).to receive(:geopoint?).and_return(true)
-    end
-
     login_publisher(publisher: publisher, organisation: organisation)
     visit publisher_root_path
   end

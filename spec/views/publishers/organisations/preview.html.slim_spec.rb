@@ -2,9 +2,7 @@ require "rails_helper"
 
 RSpec.describe "publishers/organisations/preview" do
   before do
-    Organisation.subclasses.each do |klass|
-      allow_any_instance_of(klass).to receive(:geopoint?).and_return(true)
-    end
+    allow(organisation).to receive(:geopoint?).and_return(true)
 
     assign :organisation, organisation
     assign :vacancies, vacancies
