@@ -7,9 +7,7 @@ RSpec.describe "Viewing an organisation" do
   let!(:vacancy_without_apply) { create(:vacancy, :no_tv_applications, organisations: [organisation]) }
 
   before do
-    Organisation.subclasses.each do |klass|
-      allow_any_instance_of(klass).to receive(:geopoint?).and_return(true)
-    end
+    allow(organisation).to receive(:geopoint?).and_return(true)
 
     visit organisation_path(organisation)
   end
