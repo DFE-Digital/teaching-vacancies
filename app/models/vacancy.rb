@@ -108,7 +108,8 @@ class Vacancy < ApplicationRecord
   scope :visa_sponsorship_available, -> { where(visa_sponsorship_available: true) }
 
   scope :internal, -> { where(external_source: nil, publisher_ats_api_client_id: nil) }
-  scope :external, -> { internal.invert_where }
+  # Not called from the code but frequently used for filtering during manual debugging sessions
+  scope :external, -> { where.not(external_source: nil).or(where.not(publisher_ats_api_client_id: nil)) }
 
   scope :search_by_filter, VacancyFilterQuery
   scope :search_by_location, VacancyLocationQuery
