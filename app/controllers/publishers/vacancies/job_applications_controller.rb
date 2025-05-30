@@ -33,7 +33,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def download_application_form
     unless @job_application.application_form.attached?
-      redirect_to edit_jobseekers_uploaded_job_application_upload_application_form_path(@job_application), alert: I18n.t("publishers.vacancies.job_applications.download_pdf.no_file")
+      redirect_to organisation_job_job_application_path(vacancy.id, @job_application.id), alert: I18n.t("publishers.vacancies.job_applications.download_pdf.no_file")
       return
     end
 

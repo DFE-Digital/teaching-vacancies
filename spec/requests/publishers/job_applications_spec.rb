@@ -36,7 +36,7 @@ RSpec.describe "Publishers::Vacancies::JobApplicationsController#download_applic
     it "redirects to the upload form" do
       get organisation_job_job_application_download_application_form_path(vacancy.id, job_application.id)
 
-      expect(response).to redirect_to(edit_jobseekers_uploaded_job_application_upload_application_form_path(job_application))
+      expect(response).to redirect_to(organisation_job_job_application_path(vacancy.id, job_application.id))
     end
   end
 end
