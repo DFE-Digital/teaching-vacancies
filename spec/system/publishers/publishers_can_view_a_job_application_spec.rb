@@ -25,7 +25,7 @@ RSpec.describe "Publishers can view a job application" do
   end
 
   context "when job application is not an uploaded job application" do
-    it "allows hiring staff to view the jobseekers personal details on the job application" do
+    it "allows hiring staff to see jobseekers details" do
       visit organisation_jobs_with_type_path(:expired)
       click_link "View 1 applicant"
       first(:link, "#{job_application.first_name} #{job_application.last_name}").click
@@ -63,13 +63,52 @@ RSpec.describe "Publishers can view a job application" do
 
       expect(page).to have_css(".govuk-summary-list__key", text: "Working pattern preference details")
       expect(page).to have_css(".govuk-summary-list__value", text: job_application.working_pattern_details)
+
+      expect(page).to have_content "Professional status"
+
+      expect(page).to have_css(".govuk-summary-list__key", text: "Teacher reference number (TRN)")
+      expect(page).to have_css(".govuk-summary-list__value", text: "1234567")
+
+      expect(page).to have_css(".govuk-summary-list__key", text: "Have you completed your induction period?")
+      expect(page).to have_css(".govuk-summary-list__value", text: "Yes")
+
+      expect(page).to have_content "Qualifications"
+      expect(page).to have_css(".govuk-summary-card__content", text: "The candidate has not included any qualifications.")
+
+      expect(page).to have_content "Training and continuing professional development (CPD)"
+      expect(page).to have_content "Rock climbing"
+      expect(page).to have_content "1 year"
+      expect(page).to have_content "TeachTrainLtd, 2020"
+
+      expect(page).to have_content "Professional body memberships (optional)"
+      expect(page).to have_css(".govuk-summary-card__content", text: "No memberships specified")
+
+      expect(page).to have_content "Work history"
+      expect(page).to have_css(".govuk-summary-card__content", text: "The candidate has not included any roles or employment history.")
+
+      expect(page).to have_content "Personal statement"
+      expect(page).to have_css(".govuk-summary-card__content", text: job_application.personal_statement)
+
+      expect(page).to have_content "References"
+      expect(page).to have_css(".govuk-summary-card__content", text: "The candidate has not included any roles or employment history.")
+
+      expect(page).to have_content "Ask for support if you have a disability or other needs"
+      expect(page).to have_css(".govuk-summary-list__key", text: "Do you want to ask for support so that you can attend an interview?")
+      expect(page).to have_css(".govuk-summary-list__value", text: "Yes")
+
+      expect(page).to have_content "Declarations"
+      expect(page).to have_css(".govuk-summary-list__key", text: "Do you want to declare any substantiated safeguarding issues, such as a criminal record or professional misconduct?")
+      expect(page).to have_css(".govuk-summary-list__value", text: "Yes")
+
+      expect(page).to have_css(".govuk-summary-list__key", text: "Do you have any family or close relationship with people within #{organisation.name}?")
+      expect(page).to have_css(".govuk-summary-list__value", text: "Yes")
     end
   end
 
   context "when job application is an uploaded job application" do
     let!(:uploaded_job_application) { create(:uploaded_job_application, :status_submitted, :with_uploaded_application_form, vacancy: uploaded_form_vacancy) }
 
-    it "allows hiring staff to see jobseeker personal details" do
+    it "allows hiring staff to see jobseeker details and download the completed application form" do
       visit organisation_jobs_with_type_path(:expired)
       click_link "View 1 applicant for #{uploaded_form_vacancy.job_title}"
       first(:link, "#{uploaded_job_application.first_name} #{uploaded_job_application.last_name}").click
