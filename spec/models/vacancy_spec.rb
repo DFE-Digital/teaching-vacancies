@@ -10,6 +10,24 @@ RSpec.describe Vacancy do
   it { is_expected.to have_many(:job_applications) }
   it { is_expected.to have_one(:equal_opportunities_report) }
 
+  describe "publish_on removal callback" do
+    it "publish_on is not removed when creating a new draft" do
+      draft_vacancy = create(:draft_vacancy, publish_on: Date.current)
+      expect(draft_vacancy.publish_on).to be_present
+    end
+
+    it "publish_on is not removed when converting a draft to a published vacancy" do
+      vacancy = create(:draft_vacancy, publish_on: Date.current)
+      vacancy.update(status: :published)
+      expect(vacancy.publish_on).to be_present
+    end
+
+    it "publish_on is removed when converting a published vacancy back into a draft" do
+      vacancy = create(:vacancy, publish_on: Date.current)
+      expect { vacancy.update(status: :draft) }.to change { vacancy.publish_on }.from(Date.current).to(nil)
+    end
+  end
+
   describe "#trash!" do
     subject { create(:vacancy) }
 
