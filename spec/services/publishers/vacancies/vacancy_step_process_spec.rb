@@ -152,14 +152,6 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
           expect(subject.steps).to include(:how_to_receive_applications)
         end
 
-        context "when applications are received by email" do
-          before { allow(vacancy).to receive(:receive_applications).and_return("email") }
-
-          it "has the expected steps" do
-            expect(subject.steps).to include(:application_form)
-          end
-        end
-
         context "when applications are received on a website" do
           before { allow(vacancy).to receive(:receive_applications).and_return("website") }
 

@@ -11,7 +11,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def new
     send_dfe_analytics_event
-
     if session[:newly_created_user]
       @newly_created_user = true
       session.delete(:newly_created_user)
@@ -26,12 +25,17 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def create
-    new_job_application = current_jobseeker.job_applications.create(vacancy:)
-    redirect_to jobseekers_job_application_apply_path(new_job_application)
+    new_job_application = if vacancy.has_uploaded_form?
+                            current_jobseeker.uploaded_job_applications.create!(vacancy:)
+                          else
+                            current_jobseeker.native_job_applications.create!(vacancy:)
+                          end
+
+    redirect_to jobseekers_job_application_apply_path(new_job_application.id)
   end
 
   def pre_submit
-    @form = Jobseekers::JobApplication::PreSubmitForm.new(completed_steps: job_application.completed_steps, all_steps: step_process.steps.excluding(:review).map(&:to_s))
+    @form = Jobseekers::JobApplication::PreSubmitForm.new(completed_steps: job_application.completed_steps, all_steps: all_steps)
     if @form.valid? && all_steps_valid?
       redirect_to jobseekers_job_application_review_path(@job_application)
     else
@@ -62,7 +66,10 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def apply
-    @form = Jobseekers::JobApplication::PreSubmitForm.new(completed_steps: job_application.completed_steps, all_steps: step_process.steps.excluding(:review).map(&:to_s))
+    @form = Jobseekers::JobApplication::PreSubmitForm.new(
+      completed_steps: job_application.completed_steps,
+      all_steps: all_steps,
+    )
   end
 
   def quick_apply
@@ -144,19 +151,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def all_steps_valid?
     # Check that all steps are valid, in case we have changed the validations since the step was completed.
     # NB: Only validates top-level step forms. Does not validate individual qualifications, employments, or references.
-    step_process.steps.excluding(:review).all? { |step| step_valid?(step) }
-  end
-
-  def step_valid?(step)
-    form_class = "jobseekers/job_application/#{step}_form".camelize.constantize
-
-    attributes = form_class.load_form(job_application)
-
-    form = form_class.new(attributes)
-
-    form.valid?.tap do
-      job_application.errors.merge!(form.errors)
-    end
+    Jobseekers::JobApplications::JobApplicationHandler.new(job_application, step_process).all_steps_valid?
   end
 
   def employments
@@ -191,7 +186,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def raise_unless_vacancy_enable_job_applications
-    raise ActionController::RoutingError, "Cannot apply for this vacancy" unless vacancy.enable_job_applications?
+    raise ActionController::RoutingError, "Cannot apply for this vacancy" unless vacancy.uses_either_native_or_uploaded_job_application_form?
   end
 
   def review_form
@@ -215,7 +210,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def review_form_params
     params.require(:jobseekers_job_application_review_form).permit(:confirm_data_accurate, :confirm_data_usage, update_profile: [])
-          .merge(completed_steps: job_application.completed_steps, all_steps: step_process.steps.excluding(:review).map(&:to_s))
+          .merge(completed_steps: job_application.completed_steps, all_steps: all_steps)
   end
 
   def withdraw_form_params
@@ -254,6 +249,10 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def quick_apply?
     previous_application? || profile.present?
+  end
+
+  def all_steps
+    Jobseekers::JobApplications::JobApplicationHandler.new(job_application, step_process).all_steps
   end
 end
 # rubocop:enable Metrics/ClassLength

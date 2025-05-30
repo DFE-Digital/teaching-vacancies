@@ -93,9 +93,9 @@ RSpec.describe "Job applications build" do
         context "when changing receive_applications" do
           before { patch(organisation_job_build_path(vacancy.id, :how_to_receive_applications, params)) }
 
-          context "when changing to email" do
+          context "when changing to uploaded_form" do
             let(:vacancy) { create(:vacancy, :published, enable_job_applications: false, receive_applications: "website", organisations: [school_one]) }
-            let(:params) { { publishers_job_listing_how_to_receive_applications_form: { receive_applications: "email" } } }
+            let(:params) { { publishers_job_listing_how_to_receive_applications_form: { receive_applications: "uploaded_form" } } }
 
             it "redirects to the application_form step" do
               expect(response).to redirect_to(organisation_job_build_path(vacancy.id, :application_form))

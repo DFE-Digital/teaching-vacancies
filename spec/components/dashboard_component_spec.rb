@@ -241,4 +241,67 @@ RSpec.describe DashboardComponent, type: :component do
       end
     end
   end
+
+  describe "#view_applicants" do
+    let(:organisation) { create(:school) }
+    let(:vacancies) { [vacancy] }
+    let(:vacancy) do
+      create(:vacancy, :published, organisations: [organisation])
+    end
+
+    before do
+      create(:job_application, :status_submitted, vacancy: vacancy)
+      # rubocop:disable RSpec/SubjectStub
+      allow(subject).to receive(:include_job_applications?).and_return(include_applications)
+      # rubocop:enable RSpec/SubjectStub
+      allow(vacancy).to receive(:uses_either_native_or_uploaded_job_application_form?).and_return(uses_either_native_or_uploaded_job_application_form)
+    end
+
+    context "when vacancy uses either native or uploaded job application form" do
+      let(:uses_either_native_or_uploaded_job_application_form) { true }
+
+      context "and include_job_applications? returns true" do
+        let(:include_applications) { true }
+
+        it "renders the link to view applicants" do
+          render_inline(subject)
+          expect(page).to have_link(
+            I18n.t("jobs.manage.view_applicants", count: 1),
+            href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id),
+          )
+        end
+      end
+
+      context "and include_job_applications? returns false" do
+        let(:include_applications) { false }
+
+        context "and receive_applications != 'uploaded_form" do
+          it "does not render the link to view applicants" do
+            render_inline(subject)
+            expect(page).not_to have_link(
+              I18n.t("jobs.manage.view_applicants", count: 1),
+              href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id),
+            )
+          end
+        end
+      end
+    end
+
+    context "when vacancy does not use either native or uploaded job application form" do
+      let(:uses_either_native_or_uploaded_job_application_form) { false }
+      let(:include_applications) { true }
+
+      it "does not renders the link to view applicants" do
+        render_inline(subject)
+        expect(page).not_to have_link(
+          I18n.t("jobs.manage.view_applicants", count: 1),
+          href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id),
+        )
+      end
+
+      it "returns nil" do
+        expect(subject.view_applicants(vacancy)).to be_nil
+      end
+    end
+  end
 end
