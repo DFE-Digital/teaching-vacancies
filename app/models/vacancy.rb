@@ -141,6 +141,8 @@ class Vacancy < ApplicationRecord
                   if: proc(&:listed?)
 
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
+  # Publisher will need to set a new publish date if wanting to re-publish an scheduled vacancy turned back to a draft.
+  before_save -> { self.publish_on = nil if status_changed? && status == "draft" }
   after_save :reset_markers, if: -> { saved_change_to_status? && (listed? || pending?) }
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
@@ -180,11 +182,6 @@ class Vacancy < ApplicationRecord
 
   def location
     [organisation&.name, organisation&.town, organisation&.county].reject(&:blank?)
-  end
-
-  def draft!
-    self.publish_on = nil
-    super
   end
 
   def central_office?
