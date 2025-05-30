@@ -15,6 +15,7 @@
           li = ja.name
 
 = form_with(url: update_tag_organisation_job_job_applications_path(vacancy.id), scope: :publishers_job_application_status_form) do |f|
+  =  f.hidden_field :origin, value: @origin
   - @job_applications.each do |ja|
     = f.hidden_field :job_applications, multiple: true, value: ja.id
 
