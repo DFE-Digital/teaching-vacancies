@@ -35,7 +35,7 @@ module Jobseekers
         validates :baptism_date, date: { on_or_before: :today }
       end
 
-      validates :baptism_certificate, form_file: DOCUMENT_VALIDATION_OPTIONS, presence: true, if: -> { section_completed && following_religion && religious_reference_type == "baptism_certificate" }
+      validates :baptism_certificate, form_file: Vacancy::DOCUMENT_VALIDATION_OPTIONS, presence: true, if: -> { section_completed && following_religion && religious_reference_type == "baptism_certificate" }
 
       def baptism_date=(value)
         @baptism_date = date_from_multiparameter_hash(value)

@@ -60,15 +60,19 @@ RSpec.describe "Documents" do
         expect(request).to render_template(:new)
       end
     end
+  end
 
-    context "MIME type inspection" do
+  describe "POST #upload" do
+    before do
+      allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: virus_free))
+      post organisation_job_documents_path(vacancy.id), params: {
+        publishers_job_listing_documents_form: { supporting_documents: [file] },
+      }
+    end
+
+    describe "MIME type inspection" do
       let(:valid_file_types) { "PDF, DOC or DOCX" }
-
-      before do
-        post organisation_job_documents_path(vacancy.id), params: {
-          publishers_job_listing_documents_form: { supporting_documents: [file] },
-        }
-      end
+      let(:virus_free) { true }
 
       context "with a valid PDF file" do
         let(:file) { fixture_file_upload("blank_job_spec.pdf") }
@@ -92,7 +96,7 @@ RSpec.describe "Documents" do
         let(:file) { fixture_file_upload("mime_types/zip_file_pretending_to_be_a_pdf.pdf") }
 
         it "is rejected even if the file extension suggests it is valid" do
-          expect(response.body).to include(I18n.t("jobs.file_type_error_message", filename: "zip_file_pretending_to_be_a_pdf.pdf", valid_file_types: valid_file_types))
+          expect(response.body).to include("has an invalid content type")
         end
       end
 
@@ -100,8 +104,17 @@ RSpec.describe "Documents" do
         let(:file) { fixture_file_upload("mime_types/invalid_plain_text_file.txt") }
 
         it "is rejected even if the file extension suggests it is valid" do
-          expect(response.body).to include(I18n.t("jobs.file_type_error_message", filename: "invalid_plain_text_file.txt", valid_file_types: valid_file_types))
+          expect(response.body).to include("has an invalid content type")
         end
+      end
+    end
+
+    context "with a virus" do
+      let(:virus_free) { false }
+      let(:file) { fixture_file_upload("blank_job_spec.pdf") }
+
+      it "is rejected" do
+        expect(response.body).to include("contains a virus")
       end
     end
   end

@@ -74,7 +74,21 @@ class Vacancy < ApplicationRecord
   belongs_to :publisher_organisation, class_name: "Organisation", optional: true
   belongs_to :publisher_ats_api_client, optional: true
 
+  DOCUMENT_FILE_SIZE_LIMIT = 20.megabytes
+  DOCUMENT_CONTENT_TYPES = %w[application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document].freeze
+
+  DOCUMENT_VALIDATION_OPTIONS = {
+    file_type: :document,
+    content_types_allowed: DOCUMENT_CONTENT_TYPES,
+    file_size_limit: DOCUMENT_FILE_SIZE_LIMIT,
+    valid_file_types: %i[PDF DOC DOCX],
+  }.freeze
+
   has_many_attached :supporting_documents, service: :amazon_s3_documents
+
+  validates :supporting_documents, content_type: DOCUMENT_CONTENT_TYPES,
+                                   size: { less_than: DOCUMENT_FILE_SIZE_LIMIT }, virus_free: true, if: -> { include_additional_documents }
+
   has_one_attached :application_form, service: :amazon_s3_documents
 
   has_many :saved_jobs, dependent: :destroy
