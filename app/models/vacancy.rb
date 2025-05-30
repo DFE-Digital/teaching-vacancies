@@ -135,12 +135,16 @@ class Vacancy < ApplicationRecord
   validates :application_email, email_address: true, if: -> { application_email_changed? } # Allows data created prior to validation to still be valid
   validates :contact_email, email_address: true, if: -> { contact_email_changed? }
 
+  validates :publish_on, presence: true, if: -> { status == "published" }
+
   has_noticed_notifications
   has_paper_trail on: [:update],
                   only: ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG,
                   if: proc(&:listed?)
 
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
+  # Publisher will need to set a new publish date if wanting to re-publish an scheduled vacancy turned back to a draft.
+  before_save -> { self.publish_on = nil if status_changed? && status == "draft" }
   after_save :reset_markers, if: -> { saved_change_to_status? && (listed? || pending?) }
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
@@ -180,11 +184,6 @@ class Vacancy < ApplicationRecord
 
   def location
     [organisation&.name, organisation&.town, organisation&.county].reject(&:blank?)
-  end
-
-  def draft!
-    self.publish_on = nil
-    super
   end
 
   def central_office?
