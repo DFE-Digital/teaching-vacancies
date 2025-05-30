@@ -15,7 +15,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
   context "with publisher flow" do
     let(:school) { create(:school, :with_image, name: "Some school") }
     let(:other_school) { create(:school, :with_image, name: "Some other school") }
-    let(:trust) { create(:trust) }
+    let(:trust) { create(:trust, :with_logo_and_photo) }
     let(:local_authority) { create(:local_authority, local_authority_code: "100") }
     let(:publisher) { create(:publisher, organisations: organisations, accepted_terms_at: 1.day.ago) }
 
@@ -26,12 +26,12 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
     let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
 
     before do
-      # rubocop:disable Rspec/AnyInstance
+      # rubocop:disable RSpec/AnyInstance
       allow_any_instance_of(Publishers::LoginKeysController)
         .to receive(:generate_login_key)
         .with(publisher: publisher)
         .and_return(login_key)
-      # rubocop:enable Rspec/AnyInstance
+      # rubocop:enable RSpec/AnyInstance
       allow(Publishers::AuthenticationFallbackMailer).to receive(:sign_in_fallback)
         .with(login_key_id: login_key.id, publisher: publisher)
         .and_return(message_delivery)
