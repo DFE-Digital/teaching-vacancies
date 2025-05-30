@@ -1,5 +1,8 @@
 require "rails_helper"
 
+# runtime 33 seconds
+# a total mixture of simple display tests and behaviour
+# for complex ATS functionality
 RSpec.describe "Publishers can manage job applications for a vacancy" do
   let(:organisation) { create(:school, name: "A school with a vacancy") }
   let!(:vacancy) { create(:vacancy, vacancy_trait, expires_at: expired_at, organisations: [organisation], job_applications: job_applications) }

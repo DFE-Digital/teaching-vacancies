@@ -1,5 +1,7 @@
 require "rails_helper"
 
+# Not a system test - could be a simple view spec as it has a lot of test
+# for 1 simple assert
 RSpec.describe "Contacting Jobseekers" do
   let!(:job_preferences) do
     create(:job_preferences,

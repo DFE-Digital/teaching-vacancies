@@ -1,6 +1,8 @@
 require "rails_helper"
 require "dfe/analytics/rspec/matchers"
 
+# some reasonable examples, but a few which don't seem cohesive
+# runtime 8.5 seconds
 RSpec.describe "Publishers can extend a deadline" do
   let(:organisation) { create(:school) }
   let(:publisher) { create(:publisher) }
@@ -64,6 +66,7 @@ RSpec.describe "Publishers can extend a deadline" do
     it "returns an error without a publish date" do
       click_on I18n.t("buttons.relist_vacancy")
 
+      # check errors - or move to unit test?
       expect(page).to have_content("There is a problem")
     end
 
@@ -95,6 +98,7 @@ RSpec.describe "Publishers can extend a deadline" do
         )
       end
 
+      # simple view sepcs?
       context "when looking at tabs" do
         before do
           click_on "Job listings"

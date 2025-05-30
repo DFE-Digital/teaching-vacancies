@@ -1,5 +1,6 @@
 require "rails_helper"
 
+# reviewed - seems ok
 RSpec.describe "Copying a vacancy" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school, safeguarding_information: nil) }
@@ -48,6 +49,7 @@ RSpec.describe "Copying a vacancy" do
 
   it_behaves_like "publishing a copied vacancy", type: :live
 
+  # could be made smaller - just checks that copy vacancy goes to the correct URL
   scenario "a job can be copied from the dashboard" do
     visit organisation_jobs_with_type_path
     click_on "#{I18n.t('buttons.copy_listing')} for #{original_vacancy.job_title}"
