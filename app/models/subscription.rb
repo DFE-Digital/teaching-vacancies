@@ -4,7 +4,8 @@ class Subscription < ApplicationRecord
   has_many :alert_runs, dependent: :destroy
   has_many :feedbacks, dependent: :destroy, inverse_of: :subscription
 
-  scope :active, -> { where(active: true) }
+  include Discard::Model
+  self.discard_column = :unsubscribed_at
 
   validates :email, email_address: true, if: -> { email_changed? } # Allows data created prior to validation to still be valid
 
@@ -26,6 +27,8 @@ class Subscription < ApplicationRecord
 
   # support_job_roles used to be called teaching_support_job_roles and non_teaching_support_job_roles in the past, and there are still active subscriptions with this name
   JOB_ROLE_ALIASES = %i[teaching_job_roles support_job_roles teaching_support_job_roles non_teaching_support_job_roles].freeze
+
+  self.ignored_columns += ["active"]
 
   class << self
     # map legacy phase filters onto current ones
@@ -75,13 +78,6 @@ class Subscription < ApplicationRecord
   def token
     token_values = { id: id }
     self.class.encryptor(serializer: :json_allow_marshal).encrypt_and_sign(token_values)
-  end
-
-  # Why unsubscribing/soft deleting instead of destroying?
-  # Subscriptions may have associated Feedback records, and we want to keep these for reporting purposes.
-  # https://github.com/DFE-Digital/teaching-vacancies/pull/2300
-  def unsubscribe
-    update(email: nil, active: false, unsubscribed_at: Time.current)
   end
 
   def alert_run_today

@@ -31,7 +31,6 @@ FactoryBot.define do
         organisation_slug: organisation_slug,
       }.delete_if { |_k, v| v.nil? }
     end
-    active { true }
 
     trait :with_some_criteria do
       keyword { Faker::Lorem.word }
@@ -50,6 +49,10 @@ FactoryBot.define do
 
     trait :ect_suitable do
       ect_statuses { %w[ect_suitable] }
+    end
+
+    trait :inactive do
+      unsubscribed_at { Date.current }
     end
 
     factory :daily_subscription do

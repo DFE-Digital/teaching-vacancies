@@ -8,7 +8,7 @@ RSpec.describe Subscription do
     before(:each) do
       create_list(:subscription, 3, frequency: :daily)
       create_list(:subscription, 5, frequency: :weekly)
-      create(:subscription, frequency: :daily, active: false)
+      create(:subscription, :inactive, frequency: :daily)
     end
 
     describe "#daily" do
@@ -25,7 +25,7 @@ RSpec.describe Subscription do
 
     describe "active" do
       it "retrieves all subscriptions with active set to true" do
-        expect(Subscription.active.count).to eq(8)
+        expect(Subscription.kept.count).to eq(8)
       end
     end
   end

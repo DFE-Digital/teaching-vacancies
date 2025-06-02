@@ -5,7 +5,7 @@ RSpec.describe Jobseekers::CloseAccount do
 
   let(:jobseeker) { create(:jobseeker) }
   let(:close_account_feedback_form_params) { {} }
-  let!(:subscription) { create(:subscription, email: jobseeker.email, active: true) }
+  let!(:subscription) { create(:subscription, email: jobseeker.email) }
   let!(:job_application) { create(:job_application, :reviewed, jobseeker: jobseeker) }
 
   describe "#call" do
@@ -42,7 +42,7 @@ RSpec.describe Jobseekers::CloseAccount do
     end
 
     it "marks subscriptions as inactive" do
-      expect(subscription.reload.active).to be false
+      expect(subscription.reload).to be_discarded
     end
 
     it "withdraws job applications" do

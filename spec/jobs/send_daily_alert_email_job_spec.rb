@@ -57,8 +57,8 @@ RSpec.describe SendDailyAlertEmailJob do
     let(:job) { described_class.new }
 
     it "gets active daily subscriptions" do
-      expect(Subscription).to receive_message_chain(:active, :daily).and_return(
-        Subscription.where(active: true).where(frequency: :daily),
+      expect(Subscription).to receive_message_chain(:kept, :daily).and_return(
+        Subscription.kept.where(frequency: :daily),
       )
       job.subscriptions
     end

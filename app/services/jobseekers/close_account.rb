@@ -31,9 +31,9 @@ class Jobseekers::CloseAccount
   end
 
   def mark_subscriptions_inactive
-    Subscription.active
+    Subscription.kept
                 .where(email: jobseeker.email)
-                .each { |subscription| subscription.update(active: false) }
+                .each { |subscription| subscription.discard }
   end
 
   def withdraw_job_applications

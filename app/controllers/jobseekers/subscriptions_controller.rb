@@ -8,7 +8,7 @@ class Jobseekers::SubscriptionsController < Jobseekers::BaseController
   end
 
   def subscriptions
-    @subscriptions ||= Subscription.active.where(email: current_jobseeker.email).order(sort.by => sort.order)
+    @subscriptions ||= Subscription.kept.where(email: current_jobseeker.email).order(sort.by => sort.order)
                                    .map { |subscription| SubscriptionPresenter.new(subscription) }
   end
 end
