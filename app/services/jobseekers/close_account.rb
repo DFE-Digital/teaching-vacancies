@@ -44,7 +44,7 @@ class Jobseekers::CloseAccount
 
   def withdrawn_job_application(job_application)
     job_application.update!(withdrawn_by_closing_account: true,
-                           withdrawn_at: Time.current,
-                           status: :withdrawn)
+                            withdrawn_at: Time.current,
+                            status: :withdrawn)
   end
 end
