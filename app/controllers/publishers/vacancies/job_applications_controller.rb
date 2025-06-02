@@ -32,38 +32,41 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def tag_single
-    prepare_to_tag([params.fetch(:id)])
+    prepare_to_tag([params.fetch(:id)], "all")
   end
 
   def tag
-    tag_params = params.require(:publishers_job_application_tag_form).permit(job_applications: [])
+    tag_params = params.require(:publishers_job_application_tag_form).permit(:origin, job_applications: [])
     if params["download_selected"] == "true"
       download_selected(tag_params)
     else
-      prepare_to_tag(tag_params.fetch(:job_applications).compact_blank)
+      origin = tag_params[:origin]
+      prepare_to_tag(tag_params.fetch(:job_applications).compact_blank, origin)
     end
   end
 
   def update_tag
-    update_tag_params = params.require(:publishers_job_application_status_form).permit(:status, job_applications: [])
+    update_tag_params = params.require(:publishers_job_application_status_form).permit(:origin, :status, job_applications: [])
 
     JobApplication.find(update_tag_params.fetch(:job_applications)).each do |job_application|
       job_application.update!(status: update_tag_params.fetch(:status))
     end
-    redirect_to organisation_job_job_applications_path(vacancy.id)
+    redirect_to organisation_job_job_applications_path(vacancy.id, anchor: update_tag_params[:origin])
   end
 
   def withdrawn; end
 
   private
 
-  def prepare_to_tag(job_applications)
+  def prepare_to_tag(job_applications, origin)
     @form = Publishers::JobApplication::TagForm.new(job_applications: job_applications)
     if @form.valid?
       @job_applications = vacancy.job_applications.where(id: @form.job_applications)
+      @origin = origin
       render "tag"
     else
-      render "index"
+      flash[origin.to_sym] = @form.errors.full_messages
+      redirect_to organisation_job_job_applications_path(vacancy.id, anchor: origin)
     end
   end
 
