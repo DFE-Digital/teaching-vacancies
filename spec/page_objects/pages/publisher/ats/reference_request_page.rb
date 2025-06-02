@@ -9,7 +9,7 @@ module PageObjects
 
           element :use_tv_anyway_link, ".govuk-body a.govuk-link"
 
-          elements :timeline_titles, ".moj-timeline__title"
+          elements :timeline_titles, ".timeline-component__key"
         end
       end
     end
