@@ -26,12 +26,10 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
     let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
 
     before do
-      # rubocop:disable Rspec/AnyInstance
       allow_any_instance_of(Publishers::LoginKeysController)
         .to receive(:generate_login_key)
         .with(publisher: publisher)
         .and_return(login_key)
-      # rubocop:enable Rspec/AnyInstance
       allow(Publishers::AuthenticationFallbackMailer).to receive(:sign_in_fallback)
         .with(login_key_id: login_key.id, publisher: publisher)
         .and_return(message_delivery)

@@ -16,6 +16,7 @@ class JobseekerProfile < ApplicationRecord
   delegate :all_key_stages, to: :job_preferences
   delegate :all_working_patterns, to: :job_preferences
   delegate :first_name, :last_name, to: :personal_details, allow_nil: true
+  delegate :email, to: :jobseeker
 
   scope :active, -> { where(active: true) }
   scope :not_hidden_from, lambda { |organisation|
@@ -28,10 +29,6 @@ class JobseekerProfile < ApplicationRecord
 
     where.not(id: hidden_profile_ids)
   }
-
-  delegate :email, to: :jobseeker
-
-  delegate :first_name, :last_name, to: :personal_details, allow_nil: true
 
   enum :qualified_teacher_status, { yes: 0, no: 1, on_track: 2, non_teacher: 3 }
 
