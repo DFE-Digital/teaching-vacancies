@@ -50,27 +50,19 @@
         = govuk_link_to t(".collect_reference"), collect_references_organisation_job_job_application_path(vacancy.id, @job_application.id)
 
   .govuk-grid-column-one-third
-    span.govuk-caption-l = t(".communication_history")
-    .moj-timeline
+    = render TimelineComponent.new do |timeline|
+      - timeline.with_heading(title: t(".communication_history"))
       - @reference_request.versions.reverse_each do |version|
-        .moj-timeline__item
-          .moj-timeline__header
-            h2.moj-timeline__title
-              - if version.changeset.key? "status"
-                - case version.changeset["status"].last
-                  - when "created"
-                    = t(".reference_created")
-                  - when "received"
-                    = t(".reference_received")
-                  - when "requested"
-                    = t(".reference_requested")
-              - elsif version.changeset.key? "marked_as_complete"
-                = t(".marked_as_complete")
-          .moj-timeline__byline
-            - if version.actor.present?
-              = t(".by", name: version.actor.papertrail_display_name)
-            - else
-              = t(".by_tvs")
-          .moj-timeline__date
-            time datetime=version.created_at
-              = version.created_at.to_formatted_s
+        - actor = version.actor.present? ? t(".by", name: version.actor.papertrail_display_name) : t(".by_tvs")
+        - value = "#{actor} - #{version.created_at.to_formatted_s}"
+
+        - if version.changeset.key? "status"
+          - case version.changeset["status"].last
+          - when "created"
+            - timeline.with_item(key: t(".reference_created"), value: value)
+          - when "received"
+            - timeline.with_item(key: t(".reference_received"), value: value)
+          - when "requested"
+            - timeline.with_item(key: t(".reference_requested"), value: value)
+        - elsif version.changeset.key? "marked_as_complete"
+          - timeline.with_item(key: t(".marked_as_complete"), value: value)
