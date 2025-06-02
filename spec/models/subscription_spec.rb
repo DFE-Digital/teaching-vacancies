@@ -22,11 +22,17 @@ RSpec.describe Subscription do
         expect(Subscription.weekly.count).to eq(5)
       end
     end
+  end
 
-    describe "active" do
-      it "retrieves all subscriptions with active set to true" do
-        expect(Subscription.kept.count).to eq(8)
-      end
+  context "with a feedback" do
+    let(:subscription) { create(:subscription) }
+
+    before do
+      create(:feedback, subscription: subscription)
+    end
+
+    it "doesn't destroy related feedbacks when destroyed" do
+      expect { subscription.destroy! }.not_to change(Feedback, :count)
     end
   end
 

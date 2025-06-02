@@ -19,5 +19,9 @@ FactoryBot.define do
         create(:jobseeker_profile, :with_personal_details, jobseeker: jobseeker)
       end
     end
+
+    trait :with_closed_account do
+      account_closed_on { Date.current - 1.week }
+    end
   end
 end

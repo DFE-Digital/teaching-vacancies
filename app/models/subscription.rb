@@ -2,8 +2,13 @@ class Subscription < ApplicationRecord
   enum :frequency, { daily: 0, weekly: 1 }
 
   has_many :alert_runs, dependent: :destroy
-  has_many :feedbacks, dependent: :destroy, inverse_of: :subscription
+  # don't delete feedbacks when subscriptions are destroyed
+  has_many :feedbacks, dependent: :nullify, inverse_of: :subscription
 
+  # subscriptions are discarded in 2 places:
+  # a) on account de-activation (in case we need to bring them back)
+  # b) on removal (because we need to process feedback when removing)
+  #   in this second case, the subscription will be destroyed by rake task the following day
   include Discard::Model
   self.discard_column = :unsubscribed_at
 
@@ -28,7 +33,7 @@ class Subscription < ApplicationRecord
   # support_job_roles used to be called teaching_support_job_roles and non_teaching_support_job_roles in the past, and there are still active subscriptions with this name
   JOB_ROLE_ALIASES = %i[teaching_job_roles support_job_roles teaching_support_job_roles non_teaching_support_job_roles].freeze
 
-  self.ignored_columns += ["active"]
+  self.ignored_columns += %w[active]
 
   class << self
     # map legacy phase filters onto current ones

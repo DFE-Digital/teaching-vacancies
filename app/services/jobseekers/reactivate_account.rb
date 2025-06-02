@@ -23,6 +23,6 @@ class Jobseekers::ReactivateAccount
   def mark_subscriptions_active
     Subscription
       .discarded.where(email: @jobseeker.email)
-      .each { |s| s.undiscard }
+      .each(&:undiscard)
   end
 end

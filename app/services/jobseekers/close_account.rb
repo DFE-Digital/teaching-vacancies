@@ -17,13 +17,13 @@ class Jobseekers::CloseAccount
   private
 
   def mark_jobseeker_account_closed
-    jobseeker.update(account_closed_on: Date.current)
+    jobseeker.update!(account_closed_on: Date.current)
   end
 
   def create_feedback
     return unless close_account_feedback_form_params.values.any?(&:present?)
 
-    jobseeker.feedbacks.close_account.create(close_account_feedback_form_params)
+    jobseeker.feedbacks.close_account.create!(close_account_feedback_form_params)
   end
 
   def send_email_to_jobseeker
@@ -33,7 +33,7 @@ class Jobseekers::CloseAccount
   def mark_subscriptions_inactive
     Subscription.kept
                 .where(email: jobseeker.email)
-                .each { |subscription| subscription.discard }
+                .each(&:discard!)
   end
 
   def withdraw_job_applications
@@ -43,7 +43,7 @@ class Jobseekers::CloseAccount
   end
 
   def withdrawn_job_application(job_application)
-    job_application.update(withdrawn_by_closing_account: true,
+    job_application.update!(withdrawn_by_closing_account: true,
                            withdrawn_at: Time.current,
                            status: :withdrawn)
   end
