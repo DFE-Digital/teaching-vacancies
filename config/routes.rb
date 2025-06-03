@@ -90,7 +90,7 @@ Rails.application.routes.draw do
     end
 
     resources :job_applications, only: %i[index show destroy] do
-      resources :build, only: %i[show update], controller: "job_applications/build"
+      resources :build, only: %i[show update], controller: "native_job_applications/build"
       resources :employments, only: %i[new create edit update destroy], controller: "job_applications/employments"
       resources :breaks, only: %i[new create edit update destroy], controller: "job_applications/breaks" do
         get :confirm_destroy

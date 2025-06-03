@@ -105,7 +105,7 @@ RSpec.describe "Jobseekers applications statuses" do
           expect(page).to have_css("#qualifications", text: I18n.t("shared.status_tags.complete"))
 
           within("#training_and_cpds") do
-            click_link(I18n.t("jobseekers.job_applications.build.training_and_cpds.heading"))
+            click_link(I18n.t("jobseekers.native_job_applications.build.training_and_cpds.heading"))
           end
 
           choose "Yes, I've completed this section"
@@ -114,7 +114,7 @@ RSpec.describe "Jobseekers applications statuses" do
           expect(page).to have_css("#training_and_cpds", text: I18n.t("shared.status_tags.complete"))
 
           within("#employment_history") do
-            click_link(I18n.t("jobseekers.job_applications.build.employment_history.heading"))
+            click_link(I18n.t("jobseekers.native_job_applications.build.employment_history.heading"))
           end
 
           click_on "Add another job"

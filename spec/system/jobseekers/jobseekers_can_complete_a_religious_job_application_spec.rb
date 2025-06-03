@@ -21,12 +21,12 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
     before do
       fill_in_application_up_to_and_including_personal_statement
-      click_on I18n.t("jobseekers.job_applications.build.catholic.step_title")
+      click_on I18n.t("jobseekers.native_job_applications.build.catholic.step_title")
       choose "Yes, I've completed this section"
     end
 
     it "validates first religion step" do
-      expect(page).to have_content(I18n.t("jobseekers.job_applications.build.catholic.preference_to_catholics"))
+      expect(page).to have_content(I18n.t("jobseekers.native_job_applications.build.catholic.preference_to_catholics"))
       validates_step_complete
       expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.following_religion.inclusion"))
     end
@@ -88,7 +88,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
             end
 
             it "has the correct content" do
-              expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
+              expect(page).to have_content(I18n.t("jobseekers.native_job_applications.build.referees.heading"))
 
               expect(page).to have_content(referee_name)
               expect(page).to have_content(referee_address)
@@ -130,7 +130,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
             end
 
             it "allows the certificate to be uploaded" do
-              expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
+              expect(page).to have_content(I18n.t("jobseekers.native_job_applications.build.referees.heading"))
               complete_from_references_page
               expect(page).to have_content("blank_baptism_cert.pdf")
             end
@@ -165,7 +165,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
             fill_in "Month", with: 3
             fill_in "Year", with: 2007
             click_on I18n.t("buttons.save_and_continue")
-            expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
+            expect(page).to have_content(I18n.t("jobseekers.native_job_applications.build.referees.heading"))
             complete_from_references_page
 
             expect(page).to have_content("07 March 2007")
@@ -180,7 +180,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
           it "allows jobseeker to not specify a religious referee" do
             click_on I18n.t("buttons.save_and_continue")
-            expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
+            expect(page).to have_content(I18n.t("jobseekers.native_job_applications.build.referees.heading"))
           end
         end
       end
@@ -192,12 +192,12 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
     before do
       fill_in_application_up_to_and_including_personal_statement
-      click_on I18n.t("jobseekers.job_applications.build.catholic.step_title")
+      click_on I18n.t("jobseekers.native_job_applications.build.catholic.step_title")
       choose "Yes, I've completed this section"
     end
 
     it "validates ethos and aims step" do
-      expect(page).to have_content(I18n.t("jobseekers.job_applications.build.non_catholic.preference_to_religious_applicants"))
+      expect(page).to have_content(I18n.t("jobseekers.native_job_applications.build.non_catholic.preference_to_religious_applicants"))
       validates_step_complete
       expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/non_catholic_form.attributes.ethos_and_aims.blank"))
     end
@@ -222,7 +222,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
           it "completes the religious journey" do
             click_on I18n.t("buttons.save_and_continue")
-            expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
+            expect(page).to have_content(I18n.t("jobseekers.native_job_applications.build.referees.heading"))
             complete_from_references_page
             submit_application_from_review
             expect(page).to have_content(I18n.t("jobseekers.job_applications.post_submit.panel.title"))
@@ -255,7 +255,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
               it "completes the journey" do
                 click_on I18n.t("buttons.save_and_continue")
-                expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
+                expect(page).to have_content(I18n.t("jobseekers.native_job_applications.build.referees.heading"))
                 complete_from_references_page
                 submit_application_from_review
                 expect(page).to have_content(I18n.t("jobseekers.job_applications.post_submit.panel.title"))
@@ -294,15 +294,15 @@ RSpec.describe "Jobseekers can complete a religious job application" do
     fill_in_personal_details
     click_on I18n.t("buttons.save_and_continue")
 
-    click_on(I18n.t("jobseekers.job_applications.build.professional_status.heading"))
+    click_on(I18n.t("jobseekers.native_job_applications.build.professional_status.heading"))
     fill_in_professional_status
     click_on I18n.t("buttons.save_and_continue")
 
-    click_on(I18n.t("jobseekers.job_applications.build.qualifications.heading"))
+    click_on(I18n.t("jobseekers.native_job_applications.build.qualifications.heading"))
     choose I18n.t("helpers.label.jobseekers_job_application_qualifications_form.qualifications_section_completed_options.true")
     click_on I18n.t("buttons.save_and_continue")
 
-    click_on(I18n.t("jobseekers.job_applications.build.qualifications.heading"))
+    click_on(I18n.t("jobseekers.native_job_applications.build.qualifications.heading"))
     click_on I18n.t("buttons.add_qualification")
 
     select_qualification_category("Undergraduate degree")
@@ -310,21 +310,21 @@ RSpec.describe "Jobseekers can complete a religious job application" do
     click_on I18n.t("buttons.save_qualification.one")
     click_on I18n.t("buttons.save_and_continue")
 
-    click_on(I18n.t("jobseekers.job_applications.build.training_and_cpds.heading"))
+    click_on(I18n.t("jobseekers.native_job_applications.build.training_and_cpds.heading"))
     click_on "Add training"
     fill_in_training_and_cpds
     click_on "Save and continue"
     choose "Yes, I've completed this section"
     click_on "Save and continue"
 
-    click_on(I18n.t("jobseekers.job_applications.build.professional_body_memberships.list_heading"))
+    click_on(I18n.t("jobseekers.native_job_applications.build.professional_body_memberships.list_heading"))
     click_on "Add membership"
     fill_in_professional_body_membership
     click_on "Save and continue"
     choose "Yes, I've completed this section"
     click_on "Save and continue"
 
-    click_on(I18n.t("jobseekers.job_applications.build.employment_history.heading"))
+    click_on(I18n.t("jobseekers.native_job_applications.build.employment_history.heading"))
     click_on I18n.t("buttons.add_work_history")
     fill_in_employment_history
     click_on I18n.t("buttons.save_employment")
@@ -334,13 +334,13 @@ RSpec.describe "Jobseekers can complete a religious job application" do
     choose I18n.t("helpers.label.jobseekers_job_application_employment_history_form.employment_history_section_completed_options.true")
     click_on I18n.t("buttons.save_and_continue")
 
-    click_on(I18n.t("jobseekers.job_applications.build.personal_statement.heading"))
+    click_on(I18n.t("jobseekers.native_job_applications.build.personal_statement.heading"))
     fill_in_personal_statement
     click_on I18n.t("buttons.save_and_continue")
   end
 
   def complete_from_references_page
-    click_on(I18n.t("jobseekers.job_applications.build.referees.heading"))
+    click_on(I18n.t("jobseekers.native_job_applications.build.referees.heading"))
     click_on I18n.t("buttons.add_reference")
     fill_in_referee
     click_on I18n.t("buttons.save_reference")
@@ -350,15 +350,15 @@ RSpec.describe "Jobseekers can complete a religious job application" do
     choose I18n.t("helpers.label.jobseekers_job_application_referees_form.referees_section_completed_options.true")
     click_on I18n.t("buttons.save_and_continue")
 
-    click_on(I18n.t("jobseekers.job_applications.build.equal_opportunities.heading"))
+    click_on(I18n.t("jobseekers.native_job_applications.build.equal_opportunities.heading"))
     fill_in_equal_opportunities
     click_on I18n.t("buttons.save_and_continue")
 
-    click_on(I18n.t("jobseekers.job_applications.build.ask_for_support.heading"))
+    click_on(I18n.t("jobseekers.native_job_applications.build.ask_for_support.heading"))
     fill_in_ask_for_support
     click_on I18n.t("buttons.save_and_continue")
 
-    click_on(I18n.t("jobseekers.job_applications.build.declarations.heading"))
+    click_on(I18n.t("jobseekers.native_job_applications.build.declarations.heading"))
     fill_in_declarations
     click_on I18n.t("buttons.save_and_continue")
     click_on "Review application"

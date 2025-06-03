@@ -19,7 +19,7 @@ class JobApplicationReviewComponent::Section < ReviewComponent::Section
   private
 
   def heading_text
-    t("jobseekers.job_applications.build.#{@name}.heading")
+    t("jobseekers.native_job_applications.build.#{@name}.heading")
   end
 
   def edit_link

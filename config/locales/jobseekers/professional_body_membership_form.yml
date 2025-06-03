@@ -23,13 +23,7 @@ en:
       jobseekers_professional_body_membership_form:
         exam_taken: Did you take an exam for this membership?
   jobseekers:
-    job_applications:
-      show:
-        professional_body_memberships:
-          none: You have not added any professional body memberships
-      review:
-        professional_body_memberships:
-          none: No memberships specified
+    native_job_applications:
       build:
         professional_body_memberships:
           list_heading: Professional body memberships
@@ -37,6 +31,13 @@ en:
           hint: You can include professional memberships here, such as the Chartered College of Teaching or the General Teaching Council. 
           no_training: No memberships specified
           no_professional_body_memberships: No memberships specified
+    job_applications:
+      show:
+        professional_body_memberships:
+          none: You have not added any professional body memberships
+      review:
+        professional_body_memberships:
+          none: No memberships specified
       professional_body_memberships:
         new:
           heading: Add professional body memberships

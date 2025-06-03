@@ -1,4 +1,4 @@
-class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications::BaseController
+class Jobseekers::NativeJobApplications::BuildController < Jobseekers::JobApplications::BaseController
   include Jobseekers::QualificationFormConcerns
   before_action :strip_empty_working_patterns_checkboxes, only: %i[update]
 

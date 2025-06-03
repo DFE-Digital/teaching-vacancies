@@ -15,24 +15,24 @@ RSpec.describe "Jobseekers can complete a job application" do
       visit job_path(vacancy)
       all("button", text: "Apply for this job").last.click
       click_button "Start application"
-      click_on(I18n.t("jobseekers.job_applications.build.personal_details.heading"))
+      click_on(I18n.t("jobseekers.native_job_applications.build.personal_details.heading"))
       expect(page).to have_field("Email address", with: jobseeker.email)
       validates_step_complete
       fill_in_personal_details
       click_on I18n.t("buttons.save_and_continue")
 
-      click_on(I18n.t("jobseekers.job_applications.build.professional_status.heading"))
+      click_on(I18n.t("jobseekers.native_job_applications.build.professional_status.heading"))
       validates_step_complete
       fill_in_professional_status
       click_on I18n.t("buttons.save_and_continue")
 
-      click_on(I18n.t("jobseekers.job_applications.build.qualifications.heading"))
+      click_on(I18n.t("jobseekers.native_job_applications.build.qualifications.heading"))
       validates_step_complete
       choose I18n.t("helpers.label.jobseekers_job_application_qualifications_form.qualifications_section_completed_options.true")
       click_on I18n.t("buttons.save_and_continue")
       expect(page).not_to have_content("There is a problem")
 
-      click_on I18n.t("jobseekers.job_applications.build.qualifications.heading")
+      click_on I18n.t("jobseekers.native_job_applications.build.qualifications.heading")
       click_on I18n.t("buttons.add_qualification")
       validates_step_complete(button: I18n.t("buttons.continue"))
       select_qualification_category("Undergraduate degree")
@@ -43,7 +43,7 @@ RSpec.describe "Jobseekers can complete a job application" do
       choose "Yes, I've completed this section"
       click_on I18n.t("buttons.save_and_continue")
 
-      click_on(I18n.t("jobseekers.job_applications.build.training_and_cpds.heading"))
+      click_on(I18n.t("jobseekers.native_job_applications.build.training_and_cpds.heading"))
       expect(page).to have_content("No training or CPD specified")
       validates_step_complete
       click_on "Add training"
@@ -54,7 +54,7 @@ RSpec.describe "Jobseekers can complete a job application" do
       choose "Yes, I've completed this section"
       click_on "Save and continue"
 
-      click_on(I18n.t("jobseekers.job_applications.build.professional_body_memberships.list_heading"))
+      click_on(I18n.t("jobseekers.native_job_applications.build.professional_body_memberships.list_heading"))
       expect(page).to have_content("No memberships")
       validates_step_complete
       click_on "Add membership"
@@ -65,7 +65,7 @@ RSpec.describe "Jobseekers can complete a job application" do
       choose "Yes, I've completed this section"
       click_on "Save and continue"
 
-      click_on(I18n.t("jobseekers.job_applications.build.employment_history.heading"))
+      click_on(I18n.t("jobseekers.native_job_applications.build.employment_history.heading"))
       validates_step_complete
       click_on I18n.t("buttons.add_work_history")
       click_on I18n.t("buttons.save_employment")
@@ -78,12 +78,12 @@ RSpec.describe "Jobseekers can complete a job application" do
       choose I18n.t("helpers.label.jobseekers_job_application_employment_history_form.employment_history_section_completed_options.true")
       click_on I18n.t("buttons.save_and_continue")
 
-      click_on(I18n.t("jobseekers.job_applications.build.personal_statement.heading"))
+      click_on(I18n.t("jobseekers.native_job_applications.build.personal_statement.heading"))
       validates_step_complete
       fill_in_personal_statement
       click_on I18n.t("buttons.save_and_continue")
 
-      click_on(I18n.t("jobseekers.job_applications.build.referees.heading"))
+      click_on(I18n.t("jobseekers.native_job_applications.build.referees.heading"))
 
       click_on I18n.t("buttons.add_reference")
       click_on I18n.t("buttons.save_reference")
@@ -96,17 +96,17 @@ RSpec.describe "Jobseekers can complete a job application" do
       choose I18n.t("helpers.label.jobseekers_job_application_referees_form.referees_section_completed_options.true")
       click_on I18n.t("buttons.save_and_continue")
 
-      click_on(I18n.t("jobseekers.job_applications.build.equal_opportunities.heading"))
+      click_on(I18n.t("jobseekers.native_job_applications.build.equal_opportunities.heading"))
       validates_step_complete
       fill_in_equal_opportunities
       click_on I18n.t("buttons.save_and_continue")
 
-      click_on(I18n.t("jobseekers.job_applications.build.ask_for_support.heading"))
+      click_on(I18n.t("jobseekers.native_job_applications.build.ask_for_support.heading"))
       validates_step_complete
       fill_in_ask_for_support
       click_on I18n.t("buttons.save_and_continue")
 
-      click_on(I18n.t("jobseekers.job_applications.build.declarations.heading"))
+      click_on(I18n.t("jobseekers.native_job_applications.build.declarations.heading"))
       validates_step_complete
       fill_in_declarations
       click_on I18n.t("buttons.save_and_continue")
@@ -132,13 +132,13 @@ RSpec.describe "Jobseekers can complete a job application" do
         expect(page).to have_link("Complete your personal details")
       end
 
-      click_link(I18n.t("jobseekers.job_applications.build.personal_details.heading"))
+      click_link(I18n.t("jobseekers.native_job_applications.build.personal_details.heading"))
       validates_step_complete
       choose I18n.t("helpers.label.jobseekers_job_application_personal_details_form.personal_details_section_completed_options.false")
       click_on I18n.t("buttons.save_and_continue")
       expect(page).not_to have_content("There is a problem")
       expect(page).to have_css("#personal_details .govuk-task-list__status .govuk-tag", text: "Incomplete")
-      click_link(I18n.t("jobseekers.job_applications.build.personal_details.heading"))
+      click_link(I18n.t("jobseekers.native_job_applications.build.personal_details.heading"))
       choose I18n.t("helpers.label.jobseekers_job_application_personal_details_form.personal_details_section_completed_options.true")
       click_on I18n.t("buttons.save_and_continue")
       within(".govuk-error-summary__body") do

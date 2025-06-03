@@ -1,11 +1,11 @@
 - content_for :page_title_prefix, job_application_page_title_prefix(@form, t("jobseekers.job_applications.apply.heading"))
 
-= render "jobseekers/job_applications/build/banner", vacancy: vacancy, back_path: jobseekers_job_application_apply_path(job_application)
+= render "jobseekers/native_job_applications/build/banner", vacancy: vacancy, back_path: jobseekers_job_application_apply_path(job_application)
 
 .govuk-grid-row
   div
-    h2.govuk-heading-l = t("jobseekers.job_applications.build.personal_details.heading")
-    p.govuk-body = t("jobseekers.job_applications.build.personal_details.description")
+    h2.govuk-heading-l = t("jobseekers.native_job_applications.build.personal_details.heading")
+    p.govuk-body = t("jobseekers.native_job_applications.build.personal_details.description")
 
     = form_for @form, url: jobseekers_uploaded_job_application_personal_details_path(job_application), method: :patch do |f|
       = f.govuk_error_summary

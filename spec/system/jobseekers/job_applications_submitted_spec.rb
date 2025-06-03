@@ -58,8 +58,8 @@ RSpec.describe "Submitted job applications for jobseekers" do
       end
 
       it "does not show equal opportunities section details" do
-        within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.equal_opportunities.heading") do
-          expect(page).to have_content(I18n.t("jobseekers.job_applications.build.equal_opportunities.anonymity"))
+        within ".review-component__section", text: I18n.t("jobseekers.native_job_applications.build.equal_opportunities.heading") do
+          expect(page).to have_content(I18n.t("jobseekers.native_job_applications.build.equal_opportunities.anonymity"))
         end
       end
     end

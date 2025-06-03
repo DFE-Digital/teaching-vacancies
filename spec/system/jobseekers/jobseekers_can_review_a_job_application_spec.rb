@@ -14,7 +14,7 @@ RSpec.describe "Jobseekers can review a job application" do
   after { logout }
 
   it "displays all the job application information" do
-    within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.personal_details.heading") do
+    within ".review-component__section", text: I18n.t("jobseekers.native_job_applications.build.personal_details.heading") do
       expect(page).to have_content(job_application.first_name)
       expect(page).to have_content(job_application.last_name)
       expect(page).to have_content(job_application.previous_names)
@@ -28,13 +28,13 @@ RSpec.describe "Jobseekers can review a job application" do
       expect(page).to have_content(job_application.working_pattern_details)
     end
 
-    within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.professional_status.heading") do
+    within ".review-component__section", text: I18n.t("jobseekers.native_job_applications.build.professional_status.heading") do
       expect(page).to have_content(job_application.qualified_teacher_status.humanize)
       expect(page).to have_content(job_application.qualified_teacher_status_year)
       expect(page).to have_content(job_application.is_statutory_induction_complete? ? "Yes" : "No")
     end
 
-    within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.employment_history.heading") do
+    within ".review-component__section", text: I18n.t("jobseekers.native_job_applications.build.employment_history.heading") do
       job_application.employments.job.each do |employment|
         expect(page).to have_content(employment.job_title)
         expect(page).to have_content(employment.organisation)
@@ -48,7 +48,7 @@ RSpec.describe "Jobseekers can review a job application" do
       expect_work_history_to_be_ordered_most_recent_first
     end
 
-    within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.employment_history.heading") do
+    within ".review-component__section", text: I18n.t("jobseekers.native_job_applications.build.employment_history.heading") do
       job_application.employments.break.each do |employment|
         expect(page).to have_content(employment.reason_for_break)
         expect(page).to have_content(employment.started_on.to_formatted_s(:month_year))
@@ -56,11 +56,11 @@ RSpec.describe "Jobseekers can review a job application" do
       end
     end
 
-    within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.personal_statement.heading") do
+    within ".review-component__section", text: I18n.t("jobseekers.native_job_applications.build.personal_statement.heading") do
       expect(page).to have_content(job_application.personal_statement)
     end
 
-    within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.referees.heading") do
+    within ".review-component__section", text: I18n.t("jobseekers.native_job_applications.build.referees.heading") do
       job_application.referees.each do |referee|
         expect(page).to have_content(referee.name)
         expect(page).to have_content(referee.job_title)
@@ -71,7 +71,7 @@ RSpec.describe "Jobseekers can review a job application" do
       end
     end
 
-    within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.equal_opportunities.heading") do
+    within ".review-component__section", text: I18n.t("jobseekers.native_job_applications.build.equal_opportunities.heading") do
       expect(page).to have_content(job_application.disability.humanize)
       expect(page).to have_content(job_application.gender.humanize)
       expect(page).to have_content(job_application.gender_description)
@@ -83,12 +83,12 @@ RSpec.describe "Jobseekers can review a job application" do
       expect(page).to have_content(job_application.religion_description)
     end
 
-    within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.ask_for_support.heading") do
+    within ".review-component__section", text: I18n.t("jobseekers.native_job_applications.build.ask_for_support.heading") do
       expect(page).to have_content(job_application.is_support_needed? ? "Yes" : "No")
       expect(page).to have_content(job_application.support_needed_details)
     end
 
-    within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.declarations.heading") do
+    within ".review-component__section", text: I18n.t("jobseekers.native_job_applications.build.declarations.heading") do
       expect(page).to have_content(job_application.has_close_relationships? ? "Yes" : "No")
       expect(page).to have_content(job_application.close_relationships_details)
       expect(page).to have_content(job_application.has_right_to_work_in_uk? ? "Yes" : "No")
