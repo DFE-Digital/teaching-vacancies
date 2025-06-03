@@ -177,10 +177,8 @@ RSpec.describe "Creating a vacancy" do
 
           click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
 
-          vacancy.reload
-
-          expect(vacancy.publisher).to eq(publisher_that_publishes_vacancy)
-          expect(vacancy.publisher_organisation).to eq(school)
+          expect(Vacancy.find(vacancy.id).publisher).to eq(publisher_that_publishes_vacancy)
+          expect(Vacancy.find(vacancy.id).publisher_organisation).to eq(school)
         end
       end
 

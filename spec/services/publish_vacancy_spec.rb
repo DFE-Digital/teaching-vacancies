@@ -14,16 +14,14 @@ RSpec.describe PublishVacancy do
 
     it "updates the id of the user who confirmed the publishing of a vacancy" do
       PublishVacancy.new(vacancy, user, organisation).call
-      vacancy.reload
 
-      expect(vacancy.publisher_id).to eq(user.id)
+      expect(Vacancy.find(vacancy.id).publisher_id).to eq(user.id)
     end
 
     it "updates the id of the organisation of the user who confirmed the publishing of a vacancy" do
       PublishVacancy.new(vacancy, user, organisation).call
-      vacancy.reload
 
-      expect(vacancy.publisher_organisation_id).to eq(organisation.id)
+      expect(Vacancy.find(vacancy.id).publisher_organisation_id).to eq(organisation.id)
     end
   end
 end

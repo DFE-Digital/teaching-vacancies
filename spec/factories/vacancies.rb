@@ -136,22 +136,16 @@ FactoryBot.define do
       discarded_at { Time.zone.now }
     end
 
-    trait :published do
-      status { :published }
-    end
-
     trait :live do
-      status { :published }
+      publish_on { 1.week.ago }
     end
 
     trait :published_slugged do
-      status { :published }
       sequence(:slug) { |n| "slug-#{n}" }
     end
 
     trait :expired do
       to_create { |instance| instance.save(validate: false) }
-      status { :published }
       sequence(:slug) { |n| "slug-#{n}" }
       publish_on { Date.current - 1.month }
       expires_at { 2.weeks.ago.change(hour: 9, minute: 0) }
@@ -170,14 +164,12 @@ FactoryBot.define do
     end
 
     trait :future_publish do
-      status { :published }
       publish_on { Date.current + 6.months }
       expires_at { 18.months.from_now.change(hour: 9, minute: 0) }
       starts_on { 18.months.from_now + 2.months }
     end
 
     trait :past_publish do
-      status { :published }
       sequence(:slug) { |n| "slug-#{n}" }
       publish_on { Date.current - 1.day }
       expires_at { 2.months.from_now.change(hour: 9, minute: 0) }
@@ -196,7 +188,7 @@ FactoryBot.define do
           Rack::Test::UploadedFile.new(
             Rails.root.join("spec", "fixtures", "files", "blank_job_spec.pdf"),
             "application/pdf",
-          ),
+            ),
         ]
       end
     end
@@ -208,7 +200,7 @@ FactoryBot.define do
         Rack::Test::UploadedFile.new(
           Rails.root.join("spec", "fixtures", "files", "blank_job_spec.pdf"),
           "application/pdf",
-        )
+          )
       end
     end
 
@@ -229,7 +221,7 @@ FactoryBot.define do
       flexi_working { nil }
     end
 
-    factory :draft_vacancy do
+    factory :draft_vacancy, class: "DraftVacancy" do
       status { :draft }
 
       completed_steps do
