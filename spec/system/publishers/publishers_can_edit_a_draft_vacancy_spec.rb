@@ -13,7 +13,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
     before { visit organisation_job_path(vacancy.id) }
 
     context "with an incomplete draft" do
-      let(:vacancy) { create(:vacancy, :with_contract_details, :ect_suitable, job_roles: [], organisations: [primary_school], phases: %w[primary]) }
+      let(:vacancy) { create(:draft_vacancy, :with_contract_details, :ect_suitable, job_roles: [], organisations: [primary_school], phases: %w[primary]) }
 
       it "can edit a draft" do
         within "#job_details" do
@@ -40,13 +40,13 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         click_on I18n.t("buttons.save_and_continue")
 
         expect(current_path).to eq(organisation_job_review_path(vacancy.id))
-        expect(page).to have_content(vacancy.reload.job_roles.first.humanize)
+        expect(page).to have_content(Vacancy.find(vacancy.id).job_roles.first.humanize)
       end
     end
   end
 
   context "with a school group" do
-    let(:vacancy) { create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }
+    let(:vacancy) { create(:draft_vacancy, :ect_suitable, job_roles: ["teacher"], organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }
     let(:another_primary_school) { create(:school, name: "Another primary school", phase: "primary") }
     let(:trust) { create(:trust, schools: [primary_school, another_primary_school]) }
     let(:organisation) { trust }
@@ -68,7 +68,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         fill_in_job_location_form_fields([another_primary_school])
         click_on I18n.t("buttons.save_and_finish_later")
 
-        expect(vacancy.reload.organisations).to contain_exactly(another_primary_school)
+        expect(Vacancy.find(vacancy.id).organisations).to contain_exactly(another_primary_school)
 
         within "#job_details" do
           find("a").click
@@ -76,7 +76,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         fill_in_job_location_form_fields([primary_school, another_primary_school])
         click_on I18n.t("buttons.save_and_finish_later")
 
-        expect(vacancy.reload.organisations).to contain_exactly(primary_school, another_primary_school)
+        expect(Vacancy.find(vacancy.id).organisations).to contain_exactly(primary_school, another_primary_school)
       end
 
       context "when the new job location is the trust's central office" do

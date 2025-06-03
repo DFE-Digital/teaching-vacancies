@@ -159,7 +159,7 @@ RSpec.describe "Creating a vacancy" do
     click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
     expect(current_path).to eq(organisation_job_summary_path(created_vacancy.id))
 
-    expect(created_vacancy.reload.attributes.symbolize_keys.except(*ignored_fields))
+    expect(Vacancy.find(created_vacancy.id).attributes.symbolize_keys.except(*ignored_fields))
       .to eq(vacancy.attributes.symbolize_keys.except(*ignored_fields))
   end
 

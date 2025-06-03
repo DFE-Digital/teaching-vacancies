@@ -425,6 +425,7 @@ shared:
     - other_extension_reason_details
     - religion_type
     - flexi_working_details_provided
+    - type
   failed_imported_vacancies:
     - id
     - import_errors

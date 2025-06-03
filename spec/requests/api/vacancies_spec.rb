@@ -86,7 +86,7 @@ RSpec.describe "Api::Vacancies" do
 
     it "does not retrieve incomplete or deleted vacancies" do
       create(:vacancy, organisations: [school])
-      create(:vacancy, :draft)
+      create(:draft_vacancy)
       create(:vacancy, :trashed)
       create(:vacancy, :future_publish)
 

@@ -123,13 +123,8 @@ class Vacancy < ApplicationRecord
   validates :external_reference,
             uniqueness: { scope: :publisher_ats_api_client_id },
             if: -> { publisher_ats_api_client_id.present? && external_reference.present? }
-  # temporary solution - don't do this validation on manually published vacancies
-  validate :no_duplicate_vacancy, if: -> { external? && job_title.present? && expires_at.present? && organisation_ids.present? }
-  # this validates presence of certain fields for external vacancies
-  validates_with ExternalVacancyValidator, if: :external?
 
   validates :slug, presence: true
-  validate :enable_job_applications_cannot_be_changed_once_listed
   validates :organisations, presence: true
 
   validates :application_email, email_address: true, if: -> { application_email_changed? } # Allows data created prior to validation to still be valid
@@ -140,14 +135,21 @@ class Vacancy < ApplicationRecord
                   only: ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG,
                   if: proc(&:listed?)
 
-  before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
   after_save :reset_markers, if: -> { saved_change_to_status? && (listed? || pending?) }
+
+  # temporary - keep 'type' column in sync with status, but only use Vacancy class in code
+  before_save do |vacancy|
+    if vacancy.status_changed?
+      vacancy.type = if vacancy.draft?
+                       "DraftVacancy"
+                     else
+                       "PublishedVacancy"
+                     end
+    end
+  end
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[8:00 9:00 12:00 15:00 23:59].freeze
-
-  # temporary while we install migration
-  self.ignored_columns += [:type]
 
   # Class method added to help with the mapping of array_enums for paper_trail, which stores the changes
   # as an array of integers in the version.
@@ -298,27 +300,7 @@ class Vacancy < ApplicationRecord
     job_roles.intersect?(%w[teacher head_of_year_or_phase head_of_department_or_curriculum sendco other_leadership])
   end
 
-  def find_conflicting_vacancy
-    find_conflict_vacancy || find_duplicate_vacancy
-  end
-
-  # soft delete so that all the stats etc are kept even after the vacancy no longer exists
-  def trash!
-    return if discarded?
-
-    supporting_documents.purge_later
-    discard!
-    remove_google_index
-  end
-
   private
-
-  def remove_google_index
-    return if DisableExpensiveJobs.enabled?
-
-    url = Rails.application.routes.url_helpers.job_url(self)
-    RemoveGoogleIndexQueueJob.perform_later(url)
-  end
 
   def calculate_distance(search_coordinates, geolocation)
     Geocoder::Calculations.distance_between(search_coordinates, [geolocation.latitude, geolocation.longitude])
@@ -326,41 +308,6 @@ class Vacancy < ApplicationRecord
 
   def slug_candidates
     [:job_title, %i[job_title organisation_name], %i[job_title location]]
-  end
-
-  def on_expired_vacancy_feedback_submitted_update_stats_updated_at
-    return unless listed_elsewhere_changed? && hired_status_changed?
-
-    self.stats_updated_at = Time.current
-  end
-
-  def enable_job_applications_cannot_be_changed_once_listed
-    return unless persisted? && listed? && enable_job_applications_changed?
-
-    errors.add(:enable_job_applications, :cannot_be_changed_once_listed)
-  end
-
-  def no_duplicate_vacancy
-    if find_duplicate_vacancy
-      errors.add(:base, "A vacancy with the same job title, expiry date, contract type, working_patterns, phases and salary already exists for this organisation.")
-    end
-  end
-
-  def find_conflict_vacancy
-    Vacancy.where(
-      publisher_ats_api_client_id: publisher_ats_api_client_id,
-      external_reference: external_reference,
-    ).where.not(id: id).first
-  end
-
-  def find_duplicate_vacancy
-    Vacancy.joins(:organisations)
-           .where.not(id: id)
-           .where(job_title: job_title, expires_at: expires_at, organisations: { id: organisation_ids }, contract_type: contract_type, salary: salary)
-           .with_working_patterns(working_patterns)
-           .with_phases(phases)
-           .distinct
-           .first
   end
 
   # This method is used as a callback when either:

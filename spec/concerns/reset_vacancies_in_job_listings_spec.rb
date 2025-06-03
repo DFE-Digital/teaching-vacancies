@@ -152,7 +152,7 @@ RSpec.describe Resettable do
   context "when changing enable job applications" do
     subject(:update_enable_job_applications) { vacancy.update(enable_job_applications: false) }
 
-    let(:vacancy) { build(:vacancy, :draft, personal_statement_guidance: "test") }
+    let(:vacancy) { build(:draft_vacancy, personal_statement_guidance: "test") }
     let(:previous_personal_statement_guidance) { vacancy.personal_statement_guidance }
 
     it "resets the personal statement guidance" do
