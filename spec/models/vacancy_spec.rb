@@ -83,10 +83,10 @@ RSpec.describe Vacancy do
         green_school = create(:school, name: "Green school", town: "Greenway", county: "Mars")
         blue_school = create(:school, name: "Blue school")
 
-        first_maths_teacher = create(:vacancy, :published, job_title: "Maths Teacher", organisations: [blue_school], expires_at: 1.day.from_now)
-        second_maths_teacher = create(:vacancy, :published, job_title: "Maths Teacher", organisations: [green_school], expires_at: 2.day.from_now)
-        third_maths_teacher = create(:vacancy, :published, job_title: "Maths Teacher", organisations: [green_school], expires_at: 3.day.from_now)
-        fourth_maths_teacher = create(:vacancy, :published, job_title: "Maths Teacher", organisations: [green_school], expires_at: 4.day.from_now)
+        first_maths_teacher = create(:vacancy, job_title: "Maths Teacher", organisations: [blue_school], expires_at: 1.day.from_now)
+        second_maths_teacher = create(:vacancy, job_title: "Maths Teacher", organisations: [green_school], expires_at: 2.day.from_now)
+        third_maths_teacher = create(:vacancy, job_title: "Maths Teacher", organisations: [green_school], expires_at: 3.day.from_now)
+        fourth_maths_teacher = create(:vacancy, job_title: "Maths Teacher", organisations: [green_school], expires_at: 4.day.from_now)
 
         expect(first_maths_teacher.slug).to eq("maths-teacher")
         expect(second_maths_teacher.slug).to eq("maths-teacher-green-school")
@@ -110,12 +110,11 @@ RSpec.describe Vacancy do
     end
 
     describe "#listed?" do
-      let(:datetime) do
-        instance_double(DateTime)
-      end
+      let(:datetime) { instance_double(DateTime) }
+      let(:vacancy) { build(:vacancy) }
 
       subject do
-        build(:vacancy, :published)
+        vacancy
       end
 
       it "does not break if #expires_at is nil" do
@@ -134,9 +133,12 @@ RSpec.describe Vacancy do
         subject.listed?
       end
 
-      it 'checks if #published == "draft" (yields published? == false)' do
-        subject.status = "draft"
-        expect(subject.listed?).to be_falsey
+      context "when draft" do
+        let(:vacancy) { build(:draft_vacancy) }
+
+        it 'checks if #published == "draft" (yields published? == false)' do
+          expect(subject.listed?).to be_falsey
+        end
       end
 
       describe "#publish_on" do
@@ -170,7 +172,7 @@ RSpec.describe Vacancy do
 
   context "scopes" do
     let(:expired_earlier_today) { create(:vacancy, expires_at: 5.hour.ago) }
-    let(:expires_later_today) { create(:vacancy, status: :published, expires_at: 1.hour.from_now) }
+    let(:expires_later_today) { create(:vacancy, expires_at: 1.hour.from_now) }
 
     describe "#applicable" do
       it "finds current vacancies" do
@@ -185,7 +187,7 @@ RSpec.describe Vacancy do
 
     describe "#expired" do
       it "retrieves published vacancies that have a past expires_at" do
-        create_list(:vacancy, 5, :published)
+        create_list(:vacancy, 5)
         expired = build(:vacancy, expires_at: Time.current - 1.hour)
         expired.send :set_slug
         expired.save(validate: false)
@@ -196,9 +198,9 @@ RSpec.describe Vacancy do
 
     describe "#expired_yesterday" do
       it "retrieves published and unpublished vacancies that have an expires_at of yesterday" do
-        create(:vacancy, :published, :expired_yesterday)
-        create(:vacancy, :draft, :expired_yesterday)
-        create(:vacancy, :published, :expires_tomorrow)
+        create(:vacancy, :expired_yesterday)
+        create(:draft_vacancy, :expired_yesterday)
+        create(:vacancy, :expires_tomorrow)
 
         expect(Vacancy.expired_yesterday.count).to eq(2)
       end
@@ -215,7 +217,7 @@ RSpec.describe Vacancy do
 
     describe "#listed" do
       it "retrieves vacancies that have a status of :published and a past publish_on date" do
-        published = create_list(:vacancy, 5, :published)
+        published = create_list(:vacancy, 5)
         create_list(:vacancy, 3, :future_publish)
 
         expect(Vacancy.listed.count).to eq(published.count)
@@ -231,7 +233,7 @@ RSpec.describe Vacancy do
 
     describe "#pending" do
       it "retrieves vacancies that have a status of :published, a future publish_on date & a future expires_at date" do
-        create_list(:vacancy, 5, :published)
+        create_list(:vacancy, 5)
         pending = create_list(:vacancy, 3, :future_publish)
 
         expect(Vacancy.pending.count).to eq(pending.count)
@@ -292,7 +294,7 @@ RSpec.describe Vacancy do
 
   describe "#can_receive_job_applications?" do
     context "when the vacancy can receive job applications" do
-      subject { create(:vacancy, :published, enable_job_applications: true) }
+      subject { create(:vacancy, enable_job_applications: true) }
 
       it "returns true" do
         expect(subject.can_receive_job_applications?).to be true
@@ -300,7 +302,7 @@ RSpec.describe Vacancy do
     end
 
     context "when the vacancy does not enable_job_applications?" do
-      subject { create(:vacancy, :published, enable_job_applications: false) }
+      subject { create(:vacancy, enable_job_applications: false) }
 
       it "returns false" do
         expect(subject.can_receive_job_applications?).to be false
@@ -308,7 +310,7 @@ RSpec.describe Vacancy do
     end
 
     context "when the vacancy is not published" do
-      subject { create(:vacancy, :draft) }
+      subject { create(:draft_vacancy) }
 
       it "returns false" do
         expect(subject.can_receive_job_applications?).to be false
@@ -316,7 +318,7 @@ RSpec.describe Vacancy do
     end
 
     context "when the vacancy is pending" do
-      subject { create(:vacancy, :published, publish_on: Date.tomorrow) }
+      subject { create(:vacancy, publish_on: Date.tomorrow) }
 
       it "returns false" do
         expect(subject.can_receive_job_applications?).to be false
@@ -481,14 +483,14 @@ RSpec.describe Vacancy do
 
   describe "validations" do
     describe "changing enable_job_applications" do
-      subject { build_stubbed(:vacancy, status, enable_job_applications: true) }
+      subject { vacancy }
 
       before do
         subject.enable_job_applications = false
       end
 
       context "when already listed" do
-        let(:status) { :published }
+        let(:vacancy) { build_stubbed(:vacancy, enable_job_applications: true) }
 
         it "fails validation" do
           expect(subject).not_to be_valid
@@ -497,13 +499,13 @@ RSpec.describe Vacancy do
       end
 
       context "when draft" do
-        let(:status) { :draft }
+        let(:vacancy) { build_stubbed(:draft_vacancy, enable_job_applications: true) }
 
         it { is_expected.to be_valid }
       end
 
       context "when scheduled" do
-        let(:status) { :draft }
+        let(:vacancy) { build_stubbed(:draft_vacancy, enable_job_applications: true) }
 
         it { is_expected.to be_valid }
       end
