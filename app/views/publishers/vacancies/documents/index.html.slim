@@ -1,24 +1,28 @@
-- content_for :page_title_prefix, page_title_prefix(step_process, confirmation_form)
+- content_for :page_title_prefix, page_title_prefix(step_process, @documents_form)
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds data-controller="upload-documents"
+= form_for @documents_form, url: organisation_job_path(vacancy.id), method: :get do |f|
+  = f.govuk_error_summary
 
-    = form_for confirmation_form, url: confirm_organisation_job_documents_path(vacancy.id), method: :post do |f|
-      = f.govuk_error_summary
+  - if params["back_to_#{action_name}"]
+    = f.hidden_field "back_to_#{action_name}", value: "true"
 
-      - if params["back_to_#{action_name}"]
-        = f.hidden_field "back_to_#{action_name}", value: "true"
+  = vacancy_form_page_heading(vacancy, step_process, back_path: new_organisation_job_document_path(vacancy.id, :documents), fieldset: false)
 
-      = vacancy_form_page_heading(vacancy, step_process, back_path: new_organisation_job_document_path(vacancy.id, :documents), fieldset: false)
+  .js-documents class=("js-documents--empty" if vacancy.supporting_documents.none?)
+    = render "publishers/vacancies/documents/documents"
+    p.js-documents__no-files = t("jobs.no_files_message")
 
-      h2.govuk-heading-m = t("publishers.vacancies.documents.index.summary_list_heading")
+  p.govuk-body = t(".make_sure")
 
-      .js-documents class=("js-documents--empty" if vacancy.supporting_documents.none?)
-        = render "publishers/vacancies/documents/documents"
-        p.js-documents__no-files = t("jobs.no_files_message")
+  = tag.div(class: "app-multi-file-upload", data: { upload: upload_organisation_job_documents_path(vacancy.id), delete: remove_organisation_job_documents_path(vacancy.id) }) do
+    .moj-multi-file__uploaded-files
+      h2 class="govuk-heading-m" = "Files added"
+      .govuk-summary-list class="moj-multi-file-upload__list"
 
-      = f.govuk_radio_buttons_fieldset :upload_additional_document, legend: { text: t("helpers.legend.publishers_job_listing_documents_confirmation_form.upload_additional_document"), tag: nil, size: "m" } do
-        = f.govuk_radio_button :upload_additional_document, "true", link_errors: true
-        = f.govuk_radio_button :upload_additional_document, "false"
+    .moj-multi-file-upload__upload
+      = f.govuk_file_field :supporting_documents,
+        label: -> { "" },
+        class: "moj-multi-file-upload__input",
+        accept: ".doc, .docx, .pdf"
 
-      = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+  = render "publishers/vacancies/vacancy_form_partials/submit", f: f
