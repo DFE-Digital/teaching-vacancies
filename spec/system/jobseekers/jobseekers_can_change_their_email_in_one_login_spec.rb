@@ -19,7 +19,7 @@ RSpec.describe "Jobseekers can schange their email in GovUK One Login" do
 
   context "when the new email address does match a pre-one login TV account" do
     let!(:pre_one_login_jobseeker) { create(:jobseeker, email: updated_email, govuk_one_login_id: nil) }
-    let!(:pre_one_login_job_application) { create(:job_application, jobseeker: pre_one_login_jobseeker) }
+    let!(:pre_one_login_job_application) { create(:native_job_application, jobseeker: pre_one_login_jobseeker) }
 
     context "when the GovUK One Login user was a fresh account with no job applications" do
       before { sign_in_jobseeker_govuk_one_login(one_login_jobseeker, navigate: true, email: updated_email) }
@@ -38,7 +38,7 @@ RSpec.describe "Jobseekers can schange their email in GovUK One Login" do
     end
 
     context "when the GovUK One Login user had already submitted an application" do
-      let!(:job_application) { create(:job_application, jobseeker: one_login_jobseeker) }
+      let!(:job_application) { create(:native_job_application, jobseeker: one_login_jobseeker) }
 
       before { sign_in_jobseeker_govuk_one_login(one_login_jobseeker, navigate: true, email: updated_email) }
       after { logout }

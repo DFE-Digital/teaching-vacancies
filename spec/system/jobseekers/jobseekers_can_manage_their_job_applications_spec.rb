@@ -18,10 +18,10 @@ RSpec.describe "Jobseekers can manage their job applications" do
     after { logout }
 
     context "when there are job applications" do
-      let!(:draft_job_application) { create(:job_application, updated_at: 1.day.ago, jobseeker: jobseeker, vacancy: vacancy1) }
-      let!(:deadline_passed_job_application) { create(:job_application, updated_at: 2.days.ago, jobseeker: jobseeker, vacancy: vacancy2) }
-      let!(:submitted_job_application) { create(:job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker: jobseeker, vacancy: vacancy3) }
-      let!(:shortlisted_job_application) { create(:job_application, :status_shortlisted, submitted_at: 2.days.ago, jobseeker: jobseeker, vacancy: vacancy4) }
+      let!(:draft_job_application) { create(:native_job_application, updated_at: 1.day.ago, jobseeker: jobseeker, vacancy: vacancy1) }
+      let!(:deadline_passed_job_application) { create(:native_job_application, updated_at: 2.days.ago, jobseeker: jobseeker, vacancy: vacancy2) }
+      let!(:submitted_job_application) { create(:native_job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker: jobseeker, vacancy: vacancy3) }
+      let!(:shortlisted_job_application) { create(:native_job_application, :status_shortlisted, submitted_at: 2.days.ago, jobseeker: jobseeker, vacancy: vacancy4) }
 
       before { visit jobseekers_job_applications_path }
 

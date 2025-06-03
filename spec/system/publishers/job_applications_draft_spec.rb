@@ -9,7 +9,7 @@ RSpec.describe "Draft job applications for publishers" do
     end
 
     let!(:job_application) do
-      create(:job_application, :submitted, vacancy: vacancy)
+      create(:native_job_application, :submitted, vacancy: vacancy)
     end
 
     before do

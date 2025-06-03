@@ -7,7 +7,7 @@ RSpec.describe JobApplication do
   it { is_expected.to have_many(:referees) }
 
   describe "#has_noticed_notifications" do
-    subject { create(:job_application) }
+    subject { create(:native_job_application) }
 
     before do
       Publishers::JobApplicationReceivedNotifier.with(vacancy: subject.vacancy, job_application: subject)
@@ -76,7 +76,7 @@ RSpec.describe JobApplication do
   end
 
   context "when saving change to status" do
-    subject { create(:job_application) }
+    subject { create(:native_job_application) }
 
     it "updates status timestamp" do
       freeze_time do
@@ -86,7 +86,7 @@ RSpec.describe JobApplication do
   end
 
   context "when setting support needed to 'no'" do
-    subject { create(:job_application) }
+    subject { create(:native_job_application) }
 
     before { subject.update(is_support_needed: false, support_needed_details: "details in need of resetting") }
 
@@ -170,7 +170,7 @@ RSpec.describe JobApplication do
   describe "#submit!" do
     subject { job_application.submit! }
 
-    let(:job_application) { create(:job_application) }
+    let(:job_application) { create(:native_job_application) }
 
     it "updates status" do
       expect { subject }.to change { job_application.reload.status }.from("draft").to("submitted")

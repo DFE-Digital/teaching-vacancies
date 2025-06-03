@@ -78,7 +78,7 @@ RSpec.describe "Jobseekers can sign in to their account" do
     let(:old_vacancy) { create(:vacancy, organisations: [build(:school)]) }
     let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
 
-    before { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: old_vacancy) }
+    before { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: old_vacancy) }
 
     scenario "the user is sent to the quick application page" do
       visit new_jobseekers_job_job_application_path(vacancy.id)

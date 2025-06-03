@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can view a job application" do
   let(:jobseeker) { create(:jobseeker) }
-  let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+  let(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
 
   before do
@@ -91,7 +91,7 @@ RSpec.describe "Jobseekers can view a job application" do
   end
 
   context "when job application status is shortlisted" do
-    let(:job_application) { create(:job_application, :status_shortlisted, jobseeker: jobseeker, vacancy: vacancy) }
+    let(:job_application) { create(:native_job_application, :status_shortlisted, jobseeker: jobseeker, vacancy: vacancy) }
 
     it "displays what happens next notification and shortlisted date" do
       expect(page).to have_content(I18n.t("jobseekers.job_applications.show.shortlist_alert.title"))
@@ -107,7 +107,7 @@ RSpec.describe "Jobseekers can view a job application" do
   end
 
   context "when job application status is unsuccessful" do
-    let(:job_application) { create(:job_application, :status_unsuccessful, jobseeker: jobseeker, vacancy: vacancy) }
+    let(:job_application) { create(:native_job_application, :status_unsuccessful, jobseeker: jobseeker, vacancy: vacancy) }
 
     it "displays feedback and unsuccessful date" do
       expect(page).to have_content(I18n.t("jobseekers.job_applications.show.feedback"))

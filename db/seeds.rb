@@ -95,7 +95,7 @@ Vacancy.listed.each do |vacancy|
   Jobseeker.where.not(email: "jobseeker@contoso.com").each do |jobseeker|
     # Ensures each one of the statuses gets used. When no unused statuses are left, takes random ones from the list for further new applications.
     application_status = statuses.delete(statuses.sample) || JobApplication.statuses.keys.sample
-    FactoryBot.create(:job_application, :for_seed_data, :"status_#{application_status}", jobseeker: jobseeker, vacancy: vacancy)
+    FactoryBot.create(:native_job_application, :for_seed_data, :"status_#{application_status}", jobseeker: jobseeker, vacancy: vacancy)
   end
 end
 

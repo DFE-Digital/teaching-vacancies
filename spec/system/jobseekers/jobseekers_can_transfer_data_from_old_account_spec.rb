@@ -6,8 +6,8 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
   let(:jobseeker) { create(:jobseeker) }
   let(:old_jobseeker_account) { create(:jobseeker) }
   let!(:profile) { create(:jobseeker_profile, :completed, jobseeker: old_jobseeker_account) }
-  let!(:old_submitted_application) { create(:job_application, :status_submitted, jobseeker: old_jobseeker_account) }
-  let!(:old_draft_application) { create(:job_application, jobseeker: old_jobseeker_account) }
+  let!(:old_submitted_application) { create(:native_job_application, :status_submitted, jobseeker: old_jobseeker_account) }
+  let!(:old_draft_application) { create(:native_job_application, jobseeker: old_jobseeker_account) }
   let(:organisation) { create(:school) }
   let(:vacancy) { create(:vacancy, organisations: [organisation]) }
   let!(:saved_job) { create(:saved_job, vacancy:, jobseeker: old_jobseeker_account) }

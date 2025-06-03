@@ -9,7 +9,7 @@ RSpec.describe EmailAddressAudit do
   let!(:valid_records) do
     [
       create(:feedback, email: feedback_email),
-      create(:job_application, email_address: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)),
+      create(:native_job_application, email_address: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)),
       create(:jobseeker, email: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)),
       create(:publisher, email: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)),
       create(:subscription, email: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)),

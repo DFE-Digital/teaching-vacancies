@@ -11,7 +11,7 @@ RSpec.describe JobApplicationReviewComponent::Section, type: :component do
     }
   end
 
-  let(:job_application) { create(:job_application, :draft) }
+  let(:job_application) { create(:native_job_application, :draft) }
   let(:id) { nil }
   let(:name) { :personal_details }
 

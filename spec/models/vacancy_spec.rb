@@ -44,7 +44,7 @@ RSpec.describe Vacancy do
   describe "#has_noticed_notifications" do
     subject { create(:vacancy) }
 
-    let(:job_application) { create(:job_application, vacancy: subject) }
+    let(:job_application) { create(:native_job_application, vacancy: subject) }
 
     before do
       Publishers::JobApplicationReceivedNotifier.with(vacancy: subject, job_application: job_application)
@@ -350,7 +350,7 @@ RSpec.describe Vacancy do
 
     before do
       stub_const("Vacancy::EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD", statuses.count)
-      statuses.each { |status| create(:job_application, status, vacancy: subject) }
+      statuses.each { |status| create(:native_job_application, status, vacancy: subject) }
     end
 
     context "when the vacancy has enough applications to publish the equal opportunities report" do

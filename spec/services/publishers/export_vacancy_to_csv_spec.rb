@@ -12,12 +12,12 @@ RSpec.describe Publishers::ExportVacancyToCsv do
 
   before do
     number_of_saves.times { create(:saved_job, vacancy: vacancy, jobseeker: jobseeker) }
-    create(:job_application, :status_draft, vacancy: vacancy, jobseeker: jobseeker)
-    create(:job_application, :status_reviewed, vacancy: vacancy, jobseeker: jobseeker)
-    create(:job_application, :status_submitted, vacancy: vacancy, jobseeker: jobseeker)
-    create(:job_application, :status_shortlisted, vacancy: vacancy, jobseeker: jobseeker)
-    create(:job_application, :status_unsuccessful, vacancy: vacancy, jobseeker: jobseeker)
-    create(:job_application, :status_withdrawn, vacancy: vacancy, jobseeker: jobseeker)
+    create(:native_job_application, :status_draft, vacancy: vacancy, jobseeker: jobseeker)
+    create(:native_job_application, :status_reviewed, vacancy: vacancy, jobseeker: jobseeker)
+    create(:native_job_application, :status_submitted, vacancy: vacancy, jobseeker: jobseeker)
+    create(:native_job_application, :status_shortlisted, vacancy: vacancy, jobseeker: jobseeker)
+    create(:native_job_application, :status_unsuccessful, vacancy: vacancy, jobseeker: jobseeker)
+    create(:native_job_application, :status_withdrawn, vacancy: vacancy, jobseeker: jobseeker)
   end
 
   describe "#call" do

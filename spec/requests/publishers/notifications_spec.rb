@@ -4,7 +4,7 @@ RSpec.describe "Publisher notifications" do
   let(:publisher) { create(:publisher, accepted_terms_at: 1.day.ago) }
   let(:organisation) { build(:school) }
   let(:vacancy) { create(:vacancy, organisations: [organisation]) }
-  let(:job_application) { create(:job_application, vacancy: vacancy) }
+  let(:job_application) { create(:native_job_application, vacancy: vacancy) }
 
   before do
     Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application).deliver(publisher)

@@ -10,9 +10,9 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
   describe "#job_application" do
     context "when jobseeker has a recent job application" do
       let(:old_vacancy) { create(:vacancy) }
-      let!(:recent_job_application) { create(:job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker: jobseeker, vacancy: old_vacancy) }
-      let!(:older_job_application) { create(:job_application, :status_submitted, submitted_at: 1.week.ago, jobseeker: jobseeker, vacancy: old_vacancy) }
-      let!(:draft_job_application) { create(:job_application, jobseeker: jobseeker, vacancy: old_vacancy) }
+      let!(:recent_job_application) { create(:native_job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker: jobseeker, vacancy: old_vacancy) }
+      let!(:older_job_application) { create(:native_job_application, :status_submitted, submitted_at: 1.week.ago, jobseeker: jobseeker, vacancy: old_vacancy) }
+      let!(:draft_job_application) { create(:native_job_application, jobseeker: jobseeker, vacancy: old_vacancy) }
 
       it "creates a new draft job application for the new vacancy" do
         expect { subject }.to change { jobseeker.job_applications.draft.count }.by(1)
@@ -78,7 +78,7 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
       context "when there are steps in the most recent application that are not relevant to the new application" do
         let(:vacancy_for_teacher) { create(:vacancy, job_roles: ["teacher"]) }
         let(:vacancy_for_teaching_assistant) { create(:vacancy, job_roles: ["teaching_assistant"]) }
-        let!(:most_recent_job_application) { create(:job_application, :status_submitted, submitted_at: 1.hour.ago, jobseeker: jobseeker, vacancy: vacancy_for_teacher) }
+        let!(:most_recent_job_application) { create(:native_job_application, :status_submitted, submitted_at: 1.hour.ago, jobseeker: jobseeker, vacancy: vacancy_for_teacher) }
         let(:completed_step_to_not_copy) { %i[professional_status] }
         let(:new_job_application) { jobseeker.job_applications.create(vacancy: vacancy_for_teaching_assistant) }
 

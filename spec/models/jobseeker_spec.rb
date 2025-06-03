@@ -174,7 +174,7 @@ RSpec.describe Jobseeker do
 
     context "when a legacy jobseeker with the new email address already exists" do
       let!(:legacy_jobseeker) { create(:jobseeker, govuk_one_login_id: nil) }
-      let(:job_application) { create(:job_application, jobseeker: legacy_jobseeker) }
+      let(:job_application) { create(:native_job_application, jobseeker: legacy_jobseeker) }
       let(:profile) do
         create(:jobseeker_profile, :with_qualifications, :with_employment_history, jobseeker: legacy_jobseeker)
       end
@@ -224,7 +224,7 @@ RSpec.describe Jobseeker do
       end
 
       context "when the current jobseeker already recorded a job appplication" do
-        before { create(:job_application, jobseeker: jobseeker) }
+        before { create(:native_job_application, jobseeker: jobseeker) }
 
         it_behaves_like "new jobseeker account already saved data"
       end

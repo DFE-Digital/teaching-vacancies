@@ -8,7 +8,7 @@ RSpec.describe SendEmailForDraftJobApplicationsJob, type: :job do
   include Rails.application.routes.url_helpers
 
   before do
-    create(:job_application, :status_draft, vacancy: vacancy, jobseeker: jobseeker)
+    create(:native_job_application, :status_draft, vacancy: vacancy, jobseeker: jobseeker)
   end
 
   context "when vacancy has 10 days left" do

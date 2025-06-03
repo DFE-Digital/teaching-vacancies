@@ -4,7 +4,7 @@ RSpec.describe "Jobseekers can review a job application" do
   include JobApplicationsHelper
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
-  let(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+  let(:job_application) { create(:native_job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
   before do
     login_as(jobseeker, scope: :jobseeker)

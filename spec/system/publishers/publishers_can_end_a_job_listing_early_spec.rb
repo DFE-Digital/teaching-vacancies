@@ -30,7 +30,7 @@ RSpec.describe "Publishers can end a job listing early" do
   context "when there are draft applications for the listing" do
     let(:job) { double("Send Job Listing Ended Early Notification Job") }
     let(:jobseeker) { create(:jobseeker) }
-    let!(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
+    let!(:job_application) { create(:native_job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
 
     before { allow(SendJobListingEndedEarlyNotificationJob).to receive(:new) { job } }
 

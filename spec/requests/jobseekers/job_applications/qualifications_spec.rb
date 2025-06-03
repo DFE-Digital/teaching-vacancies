@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Job applications qualifications" do
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let(:jobseeker) { create(:jobseeker) }
-  let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
+  let(:job_application) { create(:native_job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
   let(:qualification) { create(:qualification, job_application: job_application) }
 
   before do
@@ -14,7 +14,7 @@ RSpec.describe "Job applications qualifications" do
 
   describe "GET #select_category" do
     context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+      let(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
       it "returns not_found" do
         get select_category_jobseekers_job_application_qualifications_path(job_application)
@@ -61,7 +61,7 @@ RSpec.describe "Job applications qualifications" do
     let(:params) { { category: "gcse" } }
 
     context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+      let(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
       it "returns not_found" do
         get new_jobseekers_job_application_qualification_path(job_application), params: params
@@ -78,7 +78,7 @@ RSpec.describe "Job applications qualifications" do
 
   describe "GET #edit" do
     context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+      let(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
       it "returns not_found" do
         get edit_jobseekers_job_application_qualification_path(job_application, qualification)
@@ -100,7 +100,7 @@ RSpec.describe "Job applications qualifications" do
       end
 
       context "when the job application status is not draft" do
-        let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+        let(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "returns not_found" do
           post jobseekers_job_application_qualifications_path(job_application), params: params
@@ -231,7 +231,7 @@ RSpec.describe "Job applications qualifications" do
         end
 
         context "when the job application status is not draft" do
-          let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+          let(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
           it "returns not_found" do
             patch jobseekers_job_application_qualification_path(job_application, qualification), params: params
@@ -318,7 +318,7 @@ RSpec.describe "Job applications qualifications" do
     let!(:qualification) { create(:qualification, job_application: job_application) }
 
     context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+      let(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
       it "returns not_found" do
         delete jobseekers_job_application_qualification_path(job_application, qualification)

@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Job applications employments" do
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let(:jobseeker) { create(:jobseeker) }
-  let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
+  let(:job_application) { create(:native_job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
   let(:employment) { create(:employment, job_application: job_application) }
 
   before do
@@ -14,7 +14,7 @@ RSpec.describe "Job applications employments" do
 
   describe "GET #new" do
     context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+      let(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
       it "returns not_found" do
         get new_jobseekers_job_application_employment_path(job_application)
@@ -31,7 +31,7 @@ RSpec.describe "Job applications employments" do
 
   describe "GET #edit" do
     context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+      let(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
       it "returns not_found" do
         get edit_jobseekers_job_application_employment_path(job_application, employment)
@@ -85,7 +85,7 @@ RSpec.describe "Job applications employments" do
         end
 
         context "when the job application status is not draft" do
-          let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+          let(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
           it "returns not_found" do
             post jobseekers_job_application_employments_path(job_application), params: params
@@ -130,7 +130,7 @@ RSpec.describe "Job applications employments" do
         end
 
         context "when the job application status is not draft" do
-          let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+          let(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
           it "returns not_found" do
             patch jobseekers_job_application_employment_path(job_application, employment), params: params
@@ -157,7 +157,7 @@ RSpec.describe "Job applications employments" do
     let!(:employment) { create(:employment, job_application: job_application) }
 
     context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+      let(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
       it "returns not_found" do
         delete jobseekers_job_application_employment_path(job_application, employment)

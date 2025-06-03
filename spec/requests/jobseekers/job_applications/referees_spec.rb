@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Job applications references" do
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let(:jobseeker) { create(:jobseeker) }
-  let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
+  let(:job_application) { create(:native_job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
   let(:referee) { create(:referee, job_application: job_application) }
 
   before do
@@ -14,7 +14,7 @@ RSpec.describe "Job applications references" do
 
   describe "GET #new" do
     context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+      let(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
       it "returns not_found" do
         get new_jobseekers_job_application_referee_path(job_application)
@@ -31,7 +31,7 @@ RSpec.describe "Job applications references" do
 
   describe "GET #edit" do
     context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+      let(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
       it "returns not_found" do
         get edit_jobseekers_job_application_referee_path(job_application, referee)
@@ -61,7 +61,7 @@ RSpec.describe "Job applications references" do
       end
 
       context "when the job application status is not draft" do
-        let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+        let(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "returns not_found" do
           post jobseekers_job_application_referees_path(job_application), params: params
@@ -97,7 +97,7 @@ RSpec.describe "Job applications references" do
       end
 
       context "when the job application status is not draft" do
-        let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+        let(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "returns not_found" do
           patch jobseekers_job_application_referee_path(job_application, referee), params: params
@@ -121,7 +121,7 @@ RSpec.describe "Job applications references" do
     let!(:referee) { create(:referee, job_application: job_application) }
 
     context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+      let(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
       it "returns not_found" do
         delete jobseekers_job_application_referee_path(job_application, referee)

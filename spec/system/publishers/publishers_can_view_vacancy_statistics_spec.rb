@@ -7,10 +7,10 @@ RSpec.describe "Publishers can view a job application" do
 
   before do
     create(:saved_job, vacancy: vacancy)
-    create(:job_application, :status_submitted, vacancy: vacancy)
-    create(:job_application, :status_shortlisted, vacancy: vacancy)
-    create(:job_application, :status_unsuccessful, vacancy: vacancy)
-    create(:job_application, :status_withdrawn, vacancy: vacancy)
+    create(:native_job_application, :status_submitted, vacancy: vacancy)
+    create(:native_job_application, :status_shortlisted, vacancy: vacancy)
+    create(:native_job_application, :status_unsuccessful, vacancy: vacancy)
+    create(:native_job_application, :status_withdrawn, vacancy: vacancy)
 
     login_publisher(publisher: publisher, organisation: organisation)
     vacancy_stats = instance_double(Publishers::VacancyStats, number_of_unique_views: 42)

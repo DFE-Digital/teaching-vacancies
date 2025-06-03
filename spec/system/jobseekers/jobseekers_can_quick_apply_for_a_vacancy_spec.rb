@@ -4,7 +4,7 @@ RSpec.describe "Jobseekers can quick apply for a job" do
   let(:jobseeker) { create(:jobseeker) }
   let(:old_vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
-  let!(:recent_job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: old_vacancy) }
+  let!(:recent_job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: old_vacancy) }
 
   before do
     login_as(jobseeker, scope: :jobseeker)

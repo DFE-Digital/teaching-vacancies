@@ -225,10 +225,10 @@ RSpec.describe "Govuk One Login authentication response" do
           let!(:legacy_jobseeker) do
             create(:jobseeker, email: govuk_one_login_user.email, govuk_one_login_id: nil)
           end
-          let!(:legacy_jobseeker_application) { create(:job_application, jobseeker: legacy_jobseeker) }
+          let!(:legacy_jobseeker_application) { create(:native_job_application, jobseeker: legacy_jobseeker) }
 
           context "when the jobseeker to sign in had already some saved data" do
-            before { create(:job_application, jobseeker: jobseeker) }
+            before { create(:native_job_application, jobseeker: jobseeker) }
 
             it "doesn't update the jobseeker email" do
               expect { get auth_govuk_one_login_callback_path }.not_to(change { jobseeker.reload.email })

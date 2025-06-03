@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Job applications build" do
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let(:jobseeker) { create(:jobseeker) }
-  let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
+  let(:job_application) { create(:native_job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
 
   before do
     sign_in(jobseeker, scope: :jobseeker)
@@ -13,7 +13,7 @@ RSpec.describe "Job applications build" do
 
   describe "GET #show" do
     context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+      let(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
       it "returns not_found" do
         get jobseekers_job_application_build_path(job_application, :personal_details)
@@ -35,7 +35,7 @@ RSpec.describe "Job applications build" do
       before { allow_any_instance_of(Jobseekers::JobApplication::PersonalDetailsForm).to receive(:valid?).and_return(true) }
 
       context "when the jobseeker has previously submitted a job application" do
-        let!(:job_application2) { create(:job_application, :status_submitted, jobseeker: jobseeker) }
+        let!(:job_application2) { create(:native_job_application, :status_submitted, jobseeker: jobseeker) }
         let(:button) { I18n.t("buttons.save") }
 
         it "updates the job application and redirects to the review page" do
@@ -74,7 +74,7 @@ RSpec.describe "Job applications build" do
       end
 
       context "when the job application status is not draft" do
-        let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+        let(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "returns not_found" do
           patch jobseekers_job_application_build_path(job_application, :personal_details)

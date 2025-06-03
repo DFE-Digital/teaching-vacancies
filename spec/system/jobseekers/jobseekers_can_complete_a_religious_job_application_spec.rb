@@ -4,7 +4,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
   let(:jobseeker) { create(:jobseeker, jobseeker_profile: jobseeker_profile) }
   let(:jobseeker_profile) { create(:jobseeker_profile, :with_trn) }
   let(:organisation) { create(:school) }
-  let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
+  let(:job_application) { create(:native_job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
   let(:vacancy) { create(:vacancy, organisations: [organisation], religion_type: religion_type) }
 
   let(:referee_name) { Faker::Name.name }

@@ -12,10 +12,10 @@ RSpec.describe DeleteOldNonDraftJobApplicationsJob, type: :job do
   context "with some but not all old applications" do
     let(:job_applications) do
       [
-        create(:job_application, :status_submitted, jobseeker: jobseeker, submitted_at: over_5_years_ago),
-        create(:job_application, :status_submitted, jobseeker: jobseeker, submitted_at: over_5_years_ago),
-        create(:job_application, :status_draft, jobseeker: jobseeker, submitted_at: over_5_years_ago),
-        create(:job_application, :status_submitted, jobseeker: jobseeker),
+        create(:native_job_application, :status_submitted, jobseeker: jobseeker, submitted_at: over_5_years_ago),
+        create(:native_job_application, :status_submitted, jobseeker: jobseeker, submitted_at: over_5_years_ago),
+        create(:native_job_application, :status_draft, jobseeker: jobseeker, submitted_at: over_5_years_ago),
+        create(:native_job_application, :status_submitted, jobseeker: jobseeker),
       ]
     end
 
@@ -27,8 +27,8 @@ RSpec.describe DeleteOldNonDraftJobApplicationsJob, type: :job do
   context "with all old job applications" do
     let(:job_applications) do
       [
-        create(:job_application, :status_submitted, jobseeker: jobseeker, submitted_at: over_5_years_ago),
-        create(:job_application, :status_submitted, jobseeker: jobseeker, submitted_at: over_5_years_ago - 1.day),
+        create(:native_job_application, :status_submitted, jobseeker: jobseeker, submitted_at: over_5_years_ago),
+        create(:native_job_application, :status_submitted, jobseeker: jobseeker, submitted_at: over_5_years_ago - 1.day),
       ]
     end
 

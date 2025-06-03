@@ -19,7 +19,7 @@ RSpec.describe PersonalDetails do
     end
 
     context "when the profile has a previously submitted application" do
-      let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:) }
+      let!(:previous_application) { create(:native_job_application, :status_submitted, jobseeker:) }
 
       it "uses the details from the previous application" do
         expect(personal_details.first_name).to eq(previous_application.first_name)
@@ -35,7 +35,7 @@ RSpec.describe PersonalDetails do
 
     context "when the jobseeker has a previous draft application" do
       before do
-        create(:job_application, :status_draft, jobseeker:, first_name: "karl", last_name: "karlssen", phone_number: "01234567899", has_right_to_work_in_uk: true)
+        create(:native_job_application, :status_draft, jobseeker:, first_name: "karl", last_name: "karlssen", phone_number: "01234567899", has_right_to_work_in_uk: true)
       end
 
       it "does not use details from draft application" do
@@ -68,7 +68,7 @@ RSpec.describe PersonalDetails do
       end
 
       context "when the name step is partially prefilled" do
-        before { create(:job_application, :status_submitted, jobseeker:, last_name: nil) }
+        before { create(:native_job_application, :status_submitted, jobseeker:, last_name: nil) }
 
         it "does not set the step as completed" do
           expect(personal_details.completed_steps).not_to include("name")
@@ -76,7 +76,7 @@ RSpec.describe PersonalDetails do
       end
 
       context "when the name step is fully prefilled" do
-        before { create(:job_application, :status_submitted, jobseeker:) }
+        before { create(:native_job_application, :status_submitted, jobseeker:) }
 
         it "sets the step as completed" do
           expect(personal_details.completed_steps).to include("name")
@@ -84,7 +84,7 @@ RSpec.describe PersonalDetails do
       end
 
       context "when the phone number step is fully prefilled" do
-        before { create(:job_application, :status_submitted, jobseeker:) }
+        before { create(:native_job_application, :status_submitted, jobseeker:) }
 
         it "sets the step as completed" do
           expect(personal_details.completed_steps).to include("phone_number")

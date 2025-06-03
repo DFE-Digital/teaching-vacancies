@@ -58,7 +58,7 @@ RSpec.describe DashboardComponent, type: :component do
         end
 
         context "when withdrawn applications have also been received" do
-          let(:withdrawn_job_application) { create(:job_application, :status_withdrawn, vacancy: vacancy) }
+          let(:withdrawn_job_application) { create(:native_job_application, :status_withdrawn, vacancy: vacancy) }
 
           it "does not affect the count" do
             expect(page).to have_content(I18n.t("jobs.manage.view_applicants", count: 1))
@@ -250,7 +250,7 @@ RSpec.describe DashboardComponent, type: :component do
     end
 
     before do
-      create(:job_application, :status_submitted, vacancy: vacancy)
+      create(:native_job_application, :status_submitted, vacancy: vacancy)
       # rubocop:disable RSpec/SubjectStub
       allow(subject).to receive(:include_job_applications?).and_return(include_applications)
       # rubocop:enable RSpec/SubjectStub

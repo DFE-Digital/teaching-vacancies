@@ -20,7 +20,7 @@ RSpec.describe "Jobseekers can submit a job application" do
     end
 
     context "when the application is complete" do
-      let(:job_application) { create(:job_application, create_details: true, jobseeker: jobseeker, vacancy: vacancy) }
+      let(:job_application) { create(:native_job_application, create_details: true, jobseeker: jobseeker, vacancy: vacancy) }
 
       it "allows jobseekers to submit application and receive confirmation email" do
         click_on I18n.t("buttons.submit_application")
@@ -41,7 +41,7 @@ RSpec.describe "Jobseekers can submit a job application" do
     end
 
     context "when the application is incomplete" do
-      let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
+      let(:job_application) { create(:native_job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
 
       it "does not allow jobseekers to submit application" do
         check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
@@ -62,7 +62,7 @@ RSpec.describe "Jobseekers can submit a job application" do
     end
 
     context "when the application is complete but invalid" do
-      let(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy, is_statutory_induction_complete: nil) }
+      let(:job_application) { create(:native_job_application, jobseeker: jobseeker, vacancy: vacancy, is_statutory_induction_complete: nil) }
 
       it "does not allow jobseekers to submit application, and informs jobseeker of invalid value" do
         check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")

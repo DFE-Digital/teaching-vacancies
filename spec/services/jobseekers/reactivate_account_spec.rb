@@ -5,7 +5,7 @@ RSpec.describe Jobseekers::ReactivateAccount do
   let(:account_closed_on) { Date.yesterday }
   let!(:subscription) { create(:subscription, email: jobseeker.email, active: false) }
   let!(:subscription_previously_unsubscribed) { create(:subscription, email: jobseeker.email, active: false, unsubscribed_at: 1.day.ago) }
-  let!(:job_application) { create(:job_application, :withdrawn, jobseeker: jobseeker, withdrawn_by_closing_account: true) }
+  let!(:job_application) { create(:native_job_application, :withdrawn, jobseeker: jobseeker, withdrawn_by_closing_account: true) }
 
   describe ".reactivate(jobseeker)" do
     before do

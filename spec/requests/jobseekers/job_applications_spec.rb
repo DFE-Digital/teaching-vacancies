@@ -40,7 +40,7 @@ RSpec.describe "Job applications" do
         end
 
         context "when a job application for the job already exists" do
-          let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+          let!(:job_application) { create(:native_job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
           it "redirects to `jobseekers_job_applications_path`" do
             expect(get(new_jobseekers_job_job_application_path(vacancy.id))).to redirect_to(jobseekers_job_applications_path)
@@ -50,7 +50,7 @@ RSpec.describe "Job applications" do
         context "when a non-draft job application already exists and the user does not have right to work in UK" do
           let(:jobseeker_profile) { JobseekerProfile.last }
           let!(:personal_details) { create(:personal_details, has_right_to_work_in_uk: false, jobseeker_profile: jobseeker_profile) }
-          let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+          let(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
           let(:new_vacancy) { create(:vacancy, organisations: [build(:school)]) }
 
           context "when the user has the right to work in UK" do
@@ -103,7 +103,7 @@ RSpec.describe "Job applications" do
       end
 
       context "when a job application for the job already exists" do
-        let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+        let!(:job_application) { create(:native_job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "redirects to `jobseekers_job_applications_path`" do
           expect(post(jobseekers_job_job_application_path(vacancy.id))).to redirect_to(jobseekers_job_applications_path)
@@ -130,7 +130,7 @@ RSpec.describe "Job applications" do
 
     describe "GET #new_quick_apply" do
       context "when a job application for the job already exists" do
-        let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+        let!(:job_application) { create(:native_job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "redirects to `jobseekers_job_applications_path`" do
           expect(get(new_quick_apply_jobseekers_job_job_application_path(vacancy.id)))
@@ -158,7 +158,7 @@ RSpec.describe "Job applications" do
 
       context "when there are non-draft applications" do
         let(:old_vacancy) { create(:vacancy, organisations: [build(:school)]) }
-        let!(:recent_job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: old_vacancy) }
+        let!(:recent_job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: old_vacancy) }
 
         context "when the job is not listed" do
           let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
@@ -180,7 +180,7 @@ RSpec.describe "Job applications" do
 
     describe "POST #quick_apply" do
       context "when a job application for the job already exists" do
-        let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+        let!(:job_application) { create(:native_job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "redirects to `jobseekers_job_applications_path`" do
           expect(post(quick_apply_jobseekers_job_job_application_path(vacancy.id)))
@@ -208,7 +208,7 @@ RSpec.describe "Job applications" do
 
       context "when there are non-draft applications" do
         let(:old_vacancy) { create(:vacancy, organisations: [build(:school)]) }
-        let!(:recent_job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: old_vacancy) }
+        let!(:recent_job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: old_vacancy) }
 
         context "when the job is not listed" do
           let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
@@ -231,7 +231,7 @@ RSpec.describe "Job applications" do
     end
 
     describe "POST #submit" do
-      let!(:job_application) { create(:job_application, create_details: true, jobseeker: jobseeker, vacancy: vacancy) }
+      let!(:job_application) { create(:native_job_application, create_details: true, jobseeker: jobseeker, vacancy: vacancy) }
       let(:button) { I18n.t("buttons.submit_application") }
       let(:confirm_data_accurate) { 1 }
       let(:confirm_data_usage) { 1 }
@@ -255,7 +255,7 @@ RSpec.describe "Job applications" do
       end
 
       context "when the job application is not a draft" do
-        let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+        let!(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "raises an error and does not submit the job application or send email" do
           assert_emails 0 do
@@ -298,7 +298,7 @@ RSpec.describe "Job applications" do
       let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
 
       context "when the application is not a draft" do
-        let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+        let!(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "shows the application page" do
           expect(get(jobseekers_job_application_path(job_application.id))).to render_template(:show)
@@ -306,7 +306,7 @@ RSpec.describe "Job applications" do
       end
 
       context "when the application is a draft" do
-        let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+        let!(:job_application) { create(:native_job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "raises an error" do
           expect { get(jobseekers_job_application_path(job_application.id)) }.to raise_error(ActionController::RoutingError, /draft/)
@@ -316,7 +316,7 @@ RSpec.describe "Job applications" do
 
     describe "GET #confirm_destroy" do
       context "when the application is a draft" do
-        let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+        let!(:job_application) { create(:native_job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "shows a confirmation page" do
           expect(get(jobseekers_job_application_confirm_destroy_path(job_application.id))).to render_template(:confirm_destroy)
@@ -324,7 +324,7 @@ RSpec.describe "Job applications" do
       end
 
       context "when the application is not a draft" do
-        let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+        let!(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "raises an error" do
           expect { get(jobseekers_job_application_confirm_destroy_path(job_application.id)) }.to raise_error(ActionController::RoutingError, /non-draft/)
@@ -336,7 +336,7 @@ RSpec.describe "Job applications" do
       let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
 
       context "when the application is not a draft" do
-        let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+        let!(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "redirects to the application page" do
           expect(get(jobseekers_job_application_review_path(job_application.id))).to redirect_to(jobseekers_job_application_path(job_application.id))
@@ -344,7 +344,7 @@ RSpec.describe "Job applications" do
       end
 
       context "when the application is a draft" do
-        let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+        let!(:job_application) { create(:native_job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "shows the review page" do
           expect(get(jobseekers_job_application_review_path(job_application.id))).to render_template(:review)
@@ -354,7 +354,7 @@ RSpec.describe "Job applications" do
 
     describe "DELETE #destroy" do
       context "when the application is a draft" do
-        let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+        let!(:job_application) { create(:native_job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "deletes the application" do
           expect { delete(jobseekers_job_application_path(job_application.id)) }.to change { JobApplication.count }.by(-1)
@@ -366,7 +366,7 @@ RSpec.describe "Job applications" do
       end
 
       context "when the application is not a draft" do
-        let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+        let!(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "raises an error and does not delete the application" do
           expect { delete(jobseekers_job_application_path(job_application.id)) }.to raise_error(ActionController::RoutingError, /non-draft/)
@@ -377,7 +377,7 @@ RSpec.describe "Job applications" do
 
     describe "GET #confirm_withdraw" do
       context "when the application is submitted" do
-        let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+        let!(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "shows a confirmation page" do
           expect(get(jobseekers_job_application_confirm_withdraw_path(job_application.id))).to render_template(:confirm_withdraw)
@@ -385,7 +385,7 @@ RSpec.describe "Job applications" do
       end
 
       context "when the application is not reviewed, submitted or shortlisted" do
-        let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+        let!(:job_application) { create(:native_job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "raises an error" do
           expect { get(jobseekers_job_application_confirm_withdraw_path(job_application.id)) }
@@ -395,7 +395,7 @@ RSpec.describe "Job applications" do
     end
 
     describe "GET #about_your_application" do
-      let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+      let!(:job_application) { create(:native_job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
       context "without a profile" do
         it "redirects to quick apply" do
@@ -462,7 +462,7 @@ RSpec.describe "Job applications" do
       end
 
       context "when the application is submitted" do
-        let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+        let!(:job_application) { create(:native_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
         let(:button) { I18n.t("buttons.withdraw_application") }
 
         context "when the withdraw form is invalid" do
@@ -485,7 +485,7 @@ RSpec.describe "Job applications" do
       end
 
       context "when the application is not reviewed, submitted or shortlisted" do
-        let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+        let!(:job_application) { create(:native_job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "raises an error" do
           expect { post(jobseekers_job_application_withdraw_path(job_application.id)) }

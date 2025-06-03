@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Job applications" do
   let(:vacancy) { create(:vacancy) }
   let(:organisation) { vacancy.organisations.first }
-  let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
+  let(:job_application) { create(:native_job_application, :status_submitted, vacancy: vacancy) }
   let(:publisher) { create(:publisher, accepted_terms_at: 1.day.ago) }
 
   before do
@@ -28,7 +28,7 @@ RSpec.describe "Job applications" do
     end
 
     context "when the job application status is not submitted" do
-      let(:job_application) { create(:job_application, :status_shortlisted, vacancy: vacancy) }
+      let(:job_application) { create(:native_job_application, :status_shortlisted, vacancy: vacancy) }
 
       it "does not update the job application status" do
         expect { get(organisation_job_job_application_path(vacancy.id, job_application.id)) }
@@ -37,7 +37,7 @@ RSpec.describe "Job applications" do
     end
 
     context "when the job application status is draft" do
-      let(:job_application) { create(:job_application, :status_draft, vacancy: vacancy) }
+      let(:job_application) { create(:native_job_application, :status_draft, vacancy: vacancy) }
 
       it "raises an error" do
         expect { get(organisation_job_job_application_path(vacancy.id, job_application.id)) }
@@ -46,7 +46,7 @@ RSpec.describe "Job applications" do
     end
 
     context "when the job application status is withdrawn" do
-      let(:job_application) { create(:job_application, :status_withdrawn, vacancy: vacancy) }
+      let(:job_application) { create(:native_job_application, :status_withdrawn, vacancy: vacancy) }
 
       it "redirects to the withdrawn page" do
         expect(get(organisation_job_job_application_path(vacancy.id, job_application.id)))
@@ -102,7 +102,7 @@ RSpec.describe "Job applications" do
 
   describe "GET #tag" do
     let(:vacancy) { create(:vacancy, job_title: "teacher-job") }
-    let(:job_application_2) { create(:job_application, :status_submitted, vacancy: vacancy) }
+    let(:job_application_2) { create(:native_job_application, :status_submitted, vacancy: vacancy) }
     let(:tag_params) { { publishers_job_application_tag_form: { job_applications: [job_application.id, job_application_2.id] } } }
 
     context "when preparing to tag job applications" do

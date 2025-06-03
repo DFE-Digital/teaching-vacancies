@@ -7,7 +7,7 @@ RSpec.describe "Submitted job applications for jobseekers" do
     let(:jobseeker) { create(:jobseeker) }
     let!(:job_application) do
       create(
-        :job_application,
+        :native_job_application,
         :submitted,
         jobseeker: jobseeker,
         vacancy: vacancy,

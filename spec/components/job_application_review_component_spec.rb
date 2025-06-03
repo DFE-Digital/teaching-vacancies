@@ -8,7 +8,7 @@ RSpec.describe JobApplicationReviewComponent, type: :component do
     {}
   end
 
-  let(:job_application) { create(:job_application) }
+  let(:job_application) { create(:native_job_application) }
 
   it_behaves_like ReviewComponent
 

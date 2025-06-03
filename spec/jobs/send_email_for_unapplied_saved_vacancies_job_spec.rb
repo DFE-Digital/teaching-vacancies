@@ -23,7 +23,7 @@ RSpec.describe SendEmailForUnappliedSavedVacanciesJob, type: :job do
 
     context "when an application has been made" do
       before do
-        create(:job_application, jobseeker: jobseeker, vacancy: vacancy)
+        create(:native_job_application, jobseeker: jobseeker, vacancy: vacancy)
         expect(Jobseekers::VacancyMailer).not_to receive(:unapplied_saved_vacancy)
       end
 

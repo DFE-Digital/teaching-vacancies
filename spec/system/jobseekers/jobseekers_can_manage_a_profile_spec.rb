@@ -107,7 +107,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       let(:previous_application) { jobseeker.job_applications.last }
 
       before do
-        create(:job_application, :status_submitted, jobseeker:)
+        create(:native_job_application, :status_submitted, jobseeker:)
         visit jobseekers_profile_path
       end
 
@@ -126,7 +126,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       let(:first_name) { "Alfred" }
       let(:last_name) { "Accelsior" }
       let(:phone_number) { "01234567890" }
-      let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, first_name:, last_name:, phone_number:) }
+      let!(:previous_application) { create(:native_job_application, :status_submitted, jobseeker:, first_name:, last_name:, phone_number:) }
 
       before do
         visit jobseekers_profile_path
@@ -140,7 +140,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
 
     describe "personal details if the jobseeker has a blank previous draft job application" do
-      let!(:previous_application) { create(:job_application, :status_draft, jobseeker:, first_name: nil, last_name: nil, phone_number: "01234567890") }
+      let!(:previous_application) { create(:native_job_application, :status_draft, jobseeker:, first_name: nil, last_name: nil, phone_number: "01234567890") }
 
       before do
         visit jobseekers_profile_path
@@ -207,7 +207,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
 
     describe "QTS if the jobseeker has a previous job application" do
-      let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:) }
+      let!(:previous_application) { create(:native_job_application, :status_submitted, jobseeker:) }
 
       before do
         visit jobseekers_profile_path
@@ -381,7 +381,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       end
 
       context "if the jobseeker has a previous job application" do
-        let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, create_details: true) }
+        let!(:previous_application) { create(:native_job_application, :status_submitted, jobseeker:, create_details: true) }
 
         before { visit jobseekers_profile_path }
 
@@ -399,7 +399,7 @@ RSpec.describe "Jobseekers can manage their profile" do
 
     describe "qualifications" do
       context "if the jobseeker has a previous job application" do
-        let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, create_details: true) }
+        let!(:previous_application) { create(:native_job_application, :status_submitted, jobseeker:, create_details: true) }
 
         before { visit jobseekers_profile_path }
 

@@ -16,7 +16,7 @@ RSpec.describe JobseekerProfile, type: :model do
     context "when the jobseeker has a previously submitted application" do
       let(:first_name) { "Bill" }
       let(:last_name) { "Smith" }
-      let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, first_name:, last_name:) }
+      let!(:previous_application) { create(:native_job_application, :status_submitted, jobseeker:, first_name:, last_name:) }
 
       it "uses the details from the previous application" do
         expect(profile.employments.map(&:job_title).sort).to eq(previous_application.employments.map(&:job_title).sort)
@@ -35,7 +35,7 @@ RSpec.describe JobseekerProfile, type: :model do
 
     context "when the jobseeker has a previous draft application" do
       before do
-        create(:job_application, :status_draft, jobseeker:, first_name: "karl", last_name: "karlssen", phone_number: "01234567899", has_right_to_work_in_uk: true)
+        create(:native_job_application, :status_draft, jobseeker:, first_name: "karl", last_name: "karlssen", phone_number: "01234567899", has_right_to_work_in_uk: true)
       end
 
       it "does not use the details from the draft application" do
@@ -126,7 +126,7 @@ RSpec.describe JobseekerProfile, type: :model do
     let(:excluded_attrs) { %i[job_application_id jobseeker_profile_id created_at id updated_at] }
 
     before do
-      create(:job_application, employments: new_employments)
+      create(:native_job_application, employments: new_employments)
     end
 
     it "replaces the employments" do

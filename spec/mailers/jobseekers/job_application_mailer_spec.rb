@@ -37,7 +37,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
   end
 
   describe "#job_listing_ended_early" do
-    let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
+    let(:job_application) { create(:native_job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
     let(:mail) { described_class.job_listing_ended_early(job_application, vacancy) }
     let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
 

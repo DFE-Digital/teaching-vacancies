@@ -19,7 +19,7 @@ RSpec.describe JobPreferences do
     end
 
     context "when the profile has a previous application" do
-      let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:) }
+      let!(:previous_application) { create(:native_job_application, :status_submitted, jobseeker:) }
 
       it "does not use the details from the previous application" do
         expect(job_preferences.roles).to be_empty

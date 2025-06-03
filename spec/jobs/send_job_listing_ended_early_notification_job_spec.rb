@@ -13,8 +13,8 @@ RSpec.describe SendJobListingEndedEarlyNotificationJob do
     context "when the vacancy has draft job applications" do
       let(:jobseeker_one) { create(:jobseeker) }
       let(:jobseeker_two) { create(:jobseeker) }
-      let!(:job_application_one) { create(:job_application, :status_draft, jobseeker: jobseeker_one, vacancy: vacancy) }
-      let!(:job_application_two) { create(:job_application, :status_draft, jobseeker: jobseeker_two, vacancy: vacancy) }
+      let!(:job_application_one) { create(:native_job_application, :status_draft, jobseeker: jobseeker_one, vacancy: vacancy) }
+      let!(:job_application_two) { create(:native_job_application, :status_draft, jobseeker: jobseeker_two, vacancy: vacancy) }
 
       it "sends an email to each jobseeker with a draft application" do
         expect(Jobseekers::JobApplicationMailer).to receive(:job_listing_ended_early).with(job_application_one, vacancy)

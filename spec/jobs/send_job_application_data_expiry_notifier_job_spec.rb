@@ -16,7 +16,7 @@ RSpec.describe SendJobApplicationDataExpiryNotifierJob do
   end
 
   context "when the vacancy has job applications" do
-    let!(:job_application) { create(:job_application, vacancy: vacancy) }
+    let!(:job_application) { create(:native_job_application, vacancy: vacancy) }
 
     context "when the vacancy expired 351 days ago" do
       it "sends notifications" do

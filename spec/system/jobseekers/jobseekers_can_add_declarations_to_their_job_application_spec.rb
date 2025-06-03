@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Jobseekers can disclose close relationships or safeguarding issues on a job application" do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
-  let!(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
+  let!(:job_application) { create(:native_job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
 
   before { login_as(jobseeker, scope: :jobseeker) }
 

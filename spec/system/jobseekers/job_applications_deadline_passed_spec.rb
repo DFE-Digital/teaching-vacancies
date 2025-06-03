@@ -9,7 +9,7 @@ RSpec.describe "Deadline-passed job applications for jobseekers" do
     let(:jobseeker) { create(:jobseeker) }
     let!(:job_application) do
       create(
-        :job_application,
+        :native_job_application,
         draft_at: deadline - 1.week,
         jobseeker: jobseeker,
         vacancy: vacancy,
