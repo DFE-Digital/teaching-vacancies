@@ -188,7 +188,7 @@ FactoryBot.define do
           Rack::Test::UploadedFile.new(
             Rails.root.join("spec", "fixtures", "files", "blank_job_spec.pdf"),
             "application/pdf",
-            ),
+          ),
         ]
       end
     end
@@ -200,7 +200,7 @@ FactoryBot.define do
         Rack::Test::UploadedFile.new(
           Rails.root.join("spec", "fixtures", "files", "blank_job_spec.pdf"),
           "application/pdf",
-          )
+        )
       end
     end
 
