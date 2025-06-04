@@ -1,9 +1,7 @@
 class Jobseekers::JobApplications::SelfDisclosureController < Jobseekers::BaseController
   include Wicked::Wizard
-  include DateParameter
 
   before_action :redirect_when_self_disclosure_not_pending, except: :completed
-  date_param :personal_details_date_of_birth, only: :update
   before_action :set_form, except: :completed
 
   FORMS = {
@@ -51,10 +49,6 @@ class Jobseekers::JobApplications::SelfDisclosureController < Jobseekers::BaseCo
 
   def form_params
     params.fetch(form_param_key, {}).permit(*form_class.fields)
-  end
-
-  def personal_details_date_of_birth
-    [form_param_key, :date_of_birth]
   end
 
   def job_application

@@ -2,6 +2,7 @@ class Jobseekers::JobApplications::SelfDisclosure::BaseForm
   include ActiveModel::Model
   include ActiveModel::Attributes
   include ActiveModel::Validations
+  include ActiveRecord::AttributeAssignment
 
   attr_reader :model
 

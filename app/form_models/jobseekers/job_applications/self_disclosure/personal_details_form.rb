@@ -8,7 +8,7 @@ module Jobseekers::JobApplications::SelfDisclosure
     attribute :country, :string
     attribute :postcode, :string
     attribute :phone_number, :string
-    attribute :date_of_birth, :date
+    attribute :date_of_birth, :date_with_error
     attribute :has_unspent_convictions, :boolean
     attribute :has_spent_convictions, :boolean
 
@@ -17,7 +17,7 @@ module Jobseekers::JobApplications::SelfDisclosure
     validates :city, presence: true
     validates :postcode, presence: true
     validates :phone_number, phone_number: true
-    validates :date_of_birth, presence: true
+    validates :date_of_birth, date: {}
     validates :has_unspent_convictions, inclusion: { in: [true, false] }
     validates :has_spent_convictions, inclusion: { in: [true, false] }
   end

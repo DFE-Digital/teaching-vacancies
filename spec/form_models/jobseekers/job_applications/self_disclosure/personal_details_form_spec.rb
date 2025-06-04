@@ -15,6 +15,8 @@ module Jobseekers::JobApplications::SelfDisclosure
       it { is_expected.to validate_presence_of(field) }
     end
 
+    it { is_expected.to validate_date_with_error_of(:date_of_birth) }
+
     %i[
       has_unspent_convictions
       has_spent_convictions
