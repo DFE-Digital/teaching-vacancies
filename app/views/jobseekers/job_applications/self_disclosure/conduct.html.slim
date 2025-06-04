@@ -12,19 +12,19 @@
   = form_with(model: @form, url: wizard_path(step), method: :patch) do |f|
     = f.govuk_error_summary
 
-    = f.govuk_radio_buttons_fieldset :is_known_to_children_services, legend: { size: "s", tag: "h1" } do
+    = f.govuk_radio_buttons_fieldset :is_known_to_children_services, legend: { size: "s", tag: "h2" } do
       = f.govuk_radio_button :is_known_to_children_services, "true"
       = f.govuk_radio_button :is_known_to_children_services, "false"
 
-    = f.govuk_radio_buttons_fieldset :has_been_dismissed, legend: { size: "s", tag: "h1" } do
+    = f.govuk_radio_buttons_fieldset :has_been_dismissed, legend: { size: "s", tag: "h2" } do
       = f.govuk_radio_button :has_been_dismissed, "true"
       = f.govuk_radio_button :has_been_dismissed, "false"
 
-    = f.govuk_radio_buttons_fieldset :has_been_disciplined, legend: { size: "s", tag: "h1" } do
+    = f.govuk_radio_buttons_fieldset :has_been_disciplined, legend: { size: "s", tag: "h2" } do
       = f.govuk_radio_button :has_been_disciplined, "true"
       = f.govuk_radio_button :has_been_disciplined, "false"
 
-    = f.govuk_radio_buttons_fieldset :has_been_disciplined_by_regulatory_body, legend: { size: "s", tag: "h1" } do
+    = f.govuk_radio_buttons_fieldset :has_been_disciplined_by_regulatory_body, legend: { size: "s", tag: "h2" } do
       = f.govuk_radio_button :has_been_disciplined_by_regulatory_body, "true"
       = f.govuk_radio_button :has_been_disciplined_by_regulatory_body, "false"
 

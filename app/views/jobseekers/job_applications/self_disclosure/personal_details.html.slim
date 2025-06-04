@@ -25,11 +25,11 @@
     h2.govuk-heading-m = t(".criminal_record.heading")
     p.govuk-hint = t(".criminal_record.description")
 
-    = f.govuk_radio_buttons_fieldset :has_unspent_convictions, legend: { size: "s", tag: "h1" } do
+    = f.govuk_radio_buttons_fieldset :has_unspent_convictions, legend: { size: "s", tag: "h2" } do
       = f.govuk_radio_button :has_unspent_convictions, "true"
       = f.govuk_radio_button :has_unspent_convictions, "false"
 
-    = f.govuk_radio_buttons_fieldset :has_spent_convictions, legend: { size: "s", tag: "h1" } do
+    = f.govuk_radio_buttons_fieldset :has_spent_convictions, legend: { size: "s", tag: "h2" } do
       = f.govuk_radio_button :has_spent_convictions, "true"
       = f.govuk_radio_button :has_spent_convictions, "false"
 
