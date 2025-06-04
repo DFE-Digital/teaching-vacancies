@@ -10,9 +10,6 @@
     "IE 11",
     "not dead"
   ],
-  "optionalDependenciesComments": {
-    "MoJ Frontend": "upload component version 3.x has broken styling with ;"
-  },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "moment": "^2.30.1",
