@@ -32,7 +32,7 @@ class SelfDisclosurePresenter
               in "sent"
                 t(".event.requested")
               end
-      actor = version.actor&.papertrail_display_name || "Jobseeker"
+      actor = version.actor&.papertrail_display_name || "TVS"
       timestamp = version.created_at.to_fs
       [label, "#{actor} - #{timestamp}"]
     end
