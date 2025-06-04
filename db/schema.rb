@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema[7.2].define(version: 2025_05_27_101345) do
-=======
-ActiveRecord::Schema[7.2].define(version: 2025_05_09_154018) do
->>>>>>> 444039301 (Add migration to add type to job applications)
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
