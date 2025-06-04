@@ -21,13 +21,10 @@ module Publishers
         render_wizard
       end
 
-      # spec/requests/publishers/vacancies/references_and_declarations_spec.rb
-      # :nocov:
       def update
         @form = form_class.new(params.fetch(form_key, {}).permit(form_class.fields))
         if @form.valid?
-          case step
-          when :collect_references
+          if step == :collect_references
             if @form.collect_references_and_declarations
               redirect_to next_wizard_path
             else
@@ -35,8 +32,8 @@ module Publishers
               finish_form
               redirect_to finish_wizard_path
             end
-          when :ask_references_email
-            update_for_ask_references_email
+          else
+            SelfDisclosureRequest.create_and_notify_all!(job_applications)
             finish_form
             redirect_to finish_wizard_path
           end
@@ -44,17 +41,8 @@ module Publishers
           render step
         end
       end
-      # :nocov:
 
       private
-
-      def update_for_ask_references_email
-        if @form.contact_applicants
-          SelfDisclosureRequest.create_and_notify_all!(job_applications)
-        else
-          SelfDisclosureRequest.create_all!(job_applications)
-        end
-      end
 
       def job_applications
         @batch.batchable_job_applications.map(&:job_application)
