@@ -4,10 +4,10 @@ title: Update your subject and teaching knowledge
 meta_description: Find out how to update your subject and teaching knowledge to help return to teaching.
 date_posted: 17/02/2025
 category_tags: apply
-card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/update-your-subject-and-teaching-knowledge.jpg"
+card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/update-your-subject-and-teaching-knowledge.png"
 ---
 
-![A student working at a computer while a teacher helps.](/content-assets/jobseeker-guides/return-to-teaching-in-england/update-your-subject-and-teaching-knowledge.jpg)
+![A student working at a computer while a teacher helps.](/content-assets/jobseeker-guides/return-to-teaching-in-england/update-your-subject-and-teaching-knowledge.png)
 
 If you’re returning to teaching, refreshing your subject and teaching knowledge will improve your confidence and prepare you for your return to the classroom.
 

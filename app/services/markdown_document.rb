@@ -13,9 +13,13 @@ class MarkdownDocument
   def self.all(section, subcategory)
     dir_path = Rails.root.join("app", "views", "content", section, subcategory)
 
-    Dir.children(dir_path).map do |file_name|
+    excluded_post_names = ["chris-story", "denas-story", "wills-story"]
+
+    posts = Dir.children(dir_path).map do |file_name|
       new(section: section, post_name: file_name.remove(".md"), subcategory: subcategory)
     end
+
+    posts.reject { |post| excluded_post_names.include?(post.post_name) }
   end
 
   def self.all_subcategories(section)
