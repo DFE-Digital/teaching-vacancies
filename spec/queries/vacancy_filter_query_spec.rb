@@ -109,13 +109,13 @@ RSpec.describe VacancyFilterQuery do
 
         it "will return vacancies associated with all schools" do
           expect(subject).to contain_exactly(
-                               vacancy1, vacancy2, vacancy3, vacancy4, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, special_vacancy1,
-                               special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6, faith_vacancy,
-                               non_faith_vacancy1, non_faith_vacancy2, non_faith_vacancy3, teaching_assistant_vacancy,
-                               hlta_vacancy, education_support_vacancy, sendco_vacancy,
-                               administration_hr_data_and_finance_vacancy, it_support_vacancy, pastoral_health_and_welfare_vacancy,
-                               other_leadership_vacancy, other_support_vacancy, catering_cleaning_and_site_management_vacancy
-                             )
+            vacancy1, vacancy2, vacancy3, vacancy4, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, special_vacancy1,
+            special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6, faith_vacancy,
+            non_faith_vacancy1, non_faith_vacancy2, non_faith_vacancy3, teaching_assistant_vacancy,
+            hlta_vacancy, education_support_vacancy, sendco_vacancy,
+            administration_hr_data_and_finance_vacancy, it_support_vacancy, pastoral_health_and_welfare_vacancy,
+            other_leadership_vacancy, other_support_vacancy, catering_cleaning_and_site_management_vacancy
+          )
         end
       end
 
@@ -125,11 +125,11 @@ RSpec.describe VacancyFilterQuery do
         it "will return vacancies associated with local authority maintained schools, academies and free schools" do
           expect(subject)
             .to contain_exactly(
-                  vacancy1, vacancy2, vacancy3, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, teaching_assistant_vacancy,
-                  hlta_vacancy, education_support_vacancy, sendco_vacancy,
-                  administration_hr_data_and_finance_vacancy, it_support_vacancy, pastoral_health_and_welfare_vacancy,
-                  other_leadership_vacancy, other_support_vacancy, catering_cleaning_and_site_management_vacancy
-                )
+              vacancy1, vacancy2, vacancy3, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, teaching_assistant_vacancy,
+              hlta_vacancy, education_support_vacancy, sendco_vacancy,
+              administration_hr_data_and_finance_vacancy, it_support_vacancy, pastoral_health_and_welfare_vacancy,
+              other_leadership_vacancy, other_support_vacancy, catering_cleaning_and_site_management_vacancy
+            )
         end
       end
     end
@@ -303,13 +303,13 @@ RSpec.describe VacancyFilterQuery do
 
         it "doesn't filter by role if it is not included in current job roles list" do
           expect(subject).to contain_exactly(
-                               vacancy1, vacancy2, vacancy3, vacancy4, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, special_vacancy1,
-                               special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6, faith_vacancy,
-                               non_faith_vacancy1, non_faith_vacancy2, non_faith_vacancy3, teaching_assistant_vacancy,
-                               hlta_vacancy, education_support_vacancy, sendco_vacancy,
-                               administration_hr_data_and_finance_vacancy, it_support_vacancy, pastoral_health_and_welfare_vacancy,
-                               other_leadership_vacancy, other_support_vacancy, catering_cleaning_and_site_management_vacancy
-                             )
+            vacancy1, vacancy2, vacancy3, vacancy4, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, special_vacancy1,
+            special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6, faith_vacancy,
+            non_faith_vacancy1, non_faith_vacancy2, non_faith_vacancy3, teaching_assistant_vacancy,
+            hlta_vacancy, education_support_vacancy, sendco_vacancy,
+            administration_hr_data_and_finance_vacancy, it_support_vacancy, pastoral_health_and_welfare_vacancy,
+            other_leadership_vacancy, other_support_vacancy, catering_cleaning_and_site_management_vacancy
+          )
         end
       end
 
@@ -356,10 +356,10 @@ RSpec.describe VacancyFilterQuery do
         it "correctly filters by multiple roles, including all roles selected" do
           expect(subject.count).to eq(14)
           expect(subject).to contain_exactly(
-                               vacancy1, vacancy2, vacancy4, catering_cleaning_and_site_management_vacancy, special_vacancy1,
-                               special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6, faith_vacancy,
-                               non_faith_vacancy1, non_faith_vacancy2, non_faith_vacancy3
-                             )
+            vacancy1, vacancy2, vacancy4, catering_cleaning_and_site_management_vacancy, special_vacancy1,
+            special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6, faith_vacancy,
+            non_faith_vacancy1, non_faith_vacancy2, non_faith_vacancy3
+          )
         end
       end
     end
