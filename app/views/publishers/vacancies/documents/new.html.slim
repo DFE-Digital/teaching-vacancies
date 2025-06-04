@@ -10,8 +10,6 @@
 
       = f.govuk_file_field :supporting_documents,
         javascript: true,
-        chooseFilesButtonText: "Choose many files",
-        noFileChosenText: "No files chosen",
         label: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" },
         hint: { text: t("helpers.hint.publishers_job_listing_documents_form.documents") },
         accept: ".doc, .docx, .pdf",
