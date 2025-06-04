@@ -60,9 +60,9 @@ FactoryBot.define do
 
     after :create do |job_application, options|
       if options.create_details
-        create_list :referee, 1, job_application: job_application, is_most_recent_employer: true
-        create_list :qualification, 3, job_application: job_application
-        create_list :training_and_cpd, 2, job_application: job_application
+        create_list(:referee, 1, job_application: job_application, is_most_recent_employer: true)
+        create_list(:qualification, 3, job_application: job_application)
+        create_list(:training_and_cpd, 2, job_application: job_application)
       end
 
       job_application.update_columns(

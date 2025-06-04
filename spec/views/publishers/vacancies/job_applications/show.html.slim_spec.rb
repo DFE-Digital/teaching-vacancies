@@ -4,8 +4,8 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
   let(:vacancy) { create(:vacancy, :expired, organisations: build_list(:school, 1)) }
   let(:job_application) do
     create(:native_job_application, :status_submitted, vacancy: vacancy,
-                                                training_and_cpds: build_list(:training_and_cpd, 1),
-                                                working_patterns: %w[full_time part_time])
+                                                       training_and_cpds: build_list(:training_and_cpd, 1),
+                                                       working_patterns: %w[full_time part_time])
   end
 
   before do

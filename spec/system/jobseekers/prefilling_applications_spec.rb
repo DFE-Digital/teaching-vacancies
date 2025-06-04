@@ -26,8 +26,8 @@ RSpec.describe "Jobseekers can prefill applications" do
       let(:professional_body_membership) { build(:professional_body_membership) }
       let!(:previous_application) do
         create(:native_job_application, :status_submitted, create_details: true, jobseeker:, qualified_teacher_status: "yes", qualified_teacher_status_year: "2020", created_at: 1.year.ago,
-                                                    referees: [referee], employments: [employment1, employment2], qualifications: [qualification1, qualification2],
-                                                    professional_body_memberships: [professional_body_membership])
+                                                           referees: [referee], employments: [employment1, employment2], qualifications: [qualification1, qualification2],
+                                                           professional_body_memberships: [professional_body_membership])
       end
 
       it "prefills the new application with the previous application details, not the profile details and marks steps as imported`" do
