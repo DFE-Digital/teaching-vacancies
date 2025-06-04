@@ -1,5 +1,5 @@
 class VacancyLocationQuery < LocationQuery
-  def initialize(scope = Vacancy.all)
+  def initialize(scope)
     @scope = scope
   end
 
