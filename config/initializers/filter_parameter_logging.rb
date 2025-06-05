@@ -82,6 +82,10 @@ Rails.application.config.filter_parameters += %i[
   not_fit_to_practice
   able_to_undertake_role
   country
+  under_investigation_details
+  warning_details
+  unable_to_undertake_reason
+  country
   address_line_1
   address_line_2
   date_of_birth
@@ -97,9 +101,6 @@ Rails.application.config.filter_parameters += %i[
   agreed_for_criminal_record
   agreed_for_organisation_update
   agreed_for_information_sharing
-  under_investigation_details
-  warning_details
-  unable_to_undertake_reason
 ] + [
   /^age$/i,
 ]
