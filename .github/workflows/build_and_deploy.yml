@@ -128,16 +128,6 @@ jobs:
           echo "DOCKER_IMAGE_TAG=${GIT_BRANCH}-${COMMIT_SHA}" >> $GITHUB_ENV
           echo "LINK_TO_RUN=https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> $GITHUB_ENV
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-            registry: ghcr.io
-            username: ${{ github.repository_owner }}
-            password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Restore swagger
         uses: actions/cache/restore@v4
         id: swagger-cache
@@ -145,6 +135,18 @@ jobs:
           path: 'swagger'
           key: ${{ runner.os }}-swagger-${{ hashFiles('spec/swagger_helper.rb', 'spec/requests/publishers/ats_api/v1/**', 'app/controllers/publishers/ats_api/v1/**') }}
           fail-on-cache-miss: true
+
+      - name: Build and push docker image
+        id: build-image
+        uses: DFE-Digital/github-actions/build-docker-image@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          context: .
+          docker-repository: ${{ env.DOCKER_REPOSITORY }}
+          max-cache: true
+          reuse-cache: true
+          snyk-token: ${{ secrets.SNYK_TOKEN }}
+          slack_webhook: ${{env.SLACK_WEBHOOK}}
 
       - name: Build and push docker image from builder target
         uses: docker/build-push-action@v6
@@ -212,18 +214,6 @@ jobs:
         if: ${{ success() }}
         run: docker image push --all-tags ${{ env.DOCKER_REPOSITORY }}
 
-      - name: Notify twd_tv_dev channel on build workflow failure
-        if: failure()
-        uses: rtCamp/action-slack-notify@v2.3.3
-        env:
-          SLACK_CHANNEL: twd_tv_dev
-          SLACK_USERNAME: CI Deployment
-          SLACK_TITLE: Build failure
-          SLACK_MESSAGE: |
-            Build failure on branch ${{env.GIT_BRANCH}} <!channel>
-            See: <${{ env.LINK_TO_RUN }}|Workflow run>
-          SLACK_WEBHOOK: ${{env.SLACK_WEBHOOK}}
-          SLACK_COLOR: failure
 
   deploy:
     name: Deploy app
