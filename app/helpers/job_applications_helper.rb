@@ -16,6 +16,7 @@ module JobApplicationsHelper
     shortlisted: "shortlisted",
     unsuccessful: "unsuccessful",
     withdrawn: "withdrawn",
+    interviewing: "interviewing",
   }.freeze
 
   JOB_APPLICATION_STATUS_TAG_COLOURS = {

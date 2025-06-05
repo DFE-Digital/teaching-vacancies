@@ -1,0 +1,17 @@
+en:
+  jobseekers:
+    job_applications:
+      self_disclosure:
+        confirmation:
+          page_title: Self-disclosure form
+          heading: Self-disclosure form
+          confirmation_declaration: Confirmation declaration
+          description:
+            html: >-
+              <p class="govuk-hint">Select all options in order to complete the declaration. You may be asked for a wet signature at your interview.</p>
+          agreed_for_processing: I agree that the information provided here may be processed in connection with recruitment purposes and I understand that an offer of employment may be withdrawn or disciplinary action may be taken if information is not disclosed by me and subsequently come to the organisation’s attention.
+          agreed_for_criminal_record: In accordance with the organisation’s procedures if required I agree to provide a valid criminal record certificate and consent to the organisation clarifying any information provided on the disclosure with the agencies providing it.
+          agreed_for_organisation_update: I agree to inform the organisation within 24 hours if I am subsequently investigated by any agency or organisation in relation to concerns about my behaviour towards children or young people.
+          agreed_for_information_sharing: I understand that the information contained on this form, the results of the criminal record check and information supplied by third parties may be supplied by the organisation to other persons or organisations in circumstances where this is considered necessary to safeguard children.
+          signature: Signature
+          provide_signature: Please provide your signature below.

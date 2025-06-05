@@ -1,0 +1,40 @@
+en:
+  jobseekers:
+    job_applications:
+      self_disclosure:
+        personal_details:
+          page_title: Self-disclosure form
+          heading: Self-disclosure form
+          description:
+            html: >-
+              <p class="govuk-hint">You are being asked to complete this form because the role you are applying for is exempt from the Rehabilitation of Offenders Act 1974 in England, Scotland and Wales, or the Rehabilitation of Offenders (Northern Ireland) Order 1978 and involves contact with children or young people.</p>
+              <p class="govuk-hint">As the role you have applied for involves work with children, you will also be required to undergo the relevant vetting and barring checks.</p>
+              <p class="govuk-hint">All information you provide will be treated as confidential and managed in accordance with relevant data protection legislation and guidance. You have a legal right to access any information held about you.</p>
+          personal_details: Personal details
+          criminal_record:
+            heading: Criminal record declaration
+            description: The role is exempt from the Rehabilitation of Offenders Act 1974 in England, Scotland and Wales or the Rehabilitation of Offenders (Northern Ireland) Order 1978. You are therefore required to declare all unspent convictions and conditional cautions and all spent convictions and adult cautions that are not protected (i.e. eligible to be filtered).
+          date_of_birth_hint: For example, 27 3 2007
+
+  helpers:
+    legend:
+      jobseekers_job_applications_self_disclosure_personal_details_form:
+        date_of_birth: Date of birth
+        has_unspent_convictions: Do you have any unspent conditional cautions or convictions in the UK or overseas?
+        has_spent_convictions: Do you have any spent adult cautions (simple or conditional) or convictions in the UK or overseas that are not protected (i.e. eligible to be filtered) as defined by the Rehabilitation of Offenders Act 1974 in England, Scotland and Wales or the Rehabilitation of Offenders (Northern Ireland) Order 1978?
+    label:
+      jobseekers_job_applications_self_disclosure_personal_details_form:
+        name: Name
+        previous_names: Previous name(s)
+        address_line_1: Address line 1
+        address_line_2: Address line 2 (optional)
+        city: Town or city
+        country: Country (optional)
+        postcode: Postcode
+        phone_number: Telephone/mobile number
+        has_unspent_convictions_options:
+          "true": "Yes"
+          "false": "No"
+        has_spent_convictions_options:
+          "true": "Yes"
+          "false": "No"

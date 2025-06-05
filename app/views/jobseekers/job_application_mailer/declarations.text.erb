@@ -1,0 +1,3 @@
+# <%= t(".heading", job_title: @vacancy.job_title, organisation_name: @organisation_name) %>
+
+<%= t(".self_disclosure_info", link: notify_link(jobseekers_job_application_self_disclosure_url(@job_application, Wicked::FIRST_STEP), t(".self_disclosure_form"))) %>
