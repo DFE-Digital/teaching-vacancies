@@ -88,4 +88,25 @@ shared:
     - first_name
     - last_name
     - phone_number
-
+  self_disclosures:
+    - name
+    - previous_names
+    - address_line_1
+    - address_line_2
+    - city
+    - country
+    - postcode
+    - phone_number
+    - date_of_birth
+    - has_unspent_convictions
+    - has_spent_convictions
+    - is_barred
+    - has_been_refered
+    - is_known_to_children_services
+    - has_been_dismissed
+    - has_been_disciplined
+    - has_been_disciplined_by_regulatory_body
+    - agreed_for_processing
+    - agreed_for_criminal_record
+    - agreed_for_organisation_update
+    - agreed_for_information_sharing
