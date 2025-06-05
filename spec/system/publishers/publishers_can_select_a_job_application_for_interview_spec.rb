@@ -58,10 +58,10 @@ RSpec.describe "Publishers can select a job application for interview" do
         # expect(ActionMailer::Base.deliveries.map(&:to).flatten).to contain_exactly(current_referee.email, old_referee.email, job_application.email_address, job_application.email_address)
         expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
           .to eq({
-                   current_referee.email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
-                   old_referee.email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
-                   job_application.email => ["Declarations", "References are being collected for role #{vacancy.job_title} at #{organisation.name}"],
-                 })
+            current_referee.email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
+            old_referee.email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
+            job_application.email => ["Declarations", "References are being collected for role #{vacancy.job_title} at #{organisation.name}"],
+          })
       end
 
       context "when not contacting applicant" do
@@ -80,7 +80,7 @@ RSpec.describe "Publishers can select a job application for interview" do
             .to eq({
               current_referee.email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
               old_referee.email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
-              job_application.email => ["Declarations"],
+              job_application.email => %w[Declarations],
             })
         end
 
