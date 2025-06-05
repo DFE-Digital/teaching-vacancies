@@ -1,8 +1,8 @@
 class Publishers::Vacancies::JobApplications::SelfDisclosureController < Publishers::Vacancies::JobApplications::BaseController
-  before_action :redirect_to_job_application, unless: -> { job_application.self_disclosure_request.present? }
+  before_action :set_job_application
 
   def show
-    @self_disclosure = SelfDisclosurePresenter.new(job_application)
+    @self_disclosure = SelfDisclosurePresenter.new(@job_application)
 
     respond_to do |format|
       format.html
@@ -11,10 +11,10 @@ class Publishers::Vacancies::JobApplications::SelfDisclosureController < Publish
   end
 
   def update
-    job_application.self_disclosure_request.manually_completed!
+    @job_application.self_disclosure_request.manually_completed!
 
     flash[:success] = t("jobseekers.job_applications.self_disclosure.review.completed.manually_completed")
-    redirect_to organisation_job_job_application_self_disclosure_path(vacancy.id, job_application.id)
+    redirect_to organisation_job_job_application_self_disclosure_path(vacancy.id, @job_application.id)
   end
 
   private
@@ -30,11 +30,7 @@ class Publishers::Vacancies::JobApplications::SelfDisclosureController < Publish
     )
   end
 
-  def job_application
-    @job_application ||= JobApplication.includes(:self_disclosure_request).find(params[:job_application_id])
-  end
-
-  def redirect_to_job_application
-    redirect_to organisation_job_job_application_path(vacancy.id, job_application.id)
+  def set_job_application
+    @job_application = JobApplication.includes(:self_disclosure_request).find(params[:job_application_id])
   end
 end

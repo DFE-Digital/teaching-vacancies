@@ -8,7 +8,7 @@ en:
           barred_list_declaration: Barred list declaration
           description:
             - "It is a criminal offence to apply for or accept a position working with children if you have been barred from or listed as unsuitable to engage in regulated activity/work with children."
-            - "If this role has been defined as regulated activity or work it will also be subject to an enhanced with barred list check in England, Northern Ireland and Wales or checks under the Protecting Vulnerable Groups scheme in Scotland." 
+            - "If this role has been defined as regulated activity or work it will also be subject to an enhanced with barred list check in England, Northern Ireland and Wales or checks under the Protecting Vulnerable Groups scheme in Scotland."
 
   helpers:
     legend:

@@ -312,15 +312,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_30_144026) do
   create_table "job_references", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "reference_id", null: false
     t.boolean "complete", default: false, null: false
-    t.boolean "can_give_reference", default: true, null: false
-    t.boolean "is_reference_sharable", default: false, null: false
+    t.boolean "can_give_reference"
+    t.boolean "is_reference_sharable"
     t.text "how_do_you_know_the_candidate_ciphertext"
     t.string "employment_start_date_ciphertext"
-    t.boolean "currently_employed", default: false, null: false
+    t.boolean "currently_employed"
     t.text "reason_for_leaving_ciphertext"
-    t.boolean "would_reemploy_current", default: false, null: false
+    t.boolean "would_reemploy_current"
     t.text "would_reemploy_current_reason_ciphertext"
-    t.boolean "would_reemploy_any", default: false, null: false
+    t.boolean "would_reemploy_any"
     t.text "would_reemploy_any_reason_ciphertext"
     t.string "punctuality_ciphertext"
     t.string "working_relationships_ciphertext"

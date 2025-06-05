@@ -42,7 +42,6 @@ RSpec.describe "Publishers can select a job application for interview" do
 
       run_with_publisher_and_organisation(publisher, organisation) do
         publisher_ats_pre_interview_checks_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
-        sleep 35
       end
     end
 
