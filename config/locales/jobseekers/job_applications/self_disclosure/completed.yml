@@ -1,0 +1,9 @@
+en:
+  jobseekers:
+    job_applications:
+      self_disclosure:
+        completed:
+          page_title: Self-disclosure form
+          panel_text: Self-disclosure form completed
+          heading: What happens next?
+          description: Thank you for completing the declaration, your declaration will be sent to the school for review.

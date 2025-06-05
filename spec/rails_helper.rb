@@ -53,6 +53,7 @@ end
 
 Rails.root.glob("spec/support/**/*.rb").each { |f| require f }
 Rails.root.glob("spec/components/shared_examples/**/*.rb").each { |f| require f }
+Rails.root.glob("spec/page_objects/sections/**/*.rb").each { |f| require f }
 Rails.root.glob("spec/page_objects/**/*.rb").each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
