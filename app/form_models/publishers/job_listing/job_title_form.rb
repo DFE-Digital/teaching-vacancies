@@ -1,7 +1,7 @@
 class Publishers::JobListing::JobTitleForm < Publishers::JobListing::VacancyForm
   include ActionView::Helpers::SanitizeHelper
 
-  attr_accessor :job_title, :status
+  attr_accessor :job_title
 
   validates :job_title, presence: true
   validates :job_title, length: { minimum: 4, maximum: 75 }, if: -> { job_title.present? }

@@ -18,6 +18,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       working_patterns: %w[part_time],
       other_start_date_details: "September 2022",
       start_date_type: "other",
+      publish_on: publish_on,
       starts_on: nil,
     )
   end
@@ -29,7 +30,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
   let(:job_roles) { vacancy.job_roles }
   let(:working_patterns) { %w[full_time] }
   let(:expires_at) { Time.zone.today + 30.days }
-  let(:publish_on) { nil }
+  let(:publish_on) { 1.week.ago }
   let(:params) do
     {
       external_reference: "new-ref",
@@ -45,7 +46,6 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       salary: vacancy.salary,
       schools: school_urns,
       publisher_ats_api_client_id: publisher_ats_api_client_id,
-      publish_on: publish_on,
     }
   end
 
@@ -188,7 +188,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
   end
 
   context "when expires_at date is in the past" do
-    let(:expires_at) { Date.current - 1.week }
+    let(:expires_at) { Date.current - 1.day }
 
     it "returns a validation error" do
       expect(update_vacancy_service).to eq(
