@@ -12,7 +12,7 @@ en:
             contact_applicants:
               inclusion: Select yes if you would like the service to email applicants that you are collecting references.
 
-        publishers/job_application/mark_as_received_form:
+        publishers/job_application/mark_reference_as_received_form:
           attributes:
             reference_satisfactory:
               inclusion: Select yes if the reference received is satisfactory
@@ -45,7 +45,7 @@ en:
         contact_applicants_options:
           false: You will need to reach out to the candidate directly to inform them you will be collecting references.
 
-      publishers_job_application_mark_as_received_form:
+      publishers_job_application_mark_reference_as_received_form:
         reference_satisfactory_options:
           true: "This reference will be marked as complete"
           false: "This reference will remain as received"
@@ -69,7 +69,7 @@ en:
           true: "Yes"
           false: "No"
 
-      publishers_job_application_mark_as_received_form:
+      publishers_job_application_mark_reference_as_received_form:
         reference_satisfactory_options:
           true: "Yes"
           false: "No"
