@@ -68,6 +68,7 @@ RSpec.describe "Publishers can select a job application for interview" do
         before do
           choose "No"
           click_on "Save and continue"
+          find("#interviewing") # make sure controller has finished its jobs
         end
 
         it "only sends referee emails" do
