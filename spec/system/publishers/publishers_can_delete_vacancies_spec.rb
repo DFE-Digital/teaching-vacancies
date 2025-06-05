@@ -1,5 +1,7 @@
 require "rails_helper"
 
+# could be converted to a request spec?
+# runtime: 7 seconds
 RSpec.describe "School deleting vacancies" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }

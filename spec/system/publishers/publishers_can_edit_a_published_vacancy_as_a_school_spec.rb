@@ -1,5 +1,10 @@
 require "rails_helper"
 
+# slow test (15.8 seconds). Not very cohesive
+# seems to do lots of sections - but does it do all of them?
+#
+# has_published_vacancy_review_heading? does several asserts and is used in many tests
+#
 RSpec.describe "Publishers can edit a vacancy" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }
@@ -8,6 +13,7 @@ RSpec.describe "Publishers can edit a vacancy" do
 
   after { logout }
 
+  # not sure what is so interesting about this vacancy?
   context "when editing a published vacancy" do
     let(:vacancy) { create(:vacancy, organisations: [school]) }
 
