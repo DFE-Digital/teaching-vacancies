@@ -54,14 +54,21 @@ RSpec.describe "Publishers can select a job application for interview" do
 
         expect {
           perform_enqueued_jobs
-        }.to change(ActionMailer::Base.deliveries, :count).by(3)
-        expect(ActionMailer::Base.deliveries.map(&:to).flatten).to contain_exactly(current_referee.email, old_referee.email, job_application.email_address)
+        }.to change(ActionMailer::Base.deliveries, :count).by(4)
+        # expect(ActionMailer::Base.deliveries.map(&:to).flatten).to contain_exactly(current_referee.email, old_referee.email, job_application.email_address, job_application.email_address)
+        expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
+          .to eq({
+            current_referee.email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
+            old_referee.email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
+            job_application.email => ["Declarations", "References are being collected for role #{vacancy.job_title} at #{organisation.name}"],
+          })
       end
 
       context "when not contacting applicant" do
         before do
           choose "No"
           click_on "Save and continue"
+          find_by_id("interviewing") # make sure controller has finished its jobs
         end
 
         it "only sends referee emails" do
@@ -69,8 +76,13 @@ RSpec.describe "Publishers can select a job application for interview" do
 
           expect {
             perform_enqueued_jobs
-          }.to change(ActionMailer::Base.deliveries, :count).by(2)
-          expect(ActionMailer::Base.deliveries.map(&:to).flatten).to contain_exactly(current_referee.email, old_referee.email)
+          }.to change(ActionMailer::Base.deliveries, :count).by(3)
+          expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
+            .to eq({
+              current_referee.email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
+              old_referee.email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
+              job_application.email => %w[Declarations],
+            })
         end
 
         context "with a received reference", :versioning do

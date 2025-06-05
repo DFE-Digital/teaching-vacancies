@@ -30,13 +30,11 @@ module Publishers
             else
               SelfDisclosureRequest.create_all!(job_applications)
               update_completed
-              finish_form
               redirect_to finish_wizard_path
             end
           else
             SelfDisclosureRequest.create_and_notify_all!(job_applications)
             update_completed
-            finish_form
             redirect_to finish_wizard_path
           end
         else
@@ -91,14 +89,6 @@ module Publishers
 
       def set_batch
         @batch = JobApplicationBatch.where(vacancy: vacancy).find params[:job_application_batch_id] unless step == Wicked::FINISH_STEP
-      end
-
-      def finish_form
-        job_applications.each do |job_application|
-          job_application.update!(status: :interviewing)
-        end
-
-        @batch.destroy!
       end
 
       def finish_wizard_path
