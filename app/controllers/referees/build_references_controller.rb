@@ -51,7 +51,8 @@ module Referees
     end
 
     def form_key
-      form_class.to_s.underscore.tr("/", "_")
+      # form_class.to_s.underscore.tr("/", "_")
+      ActiveModel::Naming.param_key(form_class)
     end
 
     def token
@@ -59,9 +60,7 @@ module Referees
     end
 
     def set_reference
-      # expire token after 12 weeks
-      @reference_request = ReferenceRequest.where(token: token)
-                                           .where(created_at: 12.weeks.ago..)
+      @reference_request = ReferenceRequest.active_token(token)
                                            .find(params[:reference_id])
       @reference = @reference_request.referee.job_reference
     end

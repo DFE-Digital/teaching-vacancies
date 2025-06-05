@@ -14,10 +14,7 @@ h1.govuk-heading-l = t(".heading")
 
   - JobReference::RATINGS_FIELDS.each do |field_name|
     = f.govuk_radio_buttons_fieldset field_name do
-      = f.govuk_radio_button field_name, "outstanding"
-      = f.govuk_radio_button field_name, "good"
-      = f.govuk_radio_button field_name, "satisfactory"
-      = f.govuk_radio_button field_name, "poor"
-      = f.govuk_radio_button field_name, "na"
+      - JobReference::RATING_OPTIONS.each do |option|
+        = f.govuk_radio_button field_name, option
 
   = f.govuk_submit t("buttons.continue")

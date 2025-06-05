@@ -4,7 +4,7 @@ require "rails_helper"
 
 module Publishers
   module JobApplication
-    RSpec.describe MarkAsReceivedForm do
+    RSpec.describe MarkReferenceAsReceivedForm do
       context "with no data" do
         let(:form) { described_class.new }
 

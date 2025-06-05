@@ -1,6 +1,6 @@
 module Publishers
   module JobApplication
-    class MarkAsReceivedForm
+    class MarkReferenceAsReceivedForm
       include ActiveModel::Model
       include ActiveModel::Validations
       include ActiveModel::Attributes

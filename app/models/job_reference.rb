@@ -14,6 +14,8 @@ class JobReference < ApplicationRecord
                       technical_competence
                       leadership].freeze
 
+  RATING_OPTIONS = %w[outstanding good satisfactory poor na].freeze
+
   REFERENCE_INFO_FIELDS = %i[under_investigation warnings allegations not_fit_to_practice able_to_undertake_role].freeze
 
   belongs_to :referee, foreign_key: :reference_id, inverse_of: :job_reference
@@ -24,6 +26,7 @@ class JobReference < ApplicationRecord
 
   RATINGS_FIELDS.each do |rating_field|
     has_encrypted rating_field
+    validates rating_field, inclusion: { in: RATING_OPTIONS, allow_nil: true }
   end
 
   REFERENCE_INFO_FIELDS.each do |field|

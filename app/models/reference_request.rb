@@ -13,6 +13,9 @@ class ReferenceRequest < ApplicationRecord
 
   validates :status, presence: true
 
+  # expire token after 12 weeks
+  scope :active_token, ->(token) { where(token: token, created_at: 12.weeks.ago..) }
+
   def sent?
     !created?
   end
