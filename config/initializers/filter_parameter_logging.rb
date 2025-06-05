@@ -62,6 +62,22 @@ Rails.application.config.filter_parameters += %i[
   baptism_date
   faith
   place_of_worship
+  country
+  address_line_1
+  address_line_2
+  date_of_birth
+  has_unspent_convictions
+  has_spent_convictions
+  is_barred
+  has_been_refered
+  is_known_to_children_services
+  has_been_dismissed
+  has_been_disciplined
+  has_been_disciplined_by_regulatory_body
+  agreed_for_processing
+  agreed_for_criminal_record
+  agreed_for_organisation_update
+  agreed_for_information_sharing
 ] + [
   /^age$/i,
 ]

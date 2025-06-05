@@ -485,3 +485,35 @@ shared:
     - exam_taken
     - jobseeker_profile_id
     - job_application_id
+  :self_disclosure_requests:
+    - id
+    - job_application_id
+    - status
+    - created_at
+    - updated_at
+  :self_disclosures:
+    - id
+    - self_disclosure_request_id
+    - created_at
+    - updated_at
+    - name
+    - previous_names
+    - address_line_1
+    - address_line_2
+    - city
+    - country
+    - postcode
+    - phone_number
+    - date_of_birth
+    - has_unspent_convictions
+    - has_spent_convictions
+    - is_barred
+    - has_been_referred
+    - is_known_to_children_services
+    - has_been_dismissed
+    - has_been_disciplined
+    - has_been_disciplined_by_regulatory_body
+    - agreed_for_processing
+    - agreed_for_criminal_record
+    - agreed_for_organisation_update
+    - agreed_for_information_sharing
