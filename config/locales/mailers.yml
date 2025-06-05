@@ -129,6 +129,11 @@ en:
         advice: To improve your application for next time, read advice from experienced teachers and school leaders on %{link}.
         application_advice_link_text: writing a great application
         subject: Your job application has been unsuccessful
+      declarations:
+        subject: Declarations
+        heading: Self-disclosure form link
+        self_disclosure_form: self-disclosure form
+        self_disclosure_info: Complete your self-disclosure form
       job_listing_ended_early:
         body: |
           Unfortunately, %{organisation_name} has ended the job listing early and you can no longer apply for the role.
