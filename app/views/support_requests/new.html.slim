@@ -26,6 +26,7 @@
       = f.govuk_fieldset legend: { text: t("helpers.legend.support_request_form.screenshot"), size: "m" }
         p.govuk-body = t(".screenshot_description")
         = f.govuk_file_field :screenshot,
+          javascript: true,
           accept: "image/jpeg, image/png",
           enctype: "multipart/form-data"
 

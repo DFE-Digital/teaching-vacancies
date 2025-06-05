@@ -213,9 +213,9 @@ en:
       publishers_job_listing_application_link_form:
         application_link: For example, https://www.example.com
       publishers_job_listing_application_form_form:
-        application_form: You can only upload a PDF or DOCX file under 10MB
+        application_form: You can only upload a PDF or DOCX file under 20MB
       publishers_job_listing_documents_form:
-        documents: You can only upload PDF or DOCX files under 10MB
+        documents: You can only upload PDF or DOCX files under 20MB, You can upload multiple files at the same time.
       publishers_job_listing_feedback_form:
         email: >-
           We'll only use this to tell you about opportunities to take part in user research that helps us improve

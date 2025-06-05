@@ -1,6 +1,5 @@
 class Publishers::JobListing::DocumentsForm < Publishers::JobListing::VacancyForm
-  validates :supporting_documents, form_file: DOCUMENT_VALIDATION_OPTIONS
-  validate :document_presence
+  validates :supporting_documents, presence: true, if: -> { vacancy.include_additional_documents }
 
   attr_accessor :supporting_documents
 
@@ -10,14 +9,5 @@ class Publishers::JobListing::DocumentsForm < Publishers::JobListing::VacancyFor
 
   def params_to_save
     { completed_steps: params[:completed_steps] }
-  end
-
-  private
-
-  def document_presence
-    return unless vacancy.include_additional_documents
-    return if supporting_documents.present?
-
-    errors.add(:supporting_documents, :blank)
   end
 end

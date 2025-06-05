@@ -16,7 +16,8 @@
 
       - if vacancy.application_form.blank? || (params[:application_form_staged_for_replacement].present? || local_assigns[:application_form_staged_for_replacement])
         = f.govuk_file_field :application_form,
-            label: { size: "m" },
+          javascript: true,
+          label: { size: "m" },
             accept: ".doc, .docx, .pdf",
             enctype: "multipart/form-data"
       - else
