@@ -52,4 +52,14 @@ RSpec.describe Jobseekers::JobApplicationMailer do
       expect(:jobseeker_job_listing_ended_early).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
     end
   end
+
+  describe "#declarations" do
+    let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+    let(:mail) { described_class.declarations(job_application) }
+
+    it "sends a `declarations` email" do
+      expect(mail.subject).to eq("Declarations")
+      expect(mail.to).to eq([jobseeker.email])
+    end
+  end
 end
