@@ -115,6 +115,9 @@ Rails.application.routes.draw do
       get :post_submit
       post :withdraw
       resource :feedback, only: %i[create], controller: "job_applications/feedbacks"
+      resources :self_disclosure, only: %i[show update], controller: "job_applications/self_disclosure" do
+        get :completed, on: :collection
+      end
     end
 
     scope as: :job, path: ":job_id" do
@@ -407,6 +410,7 @@ Rails.application.routes.draw do
         member do
           get :pre_interview_checks
         end
+        resource :self_disclosure, only: %i[show update], controller: "publishers/vacancies/job_applications/self_disclosure"
       end
       resources :job_application_batches, only: %i[] do
         resources :references_and_declarations, only: %i[show update], controller: "publishers/vacancies/references_and_declarations"
