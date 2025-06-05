@@ -257,7 +257,7 @@ en:
           step_title: Education and qualifications
           title: Education and qualifications — Application
         referees:
-          description_html: You must include details for a referee from your current or most recent employer. If you did not work with children in this role, you must include at least one referee from the last job where you worked with children. Schools must contact your referees in compliance with %{link} 
+          description_html: You must include details for a referee from your current or most recent employer. If you did not work with children in this role, you must include at least one referee from the last job where you worked with children. Schools must contact your referees in compliance with %{link}.
           kcsie: Keeping children safe in education statutory guidance
           heading: References
           no_references: No referees specified
@@ -479,7 +479,8 @@ en:
           success: Your referee was deleted
         edit:
           caption: References
-          description_html: Schools must contact your referees in compliance with %{link}. You can ask to be told before a school contacts your referees, but we cannot guarantee the school will do so.
+          description:
+            html: If you are shortlisted, your referees may be contacted before your interview. Schools must contact your referees in compliance with %{link}. You can ask to be told before a school contacts your referees, but we cannot guarantee the school will do so.
           kcsie: Keeping children safe in education statutory guidance
           heading: Edit a referee
           title: Edit a referee — Application
@@ -495,7 +496,8 @@ en:
         name: Name
         new:
           caption: References
-          description_html: Schools must contact your referees in compliance with %{link}. You can ask to be told before a school contacts your referees, but we cannot guarantee the school will do so.
+          description:
+            html: If you are shortlisted, your referees may be contacted before your interview. Schools must contact your referees in compliance with %{link}. You can ask to be told before a school contacts your referees, but we cannot guarantee the school will do so.
           kcsie: Keeping children safe in education statutory guidance
           heading: Add a referee
           title: Add a referee — Application
