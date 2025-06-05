@@ -36,6 +36,12 @@ module PageObjects
         publisher_applying_for_the_job: "Publisher::ApplyingForTheJobPage",
         publisher_how_to_receive_applications: "Publisher::HowToReceiveApplicationsPage",
         publisher_application_link: "Publisher::ApplicationLinkPage",
+        publisher_ats_self_disclosure: "Publisher::Ats::SelfDisclosurePage",
+        jobseeker_self_disclosure_personal_details: "Jobseeker::JobApplications::SelfDisclosure::PersonalDetailPage",
+        jobseeker_self_disclosure_barred_list: "Jobseeker::JobApplications::SelfDisclosure::BarredListPage",
+        jobseeker_self_disclosure_conduct: "Jobseeker::JobApplications::SelfDisclosure::ConductPage",
+        jobseeker_self_disclosure_confirmation: "Jobseeker::JobApplications::SelfDisclosure::ConfirmationPage",
+        jobseeker_self_disclosure_completed: "Jobseeker::JobApplications::SelfDisclosure::CompletedPage",
       }.each do |page_name, page_class|
         full_page_class = "PageObjects::Pages::#{page_class}"
 
