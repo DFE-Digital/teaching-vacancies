@@ -350,7 +350,6 @@ shared:
     - created_at
     - updated_at
     - recaptcha_score
-    - active
     - unsubscribed_at
   vacancies:
     - id

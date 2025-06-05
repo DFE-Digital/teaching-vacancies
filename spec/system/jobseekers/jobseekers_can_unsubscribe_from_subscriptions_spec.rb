@@ -17,12 +17,8 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
       expect(page).to have_content(I18n.t("jobseekers.unsubscribe_feedbacks.new.header"))
     end
 
-    it "removes the email from the subscription" do
-      expect(subscription.reload.email).to be_blank
-    end
-
     it "updates the subscription status" do
-      expect(subscription.reload.active).to eq(false)
+      expect(subscription.reload).to be_discarded
     end
 
     context "when jobseeker is not signed in" do

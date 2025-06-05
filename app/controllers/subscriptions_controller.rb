@@ -63,18 +63,18 @@ class SubscriptionsController < ApplicationController
   end
 
   def unsubscribe
-    subscription = Subscription.find_and_verify_by_token(token)
-    raise ActiveRecord::RecordNotFound unless subscription.active?
+    subscription = Subscription.kept.find_and_verify_by_token(token)
 
     @subscription = SubscriptionPresenter.new(subscription)
   end
 
   def destroy
-    subscription = Subscription.find_and_verify_by_token(token)
-    raise ActiveRecord::RecordNotFound unless subscription.active?
+    subscription = Subscription.kept.find_and_verify_by_token(token)
 
     trigger_subscription_event(:job_alert_subscription_unsubscribed, subscription)
-    subscription.unsubscribe
+    # will be destroyed tomorrow morning by RemoveInvalidSubscriptionsJob
+    # just keeping around long enough to collect feedback
+    subscription.discard
 
     redirect_to new_subscription_unsubscribe_feedback_path(subscription)
   end
