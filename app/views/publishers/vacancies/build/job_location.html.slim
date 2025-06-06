@@ -23,4 +23,9 @@
           text: { aria_label: "search schools" })
 
       div class="govuk-!-margin-top-6"
+        / .govuk-button-group
+        /   = f.govuk_submit t("buttons.continue"), class: "govuk-!-margin-bottom-5"
+        /
+        / = govuk_link_to(t("buttons.cancel"), organisation_jobs_with_type_path(:draft), class: "govuk-link--no-visited-state govuk-body-m")
+
         = render "publishers/vacancies/vacancy_form_partials/submit", f: f
