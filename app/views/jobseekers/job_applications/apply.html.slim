@@ -1,6 +1,6 @@
 - content_for :page_title_prefix, job_application_page_title_prefix(review_form, t(".title"))
 
-= job_application_review(@job_applicationm, show_sidebar: false) do |r|
+= job_application_review(@job_application, show_sidebar: false) do |r|
   - r.with_header do
     = render "banner"
 
