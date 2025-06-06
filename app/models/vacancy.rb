@@ -65,7 +65,7 @@ class Vacancy < ApplicationRecord
   enum :start_date_type, { specific_date: 0, date_range: 1, other: 2, undefined: 3, asap: 4 }
   # trashed: 2 and removed_from_external_system: 3 removed in discard_soft_deletes 29/4/25
   enum :status, { published: 0, draft: 1 }
-  enum :receive_applications, { email: 0, website: 1 }
+  enum :receive_applications, { email: 0, website: 1, uploaded_form: 2 }
   enum :extension_reason, { no_applications: 0, didnt_find_right_candidate: 1, other_extension_reason: 2 }
 
   enum :religion_type, { no_religion: 0, other_religion: 1, catholic: 2 }
@@ -317,6 +317,22 @@ class Vacancy < ApplicationRecord
 
   def is_a_teaching_or_middle_leader_role?
     job_roles.intersect?(%w[teacher head_of_year_or_phase head_of_department_or_curriculum sendco other_leadership])
+  end
+
+  def new_application_path
+    if has_uploaded_form?
+      Rails.application.routes.url_helpers.jobseekers_job_job_application_path(id)
+    else
+      Rails.application.routes.url_helpers.new_jobseekers_job_job_application_path(id)
+    end
+  end
+
+  def has_uploaded_form?
+    receive_applications == "uploaded_form"
+  end
+
+  def uses_either_native_or_uploaded_job_application_form?
+    enable_job_applications? || has_uploaded_form?
   end
 
   private

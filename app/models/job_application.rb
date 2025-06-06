@@ -19,6 +19,7 @@ class JobApplication < ApplicationRecord
     equal_opportunities: 6,
     ask_for_support: 7,
     declarations: 8,
+    upload_application_form: 13,
   }
 
   array_enum imported_steps: {
@@ -122,6 +123,14 @@ class JobApplication < ApplicationRecord
 
   def unexplained_employment_gaps
     @unexplained_employment_gaps ||= Jobseekers::JobApplications::EmploymentGapFinder.new(self).significant_gaps
+  end
+
+  def form_class_for(step)
+    "jobseekers/job_application/#{step}_form".camelize.constantize
+  end
+
+  def step_process
+    Jobseekers::JobApplications::JobApplicationStepProcess.new(job_application: self)
   end
 
   private

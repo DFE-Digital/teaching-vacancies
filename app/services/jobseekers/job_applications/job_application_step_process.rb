@@ -37,6 +37,10 @@ class Jobseekers::JobApplications::JobApplicationStepProcess
     @step_groups.values.flatten
   end
 
+  def validatable_steps
+    steps.excluding(:review).map(&:to_s)
+  end
+
   def next_step(step)
     steps[steps.index(step) + 1]
   end
