@@ -1,5 +1,7 @@
 .govuk-button-group
-  - if vacancy.status.nil? && current_step != :job_title
+  / on create with location, we want a continue button until the job title is filled in as drafts without job_titles
+  / can't be accessed sensibly (as they don't have titles so can't be referenced)
+  - if vacancy.job_title.nil? && current_step != :job_title
     = f.govuk_submit t("buttons.continue"), class: "govuk-!-margin-bottom-5"
   - else
     = f.govuk_submit t("buttons.save_and_continue"), class: "govuk-!-margin-bottom-5", "data-upload-documents-target": "saveListingButton"
