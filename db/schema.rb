@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_05_27_101345) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_06_150046) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -642,7 +642,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_27_101345) do
     t.text "benefits_details"
     t.date "starts_on"
     t.string "contact_email"
-    t.integer "status"
+    t.integer "status", null: false
     t.date "publish_on"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -713,7 +713,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_27_101345) do
     t.integer "religion_type"
     t.boolean "flexi_working_details_provided"
     t.datetime "discarded_at"
-    t.string "type", default: "PublishedVacancy", null: false
+    t.string "type", null: false
     t.index ["discarded_at"], name: "index_vacancies_on_discarded_at"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["external_reference", "publisher_ats_api_client_id"], name: "index_vacancies_on_external_ref_and_publisher_ats_client_id", unique: true

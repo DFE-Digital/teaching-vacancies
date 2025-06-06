@@ -65,6 +65,9 @@ class Vacancy < ApplicationRecord
   enum :start_date_type, { specific_date: 0, date_range: 1, other: 2, undefined: 3, asap: 4 }
   # trashed: 2 and removed_from_external_system: 3 removed in discard_soft_deletes 29/4/25
   enum :status, { published: 0, draft: 1 }
+
+  validates :status, presence: true
+
   enum :receive_applications, { email: 0, website: 1 }
   enum :extension_reason, { no_applications: 0, didnt_find_right_candidate: 1, other_extension_reason: 2 }
 
@@ -319,6 +322,15 @@ class Vacancy < ApplicationRecord
     job_roles.intersect?(%w[teacher head_of_year_or_phase head_of_department_or_curriculum sendco other_leadership])
   end
 
+  # temporary solution - don't do this validation on manually published vacancies
+  validate :no_duplicate_vacancy, if: -> { external? && job_title.present? && expires_at.present? && organisation_ids.present? }
+  # this validates presence of certain fields for external vacancies
+  validates_with ExternalVacancyValidator, if: :external?
+
+  def find_conflicting_vacancy
+    find_conflict_vacancy || find_duplicate_vacancy
+  end
+
   private
 
   def calculate_distance(search_coordinates, geolocation)
@@ -341,6 +353,29 @@ class Vacancy < ApplicationRecord
                          points.presence && points.first.factory.multi_point(points)
                        end
     reset_markers if persisted? && (listed? || pending?)
+  end
+
+  def no_duplicate_vacancy
+    if find_duplicate_vacancy
+      errors.add(:base, "A vacancy with the same job title, expiry date, contract type, working_patterns, phases and salary already exists for this organisation.")
+    end
+  end
+
+  def find_conflict_vacancy
+    Vacancy.where(
+      publisher_ats_api_client_id: publisher_ats_api_client_id,
+      external_reference: external_reference,
+    ).where.not(id: id).first
+  end
+
+  def find_duplicate_vacancy
+    Vacancy.joins(:organisations)
+           .where.not(id: id)
+           .where(job_title: job_title, expires_at: expires_at, organisations: { id: organisation_ids }, contract_type: contract_type, salary: salary)
+           .with_working_patterns(working_patterns)
+           .with_phases(phases)
+           .distinct
+           .first
   end
 end
 # rubocop:enable Metrics/ClassLength
