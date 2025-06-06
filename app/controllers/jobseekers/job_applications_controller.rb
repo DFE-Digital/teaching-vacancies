@@ -35,7 +35,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def pre_submit
-    @form = Jobseekers::JobApplication::PreSubmitForm.new(completed_steps: job_application.completed_steps, all_steps: all_steps)
+    @form = Jobseekers::JobApplication::PreSubmitForm.new(completed_steps: job_application.completed_steps, all_steps: step_process.validatable_steps)
     if @form.valid? && all_steps_valid?
       redirect_to jobseekers_job_application_review_path(@job_application)
     else
@@ -68,7 +68,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def apply
     @form = Jobseekers::JobApplication::PreSubmitForm.new(
       completed_steps: job_application.completed_steps,
-      all_steps: all_steps,
+      all_steps: step_process.validatable_steps,
     )
   end
 
@@ -151,7 +151,17 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def all_steps_valid?
     # Check that all steps are valid, in case we have changed the validations since the step was completed.
     # NB: Only validates top-level step forms. Does not validate individual qualifications, employments, or references.
-    Jobseekers::JobApplications::JobApplicationHandler.new(job_application, step_process).all_steps_valid?
+    step_process.validatable_steps.all? { |step| step_valid?(step) }
+  end
+
+  def step_valid?(step)
+    form_class = job_application.form_class_for(step)
+    attributes = form_class.load_form(job_application)
+    form = form_class.new(attributes)
+
+    form.valid?.tap do
+      job_application.errors.merge!(form.errors)
+    end
   end
 
   def employments
@@ -210,7 +220,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def review_form_params
     params.require(:jobseekers_job_application_review_form).permit(:confirm_data_accurate, :confirm_data_usage, update_profile: [])
-          .merge(completed_steps: job_application.completed_steps, all_steps: all_steps)
+          .merge(completed_steps: job_application.completed_steps, all_steps: step_process.validatable_steps)
   end
 
   def withdraw_form_params
@@ -249,10 +259,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def quick_apply?
     previous_application? || profile.present?
-  end
-
-  def all_steps
-    Jobseekers::JobApplications::JobApplicationHandler.new(job_application, step_process).all_steps
   end
 end
 # rubocop:enable Metrics/ClassLength
