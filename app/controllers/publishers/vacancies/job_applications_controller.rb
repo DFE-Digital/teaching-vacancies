@@ -2,9 +2,9 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   include Jobseekers::QualificationFormConcerns
   include DatesHelper
 
-  helper_method :job_applications
-
   before_action :set_job_application, only: %i[show download_pdf]
+
+  before_action :set_job_applications, only: %i[index tag_single tag]
 
   def index
     @form = Publishers::JobApplication::TagForm.new
@@ -58,6 +58,12 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   private
 
+  def set_job_applications
+    @current_organisation = current_organisation
+    @vacancy = vacancy
+    @job_applications = vacancy.job_applications.not_draft
+  end
+
   def prepare_to_tag(job_applications, origin)
     @form = Publishers::JobApplication::TagForm.new(job_applications: job_applications)
     if @form.valid?
@@ -90,15 +96,5 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     else
       render "index"
     end
-  end
-
-  def job_applications
-    @job_applications ||= vacancy.job_applications.not_draft
-  end
-
-  def job_applications_sorted_by_virtual_attribute
-    # When we 'order' by a virtual attribute we have to do the sorting after all scopes.
-    # last_name is a virtual attribute as it is an encrypted column.
-    job_applications.sort_by(&sort.by.to_sym)
   end
 end
