@@ -166,6 +166,28 @@
   - referrer_counts
   - created_at
   - updated_at
+  job_references:
+    - token
+    - employment_start_date_ciphertext
+    - punctuality_ciphertext
+    - working_relationships_ciphertext
+    - customer_care_ciphertext
+    - adapt_to_change_ciphertext
+    - deal_with_conflict_ciphertext
+    - prioritise_workload_ciphertext
+    - team_working_ciphertext
+    - communication_ciphertext
+    - problem_solving_ciphertext
+    - general_attitude_ciphertext
+    - technical_competence_ciphertext
+    - leadership_ciphertext
+    - under_investigation_ciphertext
+    - warnings_ciphertext
+    - allegations_ciphertext
+    - not_fit_to_practice_ciphertext
+    - able_to_undertake_role_ciphertext
+  reference_requests:
+    - token
   :job_application_batches:
   - id
   - vacancy_id
@@ -199,3 +221,4 @@
   - agreed_for_criminal_record_ciphertext
   - agreed_for_organisation_update_ciphertext
   - agreed_for_information_sharing_ciphertext
+

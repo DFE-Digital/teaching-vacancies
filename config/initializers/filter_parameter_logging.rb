@@ -60,8 +60,26 @@ Rails.application.config.filter_parameters += %i[
   ethos_and_aims
   baptism_address
   baptism_date
+  employment_start_date
   faith
   place_of_worship
+  punctuality
+  working_relationships
+  customer_care
+  adapt_to_change
+  deal_with_conflict
+  prioritise_workload
+  team_working
+  communication
+  problem_solving
+  general_attitude
+  technical_competence
+  leadership
+  under_investigation
+  warnings
+  allegations
+  not_fit_to_practice
+  able_to_undertake_role
   country
   address_line_1
   address_line_2
