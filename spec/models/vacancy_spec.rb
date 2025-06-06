@@ -517,7 +517,7 @@ RSpec.describe Vacancy do
         invalid_school = School.new(email: "invalid")
         expect(invalid_school).not_to be_valid
 
-        expect(Vacancy.new(organisations: [invalid_school], publisher: publisher)).to be_valid
+        expect(Vacancy.new(organisations: [invalid_school], publisher: publisher, status: "draft")).to be_valid
       end
     end
   end
