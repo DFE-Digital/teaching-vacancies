@@ -8,14 +8,12 @@ RSpec.describe SelfDisclosureRequest do
   end
 
   describe "#.create_all!" do
-    let(:requests) { described_class.create_all!(job_applications) }
+    let(:requests) { described_class.create_all!(job_application) }
     let(:job_application) { create(:job_application) }
-    let(:job_applications) { [job_application] }
 
-    it { expect(requests.count).to eq(job_applications.count) }
-    it { expect(requests.first.job_application).to eq(job_application) }
-    it { expect(requests.first.self_disclosure).to be_nil }
-    it { expect(requests.first.status).to eq("manual") }
+    it { expect(requests.job_application).to eq(job_application) }
+    it { expect(requests.self_disclosure).to be_nil }
+    it { expect(requests.status).to eq("manual") }
 
     it "does not send the notification email" do
       expect { requests }
@@ -25,14 +23,12 @@ RSpec.describe SelfDisclosureRequest do
   end
 
   describe "#.create_and_notify_all!" do
-    let(:requests) { described_class.create_and_notify_all!(job_applications) }
+    let(:requests) { described_class.create_and_notify_all!(job_application) }
     let(:job_application) { create(:job_application) }
-    let(:job_applications) { [job_application] }
 
-    it { expect(requests.count).to eq(job_applications.count) }
-    it { expect(requests.first.job_application).to eq(job_application) }
-    it { expect(requests.first.self_disclosure).to be_present }
-    it { expect(requests.first.status).to eq("sent") }
+    it { expect(requests.job_application).to eq(job_application) }
+    it { expect(requests.self_disclosure).to be_present }
+    it { expect(requests.status).to eq("sent") }
 
     it "sends the notification email" do
       expect { requests }

@@ -51,7 +51,6 @@ module Referees
     end
 
     def form_key
-      # form_class.to_s.underscore.tr("/", "_")
       ActiveModel::Naming.param_key(form_class)
     end
 
@@ -63,6 +62,7 @@ module Referees
       @reference_request = ReferenceRequest.active_token(token)
                                            .find(params[:reference_id])
       @reference = @reference_request.referee.job_reference
+      @referee = @reference_request.referee
     end
 
     def finish_wizard_path

@@ -22,7 +22,6 @@ module Referees
     end
 
     def employment_start_date=(value)
-      # write_attribute :employment_start_date, date_from_multiparameter_hash(value)
       @employment_start_date = date_from_multiparameter_hash(value)
     end
 

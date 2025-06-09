@@ -2,9 +2,9 @@ en:
   referees:
     build_references:
       can_give:
-        page_title: Give a reference for Jane Smith
+        page_title: Give a reference for %{name}
       can_share:
-        page_title: Give a reference for Jane Smith
+        page_title: Give a reference for %{name}
       completed:
         page_title: Reference completed
         reference_completed: Reference completed
@@ -66,20 +66,20 @@ en:
         heading: Professional and character reference enquiry for %{name}
         candidate_details: Candidate details
         full_name: Full name
-        current_role: Current role
+        job_title: Job title
         organisation: Organisation
 
       reference_information:
-        page_title: Give a reference for Jane Smith
-        heading: Reference Information
+        page_title: Give a reference for %{name}
+        heading: Reference enquiry for %{name}
         caption: Part 3 of 5
 
       how_would_you_rate:
-        page_title: How would you rate Jane Smith?
-        heading: Reference enquiry for Jane Smith
+        page_title: How would you rate %{name}?
+        heading: Reference enquiry for %{name}
         caption: Part 4 of 5
 
       referee_details:
         page_title: Referee Details
-        heading: Reference enquiry for Jane Smith
+        heading: Reference enquiry for %{name}
         caption: Part 5 of 5

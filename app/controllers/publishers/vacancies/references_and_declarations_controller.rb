@@ -5,7 +5,7 @@ module Publishers
     class ReferencesAndDeclarationsController < JobApplications::BaseController
       include Wicked::Wizard
 
-      before_action :set_batch
+      before_action :set_batch, unless: -> { step == Wicked::FINISH_STEP }
 
       FORMS = {
         collect_references: Publishers::JobApplication::CollectReferencesForm,
@@ -22,19 +22,19 @@ module Publishers
       end
 
       def update
+        form_key = ActiveModel::Naming.param_key(form_class)
         @form = form_class.new(params.fetch(form_key, {}).permit(form_class.fields))
         if @form.valid?
           if step == :collect_references
             if @form.collect_references_and_declarations
               redirect_to next_wizard_path
             else
-              SelfDisclosureRequest.create_all!(job_applications)
-              update_completed
+              complete_process
               redirect_to finish_wizard_path
             end
           else
-            SelfDisclosureRequest.create_and_notify_all!(job_applications)
-            update_completed
+            # there are only 2 steps, so this one is the end by definition
+            complete_process
             redirect_to finish_wizard_path
           end
         else
@@ -44,20 +44,16 @@ module Publishers
 
       private
 
-      def update_completed
+      def complete_process
         JobApplicationBatch.transaction do
           job_applications.each do |job_application|
             if step == :collect_references
-              job_application.referees.reject { |r| r.reference_request.present? }.each do |referee|
-                referee.create_reference_request!(token: SecureRandom.uuid, status: :created)
-              end
+              SelfDisclosureRequest.create_all!(job_application)
+              ReferenceRequest.create_for_manual!(job_application)
             else
+              SelfDisclosureRequest.create_and_notify_all!(job_application)
               Publishers::CollectReferencesMailer.inform_applicant_about_references(job_application).deliver_later if @form.contact_applicants
-              job_application.referees.each do |referee|
-                reference_request = create_reference_request(referee)
-                reference = referee.create_job_reference!
-                Publishers::CollectReferencesMailer.collect_references(reference, reference_request.token).deliver_later
-              end
+              ReferenceRequest.create_for_external!(job_application)
             end
             job_application.update!(status: :interviewing)
           end
@@ -69,26 +65,12 @@ module Publishers
         FORMS.fetch(step)
       end
 
-      def form_key
-        ActiveModel::Naming.param_key(form_class)
-      end
-
       def job_applications
         @batch.batchable_job_applications.map(&:job_application)
       end
 
-      def create_reference_request(referee)
-        if referee.reference_request.present?
-          referee.reference_request.tap do |rr|
-            rr.update!(status: :requested)
-          end
-        else
-          referee.create_reference_request!(token: SecureRandom.uuid, status: :requested)
-        end
-      end
-
       def set_batch
-        @batch = JobApplicationBatch.where(vacancy: vacancy).find params[:job_application_batch_id] unless step == Wicked::FINISH_STEP
+        @batch = JobApplicationBatch.where(vacancy: vacancy).find params[:job_application_batch_id]
       end
 
       def finish_wizard_path

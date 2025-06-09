@@ -9,12 +9,12 @@ module Publishers
         def show; end
 
         def mark_as_received
-          @form = Publishers::JobApplication::MarkReferenceAsReceivedForm.new
+          @form = form_class.new
         end
 
         def update
           mark_params = params.fetch(param_key, {}).permit(:reference_satisfactory)
-          @form = Publishers::JobApplication::MarkReferenceAsReceivedForm.new(mark_params)
+          @form = form_class.new(mark_params)
           if @form.valid?
             @reference_request.update!(marked_as_complete: true) if @form.reference_satisfactory
             redirect_to organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, @reference_request.id)
@@ -25,8 +25,12 @@ module Publishers
 
         private
 
+        def form_class
+          Publishers::JobApplication::MarkReferenceAsReceivedForm
+        end
+
         def param_key
-          ActiveModel::Naming.param_key(Publishers::JobApplication::MarkReferenceAsReceivedForm)
+          ActiveModel::Naming.param_key(form_class)
         end
 
         def set_reference_request

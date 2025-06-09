@@ -201,10 +201,10 @@ en:
           na: N/A
     legend:
       referees_can_give_reference_form:
-        can_give_reference: Can you give a reference for Jane Smith?
+        can_give_reference: Can you give a reference for %{name}?
 
       referees_can_share_reference_form:
-        is_reference_sharable: Can your reference be shared with Jane Smith?
+        is_reference_sharable: Can your reference be shared with %{name}?
 
       referees_employment_reference_form:
         employment_start_date: Applicants employment start date

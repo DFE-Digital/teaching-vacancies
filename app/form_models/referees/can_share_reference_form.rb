@@ -2,13 +2,17 @@
 
 module Referees
   class CanShareReferenceForm < ReferenceForm
-    attribute :is_reference_sharable, :boolean
+    ATTRIBUTES = [:is_reference_sharable].freeze
 
-    validates :is_reference_sharable, inclusion: { in: [true, false], allow_nil: false }
+    ATTRIBUTES.each do |field|
+      attribute field, :boolean
+
+      validates field, inclusion: { in: [true, false], allow_nil: false }
+    end
 
     class << self
       def storable_fields
-        [:is_reference_sharable]
+        ATTRIBUTES
       end
     end
   end

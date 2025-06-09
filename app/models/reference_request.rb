@@ -21,4 +21,32 @@ class ReferenceRequest < ApplicationRecord
   end
 
   has_paper_trail skip: [:token]
+
+  class << self
+    def create_for_manual!(job_application)
+      job_application.referees.reject { |r| r.reference_request.present? }.each do |referee|
+        referee.create_reference_request!(token: SecureRandom.uuid, status: :created)
+      end
+    end
+
+    def create_for_external!(job_application)
+      job_application.referees.each do |referee|
+        reference_request = create_reference_request!(referee)
+        reference = referee.create_job_reference!
+        Publishers::CollectReferencesMailer.collect_references(reference, reference_request.token).deliver_later
+      end
+    end
+
+    private
+
+    def create_reference_request!(referee)
+      if referee.reference_request.present?
+        referee.reference_request.tap do |rr|
+          rr.update!(status: :requested)
+        end
+      else
+        referee.create_reference_request!(token: SecureRandom.uuid, status: :requested)
+      end
+    end
+  end
 end
