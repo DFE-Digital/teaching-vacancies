@@ -1,5 +1,5 @@
 namespace :vacancy do
-  desc "Update qualified_teacher_status from 'non_teacher' to 'no'"
+  desc "Convert vacancies with null statuses to drafts"
   task update_null_statuses: :environment do
     Vacancy.where(status: nil).find_each do |v|
       # use this rather than update_column so that type gets set automatically
