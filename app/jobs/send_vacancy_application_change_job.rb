@@ -2,16 +2,17 @@ class SendVacancyApplicationChangeJob < ApplicationJob
   queue_as :default
 
   def perform
-    Vacancy
-      .includes(:publisher)
+    Publisher
+      .joins(:vacancies)
       .where(
-        receive_applications: :email,
-        created_at: 18.months.ago...,
+        vacancies: {
+          receive_applications: :email,
+          created_at: 18.months.ago...,
+        },
       )
-      .select(:contact_email).distinct
-      .select("*")
-      .find_each do |vacancy|
-        Publishers::VacancyChangeMailer.notify(vacancy:).deliver_later
-      end
+      .distinct
+      .find_each do |publisher|
+      Publishers::VacancyChangeMailer.notify(publisher:).deliver_later
+    end
   end
 end
