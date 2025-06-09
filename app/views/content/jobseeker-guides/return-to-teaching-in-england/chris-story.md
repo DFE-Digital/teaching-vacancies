@@ -4,10 +4,10 @@ title: Chris's return to teaching story
 meta_description: Read Chris's stories about what it's like to return to teaching
 date_posted: 09/06/2025
 category_tags: apply
-card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/chris-story.jpg"
+card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/chris-story.png"
 ---
 
-![Chris smiling.](/content-assets/jobseeker-guides/return-to-teaching-in-england/chris-story.jpg)
+![Chris smiling.](/content-assets/jobseeker-guides/return-to-teaching-in-england/chris-story.png)
 
 It was not until university, where I studied Design and Technology, that the idea of teaching occurred to me; as I really enjoyed the subject and had always enjoyed sharing and imparting knowledge to others, so I decided to give teaching a go.   
 
