@@ -325,6 +325,11 @@ class Vacancy < ApplicationRecord
     enable_job_applications? || uploaded_form?
   end
 
+  def build_job_application_for(jobseeker)
+    klass = uploaded_form? ? UploadedJobApplication : NativeJobApplication
+    jobseeker.job_applications.build(vacancy: self, type: klass.name)
+  end
+
   private
 
   def calculate_distance(search_coordinates, geolocation)
