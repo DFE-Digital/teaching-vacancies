@@ -95,12 +95,6 @@ class JobApplication < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  def email
-    # This method and its test can be removed once there are no job applications remaining which were submitted before
-    # we asked jobseekers for their emails as part of the application.
-    email_address.presence || jobseeker.email
-  end
-
   def submit!
     submitted!
     Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: self).deliver(vacancy.publisher)

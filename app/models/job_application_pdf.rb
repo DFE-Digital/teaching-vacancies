@@ -233,7 +233,7 @@ class JobApplicationPdf
       [I18n.t("last_name", scope:), job_application.last_name],
       [I18n.t("your_address", scope: address_scope), your_address],
       [I18n.t("phone_number", scope:), job_application.phone_number],
-      [I18n.t("email_address", scope:), job_application.email],
+      [I18n.t("email_address", scope:), job_application.email_address],
       [I18n.t("has_right_to_work_in_uk", scope: declaration_scope), visa_sponsorship_needed_answer(job_application)],
       [I18n.t("working_patterns", scope:), readable_working_patterns(job_application)],
     ]
