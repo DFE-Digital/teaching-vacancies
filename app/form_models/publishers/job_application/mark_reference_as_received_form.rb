@@ -5,8 +5,12 @@ module Publishers
       include ActiveModel::Validations
       include ActiveModel::Attributes
 
-      attribute :reference_satisfactory, :boolean
-      validates :reference_satisfactory, inclusion: { in: [true, false], allow_nil: false }
+      ATTRIBUTES = [:reference_satisfactory].freeze
+
+      ATTRIBUTES.each do |field|
+        attribute field, :boolean
+        validates field, inclusion: { in: [true, false], allow_nil: false }
+      end
     end
   end
 end
