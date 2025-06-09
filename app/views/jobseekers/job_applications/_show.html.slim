@@ -3,7 +3,7 @@
   - r.with_above do
     = yield
 
-    - unless job_application.is_a?(UploadedJobApplication)
+    - unless vacancy.uploaded_form?
       .with_anchor-link-list class="govuk-!-display-none-print"
         = navigation_list(title: t(".application_sections")) do |navigation|
           - navigation.with_anchor text: t(".personal_details.heading"), href: "#personal_details"

@@ -12,13 +12,13 @@
     - unless @form.errors.any?
       = render "shared/error_messages", model: @job_application, presenter: ErrorSummaryPresenter.new(@job_application.errors)
 
-  - if job_application.is_a?(UploadedJobApplication)
+  - if vacancy.uploaded_form?
     p.govuk-body = t(".download_application_form")
 
   h2.govuk-heading-m = t(".heading")
 
   = govuk_task_list do |task_list|
-    - if job_application.is_a?(UploadedJobApplication)
+    - if vacancy.uploaded_form?
       - task_list.with_item(title: t("jobseekers.job_applications.build.personal_details.heading"), href: edit_jobseekers_uploaded_job_application_personal_details_path(job_application),
       html_attributes: { id: :personal_details },
       status: review_section_tag(job_application, :personal_details))

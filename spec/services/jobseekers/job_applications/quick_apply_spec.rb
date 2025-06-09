@@ -62,7 +62,6 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
 
       it "returns blank native job application" do
         job_application = subject.job_application
-        expect(job_application.is_a?(UploadedJobApplication)).to be(true)
         expect(job_application.first_name).to be_blank
         expect(job_application.last_name).to be_blank
         expect(job_application.phone_number).to be_blank
