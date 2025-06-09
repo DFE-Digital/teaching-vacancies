@@ -21,7 +21,7 @@
       = form_for @review_form, url: jobseekers_job_application_submit_path(job_application), method: :post do |f|
         = f.govuk_error_summary
 
-        - if current_jobseeker.jobseeker_profile.present? && !@job_application.is_a?(UploadedJobApplication)
+        - if current_jobseeker.jobseeker_profile.present? && !vacancy.uploaded_form?
           = f.govuk_check_boxes_fieldset(:update_profile) do
             p.govuk-body = open_in_new_tab_link_to t(".view_your_profile"), jobseekers_profile_path
             = f.govuk_check_box :update_profile, "1"

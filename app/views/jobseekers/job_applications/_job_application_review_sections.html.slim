@@ -1,4 +1,4 @@
-- if job_application.is_a?(UploadedJobApplication)
+- if vacancy.uploaded_form?
   = render "jobseekers/job_applications/uploaded_job_applications/review/personal_details", r: r, job_application: job_application
 - else
   = render "jobseekers/job_applications/review/personal_details", r: r, job_application: job_application
