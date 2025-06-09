@@ -20,11 +20,7 @@ class Jobseekers::JobApplications::QuickApply
   attr_reader :jobseeker, :vacancy
 
   def new_job_application
-    @new_job_application = if @vacancy.uploaded_form?
-                             jobseeker.uploaded_job_applications.create!(vacancy: vacancy)
-                           else
-                             jobseeker.native_job_applications.create!(vacancy: vacancy)
-                           end
+    vacancy.build_job_application_for(jobseeker).tap(&:save!)
   end
 
   def previously_submitted_application?
