@@ -5,7 +5,7 @@ class Jobseekers::JobApplications::QuickApply
   end
 
   def job_application
-    return new_job_application if @vacancy.has_uploaded_form?
+    return new_job_application if @vacancy.uploaded_form?
     return new_job_application unless has_data_available_to_prefill_with?
 
     if previously_submitted_application?
@@ -20,7 +20,7 @@ class Jobseekers::JobApplications::QuickApply
   attr_reader :jobseeker, :vacancy
 
   def new_job_application
-    @new_job_application = if @vacancy.has_uploaded_form?
+    @new_job_application = if @vacancy.uploaded_form?
                              jobseeker.uploaded_job_applications.create!(vacancy: vacancy)
                            else
                              jobseeker.native_job_applications.create!(vacancy: vacancy)
@@ -36,6 +36,6 @@ class Jobseekers::JobApplications::QuickApply
   end
 
   def has_data_available_to_prefill_with?
-    previously_submitted_application? || jobseeker_profile
+    previously_submitted_application? || jobseeker_profile.present?
   end
 end

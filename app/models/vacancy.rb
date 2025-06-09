@@ -314,19 +314,15 @@ class Vacancy < ApplicationRecord
   end
 
   def new_application_path
-    if has_uploaded_form?
+    if uploaded_form?
       Rails.application.routes.url_helpers.jobseekers_job_job_application_path(id)
     else
       Rails.application.routes.url_helpers.new_jobseekers_job_job_application_path(id)
     end
   end
 
-  def has_uploaded_form?
-    receive_applications == "uploaded_form"
-  end
-
   def uses_either_native_or_uploaded_job_application_form?
-    enable_job_applications? || has_uploaded_form?
+    enable_job_applications? || uploaded_form?
   end
 
   private

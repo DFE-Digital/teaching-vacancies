@@ -14,7 +14,7 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
         allow(jobseeker).to receive_message_chain(:native_job_applications, :create!).and_return(new_job_application)
         allow(jobseeker).to receive_message_chain(:job_applications, :not_draft, :any?).and_return(true)
         allow(jobseeker).to receive(:jobseeker_profile).and_return(nil)
-        allow(vacancy).to receive(:has_uploaded_form?).and_return(false)
+        allow(vacancy).to receive(:uploaded_form?).and_return(false)
       end
 
       it "prefills the new job application from the previous job application" do
@@ -35,7 +35,7 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
         allow(jobseeker).to receive_message_chain(:native_job_applications, :create!).and_return(new_job_application)
         allow(jobseeker).to receive_message_chain(:job_applications, :not_draft, :any?).and_return(false)
         allow(jobseeker).to receive(:jobseeker_profile).and_return(double("JobseekerProfile"))
-        allow(vacancy).to receive(:has_uploaded_form?).and_return(false)
+        allow(vacancy).to receive(:uploaded_form?).and_return(false)
       end
 
       it "prefills the new job application from the jobseeker profile" do
@@ -51,7 +51,7 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
       let(:vacancy) { create(:vacancy) }
 
       before do
-        allow(vacancy).to receive(:has_uploaded_form?).and_return(true)
+        allow(vacancy).to receive(:uploaded_form?).and_return(true)
       end
 
       it "creates a new draft job application for the new vacancy" do
