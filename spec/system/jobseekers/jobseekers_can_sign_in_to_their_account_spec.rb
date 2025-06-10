@@ -85,7 +85,7 @@ RSpec.describe "Jobseekers can sign in to their account" do
       expect(current_path).to eq(new_jobseeker_session_path)
 
       sign_in_jobseeker_govuk_one_login(jobseeker)
-      expect(current_path).to eq(new_quick_apply_jobseekers_job_job_application_path(vacancy.id))
+      expect(current_path).to eq(new_jobseekers_job_job_application_path(vacancy.id))
       expect(page).to have_css("h2", text: I18n.t("jobseekers.job_applications.new_quick_apply.heading"))
     end
   end

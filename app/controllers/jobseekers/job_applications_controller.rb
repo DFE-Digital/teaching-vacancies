@@ -1,14 +1,15 @@
-# rubocop:disable Metrics/ClassLength
 class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseController
   include Jobseekers::QualificationFormConcerns
 
   before_action :set_job_application, only: %i[review apply pre_submit submit post_submit show confirm_destroy destroy confirm_withdraw withdraw]
+
   before_action :raise_unless_vacancy_enable_job_applications,
-                :redirect_if_job_application_exists, only: %i[new create new_quick_apply quick_apply]
+                :redirect_if_job_application_exists, only: %i[new create quick_apply]
   before_action :redirect_unless_draft_job_application, only: %i[review]
 
   helper_method :employments, :job_application, :qualification_form_param_key, :review_form, :vacancy, :withdraw_form
 
+  # rubocop:disable Metrics/MethodLength
   def new
     send_dfe_analytics_event
 
@@ -22,7 +23,14 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
       # then we can send them straight to the 'quick apply' screen, otherwise we display the
       # (badly named) about_your_application screen which suggests they might not be qualified for the role.
       if profile&.personal_details.nil? || profile.personal_details.has_right_to_work_in_uk? || vacancy.visa_sponsorship_available?
-        redirect_to new_quick_apply_jobseekers_job_job_application_path(vacancy.id)
+        # redirect_to new_quick_apply_jobseekers_job_job_application_path(vacancy.id)
+        @has_previous_application = previous_application?
+        if session[:user_exists_first_log_in]
+          @user_exists_first_log_in = true
+          session.delete(:user_exists_first_log_in)
+        end
+
+        render "new_quick_apply"
       else
         render "about_your_application"
       end
@@ -31,20 +39,19 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
       session.delete(:user_exists_first_log_in)
     end
   end
-
-  def new_quick_apply
-    if session[:user_exists_first_log_in]
-      @user_exists_first_log_in = true
-      session.delete(:user_exists_first_log_in)
-    end
-
-    @has_previous_application = previous_application?
-    raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
-  end
+  # rubocop:enable Metrics/MethodLength
 
   def create
     new_job_application = current_jobseeker.job_applications.create(vacancy:)
     redirect_to jobseekers_job_application_apply_path(new_job_application)
+  end
+
+  def quick_apply
+    raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
+
+    new_job_application = prefill_job_application_with_available_data
+
+    redirect_to jobseekers_job_application_apply_path(new_job_application), notice: t("jobseekers.job_applications.new_quick_apply.import_from_previous_application")
   end
 
   def pre_submit
@@ -62,14 +69,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def apply
     @form = Jobseekers::JobApplication::PreSubmitForm.new(completed_steps: job_application.completed_steps, all_steps: step_process.steps.excluding(:review).map(&:to_s))
-  end
-
-  def quick_apply
-    raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
-
-    new_job_application = prefill_job_application_with_available_data
-
-    redirect_to jobseekers_job_application_apply_path(new_job_application), notice: t("jobseekers.job_applications.new_quick_apply.import_from_previous_application")
   end
 
   def submit
@@ -255,4 +254,3 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     previous_application? || profile.present?
   end
 end
-# rubocop:enable Metrics/ClassLength

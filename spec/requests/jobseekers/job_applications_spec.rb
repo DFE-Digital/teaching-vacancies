@@ -108,17 +108,8 @@ RSpec.describe "Job applications" do
         let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "redirects to `jobseekers_job_applications_path`" do
-          expect(get(new_quick_apply_jobseekers_job_job_application_path(vacancy.id)))
+          expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
             .to redirect_to(jobseekers_job_applications_path)
-        end
-      end
-
-      context "when there are no non-draft applications" do
-        let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
-
-        it "raises an error" do
-          expect { get new_quick_apply_jobseekers_job_job_application_path(vacancy.id) }
-            .to raise_error(ActionController::RoutingError, /non-draft/)
         end
       end
 
@@ -139,14 +130,14 @@ RSpec.describe "Job applications" do
           let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
 
           it "returns not found" do
-            get new_quick_apply_jobseekers_job_job_application_path(vacancy.id)
+            get new_jobseekers_job_job_application_path(vacancy.id)
 
             expect(response).to have_http_status(:not_found)
           end
         end
 
         it "renders the new_quick_apply template" do
-          get new_quick_apply_jobseekers_job_job_application_path(vacancy.id)
+          get new_jobseekers_job_job_application_path(vacancy.id)
 
           expect(response).to render_template(:new_quick_apply)
         end
@@ -375,9 +366,9 @@ RSpec.describe "Job applications" do
       end
 
       context "without a profile" do
-        it "redirects to quick apply" do
+        it "renders quick apply" do
           expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
-            .to redirect_to(new_quick_apply_jobseekers_job_job_application_path(vacancy.id))
+            .to  render_template(:new_quick_apply)
         end
       end
 
@@ -386,9 +377,9 @@ RSpec.describe "Job applications" do
           create(:jobseeker_profile, jobseeker: jobseeker)
         end
 
-        it "redirects to quick apply" do
+        it "renders new quick apply" do
           expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
-            .to redirect_to(new_quick_apply_jobseekers_job_job_application_path(vacancy.id))
+            .to  render_template(:new_quick_apply)
         end
       end
 
@@ -397,9 +388,9 @@ RSpec.describe "Job applications" do
           create(:jobseeker_profile, jobseeker: jobseeker, personal_details: build(:personal_details, has_right_to_work_in_uk: true))
         end
 
-        it "redirects to quick apply" do
+        it "renders new quick apply" do
           expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
-            .to redirect_to(new_quick_apply_jobseekers_job_job_application_path(vacancy.id))
+            .to  render_template(:new_quick_apply)
         end
       end
 
@@ -410,9 +401,9 @@ RSpec.describe "Job applications" do
 
         let(:visa_sponsorship) { true }
 
-        it "redirects to quick apply" do
+        it "renders new quick apply" do
           expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
-            .to redirect_to(new_quick_apply_jobseekers_job_job_application_path(vacancy.id))
+            .to  render_template(:new_quick_apply)
         end
       end
 
