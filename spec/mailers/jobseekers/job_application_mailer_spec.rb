@@ -19,11 +19,10 @@ RSpec.describe Jobseekers::JobApplicationMailer do
   describe "#application_submitted" do
     let(:job_application) { build(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
     let(:mail) { described_class.application_submitted(job_application) }
-    let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
 
     it "sends a `jobseeker_application_submitted` email" do
       expect(mail.subject).to eq(I18n.t("jobseekers.job_application_mailer.application_submitted.subject"))
-      expect(mail.to).to eq([jobseeker.email])
+      expect(mail.to).to eq([job_application.email_address])
       expect(mail.body.encoded).to include(I18n.t("jobseekers.job_application_mailer.application_submitted.heading",
                                                   organisation_name: organisation.name))
                                .and include(I18n.t("jobseekers.job_application_mailer.shared.more_info.description",
@@ -39,11 +38,10 @@ RSpec.describe Jobseekers::JobApplicationMailer do
   describe "#job_listing_ended_early" do
     let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
     let(:mail) { described_class.job_listing_ended_early(job_application, vacancy) }
-    let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
 
     it "sends a `jobseeker_job_listing_ended_early` email" do
       expect(mail.subject).to eq("Update on #{vacancy.job_title} at #{vacancy.organisation_name}")
-      expect(mail.to).to eq([jobseeker.email])
+      expect(mail.to).to eq([job_application.email_address])
       expect(mail.body.encoded).to include(I18n.t("jobseekers.job_application_mailer.job_listing_ended_early.heading",
                                                   job_title: vacancy.job_title, organisation_name: vacancy.organisation_name))
       expect(mail.body.encoded).to include(jobseekers_job_application_url(job_application))

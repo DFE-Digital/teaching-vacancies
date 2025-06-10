@@ -56,7 +56,7 @@ RSpec.describe JobApplicationPdf do
         [I18n.t("last_name", scope:), job_application.last_name],
         [I18n.t("helpers.legend.jobseekers_job_application_personal_details_form.your_address"), address],
         [I18n.t("phone_number", scope:), job_application.phone_number],
-        [I18n.t("email_address", scope:), job_application.email],
+        [I18n.t("email_address", scope:), job_application.email_address],
         [I18n.t("helpers.legend.jobseekers_job_application_declarations_form.has_right_to_work_in_uk"), "No, I already have the right to work in the UK"],
         [I18n.t("working_patterns", scope:), "Part time"],
       ]
