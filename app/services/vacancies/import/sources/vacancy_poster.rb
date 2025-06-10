@@ -27,7 +27,7 @@ class Vacancies::Import::Sources::VacancyPoster
       schools = find_schools(item)
       next if invalid_school?(schools, item["trustUID"])
 
-      v = Vacancy.find_or_initialize_by(
+      v = PublishedVacancy.find_or_initialize_by(
         external_source: SOURCE_NAME,
         external_reference: item["reference"]&.strip,
       )
