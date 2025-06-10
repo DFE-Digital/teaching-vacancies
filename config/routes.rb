@@ -111,11 +111,7 @@ Rails.application.routes.draw do
     end
 
     scope as: :job, path: ":job_id" do
-      resource :job_application, only: %i[new create] do
-        get :about_your_application
-        get :new_quick_apply
-        post :quick_apply
-      end
+      resource :job_application, only: %i[new create]
     end
 
     resource :profile, only: %i[show] do

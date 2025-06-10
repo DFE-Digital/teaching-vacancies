@@ -14,7 +14,7 @@ RSpec.describe "Jobseekers can quick apply for a job" do
   after { logout }
 
   it "redirects to quick_apply page, starts application and redirects to review page" do
-    expect(current_path).to eq(new_quick_apply_jobseekers_job_job_application_path(vacancy.id))
+    expect(current_path).to eq(new_jobseekers_job_job_application_path(vacancy.id))
 
     click_on I18n.t("buttons.start_application")
 
