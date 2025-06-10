@@ -30,7 +30,7 @@ class Jobseekers::UploadedJobApplications::PersonalDetailsController < Jobseeker
   private
 
   def set_job_application
-    @job_application = current_jobseeker.uploaded_job_applications.draft.find(params[:uploaded_job_application_id])
+    @job_application = current_jobseeker.job_applications.draft.find(params[:uploaded_job_application_id])
   end
 
   def form_params
