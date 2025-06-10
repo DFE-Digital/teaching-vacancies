@@ -3,7 +3,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   include DatesHelper
 
   before_action :set_job_application, only: %i[show download_pdf download_application_form]
-  
+
   before_action :set_job_applications, only: %i[index tag_single tag]
 
   def index
