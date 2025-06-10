@@ -1,11 +1,11 @@
-- content_for :page_title_prefix, job_application_page_title_prefix(withdraw_form, t(".title"))
+- content_for :page_title_prefix, job_application_page_title_prefix(@withdraw_form, t(".title"))
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     span.govuk-caption-l = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.organisation_name)
     h1.govuk-heading-xl = t(".heading")
 
-    = form_for withdraw_form, url: jobseekers_job_application_withdraw_path(job_application), method: :post do |f|
+    = form_for @withdraw_form, url: jobseekers_job_application_withdraw_path(job_application), method: :post do |f|
       = f.govuk_error_summary
 
       = f.govuk_radio_buttons_fieldset :withdraw_reason do
