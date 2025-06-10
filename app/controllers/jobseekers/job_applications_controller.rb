@@ -10,15 +10,17 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   helper_method :employments, :job_application, :qualification_form_param_key, :vacancy
 
-  # rubocop:disable Metrics/MethodLength
   def new
     send_dfe_analytics_event
 
+    # :nocov:
     if session[:newly_created_user]
       @newly_created_user = true
       session.delete(:newly_created_user)
     end
+    # :nocov:
 
+    @has_previous_application = nil
     if quick_apply?
       # If we don't know the user's status, or they have the right perform the role
       # then we can send them straight to the 'quick apply' screen, otherwise we display the
@@ -27,20 +29,13 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
         render "about_your_application"
       else
         @has_previous_application = previous_application?
-        if session[:user_exists_first_log_in]
-          @user_exists_first_log_in = true
-          session.delete(:user_exists_first_log_in)
-        end
-      end
-    else
-      @has_previous_application = nil
-      if session[:user_exists_first_log_in]
-        @user_exists_first_log_in = true
-        session.delete(:user_exists_first_log_in)
       end
     end
+    if session[:user_exists_first_log_in]
+      @user_exists_first_log_in = true
+      session.delete(:user_exists_first_log_in)
+    end
   end
-  # rubocop:enable Metrics/MethodLength
 
   def create
     if quick_apply?
