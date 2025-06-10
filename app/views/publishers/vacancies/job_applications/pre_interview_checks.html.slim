@@ -36,15 +36,15 @@
       - row.with_cell(text: "Last action")
       - row.with_cell(text: "Status")
   - table.with_body do |body|
-    - if job_application.self_disclosure_request
+    - if @job_application.self_disclosure_request
       - body.with_row do |row|
         - row.with_cell do
-          = govuk_link_to("Self-dislosure form", organisation_job_job_application_self_disclosure_path(vacancy.id, job_application.id))
-        - if job_application.self_disclosure_request.completed?
-          - row.with_cell(text: "Completed on the #{job_application.self_disclosure_request.updated_at.to_fs}")
+          = govuk_link_to("Self-dislosure form", organisation_job_job_application_self_disclosure_path(vacancy.id, @job_application.id))
+        - if @job_application.self_disclosure_request.completed?
+          - row.with_cell(text: "Completed on the #{@job_application.self_disclosure_request.updated_at.to_fs}")
           - row.with_cell do
             = govuk_tag(text: "COMPLETED", colour: "green")
-        - if job_application.self_disclosure_request.pending?
-          - row.with_cell(text: "Request sent on the #{job_application.self_disclosure_request.updated_at.to_fs}")
+        - if @job_application.self_disclosure_request.pending?
+          - row.with_cell(text: "Request sent on the #{@job_application.self_disclosure_request.updated_at.to_fs}")
           - row.with_cell do
             = govuk_tag(text: "PENDING", colour: "blue")
