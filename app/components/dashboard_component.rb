@@ -25,7 +25,7 @@ class DashboardComponent < ApplicationComponent
   end
 
   def view_applicants(vacancy)
-    return unless vacancy.uses_either_native_or_uploaded_job_application_form?
+    return unless vacancy.allow_job_applications?
     return unless include_job_applications?
 
     applications = vacancy.job_applications.where(status: %w[submitted reviewed shortlisted unsuccessful])
