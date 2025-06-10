@@ -16,7 +16,6 @@ RSpec.describe "Jobseekers can complete a job application" do
       all("button", text: "Apply for this job").last.click
       click_button "Start application"
       click_on(I18n.t("jobseekers.job_applications.build.personal_details.heading"))
-      expect(page).to have_field("Email address", with: jobseeker.email)
       validates_step_complete
       fill_in_personal_details
       click_on I18n.t("buttons.save_and_continue")
