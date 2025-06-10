@@ -124,7 +124,7 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
       expect(rendered).to have_css(".govuk-summary-list__value", text: uploaded_job_application.phone_number)
 
       expect(rendered).to have_css(".govuk-summary-list__key", text: "Email address")
-      expect(rendered).to have_css(".govuk-summary-list__value", text: uploaded_job_application.email)
+      expect(rendered).to have_css(".govuk-summary-list__value", text: uploaded_job_application.email_address)
 
       expect(rendered).to have_css(".govuk-summary-list__key", text: "Do you need Skilled Worker visa sponsorship?")
       expect(rendered).to have_css(".govuk-summary-list__value", text: I18n.t("jobseekers.profiles.personal_details.work.options.true"))
