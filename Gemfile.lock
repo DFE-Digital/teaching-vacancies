@@ -309,6 +309,9 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
+    guard-rubocop (1.5.0)
+      guard (~> 2.0)
+      rubocop (< 2.0)
     hashdiff (1.1.2)
     hashery (2.1.2)
     hashie (5.0.0)
@@ -913,6 +916,7 @@ DEPENDENCIES
   govuk-components (~> 5.10.0)
   govuk_design_system_formbuilder (~> 5.10.1)
   guard-rspec
+  guard-rubocop (~> 1.5)
   high_voltage
   httparty
   ipaddr
