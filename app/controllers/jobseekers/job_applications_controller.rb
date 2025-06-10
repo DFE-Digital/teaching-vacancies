@@ -32,6 +32,16 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     end
   end
 
+  def new_quick_apply
+    if session[:user_exists_first_log_in]
+      @user_exists_first_log_in = true
+      session.delete(:user_exists_first_log_in)
+    end
+
+    @has_previous_application = previous_application?
+    raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
+  end
+
   def create
     new_job_application = current_jobseeker.job_applications.create(vacancy:)
     redirect_to jobseekers_job_application_apply_path(new_job_application)
@@ -48,16 +58,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def review
     session[:back_to_review] = (session[:back_to_review] || []).push(job_application.id).uniq
-  end
-
-  def new_quick_apply
-    if session[:user_exists_first_log_in]
-      @user_exists_first_log_in = true
-      session.delete(:user_exists_first_log_in)
-    end
-
-    @has_previous_application = previous_application?
-    raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
   end
 
   def apply
