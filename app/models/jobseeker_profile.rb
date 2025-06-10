@@ -68,6 +68,10 @@ class JobseekerProfile < ApplicationRecord
     record.jobseeker
   end
 
+  def no_right_to_work_in_uk?
+    personal_details.present? && !personal_details.has_right_to_work_in_uk?
+  end
+
   def replace_qualifications!(new_qualifications)
     transaction do
       qualifications.destroy_all

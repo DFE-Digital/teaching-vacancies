@@ -22,8 +22,9 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
       # If we don't know the user's status, or they have the right perform the role
       # then we can send them straight to the 'quick apply' screen, otherwise we display the
       # (badly named) about_your_application screen which suggests they might not be qualified for the role.
-      if profile&.personal_details.nil? || profile.personal_details.has_right_to_work_in_uk? || vacancy.visa_sponsorship_available?
-        # redirect_to new_quick_apply_jobseekers_job_job_application_path(vacancy.id)
+      if !vacancy.visa_sponsorship_available? && profile.present? && profile.no_right_to_work_in_uk?
+        render "about_your_application"
+      else
         @has_previous_application = previous_application?
         if session[:user_exists_first_log_in]
           @user_exists_first_log_in = true
@@ -31,8 +32,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
         end
 
         render "new_quick_apply"
-      else
-        render "about_your_application"
       end
     elsif session[:user_exists_first_log_in]
       @user_exists_first_log_in = true
