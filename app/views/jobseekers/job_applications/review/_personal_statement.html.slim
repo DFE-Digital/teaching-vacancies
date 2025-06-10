@@ -2,4 +2,4 @@
   - if job_application.personal_statement.present?
     .govuk-body.review-component__section__body--border = simple_format(job_application.personal_statement)
   - else
-    p.govuk-body = t(".personal_statement.blank")
+    p.govuk-body = t("jobseekers.job_applications.review.personal_statement.blank")

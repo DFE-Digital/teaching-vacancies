@@ -16,7 +16,6 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
     assign :vacancy, vacancy
     assign :job_application, job_application
     assign :notes_form, Publishers::JobApplication::NotesForm.new
-
     render
   end
 
@@ -73,16 +72,16 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
   end
 
   context "when the job application is an uploaded job application" do
-    let(:uploaded_form_vacancy) { create(:vacancy, :expired, receive_applications: :uploaded_form) }
+    let(:uploaded_form_vacancy) { create(:vacancy, :expired, receive_applications: 2, job_title: "Yup this is the one") }
     let(:uploaded_job_application) do
       create(:uploaded_job_application, :status_submitted, :with_uploaded_application_form, vacancy: uploaded_form_vacancy)
     end
 
     before do
+      allow(uploaded_form_vacancy).to receive(:uploaded_form?).and_return(true)
       assign :vacancy, uploaded_form_vacancy
       assign :job_application, uploaded_job_application
       assign :notes_form, Publishers::JobApplication::NotesForm.new
-
       render
     end
 
