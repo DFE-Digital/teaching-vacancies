@@ -8,7 +8,7 @@ RSpec.describe SelfDisclosureRequest do
   end
 
   describe "#.create_all!" do
-    let(:requests) { described_class.create_all!(job_application) }
+    let(:requests) { described_class.create_for!(job_application) }
     let(:job_application) { create(:job_application) }
 
     it { expect(requests.job_application).to eq(job_application) }
@@ -23,7 +23,7 @@ RSpec.describe SelfDisclosureRequest do
   end
 
   describe "#.create_and_notify_all!" do
-    let(:requests) { described_class.create_and_notify_all!(job_application) }
+    let(:requests) { described_class.create_and_notify!(job_application) }
     let(:job_application) { create(:job_application) }
 
     it { expect(requests.job_application).to eq(job_application) }

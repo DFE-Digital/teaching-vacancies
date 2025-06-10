@@ -48,10 +48,10 @@ module Publishers
         JobApplicationBatch.transaction do
           job_applications.each do |job_application|
             if step == :collect_references
-              SelfDisclosureRequest.create_all!(job_application)
+              SelfDisclosureRequest.create_for!(job_application)
               ReferenceRequest.create_for_manual!(job_application)
             else
-              SelfDisclosureRequest.create_and_notify_all!(job_application)
+              SelfDisclosureRequest.create_and_notify!(job_application)
               Publishers::CollectReferencesMailer.inform_applicant_about_references(job_application).deliver_later if @form.contact_applicants
               ReferenceRequest.create_for_external!(job_application)
             end

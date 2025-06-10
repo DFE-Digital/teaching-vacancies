@@ -126,79 +126,38 @@ en:
           true: "Yes"
           false: "No"
 
+      rating_options: &rating_options
+        outstanding: Outstanding
+        good: Good
+        satisfactory: Satisfactory
+        poor: Poor
+        na: N/A
+
       referees_how_would_you_rate_form:
         punctuality_options:
-          outstanding: Outstanding
-          good: Good
-          satisfactory: Satisfactory
-          poor: Poor
-          na: N/A
+          *rating_options
         working_relationships_options:
-          outstanding: Outstanding
-          good: Good
-          satisfactory: Satisfactory
-          poor: Poor
-          na: N/A
+          *rating_options
         customer_care_options:
-          outstanding: Outstanding
-          good: Good
-          satisfactory: Satisfactory
-          poor: Poor
-          na: N/A
+          *rating_options
         adapt_to_change_options:
-          outstanding: Outstanding
-          good: Good
-          satisfactory: Satisfactory
-          poor: Poor
-          na: N/A
+          *rating_options
         deal_with_conflict_options:
-          outstanding: Outstanding
-          good: Good
-          satisfactory: Satisfactory
-          poor: Poor
-          na: N/A
+          *rating_options
         prioritise_workload_options:
-          outstanding: Outstanding
-          good: Good
-          satisfactory: Satisfactory
-          poor: Poor
-          na: N/A
+          *rating_options
         team_working_options:
-          outstanding: Outstanding
-          good: Good
-          satisfactory: Satisfactory
-          poor: Poor
-          na: N/A
+          *rating_options
         communication_options:
-          outstanding: Outstanding
-          good: Good
-          satisfactory: Satisfactory
-          poor: Poor
-          na: N/A
+          *rating_options
         problem_solving_options:
-          outstanding: Outstanding
-          good: Good
-          satisfactory: Satisfactory
-          poor: Poor
-          na: N/A
+          *rating_options
         general_attitude_options:
-          outstanding: Outstanding
-          good: Good
-          satisfactory: Satisfactory
-          poor: Poor
-          na: N/A
+          *rating_options
         technical_competence_options:
-          outstanding: Outstanding
-          good: Good
-          satisfactory: Satisfactory
-          poor: Poor
-          na: N/A
+          *rating_options
         leadership_options:
-          outstanding: Outstanding
-          good: Good
-          satisfactory: Satisfactory
-          poor: Poor
-          na: N/A
+          *rating_options
     legend:
       referees_can_give_reference_form:
         can_give_reference: Can you give a reference for %{name}?

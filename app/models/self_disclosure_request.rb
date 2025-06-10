@@ -8,15 +8,17 @@ class SelfDisclosureRequest < ApplicationRecord
 
   validates :job_application_id, uniqueness: true
 
-  def self.create_all!(job_application)
-    find_or_create_by!(job_application: job_application).tap(&:manual!)
-  end
+  class << self
+    def create_for!(job_application)
+      find_or_create_by!(job_application: job_application).tap(&:manual!)
+    end
 
-  def self.create_and_notify_all!(job_application)
-    find_or_create_by!(job_application: job_application).tap do |request|
-      SelfDisclosure.find_or_create_by_and_prefill!(job_application)
-      Jobseekers::JobApplicationMailer.declarations(job_application).deliver_later
-      request.sent!
+    def create_and_notify!(job_application)
+      find_or_create_by!(job_application: job_application).tap do |request|
+        SelfDisclosure.find_or_create_by_and_prefill!(job_application)
+        Jobseekers::JobApplicationMailer.declarations(job_application).deliver_later
+        request.sent!
+      end
     end
   end
 
