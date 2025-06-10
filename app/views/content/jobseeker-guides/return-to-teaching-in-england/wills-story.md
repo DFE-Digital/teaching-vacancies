@@ -4,7 +4,10 @@ title: Will's return to teaching story
 meta_description: Read Will's stories about what it's like to return to teaching
 date_posted: 09/06/2025
 category_tags: apply
+card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/wills-story.png"
 ---
+
+![Will wearing a suit.](/content-assets/jobseeker-guides/return-to-teaching-in-england/wills-story.png)
 
 # Will’s return to teaching story
 
