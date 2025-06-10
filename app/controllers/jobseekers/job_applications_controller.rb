@@ -3,11 +3,12 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   before_action :set_job_application, only: %i[review apply pre_submit submit post_submit show confirm_destroy destroy confirm_withdraw withdraw]
 
-  before_action :raise_unless_vacancy_enable_job_applications,
-                :redirect_if_job_application_exists, only: %i[new create quick_apply]
+  before_action :raise_cannot_apply, unless: -> { vacancy.enable_job_applications? }, only: %i[new create]
+  before_action :redirect_if_job_application_exists, only: %i[new create]
+
   before_action :redirect_unless_draft_job_application, only: %i[review]
 
-  helper_method :employments, :job_application, :qualification_form_param_key, :review_form, :vacancy, :withdraw_form
+  helper_method :employments, :job_application, :qualification_form_param_key, :vacancy
 
   # rubocop:disable Metrics/MethodLength
   def new
@@ -30,27 +31,26 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
           @user_exists_first_log_in = true
           session.delete(:user_exists_first_log_in)
         end
-
-        render "new_quick_apply"
       end
-    elsif session[:user_exists_first_log_in]
-      @user_exists_first_log_in = true
-      session.delete(:user_exists_first_log_in)
+    else
+      @has_previous_application = nil
+      if session[:user_exists_first_log_in]
+        @user_exists_first_log_in = true
+        session.delete(:user_exists_first_log_in)
+      end
     end
   end
   # rubocop:enable Metrics/MethodLength
 
   def create
-    new_job_application = current_jobseeker.job_applications.create(vacancy:)
-    redirect_to jobseekers_job_application_apply_path(new_job_application)
-  end
+    if quick_apply?
+      new_job_application = prefill_job_application_with_available_data
 
-  def quick_apply
-    raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
-
-    new_job_application = prefill_job_application_with_available_data
-
-    redirect_to jobseekers_job_application_apply_path(new_job_application), notice: t("jobseekers.job_applications.new_quick_apply.import_from_previous_application")
+      redirect_to jobseekers_job_application_apply_path(new_job_application), notice: t("jobseekers.job_applications.new.import_from_previous_application")
+    else
+      new_job_application = current_jobseeker.job_applications.create(vacancy:)
+      redirect_to jobseekers_job_application_apply_path(new_job_application)
+    end
   end
 
   def pre_submit
@@ -64,6 +64,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def review
     session[:back_to_review] = (session[:back_to_review] || []).push(job_application.id).uniq
+    @review_form = Jobseekers::JobApplication::ReviewForm.new
   end
 
   def apply
@@ -74,8 +75,9 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     raise ActionController::RoutingError, "Cannot submit application for non-listed job" unless vacancy.listed?
     raise ActionController::RoutingError, "Cannot submit non-draft application" unless job_application.draft?
 
-    if review_form.valid? && all_steps_valid?
-      update_jobseeker_profile!(job_application) if review_form.update_profile
+    @review_form = Jobseekers::JobApplication::ReviewForm.new(review_form_params)
+    if @review_form.valid? && all_steps_valid?
+      update_jobseeker_profile!(job_application) if @review_form.update_profile
       job_application.submit!
       redirect_to jobseekers_job_application_post_submit_path job_application
     else
@@ -106,13 +108,17 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def confirm_withdraw
     raise ActionController::RoutingError, "Cannot withdraw non-reviewed/shortlisted/submitted application" unless
       job_application.status.in?(%w[reviewed shortlisted submitted])
+
+    @withdraw_form = Jobseekers::JobApplication::WithdrawForm.new
   end
 
   def withdraw
     raise ActionController::RoutingError, "Cannot withdraw non-reviewed/shortlisted/submitted application" unless
       job_application.status.in?(%w[reviewed shortlisted submitted])
 
-    if withdraw_form.valid?
+    @withdraw_form = Jobseekers::JobApplication::WithdrawForm.new(withdraw_form_params)
+
+    if @withdraw_form.valid?
       job_application.withdrawn!
       redirect_to jobseekers_job_applications_path, success: t(".success", job_title: vacancy.job_title)
     else
@@ -187,27 +193,8 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     redirect_to jobseekers_job_application_path(job_application), warning: t(".warning") unless job_application.draft?
   end
 
-  def raise_unless_vacancy_enable_job_applications
-    raise ActionController::RoutingError, "Cannot apply for this vacancy" unless vacancy.enable_job_applications?
-  end
-
-  def review_form
-    @review_form ||= Jobseekers::JobApplication::ReviewForm.new(form_attributes)
-  end
-
-  def withdraw_form
-    @withdraw_form ||= Jobseekers::JobApplication::WithdrawForm.new(form_attributes)
-  end
-
-  def form_attributes
-    case action_name
-    when "review", "confirm_withdrawn"
-      {}
-    when "submit"
-      review_form_params
-    when "withdraw"
-      withdraw_form_params
-    end
+  def raise_cannot_apply
+    raise ActionController::RoutingError, "Cannot apply for this vacancy"
   end
 
   def review_form_params

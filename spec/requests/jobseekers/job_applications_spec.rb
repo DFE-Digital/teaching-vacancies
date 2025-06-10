@@ -139,7 +139,7 @@ RSpec.describe "Job applications" do
         it "renders the new_quick_apply template" do
           get new_jobseekers_job_job_application_path(vacancy.id)
 
-          expect(response).to render_template(:new_quick_apply)
+          expect(response).to render_template(:new)
         end
       end
     end
@@ -149,17 +149,8 @@ RSpec.describe "Job applications" do
         let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "redirects to `jobseekers_job_applications_path`" do
-          expect(post(quick_apply_jobseekers_job_job_application_path(vacancy.id)))
+          expect(post(jobseekers_job_job_application_path(vacancy.id)))
             .to redirect_to(jobseekers_job_applications_path)
-        end
-      end
-
-      context "when there are no non-draft applications" do
-        let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
-
-        it "raises an error" do
-          expect { post quick_apply_jobseekers_job_job_application_path(vacancy.id) }
-            .to raise_error(ActionController::RoutingError, /non-draft/)
         end
       end
 
@@ -167,7 +158,7 @@ RSpec.describe "Job applications" do
         let(:vacancy) { create(:vacancy, enable_job_applications: false, organisations: [build(:school)]) }
 
         it "raises an error" do
-          expect { post quick_apply_jobseekers_job_job_application_path(vacancy.id) }
+          expect { post jobseekers_job_job_application_path(vacancy.id) }
             .to raise_error(ActionController::RoutingError, /Cannot apply for this vacancy/)
         end
       end
@@ -180,14 +171,14 @@ RSpec.describe "Job applications" do
           let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
 
           it "returns not found" do
-            post quick_apply_jobseekers_job_job_application_path(vacancy.id)
+            post jobseekers_job_job_application_path(vacancy.id)
 
             expect(response).to have_http_status(:not_found)
           end
         end
 
         it "creates a job application and redirects to the review path" do
-          expect { post(quick_apply_jobseekers_job_job_application_path(vacancy.id)) }
+          expect { post(jobseekers_job_job_application_path(vacancy.id)) }
             .to change { jobseeker.job_applications.count }.by(1)
 
           expect(response)
@@ -368,7 +359,7 @@ RSpec.describe "Job applications" do
       context "without a profile" do
         it "renders quick apply" do
           expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
-            .to  render_template(:new_quick_apply)
+            .to  render_template(:new)
         end
       end
 
@@ -379,7 +370,7 @@ RSpec.describe "Job applications" do
 
         it "renders new quick apply" do
           expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
-            .to  render_template(:new_quick_apply)
+            .to  render_template(:new)
         end
       end
 
@@ -390,7 +381,7 @@ RSpec.describe "Job applications" do
 
         it "renders new quick apply" do
           expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
-            .to  render_template(:new_quick_apply)
+            .to  render_template(:new)
         end
       end
 
@@ -403,7 +394,7 @@ RSpec.describe "Job applications" do
 
         it "renders new quick apply" do
           expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
-            .to  render_template(:new_quick_apply)
+            .to  render_template(:new)
         end
       end
 
