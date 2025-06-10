@@ -15,7 +15,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
   context "with publisher flow" do
     let(:school) { create(:school, :with_image, name: "Some school") }
     let(:other_school) { create(:school, :with_image, name: "Some other school") }
-    let(:trust) { create(:trust) }
+    let(:trust) { create(:trust, :with_logo_and_photo) }
     let(:local_authority) { create(:local_authority, local_authority_code: "100") }
     let(:publisher) { create(:publisher, organisations: organisations, accepted_terms_at: 1.day.ago) }
 
