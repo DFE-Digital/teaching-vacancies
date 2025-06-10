@@ -18,7 +18,14 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     end
 
     if quick_apply?
-      redirect_to about_your_application_jobseekers_job_job_application_path(vacancy.id)
+      # If we don't know the user's status, or they have the right perform the role
+      # then we can send them straight to the 'quick apply' screen, otherwise we display the
+      # (badly named) about_your_application screen which suggests they might not be qualified for the role.
+      if profile&.personal_details.nil? || profile.personal_details.has_right_to_work_in_uk? || vacancy.visa_sponsorship_available?
+        redirect_to new_quick_apply_jobseekers_job_job_application_path(vacancy.id)
+      else
+        render "about_your_application"
+      end
     elsif session[:user_exists_first_log_in]
       @user_exists_first_log_in = true
       session.delete(:user_exists_first_log_in)
@@ -41,14 +48,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def review
     session[:back_to_review] = (session[:back_to_review] || []).push(job_application.id).uniq
-  end
-
-  # This redirect happens if we don't know the user's status, or they have the right perform the role
-  # (either they have a visa or the job doesn't require one)
-  def about_your_application
-    if profile&.personal_details.nil? || profile.personal_details.has_right_to_work_in_uk? || vacancy.visa_sponsorship_available?
-      redirect_to new_quick_apply_jobseekers_job_job_application_path(vacancy.id)
-    end
   end
 
   def new_quick_apply

@@ -47,31 +47,6 @@ RSpec.describe "Job applications" do
           end
         end
 
-        context "when a non-draft job application already exists and the user does not have right to work in UK" do
-          let(:jobseeker_profile) { JobseekerProfile.last }
-          let!(:personal_details) { create(:personal_details, has_right_to_work_in_uk: false, jobseeker_profile: jobseeker_profile) }
-          let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
-          let(:new_vacancy) { create(:vacancy, organisations: [build(:school)]) }
-
-          context "when the user has the right to work in UK" do
-            let!(:personal_details) { create(:personal_details, has_right_to_work_in_uk: true, jobseeker_profile: jobseeker_profile) }
-
-            it "redirects to `about_your_application_jobseekers_job_job_application_path`" do
-              expect(get(new_jobseekers_job_job_application_path(new_vacancy.id)))
-                .to redirect_to(about_your_application_jobseekers_job_job_application_path(new_vacancy.id))
-            end
-          end
-
-          context "when the user has right to work in UK" do
-            let!(:personal_details) { create(:personal_details, has_right_to_work_in_uk: true, jobseeker_profile: jobseeker_profile) }
-
-            it "redirects to `new_quick_apply_jobseekers_job_job_application_path`" do
-              expect(get(about_your_application_jobseekers_job_job_application_path(new_vacancy.id)))
-                .to redirect_to(new_quick_apply_jobseekers_job_job_application_path(new_vacancy.id))
-            end
-          end
-        end
-
         context "when the vacancy does not enable job applications" do
           let(:vacancy) { create(:vacancy, enable_job_applications: false, organisations: [build(:school)]) }
 
@@ -395,11 +370,13 @@ RSpec.describe "Job applications" do
     end
 
     describe "GET #about_your_application" do
-      let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+      before do
+        create(:job_application, :status_submitted, jobseeker: jobseeker)
+      end
 
       context "without a profile" do
         it "redirects to quick apply" do
-          expect(get(about_your_application_jobseekers_job_job_application_path(vacancy.id)))
+          expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
             .to redirect_to(new_quick_apply_jobseekers_job_job_application_path(vacancy.id))
         end
       end
@@ -410,7 +387,7 @@ RSpec.describe "Job applications" do
         end
 
         it "redirects to quick apply" do
-          expect(get(about_your_application_jobseekers_job_job_application_path(vacancy.id)))
+          expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
             .to redirect_to(new_quick_apply_jobseekers_job_job_application_path(vacancy.id))
         end
       end
@@ -421,7 +398,7 @@ RSpec.describe "Job applications" do
         end
 
         it "redirects to quick apply" do
-          expect(get(about_your_application_jobseekers_job_job_application_path(vacancy.id)))
+          expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
             .to redirect_to(new_quick_apply_jobseekers_job_job_application_path(vacancy.id))
         end
       end
@@ -434,7 +411,7 @@ RSpec.describe "Job applications" do
         let(:visa_sponsorship) { true }
 
         it "redirects to quick apply" do
-          expect(get(about_your_application_jobseekers_job_job_application_path(vacancy.id)))
+          expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
             .to redirect_to(new_quick_apply_jobseekers_job_job_application_path(vacancy.id))
         end
       end
@@ -447,7 +424,7 @@ RSpec.describe "Job applications" do
         let(:visa_sponsorship) { false }
 
         it "shows the page" do
-          expect(get(about_your_application_jobseekers_job_job_application_path(vacancy.id)))
+          expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
             .to render_template(:about_your_application)
         end
       end
