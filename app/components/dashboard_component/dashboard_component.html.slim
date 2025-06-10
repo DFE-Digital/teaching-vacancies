@@ -81,7 +81,7 @@
                 - case @selected_type
                 - when :live
                   div class="govuk-!-margin-bottom-1"
-                    - if vacancy.uses_either_native_or_uploaded_job_application_form?
+                    - if vacancy.allow_job_applications?
                       - if vacancy.job_applications.where(status: %w[submitted reviewed shortlisted unsuccessful]).count.positive?
                         = view_applicants(vacancy) unless vacancy_expired_over_a_year_ago?(vacancy)
                       - else
@@ -97,7 +97,7 @@
                     dt = "#{t('jobs.manage.closing_date')}:"
                     dd = format_time_to_datetime_at(vacancy.expires_at)
                 - when :expired
-                  - if vacancy.uses_either_native_or_uploaded_job_application_form?
+                  - if vacancy.allow_job_applications?
                     - if !vacancy_expired_over_a_year_ago?(vacancy) && vacancy.job_applications.where.not(status: %w[draft withdrawn]).any?
                       = view_applicants(vacancy)
                     - else

@@ -327,7 +327,7 @@ class Vacancy < ApplicationRecord
     end
   end
 
-  def uses_either_native_or_uploaded_job_application_form?
+  def allow_job_applications?
     enable_job_applications? || uploaded_form?
   end
 

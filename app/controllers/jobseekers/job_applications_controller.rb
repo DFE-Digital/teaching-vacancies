@@ -193,7 +193,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def raise_unless_vacancy_enable_job_applications
-    raise ActionController::RoutingError, "Cannot apply for this vacancy" unless vacancy.uses_either_native_or_uploaded_job_application_form?
+    raise ActionController::RoutingError, "Cannot apply for this vacancy" unless vacancy.allow_job_applications?
   end
 
   def review_form
