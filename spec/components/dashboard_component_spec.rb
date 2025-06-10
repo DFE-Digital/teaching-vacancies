@@ -254,7 +254,7 @@ RSpec.describe DashboardComponent, type: :component do
       # rubocop:disable RSpec/SubjectStub
       allow(subject).to receive(:include_job_applications?).and_return(include_applications)
       # rubocop:enable RSpec/SubjectStub
-      allow(vacancy).to receive(:uses_either_native_or_uploaded_job_application_form?).and_return(uses_either_native_or_uploaded_job_application_form)
+      allow(vacancy).to receive(:allow_job_applications?).and_return(uses_either_native_or_uploaded_job_application_form)
     end
 
     context "when vacancy uses either native or uploaded job application form" do
