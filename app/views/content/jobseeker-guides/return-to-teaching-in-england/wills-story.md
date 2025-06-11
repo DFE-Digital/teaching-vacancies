@@ -4,12 +4,10 @@ title: Will's return to teaching story
 meta_description: Read Will's stories about what it's like to return to teaching
 date_posted: 09/06/2025
 category_tags: apply
-card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/will-story.png"
+card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/will-picture.png"
 ---
 
-![Will wearing a suit.](/content-assets/jobseeker-guides/return-to-teaching-in-england/will-story.png)
-
-# Will’s return to teaching story
+![Will wearing a suit.](/content-assets/jobseeker-guides/return-to-teaching-in-england/will-picture.png)
 
 My journey into education was influenced by my parents’ career choices – they were both teachers and I felt drawn to the idea of having my own class one day and making a meaningful impact on children’s lives. Even though I gained a master’s degree in civil engineering, I decided to go into the Teach First graduate scheme fresh out of university. 
 
