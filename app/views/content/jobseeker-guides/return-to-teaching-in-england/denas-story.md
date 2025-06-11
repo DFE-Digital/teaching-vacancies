@@ -4,9 +4,10 @@ title: Dena's return to teaching story
 meta_description: Read Dena's stories about what it's like to return to teaching
 date_posted: 09/06/2025
 category_tags: apply
+card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/denas-story.png"
 ---
 
-# Dena’s return to teaching story
+![Dena looking into the camera with a neutral expression.](/content-assets/jobseeker-guides/return-to-teaching-in-england/denas-story.png)
 
 While I originally set out to become a journalist when I chose to study English at university, my love for the English subject, reading, and literature drew me towards pursuing a career in teaching.   
 
