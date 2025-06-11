@@ -5,7 +5,7 @@ class Jobseekers::JobApplications::BaseController < Jobseekers::BaseController
     if job_application.vacancy.uploaded_form?
       Jobseekers::JobApplications::UploadedJobApplicationStepProcess.new
     else
-      Jobseekers::JobApplications::JobApplicationStepProcess.new(job_application: self)
+      Jobseekers::JobApplications::JobApplicationStepProcess.new(job_application: job_application)
     end
   end
 
