@@ -157,7 +157,8 @@ class Vacancy < ApplicationRecord
                   only: ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG,
                   if: proc(&:listed?)
 
-  after_save :reset_markers, if: -> { saved_change_to_status? && (listed? || pending?) }
+  # Publisher will need to set a new publish date if wanting to re-publish an scheduled vacancy turned back to a draft.
+  before_save -> { self.publish_on = nil if status_changed?(from: "published", to: "draft") }
 
   # temporary - keep 'type' column in sync with status, but only use Vacancy class in code
   before_save do |vacancy|
@@ -169,6 +170,8 @@ class Vacancy < ApplicationRecord
                      end
     end
   end
+
+  after_save :reset_markers, if: -> { saved_change_to_status? && (listed? || pending?) }
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[8:00 9:00 12:00 15:00 23:59].freeze
@@ -204,11 +207,6 @@ class Vacancy < ApplicationRecord
 
   def location
     [organisation&.name, organisation&.town, organisation&.county].reject(&:blank?)
-  end
-
-  def draft!
-    self.publish_on = nil
-    super
   end
 
   def central_office?
