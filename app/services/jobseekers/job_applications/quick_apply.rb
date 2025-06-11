@@ -20,7 +20,7 @@ class Jobseekers::JobApplications::QuickApply
   attr_reader :jobseeker, :vacancy
 
   def new_job_application
-    vacancy.build_job_application_for(jobseeker).tap(&:save!)
+    vacancy.create_job_application_for(jobseeker).tap(&:save!)
   end
 
   def previously_submitted_application?
