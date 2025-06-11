@@ -6,7 +6,7 @@ RSpec.describe "Jobseekers can submit a job application" do
   let(:jobseeker) { create(:jobseeker, jobseeker_profile: jobseeker_profile) }
   let(:jobseeker_profile) { create(:jobseeker_profile, :with_trn) }
   let(:organisation) { create(:school) }
-  let(:vacancy) { create(:vacancy, :with_application_form, organisations: [organisation]) }
+  let(:vacancy) { create(:vacancy, organisations: [organisation]) }
 
   before do
     login_as(jobseeker, scope: :jobseeker)
@@ -80,6 +80,7 @@ RSpec.describe "Jobseekers can submit a job application" do
   end
 
   context "when it is uploaded job application" do
+    let(:vacancy) { create(:vacancy, :with_uploaded_application_form, organisations: [organisation]) }
     let(:uploaded_job_application) { create(:uploaded_job_application, :with_uploaded_application_form, jobseeker: jobseeker, vacancy: vacancy, completed_steps: %w[personal_details upload_application_form]) }
 
     before do

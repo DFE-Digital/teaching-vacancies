@@ -204,6 +204,17 @@ FactoryBot.define do
       end
     end
 
+    trait :with_uploaded_application_form do
+      enable_job_applications { false }
+      receive_applications { "uploaded_form" }
+      application_form do
+        Rack::Test::UploadedFile.new(
+          Rails.root.join("spec", "fixtures", "files", "blank_job_spec.pdf"),
+          "application/pdf",
+        )
+      end
+    end
+
     trait :external do
       enable_job_applications { false }
       about_school { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }

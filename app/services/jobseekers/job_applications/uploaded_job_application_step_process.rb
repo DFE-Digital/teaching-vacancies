@@ -13,6 +13,6 @@ class Jobseekers::JobApplications::UploadedJobApplicationStepProcess
   end
 
   def form_class_for(step)
-    "jobseekers/job_application/#{step}_form".camelize.constantize
+    "jobseekers/uploaded_job_application/#{step}_form".camelize.constantize
   end
 end
