@@ -124,7 +124,7 @@ module JobApplicationsHelper
     end
   end
 
-  def radio_button_legend_hint
+  def radio_button_legend_hint(vacancy)
     if vacancy.visa_sponsorship_available?
       {
         text: "jobseekers.profiles.personal_details.work.hint.text",
