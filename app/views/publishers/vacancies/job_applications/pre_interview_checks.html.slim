@@ -1,25 +1,33 @@
 - content_for :page_title_prefix, t(".page_title")
 
-= render "header"
+= render "header", vacancy: @vacancy, job_application: @job_application
 
 .govuk-grid-row class="govuk-!-margin-top-4"
   .govuk-grid-column-two-thirds
     .govuk-button-group class="govuk-!-display-none-print"
-      = govuk_button_link_to t("buttons.download_pdf_application"), organisation_job_job_application_download_pdf_path(vacancy.id, job_application.id)
-      = govuk_button_link_to t("buttons.update_application_status"), tag_single_organisation_job_job_application_path(vacancy.id, job_application.id), class: "govuk-button--secondary"
+      = govuk_button_link_to t("buttons.download_pdf_application"), organisation_job_job_application_download_pdf_path(vacancy.id, @job_application.id)
+      = govuk_button_link_to t("buttons.update_application_status"), tag_single_organisation_job_job_application_path(vacancy.id, @job_application.id), class: "govuk-button--secondary"
 
 = govuk_table do |table|
   - table.with_head do |head|
     - head.with_row do |row|
-      - row.with_cell(text: "References")
-      - row.with_cell(text: "Last action")
-      - row.with_cell(text: "Status")
+      - row.with_cell(text: t(".references"))
+      - row.with_cell(text: t(".last_action"))
+      - row.with_cell(text: t(".status"))
   - table.with_body do |body|
-    - @references.each do |_reference|
+    - @reference_requests.each do |reference_request|
       - body.with_row do |row|
-        - row.with_cell(text: "Ref name")
-        - row.with_cell(text: "action")
-        - row.with_cell(text: "status")
+        - row.with_cell(text: govuk_link_to(reference_request.referee.name, organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, reference_request)))
+
+        - if reference_request.sent?
+          - row.with_cell(text: t(".sent_at", date: reference_request.updated_at.to_date.to_formatted_s))
+          - row.with_cell(text: govuk_tag(text: t(".pending_status"), colour: "blue"))
+        - elsif reference_request.received?
+          - row.with_cell(text: t(".received_at", date: reference_request.updated_at.to_date.to_formatted_s))
+          - row.with_cell(text: govuk_tag(text: t(".received_status"), colour: "purple"))
+        - else
+          - row.with_cell(text: t(".created_at", date: reference_request.updated_at.to_date.to_formatted_s))
+          - row.with_cell(text: govuk_tag(text: t(".created_status"), colour: "grey"))
 
 = govuk_table do |table|
   - table.with_head do |head|
@@ -28,15 +36,15 @@
       - row.with_cell(text: "Last action")
       - row.with_cell(text: "Status")
   - table.with_body do |body|
-    - if job_application.self_disclosure_request
+    - if @job_application.self_disclosure_request
       - body.with_row do |row|
         - row.with_cell do
-          = govuk_link_to("Self-dislosure form", organisation_job_job_application_self_disclosure_path(vacancy.id, job_application.id))
-        - if job_application.self_disclosure_request.completed?
-          - row.with_cell(text: "Completed on the #{job_application.self_disclosure_request.updated_at.to_fs}")
+          = govuk_link_to("Self-dislosure form", organisation_job_job_application_self_disclosure_path(vacancy.id, @job_application.id))
+        - if @job_application.self_disclosure_request.completed?
+          - row.with_cell(text: "Completed on the #{@job_application.self_disclosure_request.updated_at.to_fs}")
           - row.with_cell do
             = govuk_tag(text: "COMPLETED", colour: "green")
-        - if job_application.self_disclosure_request.pending?
-          - row.with_cell(text: "Request sent on the #{job_application.self_disclosure_request.updated_at.to_fs}")
+        - if @job_application.self_disclosure_request.pending?
+          - row.with_cell(text: "Request sent on the #{@job_application.self_disclosure_request.updated_at.to_fs}")
           - row.with_cell do
             = govuk_tag(text: "PENDING", colour: "blue")

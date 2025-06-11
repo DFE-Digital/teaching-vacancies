@@ -20,6 +20,6 @@ class Jobseekers::JobApplicationMailer < Jobseekers::BaseMailer
     @vacancy = @job_application.vacancy
     @organisation_name = @vacancy.organisation_name
 
-    send_email(to: job_application.jobseeker.email, subject: t(".subject"))
+    send_email(to: job_application.email, subject: t(".subject"))
   end
 end

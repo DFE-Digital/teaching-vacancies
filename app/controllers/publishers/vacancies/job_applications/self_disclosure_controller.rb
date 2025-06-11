@@ -1,5 +1,5 @@
 class Publishers::Vacancies::JobApplications::SelfDisclosureController < Publishers::Vacancies::JobApplications::BaseController
-  before_action :not_enabled
+  before_action :redirect_to_job_application, unless: -> { job_application.self_disclosure_request.present? }
 
   def show
     @self_disclosure = SelfDisclosurePresenter.new(job_application)
@@ -39,9 +39,7 @@ class Publishers::Vacancies::JobApplications::SelfDisclosureController < Publish
     @job_application ||= JobApplication.includes(:self_disclosure_request).find(params[:job_application_id])
   end
 
-  def not_enabled
-    return if job_application.self_disclosure_request
-
+  def redirect_to_job_application
     redirect_to organisation_job_job_application_path(vacancy.id, job_application.id)
   end
 end

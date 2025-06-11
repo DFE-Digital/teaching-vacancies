@@ -30,8 +30,8 @@ RSpec.describe "Publishers manage self disclosure" do
       click_on("Save and continue")
       expect {
         perform_enqueued_jobs
-      }.to change(ActionMailer::Base.deliveries, :count).by(1)
-      expect(ActionMailer::Base.deliveries.map(&:to).flatten).to contain_exactly(jobseeker.email)
+      }.to change(ActionMailer::Base.deliveries, :count).by(2)
+      expect(ActionMailer::Base.deliveries.map(&:to).flatten).to contain_exactly(job_application.email, job_application.email)
     end
 
     it "create the self disclosure request and model" do
