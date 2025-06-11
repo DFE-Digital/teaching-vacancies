@@ -307,6 +307,46 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_09_154252) do
     t.index ["job_preferences_id"], name: "index_job_preferences_locations_on_job_preferences_id"
   end
 
+  create_table "job_references", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "reference_id", null: false
+    t.boolean "complete", default: false, null: false
+    t.boolean "can_give_reference", default: true, null: false
+    t.boolean "is_reference_sharable", default: false, null: false
+    t.text "how_do_you_know_the_candidate"
+    t.string "employment_start_date_ciphertext"
+    t.boolean "currently_employed", default: false, null: false
+    t.text "reason_for_leaving"
+    t.boolean "would_reemploy_current", default: false, null: false
+    t.text "would_reemploy_current_reason"
+    t.boolean "would_reemploy_any", default: false, null: false
+    t.text "would_reemploy_any_reason"
+    t.string "punctuality_ciphertext"
+    t.string "working_relationships_ciphertext"
+    t.string "customer_care_ciphertext"
+    t.string "adapt_to_change_ciphertext"
+    t.string "deal_with_conflict_ciphertext"
+    t.string "prioritise_workload_ciphertext"
+    t.string "team_working_ciphertext"
+    t.string "communication_ciphertext"
+    t.string "problem_solving_ciphertext"
+    t.string "general_attitude_ciphertext"
+    t.string "technical_competence_ciphertext"
+    t.string "leadership_ciphertext"
+    t.string "name"
+    t.string "job_title"
+    t.string "phone_number"
+    t.string "email"
+    t.string "organisation"
+    t.string "under_investigation_ciphertext"
+    t.string "warnings_ciphertext"
+    t.string "allegations_ciphertext"
+    t.string "not_fit_to_practice_ciphertext"
+    t.string "able_to_undertake_role_ciphertext"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reference_id"], name: "index_job_references_on_reference_id", unique: true
+  end
+
   create_table "jobseeker_profile_excluded_organisations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "jobseeker_profile_id", null: false
     t.uuid "organisation_id", null: false
@@ -575,6 +615,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_09_154252) do
     t.index ["jobseeker_profile_id"], name: "index_qualifications_on_jobseeker_profile_id"
   end
 
+  create_table "reference_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "reference_id", null: false
+    t.uuid "token", null: false
+    t.integer "status", null: false
+    t.boolean "marked_as_complete", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reference_id"], name: "index_reference_requests_on_reference_id", unique: true
+  end
+
   create_table "references", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "relationship", default: "", null: false
     t.uuid "job_application_id", null: false
@@ -819,6 +869,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_09_154252) do
   add_foreign_key "job_applications", "vacancies"
   add_foreign_key "job_preferences", "jobseeker_profiles"
   add_foreign_key "job_preferences_locations", "job_preferences", column: "job_preferences_id"
+  add_foreign_key "job_references", "references"
   add_foreign_key "jobseeker_profile_excluded_organisations", "jobseeker_profiles"
   add_foreign_key "jobseeker_profile_excluded_organisations", "organisations"
   add_foreign_key "jobseeker_profiles", "jobseekers"
@@ -842,6 +893,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_09_154252) do
   add_foreign_key "qualification_results", "qualifications"
   add_foreign_key "qualifications", "job_applications"
   add_foreign_key "qualifications", "jobseeker_profiles"
+  add_foreign_key "reference_requests", "references"
   add_foreign_key "references", "job_applications"
   add_foreign_key "saved_jobs", "jobseekers"
   add_foreign_key "saved_jobs", "vacancies"

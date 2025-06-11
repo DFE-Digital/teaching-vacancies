@@ -603,6 +603,54 @@ en:
             heading: Notes
         pre_interview_checks:
           page_title: Pre Interview Checks
+          sent_at: Request sent %{date}
+          received_at: Received %{date}
+          created_at: Created %{date}
+          pending_status: Pending
+          received_status: Received
+          created_status: Created
+          references: References
+          last_action: Last action
+          status: Status
+        reference_requests:
+          reference:
+            can_give_ref: Can you give a reference for %{name}?
+            how_would_you_rate: How would you rate %{name}?
+            can_share_ref: Can your reference be shared with %{name}?
+          mark_as_received:
+            caption: Update reference status
+            heading: Is %{name}'s reference satisfactory?
+          show:
+            page_title: Reference
+            pending_status: Pending
+            mark_as_received: Mark as received
+            collect_reference: Would you like to collect this reference through Teaching Vacancies?
+            received_status: Received
+            created_status: Created
+            once_the_reference_is_received: >-
+              Once the reference is received you will be able to view it on this page.
+              If you do not receive the reference within 1 week, you will be able to send a reminder.
+            more_urgent: >-
+              If the request is more urgent, you should reach out to the referee directly.
+              If you have sent and received your own reference form for this referee, you can manually mark it as received.
+            referee_details:
+              heading: Referee details
+              name: Name
+              job_title: Name
+              organisation: Organisation
+              relationship: Relationship to applicant
+              email: Email address
+              phone: Phone number
+            reference_requested: Reference requested
+            reference_received: Reference received
+            reference_created: Marked as interviewing
+            marked_as_complete: Marked as complete
+            by: by %{name}
+            by_tvs: by Teaching Vacancies
+            communication_history: Communication history
+            yes_share: Yes, if they request it
+            no_share: No
+            how_long: How long have you known the candidate and in what capacity?
         tag:
           page_title: Update application status
           what_application_status_single: What application status do you want to assign to %{name}?

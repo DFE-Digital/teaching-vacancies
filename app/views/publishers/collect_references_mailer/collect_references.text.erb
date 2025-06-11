@@ -1,0 +1,7 @@
+# <%= t(".title", name: @reference.referee.job_application.name) %>
+
+<%=
+  notify_link(t(".submit_reference"),
+              reference_build_url(@reference.id, Wicked::FIRST_STEP, token: @token)) %>
+
+<%= t("shared.footer", home_page_link: home_page_link) %>
