@@ -40,4 +40,8 @@ module ApplicationHelper
     # consented value can be 'yes' or 'clarity'
     cookies.fetch("consented-to-additional-cookies-v2", "no") != "no" && Rails.configuration.app_role.production?
   end
+
+  def kcsie_link
+    "https://www.gov.uk/government/publications/keeping-children-safe-in-education--2"
+  end
 end

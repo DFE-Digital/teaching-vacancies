@@ -385,13 +385,14 @@ en:
               content_with_link_html: You can choose for candidates to apply for the job through Teaching Vacancies. %{link}
               content_with_no_link: You can choose for candidates to apply for the job through Teaching Vacancies.
               link: Preview the application form
-          using_application_form: Use Teaching Vacancies' application form for an online form compliant with keeping children safe in education (KCSIE) guidance.
+          kcsie_guidance: Keeping children safe in education (KCSIE) guidance
+          using_application_form_html: Use Teaching Vacancies' application form for an online form %{link}.
           kcsie_compliant: KCSIE compliant
           reason_for_our_form: Online application forms make it quicker and easier for candidates to apply and may lead to more applicants for your role.
           this_form_is_kept_up_to_date: This form is kept up to date with keeping children safe in education (KCSIE) guidance.
           ask_about_religion: You'll be able to ask candidates about their religion.
           step_title: Applying for the job
-          preview_online_application_form: Preview Teaching Vacancies' application form
+          preview_online_application_form: Download preview of Teaching Vacancies' application form
           preview_religious_application_form: Preview Teaching Vacancies' application form with questions about religion
           preview_catholic_application_form: Preview application form for Catholic schools
         multiple_schools_advice_banner:
