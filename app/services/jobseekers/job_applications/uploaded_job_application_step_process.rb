@@ -11,4 +11,8 @@ class Jobseekers::JobApplications::UploadedJobApplicationStepProcess
   def validatable_steps
     steps
   end
+
+  def form_class_for(step)
+    "jobseekers/job_application/#{step}_form".camelize.constantize
+  end
 end
