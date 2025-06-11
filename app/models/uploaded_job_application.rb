@@ -4,8 +4,4 @@ class UploadedJobApplication < JobApplication
   def form_class_for(step)
     "jobseekers/uploaded_job_application/#{step}_form".camelize.constantize
   end
-
-  def step_process
-    Jobseekers::JobApplications::UploadedJobApplicationStepProcess.new
-  end
 end
