@@ -12,8 +12,7 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
 
       before do
         allow(vacancy).to receive(:uploaded_form?).and_return(false)
-        allow(vacancy).to receive(:build_job_application_for).with(jobseeker).and_return(new_job_application)
-        allow(new_job_application).to receive(:save!)
+        allow(vacancy).to receive(:create_job_application_for).with(jobseeker).and_return(new_job_application)
         allow(jobseeker).to receive_message_chain(:job_applications, :not_draft, :any?).and_return(true)
         allow(jobseeker).to receive(:jobseeker_profile).and_return(nil)
       end
@@ -34,8 +33,7 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
 
       before do
         allow(vacancy).to receive(:uploaded_form?).and_return(false)
-        allow(vacancy).to receive(:build_job_application_for).with(jobseeker).and_return(new_job_application)
-        allow(new_job_application).to receive(:save!)
+        allow(vacancy).to receive(:create_job_application_for).with(jobseeker).and_return(new_job_application)
         allow(jobseeker).to receive_message_chain(:job_applications, :not_draft, :any?).and_return(false)
         allow(jobseeker).to receive(:jobseeker_profile).and_return(double("JobseekerProfile"))
       end

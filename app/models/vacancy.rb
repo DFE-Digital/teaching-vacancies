@@ -317,9 +317,9 @@ class Vacancy < ApplicationRecord
     enable_job_applications? || uploaded_form?
   end
 
-  def build_job_application_for(jobseeker)
+  def create_job_application_for(jobseeker)
     klass = uploaded_form? ? UploadedJobApplication : NativeJobApplication
-    jobseeker.job_applications.build(vacancy: self, type: klass.name)
+    jobseeker.job_applications.create(vacancy: self, type: klass.name)
   end
 
   private
