@@ -313,14 +313,6 @@ class Vacancy < ApplicationRecord
     job_roles.intersect?(%w[teacher head_of_year_or_phase head_of_department_or_curriculum sendco other_leadership])
   end
 
-  def new_application_path
-    if uploaded_form?
-      Rails.application.routes.url_helpers.jobseekers_job_job_application_path(id)
-    else
-      Rails.application.routes.url_helpers.new_jobseekers_job_job_application_path(id)
-    end
-  end
-
   def allow_job_applications?
     enable_job_applications? || uploaded_form?
   end
