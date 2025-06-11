@@ -1,25 +1,25 @@
 - content_for :page_title_prefix, job_application_page_title_prefix(@form, t("jobseekers.job_applications.apply.heading"))
 
-= render "jobseekers/job_applications/build/banner", vacancy: vacancy, back_path: jobseekers_job_application_apply_path(job_application)
+= render "jobseekers/job_applications/build/banner", vacancy: @job_application.vacancy, back_path: jobseekers_job_application_apply_path(job_application)
 
 .govuk-grid-row
   div
     h2.govuk-heading-l = t("jobseekers.job_applications.build.personal_details.heading")
     p.govuk-body = t("jobseekers.job_applications.build.personal_details.description")
 
-    = form_for @form, url: jobseekers_uploaded_job_application_personal_details_path(job_application), method: :patch do |f|
+    = form_for @form, url: jobseekers_uploaded_job_application_personal_details_path(@job_application), method: :patch do |f|
       = f.govuk_error_summary
 
       = f.govuk_text_field :first_name, label: { size: "s" }, width: "one-half", aria: { required: true }
       = f.govuk_text_field :last_name, label: { size: "s" }, width: "one-half", aria: { required: true }
       = f.govuk_phone_field :phone_number, label: { size: "s" }, width: "one-half", aria: { required: true }
-      = f.govuk_email_field :email_address, value: @form.email_address.presence || job_application.email_address, label: { size: "s" }, width: "one-half", aria: { required: true }
+      = f.govuk_email_field :email_address, value: @form.email_address.presence || @job_application.email_address, label: { size: "s" }, width: "one-half", aria: { required: true }
       = f.govuk_radio_buttons_fieldset :has_right_to_work_in_uk,
         legend: { text: t("jobseekers.profiles.personal_details.work.page_title"), size: "s" },
         hint: { text: t(radio_button_legend_hint[:text], link: govuk_link_to(t(radio_button_legend_hint[:link]), "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas#apply-for-your-visa", target: "_blank")).html_safe } do
         = f.govuk_radio_button :has_right_to_work_in_uk, "true", label: { text: t("jobseekers.profiles.personal_details.work.options.true") }, link_errors: true
         = f.govuk_radio_button :has_right_to_work_in_uk, "false", label: { text: t("jobseekers.profiles.personal_details.work.options.false") } do
-          - unless vacancy.visa_sponsorship_available?
+          - unless @job_application.vacancy.visa_sponsorship_available?
             = govuk_warning_text(text: t("jobseekers.profiles.personal_details.work.warning.text"))
             p.govuk-body = t("jobseekers.profiles.personal_details.work.warning.paragraph_1")
             p.govuk-body = t("jobseekers.profiles.personal_details.work.warning.paragraph_2.text", link: govuk_link_to(t("jobseekers.profiles.personal_details.work.warning.paragraph_2.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas#apply-for-your-visa", target: "_blank")).html_safe

@@ -1,8 +1,6 @@
 class Jobseekers::UploadedJobApplications::UploadApplicationFormsController < Jobseekers::JobApplications::BaseController
   before_action :set_job_application
 
-  helper_method :job_application, :vacancy
-
   def edit
     @form = Jobseekers::UploadedJobApplication::UploadApplicationFormForm.new
   end
@@ -31,13 +29,9 @@ class Jobseekers::UploadedJobApplications::UploadApplicationFormsController < Jo
           .permit(:application_form, :upload_application_form_section_completed)
   end
 
-  def vacancy
-    @vacancy ||= job_application.vacancy
-  end
-
   def update_params
     if form_params["upload_application_form_section_completed"] == "false"
-      { completed_steps: job_application.completed_steps - %w[upload_application_form] }
+      { completed_steps: @job_application.completed_steps - %w[upload_application_form] }
     else
       { completed_steps: (@job_application.completed_steps + %w[upload_application_form]).uniq }
     end
