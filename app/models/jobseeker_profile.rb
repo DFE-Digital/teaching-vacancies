@@ -68,7 +68,7 @@ class JobseekerProfile < ApplicationRecord
     record.jobseeker
   end
 
-  def no_right_to_work_in_uk?
+  def needs_visa_for_uk?
     personal_details.present? && !personal_details.has_right_to_work_in_uk?
   end
 
