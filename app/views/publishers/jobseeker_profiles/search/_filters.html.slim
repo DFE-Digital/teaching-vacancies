@@ -41,6 +41,14 @@ ruby:
       selected_method: :last,
     },
     {
+      legend: t("publishers.jobseeker_profiles.filters.subjects"),
+      key: :subjects,
+      selected: form.subjects,
+      options: SUBJECT_OPTIONS,
+      value_method: :first,
+      selected_method: :first,
+    },
+    {
       legend: t("publishers.jobseeker_profiles.filters.preferred_education_phases"),
       key: :education_phases,
       selected: @form.education_phases,
