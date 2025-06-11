@@ -25,8 +25,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def create
-    new_job_application = vacancy.build_job_application_for(current_jobseeker)
-    new_job_application.save!
+    new_job_application = vacancy.create_job_application_for(current_jobseeker)
 
     redirect_to jobseekers_job_application_apply_path(new_job_application.id)
   end
