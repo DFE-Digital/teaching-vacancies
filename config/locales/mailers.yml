@@ -240,7 +240,15 @@ en:
         title: Your active job listings
     expired_vacancy_feedback_prompt_mailer:
       feedback_link_text: Tell us how you filled your vacancy.
-
+    collect_references_mailer:
+      collect_references:
+        subject: Supply a reference for %{name} for role %{job_title} at %{organisation_name}
+        title: Supply a reference for %{name}
+        submit_reference: Submit reference
+      inform_applicant_about_references:
+        subject: References are being collected for role %{job_title} at %{organisation_name}
+        title: Dear %{name}
+        collection: References are being collected for role %{job_title} at %{organisation_name}
   support_users:
     authentication_fallback_mailer:
       sign_in_fallback:
