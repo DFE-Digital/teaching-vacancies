@@ -175,10 +175,12 @@ module JobApplicationsHelper
   POSSIBLE_OTHER_GRADES = %w[Pass Merit Distinction].freeze
 
   def job_application_attributes # rubocop: disable Metrics/MethodLength, Metrics/AbcSize
+    job_switch_date = Faker::Date.in_date_period(year: 2018)
     {
       first_name: "Jane",
       last_name: "Smith",
       national_insurance_number: "QQ 12 34 56 C",
+      working_patterns: %w[part_time job_share],
       previous_names: "Churchill",
       street_address: "1 House Street",
       city: "Townington",
@@ -188,6 +190,7 @@ module JobApplicationsHelper
       teacher_reference_number: "1234567",
       qualified_teacher_status: "yes",
       is_statutory_induction_complete: true,
+      qts_age_range_and_subject: "Ages 11-16, English and Maths",
       has_right_to_work_in_uk: true,
       has_safeguarding_issue: false,
       safeguarding_issue_details: "",
@@ -206,23 +209,31 @@ module JobApplicationsHelper
         [
           Employment.new(
             organisation: "Townington Secondary School",
+            employment_type: :job,
             job_title: "KS3 Teaching Assistant",
             main_duties: "Pastoral support for students. Managing student behaviour. Monitored students’ progress and gave feedback to teachers.",
             reason_for_leaving: "Moving out of the area",
             subjects: Faker::Educator.subject,
             started_on: Faker::Date.in_date_period(year: 2016),
             is_current_role: false,
-            ended_on: Faker::Date.in_date_period(year: 2018),
+            ended_on: job_switch_date,
+          ),
+          Employment.new(
+            employment_type: :break,
+            reason_for_break: "Time off to care for elderly parent",
+            started_on: job_switch_date,
+            ended_on: job_switch_date + 2.months,
+            is_current_role: false,
           ),
           Employment.new(
             organisation: "Sheffield Secondary School",
+            employment_type: :job,
             job_title: "English Teacher",
             main_duties: "Planning and delivering English Literature and Language lessons ro a range of abilities across KS3 and GCSE to prepare them for exams. Contributing to the English department via extra curricular activities, organising trips, and running a reading club.",
             reason_for_leaving: "No opportunities for career advancement",
             subjects: Faker::Educator.subject,
-            started_on: Faker::Date.in_date_period(year: 2016),
-            is_current_role: false,
-            ended_on: Faker::Date.in_date_period(year: 2018),
+            started_on: job_switch_date + 2.months,
+            is_current_role: true,
           ),
         ],
       referees:
@@ -238,13 +249,15 @@ module JobApplicationsHelper
                       email: "john.thompson@english.sheffield.ac.uk",
                       job_title: %w[Headteacher Teacher].sample),
         ],
+      training_and_cpds: [
+        TrainingAndCpd.new(name: "HQA", provider: "TeachTrainLtd", grade: "Honours", year_awarded: "2020", course_length: "1 year"),
+      ],
       qualifications:
         [
           Qualification.new(category: :undergraduate,
                             institution: Faker::Educator.university,
                             year: 2016,
-                            subject: "BA English Literature",
-                            grade: "2.1"),
+                            subject: "BA English Literature"),
           Qualification.new(category: :other, institution: Faker::Educator.university, year: 2019, subject: "PGCE English with QTS"),
           Qualification.new(category: :a_level, institution: Faker::Educator.secondary_school, year: 2012, qualification_results: [
             QualificationResult.new(subject: "English Literature", grade: "A"),
