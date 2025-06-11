@@ -5,7 +5,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   before_action :raise_cannot_apply, unless: -> { vacancy.enable_job_applications? }, only: %i[new create]
   before_action :redirect_if_job_application_exists, only: %i[new create]
-
   before_action :redirect_unless_draft_job_application, only: %i[review]
 
   helper_method :employments, :job_application, :qualification_form_param_key, :vacancy
@@ -13,12 +12,10 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def new
     send_dfe_analytics_event
 
-    # :nocov:
     if session[:newly_created_user]
       @newly_created_user = true
       session.delete(:newly_created_user)
     end
-    # :nocov:
 
     @has_previous_application = nil
     if quick_apply?
