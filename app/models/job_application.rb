@@ -119,10 +119,6 @@ class JobApplication < ApplicationRecord
     @unexplained_employment_gaps ||= Jobseekers::JobApplications::EmploymentGapFinder.new(self).significant_gaps
   end
 
-  def form_class_for(step)
-    "jobseekers/job_application/#{step}_form".camelize.constantize
-  end
-
   private
 
   def update_status_timestamp

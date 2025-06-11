@@ -152,7 +152,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def step_valid?(step)
-    form_class = job_application.form_class_for(step)
+    form_class = step_process.form_class_for(step)
     attributes = form_class.load_form(job_application)
     form = form_class.new(attributes)
 
