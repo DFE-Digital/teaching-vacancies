@@ -319,7 +319,7 @@ class Vacancy < ApplicationRecord
 
   def create_job_application_for(jobseeker)
     klass = uploaded_form? ? UploadedJobApplication : NativeJobApplication
-    jobseeker.job_applications.create(vacancy: self, type: klass.name)
+    jobseeker.job_applications.create!(vacancy: self, type: klass.name)
   end
 
   private

@@ -41,6 +41,8 @@ RSpec.describe "Jobseekers can give job application feedback after submitting th
   end
 
   context "when job application is an uploaded job application" do
+    let(:vacancy) { create(:vacancy, :with_uploaded_application_form, organisations: [build(:school)]) }
+
     it "allows jobseekers to give job application feedback after submitting the application" do
       visit jobseekers_job_application_review_path(uploaded_job_application)
 
