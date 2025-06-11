@@ -2,7 +2,11 @@ class Jobseekers::JobApplications::BaseController < Jobseekers::BaseController
   helper_method :job_application
 
   def step_process
-    job_application.step_process
+    if job_application.vacancy.uploaded_form?
+      Jobseekers::JobApplications::UploadedJobApplicationStepProcess.new
+    else
+      Jobseekers::JobApplications::JobApplicationStepProcess.new(job_application: self)
+    end
   end
 
   def job_application
