@@ -251,17 +251,14 @@ RSpec.describe DashboardComponent, type: :component do
 
     before do
       create(:job_application, :status_submitted, vacancy: vacancy)
-      # rubocop:disable RSpec/SubjectStub
-      allow(subject).to receive(:include_job_applications?).and_return(include_applications)
-      # rubocop:enable RSpec/SubjectStub
       allow(vacancy).to receive(:allow_job_applications?).and_return(uses_either_native_or_uploaded_job_application_form)
     end
 
     context "when vacancy uses either native or uploaded job application form" do
       let(:uses_either_native_or_uploaded_job_application_form) { true }
 
-      context "and include_job_applications? returns true" do
-        let(:include_applications) { true }
+      context "when the selected type is live" do
+        let(:selected_type) { :live }
 
         it "renders the link to view applicants" do
           render_inline(subject)
@@ -272,24 +269,33 @@ RSpec.describe DashboardComponent, type: :component do
         end
       end
 
-      context "and include_job_applications? returns false" do
-        let(:include_applications) { false }
+      context "when the selected type is expired" do
+        let(:selected_type) { :expired }
 
-        context "and receive_applications != 'uploaded_form" do
-          it "does not render the link to view applicants" do
-            render_inline(subject)
-            expect(page).not_to have_link(
-              I18n.t("jobs.manage.view_applicants", count: 1),
-              href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id),
-            )
-          end
+        it "renders the link to view applicants" do
+          render_inline(subject)
+          expect(page).to have_link(
+            I18n.t("jobs.manage.view_applicants", count: 1),
+            href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id),
+          )
+        end
+      end
+
+      context "when the selected type is draft" do
+        let(:selected_type) { :draft }
+
+        it "does not render the link to view applicants" do
+          render_inline(subject)
+          expect(page).not_to have_link(
+            I18n.t("jobs.manage.view_applicants", count: 1),
+            href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id),
+          )
         end
       end
     end
 
     context "when vacancy does not use either native or uploaded job application form" do
       let(:uses_either_native_or_uploaded_job_application_form) { false }
-      let(:include_applications) { true }
 
       it "does not renders the link to view applicants" do
         render_inline(subject)
