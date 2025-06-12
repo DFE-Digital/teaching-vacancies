@@ -1,9 +1,21 @@
 require "rails_helper"
 
 RSpec.describe JobApplicationPdf do
-  let(:vacancy) { build(:vacancy, :at_one_school, :published) }
-  let(:job_application) { build(:job_application, :status_submitted, vacancy: vacancy) }
+  let(:vacancy) do
+    build_stubbed(:vacancy, organisations: build_stubbed_list(:school, 1, :catholic),
+                            religion_type: :catholic)
+  end
+  let(:job_application) do
+    build_stubbed(:job_application, :status_submitted, vacancy: vacancy,
+                                                       employments: employments, professional_body_memberships: memberships,
+                                                       training_and_cpds: trainings, qualifications: quals, referees: refs)
+  end
   let(:datasource) { described_class.new(job_application) }
+  let(:employments) { [] }
+  let(:memberships) { [] }
+  let(:trainings) { [] }
+  let(:quals) { [] }
+  let(:refs) { [] }
 
   describe "#header_text" do
     subject(:header_text) { datasource.header_text }
@@ -171,10 +183,6 @@ RSpec.describe JobApplicationPdf do
   describe "#qualifications" do
     subject(:qualifications) { datasource.qualifications }
 
-    let(:qualification) { nil }
-
-    before { job_application.qualifications = [qualification].compact }
-
     context "when no qualifications present" do
       it "returns no data available message" do
         expect(qualifications).to eq([[I18n.t("jobseekers.job_applications.show.qualifications.none"), nil]])
@@ -182,7 +190,7 @@ RSpec.describe JobApplicationPdf do
     end
 
     context "when qualifications present" do
-      let(:qualification) { build(:qualification, category: "undergraduate") }
+      let(:quals) { build_stubbed_list(:qualification, 1, category: "undergraduate") }
 
       it "returns qualification data" do
         expect(qualifications.first.first).to eq(I18n.t("helpers.label.jobseekers_qualifications_category_form.category_options.undergraduate"))
@@ -190,10 +198,8 @@ RSpec.describe JobApplicationPdf do
     end
 
     context "when secondary qualifications present" do
-      let(:qualification) { build(:qualification, category: "gcse") }
-      let(:result) { build(:qualification_result, qualification: qualification) }
-
-      before { qualification.qualification_results = [result] }
+      let(:quals) { build_stubbed_list(:qualification, 1, category: "gcse", qualification_results: [result]) }
+      let(:result) { build_stubbed(:qualification_result) }
 
       it "formats secondary qualifications correctly" do
         expect(qualifications.first.last.first.first).to include("Secondary Qualification")
@@ -202,10 +208,11 @@ RSpec.describe JobApplicationPdf do
     end
 
     context "when general qualification present" do
-      let(:qualification) { build(:qualification, category: "undergraduate") }
-      let(:result) { build(:qualification_result, qualification: qualification) }
-
-      before { qualification.qualification_results = [result] }
+      let(:qualification) do
+        build_stubbed(:qualification, category: "undergraduate",
+                                      qualification_results: build_stubbed_list(:qualification_result, 1))
+      end
+      let(:quals) { [qualification] }
 
       it "formats secondary qualifications correctly" do
         expect(qualifications.first.last.first.first).to include("Undergraduate degree")
@@ -217,10 +224,6 @@ RSpec.describe JobApplicationPdf do
   describe "#training_and_cpds" do
     subject(:training_and_cpds) { datasource.training_and_cpds }
 
-    let(:training) { nil }
-
-    before { job_application.training_and_cpds = [training].compact }
-
     context "when no training and CPDs present" do
       it "returns no data available message" do
         expect(training_and_cpds).to eq([[I18n.t("jobseekers.job_applications.show.training_and_cpds.none"), nil]])
@@ -228,7 +231,7 @@ RSpec.describe JobApplicationPdf do
     end
 
     context "when training and CPDs present" do
-      let(:training) { build(:training_and_cpd, name: "First Aid", provider: "Red Cross") }
+      let(:trainings) { build_stubbed_list(:training_and_cpd, 1, name: "First Aid", provider: "Red Cross") }
 
       it "returns training data" do
         expect(training_and_cpds.first.last.first).to include(["Name", "First Aid"])
@@ -237,7 +240,7 @@ RSpec.describe JobApplicationPdf do
     end
 
     context "when training with grade present" do
-      let(:training) { build(:training_and_cpd, name: "Advanced Course", grade: "Distinction") }
+      let(:trainings) { build_stubbed_list(:training_and_cpd, 1, name: "Advanced Course", grade: "Distinction") }
 
       it "includes grade information" do
         expect(training_and_cpds.first.last.first).to include(%w[Grade Distinction])
@@ -248,10 +251,6 @@ RSpec.describe JobApplicationPdf do
   describe "#professional_body_memberships" do
     subject(:professional_body_memberships) { datasource.professional_body_memberships }
 
-    let(:membership) { nil }
-
-    before { job_application.professional_body_memberships = [membership].compact }
-
     context "when no professional body memberships present" do
       it "returns no data available message" do
         expect(professional_body_memberships).to eq([[I18n.t("jobseekers.job_applications.show.professional_body_memberships.none"), nil]])
@@ -259,7 +258,7 @@ RSpec.describe JobApplicationPdf do
     end
 
     context "when professional body memberships present" do
-      let(:membership) { build(:professional_body_membership, name: "Royal Society of Chemistry") }
+      let(:memberships) { build_stubbed_list(:professional_body_membership, 1, name: "Royal Society of Chemistry") }
 
       it "returns membership data" do
         expect(professional_body_memberships.first.last.first).to include(["Name of professional body:", "Royal Society of Chemistry"])
@@ -270,10 +269,7 @@ RSpec.describe JobApplicationPdf do
   describe "#employment_history" do
     subject(:employment_history) { datasource.employment_history }
 
-    let(:employment) { nil }
     let(:employment_data) { employment_history.first.last.first }
-
-    before { job_application.employments = [employment].compact }
 
     context "when no employments present" do
       it "returns no data available message" do
@@ -282,7 +278,8 @@ RSpec.describe JobApplicationPdf do
     end
 
     context "when employment entries present" do
-      let(:employment) { build(:employment, ended_on: Time.zone.today) }
+      let(:employment) { build_stubbed(:employment, ended_on: Time.zone.today) }
+      let(:employments) { [employment] }
 
       it "returns employment data" do
         expect(employment_data).to include(%w[Employment])
@@ -292,17 +289,19 @@ RSpec.describe JobApplicationPdf do
     end
 
     context "when employment break present" do
-      let(:employment) { build(:employment, :break) }
+      let(:reason_for_break) { Faker::Adjective.negative }
+      let(:employments) { build_stubbed_list(:employment, 1, :break, reason_for_break: reason_for_break) }
 
       it "formats employment break correctly" do
         expect(employment_data).to include(["Employment Break"])
-        expect(employment_data).to include(["Reason:", employment.reason_for_break])
+        expect(employment_data).to include(["Reason:", reason_for_break])
         expect(employment_data).to include(["End date:", "present"])
       end
     end
 
     context "when employment has unexplained gap" do
-      let(:employment) { build(:employment) }
+      let(:employment) { build_stubbed(:employment) }
+      let(:employments) { [employment] }
       let(:gap) { { started_on: 1.year.ago.to_date, ended_on: Time.zone.today } }
 
       before do
@@ -320,10 +319,6 @@ RSpec.describe JobApplicationPdf do
   describe "#references" do
     subject(:referees) { datasource.referees }
 
-    let(:referee) { nil }
-
-    before { job_application.referees = [referee].compact }
-
     context "when no references present" do
       it "returns no data available message" do
         expect(referees).to eq([[I18n.t("jobseekers.job_applications.show.employment_history.none"), nil]])
@@ -331,7 +326,8 @@ RSpec.describe JobApplicationPdf do
     end
 
     context "when references present" do
-      let(:referee) { build(:referee) }
+      let(:referee) { build_stubbed(:referee) }
+      let(:refs) { [referee] }
 
       it "returns reference data" do
         expect(referees.first.last.first).to include(["Name:", referee.name])
@@ -340,7 +336,8 @@ RSpec.describe JobApplicationPdf do
     end
 
     context "when reference has phone number" do
-      let(:referee) { build(:referee, phone_number: "01234567890") }
+      let(:referee) { build_stubbed(:referee, phone_number: "01234567890") }
+      let(:refs) { [referee] }
 
       it "includes phone number" do
         expect(referees.first.last.first).to include(["Phone Number:", "01234567890"])
@@ -348,7 +345,8 @@ RSpec.describe JobApplicationPdf do
     end
 
     context "when is_most_recent_employer is set" do
-      let(:referee) { build(:referee, is_most_recent_employer: true) }
+      let(:referee) { build_stubbed(:referee, is_most_recent_employer: true) }
+      let(:refs) { [referee] }
 
       it "includes most recent employer information" do
         expect(referees.first.last.first).to include(["Current or most recent employer:", "Yes"])
