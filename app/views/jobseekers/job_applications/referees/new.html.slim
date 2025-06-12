@@ -5,7 +5,7 @@
     span.govuk-caption-l = t(".caption")
     h1.govuk-heading-xl = t(".heading")
 
-    p.govuk-body = t(".description")
+    p.govuk-body = t(".description.html", link: govuk_link_to(t(".kcsie"), "https://www.gov.uk/government/publications/keeping-children-safe-in-education--2"))
     h2.govuk-heading-m = t(".work_in_school_heading")
     p.govuk-body = t(".work_in_school_guidance")
     h2.govuk-heading-m = t(".trainee_teacher_heading")
@@ -17,6 +17,8 @@
       = f.govuk_error_summary
 
       = render "fields", f: f
+
+      p.govuk-body = t(".consent_confirmation")
 
       = f.govuk_submit t("buttons.save_reference")
       = govuk_button_link_to t("buttons.cancel"), jobseekers_job_application_build_path(job_application, :referees), class: "govuk-button--secondary govuk-!-margin-left-3"

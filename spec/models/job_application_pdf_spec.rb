@@ -339,6 +339,16 @@ RSpec.describe JobApplicationPdf do
       end
     end
 
+    context "when jobseeker want to be notified before contacting the referer" do
+      let(:referee) { build(:referee) }
+
+      before { job_application.notify_before_contact_referers = true }
+
+      it "adds a notification request statement" do
+        expect(referees.first.first).to eq(I18n.t("jobseekers.job_applications.review.contact_referer.publisher"))
+      end
+    end
+
     context "when reference has phone number" do
       let(:referee) { build(:referee, phone_number: "01234567890") }
 

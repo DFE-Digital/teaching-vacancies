@@ -55,6 +55,9 @@ FactoryBot.define do
     safeguarding_issue_details { Faker::Lorem.paragraph(sentence_count: 1) }
     has_right_to_work_in_uk { true }
 
+    # Referees
+    notify_before_contact_referers { false }
+
     completed_steps { JobApplication.completed_steps.keys }
     in_progress_steps { [] }
 

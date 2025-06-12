@@ -2,11 +2,15 @@
 
 require "rails_helper"
 
-RSpec.describe Jobseekers::JobApplication::RefereesForm do
-  let(:form) { described_class.new(referees: referees, referees_section_completed: true) }
+RSpec.describe Jobseekers::JobApplication::RefereesForm, type: :model do
+  let(:form) { described_class.new(referees: referees, referees_section_completed: true, notify_before_contact_referers: true) }
 
   let(:reference_with_current_employer) { create(:referee, is_most_recent_employer: true) }
   let(:reference_without_current_employer) { create(:referee, is_most_recent_employer: false) }
+
+  before { allow(Shoulda::Matchers).to receive(:warn) }
+
+  it { is_expected.to validate_inclusion_of(:notify_before_contact_referers).in_array([true, false]) }
 
   context "when at least one reference is from the most recent employer" do
     let(:referees) { [reference_with_current_employer] }
