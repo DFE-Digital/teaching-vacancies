@@ -145,7 +145,7 @@ module JobApplicationsHelper
                          religious_reference_type: "referee",
                          religious_referee_name: Faker::Name.name,
                          religious_referee_address: Faker::Address.full_address,
-                         ethos_and_aims: "",
+                         ethos_and_aims: "I am person of deep faith and wish to inspire the children I teach though God's teachings",
                          religious_referee_role: "Priest",
                          religious_referee_email: Faker::Internet.email,
                          religious_referee_phone: Faker::PhoneNumber.phone_number,
