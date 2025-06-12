@@ -19,6 +19,7 @@ class JobApplicationPdfGenerator
     render_nested_section(:professional_body_memberships)
     render_nested_section(:employment_history)
     render_page(:personal_statement)
+    render_table_section(:religious_information) if datasource.religious_application?
     render_nested_section(:referees)
     render_table_section(:ask_for_support)
     render_table_section(:declarations)
@@ -44,7 +45,7 @@ class JobApplicationPdfGenerator
 
   def render_table_section(section_name)
     page_section do
-      page_title(section_name.to_s.titleize)
+      page_title(I18n.t("jobseekers.job_applications.show.#{section_name}.heading"))
       page_table(datasource.public_send(section_name))
     end
   end

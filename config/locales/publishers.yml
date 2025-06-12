@@ -392,9 +392,9 @@ en:
           this_form_is_kept_up_to_date: This form is kept up to date with keeping children safe in education (KCSIE) guidance.
           ask_about_religion: You'll be able to ask candidates about their religion.
           step_title: Applying for the job
-          preview_online_application_form: Download preview of Teaching Vacancies' application form
-          preview_religious_application_form: Preview Teaching Vacancies' application form with questions about religion
-          preview_catholic_application_form: Preview application form for Catholic schools
+          preview_online_application_form: Download a preview of Teaching Vacancies' application form
+          preview_religious_application_form: Download a preview Teaching Vacancies' application form with questions about religion
+          preview_catholic_application_form: Download a preview application form for Catholic schools
         multiple_schools_advice_banner:
           heading: Sign-in as your trust or local authority to advertise a job across multiple schools or at a trust or local authority level
           link_text: Find out how to request organisational access
