@@ -7,7 +7,7 @@ RSpec.describe "Publishers::Vacancies::JobApplicationsController#download_applic
   let(:job_application) { create(:uploaded_job_application, vacancy: vacancy) }
 
   before do
-    sign_in publisher
+    sign_in(publisher, scope: :publisher)
     # rubocop:disable RSpec/AnyInstance
     allow_any_instance_of(Publishers::BaseController).to receive(:current_organisation).and_return(organisation)
     # rubocop:enable RSpec/AnyInstance
