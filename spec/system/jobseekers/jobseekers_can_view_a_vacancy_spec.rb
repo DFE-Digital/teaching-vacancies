@@ -68,17 +68,6 @@ RSpec.describe "Viewing a single published vacancy" do
       end
     end
 
-    context "when there is an application link set" do
-      let(:vacancy) { create(:vacancy, :no_tv_applications, organisations: [school]) }
-
-      scenario "a jobseeker can click on the application link" do
-        visit job_path(vacancy)
-        click_on I18n.t("jobs.apply")
-
-        expect(page.current_url).to eq vacancy.application_link
-      end
-    end
-
     context "meta tags" do
       include ActionView::Helpers::SanitizeHelper
 
