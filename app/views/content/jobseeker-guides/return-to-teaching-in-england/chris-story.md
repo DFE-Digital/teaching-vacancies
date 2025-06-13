@@ -11,11 +11,11 @@ card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/chri
 
 It was not until university, where I studied Design and Technology, that the idea of teaching occurred to me; as I really enjoyed the subject and had always enjoyed sharing and imparting knowledge to others, so I decided to give teaching a go.   
 
-In 1993, I started teaching Design and Technology at Chiswick Community School in West London, having graduated with a degree and then a PGCE in Design and Technology with Subsidiary Maths. After six years, I moved to become the Head of Design and Technology at a challenging school in Croydon. It was a tough experience but also quite rewarding at times. 
+In 1993, I started teaching Design and Technology at Chiswick Community School in West London, having graduated with a degree and then a PGCE in Design and Technology with Subsidiary Maths. After 6 years, I moved to become the Head of Design and Technology at a challenging school in Croydon. It was a tough experience but also quite rewarding at times. 
 
 From there, I landed a senior role at another school in Harrow in 2001 and was soon promoted to Assistant Headteacher in charge of Design and Technology with an overview of IT, amongst other responsibilities.  
 
-I left classroom teaching in 2008 to help my wife run our after-school tuition centre where I tutored Maths for children aged 6–16 years. I really fancied being my own boss, in charge of my own time and was excited to build a family business.   
+I left classroom teaching in 2008 to help my wife run our after-school tuition centre where I tutored Maths for children aged 6 to 16 years. I really fancied being my own boss, in charge of my own time and was excited to build a family business.   
 
 Fast forward to 2024, having co-run our business for 16 years, my wife is ready to retire. It can be challenging working for yourself and I didn’t want to continue running the business on my own without her, nor did I feel ready to retire from teaching either, as I love it too much.  
 
@@ -27,9 +27,7 @@ One of the most rewarding things about teaching is that ‘penny drop’ moment 
 
 All these factors combined led me to return to the school classroom. Given that my most recent teaching experience was in Maths, which I have really enjoyed, and that there’s no doubt been quite a few technological advancements in Design and Technology, I opted to return as a Maths teacher. Although I would still welcome teaching some Design and Technology in future.  
 
-I was so grateful for the support from a return to teaching adviser. I have not been to a competitive interview for a long time! 
-
-> “From the personal statement to the interview, the return to teaching adviser guided me through the whole application process every step of the way.”
+I was so grateful for the support from a return to teaching adviser. I have not been to a competitive interview for a long time! From the personal statement to the interview, the return to teaching adviser guided me through the whole application process every step of the way.
 
 It was like having a mentor and I did everything that was suggested to refresh my knowledge and skills. There is no doubt in my mind that I wouldn’t have secured a role as quickly without her invaluable help, and I am really indebted to her for all of that.  
 
