@@ -3,9 +3,6 @@
 module Referees
   class EmploymentReferenceForm < ReferenceForm
     include ActiveRecord::AttributeAssignment
-    include DateAttributeAssignment
-
-    attr_reader :employment_start_date
 
     STRING_FIELDS = %i[how_do_you_know_the_candidate reason_for_leaving would_reemploy_current_reason would_reemploy_any_reason].freeze
 
@@ -21,10 +18,7 @@ module Referees
       validates field, inclusion: { in: [true, false], allow_nil: false }
     end
 
-    def employment_start_date=(value)
-      @employment_start_date = date_from_multiparameter_hash(value)
-    end
-
+    attribute :employment_start_date, :date_or_hash
     validates :employment_start_date, date: { before: :today }
 
     class << self

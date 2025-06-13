@@ -1,4 +1,4 @@
-RSpec::Matchers.define :validate_date_with_error_of do |attribute|
+RSpec::Matchers.define :validate_date_or_hash_of do |attribute|
   match do |record|
     # rubocop:disable Layout/HashAlignment
     test_cases = {

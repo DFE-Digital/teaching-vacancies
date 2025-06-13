@@ -8,7 +8,7 @@ module Jobseekers::JobApplications::SelfDisclosure
     attribute :country, :string
     attribute :postcode, :string
     attribute :phone_number, :string
-    attribute :date_of_birth, :date_with_error
+    attribute :date_of_birth, :date_or_hash
     attribute :has_unspent_convictions, :boolean
     attribute :has_spent_convictions, :boolean
 
