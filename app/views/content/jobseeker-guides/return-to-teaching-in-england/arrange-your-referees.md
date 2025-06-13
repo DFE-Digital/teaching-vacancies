@@ -1,7 +1,7 @@
 ---
 order: 105
-title: Arrange your referees
-meta_description: Find out how to arrange your referees for job applications to return to teaching.
+title: Arranging your references
+meta_description: Arrange your teaching references for job applications. Get guidance on teaching standard references and updating your teaching portfolio.
 date_posted: 17/02/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/arrange-your-referees.png"
@@ -27,6 +27,6 @@ If you can, choose experienced teachers who have seen you teach recently. They s
 
 Make sure you confirm with your referees that they are willing to provide a reference before including their names in your application. 
 
-Supply teaching agencies often only provide brief factual references so try to find an alternative referee if possible. 
+Supply teaching agencies often only provide brief factual references, so try to find an alternative referee if possible. 
  
 [Learn more about your rights regarding work references](https://www.gov.uk/work-reference?). 
