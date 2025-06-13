@@ -1,7 +1,7 @@
 ---
 order: 104
-title: How to apply for classroom experience
-meta_description: Find out how to apply for classroom experience to help you return to teaching.
+title: How to apply for classroom experience as a returning teacher
+meta_description: Apply for classroom experience before returning to teaching. Get CV advice, DBS check help, and application guidance for former teachers.
 date_posted: 17/02/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/how-to-apply-for-classroom-experience.png"
