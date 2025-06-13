@@ -1,0 +1,53 @@
+en:
+  activemodel:
+    errors:
+      models:
+        jobseekers/job_applications/self_disclosure/personal_details_form:
+          attributes:
+            city:
+              blank: Enter your town or city
+            date_of_birth:
+              blank: Enter your date of birth
+              invalid: Enter a valid date, for example, 27 3 2007
+            name:
+              blank: Enter your name
+            phone_number:
+              blank: Enter your phone number
+              invalid: Enter a phone number in the correct format
+            postcode:
+              blank: Enter your postcode
+            address_line_1:
+              blank: Enter your building and street
+            has_unspent_convictions:
+              inclusion: Select no if you have no unspent conditional cautions or convictions in the UK or overseas
+            has_spent_convictions:
+              inclusion: Select no if you have no spent conditional cautions or convictions in the UK or overseas
+
+        jobseekers/job_applications/self_disclosure/barred_list_form:
+          attributes:
+            is_barred:
+              inclusion: Select no if you have not been included on the list of people barred from/listed as unsuitable to engage in regulated activity/work with children
+            has_been_referred:
+              inclusion: Select no if you have not been referred to the Disclosure and Baring Service
+
+        jobseekers/job_applications/self_disclosure/conduct_form:
+          attributes:
+            is_known_to_children_services:
+              inclusion: Select no if you have never been known to any children’s services department
+            has_been_dismissed:
+              inclusion: Select no if you have never been dismissed for misconduct from any paid or voluntary position previously held by you
+            has_been_disciplined:
+              inclusion: Select no if you have never been under investigation for or subject to any disciplinary sanctions
+            has_been_disciplined_by_regulatory_body:
+              inclusion: Select no if you have never been subject to any sanctions being placed on your professional registration
+
+        jobseekers/job_applications/self_disclosure/confirmation_form:
+          attributes:
+            agreed_for_processing:
+              inclusion: Agree for your information to be processed in order to complete the declaration
+            agreed_for_criminal_record:
+              inclusion: Agree criminal record option in order to complete the declaration
+            agreed_for_organisation_update:
+              inclusion: Agree to update the school in order to complete the declaration
+            agreed_for_information_sharing:
+              inclusion: Agree for information sharing  in order to complete the declaration
