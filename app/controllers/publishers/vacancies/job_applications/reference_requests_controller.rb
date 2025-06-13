@@ -6,7 +6,9 @@ module Publishers
       class ReferenceRequestsController < Publishers::Vacancies::JobApplications::BaseController
         before_action :set_job_application, :set_reference_request
 
-        def show; end
+        def show
+          @referee = @reference_request.referee
+        end
 
         def mark_as_received
           @form = form_class.new

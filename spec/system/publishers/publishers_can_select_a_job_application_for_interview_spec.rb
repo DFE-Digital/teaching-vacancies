@@ -85,14 +85,32 @@ RSpec.describe "Publishers can select a job application for interview" do
             })
         end
 
-        context "when the reference is declined" do
+        context "when the reference is declined",  :versioning do
           before do
             perform_enqueued_jobs
             current_referee.reload.job_reference.update!(attributes_for(:job_reference, :reference_declined).merge(updated_at: Date.tomorrow))
             current_referee.reload.reference_request.update!(status: :received)
           end
 
-          it "can progress to the page where the reference is shown", :js do
+          it "shows the reference as declined" do
+            publisher_ats_interviewing_page.pre_interview_check_links.first.click
+            expect(publisher_ats_pre_interview_checks_page).to be_displayed
+
+            publisher_ats_pre_interview_checks_page.reference_links.first.click
+            expect(page).to have_content("You will need to request a new referee")
+            expect(publisher_ats_pre_interview_checks_page.timeline).to have_content("Reference declined")
+          end
+        end
+
+        context "with a received reference", :versioning do
+          before do
+            perform_enqueued_jobs
+            # simulate receipt of a reference
+            current_referee.reload.job_reference.update!(attributes_for(:job_reference, :reference_given).merge(updated_at: Date.tomorrow))
+            current_referee.reload.reference_request.update!(status: :received)
+          end
+
+          it "can progress to the page where the reference is shown" do
             publisher_ats_interviewing_page.pre_interview_check_links.first.click
             expect(publisher_ats_pre_interview_checks_page).to be_displayed
 
