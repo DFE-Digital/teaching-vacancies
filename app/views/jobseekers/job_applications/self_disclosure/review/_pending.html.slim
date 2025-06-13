@@ -8,4 +8,4 @@
   = f.govuk_submit t(".manually_complete"), class: "govuk-button--secondary"
 
 - if @self_disclosure.request.manual?
-  = govuk_link_to(t(".collect_through_tv"), organisation_job_job_application_batch_references_and_declaration_path(vacancy.id, @batch.id, :collect_references))
+  = govuk_link_to(t(".collect_through_tv"), collect_references_organisation_job_job_application_path(vacancy.id, @job_application.id))
