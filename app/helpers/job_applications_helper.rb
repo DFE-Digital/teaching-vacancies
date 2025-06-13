@@ -17,6 +17,7 @@ module JobApplicationsHelper
     unsuccessful: "unsuccessful",
     withdrawn: "withdrawn",
     interviewing: "interviewing",
+    info_required: "info required",
   }.freeze
 
   JOB_APPLICATION_STATUS_TAG_COLOURS = {
@@ -28,6 +29,7 @@ module JobApplicationsHelper
     unsuccessful: "red",
     withdrawn: "yellow",
     interviewing: "turquoise",
+    info_required: "orange",
   }.freeze
 
   def job_application_qualified_teacher_status_info(job_application)
