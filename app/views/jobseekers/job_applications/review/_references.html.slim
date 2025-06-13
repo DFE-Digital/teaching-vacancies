@@ -8,6 +8,12 @@
     - job_application.referees.sort_by(&:created_at).each do |referee|
       = govuk_summary_list html_attributes: { id: referee.name } do |summary_list|
         - summary_list.with_row do |row|
+          - if jobseeker_signed_in? && job_application.notify_before_contact_referers
+            - row.with_key text: t("jobseekers.job_applications.review.contact_referer.jobseeker")
+          - elsif publisher_signed_in? && job_application.notify_before_contact_referers
+            - row.with_key text: t("jobseekers.job_applications.review.contact_referer.publisher")
+
+        - summary_list.with_row do |row|
           - row.with_key text: referee.name
 
         - summary_list.with_row do |row|

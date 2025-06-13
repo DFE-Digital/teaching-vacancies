@@ -257,7 +257,8 @@ en:
           step_title: Education and qualifications
           title: Education and qualifications — Application
         referees:
-          description: You must include your current or most recent employer as a referee. If you did not work with children in this role, you must also provide a referee from your last job where you worked with children.
+          description_html: You must include details for a referee from your current or most recent employer. If you did not work with children in this role, you must include at least one referee from the last job where you worked with children. Schools must contact your referees in compliance with %{link}.
+          kcsie: Keeping children safe in education statutory guidance
           heading: References
           no_references: No referees specified
           step_title: References
@@ -478,7 +479,9 @@ en:
           success: Your referee was deleted
         edit:
           caption: References
-          description: If you are shortlisted, your referees may be contacted before your interview.
+          description:
+            html: If you are shortlisted, your referees may be contacted before your interview. Schools must contact your referees in compliance with %{link}. You can ask to be told before a school contacts your referees, but we cannot guarantee the school will do so.
+          kcsie: Keeping children safe in education statutory guidance
           heading: Edit a referee
           title: Edit a referee — Application
           work_in_school_heading: If you work in a school
@@ -486,13 +489,16 @@ en:
           trainee_teacher_heading: If you are a trainee teacher
           trainee_teacher_guidance: You should provide a reference where you can show your experience working with children. You can include references from school placements or from your course provider.
           work_with_children_heading: If you used to work with children
-          work_with_children_guidance: If you do not currently work with children but have in the past, you should provide one referee from your current or most recent employer and one from the last time you worked with children.
+          work_with_children_guidance: If you do not currently work with children but have in the past, you should provide one reference from your current or most recent employer and one from the last time you worked with children.
+          consent_confirmation: By adding this referee, you are confirming that they have consented to providing their contact information for the purpose of providing a reference.
         email: Email address
         job_title: Job title
         name: Name
         new:
           caption: References
-          description: If you are shortlisted, your referees may be contacted before your interview.
+          description:
+            html: If you are shortlisted, your referees may be contacted before your interview. Schools must contact your referees in compliance with %{link}. You can ask to be told before a school contacts your referees, but we cannot guarantee the school will do so.
+          kcsie: Keeping children safe in education statutory guidance
           heading: Add a referee
           title: Add a referee — Application
           work_in_school_heading: If you work in a school
@@ -500,12 +506,16 @@ en:
           trainee_teacher_heading: If you are a trainee teacher
           trainee_teacher_guidance: You should provide a reference where you can show your experience working with children. You can include references from school placements or from your course provider.
           work_with_children_heading: If you used to work with children
-          work_with_children_guidance: If you do not currently work with children but have in the past, you should provide one referee from your current or most recent employer and one from the last time you worked with children.
+          work_with_children_guidance: If you do not currently work with children but have in the past, you should provide one reference from your current or most recent employer and one from the last time you worked with children.
+          consent_confirmation: By adding this referee, you are confirming that they have consented to providing their contact information for the purpose of providing a reference.
         organisation: Organisation
         phone_number: Phone number
         relationship: Relationship to applicant
         is_most_recent_employer: Current or most recent employer
       review:
+        contact_referer:
+          jobseeker: You have requested that the school contact you before collecting references.
+          publisher: This applicant wants to be contacted before you collect their references.
         view_your_profile: View your profile
         confirmation:
           heading: Confirmation
