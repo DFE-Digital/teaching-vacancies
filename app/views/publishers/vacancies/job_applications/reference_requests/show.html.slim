@@ -21,7 +21,7 @@
 
     .govuk-body = t(".more_urgent")
 
-    - unless @referee.job_reference.complete? && !@referee.job_reference.can_give_reference?
+    - unless @referee.job_reference&.complete? && !@referee.job_reference.can_give_reference?
       = govuk_button_link_to t(".mark_as_received"), mark_as_received_organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, @reference_request.id), class: "govuk-button--secondary"
 
     .h2.govuk-heading-m = t(".referee_details.heading")

@@ -3,11 +3,11 @@ FactoryBot.define do
     complete { true }
 
     trait :reference_given do
-    can_give_reference { true }
-    name { "name" }
-    job_title { "job_title" }
-    phone_number { "01234 5654345" }
-    email { Faker::Internet.email(domain: "contoso.com") }
+      can_give_reference { true }
+      name { "name" }
+      job_title { "job_title" }
+      phone_number { "01234 5654345" }
+      email { Faker::Internet.email(domain: "contoso.com") }
       organisation { "my school" }
 
       how_do_you_know_the_candidate { Faker::Lorem.paragraph }
