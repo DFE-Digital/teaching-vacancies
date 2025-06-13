@@ -1,7 +1,7 @@
 ---
 order: 106
-title: Show how you meet the teachers' standards
-meta_description: Find out how to show how you meet the teachers' standards to help you to return to teaching.
+title: Show how you meet the teachers' standards as a returning teacher
+meta_description: Learn how to meet national teaching standards. Get practical ways to evidence and meet new professional standards for teachers.
 date_posted: 17/02/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/show-how-you-meet-the-teachers-standards.jpg"
@@ -45,7 +45,7 @@ Can you give examples of how you’ve created a positive and safe environment fo
 
 Can you show how you have communicated and collaborated effectively with colleagues and parents? 
  
-## If you’re returning to teach 
+## Get support from a return to teaching advisor
  
 If you have previously taught or trained to teach in the UK, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers?). 
  
