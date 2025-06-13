@@ -85,7 +85,7 @@ RSpec.describe "Publishers can select a job application for interview" do
             })
         end
 
-        context "when the reference is declined",  :versioning do
+        context "when the reference is declined", :versioning do
           before do
             perform_enqueued_jobs
             current_referee.reload.job_reference.update!(attributes_for(:job_reference, :reference_declined).merge(updated_at: Date.tomorrow))
