@@ -37,6 +37,10 @@ class Jobseekers::JobApplications::JobApplicationStepProcess
     @step_groups.values.flatten
   end
 
+  def validatable_steps
+    steps.excluding(:review).map(&:to_s)
+  end
+
   def next_step(step)
     steps[steps.index(step) + 1]
   end
@@ -56,5 +60,9 @@ class Jobseekers::JobApplications::JobApplicationStepProcess
               PRE_RELIGION_STEPS.merge(POST_RELIGION_STEPS)
             end
     steps.values.flatten
+  end
+
+  def form_class_for(step)
+    "jobseekers/job_application/#{step}_form".camelize.constantize
   end
 end

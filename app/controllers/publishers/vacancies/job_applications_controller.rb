@@ -2,7 +2,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   include Jobseekers::QualificationFormConcerns
   include DatesHelper
 
-  before_action :set_job_application, only: %i[show download_pdf]
+  before_action :set_job_application, only: %i[show download_pdf download_application_form]
 
   before_action :set_job_applications, only: %i[index tag_single tag]
 
@@ -27,6 +27,20 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       pdf.render,
       filename: "job_application_#{@job_application.id}.pdf",
       type: "application/pdf",
+      disposition: "inline",
+    )
+  end
+
+  def download_application_form
+    unless @job_application.application_form.attached?
+      redirect_to organisation_job_job_application_path(vacancy.id, @job_application.id), alert: I18n.t("publishers.vacancies.job_applications.download_pdf.no_file")
+      return
+    end
+
+    send_data(
+      @job_application.application_form.download,
+      filename: @job_application.application_form.filename.to_s,
+      type: @job_application.application_form.content_type,
       disposition: "inline",
     )
   end
