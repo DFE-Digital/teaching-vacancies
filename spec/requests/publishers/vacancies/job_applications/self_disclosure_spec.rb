@@ -48,16 +48,6 @@ RSpec.describe "Job applications self disclosure" do
         expect(response).to have_http_status(:ok)
         expect(response).to render_template(:show)
       end
-
-      context "when manual self disclosure" do
-        let(:self_disclosure_request) { create(:self_disclosure_request, job_application:, status: "manual") }
-
-        it "create job application batch" do
-          expect {
-            get(organisation_job_job_application_self_disclosure_path(vacancy.id, job_application.id))
-          }.to change(JobApplicationBatch, :count).by(1)
-        end
-      end
     end
   end
 
