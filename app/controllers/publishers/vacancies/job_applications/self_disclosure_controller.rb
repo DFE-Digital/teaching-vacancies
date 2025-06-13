@@ -3,11 +3,6 @@ class Publishers::Vacancies::JobApplications::SelfDisclosureController < Publish
 
   def show
     @self_disclosure = SelfDisclosurePresenter.new(job_application)
-    if @self_disclosure.request.manual?
-      @batch = JobApplicationBatch.create!(vacancy_id: job_application.vacancy.id).tap do
-        it.batchable_job_applications.create!(job_application: job_application)
-      end
-    end
 
     respond_to do |format|
       format.html
