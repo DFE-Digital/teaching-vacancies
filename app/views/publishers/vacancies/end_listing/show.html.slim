@@ -1,15 +1,15 @@
-- content_for :page_title_prefix, t(".title", job_title: vacancy.job_title)
+- content_for :page_title_prefix, t(".title", job_title: @vacancy.job_title)
 
 - content_for :breadcrumbs do
   nav.govuk-breadcrumbs aria-label="Breadcrumbs"
-  = govuk_back_link text: t("buttons.back"), href: organisation_job_path(vacancy.id)
+  = govuk_back_link text: t("buttons.back"), href: organisation_job_path(@vacancy.id)
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    span.govuk-caption-l = vacancy.job_title
+    span.govuk-caption-l = @vacancy.job_title
     h1.govuk-heading-xl = t(".heading")
 
-    = form_for form, url: organisation_job_end_listing_path(vacancy.id), method: :patch do |f|
+    = form_for @form, url: organisation_job_end_listing_path(@vacancy.id), method: :patch do |f|
       = f.govuk_error_summary
 
       = f.govuk_radio_buttons_fieldset(:hired_status, legend: { size: "m" }) do
