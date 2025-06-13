@@ -614,19 +614,23 @@ en:
           last_action: Last action
           status: Status
         reference_requests:
-          reference_not_provided:
           reference:
             can_give_ref: Can you give a reference for %{name}?
             how_would_you_rate: How would you rate %{name}?
             can_share_ref: Can your reference be shared with %{name}?
-          mark_as_received:
+          reference_received:
             caption: Update reference status
             heading: Is %{name}'s reference satisfactory?
+          edit:
+            caption: Update referee information
+            heading: What is the correct email address for %{name}?
           show:
             page_title: Reference
             pending_status: Pending
             mark_as_received: Mark as received
             collect_reference: Would you like to collect this reference through Teaching Vacancies?
+            change_email_address_html: If the candidate has entered the referee's email address incorrectly, %{link}
+            change_email_link_text: you can amend it.
             received_status: Received
             unavailable_status: Unavailable
             created_status: Created
@@ -648,6 +652,7 @@ en:
               email: Email address
               phone: Phone number
             reference_requested: Reference requested
+            reference_email_changed: Reference email changed to %{email}
             reference_received: Reference received
             reference_declined: Reference declined
             reference_created: Marked as interviewing

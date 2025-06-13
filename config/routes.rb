@@ -396,9 +396,10 @@ Rails.application.routes.draw do
 
       resources :job_applications, only: %i[index show], controller: "publishers/vacancies/job_applications" do
         resources :notes, only: %i[create destroy], controller: "publishers/vacancies/job_applications/notes"
-        resources :reference_requests, only: %i[show update], controller: "publishers/vacancies/job_applications/reference_requests" do
+        resources :reference_requests, only: %i[show update edit], controller: "publishers/vacancies/job_applications/reference_requests" do
           member do
-            get :mark_as_received
+            get :reference_received
+            patch :mark_as_received
           end
         end
         get :download_pdf
