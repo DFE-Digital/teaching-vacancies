@@ -9,7 +9,10 @@ card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/retu
 
 ![A teacher talking in front of a classroom full of students.](/content-assets/jobseeker-guides/return-to-teaching-in-england/return-to-teaching-a-step-by-step-guide.jpg)
 
-Check what you need to do to return to teach in a state-funded school in England. If you need support returning to teaching after a break, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers). You can find additional support on [Get support returning to teaching](/jobseeker-guides/return-to-teaching-in-england/return-to-teaching/).
+Check what you need to do to return to teach in a state-funded school in England. If you need support returning to teaching after a break, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers). 
+
+You can find additional support on [Get support returning to teaching](/jobseeker-guides/return-to-teaching-in-england/return-to-teaching/).
+
 <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
   <div class="govuk-accordion__section">
     <div class="govuk-accordion__section-header">
@@ -59,8 +62,8 @@ Check what you need to do to return to teach in a state-funded school in England
     <div id="accordion-default-content-3" class="govuk-accordion__section-content">
       <p class="govuk-body">As part of your application, you'll need to provide a personal statement and references. Your personal statement should:</p>
       <ul>
-        <li>Highlight your skills and experience</li>
-        <li>Show strong examples of your teaching practice</li>
+        <li>highlight your skills and experience</li>
+        <li>show strong examples of your teaching practice</li>
       </ul>
       <p class="govuk-body">
         <a href="/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-write-teacher-personal-statement">How to write a teacher personal statement</a>
