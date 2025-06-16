@@ -105,7 +105,7 @@ Naming/MethodParameterName:
     - pp
     - to
 
-Naming/PredicateName:
+Naming/PredicatePrefix:
   ForbiddenPrefixes:
     - is_
 

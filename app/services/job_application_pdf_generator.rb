@@ -56,8 +56,8 @@ class JobApplicationPdfGenerator
         page_sub_title(sub_title) if sub_title.present?
         next if group.blank?
 
-        group.each do
-          page_table(it)
+        group.each do |item|
+          page_table(item)
           move_down 1.cm
         end
       end

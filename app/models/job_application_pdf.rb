@@ -32,10 +32,10 @@ class JobApplicationPdf
     scope = "helpers.label.jobseekers_job_application_personal_details_form"
     ni_review = job_application.national_insurance_number.presence || I18n.t("jobseekers.job_applications.not_defined")
 
-    @personal_details = Table[basic_personal_details].tap do
-      it << [I18n.t("national_insurance_number_review", scope:), ni_review] if job_application.national_insurance_number?
+    @personal_details = Table[basic_personal_details].tap do |table|
+      table << [I18n.t("national_insurance_number_review", scope:), ni_review] if job_application.national_insurance_number?
 
-      it << [I18n.t("working_pattern_details", scope:), job_application.working_pattern_details] if job_application.working_pattern_details.present?
+      table << [I18n.t("working_pattern_details", scope:), job_application.working_pattern_details] if job_application.working_pattern_details.present?
     end
   end
 
@@ -57,9 +57,9 @@ class JobApplicationPdf
       [I18n.t("is_statutory_induction_complete", scope:), yes_no(job_application.is_statutory_induction_complete?)],
     ]
 
-    @professional_status = Table[basic_professional_status].tap do
+    @professional_status = Table[basic_professional_status].tap do |table|
       if job_application.statutory_induction_complete_details.present?
-        it.rows << [I18n.t("statutory_induction_complete_details", scope:), job_application.statutory_induction_complete_details]
+        table.rows << [I18n.t("statutory_induction_complete_details", scope:), job_application.statutory_induction_complete_details]
       end
     end
   end
