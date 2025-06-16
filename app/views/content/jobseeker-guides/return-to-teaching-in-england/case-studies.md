@@ -17,6 +17,6 @@ Read [Chris’s experience going back to teaching after running a business](/job
 
 Find out how [Dena returned to teaching after 8 years away from the classroom](/jobseeker-guides/return-to-teaching-in-england/denas-story).
 
-Read about [Will’s return to teaching after travelling abroad and working in the private sector](/jobseeker-guides/return-to-teaching-in-england/wills-story).
+Read about [Will’s return to teaching after travelling abroad and working as an energy engineer](/jobseeker-guides/return-to-teaching-in-england/wills-story).
 
 You can also read the [Return to teaching: step by step guide](/jobseeker-guides/return-to-teaching-in-england/return-to-teaching-step-by-step) to check what you need to do to return to teach in a state-funded school in England.
