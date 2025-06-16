@@ -1,7 +1,7 @@
 ---
 order: 201
 title: Returning to teaching - teacher stories
-meta_description: Read teacher's stories about what it's like to return to teaching
+meta_description: Read real life stories about what it's like to return to teaching after a break.
 date_posted: 09/06/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/case-studies.jpg"
