@@ -150,7 +150,7 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
       end
 
       it "shows that there are no applicants" do
-        expect(rendered).to have_css(".empty-section-component h3", text: I18n.t("publishers.vacancies.job_applications.index.no_applicants"))
+        expect(rendered).to have_css(".empty-section-component h3", text: I18n.t("publishers.vacancies.job_applications.index.no_new"))
       end
     end
   end

@@ -12,11 +12,6 @@
       - interviewing = applications.fetch("interviewing", [])
       = govuk_tabs do |tabs|
         / set id property so that anchors are '#shortlisted' rather than '#shortlisted-4'
-        - tabs.with_tab(label: "All (#{@job_applications.size})", id: "all") do
-          - if @job_applications.any?
-            = render "candidates", form: @form, vacancy: @vacancy, candidates: @job_applications, heading: "All Applications", multi_select: "all", origin: :all
-          - else
-            = render EmptySectionComponent.new title: t(".no_applicants")
         - tabs.with_tab(label: "New (#{new_ones.size})", id: "submitted")
           - if new_ones.any?
             = render "candidates", form: @form, vacancy: @vacancy, candidates: new_ones, heading: "New Applications", multi_select: "new", origin: :submitted
