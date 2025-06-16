@@ -32,9 +32,9 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
     scenario "not selecting anything" do
       # Wait for page to fully load
-      expect(page).to have_button(I18n.t("publishers.vacancies.job_applications.candidates.update_application_status"), wait: 10)
+      expect(page).to have_button(I18n.t("publishers.vacancies.job_applications.tab_panel.update_application_status"), wait: 10)
 
-      click_on I18n.t("publishers.vacancies.job_applications.candidates.update_application_status")
+      click_on I18n.t("publishers.vacancies.job_applications.tab_panel.update_application_status")
       expect(page).to have_content(I18n.t("activemodel.errors.models.publishers/job_application/tag_form.attributes.job_applications.too_short"), wait: 5)
     end
 
@@ -55,29 +55,29 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       end
 
       # Wait for button to be ready
-      expect(page).to have_button(I18n.t("publishers.vacancies.job_applications.candidates.update_application_status"), wait: 5)
-      click_on I18n.t("publishers.vacancies.job_applications.candidates.update_application_status")
+      expect(page).to have_button(I18n.t("publishers.vacancies.job_applications.tab_panel.update_application_status"), wait: 5)
+      click_on I18n.t("publishers.vacancies.job_applications.tab_panel.update_application_status")
 
       # Wait for page transition to complete
       expect(page).to have_css(".govuk-tag--red", wait: 10)
       find(".govuk-tag--red").click
       click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_content("Not Considering (3)")
+      expect(page).to have_content("Not considering (4)")
     end
 
     scenario "Changing a single status" do
-      expect(page).to have_button(I18n.t("publishers.vacancies.job_applications.candidates.update_application_status"), wait: 10)
-      find_by_id("tab_not_considering", wait: 5).click
+      expect(page).to have_button(I18n.t("publishers.vacancies.job_applications.tab_panel.update_application_status"), wait: 10)
+      find_by_id("tab_unsuccessful", wait: 5).click
       within(".application-unsuccessful") do
         find(".govuk-checkboxes__input", visible: false).set(true)
       end
-      click_on I18n.t("publishers.vacancies.job_applications.candidates.update_application_status")
+      click_on I18n.t("publishers.vacancies.job_applications.tab_panel.update_application_status")
       # wait for page load
       expect(page).to have_css(".govuk-radios", wait: 5)
       choose("Reviewed ")
       # wait for complete render
       within "#main-content" do
-        find ".govuk-button"
+        find "h1"
       end
       click_on "Save and continue"
       expect(page).to have_content("New (3)")

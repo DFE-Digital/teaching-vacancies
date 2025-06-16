@@ -1,12 +1,12 @@
 require "rails_helper"
 
 RSpec.describe "publishers/vacancies/job_applications/index" do
-  let(:organisation) { build_stubbed(:school) }
-  let(:publisher) { build_stubbed(:publisher, organisations: [organisation]) }
+  let(:organisation) { create(:school) }
+  let(:publisher) { create(:publisher, organisations: [organisation]) }
 
   let(:vacancy) do
-    build_stubbed(:vacancy, publisher: publisher, organisations: [organisation],
-                            job_applications: [build_stubbed(:job_application, :submitted)])
+    create(:vacancy, publisher: publisher, organisations: [organisation],
+                     job_applications: [create(:job_application, :submitted)])
   end
   let(:job_application) { vacancy.job_applications.first }
 
@@ -14,7 +14,7 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
     assign :current_organisation, organisation
     assign :vacancy, vacancy
     assign :job_applications, vacancy.job_applications
-    assign :form, Publishers::JobApplication::TagForm.new
+    assign :form, Publishers::JobApplication::TagForm.new(vacancy:)
 
     render
   end
@@ -29,23 +29,27 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
 
   context "when a vacancy has expired and it has applications" do
     let(:vacancy) do
-      build_stubbed(:vacancy, :expired, expires_at: 2.weeks.ago, organisations: [organisation],
-                                        job_applications: [
-                                          job_application_submitted,
-                                          job_application_reviewed,
-                                          job_application_shortlisted,
-                                          job_application_unsuccessful,
-                                          job_application_withdrawn,
-                                          job_application_interviewing,
-                                        ])
+      create(:vacancy, :expired,
+             expires_at: 2.weeks.ago,
+             organisations: [organisation],
+             job_applications: [
+               job_application_submitted,
+               job_application_reviewed,
+               job_application_shortlisted,
+               job_application_unsuccessful,
+               job_application_withdrawn,
+               job_application_interviewing,
+             ])
     end
 
-    let(:job_application_submitted) { build_stubbed(:job_application, :status_submitted, last_name: "Alan") }
-    let(:job_application_reviewed) { build_stubbed(:job_application, :status_reviewed, last_name: "Charlie") }
-    let(:job_application_shortlisted) { build_stubbed(:job_application, :status_shortlisted, last_name: "Billy") }
-    let(:job_application_unsuccessful) { build_stubbed(:job_application, :status_unsuccessful, last_name: "Dave") }
-    let(:job_application_withdrawn) {  build_stubbed(:job_application, :status_withdrawn, last_name: "Ethan") }
-    let(:job_application_interviewing) { build_stubbed(:job_application, :status_interviewing, last_name: "Freddy") }
+    let(:job_application_submitted) { create(:job_application, :status_submitted, last_name: "Alan") }
+    let(:job_application_reviewed) { create(:job_application, :status_reviewed, last_name: "Charlie") }
+    let(:job_application_shortlisted) { create(:job_application, :status_shortlisted, last_name: "Billy") }
+    let(:job_application_unsuccessful) { create(:job_application, :status_unsuccessful, last_name: "Dave") }
+    let(:job_application_withdrawn) {  create(:job_application, :status_withdrawn, last_name: "Ethan") }
+    let(:job_application_interviewing) { create(:job_application, :status_interviewing, last_name: "Freddy") }
+    let(:job_application_offered) { create(:job_application, :status_offered, last_name: "Etha") }
+    let(:job_application_declined) { create(:job_application, :status_declined, last_name: "Monique") }
 
     describe "the summary section" do
       it "shows breadcrumb with link to passed deadline in dashboard" do
@@ -131,10 +135,42 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
         end
       end
     end
+
+    describe "offered application" do
+      let(:status) { "offered" }
+
+      it "shows applicant name that links to application" do
+        within(".application-#{status}") do
+          expect(rendered).to have_link("#{job_application_offered.first_name} #{job_application_offered.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_offered.id))
+        end
+      end
+
+      it "shows purple offered tag" do
+        within(".application-#{status}") do
+          expect(rendered).to have_css(".govuk-tag--purple", text: "job offered")
+        end
+      end
+    end
+
+    describe "declined application" do
+      let(:status) { "declined" }
+
+      it "shows applicant name that links to application" do
+        within(".application-#{status}") do
+          expect(rendered).to have_link("#{job_application_declined.first_name} #{job_application_declined.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_declined.id))
+        end
+      end
+
+      it "shows purple declined tag" do
+        within(".application-#{status}") do
+          expect(rendered).to have_css(".govuk-tag--purple", text: "job declined")
+        end
+      end
+    end
   end
 
   context "when a vacancy is active and it has no applications" do
-    let(:vacancy) { build_stubbed(:vacancy, expires_at: 1.month.from_now, organisations: [organisation], job_applications: []) }
+    let(:vacancy) { create(:vacancy, expires_at: 1.month.from_now, organisations: [organisation], job_applications: []) }
 
     describe "the summary section" do
       it "shows breadcrumb with link to active jobs in dashboard" do
@@ -150,13 +186,13 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
       end
 
       it "shows that there are no applicants" do
-        expect(rendered).to have_css(".empty-section-component h3", text: I18n.t("publishers.vacancies.job_applications.index.no_new"))
+        expect(rendered).to have_css(".empty-section-component h3", text: I18n.t("publishers.vacancies.job_applications.index.tab.submitted.none"))
       end
     end
   end
 
   context "when a vacancy has expired more than 1 year ago and it has applications" do
-    let(:vacancy) { build_stubbed(:vacancy, :expired, expires_at: 1.year.ago, organisations: [organisation], job_applications: build_stubbed_list(:job_application, 1, :status_submitted)) }
+    let(:vacancy) { create(:vacancy, :expired, expires_at: 1.year.ago, organisations: [organisation], job_applications: create_list(:job_application, 1, :status_submitted)) }
 
     describe "the summary section" do
       it "shows no application cards" do

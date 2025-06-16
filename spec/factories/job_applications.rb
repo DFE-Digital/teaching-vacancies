@@ -202,4 +202,22 @@ FactoryBot.define do
       )
     end
   end
+
+  trait :status_offered do
+    transient do
+      submitted_at { 4.days.ago }
+      offered_at { 2.days.ago }
+    end
+
+    status { :offered }
+  end
+
+  trait :status_declined do
+    transient do
+      submitted_at { 4.days.ago }
+      declined_at { 2.days.ago }
+    end
+
+    status { :declined }
+  end
 end

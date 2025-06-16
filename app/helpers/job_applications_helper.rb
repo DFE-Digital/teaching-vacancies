@@ -3,9 +3,11 @@ module JobApplicationsHelper
     submitted: "unread",
     reviewed: "reviewed",
     shortlisted: "shortlisted",
-    unsuccessful: "rejected",
+    unsuccessful: "not considering",
     withdrawn: "withdrawn",
     interviewing: "interviewing",
+    offered: "job offered",
+    declined: "job declined",
   }.freeze
 
   JOBSEEKER_STATUS_MAPPINGS = {
@@ -18,6 +20,8 @@ module JobApplicationsHelper
     withdrawn: "withdrawn",
     interviewing: "interviewing",
     action_required: "action required",
+    offered: "offered",
+    declined: "declined",
   }.freeze
 
   JOB_APPLICATION_STATUS_TAG_COLOURS = {
@@ -25,12 +29,22 @@ module JobApplicationsHelper
     draft: "pink",
     submitted: "blue",
     reviewed: "purple",
-    shortlisted: "green",
+    shortlisted: "yellow",
     unsuccessful: "red",
     withdrawn: "yellow",
-    interviewing: "turquoise",
     action_required: "orange",
+    interviewing: "green",
+    offered: "pink",
+    declined: "grey",
   }.freeze
+
+  def tab_name(job_application_status)
+    return "submitted" if job_application_status == "reviewed"
+    return "unsuccessful" if job_application_status == "withdrawn"
+    return "offered" if job_application_status == "declined"
+
+    job_application_status
+  end
 
   def job_application_qualified_teacher_status_info(job_application)
     case job_application.qualified_teacher_status
