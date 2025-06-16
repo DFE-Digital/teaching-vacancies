@@ -117,4 +117,4 @@ You can find additional support on [Get support returning to teaching](/jobseeke
         <a href="/jobseeker-guides/get-help-applying-for-your-teaching-role/prepare-for-a-teaching-job-interview-lesson">Prepare for a teaching interview lesson</a>
       </p>
       <p class="govuk-body">
-        <a href="/jobseeker-guides/return-to-teaching-in-england/show-how-you-meet-the-teachers-standards">Show how you meet the teachers’ standards</a>
+        <a href="/jobseeker-guides/return-to-teaching-in-england/show-how-you-meet-the-teachers-standards">Show how you meet the teachers’ standards as a returning teacher</a>
