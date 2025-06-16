@@ -1,6 +1,6 @@
 ---
 order: 100
-title: Get support from an advisor when returning to teaching
+title: Get support returning to teaching
 meta_description: Get support from an adviser on returning to teaching, restarting your career, finding a job, and adjusting after a break.
 date_posted: 08/09/2023
 category_tags: apply
