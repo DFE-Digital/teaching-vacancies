@@ -121,7 +121,6 @@ class JobApplicationPdf
     end
   end
 
-  # :nocov:
   def referees
     return no_data_available(I18n.t("jobseekers.job_applications.show.employment_history.none")) if job_application.referees.none?
 
@@ -142,7 +141,6 @@ class JobApplicationPdf
       end
     end
   end
-  # :nocov:
 
   def ask_for_support
     @ask_for_support ||= Table[

@@ -2,8 +2,14 @@ require "rails_helper"
 require "pdf/inspector"
 
 RSpec.describe JobApplicationPdfGenerator do
-  let(:vacancy) { build(:vacancy, :published, :at_one_school) }
-  let(:job_application) { build(:job_application, :status_submitted, vacancy: vacancy) }
+  let(:vacancy) { build_stubbed(:vacancy, :published, :at_one_school) }
+  let(:job_application) do
+    build_stubbed(:job_application, :status_submitted,
+                  vacancy: vacancy,
+                  referees: build_stubbed_list(:referee, 1, is_most_recent_employer: true),
+                  qualifications: build_stubbed_list(:qualification, 3),
+                  training_and_cpds: build_stubbed_list(:training_and_cpd, 2))
+  end
   let(:generator) { described_class.new(job_application) }
 
   describe "#generate" do
