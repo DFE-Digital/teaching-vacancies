@@ -35,12 +35,7 @@
   - email_ciphertext
   - phone_number_ciphertext
   :publisher_ats_api_clients:
-  - id
-  - name
   - api_key
-  - last_rotated_at
-  - created_at
-  - updated_at
   :personal_details:
   - first_name_ciphertext
   - last_name_ciphertext
@@ -129,7 +124,6 @@
   - searchable_content
   - google_index_removed
   - expired_vacancy_feedback_email_sent_at
-  - publisher_ats_api_client_id
   :qualifications:
   - finished_studying_details_ciphertext
   :feedbacks:

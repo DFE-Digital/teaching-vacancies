@@ -288,6 +288,12 @@ shared:
     - given_name
     - created_at
     - updated_at
+  publisher_ats_api_clients:
+    - id
+    - name
+    - last_rotated_at
+    - created_at
+    - updated_at
   publisher_preferences:
     - id
     - publisher_id
@@ -425,6 +431,7 @@ shared:
     - religion_type
     - flexi_working_details_provided
     - type
+    - publisher_ats_api_client_id
   failed_imported_vacancies:
     - id
     - import_errors
