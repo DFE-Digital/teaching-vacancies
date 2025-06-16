@@ -5,7 +5,7 @@ RSpec.describe "Jobseekers can close and reactivate their account" do
   let(:organisation) { create(:school) }
   let(:vacancy) { create(:vacancy, organisations: [organisation]) }
   let!(:job_application) { create(:job_application, :reviewed, jobseeker: jobseeker, vacancy: vacancy) }
-  let!(:subscription) { create(:subscription, email: jobseeker.email, active: true) }
+  let!(:subscription) { create(:subscription, email: jobseeker.email) }
 
   before { login_as(jobseeker, scope: :jobseeker) }
 

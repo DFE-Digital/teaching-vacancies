@@ -65,6 +65,9 @@ class Vacancy < ApplicationRecord
   enum :start_date_type, { specific_date: 0, date_range: 1, other: 2, undefined: 3, asap: 4 }
   # trashed: 2 and removed_from_external_system: 3 removed in discard_soft_deletes 29/4/25
   enum :status, { published: 0, draft: 1 }
+
+  validates :status, presence: true
+
   enum :receive_applications, { email: 0, website: 1 }
   enum :extension_reason, { no_applications: 0, didnt_find_right_candidate: 1, other_extension_reason: 2 }
 
@@ -74,7 +77,21 @@ class Vacancy < ApplicationRecord
   belongs_to :publisher_organisation, class_name: "Organisation", optional: true
   belongs_to :publisher_ats_api_client, optional: true
 
+  DOCUMENT_FILE_SIZE_LIMIT = 20.megabytes
+  DOCUMENT_CONTENT_TYPES = %w[application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document].freeze
+
+  DOCUMENT_VALIDATION_OPTIONS = {
+    file_type: :document,
+    content_types_allowed: DOCUMENT_CONTENT_TYPES,
+    file_size_limit: DOCUMENT_FILE_SIZE_LIMIT,
+    valid_file_types: %i[PDF DOC DOCX],
+  }.freeze
+
   has_many_attached :supporting_documents, service: :amazon_s3_documents
+
+  validates :supporting_documents, content_type: DOCUMENT_CONTENT_TYPES,
+                                   size: { less_than: DOCUMENT_FILE_SIZE_LIMIT }, virus_free: true, if: -> { include_additional_documents }
+
   has_one_attached :application_form, service: :amazon_s3_documents
 
   has_many :saved_jobs, dependent: :destroy
@@ -111,9 +128,14 @@ class Vacancy < ApplicationRecord
   # Not called from the code but frequently used for filtering during manual debugging sessions
   scope :external, -> { where.not(external_source: nil).or(where.not(publisher_ats_api_client_id: nil)) }
 
-  scope :search_by_filter, VacancyFilterQuery
-  scope :search_by_location, VacancyLocationQuery
-  scope :search_by_full_text, VacancyFullTextSearchQuery
+  # we need these 3 tiny modules to provide 'scoping glue' between the model and the queries
+  # so that if we can use PublishedVacancy and DraftVacancy safely
+  extend VacancyFilterQueryModule
+  scope :search_by_filter, ->(filters) { vacancy_filter_query(filters) }
+  extend VacancyLocationQueryModule
+  scope :search_by_location, ->(location_query, radius_in_miles, polygon:, sort_by_distance:) { vacancy_location_query(location_query, radius_in_miles, polygon: polygon, sort_by_distance: sort_by_distance) }
+  extend VacancyFulTextSearchQueryModule
+  scope :search_by_full_text, ->(query) { vacancy_full_text_search_query(query) }
 
   # effectively we have two different types of vacancy - external ones and internal ones
   # these require seperate validaqtion rules - internal ones are built up over time by a user,
@@ -135,7 +157,8 @@ class Vacancy < ApplicationRecord
                   only: ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG,
                   if: proc(&:listed?)
 
-  after_save :reset_markers, if: -> { saved_change_to_status? && (listed? || pending?) }
+  # Publisher will need to set a new publish date if wanting to re-publish an scheduled vacancy turned back to a draft.
+  before_save -> { self.publish_on = nil if status_changed?(from: "published", to: "draft") }
 
   # temporary - keep 'type' column in sync with status, but only use Vacancy class in code
   before_save do |vacancy|
@@ -147,6 +170,8 @@ class Vacancy < ApplicationRecord
                      end
     end
   end
+
+  after_save :reset_markers, if: -> { saved_change_to_status? && (listed? || pending?) }
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[8:00 9:00 12:00 15:00 23:59].freeze
@@ -182,11 +207,6 @@ class Vacancy < ApplicationRecord
 
   def location
     [organisation&.name, organisation&.town, organisation&.county].reject(&:blank?)
-  end
-
-  def draft!
-    self.publish_on = nil
-    super
   end
 
   def central_office?

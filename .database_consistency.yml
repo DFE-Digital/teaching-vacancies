@@ -70,3 +70,8 @@ Jobseeker:
   index_jobseekers_on_unlock_token:
     UniqueIndexChecker:
       enabled: false
+# it's not idiomatic to validate the type column for nulls, as it represents the class so cannot be nil
+Vacancy:
+  type:
+    NullConstraintChecker:
+      enabled: false

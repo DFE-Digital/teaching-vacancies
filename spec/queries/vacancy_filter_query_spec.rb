@@ -1,6 +1,12 @@
 require "rails_helper"
 
 RSpec.describe VacancyFilterQuery do
+  subject { PublishedVacancy.kept.search_by_filter(filters) }
+
+  before do
+    create(:vacancy, :trashed, phases: %w[secondary], working_patterns: %w[part_time full_time], subjects: %w[English Spanish], ect_status: "ect_suitable")
+  end
+
   let(:academies) { create(:school, name: "Academy1", school_type: "Academies") }
   let(:academy) { create(:school, name: "Academy2", school_type: "Academy") }
   let(:free_school) { create(:school, name: "Freeschool1", school_type: "Free schools") }
@@ -51,36 +57,38 @@ RSpec.describe VacancyFilterQuery do
   let!(:non_faith_vacancy3) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 14", phases: %w[primary], organisations: [non_faith_school3], visa_sponsorship_available: true) }
 
   describe "#call" do
-    it "queries based on the given filters" do
-      filters = {
-        subjects: %w[English Spanish],
-        working_patterns: %w[full_time],
-        phases: %w[secondary],
-        teaching_job_roles: %w[teacher],
-        ect_statuses: %w[ect_suitable],
-        from_date: 5.days.ago,
-        to_date: Date.today,
-      }
-      expect(subject.call(filters)).to contain_exactly(vacancy1)
+    context "with english spanish" do
+      let(:filters) do
+        {
+          subjects: %w[English Spanish],
+          working_patterns: %w[full_time],
+          phases: %w[secondary],
+          teaching_job_roles: %w[teacher],
+          ect_statuses: %w[ect_suitable],
+          from_date: 5.days.ago,
+          to_date: Date.today,
+        }
+      end
+
+      it "queries based on the given filters" do
+        expect(subject).to contain_exactly(vacancy1)
+      end
     end
 
     context "when visa_sponsorship_available is selected" do
-      it "will return vacancies that offer visa sponsorships" do
-        filters = {
-          visa_sponsorship_availability: ["true"],
-        }
+      let(:filters) { { visa_sponsorship_availability: ["true"] } }
 
-        expect(subject.call(filters)).to contain_exactly(vacancy1, non_faith_vacancy3)
+      it "will return vacancies that offer visa sponsorships" do
+        expect(subject).to contain_exactly(vacancy1, non_faith_vacancy3)
       end
     end
 
     context "when organisation_types filter is selected" do
       context "when organisation_types == ['Academy']" do
+        let(:filters) { { organisation_types: ["Academy"] } }
+
         it "will return vacancies associated with academies and free schools" do
-          filters = {
-            organisation_types: ["Academy"],
-          }
-          expect(subject.call(filters))
+          expect(subject)
             .to contain_exactly(vacancy1, vacancy2, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, teaching_assistant_vacancy,
                                 hlta_vacancy, education_support_vacancy, sendco_vacancy,
                                 administration_hr_data_and_finance_vacancy, it_support_vacancy, pastoral_health_and_welfare_vacancy,
@@ -89,18 +97,18 @@ RSpec.describe VacancyFilterQuery do
       end
 
       context "when organisation_types == ['Local authority maintained schools']" do
+        let(:filters) { { organisation_types: ["Local authority maintained schools"] } }
+
         it "will return vacancies associated with local authority maintained schools" do
-          filters = {
-            organisation_types: ["Local authority maintained schools"],
-          }
-          expect(subject.call(filters)).to contain_exactly(vacancy3)
+          expect(subject).to contain_exactly(vacancy3)
         end
       end
 
       context "when organisation_types is empty" do
+        let(:filters) { {} }
+
         it "will return vacancies associated with all schools" do
-          filters = {}
-          expect(subject.call(filters)).to contain_exactly(
+          expect(subject).to contain_exactly(
             vacancy1, vacancy2, vacancy3, vacancy4, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, special_vacancy1,
             special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6, faith_vacancy,
             non_faith_vacancy1, non_faith_vacancy2, non_faith_vacancy3, teaching_assistant_vacancy,
@@ -112,11 +120,10 @@ RSpec.describe VacancyFilterQuery do
       end
 
       context "when organisation_types includes both 'Academy' and 'Local authority maintained schools'" do
+        let(:filters) { { organisation_types: ["Academy", "Local authority maintained schools"] } }
+
         it "will return vacancies associated with local authority maintained schools, academies and free schools" do
-          filters = {
-            organisation_types: ["Academy", "Local authority maintained schools"],
-          }
-          expect(subject.call(filters))
+          expect(subject)
             .to contain_exactly(
               vacancy1, vacancy2, vacancy3, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, teaching_assistant_vacancy,
               hlta_vacancy, education_support_vacancy, sendco_vacancy,
@@ -128,39 +135,35 @@ RSpec.describe VacancyFilterQuery do
     end
 
     context "when a quick apply filter is selected" do
+      let(:filters) { { quick_apply: ["quick_apply"] } }
+
       it "will return vacancies with TV quick apply status only" do
-        filters = {
-          quick_apply: ["quick_apply"],
-        }
-        expect(subject.call(filters)).to contain_exactly(vacancy1, vacancy2, vacancy3)
+        expect(subject).to contain_exactly(vacancy1, vacancy2, vacancy3)
       end
     end
 
     context "when school_types filter is selected" do
       context "when school_types == ['faith_school']" do
+        let(:filters) { { school_types: ["faith_school"] } }
+
         it "will return vacancies associated with faith schools" do
-          filters = {
-            school_types: ["faith_school"],
-          }
-          expect(subject.call(filters)).to contain_exactly(faith_vacancy)
+          expect(subject).to contain_exactly(faith_vacancy)
         end
       end
 
       context "when school_types = ['special_school']" do
+        let(:filters) { { school_types: ["special_school"] } }
+
         it "will return vacancies associated with special schools" do
-          filters = {
-            school_types: ["special_school"],
-          }
-          expect(subject.call(filters)).to contain_exactly(special_vacancy1, special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6)
+          expect(subject).to contain_exactly(special_vacancy1, special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6)
         end
       end
 
       context "when school_types includes 'special_school' and 'faith_school" do
+        let(:filters) { { school_types: %w[special_school faith_school] } }
+
         it "will return vacancies associated with both faith schools and special schools" do
-          filters = {
-            school_types: %w[special_school faith_school],
-          }
-          expect(subject.call(filters)).to contain_exactly(special_vacancy1, special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6, faith_vacancy)
+          expect(subject).to contain_exactly(special_vacancy1, special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6, faith_vacancy)
         end
       end
     end
@@ -175,7 +178,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { working_patterns: %w[job_share] } }
 
         it "returns one job" do
-          expect(subject.call(filters).count).to eq(1)
+          expect(subject.count).to eq(1)
         end
       end
 
@@ -183,7 +186,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { working_patterns: %w[part_time] } }
 
         it "returns pt jobs" do
-          expect(subject.call(filters).map(&:slug)).to contain_exactly("vacancy-1", "pt1")
+          expect(subject.map(&:slug)).to contain_exactly("vacancy-1", "pt1")
         end
       end
 
@@ -191,7 +194,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { working_patterns: %w[part_time full_time] } }
 
         it "returns many jobs" do
-          expect(subject.call(filters).count).to eq(31)
+          expect(subject.count).to eq(31)
         end
       end
 
@@ -199,7 +202,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { working_patterns: %w[full_time] } }
 
         it "returns fewer jobs" do
-          expect(subject.call(filters).count).to eq(30)
+          expect(subject.count).to eq(30)
         end
       end
 
@@ -207,7 +210,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { working_patterns: %w[part_time job_share] } }
 
         it "returns two jobs" do
-          expect(subject.call(filters).map(&:slug)).to contain_exactly("vacancy-1", "pt1", "ft1")
+          expect(subject.map(&:slug)).to contain_exactly("vacancy-1", "pt1", "ft1")
         end
       end
 
@@ -215,7 +218,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { working_patterns: %w[compressed_hours staggered_hours] } }
 
         it "ignores the legacy filters and returns many jobs" do
-          expect(subject.call(filters).count).to eq(31)
+          expect(subject.count).to eq(31)
         end
       end
 
@@ -223,7 +226,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { working_patterns: [] } }
 
         it "ignores the legacy filters and returns many jobs" do
-          expect(subject.call(filters).count).to eq(31)
+          expect(subject.count).to eq(31)
         end
       end
     end
@@ -233,7 +236,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { phases: [] } }
 
         it "returns many jobs" do
-          expect(subject.call(filters).count).to eq(29)
+          expect(subject.count).to eq(29)
         end
       end
 
@@ -241,7 +244,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { phases: %w[primary] } }
 
         it "returns primary jobs" do
-          expect(subject.call(filters).count).to eq(27)
+          expect(subject.count).to eq(27)
         end
       end
 
@@ -249,7 +252,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { phases: %w[primary secondary] } }
 
         it "returns both primary and secondary jobs" do
-          expect(subject.call(filters).count).to eq(28)
+          expect(subject.count).to eq(28)
         end
       end
 
@@ -257,7 +260,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { phases: %w[middle] } }
 
         it "ignores the legacy filters and returns many jobs" do
-          expect(subject.call(filters).count).to eq(29)
+          expect(subject.count).to eq(29)
         end
       end
 
@@ -265,77 +268,99 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { phases: %w[middle primary] } }
 
         it "ignores the legacy filters and applies the filter for the valid value" do
-          expect(subject.call(filters).count).to eq(27)
+          expect(subject.count).to eq(27)
         end
       end
     end
 
     describe "roles mapping" do
-      it "transforms legacy 'leadership' to all senior leadership roles" do
-        filters = {
-          teaching_job_roles: %w[leadership],
-        }
-        expect(subject.call(filters)).to contain_exactly(vacancy7, vacancy8, vacancy9)
+      context "with leadership" do
+        let(:filters) { { teaching_job_roles: %w[leadership] } }
+
+        it "transforms legacy 'leadership' to all senior leadership roles" do
+          expect(subject).to contain_exactly(vacancy7, vacancy8, vacancy9)
+        end
       end
 
-      it "transforms legacy 'senior_leader' to all senior leadership roles" do
-        filters = {
-          teaching_job_roles: %w[senior_leader],
-        }
-        expect(subject.call(filters)).to contain_exactly(vacancy7, vacancy8, vacancy9)
+      context "with senior_leader" do
+        let(:filters) { { teaching_job_roles: %w[senior_leader] } }
+
+        it "transforms legacy 'senior_leader' to all senior leadership roles" do
+          expect(subject).to contain_exactly(vacancy7, vacancy8, vacancy9)
+        end
       end
 
-      it "transforms legacy 'middle_leader' to all middle leadership roles" do
-        filters = {
-          teaching_job_roles: %w[middle_leader],
-        }
-        expect(subject.call(filters)).to contain_exactly(vacancy5, vacancy6)
+      context "with middle_leader" do
+        let(:filters) { { teaching_job_roles: %w[middle_leader] } }
+
+        it "transforms legacy 'middle_leader' to all middle leadership roles" do
+          expect(subject).to contain_exactly(vacancy5, vacancy6)
+        end
       end
 
-      it "doesn't filter by role if it is not included in current job roles list" do
-        filters = {
-          teaching_job_roles: %w[non_valid_role],
-        }
-        expect(subject.call(filters)).to contain_exactly(
-          vacancy1, vacancy2, vacancy3, vacancy4, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, special_vacancy1,
-          special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6, faith_vacancy,
-          non_faith_vacancy1, non_faith_vacancy2, non_faith_vacancy3, teaching_assistant_vacancy,
-          hlta_vacancy, education_support_vacancy, sendco_vacancy,
-          administration_hr_data_and_finance_vacancy, it_support_vacancy, pastoral_health_and_welfare_vacancy,
-          other_leadership_vacancy, other_support_vacancy, catering_cleaning_and_site_management_vacancy
-        )
+      context "with invalid role" do
+        let(:filters) { { teaching_job_roles: %w[non_valid_role] } }
+
+        it "doesn't filter by role if it is not included in current job roles list" do
+          expect(subject).to contain_exactly(
+            vacancy1, vacancy2, vacancy3, vacancy4, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, special_vacancy1,
+            special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6, faith_vacancy,
+            non_faith_vacancy1, non_faith_vacancy2, non_faith_vacancy3, teaching_assistant_vacancy,
+            hlta_vacancy, education_support_vacancy, sendco_vacancy,
+            administration_hr_data_and_finance_vacancy, it_support_vacancy, pastoral_health_and_welfare_vacancy,
+            other_leadership_vacancy, other_support_vacancy, catering_cleaning_and_site_management_vacancy
+          )
+        end
       end
 
-      it "correctly filters by multiple roles, including all roles selected" do
-        filters = {
-          teaching_job_roles: %w[headteacher],
-          support_job_roles: %w[other_support higher_level_teaching_assistant],
-        }
-        expect(subject.call(filters).count).to eq(3)
-        expect(subject.call(filters)).to contain_exactly(vacancy7, other_support_vacancy, hlta_vacancy)
+      context "with multiple filters" do
+        let(:filters) do
+          {
+            teaching_job_roles: %w[headteacher],
+            support_job_roles: %w[other_support higher_level_teaching_assistant],
+          }
+        end
 
-        filters = {
-          support_job_roles: %w[pastoral_health_and_welfare sendco],
-        }
-        expect(subject.call(filters).count).to eq(3)
-        expect(subject.call(filters)).to contain_exactly(pastoral_health_and_welfare_vacancy, sendco_vacancy, vacancy3)
+        it "correctly filters by multiple roles, including all roles selected" do
+          expect(subject.count).to eq(3)
+          expect(subject).to contain_exactly(vacancy7, other_support_vacancy, hlta_vacancy)
+        end
+      end
 
-        filters = {
-          support_job_roles: %w[teaching_assistant catering_cleaning_and_site_management],
-        }
-        expect(subject.call(filters).count).to eq(2)
-        expect(subject.call(filters)).to contain_exactly(teaching_assistant_vacancy, catering_cleaning_and_site_management_vacancy)
+      context "with pastoral" do
+        let(:filters) { { support_job_roles: %w[pastoral_health_and_welfare sendco] } }
 
-        filters = {
-          teaching_job_roles: %w[teacher],
-          support_job_roles: %w[catering_cleaning_and_site_management],
-        }
-        expect(subject.call(filters).count).to eq(14)
-        expect(subject.call(filters)).to contain_exactly(
-          vacancy1, vacancy2, vacancy4, catering_cleaning_and_site_management_vacancy, special_vacancy1,
-          special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6, faith_vacancy,
-          non_faith_vacancy1, non_faith_vacancy2, non_faith_vacancy3
-        )
+        it "correctly filters by multiple roles, including all roles selected" do
+          expect(subject.count).to eq(3)
+          expect(subject).to contain_exactly(pastoral_health_and_welfare_vacancy, sendco_vacancy, vacancy3)
+        end
+      end
+
+      context "with catering and assistant" do
+        let(:filters) { { support_job_roles: %w[teaching_assistant catering_cleaning_and_site_management] } }
+
+        it "correctly filters by multiple roles, including all roles selected" do
+          expect(subject.count).to eq(2)
+          expect(subject).to contain_exactly(teaching_assistant_vacancy, catering_cleaning_and_site_management_vacancy)
+        end
+      end
+
+      context "with catering and teacher" do
+        let(:filters) do
+          {
+            teaching_job_roles: %w[teacher],
+            support_job_roles: %w[catering_cleaning_and_site_management],
+          }
+        end
+
+        it "correctly filters by multiple roles, including all roles selected" do
+          expect(subject.count).to eq(14)
+          expect(subject).to contain_exactly(
+            vacancy1, vacancy2, vacancy4, catering_cleaning_and_site_management_vacancy, special_vacancy1,
+            special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6, faith_vacancy,
+            non_faith_vacancy1, non_faith_vacancy2, non_faith_vacancy3
+          )
+        end
       end
     end
   end

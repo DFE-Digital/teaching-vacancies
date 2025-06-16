@@ -95,7 +95,6 @@ FactoryBot.define do
     city { "" }
     postcode { "" }
     country { "" }
-    email_address { "" }
     phone_number { "" }
     teacher_reference_number { "" }
     national_insurance_number { "" }

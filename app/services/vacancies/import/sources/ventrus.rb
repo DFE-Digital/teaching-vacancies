@@ -27,7 +27,7 @@ class Vacancies::Import::Sources::Ventrus
       next if schools.blank?
       next if vacancy_listed_at_excluded_school_type?(schools)
 
-      v = Vacancy.find_or_initialize_by(
+      v = PublishedVacancy.find_or_initialize_by(
         external_source: SOURCE_NAME,
         external_reference: item["VacancyID"],
       )

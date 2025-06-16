@@ -1,4 +1,4 @@
-namespace :db do # rubocop:disable Metrics/BlockLength
+namespace :db do
   desc "Asynchronously import organisations from GIAS and seed the database"
   task async_seed: :environment do
     SeedDatabaseJob.perform_later
@@ -20,56 +20,6 @@ namespace :db do # rubocop:disable Metrics/BlockLength
   desc "Add FriendlyId slugs to Organisation records"
   task add_friendlyid_organisation_slugs: :environment do
     SetOrganisationSlugsJob.perform_now
-  end
-
-  desc "Backfill default safeguarding information for organisations without it"
-  task backfill_default_organisation_safeguarding_information: :environment do
-    default = "Our organisation is committed to safeguarding and promoting the welfare of children, young people and vulnerable adults. " \
-              "We expect all staff, volunteers and trustees to share this commitment.\n\n" \
-              "Our recruitment process follows the keeping children safe in education guidance.\n\n" \
-              "Offers of employment may be subject to the following checks (where relevant):\n" \
-              "childcare disqualification\n" \
-              "Disclosure and Barring Service (DBS)\n" \
-              "medical\n" \
-              "online and social media\n" \
-              "prohibition from teaching\n" \
-              "right to work\n" \
-              "satisfactory references\n" \
-              "suitability to work with children\n\n" \
-              "You must tell us about any unspent conviction, cautions, reprimands or warnings under the Rehabilitation of Offenders Act 1974 (Exceptions) Order 1975."
-    Organisation.where(safeguarding_information: nil)
-      .or(Organisation.where(safeguarding_information: ""))
-      .update_all(safeguarding_information: default)
-  end
-
-  desc "Set other_start_date_details and start_date_type for vacancies"
-  task set_start_date_fields: :environment do
-    Vacancy.find_each do |v|
-      start_date_type =
-        if v.starts_asap
-          "other"
-        elsif v.starts_on.present?
-          "specific_date"
-        else
-          "undefined"
-        end
-
-      v.update_column :start_date_type, start_date_type
-
-      if v.starts_asap
-        other_start_date_details = "As soon as possible"
-        v.update_column :other_start_date_details, other_start_date_details
-      end
-    end
-  end
-
-  desc "Set vacancy fields for new listing process"
-  task set_new_vacancy_fields: :environment do
-    Vacancy.find_each do |v|
-      v.update_columns(contact_number_provided: v.contact_number.present?,
-                       include_additional_documents: v.supporting_documents.attachments&.any?,
-                       school_visits: v.school_visits_details.present?)
-    end
   end
 end
 

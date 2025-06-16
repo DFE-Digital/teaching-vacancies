@@ -20,6 +20,7 @@ gem "railties", RAILS_VERSION
 gem "activerecord-import"
 gem "activerecord-postgis-adapter", ">= 10.0.1"
 gem "activerecord-session_store"
+gem "active_storage_validations"
 gem "addressable"
 gem "array_enum"
 gem "aws-sdk-s3", require: false
@@ -36,7 +37,7 @@ gem "google-apis-drive_v3"
 gem "google-apis-indexing_v3"
 gem "google-cloud-bigquery"
 gem "govuk-components", "~> 5.10.0"
-gem "govuk_design_system_formbuilder", "~> 5.10.0"
+gem "govuk_design_system_formbuilder", "~> 5.10.1"
 gem "high_voltage"
 gem "httparty"
 gem "ipaddr"
@@ -109,6 +110,7 @@ group :development, :test do
   gem "debug", ">= 1.0.0", require: false
   gem "dotenv-rails"
   gem "guard-rspec", require: false
+  gem "guard-rubocop", "~> 1.5", require: false
   gem "launchy", "~> 3.1"
   gem "parallel_tests"
   gem "pdf-inspector", require: "pdf/inspector"

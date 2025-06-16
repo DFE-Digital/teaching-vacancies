@@ -2,7 +2,7 @@ class SendDailyAlertEmailJob < AlertEmail::Base
   queue_as :default
 
   def subscriptions
-    Subscription.active.daily
+    Subscription.kept.daily
   end
 
   def from_date

@@ -24,7 +24,14 @@
 #  * zeus: 'zeus rspec' (requires the server to be started separately)
 #  * 'just' rspec: 'rspec'
 
-guard :rspec, cmd: "bundle exec rspec" do
+rspec_options = {
+  cmd: "bundle exec rspec",
+  run_all: {
+    cmd: "bundle exec parallel_rspec -o '",
+    cmd_additional_args: "'",
+  },
+}
+guard :rspec, rspec_options do
   require "guard/rspec/dsl"
   dsl = Guard::RSpec::Dsl.new(self)
 
@@ -67,4 +74,9 @@ guard :rspec, cmd: "bundle exec rspec" do
   watch(%r{^spec/acceptance/steps/(.+)_steps\.rb$}) do |m|
     Dir[File.join("**/#{m[1]}.feature")][0] || "spec/acceptance"
   end
+end
+
+guard :rubocop, cli: ["-A"] do
+  watch(%r{.+\.rb$})
+  watch(%r{(?:.+/)?\.rubocop(?:_todo)?\.yml$}) { |m| File.dirname(m[0]) }
 end
