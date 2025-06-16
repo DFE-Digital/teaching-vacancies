@@ -54,7 +54,7 @@ class JobApplication < ApplicationRecord
   }
 
   # If you want to add a status, be sure to add a `status_at` column to the `job_applications` table
-  enum :status, { draft: 0, submitted: 1, reviewed: 2, shortlisted: 3, unsuccessful: 4, withdrawn: 5, interviewing: 6 }, default: 0
+  enum :status, { draft: 0, submitted: 1, reviewed: 2, shortlisted: 3, unsuccessful: 4, withdrawn: 5, interviewing: 6, offered: 7, declined: 8 }, default: 0
   array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
 
   RELIGIOUS_REFERENCE_TYPES = { referee: 1, baptism_certificate: 2, baptism_date: 3, no_referee: 4 }.freeze
@@ -92,6 +92,16 @@ class JobApplication < ApplicationRecord
   validates :email_address, email_address: true, if: -> { email_address_changed? } # Allows data created prior to validation to still be valid
 
   has_one_attached :baptism_certificate, service: :amazon_s3_documents
+
+  def self.group_by_status(scope = all)
+    result = statuses.each_with_object({}) do |(status_name, status_idx), hsh|
+      hsh[status_name.to_sym] = scope.where(status: status_idx)
+    end
+
+    result[:submitted] = scope.where(status: %i[submitted reviewed])
+
+    result
+  end
 
   def name
     "#{first_name} #{last_name}"

@@ -6,6 +6,12 @@ RSpec.describe JobApplication do
   it { is_expected.to have_many(:employments) }
   it { is_expected.to have_many(:referees) }
 
+  describe ".group_by_status" do
+    subject(:hash) { described_class.group_by_status }
+
+    it { expect(hash.keys).to eq(%i[draft submitted reviewed shortlisted unsuccessful withdrawn interviewing offered declined]) }
+  end
+
   describe "#has_noticed_notifications" do
     subject { create(:job_application) }
 
