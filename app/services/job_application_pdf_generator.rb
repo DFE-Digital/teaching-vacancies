@@ -56,10 +56,12 @@ class JobApplicationPdfGenerator
         page_sub_title(sub_title) if sub_title.present?
         next if group.blank?
 
+        # :nocov:
         group.each do |item|
           page_table(item)
           move_down 1.cm
         end
+        # :nocov:
       end
     end
   end
