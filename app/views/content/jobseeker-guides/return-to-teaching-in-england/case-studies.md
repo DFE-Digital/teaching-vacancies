@@ -13,7 +13,7 @@ Are you thinking about a return to teaching?
 
 Read Chris, Dena and Will’s stories to find out more about what it’s like to return to teaching after a break, and what support is available to help you get back into teaching.
 
-Read [Chris’s experience going back to teaching after running his own business](/jobseeker-guides/return-to-teaching-in-england/chris-story).
+Read [Chris’s experience going back to teaching after running a business](/jobseeker-guides/return-to-teaching-in-england/chris-story).
 
 Find out how [Dena returned to teaching after 8 years away from the classroom](/jobseeker-guides/return-to-teaching-in-england/denas-story).
 
