@@ -1,4 +1,6 @@
 module JobApplicationsHelper
+  JOB_APPLICATION_DISPLAYED_STATUSES = %i[submitted unsuccessful shortlisted interviewing offered].freeze
+
   PUBLISHER_STATUS_MAPPINGS = {
     submitted: "unread",
     reviewed: "reviewed",

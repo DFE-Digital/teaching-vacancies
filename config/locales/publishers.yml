@@ -543,15 +543,32 @@ en:
             pre_interview_checks: Pre-interview checks
             notes: Notes
         index:
+          tab:
+            submitted:
+              label: "New %{count}"
+              heading: New applications
+              none: There are no pending applications
+            unsuccessful:
+              label: "Not Considering %{count}"
+              heading: Not being considered
+              none: No applications have been marked for rejection
+            shortlisted:
+              label: "Shortlisted %{count}"
+              heading: Shortlisted applications
+              none: No applications have been shortlisted yet
+            interviewing:
+              label: "Interviewing %{count}"
+              heading: Interviewing applications
+              none: No applications have been marked for interview yet
+            offered:
+              label: "Offered %{count}"
+              heading:
+              none: No applications have been offered yet
           deadline:
             after: Deadline passed
             before: Application deadline
           expired_more_than_year: In line with our data retention policy you are no longer able to view applications for this job.
           no_applicants: Nobody has applied for this job yet
-          no_new: There are no pending applications
-          no_rejected: No applications have been marked for rejection
-          no_interviewing: No applications have been marked for interview yet
-          no_shortlisted: No applications have been shortlisted yet
           received: Received on
           rejected:
             one: Rejected application
