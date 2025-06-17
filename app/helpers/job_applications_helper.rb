@@ -5,9 +5,10 @@ module JobApplicationsHelper
     submitted: "unread",
     reviewed: "reviewed",
     shortlisted: "shortlisted",
-    unsuccessful: "rejected",
+    unsuccessful: "not considering",
     withdrawn: "withdrawn",
     interviewing: "interviewing",
+    offered: "job offered",
   }.freeze
 
   JOBSEEKER_STATUS_MAPPINGS = {
@@ -20,6 +21,7 @@ module JobApplicationsHelper
     withdrawn: "withdrawn",
     interviewing: "interviewing",
     action_required: "action required",
+    offered: "offered",
   }.freeze
 
   JOB_APPLICATION_STATUS_TAG_COLOURS = {
@@ -27,11 +29,12 @@ module JobApplicationsHelper
     draft: "pink",
     submitted: "blue",
     reviewed: "purple",
-    shortlisted: "green",
+    shortlisted: "yellow",
     unsuccessful: "red",
     withdrawn: "yellow",
-    interviewing: "turquoise",
     action_required: "orange",
+    interviewing: "green",
+    offered: "pink",
   }.freeze
 
   def job_application_qualified_teacher_status_info(job_application)

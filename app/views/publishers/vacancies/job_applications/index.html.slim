@@ -9,11 +9,16 @@
       = govuk_tabs do |tabs|
         / set id property so that anchors are '#shortlisted' rather than '#shortlisted-4'
         - JobApplicationsHelper::JOB_APPLICATION_DISPLAYED_STATUSES.each do |status|
-          - tabs.with_tab(label: t(".tab.#{status}.label", count: categories[status].count), id: status.to_s)
+          - id = status.to_s
+          - count = (status == :offered ? categories[:offered].count + categories[:declined].count : categories[status].count)
+          - tabs.with_tab(label: t(".tab.#{status}.label", count:), id:)
             - if categories[status].exists?
               = render "candidates", form: @form, vacancy: @vacancy, candidates: categories[status], heading: t(".tab.#{status}.heading"), multi_select: status, origin: status
             - else
               = render EmptySectionComponent.new title: t(".tab.#{status}.none")
+            - if status == :offered && categories[:declined].exists?
+              = govuk_section_break(visible: true, size: "xl")
+              = render "candidates", form: @form, vacancy: @vacancy, candidates: categories[:declined], heading: t(".tab.declined.heading"), multi_select: :declined, origin: :declined
 
     - else
       = govuk_inset_text do
