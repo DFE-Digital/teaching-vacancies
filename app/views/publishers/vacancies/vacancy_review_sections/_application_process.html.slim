@@ -13,16 +13,6 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                     href: organisation_job_build_path(vacancy.id, :applying_for_the_job, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.enable_job_applications")
 
-    - if vacancy.how_to_apply.present?
-      - summary_list.with_row do |row|
-        - row.with_key
-          = t("jobs.how_to_apply")
-        - row.with_value
-          = vacancy.how_to_apply
-        - row.with_action text: t("buttons.change"),
-                    href: organisation_job_build_path(vacancy.id, vacancy_how_to_apply_step(vacancy), "back_to_#{action_name}": "true"),
-                    visually_hidden_text: t("jobs.how_to_apply")
-
   - if vacancy.enable_job_applications == false
     - unless vacancy.receive_applications.nil?
       - summary_list.with_row(html_attributes: { id: "receive_applications" }) do |row|

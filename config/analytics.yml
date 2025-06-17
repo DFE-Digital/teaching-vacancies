@@ -381,7 +381,6 @@ shared:
     - about_school
     - subjects
     - school_visits
-    - how_to_apply
     - ect_status
     - contact_number
     - publisher_organisation_id

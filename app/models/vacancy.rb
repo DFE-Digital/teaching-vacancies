@@ -174,7 +174,7 @@ class Vacancy < ApplicationRecord
   # 'legacy' field list
   # [job_advert, about_school, personal_statement_guidance, school_visits_details, how_to_apply].filter_map(&:present?).any?
 
-  self.ignored_columns += [:personal_statement_guidance]
+  self.ignored_columns += %i[personal_statement_guidance how_to_apply]
 
   after_save :reset_markers, if: -> { saved_change_to_status? && (listed? || pending?) }
 

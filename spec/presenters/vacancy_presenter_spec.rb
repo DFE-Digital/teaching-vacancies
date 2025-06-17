@@ -139,10 +139,6 @@ RSpec.describe VacancyPresenter do
     it_behaves_like "a fields that outputs the correct HTML", :about_school
   end
 
-  describe "#how_to_apply" do
-    it_behaves_like "a fields that outputs the correct HTML", :how_to_apply
-  end
-
   describe "#benefits_details" do
     it_behaves_like "a fields that outputs the correct HTML", :benefits_details
   end
