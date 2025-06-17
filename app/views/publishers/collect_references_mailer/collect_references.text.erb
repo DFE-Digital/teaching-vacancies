@@ -2,7 +2,7 @@
 
 <%=
   # Wicked::Wizard redirects to first step w/o any parameters so we have to mention first step here explcitly
-  notify_link(reference_build_url(@reference_request.id, 'can_give', token: @token), t(".submit_reference"))
+  notify_link(reference_build_url(@reference_request.id, 'can_give', token: @reference_request.token), t(".submit_reference"))
 %>
 
 <%= t("shared.footer", home_page_link: home_page_link) %>
