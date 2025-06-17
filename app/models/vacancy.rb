@@ -171,6 +171,8 @@ class Vacancy < ApplicationRecord
     end
   end
 
+  self.ignored_columns += [:personal_statement_guidance]
+
   after_save :reset_markers, if: -> { saved_change_to_status? && (listed? || pending?) }
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
@@ -216,14 +218,6 @@ class Vacancy < ApplicationRecord
   # TODO: This method matches conditions of :live scope, not :listed. We should rename it
   def listed?
     published? && expires_at&.future? && (publish_on&.today? || publish_on&.past?)
-  end
-
-  def legacy?
-    [job_advert, about_school, personal_statement_guidance, school_visits_details, how_to_apply].filter_map(&:present?).any?
-  end
-
-  def legacy_draft?
-    legacy? && draft?
   end
 
   def pending?

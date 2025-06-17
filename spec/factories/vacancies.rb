@@ -72,21 +72,6 @@ FactoryBot.define do
     flexi_working_details_provided { true }
     flexi_working { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
 
-    trait :legacy_vacancy do
-      about_school { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
-      further_details_provided { nil }
-      further_details { nil }
-      how_to_apply { Faker::Lorem.paragraph(sentence_count: 4) }
-      job_advert { Faker::Lorem.paragraph(sentence_count: factory_rand(50..300)) }
-      personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
-      receive_applications { nil }
-      safeguarding_information_provided { nil }
-      safeguarding_information { nil }
-      school_offer { nil }
-      school_visits_details { Faker::Lorem.paragraph(sentence_count: 4) }
-      skills_and_experience { nil }
-    end
-
     trait :for_seed_data do
       job_roles { [factory_sample(Vacancy.job_roles.keys)] }
       is_job_share { [true, false].sample }
