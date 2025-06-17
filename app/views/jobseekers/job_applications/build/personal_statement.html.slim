@@ -29,10 +29,6 @@
         post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "how-to-write-teacher-personal-statement"),
         class: "govuk-link--no-visited-state")
 
-    - if job_application.vacancy.personal_statement_guidance.present?
-      h3.govuk-heading-s = t(".additional_instructions")
-      = govuk_inset_text text: job_application.vacancy.personal_statement_guidance
-
     = form_for @form, url: jobseekers_job_application_build_path(job_application, :personal_statement), method: :patch do |f|
       = f.govuk_error_summary
 

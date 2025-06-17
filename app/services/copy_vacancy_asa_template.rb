@@ -42,7 +42,6 @@ class CopyVacancyAsaTemplate
     def reset_legacy_fields(new_vacancy)
       new_vacancy.job_advert = nil
       new_vacancy.about_school = nil
-      new_vacancy.personal_statement_guidance = nil
       new_vacancy.school_visits_details = nil
       new_vacancy.how_to_apply = nil
       new_vacancy.safeguarding_information_provided = nil

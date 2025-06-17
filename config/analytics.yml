@@ -389,7 +389,6 @@ shared:
     - fixed_term_contract_duration
     - parental_leave_cover_contract_duration
     - enable_job_applications
-    - personal_statement_guidance
     - completed_steps
     - working_patterns_details
     - full_time_details
