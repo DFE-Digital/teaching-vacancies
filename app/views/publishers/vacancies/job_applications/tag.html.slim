@@ -20,11 +20,8 @@
     = f.hidden_field :job_applications, multiple: true, value: ja.id
 
   = f.govuk_radio_buttons_fieldset :status do
-    = f.govuk_radio_button :status, :submitted
-    = f.govuk_radio_button :status, :unsuccessful
-    = f.govuk_radio_button :status, :reviewed
-    = f.govuk_radio_button :status, :shortlisted
-    = f.govuk_radio_divider
-    = f.govuk_radio_button :status, :interviewing
+    - JobApplicationsHelper::JOB_APPLICATION_DISPLAYED_STATUSES.each do |status|
+      = f.govuk_radio_divider if status == :offered
+      = f.govuk_radio_button :status, status
 
   = f.govuk_submit t("buttons.save_and_continue")

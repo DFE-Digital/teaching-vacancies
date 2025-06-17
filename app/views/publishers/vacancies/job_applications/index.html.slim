@@ -12,6 +12,11 @@
           - tabs.with_tab(label: t(".tab.#{status}.label", count: categories[status].count), id: status.to_s)
             - if categories[status].exists?
               = render "candidates", form: @form, vacancy: @vacancy, candidates: categories[status], heading: t(".tab.#{status}.heading"), multi_select: status, origin: status
+              - if status == :offered && categories[:declined].exists?
+                = govuk_section_break(visible: true)
+                = render "candidates", form: @form, vacancy: @vacancy, candidates: categories[:declined], heading: t(".tab.declined.heading"), multi_select: :declined, origin: :declined
+              - if status == :offered && categories[:declined].none?
+                = render EmptySectionComponent.new title: t(".tab.declined.none")
             - else
               = render EmptySectionComponent.new title: t(".tab.#{status}.none")
 

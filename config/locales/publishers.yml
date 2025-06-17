@@ -545,25 +545,29 @@ en:
         index:
           tab:
             submitted:
-              label: "New %{count}"
+              label: "New (%{count})"
               heading: New applications
               none: There are no pending applications
             unsuccessful:
-              label: "Not Considering %{count}"
+              label: "Not Considering (%{count})"
               heading: Not being considered
               none: No applications have been marked for rejection
             shortlisted:
-              label: "Shortlisted %{count}"
+              label: "Shortlisted (%{count})"
               heading: Shortlisted applications
               none: No applications have been shortlisted yet
             interviewing:
-              label: "Interviewing %{count}"
+              label: "Interviewing (%{count})"
               heading: Interviewing applications
               none: No applications have been marked for interview yet
             offered:
-              label: "Offered %{count}"
+              label: "Job offered (%{count})"
               heading:
               none: No applications have been offered yet
+            declined:
+              label: "Declined (%{count})"
+              heading: Offer declined
+              none: No applications have been declined yet
           deadline:
             after: Deadline passed
             before: Application deadline

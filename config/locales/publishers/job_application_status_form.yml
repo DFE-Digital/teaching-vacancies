@@ -29,6 +29,7 @@ en:
             Applications that you plan to interview. You can create an email to send to the applicant to let them know,
             alternatively you can reach out to the applicant. You will also be able to trigger pre-interview checks
             through the Teaching Vacancies service.
+          offered: Applications that are successful
 
       publishers_job_application_collect_references_form:
         collect_references_and_declarations_options:
@@ -56,8 +57,9 @@ en:
           submitted_html: New <span class="govuk-tag govuk-tag--blue">New</span>
           unsuccessful_html: Not Considering <span class="govuk-tag govuk-tag--red">Not Considering</span>
           reviewed_html: Reviewed <span class="govuk-tag govuk-tag--purple">Reviewed</span>
-          shortlisted_html: Shortlisted <span class="govuk-tag govuk-tag--green">Shortlisted</span>
-          interviewing_html: Interviewing <span class="govuk-tag govuk-tag--turquoise">Interviewing</span>
+          shortlisted_html: Shortlisted <span class="govuk-tag govuk-tag--yellow">Shortlisted</span>
+          interviewing_html: Interviewing <span class="govuk-tag govuk-tag--green">Interviewing</span>
+          offered_html: Job offered <span class="govuk-tag govuk-tag--pink">Job offered</span>
 
       publishers_job_application_collect_references_form:
         collect_references_and_declarations_options:
