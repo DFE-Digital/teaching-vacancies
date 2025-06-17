@@ -2,7 +2,7 @@
  # Alpine v3.22.
  # TODO: Regularly check in the alpine ruby "3.4.4-alpine3.22" images for its latest upgraded packages so we can remove
  # the hardcoded versions below when they have been updated in the alpine ruby image.
-ARG PROD_PACKAGES="imagemagick libpng libjpeg libxml2=2.13.4-r6 libxslt libpq tzdata shared-mime-info postgresql15"
+ARG PROD_PACKAGES="imagemagick libpng libjpeg libxml2 libxslt libpq tzdata shared-mime-info postgresql15"
 
 FROM ruby:3.4.4-alpine3.22 AS builder
 
