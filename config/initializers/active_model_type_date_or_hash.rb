@@ -2,7 +2,7 @@ require_relative Rails.root.join("app/form_models/date_attribute_assignment")
 
 module ActiveModel
   module Type
-    class DateWithError < ActiveModel::Type::Value
+    class DateOrHash < ActiveModel::Type::Value
       include DateAttributeAssignment
 
       private
@@ -12,6 +12,6 @@ module ActiveModel
       end
     end
 
-    register(:date_with_error, DateWithError)
+    register(:date_or_hash, DateOrHash)
   end
 end
