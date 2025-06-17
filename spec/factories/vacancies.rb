@@ -106,17 +106,6 @@ FactoryBot.define do
       organisations { build_list(:school, 3) }
     end
 
-    trait :fail_minimum_validation do
-      job_advert { Faker::Lorem.paragraph[0..5] }
-      job_title { Faker::Job.title[0..2] }
-    end
-
-    trait :fail_maximum_validation do
-      job_advert { Faker::Lorem.characters(number: 50_001) }
-      job_title { Faker::Lorem.characters(number: 150) }
-      salary { Faker::Lorem.characters(number: 257) }
-    end
-
     trait :trashed do
       discarded_at { Time.zone.now }
     end

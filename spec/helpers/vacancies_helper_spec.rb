@@ -402,7 +402,7 @@ RSpec.describe VacanciesHelper do
       end
 
       context "when the draft is incomplete" do
-        let(:vacancy) { create(:vacancy, :published, job_advert: nil) }
+        let(:vacancy) { create(:vacancy, :published) }
         let(:status) { "incomplete_draft" }
 
         it "returns the correct text" do

@@ -11,10 +11,6 @@ class VacancyPresenter < BasePresenter
     simple_format(fix_bullet_points(model.about_school)) if model.about_school.present?
   end
 
-  def how_to_apply
-    simple_format(fix_bullet_points(model.how_to_apply)) if model.how_to_apply.present?
-  end
-
   def benefits_details
     simple_format(fix_bullet_points(model.benefits_details)) if model.benefits_details.present?
   end

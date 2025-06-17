@@ -14,23 +14,12 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
   describe "skills_and_experience" do
     let(:error) { %i[skills_and_experience blank] }
 
-    context "when the vacancy's job_advert is present" do
-      context "when skills_and_experience is nil " do
-        let(:params) { { skills_and_experience: nil } }
-        let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"], job_advert: "Test") }
+    context "when skills_and_experience exceeds the maxiumum words " do
+      let(:params) { { skills_and_experience: Faker::Lorem.sentence(word_count: 151) } }
+      let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"]) }
 
-        it "is valid" do
-          expect(subject.errors.added?(*error)).to be false
-        end
-      end
-
-      context "when skills_and_experience exceeds the maxiumum words " do
-        let(:params) { { skills_and_experience: Faker::Lorem.sentence(word_count: 151) } }
-        let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"], job_advert: "Test") }
-
-        it "is valid" do
-          expect(subject.errors.added?(*error)).to be false
-        end
+      it "is valid" do
+        expect(subject.errors.added?(*error)).to be false
       end
     end
 
@@ -199,24 +188,8 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
     end
   end
 
-  describe "job_advert" do
-    context "when job_advert ony contains bullet points" do
-      let(:error) { %i[job_advert blank] }
-      let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"], job_advert: "Test") }
-      let(:params) { { job_advert: "<editor-content><ul><li><br></li></ul></editor-content>" } }
-
-      it "fails validation" do
-        expect(subject.errors.added?(*error)).to be true
-      end
-
-      it "has the correct error message" do
-        expect(subject.errors.messages[:job_advert]).to include(I18n.t("about_the_role_errors.job_advert.blank"))
-      end
-    end
-  end
-
   describe "flexi_working" do
-    let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"], job_advert: "Test") }
+    let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"]) }
 
     context "when flexi working is blank except for html tags" do
       let(:params) { { flexi_working: "<p><br></p>" } }
