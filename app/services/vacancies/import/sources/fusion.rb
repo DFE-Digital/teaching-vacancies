@@ -58,7 +58,7 @@ class Vacancies::Import::Sources::Fusion
       is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phases_for(item, schools.first),
       key_stages: item["keyStages"].presence&.split(","),
-      visa_sponsorship_available: visa_sponsorship_available_for(item),
+      visa_sponsorship_available: visa_sponsorship_available_for?(item),
       is_job_share: job_share_for?(item),
 
       # TODO: What about central office/multiple school vacancies?
@@ -158,7 +158,7 @@ class Vacancies::Import::Sources::Fusion
     end
   end
 
-  def visa_sponsorship_available_for(item)
+  def visa_sponsorship_available_for?(item)
     item["visaSponsorshipAvailable"] == true
   end
 

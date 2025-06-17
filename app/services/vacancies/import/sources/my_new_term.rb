@@ -65,7 +65,7 @@ class Vacancies::Import::Sources::MyNewTerm
       phases: phases_for(item, schools.first),
       key_stages: key_stages_for(item),
       job_location: :at_one_school,
-      visa_sponsorship_available: visa_sponsorship_available_for(item),
+      visa_sponsorship_available: visa_sponsorship_available_for?(item),
       is_job_share: job_share_for?(item),
     }.merge(organisation_fields(schools)).merge(start_date_fields(item))
   end
@@ -147,7 +147,7 @@ class Vacancies::Import::Sources::MyNewTerm
     item["ectSuitable"] == true ? "ect_suitable" : "ect_unsuitable"
   end
 
-  def visa_sponsorship_available_for(item)
+  def visa_sponsorship_available_for?(item)
     item["visaSponsorshipAvailable"] == true
   end
 

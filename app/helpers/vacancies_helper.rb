@@ -29,7 +29,13 @@ module VacanciesHelper
     create_or_edit = step_process.vacancy.published? ? "edit" : "create"
     section_number = step_process.current_step_group_number
 
-    "#{form_object.errors.present? ? 'Error: ' : ''}#{page_heading} - #{t("publishers.vacancies.build.page_title.#{create_or_edit}", section_number: section_number)}"
+    prefix = if form_object.errors.present?
+               "Error: "
+             else
+               ""
+             end
+
+    "#{prefix}#{page_heading} - #{t("publishers.vacancies.build.page_title.#{create_or_edit}", section_number: section_number)}"
   end
 
   def review_page_title_prefix(vacancy)

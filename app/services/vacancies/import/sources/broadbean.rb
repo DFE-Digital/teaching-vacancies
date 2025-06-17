@@ -65,7 +65,7 @@ class Vacancies::Import::Sources::Broadbean
       contract_type: contract_type_for(item),
       is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phases_for(item, schools.first),
-      visa_sponsorship_available: visa_sponsorship_available_for(item),
+      visa_sponsorship_available: visa_sponsorship_available_for?(item),
       is_job_share: job_share_for?(item),
     }.merge(organisation_fields(schools))
      .merge(start_date_fields(item))
@@ -137,7 +137,7 @@ class Vacancies::Import::Sources::Broadbean
     end
   end
 
-  def visa_sponsorship_available_for(item)
+  def visa_sponsorship_available_for?(item)
     item["visaSponsorshipAvailable"] == "true"
   end
 

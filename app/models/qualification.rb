@@ -39,10 +39,10 @@ class Qualification < ApplicationRecord
 
   def display_attributes
     @display_attributes ||= Enumerator.new do |y|
-      display_attributes_list.each do
-        next if public_send(it).blank?
+      display_attributes_list.each do |item|
+        next if public_send(item).blank?
 
-        y << it
+        y << item
       end
     end
   end
@@ -60,9 +60,9 @@ class Qualification < ApplicationRecord
   def display_attributes_list
     return %w[institution award_date] if secondary?
 
-    %w[subject institution].tap do
-      it.push(*%w[grade award_date]) if finished_studying?
-      it << "awarding_body"
+    %w[subject institution].tap do |fields|
+      fields.push(*%w[grade award_date]) if finished_studying?
+      fields << "awarding_body"
     end
   end
 

@@ -64,7 +64,7 @@ class Vacancies::Import::Sources::Ventrus
       contract_type: contract_type_for(item),
       is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phase_for(item),
-      visa_sponsorship_available: visa_sponsorship_available_for(item),
+      visa_sponsorship_available: visa_sponsorship_available_for?(item),
       is_job_share: job_share_for?(item),
     }.merge(organisation_fields(schools))
   end
@@ -157,7 +157,7 @@ class Vacancies::Import::Sources::Ventrus
     item["Contract_Type"] == "parental_leave_cover"
   end
 
-  def visa_sponsorship_available_for(item)
+  def visa_sponsorship_available_for?(item)
     item["Visa_Sponsorship_Available"] == "true"
   end
 

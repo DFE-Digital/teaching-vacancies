@@ -21,7 +21,7 @@ class Search::JobseekerProfileSearch
     scope = scope.where("job_preferences.phases && ARRAY[?]::varchar[]", filters[:education_phases]) if filters[:education_phases].present?
     scope = scope.where("job_preferences.key_stages && ARRAY[?]::varchar[]", filters[:key_stages]) if filters[:key_stages].present?
     scope = scope.where("job_preferences.subjects && ARRAY[?]::varchar[]", filters[:subjects]) if filters[:subjects].present?
-    scope = scope.where("personal_details.has_right_to_work_in_uk = ?", right_to_work_in_uk) if one_option_selected_for_right_to_work_in_uk?
+    scope = scope.where("personal_details.has_right_to_work_in_uk = ?", right_to_work_in_uk?) if one_option_selected_for_right_to_work_in_uk?
     scope
   end
 
@@ -61,7 +61,7 @@ class Search::JobseekerProfileSearch
     filters[:right_to_work_in_uk].present? && filters[:right_to_work_in_uk].count == 1
   end
 
-  def right_to_work_in_uk
+  def right_to_work_in_uk?
     filters[:right_to_work_in_uk].first == "true"
   end
 
