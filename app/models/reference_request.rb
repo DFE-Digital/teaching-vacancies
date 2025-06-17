@@ -32,8 +32,8 @@ class ReferenceRequest < ApplicationRecord
     def create_for_external!(job_application)
       job_application.referees.each do |referee|
         reference_request = create_reference_request!(referee)
-        reference = referee.create_job_reference!
-        Publishers::CollectReferencesMailer.collect_references(reference, reference_request.token).deliver_later
+        referee.create_job_reference!
+        Publishers::CollectReferencesMailer.collect_references(reference_request).deliver_later
       end
     end
 
