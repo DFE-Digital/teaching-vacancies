@@ -52,7 +52,7 @@ RSpec.describe "Jobseekers applications statuses" do
 
     context "when the jobseeker has completed some details in their profile but not all of them" do
       let!(:jobseeker_profile) { create(:jobseeker_profile, :with_qualifications, :with_employment_history, jobseeker: jobseeker, qualified_teacher_status: nil) }
-
+      # looks like the assertions were changed here but not the description, so this test is now a duplocte of the one above. can be removed i think.
       it "shows all sections that have been filled in with the status tag 'in progress' and shows empty sections with the status tag 'not started'" do
         visit job_path(vacancy)
         within ".banner-buttons" do
@@ -68,6 +68,7 @@ RSpec.describe "Jobseekers applications statuses" do
         expect(page).to have_css("#employment_history", text: I18n.t("shared.status_tags.incomplete"))
       end
 
+      # might be able delete this. i believe completing the steps is tests in other job profile tests.
       context "when the jobseeker completes a section" do
         it "shows the section as complete", :js do
           visit job_path(vacancy)

@@ -1,3 +1,4 @@
+# can be a view spec
 require "rails_helper"
 
 RSpec.describe "Jobseekers can view organisation landing pages" do

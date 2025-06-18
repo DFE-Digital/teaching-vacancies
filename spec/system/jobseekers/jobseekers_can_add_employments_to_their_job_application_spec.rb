@@ -9,13 +9,16 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
   after { logout }
 
+  # I think the following tests below could be combined into one.
+  # it "allows jobseekers to add a current role"
+  # it "allows jobseekers to add employment history"
+  # it "displays employment history from newest to oldest job"
   it "allows jobseekers to add a current role" do
     visit jobseekers_job_application_build_path(job_application, :employment_history)
 
     click_on I18n.t("buttons.add_work_history")
     expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :employment_history))
     validates_step_complete(button: I18n.t("buttons.save_employment"))
-
     fill_in_current_role(form: "jobseekers_job_application_details_employment_form")
 
     click_on I18n.t("buttons.save_employment")
@@ -53,7 +56,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
     it "displays employment history from newest to oldest job" do
       expect(all(".govuk-summary-card__title").map(&:text)).to eq ["The Best Teacher", "Old job", "Oldest job"]
     end
-
+    # I think we can remove this test as it is already tested below in "allows jobseekers to edit employment history"
     it "shows the record with an error, and prevents saving until fixed" do
       expect(all(".govuk-summary-card__content").last).to have_content "Enter your reason for leaving this role"
 
@@ -129,7 +132,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
       expect(page).to have_content(I18n.t("jobseekers.job_applications.employments.destroy.success"))
       expect(page).not_to have_content("Teacher")
     end
-
+    # I would like to see assertions to show errors here.
     it "allows jobseekers to edit employment history" do
       visit jobseekers_job_application_build_path(job_application, :employment_history)
 
@@ -146,6 +149,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
       expect(page).to have_content("A different school")
     end
 
+    # I think we can delete this test as I believe this is already covered in "allows jobseekers to add, change and delete gaps in employment with prefilled start and end date"
     context "when there are gaps in work history" do
       it "will not allow the user to complete the employment history section until the gaps are explained" do
         visit jobseekers_job_application_build_path(job_application, :employment_history)

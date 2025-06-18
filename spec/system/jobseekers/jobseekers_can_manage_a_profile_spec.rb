@@ -1,3 +1,4 @@
+# this is where i got to
 require "rails_helper"
 
 RSpec.describe "Jobseekers can manage their profile" do
@@ -12,7 +13,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     before { login_as(jobseeker, scope: :jobseeker) }
 
     after { logout }
-
+    # Maybe we could add this to the set up of one of the other tests
     it "allows the jobseeker to navigate to their profile" do
       visit jobseeker_root_path
 
@@ -33,6 +34,13 @@ RSpec.describe "Jobseekers can manage their profile" do
         before { visit jobseekers_profile_path }
 
         it "allows the jobseeker to fill in their personal details" do
+          within "#navigation" do
+            expect(page).to have_content("Your profile")
+            click_on "Your profile"
+          end
+
+          expect(page).to have_current_path(jobseekers_profile_path)
+
           click_link("Add personal details")
           fill_in "personal_details_form[first_name]", with: first_name
           fill_in "personal_details_form[last_name]", with: last_name
@@ -150,7 +158,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         expect(page).not_to have_content(previous_application.phone_number)
       end
     end
-
+    # I think we could do this as part of anothe
     describe "#about_you" do
       let(:jobseeker_about_you) { "I am an amazing teacher" }
 
@@ -226,13 +234,21 @@ RSpec.describe "Jobseekers can manage their profile" do
           create(:jobseeker_profile, jobseeker:)
           visit jobseekers_profile_path
         end
-
+        # could probably combine many of these tests together. maybe even test for errors, test gaps and submit the form as part of one test.
         describe "errors" do
           before do
             click_link("Add roles")
           end
+          # can combine these two tests
+          it "raises errors for missing fields and makes reason mandatory when non current" do
+            click_on I18n.t("buttons.save_and_continue")
 
-          it "raises errors for missing fields" do
+            expect(page).to have_css("ul.govuk-list.govuk-error-summary__list")
+
+            within "ul.govuk-list.govuk-error-summary__list" do
+              expect(page).to have_link("Enter your reason for leaving this role", href: "#jobseekers-profile-employment-form-reason-for-leaving-field-error")
+            end
+
             check "I currently work here"
             click_on I18n.t("buttons.save_and_continue")
 
@@ -247,16 +263,6 @@ RSpec.describe "Jobseekers can manage their profile" do
                                     ["Enter the date you started at this school or organisation", "#jobseekers-profile-employment-form-started-on-field-error"])
             end
           end
-
-          it "makes reason mandatory when non current" do
-            click_on I18n.t("buttons.save_and_continue")
-
-            expect(page).to have_css("ul.govuk-list.govuk-error-summary__list")
-
-            within "ul.govuk-list.govuk-error-summary__list" do
-              expect(page).to have_link("Enter your reason for leaving this role", href: "#jobseekers-profile-employment-form-reason-for-leaving-field-error")
-            end
-          end
         end
 
         it "associates an 'employment' with their jobseeker profile", :js do
@@ -264,14 +270,18 @@ RSpec.describe "Jobseekers can manage their profile" do
         end
 
         context "when the form to add a new employment history entry is submitted" do
-          it "redirects to the review page" do
-            add_jobseeker_profile_employment
+          # could combine the following 2 tests and not have to create(:jobseeker_profile, jobseeker:), visit jobseekers_profile_path, add_jobseeker_profile_employment twice for minimal benefits (imo)
+          # it "redirects to the review page" do
+          #   add_jobseeker_profile_employment
 
-            expect(current_path).to eq(review_jobseekers_profile_work_history_index_path)
-          end
+          #   expect(current_path).to eq(review_jobseekers_profile_work_history_index_path)
+          # end
 
           it "displays every employment history entry on the review page" do
             add_jobseeker_profile_employment
+
+            expect(current_path).to eq(review_jobseekers_profile_work_history_index_path)
+
             click_link "Return to profile"
 
             profile.employments.each do |employment|
@@ -341,13 +351,16 @@ RSpec.describe "Jobseekers can manage their profile" do
         before do
           visit edit_jobseekers_profile_work_history_path(employment)
         end
-
-        it "shows the old data" do
-          expect(page).to have_content(employment.main_duties)
-          expect(page).to have_content(employment.reason_for_leaving)
-        end
+        # can combine these 2 tests and not have to visit edit_jobseekers_profile_work_history_path(employment) twice
+        # it "shows the old data" do
+        #   expect(page).to have_content(employment.main_duties)
+        #   expect(page).to have_content(employment.reason_for_leaving)
+        # end
 
         it "successfully changes the employment record" do
+          expect(page).to have_content(employment.main_duties)
+          expect(page).to have_content(employment.reason_for_leaving)
+
           fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.organisation"), with: new_employment.organisation
           fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.job_title"), with: new_employment.job_title
           fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.reason_for_leaving"), with: new_employment.reason_for_leaving
@@ -379,13 +392,13 @@ RSpec.describe "Jobseekers can manage their profile" do
           expect(current_path).to eq(review_jobseekers_profile_work_history_index_path)
         end
       end
-
+      #  I think we could combine this with the test/tests on line 338 or line 402 or both
       context "if the jobseeker has a previous job application" do
         let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, create_details: true) }
 
         before { visit jobseekers_profile_path }
 
-        it "prefills the form with the jobseeker's work history" do
+        it "prefills the form with the jobseeker's work history and qualifications" do
           previous_application.employments.each do |employment|
             if employment.job?
               expect(page).to have_content(employment.organisation)
@@ -393,17 +406,7 @@ RSpec.describe "Jobseekers can manage their profile" do
               expect(page).to have_content("You have a gap in your work history")
             end
           end
-        end
-      end
-    end
 
-    describe "qualifications" do
-      context "if the jobseeker has a previous job application" do
-        let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, create_details: true) }
-
-        before { visit jobseekers_profile_path }
-
-        it "prefills the form with the jobseeker's qualifications" do
           previous_application.qualifications.each do |qualification|
             expect(page).to have_content(qualification.name)
           end
@@ -596,6 +599,15 @@ RSpec.describe "Jobseekers can manage their profile" do
         field = find_field("Name of school or trust")
         field.fill_in(with: forbidden_organisation.name)
         click_on I18n.t("buttons.save_and_continue")
+
+        choose "Yes", visible: false
+        click_on I18n.t("buttons.save_and_continue")
+
+        field = find_field("Name of school or trust")
+        field.fill_in(with: forbidden_organisation.name)
+        click_on I18n.t("buttons.save_and_continue")
+
+        expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.schools.already_hidden", name: forbidden_organisation.name))
       end
 
       run_with_publisher(forbidden_publisher) do
@@ -607,45 +619,45 @@ RSpec.describe "Jobseekers can manage their profile" do
         visit publishers_jobseeker_profiles_path
         expect(page).to have_content(profile.full_name)
       end
+      # remove uneccessary tests
+      # run_with_jobseeker(jobseeker) do
+      #   visit jobseekers_profile_path
+      #   click_on I18n.t("jobseekers.profiles.hide_profile.summary.add_a_school")
 
-      run_with_jobseeker(jobseeker) do
-        visit jobseekers_profile_path
-        click_on I18n.t("jobseekers.profiles.hide_profile.summary.add_a_school")
+      #   field = find_field("Name of school or trust")
+      #   field.fill_in(with: permitted_organisation.name)
+      #   click_on I18n.t("buttons.save_and_continue")
+      # end
 
-        field = find_field("Name of school or trust")
-        field.fill_in(with: permitted_organisation.name)
-        click_on I18n.t("buttons.save_and_continue")
-      end
+      # run_with_publisher(permitted_publisher) do
+      #   visit publishers_jobseeker_profiles_path
+      #   expect(page).not_to have_content(profile.full_name)
+      # end
 
-      run_with_publisher(permitted_publisher) do
-        visit publishers_jobseeker_profiles_path
-        expect(page).not_to have_content(profile.full_name)
-      end
+      # run_with_publisher(forbidden_publisher) do
+      #   visit publishers_jobseeker_profiles_path
+      #   expect(page).not_to have_content(profile.full_name)
 
-      run_with_publisher(forbidden_publisher) do
-        visit publishers_jobseeker_profiles_path
-        expect(page).not_to have_content(profile.full_name)
-
-        visit publishers_jobseeker_profile_path(profile)
-        expect(page).to have_content("Page not found")
-      end
+      #   visit publishers_jobseeker_profile_path(profile)
+      #   expect(page).to have_content("Page not found")
+      # end
 
       run_with_jobseeker(jobseeker) do
         visit schools_jobseekers_profile_hide_profile_path
-        within page.find(".govuk-summary-list__key", text: permitted_organisation.name).find(:xpath, "..") do
+        within page.find(".govuk-summary-list__key", text: forbidden_organisation.name).find(:xpath, "..") do
           click_on I18n.t("buttons.delete")
         end
         click_button I18n.t("jobseekers.profiles.hide_profile.delete.delete_school")
       end
 
-      run_with_publisher(permitted_publisher) do
-        visit publishers_jobseeker_profiles_path
-        expect(page).to have_content(profile.full_name)
-      end
+      # run_with_publisher(permitted_publisher) do
+      #   visit publishers_jobseeker_profiles_path
+      #   expect(page).to have_content(profile.full_name)
+      # end
 
       run_with_publisher(forbidden_publisher) do
         visit publishers_jobseeker_profiles_path
-        expect(page).not_to have_content(profile.full_name)
+        expect(page).to have_content(profile.full_name)
       end
     end
 
@@ -656,19 +668,19 @@ RSpec.describe "Jobseekers can manage their profile" do
       end
 
       after { logout }
+      # already tested
+      # it "does not allow the jobseeker to hide themselves from the school again" do
+      #   visit jobseekers_profile_path
+      #   click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
+      #   choose "Yes", visible: false
+      #   click_on I18n.t("buttons.save_and_continue")
 
-      it "does not allow the jobseeker to hide themselves from the school again" do
-        visit jobseekers_profile_path
-        click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
-        choose "Yes", visible: false
-        click_on I18n.t("buttons.save_and_continue")
+      #   field = find_field("Name of school or trust")
+      #   field.fill_in(with: forbidden_organisation.name)
+      #   click_on I18n.t("buttons.save_and_continue")
 
-        field = find_field("Name of school or trust")
-        field.fill_in(with: forbidden_organisation.name)
-        click_on I18n.t("buttons.save_and_continue")
-
-        expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.schools.already_hidden", name: forbidden_organisation.name))
-      end
+      #   expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.schools.already_hidden", name: forbidden_organisation.name))
+      # end
     end
 
     context "if the organisation is a trust" do

@@ -54,7 +54,7 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
             expect(page).not_to have_css(".card-component__body", text: I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
           end
         end
-
+        # description could be better, I think it should say does not show apply for expired jobs link
         it "does not show apply for this job links" do
           within ".card-component:nth-child(1)" do
             expect(page).not_to have_link(I18n.t("jobseekers.saved_jobs.index.apply"))

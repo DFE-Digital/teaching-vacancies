@@ -1,3 +1,4 @@
+# can delete this file as already tested in jobseekers_can_manage_their_job_applications_spec.rb
 require "rails_helper"
 
 RSpec.describe "Jobseekers can withdraw a job application" do

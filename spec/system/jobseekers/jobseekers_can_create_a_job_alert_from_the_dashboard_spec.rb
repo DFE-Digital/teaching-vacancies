@@ -54,7 +54,7 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
     it "displays the create job alert button" do
       expect(page).to have_content(I18n.t("jobseekers.subscriptions.index.button_create"))
     end
-
+    # I don't think this adds much value, we have already tests this in the test on line 22 imo.
     it "creates a job alert and redirects to the subscriptions index page" do
       within "#subscriptions-results" do
         click_on I18n.t("jobseekers.subscriptions.index.button_create")
@@ -64,12 +64,12 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
       and_the_job_alert_is_on_the_index_page
     end
   end
-
+  # i think this method name could be improved
   def an_invalid_form_is_rejected
     click_on I18n.t("buttons.subscribe")
     expect(page).to have_content("There is a problem")
   end
-
+  # i think this method name could be improved
   def and_the_job_alert_is_on_the_index_page
     expect(current_path).to eq(jobseekers_subscriptions_path)
     expect(page).to have_content(I18n.t("subscriptions.create.success"))

@@ -23,6 +23,7 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
     expect(:vacancy_create_job_alert_clicked).to have_been_enqueued_as_analytics_event(with_data: { vacancy_id: vacancy.id }) # rubocop:disable RSpec/ExpectActual
 
     expect(page).to have_content(I18n.t("subscriptions.new.title"))
+    # I don't love this method name.
     and_the_search_criteria_are_populated
     click_on I18n.t("buttons.subscribe")
     expect(page).to have_content("There is a problem")

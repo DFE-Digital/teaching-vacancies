@@ -1,3 +1,4 @@
+# I think most of this could be a view spec
 require "rails_helper"
 
 RSpec.describe "Viewing a single published vacancy" do
