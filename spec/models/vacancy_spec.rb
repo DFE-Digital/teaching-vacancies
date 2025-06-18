@@ -805,14 +805,14 @@ RSpec.describe Vacancy do
     end
   end
 
-  describe "#is_a_teaching_or_middle_leader_role?" do
+  describe "#teaching_or_middle_leader_role?" do
     let(:vacancy) { create(:vacancy, job_roles: job_roles) }
 
     context "when job_roles includes a teaching role" do
       let(:job_roles) { ["teacher"] }
 
       it "returns true" do
-        expect(vacancy.is_a_teaching_or_middle_leader_role?).to be true
+        expect(vacancy.teaching_or_middle_leader_role?).to be true
       end
     end
 
@@ -820,7 +820,7 @@ RSpec.describe Vacancy do
       let(:job_roles) { ["head_of_year_or_phase"] }
 
       it "returns true" do
-        expect(vacancy.is_a_teaching_or_middle_leader_role?).to be true
+        expect(vacancy.teaching_or_middle_leader_role?).to be true
       end
     end
 
@@ -828,7 +828,7 @@ RSpec.describe Vacancy do
       let(:job_roles) { ["teacher", "head_of_department_or_curriculum"] }
 
       it "returns true" do
-        expect(vacancy.is_a_teaching_or_middle_leader_role?).to be true
+        expect(vacancy.teaching_or_middle_leader_role?).to be true
       end
     end
 
@@ -836,7 +836,7 @@ RSpec.describe Vacancy do
       let(:job_roles) { ["administration_hr_data_and_finance"] }
 
       it "returns false" do
-        expect(vacancy.is_a_teaching_or_middle_leader_role?).to be false
+        expect(vacancy.teaching_or_middle_leader_role?).to be false
       end
     end
 
@@ -844,7 +844,7 @@ RSpec.describe Vacancy do
       let(:job_roles) { [] }
 
       it "returns false" do
-        expect(vacancy.is_a_teaching_or_middle_leader_role?).to be false
+        expect(vacancy.teaching_or_middle_leader_role?).to be false
       end
     end
   end
