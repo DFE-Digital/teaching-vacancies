@@ -273,7 +273,7 @@ en:
       name: Name of school
       location: City, county or postcode (in England)
       results:
-        active_jobs: Active jobs
+        active_jobs: Current jobs
         key_stage: Key stage
         key_stages:
           early_years: Early years
@@ -315,6 +315,7 @@ en:
         actual_salary: Actual salary
         full_time_equivalent_salary: Full-time equivalent salary
         job_role: Role
+        school_name: Name
         working_pattern: Working pattern
       visits:
         at_one_school: Arranging a visit to %{organisation}
