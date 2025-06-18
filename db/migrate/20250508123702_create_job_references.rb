@@ -26,15 +26,15 @@ class CreateJobReferences < ActiveRecord::Migration[7.2]
       t.boolean :can_give_reference, null: false, default: true
       t.boolean :is_reference_sharable, null: false, default: false
 
-      t.text :how_do_you_know_the_candidate
+      t.text :how_do_you_know_the_candidate_ciphertext
       # an encrypted date
       t.string :employment_start_date_ciphertext
       t.boolean :currently_employed, null: false, default: false
-      t.text :reason_for_leaving
+      t.text :reason_for_leaving_ciphertext
       t.boolean :would_reemploy_current, null: false, default: false
-      t.text :would_reemploy_current_reason
+      t.text :would_reemploy_current_reason_ciphertext
       t.boolean :would_reemploy_any, null: false, default: false
-      t.text :would_reemploy_any_reason
+      t.text :would_reemploy_any_reason_ciphertext
 
       RATINGS.each do |field|
         t.string "#{field}_ciphertext"
@@ -57,6 +57,8 @@ class CreateJobReferences < ActiveRecord::Migration[7.2]
       t.uuid :token, null: false
       t.integer :status, null: false
       t.boolean :marked_as_complete, null: false, default: false
+
+      t.string :email, null: false
 
       t.timestamps
     end

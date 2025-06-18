@@ -180,6 +180,10 @@
     - allegations_ciphertext
     - not_fit_to_practice_ciphertext
     - able_to_undertake_role_ciphertext
+    - how_do_you_know_the_candidate_ciphertext
+    - reason_for_leaving_ciphertext
+    - would_reemploy_current_reason_ciphertext
+    - would_reemploy_any_reason_ciphertext
   reference_requests:
     - token
   :job_application_batches:

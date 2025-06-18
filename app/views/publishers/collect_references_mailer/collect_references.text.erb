@@ -1,7 +1,8 @@
-# <%= t(".title", name: @reference.referee.job_application.name) %>
+# <%= t(".title", name: @reference_request.referee.job_application.name) %>
 
 <%=
-  notify_link(t(".submit_reference"),
-              reference_build_url(@reference.id, Wicked::FIRST_STEP, token: @token)) %>
+  # Wicked::Wizard redirects to first step w/o any parameters so we have to mention first step here explcitly
+  notify_link(reference_build_url(@reference_request.id, 'can_give', token: @reference_request.token), t(".submit_reference"))
+%>
 
 <%= t("shared.footer", home_page_link: home_page_link) %>

@@ -21,6 +21,8 @@ RSpec.describe "Publishers can select a job application for interview" do
     before do
       create(:job_reference, referee: referee)
       referee_can_give_reference_page.load(reference_id: reference_request.id, token: reference_request.token)
+      # Wicked::Wizard redirects to first step w/o any parameters
+      # visit reference_build_url(reference_request.id, Wicked::FIRST_STEP, token: reference_request.token)
     end
 
     context "without an answer" do

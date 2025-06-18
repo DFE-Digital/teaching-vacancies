@@ -22,8 +22,9 @@ RSpec.describe Referees::RefereeDetailsForm do
 
   context "with an invalid email address" do
     let(:form) do
-      described_class.new(attributes_for(:job_reference).slice(*Referees::RefereeDetailsForm::FIELDS)
-                                                                   .merge(email: "fred@example.nowhere"))
+      described_class.new(attributes_for(:job_reference, :reference_given)
+                            .slice(*Referees::RefereeDetailsForm::FIELDS)
+                            .merge(email: "fred@example.nowhere"))
     end
 
     it "has correct errors" do

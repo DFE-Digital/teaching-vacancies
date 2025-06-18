@@ -5,7 +5,7 @@
 
   = f.hidden_field :token, value: @form.token
 
-  = f.govuk_radio_buttons_fieldset :is_reference_sharable, legend: { size: "m", tag: "h2", label: t("helpers.legend.referees_can_share_reference_form.is_reference_sharable", name: @referee.job_application.name) } do
+  = f.govuk_radio_buttons_fieldset :is_reference_sharable, legend: { size: "m", tag: "h2", text: t("helpers.legend.referees_can_share_reference_form.is_reference_sharable", name: @referee.job_application.name) } do
     = f.govuk_radio_button :is_reference_sharable, "true"
     = f.govuk_radio_button :is_reference_sharable, "false"
 
