@@ -2,25 +2,17 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   include ActiveModel::Attributes
 
   validates :ect_status, inclusion: { in: Vacancy.ect_statuses.keys }, if: -> { vacancy&.job_roles&.include?("teacher") }
-  # validate :about_school_presence, if: -> { vacancy.about_school.present? }
   validate :skills_and_experience_presence
-  # validate :school_offer_presence, unless: -> { vacancy.about_school.present? }
   validate :school_offer_presence
-  # validates :safeguarding_information_provided, inclusion: { in: [true, false] }, if: -> { vacancy.safeguarding_information.present? }, unless: -> { vacancy.about_school.present? }
   validates :safeguarding_information_provided, inclusion: { in: [true, false] }, if: -> { vacancy.safeguarding_information.present? }
-  # validate :safeguarding_information_presence, if: -> { vacancy.safeguarding_information.present? && safeguarding_information_provided  }, unless: -> { vacancy.about_school.present? }
   validate :safeguarding_information_presence, if: -> { vacancy.safeguarding_information.present? && safeguarding_information_provided }
-  # validate :safeguarding_information_does_not_exceed_maximum_words, if: -> { safeguarding_information_provided }, unless: -> { vacancy.about_school.present? }
   validate :safeguarding_information_does_not_exceed_maximum_words, if: -> { safeguarding_information_provided }
-  # validates :further_details_provided, inclusion: { in: [true, false] }, unless: -> { vacancy.about_school.present? }
   validates :further_details_provided, inclusion: { in: [true, false] }
-  # validate :further_details_presence, if: -> { further_details_provided }, unless: -> { vacancy.about_school.present? }
   validate :further_details_presence, if: -> { further_details_provided }
   validates :flexi_working_details_provided, inclusion: { in: [true, false] }
   validate :flexi_working_presence, if: -> { flexi_working_details_provided }
 
   attribute :flexi_working_details_provided, :boolean
-  # attribute :about_school
   attribute :ect_status
   attribute :skills_and_experience
   attribute :school_offer

@@ -650,7 +650,6 @@ en:
         school_visits_options:
           false: "No"
           true: "Yes"
-        school_visits_details_html: School visits details (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_visa_sponsorship_form:
         visa_sponsorship_available_options:
           false: "No"

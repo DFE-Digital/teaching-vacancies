@@ -158,7 +158,6 @@ RSpec.describe ImportFromVacancySourceJob do
           "salary" => "Main pay range 1 to Upper pay range 3, £23,719 to £39,406 per year (full time equivalent)",
           "school_offer" => "School Offer",
           "school_visits" => true,
-          "school_visits_details" => nil,
           "searchable_content" => nil,
           "skills_and_experience" => "Quasi dolores vero molestiae et velit aut nulla dolorem odit officiis sit ea sint earum et accusantium optio illo dolorem numquam in et est quia ab consequatur aperiam aut et alias rerum fuga est impedit enim et sunt ea tempora facilis eaque voluptate ex iure voluptates necessitatibus ipsa veniam nihil.",
           "slug" => "mallowpond-high-school",

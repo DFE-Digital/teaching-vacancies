@@ -91,7 +91,7 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
   def school_visits_params(params)
     if params[:publishers_job_listing_school_visits_form]
       params.require(:publishers_job_listing_school_visits_form)
-            .permit(:school_visits_details, :school_visits)
+            .permit(:school_visits)
     else
       {}
     end.merge(current_organisation: current_organisation)
