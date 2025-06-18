@@ -316,7 +316,7 @@ class Vacancy < ApplicationRecord
     end
   end
 
-  def is_a_teaching_or_middle_leader_role?
+  def teaching_or_middle_leader_role?
     job_roles.intersect?(%w[teacher head_of_year_or_phase head_of_department_or_curriculum sendco other_leadership])
   end
 
