@@ -131,7 +131,6 @@ en:
         subject: Your job application has been unsuccessful
       declarations:
         subject: Declarations
-        heading: Self-disclosure form link
         dear: Dear %{name}
         self_disclosure_form: self-disclosure form
         self_disclosure_info: "Your are required to complete your %{link} before attending your interview."
