@@ -252,15 +252,6 @@ RSpec.describe VacanciesHelper do
       end
     end
 
-    context "when the translation requires the organisation type" do
-      let(:attribute) { "about_school" }
-      let(:new_value) { "This is a school description" }
-
-      it "returns the correct translation" do
-        expect(subject).to eq(I18n.t("publishers.activity_log.#{attribute}", organisation_type: organisation_type))
-      end
-    end
-
     context "when the attribute is an array enum" do
       let(:attribute) { "working_patterns" }
       let(:new_value) { [0, 100] }

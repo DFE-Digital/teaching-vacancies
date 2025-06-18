@@ -23,16 +23,6 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                   href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                   visually_hidden_text: t("jobs.skills_and_experience.publisher")
 
-  - if strip_tags(vacancy.about_school).present?
-    - summary_list.with_row(html_attributes: { id: "job_advert" }) do |row|
-      - row.with_key
-        = t("jobs.about_school", school: vacancy.organisation.name)
-      - row.with_value
-        = vacancy.about_school
-      - row.with_action text: t("buttons.change"),
-                  href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
-                  visually_hidden_text: t("jobs.about_school")
-
   - unless vacancy.school_offer.nil?
     - summary_list.with_row(html_attributes: { id: "school_offer" }) do |row|
       - row.with_key

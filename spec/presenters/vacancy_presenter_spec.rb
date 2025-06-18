@@ -135,26 +135,8 @@ RSpec.describe VacancyPresenter do
 
   let(:vacancy) { build_stubbed(:vacancy) }
 
-  describe "#about_school" do
-    it_behaves_like "a fields that outputs the correct HTML", :about_school
-  end
-
   describe "#benefits_details" do
     it_behaves_like "a fields that outputs the correct HTML", :benefits_details
-  end
-
-  describe "#job_advert" do
-    it "adds line breaks and paragraphs to plain text adverts" do
-      vacancy.job_advert = "This is an example job advert without HTML.\n\nThe advert includes:\nFirst line.\nSecond line."
-      expect(subject.job_advert).to eq(
-        "<p>This is an example job advert without HTML.</p>\n\n<p>The advert includes:\n<br />First line.\n<br />Second line.</p>",
-      )
-    end
-
-    it "does not modify HTML adverts" do
-      vacancy.job_advert = "<p>This is an example job advert with HTML.</p><p>The advert includes:<br />First line.<br />Second line.</p>"
-      expect(subject.job_advert).to eq(vacancy.job_advert)
-    end
   end
 
   describe "#readable_working_patterns" do

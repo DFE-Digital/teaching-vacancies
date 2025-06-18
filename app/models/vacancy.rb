@@ -14,7 +14,7 @@ class Vacancy < ApplicationRecord
 
   # TODO: Update with job listing updates
   ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG = %i[
-    about_school application_link contact_email contact_number contract_type expires_at how_to_apply job_advert
+    application_link contact_email contact_number contract_type expires_at
     job_roles job_title key_stages personal_statement_guidance salary school_visits subjects starts_on
     working_patterns
   ].freeze

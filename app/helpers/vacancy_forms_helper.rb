@@ -1,14 +1,4 @@
 module VacancyFormsHelper
-  def vacancy_about_school_form_hint_text(vacancy)
-    return t("helpers.hint.publishers_job_listing_about_the_role_form.about_schools", organisation_type: organisation_type_basic(vacancy.organisation)) if vacancy.organisations.many?
-
-    t("helpers.hint.publishers_job_listing_about_the_role_form.about_organisation", organisation_type: organisation_type_basic(vacancy.organisation).capitalize)
-  end
-
-  def vacancy_about_school_form_label(vacancy)
-    vacancy.organisations.many? ? "the schools" : vacancy.organisation_name
-  end
-
   def vacancy_job_title_form_hint_text(vacancy)
     first_role = vacancy.job_roles.first
     case first_role
