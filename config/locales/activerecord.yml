@@ -267,12 +267,8 @@ en:
       blank: Enter an email address
       invalid: Enter a valid email address in the correct format, like name@example.com
   about_the_role_errors: &about_the_role_errors
-    about_school:
-      blank: Enter a description of the %{organisation}
     ect_status:
       inclusion: Select yes if this role is suitable for an early career teacher
-    job_advert:
-      blank: Enter a job advert
     skills_and_experience:
       blank: Enter the skills and experience you’re looking for
       length: The details about the skills and experience you're looking for must be 300 words or less
@@ -649,6 +645,8 @@ en:
               taken: This email seems to already have an account with Teaching Vacancies
         vacancy:
           attributes:
+            job_advert:
+              blank: Enter a job advert
             <<: *job_roles_errors
             <<: *job_location_errors
             <<: *contract_information_errors
