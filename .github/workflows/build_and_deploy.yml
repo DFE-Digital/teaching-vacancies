@@ -153,7 +153,7 @@ jobs:
           BUILDKIT_INLINE_CACHE: 1
         with:
           build-args: |
-            --secret id=RAILS_MASTER_KEY
+            --secret id=master_key,env=RAILS_MASTER_KEY
           # Cache from builder target tagged with branch name, may be empty first time branch is pushed
           # Cache from builder target tagged with main branch name, always present, maybe less recent
           cache-from: |
@@ -173,7 +173,7 @@ jobs:
           BUILDKIT_INLINE_CACHE: 1
         with:
           build-args: |
-            --secret id=RAILS_MASTER_KEY
+            --secret id=master_key,env=RAILS_MASTER_KEY
           # Cache from builder target built above, always present
           # Cache from production target tagged with branch name, may be empty first time branch is pushed
           # Cache from production target tagged with main branch name, always present, maybe less recent
