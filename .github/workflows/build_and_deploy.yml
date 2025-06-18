@@ -148,16 +148,18 @@ jobs:
 
       - name: Build and push docker image from builder target
         uses: docker/build-push-action@v6
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          BUILDKIT_INLINE_CACHE: 1
         with:
           build-args: |
-            BUILDKIT_INLINE_CACHE=1
-            RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}
+            --secret id=RAILS_MASTER_KEY
           # Cache from builder target tagged with branch name, may be empty first time branch is pushed
           # Cache from builder target tagged with main branch name, always present, maybe less recent
           cache-from: |
             ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
             ${{ env.DOCKER_REPOSITORY }}:builder-main
-          # Need to tell buildx to use current rather than git
+          # Need to tell buildx to use current rather than git so that it picks up the swagger files we have just built
           context: "."
           push: true
           # Tag with branch name for reuse
@@ -166,11 +168,12 @@ jobs:
 
       - name: Build and push docker image from production target
         uses: docker/build-push-action@v6
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          BUILDKIT_INLINE_CACHE: 1
         with:
           build-args: |
-            BUILDKIT_INLINE_CACHE=1
-            COMMIT_SHA=${{ env.COMMIT_SHA }}
-            RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}
+            --secret id=RAILS_MASTER_KEY
           # Cache from builder target built above, always present
           # Cache from production target tagged with branch name, may be empty first time branch is pushed
           # Cache from production target tagged with main branch name, always present, maybe less recent
