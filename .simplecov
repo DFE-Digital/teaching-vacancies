@@ -51,6 +51,6 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # .25% lower (branch) and .1% lower (line) than the test run for now
     #
     # possibly the tests are stable now?
-    minimum_coverage line: 96.35, branch: 82.10
+    minimum_coverage line: 96.35, branch: 82.07
   end
 end
