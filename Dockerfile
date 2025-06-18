@@ -36,9 +36,9 @@ COPY . .
 
 ENV DOCUMENTS_S3_BUCKET=throwaway_value
 ENV SCHOOLS_IMAGES_LOGOS_S3_BUCKET=throwaway_value
-#ENV RAILS_MASTER_KEY=$RAILS_MASTER_KEY
 
-RUN RAILS_ENV=production SECRET_KEY_BASE=required-to-run-but-not-used RAILS_SERVE_STATIC_FILES=1 RAILS_MASTER_KEY=/run/secrets/RAILS_MASTER_KEY bundle exec rake assets:precompile
+# RAILS_MASTER_KEY here is a throwaway value, not used in this step but needs to be 16 hex coded bytes
+RUN RAILS_ENV=production RAILS_MASTER_KEY=01010101010101010101010101010101 SECRET_KEY_BASE=required-to-run-but-not-used RAILS_SERVE_STATIC_FILES=1 bundle exec rake assets:precompile
 
 RUN rm -rf node_modules log tmp yarn.lock && \
       rm -rf /usr/local/bundle/cache && \
@@ -69,4 +69,4 @@ ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
 
 EXPOSE 3000
-CMD RAILS_MASTER_KEY=/run/secrets/RAILS_MASTER_KEY bundle exec rails db:migrate:ignore_concurrent_migration_exceptions && bundle exec rails s
+CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions && bundle exec rails s
