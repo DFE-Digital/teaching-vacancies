@@ -23,7 +23,7 @@ gem "activerecord-session_store"
 gem "active_storage_validations"
 gem "addressable"
 gem "array_enum"
-gem "aws-sdk-s3", require: false
+gem "aws-sdk-s3", "< 1.189.1", require: false
 gem "breasal"
 gem "devise"
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.4"

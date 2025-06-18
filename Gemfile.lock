@@ -888,7 +888,7 @@ DEPENDENCIES
   addressable
   amazing_print
   array_enum
-  aws-sdk-s3
+  aws-sdk-s3 (< 1.189.1)
   aws-sdk-ssm
   better_errors
   binding_of_caller
