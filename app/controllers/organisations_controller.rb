@@ -4,7 +4,7 @@ class OrganisationsController < ApplicationController
   before_action :set_organisation, only: %i[show]
 
   def show
-    @vacancies = @organisation.vacancies.live
+    @vacancies = @organisation.all_vacancies.live
   end
 
   def index
