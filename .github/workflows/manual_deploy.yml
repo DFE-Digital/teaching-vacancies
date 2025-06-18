@@ -1,0 +1,55 @@
+name: Manual deploy
+concurrency: build_and_deploy_v2_${{ github.ref_name }} # ensures that the job waits for any deployments triggered by the build workflow to finish
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment to deploy to
+        required: true
+        type: choice
+        default: qa
+        options:
+        - qa
+        - staging
+        - production
+      image_tag:
+        description: Docker image tag to be deployed
+        required: true
+
+permissions:
+  id-token: write
+  pull-requests: write
+
+jobs:
+  deploy:
+    name: ${{ github.event.inputs.environment }} deployment
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment }}
+      url: ${{ steps.deploy_app_v2.outputs.deploy-url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+          role-to-assume: Deployments
+          role-duration-seconds: 3600
+          role-skip-session-tagging: true
+
+      - name: Deploy App to ${{ github.event.inputs.environment }}
+        id: deploy_app_v2
+        uses: ./.github/actions/deploy/
+        with:
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          environment: ${{ github.event.inputs.environment }}
+          tag: ${{ github.event.inputs.image_tag }}
