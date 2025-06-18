@@ -11,7 +11,7 @@ class ReferenceRequest < ApplicationRecord
   # the request as complete when they receive it.
   enum :status, { created: 0, requested: 1, received: 2 }
 
-  validates :status, presence: true
+  validates :status, :email, presence: true
 
   # expire token after 12 weeks
   scope :active_token, ->(token) { where(token: token, created_at: 12.weeks.ago..) }
@@ -25,15 +25,15 @@ class ReferenceRequest < ApplicationRecord
   class << self
     def create_for_manual!(job_application)
       job_application.referees.reject { |r| r.reference_request.present? }.each do |referee|
-        referee.create_reference_request!(token: SecureRandom.uuid, status: :created)
+        referee.create_reference_request!(token: SecureRandom.uuid, status: :created, email: referee.email)
       end
     end
 
     def create_for_external!(job_application)
       job_application.referees.each do |referee|
         reference_request = create_reference_request!(referee)
-        reference = referee.create_job_reference!
-        Publishers::CollectReferencesMailer.collect_references(reference, reference_request.token).deliver_later
+        referee.create_job_reference!
+        Publishers::CollectReferencesMailer.collect_references(reference_request).deliver_later
       end
     end
 
@@ -45,7 +45,7 @@ class ReferenceRequest < ApplicationRecord
           rr.update!(status: :requested)
         end
       else
-        referee.create_reference_request!(token: SecureRandom.uuid, status: :requested)
+        referee.create_reference_request!(token: SecureRandom.uuid, status: :requested, email: referee.email)
       end
     end
   end

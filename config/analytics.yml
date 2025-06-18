@@ -338,14 +338,10 @@ shared:
     - can_give_reference
     - is_reference_sharable
     - reference_id
-    - how_do_you_know_the_candidate
     - employment_start_date
     - currently_employed
-    - reason_for_leaving
     - would_reemploy_current
-    - would_reemploy_current_reason
     - would_reemploy_any
-    - would_reemploy_any_reason
     - name
     - job_title
     - phone_number
@@ -368,6 +364,10 @@ shared:
     - general_attitude
     - technical_competence
     - leadership
+    - how_do_you_know_the_candidate
+    - reason_for_leaving
+    - would_reemploy_current_reason
+    - would_reemploy_any_reason
   reference_requests:
     - id
     - reference_id
@@ -375,6 +375,7 @@ shared:
     - created_at
     - updated_at
     - marked_as_complete
+    - email
   saved_jobs:
     - id
     - jobseeker_id

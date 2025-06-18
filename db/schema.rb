@@ -310,14 +310,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_27_101345) do
     t.boolean "complete", default: false, null: false
     t.boolean "can_give_reference", default: true, null: false
     t.boolean "is_reference_sharable", default: false, null: false
-    t.text "how_do_you_know_the_candidate"
+    t.text "how_do_you_know_the_candidate_ciphertext"
     t.string "employment_start_date_ciphertext"
     t.boolean "currently_employed", default: false, null: false
-    t.text "reason_for_leaving"
+    t.text "reason_for_leaving_ciphertext"
     t.boolean "would_reemploy_current", default: false, null: false
-    t.text "would_reemploy_current_reason"
+    t.text "would_reemploy_current_reason_ciphertext"
     t.boolean "would_reemploy_any", default: false, null: false
-    t.text "would_reemploy_any_reason"
+    t.text "would_reemploy_any_reason_ciphertext"
     t.string "punctuality_ciphertext"
     t.string "working_relationships_ciphertext"
     t.string "customer_care_ciphertext"
@@ -618,6 +618,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_27_101345) do
     t.uuid "token", null: false
     t.integer "status", null: false
     t.boolean "marked_as_complete", default: false, null: false
+    t.string "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["reference_id"], name: "index_reference_requests_on_reference_id", unique: true
