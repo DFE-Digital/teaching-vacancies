@@ -107,4 +107,4 @@ runs:
       id: deployment-conclusion
       shell: bash
       run: |
-        make ${{ env.DEPLOY_ENV }} ci tag=${{ inputs.tag }} terraform-app-apply
+        make ${{ env.DEPLOY_ENV }} ci tag=${{ inputs.tag }} terraform-app-plan
