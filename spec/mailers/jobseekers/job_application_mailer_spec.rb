@@ -56,10 +56,12 @@ RSpec.describe Jobseekers::JobApplicationMailer do
   describe "#declarations" do
     let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
     let(:mail) { described_class.declarations(job_application) }
+    let(:self_disclosure_link) { jobseekers_job_application_self_disclosure_url(job_application, Wicked::FIRST_STEP) }
 
     it "sends a `declarations` email" do
       expect(mail.subject).to eq("Declarations")
       expect(mail.to).to eq([job_application.email])
+      expect(mail.body).to include(self_disclosure_link)
     end
   end
 end
