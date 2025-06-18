@@ -39,9 +39,8 @@ RSpec.describe "Searching on the schools page" do
       expect(page).to have_link(I18n.t("organisations.search.results.phases.secondary"))
       expect(page).to have_link(I18n.t("organisations.filters.special_school"))
     end
-    # Maybe the following two tests could be combined since they both test clearing filters from the same starting state.
-    # The before block seems quite heavy (DOM interaction + assertions), and combining would avoid repeating that setup.
-    it "allows jobseeker to clear a filter" do
+    
+    it "allows jobseeker to clear a filter, and clear all filters" do
       within("#filters-component") do
         click_link I18n.t("organisations.filters.special_school")
       end
@@ -50,9 +49,7 @@ RSpec.describe "Searching on the schools page" do
 
       expect(page).to have_link(I18n.t("organisations.search.results.phases.secondary"))
       expect(page).not_to have_link(I18n.t("organisations.filters.special_school"))
-    end
 
-    it "allows jobseeker to clear all filters" do
       click_link "Clear filters"
 
       expect_page_to_show_schools([special_school1, secondary_school, primary_school])
