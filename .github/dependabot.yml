@@ -27,6 +27,10 @@ updates:
       - dependency-name: "undercover"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
 
+      # TODO: Remove this ignore config once issue with aws-sdk-s3 has been resolved
+      - dependency-name: "aws-sdk-s3"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+
     groups:
       gem-dependencies:
         update-types:

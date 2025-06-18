@@ -23,7 +23,8 @@ gem "activerecord-session_store"
 gem "active_storage_validations"
 gem "addressable"
 gem "array_enum"
-gem "aws-sdk-s3", require: false
+# something strange with 1.189.1 - it hangs for 6 hours on install
+gem "aws-sdk-s3", "< 1.189.1", require: false
 gem "breasal"
 gem "devise"
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.4"
