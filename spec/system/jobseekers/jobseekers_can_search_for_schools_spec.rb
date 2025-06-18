@@ -123,15 +123,6 @@ RSpec.describe "Searching on the schools page" do
       end
       visit organisations_path
     end
-    # We already test filtering by special schools in the tests starting on line 27 so I think we can probably remove at least the special school test.
-    # could combine the other 2 tests to be called can filter by schools type, and test filtering by faith and by both special and faith schools. May also be able to get away without testing for searching without a filter.
-    it "allows user to filter by special schools" do
-      check I18n.t("organisations.filters.special_school")
-      click_on I18n.t("buttons.search")
-
-      expect_page_to_show_schools([special_school1, special_school2, special_school3, special_school4, special_school5, special_school6])
-      expect_page_not_to_show_schools([secondary_school, primary_school, faith_school, non_faith_school1, non_faith_school2, non_faith_school3])
-    end
 
     it "allows users to filter by faith schools" do
       check I18n.t("organisations.filters.faith_school")
