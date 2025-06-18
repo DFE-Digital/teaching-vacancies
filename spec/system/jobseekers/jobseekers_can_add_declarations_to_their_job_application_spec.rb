@@ -40,5 +40,6 @@ RSpec.describe "Jobseekers can disclose close relationships or safeguarding issu
     click_on "Save and continue"
 
     expect(page).not_to have_css("h2", text: "There is a problem")
+    # could add extra assertions that assert that user is on the correct page and perhaps that the submitted information is persisted.
   end
 end

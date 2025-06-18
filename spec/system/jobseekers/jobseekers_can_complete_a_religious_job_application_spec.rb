@@ -26,6 +26,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
     end
 
     it "validates first religion step" do
+      # I think using translations in tests can make it difficult to understand what's going on. I would prefer to see the text to help test readability.
       expect(page).to have_content(I18n.t("jobseekers.job_applications.build.catholic.preference_to_catholics"))
       validates_step_complete
       expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.following_religion.inclusion"))
@@ -54,18 +55,18 @@ RSpec.describe "Jobseekers can complete a religious job application" do
         expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.faith.blank"))
         expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.religious_reference_type.inclusion"))
       end
-
+      # do we need this "with a denomination" context, we don't have a "without a denomination" context
       context "with a denomination" do
         before do
           fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.faith"), with: "follower of #{Faker::Religion::Bible.character}"
           fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.place_of_worship"), with: "#{Faker::Address.city} Church"
         end
-
+        
         context "with a referee" do
           before do
             find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-referee-field']").click
           end
-
+          # I would prefer to see a larger it block rather than all these smaller context and it blocks.
           it "produces the correct error messages" do
             validates_step_complete
             expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.religious_referee_name.blank"))
@@ -86,7 +87,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
               click_on I18n.t("buttons.save_and_continue")
               complete_from_references_page
             end
-
+            # would be nice to have a description of what the correct content is.
             it "has the correct content" do
               expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
 
@@ -100,7 +101,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
             it "contains the entered information" do
               expect(job_application.reload).to have_attributes(religious_reference_type: "referee")
             end
-
+            # I find the wording here confusing. Is this "can submit the application?"
             it "can be submitted as an application" do
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
@@ -201,7 +202,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
       validates_step_complete
       expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/non_catholic_form.attributes.ethos_and_aims.blank"))
     end
-
+    # don't think we need this context block, not sure the value that this adds. would prefer to see a larger it block.
     context "when on page 2" do
       before do
         fill_in I18n.t("helpers.label.jobseekers_job_application_non_catholic_form.ethos_and_aims"), with: Faker::Lorem.sentence

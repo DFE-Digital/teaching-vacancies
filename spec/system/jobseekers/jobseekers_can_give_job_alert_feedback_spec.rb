@@ -25,7 +25,7 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
   context "with the correct token" do
     let(:token) { subscription.token }
     let(:feedback) { Feedback.where(subscription_id: subscription.id).first }
-
+    # not sure we need to test both the user selecting Yes and No. Just testing No would probably suffice.
     context "when the user selects Yes" do
       context "and follows the link in the job alert email" do
         before { follow_the_link_in_the_job_alert_email }

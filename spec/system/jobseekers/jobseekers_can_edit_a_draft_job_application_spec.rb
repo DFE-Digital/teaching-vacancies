@@ -8,7 +8,7 @@ RSpec.describe "Jobseekers can edit a draft job application" do
   before { login_as(jobseeker, scope: :jobseeker) }
 
   after { logout }
-
+  #  wonder if this could be covered in another spec file already, or maybe could be placed into one?
   it "allows jobseekers to edit job application from review page" do
     visit jobseekers_job_application_review_path(job_application)
 

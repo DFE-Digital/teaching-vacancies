@@ -147,7 +147,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
       click_on I18n.t("subscriptions.link.no_search_results.link")
     end
   end
-
+  # i don't really like the method names starting with and
   def and_perform_a_search
     fill_in "keyword", with: "english"
     fill_in "location", with: location
@@ -162,7 +162,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
     check I18n.t("jobs.filters.visa_sponsorship_availability.option")
     click_on I18n.t("buttons.search")
   end
-
+# i don't really like the method names starting with and
   def and_the_search_criteria_are_populated
     expect(page.find_field("jobseekers-subscription-form-keyword-field").value).to eq("english")
     expect(page.find_field("jobseekers-subscription-form-location-field").value).to eq(location)

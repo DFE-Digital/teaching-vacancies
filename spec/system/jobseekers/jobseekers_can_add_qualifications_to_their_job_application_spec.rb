@@ -89,7 +89,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
         expect(page).to have_content("Hard Knocks")
       end
     end
-
+    # I think this could be combined with the above test
     it "has an 'add another subject' link" do
       create(:qualification,
              category: "gcse",

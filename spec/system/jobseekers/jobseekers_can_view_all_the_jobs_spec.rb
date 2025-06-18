@@ -1,3 +1,4 @@
+# first few tests up until pagination can probably be a view spec
 require "rails_helper"
 
 RSpec.describe "Jobseekers can view all the jobs" do

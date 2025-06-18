@@ -39,7 +39,8 @@ RSpec.describe "Searching on the schools page" do
       expect(page).to have_link(I18n.t("organisations.search.results.phases.secondary"))
       expect(page).to have_link(I18n.t("organisations.filters.special_school"))
     end
-
+    # Maybe the following two tests could be combined since they both test clearing filters from the same starting state.
+    # The before block seems quite heavy (DOM interaction + assertions), and combining would avoid repeating that setup.
     it "allows jobseeker to clear a filter" do
       within("#filters-component") do
         click_link I18n.t("organisations.filters.special_school")
@@ -68,6 +69,7 @@ RSpec.describe "Searching on the schools page" do
     let(:free_school2) { create(:school, name: "Free school 1", school_type: "Free school") }
     let(:local_authority_school) { create(:school, name: "Local authority school 1", school_type: "Local authority maintained schools") }
 
+     # could move the creation of publisher and vacancy into a before all block to avoid repeating that step, especially as we are creating so many publishers and vacancies here.
     before do
       [academy_school1, academy_school2, free_school1, free_school2, local_authority_school].each do |school|
         create(:publisher, organisations: [school])
@@ -75,7 +77,8 @@ RSpec.describe "Searching on the schools page" do
       end
       visit organisations_path
     end
-
+    # could combine these 3 tests to be called can filter by organisation type, and test filtering by academies and by both academies and local authorities.
+    # i don't think we need that we absolutely need to test both filtering by academies and local authorities alone.
     it "allows user to filter by academies" do
       check I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.academy")
       click_on I18n.t("buttons.search")
@@ -112,7 +115,7 @@ RSpec.describe "Searching on the schools page" do
     let(:special_school4) { create(:school, name: "Academy special converter", detailed_school_type: "Academy special converter") }
     let(:special_school5) { create(:school, name: "Academy special sponsor led", detailed_school_type: "Academy special sponsor led") }
     let(:special_school6) { create(:school, name: "Non-maintained special school", detailed_school_type: "Free schools special") }
-
+     # could move the creation of publisher and vacancy into a before all block to avoid repeating that step, especially as we are creating so many publishers and vacancies here.
     before do
       [faith_school, special_school2, special_school3, special_school4, special_school5, special_school6, non_faith_school1, non_faith_school2, non_faith_school3].each do |school|
         create(:publisher, organisations: [school])
@@ -120,7 +123,8 @@ RSpec.describe "Searching on the schools page" do
       end
       visit organisations_path
     end
-
+    # We already test filtering by special schools in the tests starting on line 27 so I think we can probably remove at least the special school test.
+    # could combine the other 2 tests to be called can filter by schools type, and test filtering by faith and by both special and faith schools. May also be able to get away without testing for searching without a filter.
     it "allows user to filter by special schools" do
       check I18n.t("organisations.filters.special_school")
       click_on I18n.t("buttons.search")
