@@ -32,4 +32,9 @@ class JobReference < ApplicationRecord
   REFERENCE_INFO_FIELDS.each do |field|
     has_encrypted field, type: :boolean
   end
+
+  has_encrypted :how_do_you_know_the_candidate
+  has_encrypted :reason_for_leaving
+  has_encrypted :would_reemploy_current_reason
+  has_encrypted :would_reemploy_any_reason
 end

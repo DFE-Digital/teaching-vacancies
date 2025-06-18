@@ -26,8 +26,9 @@ RSpec.describe Referees::EmploymentReferenceForm do
 
   context "with a future date" do
     let(:form) do
-      described_class.new(attributes_for(:job_reference).slice(*(Referees::EmploymentReferenceForm::STRING_FIELDS + Referees::EmploymentReferenceForm::BOOLEAN_FIELDS))
-                                                      .merge(employment_start_date: Date.new(3000, 4, 1)))
+      described_class.new(attributes_for(:job_reference, :reference_given)
+                            .slice(*(Referees::EmploymentReferenceForm::STRING_FIELDS + Referees::EmploymentReferenceForm::BOOLEAN_FIELDS))
+                            .merge(employment_start_date: Date.new(3000, 4, 1)))
     end
 
     it "has correct errors" do

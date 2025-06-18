@@ -64,7 +64,7 @@ RSpec.describe "Publishers can select a job application for interview" do
           })
       end
 
-      context "when not contacting applicant" do
+      context "when not contacting applicant", :versioning do
         before do
           choose "No"
           click_on "Save and continue"
@@ -85,11 +85,10 @@ RSpec.describe "Publishers can select a job application for interview" do
             })
         end
 
-        context "with a received reference", :versioning do
+        context "when the reference is declined" do
           before do
             perform_enqueued_jobs
-            # simulate receipt of a reference
-            current_referee.reload.job_reference.update!(attributes_for(:job_reference).merge(updated_at: Date.tomorrow))
+            current_referee.reload.job_reference.update!(attributes_for(:job_reference, :reference_declined).merge(updated_at: Date.tomorrow))
             current_referee.reload.reference_request.update!(status: :received)
           end
 
@@ -146,13 +145,13 @@ RSpec.describe "Publishers can select a job application for interview" do
         expect(publisher_ats_interviewing_page).to be_displayed
       end
 
-      describe "reference display page" do
+      describe "reference display page", :versioning do
         before do
           publisher_ats_interviewing_page.pre_interview_check_links.first.click
           publisher_ats_pre_interview_checks_page.reference_links.first.click
         end
 
-        scenario "accepting an out of band reference", :versioning do
+        scenario "accepting an out of band reference" do
           click_on "Mark as received"
 
           expect(publisher_ats_satisfactory_reference_page).to be_displayed
@@ -164,7 +163,7 @@ RSpec.describe "Publishers can select a job application for interview" do
           expect(publisher_ats_reference_request_page.timeline_titles.map(&:text)).to eq(["Marked as complete", "Marked as interviewing"])
         end
 
-        scenario "changing our mind and using TV after all", :versioning do
+        scenario "changing our mind and using TV after all" do
           expect(publisher_ats_reference_request_page).to be_displayed
           publisher_ats_reference_request_page.use_tv_anyway_link.click
 
