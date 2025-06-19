@@ -117,7 +117,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
         expect(page).to have_content("Hard Knocks")
       end
     end
-    # I think this test can be combined with the above test.
+
     it "has an 'add another subject' link" do
       create(:qualification,
              category: "gcse",
