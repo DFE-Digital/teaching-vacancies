@@ -8,7 +8,7 @@
   .govuk-grid-column-two-thirds
     span.govuk-caption-l = t("jobseekers.profiles.show.turn_#{@off_on}_profile")
     h1.govuk-heading-l = t(".confirm_turn_#{@off_on}")
-    - if profile.active?
+    - if @profile.active?
       p = t("jobseekers.profiles.show.turn_off_profile_text")
     - else
       p = t("jobseekers.profiles.show.turn_on_profile_text", link_text: govuk_link_to(t("jobseekers.profiles.show.turn_on_profile_link_text"), jobseekers_profile_hide_profile_path)).html_safe
