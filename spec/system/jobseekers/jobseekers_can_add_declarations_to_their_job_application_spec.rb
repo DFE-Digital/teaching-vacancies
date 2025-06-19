@@ -40,6 +40,7 @@ RSpec.describe "Jobseekers can disclose close relationships or safeguarding issu
     click_on "Save and continue"
 
     expect(page).not_to have_css("h2", text: "There is a problem")
-    # could add extra assertions that assert that user is on the correct page and perhaps that the submitted information is persisted.
+    expect(page).to have_current_path(jobseekers_job_application_apply_path(job_application))
+    expect(page).to have_selector('#declarations .govuk-task-list__status', text: 'Completed')
   end
 end
