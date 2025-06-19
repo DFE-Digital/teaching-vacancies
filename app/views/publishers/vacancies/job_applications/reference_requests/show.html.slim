@@ -2,13 +2,16 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    span.govuk-caption-l = @reference_request.referee.name
-    h1.govuk-heading-l = @reference_request.referee.job_application.name
+    span.govuk-caption-l = @referee.name
+    h1.govuk-heading-l = @referee.job_application.name
 
     .govuk-body
       - if @reference_request.sent?
-        - if @reference_request.referee.job_reference.complete?
-          = govuk_tag(text: t(".received_status"), colour: "purple")
+        - if @referee.job_reference.complete?
+          - if @referee.job_reference.can_give_reference?
+            = govuk_tag(text: t(".received_status"), colour: "purple")
+          - else
+            = govuk_tag(text: t(".unavailable_status"), colour: "red")
         - else
           = govuk_tag(text: t(".pending_status"), colour: "blue")
       - else
@@ -18,33 +21,37 @@
 
     .govuk-body = t(".more_urgent")
 
-    = govuk_button_link_to t(".mark_as_received"), mark_as_received_organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, @reference_request.id), class: "govuk-button--secondary"
+    - unless @referee.job_reference&.complete? && !@referee.job_reference.can_give_reference?
+      = govuk_button_link_to t(".mark_as_received"), mark_as_received_organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, @reference_request.id), class: "govuk-button--secondary"
 
     .h2.govuk-heading-m = t(".referee_details.heading")
 
     = govuk_summary_list do |summary_list|
       = summary_list.with_row do |row|
         - row.with_key(text: t(".referee_details.name"))
-        - row.with_value(text: @reference_request.referee.name)
+        - row.with_value(text: @referee.name)
       = summary_list.with_row do |row|
         - row.with_key(text: t(".referee_details.job_title"))
-        - row.with_value(text: @reference_request.referee.job_title)
+        - row.with_value(text: @referee.job_title)
       = summary_list.with_row do |row|
         - row.with_key(text: t(".referee_details.organisation"))
-        - row.with_value(text: @reference_request.referee.organisation)
+        - row.with_value(text: @referee.organisation)
       = summary_list.with_row do |row|
         - row.with_key(text: t(".referee_details.relationship"))
-        - row.with_value(text: @reference_request.referee.relationship)
+        - row.with_value(text: @referee.relationship)
       = summary_list.with_row do |row|
         - row.with_key(text: t(".referee_details.email"))
-        - row.with_value(text: @reference_request.referee.email)
+        - row.with_value(text: @referee.email)
       = summary_list.with_row do |row|
         - row.with_key(text: t(".referee_details.phone"))
-        - row.with_value(text: @reference_request.referee.phone_number)
+        - row.with_value(text: @referee.phone_number)
 
     - if @reference_request.sent?
-      - if @reference_request.referee.job_reference.complete?
-        = render "reference", reference: @reference_request.referee.job_reference
+      - if @referee.job_reference.complete?
+        - if @referee.job_reference.can_give_reference?
+          = render "reference", reference: @referee.job_reference
+        - else
+          = govuk_warning_text(text: t(".this_referee_will_not_provide_a_reference"))
     - else
       .govuk-body
         = govuk_link_to t(".collect_reference"), collect_references_organisation_job_job_application_path(vacancy.id, @job_application.id)
@@ -61,7 +68,10 @@
           - when "created"
             - timeline.with_item(key: t(".reference_created"), value: value)
           - when "received"
-            - timeline.with_item(key: t(".reference_received"), value: value)
+            - if @referee.job_reference.can_give_reference?
+              - timeline.with_item(key: t(".reference_received"), value: value)
+            - else
+              - timeline.with_item(key: t(".reference_declined"), value: value)
           - when "requested"
             - timeline.with_item(key: t(".reference_requested"), value: value)
         - elsif version.changeset.key? "marked_as_complete"
