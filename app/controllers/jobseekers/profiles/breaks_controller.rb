@@ -3,7 +3,7 @@ class Jobseekers::Profiles::BreaksController < Jobseekers::ProfilesController
 
   def create
     if form.valid?
-      profile.employments.break.create(employment_break_params)
+      @profile.employments.break.create(employment_break_params)
       redirect_to back_path
     else
       render :new
@@ -31,7 +31,7 @@ class Jobseekers::Profiles::BreaksController < Jobseekers::ProfilesController
   end
 
   def employment_break
-    profile.employments.break.find(params[:id] || params[:break_id])
+    @profile.employments.break.find(params[:id] || params[:break_id])
   end
 
   def employment_break_params
