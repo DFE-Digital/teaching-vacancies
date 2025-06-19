@@ -42,6 +42,7 @@ RSpec.describe "Jobseekers can add details about their qualified teacher status 
     click_on "Save and continue"
 
     expect(page).not_to have_css("h2", text: "There is a problem")
+    expect(current_path).to eq jobseekers_job_application_apply_path(job_application)
     # I think it's a bit weird we have this assertion in a system test. I don't really mind it but I think we should check for the presence of the values on the page instead.
     expect(job_application.reload).to have_attributes(qts_age_range_and_subject: "Adding up for little ones", teacher_reference_number: "1234567")
   end
