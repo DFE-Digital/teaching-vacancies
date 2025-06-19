@@ -7,4 +7,4 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl class="govuk-!-margin-bottom-5" = t(".page_title")
-    = render "jobseekers/profiles/summary"
+    = render "jobseekers/profiles/summary", profile: @profile

@@ -13,8 +13,11 @@ shared:
   - jobseeker_application_unsuccessful
   - jobseeker_changed_govuk_one_login_email
   - jobseeker_changed_govuk_one_login_id
+  - jobseeker_disable_profile_due_to_new_fields
+  - jobseeker_disable_inactive_profile
   - jobseeker_failed_govuk_one_login_sign_in
   - jobseeker_inactive_account
+  - jobseeker_inactive_profile_warning
   - jobseeker_job_listing_ended_early
   - jobseeker_request_account_transfer
   - jobseeker_self_disclosure

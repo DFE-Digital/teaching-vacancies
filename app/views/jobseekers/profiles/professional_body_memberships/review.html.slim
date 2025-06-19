@@ -6,9 +6,9 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     h1.govuk-heading-l = t(".page_title")
-    - if profile.professional_body_memberships.any?
-      = render "jobseekers/professional_body_memberships/professional_body_memberships", profile: profile
+    - if @profile.professional_body_memberships.any?
+      = render "jobseekers/professional_body_memberships/professional_body_memberships", profile: @profile
 
     .govuk-button-group
-      = govuk_button_link_to "Add membership", new_jobseekers_profile_professional_body_membership_path(profile), class: "govuk-button--secondary govuk-!-margin-bottom-0"
+      = govuk_button_link_to "Add membership", new_jobseekers_profile_professional_body_membership_path(@profile), class: "govuk-button--secondary govuk-!-margin-bottom-0"
       = govuk_button_link_to "Return to profile", jobseekers_profile_path

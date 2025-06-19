@@ -2,13 +2,13 @@ class Jobseekers::Profiles::EmploymentsController < Jobseekers::ProfilesControll
   before_action :set_employment, only: %i[edit update destroy]
 
   def new
-    @employment = profile.employments.job.build
+    @employment = @profile.employments.job.build
   end
 
   def edit; end
 
   def create
-    @employment = profile.employments.job.build
+    @employment = @profile.employments.job.build
     @employment.attributes = employment_form_params
 
     if @employment.save
@@ -40,13 +40,13 @@ class Jobseekers::Profiles::EmploymentsController < Jobseekers::ProfilesControll
   end
 
   def review
-    @employments = profile.employments.order(:ended_on)
+    @employments = @profile.employments.order(:ended_on)
   end
 
   private
 
   def set_employment
-    @employment = profile.employments.find(params[:id])
+    @employment = @profile.employments.find(params[:id])
   end
 
   def employment_form_params

@@ -1,36 +1,37 @@
 - content_for :page_title_prefix, t(".page_title")
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl
-      = t(".page_title")
-      = govuk_tag(text: t(".active"), colour: "green", classes: "vertical-align-middle govuk-!-margin-left-1") if profile.active?
+h1.govuk-heading-xl
+  = t(".page_title")
+  = govuk_tag(text: t(".active"), colour: "green", classes: "vertical-align-middle govuk-!-margin-left-1") if @profile.active?
 
-    = govuk_notification_banner title_text: "Important", classes: "govuk-notification-banner govuk-!-margin-top-0 govuk-!-margin-bottom-5" do |banner|
-        - banner.with_heading(text: t(".one_login_banner.header"))
-        p.govuk-body = t(".one_login_banner.paragraph1")
-        p.govuk-body = t(".one_login_banner.paragraph2", link: govuk_link_to(t(".one_login_banner.transfer_profile_link_text"), new_jobseekers_request_account_transfer_email_path)).html_safe
+= govuk_notification_banner title_text: "Important", classes: "govuk-notification-banner govuk-!-margin-top-0 govuk-!-margin-bottom-5" do |banner|
+    - banner.with_heading(text: t(".one_login_banner.header"))
+    p.govuk-body = t(".one_login_banner.paragraph1")
+    p.govuk-body = t(".one_login_banner.paragraph2", link: govuk_link_to(t(".one_login_banner.transfer_profile_link_text"), new_jobseekers_request_account_transfer_email_path)).html_safe
 
-    p
-      = govuk_link_to t(".turn_#{@off_on}_profile"), confirm_toggle_jobseekers_profile_path, class: "govuk-!-margin-right-2"
-      = govuk_link_to t(".preview_profile"), jobseekers_profile_preview_path
+p id="top_links"
+  = govuk_link_to t(".turn_#{@off_on}_profile"), confirm_toggle_jobseekers_profile_path, class: "govuk-!-margin-right-2"
+  = govuk_link_to t(".preview_profile"), jobseekers_profile_preview_path
 
-    p = t(".page_description")
+p = t(".page_description")
 
-    - @sections.each do |section|
-      h2.govuk-heading-m class="govuk-!-padding-top-6"
-        = section[:title]
+- unless @profile.active?
+  = govuk_warning_text text: t(".inactive_profile")
 
-      - if section[:display_summary] && instance_exec(&section[:display_summary])
-        = render(partial: "jobseekers/profiles/#{section[:key]}/summary", locals: { profile:, section: })
-      - else
-        p = govuk_link_to section[:link_text], instance_exec(&section[:page_path])
+- @sections.each do |section|
+  h2.govuk-heading-m class="govuk-!-padding-top-6"
+    = section[:title]
 
-    .preview-and-turn-on-profile
-      h2.govuk-heading-m class="govuk-!-padding-top-6" = t(".preview_and_turn_#{@off_on}_profile")
-      p = govuk_link_to t(".preview_profile"), jobseekers_profile_preview_path
-      - if profile.active?
-        p = t("jobseekers.profiles.show.turn_off_profile_text")
-      - else
-        p = t("jobseekers.profiles.show.turn_on_profile_text", link_text: govuk_link_to(t("jobseekers.profiles.show.turn_on_profile_link_text"), jobseekers_profile_hide_profile_path)).html_safe
-      p = govuk_button_link_to(t(".turn_#{@off_on}_profile"), confirm_toggle_jobseekers_profile_path)
+  - if section.fetch(:display_summary).call(@profile)
+    = render(partial: "jobseekers/profiles/#{section[:key]}/summary", locals: { profile: @profile, section: })
+  - else
+    p = govuk_link_to section[:link_text], instance_exec(&section[:page_path])
+
+.preview-and-turn-on-profile
+  h2.govuk-heading-m class="govuk-!-padding-top-6" = t(".preview_and_turn_#{@off_on}_profile")
+  p = govuk_link_to t(".preview_profile"), jobseekers_profile_preview_path
+  - if @profile.active?
+    p = t("jobseekers.profiles.show.turn_off_profile_text")
+  - else
+    p = t("jobseekers.profiles.show.turn_on_profile_text", link_text: govuk_link_to(t("jobseekers.profiles.show.turn_on_profile_link_text"), jobseekers_profile_hide_profile_path)).html_safe
+  p = govuk_button_link_to(t(".turn_#{@off_on}_profile"), confirm_toggle_jobseekers_profile_path)

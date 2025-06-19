@@ -13,7 +13,7 @@ class Jobseekers::Profiles::ProfessionalBodyMembershipsController < Jobseekers::
     @form = Jobseekers::ProfessionalBodyMembershipForm.new(professional_body_memberships_form_params)
 
     if @form.valid?
-      profile.professional_body_memberships.create!(professional_body_memberships_form_params)
+      @profile.professional_body_memberships.create!(professional_body_memberships_form_params)
       redirect_to review_jobseekers_profile_professional_body_memberships_path
     else
       render :new
@@ -45,6 +45,6 @@ class Jobseekers::Profiles::ProfessionalBodyMembershipsController < Jobseekers::
   end
 
   def professional_body_membership
-    @professional_body_membership ||= profile.professional_body_memberships.find(params[:id] || params[:professional_body_membership_id])
+    @professional_body_membership ||= @profile.professional_body_memberships.find(params[:id] || params[:professional_body_membership_id])
   end
 end
