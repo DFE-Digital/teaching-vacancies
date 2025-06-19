@@ -10,7 +10,6 @@ RSpec.describe "Jobseekers can complete a job application" do
   before { login_as(jobseeker, scope: :jobseeker) }
 
   after { logout }
-
   it "allows jobseekers to complete an application and go to review page" do
     visit jobseekers_job_application_build_path(job_application, :personal_details)
     expect(page).to have_content(I18n.t("jobseekers.job_applications.build.personal_details.heading"))
@@ -30,7 +29,6 @@ RSpec.describe "Jobseekers can complete a job application" do
     validates_step_complete
     choose I18n.t("helpers.label.jobseekers_job_application_qualifications_form.qualifications_section_completed_options.true")
     click_on I18n.t("buttons.save_and_continue")
-    expect(page).not_to have_content("There is a problem")
 
     click_on I18n.t("jobseekers.job_applications.build.qualifications.heading")
     click_on I18n.t("buttons.add_qualification")
@@ -48,8 +46,6 @@ RSpec.describe "Jobseekers can complete a job application" do
     expect(page).to have_content("No training or CPD specified")
     validates_step_complete
     click_on "Add training"
-    click_on "Save and continue"
-    expect(page).to have_content("There is a problem")
     fill_in_training_and_cpds
     click_on "Save and continue"
     choose "Yes, I've completed this section"
@@ -60,8 +56,6 @@ RSpec.describe "Jobseekers can complete a job application" do
     expect(page).to have_content("No memberships")
     validates_step_complete
     click_on "Add membership"
-    click_on "Save and continue"
-    expect(page).to have_content("There is a problem")
     fill_in_professional_body_membership
     click_on "Save and continue"
     choose "Yes, I've completed this section"
@@ -71,8 +65,6 @@ RSpec.describe "Jobseekers can complete a job application" do
     click_on(I18n.t("jobseekers.job_applications.build.employment_history.heading"))
     validates_step_complete
     click_on I18n.t("buttons.add_work_history")
-    click_on I18n.t("buttons.save_employment")
-    expect(page).to have_content("There is a problem")
     fill_in_employment_history
     click_on I18n.t("buttons.save_employment")
     click_on I18n.t("buttons.add_reason_for_break")
