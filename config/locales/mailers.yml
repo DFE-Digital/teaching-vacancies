@@ -87,6 +87,27 @@ en:
         show_job_link: "View %{job_title} job"
         show_job_link_with_organisation: "View %{job_title} at %{organisation_name} job"
         edit_link_text: Change your job alert search on Teaching Vacancies
+    profiles_mailer:
+      disable_inactive_profile:
+        subject: Your Teaching Vacancies profile has been deactivated due to inactivity
+        link: Sign in to your Teaching Vacancies account.
+        footer: |
+          If you have followed the above advice and cannot reactivate your profile, contact %{link} for assistance.
+          Kind regards,
+          The Teaching Vacancies team
+      inactive_profile_warning:
+        subject: Your Teaching Vacancies profile will be deactivated soon
+        link: Sign in to your Teaching Vacancies account.
+        footer: |
+          Kind regards,
+          The Teaching Vacancies team
+      disable_profile_due_to_new_fields:
+        subject: Your Teaching Vacancies profile has been deactivated due to missing information
+        link: Sign in to your Teaching Vacancies account.
+        footer: |
+          If you have followed the above advice and cannot reactivate your profile, contact %{link}.
+          Kind regards,
+          The Teaching Vacancies team
     job_application_mailer:
       shared: &job_application_mailer_shared
         intro: Your application for %{job_title} at %{organisation_name}
@@ -205,10 +226,10 @@ en:
         subject: Changes to using your own application form on Teaching Vacancies
         dear: "Dear %{name},"
         content: |
-          We’re writing to let you know about a change to how using your own application form for hiring staff works on the Teaching Vacancies service. 
-          From now on, if you upload your own application form for a job listing, applicants will download, complete and then upload the finished form to Teaching Vacancies. This means you’ll need to sign in to Teaching Vacancies to review applications, rather than receiving them directly from applicants by email. 
-          You will receive one email daily from Teaching Vacancies which includes a summary of any applications submitted in the last 24 hours. 
-          Any live job listings you currently have on Teaching Vacancies will not be affected by this change. 
+          We’re writing to let you know about a change to how using your own application form for hiring staff works on the Teaching Vacancies service.
+          From now on, if you upload your own application form for a job listing, applicants will download, complete and then upload the finished form to Teaching Vacancies. This means you’ll need to sign in to Teaching Vacancies to review applications, rather than receiving them directly from applicants by email.
+          You will receive one email daily from Teaching Vacancies which includes a summary of any applications submitted in the last 24 hours.
+          Any live job listings you currently have on Teaching Vacancies will not be affected by this change.
         footer: |
           If you have any questions about this process, please contact %{link}
           Kind regards,
