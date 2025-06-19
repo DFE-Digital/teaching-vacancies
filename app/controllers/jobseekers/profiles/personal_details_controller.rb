@@ -19,7 +19,7 @@ class Jobseekers::Profiles::PersonalDetailsController < Jobseekers::ProfilesCont
   end
 
   def personal_details_record
-    @personal_details_record ||= profile.personal_details || profile.build_personal_details
+    @personal_details_record ||= @profile.personal_details || @profile.build_personal_details
   end
 
   def attributes_from_store

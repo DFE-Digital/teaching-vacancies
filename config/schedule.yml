@@ -126,6 +126,11 @@ destroy_inactive_accounts:
   class: 'DestroyInactiveAccountsJob'
   queue: low
 
+disable_inactive_profiles:
+  cron: '10 8 * * *' # "At 08:10."
+  class: 'DisableInactiveProfilesJob'
+  queue: low
+
 email_feedback_prompt:
   cron: '0 09 * * *' # "At 09:00."
   class: 'SendExpiredVacancyFeedbackPromptJob'
