@@ -170,9 +170,9 @@ jobs:
         uses: docker/build-push-action@v6
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-          BUILDKIT_INLINE_CACHE: 1
         with:
           build-args: |
+            BUILDKIT_INLINE_CACHE=1
             --secret id=master_key,env=RAILS_MASTER_KEY
           # Cache from builder target built above, always present
           # Cache from production target tagged with branch name, may be empty first time branch is pushed
