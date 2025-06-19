@@ -15,7 +15,7 @@ RSpec.describe "Jobseekers applications statuses" do
     context "when the jobseeker has completed details in their profile" do
       let!(:jobseeker_profile) { create(:jobseeker_profile, :completed, jobseeker: jobseeker) }
 
-      it "shows all sections with the status tag 'in progress'" do
+      it "shows all sections with the status tag 'incomplete'" do
         visit job_path(vacancy)
         within ".banner-buttons" do
           click_on I18n.t("jobseekers.job_applications.banner_links.apply")
@@ -34,7 +34,7 @@ RSpec.describe "Jobseekers applications statuses" do
     context "when the jobseeker has not completed any details in their profile" do
       let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker, qualified_teacher_status: nil) }
 
-      it "shows all sections with the status tag 'in progress'" do
+      it "shows all sections with the status tag 'incomplete'" do
         visit job_path(vacancy)
         within ".banner-buttons" do
           click_on I18n.t("jobseekers.job_applications.banner_links.apply")
