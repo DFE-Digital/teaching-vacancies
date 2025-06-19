@@ -7,73 +7,44 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
 
   before do
     login_as(jobseeker, scope: :jobseeker)
+    visit jobseekers_subscriptions_path
   end
 
   after { logout }
 
-  context "when the jobseeker has no job alerts" do
-    before { visit jobseekers_subscriptions_path }
-
-    it "displays the no job alerts notification component" do
-      expect(page).to have_content(I18n.t("jobseekers.subscriptions.index.zero_subscriptions_title"))
-      expect(page).to have_content(I18n.t("jobseekers.subscriptions.index.link_create"))
+  it "creates a job alert and redirects to the subscriptions index page" do
+    within ".empty-section-component" do
+      click_on I18n.t("jobseekers.subscriptions.index.link_create")
     end
 
-    it "creates a job alert and redirects to the subscriptions index page" do
-      within ".empty-section-component" do
-        click_on I18n.t("jobseekers.subscriptions.index.link_create")
-      end
-      an_invalid_form_is_rejected
-      expect { create_a_job_alert }.to change { Subscription.count }.by(1)
-      and_the_job_alert_is_on_the_index_page
-    end
-
-    context "when recaptcha V3 check fails" do
-      before do
-        allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(false)
-      end
-
-      it "requests the user to pass a recaptcha V2 check" do
-        within ".empty-section-component" do
-          click_on I18n.t("jobseekers.subscriptions.index.link_create")
-        end
-
-        expect { create_a_job_alert }.not_to(change { Subscription.count })
-        expect(page).to have_content("There is a problem")
-        expect(page).to have_content(I18n.t("recaptcha.error"))
-        expect(page).to have_content(I18n.t("recaptcha.label"))
-      end
-    end
-  end
-
-  context "when the jobseeker has job alerts" do
-    let!(:created_subscription) { create(:subscription, email: jobseeker.email) }
-
-    before { visit jobseekers_subscriptions_path }
-
-    it "displays the create job alert button" do
-      expect(page).to have_content(I18n.t("jobseekers.subscriptions.index.button_create"))
-    end
-    # I don't think this adds much value, we have already tests this in the test on line 22 imo.
-    it "creates a job alert and redirects to the subscriptions index page" do
-      within "#subscriptions-results" do
-        click_on I18n.t("jobseekers.subscriptions.index.button_create")
-      end
-      an_invalid_form_is_rejected
-      expect { create_a_job_alert }.to change { Subscription.count }.by(1)
-      and_the_job_alert_is_on_the_index_page
-    end
-  end
-  # i think this method name could be improved
-  def an_invalid_form_is_rejected
     click_on I18n.t("buttons.subscribe")
     expect(page).to have_content("There is a problem")
-  end
-  # i think this method name could be improved
-  def and_the_job_alert_is_on_the_index_page
+    within "ul.govuk-list.govuk-error-summary__list" do
+      expect(page).to have_link("Select when you want to receive job alert emails")
+      expect(page).to have_link("Enter a location and one or more other filters, for example a keyword or job role.")
+    end
+
+    expect { create_a_job_alert }.to change { Subscription.count }.by(1)
     expect(current_path).to eq(jobseekers_subscriptions_path)
     expect(page).to have_content(I18n.t("subscriptions.create.success"))
     expect(page).to have_content("Keyword#{search_criteria['keyword']}")
+  end
+
+  context "when recaptcha V3 check fails" do
+    before do
+      allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(false)
+    end
+
+    it "requests the user to pass a recaptcha V2 check" do
+      within ".empty-section-component" do
+        click_on I18n.t("jobseekers.subscriptions.index.link_create")
+      end
+
+      expect { create_a_job_alert }.not_to(change { Subscription.count })
+      expect(page).to have_content("There is a problem")
+      expect(page).to have_content(I18n.t("recaptcha.error"))
+      expect(page).to have_content(I18n.t("recaptcha.label"))
+    end
   end
 
   def create_a_job_alert
