@@ -615,9 +615,6 @@ en:
           status: Status
         reference_requests:
           reference_not_provided:
-            this_referee_will_not_provide_a_reference: >-
-              This referee will not provide a reference for this candidate.
-              You will need to request a new referee from this candidate.
           reference:
             can_give_ref: Can you give a reference for %{name}?
             how_would_you_rate: How would you rate %{name}?
@@ -633,6 +630,9 @@ en:
             received_status: Received
             unavailable_status: Unavailable
             created_status: Created
+            this_referee_will_not_provide_a_reference: >-
+              This referee will not provide a reference for this candidate.
+              You will need to request a new referee from this candidate.
             once_the_reference_is_received: >-
               Once the reference is received you will be able to view it on this page.
               If you do not receive the reference within 1 week, you will be able to send a reminder.
