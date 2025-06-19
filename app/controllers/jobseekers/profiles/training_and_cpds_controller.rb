@@ -7,7 +7,7 @@ class Jobseekers::Profiles::TrainingAndCpdsController < Jobseekers::ProfilesCont
 
   def create
     if form.valid?
-      profile.training_and_cpds.create(training_and_cpd_form_params)
+      @profile.training_and_cpds.create(training_and_cpd_form_params)
       redirect_to review_jobseekers_profile_training_and_cpds_path
     else
       render :new
@@ -51,6 +51,6 @@ class Jobseekers::Profiles::TrainingAndCpdsController < Jobseekers::ProfilesCont
   end
 
   def training_and_cpd
-    @training_and_cpd ||= profile.training_and_cpds.find(params[:id] || params[:training_and_cpd_id])
+    @training_and_cpd ||= @profile.training_and_cpds.find(params[:id] || params[:training_and_cpd_id])
   end
 end
