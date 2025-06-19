@@ -66,7 +66,6 @@ RSpec.describe "Searching on the schools page" do
     let(:free_school2) { create(:school, name: "Free school 1", school_type: "Free school") }
     let(:local_authority_school) { create(:school, name: "Local authority school 1", school_type: "Local authority maintained schools") }
 
-     # could move the creation of publisher and vacancy into a before all block to avoid repeating that step, especially as we are creating so many publishers and vacancies here.
     before do
       [academy_school1, academy_school2, free_school1, free_school2, local_authority_school].each do |school|
         create(:publisher, organisations: [school])
@@ -74,27 +73,15 @@ RSpec.describe "Searching on the schools page" do
       end
       visit organisations_path
     end
-    # could combine these 3 tests to be called can filter by organisation type, and test filtering by academies and by both academies and local authorities.
-    # i don't think we need that we absolutely need to test both filtering by academies and local authorities alone.
-    it "allows user to filter by academies" do
+
+    it "allows user to filter by academies and local authorities" do
       check I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.academy")
       click_on I18n.t("buttons.search")
 
       expect_page_to_show_schools([academy_school1, academy_school2, free_school1, free_school2])
       expect_page_not_to_show_schools([local_authority_school, secondary_school, special_school1, primary_school])
-    end
 
-    it "allows user to filter by local authorities" do
       check I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.local_authority")
-      click_on I18n.t("buttons.search")
-
-      expect_page_to_show_schools([local_authority_school])
-      expect_page_not_to_show_schools([academy_school1, academy_school2, free_school1, free_school2, secondary_school, special_school1, primary_school])
-    end
-
-    it "allows user to filter by both academies and local authorities" do
-      check I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.local_authority")
-      check I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.academy")
       click_on I18n.t("buttons.search")
 
       expect_page_to_show_schools([local_authority_school, academy_school1, academy_school2, free_school1, free_school2])
@@ -112,7 +99,7 @@ RSpec.describe "Searching on the schools page" do
     let(:special_school4) { create(:school, name: "Academy special converter", detailed_school_type: "Academy special converter") }
     let(:special_school5) { create(:school, name: "Academy special sponsor led", detailed_school_type: "Academy special sponsor led") }
     let(:special_school6) { create(:school, name: "Non-maintained special school", detailed_school_type: "Free schools special") }
-     # could move the creation of publisher and vacancy into a before all block to avoid repeating that step, especially as we are creating so many publishers and vacancies here.
+
     before do
       [faith_school, special_school2, special_school3, special_school4, special_school5, special_school6, non_faith_school1, non_faith_school2, non_faith_school3].each do |school|
         create(:publisher, organisations: [school])
@@ -121,33 +108,19 @@ RSpec.describe "Searching on the schools page" do
       visit organisations_path
     end
 
-    it "allows users to filter by faith schools" do
+    it "allows users to filter by faith and special schools" do
       check I18n.t("organisations.filters.faith_school")
       click_on I18n.t("buttons.search")
 
       expect_page_to_show_schools([faith_school])
       expect_page_not_to_show_schools([secondary_school, primary_school, special_school1, special_school2, special_school3, special_school4, special_school5,
                                        special_school6, non_faith_school1, non_faith_school2, non_faith_school3])
-    end
 
-    it "allows users to filter by faith schools AND special schools" do
-      check I18n.t("organisations.filters.faith_school")
       check I18n.t("organisations.filters.special_school")
       click_on I18n.t("buttons.search")
 
       expect_page_to_show_schools([faith_school, special_school1, special_school2, special_school3, special_school4, special_school5, special_school6])
       expect_page_not_to_show_schools([secondary_school, primary_school, non_faith_school1, non_faith_school2, non_faith_school3])
-    end
-
-    it "shows all schools if neither filter is selected" do
-      click_on I18n.t("buttons.search")
-
-      expect_page_to_show_schools([faith_school, special_school1, special_school2, special_school3, special_school4, special_school5, special_school6,
-                                   secondary_school, primary_school, non_faith_school1])
-
-      click_link "2"
-
-      expect_page_to_show_schools([non_faith_school2, non_faith_school3])
     end
   end
 
@@ -161,5 +134,9 @@ RSpec.describe "Searching on the schools page" do
     schools.each do |school|
       expect(page).not_to have_link school.name
     end
+  end
+
+  def navigate_to_page_2_of_results
+    click_link "2"
   end
 end
