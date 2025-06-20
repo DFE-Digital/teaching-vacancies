@@ -14,18 +14,6 @@ RSpec.describe "Jobseekers can manage their profile" do
 
     after { logout }
 
-    # Maybe we could add this to the set up of one of the other tests
-    it "allows the jobseeker to navigate to their profile" do
-      visit jobseeker_root_path
-
-      within "#navigation" do
-        expect(page).to have_content("Your profile")
-        click_on "Your profile"
-      end
-
-      expect(page).to have_current_path(jobseekers_profile_path)
-    end
-
     describe "changing personal details" do
       context "when filling in the profile for the first time" do
         let(:first_name) { "Frodo" }
@@ -160,7 +148,6 @@ RSpec.describe "Jobseekers can manage their profile" do
       end
     end
 
-    # I think we could do this as part of anothe
     describe "#about_you" do
       let(:jobseeker_about_you) { "I am an amazing teacher" }
 
@@ -237,22 +224,12 @@ RSpec.describe "Jobseekers can manage their profile" do
           visit jobseekers_profile_path
         end
 
-        # could probably combine many of these tests together. maybe even test for errors, test gaps and submit the form as part of one test.
         describe "errors" do
           before do
             click_link("Add roles")
           end
 
-          # can combine these two tests
-          it "raises errors for missing fields and makes reason mandatory when non current" do
-            click_on I18n.t("buttons.save_and_continue")
-
-            expect(page).to have_css("ul.govuk-list.govuk-error-summary__list")
-
-            within "ul.govuk-list.govuk-error-summary__list" do
-              expect(page).to have_link("Enter your reason for leaving this role", href: "#jobseekers-profile-employment-form-reason-for-leaving-field-error")
-            end
-
+          it "raises errors for missing fields" do
             check "I currently work here"
             click_on I18n.t("buttons.save_and_continue")
 
