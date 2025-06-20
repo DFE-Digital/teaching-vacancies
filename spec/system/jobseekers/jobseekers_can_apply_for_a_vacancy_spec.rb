@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can apply for a vacancy" do
   before { visit job_path(vacancy) }
-  # I think these tests could be in a view spec
+
   context "with a website vacancy" do
     let(:expected_link) { I18n.t("jobs.apply", href: "http://www.google.com") }
 

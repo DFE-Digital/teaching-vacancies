@@ -1,5 +1,5 @@
 require "rails_helper"
-# I think this could be a view spec
+
 RSpec.describe "Deadline-passed job applications for jobseekers" do
   context "when an application is in 'draft' status and the deadline for application has passed" do
     let(:deadline) { 1.week.ago }
