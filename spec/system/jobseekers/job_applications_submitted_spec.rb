@@ -1,5 +1,5 @@
 require "rails_helper"
-# I think this could be a view spec
+
 RSpec.describe "Submitted job applications for jobseekers" do
   context "when an application is in submitted status" do
     let(:vacancy) { create(:vacancy, :at_one_school, :published) }
