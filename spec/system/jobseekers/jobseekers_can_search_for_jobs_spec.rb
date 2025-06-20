@@ -414,6 +414,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
       expect_page_to_show_jobs([senior_leader, it_support])
       expect_page_not_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2, headteacher, deputy_head, teaching_assistant, sendco, pastoral, other])
+    end
   end
 
   def expect_page_to_show_jobs(jobs)
