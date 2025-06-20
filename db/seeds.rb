@@ -27,7 +27,6 @@ users = [
   { email: "brandon1.chan@education.gov.uk", family_name: "Chan", given_name: "Brandon" },
   { email: "chloe.ewens@education.gov.uk", family_name: "Ewens", given_name: "Chloe" },
   { email: "david.thacker@education.gov.uk", family_name: "Thacker", given_name: "David" },
-  { email: "ellie.nodder@education.gov.uk", family_name: "Nodder", given_name: "Ellie" },
   { email: "erin.riches@education.gov.uk", family_name: "Riches", given_name: "Erin" },
   { email: "fisal.yusuf@education.gov.uk", family_name: "Yusuf", given_name: "Fisal" },
   { email: "halima.ikuomola@education.gov.uk", family_name: "Ikuomola", given_name: "Halima" },
@@ -36,7 +35,6 @@ users = [
   { email: "kyle.macpherson@education.gov.uk", family_name: "MacPherson", given_name: "Kyle" },
   { email: "marc.sardon@education.gov.uk", family_name: "Sardon", given_name: "Marc" },
   { email: "sophie.mcmillan@education.gov.uk", family_name: "McMillan", given_name: "Sophie" },
-  { email: "stephanie.maskery@education.gov.uk", family_name: "Maskery", given_name: "Stephanie" },
   { email: "stephen.dicks@education.gov.uk", family_name: "Dicks", given_name: "Stephen" },
   { email: "yvonne.ridley@education.gov.uk", family_name: "Ridley", given_name: "Yvonne" },
 ]
