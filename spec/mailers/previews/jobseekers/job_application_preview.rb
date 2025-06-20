@@ -29,4 +29,10 @@ class Jobseekers::JobApplicationPreview < ActionMailer::Preview
 
     Jobseekers::JobApplicationMailer.job_listing_ended_early(job_application, vacancy)
   end
+
+  def declarations
+    job_application = JobApplication.last
+
+    Jobseekers::JobApplicationMailer.declarations(job_application)
+  end
 end
