@@ -73,7 +73,6 @@ RSpec.describe "Jobseekers can sign in to their account" do
     end
   end
 
-  # already have a test for this
   context "when the user sign-in following a vacancy quick apply link" do
     let(:jobseeker) { create(:jobseeker) }
     let(:old_vacancy) { create(:vacancy, organisations: [build(:school)]) }
