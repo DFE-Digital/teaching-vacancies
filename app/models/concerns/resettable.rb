@@ -17,8 +17,6 @@ module Resettable
     reset_application_form
     reset_application_link
     reset_documents
-    reset_personal_statement_guidance
-    reset_school_visits_details
     reset_contact_number
     reset_safeguarding_information
     reset_further_details
@@ -83,18 +81,6 @@ module Resettable
     return unless include_additional_documents_changed?
 
     supporting_documents.each(&:purge_later) unless include_additional_documents?
-  end
-
-  def reset_personal_statement_guidance
-    return unless enable_job_applications_changed? && !enable_job_applications
-
-    self.personal_statement_guidance = nil
-  end
-
-  def reset_school_visits_details
-    return unless school_visits_changed? && !school_visits
-
-    self.school_visits_details = nil
   end
 
   def reset_contact_number

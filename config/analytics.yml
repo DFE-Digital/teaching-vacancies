@@ -388,7 +388,6 @@ shared:
     - about_school
     - subjects
     - school_visits
-    - how_to_apply
     - ect_status
     - contact_number
     - publisher_organisation_id
@@ -396,7 +395,6 @@ shared:
     - fixed_term_contract_duration
     - parental_leave_cover_contract_duration
     - enable_job_applications
-    - personal_statement_guidance
     - completed_steps
     - working_patterns_details
     - full_time_details
@@ -407,7 +405,6 @@ shared:
     - external_source
     - external_reference
     - external_advert_url
-    - school_visits_details
     - job_location
     - job_roles
     - starts_asap

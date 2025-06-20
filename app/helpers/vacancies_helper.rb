@@ -60,13 +60,7 @@ module VacanciesHelper
   end
 
   def vacancy_or_organisation_description(vacancy)
-    vacancy.about_school.presence || vacancy.organisation.description.presence
-  end
-
-  def vacancy_about_school_value(vacancy)
-    return "" if vacancy.organisations.many?
-
-    vacancy_or_organisation_description(vacancy)
+    vacancy.organisation.description.presence
   end
 
   def vacancy_job_location_summary(vacancy)
@@ -150,8 +144,6 @@ module VacanciesHelper
     case attribute
     when "job_roles", "key_stages", "subjects", "working_patterns"
       t("publishers.activity_log.#{attribute}", new_value: new_value.to_sentence, count: new_value.count)
-    when "about_school", "job_advert"
-      t("publishers.activity_log.#{attribute}", organisation_type: organisation_type)
     when "expires_at", "starts_on", "earliest_start_date", "latest_start_date"
       new_value.nil? ? t("publishers.activity_log.#{attribute}.deleted") : t("publishers.activity_log.#{attribute}.changed", new_value: format_date(new_value.to_date))
     when "other_start_date_details"

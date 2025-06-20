@@ -4,6 +4,6 @@ h1.govuk-heading-l class="govuk-!-display-inline"
 = govuk_inset_text do
   = vacancy_review_form_heading_inset_text(vacancy, "incomplete_draft")
   .govuk-button-group class="govuk-!-margin-top-4"
-    = vacancy_complete_action_link(vacancy, next_invalid_step) unless vacancy.legacy_draft?
+    = vacancy_complete_action_link(vacancy, next_invalid_step)
     = vacancy_copy_action_link(vacancy)
     = vacancy_delete_action_link(vacancy)
