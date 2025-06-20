@@ -14,6 +14,14 @@ module Publishers
             expect(form.errors.messages).to eq({ reference_satisfactory: ["Select yes if the reference received is satisfactory"] })
           end
         end
+
+        context "with correct data" do
+          let(:form) { described_class.new(reference_satisfactory: "true") }
+
+          it "is valid" do
+            expect(form).to be_valid
+          end
+        end
       end
     end
   end

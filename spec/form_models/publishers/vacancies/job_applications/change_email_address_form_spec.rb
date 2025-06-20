@@ -14,6 +14,14 @@ module Publishers
             expect(form.errors.messages).to eq({ email: ["Enter a valid email address"] })
           end
         end
+
+        context "with valid email" do
+          let(:form) { described_class.new(email: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)) }
+
+          it "is valid" do
+            expect(form).to be_valid
+          end
+        end
       end
     end
   end
