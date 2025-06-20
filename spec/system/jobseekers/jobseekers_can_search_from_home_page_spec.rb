@@ -1,27 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "Searching on the home page" do
-  let!(:bristol) { create(:location_polygon, name: "bristol") }
-
   before do
     visit root_path
   end
 
-  # I think we can delete this test
-  scenario "persists search terms to the jobs index page" do
-    fill_in I18n.t("jobs.search.keyword"), with: "math"
-    fill_in I18n.t("home.search.location_label"), with: "bristol"
-
-    click_on I18n.t("buttons.search")
-
-    expect(current_path).to eq(jobs_path)
-    expect(page.find("#keyword-field").value).to eq("math")
-    expect(page.find("#keyword-field").value).to eq("math")
-    expect(page.find("#location-field").value).to eq("bristol")
-    expect(page.find("#location-field").value).to eq("bristol")
-  end
-
-  # I think we can just change the description of this test to also include `persists search terms to the jobs index page`
   context "when the location is not a polygon" do
     scenario "resets radius to a default radius" do
       fill_in I18n.t("jobs.search.keyword"), with: "math"
@@ -30,13 +13,13 @@ RSpec.describe "Searching on the home page" do
       click_on I18n.t("buttons.search")
 
       expect(current_path).to eq(jobs_path)
-      # not sure whats going on with the repetition here but i'm sure we don't need it
-      expect(page.find("#keyword-field").value).to eq("math")
-      expect(page.find("#keyword-field").value).to eq("math")
-      expect(page.find("#location-field").value).to eq("my house")
-      expect(page.find("#location-field").value).to eq("my house")
-      expect(page.find("#radius-field").value).to eq(Search::RadiusBuilder::DEFAULT_RADIUS_FOR_POINT_SEARCHES.to_s)
+      expect_search_terms_to_be_persisted
       expect(page.find("#radius-field").value).to eq(Search::RadiusBuilder::DEFAULT_RADIUS_FOR_POINT_SEARCHES.to_s)
     end
+  end
+
+  def expect_search_terms_to_be_persisted
+    expect(page.find("#keyword-field").value).to eq("math")
+    expect(page.find("#location-field").value).to eq("my house")
   end
 end
