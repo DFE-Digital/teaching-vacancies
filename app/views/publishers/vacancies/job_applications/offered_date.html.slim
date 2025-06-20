@@ -2,7 +2,10 @@
 
 = form_with(model: @form, url: update_all_organisation_job_job_applications_path(vacancy.id), method: :patch) do |f|
   = f.govuk_error_summary
+  = f.hidden_field :origin
+  = f.hidden_field :status
+  = f.hidden_field :job_applications, multiple: true
 
-  = f.govuk_date_field :date_of_birth, label: { size: "s" } do
+  = f.govuk_date_field :offered_at, label: { size: "s" } do
 
   = f.govuk_submit t("buttons.continue")

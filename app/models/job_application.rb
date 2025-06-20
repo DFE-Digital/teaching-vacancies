@@ -1,5 +1,5 @@
 class JobApplication < ApplicationRecord
-  before_save :update_status_timestamp, if: :will_save_change_to_status?
+  before_save :update_status_timestamp, if: %i[will_save_change_to_status? ignore_for_offered_and_declined?]
   before_save :anonymise_report, if: :will_save_change_to_status?
   before_save :reset_support_needed_details
 
@@ -137,6 +137,10 @@ class JobApplication < ApplicationRecord
   end
 
   private
+
+  def ignore_for_offered_and_declined?
+    !status.in?(%w[offered declined])
+  end
 
   def update_status_timestamp
     self["#{status}_at"] = Time.current

@@ -46,7 +46,9 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     when "download" then download_selected(tag_params, origin)
     when "export"   then export_selected(tag_params, origin)
     when "emails"   then copy_emails_selected(tag_params, origin)
-    when "declined" then capture_decline_date(job_applications)
+    when "declined"
+      @form = Publishers::JobApplication::OfferDateForm.new(job_applications:, origin:, status: "declined")
+      render "declined_date"
     else # when "update_status"
       prepare_to_tag(job_applications, origin)
     end
@@ -54,16 +56,18 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def update_tag
     update_tag_params = params.require(:publishers_job_application_status_form).permit(:origin, :status, job_applications: [])
-    applications = update_tag_params.fetch(:job_applications)
+    job_applications = update_tag_params.fetch(:job_applications)
     origin = update_tag_params[:origin]
     status = update_tag_params[:status]
 
     case status
-    when nil            then error_no_new_status_seleceted(applications, origin)
-    when "interviewing" then start_references_and_declaration(applications)
-    when "offered"      then capture_offer_date(applications)
+    when nil            then error_no_new_status_seleceted(job_applications, origin)
+    when "interviewing" then start_references_and_declaration(job_applications)
+    when "offered"
+      @form = Publishers::JobApplication::OfferDateForm.new(job_applications:, origin:, status: "offered")
+      render "offered_date"
     else
-      JobApplication.find(applications).each { it.update!(status:) }
+      vacancy.job_applications.where(id: job_applications).find_each { it.update!(status:) }
       redirect_to organisation_job_job_applications_path(vacancy.id, anchor: origin)
     end
   end
@@ -82,8 +86,15 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def update_all
-
-
+    update_all_params = params.require(:publishers_job_application_offer_date_form)
+                          .permit(:origin, :offered_at, :declined_at, :status, job_applications: [])
+    @form = Publishers::JobApplication::OfferDateForm.new(update_all_params)
+    if @form.valid?
+      vacancy.job_applications.where(id: @form.job_applications).find_each { it.update!(@form.attributes) }
+      redirect_to organisation_job_job_applications_path(vacancy.id, anchor: @form.origin)
+    else
+      render "#{@form.status}_date"
+    end
   end
 
   private
@@ -123,21 +134,6 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       batch.batchable_job_applications.create!(job_application: ja)
     end
     redirect_to organisation_job_job_application_batch_references_and_declaration_path(vacancy.id, batch.id, Wicked::FIRST_STEP)
-  end
-
-  def capture_offer_date(applications)
-    job_applications = JobApplication.where(vacancy: vacancy.id, id: applications)
-    @form = Publishers::JobApplication::OfferDateForm.new(job_applications:)
-    render "offer_date"
-  end
-
-  def capture_decline_date(applications)
-    # # copy params and status declined
-    # params[:publishers_job_application_status_form] = { origin:, job_applications:, status: "declined" }
-    # update_tag
-
-    @job_applications = JobApplication.where(vacancy: vacancy.id, id: applications)
-    render "decline_date"
   end
 
   def send_data_when_selection_valid(tag_params, origin, filename)
