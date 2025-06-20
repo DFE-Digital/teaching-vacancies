@@ -159,6 +159,7 @@ shared:
     - ethos_and_aims
     - working_patterns
     - working_pattern_details
+    - type
   job_preferences_locations:
     - id
     - job_preferences_id

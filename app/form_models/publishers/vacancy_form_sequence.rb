@@ -39,7 +39,7 @@ class Publishers::VacancyFormSequence < FormSequence
     when :applying_for_the_job
       %i[how_to_receive_applications] unless @vacancy.enable_job_applications
     when :how_to_receive_applications
-      if @vacancy.receive_applications == "email"
+      if @vacancy.uploaded_form?
         %i[application_form]
       else
         %i[application_link]
