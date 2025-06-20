@@ -124,7 +124,10 @@ class JobApplicationPdf
   def referees
     return no_data_available(I18n.t("jobseekers.job_applications.show.employment_history.none")) if job_application.referees.none?
 
-    make_nested_section do
+    contact_referers = nil
+    contact_referers = I18n.t("jobseekers.job_applications.review.contact_referer.publisher") if job_application.notify_before_contact_referers
+
+    make_nested_section(contact_referers) do
       job_application.referees.sort_by(&:created_at).map do |referee|
         reference_data = [
           ["Name:", referee.name],
@@ -199,9 +202,9 @@ class JobApplicationPdf
     [[text, nil]]
   end
 
-  def make_nested_section
+  def make_nested_section(sub_title = nil)
     # make a nested section data structure rendered by `JobApplicationPdfGenerator.render_nested_section`
-    [[nil, yield]]
+    [[sub_title, yield]]
   end
 
   def month_year(date)

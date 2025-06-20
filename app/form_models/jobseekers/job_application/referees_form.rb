@@ -6,6 +6,10 @@ module Jobseekers
       include CompletedFormAttribute
 
       class << self
+        def storable_fields
+          %i[notify_before_contact_referers]
+        end
+
         def unstorable_fields
           %i[referees_section_completed referees]
         end
@@ -17,7 +21,10 @@ module Jobseekers
       end
 
       attribute :referees
+      attribute :notify_before_contact_referers, :boolean
       validate :at_least_one_most_recent_employer, if: -> { referees_section_completed }
+
+      validates :notify_before_contact_referers, inclusion: { in: [true, false] }
 
       completed_attribute(:referees)
 

@@ -259,6 +259,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_06_150046) do
     t.boolean "has_close_relationships"
     t.boolean "has_right_to_work_in_uk"
     t.boolean "has_safeguarding_issue"
+    t.boolean "notify_before_contact_referers"
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
