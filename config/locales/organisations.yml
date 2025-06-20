@@ -14,6 +14,28 @@ en:
         options:
           true: Only show school with jobs available
           false: Does not have any jobs
+    about:
+      at_one_school: About %{organisation}
+      at_multiple_schools: About the schools
+      central_office: About %{organisation}
+    job_location_heading:
+      at_multiple_locations: At more than one location in the %{organisation_type}
+      at_one_location: Single location
+      central_office: Head office
+    job_location_summary:
+      at_multiple_locations: More than one location
+      at_multiple_locations_with_count: More than one location (%{count})
+      central_office: Head office
+    locations:
+      at_one_school: School location
+      at_multiple_schools: School locations
+      central_office: Head office location
+    map:
+      heading: Location and map
+    schools:
+      index:
+        heading: Schools
+        page_title: Schools - %{school_group_name}
     search:
       no_results_heading: Try another search
       no_results_text: "You may get more results if you:"
@@ -29,4 +51,56 @@ en:
           results:
             one: (%{count} result)
             other: (%{count} results)
-
+      name: Name of school
+      location: City, county or postcode (in England)
+      results:
+        active_jobs: Current jobs
+        key_stage: Key stage
+        key_stages:
+          early_years: Early years
+          ks1: Key stage 1
+          ks2: Key stage 2
+          ks3: Key stage 3
+          ks4: Key stage 4
+          ks5: Key stage 5
+        phase: Education phase
+        phases:
+          nursery: Nursery
+          primary: Primary school
+          secondary: Secondary school
+          sixth_form_or_college: Sixth form or college
+          through: All through school
+    organisation:
+      see_trust_jobs: View %{count} jobs across %{name}
+    show:
+      job_alert:
+        button: Set up job alert
+        call_to_action: Get a job alert whenever a role is listed at %{organisation_name}
+        heading: Set up a job alert
+      summary:
+        address: Address
+        age_range: Age range
+        description: 'About %{organisation_name}'
+        education_phase: Education phase
+        email_address: Email address
+        heading: Summary
+        name: Name
+        safeguarding_information: Commitment to safeguarding
+        size: Size
+        type: Type
+        website_address: Website address
+      tabs:
+        organisation: Organisation
+        schools: Schools
+      vacancies:
+        heading: Current jobs
+      vacancy:
+        actual_salary: Actual salary
+        full_time_equivalent_salary: Full-time equivalent salary
+        job_role: Role
+        school_name: Name
+        working_pattern: Working pattern
+      visits:
+        at_one_school: Arranging a visit to %{organisation}
+        at_multiple_schools: Arranging a visit to one of the schools
+        central_office: Arranging a visit to %{organisation}
