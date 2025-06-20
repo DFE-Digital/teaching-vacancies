@@ -114,7 +114,6 @@ RSpec.describe "Jobseekers can start or continue a job application" do
       end
     end
 
-    # do we need to test this for both draft and submit?
     context "when a jobseeker clicks 'apply' on a job page that was loaded before they signed in" do
       before do
         visit job_path(vacancy)
