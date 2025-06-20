@@ -43,7 +43,7 @@ RSpec.describe "Jobseekers can add references to their job application" do
       visit jobseekers_job_application_build_path(job_application, :referees)
 
       click_on I18n.t("buttons.change")
-      
+
       fill_in "Name", with: ""
       choose("Yes")
       validates_step_complete(button: I18n.t("buttons.save_reference"))
