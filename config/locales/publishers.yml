@@ -549,7 +549,7 @@ en:
               heading: New applications
               none: There are no pending applications
             unsuccessful:
-              label: "Not Considering (%{count})"
+              label: "Not considering (%{count})"
               heading: Not being considered
               none: No applications have been marked for rejection
             shortlisted:
@@ -562,7 +562,7 @@ en:
               none: No applications have been marked for interview yet
             offered:
               label: "Job offered (%{count})"
-              heading:
+              heading: Applicants offered a job
               none: No applications have been offered yet
             declined:
               label: "Declined (%{count})"
@@ -592,6 +592,12 @@ en:
           application_status: Application status
           update_application_status: Update application status
           download_selected: Download selected
+          copy_applicant_email: Copy selected emails
+          offer_declined: Mark offer as declined
+          download_applicant_data: Download applicants data
+          decline_date: Decline date
+          offer_date: Ofer date
+          offered_inset: Downloading applicant data will generate a CSV file that includes each applicant’s name, address, phone number, National Insurance number, and TRN.
         interviewing:
           name: Name
           contact_details: Contact details

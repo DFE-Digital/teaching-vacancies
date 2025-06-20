@@ -5,7 +5,7 @@ module JobApplicationsHelper
     submitted: "unread",
     reviewed: "reviewed",
     shortlisted: "shortlisted",
-    unsuccessful: "rejected",
+    unsuccessful: "not considering",
     withdrawn: "withdrawn",
     interviewing: "interviewing",
     offered: "job offered",

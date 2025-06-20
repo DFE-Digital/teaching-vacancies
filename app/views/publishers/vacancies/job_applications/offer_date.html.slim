@@ -1,0 +1,8 @@
+- content_for :page_title_prefix, t(".page_title")
+
+= form_with(model: @form, url: update_all_organisation_job_job_applications_path(vacancy.id), method: :patch) do |f|
+  = f.govuk_error_summary
+
+  = f.govuk_date_field :date_of_birth, label: { size: "s" } do
+
+  = f.govuk_submit t("buttons.continue")
