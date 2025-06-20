@@ -85,7 +85,8 @@ h2.govuk-heading-m = t("organisations.show.summary.heading")
 - if vacancies.any?
   h2.govuk-heading-m = t("organisations.show.vacancies.heading")
 
-  - vacancies.each do |vacancy|
+  / bring trust jobs to the front of the list
+  - vacancies.partition { |v| v.organisation.trust? }.reduce(&:+).each do |vacancy|
     h3.govuk-heading-s class="govuk-!-margin-bottom-0"
       span class="govuk-!-margin-right-2" = results_link(vacancy, class: "view-vacancy-link")
       = govuk_tag(text: t("vacancies.listing.enable_job_applications_tag"), colour: "green") if vacancy.enable_job_applications?
@@ -116,6 +117,9 @@ h2.govuk-heading-m = t("organisations.show.summary.heading")
         - row.with_value text: vacancy_working_patterns(vacancy), classes: "govuk-body-s govuk-!-padding-bottom-0 govuk-list"
 
     hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+
+- if organisation.school? && organisation.part_of_a_trust? && organisation.trust.all_vacancies.count != vacancies.count
+  p = govuk_link_to t(".see_trust_jobs", name: organisation.trust.name, count: organisation.trust.all_vacancies.count), organisation_path(organisation.trust)
 
 h2.govuk-heading-m = t("organisations.show.job_alert.heading")
 
