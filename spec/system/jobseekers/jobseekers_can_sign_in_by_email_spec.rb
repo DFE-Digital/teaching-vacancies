@@ -4,15 +4,6 @@ require "dfe/analytics/rspec/matchers"
 RSpec.describe "Jobseekers can sign in with fallback email authentication" do
   before { allow(AuthenticationFallbackForJobseekers).to receive(:enabled?).and_return(true) }
 
-  # we can delete this test as it's already tested in the other tests.
-  it "can reach email authentication page" do
-    visit root_path
-    within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
-    click_on I18n.t("buttons.sign_in_jobseeker")
-
-    expect(page).to have_content(I18n.t("publishers.login_keys.new.notice"))
-  end
-
   context "when fallback authentication is enabled" do
     let(:jobseeker) { create(:jobseeker) }
 
