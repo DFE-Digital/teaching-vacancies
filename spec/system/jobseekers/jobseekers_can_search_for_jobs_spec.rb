@@ -204,8 +204,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
         click_on I18n.t("buttons.search")
       end
 
-      # These three tests all depend on the same location search. Could consider combining them into a single example to reduce page visits and searches and improve test speed.
-      it "shows distance between school and their location" do
+      it "shows distance between school and their location and allows sorting by distance", js: true do
         expect(page).to have_content "Jobs in or near Birmingham"
 
         within(".search-results__item", text: "Physics Teacher") do
@@ -222,15 +221,11 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
           distance_text = find("dt", text: "Distance from location").sibling("dd").text
           expect(distance_text).to eq("90.1 miles")
         end
-      end
 
-      it "orders by distance by default" do
         expect(page).to have_select("sort_by", selected: "Distance")
         expect("Physics Teacher").to appear_before("Maths 1")
         expect("Maths 1").to appear_before("Maths Teacher 2")
-      end
 
-      it "jobseekers can then choose to sort by different sort option", js: true do
         expect(page).to have_select("sort_by", selected: "Distance")
 
         select "Closing date", from: "sort-by-field"
@@ -419,14 +414,6 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
       expect_page_to_show_jobs([senior_leader, it_support])
       expect_page_not_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2, headteacher, deputy_head, teaching_assistant, sendco, pastoral, other])
-      # could remove third filtering step as I think it's already covered by earlier filter/unfilter logic.
-      uncheck "IT support"
-      uncheck "Head of year or phase"
-      check "Other support"
-      click_on I18n.t("buttons.apply_filters")
-      expect_page_to_show_jobs([other])
-      expect_page_not_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2, headteacher, deputy_head, teaching_assistant, sendco, pastoral, senior_leader, it_support])
-    end
   end
 
   def expect_page_to_show_jobs(jobs)
