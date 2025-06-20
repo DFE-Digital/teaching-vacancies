@@ -69,12 +69,8 @@ RSpec.describe "Jobseekers can manage their job alerts from the email" do
         click_on I18n.t("buttons.update_alert")
       end
 
-      # could combine the following 2 tests
-      it "shows the confirmation page" do
-        expect(page).to have_content(I18n.t("subscriptions.confirm.header.update"))
-      end
-
       it "updates the subscription" do
+        expect(page).to have_content(I18n.t("subscriptions.confirm.header.update"))
         subscription.reload
         expect(subscription.email).to eq(jobseeker.email)
         expect(subscription.frequency).to eq("weekly")
