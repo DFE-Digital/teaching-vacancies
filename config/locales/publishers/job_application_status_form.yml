@@ -12,10 +12,16 @@ en:
             contact_applicants:
               inclusion: Select yes if you would like the service to email applicants that you are collecting references.
 
-        publishers/job_application/mark_reference_as_received_form:
+        publishers/vacancies/job_applications/mark_reference_as_received_form:
           attributes:
             reference_satisfactory:
               inclusion: Select yes if the reference received is satisfactory
+
+        publishers/vacancies/job_applications/change_email_address_form:
+          attributes:
+            email:
+              blank: Enter a valid email address
+              invalid: Enter a valid email address
 
   helpers:
     hint:
