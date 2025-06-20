@@ -10,7 +10,7 @@
     p.govuk-body = t(".description2")
     p.govuk-body = t(".description3")
     p.govuk-body = open_in_new_tab_link_to(t(".description4"), "https://www.gov.uk/tell-employer-or-college-about-criminal-record")
-    p.govuk-body = t(".description5", link_text: open_in_new_tab_link_to(t(".keep_children_safe_link_text"), "https://www.gov.uk/government/publications/keeping-children-safe-in-education--2")).html_safe
+    p.govuk-body = t(".description5", link_text: open_in_new_tab_link_to(t(".keep_children_safe_link_text"), kcsie_link)).html_safe
 
     = form_for @form, url: jobseekers_job_application_build_path(job_application, :declarations), method: :patch do |f|
       = f.govuk_error_summary
