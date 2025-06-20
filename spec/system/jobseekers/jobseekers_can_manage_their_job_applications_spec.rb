@@ -54,30 +54,18 @@ RSpec.describe "Jobseekers can manage their job applications" do
           end
         end
 
-        # could combine the next 2 tests
-        it "can continue a draft application" do
-          within ".card-component", text: draft_job_application.vacancy.job_title do
-            click_on draft_job_application.vacancy.job_title
-          end
-
-          expect(current_path).to eq(jobseekers_job_application_apply_path(draft_job_application))
-        end
-
-        it "can not continue a draft application that has passed the deadline" do
+        it "can only continue a draft application that has not passed the deadline" do
           expect(page).to have_css(".card-component", text: deadline_passed_job_application.vacancy.job_title) do |card|
             expect(card).to have_css(".card-component__actions") do |actions|
               expect(actions).not_to have_link(I18n.t("jobseekers.job_applications.index.continue_application"))
             end
           end
-        end
 
-        # could make this 'can view and withdraw a submitted application and remove the test on line 90'
-        it "can view a submitted application" do
-          within ".card-component", text: submitted_job_application.vacancy.job_title do
-            click_on submitted_job_application.vacancy.job_title
+          within ".card-component", text: draft_job_application.vacancy.job_title do
+            click_on draft_job_application.vacancy.job_title
           end
 
-          expect(current_path).to eq(jobseekers_job_application_path(submitted_job_application))
+          expect(current_path).to eq(jobseekers_job_application_apply_path(draft_job_application))
         end
 
         it "can delete a draft application" do
