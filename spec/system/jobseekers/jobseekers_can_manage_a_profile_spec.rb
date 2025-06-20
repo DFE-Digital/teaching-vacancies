@@ -13,6 +13,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     before { login_as(jobseeker, scope: :jobseeker) }
 
     after { logout }
+
     # Maybe we could add this to the set up of one of the other tests
     it "allows the jobseeker to navigate to their profile" do
       visit jobseeker_root_path
@@ -158,6 +159,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         expect(page).not_to have_content(previous_application.phone_number)
       end
     end
+
     # I think we could do this as part of anothe
     describe "#about_you" do
       let(:jobseeker_about_you) { "I am an amazing teacher" }
@@ -234,11 +236,13 @@ RSpec.describe "Jobseekers can manage their profile" do
           create(:jobseeker_profile, jobseeker:)
           visit jobseekers_profile_path
         end
+
         # could probably combine many of these tests together. maybe even test for errors, test gaps and submit the form as part of one test.
         describe "errors" do
           before do
             click_link("Add roles")
           end
+
           # can combine these two tests
           it "raises errors for missing fields and makes reason mandatory when non current" do
             click_on I18n.t("buttons.save_and_continue")
@@ -392,6 +396,7 @@ RSpec.describe "Jobseekers can manage their profile" do
           expect(current_path).to eq(review_jobseekers_profile_work_history_index_path)
         end
       end
+
       #  I think we could combine this with the test/tests on line 338 or line 402 or both
       context "if the jobseeker has a previous job application" do
         let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, create_details: true) }
@@ -659,28 +664,6 @@ RSpec.describe "Jobseekers can manage their profile" do
         visit publishers_jobseeker_profiles_path
         expect(page).to have_content(profile.full_name)
       end
-    end
-
-    context "if the jobseeker is already hidden from the school" do
-      before do
-        profile.excluded_organisations << forbidden_organisation
-        login_as(jobseeker, scope: :jobseeker)
-      end
-
-      after { logout }
-      # already tested
-      # it "does not allow the jobseeker to hide themselves from the school again" do
-      #   visit jobseekers_profile_path
-      #   click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
-      #   choose "Yes", visible: false
-      #   click_on I18n.t("buttons.save_and_continue")
-
-      #   field = find_field("Name of school or trust")
-      #   field.fill_in(with: forbidden_organisation.name)
-      #   click_on I18n.t("buttons.save_and_continue")
-
-      #   expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.schools.already_hidden", name: forbidden_organisation.name))
-      # end
     end
 
     context "if the organisation is a trust" do

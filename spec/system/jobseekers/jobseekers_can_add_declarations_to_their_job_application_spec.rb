@@ -41,6 +41,6 @@ RSpec.describe "Jobseekers can disclose close relationships or safeguarding issu
 
     expect(page).not_to have_css("h2", text: "There is a problem")
     expect(page).to have_current_path(jobseekers_job_application_apply_path(job_application))
-    expect(page).to have_selector('#declarations .govuk-task-list__status', text: 'Completed')
+    expect(page).to have_css("#declarations .govuk-task-list__status", text: "Completed")
   end
 end

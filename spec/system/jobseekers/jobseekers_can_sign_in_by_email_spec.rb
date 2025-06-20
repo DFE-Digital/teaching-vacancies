@@ -3,6 +3,7 @@ require "dfe/analytics/rspec/matchers"
 
 RSpec.describe "Jobseekers can sign in with fallback email authentication" do
   before { allow(AuthenticationFallbackForJobseekers).to receive(:enabled?).and_return(true) }
+
   # we can delete this test as it's already tested in the other tests.
   it "can reach email authentication page" do
     visit root_path

@@ -203,6 +203,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
         select "200 miles", from: "radius-field"
         click_on I18n.t("buttons.search")
       end
+
       # These three tests all depend on the same location search. Could consider combining them into a single example to reduce page visits and searches and improve test speed.
       it "shows distance between school and their location" do
         expect(page).to have_content "Jobs in or near Birmingham"

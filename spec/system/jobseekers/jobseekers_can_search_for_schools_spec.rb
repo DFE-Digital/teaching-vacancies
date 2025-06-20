@@ -39,7 +39,7 @@ RSpec.describe "Searching on the schools page" do
       expect(page).to have_link(I18n.t("organisations.search.results.phases.secondary"))
       expect(page).to have_link(I18n.t("organisations.filters.special_school"))
     end
-    
+
     it "allows jobseeker to clear a filter, and clear all filters" do
       within("#filters-component") do
         click_link I18n.t("organisations.filters.special_school")

@@ -65,7 +65,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
       end
     end
   end
-  
+
   context "when editing a qualification" do
     context "when the qualification does not have qualification results" do
       before do
