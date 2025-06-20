@@ -1,6 +1,10 @@
 - title = @api_client.name
 - content_for :page_title_prefix, title
 
+- content_for :breadcrumbs do
+  nav.govuk-breadcrumbs aria-label="Breadcrumbs"
+  = govuk_back_link text: t("buttons.back"), href: support_users_service_data_path
+
 h1.govuk-heading-l = title
 
 = link_to "Rotate ATS API key", rotate_key_support_users_publisher_ats_api_client_path(@api_client), method: :post, class: "govuk-button govuk-button--secondary"

@@ -1,5 +1,9 @@
 - content_for :page_title_prefix, t("support_users.service_data.index.title")
 
+- content_for :breadcrumbs do
+  nav.govuk-breadcrumbs aria-label="Breadcrumbs"
+  = govuk_back_link text: t("buttons.back"), href: support_user_root_path
+
 h1.govuk-heading-l = t("support_users.service_data.index.heading")
 
 nav

@@ -1,5 +1,9 @@
 h1.govuk-heading-l New ATS API Client
 
+- content_for :breadcrumbs do
+  nav.govuk-breadcrumbs aria-label="Breadcrumbs"
+  = govuk_back_link text: t("buttons.back"), href: support_users_publisher_ats_api_clients_path
+
 = form_with model: @api_client, url: support_users_publisher_ats_api_clients_path, local: true do |form|
   .govuk-form-group
     = form.label :name, class: "govuk-label"
