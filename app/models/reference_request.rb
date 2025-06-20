@@ -22,6 +22,13 @@ class ReferenceRequest < ApplicationRecord
 
   has_paper_trail skip: [:token]
 
+  # change the referee email address - so re-regenerate the token
+  def change_referee_email!(email)
+    update!(email: email, token: SecureRandom.uuid)
+    referee.update!(email: email)
+    Publishers::CollectReferencesMailer.collect_references(self).deliver_later
+  end
+
   class << self
     def create_for_manual!(job_application)
       job_application.referees.reject { |r| r.reference_request.present? }.each do |referee|
