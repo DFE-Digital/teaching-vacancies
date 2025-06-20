@@ -85,7 +85,7 @@ RSpec.describe "Publishers can select a job application for interview" do
             })
         end
 
-        context "when the reference is declined", :versioning do
+        context "when the reference is declined" do
           before do
             perform_enqueued_jobs
             current_referee.reload.job_reference.update!(attributes_for(:job_reference, :reference_declined).merge(updated_at: Date.tomorrow))
@@ -102,12 +102,47 @@ RSpec.describe "Publishers can select a job application for interview" do
           end
         end
 
-        context "with a received reference", :versioning do
+        context "when the referee email is incorrect" do
           before do
             perform_enqueued_jobs
+
+            ActionMailer::Base.deliveries.clear
+            publisher_ats_interviewing_page.pre_interview_check_links.first.click
+            publisher_ats_pre_interview_checks_page.reference_links.first.click
+            within ".govuk-main-wrapper" do
+              within ".govuk-grid-column-two-thirds" do
+                find("a.govuk-link").click
+              end
+            end
+          end
+
+          let(:new_email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
+
+          scenario "with a good email" do
+            fill_in "publishers-vacancies-job-applications-change-email-address-form-email-field", with: new_email
+            click_on I18n.t("buttons.save_and_continue")
+            perform_enqueued_jobs
+            expect(page).to have_content(new_email)
+            expect(page).to have_content("Reference email changed")
+            expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
+              .to eq({
+                new_email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
+              })
+          end
+
+          scenario "without an email" do
+            click_on I18n.t("buttons.save_and_continue")
+            expect(page).to have_content("Enter a valid email address")
+          end
+        end
+
+        context "with a received reference" do
+          before do
+            perform_enqueued_jobs
+            current_referee.reload
             # simulate receipt of a reference
-            current_referee.reload.job_reference.update!(attributes_for(:job_reference, :reference_given).merge(updated_at: Date.tomorrow))
-            current_referee.reload.reference_request.update!(status: :received)
+            current_referee.job_reference.update!(attributes_for(:job_reference, :reference_given).merge(updated_at: Date.tomorrow))
+            current_referee.reference_request.update!(status: :received)
           end
 
           it "can progress to the page where the reference is shown" do
