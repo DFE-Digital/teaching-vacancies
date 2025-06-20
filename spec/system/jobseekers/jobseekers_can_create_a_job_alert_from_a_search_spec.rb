@@ -29,8 +29,8 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
     before do
       login_as(jobseeker, scope: :jobseeker) if jobseeker_signed_in?
       visit jobs_path
-      and_perform_a_search
-      and_click_job_alert_link
+      perform_a_search
+      click_job_alert_link
       fill_in_subscription_fields
       click_on I18n.t("buttons.subscribe")
     end
@@ -64,8 +64,8 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
   describe "location search" do
     before do
       visit jobs_path
-      and_perform_a_search
-      and_click_job_alert_link
+      perform_a_search
+      click_job_alert_link
     end
 
     context "when a polygon search is carried out" do
@@ -74,7 +74,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
 
       scenario "successfully creates a job alert" do
         expect(page).to have_content(I18n.t("subscriptions.new.title"))
-        and_the_search_criteria_are_populated
+        expect_search_criteria_to_be_populated
 
         click_on I18n.t("buttons.subscribe")
         expect(page).to have_content("There is a problem")
@@ -94,7 +94,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
 
       scenario "successfully creates a job alert" do
         expect(page).to have_content(I18n.t("subscriptions.new.title"))
-        and_the_search_criteria_are_populated
+        expect_search_criteria_to_be_populated
 
         click_on I18n.t("buttons.subscribe")
         expect(page).to have_content("There is a problem")
@@ -129,7 +129,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
 
       scenario "does not creates a job alert" do
         expect(page).to have_content(I18n.t("subscriptions.new.title"))
-        and_the_search_criteria_are_populated
+        expect_search_criteria_to_be_populated
 
         fill_in_subscription_fields
 
@@ -140,7 +140,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
     end
   end
 
-  def and_click_job_alert_link
+  def click_job_alert_link
     if page.has_css?("#job-alert-link")
       click_on I18n.t("subscriptions.link.text")
     else
@@ -148,7 +148,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
     end
   end
 
-  def and_perform_a_search
+  def perform_a_search
     fill_in "keyword", with: "english"
     fill_in "location", with: location
     if search_with_polygons?
@@ -163,7 +163,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
     click_on I18n.t("buttons.search")
   end
 
-  def and_the_search_criteria_are_populated
+  def expect_search_criteria_to_be_populated
     expect(page.find_field("jobseekers-subscription-form-keyword-field").value).to eq("english")
     expect(page.find_field("jobseekers-subscription-form-location-field").value).to eq(location)
     expect(page).to have_css(".location-finder__input")

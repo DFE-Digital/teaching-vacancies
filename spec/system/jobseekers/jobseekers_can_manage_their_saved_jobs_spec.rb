@@ -55,7 +55,7 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
           end
         end
 
-        it "does not show apply for this job links" do
+        it "only allows jobseekers to apply for jobs that have not expired" do
           within ".card-component:nth-child(1)" do
             expect(page).not_to have_link(I18n.t("jobseekers.saved_jobs.index.apply"))
           end

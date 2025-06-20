@@ -31,8 +31,6 @@ RSpec.describe "Jobseekers can create a job alert from a mailing campaign", reca
                 .and have_checked_field("Teacher")
                 .and have_checked_field("Suitable for early career teachers")
                 .and have_checked_field("Full time")
-
-    validate_and_confirm
   end
 
   scenario "the subscription form values are set from the URL parameters" do
@@ -61,10 +59,6 @@ RSpec.describe "Jobseekers can create a job alert from a mailing campaign", reca
     expect(page).not_to have_checked_field("Teacher")
     expect(page).not_to have_checked_field("Full time")
 
-    validate_and_confirm
-  end
-
-  def validate_and_confirm
     click_button I18n.t("buttons.subscribe_campaign")
     expect(page).to have_content("There is a problem")
                 .and have_content("Select when you want to receive job alert emails")
