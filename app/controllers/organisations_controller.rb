@@ -4,7 +4,11 @@ class OrganisationsController < ApplicationController
   before_action :set_organisation, only: %i[show]
 
   def show
-    @vacancies = @organisation.all_vacancies.live
+    # rubocop false positive - the suggested code doesn't work (replace reduce(&:+) with sum) as this is a pair of arrays
+    # rubocop:disable Performance/Sum
+    # bring trust jobs to the front of the list
+    @vacancies = @organisation.all_vacancies.live.partition { |v| v.organisation.trust? }.reduce(&:+)
+    # rubocop:enable Performance/Sum
   end
 
   def index

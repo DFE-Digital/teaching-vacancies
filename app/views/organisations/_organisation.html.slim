@@ -85,8 +85,7 @@ h2.govuk-heading-m = t("organisations.show.summary.heading")
 - if vacancies.any?
   h2.govuk-heading-m = t("organisations.show.vacancies.heading")
 
-  / bring trust jobs to the front of the list
-  - vacancies.partition { |v| v.organisation.trust? }.reduce(&:+).each do |vacancy|
+  - vacancies.each do |vacancy|
     h3.govuk-heading-s class="govuk-!-margin-bottom-0"
       span class="govuk-!-margin-right-2" = results_link(vacancy, class: "view-vacancy-link")
       = govuk_tag(text: t("vacancies.listing.enable_job_applications_tag"), colour: "green") if vacancy.enable_job_applications?
