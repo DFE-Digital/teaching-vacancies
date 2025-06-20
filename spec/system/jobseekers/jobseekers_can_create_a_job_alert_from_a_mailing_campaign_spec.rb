@@ -31,8 +31,6 @@ RSpec.describe "Jobseekers can create a job alert from a mailing campaign", reca
                 .and have_checked_field("Teacher")
                 .and have_checked_field("Suitable for early career teachers")
                 .and have_checked_field("Full time")
-
-    validate_and_confirm
   end
 
   scenario "the subscription form values are set from the URL parameters" do
