@@ -72,6 +72,7 @@ RSpec.describe "Jobseekers can sign in to their account" do
       expect(page).to have_link(text: I18n.t("nav.sign_in"))
     end
   end
+
   # already have a test for this
   context "when the user sign-in following a vacancy quick apply link" do
     let(:jobseeker) { create(:jobseeker) }

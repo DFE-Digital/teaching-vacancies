@@ -6,6 +6,7 @@ RSpec.describe "Searching on the home page" do
   before do
     visit root_path
   end
+
   # I think we can delete this test
   scenario "persists search terms to the jobs index page" do
     fill_in I18n.t("jobs.search.keyword"), with: "math"
@@ -19,6 +20,7 @@ RSpec.describe "Searching on the home page" do
     expect(page.find("#location-field").value).to eq("bristol")
     expect(page.find("#location-field").value).to eq("bristol")
   end
+
   # I think we can just change the description of this test to also include `persists search terms to the jobs index page`
   context "when the location is not a polygon" do
     scenario "resets radius to a default radius" do

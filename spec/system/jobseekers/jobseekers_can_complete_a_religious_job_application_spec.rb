@@ -54,12 +54,13 @@ RSpec.describe "Jobseekers can complete a religious job application" do
         expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.faith.blank"))
         expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.religious_reference_type.inclusion"))
       end
+
       context "with a denomination" do
         before do
           fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.faith"), with: "follower of #{Faker::Religion::Bible.character}"
           fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.place_of_worship"), with: "#{Faker::Address.city} Church"
         end
-        
+
         context "with a referee" do
           before do
             find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-referee-field']").click
@@ -85,8 +86,8 @@ RSpec.describe "Jobseekers can complete a religious job application" do
               click_on I18n.t("buttons.save_and_continue")
               complete_from_references_page
             end
-            # would be nice to have a description of what the correct content is.
-            it "has the correct content" do
+
+            it "shows the referee details" do
               expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
 
               expect(page).to have_content(referee_name)
@@ -200,7 +201,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
       validates_step_complete
       expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/non_catholic_form.attributes.ethos_and_aims.blank"))
     end
-    # don't think we need this context block, not sure the value that this adds. would prefer to see a larger it block.
+
     context "when on page 2" do
       before do
         fill_in I18n.t("helpers.label.jobseekers_job_application_non_catholic_form.ethos_and_aims"), with: Faker::Lorem.sentence

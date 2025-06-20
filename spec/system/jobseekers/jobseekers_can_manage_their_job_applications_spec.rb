@@ -53,6 +53,7 @@ RSpec.describe "Jobseekers can manage their job applications" do
             expect(page).to have_css(".card-component__actions", text: "deadline passed")
           end
         end
+
         # could combine the next 2 tests
         it "can continue a draft application" do
           within ".card-component", text: draft_job_application.vacancy.job_title do
@@ -69,6 +70,7 @@ RSpec.describe "Jobseekers can manage their job applications" do
             end
           end
         end
+
         # could make this 'can view and withdraw a submitted application and remove the test on line 90'
         it "can view a submitted application" do
           within ".card-component", text: submitted_job_application.vacancy.job_title do

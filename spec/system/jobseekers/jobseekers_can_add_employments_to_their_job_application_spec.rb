@@ -128,7 +128,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
       expect(page).to have_content(I18n.t("jobseekers.job_applications.employments.destroy.success"))
       expect(page).not_to have_content("Teacher")
     end
-    # I would like to see assertions to show errors here.
+
     it "allows jobseekers to edit employment history" do
       visit jobseekers_job_application_build_path(job_application, :employment_history)
 
