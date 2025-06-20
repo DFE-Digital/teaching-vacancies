@@ -1,4 +1,3 @@
-# this is where i got to
 require "rails_helper"
 
 RSpec.describe "Jobseekers can manage their profile" do
@@ -251,13 +250,6 @@ RSpec.describe "Jobseekers can manage their profile" do
         end
 
         context "when the form to add a new employment history entry is submitted" do
-          # could combine the following 2 tests and not have to create(:jobseeker_profile, jobseeker:), visit jobseekers_profile_path, add_jobseeker_profile_employment twice for minimal benefits (imo)
-          # it "redirects to the review page" do
-          #   add_jobseeker_profile_employment
-
-          #   expect(current_path).to eq(review_jobseekers_profile_work_history_index_path)
-          # end
-
           it "displays every employment history entry on the review page" do
             add_jobseeker_profile_employment
 
@@ -332,11 +324,6 @@ RSpec.describe "Jobseekers can manage their profile" do
         before do
           visit edit_jobseekers_profile_work_history_path(employment)
         end
-        # can combine these 2 tests and not have to visit edit_jobseekers_profile_work_history_path(employment) twice
-        # it "shows the old data" do
-        #   expect(page).to have_content(employment.main_duties)
-        #   expect(page).to have_content(employment.reason_for_leaving)
-        # end
 
         it "successfully changes the employment record" do
           expect(page).to have_content(employment.main_duties)
@@ -374,7 +361,6 @@ RSpec.describe "Jobseekers can manage their profile" do
         end
       end
 
-      #  I think we could combine this with the test/tests on line 338 or line 402 or both
       context "if the jobseeker has a previous job application" do
         let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, create_details: true) }
 
@@ -601,28 +587,6 @@ RSpec.describe "Jobseekers can manage their profile" do
         visit publishers_jobseeker_profiles_path
         expect(page).to have_content(profile.full_name)
       end
-      # remove uneccessary tests
-      # run_with_jobseeker(jobseeker) do
-      #   visit jobseekers_profile_path
-      #   click_on I18n.t("jobseekers.profiles.hide_profile.summary.add_a_school")
-
-      #   field = find_field("Name of school or trust")
-      #   field.fill_in(with: permitted_organisation.name)
-      #   click_on I18n.t("buttons.save_and_continue")
-      # end
-
-      # run_with_publisher(permitted_publisher) do
-      #   visit publishers_jobseeker_profiles_path
-      #   expect(page).not_to have_content(profile.full_name)
-      # end
-
-      # run_with_publisher(forbidden_publisher) do
-      #   visit publishers_jobseeker_profiles_path
-      #   expect(page).not_to have_content(profile.full_name)
-
-      #   visit publishers_jobseeker_profile_path(profile)
-      #   expect(page).to have_content("Page not found")
-      # end
 
       run_with_jobseeker(jobseeker) do
         visit schools_jobseekers_profile_hide_profile_path
@@ -631,11 +595,6 @@ RSpec.describe "Jobseekers can manage their profile" do
         end
         click_button I18n.t("jobseekers.profiles.hide_profile.delete.delete_school")
       end
-
-      # run_with_publisher(permitted_publisher) do
-      #   visit publishers_jobseeker_profiles_path
-      #   expect(page).to have_content(profile.full_name)
-      # end
 
       run_with_publisher(forbidden_publisher) do
         visit publishers_jobseeker_profiles_path
