@@ -90,6 +90,8 @@ en:
     profiles_mailer:
       disable_inactive_profile:
         subject: Your Teaching Vacancies profile has been deactivated due to inactivity
+      inactive_profile_warning:
+        subject: Your Teaching Vacancies profile will be deactivated soon
     job_application_mailer:
       shared: &job_application_mailer_shared
         intro: Your application for %{job_title} at %{organisation_name}

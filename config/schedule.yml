@@ -131,6 +131,11 @@ disable_inactive_profiles:
   class: 'DisableInactiveProfilesJob'
   queue: low
 
+inactive_profile_warnings:
+  cron: '10 8 * * *' # "At 08:10."
+  class: 'InactiveProfileWarningsJob'
+  queue: low
+
 email_feedback_prompt:
   cron: '0 09 * * *' # "At 09:00."
   class: 'SendExpiredVacancyFeedbackPromptJob'
