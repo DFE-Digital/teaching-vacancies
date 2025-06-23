@@ -34,7 +34,7 @@ card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/dena
 > My advice to former teachers who are thinking about returning to the classroom is to get back into a school if they are not sure. The thought of returning can be daunting but once you get back into it, you’ll know how you really feel about coming back to the classroom. 
 >
 > The beauty of teaching is that it is a career that you can pick up again after a break. Schools will always be looking for great teachers.  
->
+
 ## Want to return to teaching after a break?
 
 Returning to teaching might be easier than you think. If you’re qualified to teach and interested in getting back into the classroom, support is available.  
