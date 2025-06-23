@@ -2,7 +2,7 @@ class Jobseekers::UploadedJobApplications::PersonalDetailsController < Jobseeker
   before_action :set_job_application
 
   def edit
-    @form = Jobseekers::UploadedJobApplication::PersonalDetailsForm.new(@job_application.slice(:first_name, :last_name, :email_address, :phone_number, :has_right_to_work_in_uk))
+    @form = Jobseekers::UploadedJobApplication::PersonalDetailsForm.new(@job_application.slice(:first_name, :last_name, :email_address, :phone_number, :has_right_to_work_in_uk, :teacher_reference_number))
   end
 
   def update
