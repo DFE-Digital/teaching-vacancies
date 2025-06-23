@@ -8,6 +8,11 @@ class Jobseekers::ProfilesMailer < Jobseekers::BaseMailer
     @profile = profile
     send_email(to: profile.email, subject: I18n.t("jobseekers.profiles_mailer.inactive_profile_warning.subject"))
   end
+
+  def disable_profile_due_to_new_fields(profile)
+    @profile = profile
+    send_email(to: profile.email, subject: I18n.t("jobseekers.profiles_mailer.disable_profile_due_to_new_fields.subject"))
+  end
 end
 
 # One off email to let users know their profile has been deactivated due to missing mandatory information
@@ -25,21 +30,4 @@ end
 #   Kind regards,
 #
 #        Teaching Vacancies team
-#
-#
-# New governance cycle email to those approaching the 6 months
-#
-# Subject line: Your Teaching Vacancies profile will be deactivated soon
-#
-# Dear [first name],
-#
-#      Your Teaching Vacancies profile will be deactivated if you do not sign in by [insert expiration date here].
-#
-#   When your profile is active, school and trust hiring staff can view your details and contact you about jobs by email.
-#
-#   To keep your profile active, [sign in to your Teaching Vacancies account](https://teaching-vacancies.service.gov.uk/jobseekers/sign-in) and select ‘Turn on profile’.
-#
-#   Kind regards,
-#
-#        Teaching Vacancies
 #
