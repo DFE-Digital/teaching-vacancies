@@ -1,0 +1,12 @@
+Dear <%= @profile.personal_details&.first_name || "Jobseeker" %>,
+
+Your Teaching Vacancies profile will be deactivated if you do not sign in by [insert expiration date here].
+
+When your profile is active, school and trust hiring staff can view your details and contact you about jobs by email.
+
+To keep your profile active, [sign in to your Teaching Vacancies account](<%= jobseekers_sign_in_url %>).
+
+Kind regards,
+
+        Teaching Vacancies
+

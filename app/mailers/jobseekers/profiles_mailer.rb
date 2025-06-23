@@ -3,6 +3,11 @@ class Jobseekers::ProfilesMailer < Jobseekers::BaseMailer
     @profile = profile
     send_email(to: profile.email, subject: I18n.t("jobseekers.profiles_mailer.disable_inactive_profile.subject"))
   end
+
+  def inactive_profile_warning(profile)
+    @profile = profile
+    send_email(to: profile.email, subject: I18n.t("jobseekers.profiles_mailer.inactive_profile_warning.subject"))
+  end
 end
 
 # One off email to let users know their profile has been deactivated due to missing mandatory information
