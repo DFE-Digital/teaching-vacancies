@@ -114,7 +114,7 @@ en:
       applying_for_the_job_heading: Applying for the job
       applying_for_the_job_paragraph: Please complete the online application.
       requires_application_form_download: This job requires you to download an application form, you will be able to upload the application once complete.
-      no_cvs: CVs are not accepted.
+      no_cvs: CVs will not be accepted for this application.
       banner_links:
         apply: Apply for this job
         draft: Started - continue application
