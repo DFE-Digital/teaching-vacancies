@@ -12,7 +12,7 @@ class DisableInactiveProfilesJob < ApplicationJob
       jsp.assign_attributes(active: false)
       jsp.save!(touch: false)
 
-      Jobseekers::ProfilesMailer.disable_inactive_profile(jsp)
+      Jobseekers::ProfilesMailer.disable_inactive_profile(jsp).deliver_later
     end
   end
 end

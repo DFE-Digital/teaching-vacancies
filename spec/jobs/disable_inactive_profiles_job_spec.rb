@@ -9,5 +9,6 @@ RSpec.describe DisableInactiveProfilesJob do
 
   it "makes profiles over 6 months inactive" do
     expect { described_class.perform_now }.to change { JobseekerProfile.active.count }.by(-1)
+    expect { perform_enqueued_jobs }.to change(ActionMailer::Base.deliveries, :count).by(1)
   end
 end
