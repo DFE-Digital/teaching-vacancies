@@ -92,6 +92,7 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
       stored_location.include?("/saved_job/") || # Signed-in from a vacancy page save/unsave action.
       stored_location.include?("/jobs/") || # Signed-in from a job page (in order to download)
       stored_location.include?("/jobseekers/subscriptions") || # Signed-in from a job alert email link.
+      stored_location.include?("/self_disclosure/#{Wicked::FIRST_STEP}") || # Signed-in from self-disclosure email link.
       stored_location.include?("/jobseekers/account/email_preferences/edit") # Signed-in from a peak times email.
   end
 
