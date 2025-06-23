@@ -5,6 +5,8 @@ DfE::Analytics.configure do |config|
   #
   config.log_only = false
 
+  config.excluded_paths = ["/check"]
+
   # Whether to use ActiveJob or dispatch events immediately.
   #
   config.async = true
