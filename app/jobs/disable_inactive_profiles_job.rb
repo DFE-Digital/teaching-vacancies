@@ -11,6 +11,8 @@ class DisableInactiveProfilesJob < ApplicationJob
              .each do |jsp|
       jsp.assign_attributes(active: false)
       jsp.save!(touch: false)
+
+      Jobseekers::ProfilesMailer.disable_inactive_profile(jsp)
     end
   end
 end
