@@ -4,10 +4,6 @@ Your Teaching Vacancies profile has been deactivated. Profiles are deactivated w
 
 When your profile is active, school and trust hiring staff can view your details and contact you about jobs by email.
 
-To reactivate your profile, [sign in to your Teaching Vacancies account](<%= jobseekers_sign_in_url %>), go to ‘Your profile’ and select ‘Turn on profile’.
+To reactivate your profile, <%= sign_in_link %>, go to ‘Your profile’ and select ‘Turn on profile’.
 
-If you have followed the above advice and cannot reactivate your profile, contact [teaching.vacancies@education.gov.uk](mailto:teachingvacancies@education.gov.uk) for assistance.
-
-Kind regards,
-
-     Teaching Vacancies
+<%= t(".footer", link: notify_mail_to("teaching.vacancies@education.gov.uk")) %>
