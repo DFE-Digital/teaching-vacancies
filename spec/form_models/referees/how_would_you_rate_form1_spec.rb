@@ -12,8 +12,6 @@ RSpec.describe Referees::HowWouldYouRateForm1 do
         .to eq({
           adapt_to_change: ["Rate the candidates's capability of adapting to change"],
           customer_care: ["Rate the candidate's customer care skills"],
-          deal_with_conflict: ["Rate the candidate's ability to deal with conflicts"],
-          prioritise_workload: ["Rate the candidate's ability to prioritise and manage their own workload"],
           punctuality: ["Rate the candidate's punctuality and timekeeping"],
           working_relationships: ["Rate the candidate's working relationships"],
         })

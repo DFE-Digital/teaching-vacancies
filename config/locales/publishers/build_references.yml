@@ -91,6 +91,11 @@ en:
         heading: Reference enquiry for %{name}
         caption: Part 4 of 5
 
+      how_would_you_rate_part_3:
+        page_title: How would you rate %{name}?
+        heading: Reference enquiry for %{name}
+        caption: Part 4 of 5
+
       referee_details:
         page_title: Referee Details
         heading: Reference enquiry for %{name}

@@ -50,6 +50,7 @@ module PageObjects
         referee_reference_information: "Publisher::Ats::Referee::ReferenceInformationPage",
         referee_how_would_you_rate1: "Publisher::Ats::Referee::HowWouldYouRatePage1",
         referee_how_would_you_rate2: "Publisher::Ats::Referee::HowWouldYouRatePage2",
+        referee_how_would_you_rate3: "Publisher::Ats::Referee::HowWouldYouRatePage3",
         referee_referee_details: "Publisher::Ats::Referee::RefereeDetailsPage",
       }.each do |page_name, page_class|
         full_page_class = "PageObjects::Pages::#{page_class}"

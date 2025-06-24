@@ -14,6 +14,7 @@ module Referees
       reference_information: Referees::ReferenceInformationForm,
       how_would_you_rate_part_1: Referees::HowWouldYouRateForm1,
       how_would_you_rate_part_2: Referees::HowWouldYouRateForm2,
+      how_would_you_rate_part_3: Referees::HowWouldYouRateForm3,
       referee_details: Referees::RefereeDetailsForm,
     }.freeze
 

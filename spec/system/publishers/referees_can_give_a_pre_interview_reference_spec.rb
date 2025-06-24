@@ -84,17 +84,20 @@ RSpec.describe "Publishers can select a job application for interview" do
         referee_how_would_you_rate1_page.outstanding_working_relationships.click
         referee_how_would_you_rate1_page.outstanding_customer_care.click
         referee_how_would_you_rate1_page.outstanding_adapt_to_change.click
-        referee_how_would_you_rate1_page.outstanding_deal_with_conflict.click
-        referee_how_would_you_rate1_page.outstanding_prioritise_workload.click
         click_on I18n.t("buttons.continue")
 
         expect(referee_how_would_you_rate2_page).to be_displayed
+        referee_how_would_you_rate2_page.outstanding_deal_with_conflict.click
+        referee_how_would_you_rate2_page.outstanding_prioritise_workload.click
         referee_how_would_you_rate2_page.outstanding_team_working.click
         referee_how_would_you_rate2_page.outstanding_communication.click
-        referee_how_would_you_rate2_page.outstanding_problem_solving.click
-        referee_how_would_you_rate2_page.outstanding_general_attitude.click
-        referee_how_would_you_rate2_page.outstanding_technical_competence.click
-        referee_how_would_you_rate2_page.outstanding_leadership.click
+        click_on I18n.t("buttons.continue")
+
+        expect(referee_how_would_you_rate3_page).to be_displayed
+        referee_how_would_you_rate3_page.outstanding_problem_solving.click
+        referee_how_would_you_rate3_page.outstanding_general_attitude.click
+        referee_how_would_you_rate3_page.outstanding_technical_competence.click
+        referee_how_would_you_rate3_page.outstanding_leadership.click
         click_on I18n.t("buttons.continue")
 
         expect(referee_referee_details_page).to be_displayed

@@ -39,16 +39,18 @@ en:
               blank: Rate the candidate's customer care skills
             adapt_to_change:
               blank: Rate the candidates's capability of adapting to change
+        referees/how_would_you_rate_form2:
+          attributes:
             deal_with_conflict:
               blank: Rate the candidate's ability to deal with conflicts
             prioritise_workload:
               blank: Rate the candidate's ability to prioritise and manage their own workload
-        referees/how_would_you_rate_form2:
-          attributes:
             team_working:
               blank: Rate the candidate's team working skills
             communication:
               blank: Rate the candidate's communication skills
+        referees/how_would_you_rate_form3:
+          attributes:
             problem_solving:
               blank: Rate the candidate's problem solving skills
             general_attitude:
@@ -144,15 +146,16 @@ en:
           *rating_options
         adapt_to_change_options:
           *rating_options
+      referees_how_would_you_rate_form2:
         deal_with_conflict_options:
           *rating_options
         prioritise_workload_options:
           *rating_options
-      referees_how_would_you_rate_form2:
         team_working_options:
           *rating_options
         communication_options:
           *rating_options
+      referees_how_would_you_rate_form3:
         problem_solving_options:
           *rating_options
         general_attitude_options:
@@ -193,11 +196,12 @@ en:
         working_relationships: Ability to build effective working relationships
         customer_care: Customer care skills
         adapt_to_change: Ability to adapt to change
+      referees_how_would_you_rate_form2:
         deal_with_conflict: Ability to deal with conflict
         prioritise_workload: Ability to manage and prioritise own workload
-      referees_how_would_you_rate_form2:
         team_working: Team working skills
         communication: Communication skills
+      referees_how_would_you_rate_form3:
         problem_solving: Problem solving/decision making skills
         general_attitude: General attitude
         technical_competence: Technical/clinical competence (for clinical/professional posts only)
