@@ -57,3 +57,9 @@
       = t("helpers.legend.referees_how_would_you_rate_form2.#{field}")
     .govuk-body
       = t("helpers.label.referees_how_would_you_rate_form2.#{field}_options.#{reference.public_send(field)}")
+
+  - JobReference::RATINGS_FIELDS_3.each do |field|
+    .govuk-heading-m
+      = t("helpers.legend.referees_how_would_you_rate_form3.#{field}")
+    .govuk-body
+      = t("helpers.label.referees_how_would_you_rate_form3.#{field}_options.#{reference.public_send(field)}")
