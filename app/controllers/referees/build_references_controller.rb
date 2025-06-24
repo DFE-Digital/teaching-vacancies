@@ -12,7 +12,8 @@ module Referees
       fit_and_proper_persons: Referees::FitAndProperPersonsForm,
       employment_reference: Referees::EmploymentReferenceForm,
       reference_information: Referees::ReferenceInformationForm,
-      how_would_you_rate: Referees::HowWouldYouRateForm,
+      how_would_you_rate_part_1: Referees::HowWouldYouRateForm1,
+      how_would_you_rate_part_2: Referees::HowWouldYouRateForm2,
       referee_details: Referees::RefereeDetailsForm,
     }.freeze
 

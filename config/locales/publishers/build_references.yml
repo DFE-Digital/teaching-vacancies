@@ -81,7 +81,12 @@ en:
         heading: Reference enquiry for %{name}
         caption: Part 3 of 5
 
-      how_would_you_rate:
+      how_would_you_rate_part_1:
+        page_title: How would you rate %{name}?
+        heading: Reference enquiry for %{name}
+        caption: Part 4 of 5
+
+      how_would_you_rate_part_2:
         page_title: How would you rate %{name}?
         heading: Reference enquiry for %{name}
         caption: Part 4 of 5

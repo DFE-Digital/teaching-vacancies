@@ -29,7 +29,7 @@ en:
               inclusion: Select yes if you would re-employ the candidate in their current role
             would_reemploy_any:
               inclusion: Select yes if you would re-employ the candidate in any role
-        referees/how_would_you_rate_form:
+        referees/how_would_you_rate_form1:
           attributes:
             punctuality:
               blank: Rate the candidate's punctuality and timekeeping
@@ -43,6 +43,8 @@ en:
               blank: Rate the candidate's ability to deal with conflicts
             prioritise_workload:
               blank: Rate the candidate's ability to prioritise and manage their own workload
+        referees/how_would_you_rate_form2:
+          attributes:
             team_working:
               blank: Rate the candidate's team working skills
             communication:
@@ -133,7 +135,7 @@ en:
         poor: Poor
         na: N/A
 
-      referees_how_would_you_rate_form:
+      referees_how_would_you_rate_form1:
         punctuality_options:
           *rating_options
         working_relationships_options:
@@ -146,6 +148,7 @@ en:
           *rating_options
         prioritise_workload_options:
           *rating_options
+      referees_how_would_you_rate_form2:
         team_working_options:
           *rating_options
         communication_options:
@@ -185,13 +188,14 @@ en:
           To the best of your knowledge and with reference to the attached job description and person specification,
           are you satisfied that the applicant has the ability and is suitable to undertake this role?
 
-      referees_how_would_you_rate_form:
+      referees_how_would_you_rate_form1:
         punctuality: Punctuality/timekeeping
         working_relationships: Ability to build effective working relationships
         customer_care: Customer care skills
         adapt_to_change: Ability to adapt to change
         deal_with_conflict: Ability to deal with conflict
         prioritise_workload: Ability to manage and prioritise own workload
+      referees_how_would_you_rate_form2:
         team_working: Team working skills
         communication: Communication skills
         problem_solving: Problem solving/decision making skills
