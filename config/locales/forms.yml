@@ -225,7 +225,7 @@ en:
       publishers_job_listing_how_to_receive_applications_form:
         receive_applications_options:
           email: You’ll need to upload an application form.
-          website: You’ll need to provide a link to the website
+          website: You’ll need to provide a link to the website.
           uploaded_form: You’ll need to upload an application form. You will receive an email when an applicant has uploaded and submitted their completed application form.
       publishers_job_listing_include_additional_documents_form:
         include_additional_documents: For example, a job description or person specification
