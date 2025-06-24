@@ -3,8 +3,15 @@ en:
     build_references:
       can_give:
         page_title: Give a reference for %{name}
+        heading: Give a reference for %{name}
+        caption: >-
+          %{name} has been invited for an interview at %{school} for the %{role} position.
+          They have said that you can give them a reference.
       can_share:
         page_title: Give a reference for %{name}
+        heading: Give a reference for %{name}
+        caption: >-
+          You can choose whether %{name} should be able to see the contents of your reference or if it should be confidential.
       completed:
         page_title: Reference completed
         reference_completed: Reference completed
