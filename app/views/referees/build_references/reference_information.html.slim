@@ -33,7 +33,7 @@ h1.govuk-heading-l = t(".heading", name: @referee.job_application.name)
     = f.govuk_radio_button :not_fit_to_practice, "false"
 
   = f.govuk_radio_buttons_fieldset :able_to_undertake_role do
-    = f.govuk_radio_button :able_to_undertake_role, "true" do
+    = f.govuk_radio_button :able_to_undertake_role, "true"
     = f.govuk_radio_button :able_to_undertake_role, "false"
 
   = f.govuk_submit t("buttons.continue")

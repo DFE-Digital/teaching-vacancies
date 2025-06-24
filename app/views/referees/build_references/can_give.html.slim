@@ -11,8 +11,7 @@ p = t(".caption", name: @referee.job_application.name,
   = f.hidden_field :token, value: @form.token
 
   = f.govuk_radio_buttons_fieldset :can_give_reference,
-    legend: { size: "m", text: t("helpers.legend.referees_can_give_reference_form.can_give_reference",
-      name: @referee.job_application.name) } do
+    legend: { size: "m", text: t("helpers.legend.referees_can_give_reference_form.can_give_reference", name: @referee.job_application.name) } do
     = f.govuk_radio_button :can_give_reference, "true"
     = f.govuk_radio_button :can_give_reference, "false"
 
