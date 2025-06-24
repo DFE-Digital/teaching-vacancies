@@ -10,6 +10,18 @@ en:
           attributes:
             is_reference_sharable:
               inclusion: Select yes if the reference is sharable with the candidate upon request
+        referees/reference_information_form:
+          attributes:
+            under_investigation:
+              inclusion: Select yes if the applicant is currently under investigation for any matter
+            warnings:
+              inclusion: Select yes if there any warnings on the applicant’s record
+            allegations:
+              inclusion: Select yes if you aware of any allegations or concerns that have been raised about the candidate
+            not_fit_to_practice:
+              inclusion: Select yes if the applicant has been investigated for, or been found not fit to practice
+            able_to_undertake_role:
+              inclusion: Select yes if the applicant has the ability and is suitable to undertake this role
         referees/employment_reference_form:
           attributes:
             how_do_you_know_the_candidate:
