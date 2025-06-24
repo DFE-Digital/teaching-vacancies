@@ -19,12 +19,12 @@
       - body.with_row do |row|
         - row.with_cell(text: govuk_link_to(reference_request.referee.name, organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, reference_request)))
 
-        - if reference_request.sent?
-          - row.with_cell(text: t(".sent_at", date: reference_request.updated_at.to_fs(:time_on_date)))
-          - row.with_cell(text: govuk_tag(text: t(".pending_status"), colour: "blue"))
-        - elsif reference_request.received?
+        - if reference_request.received?
           - row.with_cell(text: t(".received_at", date: reference_request.updated_at.to_fs(:time_on_date)))
           - row.with_cell(text: govuk_tag(text: t(".received_status"), colour: "purple"))
+        - elsif reference_request.sent?
+          - row.with_cell(text: t(".sent_at", date: reference_request.updated_at.to_fs(:time_on_date)))
+          - row.with_cell(text: govuk_tag(text: t(".pending_status"), colour: "blue"))
         - else
           - row.with_cell(text: t(".created_at", date: reference_request.updated_at.to_fs(:time_on_date)))
           - row.with_cell(text: govuk_tag(text: t(".created_status"), colour: "grey"))
