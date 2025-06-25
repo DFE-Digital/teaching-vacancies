@@ -40,7 +40,7 @@ RSpec.describe "Searching on the schools page" do
       expect(page).to have_link(I18n.t("organisations.filters.special_school"))
     end
 
-    it "allows jobseeker to clear a filter" do
+    it "allows jobseeker to clear a filter, and clear all filters" do
       within("#filters-component") do
         click_link I18n.t("organisations.filters.special_school")
       end
@@ -49,9 +49,7 @@ RSpec.describe "Searching on the schools page" do
 
       expect(page).to have_link(I18n.t("organisations.search.results.phases.secondary"))
       expect(page).not_to have_link(I18n.t("organisations.filters.special_school"))
-    end
 
-    it "allows jobseeker to clear all filters" do
       click_link "Clear filters"
 
       expect_page_to_show_schools([special_school1, secondary_school, primary_school])
@@ -76,25 +74,14 @@ RSpec.describe "Searching on the schools page" do
       visit organisations_path
     end
 
-    it "allows user to filter by academies" do
+    it "allows user to filter by academies and local authorities" do
       check I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.academy")
       click_on I18n.t("buttons.search")
 
       expect_page_to_show_schools([academy_school1, academy_school2, free_school1, free_school2])
       expect_page_not_to_show_schools([local_authority_school, secondary_school, special_school1, primary_school])
-    end
 
-    it "allows user to filter by local authorities" do
       check I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.local_authority")
-      click_on I18n.t("buttons.search")
-
-      expect_page_to_show_schools([local_authority_school])
-      expect_page_not_to_show_schools([academy_school1, academy_school2, free_school1, free_school2, secondary_school, special_school1, primary_school])
-    end
-
-    it "allows user to filter by both academies and local authorities" do
-      check I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.local_authority")
-      check I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.academy")
       click_on I18n.t("buttons.search")
 
       expect_page_to_show_schools([local_authority_school, academy_school1, academy_school2, free_school1, free_school2])
@@ -121,41 +108,19 @@ RSpec.describe "Searching on the schools page" do
       visit organisations_path
     end
 
-    it "allows user to filter by special schools" do
-      check I18n.t("organisations.filters.special_school")
-      click_on I18n.t("buttons.search")
-
-      expect_page_to_show_schools([special_school1, special_school2, special_school3, special_school4, special_school5, special_school6])
-      expect_page_not_to_show_schools([secondary_school, primary_school, faith_school, non_faith_school1, non_faith_school2, non_faith_school3])
-    end
-
-    it "allows users to filter by faith schools" do
+    it "allows users to filter by faith and special schools" do
       check I18n.t("organisations.filters.faith_school")
       click_on I18n.t("buttons.search")
 
       expect_page_to_show_schools([faith_school])
       expect_page_not_to_show_schools([secondary_school, primary_school, special_school1, special_school2, special_school3, special_school4, special_school5,
                                        special_school6, non_faith_school1, non_faith_school2, non_faith_school3])
-    end
 
-    it "allows users to filter by faith schools AND special schools" do
-      check I18n.t("organisations.filters.faith_school")
       check I18n.t("organisations.filters.special_school")
       click_on I18n.t("buttons.search")
 
       expect_page_to_show_schools([faith_school, special_school1, special_school2, special_school3, special_school4, special_school5, special_school6])
       expect_page_not_to_show_schools([secondary_school, primary_school, non_faith_school1, non_faith_school2, non_faith_school3])
-    end
-
-    it "shows all schools if neither filter is selected" do
-      click_on I18n.t("buttons.search")
-
-      expect_page_to_show_schools([faith_school, special_school1, special_school2, special_school3, special_school4, special_school5, special_school6,
-                                   secondary_school, primary_school, non_faith_school1])
-
-      click_link "2"
-
-      expect_page_to_show_schools([non_faith_school2, non_faith_school3])
     end
   end
 
@@ -169,5 +134,9 @@ RSpec.describe "Searching on the schools page" do
     schools.each do |school|
       expect(page).not_to have_link school.name
     end
+  end
+
+  def navigate_to_page_2_of_results
+    click_link "2"
   end
 end

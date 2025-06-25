@@ -15,9 +15,8 @@ RSpec.describe "Jobseekers can delete a draft job application" do
 
     click_on job_application.vacancy.job_title
     click_on I18n.t("buttons.delete_application")
-    click_on I18n.t("jobseekers.job_applications.confirm_destroy.confirm")
+    expect { click_on I18n.t("jobseekers.job_applications.confirm_destroy.confirm") }.to change(JobApplication, :count).by(-1)
 
     expect(page).to have_content(I18n.t("messages.jobseekers.job_applications.draft_deleted", job_title: vacancy.job_title))
-    expect(JobApplication.count).to be_zero
   end
 end

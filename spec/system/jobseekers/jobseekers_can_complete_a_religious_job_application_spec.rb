@@ -87,7 +87,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
               complete_from_references_page
             end
 
-            it "has the correct content" do
+            it "shows the referee details" do
               expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
 
               expect(page).to have_content(referee_name)
@@ -101,7 +101,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
               expect(job_application.reload).to have_attributes(religious_reference_type: "referee")
             end
 
-            it "can be submitted as an application" do
+            it "can submit application" do
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
               click_on I18n.t("buttons.submit_application")
@@ -135,7 +135,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
               expect(page).to have_content("blank_baptism_cert.pdf")
             end
 
-            it "can be submitted as an application" do
+            it "can submit application" do
               complete_from_references_page
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")

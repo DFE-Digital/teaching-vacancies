@@ -35,13 +35,13 @@ RSpec.describe "Jobseekers can add professional body memberships to their profil
       end
     end
 
-    context "when editing training" do
+    context "when editing professional body memberships" do
       before do
         create(:professional_body_membership, jobseeker_profile: profile)
         visit jobseekers_profile_path
       end
 
-      it "allows jobseeker to edit training" do
+      it "allows jobseeker to edit professional body memberships" do
         expect_page_to_have_values("Teachers Union", "Platinum", "100", "2020", "Yes")
 
         within(".govuk-summary-card__title-wrapper", text: "Teachers Union") do
@@ -62,13 +62,13 @@ RSpec.describe "Jobseekers can add professional body memberships to their profil
       end
     end
 
-    context "when deleting training" do
+    context "when deleting professional body memberships" do
       before do
         create(:professional_body_membership, jobseeker_profile: profile)
         visit jobseekers_profile_path
       end
 
-      it "allows users to delete training" do
+      it "allows users to delete professional body memberships" do
         expect_page_to_have_values("Teachers Union", "Platinum", "100", "2020", "Yes")
 
         within(".govuk-summary-card__title-wrapper", text: "Teachers Union") do
