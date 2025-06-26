@@ -6,10 +6,9 @@ en:
           page_title: Self-disclosure form
           heading: Self-disclosure form
           description:
-            html: >-
-              <p class="govuk-hint">You are being asked to complete this form because the role you are applying for is exempt from the Rehabilitation of Offenders Act 1974 in England, Scotland and Wales, or the Rehabilitation of Offenders (Northern Ireland) Order 1978 and involves contact with children or young people.</p>
-              <p class="govuk-hint">As the role you have applied for involves work with children, you will also be required to undergo the relevant vetting and barring checks.</p>
-              <p class="govuk-hint">All information you provide will be treated as confidential and managed in accordance with relevant data protection legislation and guidance. You have a legal right to access any information held about you.</p>
+            - "You are being asked to complete this form because the role you are applying for is exempt from the Rehabilitation of Offenders Act 1974 in England, Scotland and Wales, or the Rehabilitation of Offenders (Northern Ireland) Order 1978 and involves contact with children or young people."
+            - "As the role you have applied for involves work with children, you will also be required to undergo the relevant vetting and barring checks."
+            - "All information you provide will be treated as confidential and managed in accordance with relevant data protection legislation and guidance. You have a legal right to access any information held about you."
           personal_details: Personal details
           criminal_record:
             heading: Criminal record declaration

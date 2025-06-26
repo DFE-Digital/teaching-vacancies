@@ -605,9 +605,11 @@ en:
         pre_interview_checks:
           page_title: Pre Interview Checks
           sent_at: Request sent %{date}
+          requested_at: Request sent at %{time} on %{date}
           received_at: Received %{date}
           created_at: Created %{date}
           pending_status: Pending
+          completed_status: Completed
           received_status: Received
           created_status: Created
           references: References

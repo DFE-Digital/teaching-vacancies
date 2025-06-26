@@ -20,6 +20,7 @@
         - row.with_cell(text: govuk_link_to(reference_request.referee.name, organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, reference_request)))
 
         - if reference_request.sent?
+
           - row.with_cell(text: t(".sent_at", date: reference_request.updated_at.to_date.to_formatted_s))
           - row.with_cell(text: govuk_tag(text: t(".pending_status"), colour: "blue"))
         - elsif reference_request.received?
@@ -41,10 +42,11 @@
         - row.with_cell do
           = govuk_link_to("Self-dislosure form", organisation_job_job_application_self_disclosure_path(vacancy.id, @job_application.id))
         - if @job_application.self_disclosure_request.completed?
-          - row.with_cell(text: "Completed on the #{@job_application.self_disclosure_request.updated_at.to_fs}")
+          - row.with_cell(text: t(".received_at", date: @job_application.self_disclosure_request.updated_at.to_fs(:day_month_year)))
           - row.with_cell do
-            = govuk_tag(text: "COMPLETED", colour: "green")
+            = govuk_tag(text: t(".completed_status"), colour: "green")
         - if @job_application.self_disclosure_request.pending?
-          - row.with_cell(text: "Request sent on the #{@job_application.self_disclosure_request.updated_at.to_fs}")
+          - time, date = %i[time_only day_month_year].map { @job_application.self_disclosure_request.updated_at.to_fs(it) }
+          - row.with_cell(text: t(".requested_at", time:, date:))
           - row.with_cell do
-            = govuk_tag(text: "PENDING", colour: "blue")
+            = govuk_tag(text: t(".pending_status"), colour: "blue")
