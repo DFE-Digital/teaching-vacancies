@@ -102,7 +102,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   def show_application_feature_reminder_page?
     return false if session[:visited_application_feature_reminder_page] || session[:visited_new_features_page]
 
-    Vacancy.kept.where(
+    PublishedVacancy.kept.where(
       publisher_id: current_publisher.id,
       enable_job_applications: true,
       created_at: Publishers::NewFeaturesController::NEW_FEATURES_PAGE_UPDATED_AT..,
