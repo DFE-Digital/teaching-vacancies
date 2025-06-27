@@ -13,7 +13,6 @@ en:
           heading: You have now unsubscribed
         title: You are now unsubscribed
     activity_log:
-      about_school: There were changes to about %{organisation_type}
       application_link: Link to online application changed to %{new_value}
       contact_email: Contact email changed to %{new_value}
       contact_number: Contact number changed to %{new_value}
@@ -24,7 +23,6 @@ en:
       expires_at:
         changed: Application deadline changed to %{new_value}
       how_to_apply: How to apply changed to %{new_value}
-      job_advert: There were changes to the job advert
       job_role: Job role changed to %{new_value}
       job_roles:
         one: Job role changed to %{new_value}
@@ -40,9 +38,7 @@ en:
       other_start_date_details:
         changed: Start date details changed to %{new_value}
         deleted: Start date details were deleted
-      personal_statement_guidance: Personal statement guidance changed to %{new_value}
       salary: Salary changed to %{new_value}
-      school_visits: "%{organisation_type} visits changed to %{new_value}"
       starts_on:
         changed: Expected start date changed to %{new_value}
         deleted: Expected start date was deleted

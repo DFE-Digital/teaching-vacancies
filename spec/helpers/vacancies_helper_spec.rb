@@ -252,15 +252,6 @@ RSpec.describe VacanciesHelper do
       end
     end
 
-    context "when the translation requires the organisation type" do
-      let(:attribute) { "about_school" }
-      let(:new_value) { "This is a school description" }
-
-      it "returns the correct translation" do
-        expect(subject).to eq(I18n.t("publishers.activity_log.#{attribute}", organisation_type: organisation_type))
-      end
-    end
-
     context "when the attribute is an array enum" do
       let(:attribute) { "working_patterns" }
       let(:new_value) { [0, 100] }
@@ -291,16 +282,6 @@ RSpec.describe VacanciesHelper do
       end
     end
 
-    context "when the attribute is 'school_visits'" do
-      let(:attribute) { "school_visits" }
-      let(:new_value) { "Information on visiting the school" }
-
-      it "returns the correct translation" do
-        expect(subject).to eq(I18n.t("publishers.activity_log.school_visits", organisation_type: organisation_type.capitalize,
-                                                                              new_value: new_value))
-      end
-    end
-
     context "when the attribute is 'other_start_date_details'" do
       let(:attribute) { "other_start_date_details" }
 
@@ -318,15 +299,6 @@ RSpec.describe VacanciesHelper do
         it "returns the correct translation" do
           expect(subject).to eq(I18n.t("publishers.activity_log.#{attribute}.changed", new_value: new_value))
         end
-      end
-    end
-
-    context "when none of the contexts above apply" do
-      let(:attribute) { "how_to_apply" }
-      let(:new_value) { "Show us if you can do the worm" }
-
-      it "returns the correct translation" do
-        expect(subject).to eq(I18n.t("publishers.activity_log.#{attribute}", new_value: new_value.humanize))
       end
     end
   end
@@ -402,7 +374,7 @@ RSpec.describe VacanciesHelper do
       end
 
       context "when the draft is incomplete" do
-        let(:vacancy) { create(:vacancy, :published, job_advert: nil) }
+        let(:vacancy) { create(:vacancy, :published) }
         let(:status) { "incomplete_draft" }
 
         it "returns the correct text" do
