@@ -82,9 +82,9 @@ h2.govuk-heading-m = t("organisations.show.summary.heading")
 
   = map(markers: organisation_map_marker(organisation), marker: { type: "organisation", tracking: { link: "school_website_from_map" } })
 
-- if vacancies.any?
-  h2.govuk-heading-m = t("organisations.show.vacancies.heading")
+h2.govuk-heading-m = t("organisations.show.vacancies.heading")
 
+- if vacancies.any?
   - vacancies.each do |vacancy|
     h3.govuk-heading-s class="govuk-!-margin-bottom-0"
       span class="govuk-!-margin-right-2" = results_link(vacancy, class: "view-vacancy-link")
@@ -116,6 +116,8 @@ h2.govuk-heading-m = t("organisations.show.summary.heading")
         - row.with_value text: vacancy_working_patterns(vacancy), classes: "govuk-body-s govuk-!-padding-bottom-0 govuk-list"
 
     hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+- else
+  p = t(".no_active_jobs")
 
 - if organisation.school? && organisation.part_of_a_trust? && organisation.trust.all_vacancies.count != vacancies.count
   p = govuk_link_to t(".see_trust_jobs", name: organisation.trust.name, count: organisation.trust.all_vacancies.count), organisation_path(organisation.trust)
