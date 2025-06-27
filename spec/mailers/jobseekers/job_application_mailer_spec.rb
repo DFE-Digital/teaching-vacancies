@@ -36,12 +36,12 @@ RSpec.describe Jobseekers::JobApplicationMailer do
   end
 
   describe "#job_listing_ended_early" do
-    let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
+    let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy, email_address: "other.email@contoso.com") }
     let(:mail) { described_class.job_listing_ended_early(job_application, vacancy) }
 
-    it "sends a `jobseeker_job_listing_ended_early` email" do
+    it "sends a `jobseeker_job_listing_ended_early` email to the jobseeker account's email address" do
       expect(mail.subject).to eq("Update on #{vacancy.job_title} at #{vacancy.organisation_name}")
-      expect(mail.to).to eq([job_application.email_address])
+      expect(mail.to).to eq([jobseeker.email])
       expect(mail.body.encoded).to include(I18n.t("jobseekers.job_application_mailer.job_listing_ended_early.heading",
                                                   job_title: vacancy.job_title, organisation_name: vacancy.organisation_name))
       expect(mail.body.encoded).to include(jobseekers_job_application_url(job_application))
