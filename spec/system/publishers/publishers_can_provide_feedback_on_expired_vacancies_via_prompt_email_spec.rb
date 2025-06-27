@@ -60,7 +60,7 @@ RSpec.describe "Publishers can provide feedback on expired vacancies via the pro
     let(:second_publisher) { create(:publisher, email: second_email) }
 
     before do
-      create_list(:vacancy, 2,  publisher: publisher, expires_at: 4.weeks.ago)
+      create_list(:vacancy, 2, publisher: publisher, expires_at: 4.weeks.ago)
       create_list(:vacancy, 2, publisher: second_publisher, expires_at: 4.weeks.ago)
       perform_enqueued_jobs do
         SendExpiredVacancyFeedbackPromptJob.new.perform

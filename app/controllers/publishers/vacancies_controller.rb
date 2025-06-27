@@ -78,7 +78,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def convert_to_draft
-    vacancy.draft!
+    vacancy.update!(type: "DraftVacancy")
     redirect_to organisation_job_path(vacancy.id)
   end
 
