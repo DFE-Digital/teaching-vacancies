@@ -59,10 +59,6 @@ module VacanciesHelper
     end)
   end
 
-  def vacancy_or_organisation_description(vacancy)
-    vacancy.organisation.description.presence
-  end
-
   def vacancy_job_location_summary(vacancy)
     return vacancy.organisation_name if vacancy.organisation.is_a?(School)
 

@@ -12,8 +12,8 @@ section#school-overview
   - else
     = render "vacancies/listing/school", organisation: vacancy.organisation, vacancy: vacancy, contact_details: true
 
-  - if vacancy_or_organisation_description(vacancy).present?
-    p.govuk-body = simple_format(vacancy_or_organisation_description(vacancy))
+  - if vacancy.organisation.description.present?
+    p.govuk-body = simple_format(vacancy.organisation.description)
 
   - if vacancy.organisations.many?
     h3.govuk-heading-m = t(".schools.school_details")
