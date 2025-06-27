@@ -54,7 +54,7 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated::Query do
       [31, 62, 93, 124, 155, 186].each do |days|
         it "includes internal vacancies published exactly #{days} days ago" do
           vacancy = create(:vacancy, publish_on: days.days.ago, expires_at: Time.zone.now + 12.days,
-                                                 created_at: days.days.ago, updated_at: days.days.ago)
+                                     created_at: days.days.ago, updated_at: days.days.ago)
           expect(subject.vacancies).to contain_exactly(vacancy)
         end
       end
@@ -62,7 +62,7 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated::Query do
       [15, 30, 60, 61, 63].each do |days|
         it "does not include internal vacancies published exactly #{days} days ago" do
           create(:vacancy, publish_on: days.days.ago, expires_at: Time.zone.now + 12.days,
-                                       created_at: days.days.ago, updated_at: days.days.ago)
+                           created_at: days.days.ago, updated_at: days.days.ago)
           expect(subject.vacancies).to be_empty
         end
       end
