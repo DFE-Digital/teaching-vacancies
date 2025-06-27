@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: qa.teaching-vacancies.service.gov.uk
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: qa.teaching-vacancies.service.gov.uk
+    http:
+      paths:
+      - pathType: ImplementationSpecific
+        backend:
+          service:
+            name: teaching-vacancies-maintenance
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: qa.teaching-jobs.service.gov.uk
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: qa.teaching-jobs.service.gov.uk
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: teaching-vacancies-maintenance
+                port:
+                  number: 80
