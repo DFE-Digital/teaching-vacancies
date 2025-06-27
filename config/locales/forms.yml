@@ -53,6 +53,7 @@ en:
     dismiss: Dismiss
     download_pdf_application: Download application
     download_application_form: Download an application form - %{size}
+    download_submitted_application_form: Download submitted application form - %{size}
     download_stats: Download statistics (csv, 0.2KB)
     edit: Edit
     end_listing: Close job listing
