@@ -29,7 +29,6 @@
           - row.with_cell(text: t(".created_at", date: reference_request.updated_at.to_fs(:time_on_date)))
           - row.with_cell(text: govuk_tag(text: t(".created_status"), colour: "grey"))
 
-= govuk_table do |table|
   - table.with_head do |head|
     - head.with_row do |row|
       - row.with_cell(text: "Declarations")
@@ -39,9 +38,9 @@
     - if @job_application.self_disclosure_request
       - body.with_row do |row|
         - row.with_cell do
-          = govuk_link_to("Self-dislosure form", organisation_job_job_application_self_disclosure_path(vacancy.id, @job_application.id))
+          = govuk_link_to("Self-disclosure form", organisation_job_job_application_self_disclosure_path(vacancy.id, @job_application.id))
         - if @job_application.self_disclosure_request.completed?
-          - row.with_cell(text: "Completed on the #{@job_application.self_disclosure_request.updated_at.to_fs}")
+          - row.with_cell(text: t(".completed_at", date: @job_application.self_disclosure_request.updated_at.to_fs(:time_on_date)))
           - row.with_cell do
             = govuk_tag(text: t(".completed_status"), colour: "green")
         - if @job_application.self_disclosure_request.pending?
