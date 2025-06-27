@@ -154,13 +154,12 @@ class Vacancy < ApplicationRecord
                   if: proc(&:listed?)
 
   # Publisher will need to set a new publish date if wanting to re-publish an scheduled vacancy turned back to a draft.
-  before_save -> { self.publish_on = nil if status_changed?(from: "published", to: "draft") }
-  # after_save :reset_markers, if: -> { saved_change_to_status? && (listed? || pending?) }
-  after_save :reset_markers, if: -> { (listed? || pending?) }
+  before_save -> { self.publish_on = nil if type_changed?(from: "PublishedVacancy", to: "DraftVacancy") }
+  after_save :reset_markers, if: -> { listed? || pending? }
 
   self.ignored_columns += [:status]
 
-  after_save :reset_markers, if: -> { saved_change_to_status? && (listed? || pending?) }
+  after_save :reset_markers, if: -> { saved_change_to_type? && (listed? || pending?) }
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[8:00 9:00 12:00 15:00 23:59].freeze

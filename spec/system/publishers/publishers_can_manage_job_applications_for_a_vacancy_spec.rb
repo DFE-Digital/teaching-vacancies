@@ -12,7 +12,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
   after { logout }
 
   context "when a vacancy has expired and it has applications", :js do
-    let!(:vacancy) { create(:vacancy, :expired, expires_at: 2.weeks.ago, organisations: [organisation], job_applications: job_applications) }
+    let(:vacancy) { create(:vacancy, :expired, expires_at: 2.weeks.ago, organisations: [organisation], job_applications: job_applications) }
 
     let(:job_applications) do
       [build(:job_application, :status_submitted, last_name: "Alan"),
