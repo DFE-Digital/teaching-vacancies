@@ -246,7 +246,7 @@ RSpec.describe DashboardComponent, type: :component do
     let(:organisation) { create(:school) }
     let(:vacancies) { [vacancy] }
     let(:vacancy) do
-      create(:vacancy, :published, organisations: [organisation])
+      create(:vacancy, organisations: [organisation])
     end
 
     before do
