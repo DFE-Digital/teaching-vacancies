@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teaching-vacancies-maintenance
+  labels:
+    app: teaching-vacancies-maintenance
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: teaching-vacancies-maintenance
+  template:
+    metadata:
+      labels:
+        app: teaching-vacancies-maintenance
+    spec:
+      nodeSelector:
+        teacherservices.cloud/node_pool: applications
+        kubernetes.io/os: linux
+      containers:
+      - name: teaching-vacancies-maintenance
+        image: ghcr.io/dfe-digital/teaching-vacancies-maintenance:#MAINTENANCE_IMAGE_TAG#
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: 64M
+            cpu: 0.1
+          limits:
+            memory: 64M
+            cpu: 1
