@@ -151,4 +151,55 @@ RSpec.describe JobseekerProfile, type: :model do
       expect { unrelated_employment.reload }.not_to raise_error
     end
   end
+
+  describe "#activable?" do
+    subject { profile.activable? }
+
+    let(:personal_details) { build_stubbed(:personal_details) }
+    let(:job_preferences) { build_stubbed(:job_preferences) }
+    let(:qualifications) { build_stubbed_list(:qualification, 1) }
+    let(:employments) { build_stubbed_list(:employment, 1, :current_role, job_application: nil) }
+
+    let(:profile) do
+      build_stubbed(:jobseeker_profile,
+                    personal_details: personal_details,
+                    qualifications: qualifications,
+                    job_preferences: job_preferences,
+                    employments: employments)
+    end
+
+    context "with full requirements" do
+      it { is_expected.to be true }
+    end
+
+    context "with employment_gaps" do
+      let(:employments) { build_stubbed_list(:employment, 1, job_application: nil) }
+
+      it { is_expected.to be false }
+    end
+
+    context "without qualifications" do
+      let(:qualifications) { [] }
+
+      it { is_expected.to be false }
+    end
+
+    context "without personal details" do
+      let(:personal_details) { nil }
+
+      it { is_expected.to be_nil }
+    end
+
+    context "with incomplete personal details" do
+      let(:personal_details) { build_stubbed(:personal_details, :not_started) }
+
+      it { is_expected.to be false }
+    end
+
+    context "without job preferences" do
+      let(:job_preferences) { nil }
+
+      it { is_expected.to be_nil }
+    end
+  end
 end
