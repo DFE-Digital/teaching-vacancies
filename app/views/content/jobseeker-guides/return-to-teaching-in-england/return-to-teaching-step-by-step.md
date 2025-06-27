@@ -44,7 +44,7 @@ You can find additional support on [Get support returning to teaching](/jobseeke
         You should spend time in a classroom to see if you're ready to return to teaching. Classroom experience can also help you secure a strong teaching reference for your applications. 
       </p>
       <p class="govuk-body">
-        <a href="/jobseeker-guides/return-to-teaching-in-england/find-classroom-experience">Finding classroom experience as a returning teacher</a>
+        <a href="/jobseeker-guides/return-to-teaching-in-england/find-classroom-experience">Finding classroom experience for returning teachers</a>
       </p>
       <p class="govuk-body">
         <a href="/jobseeker-guides/return-to-teaching-in-england/how-to-apply-for-classroom-experience">How to apply for classroom experience as a returning teacher</a>
