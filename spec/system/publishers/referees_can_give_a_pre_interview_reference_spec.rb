@@ -79,9 +79,25 @@ RSpec.describe "Publishers can select a job application for interview" do
         referee_reference_information_page.able_to_undertake_role_yes.click
 
         click_on I18n.t("buttons.continue")
-        expect(referee_how_would_you_rate_page).to be_displayed
+        expect(referee_how_would_you_rate1_page).to be_displayed
+        referee_how_would_you_rate1_page.outstanding_punctuality.click
+        referee_how_would_you_rate1_page.outstanding_working_relationships.click
+        referee_how_would_you_rate1_page.outstanding_customer_care.click
+        referee_how_would_you_rate1_page.outstanding_adapt_to_change.click
+        click_on I18n.t("buttons.continue")
 
-        tick_all_outstanding(referee_how_would_you_rate_page)
+        expect(referee_how_would_you_rate2_page).to be_displayed
+        referee_how_would_you_rate2_page.outstanding_deal_with_conflict.click
+        referee_how_would_you_rate2_page.outstanding_prioritise_workload.click
+        referee_how_would_you_rate2_page.outstanding_team_working.click
+        referee_how_would_you_rate2_page.outstanding_communication.click
+        click_on I18n.t("buttons.continue")
+
+        expect(referee_how_would_you_rate3_page).to be_displayed
+        referee_how_would_you_rate3_page.outstanding_problem_solving.click
+        referee_how_would_you_rate3_page.outstanding_general_attitude.click
+        referee_how_would_you_rate3_page.outstanding_technical_competence.click
+        referee_how_would_you_rate3_page.outstanding_leadership.click
         click_on I18n.t("buttons.continue")
 
         expect(referee_referee_details_page).to be_displayed
@@ -97,20 +113,5 @@ RSpec.describe "Publishers can select a job application for interview" do
         expect(referee.job_reference.reload).to be_complete
       end
     end
-  end
-
-  def tick_all_outstanding(page)
-    page.outstanding_punctuality.click
-    page.outstanding_working_relationships.click
-    page.outstanding_customer_care.click
-    page.outstanding_adapt_to_change.click
-    page.outstanding_deal_with_conflict.click
-    page.outstanding_prioritise_workload.click
-    page.outstanding_team_working.click
-    page.outstanding_communication.click
-    page.outstanding_problem_solving.click
-    page.outstanding_general_attitude.click
-    page.outstanding_technical_competence.click
-    page.outstanding_leadership.click
   end
 end
