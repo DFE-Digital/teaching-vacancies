@@ -1,0 +1,40 @@
+- content_for :page_title_prefix, t(".page_title", name: @reference.referee.job_application.name)
+
+span.govuk-caption-m = t(".caption")
+h1.govuk-heading-l = t(".heading")
+
+.govuk-body = t(".reg_19")
+
+ul.govuk-list.govuk-list--bullet
+  - t(".bullets").each do |b|
+    li = b
+
+.govuk-body = t(".legal_requirements")
+
+ul.govuk-list.govuk-list--bullet
+  - t(".legal_bullets").each do |b|
+    li = b
+
+.govuk-body = t(".essential")
+.govuk-body = t(".completing")
+
+h2.govuk-heading-m = t(".gdpr_heading")
+.govuk-body = t(".gdpr_1")
+.govuk-body = t(".gdpr_2")
+.govuk-body = t(".gdpr_3")
+
+ul.govuk-list.govuk-list--bullet
+  - t(".gdpr_bullets").each do |b|
+    li = b
+
+.govuk-body = t(".gdpr_4")
+.govuk-body = t(".gdpr_5")
+.govuk-body = t(".gdpr_6")
+.govuk-body = t(".gdpr_7")
+
+= form_with model: @form, url: wizard_path(step), method: :patch do |f|
+  = f.govuk_error_summary
+
+  = f.hidden_field :token, value: @form.token
+
+  = f.govuk_submit t("buttons.continue")
