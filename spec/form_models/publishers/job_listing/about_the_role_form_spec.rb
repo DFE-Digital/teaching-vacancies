@@ -14,7 +14,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
   describe "skills_and_experience" do
     let(:error) { %i[skills_and_experience blank] }
 
-    context "when skills_and_experience exceeds the maxiumum words " do
+    context "when skills_and_experience exceeds the maximum words " do
       let(:params) { { skills_and_experience: Faker::Lorem.sentence(word_count: 151) } }
       let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"]) }
 
