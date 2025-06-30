@@ -4,7 +4,7 @@ en:
       self_disclosure:
         review:
           pending:
-            tag: PENDING
+            tag: Pending
             line_1: Once the declaration is received you will be able to view it on this page. You will be able to send a reminder one week after the request.
             line_2: If the request is more urgent, you should reach out to the applicant directly. If you do not receive the declaration within one week, you will be able to send a reminder.
             manually_complete: Manually mark as complete
@@ -17,7 +17,7 @@ en:
               manually_completed: Manually completed
               managed_outside_tv: Managed outside TV
             self_disclosure_form: Self disclosure form
-            tag: COMPLETED
+            tag: Completed
             manually_completed: This self-disclosure form has been marked as completed.
             print: Print self-disclosure
             "true": "Yes"
