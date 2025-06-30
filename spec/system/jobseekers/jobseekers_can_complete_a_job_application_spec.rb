@@ -92,6 +92,7 @@ RSpec.describe "Jobseekers can complete a job application" do
       click_on I18n.t("buttons.add_another_reference")
       fill_in_referee
       click_on I18n.t("buttons.save_reference")
+      choose("Yes")
       choose I18n.t("helpers.label.jobseekers_job_application_referees_form.referees_section_completed_options.true")
       click_on I18n.t("buttons.save_and_continue")
 

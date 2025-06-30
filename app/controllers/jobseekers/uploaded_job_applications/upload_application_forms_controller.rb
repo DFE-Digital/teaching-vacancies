@@ -20,7 +20,7 @@ class Jobseekers::UploadedJobApplications::UploadApplicationFormsController < Jo
 
   def download_submitted_form
     submitted_job_application = current_jobseeker.job_applications.after_submission.find_by(id: params[:uploaded_job_application_id])
-    if submitted_job_application.present? && submitted_job_application.application_form.present?
+    if submitted_job_application&.application_form.present?
       send_data(
         submitted_job_application.application_form.download,
         filename: submitted_job_application.application_form.filename.to_s,
@@ -28,7 +28,7 @@ class Jobseekers::UploadedJobApplications::UploadApplicationFormsController < Jo
         disposition: "inline",
       )
     else
-      redirect_to jobseekers_job_applications_path, alert: "You are not authorized to download this file."
+      redirect_to jobseekers_job_applications_path, alert: I18n.t("jobseekers.uploaded_job_applications.upload_application_form.not_authorized_to_download")
     end
   end
 

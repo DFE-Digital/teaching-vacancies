@@ -94,12 +94,11 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def download_selected(tag_params)
     @form = Publishers::JobApplication::DownloadForm.new(job_applications: tag_params.fetch(:job_applications).compact_blank)
-  
     if @form.valid?
-      job_applications = JobApplication.includes(:application_form_attachment, :vacancy).where(vacancy: vacancy.id, id: @form.job_applications)
-  
+      job_applications = JobApplication.includes(:vacancy).where(vacancy: vacancy.id, id: @form.job_applications)
+
       zip_data = JobApplicationZipBuilder.new(vacancy: vacancy, job_applications: job_applications).generate
-  
+
       send_data(
         zip_data.string,
         filename: "applications_#{vacancy.job_title.parameterize}.zip",
