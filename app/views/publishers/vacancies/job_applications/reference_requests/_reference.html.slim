@@ -46,8 +46,20 @@
   .govuk-heading-l
     = t(".how_would_you_rate", name: reference.referee.job_application.name)
 
-  - JobReference::RATINGS_FIELDS.each do |field|
+  - JobReference::RATINGS_FIELDS_1.each do |field|
     .govuk-heading-m
-      = t("helpers.legend.referees_how_would_you_rate_form.#{field}")
+      = t("helpers.legend.referees_how_would_you_rate_form1.#{field}")
     .govuk-body
-      = t("helpers.label.referees_how_would_you_rate_form.#{field}_options.#{reference.public_send(field)}")
+      = t("helpers.label.referees_how_would_you_rate_form1.#{field}_options.#{reference.public_send(field)}")
+
+  - JobReference::RATINGS_FIELDS_2.each do |field|
+    .govuk-heading-m
+      = t("helpers.legend.referees_how_would_you_rate_form2.#{field}")
+    .govuk-body
+      = t("helpers.label.referees_how_would_you_rate_form2.#{field}_options.#{reference.public_send(field)}")
+
+  - JobReference::RATINGS_FIELDS_3.each do |field|
+    .govuk-heading-m
+      = t("helpers.legend.referees_how_would_you_rate_form3.#{field}")
+    .govuk-body
+      = t("helpers.label.referees_how_would_you_rate_form3.#{field}_options.#{reference.public_send(field)}")

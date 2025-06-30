@@ -10,6 +10,18 @@ en:
           attributes:
             is_reference_sharable:
               inclusion: Select yes if the reference is sharable with the candidate upon request
+        referees/reference_information_form:
+          attributes:
+            under_investigation:
+              inclusion: Select yes if the applicant is currently under investigation for any matter
+            warnings:
+              inclusion: Select yes if there any warnings on the applicant’s record
+            allegations:
+              inclusion: Select yes if you aware of any allegations or concerns that have been raised about the candidate
+            not_fit_to_practice:
+              inclusion: Select yes if the applicant has been investigated for, or been found not fit to practice
+            able_to_undertake_role:
+              inclusion: Select yes if the applicant has the ability and is suitable to undertake this role
         referees/employment_reference_form:
           attributes:
             how_do_you_know_the_candidate:
@@ -29,7 +41,7 @@ en:
               inclusion: Select yes if you would re-employ the candidate in their current role
             would_reemploy_any:
               inclusion: Select yes if you would re-employ the candidate in any role
-        referees/how_would_you_rate_form:
+        referees/how_would_you_rate_form1:
           attributes:
             punctuality:
               blank: Rate the candidate's punctuality and timekeeping
@@ -39,6 +51,8 @@ en:
               blank: Rate the candidate's customer care skills
             adapt_to_change:
               blank: Rate the candidates's capability of adapting to change
+        referees/how_would_you_rate_form2:
+          attributes:
             deal_with_conflict:
               blank: Rate the candidate's ability to deal with conflicts
             prioritise_workload:
@@ -47,6 +61,8 @@ en:
               blank: Rate the candidate's team working skills
             communication:
               blank: Rate the candidate's communication skills
+        referees/how_would_you_rate_form3:
+          attributes:
             problem_solving:
               blank: Rate the candidate's problem solving skills
             general_attitude:
@@ -133,7 +149,7 @@ en:
         poor: Poor
         na: N/A
 
-      referees_how_would_you_rate_form:
+      referees_how_would_you_rate_form1:
         punctuality_options:
           *rating_options
         working_relationships_options:
@@ -142,6 +158,7 @@ en:
           *rating_options
         adapt_to_change_options:
           *rating_options
+      referees_how_would_you_rate_form2:
         deal_with_conflict_options:
           *rating_options
         prioritise_workload_options:
@@ -150,6 +167,7 @@ en:
           *rating_options
         communication_options:
           *rating_options
+      referees_how_would_you_rate_form3:
         problem_solving_options:
           *rating_options
         general_attitude_options:
@@ -185,15 +203,17 @@ en:
           To the best of your knowledge and with reference to the attached job description and person specification,
           are you satisfied that the applicant has the ability and is suitable to undertake this role?
 
-      referees_how_would_you_rate_form:
+      referees_how_would_you_rate_form1:
         punctuality: Punctuality/timekeeping
         working_relationships: Ability to build effective working relationships
         customer_care: Customer care skills
         adapt_to_change: Ability to adapt to change
+      referees_how_would_you_rate_form2:
         deal_with_conflict: Ability to deal with conflict
         prioritise_workload: Ability to manage and prioritise own workload
         team_working: Team working skills
         communication: Communication skills
+      referees_how_would_you_rate_form3:
         problem_solving: Problem solving/decision making skills
         general_attitude: General attitude
         technical_competence: Technical/clinical competence (for clinical/professional posts only)
