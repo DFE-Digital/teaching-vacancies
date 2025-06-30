@@ -112,12 +112,10 @@ class Vacancy < ApplicationRecord
   scope :expired_yesterday, -> { where("DATE(expires_at) = ?", 1.day.ago.to_date) }
   scope :expires_within_data_access_period, -> { where("expires_at >= ?", Time.current - DATA_ACCESS_PERIOD_FOR_PUBLISHERS) }
   scope :in_organisation_ids, ->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).distinct }
-  # scope :non_draft, -> { kept.published }
-  scope :listed, -> { kept.where("publish_on <= ?", Date.current) }
+  scope :listed, -> { kept.where.not(publish_on: nil).where("publish_on <= ?", Date.current) }
   scope :live, -> { listed.applicable }
-  scope :pending, -> { kept.where("publish_on > ?", Date.current) }
+  scope :pending, -> { kept.where.not(publish_on: nil).where("publish_on > ?", Date.current) }
   scope :quick_apply, -> { where(enable_job_applications: true) }
-  scope :published_on_count, ->(date) { kept.where(publish_on: date.all_day).count }
   scope :visa_sponsorship_available, -> { where(visa_sponsorship_available: true) }
 
   scope :internal, -> { where(external_source: nil, publisher_ats_api_client_id: nil) }
