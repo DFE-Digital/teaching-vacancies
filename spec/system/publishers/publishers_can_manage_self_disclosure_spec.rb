@@ -57,14 +57,14 @@ RSpec.describe "Publishers manage self disclosure" do
             job_application_id: job_application.id,
           )
 
-          expect(publisher_ats_self_disclosure_page.status.text).to eq("PENDING")
+          expect(publisher_ats_self_disclosure_page.status.text).to eq("Pending")
           expect(publisher_ats_self_disclosure_page.button.text).to eq("Manually mark as complete")
           expect(publisher_ats_self_disclosure_page).not_to have_goto_references_and_declaration_form
 
           publisher_ats_self_disclosure_page.button.click
 
           expect(publisher_ats_self_disclosure_page.banner_title.text).to eq("Success")
-          expect(publisher_ats_self_disclosure_page.status.text).to eq("COMPLETED")
+          expect(publisher_ats_self_disclosure_page.status.text).to eq("Completed")
         end
       end
 
@@ -83,7 +83,7 @@ RSpec.describe "Publishers manage self disclosure" do
             job_application_id: job_application.id,
           )
 
-          expect(publisher_ats_self_disclosure_page.status.text).to eq("COMPLETED")
+          expect(publisher_ats_self_disclosure_page.status.text).to eq("Completed")
           expect(publisher_ats_self_disclosure_page.button.text).to eq("Print self-disclosure")
           expect(publisher_ats_self_disclosure_page.personal_details.heading.text).to eq("Personal details")
           expect(publisher_ats_self_disclosure_page.criminal_details.heading.text).to eq("Criminal record declaration")
@@ -126,7 +126,7 @@ RSpec.describe "Publishers manage self disclosure" do
             vacancy_id: vacancy.id,
             job_application_id: job_application.id,
           )
-          expect(publisher_ats_self_disclosure_page.status.text).to eq("PENDING")
+          expect(publisher_ats_self_disclosure_page.status.text).to eq("Pending")
           expect(publisher_ats_self_disclosure_page.button.text).to eq("Manually mark as complete")
           expect(
             publisher_ats_self_disclosure_page.goto_references_and_declaration_form.text,

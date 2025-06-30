@@ -8,7 +8,8 @@
     span.govuk-caption-m = "Part 4 of 4"
     h1.govuk-heading-l = t(".heading")
     h2.govuk-heading-m = t(".confirmation_declaration")
-    = t(".description.html")
+    - t(".description").each do |text|
+      p.govuk-hint = text
 
   = form_with(model: @form, url: wizard_path(step), method: :patch) do |f|
     = f.govuk_error_summary

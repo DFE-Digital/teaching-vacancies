@@ -7,9 +7,8 @@ en:
           heading: Self-disclosure form
           barred_list_declaration: Barred list declaration
           description:
-            html: >-
-              <p class="govuk-hint">If this role has been defined as regulated activity or work it will also be subject to an enhanced with barred list check in England, Northern Ireland and Wales or checks under the Protecting Vulnerable Groups scheme in Scotland.</p>
-              <p class="govuk-hint"><It is a criminal offence to apply for or accept a position working with children if you have been barred from/listed as unsuitable to engage in regulated activity/work with children.</p>
+            - "It is a criminal offence to apply for or accept a position working with children if you have been barred from/listed as unsuitable to engage in regulated activity/work with children."
+            - "If this role has been defined as regulated activity or work it will also be subject to an enhanced with barred list check in England, Northern Ireland and Wales or checks under the Protecting Vulnerable Groups scheme in Scotland." 
 
   helpers:
     legend:
