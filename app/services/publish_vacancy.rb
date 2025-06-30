@@ -10,7 +10,7 @@ class PublishVacancy
   def call
     vacancy.publisher_organisation = current_organisation
     vacancy.publisher = current_publisher
-    vacancy.status = :published
+    vacancy.type = "PublishedVacancy"
     vacancy.save
   end
 end

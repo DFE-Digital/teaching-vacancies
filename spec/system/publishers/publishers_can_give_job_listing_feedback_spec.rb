@@ -22,7 +22,7 @@ RSpec.describe "Publishers can give job listing feedback" do
   end
 
   context "when the vacancy is published" do
-    let(:vacancy) { create(:vacancy, :published, organisations: [organisation], publisher: publisher) }
+    let(:vacancy) { create(:vacancy, organisations: [organisation], publisher: publisher) }
 
     it "submits blank feedback, renders error and then submits feedback successfully" do
       click_on I18n.t("buttons.submit_feedback")

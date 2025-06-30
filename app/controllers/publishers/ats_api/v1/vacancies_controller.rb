@@ -47,7 +47,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   private
 
   def set_vacancy
-    @vacancy = Vacancy.non_draft.find_by!(publisher_ats_api_client: client, id: params[:id])
+    @vacancy = PublishedVacancy.kept.find_by!(publisher_ats_api_client: client, id: params[:id])
   end
 
   def required_vacancy_keys
@@ -99,9 +99,9 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   end
 
   def vacancies
-    Vacancy
+    PublishedVacancy
       .includes(:organisations)
-      .non_draft
+      .kept
       .order(publish_on: :desc)
       .where(publisher_ats_api_client: client)
   end

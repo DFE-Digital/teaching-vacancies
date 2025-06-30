@@ -9,7 +9,7 @@ RSpec.describe PublishVacancy do
     it "updates the vacancy's status to published" do
       PublishVacancy.new(vacancy, user, organisation).call
 
-      expect(vacancy.status).to eq("published")
+      expect(vacancy.type).to eq("PublishedVacancy")
     end
 
     it "updates the id of the user who confirmed the publishing of a vacancy" do

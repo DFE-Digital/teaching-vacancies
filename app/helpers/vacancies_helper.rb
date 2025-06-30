@@ -203,7 +203,7 @@ module VacanciesHelper
     elsif vacancy.published?
       :live
     else
-      vacancy.status.to_sym
+      :draft
     end
   end
 

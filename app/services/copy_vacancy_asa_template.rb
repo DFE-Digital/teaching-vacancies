@@ -4,7 +4,7 @@ class CopyVacancyAsaTemplate
   class << self
     def call(vacancy)
       new_vacancy = vacancy.dup
-      new_vacancy.status = :draft
+      new_vacancy.type = "DraftVacancy"
       new_vacancy.application_form.attach(vacancy.application_form.blob) if vacancy.application_form.attachments&.any?
 
       if vacancy.supporting_documents.attachments.any?
