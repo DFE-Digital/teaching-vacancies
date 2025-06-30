@@ -1,18 +1,10 @@
 # frozen_string_literal: true
 
 class JobReference < ApplicationRecord
-  RATINGS_FIELDS = %i[punctuality
-                      working_relationships
-                      customer_care
-                      adapt_to_change
-                      deal_with_conflict
-                      prioritise_workload
-                      team_working
-                      communication
-                      problem_solving
-                      general_attitude
-                      technical_competence
-                      leadership].freeze
+  RATINGS_FIELDS_1 = %i[punctuality working_relationships customer_care adapt_to_change].freeze
+  RATINGS_FIELDS_2 = %i[deal_with_conflict prioritise_workload team_working communication].freeze
+  RATINGS_FIELDS_3 = %i[problem_solving general_attitude technical_competence leadership].freeze
+  RATINGS_FIELDS = RATINGS_FIELDS_1 + RATINGS_FIELDS_2 + RATINGS_FIELDS_3
 
   RATING_OPTIONS = %w[outstanding good satisfactory poor na].freeze
 
