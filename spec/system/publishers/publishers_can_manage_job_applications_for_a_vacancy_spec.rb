@@ -40,7 +40,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
     scenario "Changing multiple statuses at once" do
       # Wait for page to fully load
-      find_by_id("tab_all")
+      find_by_id("tab_submitted")
 
       within(".application-reviewed") do
         expect(page).to have_css(".govuk-checkboxes__item", wait: 5)
@@ -62,11 +62,12 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       expect(page).to have_css(".govuk-tag--red", wait: 10)
       find(".govuk-tag--red").click
       click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_content("Not Considering (3)")
+      expect(page).to have_content("Not considering (3)")
     end
 
     scenario "Changing a single status" do
       expect(page).to have_button(I18n.t("publishers.vacancies.job_applications.candidates.update_application_status"), wait: 10)
+      find_by_id("tab_unsuccessful", wait: 5).click
       within(".application-unsuccessful") do
         find(".govuk-checkboxes__input", visible: false).set(true)
       end
@@ -76,7 +77,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       choose("Reviewed ")
       # wait for complete render
       within "#main-content" do
-        find ".govuk-button"
+        find "h1"
       end
       click_on "Save and continue"
       expect(page).to have_content("New (3)")
