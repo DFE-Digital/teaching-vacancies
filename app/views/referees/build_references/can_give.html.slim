@@ -1,11 +1,17 @@
 - content_for :page_title_prefix, t(".page_title", name: @referee.job_application.name)
 
+h1.govuk-heading-l = t(".heading", name: @referee.job_application.name)
+p = t(".caption", name: @referee.job_application.name,
+  school: @referee.job_application.vacancy.organisation.name,
+  role: @referee.job_application.vacancy.job_title)
+
 = form_with model: @form, url: wizard_path(step), method: :patch do |f|
   = f.govuk_error_summary
 
   = f.hidden_field :token, value: @form.token
 
-  = f.govuk_radio_buttons_fieldset :can_give_reference, legend: { size: "m", tag: "h2", text: t("helpers.legend.referees_can_give_reference_form.can_give_reference", name: @referee.job_application.name) } do
+  = f.govuk_radio_buttons_fieldset :can_give_reference,
+    legend: { size: "m", text: t("helpers.legend.referees_can_give_reference_form.can_give_reference", name: @referee.job_application.name) } do
     = f.govuk_radio_button :can_give_reference, "true"
     = f.govuk_radio_button :can_give_reference, "false"
 
