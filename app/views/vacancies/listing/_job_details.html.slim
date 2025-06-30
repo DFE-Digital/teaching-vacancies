@@ -121,9 +121,6 @@ section#job-details class="govuk-!-margin-bottom-5"
       .govuk-body = t("vacancies.international_teacher_advice.text_html", link: tracked_link_to(t("vacancies.international_teacher_advice.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers", link_type: :international_teacher_advice_link_job_listing))
 
     - else
-      - if vacancy.how_to_apply.present?
-        p.govuk-body = vacancy.how_to_apply
-
       - if vacancy.external?
         p = t("jobs.external.notice")
         p.govuk-body = t("jobseekers.job_applications.no_cvs")

@@ -72,21 +72,6 @@ FactoryBot.define do
     flexi_working_details_provided { true }
     flexi_working { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
 
-    trait :legacy_vacancy do
-      about_school { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
-      further_details_provided { nil }
-      further_details { nil }
-      how_to_apply { Faker::Lorem.paragraph(sentence_count: 4) }
-      job_advert { Faker::Lorem.paragraph(sentence_count: factory_rand(50..300)) }
-      personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
-      receive_applications { nil }
-      safeguarding_information_provided { nil }
-      safeguarding_information { nil }
-      school_offer { nil }
-      school_visits_details { Faker::Lorem.paragraph(sentence_count: 4) }
-      skills_and_experience { nil }
-    end
-
     trait :for_seed_data do
       job_roles { [factory_sample(Vacancy.job_roles.keys)] }
       is_job_share { [true, false].sample }
@@ -119,17 +104,6 @@ FactoryBot.define do
 
     trait :at_multiple_schools do
       organisations { build_list(:school, 3) }
-    end
-
-    trait :fail_minimum_validation do
-      job_advert { Faker::Lorem.paragraph[0..5] }
-      job_title { Faker::Job.title[0..2] }
-    end
-
-    trait :fail_maximum_validation do
-      job_advert { Faker::Lorem.characters(number: 50_001) }
-      job_title { Faker::Lorem.characters(number: 150) }
-      salary { Faker::Lorem.characters(number: 257) }
     end
 
     trait :trashed do
@@ -207,9 +181,7 @@ FactoryBot.define do
     trait :external do
       enable_job_applications { false }
       about_school { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
-      how_to_apply { Faker::Lorem.paragraph(sentence_count: 4) }
       job_advert { Faker::Lorem.paragraph(sentence_count: factory_rand(50..300)) }
-      personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
       publisher_ats_api_client
       external_source { "may_the_feed_be_with_you" }
       external_reference { "J3D1" }

@@ -549,14 +549,6 @@ RSpec.describe Vacancy do
         expect(stats_updated_at).to eq(Time.current)
       end
     end
-
-    it "does not update the stats when you are updating the job summary" do
-      travel_to(Time.zone.local(2019, 1, 1, 10, 4, 3)) do
-        expired_job.update(job_advert: "I am description")
-
-        expect(stats_updated_at).to be_nil
-      end
-    end
   end
 
   describe "#allow_phase_to_be_set?" do

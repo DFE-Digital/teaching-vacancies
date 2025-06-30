@@ -14,7 +14,7 @@ class Vacancy < ApplicationRecord
 
   # TODO: Update with job listing updates
   ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG = %i[
-    about_school application_link contact_email contact_number contract_type expires_at how_to_apply job_advert
+    application_link contact_email contact_number contract_type expires_at
     job_roles job_title key_stages personal_statement_guidance salary school_visits subjects starts_on
     working_patterns
   ].freeze
@@ -171,6 +171,8 @@ class Vacancy < ApplicationRecord
     end
   end
 
+  self.ignored_columns += %i[personal_statement_guidance how_to_apply school_visits_details]
+
   after_save :reset_markers, if: -> { saved_change_to_status? && (listed? || pending?) }
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
@@ -216,14 +218,6 @@ class Vacancy < ApplicationRecord
   # TODO: This method matches conditions of :live scope, not :listed. We should rename it
   def listed?
     published? && expires_at&.future? && (publish_on&.today? || publish_on&.past?)
-  end
-
-  def legacy?
-    [job_advert, about_school, personal_statement_guidance, school_visits_details, how_to_apply].filter_map(&:present?).any?
-  end
-
-  def legacy_draft?
-    legacy? && draft?
   end
 
   def pending?

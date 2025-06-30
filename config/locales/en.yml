@@ -548,7 +548,6 @@ en:
         address: Trust address
         description: Description
         group_type: Group type
-        school_visits_heading: Arranging a visit to %{school}
         trust_overview: Trust overview
         type: Trust type
         uid: Unique identifier (UID)
