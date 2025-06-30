@@ -215,6 +215,24 @@ shell: get-cluster-credentials
 	$(if $(env), , $(error Missing <env>. Usage: "make <env> shell"))
 	kubectl -n $(azure_namespace) exec -ti deployment/teaching-vacancies-$(env) -- sh
 
+maintenance-image-push:
+	$(if ${GITHUB_TOKEN},, $(error Provide a valid Github token with write:packages permissions as GITHUB_TOKEN variable))
+	$(if ${MAINTENANCE_IMAGE_TAG},, $(eval export MAINTENANCE_IMAGE_TAG=$(shell date +%s)))
+	docker build --platform linux/amd64 -t ghcr.io/dfe-digital/${SERVICE_NAME}-maintenance:${MAINTENANCE_IMAGE_TAG} maintenance_page
+	echo ${GITHUB_TOKEN} | docker login ghcr.io -u USERNAME --password-stdin
+	docker push ghcr.io/dfe-digital/${SERVICE_NAME}-maintenance:${MAINTENANCE_IMAGE_TAG}
+
+maintenance-fail-over: get-cluster-credentials
+	$(eval export CONFIG)
+	./maintenance_page/scripts/failover.sh
+
+# make qa enable-maintenance
+enable-maintenance: maintenance-image-push maintenance-fail-over
+
+disable-maintenance: get-cluster-credentials
+	$(eval export CONFIG)
+	./maintenance_page/scripts/failback.sh
+
 # make review pr_id=5432 railsc
 # make qa railsc
 .PHONY: railsc
