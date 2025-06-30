@@ -19,13 +19,13 @@ h2.govuk-heading-l = t(".heading")
 - unless @has_previous_application.nil?
   p.govuk-body = (@has_previous_application ? t(".description1") : t(".description1_profile"))
 
-p.govuk-body = t(".description.opening_html", job_link: govuk_link_to(vacancy.job_title, job_path(vacancy)), organisation_name: vacancy.organisation_name)
 p.govuk-body = t(".description.requirements")
 ul.govuk-list.govuk-list--bullet
   - t(".description.requirement_bullets").each do |requirement|
     li = requirement
 h2.govuk-heading-l = t(".saving_your_details")
 p.govuk-body = t(".your_details_will_be_saved")
+p.govuk-body = t(".you_should_review")
 p.govuk-body = t(".description.closing")
 p.govuk-body = t(".description.save_and_return")
 
