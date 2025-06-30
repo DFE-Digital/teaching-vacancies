@@ -23,3 +23,4 @@ Time::DATE_FORMATS[:time_only] = lambda do |time|
     time.strftime("%-l:%M%P")
   end
 end
+Time::DATE_FORMATS[:time_on_date] = "%-l:%M on %d %B %Y"

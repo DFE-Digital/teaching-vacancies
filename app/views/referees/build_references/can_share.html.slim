@@ -1,5 +1,8 @@
 - content_for :page_title_prefix, t(".page_title", name: @referee.job_application.name)
 
+h1.govuk-heading-l = t(".heading", name: @referee.job_application.name)
+p = t(".caption", name: @referee.job_application.name)
+
 = form_with model: @form, url: wizard_path(step), method: :patch do |f|
   = f.govuk_error_summary
 
