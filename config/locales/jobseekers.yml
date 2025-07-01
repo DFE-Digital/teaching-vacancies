@@ -389,6 +389,11 @@ en:
             - two referees
           save_and_return: You can save your application at any point and return to it later.
         heading: Before you start
+        saving_your_details: Saving your application details
+        your_details_will_be_saved: >-
+          Your details will be saved every time you make an application so that you can re-use them for future applications.
+        you_should_review: >-
+          You should review this information before submitting.
         privacy_info: >-
           We will store your information so you can use it to quickly apply for other jobs that use the Teaching
           Vacancies application form. Once you have submitted your application, your details can also be imported
@@ -405,6 +410,11 @@ en:
             paragraph1: You've made a new Teaching Vacancies account.
             paragraph2: If you already have an account using a different email address, you can %{link}
             transfer_account_link_text: transfer your account information.
+        description1: >-
+          Your details have been imported from your last job application.
+        description1_profile: >-
+          Your details have been imported from your last job application or profile.
+        import_from_previous_application: Your details have been imported from your last job application. You should review each section to make sure the information is still accurate.
       about_your_application:
         title: About your application
         warning:
@@ -415,26 +425,6 @@ en:
             link: teaching in England as a non-UK citizen (opens in new tab).
           search_for_jobs: Search for other jobs
           continue: Continue application
-      new_quick_apply:
-        one_login_banner:
-          title: Account found
-          paragraph1: We have found a teaching vacancies account using this email address.
-          paragraph2: Your account information including past applications has been saved.
-        assistance:
-          content_html: You can find out more about our %{privacy_html} and our %{terms_html}.
-          heading: Terms & Conditions
-          privacy: privacy policy
-          terms: terms and conditions
-        import_from_previous_application: Your details have been imported from your last job application. You should review each section to make sure the information is still accurate.
-        description1: >-
-          Your details have been imported from your last job application.
-        description2: You should review this information before submitting.
-        description3: You should read the job description and application pack before beginning your application.
-        description1_profile: >-
-          Your details have been imported from your last job application or profile.
-        heading: Helping you apply quicker
-        save_and_return: You can save your application at any point and return to it later.
-        title: Application
       not_defined: Not entered (will not be seen on application)
       qualifications:
         destroy:
