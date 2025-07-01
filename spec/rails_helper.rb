@@ -33,6 +33,7 @@ Capybara.register_driver(:cuprite_full) do |app|
   Capybara::Cuprite::Driver.new(app, headless: false, process_timeout: 15, window_size: [1400, 1800])
 end
 Capybara.javascript_driver = :cuprite_headless
+Capybara.server = :puma, { Silent: true, Threads: "0:1" }
 
 Capybara.configure do |config|
   # Allow us to use the `choose(label_text)` method in browser tests
