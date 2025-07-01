@@ -23,7 +23,7 @@ updates:
         update-types: ["version-update:semver-major"]
 
       # TODO: Remove this ignore config once undercover issue has been resolved
-      # Undercover 0.6.y doesn't seeem to respect :nocov: directives properly
+      # Undercover 0.6.z doesn't seeem to respect :nocov: directives properly
       - dependency-name: "undercover"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
 
