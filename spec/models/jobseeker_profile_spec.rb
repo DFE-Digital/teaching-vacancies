@@ -187,7 +187,7 @@ RSpec.describe JobseekerProfile, type: :model do
     context "without personal details" do
       let(:personal_details) { nil }
 
-      it { is_expected.to be_nil }
+      it { is_expected.to be false }
     end
 
     context "with incomplete personal details" do
@@ -199,7 +199,13 @@ RSpec.describe JobseekerProfile, type: :model do
     context "without job preferences" do
       let(:job_preferences) { nil }
 
-      it { is_expected.to be_nil }
+      it { is_expected.to be false }
+    end
+
+    context "with incomplete job_preferences" do
+      let(:job_preferences) { build_stubbed(:job_preferences, :incomplete) }
+
+      it { is_expected.to be false }
     end
   end
 end

@@ -120,7 +120,8 @@ class JobseekerProfile < ApplicationRecord
   end
 
   def activable?
-    personal_details&.complete? && job_preferences&.complete? &&
+    personal_details.present? && personal_details.complete? &&
+      job_preferences.present? && job_preferences.complete? &&
       qualified_teacher_status.present? && unexplained_employment_gaps.none? && qualifications.any?
   end
 
