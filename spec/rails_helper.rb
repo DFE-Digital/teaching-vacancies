@@ -27,10 +27,10 @@ Capybara.server = :puma, { Silent: true, Threads: "0:1" }
 
 require "capybara/cuprite"
 Capybara.register_driver(:cuprite_headless) do |app|
-  Capybara::Cuprite::Driver.new(app, headless: true, process_timeout: 15, window_size: [1400, 1400])
+  Capybara::Cuprite::Driver.new(app, headless: true, process_timeout: 30, window_size: [1400, 1400])
 end
 Capybara.register_driver(:cuprite_full) do |app|
-  Capybara::Cuprite::Driver.new(app, headless: false, process_timeout: 15, window_size: [1400, 1800])
+  Capybara::Cuprite::Driver.new(app, headless: false, process_timeout: 30, window_size: [1400, 1800])
 end
 Capybara.javascript_driver = :cuprite_headless
 Capybara.server = :puma, { Silent: true, Threads: "0:1" }
