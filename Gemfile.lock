@@ -184,6 +184,9 @@ GEM
     cssbundling-rails (1.4.3)
       railties (>= 6.0.0)
     csv (3.3.3)
+    cuprite (0.15.1)
+      capybara (~> 3.0)
+      ferrum (~> 0.15.0)
     database_consistency (2.0.4)
       activerecord (>= 3.2)
     date (3.4.1)
@@ -231,6 +234,11 @@ GEM
     faraday-net_http (3.4.0)
       net-http (>= 0.5.0)
     fastimage (2.4.0)
+    ferrum (0.15)
+      addressable (~> 2.5)
+      concurrent-ruby (~> 1.1)
+      webrick (~> 1.7)
+      websocket-driver (~> 0.7)
     ffi (1.17.1-arm64-darwin)
     ffi (1.17.1-x86_64-darwin)
     ffi (1.17.1-x86_64-linux-gnu)
@@ -900,6 +908,7 @@ DEPENDENCIES
   capybara
   climate_control
   cssbundling-rails
+  cuprite
   database_consistency
   debug (>= 1.0.0)
   devise

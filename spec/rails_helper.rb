@@ -23,27 +23,17 @@ Geocoder::DEFAULT_LOCATION = "TE5 T1NG".freeze
 # https://stackoverflow.com/questions/1368163/is-there-a-standard-domain-for-testing-throwaway-email
 TEST_EMAIL_DOMAIN = "contoso.com".freeze
 
-Capybara.register_driver :chrome_headless do |app|
-  options = Selenium::WebDriver::Chrome::Options.new(args: %w[no-sandbox headless disable-gpu window-size=1400,1400])
-
-  if ENV["SELENIUM_HUB_URL"]
-    Capybara::Selenium::Driver.new(app, browser: :remote, url: ENV.fetch("SELENIUM_HUB_URL", nil), options:)
-  else
-    Capybara::Selenium::Driver.new(app, browser: :chrome, options:)
-  end
-end
-
-Capybara.register_driver :chrome do |app|
-  options = Selenium::WebDriver::Chrome::Options.new(args: %w[no-sandbox disable-gpu window-size=1400,1800])
-
-  if ENV["SELENIUM_HUB_URL"]
-    Capybara::Selenium::Driver.new(app, browser: :remote, url: ENV.fetch("SELENIUM_HUB_URL", nil), options:)
-  else
-    Capybara::Selenium::Driver.new(app, browser: :chrome, options:)
-  end
-end
-Capybara.javascript_driver = :chrome_headless
 Capybara.server = :puma, { Silent: true, Threads: "0:1" }
+
+require "capybara/cuprite"
+Capybara.register_driver(:cuprite_headless) do |app|
+  Capybara::Cuprite::Driver.new(app, headless: true, process_timeout: 15, window_size: [1400, 1400])
+end
+Capybara.register_driver(:cuprite_full) do |app|
+  Capybara::Cuprite::Driver.new(app, headless: false, process_timeout: 15, window_size: [1400, 1800])
+end
+Capybara.javascript_driver = :cuprite_headless
+
 Capybara.configure do |config|
   # Allow us to use the `choose(label_text)` method in browser tests
   # even when the radio button element attached to the label is hidden
@@ -107,9 +97,9 @@ RSpec.configure do |config|
   # allow developers to see JS backed tests by default
   config.before(:each, type: :system, js: true) do
     if ENV.key? "CI"
-      driven_by :chrome_headless
+      driven_by :cuprite_headless
     else
-      driven_by :chrome
+      driven_by :cuprite_full
     end
   end
 
