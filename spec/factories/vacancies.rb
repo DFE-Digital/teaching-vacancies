@@ -160,7 +160,7 @@ FactoryBot.define do
       supporting_documents do
         [
           Rack::Test::UploadedFile.new(
-            Rails.root.join("spec", "fixtures", "files", "blank_job_spec.pdf"),
+            Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"),
             "application/pdf",
           ),
         ]
@@ -172,7 +172,7 @@ FactoryBot.define do
       receive_applications { "email" }
       application_form do
         Rack::Test::UploadedFile.new(
-          Rails.root.join("spec", "fixtures", "files", "blank_job_spec.pdf"),
+          Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"),
           "application/pdf",
         )
       end

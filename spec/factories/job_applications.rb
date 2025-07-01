@@ -63,9 +63,9 @@ FactoryBot.define do
 
     after :create do |job_application, options|
       if options.create_details
-        create_list :referee, 1, job_application: job_application, is_most_recent_employer: true
-        create_list :qualification, 3, job_application: job_application
-        create_list :training_and_cpd, 2, job_application: job_application
+        create_list(:referee, 1, job_application: job_application, is_most_recent_employer: true)
+        create_list(:qualification, 3, job_application: job_application)
+        create_list(:training_and_cpd, 2, job_application: job_application)
       end
 
       job_application.update_columns(
@@ -190,5 +190,16 @@ FactoryBot.define do
     end
 
     status { :interviewing }
+  end
+
+  trait :with_baptism_certificate do
+    following_religion { true }
+    religious_reference_type { :baptism_certificate }
+    baptism_certificate do
+      Rack::Test::UploadedFile.new(
+        Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"),
+        "application/pdf",
+      )
+    end
   end
 end

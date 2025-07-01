@@ -371,6 +371,7 @@ Rails.application.routes.draw do
       get :confirm_destroy
       get :convert_to_draft
       get :preview
+      resources :form_previews, only: %i[show], controller: "publishers/vacancies/form_previews"
       get :review
       post :publish, to: "publishers/vacancies/publish#create"
       get :publish, to: "publishers/vacancies/publish#create"

@@ -24,15 +24,15 @@ RSpec.describe JobApplicationPdfGenerator do
     end
 
     it "includes section titles" do
-      expect(pdf).to include("Personal Details")
-      expect(pdf).to include("Professional Status")
+      expect(pdf).to include("Personal details")
+      expect(pdf).to include("Professional status")
       expect(pdf).to include("Qualifications")
       expect(pdf).to include("Training and continuing professional development (CPD)")
       expect(pdf).to include("Professional body memberships")
       expect(pdf).to include("Work history")
       expect(pdf).to include("Personal statement")
       expect(pdf).to include("References")
-      expect(pdf).to include("Ask For Support")
+      expect(pdf).to include("Ask for support if you have a disability or other needs")
       expect(pdf).to include("Declarations")
     end
 

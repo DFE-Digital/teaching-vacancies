@@ -207,6 +207,8 @@ en:
         catholic_religion_details:
           heading: Religious information
           title: Religious information — Application
+        religious_information:
+          heading: Religious information
         non_catholic_religion_details:
           heading: Religious information
           title: Religious information — Application
