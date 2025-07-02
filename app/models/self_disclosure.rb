@@ -27,4 +27,11 @@ class SelfDisclosure < ApplicationRecord
     save!
     itself
   end
+
+  def mark_as_received
+    self_disclosure_request.received!
+    Publishers::SelfDeclarationReceivedNotifier.with(record: self,
+                                                     job_application: self_disclosure_request.job_application)
+                                               .deliver(self_disclosure_request.job_application.vacancy.publisher)
+  end
 end

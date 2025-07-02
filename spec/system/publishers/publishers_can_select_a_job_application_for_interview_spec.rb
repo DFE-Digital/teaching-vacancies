@@ -3,9 +3,10 @@ require "rails_helper"
 RSpec.describe "Publishers can select a job application for interview" do
   include ActiveJob::TestHelper
 
+  let(:job_title) { Faker::Job.title }
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
-  let(:vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
+  let(:vacancy) { create(:vacancy, :expired, organisations: [organisation], job_title: job_title) }
   let(:jobseeker) { create(:jobseeker) }
   let(:job_application) do
     create(:job_application, :status_submitted,
@@ -58,9 +59,9 @@ RSpec.describe "Publishers can select a job application for interview" do
         # expect(ActionMailer::Base.deliveries.map(&:to).flatten).to contain_exactly(current_referee.email, old_referee.email, job_application.email_address, job_application.email_address)
         expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
           .to eq({
-            current_referee.email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
-            old_referee.email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
-            job_application.email => ["Declarations", "References are being collected for role #{vacancy.job_title} at #{organisation.name}"],
+            current_referee.email => ["Provide a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
+            old_referee.email => ["Provide a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
+            job_application.email => ["Complete your self-disclosure form for #{job_title}", "References are being collected for role #{job_title} at #{organisation.name}"],
           })
       end
 
@@ -79,9 +80,9 @@ RSpec.describe "Publishers can select a job application for interview" do
           }.to change(ActionMailer::Base.deliveries, :count).by(3)
           expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
             .to eq({
-              current_referee.email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
-              old_referee.email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
-              job_application.email => %w[Declarations],
+              current_referee.email => ["Provide a reference for #{job_application.name} for role #{job_title} at #{organisation.name}"],
+              old_referee.email => ["Provide a reference for #{job_application.name} for role #{job_title} at #{organisation.name}"],
+              job_application.email => ["Complete your self-disclosure form for #{job_title}"],
             })
         end
 
@@ -126,7 +127,7 @@ RSpec.describe "Publishers can select a job application for interview" do
             expect(page).to have_content("Reference email changed")
             expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
               .to eq({
-                new_email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
+                new_email => ["Provide a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
               })
           end
 
@@ -136,13 +137,16 @@ RSpec.describe "Publishers can select a job application for interview" do
           end
         end
 
-        context "with a received reference" do
+        context "with a received reference", :inline_jobs do
           before do
-            perform_enqueued_jobs
+            # perform_enqueued_jobs
             current_referee.reload
             # simulate receipt of a reference
             current_referee.job_reference.update!(attributes_for(:job_reference, :reference_given).merge(updated_at: Date.tomorrow))
-            current_referee.reference_request.update!(status: :received)
+            current_referee.job_reference.mark_as_received
+            # have to enqueue twice to trigger notification email
+            # perform_enqueued_jobs
+            # perform_enqueued_jobs
           end
 
           it "can progress to the page where the reference is shown" do

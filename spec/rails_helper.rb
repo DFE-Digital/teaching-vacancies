@@ -86,6 +86,17 @@ RSpec.configure do |config|
     ENV.delete "ENABLE_DFE_ANALYTICS"
   end
 
+  config.around(:each, :inline_jobs) do |example|
+    old_adapter = Rails.application.config.active_job.queue_adapter
+
+    begin
+      Rails.application.config.active_job.queue_adapter = :inline
+      example.run
+    ensure
+      Rails.application.config.active_job.queue_adapter = old_adapter
+    end
+  end
+
   config.before(:each, type: :system) do
     driven_by :rack_test
     Capybara.default_host = "http://#{ENV.fetch('DOMAIN', 'localhost:3000')}"

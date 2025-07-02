@@ -22,37 +22,49 @@ RSpec.describe "Publishers can view their notifications" do
     end
   end
 
-  context "when paginating" do
-    let(:job_application2) { create(:job_application, :status_submitted, vacancy: vacancy, created_at: 1.minute.ago) }
-
+  context "when paginating", :inline_jobs do
     before do
-      stub_const("Publishers::NotificationsController::NOTIFICATIONS_PER_PAGE", 1)
-      Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
-      Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application2).deliver(vacancy.publisher)
+      stub_const("Publishers::NotificationsController::NOTIFICATIONS_PER_PAGE", 2)
+
+      [3, 2, 1].each do |delay|
+        travel_to delay.days.ago do
+          v = create(:vacancy, :published, organisations: [organisation], publisher: publisher, job_title: "#{delay} ago")
+          application = create(:job_application, :status_submitted, vacancy: v, create_details: true)
+
+          ref_req = create(:reference_request, referee: application.referees.first)
+          ref = create(:job_reference, referee: application.referees.first)
+
+          Publishers::ReferenceReceivedNotifier.with(record: ref, reference_request: ref_req)
+                                               .deliver(publisher)
+          disc_ref = create(:self_disclosure_request, job_application: application)
+          self_disc = create(:self_disclosure, self_disclosure_request: disc_ref)
+          Publishers::SelfDeclarationReceivedNotifier.with(record: self_disc,
+                                                           job_application: application)
+                                                     .deliver(publisher)
+        end
+      end
+
       visit root_path
+      click_on strip_tags(I18n.t("nav.notifications_html", count: 6))
     end
 
-    it "clicks notifications link, renders the notifications, paginates, and marks as read" do
-      click_on strip_tags(I18n.t("nav.notifications_html", count: 2))
-
-      within ".notification" do
-        expect(page).to have_css("div", class: "notification__tag", text: "new", count: 1)
+    it "clicks notifications link, renders the notifications, paginates, and marks as read", :js do
+      within "#notifications-results" do
+        expect(page).to have_css("div", class: "notification__tag", text: "new", count: 2)
       end
 
       click_on "Next"
       # wait for page load
       find(".govuk-pagination__prev", wait: 10)
 
-      within ".notification" do
-        expect(page).to have_css("div", class: "notification__tag", text: "new", count: 1)
+      within "#notifications-results" do
+        expect(page).to have_css("div", class: "notification__tag", text: "new", count: 2)
       end
 
-      click_on "Previous"
-      # wait for page load
-      find(".govuk-pagination__next")
+      click_on "3"
 
-      within ".notification" do
-        expect(page).not_to have_css("div", class: "notification__tag", text: "new", count: 1)
+      within "#notifications-results" do
+        expect(page).not_to have_css("div", class: "notification__tag", text: "new", count: 2)
       end
     end
   end
