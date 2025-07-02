@@ -131,6 +131,7 @@ end
 group :test do
   gem "capybara"
   gem "climate_control"
+  gem "cuprite"
   gem "fastimage"
   gem "mock_redis"
   gem "rack_session_access"
