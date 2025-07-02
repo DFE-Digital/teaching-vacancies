@@ -99,7 +99,7 @@ en:
         actual_salary: Actual salary
         full_time_equivalent_salary: Full-time equivalent salary
         job_role: Role
-        school_name: Name
+        school_name: School name
         working_pattern: Working pattern
       visits:
         at_one_school: Arranging a visit to %{organisation}
