@@ -42,42 +42,37 @@ RSpec.describe "Publishers manage self disclosure" do
     end
 
     describe "visit self disclosure form" do
-      let(:request) { create(:self_disclosure_request, job_application_id: job_application.id) }
-      let(:form) { create(:self_disclosure, self_disclosure_request_id: request.id) }
+      let(:request) { create(:self_disclosure_request, job_application: job_application) }
 
       before do
+        create(:self_disclosure, self_disclosure_request: request)
         request.sent!
-        form
       end
 
-      context "when completed by publisher" do
-        it "to manuanlly complete form" do
-          publisher_ats_self_disclosure_page.load(
-            vacancy_id: vacancy.id,
-            job_application_id: job_application.id,
-          )
+      it "can be manually marked as complete by publisher" do
+        publisher_ats_self_disclosure_page.load(
+          vacancy_id: vacancy.id,
+          job_application_id: job_application.id,
+        )
 
-          expect(publisher_ats_self_disclosure_page.status.text).to eq("Pending")
-          expect(publisher_ats_self_disclosure_page.button.text).to eq("Manually mark as complete")
-          expect(publisher_ats_self_disclosure_page).not_to have_goto_references_and_declaration_form
+        expect(publisher_ats_self_disclosure_page.status.text).to eq("Pending")
+        expect(publisher_ats_self_disclosure_page.button.text).to eq("Manually mark as complete")
+        expect(publisher_ats_self_disclosure_page).not_to have_goto_references_and_declaration_form
 
-          publisher_ats_self_disclosure_page.button.click
+        publisher_ats_self_disclosure_page.button.click
 
-          expect(publisher_ats_self_disclosure_page.banner_title.text).to eq("Success")
-          expect(publisher_ats_self_disclosure_page.status.text).to eq("Completed")
-        end
+        expect(publisher_ats_self_disclosure_page.banner_title.text).to eq("Success")
+        expect(publisher_ats_self_disclosure_page.status.text).to eq("Completed")
       end
 
-      context "when completed by jobseeker" do
-        let(:request) { create(:self_disclosure_request, job_application_id: job_application.id) }
-
+      context "when completed by jobseeker", :inline_jobs do
         before do
-          request.sent!
-          request.received!
-          form
+          request.self_disclosure.mark_as_received
+          # perform_enqueued_jobs
+          # perform_enqueued_jobs
         end
 
-        it "show form" do
+        it "shows the form" do
           publisher_ats_self_disclosure_page.load(
             vacancy_id: vacancy.id,
             job_application_id: job_application.id,
