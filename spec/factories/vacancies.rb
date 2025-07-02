@@ -187,7 +187,7 @@ FactoryBot.define do
       receive_applications { "uploaded_form" }
       application_form do
         Rack::Test::UploadedFile.new(
-          Rails.root.join("spec", "fixtures", "files", "blank_job_spec.pdf"),
+          Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"),
           "application/pdf",
         )
       end
