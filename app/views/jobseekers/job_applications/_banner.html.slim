@@ -14,7 +14,9 @@
     = job_application_status_tag(job_application.deadline_passed? ? :deadline_passed : job_application.status)
 
   .govuk-button-group class="govuk-!-margin-bottom-3 govuk-!-margin-top-3 govuk-!-display-none-print"
-    - if vacancy.application_form.present?
+    - if !job_application.draft? && vacancy.uploaded_form? && job_application.application_form.present?
+      = govuk_button_link_to t("buttons.download_submitted_application_form", size: number_to_human_size(vacancy.application_form.byte_size)), download_submitted_form_jobseekers_uploaded_job_application_upload_application_form_path(job_application)
+    - elsif vacancy.application_form.present?
       = govuk_button_link_to t("buttons.download_application_form", size: number_to_human_size(vacancy.application_form.byte_size)), job_document_path(vacancy, vacancy.application_form.id)
     - if job_application.draft?
       = govuk_button_link_to t("buttons.delete_application"), jobseekers_job_application_confirm_destroy_path(job_application), class: "govuk-button--warning govuk-!-margin-bottom-4"
