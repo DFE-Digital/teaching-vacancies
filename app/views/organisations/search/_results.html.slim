@@ -1,4 +1,4 @@
-- @schools.each do |school|
+- schools.each do |school|
   .header-with-logo
     - if school.logo.attached?
       .header-with-logo-logo--search-result
@@ -22,6 +22,6 @@
 
     - summary_list.with_row do |row|
       - row.with_key text: t(".active_jobs"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
-      - row.with_value text: school.vacancies.count(&:listed?), classes: "govuk-body-s govuk-!-padding-bottom-0"
+      - row.with_value text: school.all_vacancies.count(&:listed?), classes: "govuk-body-s govuk-!-padding-bottom-0"
 
   hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
