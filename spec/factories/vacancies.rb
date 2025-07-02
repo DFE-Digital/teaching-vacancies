@@ -178,6 +178,10 @@ FactoryBot.define do
       end
     end
 
+    trait :catholic do
+      religion_type { :catholic }
+    end
+
     trait :external do
       enable_job_applications { false }
       about_school { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }

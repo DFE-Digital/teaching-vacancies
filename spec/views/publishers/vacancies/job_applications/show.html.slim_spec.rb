@@ -1,12 +1,12 @@
 require "rails_helper"
 
 RSpec.describe "publishers/vacancies/job_applications/show" do
-  let(:vacancy) do
-    build_stubbed(:vacancy, :expired, organisations: build_stubbed_list(:school, 1),
-                                      job_applications:
-                                  build_stubbed_list(:job_application, 1, :status_submitted,
-                                                     training_and_cpds: build_stubbed_list(:training_and_cpd, 1),
-                                                     working_patterns: %w[full_time part_time]))
+  let(:vacancy) { build_stubbed(:vacancy, :expired, organisations:, job_applications:) }
+  let(:organisations) { build_stubbed_list(:school, 1) }
+  let(:job_applications) do
+    build_stubbed_list(:job_application, 1, :status_submitted,
+                       training_and_cpds: build_stubbed_list(:training_and_cpd, 1),
+                       working_patterns: %w[full_time part_time])
   end
   let(:job_application) do
     vacancy.job_applications.first
@@ -18,6 +18,32 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
     assign :notes_form, Publishers::JobApplication::NotesForm.new
 
     render
+  end
+
+  describe "navigation quick links" do
+    context "when non religious vacancy" do
+      let(:vacancy) { build_stubbed(:vacancy, :expired, organisations:, job_applications:) }
+
+      it "renders no religious informaiton quick link" do
+        expect(rendered).to have_no_css(".navigation-list-component__anchors .govuk-link[href=\"#following_religion\"]", text: "Religious information")
+      end
+
+      it "renders no religious information section" do
+        expect(rendered).to have_no_css(".govuk-summary-card__title", text: "Religious information")
+      end
+    end
+
+    context "when religious vacancy" do
+      let(:vacancy) { build_stubbed(:vacancy, :catholic, :expired, organisations:, job_applications:) }
+
+      it "renders religious informaiton quick link" do
+        expect(rendered).to have_css(".navigation-list-component__anchors .govuk-link[href=\"#following_religion\"]", text: "Religious information")
+      end
+
+      it "renders a religious information section" do
+        expect(rendered).to have_css(".govuk-summary-card__title", text: "Religious information")
+      end
+    end
   end
 
   it "allows hiring staff to view the jobseekers personal details on the job application" do
