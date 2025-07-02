@@ -1,7 +1,8 @@
 require "rails_helper"
-
+# /!\ WARNING /!\
 # Please notify performance analyst (currently Brandon) if you change this test
 # as it reflects the binding between the application and the Floodlight tags in GA
+# /!\ WARNING /!\
 RSpec.describe VacanciesController do
   render_views
 
@@ -22,14 +23,6 @@ RSpec.describe VacanciesController do
     end
   end
 
-  describe "How to Apply Button" do
-    let(:vacancy) { create(:vacancy, :no_tv_applications) }
-
-    it "has the correct text" do
-      expect(response.body).to have_content("How to apply")
-    end
-  end
-
   describe "Download an application form" do
     let(:vacancy) { create(:vacancy, :with_application_form) }
 
@@ -39,10 +32,18 @@ RSpec.describe VacanciesController do
   end
 
   describe "View advert on school website" do
-    let(:vacancy) { create(:vacancy, :external) }
+    let(:vacancy) { create(:vacancy, :no_tv_applications) }
 
     it "has the correct text" do
       expect(response.body).to have_content("View advert on school website (opens in new tab)")
+    end
+  end
+
+  describe "View advert on external website" do
+    let(:vacancy) { create(:vacancy, :external) }
+
+    it "has the correct text" do
+      expect(response.body).to have_content("View advert on external website (opens in new tab)")
     end
   end
 end
