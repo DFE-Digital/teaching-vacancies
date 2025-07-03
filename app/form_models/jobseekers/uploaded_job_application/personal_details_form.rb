@@ -6,10 +6,10 @@ module Jobseekers
       include Jobseekers::JobApplication::CompletedFormAttribute
 
       FIELDS = %i[
-        email_address
         first_name
         last_name
         phone_number
+        email_address
         teacher_reference_number
       ].freeze
 
@@ -25,7 +25,7 @@ module Jobseekers
         end
       end
 
-      validates :email_address, :first_name, :last_name, :phone_number, presence: true, if: -> { personal_details_section_completed }
+      validates :first_name, :last_name, :phone_number, :email_address, presence: true, if: -> { personal_details_section_completed }
       validates :phone_number, format: { with: /\A\+?(?:\d\s?){10,13}\z/ }, if: -> { personal_details_section_completed }
       validates :email_address, email_address: true
       attribute :has_right_to_work_in_uk, :boolean

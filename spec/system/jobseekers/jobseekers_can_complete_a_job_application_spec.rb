@@ -155,7 +155,7 @@ RSpec.describe "Jobseekers can complete a job application" do
       fill_in "Last name", with: "Frusciante"
       fill_in "Phone number", with: "01234 123456"
       fill_in "Email address", with: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)
-      fill_in "What is your teacher reference number (TRN)?", with: "7777777"
+      fill_in "What is your teacher reference number? (Optional)", with: "7777777"
       choose "No, I already have the right to work in the UK"
       choose I18n.t("helpers.label.jobseekers_job_application_personal_details_form.personal_details_section_completed_options.true")
       click_on I18n.t("buttons.save_and_continue")

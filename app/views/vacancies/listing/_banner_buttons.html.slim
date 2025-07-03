@@ -1,5 +1,5 @@
 .govuk-grid-row.banner-buttons
-  - if vacancy.enable_job_applications? && vacancy.listed?
+  - if (vacancy.enable_job_applications? || vacancy.uploaded_form?) && vacancy.listed?
     .govuk-grid-column-one-third
       - if job_application
         - if job_application.draft?
@@ -15,9 +15,11 @@
             href: jobseekers_job_application_path(job_application),
             icon: "green-tick"
       - else
+        - method = vacancy.uploaded_form? ? :post : :get
         = banner_button text: t("jobseekers.job_applications.banner_links.apply"),
           href: new_application_path(vacancy),
-          icon: "apply"
+          icon: "apply",
+          method: method
 
   .govuk-grid-column-one-third
     = banner_button text: t("jobs.alert.similar.terse"),

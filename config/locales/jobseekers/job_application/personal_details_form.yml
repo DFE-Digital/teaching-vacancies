@@ -134,6 +134,7 @@ en:
         personal_details_section_completed_options:
           false: No, I'll come back to it later
           true: Yes, I've completed this section
+        teacher_reference_number: What is your teacher reference number? (Optional)
       jobseekers_uploaded_job_application_upload_application_form_form:
        upload_application_form_section_completed_options:
           false: No, I'll come back to it later
@@ -143,6 +144,8 @@ en:
         first_name: Or given names
         last_name: Or family name
         phone_number: Enter a phone number you are happy to be contacted on. For example, 01632 960 001, 07700 900 982 or +44 0808 157 0192.
+      jobseekers_uploaded_job_application_personal_details_form:
+        teacher_reference_number: You can %{link} if you do not know it (for example, if you're a trainee teacher) or have forgotten it. Your TRN is 7 digits long.
       jobseekers_uploaded_job_application_personal_details_form:
         phone_number: Enter a phone number you are happy to be contacted on. For example, 01632 960 001, 07700 900 982 or +44 0808 157 0192.
 
