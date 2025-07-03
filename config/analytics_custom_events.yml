@@ -30,9 +30,11 @@ shared:
   - publisher_notify
   - publisher_applications_received
   - publisher_collect_references
+  - publisher_declaration_received
   - publisher_inform_applicant_about_references
   - publisher_invite_to_apply
   - publisher_job_application_data_expiry
+  - publisher_reference_received
   - publisher_prompt_for_feedback
   - publisher_sign_in_fallback
   - publisher_vacancy_relisted
