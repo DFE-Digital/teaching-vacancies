@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :uploaded_job_application do
     status { :draft }
     jobseeker
-    vacancy
+    vacancy factory: %i[vacancy with_uploaded_application_form]
 
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
