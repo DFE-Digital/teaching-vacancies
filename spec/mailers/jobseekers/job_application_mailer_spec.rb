@@ -60,7 +60,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
 
     it "sends a `declarations` email" do
       expect(mail.subject).to eq("Declarations")
-      expect(mail.to).to eq([job_application.email])
+      expect(mail.to).to eq([job_application.email_address])
       expect(mail.body).to include(self_disclosure_link)
     end
   end
