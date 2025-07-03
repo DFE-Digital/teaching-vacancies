@@ -14,9 +14,9 @@ module Publishers
       @name = job_application.name
       @job_title = job_application.vacancy.job_title
       @organisation_name = job_application.vacancy.organisation_name
-      send_email(to: job_application.email, subject: t(".subject",
-                                                       job_title: @job_title,
-                                                       organisation_name: @organisation_name))
+      send_email(to: job_application.email_address, subject: t(".subject",
+                                                               job_title: @job_title,
+                                                               organisation_name: @organisation_name))
     end
   end
 end
