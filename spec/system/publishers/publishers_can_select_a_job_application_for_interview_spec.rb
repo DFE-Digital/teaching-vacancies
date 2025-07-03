@@ -60,7 +60,7 @@ RSpec.describe "Publishers can select a job application for interview" do
           .to eq({
             current_referee.email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
             old_referee.email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
-            job_application.email => ["Declarations", "References are being collected for role #{vacancy.job_title} at #{organisation.name}"],
+            job_application.email_address => ["Declarations", "References are being collected for role #{vacancy.job_title} at #{organisation.name}"],
           })
       end
 
@@ -81,7 +81,7 @@ RSpec.describe "Publishers can select a job application for interview" do
             .to eq({
               current_referee.email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
               old_referee.email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
-              job_application.email => %w[Declarations],
+              job_application.email_address => %w[Declarations],
             })
         end
 
