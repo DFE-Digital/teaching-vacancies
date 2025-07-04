@@ -6,7 +6,7 @@ class Api::OrganisationsController < Api::ApplicationController
 
   def index
     suggestions = Search::SchoolSearch.new({ name: query }, scope: search_scope)
-      .organisations.limit(MAX_RESULTS).map { |s| "#{s.name} #{s.postcode}" }
+      .organisations.limit(MAX_RESULTS).map { |s| "#{s.name} (#{s.postcode})" }
 
     render json: { query:, suggestions: }
   end
