@@ -108,6 +108,9 @@ Rails.application.routes.draw do
       get :post_submit
       post :withdraw
       resource :feedback, only: %i[create], controller: "job_applications/feedbacks"
+      resources :self_disclosure, only: %i[show update], controller: "job_applications/self_disclosure" do
+        get :completed, on: :collection
+      end
     end
 
     scope as: :job, path: ":job_id" do
@@ -390,11 +393,34 @@ Rails.application.routes.draw do
 
       resources :job_applications, only: %i[index show], controller: "publishers/vacancies/job_applications" do
         resources :notes, only: %i[create destroy], controller: "publishers/vacancies/job_applications/notes"
+        resources :reference_requests, only: %i[show update edit], controller: "publishers/vacancies/job_applications/reference_requests" do
+          member do
+            get :reference_received
+            patch :mark_as_received
+          end
+        end
         get :download_pdf
         get :withdrawn
         get :tag, on: :collection
         get :tag_single, on: :member
         post :update_tag, on: :collection
+        member do
+          get :pre_interview_checks
+          get :collect_references
+        end
+        resource :self_disclosure, only: %i[show update], controller: "publishers/vacancies/job_applications/self_disclosure"
+      end
+      resources :job_application_batches, only: %i[] do
+        resources :references_and_declarations, only: %i[show update], controller: "publishers/vacancies/references_and_declarations"
+      end
+    end
+  end
+
+  resources :references, only: %i[] do
+    resources :build, only: %i[show update], controller: "referees/build_references" do
+      collection do
+        get :completed
+        get :no_reference
       end
     end
   end
