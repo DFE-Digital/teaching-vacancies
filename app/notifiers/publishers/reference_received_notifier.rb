@@ -1,11 +1,13 @@
 class Publishers::ReferenceReceivedNotifier < ApplicationNotifier
+  recipients do
+    record.referee.job_application.vacancy.publisher
+  end
+
   deliver_by :email do |config|
     config.mailer = "Publishers::CollectReferencesMailer"
     config.method = "reference_received"
     config.args = :reference_request
   end
-
-  required_param :reference_request
 
   notification_methods do
     def message
@@ -18,7 +20,8 @@ class Publishers::ReferenceReceivedNotifier < ApplicationNotifier
     end
   end
 
-  def reference_request(_ignored)
-    params.fetch(:reference_request)
+  # this gets passed the notification as a a parameter 'just in case'
+  def reference_request(*)
+    record.referee.reference_request
   end
 end

@@ -35,11 +35,11 @@ RSpec.describe "Publishers can view their notifications" do
           v = create(:vacancy, :published, organisations: [organisation], publisher: publisher, job_title: "#{delay} ago")
           application = create(:job_application, :status_submitted, vacancy: v, create_details: true)
 
-          ref_req = create(:reference_request, referee: application.referees.first)
-          ref = create(:job_reference, referee: application.referees.first)
+          create(:reference_request, referee: application.referees.first)
+          job_reference = create(:job_reference, referee: application.referees.first)
 
-          Publishers::ReferenceReceivedNotifier.with(record: ref, reference_request: ref_req)
-                                               .deliver(publisher)
+          Publishers::ReferenceReceivedNotifier.with(record: job_reference)
+                                               .deliver
         end
         travel_to (delay.days + 1.hour).ago do
           v = create(:vacancy, :published, organisations: [organisation], publisher: publisher, job_title: "#{delay} ago")

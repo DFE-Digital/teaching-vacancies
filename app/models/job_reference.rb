@@ -32,7 +32,6 @@ class JobReference < ApplicationRecord
 
   def mark_as_received
     referee.reference_request.update!(status: :received)
-    Publishers::ReferenceReceivedNotifier.with(record: self, reference_request: referee.reference_request)
-                                         .deliver(referee.job_application.vacancy.publisher)
+    Publishers::ReferenceReceivedNotifier.with(record: self).deliver
   end
 end
