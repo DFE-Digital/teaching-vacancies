@@ -26,7 +26,7 @@ RSpec.describe "Publishers can view their notifications" do
     end
   end
 
-  context "when paginating" do
+  context "when paginating", :versioning do
     before do
       stub_const("Publishers::NotificationsController::NOTIFICATIONS_PER_PAGE", 2)
 
@@ -36,7 +36,7 @@ RSpec.describe "Publishers can view their notifications" do
           application = create(:job_application, :status_submitted, vacancy: v, create_details: true)
 
           create(:reference_request, referee: application.referees.first)
-          job_reference = create(:job_reference, referee: application.referees.first)
+          job_reference = create(:job_reference, :reference_given, referee: application.referees.first)
 
           Publishers::ReferenceReceivedNotifier.with(record: job_reference)
                                                .deliver
@@ -61,7 +61,8 @@ RSpec.describe "Publishers can view their notifications" do
       click_on strip_tags(I18n.t("nav.notifications_html", count: 6))
     end
 
-    it "clicks notifications link, renders the notifications, paginates, and marks as read" do
+    it "clicks notifications link, renders the notifications, paginates, and marks as read", :js do
+      sleep 17
       within "#notifications-results" do
         expect(page).to have_css("div", class: "notification__tag", text: "new", count: 2)
       end

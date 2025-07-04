@@ -42,7 +42,8 @@ en:
     publishers/self_declaration_received_notification:
       message: You have received a self disclosure form
     publishers/reference_received_notification:
-      message: You have received a reference form
+      message_html: You have %{link}
+      reference_received: received a reference form
 
   errors:
     jobs:

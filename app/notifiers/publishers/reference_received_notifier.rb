@@ -11,12 +11,28 @@ class Publishers::ReferenceReceivedNotifier < ApplicationNotifier
 
   notification_methods do
     def message
-      t("notifications.publishers/reference_received_notification.message")
+      t("notifications.publishers/reference_received_notification.message_html", link: reference_link)
     end
+
     include DatesHelper
+    include ActionView::Helpers::UrlHelper
+    include GovukLinkHelper
+    include GovukVisuallyHiddenHelper
 
     def timestamp
       "#{day(created_at)} at #{format_time(created_at)}"
+    end
+
+    private
+
+    def reference_link
+      govuk_link_to t("notifications.publishers/reference_received_notification.reference_received"),
+                    organisation_job_job_application_reference_request_path(job_application.vacancy.id, job_application.id, event.record.referee.reference_request),
+                    class: "govuk-link--no-visited-state"
+    end
+
+    def job_application
+      record.referee.job_application
     end
   end
 
