@@ -8,7 +8,7 @@
   .govuk-grid-column-full
     h1.govuk-heading-xl class="govuk-!-margin-bottom-4" = profile.full_name
     - if (employment = profile.current_or_most_recent_employment).present?
-      p.govuk-body class="govuk-!-margin-bottom-3"
+      span.govuk-caption-l class="govuk-!-margin-bottom-3"
         - if employment.is_current_role?
           = employment.job_title
         - else
