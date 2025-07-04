@@ -151,4 +151,32 @@ RSpec.describe JobseekerProfile, type: :model do
       expect { unrelated_employment.reload }.not_to raise_error
     end
   end
+
+  describe "#current_or_most_recent_employment" do
+    let!(:profile) { create(:jobseeker_profile) }
+
+    context "when there are no employments" do
+      it "returns nil" do
+        expect(profile.current_or_most_recent_employment).to be_nil
+      end
+    end
+
+    context "when there are employments" do
+      let!(:older_employment) { create(:employment, jobseeker_profile: profile, started_on: 2.years.ago, ended_on: 1.year.ago) }
+      let!(:recent_employment) { create(:employment, jobseeker_profile: profile, started_on: 1.year.ago, ended_on: 6.months.ago) }
+
+      it "returns the most recent employment based on started_on date" do
+        expect(profile.current_or_most_recent_employment).to eq(recent_employment)
+      end
+    end
+
+    context "when there are employment breaks" do
+      let!(:employment) { create(:employment, jobseeker_profile: profile, started_on: 1.year.ago, ended_on: 6.months.ago) }
+      let!(:employment_break) { create(:employment, :break, jobseeker_profile: profile, started_on: 6.months.ago, ended_on: 3.months.ago) }
+
+      it "returns only job employments, not breaks" do
+        expect(profile.current_or_most_recent_employment).to eq(employment)
+      end
+    end
+  end
 end

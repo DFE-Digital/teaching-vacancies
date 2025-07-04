@@ -7,6 +7,12 @@
 .govuk-grid-row
   .govuk-grid-column-full
     h1.govuk-heading-xl class="govuk-!-margin-bottom-4" = profile.full_name
+    - if (employment = profile.current_or_most_recent_employment).present?
+      p.govuk-body class="govuk-!-margin-bottom-3"
+        - if employment.is_current_role?
+          = employment.job_title
+        - else
+          = t("publishers.jobseeker_profiles.previously_role", job_title: employment.job_title)
     .govuk-button-group data-controller="clipboard" data-clipboard-success-content-value="email address copied"
       = tracked_mail_to(profile.email,
                         target: "_blank",
