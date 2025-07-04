@@ -135,6 +135,10 @@ class JobseekerProfile < ApplicationRecord
     @unexplained_employment_gaps ||= Jobseekers::JobApplications::EmploymentGapFinder.new(self).significant_gaps
   end
 
+  def current_or_most_recent_employment
+    @current_or_most_recent_employment ||= employments.job.order(started_on: :desc).first
+  end
+
   private
 
   def duplicate_and_save(records)
