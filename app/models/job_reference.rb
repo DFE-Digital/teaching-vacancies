@@ -29,4 +29,9 @@ class JobReference < ApplicationRecord
   has_encrypted :reason_for_leaving
   has_encrypted :would_reemploy_current_reason
   has_encrypted :would_reemploy_any_reason
+
+  def mark_as_received
+    referee.reference_request.update!(status: :received)
+    Publishers::ReferenceReceivedNotifier.with(record: self).deliver
+  end
 end

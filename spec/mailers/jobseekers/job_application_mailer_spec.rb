@@ -2,9 +2,10 @@ require "rails_helper"
 require "dfe/analytics/rspec/matchers"
 
 RSpec.describe Jobseekers::JobApplicationMailer do
+  let(:job_title) { Faker::Job.title }
   let(:jobseeker) { create(:jobseeker) }
   let(:organisation) { build(:school) }
-  let(:vacancy) { build(:vacancy, organisations: [organisation]) }
+  let(:vacancy) { build(:vacancy, organisations: [organisation], job_title: job_title) }
   let(:contact_email) { vacancy.contact_email }
 
   let(:expected_data) do
@@ -59,7 +60,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
     let(:self_disclosure_link) { jobseekers_job_application_self_disclosure_url(job_application, Wicked::FIRST_STEP) }
 
     it "sends a `declarations` email" do
-      expect(mail.subject).to eq("Declarations")
+      expect(mail.subject).to eq("Complete your self-disclosure form for #{job_title}")
       expect(mail.to).to eq([job_application.email_address])
       expect(mail.body).to include(self_disclosure_link)
     end

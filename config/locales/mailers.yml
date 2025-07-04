@@ -99,15 +99,6 @@ en:
         search:
           intro: Search and apply for more teaching jobs on Teaching Vacancies
           link_text: Go to Teaching Vacancies
-      application_shortlisted:
-        <<: *job_application_mailer_shared
-        heading: You have been shortlisted for %{job_title} at %{organisation_name}
-        instructions: What happens next
-        subject: Your job application has been shortlisted
-        read_advice_from: "Read advice from experienced teachers and school leaders on preparing for your:"
-        teaching_job_interview: "teaching job interview"
-        teaching_interview_lesson: "teaching interview lesson"
-        guidance: "- %{link}"
       application_submitted:
         <<: *job_application_mailer_shared
         heading: Your application has been sent to %{organisation_name}
@@ -122,18 +113,20 @@ en:
         teaching_job_interview: "teaching job interview"
         teaching_interview_lesson: "teaching interview lesson"
         guidance: "- %{link}"
-      application_unsuccessful:
-        <<: *job_application_mailer_shared
-        feedback: Feedback from the school
-        heading: Unfortunately your application was not successful this time
-        advice: To improve your application for next time, read advice from experienced teachers and school leaders on %{link}.
-        application_advice_link_text: writing a great application
-        subject: Your job application has been unsuccessful
       declarations:
-        subject: Declarations
+        subject: Complete your self-disclosure form for %{job_title}
         dear: Dear %{name}
-        self_disclosure_form: self-disclosure form
-        self_disclosure_info: "Your are required to complete your %{link} before attending your interview."
+        self_disclosure_form: Teaching Vacancies account
+        body: |
+          %{school_name} has requested that you complete your self-disclosure form as part of your application for %{job_title}.
+
+          Sign in to your %{link} to complete your self-disclosure form.
+
+          If you are having issues completing the form, email [teaching.vacancies@education.gov.uk](mailto:teaching.vacancies@education.gov.uk).
+
+          Kind regards,
+
+          Teaching Vacancies team
       job_listing_ended_early:
         body: |
           Unfortunately, %{organisation_name} has ended the job listing early and you can no longer apply for the role.
@@ -242,13 +235,51 @@ en:
       feedback_link_text: Tell us how you filled your vacancy.
     collect_references_mailer:
       collect_references:
-        subject: Supply a reference for %{name} for role %{job_title} at %{organisation_name}
-        title: Supply a reference for %{name}
-        submit_reference: Submit reference
+        subject: Provide a reference for %{name} for role %{job_title} at %{organisation_name}
+        title: Dear %{name}
+        submit_reference: reference request form
+        body: |
+          You have been provided as a referee by %{candidate_name} for the %{job_title} at %{organisation_name}.
+
+          Complete this %{link} to provide a reference. You can decline to provide a reference.
+
+          If you cannot complete the above reference form using the link provided, contact %{school_email}.
+
+          Kind regards,
+          Teaching Vacancies team
       inform_applicant_about_references:
         subject: References are being collected for role %{job_title} at %{organisation_name}
+        sign_in: sign in to your Teaching vacancies account
         title: Dear %{name}
-        collection: References are being collected for role %{job_title} at %{organisation_name}
+        body: |
+          %{organisation_name} will be collecting your references for %{job_title} at %{organisation_name}.
+
+          If you need to review what referees you provided for this application, %{link}.
+
+          Kind regards,
+          Teaching Vacancies team
+      declaration_received:
+        subject: You have received a declaration form for %{job_title} at %{organisation_name}
+        title: Dear %{name}
+        sign_in: Teaching Vacancies account
+        body: |
+          You have received a declaration form from %{candidate_name} for %{job_title} at %{organisation_name}.
+
+          You can review the declaration form by signing in to your %{link}.
+
+          Kind regards,
+          Teaching Vacancies team
+      reference_received:
+        subject: You have received a reference from %{candidate_name} for %{job_title} at %{organisation_name}
+        title: Dear %{name}
+        sign_in: Teaching Vacancies account
+        body: |
+          You have received a reference for %{candidate_name} for %{job_title} at %{organisation_name}.
+
+          Sign in to your %{link} to view the reference provided.
+
+          Kind regards,
+          Teaching Vacancies team
   support_users:
     authentication_fallback_mailer:
       sign_in_fallback:
