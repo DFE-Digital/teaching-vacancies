@@ -61,8 +61,7 @@ RSpec.describe "Publishers can view their notifications" do
       click_on strip_tags(I18n.t("nav.notifications_html", count: 6))
     end
 
-    it "clicks notifications link, renders the notifications, paginates, and marks as read", :js do
-      sleep 17
+    it "clicks notifications link, renders the notifications, paginates, and marks as read" do
       within "#notifications-results" do
         expect(page).to have_css("div", class: "notification__tag", text: "new", count: 2)
       end
