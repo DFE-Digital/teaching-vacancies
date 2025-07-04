@@ -1,5 +1,4 @@
 class Publishers::JobApplicationReceivedNotifier < Noticed::Event
-  delegate :created_at, to: :record
   required_param :vacancy, :job_application
 
   notification_methods do

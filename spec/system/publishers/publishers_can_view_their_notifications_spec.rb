@@ -12,8 +12,13 @@ RSpec.describe "Publishers can view their notifications" do
 
   context "when the notification was created outside the data access period" do
     before do
-      Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
-      publisher.notifications.first.update(created_at: Time.now - 2.years)
+      travel_to 2.years.ago do
+        Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
+      end
+      # notifications are created with insert_all, which uses the DB timestamp
+      # and hence isn't changed by the travel_to block
+      publisher.notifications.each { |n| n.update!(created_at: n.event.created_at) }
+
       visit publishers_notifications_path
     end
 
@@ -23,26 +28,34 @@ RSpec.describe "Publishers can view their notifications" do
   end
 
   context "when paginating" do
-    let(:job_application2) { create(:job_application, :status_submitted, vacancy: vacancy, created_at: 1.minute.ago) }
-
     before do
-      stub_const("Publishers::NotificationsController::NOTIFICATIONS_PER_PAGE", 1)
-      Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
-      Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application2).deliver(vacancy.publisher)
+      stub_const("Publishers::NotificationsController::NOTIFICATIONS_PER_PAGE", 2)
+
+      1.upto(3) do |delay|
+        travel_to delay.days.ago do
+          job_application = create(:job_application, :status_submitted, vacancy: vacancy)
+          Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
+        end
+      end
+      # notifications are created with insert_all, which uses the DB timestamp
+      # and hence isn't changed by the travel_to block
+      publisher.notifications.each { |n| n.update!(created_at: n.event.created_at) }
+
       visit root_path
+      click_on strip_tags(I18n.t("nav.notifications_html", count: 3))
     end
 
-    it "clicks notifications link, renders the notifications, paginates, and marks as read" do
-      click_on strip_tags(I18n.t("nav.notifications_html", count: 2))
-
+    it "clicks notifications link, renders the notifications, paginates, and marks as read", :js do
+      sleep 20
       within ".notification" do
-        expect(page).to have_css("div", class: "notification__tag", text: "new", count: 1)
+        expect(page).to have_css("div", class: "notification__tag", text: "new", count: 2)
       end
 
       click_on "Next"
       # wait for page load
       find(".govuk-pagination__prev", wait: 10)
 
+      sleep 20
       within ".notification" do
         expect(page).to have_css("div", class: "notification__tag", text: "new", count: 1)
       end
@@ -51,8 +64,9 @@ RSpec.describe "Publishers can view their notifications" do
       # wait for page load
       find(".govuk-pagination__next")
 
+      sleep 20
       within ".notification" do
-        expect(page).not_to have_css("div", class: "notification__tag", text: "new", count: 1)
+        expect(page).not_to have_css("div", class: "notification__tag", text: "new", count: 2)
       end
     end
   end
