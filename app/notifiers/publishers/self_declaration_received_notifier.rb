@@ -16,6 +16,8 @@ class Publishers::SelfDeclarationReceivedNotifier < ApplicationNotifier
     def timestamp
       "#{day(created_at)} at #{format_time(created_at)}"
     end
+
+    # delegate :created_at, to: :record
   end
 
   def job_application(_ignored)

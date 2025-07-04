@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Publishers can view their notifications" do
+  include ActiveJob::TestHelper
+
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
   let(:vacancy) { create(:vacancy, :published, organisations: [organisation], publisher: publisher) }
@@ -10,10 +12,12 @@ RSpec.describe "Publishers can view their notifications" do
 
   after { logout }
 
-  context "when the notification was created outside the data access period" do
+  context "when the notification was created outside the data access period", :js do
     before do
-      Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
-      publisher.notifications.first.update(created_at: Time.now - 2.years)
+      travel_to 2.years.ago do
+        Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
+      end
+      publisher.notifications.each { |n| n.update!(created_at: n.event.created_at) }
       visit publishers_notifications_path
     end
 
@@ -22,7 +26,7 @@ RSpec.describe "Publishers can view their notifications" do
     end
   end
 
-  context "when paginating", :inline_jobs do
+  context "when paginating" do
     before do
       stub_const("Publishers::NotificationsController::NOTIFICATIONS_PER_PAGE", 2)
 
@@ -36,6 +40,11 @@ RSpec.describe "Publishers can view their notifications" do
 
           Publishers::ReferenceReceivedNotifier.with(record: ref, reference_request: ref_req)
                                                .deliver(publisher)
+        end
+        travel_to (delay.days + 1.hour).ago do
+          v = create(:vacancy, :published, organisations: [organisation], publisher: publisher, job_title: "#{delay} ago")
+          application = create(:job_application, :status_submitted, vacancy: v, create_details: true)
+
           disc_ref = create(:self_disclosure_request, job_application: application)
           self_disc = create(:self_disclosure, self_disclosure_request: disc_ref)
           Publishers::SelfDeclarationReceivedNotifier.with(record: self_disc,
@@ -44,11 +53,15 @@ RSpec.describe "Publishers can view their notifications" do
         end
       end
 
+      # notifications are created with insert_all, which uses the DB timestamp
+      # and hence isn't changed by the travel_to block
+      publisher.notifications.each { |n| n.update!(created_at: n.event.created_at) }
+
       visit root_path
       click_on strip_tags(I18n.t("nav.notifications_html", count: 6))
     end
 
-    it "clicks notifications link, renders the notifications, paginates, and marks as read", :js do
+    it "clicks notifications link, renders the notifications, paginates, and marks as read" do
       within "#notifications-results" do
         expect(page).to have_css("div", class: "notification__tag", text: "new", count: 2)
       end
@@ -61,7 +74,7 @@ RSpec.describe "Publishers can view their notifications" do
         expect(page).to have_css("div", class: "notification__tag", text: "new", count: 2)
       end
 
-      click_on "3"
+      click_on "Previous"
 
       within "#notifications-results" do
         expect(page).not_to have_css("div", class: "notification__tag", text: "new", count: 2)

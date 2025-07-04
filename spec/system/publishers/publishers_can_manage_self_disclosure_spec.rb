@@ -3,9 +3,9 @@ require "rails_helper"
 RSpec.describe "Publishers manage self disclosure" do
   include ActiveJob::TestHelper
 
-  let(:publisher) { create(:publisher) }
+  let(:publisher) { create(:publisher, email: "publisher@contoso.com") }
   let(:organisation) { create(:school) }
-  let(:vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
+  let(:vacancy) { create(:vacancy, :expired, organisations: [organisation], publisher: publisher) }
   let(:jobseeker) { create(:jobseeker) }
   let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy, jobseeker: jobseeker) }
 
@@ -65,11 +65,17 @@ RSpec.describe "Publishers manage self disclosure" do
         expect(publisher_ats_self_disclosure_page.status.text).to eq("Completed")
       end
 
-      context "when completed by jobseeker", :inline_jobs do
+      context "when completed by jobseeker" do
         before do
           request.self_disclosure.mark_as_received
-          # perform_enqueued_jobs
-          # perform_enqueued_jobs
+          # trigger notifications
+          perform_enqueued_jobs
+          perform_enqueued_jobs
+        end
+
+        it "send an email notification to the publisher that the disclosure had been received" do
+          expect(ActionMailer::Base.deliveries.map(&:to).flatten)
+            .to contain_exactly("publisher@contoso.com")
         end
 
         it "shows the form" do

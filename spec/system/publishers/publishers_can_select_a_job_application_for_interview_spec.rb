@@ -4,17 +4,17 @@ RSpec.describe "Publishers can select a job application for interview" do
   include ActiveJob::TestHelper
 
   let(:job_title) { Faker::Job.title }
-  let(:publisher) { create(:publisher) }
+  let(:publisher) { create(:publisher, email: "publisher@contoso.com") }
   let(:organisation) { create(:school) }
-  let(:vacancy) { create(:vacancy, :expired, organisations: [organisation], job_title: job_title) }
-  let(:jobseeker) { create(:jobseeker) }
+  let(:vacancy) { create(:vacancy, :expired, organisations: [organisation], job_title: job_title, publisher: publisher) }
+  let(:jobseeker) { create(:jobseeker, email: "jobseeker@contoso.com") }
   let(:job_application) do
     create(:job_application, :status_submitted,
            email_address: jobseeker.email,
            vacancy: vacancy, jobseeker: jobseeker)
   end
-  let!(:current_referee) { create(:referee, is_most_recent_employer: true, job_application: job_application) }
-  let!(:old_referee) { create(:referee, is_most_recent_employer: false, job_application: job_application) }
+  let!(:current_referee) { create(:referee, email: "employer@contoso.com", is_most_recent_employer: true, job_application: job_application) }
+  let!(:old_referee) { create(:referee, email: "previous@contoso.com", is_most_recent_employer: false, job_application: job_application) }
 
   before do
     login_publisher(publisher: publisher, organisation: organisation)
@@ -56,7 +56,6 @@ RSpec.describe "Publishers can select a job application for interview" do
         expect {
           perform_enqueued_jobs
         }.to change(ActionMailer::Base.deliveries, :count).by(4)
-        # expect(ActionMailer::Base.deliveries.map(&:to).flatten).to contain_exactly(current_referee.email, old_referee.email, job_application.email_address, job_application.email_address)
         expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
           .to eq({
             current_referee.email => ["Provide a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
@@ -137,16 +136,16 @@ RSpec.describe "Publishers can select a job application for interview" do
           end
         end
 
-        context "with a received reference", :inline_jobs do
+        context "with a received reference" do
           before do
-            # perform_enqueued_jobs
+            perform_enqueued_jobs
             current_referee.reload
             # simulate receipt of a reference
-            current_referee.job_reference.update!(attributes_for(:job_reference, :reference_given).merge(updated_at: Date.tomorrow))
+            current_referee.job_reference.update!(attributes_for(:job_reference, :reference_given).merge(updated_at: Date.yesterday))
             current_referee.job_reference.mark_as_received
             # have to enqueue twice to trigger notification email
-            # perform_enqueued_jobs
-            # perform_enqueued_jobs
+            perform_enqueued_jobs
+            perform_enqueued_jobs
           end
 
           it "can progress to the page where the reference is shown" do
@@ -155,6 +154,11 @@ RSpec.describe "Publishers can select a job application for interview" do
 
             publisher_ats_pre_interview_checks_page.reference_links.first.click
             expect(publisher_ats_reference_request_page).to be_displayed
+          end
+
+          it "send an email notification to the publisher that the reference had been received" do
+            expect(ActionMailer::Base.deliveries.map(&:to).flatten)
+              .to contain_exactly("jobseeker@contoso.com", "employer@contoso.com", "previous@contoso.com", "publisher@contoso.com")
           end
 
           context "when marking reference received" do
@@ -199,6 +203,7 @@ RSpec.describe "Publishers can select a job application for interview" do
         expect {
           perform_enqueued_jobs
         }.not_to change(ActionMailer::Base.deliveries, :count)
+        expect(ActionMailer::Base.deliveries.count).to eq(0)
         expect(publisher_ats_interviewing_page).to be_displayed
       end
 
