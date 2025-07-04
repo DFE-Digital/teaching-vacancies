@@ -132,6 +132,70 @@ RSpec.describe VacanciesHelper do
     end
   end
 
+  describe "#vacancy_form_type" do
+    let(:vacancy) { instance_double(Vacancy) }
+
+    context "when vacancy uses uploaded form" do
+      it "returns uploaded_document translation" do
+        allow(vacancy).to receive(:uploaded_form?).and_return(true)
+
+        expect(helper.vacancy_form_type(vacancy)).to eq(
+          t("publishers.vacancies.application_form_type.uploaded_document"),
+        )
+      end
+    end
+
+    context "when job applications are enabled" do
+      before do
+        allow(vacancy).to receive_messages(uploaded_form?: false, enable_job_applications: true)
+      end
+
+      it "returns catholic translation if religion_type is catholic" do
+        allow(vacancy).to receive(:religion_type).and_return("catholic")
+
+        expect(helper.vacancy_form_type(vacancy)).to eq(
+          t("publishers.vacancies.application_form_type.catholic"),
+        )
+      end
+
+      it "returns other_religion translation if religion_type is other_religion" do
+        allow(vacancy).to receive(:religion_type).and_return("other_religion")
+
+        expect(helper.vacancy_form_type(vacancy)).to eq(
+          t("publishers.vacancies.application_form_type.other_religion"),
+        )
+      end
+
+      it "returns no_religion translation for any other religion_type" do
+        allow(vacancy).to receive(:religion_type).and_return("non_religious")
+
+        expect(helper.vacancy_form_type(vacancy)).to eq(
+          t("publishers.vacancies.application_form_type.no_religion"),
+        )
+      end
+
+      it "returns no_religion translation when religion_type is nil" do
+        allow(vacancy).to receive(:religion_type).and_return(nil)
+
+        expect(helper.vacancy_form_type(vacancy)).to eq(
+          t("publishers.vacancies.application_form_type.no_religion"),
+        )
+      end
+    end
+
+    context "when job applications are not enabled" do
+      before do
+        allow(vacancy).to receive_messages(uploaded_form?: false, enable_job_applications: false)
+      end
+
+      it "returns other translation" do
+        expect(helper.vacancy_form_type(vacancy)).to eq(
+          t("publishers.vacancies.application_form_type.other"),
+        )
+      end
+    end
+  end
+
   describe "#vacancy_breadcrumbs" do
     subject(:breadcrumbs) { vacancy_breadcrumbs(vacancy).to_a }
 

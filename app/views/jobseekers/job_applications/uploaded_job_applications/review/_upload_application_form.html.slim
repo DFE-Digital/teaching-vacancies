@@ -1,0 +1,4 @@
+- r.with_section :upload_application_form do |s|
+  - s.with_row do |row|
+    - row.with_key text: "Uploaded application form"
+    - row.with_value text: job_application.application_form.filename.to_s

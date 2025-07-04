@@ -102,6 +102,9 @@ en:
         example2: Prevent duty training
         example3: first aid courses
         example4: Team Teach
+    uploaded_job_applications:
+      upload_application_form:
+        not_authorized_to_download: You are not authorized to download this file.
     job_applications:
       apply:
         apply: Apply for this job
@@ -110,9 +113,11 @@ en:
         review_and_submit: Review and submit your application
         you_will_have: You will have the opportunity to review your application in full before you submit it.
         title: Review your application — Application
+        download_application_form: To apply for this job, you'll need to download the application form. Complete the sections below to provide your personal details and upload your completed application form.
       applying_for_the_job_heading: Applying for the job
       applying_for_the_job_paragraph: Please complete the online application.
-      no_cvs: CVs are not accepted.
+      requires_application_form_download: This job requires you to download an application form, you will be able to upload the application once complete.
+      no_cvs: CVs will not be accepted for this application.
       banner_links:
         apply: Apply for this job
         draft: Started - continue application
@@ -225,6 +230,8 @@ en:
           heading: Personal details
           step_title: Personal details
           title: Personal details — Application
+        upload_application_form:
+          heading: Upload application form
         personal_statement:
           additional_instructions: Additional instructions
           banner_title: Job listing and supporting documents
@@ -351,6 +358,9 @@ en:
       feedbacks:
         create:
           success: Thank you for your feedback
+      further_details:
+        heading: Further information about the job
+        dbs_check_info: The candidate will be required to undergo a full enhanced DBS check and must be eligible to work in the UK.
       heading: Application
       job_application:
         closing_date: Closing date

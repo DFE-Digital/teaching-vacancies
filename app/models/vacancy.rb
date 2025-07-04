@@ -67,8 +67,7 @@ class Vacancy < ApplicationRecord
   enum :status, { published: 0, draft: 1 }
 
   validates :status, presence: true
-
-  enum :receive_applications, { email: 0, website: 1 }
+  enum :receive_applications, { email: 0, website: 1, uploaded_form: 2 }
   enum :extension_reason, { no_applications: 0, didnt_find_right_candidate: 1, other_extension_reason: 2 }
 
   enum :religion_type, { no_religion: 0, other_religion: 1, catholic: 2 }
@@ -312,6 +311,15 @@ class Vacancy < ApplicationRecord
 
   def teaching_or_middle_leader_role?
     job_roles.intersect?(%w[teacher head_of_year_or_phase head_of_department_or_curriculum sendco other_leadership])
+  end
+
+  def allow_job_applications?
+    enable_job_applications? || uploaded_form?
+  end
+
+  def create_job_application_for(jobseeker)
+    klass = uploaded_form? ? UploadedJobApplication : NativeJobApplication
+    jobseeker.job_applications.create!(vacancy: self, type: klass.name)
   end
 
   private

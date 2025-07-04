@@ -10,6 +10,8 @@ module VacanciesHelper
   end
 
   def vacancy_form_type(vacancy)
+    return t("publishers.vacancies.application_form_type.uploaded_document") if vacancy.uploaded_form?
+
     if vacancy.enable_job_applications
       case vacancy.religion_type
       when "catholic"

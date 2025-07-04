@@ -3,7 +3,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   before_action :set_job_application, only: %i[review apply pre_submit submit post_submit show confirm_destroy destroy confirm_withdraw withdraw]
 
-  before_action :raise_cannot_apply, unless: -> { vacancy.enable_job_applications? }, only: %i[new create]
+  before_action :raise_cannot_apply, unless: -> { vacancy.allow_job_applications? }, only: %i[new create]
   before_action :redirect_if_job_application_exists, only: %i[new create]
   before_action :redirect_unless_draft_job_application, only: %i[review]
 
@@ -11,7 +11,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def new
     send_dfe_analytics_event
-
     if session[:newly_created_user]
       @newly_created_user = true
       session.delete(:newly_created_user)
@@ -40,13 +39,13 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
       redirect_to jobseekers_job_application_apply_path(new_job_application), notice: t("jobseekers.job_applications.new.import_from_previous_application")
     else
-      new_job_application = current_jobseeker.job_applications.create(vacancy:)
-      redirect_to jobseekers_job_application_apply_path(new_job_application)
+      new_job_application = vacancy.create_job_application_for(current_jobseeker)
+      redirect_to jobseekers_job_application_apply_path(new_job_application.id)
     end
   end
 
   def pre_submit
-    @form = Jobseekers::JobApplication::PreSubmitForm.new(completed_steps: job_application.completed_steps, all_steps: step_process.steps.excluding(:review).map(&:to_s))
+    @form = Jobseekers::JobApplication::PreSubmitForm.new(completed_steps: job_application.completed_steps, all_steps: step_process.validatable_steps)
     if @form.valid? && all_steps_valid?
       redirect_to jobseekers_job_application_review_path(@job_application)
     else
@@ -60,7 +59,10 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def apply
-    @form = Jobseekers::JobApplication::PreSubmitForm.new(completed_steps: job_application.completed_steps, all_steps: step_process.steps.excluding(:review).map(&:to_s))
+    @form = Jobseekers::JobApplication::PreSubmitForm.new(
+      completed_steps: job_application.completed_steps,
+      all_steps: step_process.validatable_steps,
+    )
   end
 
   def submit
@@ -139,14 +141,12 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def all_steps_valid?
     # Check that all steps are valid, in case we have changed the validations since the step was completed.
     # NB: Only validates top-level step forms. Does not validate individual qualifications, employments, or references.
-    step_process.steps.excluding(:review).all? { |step| step_valid?(step) }
+    step_process.validatable_steps.all? { |step| step_valid?(step) }
   end
 
   def step_valid?(step)
-    form_class = "jobseekers/job_application/#{step}_form".camelize.constantize
-
+    form_class = step_process.form_class_for(step)
     attributes = form_class.load_form(job_application)
-
     form = form_class.new(attributes)
 
     form.valid?.tap do
@@ -191,7 +191,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def review_form_params
     params.require(:jobseekers_job_application_review_form).permit(:confirm_data_accurate, :confirm_data_usage, update_profile: [])
-          .merge(completed_steps: job_application.completed_steps, all_steps: step_process.steps.excluding(:review).map(&:to_s))
+          .merge(completed_steps: job_application.completed_steps, all_steps: step_process.validatable_steps)
   end
 
   def withdraw_form_params

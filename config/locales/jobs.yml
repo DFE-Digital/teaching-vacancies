@@ -282,11 +282,12 @@ en:
     contact_number_provided: Do you want to give a contact phone number?
     enable_job_applications: Application form type
     further_details_provided: Do you want to add further details about the role?
-    how_to_receive_applications: How do you want to receive applications?
+    how_to_receive_applications: How do you want candidates to apply for the role?
     include_additional_documents: Do you want to upload any additional documents?
     safeguarding_information_provided: Do you want to give information about your commitment to safeguarding?
     school_visits: Do you want to offer school visits?
     visa_sponsorship: Can you offer Skilled Worker visa sponsorship to non-UK citizens for this role?
+    document_name: Document name
 
     review: Review your entries for each section below, making any changes needed before you publish the job listing.
     review_future:
