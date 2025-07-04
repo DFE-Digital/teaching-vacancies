@@ -5,7 +5,7 @@ RSpec.describe Vacancy do
     let(:school_group) { create(:trust, schools: [school_one, school_two]) }
     let(:school_one) { create(:school, name: "First school", phase: "primary") }
     let(:school_two) { create(:school, name: "Second school", phase: "primary") }
-    let(:vacancy) { create(:vacancy, :published, :ect_suitable, job_roles: %w[teacher], organisations: [school_group], phases: %w[primary], key_stages: %w[ks1]) }
+    let(:vacancy) { create(:vacancy, :ect_suitable, job_roles: %w[teacher], organisations: [school_group], phases: %w[primary], key_stages: %w[ks1]) }
 
     describe "#refresh_geolocation" do
       context "when associated with a school group (trust)" do

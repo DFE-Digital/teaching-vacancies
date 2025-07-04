@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can save a job" do
   let(:school) { create(:school) }
-  let(:vacancy) { create(:vacancy, :published, organisations: [school]) }
+  let(:vacancy) { create(:vacancy, organisations: [school]) }
   let(:created_jobseeker) { Jobseeker.first }
 
   context "when a jobseeker has an account" do

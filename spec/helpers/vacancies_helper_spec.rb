@@ -346,7 +346,7 @@ RSpec.describe VacanciesHelper do
     subject { helper.vacancy_review_form_heading_inset_text(vacancy, status) }
 
     context "when the job has been published" do
-      let(:vacancy) { create(:vacancy, :published) }
+      let(:vacancy) { create(:vacancy) }
       let(:status) { "published" }
 
       it "returns the correct text" do
@@ -374,7 +374,7 @@ RSpec.describe VacanciesHelper do
       end
 
       context "when the draft is incomplete" do
-        let(:vacancy) { create(:vacancy, :published) }
+        let(:vacancy) { create(:vacancy) }
         let(:status) { "incomplete_draft" }
 
         it "returns the correct text" do

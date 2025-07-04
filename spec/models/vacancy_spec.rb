@@ -18,13 +18,13 @@ RSpec.describe Vacancy do
 
     it "publish_on is not removed when converting a draft to a published vacancy" do
       vacancy = create(:draft_vacancy, publish_on: Date.current)
-      vacancy.update(status: :published)
+      vacancy.update!(type: "PublishedVacancy")
       expect(vacancy.publish_on).to be_present
     end
 
     it "publish_on is removed when converting a published vacancy back into a draft" do
       vacancy = create(:vacancy, publish_on: Date.current)
-      expect { vacancy.update(status: :draft) }.to change { vacancy.publish_on }.from(Date.current).to(nil)
+      expect { vacancy.update(type: "DraftVacancy") }.to change { vacancy.publish_on }.from(Date.current).to(nil)
     end
   end
 
@@ -64,7 +64,7 @@ RSpec.describe Vacancy do
         invalid_school = School.new(email: "invalid")
         expect(invalid_school).not_to be_valid
 
-        expect(Vacancy.new(organisations: [invalid_school], publisher: publisher, status: "draft")).to be_valid
+        expect(DraftVacancy.new(organisations: [invalid_school], publisher: publisher)).to be_valid
       end
     end
 
@@ -399,23 +399,6 @@ RSpec.describe Vacancy do
         pending = create_list(:vacancy, 3, :future_publish)
 
         expect(Vacancy.pending.count).to eq(pending.count)
-      end
-    end
-
-    describe "#published_on_count(date)" do
-      it "retrieves vacancies listed on the specified date" do
-        published_today = create_list(:vacancy, 3, :published_slugged)
-        published_yesterday = build_list(:vacancy, 2, :published_slugged, publish_on: 1.day.ago)
-        published_yesterday.each { |v| v.save(validate: false) }
-        published_the_other_day = build_list(:vacancy, 1, :published_slugged, publish_on: 2.days.ago)
-        published_the_other_day.each { |v| v.save(validate: false) }
-        published_some_other_day = build_list(:vacancy, 6, :published_slugged, publish_on: 1.month.ago)
-        published_some_other_day.each { |v| v.save(validate: false) }
-
-        expect(Vacancy.published_on_count(Date.current)).to eq(published_today.count)
-        expect(Vacancy.published_on_count(1.day.ago)).to eq(published_yesterday.count)
-        expect(Vacancy.published_on_count(2.days.ago)).to eq(published_the_other_day.count)
-        expect(Vacancy.published_on_count(1.month.ago)).to eq(published_some_other_day.count)
       end
     end
 
@@ -783,14 +766,10 @@ RSpec.describe Vacancy do
     end
   end
 
-  describe "#draft!" do
+  describe "draft!" do
     subject { create(:vacancy, :future_publish) }
 
-    before { subject.draft! }
-
-    it "converts the job to a draft" do
-      expect(subject.status).to eq("draft")
-    end
+    before { subject.update!(type: "DraftVacancy") }
 
     it "resets the publish_on date" do
       expect(subject.publish_on).to eq(nil)
