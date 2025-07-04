@@ -5,18 +5,22 @@ class JobApplicationZipBuilder
   end
 
   def generate
-    Zip::OutputStream.write_buffer do |zio|
+    Zip::OutputStream.write_buffer { |zio|
       @job_applications.each do |job_application|
         if @vacancy.uploaded_form?
           next unless job_application.application_form.attached?
 
-          zio.put_next_entry "#{job_application.first_name}_#{job_application.last_name}.pdf"
-          zio.write job_application.application_form.download
+          blob = job_application.application_form.blob
+          extension = File.extname(blob.filename.to_s)
+          filename = "#{job_application.first_name}_#{job_application.last_name}#{extension}"
+
+          zio.put_next_entry(filename)
+          zio.write blob.download
         else
           zio.put_next_entry "#{job_application.first_name}_#{job_application.last_name}.pdf"
           zio.write JobApplicationPdfGenerator.new(job_application).generate.render
         end
       end
-    end
+    }.tap(&:rewind)
   end
 end

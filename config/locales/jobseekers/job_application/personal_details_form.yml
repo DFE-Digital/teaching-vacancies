@@ -134,7 +134,7 @@ en:
         personal_details_section_completed_options:
           false: No, I'll come back to it later
           true: Yes, I've completed this section
-        teacher_reference_number: What is your teacher reference number? (Optional)
+        teacher_reference_number: What is your teacher reference number? (optional)
       jobseekers_uploaded_job_application_upload_application_form_form:
        upload_application_form_section_completed_options:
           false: No, I'll come back to it later
