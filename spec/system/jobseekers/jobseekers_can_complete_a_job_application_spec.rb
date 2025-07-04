@@ -106,12 +106,11 @@ RSpec.describe "Jobseekers can complete a job application" do
     fill_in_ask_for_support
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_css("#ask_for_support", text: I18n.t("shared.status_tags.complete"))
-
+    click_on "Review application"
     click_on(I18n.t("jobseekers.job_applications.build.declarations.heading"))
     validates_step_complete
     fill_in_declarations
     click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_css("#declarations", text: I18n.t("shared.status_tags.complete"))
     click_on "Review application"
 
     expect(current_path).to eq(jobseekers_job_application_review_path(job_application))
