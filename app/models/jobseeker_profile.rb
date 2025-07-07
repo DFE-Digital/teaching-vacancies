@@ -136,7 +136,7 @@ class JobseekerProfile < ApplicationRecord
   end
 
   def current_or_most_recent_employment
-    @current_or_most_recent_employment ||= employments.job.order(started_on: :desc).first
+    employments.job.find_by(is_current_role: true) || employments.job.order(started_on: :desc).first
   end
 
   private
