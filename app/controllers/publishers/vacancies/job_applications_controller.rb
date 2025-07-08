@@ -2,7 +2,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   include Jobseekers::QualificationFormConcerns
   include DatesHelper
 
-  before_action :set_job_application, only: %i[show download_pdf]
+  before_action :set_job_application, only: %i[show download_pdf download_application_form]
 
   before_action :set_job_applications, only: %i[index tag_single tag]
 
@@ -27,6 +27,20 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       pdf.render,
       filename: "job_application_#{@job_application.id}.pdf",
       type: "application/pdf",
+      disposition: "inline",
+    )
+  end
+
+  def download_application_form
+    unless @job_application.application_form.attached?
+      redirect_to organisation_job_job_application_path(vacancy.id, @job_application.id), alert: I18n.t("publishers.vacancies.job_applications.download_pdf.no_file")
+      return
+    end
+
+    send_data(
+      @job_application.application_form.download,
+      filename: @job_application.application_form.filename.to_s,
+      type: @job_application.application_form.content_type,
       disposition: "inline",
     )
   end
@@ -81,18 +95,15 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   def download_selected(tag_params)
     @form = Publishers::JobApplication::DownloadForm.new(job_applications: tag_params.fetch(:job_applications).compact_blank)
     if @form.valid?
-      downloads = JobApplication
-                    .includes([:qualifications, :employments, :training_and_cpds, :referees, { jobseeker: :jobseeker_profile }, { vacancy: %i[organisations publisher_organisation] }])
-                    .where(vacancy: vacancy.id, id: @form.job_applications)
-      stringio = Zip::OutputStream.write_buffer do |zio|
-        downloads.each do |job_application|
-          zio.put_next_entry "#{job_application.first_name}_#{job_application.last_name}.pdf"
-          zio.write JobApplicationPdfGenerator.new(job_application).generate.render
-        end
-      end
-      send_data(stringio.string,
-                filename: "applications_#{vacancy.job_title}.zip",
-                type: "application/zip")
+      job_applications = JobApplication.includes(:vacancy).where(vacancy: vacancy.id, id: @form.job_applications)
+
+      zip_data = JobApplicationZipBuilder.new(vacancy: vacancy, job_applications: job_applications).generate
+
+      send_data(
+        zip_data.string,
+        filename: "applications_#{vacancy.job_title.parameterize}.zip",
+        type: "application/zip",
+      )
     else
       render "index"
     end

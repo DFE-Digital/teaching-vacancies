@@ -98,6 +98,10 @@ module JobApplicationsHelper
     JOB_APPLICATION_STATUS_TAG_COLOURS[status]
   end
 
+  def job_application_link(job_application)
+    job_application.draft? ? jobseekers_job_application_apply_path(job_application) : jobseekers_job_application_path(job_application)
+  end
+
   def job_application_build_submit_button_text
     if redirect_to_review?
       t("buttons.save")
@@ -120,7 +124,7 @@ module JobApplicationsHelper
     end
   end
 
-  def radio_button_legend_hint
+  def radio_button_legend_hint(vacancy)
     if vacancy.visa_sponsorship_available?
       {
         text: "jobseekers.profiles.personal_details.work.hint.text",
@@ -283,5 +287,13 @@ module JobApplicationsHelper
           end
         end,
     }
+  end
+
+  def new_application_path(vacancy)
+    if vacancy.uploaded_form?
+      jobseekers_job_job_application_path(vacancy.id)
+    else
+      new_jobseekers_job_job_application_path(vacancy.id)
+    end
   end
 end

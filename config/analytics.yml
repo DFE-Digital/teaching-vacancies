@@ -160,6 +160,7 @@ shared:
     - working_patterns
     - working_pattern_details
     - notify_before_contact_referers
+    - type
   job_preferences_locations:
     - id
     - job_preferences_id

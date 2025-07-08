@@ -7,11 +7,12 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
     context "when jobseeker has a recent job application" do
       let(:jobseeker) { double("Jobseeker") }
       let(:vacancy) { double("Vacancy") }
-      let(:new_job_application) { double("JobApplication") }
+      let(:new_job_application) { double("NativeJobApplication") }
       let(:prefill_service) { double("Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication") }
 
       before do
-        allow(jobseeker).to receive_message_chain(:job_applications, :create).and_return(new_job_application)
+        allow(vacancy).to receive(:uploaded_form?).and_return(false)
+        allow(vacancy).to receive(:create_job_application_for).with(jobseeker).and_return(new_job_application)
         allow(jobseeker).to receive_message_chain(:job_applications, :not_draft, :any?).and_return(true)
         allow(jobseeker).to receive(:jobseeker_profile).and_return(nil)
       end
@@ -23,47 +24,72 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
         subject.job_application
       end
     end
-  end
 
-  context "when jobseeker does not have a recent job application but does have a jobseeker profile" do
-    let(:jobseeker) { double("Jobseeker") }
-    let(:vacancy) { double("Vacancy") }
-    let(:new_job_application) { double("JobApplication") }
-    let(:prefill_service) { double("Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile") }
+    context "when jobseeker does not have a recent job application but does have a jobseeker profile" do
+      let(:jobseeker) { double("Jobseeker") }
+      let(:vacancy) { double("Vacancy") }
+      let(:new_job_application) { double("NativeJobApplication") }
+      let(:prefill_service) { double("Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile") }
 
-    before do
-      allow(jobseeker).to receive_message_chain(:job_applications, :create).and_return(new_job_application)
-      allow(jobseeker).to receive_message_chain(:job_applications, :not_draft, :any?).and_return(false)
-      allow(jobseeker).to receive(:jobseeker_profile).and_return(double("JobseekerProfile"))
+      before do
+        allow(vacancy).to receive(:uploaded_form?).and_return(false)
+        allow(vacancy).to receive(:create_job_application_for).with(jobseeker).and_return(new_job_application)
+        allow(jobseeker).to receive_message_chain(:job_applications, :not_draft, :any?).and_return(false)
+        allow(jobseeker).to receive(:jobseeker_profile).and_return(double("JobseekerProfile"))
+      end
+
+      it "prefills the new job application from the jobseeker profile" do
+        expect(Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile).to receive(:new).with(jobseeker, new_job_application).and_return(prefill_service)
+        expect(prefill_service).to receive(:call)
+
+        subject.job_application
+      end
     end
 
-    it "prefills the new job application from the jobseeker profile" do
-      expect(Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile).to receive(:new).with(jobseeker, new_job_application).and_return(prefill_service)
-      expect(prefill_service).to receive(:call)
+    context "when vacancy has an uploaded application form" do
+      let(:jobseeker) { create(:jobseeker) }
+      let(:vacancy) { create(:vacancy) }
 
-      subject.job_application
+      before do
+        allow(vacancy).to receive(:uploaded_form?).and_return(true)
+      end
+
+      it "creates a new draft job application for the new vacancy" do
+        expect { subject.job_application }.to change { jobseeker.job_applications.draft.count }.by(1)
+      end
+
+      it "returns blank native job application" do
+        job_application = subject.job_application
+        expect(job_application.first_name).to be_blank
+        expect(job_application.last_name).to be_blank
+        expect(job_application.phone_number).to be_blank
+        expect(job_application.has_right_to_work_in_uk).to be_nil
+      end
     end
-  end
 
-  context "when jobseeker has neither a recent job application nor a jobseeker profile" do
-    let(:jobseeker) { create(:jobseeker) }
-    let(:vacancy) { create(:vacancy) }
+    context "when vacancy does not have an uploaded application form" do
+      context "when jobseeker has neither a recent job application nor a jobseeker profile" do
+        let(:jobseeker) { create(:jobseeker) }
+        let(:vacancy) { create(:vacancy) }
 
-    it "creates a new draft job application for the new vacancy" do
-      expect { subject.job_application }.to change { jobseeker.job_applications.draft.count }.by(1)
-    end
+        it "creates a new draft job application for the new vacancy" do
+          expect { subject.job_application }.to change { jobseeker.job_applications.draft.count }.by(1)
+        end
 
-    it "returns blank job application" do
-      job_application = subject.job_application
-      expect(job_application.first_name).to be_blank
-      expect(job_application.last_name).to be_blank
-      expect(job_application.phone_number).to be_blank
-      expect(job_application.qualified_teacher_status_year).to be_blank
-      expect(job_application.qualified_teacher_status).to be_blank
-      expect(job_application.has_right_to_work_in_uk).to be_nil
-      expect(job_application.qualifications).to be_blank
-      expect(job_application.employments).to be_blank
-      expect(job_application.training_and_cpds).to be_blank
+        it "returns blank native job application" do
+          job_application = subject.job_application
+          expect(job_application.is_a?(NativeJobApplication)).to be(true)
+          expect(job_application.first_name).to be_blank
+          expect(job_application.last_name).to be_blank
+          expect(job_application.phone_number).to be_blank
+          expect(job_application.qualified_teacher_status_year).to be_blank
+          expect(job_application.qualified_teacher_status).to be_blank
+          expect(job_application.has_right_to_work_in_uk).to be_nil
+          expect(job_application.qualifications).to be_blank
+          expect(job_application.employments).to be_blank
+          expect(job_application.training_and_cpds).to be_blank
+        end
+      end
     end
   end
 end

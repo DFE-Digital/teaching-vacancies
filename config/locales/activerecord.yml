@@ -502,6 +502,8 @@ en:
             incomplete: Complete your religious information
           professional_body_memberships:
             incomplete: Complete your professional body memberships
+          upload_application_form:
+            incomplete: Upload the application form
         jobseekers/job_application/withdraw_form:
           attributes:
             withdraw_reason:
