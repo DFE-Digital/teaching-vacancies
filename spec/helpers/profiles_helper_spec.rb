@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe ProfilesHelper do
   describe "#jobseeker_status" do
     let(:profile) { instance_double(JobseekerProfile) }
-    let(:personal_details) { instance_double(PersonalDetails, right_to_work_in_uk: right_to_work_in_uk) }
+    let(:personal_details) { build_stubbed(:personal_details, has_right_to_work_in_uk: right_to_work_in_uk) }
 
     before do
       allow(profile).to receive(:personal_details).and_return(personal_details)
