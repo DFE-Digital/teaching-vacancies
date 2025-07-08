@@ -7,7 +7,7 @@
     - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.last_name")
     - row.with_value text: job_application.last_name
 
-  - if job_application.previous_names? || jobseeker?
+  - if job_application.previous_names? || jobseeker.present?
     - s.with_row do |row|
       - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.previous_names_review")
       - row.with_value text: job_application.previous_names.presence || t("jobseekers.job_applications.not_defined")
@@ -36,7 +36,7 @@
     - else
       - row.with_value text: t("helpers.label.jobseekers_job_application_personal_details_form.has_ni_number_options.no")
 
-  - if job_application.national_insurance_number? || jobseeker?
+  - if job_application.national_insurance_number? || jobseeker.present?
     - s.with_row do |row|
       - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number_review")
       - row.with_value text: job_application.national_insurance_number.presence || t("jobseekers.job_applications.not_defined")
