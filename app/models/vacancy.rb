@@ -278,10 +278,6 @@ class Vacancy < ApplicationRecord
     ]
   end
 
-  def other_contact_email(current_publisher)
-    contact_email? && contact_email != current_publisher.email
-  end
-
   def distance_in_miles_to(search_coordinates)
     if geolocation.is_a? RGeo::Geographic::SphericalMultiPointImpl
       # if there are multiple geolocations then return the distance to the nearest one to the given search location
