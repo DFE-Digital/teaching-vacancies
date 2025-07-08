@@ -36,6 +36,7 @@ module PageObjects
         publisher_application_link: "Publisher::ApplicationLinkPage",
         jobseeker_applications: "Jobseeker::JobApplicationsPage",
         jobseeker_application: "Jobseeker::JobApplicationPage",
+        jobseeker_application_apply: "Jobseeker::JobApplicationApplyPage",
       }.each do |page_name, page_class|
         full_page_class = "PageObjects::Pages::#{page_class}"
 

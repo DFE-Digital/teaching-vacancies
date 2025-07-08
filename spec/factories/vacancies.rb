@@ -181,6 +181,10 @@ FactoryBot.define do
       religion_type { :catholic }
     end
 
+    trait :other_religion do
+      religion_type { :other_religion }
+    end
+
     trait :with_uploaded_application_form do
       enable_job_applications { false }
       receive_applications { "uploaded_form" }
