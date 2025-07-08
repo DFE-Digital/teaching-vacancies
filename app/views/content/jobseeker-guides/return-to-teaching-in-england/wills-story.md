@@ -11,13 +11,13 @@ card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/will
 
 > My journey into education was influenced by my parents’ career choices – they were both teachers and I felt drawn to the idea of having my own class one day and making a meaningful impact on children’s lives. Even though I gained a master’s degree in civil engineering, I decided to go into the Teach First graduate scheme fresh out of university. 
 >
-> It was a difficult start. My first ever lesson was a baptism of fire. After 6 weeks of intensive training, I started teaching as a mathematics teacher at a challenging secondary inner city London school. I was on my own in the classroom from 8.30am–3.30pm and had to learn very quickly on the job.  
+> It was a difficult start. My first ever lesson was a baptism of fire. After 6 weeks of intensive training, I started teaching as a mathematics teacher at a challenging secondary inner city London school. I was on my own in the classroom from 8.30am to 3.30pm and had to learn very quickly on the job.  
 >
 > After qualifying and 2 tough years, I felt burnt out. I decided to go travelling and pursue a career in my degree field. When I left the classroom, I didn’t consciously give up teaching, but I left not knowing if I would return.  
 >
 > After spending time in South America and Madagascar, I came home and landed a job as an energy engineer. My role was focused on behaviour change which reflected my skills in people management but in stark contrast to teaching, I felt it lacked purpose and did not offer the same rewards.  
 >
-> After 1 year in the job, I decided to return to the classroom. I missed the quick pace and the fulfilment of teaching.  
+> After one year in the job, I decided to return to the classroom. I missed the quick pace and the fulfilment of teaching.  
 
 ## Getting back into the classroom
 
