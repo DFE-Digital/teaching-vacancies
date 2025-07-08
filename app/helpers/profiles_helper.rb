@@ -18,6 +18,8 @@ module ProfilesHelper
 
   private
 
+  # Already tested all the combinations of these private methods in the jobseeker_status public method tests.
+  # :nocov:
   def qualified_teacher_status_string(profile)
     case profile.qualified_teacher_status
     when "on_track"
@@ -32,8 +34,9 @@ module ProfilesHelper
   end
 
   def right_to_work_status_string(profile)
-    return nil if profile&.personal_details&.right_to_work_in_uk.nil?
+    return nil if profile&.personal_details&.has_right_to_work_in_uk.nil?
 
-    profile.personal_details.right_to_work_in_uk ? "Has the right to work in the UK." : "Does not have the right to work in the UK."
+    profile.personal_details.has_right_to_work_in_uk? ? "Has the right to work in the UK." : "Does not have the right to work in the UK."
   end
+  # :nocov:
 end
