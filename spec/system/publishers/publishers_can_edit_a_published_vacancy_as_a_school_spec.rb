@@ -109,7 +109,7 @@ RSpec.describe "Publishers can edit a vacancy" do
 
       describe "publish_on" do
         context "when the publication date is in the past" do
-          let(:vacancy) { create(:vacancy, :published, organisations: [school], slug: "test-slug", publish_on: 1.day.ago) }
+          let(:vacancy) { create(:vacancy, organisations: [school], slug: "test-slug", publish_on: 1.day.ago) }
           let(:expiry_time) { vacancy.expires_at + 1.year }
 
           before do
@@ -170,7 +170,7 @@ RSpec.describe "Publishers can edit a vacancy" do
 
     describe "#documents" do
       let(:filename) { "blank_job_spec.pdf" }
-      let(:vacancy) { create(:vacancy, :published, :with_supporting_documents, include_additional_documents: true, organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) }
+      let(:vacancy) { create(:vacancy, :with_supporting_documents, include_additional_documents: true, organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) }
 
       scenario "can edit documents" do
         publisher_vacancy_page.change_supporting_documents_link.click
@@ -260,7 +260,7 @@ RSpec.describe "Publishers can edit a vacancy" do
   context "when a vacancy is external" do
     let!(:vacancy) do
       create(
-        :vacancy, :external, :published, :expires_tomorrow,
+        :vacancy, :external, :expires_tomorrow,
         phases: %w[secondary],
         job_title: "Imported vacancy",
         organisations: [school]

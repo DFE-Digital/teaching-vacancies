@@ -4,4 +4,16 @@ class DraftVacancy < Vacancy
   def trash!
     destroy!
   end
+
+  def draft?
+    true
+  end
+
+  def expired?
+    false
+  end
+
+  def published?
+    false
+  end
 end

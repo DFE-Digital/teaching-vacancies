@@ -34,9 +34,9 @@ RSpec.describe DashboardComponent, type: :component do
         let!(:inline_component) { render_inline(subject) }
 
         let(:vacancies) do
-          create_list(:vacancy, 1, :published, job_title: job_title,
-                                               job_applications: build_list(:job_application, 1, :status_submitted),
-                                               organisations: [organisation])
+          create_list(:vacancy, 1, job_title: job_title,
+                                   job_applications: build_list(:job_application, 1, :status_submitted),
+                                   organisations: [organisation])
           organisation.vacancies
         end
 
@@ -89,9 +89,9 @@ RSpec.describe DashboardComponent, type: :component do
         let(:open_school) { create(:school, name: "Open school") }
         let(:closed_school) { create(:school, :closed, name: "Closed school") }
         let(:vacancies) do
-          create_list(:vacancy, 1, :published, job_title: job_title,
-                                               job_applications: build_list(:job_application, 1, :status_submitted),
-                                               organisations: [organisation])
+          create_list(:vacancy, 1, job_title: job_title,
+                                   job_applications: build_list(:job_application, 1, :status_submitted),
+                                   organisations: [organisation])
           organisation.vacancies
         end
 
@@ -141,9 +141,9 @@ RSpec.describe DashboardComponent, type: :component do
         let(:closed_school) { create(:school, :closed, name: "Closed school") }
         let(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: organisation, schools: [open_school]) }
         let(:vacancies) do
-          create_list(:vacancy, 1, :published, job_title: job_title,
-                                               job_applications: build_list(:job_application, 1, :status_submitted),
-                                               organisations: [open_school])
+          create_list(:vacancy, 1, job_title: job_title,
+                                   job_applications: build_list(:job_application, 1, :status_submitted),
+                                   organisations: [open_school])
           open_school.vacancies
         end
 
@@ -198,7 +198,7 @@ RSpec.describe DashboardComponent, type: :component do
 
     context "when job applications have not been received" do
       let(:organisation) { create(:school, name: "A school with jobs") }
-      let(:vacancies) { create_list(:vacancy, 1, :published, organisations: [organisation]) }
+      let(:vacancies) { create_list(:vacancy, 1, organisations: [organisation]) }
 
       before { render_inline(subject) }
 
@@ -213,13 +213,13 @@ RSpec.describe DashboardComponent, type: :component do
     let(:organisation) { create(:trust, schools: [school_oxford, school_cambridge]) }
     let(:school_oxford) { create(:school, name: "Oxford") }
     let(:school_cambridge) { create(:school, name: "Cambridge") }
-    let(:vacancy_cambridge) { create(:vacancy, :published, organisations: [school_cambridge], job_title: "Scientist") }
+    let(:vacancy_cambridge) { create(:vacancy, organisations: [school_cambridge], job_title: "Scientist") }
 
     before { publisher_preference.update organisations: [school_oxford] }
 
     context "when a relevant job exists" do
       let(:vacancies) { school_oxford.vacancies }
-      let!(:vacancy_oxford) { create(:vacancy, :published, organisations: [school_oxford], job_title: "Mathematician") }
+      let!(:vacancy_oxford) { create(:vacancy, organisations: [school_oxford], job_title: "Mathematician") }
 
       let!(:inline_component) { render_inline(subject) }
 
@@ -246,7 +246,7 @@ RSpec.describe DashboardComponent, type: :component do
     let(:organisation) { create(:school) }
     let(:vacancies) { [vacancy] }
     let(:vacancy) do
-      create(:vacancy, :published, organisations: [organisation])
+      create(:vacancy, organisations: [organisation])
     end
 
     before do

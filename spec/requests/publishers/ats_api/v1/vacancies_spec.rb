@@ -57,9 +57,9 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           body = response.parsed_body
           expect(body.keys).to match_array(%w[vacancies meta])
           # Contain all the client vacancies
-          expect(body["vacancies"].map { |v| v["id"] }).to contain_exactly(vacancy_published.id,
-                                                                           vacancy_unpublished.id,
-                                                                           vacancy_expired.id)
+          expect(body["vacancies"].map { |v| v["external_reference"] }).to contain_exactly(vacancy_published.external_reference,
+                                                                                           vacancy_unpublished.external_reference,
+                                                                                           vacancy_expired.external_reference)
           expect(body["meta"]["totalPages"]).to eq(1)
         end
       end
@@ -151,7 +151,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           created_vacancy = Vacancy.last
           expect(response.parsed_body).to eq("id" => created_vacancy.id)
           expect(created_vacancy).to have_attributes(
-            status: "published",
             external_advert_url: "https://www.example.com/ats-site/advertid",
             expires_at: Date.new(2026, 1, 1),
             job_title: "Teacher of Geography",
@@ -288,7 +287,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             created_vacancy = Vacancy.last
             expect(response.parsed_body).to eq("id" => created_vacancy.id)
             expect(created_vacancy).to have_attributes(
-              status: "published",
               publish_on: Time.zone.today,
               benefits_details: nil,
               starts_on: nil,

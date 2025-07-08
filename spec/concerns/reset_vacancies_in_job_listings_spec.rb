@@ -92,17 +92,12 @@ RSpec.describe Resettable do
   end
 
   context "when changing enable job applications" do
-    subject(:update_job_applications) { vacancy.update(enable_job_applications: true) }
-
-    let(:vacancy) { build(:vacancy, receive_applications: "website", enable_job_applications: false) }
-    let(:previous_receive_applications) { vacancy.receive_applications }
-
-    before { vacancy.update(status: :draft) }
+    let(:vacancy) { create(:draft_vacancy, receive_applications: "website", enable_job_applications: false) }
 
     it "resets receive application" do
-      expect { update_job_applications }
-        .to change { vacancy.receive_applications }
-        .from(previous_receive_applications).to(nil)
+      expect { vacancy.update!(enable_job_applications: true) }
+        .to change { vacancy.reload.receive_applications }
+        .from("website").to(nil)
     end
   end
 

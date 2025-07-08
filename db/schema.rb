@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_06_150046) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_09_154252) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -644,7 +644,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_06_150046) do
     t.text "benefits_details"
     t.date "starts_on"
     t.string "contact_email"
-    t.integer "status", null: false
+    t.integer "status"
     t.date "publish_on"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -727,7 +727,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_06_150046) do
     t.index ["publisher_organisation_id"], name: "index_vacancies_on_publisher_organisation_id"
     t.index ["searchable_content"], name: "index_vacancies_on_searchable_content", using: :gin
     t.index ["slug"], name: "index_vacancies_on_slug"
-    t.index ["status"], name: "index_vacancies_on_status"
   end
 
   create_table "vacancy_analytics", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
