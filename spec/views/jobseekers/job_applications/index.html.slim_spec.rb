@@ -33,15 +33,16 @@ RSpec.describe "jobseekers/job_applications/index" do
       let(:unsuccessful) { create(:job_application, :status_unsuccessful, jobseeker:) }
       let(:withdrawn) { create(:job_application, :status_withdrawn, jobseeker:) }
       let(:interviewing) { create(:job_application, :status_interviewing, jobseeker:) }
-      #let(:expired) { create(:job_application, :status_draft, jobseeker:) }
+      let(:expired) { create(:job_application, :status_draft, jobseeker:, vacancy: vacancy_expired) }
+      let(:vacancy_expired) { create(:vacancy, :at_one_school, expires_at: 1.week.ago) }
 
       let(:job_applications) do
-        [draft, submitted, reviewed, shortlisted, unsuccessful, withdrawn, interviewing]
+        [draft, submitted, reviewed, shortlisted, unsuccessful, withdrawn, interviewing, expired]
       end
 
       it "renders job application list" do
-        expect(index_view.header).to have_text("Applications (7)")
-        expect(index_view.job_applications.count).to eq(6)
+        expect(index_view.header).to have_text("Applications (8)")
+        expect(index_view.job_applications.count).to eq(7)
       end
 
       it "renders draft applications group first" do
@@ -61,6 +62,12 @@ RSpec.describe "jobseekers/job_applications/index" do
             expect(index_view.job_applications[idx + 1].tag).to have_text(application.status)
           end
         end
+      end
+
+      it "renders expired applications group last" do
+        expect(index_view.job_applications.last.header).to have_text(expired.vacancy.job_title)
+        expect(index_view.job_applications.last.header["href"]).to eq(jobseekers_job_application_apply_path(expired))
+        expect(index_view.job_applications.last.tag).to have_text("deadline passed")
       end
     end
   end

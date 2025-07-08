@@ -1,0 +1,150 @@
+require "rails_helper"
+
+RSpec.describe "jobseekers/job_applications/apply" do
+  let(:apply_view) { jobseeker_application_apply_page }
+  let(:jobseeker) { build_stubbed(:jobseeker) }
+  let(:vacancy) { build_stubbed(:vacancy) }
+  let(:job_application) { build_stubbed(:job_application, :status_draft, jobseeker:, vacancy:) }
+  let(:current_jobseeker) { jobseeker }
+  let(:completed_steps) { [] }
+  let(:all_steps) { [] }
+  let(:form) { Jobseekers::JobApplication::PreSubmitForm.new(completed_steps:, all_steps:) }
+
+  before do
+    without_partial_double_verification do
+      allow(view).to receive_messages(current_jobseeker:, vacancy:, job_application:)
+    end
+    assign :job_application, job_application
+    assign :form, form
+
+    render
+
+    apply_view.load(rendered)
+  end
+
+  describe "banner" do
+    subject(:banner) { apply_view.banner }
+
+    it "renders section" do
+      expect(banner.header).to have_text("#{vacancy.job_title} at #{vacancy.organisation.name}")
+      expect(banner.tag).to have_text("draft")
+
+      expect(banner.view_link).to have_text("View this listing (opens in new tab)")
+      expect(banner.view_link["href"]).to eq(job_path(vacancy))
+
+      expect(banner).to have_no_download_btn
+      expect(banner).to have_no_withdraw_btn
+
+      expect(banner).to have_delete_btn
+      expect(banner.delete_btn["href"]).to eq(jobseekers_job_application_confirm_destroy_path(job_application))
+    end
+  end
+
+  describe "task list" do
+    subject(:tasks) { apply_view.tasks }
+
+    context "when viewed by publisher" do
+      let(:current_jobseeker) { nil }
+      let(:expected_tasks) do
+        [
+          { name: "Personal details", status: "Incomplete" },
+          { name: "Professional status", status: "Incomplete" },
+          { name: "Qualifications", status: "Incomplete" },
+          { name: "Training and continuing professional development (CPD)", status: "Incomplete" },
+          { name: "Professional body memberships", status: "Incomplete" },
+          { name: "Work history", status: "Incomplete" },
+          { name: "Personal statement", status: "Incomplete" },
+          { name: "References", status: "Incomplete" },
+          { name: "Ask for support if you have a disability or other needs", status: "Incomplete" },
+          { name: "Declarations", status: "Incomplete" },
+        ]
+      end
+
+      it "renders a tasks list" do
+        tasks.each.with_index do |task, index|
+          expect(task.name).to have_text expected_tasks.dig(index, :name)
+          expect(task.status).to have_text expected_tasks.dig(index, :status)
+        end
+      end
+    end
+
+    context "when viewed by jobseeker" do
+      let(:expected_tasks) do
+        [
+          { name: "Personal details", status: "Incomplete" },
+          { name: "Professional status", status: "Incomplete" },
+          { name: "Qualifications", status: "Incomplete" },
+          { name: "Training and continuing professional development (CPD)", status: "Incomplete" },
+          { name: "Professional body memberships", status: "Incomplete" },
+          { name: "Work history", status: "Incomplete" },
+          { name: "Personal statement", status: "Incomplete" },
+          { name: "References", status: "Incomplete" },
+          { name: "Equal opportunities and recruitment monitoring", status: "Incomplete" },
+          { name: "Ask for support if you have a disability or other needs", status: "Incomplete" },
+          { name: "Declarations", status: "Incomplete" },
+        ]
+      end
+
+      it "renders a tasks list" do
+        tasks.each.with_index do |task, index|
+          expect(task.name).to have_text expected_tasks.dig(index, :name)
+          expect(task.status).to have_text expected_tasks.dig(index, :status)
+        end
+      end
+    end
+
+    context "when catholic vacancy" do
+      let(:vacancy) { build_stubbed(:vacancy, :catholic) }
+      let(:expected_tasks) do
+        [
+          { name: "Personal details", status: "Incomplete" },
+          { name: "Professional status", status: "Incomplete" },
+          { name: "Qualifications", status: "Incomplete" },
+          { name: "Training and continuing professional development (CPD)", status: "Incomplete" },
+          { name: "Professional body memberships", status: "Incomplete" },
+          { name: "Work history", status: "Incomplete" },
+          { name: "Personal statement", status: "Incomplete" },
+          { name: "Religious information", status: "Incomplete" },
+          { name: "References", status: "Incomplete" },
+          { name: "Equal opportunities and recruitment monitoring", status: "Incomplete" },
+          { name: "Ask for support if you have a disability or other needs", status: "Incomplete" },
+          { name: "Declarations", status: "Incomplete" },
+        ]
+      end
+
+      it "renders a tasks list" do
+        tasks.each.with_index do |task, index|
+          expect(task.name).to have_text expected_tasks.dig(index, :name)
+          expect(task.status).to have_text expected_tasks.dig(index, :status)
+        end
+      end
+    end
+
+    context "when other religion vacancy" do
+      let(:vacancy) { build_stubbed(:vacancy, :other_religion) }
+      let(:expected_tasks) do
+        [
+          { name: "Personal details", status: "Incomplete" },
+          { name: "Professional status", status: "Incomplete" },
+          { name: "Qualifications", status: "Incomplete" },
+          { name: "Training and continuing professional development (CPD)", status: "Incomplete" },
+          { name: "Professional body memberships", status: "Incomplete" },
+          { name: "Work history", status: "Incomplete" },
+          { name: "Personal statement", status: "Incomplete" },
+          { name: "Religious information", status: "Incomplete" },
+          { name: "References", status: "Incomplete" },
+          { name: "Equal opportunities and recruitment monitoring", status: "Incomplete" },
+          { name: "Ask for support if you have a disability or other needs", status: "Incomplete" },
+          { name: "Declarations", status: "Incomplete" },
+        ]
+      end
+
+      it "renders a tasks list" do
+        tasks.each.with_index do |task, index|
+          expect(task.name).to have_text expected_tasks.dig(index, :name)
+          expect(task.status).to have_text expected_tasks.dig(index, :status)
+        end
+      end
+    end
+  end
+end
