@@ -38,8 +38,4 @@ class PersonalDetails < ApplicationRecord
   def complete?
     first_name.present? && last_name.present? && (!phone_number_provided? || phone_number.present?) && !has_right_to_work_in_uk.nil?
   end
-
-  def right_to_work_in_uk
-    has_right_to_work_in_uk?
-  end
 end
