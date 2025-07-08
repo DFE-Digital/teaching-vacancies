@@ -58,7 +58,7 @@ class Search::JobseekerProfileSearch
   attr_reader :current_organisation
 
   def one_option_selected_for_right_to_work_in_uk?
-    filters[:right_to_work_in_uk].present? && filters[:right_to_work_in_uk].count == 1
+    filters[:right_to_work_in_uk].present? && filters[:right_to_work_in_uk].one?
   end
 
   def right_to_work_in_uk?

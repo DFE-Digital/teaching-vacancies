@@ -1,7 +1,7 @@
 # Documentation: app/mailers/previewing_emails.md
 class Publishers::FeedbackPromptPreview < ActionMailer::Preview
   def prompt_for_feedback
-    unless Publisher.any? && Vacancy.count > 1
+    unless Publisher.any? && Vacancy.many?
       raise "I don't want to mess up your development database with factory-created records, so this preview won't
             run unless there is >=1 publisher and >=2 vacancies in the database."
     end
