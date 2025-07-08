@@ -9,7 +9,7 @@ RSpec.describe ProfilesHelper do
       allow(profile).to receive(:personal_details).and_return(personal_details)
     end
 
-    context "when profile right_to_work_in_uk == true" do
+    context "when profile has right_to_work_in_uk set as true" do
       let(:right_to_work_in_uk) { true }
 
       context "when qualified teacher status is `yes`" do
@@ -44,7 +44,7 @@ RSpec.describe ProfilesHelper do
       end
     end
 
-    context "when profile right_to_work_in_uk == true" do
+    context "when profile has right_to_work_in_uk set as false" do
       let(:right_to_work_in_uk) { false }
 
       context "when qualified teacher status is `yes`" do
@@ -79,7 +79,7 @@ RSpec.describe ProfilesHelper do
       end
     end
 
-    context "when profile right_to_work_in_uk == true" do
+    context "when profile right_to_work_in_uk is not set" do
       let(:right_to_work_in_uk) { nil }
 
       context "when qualified teacher status is `yes`" do
