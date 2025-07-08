@@ -456,6 +456,36 @@ RSpec.describe JobApplicationPdf do
     end
   end
 
+  describe "#religious_application?" do
+    subject(:religious_application) { datasource.religious_application? }
+
+    let(:job_application) { build_stubbed(:job_application, vacancy: vacancy) }
+
+    context "when vacancy has no religion type" do
+      let(:vacancy) { build_stubbed(:vacancy, religion_type: nil) }
+
+      it { is_expected.to be false }
+    end
+
+    context "when vacancy religion type is no_religion" do
+      let(:vacancy) { build_stubbed(:vacancy, religion_type: "no_religion") }
+
+      it { is_expected.to be false }
+    end
+
+    context "when vacancy religion type is catholic" do
+      let(:vacancy) { build_stubbed(:vacancy, religion_type: "catholic") }
+
+      it { is_expected.to be true }
+    end
+
+    context "when vacancy religion type is other_religion" do
+      let(:vacancy) { build_stubbed(:vacancy, religion_type: "other_religion") }
+
+      it { is_expected.to be true }
+    end
+  end
+
   describe "religious applications" do
     context "with a baptism cerificate" do
       let(:job_application) do
