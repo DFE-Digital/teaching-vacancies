@@ -69,6 +69,7 @@ RSpec.describe PostsController do
             show-how-you-meet-the-teachers-standards
             update-your-subject-and-teaching-knowledge
             return-to-teaching-step-by-step
+            case-studies
           ]
         end
 
