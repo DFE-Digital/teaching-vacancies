@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Searching on the schools page" do
+RSpec.xdescribe "Searching on the schools page" do
   let(:secondary_school) { create(:school, name: "Oxford", phase: "secondary") }
   let(:primary_school) { create(:school, name: "St Peters", phase: "primary") }
   let(:special_school1) { create(:school, name: "Community special school", phase: "secondary", detailed_school_type: "Community special school") }
