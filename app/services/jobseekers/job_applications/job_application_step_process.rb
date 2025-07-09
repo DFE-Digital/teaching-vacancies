@@ -50,18 +50,6 @@ class Jobseekers::JobApplications::JobApplicationStepProcess
     step == group.last
   end
 
-  def all_possible_steps
-    steps = case job_application.vacancy.religion_type
-            when "catholic"
-              PRE_RELIGION_STEPS.merge(religious_information: [:religious_information]).merge(POST_RELIGION_STEPS)
-            when "other_religion"
-              PRE_RELIGION_STEPS.merge(non_catholic: [:non_catholic]).merge(POST_RELIGION_STEPS)
-            else
-              PRE_RELIGION_STEPS.merge(POST_RELIGION_STEPS)
-            end
-    steps.values.flatten
-  end
-
   def form_class_for(step)
     "jobseekers/job_application/#{step}_form".camelize.constantize
   end
