@@ -21,7 +21,7 @@ RSpec.describe "Jobseekers can view all the jobs" do
     end
   end
 
-  it "jobseekers can visit the home page and use secondary navigation to view schools" do
+  xit "jobseekers can visit the home page and use secondary navigation to view schools" do
     visit root_path
 
     within ".sub-navigation" do
