@@ -477,4 +477,36 @@ RSpec.describe Vacancies::Import::Sources::MyNewTerm do
       end
     end
   end
+
+  describe "religion_type mapping" do
+    context "when religion_type is not provided" do
+      it "defaults to no_religion" do
+        expect(vacancy.religion_type).to eq("no_religion")
+      end
+    end
+
+    context "when religion_type is provided" do
+      let(:job_listings_response_body) do
+        hash = JSON.parse(super())
+        hash["data"]["jobs"].first["religionType"] = "catholic"
+        hash.to_json
+      end
+
+      it "uses the provided religion_type" do
+        expect(vacancy.religion_type).to eq("catholic")
+      end
+    end
+
+    context "when religion_type is provided as nil" do
+      let(:job_listings_response_body) do
+        hash = JSON.parse(super())
+        hash["data"]["jobs"].first["religionType"] = nil
+        hash.to_json
+      end
+
+      it "defaults to no_religion" do
+        expect(vacancy.religion_type).to eq("no_religion")
+      end
+    end
+  end
 end

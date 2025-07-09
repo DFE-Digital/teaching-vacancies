@@ -66,6 +66,7 @@ class Vacancies::Import::Sources::MyNewTerm
       job_location: :at_one_school,
       visa_sponsorship_available: visa_sponsorship_available_for?(item),
       is_job_share: job_share_for?(item),
+      religion_type: item["religionType"].presence || "no_religion",
     }.merge(organisation_fields(schools)).merge(start_date_fields(item))
   end
 

@@ -248,5 +248,29 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
         expect(vacancy.job_title).to eq("Test Post")
       end
     end
+
+    describe "religion_type mapping" do
+      context "when religion_type is not provided" do
+        it "defaults to no_religion" do
+          expect(vacancy.religion_type).to eq("no_religion")
+        end
+      end
+
+      context "when religion_type is provided" do
+        let(:response_body) { super().gsub("<religionType><![CDATA[]]></religionType>", "<religionType><![CDATA[catholic]]></religionType>") }
+
+        it "uses the provided religion_type" do
+          expect(vacancy.religion_type).to eq("catholic")
+        end
+      end
+
+      context "when religion_type is provided as nil" do
+        let(:response_body) { super().gsub("<religionType><![CDATA[]]></religionType>", "<religionType><![CDATA[nil]]></religionType>") }
+
+        it "defaults to no_religion" do
+          expect(vacancy.religion_type).to eq("no_religion")
+        end
+      end
+    end
   end
 end

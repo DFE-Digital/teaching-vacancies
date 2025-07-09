@@ -17,5 +17,6 @@
     <schoolUrns>111111,222222</schoolUrns>
     <trustUID>12345</trustUID>
     <visaSponsorshipAvailable>true</visaSponsorshipAvailable>
+    <religionType></religionType>
   </item>
 </items>

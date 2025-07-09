@@ -169,6 +169,25 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
         end
       end
 
+      describe "'religion_type'" do
+        it "defaults to 'no_religion' when not provided" do
+          create_vacancy_service
+          expect(Vacancy.last.religion_type).to eq("no_religion")
+        end
+
+        it "defaults to 'no_religion' when provided as nil" do
+          params[:religion_type] = nil
+          create_vacancy_service
+          expect(Vacancy.last.religion_type).to eq("no_religion")
+        end
+
+        it "preserves the value when provided" do
+          params[:religion_type] = "catholic"
+          create_vacancy_service
+          expect(Vacancy.last.religion_type).to eq("catholic")
+        end
+      end
+
       describe "start date fields" do
         context "when starts_on is not provided" do
           it "does not set any start date fields" do

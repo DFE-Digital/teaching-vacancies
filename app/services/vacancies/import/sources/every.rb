@@ -58,6 +58,7 @@ class Vacancies::Import::Sources::Every
       key_stages: item["keyStages"].presence&.split(","),
       visa_sponsorship_available: visa_sponsorship_available_for?(item),
       is_job_share: job_share_for?(item),
+      religion_type: item["religionType"].presence || "no_religion",
       # TODO: What about central office/multiple school vacancies?
       job_location: :at_one_school,
     }.merge(organisation_fields(item, schools)).merge(start_date_fields(item))

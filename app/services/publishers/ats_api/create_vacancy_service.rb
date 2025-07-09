@@ -26,6 +26,7 @@ module Publishers
           params[:is_job_share] = params[:is_job_share].in?([true, "true"])
           params[:visa_sponsorship_available] = params[:visa_sponsorship_available].in?([true, "true"])
           params[:ect_status] = params[:ect_suitable].in?([true, "true"]) ? "ect_suitable" : "ect_unsuitable"
+          params[:religion_type] = "no_religion" if params[:religion_type].nil?
           params.except(:schools, :ect_suitable)
                 .merge(organisations: organisations)
                 .merge(start_date_fields(params[:starts_on]))

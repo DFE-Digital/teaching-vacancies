@@ -65,6 +65,7 @@ class Vacancies::Import::Sources::Ventrus
       phases: phase_for(item),
       visa_sponsorship_available: visa_sponsorship_available_for?(item),
       is_job_share: job_share_for?(item),
+      religion_type: religion_type_for(item),
     }.merge(organisation_fields(schools))
   end
 
@@ -158,6 +159,12 @@ class Vacancies::Import::Sources::Ventrus
 
   def visa_sponsorship_available_for?(item)
     item["Visa_Sponsorship_Available"] == "true"
+  end
+
+  def religion_type_for(item)
+    religion_type = item["Religion_Type"].presence
+    return "no_religion" if religion_type.blank? || religion_type == "nil"
+    religion_type
   end
 
   def items

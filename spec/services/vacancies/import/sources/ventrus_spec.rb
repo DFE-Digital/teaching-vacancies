@@ -356,5 +356,29 @@ RSpec.describe Vacancies::Import::Sources::Ventrus do
         expect(subject.count).to eq(0)
       end
     end
+
+    describe "religion_type mapping" do
+      context "when religion_type is not provided" do
+        it "defaults to no_religion" do
+          expect(vacancy.religion_type).to eq("no_religion")
+        end
+      end
+
+      context "when religion_type is provided" do
+        let(:response_body) { super().gsub("<Religion_Type></Religion_Type>", "<Religion_Type>catholic</Religion_Type>") }
+
+        it "uses the provided religion_type" do
+          expect(vacancy.religion_type).to eq("catholic")
+        end
+      end
+
+      context "when religion_type is provided as nil" do
+        let(:response_body) { super().gsub("<Religion_Type></Religion_Type>", "<Religion_Type>nil</Religion_Type>") }
+
+        it "defaults to no_religion" do
+          expect(vacancy.religion_type).to eq("no_religion")
+        end
+      end
+    end
   end
 end
