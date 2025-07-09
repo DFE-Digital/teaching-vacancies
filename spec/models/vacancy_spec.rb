@@ -175,7 +175,7 @@ RSpec.describe Vacancy do
       it "enforces religion_type presence for published vacancies" do
         vacancy = build_stubbed(:vacancy, religion_type: nil)
         expect(vacancy).not_to be_valid
-        expect(vacancy.errors[:religion_type]).to include("can't be blank")
+        expect(vacancy.errors[:religion_type]).to include("Select a religion type")
       end
 
       it "allows religion_type to be nil for draft vacancies" do

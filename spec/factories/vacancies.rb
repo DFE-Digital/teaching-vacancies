@@ -70,6 +70,7 @@ FactoryBot.define do
     is_job_share { false }
     flexi_working_details_provided { true }
     flexi_working { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
+    religion_type { "no_religion" }
 
     trait :for_seed_data do
       job_roles { [factory_sample(Vacancy.job_roles.keys)] }
