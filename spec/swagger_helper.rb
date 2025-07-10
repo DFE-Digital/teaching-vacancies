@@ -95,6 +95,16 @@ RSpec.configure do |config|
                     example: "Teacher of Geography",
                     description: "The short job title shown in the page title and search results.",
                   },
+                  religion_type: {
+                    type: :string,
+                    enum: %w[
+                      no_religion
+                      catholic
+                      other_religion
+                    ],
+                    example: "no_religion",
+                    description: "The religious affiliation for the vacancy, if any."
+                  },
                   job_advert: {
                     type: :string,
                     example: "We're looking for a dedicated Teacher of Geography to join our team. The ideal candidate will have a passion for teaching and a deep understanding of the subject matter. Responsibilities include preparing lesson plans, delivering engaging lessons, and assessing student progress.",
