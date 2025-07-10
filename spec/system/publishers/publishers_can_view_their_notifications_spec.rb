@@ -5,7 +5,7 @@ RSpec.describe "Publishers can view their notifications" do
 
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
-  let(:vacancy) { create(:vacancy, :published, organisations: [organisation], publisher: publisher) }
+  let(:vacancy) { create(:vacancy, organisations: [organisation], publisher: publisher) }
   let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
 
   before { login_publisher(publisher: publisher, organisation: organisation) }
@@ -32,7 +32,7 @@ RSpec.describe "Publishers can view their notifications" do
 
       [3, 2, 1].each do |delay|
         travel_to delay.days.ago do
-          v = create(:vacancy, :published, organisations: [organisation], publisher: publisher, job_title: "#{delay} ago")
+          v = create(:vacancy, organisations: [organisation], publisher: publisher, job_title: "#{delay} ago")
           application = create(:job_application, :status_submitted, vacancy: v, create_details: true)
 
           create(:reference_request, referee: application.referees.first)
@@ -42,7 +42,7 @@ RSpec.describe "Publishers can view their notifications" do
                                                .deliver
         end
         travel_to (delay.days + 1.hour).ago do
-          v = create(:vacancy, :published, organisations: [organisation], publisher: publisher, job_title: "#{delay} ago")
+          v = create(:vacancy, organisations: [organisation], publisher: publisher, job_title: "#{delay} ago")
           application = create(:job_application, :status_submitted, vacancy: v, create_details: true)
 
           disc_ref = create(:self_disclosure_request, job_application: application)

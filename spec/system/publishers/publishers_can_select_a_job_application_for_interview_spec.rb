@@ -126,7 +126,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
           end
         end
 
-        context "with a received reference", :perform_enqueued do
+        context "with a received reference" do
           before do
             current_referee.reload
             # simulate receipt of a reference
