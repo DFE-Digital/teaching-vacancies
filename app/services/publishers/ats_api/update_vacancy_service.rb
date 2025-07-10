@@ -24,6 +24,7 @@ module Publishers
           organisations = fetch_organisations(params[:schools])
           ect_status = ect_status_from(params[:ect_suitable])
           params[:ect_status] = ect_status if ect_status.present?
+          params[:religion_type] = "no_religion" if params[:religion_type].nil?
           params.except(:schools, :ect_suitable)
                 .merge(organisations: organisations)
                 .merge(start_date_fields(params[:starts_on]))
