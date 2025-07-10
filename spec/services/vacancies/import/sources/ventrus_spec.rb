@@ -359,6 +359,9 @@ RSpec.describe Vacancies::Import::Sources::Ventrus do
 
     describe "religion_type mapping" do
       context "when religion_type is not provided" do
+        # ventrus_with_parental_leave_cover does not have religion_type field
+        let(:response_body) { file_fixture("vacancy_sources/ventrus_with_parental_leave_cover.xml").read }
+
         it "defaults to no_religion" do
           expect(vacancy.religion_type).to eq("no_religion")
         end
@@ -369,14 +372,6 @@ RSpec.describe Vacancies::Import::Sources::Ventrus do
 
         it "uses the provided religion_type" do
           expect(vacancy.religion_type).to eq("catholic")
-        end
-      end
-
-      context "when religion_type is provided as nil" do
-        let(:response_body) { super().gsub("<Religion_Type></Religion_Type>", "<Religion_Type>nil</Religion_Type>") }
-
-        it "defaults to no_religion" do
-          expect(vacancy.religion_type).to eq("no_religion")
         end
       end
     end

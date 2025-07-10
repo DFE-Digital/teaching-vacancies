@@ -66,7 +66,7 @@ class Vacancies::Import::Sources::Broadbean
       phases: phases_for(item, schools.first),
       visa_sponsorship_available: visa_sponsorship_available_for?(item),
       is_job_share: job_share_for?(item),
-      religion_type: (item["religionType"].presence && item["religionType"] != "nil") ? item["religionType"] : "no_religion",
+      religion_type: item["religionType"].presence || "no_religion",
     }.merge(organisation_fields(schools))
      .merge(start_date_fields(item))
   end

@@ -71,7 +71,7 @@ class Vacancies::Import::Sources::VacancyPoster
       phases: phase_for(item),
       visa_sponsorship_available: false,
       is_job_share: job_share_for?(item),
-      religion_type: (item["religionType"].presence && item["religionType"] != "nil") ? item["religionType"] : "no_religion",
+      religion_type: item["religionType"].presence || "no_religion",
     }.merge(organisation_fields(schools))
   end
 

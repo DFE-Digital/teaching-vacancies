@@ -164,6 +164,7 @@ class Vacancies::Import::Sources::Ventrus
   def religion_type_for(item)
     religion_type = item["Religion_Type"].presence
     return "no_religion" if religion_type.blank? || religion_type == "nil"
+
     religion_type
   end
 

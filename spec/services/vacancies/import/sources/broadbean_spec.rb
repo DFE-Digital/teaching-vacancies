@@ -411,14 +411,6 @@ RSpec.describe Vacancies::Import::Sources::Broadbean do
           expect(vacancy.religion_type).to eq("catholic")
         end
       end
-
-      context "when religion_type is provided as nil" do
-        let(:response_body) { super().gsub("<religionType></religionType>", "<religionType>nil</religionType>") }
-
-        it "defaults to no_religion" do
-          expect(vacancy.religion_type).to eq("no_religion")
-        end
-      end
     end
   end
 end
