@@ -73,7 +73,7 @@ RSpec.describe "Viewing a single published vacancy" do
 
       scenario "a jobseeker can click on the application link" do
         visit job_path(vacancy)
-        click_on I18n.t("jobs.apply")
+        click_on I18n.t("jobs.view_advert.school")
 
         expect(page.current_url).to eq vacancy.application_link
       end

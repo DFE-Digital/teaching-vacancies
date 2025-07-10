@@ -70,7 +70,7 @@ module LinksHelper
 
   def external_advert_link(vacancy, **)
     tracked_open_in_new_tab_button_link_to(
-      t("jobs.external.link"),
+      t("jobs.view_advert.external"),
       vacancy.external_advert_url,
       link_type: :external_advert_link,
       link_subject: vacancy.id,
@@ -79,8 +79,8 @@ module LinksHelper
   end
 
   def apply_link(vacancy, **)
-    tracked_button_link_to(
-      t("jobs.apply"),
+    tracked_open_in_new_tab_button_link_to(
+      t("jobs.view_advert.school"),
       vacancy.application_link,
       "aria-label": t("jobs.aria_labels.apply_link"),
       link_type: :get_more_information,
