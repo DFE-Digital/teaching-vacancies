@@ -111,7 +111,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "earliest_start_date" => nil,
           "ect_status" => "ect_suitable",
           "enable_job_applications" => true,
-          "extension_reason" => nil,
+          "extension_reason" => nil,spec/jobs/import_from_vacancy_source_job_spec.rb
           "expired_vacancy_feedback_email_sent_at" => nil,
           "expires_at" => "2023-06-06T09:00:00.000+01:00",
           "external_advert_url" => "https://example.com/jobs/123",
@@ -147,7 +147,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "readable_job_location" => nil,
           "readable_phases" => [],
           "receive_applications" => nil,
-          "religion_type" => nil,
+          "religion_type" => "no_religion",
           "safeguarding_information" => nil,
           "safeguarding_information_provided" => nil,
           "salary" => "Main pay range 1 to Upper pay range 3, £23,719 to £39,406 per year (full time equivalent)",

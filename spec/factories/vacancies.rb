@@ -206,6 +206,7 @@ FactoryBot.define do
       actual_salary { nil }
       school_offer { nil }
       flexi_working { nil }
+      religion_type { "no_religion" }
     end
 
     factory :draft_vacancy, class: "DraftVacancy" do

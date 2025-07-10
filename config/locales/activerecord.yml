@@ -650,7 +650,7 @@ en:
             job_advert:
               blank: Enter a job advert
             religion_type:
-              blank: Select a religion type
+              inclusion: Select a religion type
             <<: *job_roles_errors
             <<: *job_location_errors
             <<: *contract_information_errors

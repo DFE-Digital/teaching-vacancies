@@ -300,6 +300,10 @@ class Vacancy < ApplicationRecord
     jobseeker.job_applications.create!(vacancy: self, type: klass.name)
   end
 
+  def is_religious?
+    !no_religion?
+  end
+
   private
 
   def calculate_distance(search_coordinates, geolocation)
