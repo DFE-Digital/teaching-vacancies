@@ -529,6 +529,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     let!(:forbidden_organisation) do
       create(:school,
              name: "Forbidden School",
+             postcode: "FB1 1FB",
              publishers: [forbidden_publisher],
              geopoint: bexleyheath_geopoint)
     end
@@ -547,7 +548,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       allow(Geocoding).to receive(:test_coordinates).and_return(bexleyheath)
     end
 
-    it "allows the jobseeker to hide themselves from specific schools" do
+    it "allows the jobseeker to hide themselves from specific schools", :js do
       run_with_publisher(permitted_publisher) do
         visit publishers_jobseeker_profiles_path
         expect(page).to have_content(profile.full_name)
@@ -565,6 +566,9 @@ RSpec.describe "Jobseekers can manage their profile" do
         click_on I18n.t("buttons.save_and_continue")
 
         field = find_field("Name of school or trust")
+        field.fill_in(with: forbidden_organisation.name[..5])
+        # check that search dropdown works correctly
+        expect(page).to have_content "Forbidden School (FB1 1FB)"
         field.fill_in(with: forbidden_organisation.name)
         click_on I18n.t("buttons.save_and_continue")
 
