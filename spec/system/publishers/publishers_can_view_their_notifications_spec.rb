@@ -47,8 +47,7 @@ RSpec.describe "Publishers can view their notifications" do
 
           disc_ref = create(:self_disclosure_request, job_application: application)
           self_disc = create(:self_disclosure, self_disclosure_request: disc_ref)
-          Publishers::SelfDeclarationReceivedNotifier.with(record: self_disc,
-                                                           job_application: application)
+          Publishers::SelfDisclosureReceivedNotifier.with(record: self_disc)
                                                      .deliver
         end
       end

@@ -1,4 +1,4 @@
-class Publishers::SelfDeclarationReceivedNotifier < ApplicationNotifier
+class Publishers::SelfDisclosureReceivedNotifier < ApplicationNotifier
   recipients do
     record.self_disclosure_request.job_application.vacancy.publisher
   end

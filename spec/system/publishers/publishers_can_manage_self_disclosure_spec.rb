@@ -26,11 +26,8 @@ RSpec.describe "Publishers manage self disclosure" do
       choose "Yes"
     end
 
-    it "sends the notification email" do
+    it "sends the notification email", :perform_enqueued do
       click_on("Save and continue")
-      expect {
-        perform_enqueued_jobs
-      }.to change(ActionMailer::Base.deliveries, :count).by(2)
       expect(ActionMailer::Base.deliveries.map(&:to).flatten).to contain_exactly(job_application.email_address, job_application.email_address)
     end
 
@@ -65,12 +62,9 @@ RSpec.describe "Publishers manage self disclosure" do
         expect(publisher_ats_self_disclosure_page.status.text).to eq("Completed")
       end
 
-      context "when completed by jobseeker" do
+      context "when completed by jobseeker", :perform_enqueued do
         before do
           request.self_disclosure.mark_as_received
-          # trigger notifications
-          perform_enqueued_jobs
-          perform_enqueued_jobs
         end
 
         it "send an email notification to the publisher that the disclosure had been received" do

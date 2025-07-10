@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Publishers can select a job application for interview" do
+RSpec.describe "Publishers can select a job application for interview", :perform_enqueued do
   include ActiveJob::TestHelper
 
   let(:job_title) { Faker::Job.title }
@@ -53,9 +53,6 @@ RSpec.describe "Publishers can select a job application for interview" do
         click_on "Save and continue"
         expect(publisher_ats_applications_page).to be_displayed
 
-        expect {
-          perform_enqueued_jobs
-        }.to change(ActionMailer::Base.deliveries, :count).by(4)
         expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
           .to eq({
             current_referee.email => ["Provide a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
@@ -74,9 +71,6 @@ RSpec.describe "Publishers can select a job application for interview" do
         it "only sends referee emails" do
           expect(publisher_ats_interviewing_page).to be_displayed
 
-          expect {
-            perform_enqueued_jobs
-          }.to change(ActionMailer::Base.deliveries, :count).by(3)
           expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
             .to eq({
               current_referee.email => ["Provide a reference for #{job_application.name} for role #{job_title} at #{organisation.name}"],
@@ -87,7 +81,6 @@ RSpec.describe "Publishers can select a job application for interview" do
 
         context "when the reference is declined" do
           before do
-            perform_enqueued_jobs
             current_referee.reload.job_reference.update!(attributes_for(:job_reference, :reference_declined).merge(updated_at: Date.tomorrow))
             current_referee.reload.reference_request.update!(status: :received)
           end
@@ -104,8 +97,6 @@ RSpec.describe "Publishers can select a job application for interview" do
 
         context "when the referee email is incorrect" do
           before do
-            perform_enqueued_jobs
-
             ActionMailer::Base.deliveries.clear
             publisher_ats_interviewing_page.pre_interview_check_links.first.click
             publisher_ats_pre_interview_checks_page.reference_links.first.click
@@ -121,7 +112,6 @@ RSpec.describe "Publishers can select a job application for interview" do
           scenario "with a good email" do
             fill_in "publishers-vacancies-job-applications-change-email-address-form-email-field", with: new_email
             click_on I18n.t("buttons.save_and_continue")
-            perform_enqueued_jobs
             expect(page).to have_content(new_email)
             expect(page).to have_content("Reference email changed")
             expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
@@ -136,16 +126,12 @@ RSpec.describe "Publishers can select a job application for interview" do
           end
         end
 
-        context "with a received reference" do
+        context "with a received reference", :perform_enqueued do
           before do
-            perform_enqueued_jobs
             current_referee.reload
             # simulate receipt of a reference
             current_referee.job_reference.update!(attributes_for(:job_reference, :reference_given).merge(updated_at: Date.yesterday))
             current_referee.job_reference.mark_as_received
-            # have to enqueue twice to trigger notification email
-            perform_enqueued_jobs
-            perform_enqueued_jobs
           end
 
           it "can progress to the page where the reference is shown" do
@@ -200,9 +186,6 @@ RSpec.describe "Publishers can select a job application for interview" do
       end
 
       it "does not send any emails" do
-        expect {
-          perform_enqueued_jobs
-        }.not_to change(ActionMailer::Base.deliveries, :count)
         expect(ActionMailer::Base.deliveries.count).to eq(0)
         expect(publisher_ats_interviewing_page).to be_displayed
       end

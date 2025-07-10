@@ -57,8 +57,6 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
 
   config.before do
-    ActiveJob::Base.queue_adapter = :test
-
     allow(Google::Cloud::Bigquery).to receive(:new).and_return(
       double("BigQuery", dataset: double("BigQuery dataset", table: double.as_null_object)),
     )
@@ -75,6 +73,12 @@ RSpec.configure do |config|
     ENV["ENABLE_DFE_ANALYTICS"] = "true"
     example.run
     ENV.delete "ENABLE_DFE_ANALYTICS"
+  end
+
+  config.around(:each, :perform_enqueued) do |example|
+    perform_enqueued_jobs do
+      example.run
+    end
   end
 
   config.before(:each, type: :system) do
