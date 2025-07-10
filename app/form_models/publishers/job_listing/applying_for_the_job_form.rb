@@ -21,7 +21,7 @@ class Publishers::JobListing::ApplyingForTheJobForm < Publishers::JobListing::Va
   def params_to_save
     if application_form_type == "other"
       {
-        religion_type: nil,
+        religion_type: "no_religion",
         enable_job_applications: false,
       }
     else
