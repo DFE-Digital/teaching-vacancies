@@ -301,6 +301,9 @@ en:
     share_on_facebook: Share to Facebook
     share_on_twitter: Share to Twitter
     share_this_job: Share this job
+    view_advert:
+      school: View advert on school website
+      external: View advert on external website
 
     external:
       notice: This school accepts applications through their own website, where you may also find more information about this job.
