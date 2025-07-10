@@ -1,19 +1,20 @@
 require "rails_helper"
 
-RSpec.describe "Publishers can select a job application for interview" do
+RSpec.describe "Publishers can select a job application for interview", :perform_enqueued do
   include ActiveJob::TestHelper
 
-  let(:publisher) { create(:publisher) }
+  let(:job_title) { Faker::Job.title }
+  let(:publisher) { create(:publisher, email: "publisher@contoso.com") }
   let(:organisation) { create(:school) }
-  let(:vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
-  let(:jobseeker) { create(:jobseeker) }
+  let(:vacancy) { create(:vacancy, :expired, organisations: [organisation], job_title: job_title, publisher: publisher) }
+  let(:jobseeker) { create(:jobseeker, email: "jobseeker@contoso.com") }
   let(:job_application) do
     create(:job_application, :status_submitted,
            email_address: jobseeker.email,
            vacancy: vacancy, jobseeker: jobseeker)
   end
-  let!(:current_referee) { create(:referee, is_most_recent_employer: true, job_application: job_application) }
-  let!(:old_referee) { create(:referee, is_most_recent_employer: false, job_application: job_application) }
+  let!(:current_referee) { create(:referee, email: "employer@contoso.com", is_most_recent_employer: true, job_application: job_application) }
+  let!(:old_referee) { create(:referee, email: "previous@contoso.com", is_most_recent_employer: false, job_application: job_application) }
 
   before do
     login_publisher(publisher: publisher, organisation: organisation)
@@ -52,15 +53,11 @@ RSpec.describe "Publishers can select a job application for interview" do
         click_on "Save and continue"
         expect(publisher_ats_applications_page).to be_displayed
 
-        expect {
-          perform_enqueued_jobs
-        }.to change(ActionMailer::Base.deliveries, :count).by(4)
-        # expect(ActionMailer::Base.deliveries.map(&:to).flatten).to contain_exactly(current_referee.email, old_referee.email, job_application.email_address, job_application.email_address)
         expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
           .to eq({
-            current_referee.email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
-            old_referee.email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
-            job_application.email_address => ["Declarations", "References are being collected for role #{vacancy.job_title} at #{organisation.name}"],
+            current_referee.email => ["Provide a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
+            old_referee.email => ["Provide a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
+            job_application.email_address => ["Complete your self-disclosure form for #{job_title}", "References are being collected for role #{job_title} at #{organisation.name}"],
           })
       end
 
@@ -74,20 +71,16 @@ RSpec.describe "Publishers can select a job application for interview" do
         it "only sends referee emails" do
           expect(publisher_ats_interviewing_page).to be_displayed
 
-          expect {
-            perform_enqueued_jobs
-          }.to change(ActionMailer::Base.deliveries, :count).by(3)
           expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
             .to eq({
-              current_referee.email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
-              old_referee.email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
-              job_application.email_address => %w[Declarations],
+              current_referee.email => ["Provide a reference for #{job_application.name} for role #{job_title} at #{organisation.name}"],
+              old_referee.email => ["Provide a reference for #{job_application.name} for role #{job_title} at #{organisation.name}"],
+              job_application.email_address => ["Complete your self-disclosure form for #{job_title}"],
             })
         end
 
         context "when the reference is declined" do
           before do
-            perform_enqueued_jobs
             current_referee.reload.job_reference.update!(attributes_for(:job_reference, :reference_declined).merge(updated_at: Date.tomorrow))
             current_referee.reload.reference_request.update!(status: :received)
           end
@@ -104,8 +97,6 @@ RSpec.describe "Publishers can select a job application for interview" do
 
         context "when the referee email is incorrect" do
           before do
-            perform_enqueued_jobs
-
             ActionMailer::Base.deliveries.clear
             publisher_ats_interviewing_page.pre_interview_check_links.first.click
             publisher_ats_pre_interview_checks_page.reference_links.first.click
@@ -121,12 +112,11 @@ RSpec.describe "Publishers can select a job application for interview" do
           scenario "with a good email" do
             fill_in "publishers-vacancies-job-applications-change-email-address-form-email-field", with: new_email
             click_on I18n.t("buttons.save_and_continue")
-            perform_enqueued_jobs
             expect(page).to have_content(new_email)
             expect(page).to have_content("Reference email changed")
             expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
               .to eq({
-                new_email => ["Supply a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
+                new_email => ["Provide a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
               })
           end
 
@@ -136,13 +126,12 @@ RSpec.describe "Publishers can select a job application for interview" do
           end
         end
 
-        context "with a received reference" do
+        context "with a received reference", :perform_enqueued do
           before do
-            perform_enqueued_jobs
             current_referee.reload
             # simulate receipt of a reference
-            current_referee.job_reference.update!(attributes_for(:job_reference, :reference_given).merge(updated_at: Date.tomorrow))
-            current_referee.reference_request.update!(status: :received)
+            current_referee.job_reference.update!(attributes_for(:job_reference, :reference_given).merge(updated_at: Date.yesterday))
+            current_referee.job_reference.mark_as_received
           end
 
           it "can progress to the page where the reference is shown" do
@@ -151,6 +140,11 @@ RSpec.describe "Publishers can select a job application for interview" do
 
             publisher_ats_pre_interview_checks_page.reference_links.first.click
             expect(publisher_ats_reference_request_page).to be_displayed
+          end
+
+          it "send an email notification to the publisher that the reference had been received" do
+            expect(ActionMailer::Base.deliveries.map(&:to).flatten)
+              .to contain_exactly("jobseeker@contoso.com", "employer@contoso.com", "previous@contoso.com", "publisher@contoso.com")
           end
 
           context "when marking reference received" do
@@ -192,9 +186,7 @@ RSpec.describe "Publishers can select a job application for interview" do
       end
 
       it "does not send any emails" do
-        expect {
-          perform_enqueued_jobs
-        }.not_to change(ActionMailer::Base.deliveries, :count)
+        expect(ActionMailer::Base.deliveries.count).to eq(0)
         expect(publisher_ats_interviewing_page).to be_displayed
       end
 

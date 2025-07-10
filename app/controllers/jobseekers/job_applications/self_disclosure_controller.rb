@@ -21,7 +21,7 @@ class Jobseekers::JobApplications::SelfDisclosureController < Jobseekers::BaseCo
     if @form.valid?
       @form.save_model!
       if next_step == Wicked::FINISH_STEP
-        self_disclosure.self_disclosure_request.received!
+        self_disclosure.mark_as_received
         redirect_to finish_wizard_path
       else
         redirect_to next_wizard_path
