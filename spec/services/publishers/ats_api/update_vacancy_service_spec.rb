@@ -46,7 +46,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       salary: vacancy.salary,
       schools: school_urns,
       publisher_ats_api_client_id: publisher_ats_api_client_id,
-      religion_type: "catholic"
+      religion_type: "catholic",
     }
   end
 

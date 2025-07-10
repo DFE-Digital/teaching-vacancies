@@ -103,7 +103,7 @@ RSpec.configure do |config|
                       other_religion
                     ],
                     example: "no_religion",
-                    description: "The religious affiliation for the vacancy, if any."
+                    description: "The religious affiliation for the vacancy, if any.",
                   },
                   job_advert: {
                     type: :string,

@@ -284,7 +284,7 @@ RSpec.describe "Creating a vacancy" do
 
       it "doesnt ask religion questions" do
         expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :how_to_receive_applications))
-        expect(Vacancy.find(created_vacancy.id)).to have_attributes(enable_job_applications: false, religion_type: nil)
+        expect(Vacancy.find(created_vacancy.id)).to have_attributes(enable_job_applications: false, religion_type: "no_religion")
       end
     end
   end
