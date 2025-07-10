@@ -74,6 +74,7 @@ RSpec.configure do |config|
   config.around(:each, :dfe_analytics) do |example|
     ENV["ENABLE_DFE_ANALYTICS"] = "true"
     example.run
+  ensure
     ENV.delete "ENABLE_DFE_ANALYTICS"
   end
 
