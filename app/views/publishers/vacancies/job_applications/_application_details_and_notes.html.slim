@@ -13,7 +13,7 @@
           - navigation.with_anchor text: t("jobseekers.job_applications.build.professional_body_memberships.heading"), href: "#professional_body_memberships"
           - navigation.with_anchor text: t("jobseekers.job_applications.build.employment_history.heading"), href: "#employment_history"
           - navigation.with_anchor text: t("jobseekers.job_applications.build.personal_statement.heading"), href: "#personal_statement"
-          - if vacancy.is_religious?
+          - if vacancy.religious?
             - navigation.with_anchor text: t("jobseekers.job_applications.build.religious_information.heading"), href: "#following_religion"
           - navigation.with_anchor text: t("jobseekers.job_applications.build.referees.heading"), href: "#referees"
           - navigation.with_anchor text: t("jobseekers.job_applications.build.ask_for_support.heading"), href: "#ask_for_support"

@@ -111,7 +111,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "earliest_start_date" => nil,
           "ect_status" => "ect_suitable",
           "enable_job_applications" => true,
-          "extension_reason" => nil,spec/jobs/import_from_vacancy_source_job_spec.rb
+          "extension_reason" => nil,
           "expired_vacancy_feedback_email_sent_at" => nil,
           "expires_at" => "2023-06-06T09:00:00.000+01:00",
           "external_advert_url" => "https://example.com/jobs/123",
