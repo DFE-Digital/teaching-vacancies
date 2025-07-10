@@ -39,6 +39,12 @@ en:
       message_html: You have received %{link} for %{job_title} at %{organisation}
     publishers/job_application_data_expiry_notification:
       message_html: You will have access to candidates' applications for %{link} until %{date}
+    publishers/self_declaration_received_notification:
+      message_html: You have received a %{link}
+      disclosure_received: self disclosure form
+    publishers/reference_received_notification:
+      message_html: You have received a %{link}
+      reference_received: reference for a candidate
 
   errors:
     jobs:
