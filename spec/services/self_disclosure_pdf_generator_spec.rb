@@ -2,7 +2,7 @@ require "rails_helper"
 require "pdf/inspector"
 
 RSpec.describe SelfDisclosurePdfGenerator do
-  let(:vacancy) { create(:vacancy, :published, :at_one_school) }
+  let(:vacancy) { create(:vacancy, :at_one_school) }
   let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
   let(:self_disclosure_request) { create(:self_disclosure_request, job_application:, status: "received") }
   let(:self_disclosure) { create(:self_disclosure, self_disclosure_request:) }
