@@ -1,7 +1,7 @@
 ---
 order: 100
 title: Get support returning to teaching
-meta_description: Find out how you could get support returning to teaching, including how to get free, one-to-one guidance from a return to teaching adviser.
+meta_description: Get support from an adviser on returning to teaching, restarting your career, finding a job, and adjusting after a break.
 date_posted: 08/09/2023
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/return-to-teaching.jpg"
@@ -14,7 +14,7 @@ If you’re thinking about returning to teaching and have previously taught or t
 If you trained to teach in the UK and are a UK citizen currently working abroad, find out about [returning to England to teach](https://teaching-vacancies.service.gov.uk/jobseeker-guides/return-to-teaching-in-england/return-to-england-after-teaching-overseas).
 
 ## Get back into teaching
-Returning to teaching might be easier than you think.
+Returning to teaching after a break might be easier than you think.
 
 Time away and different life experiences can help give you a fresh perspective on being a teacher.
 
