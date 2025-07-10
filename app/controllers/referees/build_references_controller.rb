@@ -23,7 +23,19 @@ module Referees
     def show
       if step != Wicked::FINISH_STEP
         if @reference.can_give_reference?
-          @form = FORMS.fetch(step).new(token: token)
+          @form = if step == :referee_details
+                    form_class.new(token: token,
+                                   name: @referee.name,
+                                   job_title: @referee.job_title,
+                                   email: @referee.email,
+                                   organisation: @referee.organisation,
+                                   phone_number: @referee.phone_number)
+                  elsif step == :can_give
+                    form_class.new(token: token)
+                  else
+                    # This allows the 'back' button to pick up previously entered data.
+                    form_class.new(@reference.slice(*form_class.fields).merge(token: token))
+                  end
         else
           jump_to Wicked::FINISH_STEP
         end
@@ -36,9 +48,14 @@ module Referees
                                    .permit(*(form_class.fields + [:token])))
       if @form.valid?
         @reference.update!(@form.params_to_save)
-        @reference.mark_as_received if step == steps.last
-
-        redirect_to next_wizard_path(token: token)
+        # invalidate token after reference is complete
+        if step == steps.last
+          @reference.mark_as_received
+          next_token = @reference_request.token
+        else
+          next_token = token
+        end
+        redirect_to next_wizard_path(token: next_token)
       else
         render step
       end

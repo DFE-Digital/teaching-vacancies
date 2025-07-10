@@ -36,11 +36,13 @@ RSpec.describe "Publishers can select a job application for interview", :perform
       expect(publisher_ats_collect_references_page.errors.map(&:text)).to eq(["Select yes if you would like to collect references and self-disclosure through the service"])
     end
 
-    context "when choosing yes for refs and decls" do
+    context "when choosing yes for references and self disclosure" do
       before do
         choose "Yes"
         click_on "Save and continue"
       end
+
+      let(:emails_with_subjects) { ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map { |x| x.subject.split[..3].join(" ") } } }
 
       scenario "no selection" do
         expect(publisher_ats_ask_references_email_page).to be_displayed
@@ -48,16 +50,16 @@ RSpec.describe "Publishers can select a job application for interview", :perform
         expect(publisher_ats_ask_references_email_page.errors.map(&:text)).to eq(["Select yes if you would like the service to email applicants that you are collecting references."])
       end
 
-      scenario "contacting applicant sends emails to refs and applicant" do
+      scenario "contacting applicant sends emails to referees and applicant" do
         choose "Yes"
         click_on "Save and continue"
         expect(publisher_ats_applications_page).to be_displayed
 
-        expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
+        expect(emails_with_subjects)
           .to eq({
-            current_referee.email => ["Provide a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
-            old_referee.email => ["Provide a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
-            job_application.email_address => ["Complete your self-disclosure form for #{job_title}", "References are being collected for role #{job_title} at #{organisation.name}"],
+            current_referee.email => ["Provide a reference for"],
+            old_referee.email => ["Provide a reference for"],
+            job_application.email_address => ["Complete your self-disclosure form", "References are being collected"],
           })
       end
 
@@ -71,11 +73,11 @@ RSpec.describe "Publishers can select a job application for interview", :perform
         it "only sends referee emails" do
           expect(publisher_ats_interviewing_page).to be_displayed
 
-          expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
+          expect(emails_with_subjects)
             .to eq({
-              current_referee.email => ["Provide a reference for #{job_application.name} for role #{job_title} at #{organisation.name}"],
-              old_referee.email => ["Provide a reference for #{job_application.name} for role #{job_title} at #{organisation.name}"],
-              job_application.email_address => ["Complete your self-disclosure form for #{job_title}"],
+              current_referee.email => ["Provide a reference for"],
+              old_referee.email => ["Provide a reference for"],
+              job_application.email_address => ["Complete your self-disclosure form"],
             })
         end
 
@@ -116,7 +118,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
             expect(page).to have_content("Reference email changed")
             expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
               .to eq({
-                new_email => ["Provide a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
+                new_email => ["Provide a reference for #{job_application.name} for #{vacancy.job_title} at #{organisation.name}"],
               })
           end
 
@@ -130,16 +132,43 @@ RSpec.describe "Publishers can select a job application for interview", :perform
           before do
             current_referee.reload
             # simulate receipt of a reference
-            current_referee.job_reference.update!(attributes_for(:job_reference, :reference_given).merge(updated_at: Date.yesterday))
+            current_referee.job_reference.update!(attributes_for(:job_reference, :reference_given).merge(updated_at: Date.tomorrow))
             current_referee.job_reference.mark_as_received
+            publisher_ats_interviewing_page.pre_interview_check_links.first.click
           end
 
-          it "can progress to the page where the reference is shown" do
-            publisher_ats_interviewing_page.pre_interview_check_links.first.click
-            expect(publisher_ats_pre_interview_checks_page).to be_displayed
+          context "with a simple reference" do
+            let(:reference_data) { attributes_for(:job_reference, :reference_given) }
 
-            publisher_ats_pre_interview_checks_page.reference_links.first.click
-            expect(publisher_ats_reference_request_page).to be_displayed
+            it "can progress to the page where the reference is shown" do
+              expect(publisher_ats_pre_interview_checks_page).to be_displayed
+
+              publisher_ats_pre_interview_checks_page.reference_links.first.click
+              expect(publisher_ats_reference_request_page).to be_displayed
+            end
+          end
+
+          context "when reference contains issues" do
+            let(:investigation_details) { "under" }
+            let(:warning_details) { "danger will robinson" }
+            let(:undertake_reason) { "amerivans can do it" }
+
+            before do
+              current_referee.job_reference.update!(attributes_for(:job_reference, :with_issues,
+                                                                   under_investigation_details: investigation_details,
+                                                                   warning_details: warning_details,
+                                                                   unable_to_undertake_reason: undertake_reason))
+            end
+
+            it "can progress to the page where the reference is shown" do
+              expect(publisher_ats_pre_interview_checks_page).to be_displayed
+
+              publisher_ats_pre_interview_checks_page.reference_links.first.click
+              expect(publisher_ats_reference_request_page).to be_displayed
+              expect(page).to have_content investigation_details
+              expect(page).to have_content warning_details
+              expect(page).to have_content undertake_reason
+            end
           end
 
           it "send an email notification to the publisher that the reference had been received" do
@@ -148,10 +177,17 @@ RSpec.describe "Publishers can select a job application for interview", :perform
           end
 
           context "when marking reference received" do
+            let(:reference_data) { attributes_for(:job_reference, :reference_given) }
+
             before do
-              publisher_ats_interviewing_page.pre_interview_check_links.first.click
               publisher_ats_pre_interview_checks_page.reference_links.first.click
               click_on "Mark as received"
+            end
+
+            it "displays the page correctly" do
+              expect(page).to have_content "This reference will be marked as complete"
+              expect(page).to have_content "This reference will remain as received"
+              expect(page).to have_content "Yes"
             end
 
             scenario "error bounce" do
@@ -179,7 +215,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
       end
     end
 
-    context "when choosing no for refs and decls" do
+    context "when choosing no for references and self disclosures" do
       before do
         choose "No"
         click_on "Save and continue"

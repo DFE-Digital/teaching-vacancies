@@ -14,6 +14,7 @@
       - row.with_cell(text: t(".references"))
       - row.with_cell(text: t(".last_action"))
       - row.with_cell(text: t(".status"))
+
   - table.with_body do |body|
     - @reference_requests.each do |reference_request|
       - body.with_row do |row|
@@ -29,6 +30,7 @@
           - row.with_cell(text: t(".created_at", date: reference_request.updated_at.to_fs(:time_on_date)))
           - row.with_cell(text: govuk_tag(text: t(".created_status"), colour: "grey"))
 
+= govuk_table do |table|
   - table.with_head do |head|
     - head.with_row do |row|
       - row.with_cell(text: "Self-disclosure")

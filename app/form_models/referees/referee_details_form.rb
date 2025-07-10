@@ -6,15 +6,19 @@ module Referees
 
     FIELDS.each do |field_name|
       attribute field_name, :string
-      validates field_name, presence: true
     end
-    validates :email, email_address: true
 
     attribute :complete, :boolean
 
     attribute :complete_and_accurate, :boolean
     validates :complete_and_accurate,
               acceptance: true
+
+    validates :name, presence: true, length: { maximum: 50 }
+    validates :job_title, presence: true, length: { maximum: 50 }
+    validates :phone_number, format: { with: /\A\+?(?:\d\s?){10,12}\z/ }, allow_blank: true
+    validates :email, presence: true, email_address: true
+    validates :organisation, presence: true, length: { maximum: 50 }
 
     class << self
       def unstorable_fields

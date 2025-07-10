@@ -14,7 +14,7 @@ class SelfDisclosure < ApplicationRecord
 
   def self.find_or_create_by_and_prefill!(job_application)
     find_or_create_by!(
-      self_disclosure_request_id: job_application.self_disclosure_request.id,
+      self_disclosure_request: job_application.self_disclosure_request,
     ) { |sd| sd.prefill(job_application) }
   end
 
