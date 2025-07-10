@@ -46,6 +46,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       salary: vacancy.salary,
       schools: school_urns,
       publisher_ats_api_client_id: publisher_ats_api_client_id,
+      religion_type: "catholic"
     }
   end
 
@@ -55,6 +56,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
         expect { update_vacancy_service }
           .to change { vacancy.reload.external_reference }.from("old-ref").to("new-ref")
           .and change { vacancy.reload.working_patterns }.from(%w[part_time]).to(%w[full_time])
+          .and change { vacancy.reload.religion_type }.from("no_religion").to("catholic")
       end
 
       it "keeps the existing value for optional attributes not provided" do

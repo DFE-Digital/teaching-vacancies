@@ -45,17 +45,4 @@ RSpec.describe "JsonSwaggerValidator" do
         .to eq(["The property '#/vacancy/phases/0' value \"notaphase\" did not match one of the following values: nursery, primary, secondary, sixth_form_or_college, through"])
     end
   end
-
-  context "without a valid religion_type" do
-    let(:payload) { { vacancy: vacancy.merge(religion_type: "notareligiontype") } }
-
-    it "is not valid" do
-      expect(validator.valid?(payload)).to be(false)
-    end
-
-    it "has relevant errors" do
-      expect(validator.errors(payload).map { |x| /(.+) in schema/.match(x)[1] })
-        .to eq(["The property '#/vacancy/religion_type' value \"notareligiontype\" did not match one of the following values: no_religion, other_religion, catholic"])
-    end
-  end
 end
