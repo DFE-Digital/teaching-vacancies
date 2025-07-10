@@ -19,6 +19,7 @@ module Referees
     }.freeze
 
     steps(*FORMS.keys)
+
     def show
       if step != Wicked::FINISH_STEP
         if @reference.can_give_reference?
@@ -35,7 +36,7 @@ module Referees
                                    .permit(*(form_class.fields + [:token])))
       if @form.valid?
         @reference.update!(@form.params_to_save)
-        @reference_request.update!(status: :received) if step == steps.last
+        @reference.mark_as_received if step == steps.last
 
         redirect_to next_wizard_path(token: token)
       else

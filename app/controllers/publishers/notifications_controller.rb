@@ -1,22 +1,23 @@
 class Publishers::NotificationsController < Publishers::BaseController
   NOTIFICATIONS_PER_PAGE = 30
 
+  before_action :load_notifications
   after_action :mark_notifications_as_read
 
   def index
-    @unread_count = notifications.unread.count
-    @pagy, @notifications = pagy(notifications, items: NOTIFICATIONS_PER_PAGE)
+    @unread_count = @raw_notifications.unread.count
+    @pagy, @notifications = pagy(@raw_notifications, items: NOTIFICATIONS_PER_PAGE)
   end
 
   private
 
-  def notifications
-    @notifications ||= current_publisher.notifications
+  def load_notifications
+    @raw_notifications = current_publisher.notifications
                                         .where("created_at >= ?", Time.current - DATA_ACCESS_PERIOD_FOR_PUBLISHERS)
-                                        .order(created_at: :desc)
+                                        .newest_first
   end
 
   def mark_notifications_as_read
-    notifications.mark_as_read
+    @notifications.mark_as_read
   end
 end
