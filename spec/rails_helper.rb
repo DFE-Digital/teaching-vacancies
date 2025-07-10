@@ -65,6 +65,8 @@ RSpec.configure do |config|
   end
 
   config.before(:each, geocode: true) do
+    ActiveJob::Base.queue_adapter = :test
+
     allow(Geocoder).to receive(:search).and_call_original
     allow(Rails.application.config).to receive(:geocoder_lookup).and_return(:default)
   end
