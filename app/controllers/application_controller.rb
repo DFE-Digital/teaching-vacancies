@@ -103,7 +103,8 @@ class ApplicationController < ActionController::Base
   helper_method :current_organisation
 
   def user_for_paper_trail
-    current_publisher || current_support_user
+    # current_publisher || current_support_user
+    current_publisher || current_support_user || current_jobseeker
   end
 
   def set_sentry_user
