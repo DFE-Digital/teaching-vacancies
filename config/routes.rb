@@ -409,7 +409,7 @@ Rails.application.routes.draw do
   end
 
   # Well known URLs
-  get ".well-known/change-password", to: redirect(status: 302) { Rails.application.routes.url_helpers.edit_jobseeker_registration_path(password_update: true) }
+  get ".well-known/change-password", to: redirect(status: 302) { "https://home.account.gov.uk/security" }
 
   match "/401", as: :unauthorised, to: "errors#unauthorised", via: :all
   match "/404", as: :not_found, to: "errors#not_found", via: :all
