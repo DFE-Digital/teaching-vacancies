@@ -65,6 +65,8 @@ RSpec.configure do |config|
   end
 
   config.before(:each, geocode: true) do
+    ActiveJob::Base.queue_adapter = :test
+
     allow(Geocoder).to receive(:search).and_call_original
     allow(Rails.application.config).to receive(:geocoder_lookup).and_return(:default)
   end
@@ -72,6 +74,7 @@ RSpec.configure do |config|
   config.around(:each, :dfe_analytics) do |example|
     ENV["ENABLE_DFE_ANALYTICS"] = "true"
     example.run
+  ensure
     ENV.delete "ENABLE_DFE_ANALYTICS"
   end
 
