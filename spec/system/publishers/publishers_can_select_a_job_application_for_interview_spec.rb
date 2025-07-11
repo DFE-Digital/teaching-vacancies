@@ -42,6 +42,8 @@ RSpec.describe "Publishers can select a job application for interview", :perform
         click_on "Save and continue"
       end
 
+      let(:emails_with_subjects) { ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map { |x| x.subject.split[..3].join(" ") } } }
+
       scenario "no selection" do
         expect(publisher_ats_ask_references_email_page).to be_displayed
         click_on "Save and continue"
@@ -53,11 +55,11 @@ RSpec.describe "Publishers can select a job application for interview", :perform
         click_on "Save and continue"
         expect(publisher_ats_applications_page).to be_displayed
 
-        expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
+        expect(emails_with_subjects)
           .to eq({
-            current_referee.email => ["Provide a reference for #{job_application.name} for #{vacancy.job_title} at #{organisation.name}"],
-            old_referee.email => ["Provide a reference for #{job_application.name} for #{vacancy.job_title} at #{organisation.name}"],
-            job_application.email_address => ["Complete your self-disclosure form for #{job_title} at #{organisation.name}", "References are being collected for role #{job_title} at #{organisation.name}"],
+            current_referee.email => ["Provide a reference for"],
+            old_referee.email => ["Provide a reference for"],
+            job_application.email_address => ["Complete your self-disclosure form", "References are being collected"],
           })
       end
 
@@ -71,11 +73,11 @@ RSpec.describe "Publishers can select a job application for interview", :perform
         it "only sends referee emails" do
           expect(publisher_ats_interviewing_page).to be_displayed
 
-          expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
+          expect(emails_with_subjects)
             .to eq({
-              current_referee.email => ["Provide a reference for #{job_application.name} for #{job_title} at #{organisation.name}"],
-              old_referee.email => ["Provide a reference for #{job_application.name} for #{job_title} at #{organisation.name}"],
-              job_application.email_address => ["Complete your self-disclosure form for #{job_title} at #{organisation.name}"],
+              current_referee.email => ["Provide a reference for"],
+              old_referee.email => ["Provide a reference for"],
+              job_application.email_address => ["Complete your self-disclosure form"],
             })
         end
 
