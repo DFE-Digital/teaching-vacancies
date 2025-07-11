@@ -4,10 +4,11 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
   let(:vacancy) { build_stubbed(:vacancy, :expired, organisations:, job_applications:) }
   let(:organisations) { build_stubbed_list(:school, 1) }
   let(:job_applications) do
-    build_stubbed_list(:job_application, 1, :status_submitted,
-                       training_and_cpds: build_stubbed_list(:training_and_cpd, 1),
-                       working_patterns: %w[full_time part_time])
+    build_stubbed_list(:job_application, 1, status:,
+                                            training_and_cpds: build_stubbed_list(:training_and_cpd, 1),
+                                            working_patterns: %w[full_time part_time])
   end
+  let(:status) { "submitted" }
   let(:job_application) do
     vacancy.job_applications.first
   end
@@ -41,6 +42,40 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
 
       it "renders a religious information section" do
         expect(rendered).to have_css(".govuk-summary-card__title", text: "Religious information")
+      end
+    end
+  end
+
+  describe "update application status link" do
+    context "when job application status is reviewed" do
+      let(:status) { "reviewed" }
+
+      it "renders correct link" do
+        expect(rendered).to have_link("Update application status", href: tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: "submitted", job_applications: [job_application.id] } }))
+      end
+    end
+
+    context "when job application status is withdrawn" do
+      let(:status) { "withdrawn" }
+
+      it "renders correct link" do
+        expect(rendered).to have_link("Update application status", href: tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: "unsuccessful", job_applications: [job_application.id] } }))
+      end
+    end
+
+    context "when job application status is declined" do
+      let(:status) { "declined" }
+
+      it "renders correct link" do
+        expect(rendered).to have_link("Update application status", href: tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: "offered", job_applications: [job_application.id] } }))
+      end
+    end
+
+    context "when job application status is interviewing" do
+      let(:status) { "interviewing" }
+
+      it "renders correct link" do
+        expect(rendered).to have_link("Update application status", href: tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: "interviewing", job_applications: [job_application.id] } }))
       end
     end
   end

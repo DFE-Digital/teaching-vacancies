@@ -533,6 +533,9 @@ en:
           draft: Draft jobs - %{organisation_name}
           awaiting_feedback: Jobs awaiting feedbank - %{organisation_name}
       job_applications:
+        update_application_status: Update application status
+        update_tag:
+          blank: You must select one option
         interviewing_status:
           pre_interview_checks: Pre-interview checks
         header:
@@ -541,16 +544,68 @@ en:
             application: Application
             pre_interview_checks: Pre-interview checks
             notes: Notes
+        tab_panel:
+          name: Name
+          contact_details: Contact details
+          application_status: Application status
+          update_application_status: Update application status
+          download_selected: Download selected
+          copy_applicant_email: Copy selected emails
+          tab:
+            submitted:
+              heading: New applications
+              none: There are no pending applications
+            unsuccessful:
+              heading: Not being considered
+              none: No applications have been marked for rejection
+            shortlisted:
+              heading: Shortlisted applications
+              none: No applications have been shortlisted yet
+            interviewing:
+              heading: Interviewing applications
+              none: No applications have been marked for interview yet
+        tab_offered:
+          name: Name
+          contact_details: Contact details
+          application_status: Application status
+          update_application_status: Update application status
+          download_selected: Download selected
+          copy_applicant_email: Copy selected emails
+          offer_declined: Mark offer as declined
+          download_applicant_data: Download applicants data
+          decline_date: Decline date
+          offer_date: Ofer date
+          offered_inset: Downloading applicant data will generate a CSV file that includes each applicant’s name, address, phone number, National Insurance number, and TRN.
+          tab:
+            offered:
+              heading: Applicants offered a job
+              none: No applications have been offered yet
+            declined:
+              heading: Offer declined
+              none: No applications have been declined yet
         index:
+          tab:
+            submitted:
+              label: "New (%{count})"
+              none: There are no pending applications
+            unsuccessful:
+              label: "Not considering (%{count})"
+              none: No applications have been marked for rejection
+            shortlisted:
+              label: "Shortlisted (%{count})"
+              none: No applications have been shortlisted yet
+            interviewing:
+              label: "Interviewing (%{count})"
+              none: No applications have been marked for interviewing yet
+            offered:
+              label: "Job offered (%{count})"
+            declined:
+              label: "Declined (%{count})"
           deadline:
             after: Deadline passed
             before: Application deadline
           expired_more_than_year: In line with our data retention policy you are no longer able to view applications for this job.
           no_applicants: Nobody has applied for this job yet
-          no_new: There are no pending applications
-          no_rejected: No applications have been marked for rejection
-          no_interviewing: No applications have been marked for interview yet
-          no_shortlisted: No applications have been shortlisted yet
           received: Received on
           rejected:
             one: Rejected application
@@ -564,18 +619,6 @@ en:
           submitted:
             one: Unread application
             other: Unread applications
-        candidates:
-          name: Name
-          contact_details: Contact details
-          application_status: Application status
-          update_application_status: Update application status
-          download_selected: Download selected
-        interviewing:
-          name: Name
-          contact_details: Contact details
-          application_status: Application status
-          update_application_status: Update application status
-          download_selected: Download selected
         notes:
           create:
             success: A note has been added
@@ -666,8 +709,9 @@ en:
             how_long: How long have you known the candidate and in what capacity?
         tag:
           page_title: Update application status
-          what_application_status_single: What application status do you want to assign to %{name}?
-          what_application_status_multiple: What application status do you want to assign to these applicants?
+          what_application_status:
+            one: What application status do you want to assign to this applicant?
+            other: What application status do you want to assign to these applicants?
           applicants: Applicants
         update_status:
           unsuccessful: "%{name} has been sent an email telling them their application has not been successful"

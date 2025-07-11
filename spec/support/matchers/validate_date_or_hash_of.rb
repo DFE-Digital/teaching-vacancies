@@ -28,11 +28,11 @@ RSpec::Matchers.define :validate_date_or_hash_of do |attribute|
     test_cases_results.all?
   end
 
-  failure_message do
+  failure_message do |record|
     "expected #{record.class} to validate date of #{attribute}"
   end
 
-  failure_message_when_negated do
+  failure_message_when_negated do |record|
     "expected #{record.class} not to validate date of #{attribute}"
   end
 
