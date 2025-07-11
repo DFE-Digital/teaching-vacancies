@@ -2,7 +2,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   include Jobseekers::QualificationFormConcerns
   include DatesHelper
 
-  before_action :set_job_application, only: %i[show download_pdf download_application_form]
+  before_action :set_job_application, only: %i[show download_pdf download_application_form pre_interview_checks collect_references]
 
   before_action :set_job_applications, only: %i[index tag_single tag]
 
@@ -62,13 +62,35 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   def update_tag
     update_tag_params = params.require(:publishers_job_application_status_form).permit(:origin, :status, job_applications: [])
 
-    JobApplication.find(update_tag_params.fetch(:job_applications)).each do |job_application|
-      job_application.update!(status: update_tag_params.fetch(:status))
+    applications = update_tag_params.fetch(:job_applications)
+    new_status = update_tag_params.fetch(:status).to_sym
+
+    if new_status == :interviewing
+      batch = JobApplicationBatch.create!(vacancy: vacancy)
+      JobApplication.find(applications).each do |ja|
+        batch.batchable_job_applications.create!(job_application: ja)
+      end
+      redirect_to organisation_job_job_application_batch_references_and_declaration_path(vacancy.id, batch.id, Wicked::FIRST_STEP)
+    else
+      JobApplication.find(applications).each do |job_application|
+        job_application.update!(status: new_status)
+      end
+      redirect_to organisation_job_job_applications_path(vacancy.id, anchor: update_tag_params[:origin])
     end
-    redirect_to organisation_job_job_applications_path(vacancy.id, anchor: update_tag_params[:origin])
+  end
+
+  def collect_references
+    batch = JobApplicationBatch.create!(vacancy: vacancy)
+    batch.batchable_job_applications.create!(job_application: @job_application)
+
+    redirect_to organisation_job_job_application_batch_references_and_declaration_path(vacancy.id, batch.id, Wicked::FIRST_STEP)
   end
 
   def withdrawn; end
+
+  def pre_interview_checks
+    @reference_requests = @job_application.referees.filter_map(&:reference_request)
+  end
 
   private
 

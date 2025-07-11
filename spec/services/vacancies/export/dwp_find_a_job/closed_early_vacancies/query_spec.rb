@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Vacancies::Export::DwpFindAJob::ClosedEarlyVacancies::Query do
-  let(:vacancy) { build_stubbed(:vacancy, :published) }
+  let(:vacancy) { build_stubbed(:vacancy) }
 
   subject { described_class.new("2024-05-01") }
 
