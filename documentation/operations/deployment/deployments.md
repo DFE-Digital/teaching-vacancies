@@ -117,31 +117,24 @@ In those cases, we will need to manually delete the review app by:
   kubectl -n tv-development get deployments
   ```
   In this example, we identify `teaching-vacancies-review-pr-6488` as the review app that needs to be removed.
+  Delete each of the review app deployment resources with `kubectl`:
 - Delete the web app deployment with `kubectl`:
   ```bash
    kubectl -n tv-development delete deployment teaching-vacancies-review-pr-6488
   ```
-- Delete the worker deployment with `kubectl`:
+- Delete the worker:
   ```bash
    kubectl -n tv-development delete deployment teaching-vacancies-review-pr-6488-worker
   ```
-
-#### Deleting the review app resources in the Azure Portal
-- On the Azure Portal, go to the `Resource Groups` section.
-- Click on the the `s189t01-tv-rv-rg` resource group (review resource group), under the `s189-teacher-services-cloud-test` subscription
-- In the filter field, introduce the number of the review app you're deleting, to find all its associated resources. In our example it will be `6488`.
-  - Example of the filtered resources we will find:
-    | Name                                      | Type                                                            |
-    |-------------------------------------------|-----------------------------------------------------------------|
-    | s189t01-tv-review-pr-6488-redis-cache     | Azure Cache for Redis                                           |
-    | s189t01-tv-review-pr-6488-redis-cache-pe  | Private endpoint                                                |
-    | s189t01-tv-review-pr-6488-redis-cache-pe.nic.ae0700e4-b326-43cd-aab5-b65da2c4ebfe  | Network Interface      |
-    | s189t01-tv-review-pr-6488-redis-queue     | Azure Cache for Redis                                           |
-    | s189t01-tv-review-pr-6488-redis-queue-pe  | Private endpoint                                                |
-    | s189t01-tv-review-pr-6488-redis-queue-pe.nic.fb886c94-78c0-42d1-8132-4f82d59bfaa3  | Network Interface      |
-    | s189t01-tv-rv-pg-review-pr-6488           | Azure Database for PostgreSQL flexible server                   |
-- Select all the resources associated with the Review App you are deleting.
-- On the top menu, click on the bin icon with the **Delete** action.
-  - Do **not** click on the `Delete resource group`, as this would delete all the resources for all the running review apps.
-- Review the resources that are going to be deleted and confirm the deletion.
-- You will see the resources progressively dissapearing from the list as the deletion gets processed.
+- Delete the database:
+  ```bash
+   kubectl -n tv-development delete deployment teaching-vacancies-review-pr-6488-postgres
+  ```
+- Delete the Redis cache:
+  ```bash
+   kubectl -n tv-development delete deployment teaching-vacancies-review-pr-6488-redis-cache
+  ```
+- Dekete the Redis queue:
+  ```bash
+   kubectl -n tv-development delete deployment teaching-vacancies-review-pr-6488-redis-queue
+  ```
