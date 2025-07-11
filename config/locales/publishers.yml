@@ -87,6 +87,9 @@ en:
       preferred_subjects:
         one: Preferred subject
         other: Preferred subjects
+      current_role: "Current role"
+      latest_role: "Latest role"
+      previously_role: "Previously %{job_title}"
       search_result_heading: "Candidate profiles (%{count})"
       sort_result_text: "Ordered by most recently updated."
       filters:

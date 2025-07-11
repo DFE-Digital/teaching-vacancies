@@ -13,9 +13,10 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         catering_cleaning_and_site_management it_support pastoral_health_and_welfare other_leadership other_support ]
   end
 
-  let!(:jobseeker_profile) { create(:jobseeker_profile, :with_personal_details, qualified_teacher_status: "yes", qualified_teacher_status_year: "2000", job_preferences: job_preferences) }
+  let!(:jobseeker_profile) { create(:jobseeker_profile, :with_personal_details, qualified_teacher_status: "yes", qualified_teacher_status_year: "2000", job_preferences: job_preferences, employments: [current_employment]) }
   let(:job_preferences) { create(:job_preferences, roles: roles, key_stages: %w[ks1], working_patterns: %w[full_time], locations: [location_preference_containing_school], subjects: ["English"]) }
   let(:location_preference_containing_school) { create(:job_preferences_location, name: "London", radius: 100) }
+  let(:current_employment) { create(:employment, :jobseeker_profile_employment, job_title: "Senior Teacher", started_on: 1.year.ago, ended_on: nil, is_current_role: true) }
 
   let!(:part_time_jobseeker_profile) { create(:jobseeker_profile, :with_personal_details, qualified_teacher_status: "yes", qualified_teacher_status_year: "2000", job_preferences: part_time_job_preferences) }
   let(:part_time_job_preferences) { create(:job_preferences, roles: %w[teacher], key_stages: %w[ks1], working_patterns: %w[part_time], locations: [part_time_preference_containing_school], subjects: ["Physics"]) }
@@ -58,6 +59,14 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         expect(page).to have_content(jobseeker_profile.job_preferences.key_stages.first.humanize)
         expect(page).to have_content(jobseeker_profile.job_preferences.working_patterns.first.humanize)
         expect(page).to have_content(jobseeker_profile.job_preferences.subjects.first.humanize)
+      end
+
+      # Check that current role is displayed for the jobseeker with employment
+      within ".search-results__item", text: jobseeker_profile.full_name do
+        within ".govuk-summary-list__row", text: "Current role" do
+          expect(page).to have_content("Current role")
+          expect(page).to have_content(current_employment.job_title)
+        end
       end
     end
 
