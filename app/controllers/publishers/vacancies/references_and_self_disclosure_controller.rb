@@ -2,7 +2,7 @@
 
 module Publishers
   module Vacancies
-    class ReferencesAndDeclarationsController < JobApplications::BaseController
+    class ReferencesAndSelfDisclosureController < JobApplications::BaseController
       include Wicked::Wizard
 
       before_action :set_batch, unless: -> { step == Wicked::FINISH_STEP }
@@ -26,7 +26,7 @@ module Publishers
         @form = form_class.new(params.fetch(form_key, {}).permit(form_class.fields))
         if @form.valid?
           if step == :collect_references
-            if @form.collect_references_and_declarations
+            if @form.collect_references_and_self_disclosure
               redirect_to next_wizard_path
             else
               complete_process

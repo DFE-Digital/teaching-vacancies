@@ -54,7 +54,7 @@ RSpec.describe "Publishers manage self disclosure" do
 
         expect(publisher_ats_self_disclosure_page.status.text).to eq("Pending")
         expect(publisher_ats_self_disclosure_page.button.text).to eq("Manually mark as complete")
-        expect(publisher_ats_self_disclosure_page).not_to have_goto_references_and_declaration_form
+        expect(publisher_ats_self_disclosure_page).not_to have_goto_references_and_self_disclosure_form
 
         publisher_ats_self_disclosure_page.button.click
 
@@ -81,9 +81,9 @@ RSpec.describe "Publishers manage self disclosure" do
           expect(publisher_ats_self_disclosure_page.status.text).to eq("Completed")
           expect(publisher_ats_self_disclosure_page.button.text).to eq("Print self-disclosure")
           expect(publisher_ats_self_disclosure_page.personal_details.heading.text).to eq("Personal details")
-          expect(publisher_ats_self_disclosure_page.criminal_details.heading.text).to eq("Criminal record declaration")
-          expect(publisher_ats_self_disclosure_page.conduct_details.heading.text).to eq("Conduct declaration")
-          expect(publisher_ats_self_disclosure_page.confirmation_details.heading.text).to eq("Confirmation declaration")
+          expect(publisher_ats_self_disclosure_page.criminal_details.heading.text).to eq("Criminal record self-disclosure")
+          expect(publisher_ats_self_disclosure_page.conduct_details.heading.text).to eq("Conduct self-disclosure")
+          expect(publisher_ats_self_disclosure_page.confirmation_details.heading.text).to eq("Confirmation self-disclosure")
         end
       end
     end
@@ -100,7 +100,7 @@ RSpec.describe "Publishers manage self disclosure" do
     it "does not send any notification email" do
       expect {
         click_on "Save and continue"
-      }.not_to have_enqueued_email(Jobseekers::JobApplicationMailer, :declarations)
+      }.not_to have_enqueued_email(Jobseekers::JobApplicationMailer, :self_disclosures)
     end
 
     it "creates a self disclosure request" do
@@ -116,7 +116,7 @@ RSpec.describe "Publishers manage self disclosure" do
       before { request.manual! }
 
       context "when request is pending" do
-        it "publisher can go to the references and declaration form" do
+        it "publisher can go to the references and self_disclosure form" do
           publisher_ats_self_disclosure_page.load(
             vacancy_id: vacancy.id,
             job_application_id: job_application.id,
@@ -124,12 +124,12 @@ RSpec.describe "Publishers manage self disclosure" do
           expect(publisher_ats_self_disclosure_page.status.text).to eq("Pending")
           expect(publisher_ats_self_disclosure_page.button.text).to eq("Manually mark as complete")
           expect(
-            publisher_ats_self_disclosure_page.goto_references_and_declaration_form.text,
+            publisher_ats_self_disclosure_page.goto_references_and_self_disclosure_form.text,
           ).to eq("Would you like to collect this self-disclosure form through Teaching Vacancies?")
 
-          publisher_ats_self_disclosure_page.goto_references_and_declaration_form.click
+          publisher_ats_self_disclosure_page.goto_references_and_self_disclosure_form.click
 
-          expect(page).to have_content("Would you like to collect references and declarations through the Teaching Vacancies service?")
+          expect(page).to have_content("Would you like to collect references and self-disclosure through the Teaching Vacancies service?")
         end
       end
     end

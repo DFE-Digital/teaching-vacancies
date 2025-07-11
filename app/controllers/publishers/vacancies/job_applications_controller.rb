@@ -70,7 +70,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       JobApplication.find(applications).each do |ja|
         batch.batchable_job_applications.create!(job_application: ja)
       end
-      redirect_to organisation_job_job_application_batch_references_and_declaration_path(vacancy.id, batch.id, Wicked::FIRST_STEP)
+      redirect_to organisation_job_job_application_batch_references_and_self_disclosure_path(vacancy.id, batch.id, Wicked::FIRST_STEP)
     else
       JobApplication.find(applications).each do |job_application|
         job_application.update!(status: new_status)
@@ -83,7 +83,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     batch = JobApplicationBatch.create!(vacancy: vacancy)
     batch.batchable_job_applications.create!(job_application: @job_application)
 
-    redirect_to organisation_job_job_application_batch_references_and_declaration_path(vacancy.id, batch.id, Wicked::FIRST_STEP)
+    redirect_to organisation_job_job_application_batch_references_and_self_disclosure_path(vacancy.id, batch.id, Wicked::FIRST_STEP)
   end
 
   def withdrawn; end

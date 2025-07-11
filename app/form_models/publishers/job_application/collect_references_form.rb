@@ -3,12 +3,12 @@ class Publishers::JobApplication::CollectReferencesForm
   include ActiveModel::Validations
   include ActiveModel::Attributes
 
-  attribute :collect_references_and_declarations, :boolean
-  validates :collect_references_and_declarations, inclusion: { in: [true, false], allow_nil: false }
+  attribute :collect_references_and_self_disclosure, :boolean
+  validates :collect_references_and_self_disclosure, inclusion: { in: [true, false], allow_nil: false }
 
   class << self
     def fields
-      [:collect_references_and_declarations]
+      [:collect_references_and_self_disclosure]
     end
   end
 end

@@ -5,7 +5,7 @@ module PageObjects
     module Publisher
       module Ats
         class CollectReferencesPage < CommonPage
-          set_url "/organisation/jobs/{vacancy_id}/job_application_batches/{job_application_batch_id}/references_and_declarations/collect_references"
+          set_url "/organisation/jobs/{vacancy_id}/job_application_batches/{job_application_batch_id}/references_and_self_disclosure/collect_references"
         end
       end
     end

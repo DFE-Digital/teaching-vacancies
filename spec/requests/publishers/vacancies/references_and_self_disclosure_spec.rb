@@ -21,7 +21,7 @@ RSpec.describe "Job applications self disclosure" do
     context "when form incomplete" do
       before do
         get(
-          organisation_job_job_application_batch_references_and_declaration_path(
+          organisation_job_job_application_batch_references_and_self_disclosure_path(
             vacancy.id,
             batch.id,
             :collect_references,
@@ -35,7 +35,7 @@ RSpec.describe "Job applications self disclosure" do
     context "when form complete" do
       before do
         get(
-          organisation_job_job_application_batch_references_and_declaration_path(
+          organisation_job_job_application_batch_references_and_self_disclosure_path(
             vacancy.id,
             batch.id,
             Wicked::FINISH_STEP,
@@ -51,7 +51,7 @@ RSpec.describe "Job applications self disclosure" do
     context "when invalid" do
       let(:request) do
         patch(
-          organisation_job_job_application_batch_references_and_declaration_path(
+          organisation_job_job_application_batch_references_and_self_disclosure_path(
             vacancy.id,
             batch.id,
             :collect_references,
@@ -65,17 +65,17 @@ RSpec.describe "Job applications self disclosure" do
       end
     end
 
-    context "when collect_references_and_declarations false" do
+    context "when collect_references_and_self_disclosure false" do
       let(:params) do
         {
           publishers_job_application_collect_references_form: {
-            collect_references_and_declarations: "false",
+            collect_references_and_self_disclosure: "false",
           },
         }
       end
       let(:request) do
         patch(
-          organisation_job_job_application_batch_references_and_declaration_path(
+          organisation_job_job_application_batch_references_and_self_disclosure_path(
             vacancy.id,
             batch.id,
             :collect_references,
@@ -91,17 +91,17 @@ RSpec.describe "Job applications self disclosure" do
       it { expect { request }.to change { job_application.reload.status }.to("interviewing") }
     end
 
-    context "when collect_references_and_declarations true" do
+    context "when collect_references_and_self_disclosure true" do
       let(:params) do
         {
           publishers_job_application_collect_references_form: {
-            collect_references_and_declarations: "true",
+            collect_references_and_self_disclosure: "true",
           },
         }
       end
       let(:request) do
         patch(
-          organisation_job_job_application_batch_references_and_declaration_path(
+          organisation_job_job_application_batch_references_and_self_disclosure_path(
             vacancy.id,
             batch.id,
             :collect_references,
@@ -110,7 +110,7 @@ RSpec.describe "Job applications self disclosure" do
         )
       end
 
-      it { expect(request).to redirect_to(organisation_job_job_application_batch_references_and_declaration_path(vacancy.id, batch.id, :ask_references_email)) }
+      it { expect(request).to redirect_to(organisation_job_job_application_batch_references_and_self_disclosure_path(vacancy.id, batch.id, :ask_references_email)) }
     end
 
     context "when contact_applicant false" do
@@ -123,7 +123,7 @@ RSpec.describe "Job applications self disclosure" do
       end
       let(:request) do
         patch(
-          organisation_job_job_application_batch_references_and_declaration_path(
+          organisation_job_job_application_batch_references_and_self_disclosure_path(
             vacancy.id,
             batch.id,
             :ask_references_email,
@@ -149,7 +149,7 @@ RSpec.describe "Job applications self disclosure" do
       end
       let(:request) do
         patch(
-          organisation_job_job_application_batch_references_and_declaration_path(
+          organisation_job_job_application_batch_references_and_self_disclosure_path(
             vacancy.id,
             batch.id,
             :ask_references_email,

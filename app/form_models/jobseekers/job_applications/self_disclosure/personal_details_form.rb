@@ -17,8 +17,12 @@ module Jobseekers::JobApplications::SelfDisclosure
     validates :city, presence: true
     validates :postcode, presence: true
     validates :phone_number, phone_number: true
-    validates :date_of_birth, date: {}
+    validates :date_of_birth, date: { before: :over_18 }
     validates :has_unspent_convictions, inclusion: { in: [true, false] }
     validates :has_spent_convictions, inclusion: { in: [true, false] }
+
+    def over_18
+      18.years.ago
+    end
   end
 end
