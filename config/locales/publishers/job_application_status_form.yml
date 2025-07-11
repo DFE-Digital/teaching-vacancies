@@ -4,8 +4,8 @@ en:
       models:
         publishers/job_application/collect_references_form:
           attributes:
-            collect_references_and_declarations:
-              inclusion: Select yes if you would like to collect references and declarations through the service
+            collect_references_and_self_disclosure:
+              inclusion: Select yes if you would like to collect references and self-disclosure through the service
 
         publishers/job_application/references_contact_applicant_form:
           attributes:
@@ -37,7 +37,7 @@ en:
             through the Teaching Vacancies service.
 
       publishers_job_application_collect_references_form:
-        collect_references_and_declarations_options:
+        collect_references_and_self_disclosure_options:
           true: >-
             Both the candidate and their referees will receive an email with instructions
             to complete the necessary documentation. If you do not receive a response, you can send
@@ -66,7 +66,7 @@ en:
           interviewing_html: Interviewing <span class="govuk-tag govuk-tag--turquoise">Interviewing</span>
 
       publishers_job_application_collect_references_form:
-        collect_references_and_declarations_options:
+        collect_references_and_self_disclosure_options:
           true: "Yes"
           false: "No"
 
@@ -82,8 +82,8 @@ en:
 
     legend:
       publishers_job_application_collect_references_form:
-        collect_references_and_declarations: >-
-          Would you like to collect references and declarations through the Teaching Vacancies service?
+        collect_references_and_self_disclosure: >-
+          Would you like to collect references and self-disclosure through the Teaching Vacancies service?
 
       publishers_job_application_references_contact_applicant_form:
         contact_applicants: >-

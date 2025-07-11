@@ -33,9 +33,9 @@ en:
             postcode: Postcode
             phone_number: Telephone/mobile number
             date_of_birth: Date of birth
-            criminal: Criminal record declaration
-            conduct: Conduct declaration
-            confirmation: Confirmation declaration
+            criminal: Criminal record self-disclosure
+            conduct: Conduct self-disclosure
+            confirmation: Confirmation self-disclosure
             has_unspent_convictions:  Do you have any unspent conditional cautions or convictions in the UK or overseas?
             has_spent_convictions: Do you have any spent adult cautions (simple or conditional) or convictions in the UK or overseas that are not protected (i.e. eligible to be filtered) as defined by the Rehabilitation of Offenders Act 1974 in England, Scotland and Wales or the Rehabilitation of Offenders (Northern Ireland) Order 1978?
             is_barred: Are you included on the list of people barred from/listed as unsuitable to engage in regulated activity/work with children?

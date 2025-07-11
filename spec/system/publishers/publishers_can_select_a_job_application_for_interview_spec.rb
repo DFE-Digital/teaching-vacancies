@@ -33,7 +33,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
     scenario "without selecting" do
       expect(publisher_ats_collect_references_page).to be_displayed
       click_on "Save and continue"
-      expect(publisher_ats_collect_references_page.errors.map(&:text)).to eq(["Select yes if you would like to collect references and declarations through the service"])
+      expect(publisher_ats_collect_references_page.errors.map(&:text)).to eq(["Select yes if you would like to collect references and self-disclosure through the service"])
     end
 
     context "when choosing yes for refs and decls" do
