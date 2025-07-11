@@ -14,12 +14,13 @@ class Jobseekers::JobApplications::SelfDisclosureController < Jobseekers::BaseCo
   steps(*FORMS.keys)
 
   def show
+    @form.model = self_disclosure if step == :personal_details
     render_wizard
   end
 
   def update
     if @form.valid?
-      @form.save_model!
+      self_disclosure.update!(@form.attributes)
       if next_step == Wicked::FINISH_STEP
         self_disclosure.mark_as_received
         redirect_to finish_wizard_path
@@ -36,7 +37,7 @@ class Jobseekers::JobApplications::SelfDisclosureController < Jobseekers::BaseCo
   private
 
   def set_form
-    @form = form_class.new(form_params).tap { it.model = self_disclosure }
+    @form = form_class.new(form_params)
   end
 
   def form_class
