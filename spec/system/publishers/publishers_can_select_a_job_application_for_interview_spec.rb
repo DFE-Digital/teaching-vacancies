@@ -55,9 +55,9 @@ RSpec.describe "Publishers can select a job application for interview", :perform
 
         expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
           .to eq({
-            current_referee.email => ["Provide a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
-            old_referee.email => ["Provide a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
-            job_application.email_address => ["Complete your self-disclosure form for #{job_title}", "References are being collected for role #{job_title} at #{organisation.name}"],
+            current_referee.email => ["Provide a reference for #{job_application.name} for #{vacancy.job_title} at #{organisation.name}"],
+            old_referee.email => ["Provide a reference for #{job_application.name} for #{vacancy.job_title} at #{organisation.name}"],
+            job_application.email_address => ["Complete your self-disclosure form for #{job_title} at #{organisation.name}", "References are being collected for role #{job_title} at #{organisation.name}"],
           })
       end
 
@@ -73,9 +73,9 @@ RSpec.describe "Publishers can select a job application for interview", :perform
 
           expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
             .to eq({
-              current_referee.email => ["Provide a reference for #{job_application.name} for role #{job_title} at #{organisation.name}"],
-              old_referee.email => ["Provide a reference for #{job_application.name} for role #{job_title} at #{organisation.name}"],
-              job_application.email_address => ["Complete your self-disclosure form for #{job_title}"],
+              current_referee.email => ["Provide a reference for #{job_application.name} for #{job_title} at #{organisation.name}"],
+              old_referee.email => ["Provide a reference for #{job_application.name} for #{job_title} at #{organisation.name}"],
+              job_application.email_address => ["Complete your self-disclosure form for #{job_title} at #{organisation.name}"],
             })
         end
 
@@ -116,7 +116,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
             expect(page).to have_content("Reference email changed")
             expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
               .to eq({
-                new_email => ["Provide a reference for #{job_application.name} for role #{vacancy.job_title} at #{organisation.name}"],
+                new_email => ["Provide a reference for #{job_application.name} for #{vacancy.job_title} at #{organisation.name}"],
               })
           end
 
