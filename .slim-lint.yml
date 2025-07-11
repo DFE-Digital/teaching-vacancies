@@ -26,6 +26,7 @@ linters:
       - Layout/HashAlignment
       - Layout/IndentationWidth
       - Layout/TrailingEmptyLines
+      - Layout/LineLength
       - Lint/Void
       - Metrics/BlockLength
       - Metrics/BlockNesting
@@ -33,3 +34,5 @@ linters:
       - Style/HashSyntax
       - Style/Next
       - Style/WordArray
+      - Style/StringLiterals
+      - Style/FrozenStringLiteralComment
