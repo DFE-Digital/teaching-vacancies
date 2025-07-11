@@ -15,10 +15,41 @@ FactoryBot.define do
       would_reemploy_current_reason { "wonderful" }
       would_reemploy_any_reason { "fantastic" }
 
-      currently_employed { true }
+      currently_employed { false }
       would_reemploy_current { true }
       would_reemploy_any { true }
-      employment_start_date { Faker::Date.between(from: Date.new(2012, 1, 1), to: Date.new(2022, 1, 1)) }
+      employment_start_date { Faker::Date.between(from: Date.new(2012, 1, 1), to: Date.new(2017, 1, 1)) }
+      employment_end_date { Faker::Date.between(from: Date.new(2017, 1, 1), to: Date.new(2022, 1, 1)) }
+
+      under_investigation { false }
+      warnings { false }
+      allegations { false }
+      not_fit_to_practice { false }
+      able_to_undertake_role { true }
+
+      punctuality { "outstanding" }
+      working_relationships { "outstanding" }
+      customer_care { "outstanding" }
+      adapt_to_change { "outstanding" }
+      deal_with_conflict { "outstanding" }
+      prioritise_workload { "outstanding" }
+
+      team_working { "good" }
+      communication { "outstanding" }
+      problem_solving { "outstanding" }
+      general_attitude { "outstanding" }
+      technical_competence { "poor" }
+      leadership { "outstanding" }
+    end
+
+    trait :with_issues do
+      under_investigation { true }
+      warnings { true }
+      able_to_undertake_role { false }
+
+      under_investigation_details { Faker::Lorem.paragraph }
+      warning_details { Faker::Lorem.paragraph }
+      unable_to_undertake_reason { Faker::Lorem.paragraph }
     end
 
     trait :reference_declined do

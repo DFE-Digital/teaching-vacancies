@@ -16,6 +16,21 @@ module Referees
             not_fit_to_practice: ["Select yes if the applicant has been investigated for, or been found not fit to practice"],
             under_investigation: ["Select yes if the applicant is currently under investigation for any matter"],
             warnings: ["Select yes if there any warnings on the applicant’s record"],
+            unable_to_undertake_reason: ["Please enter your concerns"],
+          })
+      end
+    end
+
+    context "with required warning details" do
+      let(:form) { described_class.new(allegations: false, not_fit_to_practice: false, warnings: true, under_investigation: true, able_to_undertake_role: false) }
+
+      it "has correct errors" do
+        expect(form).not_to be_valid
+        expect(form.errors.messages)
+          .to eq({
+            unable_to_undertake_reason: ["Please enter your concerns"],
+            under_investigation_details: ["Please give details"],
+            warning_details: ["Please give details"],
           })
       end
     end

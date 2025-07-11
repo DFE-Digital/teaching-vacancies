@@ -112,6 +112,7 @@ shared:
     - agreed_for_information_sharing
   job_references:
     - employment_start_date
+    - employment_end_date
     - punctuality
     - working_relationships
     - customer_care
@@ -129,3 +130,6 @@ shared:
     - allegations
     - not_fit_to_practice
     - able_to_undertake_role
+    - under_investigation_details
+    - warning_details
+    - unable_to_undertake_reason

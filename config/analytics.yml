@@ -347,6 +347,7 @@ shared:
     - is_reference_sharable
     - reference_id
     - employment_start_date
+    - employment_end_date
     - currently_employed
     - would_reemploy_current
     - would_reemploy_any
@@ -376,6 +377,9 @@ shared:
     - reason_for_leaving
     - would_reemploy_current_reason
     - would_reemploy_any_reason
+    - under_investigation_details
+    - warning_details
+    - unable_to_undertake_reason
   reference_requests:
     - id
     - reference_id

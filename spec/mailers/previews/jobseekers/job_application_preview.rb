@@ -30,9 +30,9 @@ class Jobseekers::JobApplicationPreview < ActionMailer::Preview
     Jobseekers::JobApplicationMailer.job_listing_ended_early(job_application, vacancy)
   end
 
-  def declarations
+  def self_disclosure
     job_application = JobApplication.last
 
-    Jobseekers::JobApplicationMailer.declarations(job_application)
+    Jobseekers::JobApplicationMailer.self_disclosure(job_application)
   end
 end

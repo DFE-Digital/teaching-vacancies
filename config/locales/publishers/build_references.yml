@@ -41,8 +41,8 @@ en:
           It is therefore essential to require a reference from a previous employer, and the employee cannot be expected to find work of this type unless his or her employer
           provides a full and frank reference to a prospective employer.
         completing: >-
-          It is therefore essential to require a reference from a previous employer, and the employee cannot be expected to find work of this type unless his or her employer
-          provides a full and frank reference to a prospective employer.
+          When completing this reference organisations have a responsibility to ensure that the reference is accurate and does not contain any misstatement and
+          nothing significant is omitted.
         gdpr_heading: UKGDPR/Data Protection Act 2018
         gdpr_1: >-
           This form contains personal data as defined by UKGDPR/DPA 2018. It may include special category data (Article 9) and/ criminal offence data (Article 10)
@@ -81,6 +81,11 @@ en:
         heading: Reference enquiry for %{name}
         caption: Part 3 of 5
         must_report: You must ensure this has been reported to the Teaching Regulation Agency (TRA)
+        give_investigation_details: >-
+          As you have chosen yes, please give details
+          (this may include warnings that could have been imposed, if the individual had not left before an
+          investigation had concluded)
+        give_warning_details: As you have chosen yes, please give details why
 
       how_would_you_rate_part_1:
         page_title: How would you rate %{name}?

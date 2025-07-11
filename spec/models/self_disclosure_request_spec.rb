@@ -17,7 +17,7 @@ RSpec.describe SelfDisclosureRequest do
 
     it "does not send the notification email" do
       expect { requests }
-        .not_to have_enqueued_email(Jobseekers::JobApplicationMailer, :declarations)
+        .not_to have_enqueued_email(Jobseekers::JobApplicationMailer, :self_disclosure)
         .with(job_application)
     end
   end
@@ -32,7 +32,7 @@ RSpec.describe SelfDisclosureRequest do
 
     it "sends the notification email" do
       expect { requests }
-        .to have_enqueued_email(Jobseekers::JobApplicationMailer, :declarations)
+        .to have_enqueued_email(Jobseekers::JobApplicationMailer, :self_disclosure)
         .with(job_application)
     end
   end

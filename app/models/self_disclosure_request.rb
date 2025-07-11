@@ -16,7 +16,7 @@ class SelfDisclosureRequest < ApplicationRecord
     def create_and_notify!(job_application)
       find_or_create_by!(job_application: job_application).tap do |request|
         SelfDisclosure.find_or_create_by_and_prefill!(job_application)
-        Jobseekers::JobApplicationMailer.declarations(job_application).deliver_later
+        Jobseekers::JobApplicationMailer.self_disclosure(job_application).deliver_later
         request.sent!
       end
     end
