@@ -13,6 +13,8 @@
       = tag.div(card.labelled_item(t(".submitted"), format_time_to_datetime_at(job_application.submitted_at)))
     - when "shortlisted"
       = tag.div(card.labelled_item(t(".shortlisted"), format_time_to_datetime_at(job_application.shortlisted_at)))
+    - when "interviewing"
+      = tag.div(card.labelled_item(t(".interviewing"), format_time_to_datetime_at(job_application.interviewing_at)))
     - when "withdrawn"
       = tag.div(card.labelled_item(t(".withdrawn"), format_time_to_datetime_at(job_application.updated_at)))
 

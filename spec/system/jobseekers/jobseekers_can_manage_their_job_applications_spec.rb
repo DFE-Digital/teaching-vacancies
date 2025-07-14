@@ -8,6 +8,9 @@ RSpec.describe "Jobseekers can manage their job applications" do
   let(:vacancy2) { create(:vacancy, :expired, job_title: "Teacher of History", organisations: [organisation]) }
   let(:vacancy3) { create(:vacancy, job_title: "Teacher of Design & Technology", organisations: [organisation]) }
   let(:vacancy4) { create(:vacancy, job_title: "Teacher of RE & PSHE", organisations: [organisation]) }
+  let(:vacancy5) { create(:vacancy, job_title: "Interviewing Job", organisations: [organisation]) }
+  let(:vacancy6) { create(:vacancy, job_title: "Withdrawn Job", organisations: [organisation]) }
+  let(:vacancy7) { create(:vacancy, job_title: "Unsuccessful Job", organisations: [organisation]) }
 
   context "when logged in" do
     before do
@@ -22,6 +25,9 @@ RSpec.describe "Jobseekers can manage their job applications" do
       let!(:deadline_passed_job_application) { create(:job_application, updated_at: 2.days.ago, jobseeker: jobseeker, vacancy: vacancy2) }
       let!(:submitted_job_application) { create(:job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker: jobseeker, vacancy: vacancy3) }
       let!(:shortlisted_job_application) { create(:job_application, :status_shortlisted, submitted_at: 2.days.ago, jobseeker: jobseeker, vacancy: vacancy4) }
+      let!(:interviewing_job_application) { create(:job_application, :status_interviewing, jobseeker: jobseeker, vacancy: vacancy5) }
+      let!(:withdrawn_job_application) { create(:job_application, :status_withdrawn, jobseeker: jobseeker, vacancy: vacancy6) }
+      let!(:unsuccessful_job_application) { create(:job_application, :status_unsuccessful, jobseeker: jobseeker, vacancy: vacancy7) }
 
       before { visit jobseekers_job_applications_path }
 
@@ -49,6 +55,21 @@ RSpec.describe "Jobseekers can manage their job applications" do
           end
 
           within ".card-component:nth-child(4)" do
+            expect(page).to have_css(".card-component__header", text: interviewing_job_application.vacancy.job_title)
+            expect(page).to have_css(".card-component__actions", text: "interviewing")
+          end
+
+          within ".card-component:nth-child(5)" do
+            expect(page).to have_css(".card-component__header", text: unsuccessful_job_application.vacancy.job_title)
+            expect(page).to have_css(".card-component__actions", text: "unsuccessful")
+          end
+
+          within ".card-component:nth-child(6)" do
+            expect(page).to have_css(".card-component__header", text: withdrawn_job_application.vacancy.job_title)
+            expect(page).to have_css(".card-component__actions", text: "withdrawn")
+          end
+
+          within ".card-component:nth-child(7)" do
             expect(page).to have_css(".card-component__header", text: deadline_passed_job_application.vacancy.job_title)
             expect(page).to have_css(".card-component__actions", text: "deadline passed")
           end
