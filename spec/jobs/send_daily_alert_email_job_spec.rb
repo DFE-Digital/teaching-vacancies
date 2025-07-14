@@ -40,6 +40,14 @@ RSpec.describe SendDailyAlertEmailJob do
           perform_enqueued_jobs { job }
         end
       end
+
+      context "when email notifications are disabled", :disable_email_notifications do
+        it "does not send an email or create a run" do
+          expect(Jobseekers::AlertMailer).to_not receive(:alert)
+          perform_enqueued_jobs { job }
+          expect(subscription.alert_runs.count).to eq(0)
+        end
+      end
     end
 
     context "with no vacancies" do

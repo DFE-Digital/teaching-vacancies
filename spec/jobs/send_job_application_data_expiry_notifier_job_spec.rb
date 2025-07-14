@@ -22,6 +22,13 @@ RSpec.describe SendJobApplicationDataExpiryNotifierJob do
         expect(notification).to receive(:deliver).with(publisher)
         described_class.perform_now
       end
+
+      context "when email notifications are disabled", :disable_email_notifications do
+        it "does not send notifications" do
+          expect(Publishers::JobApplicationDataExpiryNotifier).not_to receive(:with).with(vacancy: vacancy, publisher: publisher)
+          described_class.perform_now
+        end
+      end
     end
 
     context "when the vacancy did not expire 351 days ago" do

@@ -19,6 +19,15 @@ RSpec.describe SendInactiveAccountEmailJob do
 
       perform_enqueued_jobs { job }
     end
+
+    context "when email notifications are disabled", :disable_email_notifications do
+      it "does not send emails" do
+        expect(Jobseekers::AccountMailer)
+          .not_to receive(:inactive_account)
+
+        perform_enqueued_jobs { job }
+      end
+    end
   end
 
   context "with active jobseeker" do
