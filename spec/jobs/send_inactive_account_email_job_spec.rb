@@ -6,8 +6,6 @@ RSpec.describe SendInactiveAccountEmailJob do
   let(:jobseeker) { create(:jobseeker, last_sign_in_at: last_sign_in_at) }
   let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
 
-  before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false) }
-
   context "with inactive jobseeker for 5 years" do
     let(:last_sign_in_at) { 5.years.ago }
 

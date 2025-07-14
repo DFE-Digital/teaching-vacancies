@@ -15,7 +15,6 @@ end
 RSpec.describe ImportFromVacancySourceJob do
   before do
     FakeVacancySource.vacancies = vacancies_from_source
-    allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false)
   end
 
   subject(:import_from_vacancy_source_job) { described_class.perform_now(FakeVacancySource) }

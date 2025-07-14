@@ -2,7 +2,7 @@ class ImportFromVacancySourceJob < ApplicationJob
   queue_as :low
 
   def perform(source_klass)
-    return if DisableExpensiveJobs.enabled?
+    return if DisableIntegrations.enabled?
 
     @source_klass = source_klass
     @source_name = source_klass.source_name

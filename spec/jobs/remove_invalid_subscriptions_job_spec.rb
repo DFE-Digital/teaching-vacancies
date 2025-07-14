@@ -57,7 +57,7 @@ RSpec.describe RemoveInvalidSubscriptionsJob do
     end
   end
 
-  context "when ExpensiveJobs are disabled", :disable_expensive_jobs do
+  context "when the integrations are disabled", :disable_integrations do
     it "does not perform the job" do
       expect(Notifications::Client).not_to receive(:new)
 

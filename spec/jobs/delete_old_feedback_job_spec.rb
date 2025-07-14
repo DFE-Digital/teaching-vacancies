@@ -5,8 +5,6 @@ RSpec.describe DeleteOldFeedbackJob do
   let!(:old_feedback) { create(:feedback, created_at: 6.years.ago) }
 
   before do
-    allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false)
-
     described_class.perform_now
   end
 

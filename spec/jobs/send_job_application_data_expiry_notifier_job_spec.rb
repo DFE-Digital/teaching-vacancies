@@ -6,8 +6,6 @@ RSpec.describe SendJobApplicationDataExpiryNotifierJob do
   let(:publisher) { create(:publisher, organisations: [organisation]) }
   let!(:vacancy) { create(:vacancy, expires_at: 351.days.ago, publisher: publisher, organisations: [organisation]) }
 
-  before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false) }
-
   context "when the vacancy has no job applications" do
     it "does not send notifications" do
       expect(Publishers::JobApplicationDataExpiryNotifier).not_to receive(:with).with(vacancy: vacancy, publisher: publisher)

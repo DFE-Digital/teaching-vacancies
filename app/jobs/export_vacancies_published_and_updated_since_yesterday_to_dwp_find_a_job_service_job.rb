@@ -2,7 +2,7 @@ class ExportVacanciesPublishedAndUpdatedSinceYesterdayToDwpFindAJobServiceJob < 
   queue_as :default
 
   def perform
-    return if DisableExpensiveJobs.enabled?
+    return if DisableIntegrations.enabled?
 
     Vacancies::Export::DwpFindAJob::PublishedAndUpdated.new(25.hours.ago).call
   end

@@ -8,8 +8,6 @@ RSpec.describe DestroyInactiveAccountsJob do
   let!(:saved_job) { create(:saved_job, jobseeker:) }
 
   before do
-    allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false)
-
     described_class.perform_now
   end
 

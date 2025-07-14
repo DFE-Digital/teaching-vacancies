@@ -11,7 +11,7 @@ class ImportFromVacancySourcesJob < ApplicationJob
   queue_as :default
 
   def perform
-    return if DisableExpensiveJobs.enabled?
+    return if DisableIntegrations.enabled?
 
     SOURCES.each { |source_klass| ImportFromVacancySourceJob.perform_later(source_klass) }
   end

@@ -9,16 +9,14 @@ RSpec.describe ExportVacanciesPublishedAndUpdatedSinceYesterdayToDwpFindAJobServ
     allow(Vacancies::Export::DwpFindAJob::PublishedAndUpdated).to receive(:new).and_return(service)
   end
 
-  context "when DisableExpensiveJobs is enabled", :disable_expensive_jobs do
+  context "when DisableIntegrations is enabled", :disable_integrations do
     it "does not call the service" do
       perform_enqueued_jobs { job }
       expect(Vacancies::Export::DwpFindAJob::PublishedAndUpdated).not_to have_received(:new)
     end
   end
 
-  context "when DisableExpensiveJobs is not enabled" do
-    before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false) }
-
+  context "when DisableIntegrations is not enabled" do
     it "calls the service passing the time 25 hours before now" do
       freeze_time do
         perform_enqueued_jobs { job }

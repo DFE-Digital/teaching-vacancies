@@ -185,7 +185,7 @@ RSpec.describe Vacancy do
       expect { subject.trash! }.to have_enqueued_job(RemoveGoogleIndexQueueJob).with(url)
     end
 
-    it "doesnt remove google index when expensive jobs are disabled", :disable_expensive_jobs do
+    it "doesnt remove google index when integrations are disabled", :disable_integrations do
       expect { subject.trash! }.not_to have_enqueued_job(RemoveGoogleIndexQueueJob)
     end
 
