@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "jobseekers/job_applications/apply" do
-  let(:apply_view) { jobseeker_application_apply_page }
+  let(:apply_view) { Capybara.string(rendered) }
   let(:jobseeker) { build_stubbed(:jobseeker) }
   let(:vacancy) { build_stubbed(:vacancy) }
   let(:job_application) { build_stubbed(:job_application, :status_draft, jobseeker:, vacancy:) }
@@ -18,30 +18,39 @@ RSpec.describe "jobseekers/job_applications/apply" do
     assign :form, form
 
     render
-
-    apply_view.load(rendered)
   end
 
   describe "banner" do
-    subject(:banner) { apply_view.banner }
+    subject(:banner) { apply_view.find(".review-banner") }
+
+    let(:selectors) do
+      {
+        header: "h1",
+        tag: ".status-tag",
+        delete_btn: ".delete-application",
+        withdraw_btn: ".withdraw-application",
+        download_btn: ".print-application",
+        view_link: ".view-listing-link",
+      }
+    end
 
     it "renders section" do
-      expect(banner.header).to have_text("#{vacancy.job_title} at #{vacancy.organisation.name}")
-      expect(banner.tag).to have_text("draft")
+      expect(banner).to have_css(selectors[:header], text: "#{vacancy.job_title} at #{vacancy.organisation.name}")
+      expect(banner).to have_css(selectors[:tag], text: "draft")
 
-      expect(banner.view_link).to have_text("View this listing (opens in new tab)")
-      expect(banner.view_link["href"]).to eq(job_path(vacancy))
+      expect(banner).to have_css(selectors[:view_link], text: "View this listing (opens in new tab)")
+      expect(banner).to have_link("View this listing (opens in new tab)", href: job_path(vacancy))
 
-      expect(banner).to have_no_download_btn
-      expect(banner).to have_no_withdraw_btn
+      expect(banner).to have_css(selectors[:delete_btn])
+      expect(banner).to have_link("Delete", href: jobseekers_job_application_confirm_destroy_path(job_application))
 
-      expect(banner).to have_delete_btn
-      expect(banner.delete_btn["href"]).to eq(jobseekers_job_application_confirm_destroy_path(job_application))
+      expect(banner).to have_no_css(selectors[:download_btn])
+      expect(banner).to have_no_css(selectors[:withdraw_btn])
     end
   end
 
   describe "task list" do
-    subject(:tasks) { apply_view.tasks }
+    subject(:tasks) { apply_view.all(".govuk-task-list__item") }
 
     context "when viewed by publisher" do
       let(:current_jobseeker) { nil }
@@ -62,8 +71,8 @@ RSpec.describe "jobseekers/job_applications/apply" do
 
       it "renders a tasks list" do
         tasks.each.with_index do |task, index|
-          expect(task.name).to have_text expected_tasks.dig(index, :name)
-          expect(task.status).to have_text expected_tasks.dig(index, :status)
+          expect(task.find(".govuk-task-list__name-and-hint a")).to have_text expected_tasks.dig(index, :name)
+          expect(task.find(".govuk-task-list__status")).to have_text expected_tasks.dig(index, :status)
         end
       end
     end
@@ -87,8 +96,8 @@ RSpec.describe "jobseekers/job_applications/apply" do
 
       it "renders a tasks list" do
         tasks.each.with_index do |task, index|
-          expect(task.name).to have_text expected_tasks.dig(index, :name)
-          expect(task.status).to have_text expected_tasks.dig(index, :status)
+          expect(task.find(".govuk-task-list__name-and-hint a")).to have_text expected_tasks.dig(index, :name)
+          expect(task.find(".govuk-task-list__status")).to have_text expected_tasks.dig(index, :status)
         end
       end
     end
@@ -114,8 +123,8 @@ RSpec.describe "jobseekers/job_applications/apply" do
 
       it "renders a tasks list" do
         tasks.each.with_index do |task, index|
-          expect(task.name).to have_text expected_tasks.dig(index, :name)
-          expect(task.status).to have_text expected_tasks.dig(index, :status)
+          expect(task.find(".govuk-task-list__name-and-hint a")).to have_text expected_tasks.dig(index, :name)
+          expect(task.find(".govuk-task-list__status")).to have_text expected_tasks.dig(index, :status)
         end
       end
     end
@@ -141,8 +150,8 @@ RSpec.describe "jobseekers/job_applications/apply" do
 
       it "renders a tasks list" do
         tasks.each.with_index do |task, index|
-          expect(task.name).to have_text expected_tasks.dig(index, :name)
-          expect(task.status).to have_text expected_tasks.dig(index, :status)
+          expect(task.find(".govuk-task-list__name-and-hint a")).to have_text expected_tasks.dig(index, :name)
+          expect(task.find(".govuk-task-list__status")).to have_text expected_tasks.dig(index, :status)
         end
       end
     end

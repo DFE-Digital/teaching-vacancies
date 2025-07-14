@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "jobseekers/job_applications/show" do
-  let(:show_view) { jobseeker_application_page }
+  let(:show_view) { Capybara.string(rendered) }
   let(:jobseeker) { build_stubbed(:jobseeker) }
   let(:vacancy) { build_stubbed(:vacancy) }
   let(:job_application) { build_stubbed(:job_application, :status_shortlisted, jobseeker:, vacancy:) }
@@ -13,30 +13,39 @@ RSpec.describe "jobseekers/job_applications/show" do
     end
 
     render
-
-    show_view.load(rendered)
   end
 
   describe "banner" do
-    subject(:banner) { show_view.banner }
+    subject(:banner) { show_view.find(".review-banner") }
+
+    let(:selectors) do
+      {
+        header: "h1",
+        tag: ".status-tag",
+        delete_btn: ".delete-application",
+        withdraw_btn: ".withdraw-application",
+        download_btn: ".print-application",
+        view_link: ".view-listing-link",
+      }
+    end
 
     it "renders section" do
-      expect(banner.header).to have_text("#{vacancy.job_title} at #{vacancy.organisation.name}")
-      expect(banner.tag).to have_text("shortlisted")
+      expect(banner).to have_css(selectors[:header], text: "#{vacancy.job_title} at #{vacancy.organisation.name}")
+      expect(banner).to have_css(selectors[:tag], text: "shortlisted")
 
-      expect(banner.view_link).to have_text("View this listing (opens in new tab)")
-      expect(banner.view_link["href"]).to eq(job_path(vacancy))
+      expect(banner).to have_css(selectors[:view_link], text: "View this listing (opens in new tab)")
+      expect(banner).to have_link("View this listing (opens in new tab)", href: job_path(vacancy))
 
-      expect(banner).to have_download_btn
-      expect(banner).to have_withdraw_btn
-      expect(banner.withdraw_btn["href"]).to eq(jobseekers_job_application_confirm_withdraw_path(job_application))
+      expect(banner).to have_css(selectors[:download_btn])
+      expect(banner).to have_css(selectors[:withdraw_btn])
+      expect(banner).to have_link("Withdraw", href: jobseekers_job_application_confirm_withdraw_path(job_application))
 
-      expect(banner).to have_no_delete_btn
+      expect(banner).to have_no_css(selectors[:delete_btn])
     end
   end
 
   describe "quick links" do
-    subject(:quick_links) { show_view.quick_links }
+    subject(:quick_links) { show_view.all(".navigation-list-component .navigation-list-component__anchor a") }
 
     context "with religious vacancy" do
       let(:jobseeker) { create(:jobseeker) }
@@ -61,21 +70,30 @@ RSpec.describe "jobseekers/job_applications/show" do
       end
 
       it "renders nav links" do
-        expect(quick_links.items.map(&:text)).to match_array(expected_sections)
+        expect(quick_links.map(&:text)).to match_array(expected_sections)
       end
 
       describe "sections" do
-        subject(:sections) { show_view.review_sections }
+        subject(:sections) { show_view.all(".govuk-summary-card__title") }
 
-        context "when jobseeker logged in" do
-          let(:current_jobseeker) { jobseeker }
+        let(:expected_sections) do
+          [
+            "Personal details",
+            "Professional status",
+            "Qualifications",
+            "Training and continuing professional development (CPD)",
+            "Professional body memberships (optional)",
+            "Work history",
+            "Personal statement",
+            "Religious information",
+            "References",
+            "Ask for support if you have a disability or other needs",
+            "Declarations",
+          ]
+        end
 
-          it "renders" do
-            sections.each.with_index do |section, index|
-              expect(section).to have_header
-              expect(section.header).to have_text(expected_sections[index])
-            end
-          end
+        it "renders each section" do
+          expect(sections.map(&:text)).to match_array(expected_sections)
         end
       end
     end
@@ -97,29 +115,39 @@ RSpec.describe "jobseekers/job_applications/show" do
       end
 
       it "renders nav links" do
-        expect(quick_links.items.map(&:text)).to match_array(expected_sections)
+        expect(quick_links.map(&:text)).to match_array(expected_sections)
       end
 
       describe "sections" do
-        subject(:sections) { show_view.review_sections }
+        subject(:sections) { show_view.all(".govuk-summary-card__title") }
 
-        context "when jobseeker logged in" do
-          let(:current_jobseeker) { jobseeker }
+        let(:expected_sections) do
+          [
+            "Personal details",
+            "Professional status",
+            "Qualifications",
+            "Training and continuing professional development (CPD)",
+            "Professional body memberships (optional)",
+            "Work history",
+            "Personal statement",
+            "References",
+            "Ask for support if you have a disability or other needs",
+            "Declarations",
+          ]
+        end
 
-          it "renders" do
-            sections.each.with_index do |section, index|
-              expect(section).to have_header
-              expect(section.header).to have_text(expected_sections[index])
-            end
-          end
+        it "renders each section" do
+          expect(sections.map(&:text)).to match_array(expected_sections)
         end
       end
     end
   end
 
   describe "timeline" do
+    subject(:timeline_items) { show_view.all(".timeline-component .timeline-component__item") }
+
     it "renders" do
-      expect(show_view.timeline.items.map(&:text)).to contain_exactly("Application submitted")
+      expect(timeline_items.map(&:text)).to contain_exactly("Application submitted")
     end
   end
 end
