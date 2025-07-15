@@ -24,29 +24,16 @@ class DashboardComponent < ApplicationComponent
     t("jobs.manage.#{selected_type}.no_jobs.#{publisher_preference.organisations.any? ? 'with' : 'no'}_filters")
   end
 
-  def view_applicants(vacancy)
-    return unless vacancy.allow_job_applications?
-    return unless include_job_applications?
-
-    applications = vacancy.job_applications.where.not(status: %w[draft withdrawn])
-
-    govuk_link_to(tag.span(t("jobs.manage.view_applicants", count: applications.count)) \
-                  + tag.span(" for #{vacancy.job_title}", class: "govuk-visually-hidden"),
+  def view_applicants(vacancy, job_applications_count)
+    govuk_link_to(tag.span(t("jobs.manage.view_applicants", count: job_applications_count)) \
+                    + tag.span(" for #{vacancy.job_title}", class: "govuk-visually-hidden"),
                   organisation_job_job_applications_path(vacancy.id),
                   class: "govuk-link--no-visited-state")
-  end
-
-  def vacancy_expired_over_a_year_ago?(vacancy)
-    vacancy.expires_at < 1.year.ago
   end
 
   private
 
   attr_reader :publisher_preference, :organisation, :selected_type, :sort, :vacancies
-
-  def include_job_applications?
-    @selected_type.in?(%i[live expired])
-  end
 
   def set_organisation_options
     schools = organisation.local_authority? ? publisher_preference.schools : organisation.schools
