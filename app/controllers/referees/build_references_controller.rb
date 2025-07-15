@@ -49,7 +49,7 @@ module Referees
       if @form.valid?
         @reference.update!(@form.params_to_save)
         # invalidate token after reference is complete
-        if step == steps.last
+        if @reference.complete?
           @reference.mark_as_received
           next_token = @reference_request.token
         else

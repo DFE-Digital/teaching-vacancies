@@ -9,13 +9,13 @@
       - if @reference_request.sent?
         - if @referee.job_reference.complete?
           - if @referee.job_reference.can_give_reference?
-            = govuk_tag(text: t(".received_status"), colour: "purple")
+            = govuk_tag(text: t("reference_requests.received.status"), colour: t("reference_requests.received.colour"))
           - else
-            = govuk_tag(text: t(".unavailable_status"), colour: "red")
+            = govuk_tag(text: t("reference_requests.declined.status"), colour: t("reference_requests.declined.colour"))
         - else
-          = govuk_tag(text: t(".pending_status"), colour: "blue")
+          = govuk_tag(text: t("reference_requests.pending.status"), colour: t("reference_requests.pending.colour"))
       - else
-        = govuk_tag(text: t(".created_status"), colour: "grey")
+        = govuk_tag(text: t("reference_requests.created.status"), colour: t("reference_requests.created.colour"))
 
     .govuk-body = t(".once_the_reference_is_received")
 

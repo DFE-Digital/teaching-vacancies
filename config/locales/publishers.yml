@@ -606,11 +606,8 @@ en:
           sent_at: Request sent %{date}
           completed_at: Completed %{date}
           received_at: Received %{date}
+          declined_at: Declined %{date}
           created_at: Created %{date}
-          pending_status: pending
-          received_status: received
-          created_status: created
-          completed_status: completed
           references: References
           last_action: Last action
           status: Status
@@ -629,14 +626,10 @@ en:
             heading: What is the correct email address for %{name}?
           show:
             page_title: Reference
-            pending_status: pending
             mark_as_received: Mark as received
             collect_reference: Would you like to collect this reference through Teaching Vacancies?
             change_email_address_html: If the candidate has entered the referee's email address incorrectly, %{link}
             change_email_link_text: you can amend it.
-            received_status: received
-            unavailable_status: unavailable
-            created_status: created
             this_referee_will_not_provide_a_reference: >-
               This referee will not provide a reference for this candidate.
               You will need to request a new referee from this candidate.

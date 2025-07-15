@@ -33,12 +33,17 @@ RSpec.describe "Publishers can select a job application for interview" do
       end
     end
 
-    scenario "the referee is unable to give a reference" do
+    scenario "the referee is unable to give a reference", :js, :versioning do
       choose I18n.t("helpers.label.referees_can_give_reference_form.can_give_reference_options.false")
       click_on I18n.t("buttons.continue")
       expect(page).to have_current_path(no_reference_reference_build_index_path(reference_request.id))
       expect(referee.job_reference.reload).to be_complete
       expect(referee.job_reference.can_give_reference).to be(false)
+
+      run_with_publisher_and_organisation(publisher, organisation) do
+        publisher_ats_pre_interview_checks_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
+        sleep 35
+      end
     end
 
     context "when giving a reference" do

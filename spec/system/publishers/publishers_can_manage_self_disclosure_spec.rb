@@ -60,14 +60,14 @@ RSpec.describe "Publishers manage self disclosure" do
             job_application_id: job_application.id,
           )
 
-          expect(publisher_ats_self_disclosure_page.status.text).to eq("Pending")
+          expect(publisher_ats_self_disclosure_page.status.text).to eq("pending")
           expect(publisher_ats_self_disclosure_page.button.text).to eq("Manually mark as complete")
           expect(publisher_ats_self_disclosure_page).not_to have_goto_references_and_self_disclosure_form
 
           publisher_ats_self_disclosure_page.button.click
 
           expect(publisher_ats_self_disclosure_page.banner_title.text).to eq("Success")
-          expect(publisher_ats_self_disclosure_page.status.text).to eq("Completed")
+          expect(publisher_ats_self_disclosure_page.status.text).to eq("completed")
         end
       end
 
@@ -121,7 +121,7 @@ RSpec.describe "Publishers manage self disclosure" do
               .to eq(["#{jobseeker.jobseeker_profile.personal_details.first_name} #{jobseeker.jobseeker_profile.personal_details.last_name} - #{Date.current.to_fs}",
                       "#{publisher.given_name} #{publisher.family_name} - #{Date.current.to_fs}"])
 
-            expect(publisher_ats_self_disclosure_page.status.text).to eq("Completed")
+            expect(publisher_ats_self_disclosure_page.status.text).to eq("completed")
             expect(publisher_ats_self_disclosure_page.button.text).to eq("Print self-disclosure")
             expect(publisher_ats_self_disclosure_page.personal_details.heading.text).to eq("Personal details")
             expect(publisher_ats_self_disclosure_page.criminal_details.heading.text).to eq("Criminal record self-disclosure")
@@ -169,7 +169,7 @@ RSpec.describe "Publishers manage self disclosure" do
             vacancy_id: vacancy.id,
             job_application_id: job_application.id,
           )
-          expect(publisher_ats_self_disclosure_page.status.text).to eq("Pending")
+          expect(publisher_ats_self_disclosure_page.status.text).to eq("pending")
           expect(publisher_ats_self_disclosure_page.button.text).to eq("Manually mark as complete")
           expect(
             publisher_ats_self_disclosure_page.goto_references_and_self_disclosure_form.text,
