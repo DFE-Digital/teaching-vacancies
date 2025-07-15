@@ -28,7 +28,7 @@ class DashboardComponent < ApplicationComponent
     return unless vacancy.allow_job_applications?
     return unless include_job_applications?
 
-    applications = vacancy.job_applications.where(status: %w[submitted reviewed shortlisted unsuccessful])
+    applications = vacancy.job_applications.where.not(status: %w[draft withdrawn])
 
     govuk_link_to(tag.span(t("jobs.manage.view_applicants", count: applications.count)) \
                   + tag.span(" for #{vacancy.job_title}", class: "govuk-visually-hidden"),
