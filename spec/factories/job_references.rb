@@ -1,8 +1,9 @@
 FactoryBot.define do
   factory :job_reference do
-    complete { true }
+    complete { false }
 
     trait :reference_given do
+      complete { true }
       can_give_reference { true }
       name { "name" }
       job_title { "job_title" }
@@ -43,6 +44,7 @@ FactoryBot.define do
     end
 
     trait :with_issues do
+      complete { true }
       under_investigation { true }
       warnings { true }
       able_to_undertake_role { false }
@@ -53,6 +55,7 @@ FactoryBot.define do
     end
 
     trait :reference_declined do
+      complete { true }
       can_give_reference { false }
     end
   end
