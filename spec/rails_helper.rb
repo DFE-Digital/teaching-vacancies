@@ -105,11 +105,21 @@ RSpec.configure do |config|
   end
 
   config.before do
+    allow(DisableEmailNotifications).to receive(:enabled?).and_return(false)
     allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false)
+    allow(DisableIntegrations).to receive(:enabled?).and_return(false)
+  end
+
+  config.before(:each, disable_email_notifications: true) do
+    allow(DisableEmailNotifications).to receive(:enabled?).and_return(true)
   end
 
   config.before(:each, disable_expensive_jobs: true) do
     allow(DisableExpensiveJobs).to receive(:enabled?).and_return(true)
+  end
+
+  config.before(:each, disable_integrations: true) do
+    allow(DisableIntegrations).to receive(:enabled?).and_return(true)
   end
 
   config.around(:each, :with_csrf_protection) do |example|

@@ -6,6 +6,8 @@ class SendExpiredVacancyFeedbackPromptJob < ApplicationJob
   CUTOFF_DATE = 6.weeks.ago.beginning_of_day
 
   def perform
+    return if DisableEmailNotifications.enabled?
+
     vacancies_requiring_expiry_email_prompt.each do |expired_vacancy|
       next unless expired_vacancy.publisher.email.present? && expired_vacancy.publisher.unsubscribed_from_expired_vacancy_prompt_at.nil?
 

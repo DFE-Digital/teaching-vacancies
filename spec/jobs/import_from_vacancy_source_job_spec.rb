@@ -15,7 +15,6 @@ end
 RSpec.describe ImportFromVacancySourceJob do
   before do
     FakeVacancySource.vacancies = vacancies_from_source
-    allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false)
   end
 
   subject(:import_from_vacancy_source_job) { described_class.perform_now(FakeVacancySource) }
@@ -23,6 +22,15 @@ RSpec.describe ImportFromVacancySourceJob do
   let(:school) { create(:school) }
 
   describe "#perform" do
+    context "when the integrations are disabled", :disable_integrations do
+      let(:vacancies_from_source) { [] }
+
+      it "does not run the import for the vacancy source class" do
+        expect(FakeVacancySource).not_to receive(:new)
+        described_class.perform_now(FakeVacancySource)
+      end
+    end
+
     context "when a new valid vacancy comes through" do
       let(:vacancies_from_source) { [vacancy] }
       let(:vacancy) do

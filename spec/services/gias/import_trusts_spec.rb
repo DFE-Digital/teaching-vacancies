@@ -26,8 +26,6 @@ RSpec.describe Gias::ImportTrusts do
         :get,
         "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/alllinksdata#{todays_date}.csv",
       ).to_return(body: links_csv)
-
-      allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false)
     end
 
     it "creates SchoolGroups" do

@@ -40,8 +40,6 @@ class PublishedVacancy < Vacancy
   private
 
   def remove_google_index
-    return if DisableExpensiveJobs.enabled?
-
     url = Rails.application.routes.url_helpers.job_url(self)
     RemoveGoogleIndexQueueJob.perform_later(url)
   end

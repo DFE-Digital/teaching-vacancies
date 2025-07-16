@@ -748,6 +748,12 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           )
         end
 
+        it "enqueues UpdateGoogleIndexQueueJob with the correct job URL", document: false do |example|
+          expect(UpdateGoogleIndexQueueJob).to receive(:perform_later)
+          submit_request(example.metadata)
+          assert_response_matches_metadata(example.metadata)
+        end
+
         context "when not providing the optional parameters", document: false do
           let(:vacancy_params) do
             super().except(:publish_on,
@@ -786,16 +792,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
               "publish_on" => publish_on,
               "public_url" => nil,
             )
-          end
-        end
-
-        context "when DisableExpensiveJobs is disabled", document: false do
-          before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false) }
-
-          it "enqueues UpdateGoogleIndexQueueJob with the correct job URL" do |example|
-            expect(UpdateGoogleIndexQueueJob).to receive(:perform_later)
-            submit_request(example.metadata)
-            assert_response_matches_metadata(example.metadata)
           end
         end
       end

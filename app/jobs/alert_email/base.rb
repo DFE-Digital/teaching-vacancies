@@ -2,7 +2,7 @@ class AlertEmail::Base < ApplicationJob
   MAXIMUM_RESULTS_PER_RUN = 500
 
   def perform
-    return if DisableExpensiveJobs.enabled?
+    return if DisableEmailNotifications.enabled?
 
     # The intent here is that if we don't have keyword or location searches, then this operation can all be done in memory
     # really fast (1 week's worth of vacancies is around 2000, so not worth leaving on disk for each of 100k daily subscriptions

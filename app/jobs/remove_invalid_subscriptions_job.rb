@@ -2,7 +2,7 @@ class RemoveInvalidSubscriptionsJob < ApplicationJob
   queue_as :low
 
   def perform
-    return if DisableExpensiveJobs.enabled?
+    return if DisableIntegrations.enabled?
 
     client = GovUkNotifyStatusClient.new
     client.get_email_notifications({ status: "permanent-failure" }).each do |failed_message|

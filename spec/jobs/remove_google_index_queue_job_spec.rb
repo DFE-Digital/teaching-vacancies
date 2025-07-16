@@ -20,4 +20,11 @@ RSpec.describe RemoveGoogleIndexQueueJob do
       described_class.perform_now(url)
     end
   end
+
+  context "when DisableIntegrations is enabled", :disable_integrations do
+    it "does not perform the job" do
+      expect(GoogleIndexing).not_to receive(:new)
+      perform_enqueued_jobs { job }
+    end
+  end
 end

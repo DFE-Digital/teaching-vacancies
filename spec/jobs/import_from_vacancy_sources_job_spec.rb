@@ -18,9 +18,7 @@ RSpec.describe ImportFromVacancySourcesJob do
   end
 
   describe "#perform" do
-    context "when DisableExpensiveJobs is disabled" do
-      before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false) }
-
+    context "when DisableIntegrations is disabled" do
       it "enqueues a job for each source" do
         expect { described_class.perform_now }
           .to have_enqueued_job(ImportFromVacancySourceJob).exactly(2).times
@@ -29,7 +27,7 @@ RSpec.describe ImportFromVacancySourcesJob do
       end
     end
 
-    context "when DisableExpensiveJobs is enabled", :disable_expensive_jobs do
+    context "when DisableIntegrations is enabled", :disable_integrations do
       it "does not enqueue any jobs" do
         expect { described_class.perform_now }.not_to have_enqueued_job(ImportFromVacancySourceJob)
       end

@@ -64,8 +64,6 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   end
 
   def update_google_index(job)
-    return if DisableExpensiveJobs.enabled?
-
     url = job_url(job)
     UpdateGoogleIndexQueueJob.perform_later(url)
   end
