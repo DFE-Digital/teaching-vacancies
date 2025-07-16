@@ -1,7 +1,7 @@
 ---
 order: 104
-title: How to apply for classroom experience
-meta_description: Find out how to apply for classroom experience to help you return to teaching.
+title: How to apply for classroom experience as a returning teacher
+meta_description: Apply for classroom experience before returning to teaching. Get CV advice, DBS check help, and application guidance for former teachers.
 date_posted: 17/02/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/how-to-apply-for-classroom-experience.png"
@@ -38,4 +38,4 @@ Some schools may allow an initial visit without a DBS, provided you’re:
 
 You may not be allowed on school grounds without proper identification (ID). You must check with the school beforehand to see what forms of ID are required.   
   
-Part 3 of [Keeping children safe in education](https://www.gov.uk/government/publications/keeping-children-safe-in-education--2) guidance explains what type of DBS check is required and when.
+Part 3 of [Keeping children safe in education guidance](https://www.gov.uk/government/publications/keeping-children-safe-in-education--2) explains what type of DBS check is required and when.

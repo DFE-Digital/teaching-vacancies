@@ -1,7 +1,7 @@
 ---
 order: 105
-title: Arrange your referees
-meta_description: Find out how to arrange your referees for job applications to return to teaching.
+title: Arranging your references
+meta_description: Arrange your teaching references for job applications. Get guidance on teaching standard references and updating your teaching portfolio.
 date_posted: 17/02/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/arrange-your-referees.png"
@@ -15,7 +15,7 @@ Further guidance can be found in [Part three (safer recruitment) of the statutor
  
 KCSIE is not specific about how many references are required. Schools are best placed to make this decision based on their individual needs and circumstances. 
  
-[Gaining school experience](/jobseeker-guides/return-to-teaching-in-england/find-classroom-experience) can help you secure referees. 
+[Getting more school experience](/jobseeker-guides/return-to-teaching-in-england/find-classroom-experience) can help you get new referees. 
  
 ## How to select your referees 
  
@@ -27,6 +27,6 @@ If you can, choose experienced teachers who have seen you teach recently. They s
 
 Make sure you confirm with your referees that they are willing to provide a reference before including their names in your application. 
 
-Supply teaching agencies often only provide brief factual references so try to find an alternative referee if possible. 
+Supply teaching agencies often only provide brief factual references, so try to find an alternative referee if possible. 
  
 [Learn more about your rights regarding work references](https://www.gov.uk/work-reference?). 
