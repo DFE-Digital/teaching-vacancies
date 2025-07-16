@@ -25,10 +25,10 @@ RSpec.describe SelfDisclosurePdfGenerator do
     end
 
     it "includes section titles" do
-      expect(pdf).to include("Personal Details")
-      expect(pdf).to include("Criminal Record Declaration")
-      expect(pdf).to include("Conduct Declaration")
-      expect(pdf).to include("Confirmation Declaration")
+      expect(pdf).to include("Personal details")
+      expect(pdf).to include("Criminal record self-disclosure")
+      expect(pdf).to include("Conduct self-disclosure")
+      expect(pdf).to include("Confirmation self-disclosure")
     end
 
     it "includes page footer" do
