@@ -15,6 +15,7 @@ en:
             date_of_birth:
               blank: Enter your date of birth
               invalid: Enter a valid date, for example, 27 3 2007
+              before: Must be over 18 years old
             name:
               blank: Enter your name
             phone_number:

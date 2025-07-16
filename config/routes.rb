@@ -420,7 +420,7 @@ Rails.application.routes.draw do
         resource :self_disclosure, only: %i[show update], controller: "publishers/vacancies/job_applications/self_disclosure"
       end
       resources :job_application_batches, only: %i[] do
-        resources :references_and_declarations, only: %i[show update], controller: "publishers/vacancies/references_and_declarations"
+        resources :references_and_self_disclosure, only: %i[show update], controller: "publishers/vacancies/references_and_self_disclosure"
       end
     end
   end
