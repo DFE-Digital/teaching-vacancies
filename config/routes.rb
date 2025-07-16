@@ -84,6 +84,13 @@ Rails.application.routes.draw do
       get :consume, on: :member
     end
 
+    resources :uploaded_job_applications, only: [] do
+      resource :personal_details, only: %i[edit update], module: :uploaded_job_applications
+      resource :upload_application_form, only: %i[edit update], module: :uploaded_job_applications do
+        get :download_submitted_form, on: :collection
+      end
+    end
+
     resources :job_applications, only: %i[index show destroy] do
       resources :build, only: %i[show update], controller: "job_applications/build"
       resources :employments, only: %i[new create edit update destroy], controller: "job_applications/employments"
@@ -112,6 +119,7 @@ Rails.application.routes.draw do
 
     scope as: :job, path: ":job_id" do
       resource :job_application, only: %i[new create]
+      resource :uploaded_job_application, only: %i[create], controller: "uploaded_job_applications"
     end
 
     resource :profile, only: %i[show] do
@@ -391,6 +399,7 @@ Rails.application.routes.draw do
       resources :job_applications, only: %i[index show], controller: "publishers/vacancies/job_applications" do
         resources :notes, only: %i[create destroy], controller: "publishers/vacancies/job_applications/notes"
         get :download_pdf
+        get :download_application_form
         get :withdrawn
         get :tag, on: :collection
         get :tag_single, on: :member
@@ -400,7 +409,7 @@ Rails.application.routes.draw do
   end
 
   # Well known URLs
-  get ".well-known/change-password", to: redirect(status: 302) { Rails.application.routes.url_helpers.edit_jobseeker_registration_path(password_update: true) }
+  get ".well-known/change-password", to: redirect(status: 302) { "https://home.account.gov.uk/security" }
 
   match "/401", as: :unauthorised, to: "errors#unauthorised", via: :all
   match "/404", as: :not_found, to: "errors#not_found", via: :all

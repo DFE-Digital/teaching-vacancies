@@ -6,9 +6,9 @@ RSpec.describe "Viewing a single published vacancy" do
 
   context "when the vacancy status is published" do
     let(:vacancy) do
-      create(:vacancy, :published, start_date_type: "asap", organisations: [school], job_roles: %w[ teacher headteacher deputy_headteacher assistant_headteacher head_of_year_or_phase head_of_department_or_curriculum teaching_assistant
-                                                                                                    higher_level_teaching_assistant education_support sendco administration_hr_data_and_finance
-                                                                                                    catering_cleaning_and_site_management it_support pastoral_health_and_welfare other_leadership other_support ])
+      create(:vacancy, start_date_type: "asap", organisations: [school], job_roles: %w[ teacher headteacher deputy_headteacher assistant_headteacher head_of_year_or_phase head_of_department_or_curriculum teaching_assistant
+                                                                                        higher_level_teaching_assistant education_support sendco administration_hr_data_and_finance
+                                                                                        catering_cleaning_and_site_management it_support pastoral_health_and_welfare other_leadership other_support ])
     end
 
     scenario "jobseekers can view the vacancy" do
@@ -59,7 +59,7 @@ RSpec.describe "Viewing a single published vacancy" do
     end
 
     context "with supporting documents attached" do
-      let(:vacancy) { create(:vacancy, :published, :with_supporting_documents, organisations: [school]) }
+      let(:vacancy) { create(:vacancy, :with_supporting_documents, organisations: [school]) }
 
       scenario "can see the supporting documents section" do
         visit job_path(vacancy)
@@ -73,7 +73,7 @@ RSpec.describe "Viewing a single published vacancy" do
 
       scenario "a jobseeker can click on the application link" do
         visit job_path(vacancy)
-        click_on I18n.t("jobs.apply")
+        click_on I18n.t("jobs.view_advert.school")
 
         expect(page.current_url).to eq vacancy.application_link
       end
@@ -107,15 +107,15 @@ RSpec.describe "Viewing a single published vacancy" do
     end
 
     scenario "jobseeker does not see a tag on jobs that don't allow to apply through Teaching Vacancies" do
-      vacancy_without_apply = create(:vacancy, :published, :no_tv_applications, organisations: [school])
+      vacancy_without_apply = create(:vacancy, :no_tv_applications, organisations: [school])
 
       visit job_path(vacancy_without_apply)
       expect(page).not_to have_css("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
     end
 
     context "with similar jobs listed" do
-      let(:similar_job_tv_application) { create(:vacancy, :published, organisations: [school]) }
-      let(:similar_job_no_tv_application) { create(:vacancy, :published, :no_tv_applications, organisations: [school]) }
+      let(:similar_job_tv_application) { create(:vacancy, organisations: [school]) }
+      let(:similar_job_no_tv_application) { create(:vacancy, :no_tv_applications, organisations: [school]) }
       let(:similar_jobs_stub) do
         instance_double(Search::SimilarJobs, similar_jobs: [similar_job_tv_application, similar_job_no_tv_application])
       end

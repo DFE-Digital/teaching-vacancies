@@ -4,11 +4,11 @@ RSpec.describe "Jobseekers can apply for a vacancy" do
   before { visit job_path(vacancy) }
 
   context "with a website vacancy" do
-    let(:expected_link) { I18n.t("jobs.apply", href: "http://www.google.com") }
+    let(:expected_link) { I18n.t("jobs.view_advert.school", href: "http://www.google.com") }
 
     context "with a published vacancy" do
       let(:vacancy) do
-        create(:vacancy, :published, :no_tv_applications,
+        create(:vacancy, :no_tv_applications,
                application_link: "www.google.com", organisations: [build(:school)])
       end
 
@@ -31,7 +31,7 @@ RSpec.describe "Jobseekers can apply for a vacancy" do
 
   context "with a download form vacancy" do
     let(:vacancy) do
-      create(:vacancy, :published, :with_application_form,
+      create(:vacancy, :with_application_form,
              organisations: [build(:school)])
     end
     let(:jobseeker) { create(:jobseeker) }

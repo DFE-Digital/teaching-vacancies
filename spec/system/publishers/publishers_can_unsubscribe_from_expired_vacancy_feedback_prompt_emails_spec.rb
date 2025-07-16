@@ -7,7 +7,7 @@ RSpec.describe "Publishers can unsubscribe from expired vacancy feedback prompt 
 
   before do
     ActionMailer::Base.deliveries.clear
-    create(:vacancy, :published, publisher: publisher, expires_at: 3.weeks.ago)
+    create(:vacancy, publisher: publisher, expires_at: 3.weeks.ago)
     perform_enqueued_jobs do
       SendExpiredVacancyFeedbackPromptJob.new.perform
     end

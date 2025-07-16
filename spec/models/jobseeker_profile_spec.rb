@@ -151,4 +151,50 @@ RSpec.describe JobseekerProfile, type: :model do
       expect { unrelated_employment.reload }.not_to raise_error
     end
   end
+
+  describe "#current_or_most_recent_employment" do
+    let!(:profile) { create(:jobseeker_profile) }
+
+    context "when there are no employments" do
+      it "returns nil" do
+        expect(profile.current_or_most_recent_employment).to be_nil
+      end
+    end
+
+    context "when there are employments" do
+      let!(:recent_employment) { create(:employment, :jobseeker_profile_employment, jobseeker_profile: profile, started_on: 1.year.ago, ended_on: 6.months.ago) }
+
+      before do
+        create(:employment, :jobseeker_profile_employment, jobseeker_profile: profile, started_on: 2.years.ago, ended_on: 1.year.ago)
+      end
+
+      it "returns the most recent employment based on started_on date" do
+        expect(profile.current_or_most_recent_employment).to eq(recent_employment)
+      end
+    end
+
+    context "when there are employment breaks" do
+      let!(:employment) { create(:employment, :jobseeker_profile_employment, jobseeker_profile: profile, started_on: 1.year.ago, ended_on: 6.months.ago) }
+
+      before do
+        create(:employment, :jobseeker_profile_employment, :break, jobseeker_profile: profile, started_on: 6.months.ago, ended_on: 3.months.ago)
+      end
+
+      it "returns only job employments, not breaks" do
+        expect(profile.current_or_most_recent_employment).to eq(employment)
+      end
+    end
+
+    context "when there is a current employment" do
+      let!(:current_employment) { create(:employment, :jobseeker_profile_employment, jobseeker_profile: profile, started_on: 6.months.ago, ended_on: nil, is_current_role: true) }
+
+      before do
+        create(:employment, :jobseeker_profile_employment, jobseeker_profile: profile, started_on: 1.month.ago, ended_on: 2.weeks.ago)
+      end
+
+      it "returns the current employment regardless of started_on date" do
+        expect(profile.current_or_most_recent_employment).to eq(current_employment)
+      end
+    end
+  end
 end

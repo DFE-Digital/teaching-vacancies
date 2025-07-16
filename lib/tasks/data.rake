@@ -6,7 +6,7 @@ namespace :db do
 
   desc "Reset markers"
   task reset_markers: :environment do
-    Vacancy.non_draft.applicable.find_each(&:reset_markers)
+    PublishedVacancy.applicable.find_each(&:reset_markers)
   end
 
   desc "Generates 1000 random vacancies for testing purposes"

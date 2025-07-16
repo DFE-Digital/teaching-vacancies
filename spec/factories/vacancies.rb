@@ -60,7 +60,6 @@ FactoryBot.define do
     skills_and_experience { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
     start_date_type { "specific_date" }
     starts_on { 1.year.from_now.to_date }
-    status { :published }
     # Subjects are ignored when phases are primary-only
     subjects { factory_sample(SUBJECT_OPTIONS, 2).map(&:first).sort! }
     key_stages { %w[ks1] }
@@ -182,6 +181,17 @@ FactoryBot.define do
       religion_type { :catholic }
     end
 
+    trait :with_uploaded_application_form do
+      enable_job_applications { false }
+      receive_applications { "uploaded_form" }
+      application_form do
+        Rack::Test::UploadedFile.new(
+          Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"),
+          "application/pdf",
+        )
+      end
+    end
+
     trait :external do
       enable_job_applications { false }
       about_school { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
@@ -198,8 +208,6 @@ FactoryBot.define do
     end
 
     factory :draft_vacancy, class: "DraftVacancy" do
-      status { :draft }
-
       completed_steps do
         %w[job_location job_role education_phases job_title key_stages subjects contract_type working_patterns pay_package start_date
            applying_for_the_job school_visits contact_details about_the_role include_additional_documents]

@@ -1,4 +1,3 @@
-# :nocov:
 class Api::OrganisationsController < Api::ApplicationController
   before_action :verify_json_request, only: %i[index]
   before_action :check_valid_params, only: %i[index]
@@ -7,7 +6,7 @@ class Api::OrganisationsController < Api::ApplicationController
 
   def index
     suggestions = Search::SchoolSearch.new({ name: query }, scope: search_scope)
-      .organisations.limit(MAX_RESULTS).pluck(:name)
+      .organisations.limit(MAX_RESULTS).map { |s| "#{s.name} (#{s.postcode})" }
 
     render json: { query:, suggestions: }
   end
@@ -28,4 +27,3 @@ class Api::OrganisationsController < Api::ApplicationController
     render(json: { error: "Insufficient query" }, status: :bad_request) if query.length < 3
   end
 end
-# :nocov:

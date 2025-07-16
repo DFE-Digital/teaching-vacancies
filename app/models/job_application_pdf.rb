@@ -15,7 +15,7 @@ class JobApplicationPdf
   end
 
   def religious_application?
-    vacancy.religion_type.present?
+    vacancy.religion_type.present? && !vacancy.no_religion?
   end
 
   def header_text

@@ -9,7 +9,7 @@ RSpec.describe RemoveVacanciesThatExpiredYesterdayFromGoogleIndexJob do
   before do
     create_list(:vacancy, 5, expires_at: 1.day.ago)
     create_list(:vacancy, 1, expires_at: 2.days.ago)
-    create_list(:vacancy, 1, :published)
+    create_list(:vacancy, 1)
   end
 
   it "removes the url for each expired vacancy" do

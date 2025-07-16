@@ -2,7 +2,7 @@ require "rails_helper"
 require "pdf/inspector"
 
 RSpec.describe JobApplicationPdfGenerator do
-  let(:vacancy) { build_stubbed(:vacancy, :published, :at_one_school) }
+  let(:vacancy) { build_stubbed(:vacancy, :at_one_school) }
   let(:job_application) do
     build_stubbed(:job_application, :status_submitted,
                   vacancy: vacancy,
@@ -42,6 +42,16 @@ RSpec.describe JobApplicationPdfGenerator do
 
     it "includes page number" do
       expect(pdf).to include("1 of 4")
+    end
+
+    context "when vacancy religion type is no_religion" do
+      let(:vacancy) { build_stubbed(:vacancy, :at_one_school, religion_type: "no_religion") }
+
+      it "generates PDF without religious information section" do
+        expect { document }.not_to raise_error
+        expect(document).to be_a(Prawn::Document)
+        expect(pdf).not_to include("Religious information")
+      end
     end
   end
 end

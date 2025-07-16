@@ -160,6 +160,7 @@ shared:
     - working_patterns
     - working_pattern_details
     - notify_before_contact_referers
+    - type
   job_preferences_locations:
     - id
     - job_preferences_id
@@ -371,7 +372,6 @@ shared:
     - latest_start_date
     - other_start_date_details
     - contact_email
-    - status
     - publish_on
     - created_at
     - updated_at

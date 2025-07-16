@@ -1,3 +1,4 @@
+# This is unused at the moment and not matching the current recommendations for ViewComponent previews.
 class PreviewsController < ApplicationController
   layout "application"
 
@@ -7,9 +8,14 @@ class PreviewsController < ApplicationController
   def index
     @previews = ViewComponent::Preview.all
     @page_title = "Component Previews"
-    render "application/index"
+    render "design_system/index"
   end
 
+  # This is legacy code for ViewComponent previews.
+  # Trying to add tests to this code highlighted that the ViewComponent::Preview interface has changed significantly
+  # and things like form, component_name, etc no longer belong to the ViewComponent::Preview class.
+  # TODO: Align ViewComponent Preview feature with modern ViewComponent practices.
+  # :nocov:
   def previews
     @previews = ViewComponent::Preview.all
     @page_title = "Component Previews"
@@ -32,6 +38,7 @@ class PreviewsController < ApplicationController
     opts[:locals] = locals if locals.present?
     render template, opts
   end
+  # :nocov:
 
   private
 

@@ -22,11 +22,11 @@ RSpec.describe VacanciesController do
     end
   end
 
-  describe "How to Apply Button" do
+  describe "View advert on school website" do
     let(:vacancy) { create(:vacancy, :no_tv_applications) }
 
     it "has the correct text" do
-      expect(response.body).to have_content("How to apply")
+      expect(response.body).to have_content("View advert on school website (opens in new tab)")
     end
   end
 
@@ -38,11 +38,11 @@ RSpec.describe VacanciesController do
     end
   end
 
-  describe "View advert on school website" do
+  describe "View advert on external website" do
     let(:vacancy) { create(:vacancy, :external) }
 
     it "has the correct text" do
-      expect(response.body).to have_content("View advert on school website (opens in new tab)")
+      expect(response.body).to have_content("View advert on external website (opens in new tab)")
     end
   end
 end

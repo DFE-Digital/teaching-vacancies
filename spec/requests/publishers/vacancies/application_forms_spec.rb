@@ -15,7 +15,7 @@ RSpec.describe "Documents" do
   after { sign_out(publisher) }
 
   describe "POST #create" do
-    let(:vacancy) { create(:vacancy, enable_job_applications: false, receive_applications: "email", organisations: [organisation]) }
+    let(:vacancy) { create(:vacancy, enable_job_applications: false, receive_applications: "uploaded_form", organisations: [organisation]) }
     let(:valid_file) { fixture_file_upload("blank_job_spec.pdf", "application/pdf") }
     let(:application_email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
     let(:request) do
@@ -49,12 +49,6 @@ RSpec.describe "Documents" do
         expect(vacancy.application_form.filename.to_s).to eq(valid_file.original_filename)
       end
 
-      it "updates the vacancy" do
-        request
-
-        expect(vacancy.reload.application_email).to eq(application_email)
-      end
-
       it "adds application_form to the completed steps" do
         request
 
@@ -82,7 +76,7 @@ RSpec.describe "Documents" do
         end
 
         context "when the vacancy has not been published" do
-          before { vacancy.update(status: "draft") }
+          let(:vacancy) { create(:draft_vacancy, enable_job_applications: false, receive_applications: "email", organisations: [organisation]) }
 
           it "redirects to the review page" do
             expect(request).to redirect_to(organisation_job_review_path(vacancy.id))
