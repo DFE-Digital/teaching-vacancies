@@ -14,7 +14,7 @@ en:
     legend:
       jobseekers_job_applications_self_disclosure_barred_list_form:
         is_barred: Are you included on the list of people barred from/listed as unsuitable to engage in regulated activity/work with children?
-        has_been_referred: If you are not currently barred from working with children, have you been referred to the Disclosure and Baring Service (DBS) or Disclosure Scotland for consideration to be added to one of the lists?
+        has_been_referred: If you are not currently barred from working with children, have you been referred to the Disclosure and Barring Service (DBS) or Disclosure Scotland for consideration to be added to one of the lists?
     label:
       jobseekers_job_applications_self_disclosure_barred_list_form:
         is_barred_options:

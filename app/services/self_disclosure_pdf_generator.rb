@@ -39,14 +39,14 @@ class SelfDisclosurePdfGenerator
 
   def render_table_section(section_name)
     page_section do
-      page_title(section_name.to_s.titleize)
+      page_title(section_name.to_s.tr("_", " ").capitalize)
       page_table(datasource.public_send(section_name).to_a)
     end
   end
 
   def render_nested_section(section_name, fields)
     page_section do
-      page_title(section_name.to_s.titleize)
+      page_title(section_name)
       move_down 1.cm
 
       fields.each do |question, answer|

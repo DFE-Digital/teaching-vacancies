@@ -688,9 +688,9 @@ en:
           eligibility_link_text: Find out about eligible support roles and salary requirements (opens in new tab).
         download_pdf:
           no_file: "No file has been uploaded."
-      references_and_declarations:
+      references_and_self_disclosure:
         collect_references:
-          page_title: Collect references and declarations
+          page_title: Collect references and self-disclosure
         ask_references_email:
           page_title: Contact applicant for references
       live:
