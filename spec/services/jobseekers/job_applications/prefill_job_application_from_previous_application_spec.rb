@@ -10,7 +10,7 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
   describe "#job_application" do
     context "when jobseeker has a recent job application" do
       let(:old_vacancy) { create(:vacancy) }
-      let!(:recent_job_application) { create(:job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker: jobseeker, vacancy: old_vacancy) }
+      let!(:recent_job_application) { create(:job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker: jobseeker, vacancy: old_vacancy, notify_before_contact_referers: true) }
       let!(:older_job_application) { create(:job_application, :status_submitted, submitted_at: 1.week.ago, jobseeker: jobseeker, vacancy: old_vacancy) }
       let!(:draft_job_application) { create(:job_application, jobseeker: jobseeker, vacancy: old_vacancy) }
 
@@ -23,7 +23,7 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
         let(:attributes_to_copy) do
           %i[first_name last_name previous_names street_address city country postcode phone_number
              national_insurance_number qualified_teacher_status qualified_teacher_status_year qualified_teacher_status_details
-             is_statutory_induction_complete is_support_needed support_needed_details]
+             is_statutory_induction_complete is_support_needed support_needed_details notify_before_contact_referers]
         end
 
         it "copies personal info from the recent job application" do
