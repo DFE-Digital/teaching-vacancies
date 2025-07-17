@@ -6,6 +6,105 @@ RSpec.describe JobApplication do
   it { is_expected.to have_many(:employments) }
   it { is_expected.to have_many(:referees) }
 
+  describe "before save hook" do
+    let(:job_application) { create(:job_application) }
+
+    it "enqueue equal opportunities report update job" do
+      expect { job_application.submitted! }
+        .to have_enqueued_job(EqualOpportunitiesReportUpdateJob).with(job_application.id)
+    end
+  end
+
+  describe ".fill_in_report_and_reset_attributes!" do
+    let(:job_application) do
+      create(
+        :job_application,
+        :status_submitted,
+        disability: "yes",
+        gender: "other",
+        gender_description: "lorem gender",
+        orientation: "gay_or_lesbian",
+        orientation_description: "",
+        ethnicity: "asian",
+        ethnicity_description: "",
+        religion: "other",
+        religion_description: "lorem religion",
+        age: "prefer_not_to_say",
+      )
+    end
+    let(:report) { job_application.vacancy.equal_opportunities_report }
+
+    before do
+      job_application.fill_in_report_and_reset_attributes!
+    end
+
+    it "fills in the equal opportunities report" do
+      expect(report.total_submissions).to eq(1)
+
+      expect(report.disability_no).to eq(0)
+      expect(report.disability_prefer_not_to_say).to eq(0)
+      expect(report.disability_yes).to eq(1)
+
+      expect(report.gender_man).to eq(0)
+      expect(report.gender_other).to eq(1)
+      expect(report.gender_prefer_not_to_say).to eq(0)
+      expect(report.gender_woman).to eq(0)
+      expect(report.gender_other_descriptions).to contain_exactly("lorem gender")
+
+      expect(report.orientation_bisexual).to eq(0)
+      expect(report.orientation_gay_or_lesbian).to eq(1)
+      expect(report.orientation_heterosexual).to eq(0)
+      expect(report.orientation_other).to eq(0)
+      expect(report.orientation_prefer_not_to_say).to eq(0)
+      expect(report.orientation_other_descriptions).to be_empty
+
+      expect(report.ethnicity_asian).to eq(1)
+      expect(report.ethnicity_black).to eq(0)
+      expect(report.ethnicity_mixed).to eq(0)
+      expect(report.ethnicity_other).to eq(0)
+      expect(report.ethnicity_prefer_not_to_say).to eq(0)
+      expect(report.ethnicity_white).to eq(0)
+      expect(report.ethnicity_other_descriptions).to be_empty
+
+      expect(report.religion_buddhist).to eq(0)
+      expect(report.religion_christian).to eq(0)
+      expect(report.religion_hindu).to eq(0)
+      expect(report.religion_jewish).to eq(0)
+      expect(report.religion_muslim).to eq(0)
+      expect(report.religion_none).to eq(0)
+      expect(report.religion_other).to eq(1)
+      expect(report.religion_prefer_not_to_say).to eq(0)
+      expect(report.religion_sikh).to eq(0)
+      expect(report.religion_other_descriptions).to contain_exactly("lorem religion")
+
+      expect(report.age_under_twenty_five).to eq(0)
+      expect(report.age_twenty_five_to_twenty_nine).to eq(0)
+      expect(report.age_prefer_not_to_say).to eq(1)
+      expect(report.age_thirty_to_thirty_nine).to eq(0)
+      expect(report.age_forty_to_forty_nine).to eq(0)
+      expect(report.age_fifty_to_fifty_nine).to eq(0)
+      expect(report.age_sixty_and_over).to eq(0)
+    end
+
+    it "resets the job application equal opportunities data" do
+      job_application.reload
+      %i[
+        disability
+        gender
+        gender_description
+        orientation
+        orientation_description
+        ethnicity
+        ethnicity_description
+        religion
+        religion_description
+        age
+      ].each do |field|
+        expect(job_application[field]).to eq("")
+      end
+    end
+  end
+
   describe "#has_noticed_notifications" do
     subject { create(:job_application) }
 
@@ -71,77 +170,6 @@ RSpec.describe JobApplication do
     it "resets support needed details" do
       expect(subject.support_needed_details).to be_blank
       expect(subject.is_support_needed).to be(false)
-    end
-  end
-
-  context "when submitted" do
-    subject do
-      build(:job_application, vacancy: vacancy, disability: "no", age: "under_twenty_five", gender: "man", gender_description: "",
-                              ethnicity: "black", ethnicity_description: "", orientation: "other",
-                              orientation_description: "extravagant", religion: "other", religion_description: "agnostic")
-    end
-
-    let(:vacancy) { create(:vacancy) }
-    let(:equal_opportunities_report) { vacancy.equal_opportunities_report }
-
-    before { subject.submitted! }
-
-    it "creates a report" do
-      expect(equal_opportunities_report.total_submissions).to be 1
-    end
-
-    it "sets the correct counters on the report" do
-      expect(equal_opportunities_report.disability_no).to be 1
-      expect(equal_opportunities_report.disability_prefer_not_to_say).to be 0
-      expect(equal_opportunities_report.disability_yes).to be 0
-      expect(equal_opportunities_report.age_under_twenty_five).to be 1
-      expect(equal_opportunities_report.age_twenty_five_to_twenty_nine).to be 0
-      expect(equal_opportunities_report.age_prefer_not_to_say).to be 0
-      expect(equal_opportunities_report.age_thirty_to_thirty_nine).to be 0
-      expect(equal_opportunities_report.age_forty_to_forty_nine).to be 0
-      expect(equal_opportunities_report.age_fifty_to_fifty_nine).to be 0
-      expect(equal_opportunities_report.age_sixty_and_over).to be 0
-      expect(equal_opportunities_report.gender_man).to be 1
-      expect(equal_opportunities_report.gender_other).to be 0
-      expect(equal_opportunities_report.gender_prefer_not_to_say).to be 0
-      expect(equal_opportunities_report.gender_woman).to be 0
-      expect(equal_opportunities_report.orientation_bisexual).to be 0
-      expect(equal_opportunities_report.orientation_gay_or_lesbian).to be 0
-      expect(equal_opportunities_report.orientation_heterosexual).to be 0
-      expect(equal_opportunities_report.orientation_other).to be 1
-      expect(equal_opportunities_report.orientation_prefer_not_to_say).to be 0
-      expect(equal_opportunities_report.ethnicity_asian).to be 0
-      expect(equal_opportunities_report.ethnicity_black).to be 1
-      expect(equal_opportunities_report.ethnicity_mixed).to be 0
-      expect(equal_opportunities_report.ethnicity_other).to be 0
-      expect(equal_opportunities_report.ethnicity_prefer_not_to_say).to be 0
-      expect(equal_opportunities_report.ethnicity_white).to be 0
-      expect(equal_opportunities_report.religion_buddhist).to be 0
-      expect(equal_opportunities_report.religion_christian).to be 0
-      expect(equal_opportunities_report.religion_hindu).to be 0
-      expect(equal_opportunities_report.religion_jewish).to be 0
-      expect(equal_opportunities_report.religion_muslim).to be 0
-      expect(equal_opportunities_report.religion_none).to be 0
-      expect(equal_opportunities_report.religion_other).to be 1
-      expect(equal_opportunities_report.religion_prefer_not_to_say).to be 0
-      expect(equal_opportunities_report.religion_sikh).to be 0
-    end
-
-    it "sets the correct string array attributes on the report" do
-      expect(equal_opportunities_report.orientation_other_descriptions).to eq ["extravagant"]
-      expect(equal_opportunities_report.religion_other_descriptions).to eq ["agnostic"]
-    end
-
-    it "resets equal opportunity attributes" do
-      expect(subject.disability).to eq ""
-      expect(subject.gender).to eq ""
-      expect(subject.gender_description).to eq ""
-      expect(subject.orientation).to eq ""
-      expect(subject.orientation_description).to eq ""
-      expect(subject.ethnicity).to eq ""
-      expect(subject.ethnicity_description).to eq ""
-      expect(subject.religion).to eq ""
-      expect(subject.religion_description).to eq ""
     end
   end
 

@@ -1,7 +1,6 @@
 shared:
   - api_queried
   - copied_to_clipboard
-  - equal_opportunities_report_published
   - failed_dsi_sign_in_attempt
   - form_validation_failed
   - google_geocoding_api_hit

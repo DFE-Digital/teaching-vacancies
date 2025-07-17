@@ -119,6 +119,12 @@ class JobApplication < ApplicationRecord
     @unexplained_employment_gaps ||= Jobseekers::JobApplications::EmploymentGapFinder.new(self).significant_gaps
   end
 
+  def fill_in_report_and_reset_attributes!
+    fill_in_report
+    reset_equal_opportunities_attributes
+    save!
+  end
+
   private
 
   def update_status_timestamp
@@ -128,8 +134,7 @@ class JobApplication < ApplicationRecord
   def anonymise_report
     return unless status == "submitted"
 
-    fill_in_report
-    reset_equal_opportunities_attributes
+    EqualOpportunitiesReportUpdateJob.perform_later(id)
   end
 
   def fill_in_report

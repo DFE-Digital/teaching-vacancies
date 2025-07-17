@@ -51,11 +51,6 @@ export_users:
   class: 'ExportDSIUsersToBigQueryJob'
   queue: low
 
-stream_equal_opportunities_report_publication_job:
-  cron: '30 01 * * *' # "At 01:30."
-  class: 'StreamEqualOpportunitiesReportPublicationJob'
-  queue: low
-
 send_entity_table_checks_to_bigquery:
   cron: "30 1 * * *" # "At 01:30."
   class: "DfE::Analytics::EntityTableCheckJob"
