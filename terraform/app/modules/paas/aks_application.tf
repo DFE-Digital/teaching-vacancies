@@ -56,6 +56,11 @@ module "web_application" {
   replicas               = var.aks_web_app_instances
   enable_logit           = var.enable_logit
   max_memory             = var.aks_web_app_memory
+
+  # Uncomment this when we want traffic to be redirected to the maintenance
+  # page during disaster recovery (i.e., while waiting for a database to be
+  # recreated)
+  # send_traffic_to_maintenance_page = true
 }
 
 module "worker_application" {
