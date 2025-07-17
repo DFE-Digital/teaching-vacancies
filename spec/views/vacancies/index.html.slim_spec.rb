@@ -26,7 +26,7 @@ RSpec.describe "vacancies/index" do
     render
   end
 
-  describe "mobiile filters" do
+  describe "mobile filters" do
     it_behaves_like "a rendered mobile search filter component",
                     { visa_sponsorship_availability: %w[true] },
                     I18n.t("jobs.filters.visa_sponsorship_availability.option")
