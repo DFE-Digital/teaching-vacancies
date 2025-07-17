@@ -47,7 +47,7 @@ FactoryBot.define do
     expires_at { 6.months.from_now.change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
     include_additional_documents { false }
-    job_title { Rails.env.production? ? factory_sample(job_titles) : generate(:job_title) }
+    job_title { generate(:job_title) }
     listed_elsewhere { nil }
     job_roles { %w[teacher] }
     ect_status { factory_sample(Vacancy.ect_statuses.keys) if job_roles.include?("teacher") }
@@ -72,7 +72,6 @@ FactoryBot.define do
     flexi_working { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
 
     trait :for_seed_data do
-      job_roles { [factory_sample(Vacancy.job_roles.keys)] }
       is_job_share { [true, false].sample }
       working_patterns { factory_rand_sample(%w[full_time part_time], 1..2) }
       working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
