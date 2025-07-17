@@ -35,8 +35,8 @@ RSpec.describe DashboardComponent, type: :component do
 
         let(:vacancies) do
           create_list(:vacancy, 1, job_title: job_title,
-                      job_applications: build_list(:job_application, 1, :status_submitted),
-                      organisations: [organisation])
+                                   job_applications: build_list(:job_application, 1, :status_submitted),
+                                   organisations: [organisation])
           organisation.vacancies
         end
 
@@ -90,8 +90,8 @@ RSpec.describe DashboardComponent, type: :component do
         let(:closed_school) { create(:school, :closed, name: "Closed school") }
         let(:vacancies) do
           create_list(:vacancy, 1, job_title: job_title,
-                      job_applications: build_list(:job_application, 1, :status_submitted),
-                      organisations: [organisation])
+                                   job_applications: build_list(:job_application, 1, :status_submitted),
+                                   organisations: [organisation])
           organisation.vacancies
         end
 
@@ -108,7 +108,7 @@ RSpec.describe DashboardComponent, type: :component do
         it "renders the trust's name in the table" do
           expect(
             inline_component.css(".govuk-summary-list__key").to_html,
-            ).to include(I18n.t("organisations.job_location_summary.central_office"))
+          ).to include(I18n.t("organisations.job_location_summary.central_office"))
         end
 
         it "renders the link to view applicants" do
@@ -119,7 +119,7 @@ RSpec.describe DashboardComponent, type: :component do
         it "renders the filters sidebar" do
           expect(
             inline_component.css('.edit_publisher_preference button[type="submit"]').first.text,
-            ).to eq(I18n.t("buttons.apply_filters"))
+          ).to eq(I18n.t("buttons.apply_filters"))
         end
 
         it "renders the head office as a filter option" do
@@ -142,8 +142,8 @@ RSpec.describe DashboardComponent, type: :component do
         let(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: organisation, schools: [open_school]) }
         let(:vacancies) do
           create_list(:vacancy, 1, job_title: job_title,
-                      job_applications: build_list(:job_application, 1, :status_submitted),
-                      organisations: [open_school])
+                                   job_applications: build_list(:job_application, 1, :status_submitted),
+                                   organisations: [open_school])
           open_school.vacancies
         end
 
@@ -164,13 +164,13 @@ RSpec.describe DashboardComponent, type: :component do
         it "renders the local authority's name in the table" do
           expect(
             inline_component.css(".govuk-summary-list__key").to_html,
-            ).to include(open_school.name)
+          ).to include(open_school.name)
         end
 
         it "renders the filters sidebar" do
           expect(
             inline_component.css('.edit_publisher_preference button[type="submit"]').first.text,
-            ).to eq(I18n.t("buttons.apply_filters"))
+          ).to eq(I18n.t("buttons.apply_filters"))
         end
 
         it "does not render the head office as a filter option" do
