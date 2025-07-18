@@ -101,6 +101,9 @@ Rails.application.config.filter_parameters += %i[
   agreed_for_criminal_record
   agreed_for_organisation_update
   agreed_for_information_sharing
+  under_investigation_details
+  warning_details
+  unable_to_undertake_reason
 ] + [
   /^age$/i,
 ]
