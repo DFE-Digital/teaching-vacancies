@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Publishers can preview a vacancy" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }
-  let(:vacancy) { create(:draft_vacancy, :ect_suitable, job_roles: ["teacher"], organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) }
+  let(:vacancy) { create(:draft_vacancy, :secondary, :ect_suitable, job_roles: ["teacher"], organisations: [school]) }
 
   before { login_publisher(publisher: publisher, organisation: school) }
 
@@ -13,7 +13,7 @@ RSpec.describe "Publishers can preview a vacancy" do
     before { visit organisation_job_path(vacancy.id) }
 
     context "when the job has been scheduled" do
-      let(:vacancy) { create(:vacancy, :future_publish, :ect_suitable, job_roles: %w[teacher other_support], organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) }
+      let(:vacancy) { create(:vacancy, :secondary, :future_publish, :ect_suitable, job_roles: %w[teacher other_support], organisations: [school]) }
 
       scenario "users can preview the listing" do
         click_on I18n.t("publishers.vacancies.show.heading_component.action.preview")
@@ -24,7 +24,7 @@ RSpec.describe "Publishers can preview a vacancy" do
     end
 
     context "when the job in draft and all steps are valid" do
-      let(:vacancy) { create(:vacancy, :future_publish, :ect_suitable, job_roles: %w[teacher other_support], organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) }
+      let(:vacancy) { create(:vacancy, :secondary, :future_publish, :ect_suitable, job_roles: %w[teacher other_support], organisations: [school]) }
 
       scenario "users can preview the listing" do
         click_on I18n.t("publishers.vacancies.show.heading_component.action.preview")

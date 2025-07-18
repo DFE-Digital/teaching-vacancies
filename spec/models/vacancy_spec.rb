@@ -550,7 +550,7 @@ RSpec.describe Vacancy do
 
   describe "#allow_key_stages?" do
     context "when one of the phases of the vacancy is among [primary middle secondary through]" do
-      subject { create(:vacancy, phases: %w[secondary]) }
+      subject { create(:vacancy, :secondary) }
 
       it "returns false" do
         expect(subject.allow_key_stages?).to be(true)

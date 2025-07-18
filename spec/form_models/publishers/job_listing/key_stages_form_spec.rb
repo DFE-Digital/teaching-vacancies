@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Publishers::JobListing::KeyStagesForm, type: :model do
   subject { described_class.new(params, vacancy) }
 
-  let(:vacancy) { build_stubbed(:vacancy, phases: %w[secondary]) }
+  let(:vacancy) { build_stubbed(:vacancy, :secondary) }
   let(:params) { { key_stages: key_stages } }
 
   context "when vacancy does not allow key stages" do

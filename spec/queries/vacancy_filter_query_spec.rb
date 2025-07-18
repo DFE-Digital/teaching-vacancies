@@ -4,7 +4,7 @@ RSpec.describe VacancyFilterQuery do
   subject { PublishedVacancy.kept.search_by_filter(filters) }
 
   before do
-    create(:vacancy, :trashed, phases: %w[secondary], working_patterns: %w[part_time full_time], subjects: %w[English Spanish], ect_status: "ect_suitable")
+    create(:vacancy, :trashed, :secondary, working_patterns: %w[part_time full_time], subjects: %w[English Spanish], ect_status: "ect_suitable")
   end
 
   let(:academies) { create(:school, name: "Academy1", school_type: "Academies") }
@@ -25,7 +25,7 @@ RSpec.describe VacancyFilterQuery do
   let(:non_faith_school3) { create(:school, name: "nonfaith3", gias_data: { "ReligiousCharacter (name)" => "None" }) }
 
   # Subjects are ignored when phases are primary-only
-  let!(:vacancy1) { create(:vacancy, job_title: "Vacancy 1", subjects: %w[English Spanish], working_patterns: %w[part_time full_time], phases: %w[secondary], ect_status: "ect_suitable", organisations: [academy], enable_job_applications: true, visa_sponsorship_available: true) }
+  let!(:vacancy1) { create(:vacancy, :secondary, job_title: "Vacancy 1", subjects: %w[English Spanish], working_patterns: %w[part_time full_time], ect_status: "ect_suitable", organisations: [academy], enable_job_applications: true, visa_sponsorship_available: true) }
   let!(:vacancy2) { create(:vacancy, job_title: "Vacancy 2", subjects: %w[English Spanish], phases: %w[sixth_form_or_college], ect_status: "ect_unsuitable", organisations: [free_school], enable_job_applications: true) }
   let!(:vacancy3) { create(:vacancy, job_title: "Vacancy 3", phases: %w[primary], job_roles: ["sendco"], organisations: [local_authority_school], enable_job_applications: true) }
   let!(:vacancy4) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 4", phases: %w[primary]) }
