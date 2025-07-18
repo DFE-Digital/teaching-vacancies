@@ -5,10 +5,9 @@ RSpec.describe "Creating a vacancy" do
   let(:vacancy) do
     build(:vacancy,
           :ect_suitable,
+          :secondary,
           :no_tv_applications,
           job_roles: ["teacher"],
-          phases: %w[secondary],
-          key_stages: %w[ks3],
           publish_on: Date.current)
   end
   let(:created_vacancy) { Vacancy.last }
@@ -183,7 +182,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "can be published at a later date" do
-        vacancy = create(:draft_vacancy, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
+        vacancy = create(:draft_vacancy, :ect_suitable, :secondary, job_roles: ["teacher"], organisations: [school], publish_on: Time.zone.tomorrow)
 
         visit organisation_job_path(vacancy.id)
         click_on I18n.t("publishers.vacancies.show.heading_component.action.scheduled_complete_draft")
@@ -199,7 +198,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "can be converted to a draft" do
-        vacancy = create(:draft_vacancy, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
+        vacancy = create(:draft_vacancy, :ect_suitable, :secondary, job_roles: ["teacher"], organisations: [school], publish_on: Time.zone.tomorrow)
 
         visit organisation_job_path(vacancy.id)
         click_on I18n.t("publishers.vacancies.show.heading_component.action.scheduled_complete_draft")
@@ -216,7 +215,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "a published vacancy cannot be republished" do
-        vacancy = create(:draft_vacancy, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
+        vacancy = create(:draft_vacancy, :secondary, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Time.zone.tomorrow)
 
         visit organisation_job_path(vacancy.id)
 
@@ -225,7 +224,7 @@ RSpec.describe "Creating a vacancy" do
 
       context "adds a job to update the Google index in the queue" do
         scenario "if the vacancy is published immediately" do
-          vacancy = create(:draft_vacancy, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Date.current, key_stages: %w[ks3], phases: %w[secondary])
+          vacancy = create(:draft_vacancy, :secondary, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Date.current)
 
           expect_any_instance_of(Publishers::Vacancies::BaseController)
             .to receive(:update_google_index).with(Vacancy.find(vacancy.id))

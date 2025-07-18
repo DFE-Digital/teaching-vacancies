@@ -53,7 +53,7 @@ RSpec.describe Resettable do
   context "when changing education phases" do
     subject(:update_education_phases) { vacancy.update(phases: updated_phases) }
 
-    let(:vacancy) { build(:vacancy, phases: %w[secondary], key_stages: %w[ks1]) }
+    let(:vacancy) { build(:vacancy, :secondary) }
     let(:previous_subjects) { vacancy.subjects }
     let(:previous_key_stages) { vacancy.key_stages }
 

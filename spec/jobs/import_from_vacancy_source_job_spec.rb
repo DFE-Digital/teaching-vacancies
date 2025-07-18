@@ -34,7 +34,7 @@ RSpec.describe ImportFromVacancySourceJob do
     context "when a new valid vacancy comes through" do
       let(:vacancies_from_source) { [vacancy] }
       let(:vacancy) do
-        build(:vacancy, :external, phases: %w[secondary], job_roles: ["teaching_assistant"], organisations: [school])
+        build(:vacancy, :external, :secondary, job_roles: ["teaching_assistant"], organisations: [school])
       end
 
       it "saves the vacancy" do
@@ -51,7 +51,7 @@ RSpec.describe ImportFromVacancySourceJob do
     context "when the vacancy has already been imported" do
       let(:vacancies_from_source) { [vacancy] }
       let(:vacancy) do
-        build(:vacancy, :external, phases: %w[secondary], job_roles: ["teaching_assistant"], organisations: [school], external_source: "fake_source")
+        build(:vacancy, :external, :secondary, job_roles: ["teaching_assistant"], organisations: [school], external_source: "fake_source")
       end
 
       before { described_class.perform_now(FakeVacancySource) }
@@ -204,7 +204,7 @@ RSpec.describe ImportFromVacancySourceJob do
     end
 
     context "when a live vacancy no longer comes through" do
-      before { create(:vacancy, :external, phases: %w[secondary], organisations: [school], external_source: "fake_source", external_reference: "123", updated_at: 1.hour.ago) }
+      before { create(:vacancy, :external, :secondary, organisations: [school], external_source: "fake_source", external_reference: "123", updated_at: 1.hour.ago) }
 
       let(:vacancies_from_source) { [] }
 
