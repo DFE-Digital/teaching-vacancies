@@ -73,6 +73,7 @@ RSpec.describe "Publishers manage self disclosure" do
 
       context "when completed by jobseeker", :perform_enqueued do
         before do
+          # clear the mail queue so that we can show just the publisher notification email being sent
           ActionMailer::Base.deliveries.clear
           run_with_jobseeker(jobseeker) do
             visit jobseekers_job_application_path job_application
