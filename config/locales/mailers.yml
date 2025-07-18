@@ -270,7 +270,7 @@ en:
           Kind regards,
           Teaching Vacancies team
       reference_received:
-        subject: You have received a reference from %{candidate_name} for %{job_title} at %{organisation_name}
+        subject: You have received a reference for %{candidate_name} for %{job_title} at %{organisation_name}
         title: Dear %{name}
         sign_in: Teaching Vacancies account
         body: |
