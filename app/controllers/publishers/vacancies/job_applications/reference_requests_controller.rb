@@ -20,6 +20,7 @@ module Publishers
           @form = email_form_class.new(update_params)
           if @form.valid?
             @reference_request.change_referee_email!(@form.email)
+            flash[:success] = t(".change_email_success")
             redirect_to organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, @reference_request.id)
           else
             render :edit

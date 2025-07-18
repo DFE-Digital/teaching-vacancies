@@ -42,6 +42,21 @@
       = t("helpers.legend.referees_reference_information_form.#{field}")
     .govuk-body
       = t("helpers.label.referees_reference_information_form.#{field}_options.#{reference.public_send(field)}")
+    - if field == :under_investigation && reference.under_investigation?
+      .govuk-heading-m
+        = t(".under_investigation_details")
+      .govuk-body
+        = reference.under_investigation_details
+    - if field == :warnings && reference.warnings?
+      .govuk-heading-m
+        = t(".warning_details")
+      .govuk-body
+        = reference.warning_details
+    - if field == :able_to_undertake_role && !reference.able_to_undertake_role?
+      .govuk-heading-m
+        = t(".warning_details")
+      .govuk-body
+        = reference.unable_to_undertake_reason
 
   .govuk-heading-l
     = t(".how_would_you_rate", name: reference.referee.job_application.name)

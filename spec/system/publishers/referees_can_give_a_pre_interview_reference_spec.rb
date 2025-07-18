@@ -21,8 +21,6 @@ RSpec.describe "Publishers can select a job application for interview" do
     before do
       create(:job_reference, referee: referee)
       referee_can_give_reference_page.load(reference_id: reference_request.id, token: reference_request.token)
-      # Wicked::Wizard redirects to first step w/o any parameters
-      # visit reference_build_url(reference_request.id, Wicked::FIRST_STEP, token: reference_request.token)
     end
 
     context "without an answer" do
@@ -35,11 +33,17 @@ RSpec.describe "Publishers can select a job application for interview" do
       end
     end
 
-    scenario "the referee is unable to give a reference" do
+    scenario "the referee is unable to give a reference", :js, :versioning do
       choose I18n.t("helpers.label.referees_can_give_reference_form.can_give_reference_options.false")
       click_on I18n.t("buttons.continue")
       expect(page).to have_current_path(no_reference_reference_build_index_path(reference_request.id))
       expect(referee.job_reference.reload).to be_complete
+      expect(referee.job_reference.can_give_reference).to be(false)
+
+      run_with_publisher_and_organisation(publisher, organisation) do
+        publisher_ats_pre_interview_checks_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
+        sleep 35
+      end
     end
 
     context "when giving a reference" do
@@ -56,7 +60,7 @@ RSpec.describe "Publishers can select a job application for interview" do
         click_on I18n.t("buttons.continue")
 
         expect(referee_employment_reference_page).to be_displayed
-        referee_employment_reference_page.currently_employed_yes.click
+        referee_employment_reference_page.currently_employed_no.click
         referee_employment_reference_page.reemploy_current_yes.click
         referee_employment_reference_page.reemploy_any_yes.click
 
@@ -66,8 +70,18 @@ RSpec.describe "Publishers can select a job application for interview" do
         fill_in "referees_employment_reference_form[would_reemploy_any_reason]", with: Faker::Lorem.paragraph
 
         referee_employment_reference_page.employment_start_day.send_keys "2"
-        referee_employment_reference_page.employment_start_month.send_keys "1"
+        referee_employment_reference_page.employment_start_month.send_keys "0"
         referee_employment_reference_page.employment_start_year.send_keys "2007"
+
+        referee_employment_reference_page.employment_end_day.send_keys "2"
+        referee_employment_reference_page.employment_end_month.send_keys "0"
+        referee_employment_reference_page.employment_end_year.send_keys "2008"
+
+        click_on I18n.t("buttons.continue")
+        expect(referee_employment_reference_page.errors.map(&:text)).to eq(["Enter a date in the correct format", "Enter a date in the correct format"])
+
+        referee_employment_reference_page.employment_start_month.send_keys "3"
+        referee_employment_reference_page.employment_end_month.send_keys "3"
 
         click_on I18n.t("buttons.continue")
 
@@ -77,8 +91,11 @@ RSpec.describe "Publishers can select a job application for interview" do
         referee_reference_information_page.allegations_yes.click
         referee_reference_information_page.not_fit_to_practice_yes.click
         referee_reference_information_page.able_to_undertake_role_yes.click
+        fill_in "referees_reference_information_form[under_investigation_details]", with: Faker::Lorem.paragraph
+        fill_in "referees_reference_information_form[warning_details]", with: Faker::Lorem.paragraph
 
         click_on I18n.t("buttons.continue")
+
         expect(referee_how_would_you_rate1_page).to be_displayed
         referee_how_would_you_rate1_page.outstanding_punctuality.click
         referee_how_would_you_rate1_page.outstanding_working_relationships.click
@@ -101,16 +118,12 @@ RSpec.describe "Publishers can select a job application for interview" do
         click_on I18n.t("buttons.continue")
 
         expect(referee_referee_details_page).to be_displayed
-        fill_in "referees_referee_details_form[name]", with: Faker::Lorem.word
-        fill_in "referees_referee_details_form[job_title]", with: Faker::Lorem.word
-        fill_in "referees_referee_details_form[phone_number]", with: Faker::Lorem.word
-        fill_in "referees_referee_details_form[email]", with: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)
-        fill_in "referees_referee_details_form[organisation]", with: Faker::Lorem.word
 
         referee_referee_details_page.complete_and_accurate_checkbox.click
         # last click to go to the confirmation page
-        click_on I18n.t("buttons.continue")
+        click_on I18n.t("buttons.confirm_and_submit")
         expect(referee.job_reference.reload).to be_complete
+        expect(page).to have_current_path(completed_reference_build_index_path(reference_request.id))
       end
     end
   end

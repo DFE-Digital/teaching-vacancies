@@ -113,8 +113,8 @@ en:
         teaching_job_interview: "teaching job interview"
         teaching_interview_lesson: "teaching interview lesson"
         guidance: "- %{link}"
-      declarations:
-        subject: Complete your self-disclosure form for %{job_title}
+      self_disclosure:
+        subject: Complete your self-disclosure form for %{job_title} at %{organisation_name}
         dear: Dear %{name}
         self_disclosure_form: Teaching Vacancies account
         body: |
@@ -235,7 +235,7 @@ en:
       feedback_link_text: Tell us how you filled your vacancy.
     collect_references_mailer:
       collect_references:
-        subject: Provide a reference for %{name} for role %{job_title} at %{organisation_name}
+        subject: Provide a reference for %{name} for %{job_title} at %{organisation_name}
         title: Dear %{name}
         submit_reference: reference request form
         body: |
@@ -259,13 +259,13 @@ en:
           Kind regards,
           Teaching Vacancies team
       declaration_received:
-        subject: You have received a declaration form for %{job_title} at %{organisation_name}
+        subject: You have received a self-disclosure form for %{job_title} at %{organisation_name}
         title: Dear %{name}
         sign_in: Teaching Vacancies account
         body: |
-          You have received a declaration form from %{candidate_name} for %{job_title} at %{organisation_name}.
+          You have received a self-disclosure form from %{candidate_name} for %{job_title} at %{organisation_name}.
 
-          You can review the declaration form by signing in to your %{link}.
+          You can review the self-disclosure form by signing in to your %{link}.
 
           Kind regards,
           Teaching Vacancies team
