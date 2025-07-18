@@ -47,6 +47,9 @@ class Jobseeker < ApplicationRecord
     save!
   end
 
+  def papertrail_display_name
+    jobseeker_profile&.full_name || "Jobseeker"
+  end
   #
   # GovUK OneLogin methods
   #

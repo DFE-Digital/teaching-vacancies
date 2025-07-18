@@ -81,12 +81,16 @@ class JobApplication < ApplicationRecord
   has_many :professional_body_memberships, dependent: :destroy
 
   has_many :feedbacks, dependent: :destroy, inverse_of: :job_application
+  has_one :self_disclosure_request, dependent: :destroy
+  has_one :self_disclosure, through: :self_disclosure_request
 
   has_noticed_notifications
 
   scope :submitted_yesterday, -> { submitted.where("DATE(submitted_at) = ?", Date.yesterday) }
   scope :after_submission, -> { where.not(status: :draft) }
   scope :draft, -> { where(status: "draft") }
+
+  scope :active_for_selection, -> { where.not(status: %w[draft withdrawn]) }
 
   validates :email_address, email_address: true, if: -> { email_address_changed? } # Allows data created prior to validation to still be valid
 

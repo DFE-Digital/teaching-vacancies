@@ -625,6 +625,7 @@ en:
         submitted: Application submitted
         unsuccessful: Unsuccessful
         withdrawn: Withdrawn
+        self_disclosure_completed: Self-disclosure completed
       post_submit:
         feedback:
           description: >-

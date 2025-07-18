@@ -19,6 +19,12 @@ module AuthHelpers
     logout
   end
 
+  def run_with_publisher_and_organisation(publisher, organisation)
+    login_publisher(publisher: publisher, organisation: organisation)
+    yield
+    logout
+  end
+
   def stub_publisher_authentication_step(organisation_id: "939eac36-0777-48c2-9c2c-b87c948a9ee0",
                                          school_urn: "110627", trust_uid: nil, la_code: nil,
                                          email: "an-email@example.com")
