@@ -42,7 +42,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
   end
 
   def attributes_to_copy
-    (relevant_steps - %i[review declarations])
+    (relevant_steps - %i[review declarations equal_opportunities])
       .flat_map { |step| form_fields_from_step(step) }
   end
 
