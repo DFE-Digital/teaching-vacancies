@@ -9,6 +9,24 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   helper_method :employments, :job_application, :qualification_form_param_key, :vacancy
 
+  def index
+    draft_job_applications = current_jobseeker.job_applications
+                                              .includes(:vacancy).draft
+                                              .order(updated_at: :desc)
+    @active_drafts, @expired_drafts = draft_job_applications.partition { |job_application| job_application.vacancy.expires_at.future? }
+
+    # This is the primary sort order for application statuses on the index page
+    status_keys = %i[submitted reviewed shortlisted interviewing unsuccessful withdrawn].freeze
+
+    @active_job_applications = current_jobseeker.job_applications
+                                                .includes(:vacancy)
+                                                .where.not(status: :draft)
+                                                .order(submitted_at: :desc)
+                                                .sort_by { |x| status_keys.index(x.status.to_sym) }
+
+    @job_application_count = @active_drafts.count + @expired_drafts.count + @active_job_applications.count
+  end
+
   def new
     send_dfe_analytics_event
     if session[:newly_created_user]
@@ -149,9 +167,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     attributes = form_class.load_form(job_application)
     form = form_class.new(attributes)
 
-    form.valid?.tap do
-      job_application.errors.merge!(form.errors)
-    end
+    form.valid?.tap { job_application.errors.merge!(form.errors) }
   end
 
   def employments
