@@ -3,6 +3,7 @@ class CopyVacancyAsaTemplate
   # via a controller
   class << self
     # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength
     def call(vacancy)
       new_vacancy = vacancy.dup
       new_vacancy.type = "DraftVacancy"
@@ -31,6 +32,7 @@ class CopyVacancyAsaTemplate
       new_vacancy.save!(validate: false)
       new_vacancy
     end
+    # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize
 
     private
