@@ -45,7 +45,7 @@ user_emails = users.map { |u| u.fetch(:email) }
 
 users.each do |user|
   # Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la, oakfield, avanti, abraham_moss], **user)
-  Publisher.create(organisations: schools, **user)
+  Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la], **user)
   SupportUser.create(user)
   FactoryBot.create(:jobseeker, email: user[:email])
 end
