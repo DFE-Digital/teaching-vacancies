@@ -7,7 +7,7 @@ en:
             referees_section_completed:
               inclusion: Select yes if you have completed this section
             notify_before_contact_referers:
-              inclusion: Select yes if you want to be notified before the school contacts your referer
+              inclusion: Select 'Yes' if you want to be notified before the school contacts your referee(s)
             referees:
               too_short: You must provide a minimum of %{count} references
               must_include_most_recent_employer: At least one reference must be marked as the most recent employer.
@@ -30,4 +30,4 @@ en:
         notify_before_contact_referers: We will ask the school to tell you before contacting your referees, but we cannot guarantee they will do so.
         notify_before_contact_referers_options:
           text: We will ask the school to tell you before contacting your referees.
-      
+
