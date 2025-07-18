@@ -17,7 +17,7 @@ southampton_la = SchoolGroup.find_by!(local_authority_code: "852")
 # Avanti Park is middle deeemrd primary
 # avanti = School.find_by!(urn: "147651")
 #  Through school
-# abraham_moss = School.find_by!(urn: "150009")
+abraham_moss = School.find_by!(urn: "150009")
 
 # Team users
 users = [
@@ -39,13 +39,13 @@ users = [
   { email: "yvonne.ridley@education.gov.uk", family_name: "Ridley", given_name: "Yvonne" },
 ]
 
-schools = [bexleyheath_school, weydon_trust.schools.first, southampton_la.schools.first]
+schools = [bexleyheath_school, weydon_trust.schools.first, southampton_la.schools.first, abraham_moss]
 
 user_emails = users.map { |u| u.fetch(:email) }
 
 users.each do |user|
   # Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la, oakfield, avanti, abraham_moss], **user)
-  Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la], **user)
+  Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la, abraham_moss], **user)
   SupportUser.create(user)
   FactoryBot.create(:jobseeker, email: user[:email])
 end
