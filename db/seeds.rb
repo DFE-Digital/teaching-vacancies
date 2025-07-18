@@ -39,8 +39,6 @@ users = [
   { email: "yvonne.ridley@education.gov.uk", family_name: "Ridley", given_name: "Yvonne" },
 ]
 
-user_emails = users.map { |u| u.fetch(:email) }
-
 users.each do |user|
   Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la, oakfield, avanti, abraham_moss], **user)
   SupportUser.create(user)
@@ -89,12 +87,10 @@ attrs = { organisations: southampton_la.schools.first(5), phases: %w[primary], p
 FactoryBot.create(:jobseeker, email: "jobseeker@contoso.com")
 JobApplication.statuses.count.times { |i| FactoryBot.create(:jobseeker, email: "jobseeker#{i}@contoso.com") }
 
-emails_without_applications = ["jobseeker@contoso.com"] + user_emails
 # Job Applications
 Vacancy.listed.each do |vacancy|
   statuses = JobApplication.statuses.keys
-  # only add fake job applications to non-DFE jobseekers
-  Jobseeker.where.not(email: emails_without_applications).each do |jobseeker|
+  Jobseeker.where.not(email: "jobseeker@contoso.com").each do |jobseeker|
     # Ensures each one of the statuses gets used. When no unused statuses are left, takes random ones from the list for further new applications.
     application_status = statuses.delete(statuses.sample) || JobApplication.statuses.keys.sample
     FactoryBot.create(:job_application, :for_seed_data, :"status_#{application_status}", jobseeker: jobseeker, vacancy: vacancy)
