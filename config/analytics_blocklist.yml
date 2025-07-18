@@ -163,6 +163,7 @@
   job_references:
     - token
     - employment_start_date_ciphertext
+    - employment_end_date_ciphertext
     - punctuality_ciphertext
     - working_relationships_ciphertext
     - customer_care_ciphertext
@@ -184,6 +185,9 @@
     - reason_for_leaving_ciphertext
     - would_reemploy_current_reason_ciphertext
     - would_reemploy_any_reason_ciphertext
+    - under_investigation_details_ciphertext
+    - warning_details_ciphertext
+    - unable_to_undertake_reason_ciphertext
   reference_requests:
     - token
   :job_application_batches:

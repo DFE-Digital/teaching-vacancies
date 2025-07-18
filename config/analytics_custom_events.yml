@@ -16,8 +16,8 @@ shared:
   - jobseeker_failed_govuk_one_login_sign_in
   - jobseeker_inactive_account
   - jobseeker_job_listing_ended_early
-  - jobseeker_declarations
   - jobseeker_request_account_transfer
+  - jobseeker_self_disclosure
   - jobseeker_sign_in_attempt
   - jobseeker_subscription_alert
   - jobseeker_subscription_confirmation

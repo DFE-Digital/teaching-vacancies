@@ -15,11 +15,15 @@ h1.govuk-heading-l = t(".heading", name: @referee.job_application.name)
   = f.govuk_radio_buttons_fieldset :under_investigation do
     = f.govuk_radio_button :under_investigation, "true" do
       p.govuk-hint = t(".must_report")
+      p.govuk-hint = t(".give_investigation_details")
+      = f.govuk_text_area :under_investigation_details, label: nil, rows: 5, max_chars: Referees::ReferenceInformationForm::MAX_REFERENCE_FIELD_LENGTH
     = f.govuk_radio_button :under_investigation, "false"
 
   = f.govuk_radio_buttons_fieldset :warnings do
     = f.govuk_radio_button :warnings, "true" do
       p.govuk-hint = t(".must_report")
+      p.govuk-hint = t(".give_warning_details")
+      = f.govuk_text_area :warning_details, label: nil, rows: 5, max_chars: Referees::ReferenceInformationForm::MAX_REFERENCE_FIELD_LENGTH
     = f.govuk_radio_button :warnings, "false"
 
   = f.govuk_radio_buttons_fieldset :allegations do
@@ -34,6 +38,7 @@ h1.govuk-heading-l = t(".heading", name: @referee.job_application.name)
 
   = f.govuk_radio_buttons_fieldset :able_to_undertake_role do
     = f.govuk_radio_button :able_to_undertake_role, "true"
-    = f.govuk_radio_button :able_to_undertake_role, "false"
+    = f.govuk_radio_button :able_to_undertake_role, "false" do
+      = f.govuk_text_area :unable_to_undertake_reason, label: nil, rows: 5, max_chars: Referees::ReferenceInformationForm::MAX_REFERENCE_FIELD_LENGTH
 
   = f.govuk_submit t("buttons.continue")
