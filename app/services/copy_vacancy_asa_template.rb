@@ -45,9 +45,10 @@ class CopyVacancyAsaTemplate
     end
 
     def current_steps(vacancy)
-      Publishers::Vacancies::VacancyStepProcess.new(:job_role,
-                                                    vacancy: vacancy,
-                                                    organisation: vacancy.organisation).steps
+      process = Publishers::Vacancies::VacancyStepProcess.new(:job_role,
+                                                              vacancy: vacancy,
+                                                              organisation: vacancy.organisation)
+      Publishers::VacancyFormSequence.new(vacancy: vacancy, organisation: vacancy.organisation, step_process: process).valid_steps
     end
   end
 end
