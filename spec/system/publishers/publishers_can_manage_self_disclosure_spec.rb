@@ -148,7 +148,7 @@ RSpec.describe "Publishers manage self disclosure" do
     it "does not send any notification email" do
       expect {
         click_on "Save and continue"
-      }.not_to have_enqueued_email(Jobseekers::JobApplicationMailer, :self_disclosures)
+      }.not_to have_enqueued_email(Jobseekers::JobApplicationMailer, :self_disclosure)
     end
 
     it "creates a self disclosure request" do
