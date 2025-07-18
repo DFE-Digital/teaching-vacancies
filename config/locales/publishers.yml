@@ -606,11 +606,8 @@ en:
           sent_at: Request sent %{date}
           completed_at: Completed %{date}
           received_at: Received %{date}
+          declined_at: Declined %{date}
           created_at: Created %{date}
-          pending_status: pending
-          received_status: received
-          created_status: created
-          completed_status: completed
           references: References
           last_action: Last action
           status: Status
@@ -619,6 +616,8 @@ en:
             can_give_ref: Can you give a reference for %{name}?
             how_would_you_rate: How would you rate %{name}?
             can_share_ref: Can your reference be shared with %{name}?
+            under_investigation_details: Under investigation details
+            warning_details: Warning details
           reference_received:
             caption: Update reference status
             heading: Is %{name}'s reference satisfactory?
@@ -627,14 +626,10 @@ en:
             heading: What is the correct email address for %{name}?
           show:
             page_title: Reference
-            pending_status: pending
             mark_as_received: Mark as received
             collect_reference: Would you like to collect this reference through Teaching Vacancies?
             change_email_address_html: If the candidate has entered the referee's email address incorrectly, %{link}
             change_email_link_text: you can amend it.
-            received_status: received
-            unavailable_status: unavailable
-            created_status: created
             this_referee_will_not_provide_a_reference: >-
               This referee will not provide a reference for this candidate.
               You will need to request a new referee from this candidate.
@@ -664,6 +659,8 @@ en:
             yes_share: Yes, if they request it
             no_share: No
             how_long: How long have you known the candidate and in what capacity?
+          update:
+            change_email_success: Email address updated and reference request sent
         tag:
           page_title: Update application status
           what_application_status_single: What application status do you want to assign to %{name}?

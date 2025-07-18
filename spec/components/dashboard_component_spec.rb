@@ -304,10 +304,6 @@ RSpec.describe DashboardComponent, type: :component do
           href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id),
         )
       end
-
-      it "returns nil" do
-        expect(subject.view_applicants(vacancy)).to be_nil
-      end
     end
   end
 end

@@ -1,5 +1,5 @@
 .govuk-body
-  = govuk_tag(text: t(".tag"), colour: "green")
+  = govuk_tag(text: t("reference_requests.completed.status"), colour: t("reference_requests.completed.colour"))
 
 - if @self_disclosure.request.manually_completed?
   .govuk-body = t(".manually_completed")

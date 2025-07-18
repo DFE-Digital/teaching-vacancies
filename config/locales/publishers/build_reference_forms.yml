@@ -22,19 +22,34 @@ en:
               inclusion: Select yes if the applicant has been investigated for, or been found not fit to practice
             able_to_undertake_role:
               inclusion: Select yes if the applicant has the ability and is suitable to undertake this role
+            unable_to_undertake_reason:
+              blank: Please enter your concerns
+            warning_details:
+              blank: Please give details
+            under_investigation_details:
+              blank: Please give details
         referees/employment_reference_form:
           attributes:
             how_do_you_know_the_candidate:
               blank: Describe your relationship to the candidate
+              too_long: Field must not be more than 200 characters
             reason_for_leaving:
               blank: Enter the reason for leaving
+              too_long: Field must not be more than 200 characters
             would_reemploy_current_reason:
               blank: Enter the reason why you would re-employ the candidate in their current role
+              too_long: Field must not be more than 200 characters
             would_reemploy_any_reason:
               blank: Enter the reason why you would re-employ the candidate
+              too_long: Field must not be more than 200 characters
             employment_start_date:
               blank: Enter the candidate's employment start date
               before: Employment start date cannot be in the future
+              invalid: Enter a date in the correct format
+            employment_end_date:
+              blank: Enter the candidate's employment end date
+              before: Employment end date cannot be in the future
+              invalid: Enter a date in the correct format
             currently_employed:
               inclusion: Select yes if the candidate is currently employed in your organisation
             would_reemploy_current:
@@ -78,7 +93,7 @@ en:
             job_title:
               blank: Enter your job title
             phone_number:
-              blank: Enter your phone number
+              invalid: Enter a phone number in the correct format
             email:
               blank: Enter your email address
               invalid: Enter a valid email address in the correct format, like name@example.com
@@ -91,6 +106,7 @@ en:
     hint:
       referees_employment_reference_form:
         employment_start_date: For example, 27 3 2007
+        employment_end_date: For example, 27 3 2007
     label:
       referees_can_give_reference_form:
         can_give_reference_options:
@@ -122,8 +138,8 @@ en:
           true: "Yes"
           false: "No"
         reason_for_leaving: Reason for leaving/considering leaving your employment
-        would_reemploy_current_reason: Please give reasons for you answer
-        would_reemploy_any_reason: Please give reasons for you answer
+        would_reemploy_current_reason: Please give reasons for your answer
+        would_reemploy_any_reason: Please give reasons for your answer
 
       referees_reference_information_form:
         under_investigation_options:
@@ -185,6 +201,7 @@ en:
 
       referees_employment_reference_form:
         employment_start_date: Applicants employment start date
+        employment_end_date: Applicants employment end date
         currently_employed: Is the applicant currently employed at this organisation?
         would_reemploy_current: Would you re-employ the applicant in the same job as they currently hold or held?
         would_reemploy_any: Would you re-employ the applicant in any role within your organisation?
