@@ -2,6 +2,8 @@ class CopyVacancyAsaTemplate
   # don't call this code directly - it needs to send analytics events
   # via a controller
   class << self
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength
     def call(vacancy)
       new_vacancy = vacancy.dup
       new_vacancy.type = "DraftVacancy"
@@ -11,32 +13,33 @@ class CopyVacancyAsaTemplate
         vacancy.supporting_documents.each { |supporting_document| new_vacancy.supporting_documents.attach(supporting_document.blob) }
 
         new_vacancy.include_additional_documents = true
+        new_vacancy.completed_steps = current_steps(vacancy)
       else
         new_vacancy.include_additional_documents = nil
+        new_vacancy.completed_steps = current_steps(vacancy) - [:documents]
       end
 
       # :nocov:
-      reset_date_fields(new_vacancy) if vacancy.publish_on&.past?
+      if vacancy.publish_on&.past?
+        reset_date_fields(new_vacancy)
+        new_vacancy.completed_steps -= %i[start_date important_dates]
+      end
       # :nocov:
 
       reset_legacy_fields(new_vacancy)
-      new_vacancy.completed_steps = current_steps(vacancy)
       new_vacancy.organisations = vacancy.organisations
       new_vacancy.send(:set_slug)
       new_vacancy.save!(validate: false)
       new_vacancy
     end
+    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize
 
     private
 
     def reset_date_fields(new_vacancy)
-      new_vacancy.expires_at = nil
-      new_vacancy.start_date_type = nil
-      new_vacancy.starts_on = nil
-      new_vacancy.earliest_start_date = nil
-      new_vacancy.latest_start_date = nil
-      new_vacancy.other_start_date_details = nil
-      new_vacancy.publish_on = nil
+      new_vacancy.assign_attributes(expires_at: nil, start_date_type: nil, starts_on: nil,
+                                    earliest_start_date: nil, latest_start_date: nil, other_start_date_details: nil, publish_on: nil)
     end
 
     def reset_legacy_fields(new_vacancy)
@@ -45,9 +48,10 @@ class CopyVacancyAsaTemplate
     end
 
     def current_steps(vacancy)
-      Publishers::Vacancies::VacancyStepProcess.new(:job_role,
-                                                    vacancy: vacancy,
-                                                    organisation: vacancy.organisation).steps
+      process = Publishers::Vacancies::VacancyStepProcess.new(:job_role,
+                                                              vacancy: vacancy,
+                                                              organisation: vacancy.organisation)
+      Publishers::VacancyFormSequence.new(vacancy: vacancy, organisation: vacancy.organisation, step_process: process).valid_steps
     end
   end
 end
