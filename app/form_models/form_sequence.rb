@@ -14,6 +14,10 @@ class FormSequence
     validate_all_steps.values.all?(&:valid?)
   end
 
+  def valid_steps
+    validate_all_steps.select { |_k, v| v.valid? }.keys + not_validatable_steps
+  end
+
   private
 
   def validatable_steps
