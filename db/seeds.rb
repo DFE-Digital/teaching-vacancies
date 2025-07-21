@@ -13,9 +13,9 @@ bexleyheath_school = School.find_by!(urn: "137138")
 weydon_trust = SchoolGroup.find_by!(uid: "16644")
 southampton_la = SchoolGroup.find_by!(local_authority_code: "852")
 #  Oakfield Academy is middle deemed secondary
-oakfield = School.find_by!(urn: "136970")
-# Avanti Park is middle deeemd primary
-avanti = School.find_by!(urn: "147651")
+# oakfield = School.find_by!(urn: "136970")
+# Avanti Park is middle deeemrd primary
+# avanti = School.find_by!(urn: "147651")
 #  Through school
 abraham_moss = School.find_by!(urn: "150009")
 
@@ -39,51 +39,64 @@ users = [
   { email: "yvonne.ridley@education.gov.uk", family_name: "Ridley", given_name: "Yvonne" },
 ]
 
+schools = [bexleyheath_school, weydon_trust.schools.first, southampton_la.schools.first, abraham_moss]
+
 user_emails = users.map { |u| u.fetch(:email) }
 
 users.each do |user|
-  Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la, oakfield, avanti, abraham_moss], **user)
+  # Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la, oakfield, avanti, abraham_moss], **user)
+  Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la, abraham_moss], **user)
   SupportUser.create(user)
   FactoryBot.create(:jobseeker, email: user[:email])
 end
 
 # Vacancies at Bexleyheath school
-attrs = { organisations: [bexleyheath_school], phases: [bexleyheath_school.phase], publisher_organisation: bexleyheath_school, publisher: Publisher.all.sample }
-6.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
-2.times { FactoryBot.create(:vacancy, :for_seed_data, :no_tv_applications, **attrs) }
-4.times { FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs) }
-2.times { FactoryBot.create(:draft_vacancy, :for_seed_data, **attrs) }
-4.times { FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false) }
+# attrs = { organisations: [bexleyheath_school], phases: [bexleyheath_school.phase], publisher_organisation: bexleyheath_school, publisher: Publisher.all.sample }
+# 3.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+# FactoryBot.create(:vacancy, :for_seed_data, :no_tv_applications, **attrs)
+# 2.times { FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs) }
+# FactoryBot.create(:draft_vacancy, :for_seed_data, **attrs)
+# 2.times { FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false) }
+
+schools.each do |school|
+  phases = school.phase == "not_applicable" ? ["secondary"] : [school.phase]
+  attrs = { organisations: [school], phases: phases, publisher_organisation: school, publisher: Publisher.all.sample }
+  3.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+  FactoryBot.create(:vacancy, :for_seed_data, :no_tv_applications, **attrs)
+  2.times { FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs) }
+  FactoryBot.create(:draft_vacancy, :for_seed_data, **attrs)
+  2.times { FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false) }
+end
 
 # Vacancies at a school that belongs to Weydon Multi Academy Trust
-school = weydon_trust.schools.first
-attrs = { organisations: [school], phases: ["secondary"], publisher_organisation: school, publisher: Publisher.all.sample }
-6.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
-2.times { FactoryBot.create(:vacancy, :for_seed_data, :no_tv_applications, **attrs) }
-4.times { FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs) }
-2.times { FactoryBot.create(:draft_vacancy, :for_seed_data, **attrs) }
-4.times { FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false) }
+# school = weydon_trust.schools.first
+# attrs = { organisations: [school], phases: ["secondary"], publisher_organisation: school, publisher: Publisher.all.sample }
+# 3.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+# FactoryBot.create(:vacancy, :for_seed_data, :no_tv_applications, **attrs)
+# 2.times { FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs) }
+# FactoryBot.create(:draft_vacancy, :for_seed_data, **attrs)
+# 2.times { FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false) }
 
 # Vacancies at a school that belongs to Southampton local authority
-school = southampton_la.schools.first
-attrs = { organisations: [school], phases: ["primary"], publisher_organisation: school, publisher: Publisher.all.sample }
-6.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
-2.times { FactoryBot.create(:vacancy, :for_seed_data, :no_tv_applications, **attrs) }
-4.times { FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs) }
-2.times { FactoryBot.create(:draft_vacancy, :for_seed_data, **attrs) }
-4.times { FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false) }
+# school = southampton_la.schools.first
+# attrs = { organisations: [school], phases: ["primary"], publisher_organisation: school, publisher: Publisher.all.sample }
+# 3.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+# FactoryBot.create(:vacancy, :for_seed_data, :no_tv_applications, **attrs)
+# 2.times { FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs) }
+# FactoryBot.create(:draft_vacancy, :for_seed_data, **attrs)
+# 2.times { FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false) }
 
 # Vacancies at Weydon trust central office
 attrs = { organisations: [weydon_trust], phases: %w[secondary], publisher_organisation: weydon_trust, publisher: Publisher.all.sample }
-3.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+FactoryBot.create(:vacancy, :for_seed_data, **attrs)
 
 # Vacancies at multiple schools in Weydon trust
 attrs = { organisations: weydon_trust.schools, phases: %w[secondary], publisher_organisation: weydon_trust, publisher: Publisher.all.sample }
-3.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+FactoryBot.create(:vacancy, :for_seed_data, **attrs)
 
 # Vacancies at multiple schools in Southampton local authority
 attrs = { organisations: southampton_la.schools.first(5), phases: %w[primary], publisher_organisation: southampton_la, publisher: Publisher.all.sample }
-3.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+FactoryBot.create(:vacancy, :for_seed_data, **attrs)
 
 # Jobseekers
 FactoryBot.create(:jobseeker, email: "jobseeker@contoso.com")
@@ -102,10 +115,9 @@ Vacancy.listed.each do |vacancy|
 end
 
 ## Jobseeker Profiles
-weydon_trust_schools = weydon_trust.schools.all
-location_preference_names = weydon_trust_schools.map(&:postcode)
+location_preference_names = weydon_trust.schools.map(&:postcode)
 
-Jobseeker.first(weydon_trust_schools.count).each do |jobseeker|
+Jobseeker.first(weydon_trust.schools.count).each do |jobseeker|
   Jobseeker.transaction do
     FactoryBot.create(:jobseeker_profile, :with_personal_details,
                       qualifications: FactoryBot.build_list(:qualification, 1, job_application: nil),

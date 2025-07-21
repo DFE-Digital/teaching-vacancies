@@ -9,7 +9,7 @@ RSpec.describe Publishers::VacancyFormSequence do
     )
   end
 
-  let(:vacancy) { create(:draft_vacancy, :no_tv_applications, school_visits: nil, key_stages: %w[ks3], phases: %w[secondary], organisations: [organisation]) }
+  let(:vacancy) { create(:draft_vacancy, :secondary, :no_tv_applications, school_visits: nil, organisations: [organisation]) }
   let(:organisation) { create(:school) }
   let(:step_process) { double(:step_process, steps: all_steps, current_step: current_step) }
   let(:current_step) { :review }
@@ -61,7 +61,7 @@ RSpec.describe Publishers::VacancyFormSequence do
     end
 
     context "when the vacancy has been published" do
-      let(:vacancy) { create(:vacancy, phases: %w[secondary], organisations: [organisation]) }
+      let(:vacancy) { create(:vacancy, :secondary, organisations: [organisation]) }
 
       context "when the current step has dependent steps" do
         let(:current_step) { :job_location }
@@ -78,7 +78,7 @@ RSpec.describe Publishers::VacancyFormSequence do
         end
 
         context "when the dependent steps are valid" do
-          let(:vacancy) { create(:vacancy, phases: %w[secondary], key_stages: %w[ks3], organisations: [organisation]) }
+          let(:vacancy) { create(:vacancy, :secondary, organisations: [organisation]) }
 
           it "returns a hash containing valid forms for each dependent step" do
             validated_forms.each_value { |form| expect(form).to be_valid }
@@ -104,7 +104,7 @@ RSpec.describe Publishers::VacancyFormSequence do
     end
 
     context "when the vacancy has been published" do
-      let(:vacancy) { create(:vacancy, phases: %w[secondary], organisations: [organisation]) }
+      let(:vacancy) { create(:vacancy, :secondary, organisations: [organisation]) }
 
       context "when the current step has dependent steps" do
         let(:current_step) { :job_location }
@@ -118,7 +118,7 @@ RSpec.describe Publishers::VacancyFormSequence do
         end
 
         context "when the dependent steps are valid" do
-          let(:vacancy) { create(:vacancy, phases: %w[secondary], key_stages: %w[ks3], organisations: [organisation]) }
+          let(:vacancy) { create(:vacancy, :secondary, organisations: [organisation]) }
 
           it "returns true" do
             expect(sequence.all_steps_valid?).to be true
@@ -142,7 +142,7 @@ RSpec.describe Publishers::VacancyFormSequence do
     end
 
     context "when the next incomplete step is subjects" do
-      let(:vacancy) { create(:vacancy, phases: %w[secondary], key_stages: %w[ks3], completed_steps: %w[job_location job_role education_phases job_title key_stages]) }
+      let(:vacancy) { create(:vacancy, :secondary, completed_steps: %w[job_location job_role education_phases job_title key_stages]) }
 
       before { allow(vacancy).to receive(:allow_key_stages?).and_return(true) }
 

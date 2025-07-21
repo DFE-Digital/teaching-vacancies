@@ -40,14 +40,13 @@ FactoryBot.define do
     contact_email { Faker::Internet.email(domain: "contoso.com") }
     contact_number_provided { true }
     contact_number { "01234 123456" }
-    contract_type { factory_sample(Vacancy.contract_types.keys) }
-    fixed_term_contract_duration { "6 months" }
+    contract_type { :permanent }
     further_details_provided { true }
     further_details { Faker::Lorem.sentence(word_count: factory_rand(50..300)) }
     expires_at { 6.months.from_now.change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
     include_additional_documents { false }
-    job_title { Rails.env.production? ? factory_sample(job_titles) : generate(:job_title) }
+    job_title { generate(:job_title) }
     listed_elsewhere { nil }
     job_roles { %w[teacher] }
     ect_status { factory_sample(Vacancy.ect_statuses.keys) if job_roles.include?("teacher") }
@@ -60,8 +59,7 @@ FactoryBot.define do
     skills_and_experience { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
     start_date_type { "specific_date" }
     starts_on { 1.year.from_now.to_date }
-    # Subjects are ignored when phases are primary-only
-    subjects { factory_sample(SUBJECT_OPTIONS, 2).map(&:first).sort! }
+    subjects { [] }
     key_stages { %w[ks1] }
     working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
     working_patterns { %w[full_time] }
@@ -71,13 +69,34 @@ FactoryBot.define do
     flexi_working_details_provided { true }
     flexi_working { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
 
+    trait :secondary do
+      phases { %w[secondary] }
+      key_stages { %w[ks3] }
+
+      # Subjects are ignored when phases are primary-only
+      subjects { factory_sample(SUBJECT_OPTIONS, 2).map(&:first).sort! }
+    end
+
+    trait :fixed_term do
+      contract_type { :fixed_term }
+      fixed_term_contract_duration { "6 months" }
+      is_parental_leave_cover { true }
+    end
+
     trait :for_seed_data do
-      job_roles { [factory_sample(Vacancy.job_roles.keys)] }
       is_job_share { [true, false].sample }
       working_patterns { factory_rand_sample(%w[full_time part_time], 1..2) }
       working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
-      phases { factory_rand_sample(Vacancy.phases.keys, 1..3) }
-      key_stages { factory_rand_sample(%w[early_years ks1 ks2 ks3 ks4 ks5], 2..3) }
+      rand_phases = Vacancy.phases.keys.sample(Random.rand(1..3))
+      phases { rand_phases }
+      key_stages { factory_rand_sample(Vacancy.new(phases: rand_phases).key_stages_for_phases, 2..3) }
+      rand_contract_type = Vacancy.contract_types.keys.sample
+      contract_type { rand_contract_type }
+      # if contract type comes out as fixed term, then parental_leave_cover and fixed_term_contract_duration become mandatory
+      if rand_contract_type == :fixed_term
+        is_parental_leave_cover { true }
+        fixed_term_contract_duration { "6 months" }
+      end
     end
 
     trait :without_any_money do

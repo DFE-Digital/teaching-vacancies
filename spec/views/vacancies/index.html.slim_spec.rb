@@ -8,7 +8,7 @@ RSpec.describe "vacancies/index" do
   let(:landing_page) { LandingPage[landing_page_slug] }
   let(:landing_page_slug) { "part-time-potions-and-sorcery-teacher-jobs" }
   let(:school) { build_stubbed(:school) }
-  let(:vacancy) { build_stubbed(:vacancy, job_title: "Head of Hogwarts", subjects: %w[Potions], working_patterns: %w[part_time], organisations: [school], phases: %w[secondary]) }
+  let(:vacancy) { build_stubbed(:vacancy, :secondary, job_title: "Head of Hogwarts", subjects: %w[Potions], working_patterns: %w[part_time], organisations: [school]) }
   let(:vacancies) { [vacancy] }
   let(:search_criteria) { {} }
   let(:sort) { form.sort }
