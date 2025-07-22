@@ -24,14 +24,15 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                     href: organisation_job_build_path(vacancy.id, :how_to_receive_applications, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.how_to_receive_applications")
     - if vacancy.application_form
-      - summary_list.with_row(html_attributes: { id: "uploaded_form" }) do |row|
-        - row.with_key
-          = t("jobs.document_name")
-        - row.with_value
-          = vacancy.application_form.filename.to_s
-        - row.with_action text: t("buttons.change"),
-                    href: organisation_job_build_path(vacancy.id, :application_form, "back_to_#{action_name}": "true"),
-                    visually_hidden_text: t("jobs.document_name")
+      - if vacancy.receive_applications != "website"
+        - summary_list.with_row(html_attributes: { id: "uploaded_form" }) do |row|
+          - row.with_key
+            = t("jobs.document_name")
+          - row.with_value
+            = vacancy.application_form.filename.to_s
+          - row.with_action text: t("buttons.change"),
+                      href: organisation_job_build_path(vacancy.id, :application_form, "back_to_#{action_name}": "true"),
+                      visually_hidden_text: t("jobs.document_name")
 
       - if vacancy.receive_applications == "email"
         - if vacancy.application_form.attachments&.any?
@@ -39,7 +40,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
             - row.with_key
               = t("jobs.application_form")
             - row.with_value
-              = govuk_link_to("#{vacancy.application_form.filename}, #{number_to_human_size(vacancy.application_form.byte_size)}", job_document_path(vacancy, vacancy.application_form.id))
+              = govuk_link_to("#{vacancy.application_form.filename}, #{number_to_human_size(vacancy.application_form.byte_size)}", job_document_path(vacancy.id, vacancy.application_form.id))
             - row.with_action text: t("buttons.change"),
                           href: organisation_job_build_path(vacancy.id, :application_form, "back_to_#{action_name}": "true"),
                           visually_hidden_text: t("jobs.application_form")

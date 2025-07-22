@@ -103,6 +103,12 @@ RSpec.configure do |config|
     end
   end
 
+  config.around(:each, type: :view) do |example|
+    without_partial_double_verification do
+      example.run
+    end
+  end
+
   config.before do
     allow(DisableEmailNotifications).to receive(:enabled?).and_return(false)
     allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false)
