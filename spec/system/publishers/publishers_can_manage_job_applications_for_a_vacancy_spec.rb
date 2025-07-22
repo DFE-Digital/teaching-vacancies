@@ -1,85 +1,196 @@
 require "rails_helper"
 
 RSpec.describe "Publishers can manage job applications for a vacancy" do
-  let(:organisation) { create(:school, name: "A school with a vacancy") }
-  let(:publisher) { create(:publisher) }
+  let(:vacancy) { create(:vacancy) }
+  let(:organisation) { vacancy.organisations.first }
+  let(:publisher) { create(:publisher, accepted_terms_at: 1.day.ago) }
 
   before do
     login_publisher(publisher: publisher, organisation: organisation)
-    visit organisation_job_job_applications_path(vacancy.id)
   end
 
   after { logout }
 
-  context "when a vacancy has expired and it has applications", :js do
-    let(:vacancy) { create(:vacancy, :expired, expires_at: 2.weeks.ago, organisations: [organisation], job_applications: job_applications) }
-
-    let(:job_applications) do
-      [build(:job_application, :status_submitted, last_name: "Alan"),
-       build(:job_application, :status_reviewed, last_name: "Charlie"),
-       build(:job_application, :status_shortlisted, last_name: "Billy"),
-       build(:job_application, :status_unsuccessful, last_name: "Dave"),
-       build(:job_application, :status_withdrawn, last_name: "Ethan"),
-       build(:job_application, :status_interviewing, last_name: "Freddy"),
-       build(:job_application, :status_draft)]
+  describe "through publisher actions", :js do
+    %i[alan charlie etha hanane said yun britany].each do |first_name|
+      let(first_name) { create(:job_application, :status_submitted, vacancy:, first_name:) }
     end
-    let(:job_application_submitted) { JobApplication.find_by!(status: "submitted") }
-    let(:job_application_reviewed) { JobApplication.find_by!(status: "reviewed") }
-    let(:job_application_shortlisted) { JobApplication.find_by!(status: "shortlisted") }
-    let(:job_application_unsuccessful) { JobApplication.find_by!(status: "unsuccessful") }
-    let(:job_application_withdrawn) {  JobApplication.find_by!(status: "withdrawn") }
-    let(:job_application_interviewing) { JobApplication.find_by!(status: "interviewing") }
+    let(:job_applications) { [alan, charlie, etha, hanane, said, yun, britany] }
+    let(:current_page) { publisher_ats_applications_page }
 
-    scenario "not selecting anything" do
-      # Wait for page to fully load
-      expect(page).to have_button(I18n.t("publishers.vacancies.job_applications.candidates.update_application_status"), wait: 10)
-
-      click_on I18n.t("publishers.vacancies.job_applications.candidates.update_application_status")
-      expect(page).to have_content(I18n.t("activemodel.errors.models.publishers/job_application/tag_form.attributes.job_applications.too_short"), wait: 5)
+    before do
+      job_applications
+      publisher_ats_applications_page.load(vacancy_id: vacancy.id)
     end
 
-    scenario "Changing multiple statuses at once" do
-      # Wait for page to fully load
-      find_by_id("tab_all")
+    it "progress job applications" do
+      expect(current_page.job_title).to have_text(vacancy.job_title)
 
-      within(".application-reviewed") do
-        expect(page).to have_css(".govuk-checkboxes__item", wait: 5)
-        find(".govuk-checkboxes__input", visible: false, wait: 5).set(true)
+      # navigation
+      expect(current_page.nav.current_item).to have_text("Applications")
+
+      current_page.select_tab(:tab_submitted)
+
+      # job application panel
+      expect(current_page.selected_tab).to have_text("New")
+      expect(current_page.tab_panel.heading).to have_text("New Applications")
+      expect(current_page.tab_panel.job_applications.count).to eq(job_applications.count)
+      job_applications.each_with_index do |job_application, index|
+        expect(current_page.tab_panel.job_applications[index].name).to have_text(job_application.name)
+        expect(current_page.tab_panel.job_applications[index].mapped_status).to eq(job_application.status)
       end
 
-      expect(page).to have_css(".application-submitted", wait: 5)
-
-      within(".application-submitted") do
-        expect(page).to have_css(".govuk-checkboxes__item", wait: 5)
-        find(".govuk-checkboxes__input", visible: false, wait: 5).set(true)
+      # count for tabs other than current tab
+      {
+        tab_all: job_applications.count,
+        tab_submitted: job_applications.count,
+        tab_not_considering: 0,
+        tab_shortlisted: 0,
+        tab_interviewing: 0,
+      }.each do |tab_id, count|
+        expect(current_page.get_tab(tab_id)).to have_text("(#{count})")
       end
 
-      # Wait for button to be ready
-      expect(page).to have_button(I18n.t("publishers.vacancies.job_applications.candidates.update_application_status"), wait: 5)
-      click_on I18n.t("publishers.vacancies.job_applications.candidates.update_application_status")
-
-      # Wait for page transition to complete
-      expect(page).to have_css(".govuk-tag--red", wait: 10)
-      find(".govuk-tag--red").click
-      click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_content("Not Considering (3)")
-    end
-
-    scenario "Changing a single status" do
-      expect(page).to have_button(I18n.t("publishers.vacancies.job_applications.candidates.update_application_status"), wait: 10)
-      within(".application-unsuccessful") do
-        find(".govuk-checkboxes__input", visible: false).set(true)
+      # shortlist some applications
+      current_page.update_status(charlie, etha, hanane, said, yun) do |tag_page|
+        tag_page.select_and_submit("shortlisted")
       end
-      click_on I18n.t("publishers.vacancies.job_applications.candidates.update_application_status")
-      # wait for page load
-      expect(page).to have_css(".govuk-radios", wait: 5)
-      choose("Reviewed ")
-      # wait for complete render
-      within "#main-content" do
-        find ".govuk-button"
+
+      # job application panel
+      expect(current_page.selected_tab).to have_text("New")
+      [alan, britany].each_with_index do |job_application, index|
+        expect(current_page.tab_panel.job_applications[index].name).to have_text(job_application.name)
+        expect(current_page.tab_panel.job_applications[index].mapped_status).to eq(job_application.status)
       end
-      click_on "Save and continue"
-      expect(page).to have_content("New (3)")
+
+      {
+        tab_all: job_applications.count,
+        tab_submitted: 2,
+        tab_not_considering: 0,
+        tab_shortlisted: 5,
+        tab_interviewing: 0,
+      }.each do |tab_id, count|
+        expect(current_page.get_tab(tab_id)).to have_text("(#{count})")
+      end
+
+      # reject britany
+      current_page.update_status(britany) do |tag_page|
+        tag_page.select_and_submit("unsuccessful")
+      end
+
+      expect(current_page.selected_tab).to have_text("New")
+      {
+        tab_all: job_applications.count,
+        tab_submitted: 1,
+        tab_not_considering: 1,
+        tab_shortlisted: 5,
+        tab_interviewing: 0,
+      }.each do |tab_id, count|
+        expect(current_page.get_tab(tab_id)).to have_text("(#{count})")
+      end
+
+      # action review applicant
+      current_page.update_status(alan) do |tag_page|
+        tag_page.select_and_submit("reviewed")
+      end
+      {
+        tab_all: job_applications.count,
+        tab_submitted: 1,
+        tab_not_considering: 1,
+        tab_shortlisted: 5,
+        tab_interviewing: 0,
+      }.each do |tab_id, count|
+        expect(current_page.get_tab(tab_id)).to have_text("(#{count})")
+      end
+      expect(current_page.selected_tab).to have_text("New")
+      expect(current_page.tab_panel.job_applications[0].name).to have_text(alan.name)
+      expect(current_page.tab_panel.job_applications[0].mapped_status).to eq(alan.reload.status)
+
+      #
+      # display not considering tab
+      #
+      current_page.select_tab(:tab_not_considering)
+
+      expect(current_page.selected_tab).to have_text("Not Considering")
+      expect(current_page.tab_panel.job_applications[0].name).to have_text(britany.name)
+      expect(current_page.tab_panel.job_applications[0].mapped_status).to eq(britany.reload.status)
+
+      #
+      # display shortlisted tab
+      #
+      current_page.select_tab(:tab_shortlisted)
+
+      expect(current_page.selected_tab).to have_text("Shortlisted")
+      [charlie, etha, hanane, said, yun].each.with_index do |applicant, index|
+        expect(current_page.tab_panel.job_applications[index].name).to have_text(applicant.name)
+        expect(current_page.tab_panel.job_applications[index].mapped_status).to eq(applicant.reload.status)
+      end
+
+      #
+      # progress applicants
+      #
+      current_page.update_status(etha, hanane) do |tag_page|
+        tag_page.select_and_submit("interviewing")
+      end
+      {
+        tab_all: job_applications.count,
+        tab_submitted: 1,
+        tab_not_considering: 1,
+        tab_shortlisted: 3,
+        tab_interviewing: 2,
+      }.each do |tab_id, count|
+        expect(current_page.get_tab(tab_id)).to have_text("(#{count})")
+      end
+      expect(current_page.selected_tab).to have_text("Shortlisted")
+      [charlie, said, yun].each.with_index do |applicant, index|
+        expect(current_page.tab_panel.job_applications[index].name).to have_text(applicant.name)
+        expect(current_page.tab_panel.job_applications[index].mapped_status).to eq(applicant.reload.status)
+      end
+
+      #
+      # applicant withdraws
+      #
+      said.withdrawn!
+
+      #
+      # reload page and select shortlisted tab
+      #
+      publisher_ats_applications_page.load(vacancy_id: vacancy.id)
+      current_page.select_tab(:tab_shortlisted)
+
+      {
+        tab_all: job_applications.count,
+        tab_submitted: 1,
+        tab_not_considering: 1,
+        tab_shortlisted: 2,
+        tab_interviewing: 2,
+      }.each do |tab_id, count|
+        expect(current_page.get_tab(tab_id)).to have_text("(#{count})")
+      end
+      expect(current_page.selected_tab).to have_text("Shortlisted")
+      [charlie, yun].each.with_index do |applicant, index|
+        expect(current_page.tab_panel.job_applications[index].name).to have_text(applicant.name)
+        expect(current_page.tab_panel.job_applications[index].mapped_status).to eq(applicant.reload.status)
+      end
+
+      #
+      # dispaly interviewing tab
+      #
+      current_page.select_tab(:tab_interviewing)
+
+      expect(current_page.selected_tab).to have_text("Interviewing")
+      [etha, hanane].each.with_index do |applicant, index|
+        expect(current_page.tab_panel.job_applications[index].name).to have_text(applicant.name)
+        expect(current_page.tab_panel.job_applications[index].mapped_status).to eq(applicant.reload.status)
+      end
+
+      #
+      # display all tab
+      #
+      current_page.select_tab(:tab_all)
+
+      expect(current_page.selected_tab).to have_text("All")
+      expect(current_page).to have_text(said.name)
     end
   end
 end
