@@ -6,6 +6,8 @@ module PageObjects
 
         section :banner, Sections::Jobseeker::JobApplicationBannerSection, ".review-banner"
         sections :tasks, Sections::Jobseeker::JobApplicationTaskSection, ".govuk-task-list__item"
+
+        element :tag, ".status-tag"
       end
     end
   end
