@@ -10,7 +10,7 @@ module PageObjects
           end
 
           element :checkbox, ".govuk-checkboxes__input", visible: false
-          element :name, selector(2)
+          element :name, ".govuk-link"
           element :email, selector(3)
           element :status, selector(4)
 
