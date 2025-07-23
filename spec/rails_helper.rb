@@ -103,6 +103,9 @@ RSpec.configure do |config|
     end
   end
 
+  # view specs idiom is allow(view).to receive_messages(x)
+  # for controller methods. This seems like a good way to ensure this
+  # as view specs should not use test doubles for any other purpose
   config.around(:each, type: :view) do |example|
     without_partial_double_verification do
       example.run
