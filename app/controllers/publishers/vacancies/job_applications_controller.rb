@@ -4,7 +4,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   before_action :set_job_application, only: %i[show download_pdf download_application_form]
 
-  before_action :set_job_applications, only: %i[index tag_single tag]
+  before_action :set_job_applications, only: %i[index tag]
 
   def index
     @form = Publishers::JobApplication::TagForm.new
@@ -43,10 +43,6 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       type: @job_application.application_form.content_type,
       disposition: "inline",
     )
-  end
-
-  def tag_single
-    prepare_to_tag([params.fetch(:id)], "all")
   end
 
   def tag
