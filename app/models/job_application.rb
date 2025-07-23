@@ -1,7 +1,7 @@
 class JobApplication < ApplicationRecord
   before_save :update_status_timestamp, if: :will_save_change_to_status?
-  before_save :anonymise_report, if: :will_save_change_to_status?
   before_save :reset_support_needed_details
+  before_update :anonymise_report, if: -> { will_save_change_to_status? && status == "submitted" }
 
   extend ArrayEnum
 
@@ -136,8 +136,6 @@ class JobApplication < ApplicationRecord
   end
 
   def anonymise_report
-    return unless status == "submitted"
-
     EqualOpportunitiesReportUpdateJob.perform_later(id)
   end
 

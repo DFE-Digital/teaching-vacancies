@@ -16,9 +16,6 @@ h1.govuk-heading-l = t(".page_title_with_count", count: current_jobseeker.job_ap
   .govuk-grid-column-full
     - if current_jobseeker.job_applications.any?
       #applications-results
-        - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).interviewing.each do |job_application|
-          = render "job_application", job_application: job_application
-
         - current_jobseeker.job_applications.includes(:vacancy).order(updated_at: :desc).draft.each do |job_application|
           = render "job_application", job_application: job_application if job_application.vacancy.expires_at.future?
 
@@ -29,6 +26,9 @@ h1.govuk-heading-l = t(".page_title_with_count", count: current_jobseeker.job_ap
           = render "job_application", job_application: job_application
 
         - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).shortlisted.each do |job_application|
+          = render "job_application", job_application: job_application
+
+        - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).interviewing.each do |job_application|
           = render "job_application", job_application: job_application
 
         - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).unsuccessful.each do |job_application|
