@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_09_154252) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_09_154313) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -644,7 +644,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_09_154252) do
     t.text "benefits_details"
     t.date "starts_on"
     t.string "contact_email"
-    t.integer "status"
     t.date "publish_on"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
