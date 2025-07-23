@@ -49,7 +49,7 @@ FactoryBot.define do
     job_title { generate(:job_title) }
     listed_elsewhere { nil }
     job_roles { %w[teacher] }
-    ect_status { factory_sample(Vacancy.ect_statuses.keys) if job_roles.include?("teacher") }
+    ect_status { :ect_suitable }
     pay_scale { factory_sample(salaries) }
     publish_on { Date.current }
     salary { factory_sample(salaries) }
@@ -84,6 +84,7 @@ FactoryBot.define do
     end
 
     trait :for_seed_data do
+      ect_status { factory_sample(Vacancy.ect_statuses.keys) if job_roles.include?("teacher") }
       is_job_share { [true, false].sample }
       working_patterns { factory_rand_sample(%w[full_time part_time], 1..2) }
       working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
