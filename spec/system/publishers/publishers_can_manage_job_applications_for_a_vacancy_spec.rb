@@ -11,7 +11,26 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
   after { logout }
 
-  describe "through publisher actions", :js do
+  describe "through job application page actions" do
+    let(:job_application) { create(:job_application, :status_submitted, vacancy:) }
+
+    before do
+      publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
+    end
+
+    it "updates job application status", :js do
+      publisher_application_page.update_status do |tag_page|
+        tag_page.select_and_submit("shortlisted")
+      end
+
+      # TODO: should the redirection points to the job application page instead?
+      expect(publisher_ats_applications_page).to be_displayed(vacancy_id: vacancy.id)
+
+      expect(publisher_ats_applications_page.tab_panel.job_applications.first.mapped_status).to eq(job_application.reload.status)
+    end
+  end
+
+  describe "through vacancy applications page actions", :js do
     %i[alan charlie etha hanane said yun britany].each do |first_name|
       let(first_name) { create(:job_application, :status_submitted, vacancy:, first_name:) }
     end
