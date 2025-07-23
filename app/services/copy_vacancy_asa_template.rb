@@ -16,21 +16,23 @@ class CopyVacancyAsaTemplate
         new_vacancy.completed_steps = current_steps(vacancy)
       else
         new_vacancy.include_additional_documents = nil
-        new_vacancy.completed_steps = current_steps(vacancy) - [:documents]
+        new_vacancy.completed_steps = current_steps(vacancy) - %w[documents]
       end
 
-      # :nocov:
+      # convert legacy email vacancies into uploaded ones
+      new_vacancy.receive_applications = :uploaded_form if vacancy.email?
+
       if vacancy.publish_on&.past?
         reset_date_fields(new_vacancy)
-        new_vacancy.completed_steps -= %i[start_date important_dates]
+        new_vacancy.completed_steps -= %w[start_date important_dates]
       end
-      # :nocov:
 
       reset_legacy_fields(new_vacancy)
-      new_vacancy.organisations = vacancy.organisations
-      new_vacancy.send(:set_slug)
-      new_vacancy.save!(validate: false)
-      new_vacancy
+      new_vacancy.tap do |v|
+        v.organisations = vacancy.organisations
+        v.send(:set_slug)
+        v.save!(validate: false)
+      end
     end
     # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize
@@ -43,15 +45,22 @@ class CopyVacancyAsaTemplate
     end
 
     def reset_legacy_fields(new_vacancy)
-      new_vacancy.safeguarding_information_provided = nil
-      new_vacancy.safeguarding_information = nil
+      new_vacancy.assign_attributes(safeguarding_information_provided: nil,
+                                    safeguarding_information: nil)
     end
 
     def current_steps(vacancy)
-      process = Publishers::Vacancies::VacancyStepProcess.new(:job_role,
+      process = Publishers::Vacancies::VacancyStepProcess.new(:review,
                                                               vacancy: vacancy,
                                                               organisation: vacancy.organisation)
-      Publishers::VacancyFormSequence.new(vacancy: vacancy, organisation: vacancy.organisation, step_process: process).valid_steps
+      (process.steps - [:review]).select do |step_name|
+        step_form_class = File.join("publishers/job_listing", "#{step_name}_form").camelize.constantize
+
+        params = step_form_class.load_form(vacancy)
+                                .merge(current_organisation: @organisation)
+
+        step_form_class.new(params, vacancy).valid?
+      end
     end
   end
 end
