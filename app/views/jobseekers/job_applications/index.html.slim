@@ -5,16 +5,18 @@
   p.govuk-body = t(".one_login_banner.paragraph1")
   p.govuk-body = t(".one_login_banner.paragraph2", link: govuk_link_to(t(".one_login_banner.transfer_profile_link_text"), new_jobseekers_request_account_transfer_email_path)).html_safe
 
-- if @job_application_count.positive?
+- job_application_count = @active_drafts.count + @expired_drafts.count + @active_job_applications.count
+
+- if job_application_count.positive?
   - content_for :skip_links do
     = govuk_skip_link(href: "#applications-results", text: t(".skip_link"))
 - if Date.today <= Date.new(2024, 4, 2)
   = render "jobseekers/visa_sponsorship_banner"
-h1.govuk-heading-l = t(".page_title_with_count", count: @job_application_count)
+h1.govuk-heading-l = t(".page_title_with_count", count: job_application_count)
 
 .govuk-grid-row
   .govuk-grid-column-full
-    - if @job_application_count.positive?
+    - if job_application_count.positive?
       #applications-results
         - @active_drafts.each do |job_application|
           = render "job_application", job_application: job_application

@@ -23,8 +23,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
                                                 .where.not(status: :draft)
                                                 .order(submitted_at: :desc)
                                                 .sort_by { |x| status_keys.index(x.status.to_sym) }
-
-    @job_application_count = @active_drafts.count + @expired_drafts.count + @active_job_applications.count
   end
 
   def new
