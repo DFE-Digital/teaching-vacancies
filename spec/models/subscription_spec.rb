@@ -132,7 +132,7 @@ RSpec.describe Subscription do
         let(:nice_job) { Vacancy.find_by!(contact_number: "9") }
 
         before do
-          create(:vacancy, :published_slugged, contact_number: "9", job_title: "This is a Really Nice job", job_roles: %w[headteacher], phases: %w[secondary], working_patterns: %w[full_time])
+          create(:vacancy, :published_slugged, :secondary, contact_number: "9", job_title: "This is a Really Nice job", job_roles: %w[headteacher], working_patterns: %w[full_time])
         end
 
         context "with plain keyword" do
@@ -259,8 +259,8 @@ RSpec.describe Subscription do
 
       context "with teaching job roles" do
         before do
-          create(:vacancy, :published_slugged, contact_number: "teach1", job_roles: %w[teacher], subjects: %w[English], phases: %w[secondary], working_patterns: %w[full_time])
-          create(:vacancy, :published_slugged, contact_number: "itsupp1", job_roles: %w[it_support], subjects: %w[English], phases: %w[secondary], working_patterns: %w[full_time])
+          create(:vacancy, :published_slugged, :secondary, contact_number: "teach1", job_roles: %w[teacher], subjects: %w[English], working_patterns: %w[full_time])
+          create(:vacancy, :published_slugged, :secondary, contact_number: "itsupp1", job_roles: %w[it_support], subjects: %w[English], working_patterns: %w[full_time])
         end
 
         let(:teacher_vacancy) { Vacancy.find_by!(contact_number: "teach1") }
@@ -285,7 +285,7 @@ RSpec.describe Subscription do
 
       context "with support job roles" do
         before do
-          create(:vacancy, :published_slugged, contact_number: "2", job_roles: %w[it_support], subjects: %w[English], phases: %w[secondary], working_patterns: %w[full_time])
+          create(:vacancy, :published_slugged, :secondary, contact_number: "2", job_roles: %w[it_support], subjects: %w[English], working_patterns: %w[full_time])
         end
 
         let(:support_vacancy) { Vacancy.find_by!(contact_number: "2") }
@@ -298,7 +298,7 @@ RSpec.describe Subscription do
 
       context "with visa sponsorship" do
         before do
-          create(:vacancy, :published_slugged, contact_number: "3", visa_sponsorship_available: true, job_roles: %w[headteacher], subjects: %w[English], phases: %w[secondary], working_patterns: %w[full_time])
+          create(:vacancy, :published_slugged, :secondary, contact_number: "3", visa_sponsorship_available: true, job_roles: %w[headteacher], subjects: %w[English], working_patterns: %w[full_time])
         end
 
         let(:visa_job) { Vacancy.find_by!(contact_number: "3") }
@@ -311,8 +311,8 @@ RSpec.describe Subscription do
 
       context "with ECT" do
         before do
-          create(:vacancy, :published_slugged, contact_number: "4", ect_status: :ect_suitable, job_roles: %w[headteacher teacher], subjects: %w[English], phases: %w[secondary], working_patterns: %w[full_time])
-          create(:vacancy, :published_slugged, ect_status: nil, job_roles: %w[headteacher teacher], subjects: %w[English], phases: %w[secondary], working_patterns: %w[full_time])
+          create(:vacancy, :published_slugged, :secondary, contact_number: "4", ect_status: :ect_suitable, job_roles: %w[headteacher teacher], subjects: %w[English], working_patterns: %w[full_time])
+          create(:vacancy, :published_slugged, :secondary, ect_status: nil, job_roles: %w[headteacher teacher], subjects: %w[English], working_patterns: %w[full_time])
         end
 
         let(:subscription) { create(:subscription, :ect_suitable, frequency: :daily) }
@@ -325,7 +325,7 @@ RSpec.describe Subscription do
 
       context "with subjects filter" do
         before do
-          create(:vacancy, :published_slugged, contact_number: "5", job_roles: %w[headteacher], subjects: %w[French], phases: %w[secondary], working_patterns: %w[full_time])
+          create(:vacancy, :published_slugged, :secondary, contact_number: "5", job_roles: %w[headteacher], subjects: %w[French], working_patterns: %w[full_time])
         end
 
         let(:french_job) { Vacancy.find_by!(contact_number: "5") }
@@ -341,7 +341,7 @@ RSpec.describe Subscription do
           create(:vacancy, :published_slugged, contact_number: "6", job_roles: %w[headteacher], phases: %w[primary], working_patterns: %w[full_time])
           create(:vacancy, :published_slugged, contact_number: "7", job_roles: %w[headteacher], phases: %w[sixth_form_or_college], working_patterns: %w[full_time])
           create(:vacancy, :published_slugged, contact_number: "8", job_roles: %w[headteacher], phases: %w[through], working_patterns: %w[full_time])
-          create(:vacancy, :published_slugged, contact_number: "9", job_roles: %w[headteacher], phases: %w[secondary], working_patterns: %w[full_time])
+          create(:vacancy, :published_slugged, :secondary, contact_number: "9", job_roles: %w[headteacher], working_patterns: %w[full_time])
         end
 
         let(:primary_job) { Vacancy.find_by!(contact_number: "6") }
@@ -400,9 +400,9 @@ RSpec.describe Subscription do
 
       context "with working patterns filter" do
         before do
-          create(:vacancy, :published_slugged, contact_number: "7", job_roles: %w[headteacher], phases: %w[secondary], is_job_share: false, working_patterns: %w[part_time])
-          create(:vacancy, :published_slugged, contact_number: "8ft", job_roles: %w[headteacher], phases: %w[secondary], is_job_share: false, working_patterns: %w[full_time])
-          create(:vacancy, :published_slugged, contact_number: "9js", job_roles: %w[headteacher], phases: %w[secondary], is_job_share: true, working_patterns: [])
+          create(:vacancy, :published_slugged, :secondary, contact_number: "7", job_roles: %w[headteacher], is_job_share: false, working_patterns: %w[part_time])
+          create(:vacancy, :published_slugged, :secondary, contact_number: "8ft", job_roles: %w[headteacher], is_job_share: false, working_patterns: %w[full_time])
+          create(:vacancy, :published_slugged, :secondary, contact_number: "9js", job_roles: %w[headteacher], is_job_share: true, working_patterns: [])
         end
 
         let(:subscription) { create(:daily_subscription, working_patterns: %w[part_time job_share]) }
@@ -416,7 +416,7 @@ RSpec.describe Subscription do
 
       context "with organisation filter" do
         before do
-          create(:vacancy, :published_slugged, contact_number: "8", organisations: [new_org], job_roles: %w[headteacher], phases: %w[secondary], working_patterns: %w[full_time])
+          create(:vacancy, :published_slugged, :secondary, contact_number: "8", organisations: [new_org], job_roles: %w[headteacher], working_patterns: %w[full_time])
         end
 
         let(:new_org) { create(:school) }

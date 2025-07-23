@@ -144,7 +144,7 @@ RSpec.describe "Publishers can edit a vacancy" do
     end
 
     describe "#application_form" do
-      let(:vacancy) { create(:vacancy, :with_application_form, organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) }
+      let(:vacancy) { create(:vacancy, :secondary, :with_application_form, organisations: [school]) }
 
       before do
         publisher_vacancy_page.change_application_form_link.click
@@ -170,7 +170,7 @@ RSpec.describe "Publishers can edit a vacancy" do
 
     describe "#documents" do
       let(:filename) { "blank_job_spec.pdf" }
-      let(:vacancy) { create(:vacancy, :with_supporting_documents, include_additional_documents: true, organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) }
+      let(:vacancy) { create(:vacancy, :secondary, :with_supporting_documents, include_additional_documents: true, organisations: [school]) }
 
       scenario "can edit documents" do
         publisher_vacancy_page.change_supporting_documents_link.click
@@ -261,7 +261,7 @@ RSpec.describe "Publishers can edit a vacancy" do
     let!(:vacancy) do
       create(
         :vacancy, :external, :expires_tomorrow,
-        phases: %w[secondary],
+        :secondary,
         job_title: "Imported vacancy",
         organisations: [school]
       )

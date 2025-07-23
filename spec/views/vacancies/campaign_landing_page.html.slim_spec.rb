@@ -8,6 +8,7 @@ RSpec.describe "vacancies/campaign_landing_page" do
   let(:recent_part_time_maths_job) do
     build_stubbed(
       :vacancy,
+      :secondary,
       :past_publish,
       :no_tv_applications,
       job_roles: %w[teacher],
@@ -16,7 +17,6 @@ RSpec.describe "vacancies/campaign_landing_page" do
       job_title: "Maths Teacher",
       subjects: %w[Mathematics],
       organisations: [school],
-      phases: %w[secondary],
       expires_at: Date.current + 1,
       geolocation: "POINT(-0.019501 51.504949)",
     )
@@ -26,6 +26,7 @@ RSpec.describe "vacancies/campaign_landing_page" do
     build_stubbed(
       :vacancy,
       :past_publish,
+      :secondary,
       :no_tv_applications,
       job_roles: %w[teacher],
       working_patterns: %w[part_time],
@@ -33,7 +34,6 @@ RSpec.describe "vacancies/campaign_landing_page" do
       job_title: "Maths Teacher",
       subjects: %w[Mathematics],
       organisations: [school],
-      phases: %w[secondary],
       expires_at: Date.current + 3,
       geolocation: "POINT(-1.8964 52.4820)",
     )

@@ -7,9 +7,9 @@ RSpec.describe "Creating a vacancy" do
   let(:school1) { create(:school, phase: :not_applicable, name: "First school") }
   let(:school2) { create(:school, phase: :not_applicable, name: "Second school") }
   let(:vacancy) do
-    build(:vacancy, :no_tv_applications, :ect_suitable, job_roles: ["teacher"], phases: %w[secondary],
-                                                        key_stages: %w[ks3], working_patterns: %w[full_time part_time], hourly_rate: nil,
-                                                        organisations: [school1, school2], contract_type: "fixed_term", is_parental_leave_cover: true)
+    build(:vacancy, :no_tv_applications, :secondary, :fixed_term, :ect_suitable, job_roles: ["teacher"],
+                                                                                 working_patterns: %w[full_time part_time], hourly_rate: nil,
+                                                                                 organisations: [school1, school2])
   end
   let(:created_vacancy) { Vacancy.last }
 

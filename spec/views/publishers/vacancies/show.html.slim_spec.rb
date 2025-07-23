@@ -14,7 +14,7 @@ RSpec.describe "publishers/vacancies/show" do
 
   describe "show" do
     context "when published" do
-      let(:vacancy) { create(:vacancy, :with_supporting_documents, phases: %w[secondary], organisations: [school], key_stages: %w[ks5]) }
+      let(:vacancy) { create(:vacancy, :secondary, :with_supporting_documents, organisations: [school]) }
       let(:next_invalid_step) { nil }
 
       it "doesn't have publish buttons" do
@@ -115,7 +115,7 @@ RSpec.describe "publishers/vacancies/show" do
       end
 
       context "with a plain draft" do
-        let(:vacancy) { create(:draft_vacancy, phases: %w[secondary], organisations: [school]) }
+        let(:vacancy) { create(:draft_vacancy, :secondary, organisations: [school]) }
         let(:next_invalid_step) { nil }
 
         it "has publish buttons" do
@@ -133,7 +133,7 @@ RSpec.describe "publishers/vacancies/show" do
       end
 
       context "with a complete future published draft" do
-        let(:vacancy) { create(:draft_vacancy, phases: %w[secondary], publish_on: Date.current + 6.months, organisations: [school]) }
+        let(:vacancy) { create(:draft_vacancy, :secondary, publish_on: Date.current + 6.months, organisations: [school]) }
         let(:next_invalid_step) { nil }
 
         it "displays schedule information" do
