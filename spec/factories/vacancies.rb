@@ -34,7 +34,7 @@ FactoryBot.define do
     benefits { true }
     benefits_details { Faker::Lorem.paragraph(sentence_count: factory_rand(1..3)) }
     completed_steps do
-      %w[job_location job_role education_phases job_title key_stages subjects contract_type working_patterns pay_package important_dates start_date
+      %w[job_location job_role education_phases job_title key_stages contract_type working_patterns pay_package important_dates start_date
          applying_for_the_job school_visits contact_details about_the_role include_additional_documents]
     end
     contact_email { Faker::Internet.email(domain: "contoso.com") }
@@ -75,6 +75,11 @@ FactoryBot.define do
 
       # Subjects are ignored when phases are primary-only
       subjects { factory_sample(SUBJECT_OPTIONS, 2).map(&:first).sort! }
+
+      completed_steps do
+        %w[job_location job_role education_phases job_title key_stages contract_type working_patterns pay_package important_dates start_date
+           applying_for_the_job school_visits contact_details about_the_role include_additional_documents subjects]
+      end
     end
 
     trait :fixed_term do
@@ -111,6 +116,12 @@ FactoryBot.define do
     trait :no_tv_applications do
       receive_applications { "website" }
       application_link { Faker::Internet.url(host: "contoso.com") }
+      enable_job_applications { false }
+    end
+
+    trait :legacy_email_application do
+      receive_applications { "email" }
+      application_email { Faker::Internet.email(domain: "contoso.com") }
       enable_job_applications { false }
     end
 
