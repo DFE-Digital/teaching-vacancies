@@ -2,7 +2,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   include Jobseekers::QualificationFormConcerns
   include DatesHelper
 
-  before_action :set_job_application, only: %i[show download_pdf download_application_form pre_interview_checks collect_references]
+  before_action :set_job_application, only: %i[show download_pdf download_application_form pre_interview_checks]
 
   before_action :set_job_applications, only: %i[index tag_single tag]
 
@@ -77,13 +77,6 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       end
       redirect_to organisation_job_job_applications_path(vacancy.id, anchor: update_tag_params[:origin])
     end
-  end
-
-  def collect_references
-    batch = JobApplicationBatch.create!(vacancy: vacancy)
-    batch.batchable_job_applications.create!(job_application: @job_application)
-
-    redirect_to organisation_job_job_application_batch_references_and_self_disclosure_path(vacancy.id, batch.id, Wicked::FIRST_STEP)
   end
 
   def withdrawn; end

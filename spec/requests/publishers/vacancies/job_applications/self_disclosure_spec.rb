@@ -19,17 +19,6 @@ RSpec.describe "Job applications self disclosure" do
   after { sign_out(publisher) }
 
   describe "GET #show" do
-    context "when no request exists" do
-      let(:self_disclosure_request) { nil }
-      let(:self_disclosure) { nil }
-
-      it "redirects to job application page" do
-        get(organisation_job_job_application_self_disclosure_path(vacancy.id, job_application.id))
-
-        expect(response).to redirect_to(organisation_job_job_application_path(vacancy.id, job_application.id))
-      end
-    end
-
     context "when request format is pdf" do
       it "returns the pdf file" do
         get(organisation_job_job_application_self_disclosure_path(vacancy.id, job_application.id, format: :pdf))

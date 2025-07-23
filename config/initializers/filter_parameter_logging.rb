@@ -82,10 +82,6 @@ Rails.application.config.filter_parameters += %i[
   not_fit_to_practice
   able_to_undertake_role
   country
-  under_investigation_details
-  warning_details
-  unable_to_undertake_reason
-  country
   address_line_1
   address_line_2
   date_of_birth
