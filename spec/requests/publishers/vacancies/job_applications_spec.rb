@@ -100,14 +100,6 @@ RSpec.describe "Job applications" do
     end
   end
 
-  describe "GET #tag_single" do
-    it "tags a single application" do
-      get tag_single_organisation_job_job_application_path(vacancy.id, job_application.id)
-
-      expect(response).to render_template(:tag)
-    end
-  end
-
   describe "GET #tag" do
     let(:vacancy) { create(:vacancy, job_title: "teacher-job") }
     let(:job_application_2) { create(:job_application, :status_submitted, vacancy: vacancy) }

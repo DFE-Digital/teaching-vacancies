@@ -11,7 +11,7 @@ module PageObjects
         def update_status
           btn_update_status.click
 
-          tag_page = PageObjects::Pages::Publisher::Ats::TagSinglePage.new
+          tag_page = PageObjects::Pages::Publisher::Ats::TagPage.new
           if tag_page.displayed?
             yield tag_page
           else
