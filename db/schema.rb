@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_09_154313) do
+ActiveRecord::Schema[7.2].define(version: 2025_07_07_080651) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -344,6 +344,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_09_154313) do
     t.string "able_to_undertake_role_ciphertext"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "under_investigation_details_ciphertext"
+    t.string "warning_details_ciphertext"
+    t.string "unable_to_undertake_reason_ciphertext"
+    t.string "employment_end_date_ciphertext"
     t.index ["reference_id"], name: "index_job_references_on_reference_id", unique: true
   end
 
