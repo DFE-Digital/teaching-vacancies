@@ -23,47 +23,55 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         - row.with_action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :how_to_receive_applications, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.how_to_receive_applications")
-    - if vacancy.application_form
-      - if vacancy.receive_applications != "website"
+      / legacy type - no longer supported
+      - if vacancy.receive_applications == "email"
         - summary_list.with_row(html_attributes: { id: "uploaded_form" }) do |row|
           - row.with_key
             = t("jobs.document_name")
           - row.with_value
             = vacancy.application_form.filename.to_s
           - row.with_action text: t("buttons.change"),
-                      href: organisation_job_build_path(vacancy.id, :application_form, "back_to_#{action_name}": "true"),
-                      visually_hidden_text: t("jobs.document_name")
-
-      - if vacancy.receive_applications == "email"
+            href: organisation_job_build_path(vacancy.id, :application_form, "back_to_#{action_name}": "true"),
+            visually_hidden_text: t("jobs.document_name")
         - if vacancy.application_form.attachments&.any?
           - summary_list.with_row(html_attributes: { id: "application_form" }) do |row|
             - row.with_key
               = t("jobs.application_form")
             - row.with_value
-              = govuk_link_to("#{vacancy.application_form.filename}, #{number_to_human_size(vacancy.application_form.byte_size)}", job_document_path(vacancy.id, vacancy.application_form.id))
+              = govuk_link_to("#{vacancy.application_form.filename}, #{number_to_human_size(vacancy.application_form.byte_size)}", job_document_path(vacancy, vacancy.application_form.id))
             - row.with_action text: t("buttons.change"),
-                          href: organisation_job_build_path(vacancy.id, :application_form, "back_to_#{action_name}": "true"),
-                          visually_hidden_text: t("jobs.application_form")
+              href: organisation_job_build_path(vacancy.id, :application_form, "back_to_#{action_name}": "true"),
+              visually_hidden_text: t("jobs.application_form")
 
         - unless vacancy.application_email.nil?
           - summary_list.with_row(html_attributes: { id: "application_email" }) do |row|
             - row.with_key
-              = t("jobs.application_email")
+            = t("jobs.application_email")
             - row.with_value
-              = vacancy.application_email
+            = vacancy.application_email
             - row.with_action text: t("buttons.change"),
-                          href: organisation_job_build_path(vacancy.id, :application_form, "back_to_#{action_name}": "true"),
-                          visually_hidden_text: t("jobs.application_email")
+              href: organisation_job_build_path(vacancy.id, :application_form, "back_to_#{action_name}": "true"),
+              visually_hidden_text: t("jobs.application_email")
+      - elsif vacancy.receive_applications == "website" && !vacancy.application_link.nil?
+        - summary_list.with_row(html_attributes: { id: "application_link" }) do |row|
+          - row.with_key
+            = t("jobs.application_link")
+          - row.with_value
+            = vacancy.application_link
+          - row.with_action text: t("buttons.change"),
+                        href: organisation_job_build_path(vacancy.id, :application_link, "back_to_#{action_name}": "true"),
+                        visually_hidden_text: t("jobs.application_link")
+      - else
+        / uploaded form
+        - summary_list.with_row(html_attributes: { id: "uploaded_form" }) do |row|
+          - row.with_key
+            = t("jobs.document_name")
+          - row.with_value
+            = vacancy.application_form.filename.to_s
+          - row.with_action text: t("buttons.change"),
+            href: organisation_job_build_path(vacancy.id, :application_form, "back_to_#{action_name}": "true"),
+            visually_hidden_text: t("jobs.document_name")
 
-    - if vacancy.receive_applications == "website" && !vacancy.application_link.nil?
-      - summary_list.with_row(html_attributes: { id: "application_link" }) do |row|
-        - row.with_key
-          = t("jobs.application_link")
-        - row.with_value
-          = vacancy.application_link
-        - row.with_action text: t("buttons.change"),
-                      href: organisation_job_build_path(vacancy.id, :application_link, "back_to_#{action_name}": "true"),
-                      visually_hidden_text: t("jobs.application_link")
 
   - unless vacancy.contact_email.nil?
     - summary_list.with_row(html_attributes: { id: "contact_email" }) do |row|
