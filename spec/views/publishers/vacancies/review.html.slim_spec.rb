@@ -23,8 +23,9 @@ RSpec.describe "publishers/vacancies/review" do
   context "with email applications" do
     let(:vacancy) { create(:vacancy, :with_application_form) }
 
-    it "shows the document link" do
-      expect(rendered).to include("Document name")
+    it "doesnt show the document link" do
+      expect(rendered).not_to include("Document name")
+      expect(rendered).to include("Application form")
     end
   end
 
