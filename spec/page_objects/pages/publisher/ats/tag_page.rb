@@ -8,7 +8,7 @@ module PageObjects
           element :form, "form"
           element :btn_save_and_continue, ".govuk-button.update-status"
           %w[submitted unsuccessful reviewed shortlisted interviewing].each do |status|
-            element :"status_#{status}", "#publishers-job-application-status-form-status-#{status}-field", visible: false
+            element :"status_#{status}", "#publishers-job-application-tag-form-status-#{status}-field", visible: false
           end
 
           def select_and_submit(status)
