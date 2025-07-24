@@ -103,37 +103,88 @@ RSpec.describe "Job applications" do
   describe "GET #tag" do
     let(:vacancy) { create(:vacancy, job_title: "teacher-job") }
     let(:job_application_2) { create(:job_application, :status_submitted, vacancy: vacancy) }
-    let(:tag_params) { { publishers_job_application_tag_form: { job_applications: [job_application.id, job_application_2.id] } } }
+    let(:job_applications) { [job_application.id, job_application_2.id] }
+    let(:tag_params) do
+      {
+        publishers_job_application_tag_form: { job_applications:, origin: },
+      }
+    end
+    let(:origin) { "new" }
 
     context "when preparing to tag job applications" do
       it "renders the tag template" do
         get tag_organisation_job_job_applications_path(vacancy.id), params: tag_params
         expect(response).to render_template(:tag)
       end
+    end
+
+    context "when no job application selected" do
+      let(:job_applications) { [] }
 
       it "renders index when form is invalid" do
-        get tag_organisation_job_job_applications_path(vacancy.id), params: { publishers_job_application_tag_form: { job_applications: [], origin: "all" } }
-        expect(response).to redirect_to(organisation_job_job_applications_path(vacancy.id, anchor: "all"))
+        get tag_organisation_job_job_applications_path(vacancy.id), params: tag_params
+        expect(response).to redirect_to(organisation_job_job_applications_path(vacancy.id, anchor: origin))
       end
     end
 
     context "when downloading selected job applications" do
-      let(:download_params) { tag_params.merge(download_selected: "true") }
-
       it "sends zip file with PDFs" do
-        get tag_organisation_job_job_applications_path(vacancy.id), params: download_params
+        get tag_organisation_job_job_applications_path(vacancy.id), params: tag_params.merge(download_selected: "true")
 
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq("application/zip")
         expect(response.headers["Content-Disposition"]).to include("applications_#{vacancy.job_title}.zip")
       end
+    end
+
+    context "when downloading with missing job applications" do
+      let(:job_applications) { [] }
 
       it "renders index when download form is invalid" do
-        get tag_organisation_job_job_applications_path(vacancy.id), params: {
-          publishers_job_application_tag_form: { job_applications: [] },
-          download_selected: "true",
-        }
-        expect(response).to render_template(:index)
+        get tag_organisation_job_job_applications_path(vacancy.id), params: tag_params.merge(download_selected: "true")
+        expect(response).to redirect_to(organisation_job_job_applications_path(vacancy.id, anchor: origin))
+      end
+    end
+  end
+
+  describe "POST #update_tag" do
+    subject { response }
+
+    let(:vacancy) { create(:vacancy, job_title: "teacher-job") }
+    let(:job_application_2) { create(:job_application, :status_submitted, vacancy: vacancy) }
+    let(:job_applications) { [job_application.id, job_application_2.id] }
+    let(:origin) { "new" }
+    let(:status) { nil }
+    let(:form_params) { { origin:, status:, job_applications: } }
+    let(:params) { { publishers_job_application_tag_form: form_params } }
+
+    context "when form missing selected status" do
+      before do
+        post(update_tag_organisation_job_job_applications_path(vacancy.id), params:)
+      end
+
+      it { is_expected.to render_template(:tag) }
+    end
+
+    context "when form missing job applications" do
+      let(:job_applications) { [] }
+      let(:status) { "shortlisted" }
+
+      before do
+        post(update_tag_organisation_job_job_applications_path(vacancy.id), params:)
+      end
+
+      it { is_expected.to redirect_to organisation_job_job_applications_path(vacancy.id, anchor: origin) }
+    end
+
+    context "when form valid" do
+      let(:status) { "shortlisted" }
+
+      it "update status and redirects" do
+        expect { post(update_tag_organisation_job_job_applications_path(vacancy.id), params:) }
+          .to change { job_application.reload.status }.from("submitted").to(status)
+
+        expect(response).to redirect_to organisation_job_job_applications_path(vacancy.id, anchor: origin)
       end
     end
   end
