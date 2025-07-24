@@ -10,15 +10,12 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
       build_stubbed(:job_application, :status_reviewed, vacancy:),
     ]
   end
-  let(:unsuccessful) { build_stubbed_list(:job_application, 1, :status_unsuccessful, vacancy:) }
+  let(:unsuccessful) { JobApplication }
   let(:shortlisted) { build_stubbed_list(:job_application, 1, :status_shortlisted, vacancy:) }
   let(:interviewing) { build_stubbed_list(:job_application, 1, :status_interviewing, vacancy:) }
-  let(:withdrawn) { build_stubbed_list(:job_application, 1, :status_withdrawn, vacancy:) }
-  let(:all) { withdrawn + submitted + unsuccessful + shortlisted + interviewing }
-  let(:candidates) { { all:, submitted:, unsuccessful:, shortlisted:, interviewing: }.stringify_keys }
+  let(:candidates) { { submitted:, unsuccessful:, shortlisted:, interviewing: }.stringify_keys }
   let(:tab_headers) do
     [
-      ["all", all.count],
       ["submitted", submitted.count],
       ["unsuccessful", unsuccessful.count],
       ["shortlisted", shortlisted.count],
@@ -27,6 +24,10 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
   end
 
   before do
+    list_unsuccessful = build_stubbed_list(:job_application, 1, :status_unsuccessful, vacancy:)
+    list_withdrawn = build_stubbed_list(:job_application, 1, :status_withdrawn, vacancy:)
+    allow(unsuccessful).to receive_messages(unsuccessful: list_unsuccessful, withdrawn: list_withdrawn)
+
     assign :current_organisation, organisation
     assign :vacancy, vacancy
     assign :form, Publishers::JobApplication::TagForm.new
@@ -140,10 +141,9 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
 
   context "when a vacancy is active and it has no applications" do
     let(:submitted) { [] }
-    let(:unsuccessful) { [] }
+    let(:unsuccessful) { JobApplication }
     let(:shortlisted) { [] }
     let(:interviewing) { [] }
-    let(:withdrawn) { [] }
 
     describe "the summary section" do
       it "shows breadcrumb with link to active jobs in dashboard" do
@@ -159,7 +159,7 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
       end
 
       it "shows that there are no applicants" do
-        expect(rendered).to have_css(".empty-section-component h3", text: "Nobody has applied for this job yet")
+        expect(rendered).to have_css(".empty-section-component h3", text: "There are no pending applications")
       end
     end
   end

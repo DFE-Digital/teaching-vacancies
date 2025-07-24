@@ -89,7 +89,7 @@ RSpec.describe "Job applications" do
         end
       end
       let(:submitteds) { job_applications.select { %w[submitted reviewed].include?(it.status) } }
-      let(:unsuccessfuls) { job_applications.select { it.status == "unsuccessful" } }
+      let(:unsuccessfuls) { job_applications.select { %w[unsuccessful withdrawn].include?(it.status) } }
       let(:shortlisteds) { job_applications.select { it.status == "shortlisted" } }
       let(:interviewings) { job_applications.select { it.status == "interviewing" } }
 
@@ -103,7 +103,6 @@ RSpec.describe "Job applications" do
       end
 
       it "assigns candidates variables" do
-        expect(assigns[:candidates]["all"]).to match_array(job_applications)
         expect(assigns[:candidates]["submitted"]).to match_array(submitteds)
         expect(assigns[:candidates]["unsuccessful"]).to match_array(unsuccessfuls)
         expect(assigns[:candidates]["shortlisted"]).to match_array(shortlisteds)
@@ -112,13 +111,17 @@ RSpec.describe "Job applications" do
 
       it "assigns tab_heaers variables" do
         expected_tab_headers = [
-          ["all", job_applications.count],
           ["submitted", 2],
-          ["unsuccessful", 1],
+          ["unsuccessful", 2],
           ["shortlisted", 1],
           ["interviewing", 1],
         ]
         expect(assigns[:tab_headers]).to match_array(expected_tab_headers)
+      end
+
+      it "assigns all job application except draft ones" do
+        total = assigns[:tab_headers].sum(&:last)
+        expect(total).to eq(job_applications.count)
       end
     end
   end

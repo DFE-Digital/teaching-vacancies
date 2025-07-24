@@ -1,4 +1,4 @@
-- if candidates[tab_name].any?
+- if candidates[tab_name].unsuccessful.any?
   = form_with(model: form, url: tag_organisation_job_job_applications_path(vacancy.id), method: :get) do |f|
     = f.govuk_error_summary
     - if flash[tab_name]
@@ -17,7 +17,7 @@
             - row.with_cell(text: t("tabs.headers.application_status"))
 
         - table.with_body do |body|
-          - candidates[tab_name].each_with_index do |application, index|
+          - candidates[tab_name].unsuccessful.each_with_index do |application, index|
             - body.with_row(html_attributes: { class: "application-#{application.status}" }) do |row|
               - row.with_cell(text: tag.div(f.govuk_check_box(:job_applications, application.id, link_errors: index.zero?, label: { hidden: true, text: "Select #{application.name}" }),
                                   class: "govuk-checkboxes--small"))
@@ -31,3 +31,28 @@
 
 - else
   = render EmptySectionComponent.new title: t("tabs.#{tab_name}.none")
+
+- if candidates[tab_name].withdrawn.any?
+
+  = govuk_section_break(visible: true, size: "xl")
+
+  / this empty form is here just render the f.govuk_fieldset we dont have a straight up govuk_fieldset
+  = form_with(url: "") do |f|
+    = f.govuk_fieldset legend: { text: t("tabs.withdrawn.heading"), size: "m" } do
+      = govuk_table do |table|
+        - table.with_head do |head|
+          - head.with_row do |row|
+            - row.with_cell(text: "")
+            - row.with_cell(text: t("tabs.headers.name"))
+            - row.with_cell(text: t("tabs.headers.contact_details"))
+            - row.with_cell(text: t("tabs.headers.application_status"))
+
+        - table.with_body do |body|
+          - candidates[tab_name].withdrawn.each do |application|
+            - body.with_row(html_attributes: { class: "application-#{application.status}" }) do |row|
+              - row.with_cell(text: "")
+              - row.with_cell(text: govuk_link_to(application.name, organisation_job_job_application_path(vacancy.id, application)))
+              - row.with_cell(text: application.email_address)
+              - row.with_cell(text: publisher_job_application_status_tag(application.status))
+- else
+  = render EmptySectionComponent.new title: t("tabs.withdrawn.none")

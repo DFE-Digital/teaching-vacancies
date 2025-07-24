@@ -14,10 +14,9 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     end
 
     @candidates["submitted"] = vacancy.job_applications.where(status: %i[submitted reviewed])
-    @candidates["unsuccessful"] = vacancy.job_applications.where(status: %i[unsuccessful])
-    @candidates["all"] = vacancy.job_applications.where(status: JobApplication.statuses.except("draft").keys)
+    @candidates["unsuccessful"] = vacancy.job_applications.where(status: %i[unsuccessful withdrawn])
 
-    @tab_headers = %w[all submitted unsuccessful shortlisted interviewing].map do |tab_name|
+    @tab_headers = %w[submitted unsuccessful shortlisted interviewing].map do |tab_name|
       [tab_name, @candidates[tab_name].count]
     end
   end
