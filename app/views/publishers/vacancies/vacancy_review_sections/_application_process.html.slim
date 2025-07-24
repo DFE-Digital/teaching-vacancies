@@ -23,7 +23,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         - row.with_action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :how_to_receive_applications, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.how_to_receive_applications")
-      / legacy type - no longer supported
+      / legacy type - no longer supported on creation
       - if vacancy.receive_applications == "email"
         - summary_list.with_row(html_attributes: { id: "uploaded_form" }) do |row|
           - row.with_key
@@ -46,9 +46,9 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         - unless vacancy.application_email.nil?
           - summary_list.with_row(html_attributes: { id: "application_email" }) do |row|
             - row.with_key
-            = t("jobs.application_email")
+              = t("jobs.application_email")
             - row.with_value
-            = vacancy.application_email
+              = vacancy.application_email
             - row.with_action text: t("buttons.change"),
               href: organisation_job_build_path(vacancy.id, :application_form, "back_to_#{action_name}": "true"),
               visually_hidden_text: t("jobs.application_email")
