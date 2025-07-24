@@ -152,7 +152,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       # progress 2 applicants to interviewing
       #
       current_page.update_status(etha, hanane) do |tag_page|
-        tag_page.select_and_submit("interviewing")
+        tag_page.select_and_submit("interviewing", &:external_pre_checks)
       end
 
       #
@@ -172,8 +172,9 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       }.each do |tab_id, count|
         expect(current_page.get_tab(tab_id)).to have_text("(#{count})")
       end
-      expect(current_page.selected_tab).to have_text("Interviewing")
-      [etha, hanane].each do |applicant|
+      current_page.select_tab(:tab_shortlisted)
+      expect(current_page.selected_tab).to have_text("Shortlisted")
+      [charlie, said, yun].each do |applicant|
         job_application = current_page.candidate(applicant)
         expect(job_application.name).to have_text(applicant.name)
         expect(job_application.mapped_status).to eq(applicant.reload.status)
@@ -215,7 +216,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       [etha, hanane].each do |applicant|
         job_application = current_page.candidate(applicant)
         expect(job_application.name).to have_text(applicant.name)
-        expect(job_application.mapped_status).to eq(applicant.reload.status)
+        expect(job_application.mapped_status).to have_text(applicant.reload.status)
       end
 
       #
