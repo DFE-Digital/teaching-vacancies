@@ -1,0 +1,29 @@
+en:
+  tabs:
+    headers:
+      name: Name
+      contact_details: Contact details
+      application_status: Application status
+    buttons:
+      update_application_status: Update application status
+      download_selected: Download selected
+    all:
+      label: "All (%{count})"
+      heading: All applications
+      none: Nobody has applied for this job yet
+    submitted:
+      label: "New (%{count})"
+      heading: New applications
+      none: There are no pending applications
+    unsuccessful:
+      label: "Not considering (%{count})"
+      heading: Not being considered
+      none: No applications have been marked for rejection
+    shortlisted:
+      label: "Shortlisted (%{count})"
+      heading: Shortlisted applications
+      none: No applications have been shortlisted yet
+    interviewing:
+      label: "Interviewing (%{count})"
+      heading: Interviewing applications
+      none: No applications have been marked for interview yet

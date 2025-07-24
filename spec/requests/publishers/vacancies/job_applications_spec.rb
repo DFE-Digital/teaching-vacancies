@@ -82,8 +82,44 @@ RSpec.describe "Job applications" do
       end
     end
 
-    it "renders the index page" do
-      expect(get(organisation_job_job_applications_path(vacancy.id))).to render_template(:index)
+    context "when renders index" do
+      let(:job_applications) do
+        JobApplication.statuses.except("draft").map do |status, _|
+          create(:job_application, :"status_#{status}", vacancy:)
+        end
+      end
+      let(:submitteds) { job_applications.select { %w[submitted reviewed].include?(it.status) } }
+      let(:unsuccessfuls) { job_applications.select { it.status == "unsuccessful" } }
+      let(:shortlisteds) { job_applications.select { it.status == "shortlisted" } }
+      let(:interviewings) { job_applications.select { it.status == "interviewing" } }
+
+      before do
+        job_applications
+        get(organisation_job_job_applications_path(vacancy.id))
+      end
+
+      it "renders the index page" do
+        expect(response).to render_template(:index)
+      end
+
+      it "assigns candidates variables" do
+        expect(assigns[:candidates]["all"]).to match_array(job_applications)
+        expect(assigns[:candidates]["submitted"]).to match_array(submitteds)
+        expect(assigns[:candidates]["unsuccessful"]).to match_array(unsuccessfuls)
+        expect(assigns[:candidates]["shortlisted"]).to match_array(shortlisteds)
+        expect(assigns[:candidates]["interviewing"]).to match_array(interviewings)
+      end
+
+      it "assigns tab_heaers variables" do
+        expected_tab_headers = [
+          ["all", job_applications.count],
+          ["submitted", 2],
+          ["unsuccessful", 1],
+          ["shortlisted", 1],
+          ["interviewing", 1],
+        ]
+        expect(assigns[:tab_headers]).to match_array(expected_tab_headers)
+      end
     end
   end
 
@@ -129,7 +165,7 @@ RSpec.describe "Job applications" do
 
     context "when downloading selected job applications" do
       it "sends zip file with PDFs" do
-        get tag_organisation_job_job_applications_path(vacancy.id), params: tag_params.merge(download_selected: "true")
+        get tag_organisation_job_job_applications_path(vacancy.id), params: tag_params.merge(target: "download")
 
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq("application/zip")
