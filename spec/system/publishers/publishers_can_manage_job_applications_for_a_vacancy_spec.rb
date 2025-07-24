@@ -26,6 +26,8 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       # TODO: should the redirection points to the job application page instead?
       expect(publisher_ats_applications_page).to be_displayed(vacancy_id: vacancy.id)
 
+      publisher_ats_applications_page.select_tab(:tab_shortlisted)
+
       expect(publisher_ats_applications_page.tab_panel.job_applications.first.mapped_status).to eq(job_application.reload.status)
     end
   end
@@ -62,7 +64,6 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
       # count for tabs other than current tab
       {
-        tab_all: job_applications.count,
         tab_submitted: job_applications.count,
         tab_unsuccessful: 0,
         tab_shortlisted: 0,
@@ -85,7 +86,6 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       end
 
       {
-        tab_all: job_applications.count,
         tab_submitted: 2,
         tab_unsuccessful: 0,
         tab_shortlisted: 5,
@@ -101,7 +101,6 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
       expect(current_page.selected_tab).to have_text("New")
       {
-        tab_all: job_applications.count,
         tab_submitted: 1,
         tab_unsuccessful: 1,
         tab_shortlisted: 5,
@@ -115,7 +114,6 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
         tag_page.select_and_submit("reviewed")
       end
       {
-        tab_all: job_applications.count,
         tab_submitted: 1,
         tab_unsuccessful: 1,
         tab_shortlisted: 5,
@@ -164,7 +162,6 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       expect(publisher_ats_applications_page).to be_displayed
 
       {
-        tab_all: job_applications.count,
         tab_submitted: 1,
         tab_unsuccessful: 1,
         tab_shortlisted: 3,
@@ -192,9 +189,8 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       current_page.select_tab(:tab_shortlisted)
 
       {
-        tab_all: job_applications.count,
         tab_submitted: 1,
-        tab_unsuccessful: 1,
+        tab_unsuccessful: 2,
         tab_shortlisted: 2,
         tab_interviewing: 2,
       }.each do |tab_id, count|
@@ -219,12 +215,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
         expect(job_application.mapped_status).to have_text(applicant.reload.status)
       end
 
-      #
-      # display all tab
-      #
-      current_page.select_tab(:tab_all)
-
-      expect(current_page.selected_tab).to have_text("All")
+      current_page.select_tab(:tab_unsuccessful)
       expect(current_page).to have_text(said.name)
     end
   end

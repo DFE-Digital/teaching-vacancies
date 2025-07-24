@@ -7,10 +7,6 @@ en:
     buttons:
       update_application_status: Update application status
       download_selected: Download selected
-    all:
-      label: "All (%{count})"
-      heading: All applications
-      none: Nobody has applied for this job yet
     submitted:
       label: "New (%{count})"
       heading: New applications
@@ -27,3 +23,6 @@ en:
       label: "Interviewing (%{count})"
       heading: Interviewing applications
       none: No applications have been marked for interview yet
+    withdrawn:
+      heading: Withdrawn applications
+      none: No candidate has withdrawn

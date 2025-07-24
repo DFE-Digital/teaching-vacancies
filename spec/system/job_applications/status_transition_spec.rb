@@ -72,12 +72,6 @@ RSpec.describe "check job application after status transition" do
         publisher_ats_applications_page.load(vacancy_id: vacancy.id)
 
         #
-        # check tab all
-        #
-        publisher_ats_applications_page.select_tab(:tab_all)
-        expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(0)
-
-        #
         # check tab new
         #
         publisher_ats_applications_page.select_tab(:tab_submitted)
@@ -107,12 +101,6 @@ RSpec.describe "check job application after status transition" do
 
       run_with_publisher(publisher) do
         publisher_ats_applications_page.load(vacancy_id: vacancy.id)
-
-        #
-        # check tab all
-        #
-        publisher_ats_applications_page.select_tab(:tab_all)
-        expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
 
         #
         # check tab new
@@ -155,12 +143,6 @@ RSpec.describe "check job application after status transition" do
     it "allows the publisher to reject a submitted job application and the jobseeker to see it as unsuccessful afterwards" do
       run_with_publisher(publisher) do
         publisher_ats_applications_page.load(vacancy_id: vacancy.id)
-
-        #
-        # check tab all
-        #
-        publisher_ats_applications_page.select_tab(:tab_all)
-        expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
 
         #
         # check tab new
@@ -209,12 +191,6 @@ RSpec.describe "check job application after status transition" do
     it "allows the publisher to shortlist a submitted job application and the jobseeker to see it as shortlisted afterwards" do
       run_with_publisher(publisher) do
         publisher_ats_applications_page.load(vacancy_id: vacancy.id)
-
-        #
-        # check tab all
-        #
-        publisher_ats_applications_page.select_tab(:tab_all)
-        expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
 
         #
         # check tab new
@@ -278,12 +254,6 @@ RSpec.describe "check job application after status transition" do
 
       run_with_publisher(publisher) do
         publisher_ats_applications_page.load(vacancy_id: vacancy.id)
-
-        #
-        # check tab all
-        #
-        publisher_ats_applications_page.select_tab(:tab_all)
-        expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
 
         #
         # check tab new
