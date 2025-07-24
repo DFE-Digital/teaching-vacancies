@@ -19,7 +19,7 @@ RSpec.describe "check job application after status transition" do
     end
   end
 
-  describe "jobseeker job applications listing" do
+  describe "job applications listing" do
     it "jobseeker can view all its applications", pending: "fix on interviewing display" do
       run_with_jobseeker(jobseeker) do
         jobseeker_applications_page.load
@@ -325,9 +325,10 @@ RSpec.describe "check job application after status transition" do
         expect(display_status).to have_text("shortlisted")
 
         publisher_ats_applications_page.update_status(job_application) do |tag_page|
-          tag_page.select_and_submit("interviewing")
+          tag_page.select_and_submit("interviewing", &:external_pre_checks)
         end
 
+        publisher_ats_applications_page.select_tab(:tab_shortlisted)
         expect(publisher_ats_applications_page.tab_panel.job_applications).to be_empty
 
         #

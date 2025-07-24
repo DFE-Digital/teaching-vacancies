@@ -16,6 +16,7 @@ module PageObjects
         publisher_ats_applications: "Publisher::Ats::JobApplicationsPage",
         publisher_ats_interviewing: "Publisher::Ats::InterviewingApplicationsPage",
         publisher_ats_pre_interview_checks: "Publisher::Ats::PreInterviewChecksPage",
+        publisher_ats_reference_and_self_disclosure: "ReferenceAndSelfDisclosurePage",
         publisher_ats_reference_request: "Publisher::Ats::ReferenceRequestPage",
         publisher_ats_satisfactory_reference: "Publisher::Ats::SatisfactoryReferencePage",
         publisher_ats_tag: "Publisher::Ats::TagPage",

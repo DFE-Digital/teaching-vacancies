@@ -14,6 +14,11 @@ module PageObjects
           def select_and_submit(status)
             public_send(:"status_#{status}").click
             btn_save_and_continue.click
+
+            if status == "interviewing" && block_given?
+              ref_and_dis_page = PageObjects::Pages::Publisher::Ats::ReferenceAndSelfDisclosurePage.new
+              yield ref_and_dis_page if ref_and_dis_page.displayed?
+            end
           end
         end
       end

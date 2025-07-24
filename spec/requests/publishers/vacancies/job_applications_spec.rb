@@ -158,26 +158,28 @@ RSpec.describe "Job applications" do
     let(:form_params) { { origin:, status:, job_applications: } }
     let(:params) { { publishers_job_application_tag_form: form_params } }
 
-    context "when form missing selected status" do
-      before do
-        post(update_tag_organisation_job_job_applications_path(vacancy.id), params:)
+    describe "validations" do
+      context "when form missing selected status" do
+        before do
+          post(update_tag_organisation_job_job_applications_path(vacancy.id), params:)
+        end
+
+        it { is_expected.to render_template(:tag) }
       end
 
-      it { is_expected.to render_template(:tag) }
-    end
+      context "when form missing job applications" do
+        let(:job_applications) { [] }
+        let(:status) { "shortlisted" }
 
-    context "when form missing job applications" do
-      let(:job_applications) { [] }
-      let(:status) { "shortlisted" }
+        before do
+          post(update_tag_organisation_job_job_applications_path(vacancy.id), params:)
+        end
 
-      before do
-        post(update_tag_organisation_job_job_applications_path(vacancy.id), params:)
+        it { is_expected.to redirect_to organisation_job_job_applications_path(vacancy.id, anchor: origin) }
       end
-
-      it { is_expected.to redirect_to organisation_job_job_applications_path(vacancy.id, anchor: origin) }
     end
 
-    context "when form valid" do
+    context "when progressing to status other than interviewing" do
       let(:status) { "shortlisted" }
 
       it "update status and redirects" do
@@ -185,6 +187,18 @@ RSpec.describe "Job applications" do
           .to change { job_application.reload.status }.from("submitted").to(status)
 
         expect(response).to redirect_to organisation_job_job_applications_path(vacancy.id, anchor: origin)
+      end
+    end
+
+    context "when progressing to interviewing" do
+      let(:status) { "interviewing" }
+      let(:batch) { JobApplicationBatch.last }
+
+      it "creates a batch and redirect" do
+        expect { post(update_tag_organisation_job_job_applications_path(vacancy.id), params:) }
+          .to change(JobApplicationBatch, :count).by(1)
+
+        expect(response).to redirect_to organisation_job_job_application_batch_references_and_self_disclosure_path(vacancy.id, batch.id, Wicked::FIRST_STEP)
       end
     end
   end
