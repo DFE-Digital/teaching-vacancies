@@ -52,7 +52,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
       # job application panel
       expect(current_page.selected_tab).to have_text("New")
-      expect(current_page.tab_panel.heading).to have_text("New Applications")
+      expect(current_page.tab_panel.heading).to have_text("New applications")
       expect(current_page.tab_panel.job_applications.count).to eq(job_applications.count)
       job_applications.each do |applicant|
         job_application = current_page.candidate(applicant)
@@ -64,7 +64,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       {
         tab_all: job_applications.count,
         tab_submitted: job_applications.count,
-        tab_not_considering: 0,
+        tab_unsuccessful: 0,
         tab_shortlisted: 0,
         tab_interviewing: 0,
       }.each do |tab_id, count|
@@ -87,7 +87,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       {
         tab_all: job_applications.count,
         tab_submitted: 2,
-        tab_not_considering: 0,
+        tab_unsuccessful: 0,
         tab_shortlisted: 5,
         tab_interviewing: 0,
       }.each do |tab_id, count|
@@ -103,7 +103,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       {
         tab_all: job_applications.count,
         tab_submitted: 1,
-        tab_not_considering: 1,
+        tab_unsuccessful: 1,
         tab_shortlisted: 5,
         tab_interviewing: 0,
       }.each do |tab_id, count|
@@ -117,7 +117,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       {
         tab_all: job_applications.count,
         tab_submitted: 1,
-        tab_not_considering: 1,
+        tab_unsuccessful: 1,
         tab_shortlisted: 5,
         tab_interviewing: 0,
       }.each do |tab_id, count|
@@ -130,9 +130,9 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       #
       # display not considering tab
       #
-      current_page.select_tab(:tab_not_considering)
+      current_page.select_tab(:tab_unsuccessful)
 
-      expect(current_page.selected_tab).to have_text("Not Considering")
+      expect(current_page.selected_tab).to have_text("Not considering")
       expect(current_page.tab_panel.job_applications[0].name).to have_text(britany.name)
       expect(current_page.tab_panel.job_applications[0].mapped_status).to eq(britany.reload.status)
 
@@ -166,7 +166,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       {
         tab_all: job_applications.count,
         tab_submitted: 1,
-        tab_not_considering: 1,
+        tab_unsuccessful: 1,
         tab_shortlisted: 3,
         tab_interviewing: 2,
       }.each do |tab_id, count|
@@ -194,7 +194,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       {
         tab_all: job_applications.count,
         tab_submitted: 1,
-        tab_not_considering: 1,
+        tab_unsuccessful: 1,
         tab_shortlisted: 2,
         tab_interviewing: 2,
       }.each do |tab_id, count|

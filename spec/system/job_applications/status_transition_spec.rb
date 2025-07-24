@@ -180,7 +180,7 @@ RSpec.describe "check job application after status transition" do
         #
         # display not considering tab
         #
-        publisher_ats_applications_page.select_tab(:tab_not_considering)
+        publisher_ats_applications_page.select_tab(:tab_unsuccessful)
 
         display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
         expect(display_status).to have_text("rejected")

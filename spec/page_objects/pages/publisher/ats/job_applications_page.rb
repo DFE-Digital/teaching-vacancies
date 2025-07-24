@@ -28,8 +28,8 @@ module PageObjects
           sections :job_applications, JobApplicationSection, ".govuk-table__body .govuk-table__row"
 
           element :heading, "h3"
-          element :btn_download, '.govuk-button[name="download_selected"]'
-          element :btn_update_status, '.govuk-button[name="update_application_status"]'
+          element :btn_download, '.govuk-button[value="download"]'
+          element :btn_update_status, '.govuk-button[value="update_status"]'
         end
 
         class JobApplicationsPage < CommonPage

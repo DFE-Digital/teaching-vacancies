@@ -560,11 +560,6 @@ en:
             after: Deadline passed
             before: Application deadline
           expired_more_than_year: In line with our data retention policy you are no longer able to view applications for this job.
-          no_applicants: Nobody has applied for this job yet
-          no_new: There are no pending applications
-          no_rejected: No applications have been marked for rejection
-          no_interviewing: No applications have been marked for interview yet
-          no_shortlisted: No applications have been shortlisted yet
           received: Received on
           rejected:
             one: Rejected application
@@ -578,18 +573,6 @@ en:
           submitted:
             one: Unread application
             other: Unread applications
-        candidates:
-          name: Name
-          contact_details: Contact details
-          application_status: Application status
-          update_application_status: Update application status
-          download_selected: Download selected
-        interviewing:
-          name: Name
-          contact_details: Contact details
-          application_status: Application status
-          update_application_status: Update application status
-          download_selected: Download selected
         notes:
           create:
             success: A note has been added

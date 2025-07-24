@@ -8,6 +8,18 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def index
     @form = Publishers::JobApplication::TagForm.new
+
+    @candidates = JobApplication.statuses.transform_values do |status_idx|
+      vacancy.job_applications.where(status: status_idx)
+    end
+
+    @candidates["submitted"] = vacancy.job_applications.where(status: %i[submitted reviewed])
+    @candidates["unsuccessful"] = vacancy.job_applications.where(status: %i[unsuccessful])
+    @candidates["all"] = vacancy.job_applications.where(status: JobApplication.statuses.except("draft").keys)
+
+    @tab_headers = %w[all submitted unsuccessful shortlisted interviewing].map do |tab_name|
+      [tab_name, @candidates[tab_name].count]
+    end
   end
 
   def show
@@ -47,7 +59,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def tag
     with_valid_tag_form do |form|
-      if params["download_selected"] == "true"
+      if params["target"] == "download"
         download_selected(form.job_applications)
       else # when "update_status"
         render "tag"
