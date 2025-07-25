@@ -98,7 +98,7 @@ RSpec.describe "Job applications" do
         get(organisation_job_job_applications_path(vacancy.id))
       end
 
-      it "renders the index page" do
+      it "with correct template" do
         expect(response).to render_template(:index)
       end
 
@@ -109,12 +109,13 @@ RSpec.describe "Job applications" do
         expect(assigns[:candidates]["interviewing"]).to match_array(interviewings)
       end
 
-      it "assigns tab_heaers variables" do
+      it "assigns tab_headers variables" do
         expected_tab_headers = [
           ["submitted", 2],
           ["unsuccessful", 2],
           ["shortlisted", 1],
           ["interviewing", 1],
+          ["offered", 2],
         ]
         expect(assigns[:tab_headers]).to match_array(expected_tab_headers)
       end
@@ -140,49 +141,89 @@ RSpec.describe "Job applications" do
   end
 
   describe "GET #tag" do
+    subject { response }
+
     let(:vacancy) { create(:vacancy, job_title: "teacher-job") }
     let(:job_application_2) { create(:job_application, :status_submitted, vacancy: vacancy) }
-    let(:job_applications) { [job_application.id, job_application_2.id] }
-    let(:tag_params) do
+    let(:params) do
       {
-        publishers_job_application_tag_form: { job_applications:, origin: },
+        publishers_job_application_tag_form: {
+          job_applications:,
+          origin:,
+        },
+        target:,
       }
     end
+    let(:job_applications) { [job_application.id, job_application_2.id] }
     let(:origin) { "new" }
+    let(:target) { nil }
 
-    context "when preparing to tag job applications" do
-      it "renders the tag template" do
-        get tag_organisation_job_job_applications_path(vacancy.id), params: tag_params
-        expect(response).to render_template(:tag)
-      end
+    before do
+      get(tag_organisation_job_job_applications_path(vacancy.id), params:)
     end
 
-    context "when no job application selected" do
-      let(:job_applications) { [] }
+    context "when preparing to tag job applications" do
+      it { is_expected.to render_template(:tag) }
 
-      it "redirects to index when form is invalid" do
-        get tag_organisation_job_job_applications_path(vacancy.id), params: tag_params
-        expect(response).to redirect_to(organisation_job_job_applications_path(vacancy.id, anchor: origin))
+      context "when no job application selected" do
+        let(:job_applications) { [] }
+
+        it { is_expected.to redirect_to(organisation_job_job_applications_path(vacancy.id, anchor: origin)) }
       end
     end
 
     context "when downloading selected job applications" do
-      it "sends zip file with PDFs" do
-        get tag_organisation_job_job_applications_path(vacancy.id), params: tag_params.merge(target: "download")
+      let(:target) { "download" }
 
+      it "sends zip file with PDFs" do
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq("application/zip")
         expect(response.headers["Content-Disposition"]).to include("applications_#{vacancy.job_title}.zip")
       end
+
+      context "when no job application selected" do
+        let(:job_applications) { [] }
+
+        it { is_expected.to redirect_to(organisation_job_job_applications_path(vacancy.id, anchor: origin)) }
+      end
     end
 
-    context "when downloading with missing job applications" do
-      let(:job_applications) { [] }
+    context "when exporting selected job applications" do
+      let(:target) { "export" }
 
-      it "renders index when download form is invalid" do
-        get tag_organisation_job_job_applications_path(vacancy.id), params: tag_params.merge(download_selected: "true")
-        expect(response).to redirect_to(organisation_job_job_applications_path(vacancy.id, anchor: origin))
+      it "sends csv file" do
+        expect(response).to have_http_status(:ok)
+        expect(response.content_type).to eq("text/csv")
+        expect(response.headers["Content-Disposition"]).to include("applications_offered_#{vacancy.job_title}.csv")
       end
+
+      context "when no job application selected" do
+        let(:job_applications) { [] }
+
+        it { is_expected.to redirect_to(organisation_job_job_applications_path(vacancy.id, anchor: origin)) }
+      end
+    end
+
+    context "when copying emails" do
+      let(:target) { "emails" }
+
+      it "sends json files with emails" do
+        expect(response).to have_http_status(:ok)
+        expect(response.content_type).to eq("application/json")
+        expect(response.headers["Content-Disposition"]).to include("applications_emails_#{vacancy.job_title}.json")
+      end
+
+      context "when no job application selected" do
+        let(:job_applications) { [] }
+
+        it { is_expected.to redirect_to(organisation_job_job_applications_path(vacancy.id, anchor: origin)) }
+      end
+    end
+
+    context "when declining job offer" do
+      let(:target) { "declined" }
+
+      it { is_expected.to render_template(:declined_date) }
     end
   end
 
@@ -196,12 +237,13 @@ RSpec.describe "Job applications" do
     let(:status) { nil }
     let(:form_params) { { origin:, status:, job_applications: } }
     let(:params) { { publishers_job_application_tag_form: form_params } }
+    let(:request) do
+      post(update_tag_organisation_job_job_applications_path(vacancy.id), params:)
+    end
 
     describe "validations" do
       context "when form missing selected status" do
-        before do
-          post(update_tag_organisation_job_job_applications_path(vacancy.id), params:)
-        end
+        before { request }
 
         it { is_expected.to render_template(:tag) }
       end
@@ -210,9 +252,7 @@ RSpec.describe "Job applications" do
         let(:job_applications) { [] }
         let(:status) { "shortlisted" }
 
-        before do
-          post(update_tag_organisation_job_job_applications_path(vacancy.id), params:)
-        end
+        before { request }
 
         it { is_expected.to redirect_to organisation_job_job_applications_path(vacancy.id, anchor: origin) }
       end
@@ -222,8 +262,7 @@ RSpec.describe "Job applications" do
       let(:status) { "shortlisted" }
 
       it "update status and redirects" do
-        expect { post(update_tag_organisation_job_job_applications_path(vacancy.id), params:) }
-          .to change { job_application.reload.status }.from("submitted").to(status)
+        expect { request }.to change { job_application.reload.status }.from("submitted").to(status)
 
         expect(response).to redirect_to organisation_job_job_applications_path(vacancy.id, anchor: origin)
       end
@@ -234,10 +273,109 @@ RSpec.describe "Job applications" do
       let(:batch) { JobApplicationBatch.last }
 
       it "creates a batch and redirect" do
-        expect { post(update_tag_organisation_job_job_applications_path(vacancy.id), params:) }
-          .to change(JobApplicationBatch, :count).by(1)
+        expect { request }.to change(JobApplicationBatch, :count).by(1)
 
         expect(response).to redirect_to organisation_job_job_application_batch_references_and_self_disclosure_path(vacancy.id, batch.id, Wicked::FIRST_STEP)
+      end
+    end
+
+    context "when progressing to offered" do
+      let(:status) { "offered" }
+
+      before { request }
+
+      it { is_expected.to render_template(:offered_date) }
+    end
+
+    context "when declined_at invalid" do
+      let(:status) { "declined" }
+      let(:form_params) do
+        { origin:, status:, job_applications: }.merge(
+          "declined_at(1i)" => 2025,
+          "declined_at(2i)" => 120,
+          "declined_at(3i)" => 11,
+        )
+      end
+
+      before { request }
+
+      it { is_expected.to render_template(:declined_date) }
+    end
+  end
+
+  describe "POST #offer" do
+    subject { response }
+
+    let(:params) do
+      { publishers_job_application_tag_form: form_params }
+    end
+    let(:vacancy) { create(:vacancy, job_title: "teacher-job") }
+    let(:job_application_2) { create(:job_application, :status_submitted, vacancy: vacancy) }
+    let(:job_applications) { [job_application.id, job_application_2.id] }
+    let(:origin) { "new" }
+    let(:status) { nil }
+    let(:form_params) do
+      { origin:, status:, job_applications: }
+    end
+
+    context "when offered_at invalid" do
+      let(:status) { "offered" }
+      let(:field) { :offered_at }
+
+      context "when job applications ommitted" do
+        let(:job_applications) { nil }
+
+        before do
+          post(offer_organisation_job_job_applications_path(vacancy.id), params:)
+        end
+
+        it { is_expected.to redirect_to organisation_job_job_applications_path(vacancy.id, anchor: origin) }
+      end
+
+      context "when date ommitted" do
+        it "update job application status" do
+          expect { post(offer_organisation_job_job_applications_path(vacancy.id), params:) }
+            .to change { job_application.reload.status }.from("submitted").to(status)
+          expect(response).to redirect_to organisation_job_job_applications_path(vacancy.id, anchor: origin)
+        end
+
+        it "does not update date" do
+          expect { post(offer_organisation_job_job_applications_path(vacancy.id), params:) }
+            .to not_change { job_application.reload.public_send(field) }.from(nil)
+        end
+      end
+
+      context "when date is invalid" do
+        let(:form_params) do
+          { origin:, status:, job_applications: }.merge("offered_at(1i)" => 111)
+        end
+
+        before do
+          post(offer_organisation_job_job_applications_path(vacancy.id), params:)
+        end
+
+        it { is_expected.to render_template("offered_date") }
+      end
+
+      context "when date is valid" do
+        let(:form_params) do
+          { origin:, status:, job_applications: }.merge(
+            "offered_at(1i)" => 2025,
+            "offered_at(2i)" => 12,
+            "offered_at(3i)" => 11,
+          )
+        end
+
+        it "update job application" do
+          expect { post(offer_organisation_job_job_applications_path(vacancy.id), params:) }
+            .to change { job_application.reload.status }.from("submitted").to(status)
+          expect(response).to redirect_to organisation_job_job_applications_path(vacancy.id, anchor: origin)
+        end
+
+        it "update date" do
+          expect { post(offer_organisation_job_job_applications_path(vacancy.id), params:) }
+            .to change { job_application.reload.public_send(field) }.from(nil).to(Date.new(2025, 12, 11))
+        end
       end
     end
   end

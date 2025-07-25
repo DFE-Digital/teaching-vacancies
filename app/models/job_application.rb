@@ -1,5 +1,5 @@
 class JobApplication < ApplicationRecord
-  before_save :update_status_timestamp, if: :will_save_change_to_status?
+  before_save :update_status_timestamp, if: %i[will_save_change_to_status? ignore_for_offered_and_declined?]
   before_save :reset_support_needed_details
   before_update :anonymise_report, if: -> { will_save_change_to_status? && status == "submitted" }
 
@@ -55,7 +55,7 @@ class JobApplication < ApplicationRecord
   }
 
   # If you want to add a status, be sure to add a `status_at` column to the `job_applications` table
-  enum :status, { draft: 0, submitted: 1, reviewed: 2, shortlisted: 3, unsuccessful: 4, withdrawn: 5, interviewing: 6 }, default: 0
+  enum :status, { draft: 0, submitted: 1, reviewed: 2, shortlisted: 3, unsuccessful: 4, withdrawn: 5, interviewing: 6, offered: 7, declined: 8 }, default: 0
   array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
 
   RELIGIOUS_REFERENCE_TYPES = { referee: 1, baptism_certificate: 2, baptism_date: 3, no_referee: 4 }.freeze
@@ -130,6 +130,10 @@ class JobApplication < ApplicationRecord
   end
 
   private
+
+  def ignore_for_offered_and_declined?
+    %w[offered declined].exclude?(status)
+  end
 
   def update_status_timestamp
     self["#{status}_at"] = Time.current
