@@ -5,7 +5,7 @@ class DSIClient
   end
 
   def role_ids
-    @role_ids ||= roles.map { |r| r[:id] }
+    @role_ids ||= roles.pluck(:id)
   end
 
   def roles

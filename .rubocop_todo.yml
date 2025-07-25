@@ -1315,7 +1315,6 @@ Rails/IndexWith:
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/Pluck:
   Exclude:
-    - 'app/services/dsi_client.rb'
     - 'app/services/gias/import_schools_and_local_authorities.rb'
     - 'app/services/location_suggestion.rb'
     - 'lib/modules/aws_ip_ranges.rb'
@@ -1592,7 +1591,6 @@ Style/WordArray:
     - 'spec/requests/publishers/vacancies/build_spec.rb'
     - 'spec/requests/subscriptions_spec.rb'
     - 'spec/services/authorisation_spec.rb'
-    - 'spec/services/dsi_client_spec.rb'
     - 'spec/services/jobseekers/job_applications/prefill_job_application_from_previous_application_spec.rb'
     - 'spec/services/publishers/vacancies/vacancy_step_process_spec.rb'
     - 'spec/services/search/criteria_inventor_spec.rb'
