@@ -4,9 +4,14 @@ en:
       name: Name
       contact_details: Contact details
       application_status: Application status
+      offer_date: Offer date
+      decline_date: Decline date
     buttons:
       update_application_status: Update application status
       download_selected: Download selected
+      offer_declined: Mark offer as declined
+      copy_candidate_email: Copy selected emails
+      download_candidate_data: Download applicants data
     submitted:
       label: "New (%{count})"
       heading: New applications
@@ -15,6 +20,9 @@ en:
       label: "Not considering (%{count})"
       heading: Not being considered
       none: No applications have been marked for rejection
+    withdrawn:
+      heading: Withdrawn applications
+      none: No candidate has withdrawn
     shortlisted:
       label: "Shortlisted (%{count})"
       heading: Shortlisted applications
@@ -23,6 +31,11 @@ en:
       label: "Interviewing (%{count})"
       heading: Interviewing applications
       none: No applications have been marked for interview yet
-    withdrawn:
-      heading: Withdrawn applications
-      none: No candidate has withdrawn
+    offered:
+      label: "Job offered (%{count})"
+      heading: Applicants offered a job
+      none: No applications have been offered yet
+      offered_inset: Downloading applicant data will generate a CSV file that includes each applicant’s name, address, phone number, National Insurance number, and TRN.
+    declined:
+      heading: Offer declined
+      none: No applications have been declined yet
