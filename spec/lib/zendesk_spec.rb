@@ -1,6 +1,7 @@
 require "rails_helper"
+require "zendesk"
 
-RSpec.describe Zendesk, zendesk: true do
+RSpec.describe Zendesk, :zendesk do
   subject(:service) { described_class }
 
   let(:client) { double(ZendeskAPI::Client) }
@@ -21,7 +22,7 @@ RSpec.describe Zendesk, zendesk: true do
     let(:comment) { "Help!" }
     let(:email_address) { "test@example.com" }
     let(:name) { "A User" }
-    let(:subject) { "Some page" }
+    let(:request_subject) { "Some page" }
 
     let(:kwargs) do
       {
@@ -29,7 +30,7 @@ RSpec.describe Zendesk, zendesk: true do
         comment: comment,
         email_address: email_address,
         name: name,
-        subject: subject,
+        subject: request_subject,
       }
     end
 
@@ -37,8 +38,7 @@ RSpec.describe Zendesk, zendesk: true do
     let(:uploads) { double(create!: nil) }
 
     before do
-      allow(client).to receive(:requests).and_return(requests)
-      allow(client).to receive(:uploads).and_return(uploads)
+      allow(client).to receive_messages(requests: requests, uploads: uploads)
     end
 
     it "uses the end user's email address as the API username" do
@@ -53,7 +53,7 @@ RSpec.describe Zendesk, zendesk: true do
           name: name,
           email: email_address,
         },
-        subject: "[Support request] #{subject}",
+        subject: "[Support request] #{request_subject}",
         comment: {
           body: comment,
           uploads: [],
@@ -71,11 +71,11 @@ RSpec.describe Zendesk, zendesk: true do
       let(:upload) { double(id: upload_id) }
 
       it "uploads the attachments and assigns them to the comment" do
-        expect(uploads).to receive(:create!)
-          .with(file: file).and_return(upload)
+        allow(uploads).to receive(:create!).with(file: file).and_return(upload)
 
         service.create_request!(**kwargs)
 
+        expect(uploads).to have_received(:create!).with(file: file)
         expect(requests).to have_received(:create!).with(
           hash_including(
             comment: hash_including(uploads: [upload_id]),
@@ -109,7 +109,7 @@ RSpec.describe Zendesk, zendesk: true do
         expect(config).to have_received(:token=).with(api_key)
       end
 
-      context "if the key is not set" do
+      context "when the key is not set" do
         let(:api_key) { nil }
 
         it "raises a configuration error" do

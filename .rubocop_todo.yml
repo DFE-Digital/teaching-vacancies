@@ -372,7 +372,6 @@ RSpec/ContextWording:
     - 'spec/services/publishers/vacancies/vacancy_step_process_spec.rb'
     - 'spec/services/search/jobseeker_profile_search_spec.rb'
     - 'spec/services/search/wider_suggestions_builder_spec.rb'
-    - 'spec/services/zendesk_spec.rb'
     - 'spec/smoke_tests/jobseekers_can_view_homepage_spec.rb'
     - 'spec/system/jobseekers/jobseeker_can_add_training_and_cpds_to_their_job_application_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_add_employments_to_their_job_application_spec.rb'
@@ -767,7 +766,6 @@ RSpec/MetadataStyle:
     - 'spec/requests/api/vacancies_spec.rb'
     - 'spec/requests/recaptcha_spec.rb'
     - 'spec/requests/subscriptions_spec.rb'
-    - 'spec/services/zendesk_spec.rb'
     - 'spec/smoke_tests/jobseekers_can_view_homepage_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_create_a_job_alert_from_a_listing_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_create_a_job_alert_from_a_mailing_campaign_spec.rb'
@@ -880,7 +878,6 @@ RSpec/NamedSubject:
     - 'spec/services/vacancies/import/sources/my_new_term_spec.rb'
     - 'spec/services/vacancies/import/sources/vacancy_poster_spec.rb'
     - 'spec/services/vacancies/import/sources/ventrus_spec.rb'
-    - 'spec/services/zendesk_spec.rb'
 
 # Offense count: 17
 # Configuration parameters: AllowedPatterns.
@@ -952,7 +949,6 @@ RSpec/ReceiveMessages:
     - 'spec/services/search/postgres/query_parser_spec.rb'
     - 'spec/services/search/postgres/query_transformer_spec.rb'
     - 'spec/services/vacancies/export/dwp_find_a_job/published_and_updated_vacancies/parsed_vacancy_spec.rb'
-    - 'spec/services/zendesk_spec.rb'
 
 # Offense count: 8
 RSpec/RepeatedExampleGroupBody:
@@ -1049,7 +1045,6 @@ RSpec/StubbedMock:
     - 'spec/services/vacancies/import/sources/fusion_spec.rb'
     - 'spec/services/vacancies/import/sources/vacancy_poster_spec.rb'
     - 'spec/services/vacancies/import/sources/ventrus_spec.rb'
-    - 'spec/services/zendesk_spec.rb'
     - 'spec/support/shared_examples/radius_builder.rb'
     - 'spec/system/jobseekers/jobseekers_can_create_a_job_alert_from_a_listing_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_create_a_job_alert_from_a_search_spec.rb'
@@ -1059,7 +1054,6 @@ RSpec/StubbedMock:
 RSpec/SubjectDeclaration:
   Exclude:
     - 'spec/components/searchable_collection_component_spec.rb'
-    - 'spec/services/zendesk_spec.rb'
 
 # Offense count: 14
 RSpec/SubjectStub:
@@ -1086,6 +1080,7 @@ RSpec/VerifiedDoubles:
     - 'spec/jobs/send_daily_alert_email_job_spec.rb'
     - 'spec/jobs/send_expired_vacancy_feedback_email_prompt_job_spec.rb'
     - 'spec/jobs/send_job_listing_ended_early_notification_job_spec.rb'
+    - 'spec/lib/zendesk_spec.rb'
     - 'spec/queries/vacancy_location_query_spec.rb'
     - 'spec/rails_helper.rb'
     - 'spec/requests/api/location_suggestion_spec.rb'
@@ -1104,7 +1099,6 @@ RSpec/VerifiedDoubles:
     - 'spec/services/vacancies/import/sources/fusion_spec.rb'
     - 'spec/services/vacancies/import/sources/my_new_term_spec.rb'
     - 'spec/services/vacancies/import/sources/ventrus_spec.rb'
-    - 'spec/services/zendesk_spec.rb'
     - 'spec/system/publishers/publishers_can_add_additional_documents_to_a_vacancy_spec.rb'
     - 'spec/system/publishers/publishers_can_edit_a_published_vacancy_as_a_school_spec.rb'
     - 'spec/system/publishers/publishers_can_end_a_job_listing_early_spec.rb'
@@ -1203,7 +1197,6 @@ Rails/CompactBlank:
     - 'app/models/vacancy.rb'
     - 'app/presenters/vacancy_presenter.rb'
     - 'app/services/search/criteria_inventor.rb'
-    - 'app/services/zendesk.rb'
 
 # Offense count: 43
 # This cop supports unsafe autocorrection (--autocorrect-all).
