@@ -71,10 +71,6 @@ class DSIClient
     delegate :body, :code, to: :@net_http_response
     delegate :[], to: :data
 
-    def success?
-      code == "200"
-    end
-
     def invalid?
       code.starts_with?("4")
     end
