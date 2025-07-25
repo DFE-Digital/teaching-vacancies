@@ -547,6 +547,7 @@ en:
           draft: Draft jobs - %{organisation_name}
           awaiting_feedback: Jobs awaiting feedbank - %{organisation_name}
       job_applications:
+        update_application_status: Update application status
         interviewing_status:
           pre_interview_checks: Pre-interview checks
         header:
@@ -660,8 +661,9 @@ en:
             change_email_success: Email address updated and reference request sent
         tag:
           page_title: Update application status
-          what_application_status_single: What application status do you want to assign to %{name}?
-          what_application_status_multiple: What application status do you want to assign to these applicants?
+          what_application_status:
+            one: What application status do you want to assign to this applicant?
+            other: What application status do you want to assign to these applicants?
           applicants: Applicants
         update_status:
           unsuccessful: "%{name} has been sent an email telling them their application has not been successful"

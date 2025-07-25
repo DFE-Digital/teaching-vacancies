@@ -1,6 +1,56 @@
 require "rails_helper"
 
 RSpec.describe JobApplicationsHelper do
+  describe "#tab_name" do
+    subject { helper.tab_name(status) }
+
+    context "when status reviewed" do
+      let(:status) { "reviewed" }
+
+      it { is_expected.to eq("submitted") }
+    end
+
+    context "when status withdrawn" do
+      let(:status) { "withdrawn" }
+
+      it { is_expected.to eq("unsuccessful") }
+    end
+
+    context "when status declined" do
+      let(:status) { "declined" }
+
+      it { is_expected.to eq("offered") }
+    end
+
+    context "when status any other" do
+      let(:status) { "draft" }
+
+      it { is_expected.to eq("draft") }
+    end
+  end
+
+  describe "#tag_status_options" do
+    subject { helper.tag_status_options(status) }
+
+    context "when status shortlisted" do
+      let(:status) { "shortlisted" }
+
+      it { is_expected.to match_array(%i[unsuccessful interviewing offered]) }
+    end
+
+    context "when status interviewing" do
+      let(:status) { "interviewing" }
+
+      it { is_expected.to match_array(%i[unsuccessful offered]) }
+    end
+
+    context "when status any other" do
+      let(:status) { "unsuccessful" }
+
+      it { is_expected.to match_array(%i[unsuccessful shortlisted interviewing offered]) }
+    end
+  end
+
   describe "#job_application_qualified_teacher_status_info" do
     subject { helper.job_application_qualified_teacher_status_info(job_application) }
 

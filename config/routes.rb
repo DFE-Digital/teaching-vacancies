@@ -416,6 +416,7 @@ Rails.application.routes.draw do
         get :withdrawn
         get :tag, on: :collection
         post :update_tag, on: :collection
+        post :offer, on: :collection
         member do
           get :pre_interview_checks
           get :collect_references
