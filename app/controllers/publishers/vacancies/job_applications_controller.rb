@@ -15,8 +15,9 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
     @candidates["submitted"] = vacancy.job_applications.where(status: %i[submitted reviewed])
     @candidates["unsuccessful"] = vacancy.job_applications.where(status: %i[unsuccessful withdrawn])
+    @candidates["offered"] = vacancy.job_applications.where(status: %i[offered declined])
 
-    @tab_headers = %w[submitted unsuccessful shortlisted interviewing].map do |tab_name|
+    @tab_headers = %w[submitted unsuccessful shortlisted interviewing offered].map do |tab_name|
       [tab_name, @candidates[tab_name].count]
     end
   end
@@ -58,8 +59,11 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def tag
     with_valid_tag_form do |form|
-      if params["target"] == "download"
-        download_selected(form.job_applications)
+      case params["target"]
+      when "download" then download_selected(form.job_applications)
+      when "export"   then export_selected(form.job_applications)
+      when "emails"   then copy_emails_selected(form.job_applications)
+      when "declined" then render_declined_form(form.job_applications, form.origin)
       else # when "update_status"
         render "tag"
       end
@@ -68,14 +72,20 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def update_tag
     with_valid_tag_form(validate_status: true) do |form|
-      if form.status == "interviewing"
-        batch = JobApplicationBatch.create!(vacancy: vacancy)
-        form.job_applications.each { |ja| batch.batchable_job_applications.create!(job_application: ja) }
-        redirect_to organisation_job_job_application_batch_references_and_self_disclosure_path(vacancy.id, batch.id, Wicked::FIRST_STEP)
+      case form.status
+      when "interviewing" then redirect_to_references_and_self_disclosure(form.job_applications)
+      when "offered"      then render_offered_form(form.job_applications, form.origin)
       else
-        form.job_applications.each { |ja| ja.update!(status: form.status) }
+        form.job_applications.each { it.update!(form.attributes) }
         redirect_to organisation_job_job_applications_path(vacancy.id, anchor: form.origin)
       end
+    end
+  end
+
+  def offer
+    with_valid_tag_form do |form|
+      form.job_applications.find_each { it.update!(form.attributes) }
+      redirect_to organisation_job_job_applications_path(vacancy.id, anchor: form.origin)
     end
   end
 
@@ -104,7 +114,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     form_class = Publishers::JobApplication::TagForm
     form_params = params
                     .fetch(ActiveModel::Naming.param_key(form_class), {})
-                    .permit(:origin, :status, { job_applications: [] })
+                    .permit(:origin, :status, :offered_at, :declined_at, { job_applications: [] })
     form_params[:job_applications] = vacancy.job_applications.where(id: Array(form_params[:job_applications]).compact_blank)
     form_params[:validate_status] = validate_status
 
@@ -117,8 +127,10 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def handle_tag_form_errors(form)
-    if form.errors.details.key?(:status)
-      render "tag"
+    case form.errors.details
+    in { status: }      then render "tag"
+    in { offered_at: }  then render "offered_date"
+    in { declined_at: } then render "declined_date"
     else
       flash[form.origin] = form.errors.full_messages
       redirect_to organisation_job_job_applications_path(vacancy.id, anchor: form.origin)
@@ -128,12 +140,44 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   require "zip"
 
   def download_selected(job_applications)
-    zip_data = JobApplicationZipBuilder.new(vacancy: vacancy, job_applications: job_applications).generate
+    zip_data = JobApplicationZipBuilder.new(vacancy:, job_applications:).generate
 
     send_data(
       zip_data.string,
       filename: "applications_#{vacancy.job_title.parameterize}.zip",
       type: "application/zip",
     )
+  end
+
+  def export_selected(selection)
+    headers = %i[first_name last_name street_address city postcode phone_number email_address national_insurance_number teacher_reference_number]
+
+    data = CSV.generate do |csv|
+      csv << headers
+      selection.pluck(*headers).each { csv << it }
+    end
+    send_data(data, filename: "applications_offered_#{vacancy.job_title}.csv")
+  end
+
+  def copy_emails_selected(selection)
+    send_data(selection.pluck(:email_address).to_json, filename: "applications_emails_#{vacancy.job_title}.json")
+  end
+
+  def redirect_to_references_and_self_disclosure(job_applications)
+    batch = JobApplicationBatch.create!(vacancy: vacancy)
+    job_applications.each do |ja|
+      batch.batchable_job_applications.create!(job_application: ja)
+    end
+    redirect_to organisation_job_job_application_batch_references_and_self_disclosure_path(vacancy.id, batch.id, Wicked::FIRST_STEP)
+  end
+
+  def render_declined_form(job_applications, origin)
+    @form = Publishers::JobApplication::TagForm.new(job_applications:, origin:, status: "declined")
+    render "declined_date"
+  end
+
+  def render_offered_form(job_applications, origin)
+    @form = Publishers::JobApplication::TagForm.new(job_applications:, origin:, status: "offered")
+    render "offered_date"
   end
 end

@@ -153,12 +153,6 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
         tag_page.select_and_submit("interviewing", &:external_pre_checks)
       end
 
-      #
-      # without ATS references and self-disclosure collection through TV service
-      #
-      expect(publisher_ats_collect_references_page).to be_displayed(vacancy_id: vacancy.id)
-      publisher_ats_collect_references_page.answer_no
-
       expect(publisher_ats_applications_page).to be_displayed
 
       {

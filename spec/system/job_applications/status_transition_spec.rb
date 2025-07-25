@@ -269,12 +269,6 @@ RSpec.describe "check job application after status transition" do
         end
 
         #
-        # without ATS references and self-disclosure collection through TV service
-        #
-        expect(publisher_ats_collect_references_page).to be_displayed(vacancy_id: vacancy.id)
-        publisher_ats_collect_references_page.answer_no
-
-        #
         # display interviewing tab
         #
         expect(publisher_ats_applications_page).to be_displayed
