@@ -13,13 +13,15 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
   let(:unsuccessful) { JobApplication }
   let(:shortlisted) { build_stubbed_list(:job_application, 1, :status_shortlisted, vacancy:) }
   let(:interviewing) { build_stubbed_list(:job_application, 1, :status_interviewing, vacancy:) }
-  let(:candidates) { { submitted:, unsuccessful:, shortlisted:, interviewing: }.stringify_keys }
+  let(:offered) { JobApplication }
+  let(:candidates) { { submitted:, unsuccessful:, shortlisted:, interviewing:, offered: }.stringify_keys }
   let(:tab_headers) do
     [
       ["submitted", submitted.count],
       ["unsuccessful", unsuccessful.count],
       ["shortlisted", shortlisted.count],
       ["interviewing", interviewing.count],
+      ["offered", offered.count],
     ]
   end
 
@@ -27,6 +29,10 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
     list_unsuccessful = build_stubbed_list(:job_application, 1, :status_unsuccessful, vacancy:)
     list_withdrawn = build_stubbed_list(:job_application, 1, :status_withdrawn, vacancy:)
     allow(unsuccessful).to receive_messages(unsuccessful: list_unsuccessful, withdrawn: list_withdrawn)
+
+    list_offered = build_stubbed_list(:job_application, 1, :status_offered, vacancy:)
+    list_declined = build_stubbed_list(:job_application, 1, :status_declined, vacancy:)
+    allow(offered).to receive_messages(offered: list_offered, declined: list_declined)
 
     assign :current_organisation, organisation
     assign :vacancy, vacancy
@@ -134,6 +140,40 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
 
         within(".application-#{status}") do
           expect(rendered).to have_css(".govuk-tag--red", text: "rejected")
+        end
+      end
+    end
+
+    describe "offered application" do
+      let(:status) { "offered" }
+      let(:candidate) { offered.first }
+
+      it "shows applicant name that links to application" do
+        expect(rendered).to have_css(".application-#{status}")
+
+        within(".application-#{status}") do
+          expect(rendered).to have_link("#{candidate.first_name} #{candidate.last_name}", href: organisation_job_job_application_path(vacancy.id, candidate.id))
+        end
+      end
+
+      it "shows pink job offered tag" do
+        expect(rendered).to have_css(".application-#{status}")
+
+        within(".application-#{status}") do
+          expect(rendered).to have_css(".govuk-tag--pink", text: "job offered")
+        end
+      end
+    end
+
+    describe "declined application" do
+      let(:status) { "declined" }
+      let(:candidate) { offered.last }
+
+      it "shows applicant name that links to application" do
+        expect(rendered).to have_css(".application-#{status}")
+
+        within(".application-#{status}") do
+          expect(rendered).to have_link("#{candidate.first_name} #{candidate.last_name}", href: organisation_job_job_application_path(vacancy.id, candidate.id))
         end
       end
     end

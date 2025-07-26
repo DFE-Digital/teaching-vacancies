@@ -24,7 +24,7 @@
                                   class: "govuk-checkboxes--small"))
               - row.with_cell(text: govuk_link_to(application.name, organisation_job_job_application_path(vacancy.id, application)))
               - row.with_cell(text: application.email_address)
-              - row.with_cell(text: publisher_job_application_status_tag(application.status))
+              - row.with_cell(text: publisher_job_application_status_tag(application.status), html_attributes: { class: "status" })
 
       .govuk-button-group
         = f.govuk_submit t("tabs.buttons.download_selected"), name: "target", value: "download"
