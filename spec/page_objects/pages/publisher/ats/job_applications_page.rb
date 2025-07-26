@@ -12,7 +12,7 @@ module PageObjects
           element :checkbox, ".govuk-checkboxes__input", visible: false
           element :name, ".govuk-link:nth-child(1)"
           element :email, selector(3)
-          element :status, "#{selector(4)} .govuk-tag"
+          element :status, ".status"
 
           STATUS_MAPPING = {
             "unread" => "submitted",
@@ -26,10 +26,14 @@ module PageObjects
 
         class JobApplicationTabPanelSection < Sections::TabsSection
           sections :job_applications, JobApplicationSection, ".govuk-table__body .govuk-table__row"
+          sections :declined_job_applications, JobApplicationSection, ".application-declined.govuk-table__row"
 
           element :heading, "h3"
           element :btn_download, '.govuk-button[value="download"]'
           element :btn_update_status, '.govuk-button[value="update_status"]'
+          element :btn_decline, '.govuk-button[value="declined"]'
+          element :btn_copy_emails, '.govuk-button[value="emails"]'
+          element :btn_export, '.govuk-button[value="export"]'
         end
 
         class JobApplicationsPage < CommonPage
@@ -61,6 +65,18 @@ module PageObjects
               yield tag_page
             else
               raise "Tag page not displayed"
+            end
+          end
+
+          def decline_offer(*selection)
+            selection.each { select_candidate(it) }
+            tab_panel.btn_decline.click
+
+            job_decline_date_page = PageObjects::Pages::Publisher::Ats::JobDeclineDatePage.new
+            if job_decline_date_page.displayed?
+              yield job_decline_date_page
+            else
+              raise "decline offer date page not displayed"
             end
           end
 
