@@ -14,16 +14,7 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
   let(:shortlisted) { build_stubbed_list(:job_application, 1, :status_shortlisted, vacancy:) }
   let(:interviewing) { build_stubbed_list(:job_application, 1, :status_interviewing, vacancy:) }
   let(:offered) { JobApplication }
-  let(:candidates) { { submitted:, unsuccessful:, shortlisted:, interviewing:, offered: }.stringify_keys }
-  let(:tab_headers) do
-    [
-      ["submitted", submitted.count],
-      ["unsuccessful", unsuccessful.count],
-      ["shortlisted", shortlisted.count],
-      ["interviewing", interviewing.count],
-      ["offered", offered.count],
-    ]
-  end
+  let(:tabs_data) { { submitted:, unsuccessful:, shortlisted:, interviewing:, offered: }.stringify_keys }
 
   before do
     list_unsuccessful = build_stubbed_list(:job_application, 1, :status_unsuccessful, vacancy:)
@@ -37,8 +28,7 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
     assign :current_organisation, organisation
     assign :vacancy, vacancy
     assign :form, Publishers::JobApplication::TagForm.new
-    assign :candidates, candidates
-    assign :tab_headers, tab_headers
+    assign :tabs_data, tabs_data
 
     render
   end

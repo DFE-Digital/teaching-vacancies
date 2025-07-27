@@ -8,17 +8,17 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def index
     @form = Publishers::JobApplication::TagForm.new
+    tabs_definition = {
+      submitted:    %i[submitted reviewed],
+      unsuccessful: %i[unsuccessful withdrawn],
+      shortlisted:  %i[shortlisted],
+      interviewing: %i[interviewing],
+      offered:      %i[offered declined],
+    }.stringify_keys
 
-    @candidates = JobApplication.statuses.transform_values do |status_idx|
-      vacancy.job_applications.where(status: status_idx)
-    end
-
-    @candidates["submitted"] = vacancy.job_applications.where(status: %i[submitted reviewed])
-    @candidates["unsuccessful"] = vacancy.job_applications.where(status: %i[unsuccessful withdrawn])
-    @candidates["offered"] = vacancy.job_applications.where(status: %i[offered declined])
-
-    @tab_headers = %w[submitted unsuccessful shortlisted interviewing offered].map do |tab_name|
-      [tab_name, @candidates[tab_name].count]
+    @tabs_data = tabs_definition.transform_values do |statuses|
+      ordering = statuses.map { :"#{it}_at" }.index_with { :desc }
+      vacancy.job_applications.where(status: statuses).order(ordering)
     end
   end
 
