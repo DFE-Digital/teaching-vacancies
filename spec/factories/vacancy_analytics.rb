@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :vacancy_analytics do
     vacancy
-    referrer_counts { { "direct" => 1, "yahoo" => 12, "magic" => 8, "linkedin" => 15 } }
+    referrer_counts { { "Direct" => 1, "Yahoo" => 12, "Ask Jeeves" => 18, "Magic" => 8, "LinkedIn" => 15 } }
   end
 end
