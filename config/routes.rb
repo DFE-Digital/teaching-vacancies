@@ -222,6 +222,16 @@ Rails.application.routes.draw do
     resource :new_features, only: %i[] do
       get :reminder
     end
+    resources :current_year_statistics, only: %i[index] do
+      collection do
+        get :equal_opportunities
+      end
+    end
+    resources :all_time_statistics, only: %i[index] do
+      collection do
+        get :equal_opportunities
+      end
+    end
     resources :notifications, only: %i[index]
     resources :publisher_preferences, only: %i[new create edit update destroy]
     resources :organisations, only: %i[show] do

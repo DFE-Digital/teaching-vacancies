@@ -242,6 +242,57 @@ RSpec.describe Vacancy do
     let(:expired_earlier_today) { create(:vacancy, expires_at: 5.hour.ago) }
     let(:expires_later_today) { create(:vacancy, expires_at: 1.hour.from_now) }
 
+    # rubocop:disable RSpec/IndexedLet
+    describe ".active_in_current_academic_year" do
+      let(:jun_1_2025) { Date.current.beginning_of_year.months_since(5) }
+      let(:aug31_2025) { Date.current.end_of_year.months_ago(4) }
+      let(:aug_31_2024) { aug31_2025 - 1.year }
+      let(:sep_1_2025) { Date.current.beginning_of_year.months_since(8) }
+      let(:sep_2_2025) { sep_1_2025 + 1.day }
+      let(:sep_1_2024) { sep_1_2025 - 1.year }
+      let(:sep_2_2024) { sep_2_2025 - 1.year }
+
+      before do
+        create(:vacancy, publish_on: 2.years.ago, expiry_date: 2.years.ago, job_title: "expired_years_ago")
+        create(:vacancy, publish_on: sep_2_2024, expiry_date: aug31_2025, job_title: "academic_24_25")
+        create(:vacancy, publish_on: jun_1_2025, expiry_date: sep_2_2025, job_title: "academic_24_26")
+        create(:vacancy, publish_on: aug_31_2024, expiry_date: aug_31_2024, job_title: "aug_31_2024")
+        create(:vacancy, publish_on: sep_1_2024, expiry_date: sep_2_2024, job_title: "sep_2_2024")
+        create(:vacancy, publish_on: aug31_2025, expiry_date: aug31_2025, job_title: "aug_31_2025")
+        create(:vacancy, publish_on: sep_1_2025, expiry_date: sep_2_2025, job_title: "sep_2_2025")
+
+        travel_to(today)
+      end
+
+      context "when in July 2025" do
+        let(:today) { Date.current.beginning_of_year.months_since(6) }
+
+        it "finds vacancies from 2024-25" do
+          expect(described_class.active_in_current_academic_year.map(&:job_title))
+            .to contain_exactly("academic_24_25", "academic_24_26", "sep_2_2024")
+        end
+      end
+
+      context "when in Oct 2025" do
+        let(:today) { Date.current.beginning_of_year.months_since(9) }
+
+        it "finds vacancies from 2025-26" do
+          expect(described_class.active_in_current_academic_year.map(&:job_title))
+            .to contain_exactly("academic_24_26", "sep_2_2025")
+        end
+      end
+
+      context "when in June 2026" do
+        let(:today) { Date.current.end_of_year.months_since(6) }
+
+        it "finds vacancies from 2025-26" do
+          expect(described_class.active_in_current_academic_year.map(&:job_title))
+            .to contain_exactly("academic_24_26", "sep_2_2025")
+        end
+      end
+    end
+    # rubocop:enable RSpec/IndexedLet
+
     describe "#applicable" do
       it "finds current vacancies" do
         expired_earlier_today.send :set_slug

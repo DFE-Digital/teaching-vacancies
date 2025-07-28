@@ -44,8 +44,13 @@ schools = [bexleyheath_school,
 
 user_emails = users.map { |u| u.fetch(:email) }
 
+organisations = [bexleyheath_school, weydon_trust, southampton_la, abraham_moss]
+
 users.each do |user|
-  Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la, abraham_moss], **user)
+  publisher = Publisher.create(organisations: organisations, **user)
+  organisations.each do |organisation|
+    FactoryBot.create(:publisher_preference, publisher: publisher, organisation: organisation)
+  end
   SupportUser.create(user)
   FactoryBot.create(:jobseeker, :for_seed_data, email: user[:email])
 end
@@ -76,7 +81,7 @@ FactoryBot.create(:vacancy, :for_seed_data, **attrs)
 
 # Jobseekers
 FactoryBot.create(:jobseeker, email: "jobseeker@contoso.com")
-JobApplication.statuses.count.times { |i| FactoryBot.create(:jobseeker, email: "jobseeker#{i}@contoso.com") }
+50.times { |i| FactoryBot.create(:jobseeker, email: "jobseeker#{i}@contoso.com") }
 
 emails_without_applications = ["jobseeker@contoso.com"] + user_emails
 # Job Applications

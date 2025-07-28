@@ -203,33 +203,10 @@ en:
               text_html: '%{link} if you need help adding your organisation photo.'
               link_text: Contact support
           title: Organisation photo
-      preview:
-        exit_preview_link_text: Exit preview
-        page_title: Preview %{organisation_name}
-        summary:
-          heading:
-            caption_with_link_html: Part of %{link}
-            link_text: '%{organisation_name}'
       profile_caption: '%{organisation_type} profile'
       safeguarding_information:
         edit:
           title: Commitment to safeguarding
-      schools:
-        preview:
-          exit_preview_link_text: Exit preview
-          page_title: Schools - %{school_group_name}
-      show:
-        preview_link_text: Preview %{organisation_type} profile
-        schools: Schools
-        title: '%{organisation_type} profile'
-        profile_incomplete_banner:
-          title: Complete your %{organisation_type} profile
-        complete_school_profile: Complete your school profile
-      update_success: '%{organisation_type} details updated'
-      upload_a_file: Upload a file
-      url_override:
-        edit:
-          title: Website address
       organisation:
         address:
           label: Address
@@ -301,6 +278,10 @@ en:
           title: Complete your %{organisation_type} profile
         complete_school_profile: Complete your school profile
       update_success: "%{organisation_type} details updated"
+      upload_a_file: Upload a file
+      url_override:
+        edit:
+          title: Website address
     publisher_preferences:
       new:
         description_1: >-
@@ -341,6 +322,38 @@ en:
           description: Use DfE Sign-in to access your Teaching Vacancies account.
           description_fallback: Enter your email below and we will send you a link that will take you straight into your account.
           title: Hiring staff sign in
+    current_year_statistics:
+      bar_chart:
+        accessible_view: Change to table and accessible view
+        chart_view: Change to chart view
+      donut_chart:
+        accessible_view: Change to table and accessible view
+        chart_view: Change to chart view
+      equal_opportunities:
+        applicant_age: Applicant age
+        applicant_disability: Disability
+        applicant_ethnicity: Ethnicity
+        applicant_gender: Gender
+        applicant_orientation: Sexual orientation
+        applicant_religion: Religion
+        application_counts: You have received %{count} applications this acedemic year.
+        download_stats: >-
+          Select 'Download statistics' to download all historical equal opportunities data.
+      index:
+        vacancy_counts_html: You have posted %{link}.
+        vacancy_counts_link: "%{count} job listings this academic year"
+        download_stats: >-
+          Select 'Download statistics' to download all historical job listing data.
+      page_header:
+        equal_opportunities: Equal opportunities
+        overview: Overview
+        this_data: >-
+          This data is from the current academic year. If a job is live in two academic years (for example from
+          August 2025 to September 2025) it will be counted for both academic years. This data resets each academic year.
+        this_may_include: >-
+          This may include data from people who have withdrawn their applications.
+          This is to ensure the anonymity of applications who submit equal opportunities information.
+        title: Statistics dashboard
     temp_login:
       check_your_email:
         check_spam_html: >-
@@ -850,6 +863,10 @@ en:
         update:
           success: Thank you for submitting your feedback for %{job_title}
         statistics: Statistics
+        vacancy_view_stats:
+          accessible_view: Change to table and accessible view
+          chart_view: Change to chart view
+          job_source: Job listing source
       vacancy_publisher_feedbacks:
         new:
           already_submitted: Feedback for this job has already been submitted
