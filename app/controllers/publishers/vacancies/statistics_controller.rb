@@ -3,6 +3,8 @@ class Publishers::Vacancies::StatisticsController < Publishers::Vacancies::BaseC
     @number_of_unique_views = Publishers::VacancyStats.new(vacancy).number_of_unique_views
     @vacancy_analytics = vacancy.vacancy_analytics
 
+    @bar_chart = params[:view] != "table"
+
     respond_to do |format|
       format.html
       format.csv { send_data Publishers::ExportVacancyToCsv.new(vacancy, @number_of_unique_views).call, filename: "#{vacancy.slug}-statistics.csv" }

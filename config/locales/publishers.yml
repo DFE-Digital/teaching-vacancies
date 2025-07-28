@@ -785,6 +785,8 @@ en:
           unread_applications: Unread applications
           views_by_jobseeker: Views by jobseekers
           withdrawn_applications: Withdrawn applications
+          accessible_view: Change to table and accessible view
+          chart_view: Change to chart view
         update:
           success: Thank you for submitting your feedback for %{job_title}
         statistics: Statistics

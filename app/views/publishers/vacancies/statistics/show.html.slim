@@ -19,9 +19,17 @@
 
     - if @vacancy_analytics.present?
       h3.govuk-heading-m = t(".job_source")
-      = vacancy_statistics_bar_chart @vacancy_analytics.referrer_counts
-
-    .div
+      - if @bar_chart
+        = govuk_button_link_to t(".accessible_view"), organisation_job_statistics_path(vacancy.id, view: 'table'), id: "accessible", class: "govuk-button--secondary"
+        = vacancy_statistics_bar_chart @vacancy_analytics.referrer_counts
+      - else
+        = govuk_button_link_to t(".chart_view"), organisation_job_statistics_path(vacancy.id), id: "barchart", class: "govuk-button--secondary"
+        = govuk_summary_list html_attributes: { id: "analytics" } do |summary_list|
+          - sort_referrer_counts(@vacancy_analytics.referrer_counts).each do |key, value|
+            - summary_list.with_row do |row|
+              - row.with_key text: key
+              - row.with_value text: value
+      .div
       h3.govuk-heading-m.heading--border-bottom = t(".listing_data")
 
       = govuk_summary_list html_attributes: { id: "vacancy_statistics" } do |summary_list|

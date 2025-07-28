@@ -221,7 +221,7 @@ module VacanciesHelper
     }
 
     # sort with highest value on top - using a hash results in an arbitrary ordering
-    bar_chart referrer_counts.map { |k, v| [k, v] }.sort_by { |_k, v| -v },
+    bar_chart sort_referrer_counts(referrer_counts),
               library: {
                 hAxis: {
                   textStyle: text_style,
@@ -235,5 +235,9 @@ module VacanciesHelper
               },
               height: "#{referrer_counts.size * 60}px",
               colors: ["#003764"]
+  end
+
+  def sort_referrer_counts(referrer_counts)
+    referrer_counts.map { |k, v| [k, v] }.sort_by { |_k, v| -v }
   end
 end
