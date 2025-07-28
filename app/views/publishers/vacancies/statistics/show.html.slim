@@ -17,7 +17,11 @@
 
       = govuk_button_link_to t("buttons.download_stats"), organisation_job_statistics_path(vacancy.id, format: :csv), class: "govuk-button--secondary"
 
-    .govuk-grid-column-two-thirds
+    - if @vacancy_analytics.present?
+      h3.govuk-heading-m = t(".job_source")
+      = vacancy_statistics_bar_chart @vacancy_analytics.referrer_counts
+
+    .div
       h3.govuk-heading-m.heading--border-bottom = t(".listing_data")
 
       = govuk_summary_list html_attributes: { id: "vacancy_statistics" } do |summary_list|

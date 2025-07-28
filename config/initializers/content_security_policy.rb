@@ -42,7 +42,8 @@ Rails.application.configure do
                        "https://www.googletagmanager.com",
                        "https://www.recaptcha.net",
                        "https://*.visualwebsiteoptimizer.com",
-                       "https://www.clarity.ms"
+                       "https://www.clarity.ms",
+                       "https://www.gstatic.com"
 
     policy.style_src   :self,
                        :unsafe_inline,

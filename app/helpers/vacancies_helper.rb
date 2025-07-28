@@ -212,4 +212,18 @@ module VacanciesHelper
 
     organisation_slug
   end
+
+  def vacancy_statistics_bar_chart(referrer_counts)
+    # sort with the highest value on top - using a hash results in an arbitrary ordering
+    bar_chart referrer_counts.map { |k, v| [k, v] }.sort_by { |_k, v| -v },
+              library: {
+                # tooltip: {
+                #   headerFormat: "<b>{series.name}</b><br>",
+                #   pointFormat: "{point.y} on {point.x}",
+                # },
+                title: { text: "what of thius works" },
+              },
+              height: "#{referrer_counts.size * 60}px",
+              colors: ["#003764"]
+  end
 end
