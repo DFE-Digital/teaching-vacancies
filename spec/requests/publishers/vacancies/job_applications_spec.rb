@@ -177,10 +177,10 @@ RSpec.describe "Job applications" do
     context "when exporting selected job applications" do
       let(:target) { "export" }
 
-      it "sends csv file" do
+      it "sends bundle zip file" do
         expect(response).to have_http_status(:ok)
-        expect(response.content_type).to eq("text/csv")
-        expect(response.headers["Content-Disposition"]).to include("applications_offered_#{vacancy.job_title}.csv")
+        expect(response.content_type).to eq("application/zip")
+        expect(response.headers["Content-Disposition"]).to include("applications_offered_#{vacancy.job_title}.zip")
       end
 
       context "when no job application selected" do
