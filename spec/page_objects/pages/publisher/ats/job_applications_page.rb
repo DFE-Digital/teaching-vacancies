@@ -16,7 +16,7 @@ module PageObjects
 
           STATUS_MAPPING = {
             "unread" => "submitted",
-            "rejected" => "unsuccessful",
+            "not considering" => "unsuccessful",
           }.freeze
 
           def mapped_status

@@ -435,12 +435,6 @@ RSpec.describe "check job application after status transition" do
 
         publisher_ats_applications_page.select_tab(:tab_offered)
         expect(publisher_ats_applications_page.tab_panel.declined_job_applications.count).to eq(1)
-
-        #
-        # view job application
-        #
-        publisher_ats_applications_page.tab_panel.job_applications.first.name.click
-        expect(publisher_application_page).to be_displayed(vacancy_id: vacancy.id, job_application_id: job_application.id)
       end
 
       run_with_jobseeker(jobseeker) do

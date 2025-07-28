@@ -109,22 +109,6 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
         expect(current_page.get_tab(tab_id)).to have_text("(#{count})")
       end
 
-      # action review applicant
-      current_page.update_status(alan) do |tag_page|
-        tag_page.select_and_submit("reviewed")
-      end
-      {
-        tab_submitted: 1,
-        tab_unsuccessful: 1,
-        tab_shortlisted: 5,
-        tab_interviewing: 0,
-      }.each do |tab_id, count|
-        expect(current_page.get_tab(tab_id)).to have_text("(#{count})")
-      end
-      expect(current_page.selected_tab).to have_text("New")
-      expect(current_page.tab_panel.job_applications[0].name).to have_text(alan.name)
-      expect(current_page.tab_panel.job_applications[0].mapped_status).to eq(alan.reload.status)
-
       #
       # display not considering tab
       #

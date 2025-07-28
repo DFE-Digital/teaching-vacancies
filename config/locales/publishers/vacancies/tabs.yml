@@ -2,16 +2,16 @@ en:
   tabs:
     headers:
       name: Name
-      contact_details: Contact details
-      application_status: Application status
-      offer_date: Offer date
-      decline_date: Decline date
+      email_address: Contact details
+      status: Application status
+      offered_at: Offer date
+      declined_at: Decline date
     buttons:
-      update_application_status: Update application status
-      download_selected: Download selected
-      offer_declined: Mark offer as declined
-      copy_candidate_email: Copy selected emails
-      download_candidate_data: Download applicants data
+      download: Download selected
+      update_status: Update application status
+      emails: Copy selected emails
+      declined: Mark offer as declined
+      export: Download candidate's data
     submitted:
       label: "New (%{count})"
       heading: New applications
@@ -31,6 +31,7 @@ en:
       label: "Interviewing (%{count})"
       heading: Interviewing applications
       none: No applications have been marked for interview yet
+      pre_interview_checks: Pre-interview checks
     offered:
       label: "Job offered (%{count})"
       heading: Applicants offered a job

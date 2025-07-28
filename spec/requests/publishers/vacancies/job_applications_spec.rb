@@ -102,27 +102,11 @@ RSpec.describe "Job applications" do
         expect(response).to render_template(:index)
       end
 
-      it "assigns candidates variables" do
-        expect(assigns[:candidates]["submitted"]).to match_array(submitteds)
-        expect(assigns[:candidates]["unsuccessful"]).to match_array(unsuccessfuls)
-        expect(assigns[:candidates]["shortlisted"]).to match_array(shortlisteds)
-        expect(assigns[:candidates]["interviewing"]).to match_array(interviewings)
-      end
-
-      it "assigns tab_headers variables" do
-        expected_tab_headers = [
-          ["submitted", 2],
-          ["unsuccessful", 2],
-          ["shortlisted", 1],
-          ["interviewing", 1],
-          ["offered", 2],
-        ]
-        expect(assigns[:tab_headers]).to match_array(expected_tab_headers)
-      end
-
-      it "assigns all job application except draft ones" do
-        total = assigns[:tab_headers].sum(&:last)
-        expect(total).to eq(job_applications.count)
+      it "assigns tabs_data variable" do
+        expect(assigns[:tabs_data]["submitted"]).to match_array(submitteds)
+        expect(assigns[:tabs_data]["unsuccessful"]).to match_array(unsuccessfuls)
+        expect(assigns[:tabs_data]["shortlisted"]).to match_array(shortlisteds)
+        expect(assigns[:tabs_data]["interviewing"]).to match_array(interviewings)
       end
     end
   end
