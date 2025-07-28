@@ -9,7 +9,7 @@
   .govuk-body
     = t("helpers.label.referees_can_share_reference_form.is_reference_sharable_options.#{reference.is_reference_sharable?}")
   .govuk-heading-m
-    = t("helpers.label.referees_employment_reference_form.how_do_you_know_the_candidate")
+    = t("helpers.legend.referees_employment_reference_form.how_do_you_know_the_candidate")
   .govuk-body
     = reference.how_do_you_know_the_candidate
   .govuk-heading-m
@@ -32,10 +32,6 @@
     = t("helpers.label.referees_employment_reference_form.would_reemploy_any_options.#{reference.would_reemploy_any?}")
   .govuk-body
     = reference.would_reemploy_any_reason
-  .govuk-heading-m
-    = t("helpers.legend.referees_employment_reference_form.currently_employed")
-  .govuk-body
-    = t("helpers.label.referees_employment_reference_form.currently_employed_options.#{reference.currently_employed?}")
 
   - JobReference::REFERENCE_INFO_FIELDS.each do |field|
     .govuk-heading-m

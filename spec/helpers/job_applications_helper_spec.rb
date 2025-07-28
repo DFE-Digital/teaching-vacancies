@@ -23,9 +23,9 @@ RSpec.describe JobApplicationsHelper do
     end
 
     context "when status any other" do
-      let(:status) { "draft" }
+      let(:status) { "interviewing" }
 
-      it { is_expected.to eq("draft") }
+      it { is_expected.to eq("interviewing") }
     end
   end
 
