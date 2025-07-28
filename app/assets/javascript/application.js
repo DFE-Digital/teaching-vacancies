@@ -10,6 +10,8 @@ import { Application } from '@hotwired/stimulus';
 import Rails from 'rails-ujs';
 import { initMojFrontEnd } from './init-moj-front-end';
 
+import 'chartkick';
+
 // view components
 import CookiesBannerController from './components/cookiesBanner/enhance';
 import EditorController from './components/editor/editor';

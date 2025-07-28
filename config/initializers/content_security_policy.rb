@@ -54,11 +54,13 @@ Rails.application.configure do
                        "https://snap.licdn.com",
                        "https://www.redditstatic.com",
                        "https://www.clarity.ms",
-                       "https://scripts.clarity.ms"
+                       "https://scripts.clarity.ms",
+                       "https://www.gstatic.com"
 
     policy.style_src   :self,
                        :unsafe_inline,
-                       "https://fonts.gstatic.com/*"
+                       "https://fonts.gstatic.com/*",
+                       "https://www.gstatic.com"
 
     policy.worker_src  :self,
                        :blob,
