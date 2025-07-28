@@ -47,7 +47,8 @@ Rails.application.configure do
 
     policy.style_src   :self,
                        :unsafe_inline,
-                       "https://fonts.gstatic.com/*"
+                       "https://fonts.gstatic.com/*",
+                       "https://www.gstatic.com"
 
     policy.worker_src  :self,
                        :blob,

@@ -10,7 +10,7 @@ import { Application } from '@hotwired/stimulus';
 import Rails from 'rails-ujs';
 import { initMojFrontEnd } from './init-moj-front-end';
 
-import 'chartkick/chart.js';
+import 'chartkick';
 
 // view components
 import CookiesBannerController from './components/cookiesBanner/enhance';

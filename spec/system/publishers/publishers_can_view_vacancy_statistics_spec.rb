@@ -24,8 +24,6 @@ RSpec.describe "Publishers can view a job application" do
   after { logout }
 
   it "shows the statistics", :js do
-    sleep 20
-
     within("#vacancy_statistics") do
       within(".govuk-summary-list__row:nth-child(1)") do
         expect(page).to have_content(I18n.t("publishers.vacancies.statistics.show.views_by_jobseeker").to_s)

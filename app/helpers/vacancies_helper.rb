@@ -214,14 +214,24 @@ module VacanciesHelper
   end
 
   def vacancy_statistics_bar_chart(referrer_counts)
-    # sort with the highest value on top - using a hash results in an arbitrary ordering
+    text_style = {
+      color: "#000000",
+      fontSize: 20,
+      fontName: "GDS Transport",
+    }
+
+    # sort with highest value on top - using a hash results in an arbitrary ordering
     bar_chart referrer_counts.map { |k, v| [k, v] }.sort_by { |_k, v| -v },
               library: {
-                # tooltip: {
-                #   headerFormat: "<b>{series.name}</b><br>",
-                #   pointFormat: "{point.y} on {point.x}",
-                # },
-                title: { text: "what of thius works" },
+                hAxis: {
+                  textStyle: text_style,
+                },
+                tooltip: {
+                  textStyle: text_style,
+                },
+                vAxis: {
+                  textStyle: text_style,
+                },
               },
               height: "#{referrer_counts.size * 60}px",
               colors: ["#003764"]
