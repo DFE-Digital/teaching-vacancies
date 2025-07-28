@@ -39,28 +39,28 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
 
           it "copies completed steps except for declarations and equal opportunities and employment_history and also adds them to imported steps" do
             expect(subject.completed_steps)
-              .to eq(%w[personal_details personal_statement referees ask_for_support qualifications training_and_cpds professional_body_memberships professional_status])
+              .to eq(%w[personal_details referees ask_for_support qualifications training_and_cpds professional_body_memberships professional_status])
             expect(subject.imported_steps)
-              .to eq(%w[personal_details personal_statement referees ask_for_support qualifications training_and_cpds professional_body_memberships professional_status])
+              .to eq(%w[personal_details referees ask_for_support qualifications training_and_cpds professional_body_memberships professional_status])
           end
 
           it "add employment_history to the in progress steps " do
             expect(subject.in_progress_steps)
-              .to eq(%w[employment_history])
+              .to eq(%w[personal_statement employment_history])
           end
         end
 
         context "when the application is from after we added gap validation for employment history section" do
           it "copies completed steps except for declarations and equal opportunities and also adds them to imported steps" do
             expect(subject.completed_steps)
-              .to eq(%w[personal_details personal_statement referees ask_for_support qualifications training_and_cpds professional_body_memberships employment_history professional_status])
+              .to eq(%w[personal_details referees ask_for_support qualifications training_and_cpds professional_body_memberships employment_history professional_status])
             expect(subject.imported_steps)
-              .to eq(%w[personal_details personal_statement referees ask_for_support qualifications training_and_cpds professional_body_memberships employment_history professional_status])
+              .to eq(%w[personal_details referees ask_for_support qualifications training_and_cpds professional_body_memberships employment_history professional_status])
           end
 
           it "sets in progress steps as empty" do
             expect(subject.in_progress_steps)
-              .to eq(%w[])
+              .to eq(%w[personal_statement])
           end
         end
 
