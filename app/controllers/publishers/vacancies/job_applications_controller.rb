@@ -8,18 +8,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def index
     @form = Publishers::JobApplication::TagForm.new
-    tabs_definition = {
-      submitted:    %i[submitted reviewed],
-      unsuccessful: %i[unsuccessful withdrawn],
-      shortlisted:  %i[shortlisted],
-      interviewing: %i[interviewing],
-      offered:      %i[offered declined],
-    }.stringify_keys
-
-    @tabs_data = tabs_definition.transform_values do |statuses|
-      ordering = statuses.map { :"#{it}_at" }.index_with { :desc }
-      vacancy.job_applications.where(status: statuses).order(ordering)
-    end
+    @tabs_data = VacancyTabsPresenter.tabs_data(vacancy)
   end
 
   def show
