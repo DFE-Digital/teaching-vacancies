@@ -126,26 +126,18 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     end
   end
 
-  require "zip"
-
   def download_selected(job_applications)
     zip_data = JobApplicationZipBuilder.new(vacancy:, job_applications:).generate
 
     send_data(
       zip_data.string,
       filename: "applications_#{vacancy.job_title.parameterize}.zip",
-      type: "application/zip",
     )
   end
 
   def export_selected(selection)
-    headers = %i[first_name last_name street_address city postcode phone_number email_address national_insurance_number teacher_reference_number]
-
-    data = CSV.generate do |csv|
-      csv << headers
-      selection.pluck(*headers).each { csv << it }
-    end
-    send_data(data, filename: "applications_offered_#{vacancy.job_title}.csv")
+    zip_data = ExportCandidateDataService.call(selection)
+    send_data(zip_data.string, filename: "applications_offered_#{vacancy.job_title}.zip")
   end
 
   def copy_emails_selected(selection)

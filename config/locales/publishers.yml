@@ -623,6 +623,7 @@ en:
             caption: Update referee information
             heading: What is the correct email address for %{name}?
           show:
+            print: Print
             page_title: Reference
             mark_as_received: Mark as received
             collect_reference: Would you like to collect this reference through Teaching Vacancies?
@@ -644,7 +645,7 @@ en:
               organisation: Organisation
               relationship: Relationship to applicant
               email: Email address
-              phone: Phone number
+              phone_number: Phone number
             reference_requested: Reference requested
             reference_email_changed: Reference email changed to %{email}
             reference_received: Reference received
