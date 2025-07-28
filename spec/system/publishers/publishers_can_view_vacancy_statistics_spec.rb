@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Publishers can view a job application" do
+RSpec.describe "Publishers can view vacancy statastics" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
 
@@ -20,26 +20,16 @@ RSpec.describe "Publishers can view a job application" do
   after { logout }
 
   describe "job listing source" do
-    let(:top_company) { "Ask Jeeves" }
-    let(:second_company) { "LinkedIn" }
-
     let(:vacancy) do
       create(:vacancy, organisations: [organisation],
                        vacancy_analytics: build(:vacancy_analytics,
-                                                referrer_counts: { "Direct" => 14, top_company => 24, second_company => 22, "Also Rans" => 15 }))
+                                                referrer_counts: { "Direct" => 14, "Ask Jeeves" => 24, "LinkedIn" => 22, "Also Rans" => 15 }))
     end
 
     it "cam switch between views" do
       find_by_id("accessible").click
       within("#analytics") do
-        within(".govuk-summary-list__row:nth-child(1)") do
-          expect(page).to have_content(top_company)
-          expect(page).to have_content("24")
-        end
-        within(".govuk-summary-list__row:nth-child(2)") do
-          expect(page).to have_content(second_company)
-          expect(page).to have_content("22")
-        end
+        expect(all(".govuk-summary-list__row").map(&:text)).to eq(["Ask Jeeves24", "LinkedIn22", "Also Rans15", "Direct14"])
       end
     end
   end

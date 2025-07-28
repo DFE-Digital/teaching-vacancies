@@ -1,7 +1,7 @@
 class JobApplication < ApplicationRecord
   before_save :update_status_timestamp, if: %i[will_save_change_to_status? ignore_for_offered_and_declined?]
   before_save :reset_support_needed_details
-  before_update :anonymise_report, if: -> { will_save_change_to_status? && status == "submitted" }
+  after_save :anonymise_equal_opportunities_fields, if: -> { saved_change_to_status? && status == "submitted" }
 
   extend ArrayEnum
 
@@ -194,7 +194,7 @@ class JobApplication < ApplicationRecord
     self["#{status}_at"] = Time.current
   end
 
-  def anonymise_report
+  def anonymise_equal_opportunities_fields
     EqualOpportunitiesReportUpdateJob.perform_later(id)
   end
 
