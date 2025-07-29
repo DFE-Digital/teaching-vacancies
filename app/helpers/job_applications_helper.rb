@@ -39,11 +39,7 @@ module JobApplicationsHelper
   }.freeze
 
   def tab_name(job_application_status)
-    return "submitted" if job_application_status == "reviewed"
-    return "unsuccessful" if job_application_status == "withdrawn"
-    return "offered" if job_application_status == "declined"
-
-    job_application_status
+    VacancyTabsPresenter.tab_for(job_application_status)
   end
 
   def tag_status_options(job_application_status)
