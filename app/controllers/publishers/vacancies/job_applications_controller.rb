@@ -12,7 +12,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def show
-    redirect_to organisation_job_job_application_withdrawn_path(vacancy.id, @job_application) if @job_application.withdrawn?
+    redirect_to organisation_job_job_application_terminal_path(vacancy.id, @job_application) if @job_application.terminal_status?
 
     @notes_form = Publishers::JobApplication::NotesForm.new
 
@@ -85,7 +85,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     redirect_to organisation_job_job_application_batch_references_and_self_disclosure_path(vacancy.id, batch.id, Wicked::FIRST_STEP)
   end
 
-  def withdrawn; end
+  def terminal; end
 
   def pre_interview_checks
     @reference_requests = @job_application.referees.filter_map(&:reference_request)

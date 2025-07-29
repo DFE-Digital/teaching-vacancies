@@ -413,7 +413,7 @@ Rails.application.routes.draw do
         end
         get :download_pdf
         get :download_application_form
-        get :withdrawn
+        get :terminal
         get :tag, on: :collection
         post :update_tag, on: :collection
         post :offer, on: :collection
