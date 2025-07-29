@@ -58,7 +58,7 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
               .to eq(%w[personal_details referees ask_for_support qualifications training_and_cpds professional_body_memberships employment_history professional_status])
           end
 
-          it "sets in progress steps as empty" do
+          it "does not add employment_history to the in progress steps" do
             expect(subject.in_progress_steps)
               .to eq(%w[personal_statement])
           end
