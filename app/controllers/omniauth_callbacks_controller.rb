@@ -5,7 +5,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   rescue_from OrganisationCategoryNotFound, with: :unknown_organisation_category
 
   def dfe
-    authorisation = Authorisation.new(organisation_id: organisation_id, user_id: user_id)
+    authorisation = Publishers::DfeSignIn::Authorisation.new(organisation_id: organisation_id, user_id: user_id)
 
     if authorisation.authorised_support_user?
       sign_in_support_user

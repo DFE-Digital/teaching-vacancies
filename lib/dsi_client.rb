@@ -5,7 +5,7 @@ class DSIClient
   end
 
   def role_ids
-    @role_ids ||= roles.map { |r| r[:id] }
+    @role_ids ||= roles.pluck(:id)
   end
 
   def roles
@@ -70,10 +70,6 @@ class DSIClient
 
     delegate :body, :code, to: :@net_http_response
     delegate :[], to: :data
-
-    def success?
-      code == "200"
-    end
 
     def invalid?
       code.starts_with?("4")

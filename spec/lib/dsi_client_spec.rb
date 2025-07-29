@@ -1,4 +1,5 @@
 require "rails_helper"
+require "dsi_client"
 
 RSpec.describe DSIClient do
   subject(:client) do
@@ -17,7 +18,7 @@ RSpec.describe DSIClient do
     end
 
     it "returns the user's roles" do
-      expect(client.role_ids).to eq(["test-publisher-role-id"])
+      expect(client.role_ids).to eq(%w[test-publisher-role-id])
     end
 
     context "when the response is a 404" do

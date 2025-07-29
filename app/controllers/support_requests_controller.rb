@@ -1,3 +1,5 @@
+require "zendesk"
+
 class SupportRequestsController < ApplicationController
   include RecaptchaChecking
 

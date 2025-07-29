@@ -85,7 +85,7 @@ RSpec.describe "Support users can sign in with DfE Sign In" do
     it "raises an error" do
       visit new_support_user_session_path
 
-      expect { sign_in_support_user }.to raise_error(Authorisation::ExternalServerError)
+      expect { sign_in_support_user }.to raise_error(Publishers::DfeSignIn::Authorisation::ExternalServerError)
     end
   end
 
