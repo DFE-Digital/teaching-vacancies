@@ -4,13 +4,15 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
   let(:vacancy) { build_stubbed(:vacancy, :expired, organisations:, job_applications:) }
   let(:organisations) { build_stubbed_list(:school, 1) }
   let(:job_applications) do
-    build_stubbed_list(:job_application, 1, :status_submitted,
+    build_stubbed_list(:job_application, 1,
                        training_and_cpds: build_stubbed_list(:training_and_cpd, 1),
-                       working_patterns: %w[full_time part_time])
+                       working_patterns: %w[full_time part_time],
+                       status:)
   end
   let(:job_application) do
     vacancy.job_applications.first
   end
+  let(:status) { "submitted" }
 
   before do
     assign :vacancy, vacancy
@@ -133,6 +135,27 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
       expect(rendered).to have_css(".govuk-summary-list__value", text: uploaded_job_application.teacher_reference_number)
 
       expect(rendered).to have_link("Download application", href: organisation_job_job_application_download_application_form_path(uploaded_job_application.vacancy.id, uploaded_job_application))
+    end
+  end
+
+  describe "action buttons" do
+    context "when status not terminal" do
+      let(:status) { "interviewing" }
+
+      it { expect(rendered).to have_link("Update application status") }
+    end
+
+    context "when status terminal" do
+      let(:status) { "withdrawn" }
+
+      it { expect(rendered).to have_no_link("Update application status") }
+    end
+
+    context "when status offered" do
+      let(:status) { "offered" }
+
+      it { expect(rendered).to have_link("Mark offer as declined") }
+      it { expect(rendered).to have_no_link("Update application status") }
     end
   end
 end

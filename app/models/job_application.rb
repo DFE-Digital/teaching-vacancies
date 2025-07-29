@@ -90,11 +90,17 @@ class JobApplication < ApplicationRecord
   scope :after_submission, -> { where.not(status: :draft) }
   scope :draft, -> { where(status: "draft") }
 
-  scope :active_for_selection, -> { where.not(status: %w[draft withdrawn]) }
+  # end of the road statuses for job application we cannot further update status at the point
+  TERMINAL_STATUSES = %w[withdrawn declined].freeze
+  scope :active_for_selection, -> { where.not(status: %w[draft] + TERMINAL_STATUSES) }
 
   validates :email_address, email_address: true, if: -> { email_address_changed? } # Allows data created prior to validation to still be valid
 
   has_one_attached :baptism_certificate, service: :amazon_s3_documents
+
+  def terminal_status?
+    status.in?(TERMINAL_STATUSES)
+  end
 
   def name
     "#{first_name} #{last_name}"

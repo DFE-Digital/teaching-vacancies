@@ -46,4 +46,56 @@ RSpec.describe VacancyTabsPresenter do
       expect(tabs_data["offered"].map(&:status).uniq).to match_array(%w[offered declined])
     end
   end
+
+  describe "tab_for" do
+    subject(:tab_for) { described_class.tab_for(job_application_status) }
+
+    context "when submitted" do
+      let(:job_application_status) { "submitted" }
+
+      it { is_expected.to eq("submitted") }
+    end
+
+    context "when reviewed" do
+      let(:job_application_status) { "reviewed" }
+
+      it { is_expected.to eq("submitted") }
+    end
+
+    context "when withdrawn" do
+      let(:job_application_status) { "withdrawn" }
+
+      it { is_expected.to eq("unsuccessful") }
+    end
+
+    context "when unsuccessful" do
+      let(:job_application_status) { "unsuccessful" }
+
+      it { is_expected.to eq("unsuccessful") }
+    end
+
+    context "when shortlisted" do
+      let(:job_application_status) { "shortlisted" }
+
+      it { is_expected.to eq("shortlisted") }
+    end
+
+    context "when interviewing" do
+      let(:job_application_status) { "interviewing" }
+
+      it { is_expected.to eq("interviewing") }
+    end
+
+    context "when offered" do
+      let(:job_application_status) { "offered" }
+
+      it { is_expected.to eq("offered") }
+    end
+
+    context "when declined" do
+      let(:job_application_status) { "declined" }
+
+      it { is_expected.to eq("offered") }
+    end
+  end
 end

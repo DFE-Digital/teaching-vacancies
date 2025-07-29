@@ -45,12 +45,14 @@ RSpec.describe "Job applications" do
       end
     end
 
-    context "when the job application status is withdrawn" do
-      let(:job_application) { create(:job_application, :status_withdrawn, vacancy: vacancy) }
+    JobApplication::TERMINAL_STATUSES.each do |status|
+      context "when the job application status is #{status}" do
+        let(:job_application) { create(:job_application, :"status_#{status}", vacancy: vacancy) }
 
-      it "redirects to the withdrawn page" do
-        expect(get(organisation_job_job_application_path(vacancy.id, job_application.id)))
-          .to redirect_to(organisation_job_job_application_withdrawn_path(vacancy.id, job_application.id))
+        it "redirects to the withdrawn page" do
+          expect(get(organisation_job_job_application_path(vacancy.id, job_application.id)))
+            .to redirect_to(organisation_job_job_application_terminal_path(vacancy.id, job_application.id))
+        end
       end
     end
   end
