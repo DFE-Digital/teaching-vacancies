@@ -8,6 +8,7 @@ module Publishers
 
         def show
           @referee = @reference_request.referee
+          @notes_form = Publishers::JobApplication::NotesForm.new
         end
 
         # changing the email address of the referee
