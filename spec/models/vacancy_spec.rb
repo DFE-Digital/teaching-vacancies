@@ -332,6 +332,41 @@ RSpec.describe Vacancy do
     let(:expired_earlier_today) { create(:vacancy, expires_at: 5.hour.ago) }
     let(:expires_later_today) { create(:vacancy, expires_at: 1.hour.from_now) }
 
+    describe "#active_in_current_academic_year" do
+      let(:current_aug31) { Date.current.beginning_of_year.months_since(7).end_of_month }
+      let(:last_aug31) { current_aug31 - 1.year }
+      let(:current_sep1) { Date.current.beginning_of_year.months_since(8) }
+      let(:last_sep1) { current_sep1 - 1.year }
+
+      before do
+        create(:vacancy, expiry_date: 2.years.ago, publish_on: 2.years.ago, job_title: "expired_years_ago")
+        create(:vacancy, expiry_date: current_aug31, publish_on: current_aug31, job_title: "expired_this_august")
+        create(:vacancy, expiry_date: current_sep1, publish_on: current_sep1, job_title: "expired_this_september")
+        create(:vacancy, expiry_date: last_aug31, publish_on: last_aug31, job_title: "expired_last_august")
+        create(:vacancy, expiry_date: last_sep1, publish_on: last_sep1, job_title: "expired_last_september")
+      end
+
+      context "when bwtween Sepetmber and December" do
+        before do
+          travel_to Date.current.beginning_of_year.months_since(10)
+        end
+
+        it "finds current aug/sept" do
+          expect(Vacancy.active_in_current_academic_year.map(&:job_title)).to contain_exactly("expired_this_august", "expired_this_september")
+        end
+      end
+
+      context "when bwtween January and August" do
+        before do
+          travel_to Date.current.end_of_year.months_since(6)
+        end
+
+        it "finds previous aug/sept" do
+          expect(Vacancy.active_in_current_academic_year.map(&:job_title)).to contain_exactly("expired_this_august", "expired_this_september")
+        end
+      end
+    end
+
     describe "#applicable" do
       it "finds current vacancies" do
         expired_earlier_today.send :set_slug

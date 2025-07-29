@@ -1,0 +1,4 @@
+= render("navigation")
+
+= render "vacancy_view_stats", chart: @bar_chart, referrer_counts: @referrer_counts,
+  link: publishers_statistics_path, accessible_link: publishers_statistics_path(view: "table")
