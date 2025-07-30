@@ -220,14 +220,10 @@ module VacanciesHelper
       fontName: "GDS Transport",
     }
 
-    # sort with highest value on top - using a hash results in an arbitrary ordering
     pie_chart referrer_counts, donut: true,
                                library: {
-                                 tooltip: {
-                                   textStyle: text_style,
-                                 },
+                                 tooltip: { textStyle: text_style },
                                }
-    # colors: ["#003764"]
   end
 
   def vacancy_statistics_bar_chart(referrer_counts)
