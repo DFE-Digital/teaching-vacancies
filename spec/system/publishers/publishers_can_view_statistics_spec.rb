@@ -56,9 +56,9 @@ RSpec.describe "Publishers can view statistics" do
                                                          age_prefer_not_to_say: 10,
                                                          age_thirty_to_thirty_nine: 12,
                                                          age_under_twenty_five: 3,
-                                                         age_forty_to_forty_nine: 17,
-                                                         age_fifty_to_fifty_nine: 23,
-                                                         age_sixty_and_over: 27))
+                                                         age_forty_to_forty_nine: 11,
+                                                         age_fifty_to_fifty_nine: 6,
+                                                         age_sixty_and_over: 8))
       create(:vacancy, publisher: publisher,
                        equal_opportunities_report: build(:equal_opportunities_report,
                                                          disability_no: 34,
@@ -85,19 +85,19 @@ RSpec.describe "Publishers can view statistics" do
                                                          religion_other: 66, religion_prefer_not_to_say: 12, religion_sikh: 12))
     end
 
-    it "adds up the stats for each age group", :js do
+    it "displays age groups with youngest at the top", :js do
       visit equal_opportunities_publishers_statistics_path
 
       within("#age_counts") do
         find(".accessible-button").click
 
         within(".govuk-summary-list__row:nth-child(1)") do
-          expect(page).to have_content("60 and over")
-          expect(page).to have_content("27")
+          expect(page).to have_content("Under 25")
+          expect(page).to have_content("3")
         end
         within(".govuk-summary-list__row:nth-child(2)") do
-          expect(page).to have_content("50 to 59")
-          expect(page).to have_content("23")
+          expect(page).to have_content("25 to 29")
+          expect(page).to have_content("5")
         end
       end
     end

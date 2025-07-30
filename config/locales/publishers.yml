@@ -332,6 +332,9 @@ en:
           description_fallback: Enter your email below and we will send you a link that will take you straight into your account.
           title: Hiring staff sign in
     statistics:
+      bar_chart:
+        accessible_view: Change to table and accessible view
+        chart_view: Change to chart view
       donut_chart:
         accessible_view: Change to table and accessible view
         chart_view: Change to chart view

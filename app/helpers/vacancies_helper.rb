@@ -216,37 +216,49 @@ module VacanciesHelper
   def donut_chart(referrer_counts)
     text_style = {
       color: "#000000",
-      fontSize: 15,
+      fontSize: 16,
       fontName: "GDS Transport",
     }
 
     pie_chart referrer_counts, donut: true,
                                library: {
                                  tooltip: { textStyle: text_style },
+                                 legend: { textStyle: text_style },
                                }
   end
 
   def vacancy_statistics_bar_chart(referrer_counts)
+    # sort with highest value on top - using a hash results in an arbitrary ordering
+    bar_chart sort_referrer_counts(referrer_counts), **bar_chart_options(referrer_counts.size)
+  end
+
+  def bar_chart_options(item_count)
     text_style = {
       color: "#000000",
-      fontSize: 20,
+      fontSize: 18,
       fontName: "GDS Transport",
     }
 
     gov_uk_blue = "#1d70b8"
 
-    # sort with highest value on top - using a hash results in an arbitrary ordering
-    bar_chart sort_referrer_counts(referrer_counts),
-              library: {
-                hAxis: { textStyle: text_style },
-                tooltip: { textStyle: text_style },
-                vAxis: { textStyle: text_style },
-              },
-              height: "#{referrer_counts.size * 60}px",
-              colors: [gov_uk_blue]
+    {
+      library: {
+        hAxis: { textStyle: text_style },
+        tooltip: { textStyle: text_style },
+        vAxis: { textStyle: text_style },
+      },
+      height: "#{item_count * 60}px",
+      colors: [gov_uk_blue],
+    }
   end
 
   def sort_referrer_counts(referrer_counts)
     referrer_counts.map { |k, v| [k, v] }.sort_by { |_k, v| -v }
+  end
+
+  def sort_age_stats(referrer_counts)
+    age_sort_order = %w[under_twenty_five twenty_five_to_twenty_nine thirty_to_thirty_nine forty_to_forty_nine fifty_to_fifty_nine sixty_and_over prefer_not_to_say]
+
+    referrer_counts.sort_by { |k, _v| age_sort_order.index(k) }.to_h
   end
 end
