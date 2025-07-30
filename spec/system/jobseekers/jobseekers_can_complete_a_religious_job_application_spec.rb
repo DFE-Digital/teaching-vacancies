@@ -87,6 +87,10 @@ RSpec.describe "Jobseekers can complete a religious job application" do
               complete_from_references_page
             end
 
+            it "has a correct change link" do
+              expect(page).to have_link(href: jobseekers_job_application_build_path(job_application, :catholic))
+            end
+
             it "shows the referee details" do
               expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
 
@@ -220,12 +224,18 @@ RSpec.describe "Jobseekers can complete a religious job application" do
         context "when not following a religion" do
           let(:following_religion) { false }
 
-          it "completes the religious journey" do
+          before do
             click_on I18n.t("buttons.save_and_continue")
-            expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
             complete_from_references_page
+          end
+
+          it "completes the religious journey" do
             submit_application_from_review
             expect(page).to have_content(I18n.t("jobseekers.job_applications.post_submit.panel.title"))
+          end
+
+          it "has a correct change link" do
+            expect(page).to have_link(href: jobseekers_job_application_build_path(job_application, :non_catholic))
           end
         end
 
