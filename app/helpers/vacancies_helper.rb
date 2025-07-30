@@ -225,15 +225,9 @@ module VacanciesHelper
     # sort with highest value on top - using a hash results in an arbitrary ordering
     bar_chart sort_referrer_counts(referrer_counts),
               library: {
-                hAxis: {
-                  textStyle: text_style,
-                },
-                tooltip: {
-                  textStyle: text_style,
-                },
-                vAxis: {
-                  textStyle: text_style,
-                },
+                hAxis: { textStyle: text_style },
+                tooltip: { textStyle: text_style },
+                vAxis: { textStyle: text_style },
               },
               height: "#{referrer_counts.size * 60}px",
               colors: [gov_uk_blue]
