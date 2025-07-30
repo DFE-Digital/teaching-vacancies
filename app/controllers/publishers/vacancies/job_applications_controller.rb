@@ -47,11 +47,10 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def tag
     with_valid_tag_form do |form|
-      job_applications = tag_params.fetch(:job_applications).compact_blank
-    if params["download_selected"] == "true"
-      download_selected(form.job_applications)
-    elsif params["reject"] == "true"
-      prepare_to_reject(job_applications)
+      if params["download_selected"] == "true"
+        download_selected(form.job_applications)
+      elsif params["reject"] == "true"
+        prepare_to_reject(form.job_applications)
       else # when "update_status"
         render "tag"
       end
