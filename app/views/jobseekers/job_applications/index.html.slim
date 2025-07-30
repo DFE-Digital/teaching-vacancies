@@ -5,37 +5,19 @@
   p.govuk-body = t(".one_login_banner.paragraph1")
   p.govuk-body = t(".one_login_banner.paragraph2", link: govuk_link_to(t(".one_login_banner.transfer_profile_link_text"), new_jobseekers_request_account_transfer_email_path)).html_safe
 
-- if current_jobseeker.job_applications.any?
+- if @job_applications.any?
   - content_for :skip_links do
     = govuk_skip_link(href: "#applications-results", text: t(".skip_link"))
 - if Date.today <= Date.new(2024, 4, 2)
   = render "jobseekers/visa_sponsorship_banner"
-h1.govuk-heading-l = t(".page_title_with_count", count: current_jobseeker.job_applications.count)
+h1.govuk-heading-l = t(".page_title_with_count", count: @job_applications.count)
 
 .govuk-grid-row
   .govuk-grid-column-full
-    - if current_jobseeker.job_applications.any?
+    - if @job_applications.any?
       #applications-results
-        - current_jobseeker.job_applications.includes(:vacancy).order(updated_at: :desc).draft.each do |job_application|
-          = render "job_application", job_application: job_application if job_application.vacancy.expires_at.future?
-
-        - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).submitted.each do |job_application|
+        - @job_applications.each do |job_application|
           = render "job_application", job_application: job_application
-
-        - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).reviewed.each do |job_application|
-          = render "job_application", job_application: job_application
-
-        - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).shortlisted.each do |job_application|
-          = render "job_application", job_application: job_application
-
-        - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).unsuccessful.each do |job_application|
-          = render "job_application", job_application: job_application
-
-        - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).withdrawn.each do |job_application|
-          = render "job_application", job_application: job_application
-
-        - current_jobseeker.job_applications.includes(:vacancy).order(updated_at: :desc).draft.each do |job_application|
-          = render "job_application", job_application: job_application unless job_application.vacancy.expires_at.future?
 
     - else
       = render EmptySectionComponent.new title: t(".no_job_applications") do
