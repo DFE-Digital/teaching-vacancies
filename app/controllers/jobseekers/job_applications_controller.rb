@@ -13,16 +13,17 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     draft_job_applications = current_jobseeker.job_applications
                                               .includes(:vacancy).draft
                                               .order(updated_at: :desc)
-    @active_drafts, @expired_drafts = draft_job_applications.partition { |job_application| job_application.vacancy.expires_at.future? }
+    active_drafts, expired_drafts = draft_job_applications.partition { |job_application| job_application.vacancy.expires_at.future? }
 
     # This is the primary sort order for application statuses on the index page
-    status_keys = %i[submitted reviewed shortlisted interviewing unsuccessful withdrawn].freeze
+    status_keys = %i[interviewing shortlisted reviewed submitted unsuccessful withdrawn].freeze
 
-    @active_job_applications = current_jobseeker.job_applications
+    active_job_applications = current_jobseeker.job_applications
                                                 .includes(:vacancy)
                                                 .where.not(status: :draft)
                                                 .order(submitted_at: :desc)
                                                 .sort_by { |x| status_keys.index(x.status.to_sym) }
+    @job_applications = active_drafts + active_job_applications + expired_drafts
   end
 
   def new

@@ -17,18 +17,14 @@ RSpec.describe "jobseekers/job_applications/index" do
       allow(view).to receive(:current_jobseeker).and_return(jobseeker.reload)
     end
 
-    assign(:active_drafts, active_drafts)
-    assign(:expired_drafts, expired_drafts)
-    assign(:active_job_applications, active_job_applications)
+    assign(:job_applications, job_applications)
 
     render
   end
 
   describe "job applications rendering" do
     context "when there is no job application" do
-      let(:active_drafts) { [] }
-      let(:expired_drafts) { [] }
-      let(:active_job_applications) { [] }
+      let(:job_applications) { [] }
 
       it "renders empty content" do
         expect(index_view).to have_css(selectors[:header], text: "Applications (0)")
@@ -39,25 +35,16 @@ RSpec.describe "jobseekers/job_applications/index" do
     context "when there are some job applications" do
       let(:active_draft_job) { build_stubbed(:vacancy) }
       let(:active_draft) { build_stubbed(:job_application, :status_draft, jobseeker:, vacancy: active_draft_job) }
-      let(:active_drafts) { [active_draft] }
       let(:expired_draft) { build_stubbed(:job_application, :status_draft, jobseeker:, vacancy: vacancy_expired) }
-      let(:expired_drafts) { [expired_draft] }
       let(:active_job_applications) do
         [build_stubbed(:job_application, :status_submitted, jobseeker:),
          build_stubbed(:job_application, :status_reviewed, jobseeker:)]
       end
 
-      # let(:submitted) { create(:job_application, :status_submitted, jobseeker:) }
-      # let(:reviewed) { create(:job_application, :status_reviewed, jobseeker:) }
-      # let(:shortlisted) { create(:job_application, :status_shortlisted, jobseeker:) }
-      # let(:unsuccessful) { create(:job_application, :status_unsuccessful, jobseeker:) }
-      # let(:withdrawn) { create(:job_application, :status_withdrawn, jobseeker:) }
-      # let(:interviewing) { create(:job_application, :status_interviewing, jobseeker:) }
-      # let(:expired) { create(:job_application, :status_draft, jobseeker:, vacancy: vacancy_expired) }
       let(:vacancy_expired) { build_stubbed(:vacancy, :at_one_school, expires_at: 1.week.ago) }
 
       let(:job_applications) do
-        [draft, submitted, reviewed, shortlisted, unsuccessful, withdrawn, interviewing, expired]
+        [active_draft] + active_job_applications + [expired_draft]
       end
 
       it "renders job application list" do

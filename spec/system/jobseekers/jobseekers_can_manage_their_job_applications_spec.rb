@@ -54,12 +54,8 @@ RSpec.describe "Jobseekers can manage their job applications" do
           end
 
           within ".card-component:nth-child(2)" do
-            expect(page).to have_css(".card-component__header", text: submitted_job_application.vacancy.job_title)
-            within ".card-component__body" do
-              dt = find("dt", text: "Submitted")
-              expect(dt.sibling("dd").text).to eq("1 March 2025 at 12:31pm")
-            end
-            expect(page).to have_css(".card-component__actions", text: "submitted")
+            expect(page).to have_css(".card-component__header", text: interviewing_job_application.vacancy.job_title)
+            expect(page).to have_css(".card-component__actions", text: "interviewing")
           end
 
           within ".card-component:nth-child(3)" do
@@ -68,8 +64,12 @@ RSpec.describe "Jobseekers can manage their job applications" do
           end
 
           within ".card-component:nth-child(4)" do
-            expect(page).to have_css(".card-component__header", text: interviewing_job_application.vacancy.job_title)
-            expect(page).to have_css(".card-component__actions", text: "interviewing")
+            expect(page).to have_css(".card-component__header", text: submitted_job_application.vacancy.job_title)
+            within ".card-component__body" do
+              dt = find("dt", text: "Submitted")
+              expect(dt.sibling("dd").text).to eq("1 March 2025 at 12:31pm")
+            end
+            expect(page).to have_css(".card-component__actions", text: "submitted")
           end
 
           within ".card-component:nth-child(5)" do
