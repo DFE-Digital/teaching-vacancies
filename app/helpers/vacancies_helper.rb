@@ -236,8 +236,4 @@ module VacanciesHelper
   def sort_referrer_counts(referrer_counts)
     referrer_counts.map { |k, v| [k, v] }.sort_by { |_k, v| -v }
   end
-
-  def sort_referrer_counts(referrer_counts)
-    referrer_counts.map { |k, v| [k, v] }.sort_by { |_k, v| -v }
-  end
 end
