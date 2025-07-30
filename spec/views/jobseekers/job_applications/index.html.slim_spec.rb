@@ -14,9 +14,7 @@ RSpec.describe "jobseekers/job_applications/index" do
 
   before do
     job_applications
-    without_partial_double_verification do
-      allow(view).to receive(:current_jobseeker).and_return(jobseeker.reload)
-    end
+    allow(view).to receive(:current_jobseeker).and_return(jobseeker.reload)
 
     render
   end

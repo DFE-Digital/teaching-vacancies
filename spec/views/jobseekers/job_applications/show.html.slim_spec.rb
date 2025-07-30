@@ -8,9 +8,7 @@ RSpec.describe "jobseekers/job_applications/show" do
   let(:current_jobseeker) { jobseeker }
 
   before do
-    without_partial_double_verification do
-      allow(view).to receive_messages(current_jobseeker:, job_application:, vacancy:)
-    end
+    allow(view).to receive_messages(current_jobseeker:, job_application:, vacancy:)
 
     render
   end
