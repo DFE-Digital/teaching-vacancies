@@ -607,7 +607,7 @@ en:
           submitted:
             one: Unread application
             other: Unread applications
-        rejected:
+        tab_unsuccessful:
           reject: Send rejection emails
           have_been_sent: Have been sent a rejection email
           table:

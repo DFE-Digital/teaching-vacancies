@@ -70,6 +70,23 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_24_133259) do
     t.index ["subscription_id"], name: "index_alert_runs_on_subscription_id"
   end
 
+  create_table "batch_email_job_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "batch_email_id", null: false
+    t.uuid "job_application_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["batch_email_id"], name: "index_batch_email_job_applications_on_batch_email_id"
+    t.index ["job_application_id"], name: "index_batch_email_job_applications_on_job_application_id"
+  end
+
+  create_table "batch_emails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "vacancy_id", null: false
+    t.integer "batch_type", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["vacancy_id"], name: "index_batch_emails_on_vacancy_id"
+  end
+
   create_table "batchable_job_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "job_application_batch_id", null: false
     t.uuid "job_application_id", null: false
@@ -88,6 +105,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_24_133259) do
     t.boolean "has_unread_jobseeker_messages", default: false, null: false
     t.index ["archived"], name: "index_conversations_on_archived"
     t.index ["job_application_id"], name: "index_conversations_on_job_application_id"
+  end
+
+  create_table "email_templates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "publisher_id", null: false
+    t.integer "template_type", null: false
+    t.string "name", null: false
+    t.string "from", null: false
+    t.string "subject", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["publisher_id"], name: "index_email_templates_on_publisher_id"
   end
 
   create_table "emergency_login_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -905,9 +933,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_24_133259) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "alert_runs", "subscriptions"
+  add_foreign_key "batch_email_job_applications", "batch_emails"
+  add_foreign_key "batch_email_job_applications", "job_applications"
+  add_foreign_key "batch_emails", "vacancies"
   add_foreign_key "batchable_job_applications", "job_application_batches"
   add_foreign_key "batchable_job_applications", "job_applications"
   add_foreign_key "conversations", "job_applications"
+  add_foreign_key "email_templates", "publishers"
   add_foreign_key "employments", "job_applications"
   add_foreign_key "employments", "jobseeker_profiles"
   add_foreign_key "equal_opportunities_reports", "vacancies"

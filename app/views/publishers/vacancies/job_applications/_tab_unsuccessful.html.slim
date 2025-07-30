@@ -1,1 +1,23 @@
-= render TabPanelComponent.new(tab_name:, vacancy:, form:, candidates: candidates.values.flatten, button_group: %i[download])
+- email_batches = vacancy.batch_emails.rejection
+- emails = email_batches.flat_map(&:job_applications)
+
+= render TabPanelComponent.new(tab_name:, vacancy:, form:, candidates: candidates.values.flatten - emails, button_group: %i[download reject])
+
+- if emails.any?
+  h3 = t(".have_been_sent")
+
+  = govuk_table(id: "rejected_emails") do |table|
+    - table.with_head do |head|
+      - head.with_row do |row|
+        - row.with_cell(text: t(".table.name"))
+        - row.with_cell(text: t(".table.contact_details"))
+        - row.with_cell(text: t(".table.status"))
+        - row.with_cell(text: t(".table.date"))
+    - table.with_body do |body|
+      - email_batches.each do |email_batch|
+        - email_batch.job_applications.each do |job_application|
+          - body.with_row do |row|
+            - row.with_cell(text: job_application.name)
+            - row.with_cell(text: job_application.email_address)
+            - row.with_cell(text: govuk_tag(text: "Rejection sent", colour: "red"))
+            - row.with_cell(text: email_batch.created_at.to_formatted_s(:day_month_year))

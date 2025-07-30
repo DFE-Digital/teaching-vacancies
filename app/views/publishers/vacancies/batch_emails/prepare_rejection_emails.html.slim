@@ -10,7 +10,7 @@ h3 = t(".to")
   p.govuk-body
     ul
       - @job_applications.each do |ja|
-        li = ja.email
+        li = ja.email_address
 
 = form_with(model: @form, url: send_rejection_emails_organisation_job_batch_email_path(vacancy.id, @batch_email.id)) do |f|
   = f.govuk_error_summary

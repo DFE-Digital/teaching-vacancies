@@ -31,7 +31,7 @@ module Publishers
 
       batch.update!(batch_type: :rejection)
 
-      redirect_to organisation_job_job_applications_path(vacancy.id, anchor: :not_considering), success: t(".rejections_sent")
+      redirect_to organisation_job_job_applications_path(vacancy.id, anchor: :unsuccessful), success: t(".rejections_sent")
     end
 
     private
