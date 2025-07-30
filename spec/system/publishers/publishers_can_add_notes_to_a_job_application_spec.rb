@@ -14,58 +14,57 @@ RSpec.describe "Publishers can add notes to a job application" do
   after { logout }
 
   describe "on job application show page" do
+    context "with a note" do
+      let!(:note) { create(:note, job_application: job_application, publisher: publisher, content: "This is a note") }
 
-  context "with a note" do
-    let!(:note) { create(:note, job_application: job_application, publisher: publisher, content: "This is a note") }
+      before do
+        publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
+      end
 
-    before do
-      publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
+      it "shows the current notes" do
+        expect(publisher_application_page).to be_displayed
+
+        expect(page).to have_content(note.content)
+      end
+
+      it "allows notes to be deleted" do
+        expect(publisher_application_page).to be_displayed
+
+        click_on I18n.t("buttons.delete")
+        # wait for action to complete
+        expect(publisher_application_page.notification_banner.text).to eq("Success\nNote deleted")
+
+        expect(page).to have_no_content(note.content)
+      end
     end
 
-    it "shows the current notes" do
-      expect(publisher_application_page).to be_displayed
+    context "without a note" do
+      before do
+        publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
+      end
 
-      expect(page).to have_content(note.content)
+      it "allows notes to be added to job applications" do
+        expect(publisher_application_page).to be_displayed
+
+        click_on I18n.t("buttons.save")
+
+        expect(page).to have_content("Note did not save. Notes must not be blank or more than 150 words")
+
+        fill_in "Add a note", with: "ABCDEFG"
+        click_on I18n.t("buttons.save")
+
+        # wait for action to complete
+        expect(publisher_application_page.notification_banner.text).to eq("Success\nA note has been added")
+
+        expect(page).to have_content("ABCDEFG")
+      end
     end
-
-    it "allows notes to be deleted" do
-      expect(publisher_application_page).to be_displayed
-
-      click_on I18n.t("buttons.delete")
-      # wait for action to complete
-      expect(publisher_application_page.notification_banner.text).to eq("Success\nNote deleted")
-
-      expect(page).to have_no_content(note.content)
-    end
-  end
-
-  context "without a note" do
-    before do
-      publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
-    end
-
-    it "allows notes to be added to job applications" do
-      expect(publisher_application_page).to be_displayed
-
-      click_on I18n.t("buttons.save")
-
-      expect(page).to have_content("Note did not save. Notes must not be blank or more than 150 words")
-
-      fill_in "Add a note", with: "ABCDEFG"
-      click_on I18n.t("buttons.save")
-
-      # wait for action to complete
-      expect(publisher_application_page.notification_banner.text).to eq("Success\nA note has been added")
-
-      expect(page).to have_content("ABCDEFG")
-    end
-  end
   end
 
   describe "on reference request page" do
     let(:referee) { create(:referee, job_application: job_application) }
     let(:reference_request) { create(:reference_request, referee: referee) }
-    
+
     before do
       create(:job_reference, referee: referee)
     end
