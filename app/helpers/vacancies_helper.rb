@@ -220,6 +220,8 @@ module VacanciesHelper
       fontName: "GDS Transport",
     }
 
+    gov_uk_blue = "#1d70b8"
+
     # sort with highest value on top - using a hash results in an arbitrary ordering
     bar_chart sort_referrer_counts(referrer_counts),
               library: {
@@ -234,7 +236,7 @@ module VacanciesHelper
                 },
               },
               height: "#{referrer_counts.size * 60}px",
-              colors: ["#003764"]
+              colors: [gov_uk_blue]
   end
 
   def sort_referrer_counts(referrer_counts)
