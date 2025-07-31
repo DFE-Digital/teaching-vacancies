@@ -20,8 +20,6 @@
     - if @vacancy_analytics.present?
       = render "publishers/statistics/vacancy_view_stats", chart: @bar_chart, referrer_counts: @vacancy_analytics.referrer_counts,
         link: organisation_job_statistics_path(vacancy.id), accessible_link: organisation_job_statistics_path(vacancy.id, view: "table")
-      .div
-      h3.govuk-heading-m.heading--border-bottom = t(".listing_data")
 
     .govuk-grid-column-two-thirds
       = govuk_table do |table|
@@ -40,7 +38,6 @@
             - row.with_cell text: vacancy.saved_jobs.count, numeric: true
 
       - if vacancy.can_receive_job_applications?
-
         = govuk_table do |table|
           - table.with_head do |head|
             - head.with_row do |row|
