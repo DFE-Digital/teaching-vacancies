@@ -85,7 +85,7 @@ RSpec.describe "Publishers can add notes to a job application" do
           expect(publisher_ats_reference_request_page).to be_displayed
 
           click_on I18n.t("buttons.delete")
-          # wait for redirect and check we're still on the reference request page
+
           expect(publisher_ats_reference_request_page).to be_displayed
           expect(page).to have_no_content(note.content)
         end
@@ -102,7 +102,6 @@ RSpec.describe "Publishers can add notes to a job application" do
           fill_in "Add a note", with: "New reference note"
           click_on I18n.t("buttons.save_note")
 
-          # wait for redirect and check we're still on the reference request page
           expect(publisher_ats_reference_request_page).to be_displayed
           expect(page).to have_content("New reference note")
         end
@@ -131,7 +130,7 @@ RSpec.describe "Publishers can add notes to a job application" do
           expect(publisher_ats_self_disclosure_page).to be_displayed
 
           click_on I18n.t("buttons.delete")
-          # wait for redirect and check we're still on the self disclosure page
+
           expect(publisher_ats_self_disclosure_page).to be_displayed
           expect(page).to have_no_content(note.content)
         end
@@ -148,7 +147,6 @@ RSpec.describe "Publishers can add notes to a job application" do
           fill_in "Add a note", with: "New self disclosure note"
           click_on I18n.t("buttons.save_note")
 
-          # wait for redirect and check we're still on the self disclosure page
           expect(publisher_ats_self_disclosure_page).to be_displayed
           expect(page).to have_content("New self disclosure note")
         end
