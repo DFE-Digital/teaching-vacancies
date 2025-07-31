@@ -8,6 +8,10 @@ module Publishers
 
         def show
           @referee = @reference_request.referee
+          respond_to do |format|
+            format.html
+            format.pdf { send_reference_pdf }
+          end
         end
 
         # changing the email address of the referee
@@ -58,6 +62,18 @@ module Publishers
 
         def set_reference_request
           @reference_request = ReferenceRequest.where(referee: @job_application.referees).find params[:id]
+        end
+
+        def send_reference_pdf
+          referee_presenter = RefereePresenter.new(@referee)
+          pdf = ReferencePdfGenerator.new(referee_presenter).generate
+
+          send_data(
+            pdf.render,
+            filename: "reference_#{@referee.id}.pdf",
+            type: "application/pdf",
+            disposition: "inline",
+          )
         end
       end
     end
