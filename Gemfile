@@ -26,6 +26,7 @@ gem "array_enum"
 # something strange with 1.189.1 - it hangs for 6 hours on install
 gem "aws-sdk-s3", "< 1.189.1", require: false
 gem "breasal"
+gem "chartkick"
 gem "devise"
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.7"
 gem "discard", "~> 1.4"
