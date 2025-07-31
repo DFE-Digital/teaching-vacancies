@@ -58,6 +58,20 @@ RSpec.describe SubscriptionsController, recaptcha: true do
           subject
         end
 
+        it "records the recaptcha score on the subscription" do
+          expect(subscription).to receive(:update).with(recaptcha_score: recaptcha_score)
+          subject
+        end
+
+        context "when the recaptcha reply as yet not been fetched" do
+          let(:recaptcha_reply) { nil }
+
+          it "records a nil recaptcha score" do
+            expect(subscription).to receive(:update).with(recaptcha_score: nil)
+            subject
+          end
+        end
+
         it "renders the subscription confirmation page" do
           expect(subject).to render_template("confirm")
         end

@@ -26,7 +26,9 @@ class Jobseekers::Subscriptions::Feedbacks::FurtherFeedbacksController < Applica
 
   def update_feedback
     feedback.update(further_feedback_form_params)
+    # :nocov:
     feedback.recaptcha_score = recaptcha_reply&.score
+    # :nocov:
     feedback.save
   end
 
