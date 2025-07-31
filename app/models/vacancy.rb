@@ -64,6 +64,7 @@ class Vacancy < ApplicationRecord
   enum :listed_elsewhere, { listed_paid: 0, listed_free: 1, listed_mix: 2, not_listed: 3, listed_dont_know: 4 }
   enum :start_date_type, { specific_date: 0, date_range: 1, other: 2, undefined: 3, asap: 4 }
 
+  # email is legacy
   enum :receive_applications, { email: 0, website: 1, uploaded_form: 2 }
   enum :extension_reason, { no_applications: 0, didnt_find_right_candidate: 1, other_extension_reason: 2 }
 
@@ -286,7 +287,7 @@ class Vacancy < ApplicationRecord
   end
 
   def teaching_or_middle_leader_role?
-    job_roles.intersect?(%w[teacher head_of_year_or_phase head_of_department_or_curriculum sendco other_leadership])
+    job_roles.intersect?(TEACHING_JOB_ROLES)
   end
 
   def allow_job_applications?
