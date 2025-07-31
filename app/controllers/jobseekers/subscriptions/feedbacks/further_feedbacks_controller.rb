@@ -26,7 +26,7 @@ class Jobseekers::Subscriptions::Feedbacks::FurtherFeedbacksController < Applica
 
   def update_feedback
     feedback.update(further_feedback_form_params)
-    feedback.recaptcha_score = recaptcha_reply&.dig("score")
+    feedback.recaptcha_score = recaptcha_reply&.score
     feedback.save
   end
 
