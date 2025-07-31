@@ -8,6 +8,7 @@ module Publishers
 
         def show
           @referee = RefereePresenter.new(@reference_request.referee)
+          @notes_form = Publishers::JobApplication::NotesForm.new
           respond_to do |format|
             format.html
             format.pdf { send_reference_pdf }

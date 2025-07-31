@@ -6,16 +6,16 @@ class Publishers::Vacancies::JobApplications::NotesController < Publishers::Vaca
 
     if @notes_form.valid?
       Note.create(notes_attributes)
-      redirect_to organisation_job_job_application_path(id: @job_application.id), success: t(".success")
+      redirect_to redirect_path, success: t(".success")
     else
-      redirect_to organisation_job_job_application_path(id: @job_application.id), warning: t(".failure")
+      redirect_to redirect_path, warning: t(".failure")
     end
   end
 
   def destroy
     note = @job_application.notes.find(params[:id])
     note.destroy
-    redirect_to organisation_job_job_application_path(id: @job_application.id), success: t(".success")
+    redirect_to redirect_path, success: t(".success")
   end
 
   private
@@ -26,5 +26,22 @@ class Publishers::Vacancies::JobApplications::NotesController < Publishers::Vaca
 
   def notes_form_params
     params[:publishers_job_application_notes_form].permit(:content)
+  end
+
+  def redirect_path
+    return_to = params[:return_to]
+
+    case return_to
+    when "reference_request"
+      if params[:reference_request_id].present?
+        organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, params[:reference_request_id])
+      else
+        organisation_job_job_application_path(id: @job_application.id)
+      end
+    when "self_disclosure"
+      organisation_job_job_application_self_disclosure_path(vacancy.id, @job_application.id)
+    else
+      organisation_job_job_application_path(id: @job_application.id)
+    end
   end
 end
