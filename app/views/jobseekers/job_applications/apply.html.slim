@@ -55,15 +55,14 @@
         html_attributes: { id: :personal_statement },
         status: review_section_tag(@job_application, :personal_statement))
 
-      - case @job_application.vacancy.religion_type
-        - when "catholic"
-          - task_list.with_item(title: t("jobseekers.job_applications.build.catholic.step_title"), href: jobseekers_job_application_build_path(@job_application, :catholic),
-            html_attributes: { id: :religious_information },
-            status: review_section_tag(@job_application, :catholic))
-        - when "other_religion"
-          - task_list.with_item(title: t("jobseekers.job_applications.build.catholic.step_title"), href: jobseekers_job_application_build_path(@job_application, :non_catholic),
-            html_attributes: { id: :religious_information },
-            status: review_section_tag(@job_application, :non_catholic))
+      - if @job_application.vacancy.catholic?
+        - task_list.with_item(title: t("jobseekers.job_applications.build.catholic.step_title"), href: jobseekers_job_application_build_path(@job_application, :catholic),
+          html_attributes: { id: :religious_information },
+          status: review_section_tag(@job_application, :catholic))
+      - elsif @job_application.vacancy.other_religion?
+        - task_list.with_item(title: t("jobseekers.job_applications.build.catholic.step_title"), href: jobseekers_job_application_build_path(@job_application, :non_catholic),
+          html_attributes: { id: :religious_information },
+          status: review_section_tag(@job_application, :non_catholic))
 
       - task_list.with_item(title: t("jobseekers.job_applications.build.referees.heading"), href: jobseekers_job_application_build_path(@job_application, :referees),
         html_attributes: { id: :referees },
