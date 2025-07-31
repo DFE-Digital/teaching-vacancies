@@ -285,6 +285,7 @@ shared:
     - accepted_terms_at
     - acknowledged_candidate_profiles_interstitial
     - email
+    - email_opt_out
     - last_activity_at
     - family_name
     - given_name
