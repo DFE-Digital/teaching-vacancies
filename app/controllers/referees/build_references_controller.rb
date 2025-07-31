@@ -22,7 +22,9 @@ module Referees
 
     def show
       if step != Wicked::FINISH_STEP
-        if @reference.can_give_reference?
+        if @reference.can_give_reference == false
+          jump_to Wicked::FINISH_STEP
+        else
           @form = if step == :referee_details
                     form_class.new(token: token,
                                    name: @referee.name,
@@ -30,14 +32,10 @@ module Referees
                                    email: @referee.email,
                                    organisation: @referee.organisation,
                                    phone_number: @referee.phone_number)
-                  elsif step == :can_give
-                    form_class.new(token: token)
                   else
                     # This allows the 'back' button to pick up previously entered data.
                     form_class.new(@reference.slice(*form_class.fields).merge(token: token))
                   end
-        else
-          jump_to Wicked::FINISH_STEP
         end
       end
       render_wizard(nil, {}, token: token)

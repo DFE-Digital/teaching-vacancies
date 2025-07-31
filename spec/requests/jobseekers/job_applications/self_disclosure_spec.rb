@@ -20,12 +20,6 @@ RSpec.describe "Job applications self disclosure" do
       get jobseekers_job_application_self_disclosure_path(job_application, :personal_details)
     end
 
-    context "when the self disclosure has not been enabled" do
-      let(:self_disclosure) { nil }
-
-      it { expect(response).to redirect_to(jobseekers_job_application_path(job_application)) }
-    end
-
     context "when the self disclosure is managed outside TV" do
       let(:status) { "manual" }
 

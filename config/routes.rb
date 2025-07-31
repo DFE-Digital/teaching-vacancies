@@ -415,9 +415,10 @@ Rails.application.routes.draw do
         post :update_tag, on: :collection
         member do
           get :pre_interview_checks
-          get :collect_references
         end
         resource :self_disclosure, only: %i[show update], controller: "publishers/vacancies/job_applications/self_disclosure"
+        resources :collect_references, only: %i[show update], controller: "publishers/vacancies/collect_references_wizard"
+        resources :collect_self_disclosures, only: %i[show update], controller: "publishers/vacancies/collect_self_disclosure_wizard"
       end
       resources :job_application_batches, only: %i[] do
         resources :references_and_self_disclosure, only: %i[show update], controller: "publishers/vacancies/references_and_self_disclosure"

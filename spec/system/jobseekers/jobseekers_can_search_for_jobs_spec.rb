@@ -15,11 +15,9 @@ RSpec.shared_examples "a successful search" do
 
     context "when navigating between pages" do
       it "displays page 3 jobs" do
-        sleep 30
         within ".govuk-pagination" do
           click_on "3"
         end
-        sleep 20
 
         expect(page).to have_css(".search-results > .search-results__item", count: 2)
         expect(page).to have_content strip_tags(I18n.t("app.pagy_stats_html", from: 5, to: 6, total: 6, type: "results"))
