@@ -7,6 +7,7 @@ module Publishers
         before_action :set_job_application, :set_reference_request
 
         def show
+          @notes_form = Publishers::JobApplication::NotesForm.new
           @referee = @reference_request.referee
         end
 

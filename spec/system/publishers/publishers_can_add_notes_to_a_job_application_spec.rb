@@ -13,49 +13,146 @@ RSpec.describe "Publishers can add notes to a job application" do
 
   after { logout }
 
-  context "with a note" do
-    let!(:note) { create(:note, job_application: job_application, publisher: publisher, content: "This is a note") }
+  describe "on job application show page" do
+    context "with a note" do
+      let!(:note) { create(:note, job_application: job_application, publisher: publisher, content: "This is a note") }
 
-    before do
-      publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
+      before do
+        publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
+      end
+
+      it "shows the current notes" do
+        expect(publisher_application_page).to be_displayed
+
+        expect(page).to have_content(note.content)
+      end
+
+      it "allows notes to be deleted" do
+        expect(publisher_application_page).to be_displayed
+
+        click_on I18n.t("buttons.delete")
+        # wait for action to complete
+        expect(publisher_application_page.notification_banner.text).to eq("Success\nNote deleted")
+
+        expect(page).to have_no_content(note.content)
+      end
     end
 
-    it "shows the current notes" do
-      expect(publisher_application_page).to be_displayed
+    context "without a note" do
+      before do
+        publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
+      end
 
-      expect(page).to have_content(note.content)
+      it "allows notes to be added to job applications" do
+        expect(publisher_application_page).to be_displayed
+
+        click_on I18n.t("buttons.save")
+
+        expect(page).to have_content("Note did not save. Notes must not be blank or more than 150 words")
+
+        fill_in "Add a note", with: "ABCDEFG"
+        click_on I18n.t("buttons.save")
+
+        # wait for action to complete
+        expect(publisher_application_page.notification_banner.text).to eq("Success\nA note has been added")
+
+        expect(page).to have_content("ABCDEFG")
+      end
     end
 
-    it "allows notes to be deleted" do
-      expect(publisher_application_page).to be_displayed
+    describe "on reference request page" do
+      let(:referee) { create(:referee, job_application: job_application) }
+      let(:reference_request) { create(:reference_request, referee: referee) }
 
-      click_on I18n.t("buttons.delete")
-      # wait for action to complete
-      expect(publisher_application_page.notification_banner.text).to eq("Success\nNote deleted")
+      before do
+        create(:job_reference, referee: referee)
+      end
 
-      expect(page).to have_no_content(note.content)
+      context "with a note" do
+        let!(:note) { create(:note, job_application: job_application, publisher: publisher, content: "This is a reference note") }
+
+        before do
+          publisher_ats_reference_request_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id, reference_request_id: reference_request.id)
+        end
+
+        it "shows the current notes" do
+          expect(publisher_ats_reference_request_page).to be_displayed
+
+          expect(page).to have_content(note.content)
+        end
+
+        it "allows notes to be deleted and redirects back to reference request page" do
+          expect(publisher_ats_reference_request_page).to be_displayed
+
+          click_on I18n.t("buttons.delete")
+          # wait for redirect and check we're still on the reference request page
+          expect(publisher_ats_reference_request_page).to be_displayed
+          expect(page).to have_no_content(note.content)
+        end
+      end
+
+      context "without a note" do
+        before do
+          publisher_ats_reference_request_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id, reference_request_id: reference_request.id)
+        end
+
+        it "allows notes to be added and redirects back to reference request page" do
+          expect(publisher_ats_reference_request_page).to be_displayed
+
+          fill_in "Add a note", with: "New reference note"
+          click_on I18n.t("buttons.save_note")
+
+          # wait for redirect and check we're still on the reference request page
+          expect(publisher_ats_reference_request_page).to be_displayed
+          expect(page).to have_content("New reference note")
+        end
+      end
     end
-  end
 
-  context "without a note" do
-    before do
-      publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
-    end
+    describe "on self disclosure page" do
+      before do
+        create(:self_disclosure_request, job_application: job_application)
+      end
 
-    it "allows notes to be added to job applications" do
-      expect(publisher_application_page).to be_displayed
+      context "with a note" do
+        let!(:note) { create(:note, job_application: job_application, publisher: publisher, content: "This is a self disclosure note") }
 
-      click_on I18n.t("buttons.save")
+        before do
+          publisher_ats_self_disclosure_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
+        end
 
-      expect(page).to have_content("Note did not save. Notes must not be blank or more than 150 words")
+        it "shows the current notes" do
+          expect(publisher_ats_self_disclosure_page).to be_displayed
 
-      fill_in "Add a note", with: "ABCDEFG"
-      click_on I18n.t("buttons.save")
+          expect(page).to have_content(note.content)
+        end
 
-      # wait for action to complete
-      expect(publisher_application_page.notification_banner.text).to eq("Success\nA note has been added")
+        it "allows notes to be deleted and redirects back to self disclosure page" do
+          expect(publisher_ats_self_disclosure_page).to be_displayed
 
-      expect(page).to have_content("ABCDEFG")
+          click_on I18n.t("buttons.delete")
+          # wait for redirect and check we're still on the self disclosure page
+          expect(publisher_ats_self_disclosure_page).to be_displayed
+          expect(page).to have_no_content(note.content)
+        end
+      end
+
+      context "without a note" do
+        before do
+          publisher_ats_self_disclosure_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
+        end
+
+        it "allows notes to be added and redirects back to self disclosure page" do
+          expect(publisher_ats_self_disclosure_page).to be_displayed
+
+          fill_in "Add a note", with: "New self disclosure note"
+          click_on I18n.t("buttons.save_note")
+
+          # wait for redirect and check we're still on the self disclosure page
+          expect(publisher_ats_self_disclosure_page).to be_displayed
+          expect(page).to have_content("New self disclosure note")
+        end
+      end
     end
   end
 end
