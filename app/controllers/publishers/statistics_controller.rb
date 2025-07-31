@@ -24,7 +24,8 @@ module Publishers
     end
 
     def vacancies
-      current_publisher.vacancies.active_in_current_academic_year
+      PublishedVacancy.in_organisation_ids(current_publisher.accessible_organisations(current_organisation))
+                      .active_in_current_academic_year
     end
 
     # convert hash like {"age_thing" => 28, "age_other" => 24, "wibble" => 43}
