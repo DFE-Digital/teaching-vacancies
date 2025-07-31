@@ -3,13 +3,6 @@ require "rails_helper"
 RSpec.describe "Publishers can view a job application" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
-  let(:top_company) { "Ask Jeeves" }
-  let(:second_company) { "LinkedIn" }
-  let(:vacancy) do
-    create(:vacancy, organisations: [organisation],
-                     vacancy_analytics: build(:vacancy_analytics,
-                                              referrer_counts: { "Direct" => 14, top_company => 24, second_company => 22, "Also Rans" => 15 }))
-  end
 
   before do
     create(:saved_job, vacancy: vacancy)
@@ -26,52 +19,67 @@ RSpec.describe "Publishers can view a job application" do
 
   after { logout }
 
-  it "cam switch between views", :js do
-    find_by_id("accessible").click
-    within("#analytics") do
-      within(".govuk-summary-list__row:nth-child(1)") do
-        expect(page).to have_content(top_company)
-        expect(page).to have_content("24")
-      end
-      within(".govuk-summary-list__row:nth-child(2)") do
-        expect(page).to have_content(second_company)
-        expect(page).to have_content("22")
+  describe "job listing source" do
+    let(:top_company) { "Ask Jeeves" }
+    let(:second_company) { "LinkedIn" }
+
+    let(:vacancy) do
+      create(:vacancy, organisations: [organisation],
+                       vacancy_analytics: build(:vacancy_analytics,
+                                                referrer_counts: { "Direct" => 14, top_company => 24, second_company => 22, "Also Rans" => 15 }))
+    end
+
+    it "cam switch between views" do
+      find_by_id("accessible").click
+      within("#analytics") do
+        within(".govuk-summary-list__row:nth-child(1)") do
+          expect(page).to have_content(top_company)
+          expect(page).to have_content("24")
+        end
+        within(".govuk-summary-list__row:nth-child(2)") do
+          expect(page).to have_content(second_company)
+          expect(page).to have_content("22")
+        end
       end
     end
   end
 
-  it "shows the statistics" do
-    within("#vacancy_statistics") do
-      within(".govuk-summary-list__row:nth-child(1)") do
-        expect(page).to have_content(I18n.t("publishers.vacancies.statistics.show.views_by_jobseeker").to_s)
-        expect(page).to have_content("42")
-      end
-      within(".govuk-summary-list__row:nth-child(2)") do
-        expect(page).to have_content(I18n.t("publishers.vacancies.statistics.show.saves_by_jobseeker").to_s)
-        expect(page).to have_content("1")
-      end
-    end
+  describe "listing and application data" do
+    let(:vacancy) { create(:vacancy, organisations: [organisation]) }
 
-    within("#job_applications_statistics") do
-      within(".govuk-summary-list__row:nth-child(1)") do
-        expect(page).to have_content(I18n.t("publishers.vacancies.statistics.show.total_applications").to_s)
-        expect(page).to have_content("4")
+    it "shows the statistics" do
+      within("#vacancy_statistics") do
+        within(".govuk-table__row:nth-child(1)") do
+          expect(page).to have_content(I18n.t("publishers.vacancies.statistics.show.views_by_jobseeker").to_s)
+          expect(page).to have_content("42")
+        end
+        within(".govuk-table__row:nth-child(2)") do
+          expect(page).to have_content(I18n.t("publishers.vacancies.statistics.show.saves_by_jobseeker").to_s)
+          expect(page).to have_content("1")
+        end
       end
-      within(".govuk-summary-list__row:nth-child(2)") do
-        expect(page).to have_content(I18n.t("publishers.vacancies.statistics.show.unread_applications").to_s)
-        expect(page).to have_content("1")
-      end
-      within(".govuk-summary-list__row:nth-child(3)") do
-        expect(page).to have_content(I18n.t("publishers.vacancies.statistics.show.shortlisted_applications").to_s)
-        expect(page).to have_content("1")
-      end
-      within(".govuk-summary-list__row:nth-child(4)") do
-        expect(page).to have_content(I18n.t("publishers.vacancies.statistics.show.rejected_applications").to_s)
-        expect(page).to have_content("1")
-      end
-      within(".govuk-summary-list__row:nth-child(5)") do
-        expect(page).to have_content(I18n.t("publishers.vacancies.statistics.show.withdrawn_applications").to_s)
-        expect(page).to have_content("1")
+
+      within("#job_applications_statistics") do
+        within(".govuk-table__row:nth-child(1)") do
+          expect(page).to have_content(I18n.t("publishers.vacancies.statistics.show.total_applications").to_s)
+          expect(page).to have_content("4")
+        end
+        within(".govuk-table__row:nth-child(2)") do
+          expect(page).to have_content(I18n.t("publishers.vacancies.statistics.show.unread_applications").to_s)
+          expect(page).to have_content("1")
+        end
+        within(".govuk-table__row:nth-child(3)") do
+          expect(page).to have_content(I18n.t("publishers.vacancies.statistics.show.shortlisted_applications").to_s)
+          expect(page).to have_content("1")
+        end
+        within(".govuk-table__row:nth-child(4)") do
+          expect(page).to have_content(I18n.t("publishers.vacancies.statistics.show.rejected_applications").to_s)
+          expect(page).to have_content("1")
+        end
+        within(".govuk-table__row:nth-child(5)") do
+          expect(page).to have_content(I18n.t("publishers.vacancies.statistics.show.withdrawn_applications").to_s)
+          expect(page).to have_content("1")
+        end
       end
     end
   end

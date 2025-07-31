@@ -784,6 +784,12 @@ en:
           total_applications: Total applications
           unread_applications: Unread applications
           views_by_jobseeker: Views by jobseekers
+          listing_header:
+            label: Job listing data
+            data: Amount
+          applications_header:
+            label: Application data
+            data: Amount
           withdrawn_applications: Withdrawn applications
           accessible_view: Change to table and accessible view
           chart_view: Change to chart view
