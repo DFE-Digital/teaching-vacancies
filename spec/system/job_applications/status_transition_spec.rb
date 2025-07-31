@@ -20,7 +20,7 @@ RSpec.describe "check job application after status transition" do
   end
 
   describe "jobseeker job applications listing" do
-    it "jobseeker can view all its applications", pending: "fix on interviewing display" do
+    it "jobseeker can view all its applications" do
       run_with_jobseeker(jobseeker) do
         jobseeker_applications_page.load
 
@@ -356,10 +356,9 @@ RSpec.describe "check job application after status transition" do
         # view application
         #
 
-        # TODO: uncomment once interviewing fix is merged in
-        # jobseeker_applications_page.click_on_job_application(job_application.id)
-        # expect(jobseeker_application_page).to be_displayed(id: job_application.id)
-        # expect(jobseeker_application_page.tag).to have_text("interviewing")
+        jobseeker_applications_page.click_on_job_application(job_application.id)
+        expect(jobseeker_application_page).to be_displayed(id: job_application.id)
+        expect(jobseeker_application_page.tag).to have_text("interviewing")
       end
     end
   end
