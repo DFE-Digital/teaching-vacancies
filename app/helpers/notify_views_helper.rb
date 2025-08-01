@@ -27,6 +27,13 @@ module NotifyViewsHelper
     notify_link(url, "Unsubscribe from these emails")
   end
 
+  def publisher_email_opt_out_link(publisher)
+    return if publisher.blank?
+
+    url = confirm_email_opt_out_publishers_account_url(publisher_id: publisher.signed_id)
+    notify_link(url, "Stop receiving emails from Teaching Vacancies")
+  end
+
   def home_page_link(text = t("app.title"))
     url = root_url(**utm_params)
     notify_link(url, text)

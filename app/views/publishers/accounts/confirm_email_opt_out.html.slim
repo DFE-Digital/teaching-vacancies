@@ -6,7 +6,7 @@
   p.govuk-body
     = t(".notification_banner.body")
 
-= form_for @publisher, url: unsubscribe_publishers_account_path(publisher_id: @publisher.signed_id), method: :patch do |f|
+= form_for @publisher, url: email_opt_out_publishers_account_path(publisher_id: @publisher.signed_id), method: :patch do |f|
   .govuk-button-group
-    = f.govuk_submit t("buttons.confirm_unsubscribe"), warning: true
+    = f.govuk_submit t("buttons.confirm_email_opt_out"), warning: true
     = govuk_link_to t("buttons.cancel"), root_path, class: "govuk-link--no-visited-state"

@@ -43,4 +43,18 @@ RSpec.describe NotifyViewsHelper do
       end
     end
   end
+
+  describe "#publisher_email_opt_out_link" do
+    it "returns nil when no publisher is provided" do
+      expect(helper.publisher_email_opt_out_link(nil)).to be_nil
+    end
+
+    it "generates the opt out link for the publisher" do
+      publisher = build_stubbed(:publisher)
+      expected_link = helper.confirm_email_opt_out_publishers_account_url(publisher_id: publisher.signed_id)
+
+      expect(helper.publisher_email_opt_out_link(publisher))
+        .to eq(helper.notify_link(expected_link, "Stop receiving emails from Teaching Vacancies"))
+    end
+  end
 end
