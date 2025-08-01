@@ -1,8 +1,9 @@
-class RefereePresenter
+class RefereePresenter < BasePresenter
   REFEREE_DETAILS = %i[name job_title organisation relationship email phone_number].freeze
   REF_INFO = %i[how_do_you_know_the_candidate employment_start_date currently_employed would_reemploy_current would_reemploy_any].freeze
 
   def initialize(referee)
+    super
     @referee = referee
     @reference = referee.job_reference
   end
