@@ -1,4 +1,10 @@
 = render("navigation")
 
+p.govuk-body = t(".this_data")
+
+p.govuk-body = t(".download_stats")
+
+= govuk_button_link_to t("buttons.download_stats"), publishers_statistics_path(format: :csv), class: "govuk-button--secondary"
+
 = render "vacancy_view_stats", chart: @bar_chart, referrer_counts: @referrer_counts,
   link: publishers_statistics_path, accessible_link: publishers_statistics_path(view: "table")

@@ -1,20 +1,19 @@
 require "rails_helper"
 
-RSpec.describe "Publishers can view statistics" do
+RSpec.describe "Publisher statistics" do
   let(:school) { create(:school) }
 
   let(:publisher) { create(:publisher, publisher_preferences: build_list(:publisher_preference, 1, organisation: school)) }
 
   before do
-    create(:vacancy, organisations: [school], publisher: publisher)
-    login_publisher(publisher: publisher, organisation: school)
+    allow_any_instance_of(Publishers::BaseController).to receive(:current_organisation).and_return(school)
+    sign_in(publisher, scope: :publisher)
   end
 
-  after { logout }
+  after { sign_out(publisher) }
 
-  describe "vacancy stats page" do
+  describe "GET #index" do
     before do
-      # This old vacancy shouldn't show up in the visible stats as its too old
       create(:vacancy, publisher: publisher, organisations: [school], publish_on: 1.year.ago,
                        vacancy_analytics: build(:vacancy_analytics,
                                                 referrer_counts: { "Google" => 6, "Magic" => 8 }))
@@ -26,28 +25,17 @@ RSpec.describe "Publishers can view statistics" do
                                                 referrer_counts: { "Google" => 4, "Yahoo" => 12, "LinkedIn" => 13 }))
       create(:vacancy, publisher: publisher, organisations: [school],
                        vacancy_analytics: build(:vacancy_analytics,
-                                                referrer_counts: { "Google" => 14, "Indeed" => 5, "LinkedIn" => 17 }))
+                                                referrer_counts: { "Google" => 14, "Indeed" => 5, "LinkedIn" => 15 }))
     end
 
-    it "adds up the stats for each referrer" do
-      visit publishers_statistics_path
+    it "includes old data in its calculations" do
+      get(publishers_statistics_path(format: :csv))
 
-      find_by_id("accessible").click
-
-      within("#analytics") do
-        within(".govuk-summary-list__row:nth-child(1)") do
-          expect(page).to have_content("LinkedIn")
-          expect(page).to have_content("30")
-        end
-        within(".govuk-summary-list__row:nth-child(2)") do
-          expect(page).to have_content("Google")
-          expect(page).to have_content("24")
-        end
-      end
+      expect(response.body.split("\n")).to eq(["Google,LinkedIn,Magic,Yahoo,Indeed", "30,28,16,12,5"])
     end
   end
 
-  describe "equal opportunities page" do
+  describe "GET #equal_opportunities" do
     before do
       create(:vacancy, publisher: publisher, organisations: [school],
                        equal_opportunities_report: build(:equal_opportunities_report,
@@ -85,21 +73,24 @@ RSpec.describe "Publishers can view statistics" do
                                                          religion_other: 66, religion_prefer_not_to_say: 12, religion_sikh: 12))
     end
 
-    it "displays age groups with youngest at the top", :js do
-      visit equal_opportunities_publishers_statistics_path
+    it "includes old data in its calculations" do
+      get(equal_opportunities_publishers_statistics_path(format: :csv))
 
-      within("#age_counts") do
-        find(".accessible-button").click
-
-        within(".govuk-summary-list__row:nth-child(1)") do
-          expect(page).to have_content("Under 25")
-          expect(page).to have_content("3")
-        end
-        within(".govuk-summary-list__row:nth-child(2)") do
-          expect(page).to have_content("25 to 29")
-          expect(page).to have_content("5")
-        end
-      end
+      expect(response.body.split("\n"))
+        .to eq(
+          ["under_twenty_five,twenty_five_to_twenty_nine,thirty_to_thirty_nine,forty_to_forty_nine,fifty_to_fifty_nine,sixty_and_over,prefer_not_to_say",
+           "3,5,12,11,6,8,10",
+           "no,prefer_not_to_say,yes",
+           "34,21,18",
+           "white,prefer_not_to_say,other,mixed,black,asian",
+           "36,25,16,9,4,1",
+           "man,woman,other,prefer_not_to_say",
+           "11,7,6,3",
+           "prefer_not_to_say,gay_or_lesbian,heterosexual,other,bisexual",
+           "64,25,16,14,8",
+           "muslim,buddhist,none,other,hindu,christian,prefer_not_to_say,sikh,jewish",
+           "144,87,77,71,46,37,12,12,5"],
+        )
     end
   end
 end
