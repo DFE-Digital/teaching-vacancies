@@ -41,7 +41,7 @@ RSpec.describe "check job application after status transition" do
         # jobseeker starts an application
         #
         jobseeker_application_start_page.load(vacancy_id: vacancy.id)
-        jobseeker_application_start_page.btn_start_application.click
+        expect { jobseeker_application_start_page.btn_start_application.click }.to change { jobseeker.job_applications.draft.count }.by(1)
         jobseeker.reload
 
         #

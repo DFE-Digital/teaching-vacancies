@@ -97,18 +97,6 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     end
   end
 
-  def prepare_to_tag(job_applications, origin)
-    @form = Publishers::JobApplication::TagForm.new(job_applications: job_applications)
-    if @form.valid?
-      @job_applications = vacancy.job_applications.where(id: @form.job_applications)
-      @origin = origin
-      render "tag"
-    else
-      flash[origin.to_sym] = @form.errors.full_messages
-      redirect_to organisation_job_job_applications_path(vacancy.id, anchor: origin)
-    end
-  end
-
   require "zip"
 
   def download_selected(job_applications)
