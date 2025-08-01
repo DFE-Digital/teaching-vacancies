@@ -220,7 +220,12 @@ Rails.application.routes.draw do
     resource :new_features, only: %i[] do
       get :reminder
     end
-    resources :statistics, only: %i[index] do
+    resources :current_year_statistics, only: %i[index] do
+      collection do
+        get :equal_opportunities
+      end
+    end
+    resources :all_time_statistics, only: %i[index] do
       collection do
         get :equal_opportunities
       end

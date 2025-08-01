@@ -30,7 +30,7 @@ RSpec.describe "Publishers can view statistics" do
     end
 
     it "adds up the stats for each referrer" do
-      visit publishers_statistics_path
+      visit publishers_current_year_statistics_path
 
       find_by_id("accessible").click
 
@@ -86,7 +86,7 @@ RSpec.describe "Publishers can view statistics" do
     end
 
     it "displays age groups with youngest at the top", :js do
-      visit equal_opportunities_publishers_statistics_path
+      visit equal_opportunities_publishers_current_year_statistics_path
 
       within("#age_counts") do
         find(".accessible-button").click
