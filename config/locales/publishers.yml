@@ -331,7 +331,7 @@ en:
           description: Use DfE Sign-in to access your Teaching Vacancies account.
           description_fallback: Enter your email below and we will send you a link that will take you straight into your account.
           title: Hiring staff sign in
-    statistics:
+    current_year_statistics:
       bar_chart:
         accessible_view: Change to table and accessible view
         chart_view: Change to chart view
@@ -358,10 +358,6 @@ en:
         this_may_include: >-
           This may include data from candidates who have withdrawn their applications.
           This is to ensure the anonymity of applications who submit equal opportunities information.
-      vacancy_view_stats:
-        accessible_view: Change to table and accessible view
-        chart_view: Change to chart view
-        job_source: Job listing source
     temp_login:
       check_your_email:
         check_spam_html: >-
@@ -819,6 +815,10 @@ en:
         update:
           success: Thank you for submitting your feedback for %{job_title}
         statistics: Statistics
+        vacancy_view_stats:
+          accessible_view: Change to table and accessible view
+          chart_view: Change to chart view
+          job_source: Job listing source
       vacancy_publisher_feedbacks:
         new:
           already_submitted: Feedback for this job has already been submitted

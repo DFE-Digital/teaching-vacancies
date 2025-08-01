@@ -1,6 +1,6 @@
 module StatisticsHelper
   def sort_referrer_counts(referrer_counts)
-    referrer_counts.map { |k, v| [k, v] }.sort_by { |_k, v| -v }
+    referrer_counts.map { |k, v| [k, v] }.sort_by { |_k, v| -v }.to_h
   end
 
   def sort_age_stats(referrer_counts)
