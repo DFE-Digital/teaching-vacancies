@@ -10,16 +10,16 @@ module Publishers
       let(:origin) { "submitted" }
 
       describe "validation" do
-        context "when validate status true" do
-          let(:validate_status) { true }
+        context "when validate_status evalutes to truthy" do
+          let(:validate_status) { "false" }
 
           it { is_expected.to validate_length_of(:job_applications) }
           it { is_expected.to validate_presence_of(:status) }
           it { is_expected.to validate_inclusion_of(:status).in_array(%w[submitted unsuccessful reviewed shortlisted interviewing]) }
         end
 
-        context "when validate status false" do
-          let(:validate_status) { false }
+        context "when validate_status evaluates to falsy" do
+          let(:validate_status) { nil }
 
           it { is_expected.to validate_length_of(:job_applications) }
         end
