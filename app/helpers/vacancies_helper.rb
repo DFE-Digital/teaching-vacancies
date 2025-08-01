@@ -227,12 +227,7 @@ module VacanciesHelper
                                }
   end
 
-  def vacancy_statistics_bar_chart(referrer_counts)
-    # sort with highest value on top - using a hash results in an arbitrary ordering
-    bar_chart sort_referrer_counts(referrer_counts), **bar_chart_options(referrer_counts.size)
-  end
-
-  def bar_chart_options(item_count)
+  def bar_chart_options
     text_style = {
       color: "#000000",
       fontSize: 18,
@@ -247,7 +242,6 @@ module VacanciesHelper
         tooltip: { textStyle: text_style },
         vAxis: { textStyle: text_style },
       },
-      height: "#{item_count * 60}px",
       colors: [gov_uk_blue],
     }
   end
