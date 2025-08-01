@@ -85,7 +85,7 @@ RSpec.describe "Publishers can view statistics" do
                                                          religion_other: 66, religion_prefer_not_to_say: 12, religion_sikh: 12))
     end
 
-    it "displays age groups with youngest at the top", :js do
+    it "displays age groups with youngest at the top" do
       visit equal_opportunities_publishers_current_year_statistics_path
 
       within("#age_counts") do
