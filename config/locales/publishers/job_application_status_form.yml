@@ -1,7 +1,16 @@
 en:
+  activemodel:
+    errors:
+      models:
+        publishers/job_application/tag_form:
+          attributes:
+            status:
+              blank: You must select one status
+            job_applications:
+              too_short: You must select at least one job application
   helpers:
     label:
-      publishers_job_application_status_form:
+      publishers_job_application_tag_form:
         status_options:
           submitted_html: New <span class="govuk-tag govuk-tag--blue">New</span>
           unsuccessful_html: Not Considering <span class="govuk-tag govuk-tag--red">Not Considering</span>
