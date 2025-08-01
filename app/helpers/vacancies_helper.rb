@@ -213,18 +213,21 @@ module VacanciesHelper
     organisation_slug
   end
 
-  def donut_chart(referrer_counts)
+  # Google Charts claims to have a 'textStyle' option for the whole chart,
+  # but it doesn't appear to work hence these work-arounds
+  def donut_chart_options
     text_style = {
       color: "#000000",
       fontSize: 16,
       fontName: "GDS Transport",
     }
 
-    pie_chart referrer_counts, donut: true,
-                               library: {
-                                 tooltip: { textStyle: text_style },
-                                 legend: { textStyle: text_style },
-                               }
+    {
+      library: {
+        tooltip: { textStyle: text_style },
+        legend: { textStyle: text_style },
+      },
+    }
   end
 
   def bar_chart_options
