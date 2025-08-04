@@ -91,7 +91,7 @@ Vacancy.listed.each do |vacancy|
 end
 
 ## Jobseeker Profiles
-location_preference_names = School.all.map(&:postcode)
+location_preference_names = schools.map(&:postcode)
 
 Jobseeker.find_each do |jobseeker|
   Jobseeker.transaction do
