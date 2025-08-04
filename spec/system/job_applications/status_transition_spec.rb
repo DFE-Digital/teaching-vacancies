@@ -89,7 +89,7 @@ RSpec.describe "check job application after status transition" do
   describe "transition: submitted to reviewed", :js do
     let(:status) { "submitted" }
 
-    it "jobseeker and publisher can view job application" do
+    it "allows the publisher to review a submitted job application and the jobseeker to see it as reviewed afterwards" do
       run_with_jobseeker(jobseeker) do
         #
         # jobseeker views all its applications
