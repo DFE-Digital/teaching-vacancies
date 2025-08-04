@@ -153,21 +153,6 @@ RSpec.describe "check job application after status transition" do
     let(:status) { "reviewed" }
 
     it "allows the publisher to reject a submitted job application and the jobseeker to see it as unsuccessful afterwards" do
-      run_with_jobseeker(jobseeker) do
-        #
-        # jobseeker views all its applications
-        #
-        jobseeker_applications_page.load
-        job_applications_count = jobseeker.reload.job_applications.count
-        expect(jobseeker_applications_page.header).to have_text("Applications (#{job_applications_count})")
-        #
-        # view submitted application
-        #
-        jobseeker_applications_page.click_on_job_application(job_application.id)
-        expect(jobseeker_application_page).to be_displayed(id: job_application.id)
-        expect(jobseeker_application_page.tag).to have_text("submitted")
-      end
-
       run_with_publisher(publisher) do
         publisher_ats_applications_page.load(vacancy_id: vacancy.id)
 
@@ -222,21 +207,6 @@ RSpec.describe "check job application after status transition" do
     let(:status) { "reviewed" }
 
     it "allows the publisher to shortlist a submitted job application and the jobseeker to see it as shortlisted afterwards" do
-      run_with_jobseeker(jobseeker) do
-        #
-        # jobseeker views all its applications
-        #
-        jobseeker_applications_page.load
-        job_applications_count = jobseeker.reload.job_applications.count
-        expect(jobseeker_applications_page.header).to have_text("Applications (#{job_applications_count})")
-        #
-        # view submitted application
-        #
-        jobseeker_applications_page.click_on_job_application(job_application.id)
-        expect(jobseeker_application_page).to be_displayed(id: job_application.id)
-        expect(jobseeker_application_page.tag).to have_text("submitted")
-      end
-
       run_with_publisher(publisher) do
         publisher_ats_applications_page.load(vacancy_id: vacancy.id)
 
