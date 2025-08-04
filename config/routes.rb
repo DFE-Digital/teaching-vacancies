@@ -406,7 +406,6 @@ Rails.application.routes.draw do
         get :download_application_form
         get :withdrawn
         get :tag, on: :collection
-        get :tag_single, on: :member
         post :update_tag, on: :collection
       end
     end
