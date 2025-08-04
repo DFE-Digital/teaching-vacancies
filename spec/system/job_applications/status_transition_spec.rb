@@ -152,7 +152,7 @@ RSpec.describe "check job application after status transition" do
   describe "transition: reviewed to unsuccessful", :js do
     let(:status) { "reviewed" }
 
-    it "jobseeker and publisher can view job application" do
+    it "allows the publisher to reject a submitted job application and the jobseeker to see it as unsuccessful afterwards" do
       run_with_jobseeker(jobseeker) do
         #
         # jobseeker views all its applications
@@ -221,7 +221,7 @@ RSpec.describe "check job application after status transition" do
   describe "transition: reviewed to shortlisted", :js do
     let(:status) { "reviewed" }
 
-    it "jobseeker and publisher can view job application" do
+    it "allows the publisher to shortlist a submitted job application and the jobseeker to see it as shortlisted afterwards" do
       run_with_jobseeker(jobseeker) do
         #
         # jobseeker views all its applications
@@ -262,7 +262,7 @@ RSpec.describe "check job application after status transition" do
         expect(publisher_ats_applications_page.tab_panel.job_applications).to be_empty
 
         #
-        # display not considering tab
+        # display shortlisted tab
         #
         publisher_ats_applications_page.select_tab(:tab_shortlisted)
 
@@ -290,7 +290,7 @@ RSpec.describe "check job application after status transition" do
   describe "transition: shortlisted to interviewing", :js do
     let(:status) { "shortlisted" }
 
-    it "jobseeker and publisher can view job application" do
+    it "allows the publisher to set a shortlisted job application as interviewing and the jobseeker to see it as interviewing afterwards" do
       run_with_jobseeker(jobseeker) do
         #
         # jobseeker views all its applications
