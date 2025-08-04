@@ -34,6 +34,7 @@ en:
     confirm_deletion: Delete job listing
     confirm_destroy: Yes I am sure - delete this entry
     confirm_rejection: Confirm rejection
+    confirm_email_opt_out: Opt out
     confirm_unsubscribe: Unsubscribe
     continue: Continue
     continue_to_account: Continue to your account

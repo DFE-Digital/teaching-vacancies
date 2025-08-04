@@ -210,8 +210,12 @@ Rails.application.routes.draw do
 
   namespace :publishers do
     resource :account do
+      # Unsubscribe from expired vacancy feedback emails
       get "confirm-unsubscribe", to: "accounts#confirm_unsubscribe"
       patch "unsubscribe", to: "accounts#unsubscribe"
+      # Opt out from mail communications from Teaching Vacancies
+      get "confirm-email-opt-out", to: "accounts#confirm_email_opt_out"
+      patch "email-opt-out", to: "accounts#email_opt_out"
     end
     resources :login_keys, only: %i[show new create] do
       post :consume, on: :member
