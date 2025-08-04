@@ -33,6 +33,7 @@ RSpec.describe SubscriptionsController, recaptcha: true do
       let(:errors) { instance_double(ActiveModel::Errors, add: nil) }
       let(:form) { instance_double(Jobseekers::SubscriptionForm, errors: errors) }
       let(:subscription_form_valid?) { true }
+      let(:recaptcha_reply) { instance_double(Recaptcha::Reply, score: recaptcha_score) }
 
       before do
         allow(Subscription).to receive(:new).and_return(subscription)
@@ -43,7 +44,7 @@ RSpec.describe SubscriptionsController, recaptcha: true do
         allow(form).to receive(:job_alert_params).and_return(job_alert_params)
         allow(form).to receive(:invalid?).and_return(!subscription_form_valid?)
         allow(form).to receive(:class).and_return(Jobseekers::SubscriptionForm)
-        allow(controller).to receive(:recaptcha_reply).and_return({ "score" => recaptcha_score })
+        allow(controller).to receive(:recaptcha_reply).and_return(recaptcha_reply)
         allow(controller).to receive(:verify_recaptcha).and_return(verify_recaptcha)
       end
 
@@ -55,6 +56,20 @@ RSpec.describe SubscriptionsController, recaptcha: true do
                             .with(hash_including(secret_key: ENV.fetch("RECAPTCHA_V3_SECRET_KEY", ""))).once
           expect(controller).not_to receive(:verify_recaptcha).with(no_args)
           subject
+        end
+
+        it "records the recaptcha score on the subscription" do
+          expect(subscription).to receive(:update).with(recaptcha_score: recaptcha_score)
+          subject
+        end
+
+        context "when the recaptcha reply as yet not been fetched" do
+          let(:recaptcha_reply) { nil }
+
+          it "records a nil recaptcha score" do
+            expect(subscription).to receive(:update).with(recaptcha_score: nil)
+            subject
+          end
         end
 
         it "renders the subscription confirmation page" do

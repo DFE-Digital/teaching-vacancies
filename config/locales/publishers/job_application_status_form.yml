@@ -12,6 +12,13 @@ en:
             contact_applicants:
               inclusion: Select yes if you would like the service to email applicants that you are collecting references.
 
+        publishers/job_application/tag_form:
+          attributes:
+            status:
+              blank: You must select one status
+            job_applications:
+              too_short: You must select at least one job application
+
         publishers/vacancies/job_applications/mark_reference_as_received_form:
           attributes:
             reference_satisfactory:
@@ -25,10 +32,10 @@ en:
 
   helpers:
     hint:
-      publishers_job_application_status_form:
+      publishers_job_application_tag_form:
         status_options:
           submitted: Applications that have not been reviewed
-          unsuccessful: Applications that you arw not taking forward to interview. You can create an email to send to the applicant to let them know
+          unsuccessful: Applications that you are not taking forward to interview. You can create an email to send to the applicant to let them know
           reviewed: Applications that have been reviewed
           shortlisted: Applications that have been shortlisted
           interviewing: >-
@@ -57,7 +64,7 @@ en:
           false: "This reference will remain as received"
 
     label:
-      publishers_job_application_status_form:
+      publishers_job_application_tag_form:
         status_options:
           submitted_html: New <span class="govuk-tag govuk-tag--blue">New</span>
           unsuccessful_html: Not Considering <span class="govuk-tag govuk-tag--red">Not Considering</span>

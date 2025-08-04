@@ -116,7 +116,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def notify_new_subscription(subscription)
-    subscription.update(recaptcha_score: recaptcha_reply&.dig("score"))
+    subscription.update(recaptcha_score: recaptcha_reply&.score)
     Jobseekers::SubscriptionMailer.confirmation(subscription.id).deliver_later
     trigger_subscription_event(:job_alert_subscription_created, subscription)
   end

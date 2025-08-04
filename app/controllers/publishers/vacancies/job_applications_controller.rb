@@ -4,7 +4,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   before_action :set_job_application, only: %i[show download_pdf download_application_form pre_interview_checks collect_references]
 
-  before_action :set_job_applications, only: %i[index tag_single tag]
+  before_action :set_job_applications, only: %i[index tag]
 
   def index
     @form = Publishers::JobApplication::TagForm.new
@@ -45,37 +45,26 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     )
   end
 
-  def tag_single
-    prepare_to_tag([params.fetch(:id)], "all")
-  end
-
   def tag
-    tag_params = params.require(:publishers_job_application_tag_form).permit(:origin, job_applications: [])
-    if params["download_selected"] == "true"
-      download_selected(tag_params)
-    else
-      origin = tag_params[:origin]
-      prepare_to_tag(tag_params.fetch(:job_applications).compact_blank, origin)
+    with_valid_tag_form do |form|
+      if params["download_selected"] == "true"
+        download_selected(form.job_applications)
+      else # when "update_status"
+        render "tag"
+      end
     end
   end
 
   def update_tag
-    update_tag_params = params.require(:publishers_job_application_status_form).permit(:origin, :status, job_applications: [])
-
-    applications = update_tag_params.fetch(:job_applications)
-    new_status = update_tag_params.fetch(:status).to_sym
-
-    if new_status == :interviewing
-      batch = JobApplicationBatch.create!(vacancy: vacancy)
-      JobApplication.find(applications).each do |ja|
-        batch.batchable_job_applications.create!(job_application: ja)
+    with_valid_tag_form(validate_status: true) do |form|
+      if form.status == "interviewing"
+        batch = JobApplicationBatch.create!(vacancy: vacancy)
+        form.job_applications.each { |ja| batch.batchable_job_applications.create!(job_application: ja) }
+        redirect_to organisation_job_job_application_batch_references_and_self_disclosure_path(vacancy.id, batch.id, Wicked::FIRST_STEP)
+      else
+        form.job_applications.each { |ja| ja.update!(status: form.status) }
+        redirect_to organisation_job_job_applications_path(vacancy.id, anchor: form.origin)
       end
-      redirect_to organisation_job_job_application_batch_references_and_self_disclosure_path(vacancy.id, batch.id, Wicked::FIRST_STEP)
-    else
-      JobApplication.find(applications).each do |job_application|
-        job_application.update!(status: new_status)
-      end
-      redirect_to organisation_job_job_applications_path(vacancy.id, anchor: update_tag_params[:origin])
     end
   end
 
@@ -100,34 +89,40 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     @job_applications = vacancy.job_applications.not_draft
   end
 
-  def prepare_to_tag(job_applications, origin)
-    @form = Publishers::JobApplication::TagForm.new(job_applications: job_applications)
+  def with_valid_tag_form(validate_status: false)
+    form_class = Publishers::JobApplication::TagForm
+    form_params = params
+                    .fetch(ActiveModel::Naming.param_key(form_class), {})
+                    .permit(:origin, :status, { job_applications: [] })
+    form_params[:job_applications] = vacancy.job_applications.where(id: Array(form_params[:job_applications]).compact_blank)
+    form_params[:validate_status] = validate_status
+
+    @form = form_class.new(form_params)
     if @form.valid?
-      @job_applications = vacancy.job_applications.where(id: @form.job_applications)
-      @origin = origin
+      yield @form
+    else
+      handle_tag_form_errors(@form)
+    end
+  end
+
+  def handle_tag_form_errors(form)
+    if form.errors.details.key?(:status)
       render "tag"
     else
-      flash[origin.to_sym] = @form.errors.full_messages
-      redirect_to organisation_job_job_applications_path(vacancy.id, anchor: origin)
+      flash[form.origin] = form.errors.full_messages
+      redirect_to organisation_job_job_applications_path(vacancy.id, anchor: form.origin)
     end
   end
 
   require "zip"
 
-  def download_selected(tag_params)
-    @form = Publishers::JobApplication::DownloadForm.new(job_applications: tag_params.fetch(:job_applications).compact_blank)
-    if @form.valid?
-      job_applications = JobApplication.includes(:vacancy).where(vacancy: vacancy.id, id: @form.job_applications)
+  def download_selected(job_applications)
+    zip_data = JobApplicationZipBuilder.new(vacancy: vacancy, job_applications: job_applications).generate
 
-      zip_data = JobApplicationZipBuilder.new(vacancy: vacancy, job_applications: job_applications).generate
-
-      send_data(
-        zip_data.string,
-        filename: "applications_#{vacancy.job_title.parameterize}.zip",
-        type: "application/zip",
-      )
-    else
-      render "index"
-    end
+    send_data(
+      zip_data.string,
+      filename: "applications_#{vacancy.job_title.parameterize}.zip",
+      type: "application/zip",
+    )
   end
 end
