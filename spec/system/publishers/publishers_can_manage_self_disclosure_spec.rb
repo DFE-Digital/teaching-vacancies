@@ -119,8 +119,8 @@ RSpec.describe "Publishers manage self disclosure" do
             )
 
             expect(all(".timeline-component__value").map { |x| x.text.split.first(6).join(" ") })
-              .to eq(["#{jobseeker.jobseeker_profile.personal_details.first_name} #{jobseeker.jobseeker_profile.personal_details.last_name} - #{Date.current.to_fs}",
-                      "#{publisher.given_name} #{publisher.family_name} - #{Date.current.to_fs}"])
+              .to eq(["#{jobseeker.jobseeker_profile.personal_details.first_name} #{jobseeker.jobseeker_profile.personal_details.last_name} - #{Date.current.to_fs.strip}",
+                      "#{publisher.given_name} #{publisher.family_name} - #{Date.current.to_fs.strip}"])
 
             expect(publisher_ats_self_disclosure_page.status.text).to eq("completed")
             expect(publisher_ats_self_disclosure_page.button.text).to eq("Print self-disclosure")
