@@ -28,6 +28,9 @@
       
       = form_for @message_form, url: organisation_job_job_application_messages_path(@vacancy.id, @job_application.id), method: :post do |f|
         = f.govuk_error_summary
-        = editor(form_input: f.govuk_text_area(:content, label: { size: "s", id: "message-content-label" }, rows: 5, required: true, aria: { hidden: false }), value: @message_form.content, field_name: "publishers_job_application_messages_form[content]")
+        = f.label :content, "Message content", class: "govuk-label govuk-label--s", id: "message-content-label"
+        p.govuk-hint You can copy and paste bullet points into the text box.
+
+        = f.rich_text_area :content
 
         = f.govuk_submit "Send Message"

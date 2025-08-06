@@ -75,3 +75,23 @@ $govuk-assets-path: "/";
 @import 'js_components/manageQualifications';
 @import 'js_components/panel';
 @import 'js_components/uploadDocuments';
+
+@import "trix/dist/trix";
+@import "@rails/actiontext";
+
+// Ensures the editor box is shown and styled
+trix-editor {
+  display: block !important;
+  min-height: 200px !important;
+  border: 1px solid #b1b4b6 !important;
+  padding: 1rem !important;
+  background-color: #fff !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+
+trix-toolbar {
+  display: block !important;
+  margin-bottom: 0.5rem;
+}
