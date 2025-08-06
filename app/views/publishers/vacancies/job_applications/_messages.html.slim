@@ -1,0 +1,33 @@
+.govuk-grid-row
+  .govuk-grid-column-full
+    h2.govuk-heading-m Messages
+
+    / Display existing messages
+    #messages-list
+      - if @messages&.any?
+        - @messages.each do |message|
+          .govuk-summary-card
+            .govuk-summary-card__title-wrapper
+              h3.govuk-summary-card__title 
+                | From: 
+                - if message.sender.is_a?(Publisher)
+                  | #{message.sender.given_name} #{message.sender.family_name} (Hiring Staff)
+                - else
+                  | #{message.sender.given_name} #{message.sender.family_name} (Job Applicant)
+            .govuk-summary-card__content
+              .message-content
+                == message.content
+              p.govuk-body-s.govuk-!-margin-top-3
+                | Sent on #{message.created_at.strftime("%d %B %Y at %I:%M %p")}
+      - else
+        p.govuk-body No messages have been sent yet.
+
+    / Message composition form
+    div class="govuk-!-margin-top-6"
+      h3.govuk-heading-s Send a new message
+      
+      = form_for @message_form, url: organisation_job_job_application_messages_path(@vacancy.id, @job_application.id), method: :post do |f|
+        = f.govuk_error_summary
+        = editor(form_input: f.govuk_text_area(:content, label: { size: "s", id: "message-content-label" }, rows: 5, required: true, aria: { hidden: false }), value: @message_form.content, field_name: "publishers_job_application_messages_form[content]")
+
+        = f.govuk_submit "Send Message"

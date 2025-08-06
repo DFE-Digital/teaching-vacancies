@@ -13,13 +13,10 @@
 ActiveRecord::Schema[7.2].define(version: 2025_08_08_151134) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
-  enable_extension "citext"
   enable_extension "fuzzystrmatch"
-  enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "postgis"
-  enable_extension "uuid-ossp"
 
   create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
@@ -275,10 +272,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_08_151134) do
     t.boolean "has_close_relationships"
     t.boolean "has_right_to_work_in_uk"
     t.boolean "has_safeguarding_issue"
-    t.boolean "notify_before_contact_referers"
+    t.string "application_type", default: "full", null: false
     t.string "type"
     t.datetime "offered_at"
     t.datetime "declined_at"
+    t.boolean "notify_before_contact_referers"
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
@@ -389,9 +387,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_08_151134) do
     t.date "account_closed_on"
     t.text "current_sign_in_ip_ciphertext"
     t.text "last_sign_in_ip_ciphertext"
-    t.string "govuk_one_login_id"
     t.string "account_merge_confirmation_code"
     t.datetime "account_merge_confirmation_code_generated_at"
+    t.string "govuk_one_login_id"
     t.boolean "email_opt_out", default: false, null: false
     t.integer "email_opt_out_reason"
     t.text "email_opt_out_comment"
@@ -428,6 +426,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_08_151134) do
     t.index ["geopoint"], name: "index_markers_on_geopoint", using: :gist
     t.index ["organisation_id"], name: "index_markers_on_organisation_id"
     t.index ["vacancy_id"], name: "index_markers_on_vacancy_id"
+  end
+
+  create_table "messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "content"
+    t.uuid "job_application_id", null: false
+    t.string "sender_type", null: false
+    t.uuid "sender_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_application_id"], name: "index_messages_on_job_application_id"
+    t.index ["sender_type", "sender_id"], name: "index_messages_on_sender"
   end
 
   create_table "notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -747,6 +756,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_08_151134) do
     t.index ["jobseeker_profile_id"], name: "index_training_and_cpds_on_jobseeker_profile_id"
   end
 
+  create_table "uploaded_job_applications", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "trn"
+    t.string "email"
+    t.boolean "has_right_to_work_in_uk", default: false, null: false
+    t.uuid "jobseeker_id", null: false
+    t.uuid "vacancy_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "job_title"
     t.string "slug", null: false
@@ -820,8 +841,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_08_151134) do
     t.string "flexi_working"
     t.integer "extension_reason"
     t.string "other_extension_reason_details"
-    t.uuid "publisher_ats_api_client_id"
     t.integer "religion_type"
+    t.uuid "publisher_ats_api_client_id"
     t.boolean "flexi_working_details_provided"
     t.datetime "discarded_at"
     t.string "type", null: false
@@ -838,13 +859,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_08_151134) do
     t.index ["slug"], name: "index_vacancies_on_slug"
   end
 
-  create_table "vacancy_analytics", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "vacancy_analytics", force: :cascade do |t|
     t.uuid "vacancy_id", null: false
-    t.jsonb "referrer_counts", default: {}, null: false
+    t.integer "view_count", default: 0
+    t.jsonb "referrer_counts", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["referrer_counts"], name: "index_vacancy_analytics_on_referrer_counts", using: :gin
-    t.index ["vacancy_id"], name: "index_vacancy_analytics_on_vacancy_id", unique: true
   end
 
   create_table "versions", force: :cascade do |t|
@@ -884,6 +904,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_08_151134) do
   add_foreign_key "local_authority_publisher_schools", "publisher_preferences"
   add_foreign_key "markers", "organisations"
   add_foreign_key "markers", "vacancies"
+  add_foreign_key "messages", "job_applications"
   add_foreign_key "notes", "job_applications"
   add_foreign_key "notes", "publishers"
   add_foreign_key "organisation_publisher_preferences", "organisations"
@@ -904,7 +925,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_08_151134) do
   add_foreign_key "references", "job_applications"
   add_foreign_key "saved_jobs", "jobseekers"
   add_foreign_key "saved_jobs", "vacancies"
-  add_foreign_key "school_group_memberships", "organisations", column: "school_group_id"
+  add_foreign_key "school_group_memberships", "organisations", column: "school_group_id", validate: false
   add_foreign_key "school_group_memberships", "organisations", column: "school_id"
   add_foreign_key "self_disclosure_requests", "job_applications"
   add_foreign_key "self_disclosures", "self_disclosure_requests"
@@ -913,5 +934,4 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_08_151134) do
   add_foreign_key "vacancies", "organisations", column: "publisher_organisation_id"
   add_foreign_key "vacancies", "publisher_ats_api_clients"
   add_foreign_key "vacancies", "publishers"
-  add_foreign_key "vacancy_analytics", "vacancies"
 end
