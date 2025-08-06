@@ -77,7 +77,6 @@ $govuk-assets-path: "/";
 @import 'js_components/uploadDocuments';
 
 @import "trix/dist/trix";
-@import "@rails/actiontext";
 
 // Ensures the editor box is shown and styled
 trix-editor {

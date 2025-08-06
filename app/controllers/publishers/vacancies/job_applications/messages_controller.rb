@@ -2,10 +2,10 @@ class Publishers::Vacancies::JobApplications::MessagesController < Publishers::V
   before_action :set_job_application
 
   def create
-    @message_form = Publishers::JobApplication::MessagesForm.new(message_form_params)
+    @message = @job_application.messages.build(message_params)
+    @message.sender = current_publisher
 
-    if @message_form.valid?
-      Message.create(message_attributes)
+    if @message.save
       redirect_to organisation_job_job_application_path(id: @job_application.id, tab: "messages"), success: t(".success")
     else
       redirect_to organisation_job_job_application_path(id: @job_application.id, tab: "messages"), warning: t(".failure")
@@ -14,11 +14,7 @@ class Publishers::Vacancies::JobApplications::MessagesController < Publishers::V
 
   private
 
-  def message_attributes
-    message_form_params.merge(job_application: @job_application, sender: current_publisher)
-  end
-
-  def message_form_params
-    params[:publishers_job_application_messages_form].permit(:content)
+  def message_params
+    params.require(:message).permit(:content)
   end
 end

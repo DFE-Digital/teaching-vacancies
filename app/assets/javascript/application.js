@@ -31,8 +31,6 @@ import PanelController from './js_components/panel/panel';
 import ShowHiddenContentController from './js_components/showHiddenContent/showHiddenContent';
 import TrackedLinkController from './js_components/trackedLink/trackedLink';
 import UtilsController from './js_components/utils';
-import "trix"
-import "@rails/actiontext"
 
 import './clarity_cookies';
 

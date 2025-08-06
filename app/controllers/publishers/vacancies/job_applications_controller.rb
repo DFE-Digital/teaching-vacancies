@@ -16,7 +16,8 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
     @notes_form = Publishers::JobApplication::NotesForm.new
     @message_form = Publishers::JobApplication::MessagesForm.new
-    @messages = @job_application.messages || []
+    @message = @job_application.messages.build(sender: current_publisher)
+    @messages = @job_application.messages.where.not(created_at: nil)
 
     raise ActionController::RoutingError, "Cannot view a draft application" if @job_application.draft?
 
