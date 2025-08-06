@@ -10,9 +10,9 @@ module PageObjects
           end
 
           element :checkbox, ".govuk-checkboxes__input", visible: false
-          element :name, ".govuk-link"
+          element :name, "#{selector(2)} .govuk-link"
           element :email, selector(3)
-          element :status, selector(4)
+          element :status, "#{selector(4)} .govuk-tag"
 
           STATUS_MAPPING = {
             "unread" => "submitted",

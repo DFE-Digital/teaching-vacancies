@@ -298,13 +298,17 @@ RSpec.describe "check job application after status transition" do
           tag_page.select_and_submit("interviewing")
         end
 
-        expect(publisher_ats_applications_page.tab_panel.job_applications).to be_empty
+        #
+        # without ATS references and self-disclosure collection through TV service
+        #
+        expect(publisher_ats_collect_references_page).to be_displayed(vacancy_id: vacancy.id)
+        publisher_ats_collect_references_page.answer_no
 
         #
         # display interviewing tab
         #
-        publisher_ats_applications_page.select_tab(:tab_interviewing)
-
+        expect(publisher_ats_applications_page).to be_displayed
+        expect(publisher_ats_applications_page.selected_tab).to have_text("Interviewing")
         display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
         expect(display_status).to have_text("interviewing")
 
