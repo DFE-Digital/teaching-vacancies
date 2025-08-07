@@ -109,7 +109,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "application_link" => nil,
           "benefits" => true,
           "benefits_details" => "ut sit dolores.",
-          "completed_steps" => %w[job_location job_role education_phases job_title key_stages subjects contract_type working_patterns pay_package important_dates start_date applying_for_the_job school_visits contact_details about_the_role include_additional_documents],
+          "completed_steps" => %w[job_location job_role education_phases job_title key_stages contract_type working_patterns pay_package important_dates start_date applying_for_the_job school_visits contact_details about_the_role include_additional_documents],
           "contact_email" => contact_email,
           "contact_number" => "01234 123456",
           "contact_number_provided" => true,
