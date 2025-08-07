@@ -53,5 +53,18 @@ RSpec.describe JobApplicationPdfGenerator do
         expect(pdf).not_to include("Religious information")
       end
     end
+
+    context "when the religion reference data is a baptism certificate" do
+      let(:vacancy) { build_stubbed(:vacancy, :catholic) }
+      let(:job_application) do
+        build_stubbed(:job_application, :status_submitted, :with_baptism_certificate, vacancy:)
+      end
+
+      it "generates PDF with the baptism certificate file name" do
+        expect { document }.not_to raise_error
+        expect(document).to be_a(Prawn::Document)
+        expect(pdf).to include("blank_job_spec.pdf")
+      end
+    end
   end
 end
