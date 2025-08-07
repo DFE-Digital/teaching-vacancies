@@ -24,7 +24,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
 
   def create
     if @form.valid?
-      profile.qualifications.create(qualification_params)
+      @profile.qualifications.create(qualification_params)
       redirect_to review_jobseekers_profile_qualifications_path
     else
       render :new, status: :unprocessable_entity
@@ -94,6 +94,6 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
   end
 
   def qualification
-    @qualification ||= profile.qualifications.find(params[:id] || params[:qualification_id])
+    @qualification ||= @profile.qualifications.find(params[:id] || params[:qualification_id])
   end
 end

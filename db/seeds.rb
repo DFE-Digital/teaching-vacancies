@@ -38,8 +38,8 @@ users = [
 # Schools with phase 'n/a' are tricky to create dynamic vacancies for - they tend to be
 # special schools that don't quite fit the primary/secondary/higher pattern
 schools = [bexleyheath_school,
-           weydon_trust.schools.detect { |s| s.phase != "not_applicable" },
-           southampton_la.schools.detect { |s| s.phase != "not_applicable" },
+           weydon_trust.schools.detect { |s| s.phase != "not_applicable" && s.phase.exclude?("middle") },
+           southampton_la.schools.detect { |s| s.phase != "not_applicable" && s.phase.exclude?("middle") },
            abraham_moss]
 
 user_emails = users.map { |u| u.fetch(:email) }
@@ -47,12 +47,14 @@ user_emails = users.map { |u| u.fetch(:email) }
 users.each do |user|
   Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la, abraham_moss], **user)
   SupportUser.create(user)
-  FactoryBot.create(:jobseeker, email: user[:email])
+  FactoryBot.create(:jobseeker, :for_seed_data, email: user[:email])
 end
 
 schools.each do |school|
-  phases = [school.phase]
-  attrs = { organisations: [school], phases: phases, publisher_organisation: school, publisher: Publisher.all.sample }
+  attrs = { organisations: [school],
+            phases: [school.phase],
+            publisher_organisation: school,
+            publisher: Publisher.all.sample }
   3.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
   FactoryBot.create(:vacancy, :for_seed_data, :no_tv_applications, **attrs)
   2.times { FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs) }
@@ -89,16 +91,17 @@ Vacancy.listed.each do |vacancy|
 end
 
 ## Jobseeker Profiles
-location_preference_names = weydon_trust.schools.map(&:postcode)
+location_preference_names = schools.map(&:postcode)
 
-Jobseeker.first(weydon_trust.schools.count).each do |jobseeker|
+Jobseeker.find_each do |jobseeker|
   Jobseeker.transaction do
     FactoryBot.create(:jobseeker_profile, :with_personal_details,
+                      active: true,
                       qualifications: FactoryBot.build_list(:qualification, 1, job_application: nil),
                       employments: FactoryBot.build_list(:employment, 1, :jobseeker_profile_employment),
                       jobseeker: jobseeker) do |jobseeker_profile|
       FactoryBot.create(:job_preferences, jobseeker_profile: jobseeker_profile) do |job_preferences|
-        FactoryBot.create(:job_preferences_location, job_preferences:, name: location_preference_names.pop)
+        FactoryBot.create(:job_preferences_location, job_preferences:, name: location_preference_names.sample)
       end
     end
   end

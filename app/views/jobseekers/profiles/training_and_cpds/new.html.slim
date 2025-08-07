@@ -5,7 +5,7 @@
     span.govuk-caption-l Training and continuing professional development (CPD)
     h1.govuk-heading-xl = "Add training and continuing professional development (CPD)"
 
-    = form_for form, url: jobseekers_profile_training_and_cpds_path(profile), method: :post do |f|
+    = form_for form, url: jobseekers_profile_training_and_cpds_path(@profile), method: :post do |f|
       p.govuk-body = t(".description")
       p.govuk-body = t(".example_intro")
       ul.govuk-list.govuk-list--bullet
