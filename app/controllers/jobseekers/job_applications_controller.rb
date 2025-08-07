@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/ClassLength
 class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseController
   include Jobseekers::QualificationFormConcerns
 
@@ -18,12 +20,18 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     # This is the primary sort order for application statuses on the index page
     status_keys = %i[interviewing shortlisted reviewed submitted unsuccessful withdrawn].freeze
 
+    action_required = JobApplication.includes(:self_disclosure_request, :vacancy)
+                                    .where(jobseeker: current_jobseeker)
+                                    .joins(:self_disclosure_request)
+                                    .merge(SelfDisclosureRequest.sent)
+                                    .interviewing.order(submitted_at: :desc)
+
     active_job_applications = current_jobseeker.job_applications
                                                 .includes(:vacancy)
                                                 .where.not(status: :draft)
                                                 .order(submitted_at: :desc)
-                                                .sort_by { |x| status_keys.index(x.status.to_sym) }
-    @job_applications = active_drafts + active_job_applications + expired_drafts
+                                                .sort_by { |x| status_keys.index(x.status.to_sym) } - action_required
+    @job_applications = active_drafts + action_required + active_job_applications + expired_drafts
   end
 
   def new
@@ -247,3 +255,5 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     previous_application? || profile.present?
   end
 end
+# rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/ClassLength

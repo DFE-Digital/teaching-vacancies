@@ -1,0 +1,17 @@
+en:
+  reference_requests:
+    pending:
+      status: pending
+      colour: blue
+    received:
+      status: received
+      colour: purple
+    declined:
+      status: unavailable
+      colour: red
+    created:
+      status: created
+      colour: grey
+    completed:
+      status: completed
+      colour: green

@@ -149,11 +149,20 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       end
 
       #
-      # progress applicants
+      # progress 2 applicants to interviewing
       #
       current_page.update_status(etha, hanane) do |tag_page|
         tag_page.select_and_submit("interviewing")
       end
+
+      #
+      # without ATS references and self-disclosure collection through TV service
+      #
+      expect(publisher_ats_collect_references_page).to be_displayed(vacancy_id: vacancy.id)
+      publisher_ats_collect_references_page.answer_no
+
+      expect(publisher_ats_applications_page).to be_displayed
+
       {
         tab_all: job_applications.count,
         tab_submitted: 1,
@@ -163,8 +172,8 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       }.each do |tab_id, count|
         expect(current_page.get_tab(tab_id)).to have_text("(#{count})")
       end
-      expect(current_page.selected_tab).to have_text("Shortlisted")
-      [charlie, said, yun].each do |applicant|
+      expect(current_page.selected_tab).to have_text("Interviewing")
+      [etha, hanane].each do |applicant|
         job_application = current_page.candidate(applicant)
         expect(job_application.name).to have_text(applicant.name)
         expect(job_application.mapped_status).to eq(applicant.reload.status)

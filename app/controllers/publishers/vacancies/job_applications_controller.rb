@@ -2,7 +2,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   include Jobseekers::QualificationFormConcerns
   include DatesHelper
 
-  before_action :set_job_application, only: %i[show download_pdf download_application_form]
+  before_action :set_job_application, only: %i[show download_pdf download_application_form pre_interview_checks collect_references]
 
   before_action :set_job_applications, only: %i[index tag]
 
@@ -57,12 +57,29 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def update_tag
     with_valid_tag_form(validate_status: true) do |form|
-      form.job_applications.find_each { it.update!(status: form.status) }
-      redirect_to organisation_job_job_applications_path(vacancy.id, anchor: form.origin)
+      if form.status == "interviewing"
+        batch = JobApplicationBatch.create!(vacancy: vacancy)
+        form.job_applications.each { |ja| batch.batchable_job_applications.create!(job_application: ja) }
+        redirect_to organisation_job_job_application_batch_references_and_self_disclosure_path(vacancy.id, batch.id, Wicked::FIRST_STEP)
+      else
+        form.job_applications.each { |ja| ja.update!(status: form.status) }
+        redirect_to organisation_job_job_applications_path(vacancy.id, anchor: form.origin)
+      end
     end
   end
 
+  def collect_references
+    batch = JobApplicationBatch.create!(vacancy: vacancy)
+    batch.batchable_job_applications.create!(job_application: @job_application)
+
+    redirect_to organisation_job_job_application_batch_references_and_self_disclosure_path(vacancy.id, batch.id, Wicked::FIRST_STEP)
+  end
+
   def withdrawn; end
+
+  def pre_interview_checks
+    @reference_requests = @job_application.referees.filter_map(&:reference_request)
+  end
 
   private
 

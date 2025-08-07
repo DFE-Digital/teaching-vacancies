@@ -1,0 +1,20 @@
+- content_for :page_title_prefix, t(".page_title", name: @referee.job_application.name)
+
+- content_for :breadcrumbs do
+  nav.govuk-breadcrumbs aria-label="Breadcrumbs"
+  = govuk_back_link text: t("buttons.back"), href: previous_wizard_path(token: @form.token)
+
+span.govuk-caption-m = t(".caption")
+h1.govuk-heading-l = t(".heading", name: @referee.job_application.name)
+
+= form_with model: @form, url: wizard_path(step), method: :patch do |f|
+  = f.govuk_error_summary
+
+  = f.hidden_field :token, value: @form.token
+
+  - JobReference::RATINGS_FIELDS_3.each do |field_name|
+    = f.govuk_radio_buttons_fieldset field_name do
+      - JobReference::RATING_OPTIONS.each do |option|
+        = f.govuk_radio_button field_name, option
+
+  = f.govuk_submit t("buttons.continue")
