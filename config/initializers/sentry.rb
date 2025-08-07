@@ -1,5 +1,5 @@
 Sentry.init do |config|
-  filter = ActiveSupport::ParameterFilter.new(Rails.application.config.filter_parameters - %i[id])
+  filter = ActiveSupport::ParameterFilter.new(Rails.application.config.filter_parameters - %i[id name])
   config.before_send = lambda do |event, _hint|
     filter.filter(event.to_hash)
   end

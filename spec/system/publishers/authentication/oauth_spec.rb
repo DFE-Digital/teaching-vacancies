@@ -215,7 +215,7 @@ RSpec.describe "Publisher authentication" do
       it "raises an error" do
         visit new_publisher_session_path
 
-        expect { sign_in_publisher }.to raise_error(Authorisation::ExternalServerError)
+        expect { sign_in_publisher }.to raise_error(Publishers::DfeSignIn::Authorisation::ExternalServerError)
       end
     end
 

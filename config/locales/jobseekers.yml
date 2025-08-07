@@ -366,6 +366,7 @@ en:
         closing_date: Closing date
         last_edited: Last edited
         shortlisted: Shortlisted
+        interviewing: Interviewing
         submitted: Submitted
         withdrawn: Withdrawn
       index:
@@ -555,7 +556,7 @@ en:
           none: You have not added any training.
         religious_information:
           heading: This school has a religious character and has asked applicants to provide religious information as part of the application, where possible.
-          baptism_certificate: Baptism certficate
+          baptism_certificate: Baptism certificate
       show:
         application_sections: Application sections
         ask_for_support:

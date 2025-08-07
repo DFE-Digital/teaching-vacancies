@@ -32,14 +32,13 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     @sort = Publishers::VacancySort.new(current_organisation, @selected_type).update(sort_by: params[:sort_by])
 
     scope = if @selected_type == :draft
-              DraftVacancy.kept
+              DraftVacancy.kept.where.not(job_title: nil)
             else
               PublishedVacancy.kept.public_send(VACANCY_TYPES.fetch(@selected_type))
             end
     vacancies = scope
                   .in_organisation_ids(current_publisher.accessible_organisations(current_organisation).map(&:id))
                   .order(@sort.by => @sort.order)
-                  .where.not(job_title: nil)
 
     @pagy, @vacancies = pagy(vacancies)
     @count = vacancies.count

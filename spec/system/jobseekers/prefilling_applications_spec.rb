@@ -55,7 +55,7 @@ RSpec.describe "Jobseekers can prefill applications" do
         expect(page).to have_content(previous_application.personal_statement)
         click_on "Save and continue"
         within("#personal_statement") do
-          expect(page).to have_css(".govuk-task-list__status", text: I18n.t("shared.status_tags.complete"))
+          expect(page).to have_css(".govuk-task-list__status", text: I18n.t("shared.status_tags.incomplete"))
         end
 
         # qualified teacher status

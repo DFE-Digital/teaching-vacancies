@@ -1,12 +1,23 @@
 en:
   publishers:
     accounts:
+      confirm_email_opt_out:
+        confirmation_button: Opt out
+        notification_banner:
+          body: Are you sure you want to opt out from service email communications?
+          heading: Opt out from service email communications
+        title: Opt out
       confirm_unsubscribe:
         confirmation_button: Unsubscribe
         notification_banner:
           body: Are you sure you want to unsubscribe?
           heading: Unsubscribe from feedback requests
         title: Unsubscribe
+      email_opt_out:
+        panel:
+          body: You will no longer receive service email communications
+          heading: You have now opted out
+        title: You have now opted out
       unsubscribe:
         panel:
           body: You will no longer receive feedback requests for your listing

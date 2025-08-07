@@ -13,7 +13,7 @@ class Zendesk
     client.requests.create!(
       comment: {
         body: comment,
-        uploads: attachments.reject(&:blank?).map { |a| client.uploads.create!(file: a).id },
+        uploads: attachments.compact_blank.map { |a| client.uploads.create!(file: a).id },
       },
       requester: {
         name: name,
