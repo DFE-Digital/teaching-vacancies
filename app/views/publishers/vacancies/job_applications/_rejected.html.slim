@@ -1,0 +1,22 @@
+= render "candidates", form: form, origin: origin, vacancy: vacancy, candidates: candidates - emails.map(&:job_applications).flatten,
+  heading: "Not being considered", tab: "non_considering",
+  extras: [{ text: t(".reject"), name: "reject", warning: true }]
+
+- if emails.any?
+  h3 = t(".have_been_sent")
+
+  = govuk_table(id: "rejected_emails") do |table|
+    - table.with_head do |head|
+      - head.with_row do |row|
+        - row.with_cell(text: t(".table.name"))
+        - row.with_cell(text: t(".table.contact_details"))
+        - row.with_cell(text: t(".table.status"))
+        - row.with_cell(text: t(".table.date"))
+    - table.with_body do |body|
+      - emails.each do |email_batch|
+        - email_batch.job_applications.each do |job_application|
+          - body.with_row do |row|
+            - row.with_cell(text: job_application.name)
+            - row.with_cell(text: job_application.email_address)
+            - row.with_cell(text: govuk_tag(text: "Rejection sent", colour: "red"))
+            - row.with_cell(text: email_batch.created_at.to_date.to_formatted_s(:day_month_year))
