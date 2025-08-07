@@ -36,6 +36,9 @@ class VacancyAnalyticsService
 
   def self.update_stats_in_database(vacancy_updates)
     vacancy_updates.each do |vacancy_id, new_referrer_counts|
+      # Skip if the associated vacancy does not exist. This may happen if the vacancy was deleted after the visit was tracked.
+      next unless Vacancy.exists?(id: vacancy_id)
+
       VacancyAnalytics.transaction do
         analytics = VacancyAnalytics.where(vacancy_id: vacancy_id).lock(true).first_or_initialize
 
