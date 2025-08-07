@@ -9,16 +9,11 @@
           .govuk-summary-card
             .govuk-summary-card__title-wrapper
               h3.govuk-summary-card__title 
-                | From: 
-                - if message.sender.is_a?(Publisher)
-                  | #{message.sender.given_name} #{message.sender.family_name} (Hiring Staff)
-                - else
-                  | #{message.sender.given_name} #{message.sender.family_name} (Job Applicant)
+                = "#{message.sender.given_name} #{message.sender.family_name} <#{message.sender.email}>"
             .govuk-summary-card__content
+              p.govuk-body = "Date: #{message.created_at&.strftime("%d %B %Y at %I:%M %p")}"
               .message-content
                 == message.content
-              p.govuk-body-s.govuk-!-margin-top-3
-                | Sent on #{message.created_at&.strftime("%d %B %Y at %I:%M %p")}
       - else
         p.govuk-body No messages have been sent yet.
 
@@ -26,12 +21,11 @@
     div class="govuk-!-margin-top-6"
       h3.govuk-heading-s Send a new message
       
-      = form_with model: @message, url: organisation_job_job_application_messages_path(@vacancy.id, @job_application.id), method: :post, local: true do |f|
+      = form_for @message_form, url: organisation_job_job_application_messages_path(@vacancy.id, @job_application.id), method: :post do |f|
+        = f.govuk_error_summary
         = f.label :content, "Message content", class: "govuk-label govuk-label--s", id: "message-content-label"
         p.govuk-hint You can copy and paste bullet points into the text box.
 
         = f.text_area :content, rows: 6, class: "govuk-textarea"
-        / TODO: Replace with rich_text_area once working
-        / = f.rich_text_area :content
 
-        = f.submit "Send Message", class: "govuk-button"
+        = f.govuk_submit "Send Message"

@@ -10,11 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
+
 ActiveRecord::Schema[7.2].define(version: 2025_08_08_151134) do
-=======
-ActiveRecord::Schema[7.2].define(version: 2025_08_06_143335) do
->>>>>>> 0511e79db (wip trying to get actiontext to work)
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "fuzzystrmatch"
@@ -78,6 +75,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_06_143335) do
     t.datetime "updated_at", null: false
     t.index ["job_application_batch_id"], name: "index_batchable_job_applications_on_job_application_batch_id"
     t.index ["job_application_id"], name: "index_batchable_job_applications_on_job_application_id"
+  end
+
+  create_table "conversations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "job_application_id", null: false
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_application_id"], name: "index_conversations_on_job_application_id"
   end
 
   create_table "emergency_login_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -444,12 +449,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_06_143335) do
 
   create_table "messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "content"
-    t.uuid "job_application_id", null: false
     t.string "sender_type", null: false
     t.uuid "sender_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["job_application_id"], name: "index_messages_on_job_application_id"
+    t.uuid "conversation_id", null: false
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
     t.index ["sender_type", "sender_id"], name: "index_messages_on_sender"
   end
 
@@ -918,7 +923,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_06_143335) do
   add_foreign_key "local_authority_publisher_schools", "publisher_preferences"
   add_foreign_key "markers", "organisations"
   add_foreign_key "markers", "vacancies"
-  add_foreign_key "messages", "job_applications"
+  add_foreign_key "messages", "conversations"
   add_foreign_key "notes", "job_applications"
   add_foreign_key "notes", "publishers"
   add_foreign_key "organisation_publisher_preferences", "organisations"
