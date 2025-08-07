@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_09_154313) do
+ActiveRecord::Schema[7.2].define(version: 2025_07_30_144026) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -526,6 +526,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_09_154313) do
     t.datetime "dismissed_new_features_page_at", precision: nil
     t.datetime "unsubscribed_from_expired_vacancy_prompt_at", precision: nil
     t.boolean "acknowledged_candidate_profiles_interstitial", default: false, null: false
+    t.boolean "email_opt_out", default: false, null: false
     t.index ["email"], name: "index_publishers_on_email"
     t.index ["oid"], name: "index_publishers_on_oid", unique: true
   end

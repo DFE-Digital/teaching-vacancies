@@ -253,7 +253,7 @@ class JobApplicationPdf
       ]
     when "baptism_certificate"
       [
-        [I18n.t("jobseekers.job_applications.review.religious_information.baptism_certificate"), job_application.baptism_certificate.filename],
+        [I18n.t("jobseekers.job_applications.review.religious_information.baptism_certificate"), job_application.baptism_certificate.filename.to_s],
       ]
 
     when "baptism_date"
