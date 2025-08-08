@@ -261,13 +261,15 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
 
     context "when a vacancy with the same external reference exists" do
       let(:external_reference) { "existing-ref" }
-      let!(:existing_vacancy) do
-        create(
-          :vacancy,
-          :external,
-          external_reference: "existing-ref",
-          publisher_ats_api_client_id: publisher_ats_api_client_id,
-        )
+      let(:vacancy_attributes) do
+        { external_reference: external_reference, publisher_ats_api_client_id: publisher_ats_api_client_id }
+      end
+      let(:existing_vacancy) { create(:vacancy, :external, **vacancy_attributes) }
+
+      before { existing_vacancy }
+
+      it "does not create a new vacancy" do
+        expect { create_vacancy_service }.not_to change(PublishedVacancy, :count)
       end
 
       it "returns a conflict response" do
@@ -280,6 +282,20 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
             },
           },
         )
+      end
+
+      context "when the existing vacancy was discarded" do
+        let(:existing_vacancy) { create(:vacancy, :trashed, :external, **vacancy_attributes) }
+
+        it "creates a new published vacancy with the same external reference" do
+          expect { create_vacancy_service }.to change { PublishedVacancy.kept.count }.by(1)
+          vacancy = PublishedVacancy.kept.last
+          expect(vacancy.external_reference).to eq(existing_vacancy.external_reference)
+        end
+
+        it "returns a success response" do
+          expect(create_vacancy_service).to eq(status: :created, json: { id: PublishedVacancy.kept.last.id })
+        end
       end
     end
 

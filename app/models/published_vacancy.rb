@@ -59,19 +59,21 @@ class PublishedVacancy < Vacancy
   end
 
   def find_conflict_vacancy
-    Vacancy.where(
+    self.class.kept.where(
       publisher_ats_api_client_id: publisher_ats_api_client_id,
       external_reference: external_reference,
     ).where.not(id: id).first
   end
 
   def find_duplicate_vacancy
-    Vacancy.joins(:organisations)
-           .where.not(id: id)
-           .where(job_title: job_title, expires_at: expires_at, organisations: { id: organisation_ids }, contract_type: contract_type, salary: salary)
-           .with_working_patterns(working_patterns)
-           .with_phases(phases)
-           .distinct
-           .first
+    self.class
+        .kept
+        .joins(:organisations)
+        .where.not(id: id)
+        .where(job_title: job_title, expires_at: expires_at, organisations: { id: organisation_ids }, contract_type: contract_type, salary: salary)
+        .with_working_patterns(working_patterns)
+        .with_phases(phases)
+        .distinct
+        .first
   end
 end

@@ -51,6 +51,10 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
 
   describe "#call" do
     context "when the update is successful" do
+      it "returns a success status" do
+        expect(update_vacancy_service).to eq(status: :ok)
+      end
+
       it "updates the attributes that differ from the original vacancy" do
         expect { update_vacancy_service }
           .to change { vacancy.reload.external_reference }.from("old-ref").to("new-ref")
@@ -221,7 +225,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
   end
 
   context "when a vacancy with the same external reference exists" do
-    let!(:existing_vacancy) do
+    let(:existing_vacancy) do
       create(
         :vacancy,
         :external,
@@ -229,6 +233,8 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
         publisher_ats_api_client_id: publisher_ats_api_client_id,
       )
     end
+
+    before { existing_vacancy }
 
     it "returns a conflict response" do
       expect(update_vacancy_service).to eq(
@@ -240,6 +246,26 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
           },
         },
       )
+    end
+
+    context "when the existing vacancy was discarded" do
+      let(:existing_vacancy) do
+        create(
+          :vacancy,
+          :trashed,
+          :external,
+          external_reference: "new-ref",
+          publisher_ats_api_client_id: publisher_ats_api_client_id,
+        )
+      end
+
+      it "successfully updates the vacancy external reference" do
+        expect { update_vacancy_service }.to change(vacancy, :external_reference).from("old-ref").to("new-ref")
+      end
+
+      it "returns an ok status" do
+        expect(update_vacancy_service).to eq(status: :ok)
+      end
     end
   end
 

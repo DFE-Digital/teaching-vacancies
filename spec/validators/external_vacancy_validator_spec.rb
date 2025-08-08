@@ -75,4 +75,32 @@ RSpec.describe ExternalVacancyValidator, type: :model do
       expect(vacancy.errors[:expires_at]).to include("must be later than the publish date")
     end
   end
+
+  describe "conflict validation" do
+    subject(:vacancy) { build(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:) }
+
+    let(:publisher_ats_api_client) { create(:publisher_ats_api_client) }
+
+    context "when there a vacancy with the same ATS client ID but with different external reference" do
+      before do
+        create(:vacancy, :external, external_reference: "REF456", publisher_ats_api_client:)
+      end
+
+      it "the new vacancy is valid" do
+        expect(vacancy).to be_valid
+      end
+    end
+
+    context "when there a vacancy with the same ATS client ID and external reference" do
+      before do
+        create(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:)
+      end
+
+      it "the new vacancy is invalid" do
+        expect(vacancy).not_to be_valid
+        expect(vacancy.errors[:external_reference])
+          .to include("A vacancy with the provided ATS client ID and external reference already exists.")
+      end
+    end
+  end
 end
