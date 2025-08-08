@@ -29,19 +29,6 @@ class Publishers::Vacancies::JobApplications::NotesController < Publishers::Vaca
   end
 
   def redirect_path
-    return_to = params[:return_to]
-
-    case return_to
-    when "reference_request"
-      if params[:reference_request_id].present?
-        organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, params[:reference_request_id])
-      else
-        organisation_job_job_application_path(id: @job_application.id)
-      end
-    when "self_disclosure"
-      organisation_job_job_application_self_disclosure_path(vacancy.id, @job_application.id)
-    else
-      organisation_job_job_application_path(id: @job_application.id)
-    end
+    params[:return_to].presence || organisation_job_job_application_path(id: @job_application.id)
   end
 end
