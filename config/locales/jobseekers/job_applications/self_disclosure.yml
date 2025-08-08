@@ -3,7 +3,7 @@ en:
     job_applications:
       show:
         self_disclosure:
-          form: self-disclosure declaration
+          form: self-disclosure form 
           cta_html: "%{organisation} has asked you to complete a %{link} as soon as possible."
   activemodel:
     errors:
