@@ -19,75 +19,15 @@ RSpec.describe "Publishers::Vacancies::JobApplications::Notes" do
   describe "POST /organisation/jobs/:vacancy_id/job_applications/:job_application_id/notes" do
     let(:notes_path) { organisation_job_job_application_notes_path(vacancy.id, job_application.id) }
 
-    context "with return_to parameter for reference_request" do
-      let(:referee) { create(:referee, job_application: job_application) }
-      let(:reference_request) { create(:reference_request, referee: referee) }
-
-      before do
-        create(:job_reference, referee: referee)
-      end
-
-      context "with valid reference_request_id" do
-        let(:params) do
-          valid_note_params.merge(
-            return_to: "reference_request",
-            reference_request_id: reference_request.id,
-          )
-        end
-
-        it "redirects to the reference request page" do
-          post notes_path, params: params
-
-          expect(response).to redirect_to(
-            organisation_job_job_application_reference_request_path(vacancy.id, job_application.id, reference_request.id),
-          )
-        end
-      end
-
-      context "without reference_request_id" do
-        let(:params) do
-          valid_note_params.merge(return_to: "reference_request")
-        end
-
-        it "redirects to the job application page" do
-          post notes_path, params: params
-
-          expect(response).to redirect_to(
-            organisation_job_job_application_path(vacancy.id, job_application.id),
-          )
-        end
-      end
-    end
-
-    context "with return_to parameter for self_disclosure" do
+    context "with return_to parameter" do
       let(:params) do
-        valid_note_params.merge(return_to: "self_disclosure")
+        valid_note_params.merge(return_to: "https://example.com/some/page")
       end
 
-      before do
-        create(:self_disclosure_request, job_application: job_application)
-      end
-
-      it "redirects to the self disclosure page" do
+      it "redirects to the return_to URL" do
         post notes_path, params: params
 
-        expect(response).to redirect_to(
-          organisation_job_job_application_self_disclosure_path(vacancy.id, job_application.id),
-        )
-      end
-    end
-
-    context "with unknown return_to parameter" do
-      let(:params) do
-        valid_note_params.merge(return_to: "unknown_page")
-      end
-
-      it "redirects to the job application page" do
-        post notes_path, params: params
-
-        expect(response).to redirect_to(
-          organisation_job_job_application_path(vacancy.id, job_application.id),
-        )
+        expect(response).to redirect_to("https://example.com/some/page")
       end
     end
 
@@ -108,69 +48,13 @@ RSpec.describe "Publishers::Vacancies::JobApplications::Notes" do
     let!(:note) { create(:note, job_application: job_application, publisher: publisher) }
     let(:note_path) { organisation_job_job_application_note_path(vacancy.id, job_application.id, note.id) }
 
-    context "with return_to parameter for reference_request" do
-      let(:referee) { create(:referee, job_application: job_application) }
-      let(:reference_request) { create(:reference_request, referee: referee) }
+    context "with return_to parameter" do
+      let(:params) { { return_to: "https://example.com/some/page" } }
 
-      before do
-        create(:job_reference, referee: referee)
-      end
-
-      context "with valid reference_request_id" do
-        let(:params) do
-          {
-            return_to: "reference_request",
-            reference_request_id: reference_request.id,
-          }
-        end
-
-        it "redirects to the reference request page" do
-          delete note_path, params: params
-
-          expect(response).to redirect_to(
-            organisation_job_job_application_reference_request_path(vacancy.id, job_application.id, reference_request.id),
-          )
-        end
-      end
-
-      context "without reference_request_id" do
-        let(:params) { { return_to: "reference_request" } }
-
-        it "redirects to the job application page" do
-          delete note_path, params: params
-
-          expect(response).to redirect_to(
-            organisation_job_job_application_path(vacancy.id, job_application.id),
-          )
-        end
-      end
-    end
-
-    context "with return_to parameter for self_disclosure" do
-      let(:params) { { return_to: "self_disclosure" } }
-
-      before do
-        create(:self_disclosure_request, job_application: job_application)
-      end
-
-      it "redirects to the self disclosure page" do
+      it "redirects to the return_to URL" do
         delete note_path, params: params
 
-        expect(response).to redirect_to(
-          organisation_job_job_application_self_disclosure_path(vacancy.id, job_application.id),
-        )
-      end
-    end
-
-    context "with unknown return_to parameter" do
-      let(:params) { { return_to: "unknown_page" } }
-
-      it "redirects to the job application page" do
-        delete note_path, params: params
-
-        expect(response).to redirect_to(
-          organisation_job_job_application_path(vacancy.id, job_application.id),
-        )
+        expect(response).to redirect_to("https://example.com/some/page")
       end
     end
 
