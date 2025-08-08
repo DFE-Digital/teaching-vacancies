@@ -547,6 +547,7 @@ en:
           draft: Draft jobs - %{organisation_name}
           awaiting_feedback: Jobs awaiting feedbank - %{organisation_name}
       job_applications:
+        update_application_status: Update application status
         interviewing_status:
           pre_interview_checks: Pre-interview checks
         header:
@@ -560,11 +561,6 @@ en:
             after: Deadline passed
             before: Application deadline
           expired_more_than_year: In line with our data retention policy you are no longer able to view applications for this job.
-          no_applicants: Nobody has applied for this job yet
-          no_new: There are no pending applications
-          no_rejected: No applications have been marked for rejection
-          no_interviewing: No applications have been marked for interview yet
-          no_shortlisted: No applications have been shortlisted yet
           received: Received on
           rejected:
             one: Rejected application
@@ -578,18 +574,6 @@ en:
           submitted:
             one: Unread application
             other: Unread applications
-        candidates:
-          name: Name
-          contact_details: Contact details
-          application_status: Application status
-          update_application_status: Update application status
-          download_selected: Download selected
-        interviewing:
-          name: Name
-          contact_details: Contact details
-          application_status: Application status
-          update_application_status: Update application status
-          download_selected: Download selected
         notes:
           create:
             success: A note has been added
@@ -639,6 +623,7 @@ en:
             caption: Update referee information
             heading: What is the correct email address for %{name}?
           show:
+            print: Print
             page_title: Reference
             mark_as_received: Mark as received
             collect_reference: Would you like to collect this reference through Teaching Vacancies?
@@ -660,7 +645,7 @@ en:
               organisation: Organisation
               relationship: Relationship to applicant
               email: Email address
-              phone: Phone number
+              phone_number: Phone number
             reference_requested: Reference requested
             reference_email_changed: Reference email changed to %{email}
             reference_received: Reference received
@@ -677,15 +662,16 @@ en:
             change_email_success: Email address updated and reference request sent
         tag:
           page_title: Update application status
-          what_application_status_single: What application status do you want to assign to %{name}?
-          what_application_status_multiple: What application status do you want to assign to these applicants?
+          what_application_status:
+            one: What application status do you want to assign to this applicant?
+            other: What application status do you want to assign to these applicants?
           applicants: Applicants
         update_status:
           unsuccessful: "%{name} has been sent an email telling them their application has not been successful"
           shortlisted: "%{name} has been sent an email telling them that they have been shortlisted"
-        withdrawn:
-          content: The candidate has withdrawn their application and you cannot view it any more.
-          heading: This application has been withdrawn
+        terminal:
+          content: The candidate is no longer available for consideration and you cannot view it any more.
+          heading: This application is no longer accessible
           page_title: Application withdrawn
           view_more_applications: View more applications
         visa_sponsorship:

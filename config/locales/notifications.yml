@@ -41,7 +41,7 @@ en:
       message_html: You will have access to candidates' applications for %{link} until %{date}
     publishers/self_declaration_received_notification:
       message_html: You have received a %{link}
-      disclosure_received: self disclosure form
+      disclosure_received: self-disclosure form
     publishers/reference_received_notification:
       message_html: You have received a %{link}
       reference_received: reference for a candidate

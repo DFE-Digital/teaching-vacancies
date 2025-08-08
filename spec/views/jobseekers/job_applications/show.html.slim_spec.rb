@@ -160,7 +160,7 @@ RSpec.describe "jobseekers/job_applications/show" do
         ".cta_html",
         scope:,
         organisation: job_application.vacancy.organisation.name,
-        link: "self-disclosure declaration",
+        link: "self-disclosure form",
       )
     end
     let(:form_path) do

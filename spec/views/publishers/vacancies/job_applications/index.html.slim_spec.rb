@@ -3,18 +3,32 @@ require "rails_helper"
 RSpec.describe "publishers/vacancies/job_applications/index" do
   let(:organisation) { build_stubbed(:school) }
   let(:publisher) { build_stubbed(:publisher, organisations: [organisation]) }
-
-  let(:vacancy) do
-    build_stubbed(:vacancy, publisher: publisher, organisations: [organisation],
-                            job_applications: [build_stubbed(:job_application, :submitted)])
+  let(:vacancy) { build_stubbed(:vacancy, publisher: publisher, organisations: [organisation]) }
+  let(:submitted) do
+    [
+      build_stubbed(:job_application, :status_submitted, vacancy:),
+      build_stubbed(:job_application, :status_reviewed, vacancy:),
+    ]
   end
-  let(:job_application) { vacancy.job_applications.first }
+  let(:unsuccessful) { JobApplication }
+  let(:shortlisted) { build_stubbed_list(:job_application, 1, :status_shortlisted, vacancy:) }
+  let(:interviewing) { build_stubbed_list(:job_application, 1, :status_interviewing, vacancy:) }
+  let(:offered) { JobApplication }
+  let(:tabs_data) { { submitted:, unsuccessful:, shortlisted:, interviewing:, offered: }.stringify_keys }
 
   before do
+    list_unsuccessful = build_stubbed_list(:job_application, 1, :status_unsuccessful, vacancy:)
+    list_withdrawn = build_stubbed_list(:job_application, 1, :status_withdrawn, vacancy:)
+    allow(unsuccessful).to receive_messages(unsuccessful: list_unsuccessful, withdrawn: list_withdrawn)
+
+    list_offered = build_stubbed_list(:job_application, 1, :status_offered, vacancy:)
+    list_declined = build_stubbed_list(:job_application, 1, :status_declined, vacancy:)
+    allow(offered).to receive_messages(offered: list_offered, declined: list_declined)
+
     assign :current_organisation, organisation
     assign :vacancy, vacancy
-    assign :job_applications, vacancy.job_applications
     assign :form, Publishers::JobApplication::TagForm.new
+    assign :tabs_data, tabs_data
 
     render
   end
@@ -24,28 +38,12 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
   end
 
   it "has a link to view the application" do
+    job_application = submitted.first
     expect(rendered).to have_link(job_application.name, href: organisation_job_job_application_path(job_application, job_id: vacancy.id))
   end
 
   context "when a vacancy has expired and it has applications" do
-    let(:vacancy) do
-      build_stubbed(:vacancy, :expired, expires_at: 2.weeks.ago, organisations: [organisation],
-                                        job_applications: [
-                                          job_application_submitted,
-                                          job_application_reviewed,
-                                          job_application_shortlisted,
-                                          job_application_unsuccessful,
-                                          job_application_withdrawn,
-                                          job_application_interviewing,
-                                        ])
-    end
-
-    let(:job_application_submitted) { build_stubbed(:job_application, :status_submitted, last_name: "Alan") }
-    let(:job_application_reviewed) { build_stubbed(:job_application, :status_reviewed, last_name: "Charlie") }
-    let(:job_application_shortlisted) { build_stubbed(:job_application, :status_shortlisted, last_name: "Billy") }
-    let(:job_application_unsuccessful) { build_stubbed(:job_application, :status_unsuccessful, last_name: "Dave") }
-    let(:job_application_withdrawn) {  build_stubbed(:job_application, :status_withdrawn, last_name: "Ethan") }
-    let(:job_application_interviewing) { build_stubbed(:job_application, :status_interviewing, last_name: "Freddy") }
+    let(:vacancy) { build_stubbed(:vacancy, :expired, expires_at: 2.weeks.ago, organisations: [organisation]) }
 
     describe "the summary section" do
       it "shows breadcrumb with link to passed deadline in dashboard" do
@@ -70,10 +68,11 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
 
     describe "submitted application" do
       let(:status) { "submitted" }
+      let(:candidate) { submitted.first }
 
       it "shows applicant name that links to application" do
         within(".application-#{status}") do
-          expect(rendered).to have_link("#{job_application_submitted.first_name} #{job_application_submitted.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_submitted.id))
+          expect(rendered).to have_link("#{candidate.first_name} #{candidate.last_name}", href: organisation_job_job_application_path(vacancy.id, candidate.id))
         end
       end
 
@@ -86,10 +85,11 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
 
     describe "reviewed application" do
       let(:status) { "reviewed" }
+      let(:candidate) { submitted.last }
 
       it "shows applicant name that links to application" do
         within(".application-#{status}") do
-          expect(rendered).to have_link("#{job_application_reviewed.first_name} #{job_application_reviewed.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_reviewed.id))
+          expect(rendered).to have_link("#{candidate.first_name} #{candidate.last_name}", href: organisation_job_job_application_path(vacancy.id, candidate.id))
         end
       end
 
@@ -101,25 +101,27 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
     end
 
     describe "shortlisted application" do
+      let(:candidate) { shortlisted.first }
+
       it "shows applicant name that links to application and green shortlisted tag" do
         expect(rendered).to have_css(".application-shortlisted")
 
         within(".application-shortlisted") do
           expect(rendered).to have_css(".govuk-tag--green", text: "shortlisted")
-          expect(rendered).to have_link("#{job_application_shortlisted.first_name} #{job_application_shortlisted.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_shortlisted.id))
+          expect(rendered).to have_link("#{candidate.first_name} #{candidate.last_name}", href: organisation_job_job_application_path(vacancy.id, candidate.id))
         end
       end
     end
 
     describe "unsuccessful application" do
       let(:status) { "unsuccessful" }
+      let(:candidate) { unsuccessful.first }
 
       it "shows applicant name that links to application" do
         expect(rendered).to have_css(".application-#{status}")
 
         within(".application-#{status}") do
-          expect(rendered).to have_link("#{job_application_unsuccessful.first_name} #{job_application_unsuccessful.last_name}",
-                                        href: organisation_job_job_application_path(vacancy.id, job_application_unsuccessful.id))
+          expect(rendered).to have_link("#{candidate.first_name} #{candidate.last_name}", href: organisation_job_job_application_path(vacancy.id, candidate.id))
         end
       end
 
@@ -131,10 +133,47 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
         end
       end
     end
+
+    describe "offered application" do
+      let(:status) { "offered" }
+      let(:candidate) { offered.first }
+
+      it "shows applicant name that links to application" do
+        expect(rendered).to have_css(".application-#{status}")
+
+        within(".application-#{status}") do
+          expect(rendered).to have_link("#{candidate.first_name} #{candidate.last_name}", href: organisation_job_job_application_path(vacancy.id, candidate.id))
+        end
+      end
+
+      it "shows pink job offered tag" do
+        expect(rendered).to have_css(".application-#{status}")
+
+        within(".application-#{status}") do
+          expect(rendered).to have_css(".govuk-tag--pink", text: "job offered")
+        end
+      end
+    end
+
+    describe "declined application" do
+      let(:status) { "declined" }
+      let(:candidate) { offered.last }
+
+      it "shows applicant name that links to application" do
+        expect(rendered).to have_css(".application-#{status}")
+
+        within(".application-#{status}") do
+          expect(rendered).to have_link("#{candidate.first_name} #{candidate.last_name}", href: organisation_job_job_application_path(vacancy.id, candidate.id))
+        end
+      end
+    end
   end
 
   context "when a vacancy is active and it has no applications" do
-    let(:vacancy) { build_stubbed(:vacancy, expires_at: 1.month.from_now, organisations: [organisation], job_applications: []) }
+    let(:submitted) { [] }
+    let(:unsuccessful) { JobApplication }
+    let(:shortlisted) { [] }
+    let(:interviewing) { [] }
 
     describe "the summary section" do
       it "shows breadcrumb with link to active jobs in dashboard" do
@@ -150,13 +189,13 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
       end
 
       it "shows that there are no applicants" do
-        expect(rendered).to have_css(".empty-section-component h3", text: I18n.t("publishers.vacancies.job_applications.index.no_applicants"))
+        expect(rendered).to have_css(".empty-section-component h3", text: "There are no pending applications")
       end
     end
   end
 
   context "when a vacancy has expired more than 1 year ago and it has applications" do
-    let(:vacancy) { build_stubbed(:vacancy, :expired, expires_at: 1.year.ago, organisations: [organisation], job_applications: build_stubbed_list(:job_application, 1, :status_submitted)) }
+    let(:vacancy) { build_stubbed(:vacancy, :expired, expires_at: 1.year.ago, organisations: [organisation]) }
 
     describe "the summary section" do
       it "shows no application cards" do

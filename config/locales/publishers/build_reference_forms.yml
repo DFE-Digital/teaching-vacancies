@@ -205,6 +205,7 @@ en:
         currently_employed: Is the applicant currently employed at this organisation?
         would_reemploy_current: Would you re-employ the applicant in the same job as they currently hold or held?
         would_reemploy_any: Would you re-employ the applicant in any role within your organisation?
+        how_do_you_know_the_candidate: How long have you known the candidate and in what capacity?
 
       referees_reference_information_form:
         under_investigation: >-

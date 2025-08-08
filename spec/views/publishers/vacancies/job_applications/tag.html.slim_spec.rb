@@ -21,7 +21,7 @@ RSpec.describe "publishers/vacancies/job_applications/tag" do
       let(:job_applications) { build_stubbed_list(:job_application, 1, :status_submitted, vacancy:) }
 
       it "renders header with name" do
-        expect(tag_page.find("h1")).to have_text(I18n.t("publishers.vacancies.job_applications.tag.what_application_status_single", name: job_applications.first.name))
+        expect(tag_page.find("h1")).to have_text(I18n.t("publishers.vacancies.job_applications.tag.what_application_status.one"))
       end
     end
 
@@ -29,7 +29,7 @@ RSpec.describe "publishers/vacancies/job_applications/tag" do
       let(:li_tags) { tag_page.all("li") }
 
       it "renders header without name" do
-        expect(tag_page.find("h1")).to have_text(I18n.t("publishers.vacancies.job_applications.tag.what_application_status_multiple"))
+        expect(tag_page.find("h1")).to have_text(I18n.t("publishers.vacancies.job_applications.tag.what_application_status.other"))
       end
 
       it "lists candidates" do
@@ -42,9 +42,33 @@ RSpec.describe "publishers/vacancies/job_applications/tag" do
   end
 
   describe "form status options" do
-    %i[submitted unsuccessful reviewed shortlisted interviewing].each do |status|
-      it "shows a radio button for status '#{status}'" do
-        expect(rendered).to have_css("#publishers-job-application-tag-form-status-#{status}-field")
+    context "when job applications have status submitted" do
+      let(:job_applications) { build_stubbed_list(:job_application, 3, :status_submitted, vacancy:) }
+
+      %i[unsuccessful shortlisted interviewing offered].each do |status|
+        it "shows a radio button for status '#{status}'" do
+          expect(rendered).to have_css("#publishers-job-application-tag-form-status-#{status}-field")
+        end
+      end
+    end
+
+    context "when job applications have status shortlisted" do
+      let(:job_applications) { build_stubbed_list(:job_application, 3, :status_shortlisted, vacancy:) }
+
+      %i[unsuccessful interviewing offered].each do |status|
+        it "shows a radio button for status '#{status}'" do
+          expect(rendered).to have_css("#publishers-job-application-tag-form-status-#{status}-field")
+        end
+      end
+    end
+
+    context "when job applications have status interviewing" do
+      let(:job_applications) { build_stubbed_list(:job_application, 3, :status_interviewing, vacancy:) }
+
+      %i[unsuccessful offered].each do |status|
+        it "shows a radio button for status '#{status}'" do
+          expect(rendered).to have_css("#publishers-job-application-tag-form-status-#{status}-field")
+        end
       end
     end
   end

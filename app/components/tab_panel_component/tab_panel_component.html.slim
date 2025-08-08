@@ -1,0 +1,37 @@
+= tag.div(**html_attributes) do
+  = form_with(**form_with_args) do |f|
+    - if @form.present?
+      = f.govuk_error_summary
+      - if flash[@tab_name]
+        = govuk_notification_banner title_text: "Error", success: false, classes: ["govuk-error-colour"] do |notification_banner|
+          - notification_banner.with_heading(text: flash[@tab_name])
+
+    = f.govuk_check_boxes_fieldset :job_applications, legend: { text: t("tabs.#{@tab_name}.heading"), size: "m" } do
+      = f.hidden_field :origin, value: @tab_name
+
+      - if @candidates.any?
+        = govuk_table(**govuk_table_args) do |table|
+          - table.with_head do |head|
+            - head.with_row do |row|
+              - if @form.present?
+                - row.with_cell(html_attributes: { id: "multi_select_#{@tab_name}" })
+              - @displayed_fields.each do |field|
+                - row.with_cell(text: t("tabs.headers.#{field}"))
+
+          - table.with_body do |body|
+            - @candidates.each_with_index do |application, index|
+              - body.with_row(html_attributes: { class: "application-#{application.status}" }) do |row|
+                - if @form.present?
+                  - row.with_cell(text: tag.div(f.govuk_check_box(:job_applications, application.id, link_errors: index.zero?, label: { hidden: true, text: "Select #{application.name}" }),
+                                    class: "govuk-checkboxes--small"))
+                - @displayed_fields.each do |field|
+                  - row.with_cell(text: display(application, field), html_attributes: { class: field.to_s })
+
+        - if @form.present?
+          - @button_groups.each do |group|
+            .govuk-button-group
+              - group.each do |value|
+                = f.govuk_submit t(value, scope: "tabs.buttons"), name: "target", value:, secondary: (value != :download)
+
+      - else
+        = render EmptySectionComponent.new title: t("tabs.#{@tab_name}.none")

@@ -3,7 +3,7 @@
 .govuk-grid-row
   div
     span.govuk-caption-m = "Part 1 of 4"
-    h1.govuk-heading-l = t(".heading")
+    h1.govuk-heading-l = t(".heading", job_title: @job_application.vacancy.job_title)
     - t(".description").each do |text|
       p.govuk-hint = text
 

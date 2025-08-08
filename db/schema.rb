@@ -277,6 +277,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_30_144026) do
     t.boolean "has_safeguarding_issue"
     t.boolean "notify_before_contact_referers"
     t.string "type"
+    t.datetime "offered_at"
+    t.datetime "declined_at"
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
