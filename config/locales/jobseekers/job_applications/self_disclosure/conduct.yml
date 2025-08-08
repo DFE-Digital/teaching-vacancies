@@ -4,14 +4,13 @@ en:
       self_disclosure:
         conduct:
           page_title: Self-disclosure form
-          heading: Self-disclosure form
-          conduct_declaration: Conduct declaration
+          heading: "Self-disclosure form for %{job_title}"
 
   helpers:
     legend:
       jobseekers_job_applications_self_disclosure_conduct_form:
         is_known_to_children_services: Have you ever been known to any children’s services department or police as being a risk or potential risk to children?
-        has_been_dismissed: Have you ever been dismissed for misconduct from any paid or voluntary position previously held by you?
+        has_been_dismissed: Have you ever been dismissed for misconduct from any paid or voluntary position?
         has_been_disciplined: Have you ever been under investigation for or subject to any disciplinary sanctions in relation to your conduct at the time of your employment?
         has_been_disciplined_by_regulatory_body: Have you ever been subject to any sanctions being placed on your professional registration, by a regulatory or licencing body in any country? (as applicable)
 
