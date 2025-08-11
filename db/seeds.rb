@@ -74,7 +74,7 @@ FactoryBot.create(:vacancy, :for_seed_data, **attrs)
 
 # Jobseekers
 FactoryBot.create(:jobseeker, email: "jobseeker@contoso.com")
-JobApplication.statuses.count.times { |i| FactoryBot.create(:jobseeker, email: "jobseeker#{i}@contoso.com") }
+50.times { |i| FactoryBot.create(:jobseeker, email: "jobseeker#{i}@contoso.com") }
 
 emails_without_applications = ["jobseeker@contoso.com"] + user_emails
 # Job Applications
