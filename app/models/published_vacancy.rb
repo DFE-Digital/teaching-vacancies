@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class PublishedVacancy < Vacancy
-  # temporary solution - don't do this validation on manually published vacancies
-  validate :no_duplicate_vacancy, if: -> { external? && job_title.present? && expires_at.present? && organisation_ids.present? }
   # this validates presence of certain fields for external vacancies
   validates_with ExternalVacancyValidator, if: :external?
 
@@ -13,7 +11,7 @@ class PublishedVacancy < Vacancy
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at, if: -> { listed_elsewhere_changed? && hired_status_changed? }
 
   def find_conflicting_vacancy
-    find_external_reference_conflict_vacancy || find_duplicate_vacancy
+    find_external_reference_conflict_vacancy || find_duplicate_external_vacancy
   end
 
   # soft delete so that all the stats etc are kept even after the vacancy no longer exists
@@ -46,6 +44,27 @@ class PublishedVacancy < Vacancy
     ).where.not(id: id).first
   end
 
+  # rubocop:disable Metrics/AbcSize
+  def find_duplicate_external_vacancy
+    return unless external? && job_title.present? && expires_at.present? && organisation_ids.present? &&
+      contract_type.present? && salary.present? && working_patterns.present? && phases.present?
+
+    self.class
+        .kept
+        .joins(:organisations)
+        .where.not(id: id)
+        .where(job_title: job_title,
+               expires_at: expires_at,
+               organisations: { id: organisation_ids },
+               contract_type: contract_type,
+               salary: salary)
+        .with_working_patterns(working_patterns)
+        .with_phases(phases)
+        .distinct
+        .first
+  end
+  # rubocop:enable Metrics/AbcSize
+
   private
 
   def remove_google_index
@@ -59,23 +78,5 @@ class PublishedVacancy < Vacancy
 
   def enable_job_applications_cannot_be_changed_once_listed
     errors.add(:enable_job_applications, :cannot_be_changed_once_listed)
-  end
-
-  def no_duplicate_vacancy
-    if find_duplicate_vacancy
-      errors.add(:base, "A vacancy with the same job title, expiry date, contract type, working_patterns, phases and salary already exists for this organisation.")
-    end
-  end
-
-  def find_duplicate_vacancy
-    self.class
-        .kept
-        .joins(:organisations)
-        .where.not(id: id)
-        .where(job_title: job_title, expires_at: expires_at, organisations: { id: organisation_ids }, contract_type: contract_type, salary: salary)
-        .with_working_patterns(working_patterns)
-        .with_phases(phases)
-        .distinct
-        .first
   end
 end

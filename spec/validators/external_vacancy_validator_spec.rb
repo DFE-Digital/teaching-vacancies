@@ -76,7 +76,7 @@ RSpec.describe ExternalVacancyValidator, type: :model do
     end
   end
 
-  describe "conflict validation" do
+  describe "external reference conflict validation" do
     subject(:vacancy) { build(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:) }
 
     let(:publisher_ats_api_client) { create(:publisher_ats_api_client) }
@@ -100,6 +100,78 @@ RSpec.describe ExternalVacancyValidator, type: :model do
         expect(vacancy).not_to be_valid
         expect(vacancy.errors[:external_reference])
           .to include("A vacancy with the provided ATS client ID and external reference already exists.")
+      end
+    end
+  end
+
+  describe "duplicate validation" do
+    subject(:vacancy) do
+      build(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
+    end
+
+    let(:school) { create(:school) }
+    let(:publisher_ats_api_client) { create(:publisher_ats_api_client) }
+
+    context "when there is a vacancy with some shared info but not all required fields to be considered duplicated" do
+      before do
+        create(:vacancy,
+               organisations: [school],
+               job_title: vacancy.job_title,
+               expires_at: vacancy.expires_at,
+               working_patterns: vacancy.working_patterns)
+      end
+
+      it "the new vacancy is valid" do
+        expect(vacancy).to be_valid
+      end
+    end
+
+    context "when there is an existing vacancy sharing all required fields to be considered duplicated" do
+      let(:dup_fields) do
+        {
+          organisations: [school],
+          job_title: vacancy.job_title,
+          expires_at: vacancy.expires_at,
+          working_patterns: vacancy.working_patterns,
+          contract_type: vacancy.contract_type,
+          phases: vacancy.phases,
+          salary: vacancy.salary,
+        }
+      end
+
+      let(:existing_vacancy) { create(:vacancy, **dup_fields) }
+
+      before { existing_vacancy }
+
+      it "the new vacancy is invalid" do
+        expect(vacancy).not_to be_valid
+        expect(vacancy.errors[:base])
+          .to include("A vacancy with the same job title, expiry date, contract type, working_patterns, phases and salary already exists for this organisation.")
+      end
+
+      context "when the existing vacancy was discarded" do
+        let(:existing_vacancy) { create(:vacancy, :trashed, **dup_fields) }
+
+        it "the new vacancy is valid" do
+          expect(vacancy).to be_valid
+        end
+      end
+    end
+
+    context "when there is an existing vacancy sharing all required fields to be considered duplicated but belongs to a different organisation" do
+      before do
+        create(:vacancy,
+               organisations: [create(:school)],
+               job_title: vacancy.job_title,
+               expires_at: vacancy.expires_at,
+               working_patterns: vacancy.working_patterns,
+               contract_type: vacancy.contract_type,
+               phases: vacancy.phases,
+               salary: vacancy.salary)
+      end
+
+      it "the new vacancy is valid" do
+        expect(vacancy).to be_valid
       end
     end
   end
