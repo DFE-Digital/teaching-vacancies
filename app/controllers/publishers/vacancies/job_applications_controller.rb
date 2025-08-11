@@ -50,7 +50,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       if params["download_selected"] == "true"
         download_selected(form.job_applications)
       elsif params["reject"] == "true"
-        prepare_to_reject(job_applications)
+        prepare_to_reject(form.job_applications)
       else # when "update_status"
         render "tag"
       end
