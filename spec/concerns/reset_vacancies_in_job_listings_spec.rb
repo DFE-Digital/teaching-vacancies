@@ -92,7 +92,9 @@ RSpec.describe Resettable do
   end
 
   context "when changing enable job applications" do
-    let(:vacancy) { create(:draft_vacancy, receive_applications: "website", enable_job_applications: false) }
+    let(:vacancy) do
+      create(:draft_vacancy, :no_tv_applications)
+    end
 
     it "resets receive application" do
       expect { vacancy.update!(enable_job_applications: true) }
@@ -102,7 +104,7 @@ RSpec.describe Resettable do
   end
 
   context "when changing receive application" do
-    subject(:update_receive_application) { vacancy.update(receive_applications: new_receive_applications) }
+    subject(:update_receive_application) { vacancy.update!(receive_applications: new_receive_applications, application_link: Faker::Internet.url) }
 
     context "from email to website" do
       let(:vacancy) { build(:vacancy, enable_job_applications: false, receive_applications: "email", application_email: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)) }
