@@ -13,7 +13,7 @@ class PublishedVacancy < Vacancy
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at, if: -> { listed_elsewhere_changed? && hired_status_changed? }
 
   def find_conflicting_vacancy
-    find_conflict_vacancy || find_duplicate_vacancy
+    find_external_reference_conflict_vacancy || find_duplicate_vacancy
   end
 
   # soft delete so that all the stats etc are kept even after the vacancy no longer exists
@@ -37,6 +37,15 @@ class PublishedVacancy < Vacancy
     true
   end
 
+  def find_external_reference_conflict_vacancy
+    return unless publisher_ats_api_client_id.present? && external_reference.present?
+
+    self.class.kept.where(
+      publisher_ats_api_client_id: publisher_ats_api_client_id,
+      external_reference: external_reference,
+    ).where.not(id: id).first
+  end
+
   private
 
   def remove_google_index
@@ -56,13 +65,6 @@ class PublishedVacancy < Vacancy
     if find_duplicate_vacancy
       errors.add(:base, "A vacancy with the same job title, expiry date, contract type, working_patterns, phases and salary already exists for this organisation.")
     end
-  end
-
-  def find_conflict_vacancy
-    self.class.kept.where(
-      publisher_ats_api_client_id: publisher_ats_api_client_id,
-      external_reference: external_reference,
-    ).where.not(id: id).first
   end
 
   def find_duplicate_vacancy
