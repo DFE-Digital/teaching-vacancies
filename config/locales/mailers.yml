@@ -90,24 +90,24 @@ en:
     profiles_mailer:
       disable_inactive_profile:
         subject: Your Teaching Vacancies profile has been deactivated due to inactivity
-        link: Sign in to your Teaching Vacancies account.
+        link: sign in to your Teaching Vacancies account.
         footer: |
           If you have followed the above advice and cannot reactivate your profile, contact %{link} for assistance.
           Kind regards,
-          The Teaching Vacancies team
+          Teaching Vacancies team
       inactive_profile_warning:
         subject: Your Teaching Vacancies profile will be deactivated soon
-        link: Sign in to your Teaching Vacancies account.
+        link: sign in to your Teaching Vacancies account.
         footer: |
           Kind regards,
-          The Teaching Vacancies team
+          Teaching Vacancies team
       disable_profile_due_to_new_fields:
         subject: Your Teaching Vacancies profile has been deactivated due to missing information
-        link: Sign in to your Teaching Vacancies account.
+        link: sign in to your Teaching Vacancies account.
         footer: |
           If you have followed the above advice and cannot reactivate your profile, contact %{link}.
           Kind regards,
-          The Teaching Vacancies team
+          Teaching Vacancies team
     job_application_mailer:
       shared: &job_application_mailer_shared
         intro: Your application for %{job_title} at %{organisation_name}
