@@ -100,18 +100,12 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def prepare_to_reject(job_applications)
-    @form = Publishers::JobApplication::RejectionEmailsForm.new(job_applications: job_applications)
-    if @form.valid?
-      job_applications = vacancy.job_applications.where(id: @form.job_applications)
-      batch = vacancy.batch_emails.build(batch_type: :not_sent)
-      job_applications.each do |job_application|
-        batch.job_applications << job_application
-      end
-      batch.save!
-      redirect_to select_rejection_template_organisation_job_batch_email_path(vacancy.id, batch)
-    else
-      render "index"
+    batch = vacancy.batch_emails.build(batch_type: :not_sent)
+    job_applications.each do |job_application|
+      batch.job_applications << job_application
     end
+    batch.save!
+    redirect_to select_rejection_template_organisation_job_batch_email_path(vacancy.id, batch)
   end
 
   require "zip"
