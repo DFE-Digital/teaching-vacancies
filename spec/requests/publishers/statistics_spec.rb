@@ -72,7 +72,7 @@ RSpec.describe "Publisher statistics" do
                                                          religion_buddhist: 87,
                                                          religion_christian: 37, religion_hindu: 46,
                                                          religion_jewish: 5, religion_muslim: 144, religion_none: 77,
-                                                         religion_other: 66, religion_prefer_not_to_say: 12, religion_sikh: 12))
+                                                         religion_other: 66, religion_prefer_not_to_say: 14, religion_sikh: 12))
     end
 
     it "includes old data in its calculations" do
@@ -91,7 +91,7 @@ RSpec.describe "Publisher statistics" do
            "prefer_not_to_say,gay_or_lesbian,heterosexual,other,bisexual",
            "64,25,16,14,8",
            "muslim,buddhist,none,other,hindu,christian,prefer_not_to_say,sikh,jewish",
-           "144,87,77,71,46,37,12,12,5"],
+           "144,87,77,71,46,37,14,12,5"],
         )
     end
   end
