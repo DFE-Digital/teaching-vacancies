@@ -2,7 +2,7 @@ h3.govuk-heading-m = t(".job_source")
 - if chart
   = govuk_button_link_to t(".accessible_view"), accessible_link, id: "accessible", class: "govuk-button--secondary"
   / # sort with highest value on top - using a hash results in an arbitrary ordering
-  = bar_chart sort_referrer_counts(referrer_counts), **bar_chart_options.merge(height: "#{referrer_counts.size * 60}px")
+  = bar_chart sort_referrer_counts(referrer_counts), height: "#{referrer_counts.size * 60}px", **bar_chart_options
 - else
   = govuk_button_link_to t(".chart_view"), link, id: "barchart", class: "govuk-button--secondary"
   = govuk_summary_list html_attributes: { id: "analytics" } do |summary_list|
