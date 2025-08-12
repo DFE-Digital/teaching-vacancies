@@ -6,6 +6,7 @@ en:
       status: Application status
       offered_at: Offer date
       declined_at: Decline date
+      interview_feedback_received_at: Feedback date
     buttons:
       download: Download selected
       update_status: Update application status

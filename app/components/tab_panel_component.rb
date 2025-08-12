@@ -78,4 +78,8 @@ class TabPanelComponent < ApplicationComponent
   def candidate_declined_at(application)
     application.declined_at&.to_fs(:day_month_year)
   end
+
+  def candidate_interview_feedback_received_at(application)
+    application.interview_feedback_received_at&.to_fs(:day_month_year)
+  end
 end
