@@ -11,7 +11,12 @@ RSpec.describe VacancyTabsPresenter do
     subject(:tabs_data) { described_class.tabs_data(vacancy) }
 
     let(:vacancy) { create(:vacancy, job_applications:) }
-    let(:job_applications) { submitted + reviewed + unsuccessful + withdrawn + shortlisted + interviewing + offered + declined }
+    let(:job_applications) do
+      JobApplication
+        .statuses
+        .except(:draft)
+        .each_key.with_object([]) { |status, acc| acc << public_send(status.to_sym) }.flatten
+    end
 
     JobApplication.statuses.except(:draft).each_key do |status|
       let(status.to_sym) { create_list(:job_application, 2, :"status_#{status}") }
@@ -37,8 +42,8 @@ RSpec.describe VacancyTabsPresenter do
     end
 
     it "contains all job application for tab interviewing" do
-      expect(tabs_data["interviewing"].count).to eq(2)
-      expect(tabs_data["interviewing"].map(&:status).uniq).to match_array(%w[interviewing])
+      expect(tabs_data["interviewing"].count).to eq(4)
+      expect(tabs_data["interviewing"].map(&:status).uniq).to match_array(%w[interviewing unsuccessful_interview])
     end
 
     it "contains all job application for tab offered" do

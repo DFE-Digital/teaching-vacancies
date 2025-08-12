@@ -40,3 +40,6 @@ en:
     declined:
       heading: Offer declined
       none: No applications have been declined yet
+    unsuccessful_interview:
+      heading: Interview unsuccessful
+      none: No applications have had a unsuccessful interview yet
