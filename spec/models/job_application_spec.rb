@@ -120,6 +120,30 @@ RSpec.describe JobApplication do
     end
   end
 
+  describe "terminal_status?" do
+    subject { build_stubbed(:job_application, :"status_#{status}").terminal_status? }
+
+    context "when status is withdrawn" do
+      let(:status) { "withdrawn" }
+
+      it { is_expected.to be true }
+    end
+
+    context "when status is declined" do
+      let(:status) { "declined" }
+
+      it { is_expected.to be true }
+    end
+
+    described_class.statuses.except(*%w[draft] + described_class::TERMINAL_STATUSES).each_key do |status|
+      context "when status is #{status}" do
+        let(:status) { status }
+
+        it { is_expected.to be false }
+      end
+    end
+  end
+
   describe "#name" do
     subject { build_stubbed(:job_application, first_name: "Brilliant", last_name: "Name") }
 

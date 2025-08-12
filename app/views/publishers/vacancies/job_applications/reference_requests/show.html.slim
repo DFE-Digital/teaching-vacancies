@@ -21,8 +21,11 @@
 
     .govuk-body = t(".more_urgent")
 
-    - unless @referee.job_reference&.complete? && !@referee.job_reference.can_give_reference?
-      = govuk_button_link_to t(".mark_as_received"), reference_received_organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, @reference_request.id), class: "govuk-button--secondary"
+    .govuk-button-group
+      - if @reference_request.sent? && @referee.job_reference.complete? && @referee.job_reference.can_give_reference?
+        = govuk_button_link_to t(".print"), organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, @reference_request.id, format: :pdf), class: "govuk-button--secondary"
+      - unless @referee.job_reference&.complete? && !@referee.job_reference.can_give_reference?
+        = govuk_button_link_to t(".mark_as_received"), reference_received_organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, @reference_request.id), class: "govuk-button--secondary"
 
     .h2.govuk-heading-m = t(".referee_details.heading")
 
@@ -43,7 +46,7 @@
         - row.with_key(text: t(".referee_details.email"))
         - row.with_value(text: @referee.email)
       = summary_list.with_row do |row|
-        - row.with_key(text: t(".referee_details.phone"))
+        - row.with_key(text: t(".referee_details.phone_number"))
         - row.with_value(text: @referee.phone_number)
 
     - if @reference_request.sent?

@@ -1,5 +1,5 @@
 class JobApplication < ApplicationRecord
-  before_save :update_status_timestamp, if: :will_save_change_to_status?
+  before_save :update_status_timestamp, if: %i[will_save_change_to_status? ignore_for_offered_and_declined?]
   before_save :reset_support_needed_details
   before_update :anonymise_report, if: -> { will_save_change_to_status? && status == "submitted" }
 
@@ -55,7 +55,7 @@ class JobApplication < ApplicationRecord
   }
 
   # If you want to add a status, be sure to add a `status_at` column to the `job_applications` table
-  enum :status, { draft: 0, submitted: 1, reviewed: 2, shortlisted: 3, unsuccessful: 4, withdrawn: 5, interviewing: 6 }, default: 0
+  enum :status, { draft: 0, submitted: 1, reviewed: 2, shortlisted: 3, unsuccessful: 4, withdrawn: 5, interviewing: 6, offered: 7, declined: 8 }, default: 0
   array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
 
   RELIGIOUS_REFERENCE_TYPES = { referee: 1, baptism_certificate: 2, baptism_date: 3, no_referee: 4 }.freeze
@@ -90,11 +90,17 @@ class JobApplication < ApplicationRecord
   scope :after_submission, -> { where.not(status: :draft) }
   scope :draft, -> { where(status: "draft") }
 
-  scope :active_for_selection, -> { where.not(status: %w[draft withdrawn]) }
+  # end of the road statuses for job application we cannot further update status at the point
+  TERMINAL_STATUSES = %w[withdrawn declined].freeze
+  scope :active_for_selection, -> { where.not(status: %w[draft] + TERMINAL_STATUSES) }
 
   validates :email_address, email_address: true, if: -> { email_address_changed? } # Allows data created prior to validation to still be valid
 
   has_one_attached :baptism_certificate, service: :amazon_s3_documents
+
+  def terminal_status?
+    status.in?(TERMINAL_STATUSES)
+  end
 
   def name
     "#{first_name} #{last_name}"
@@ -130,6 +136,11 @@ class JobApplication < ApplicationRecord
   end
 
   private
+
+  # predicate method used to ignore the automatic update of `offered_at` and `declined_at` as the are manually entered by publishers
+  def ignore_for_offered_and_declined?
+    %w[offered declined].exclude?(status)
+  end
 
   def update_status_timestamp
     self["#{status}_at"] = Time.current

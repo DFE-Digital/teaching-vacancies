@@ -1,0 +1,13 @@
+= govuk_inset_text do
+  p = t("tabs.offered.offered_inset")
+
+= render TabPanelComponent.new(tab_name:,
+                               vacancy:,
+                               form:,
+                               candidates: candidates.offered,
+                               displayed_fields: %i[name email_address offered_at status],
+                               button_groups: [%i[download declined emails], [:export]])
+
+= govuk_section_break(visible: true, size: "xl")
+
+= render TabPanelComponent.new(vacancy:, candidates: candidates.declined, tab_name: "declined", displayed_fields: %i[name email_address declined_at status])

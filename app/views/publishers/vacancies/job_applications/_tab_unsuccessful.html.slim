@@ -1,0 +1,5 @@
+= render TabPanelComponent.new(tab_name:, vacancy:, form:, candidates: candidates.unsuccessful)
+
+= govuk_section_break(visible: true, size: "xl")
+
+= render TabPanelComponent.new(vacancy:, candidates: candidates.withdrawn, tab_name: "withdrawn")

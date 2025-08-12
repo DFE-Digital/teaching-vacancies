@@ -18,6 +18,10 @@ en:
               blank: You must select one status
             job_applications:
               too_short: You must select at least one job application
+            offered_at:
+              invalid: Enter a valid date, for example, 27 3 2007
+            declined_at:
+              invalid: Enter a valid date, for example, 27 3 2007
 
         publishers/vacancies/job_applications/mark_reference_as_received_form:
           attributes:
@@ -33,15 +37,17 @@ en:
   helpers:
     hint:
       publishers_job_application_tag_form:
+        offered_at: For example 24 2 2025
+        declined_at: For example 24 2 2025
         status_options:
           submitted: Applications that have not been reviewed
           unsuccessful: Applications that you are not taking forward to interview. You can create an email to send to the applicant to let them know
-          reviewed: Applications that have been reviewed
+          reviewed: Applications that have been reviewed. Reviewed applications will remain in the 'New' tab until shortlisted or not considering.
           shortlisted: Applications that have been shortlisted
           interviewing: >-
-            Applications that you plan to interview. You can create an email to send to the applicant to let them know,
-            alternatively you can reach out to the applicant. You will also be able to trigger pre-interview checks
-            through the Teaching Vacancies service.
+            Candidates you plan to interview. You can create an email to send to the applicant to let them know.
+            You will also be able to trigger pre-interview checks through the Teaching Vacancies service.
+          offered: Candidates that have been offered a job. Should they decline the offer you will have the option to update the status later.
 
       publishers_job_application_collect_references_form:
         collect_references_and_self_disclosure_options:
@@ -67,10 +73,11 @@ en:
       publishers_job_application_tag_form:
         status_options:
           submitted_html: New <span class="govuk-tag govuk-tag--blue">New</span>
-          unsuccessful_html: Not Considering <span class="govuk-tag govuk-tag--red">Not Considering</span>
+          unsuccessful_html: Not considering <span class="govuk-tag govuk-tag--red">Not considering</span>
           reviewed_html: Reviewed <span class="govuk-tag govuk-tag--purple">Reviewed</span>
-          shortlisted_html: Shortlisted <span class="govuk-tag govuk-tag--green">Shortlisted</span>
-          interviewing_html: Interviewing <span class="govuk-tag govuk-tag--turquoise">Interviewing</span>
+          shortlisted_html: Shortlisted <span class="govuk-tag govuk-tag--yellow">Shortlisted</span>
+          interviewing_html: Interviewing <span class="govuk-tag govuk-tag--green">Interviewing</span>
+          offered_html: Job offered <span class="govuk-tag govuk-tag--pink">Job offered</span>
 
       publishers_job_application_collect_references_form:
         collect_references_and_self_disclosure_options:
@@ -96,3 +103,9 @@ en:
         contact_applicants: >-
           The applicant needs to be notified when you are collecting references.
           Would you like Teaching Vacancies to contact the applicant?
+
+      publishers_job_application_tag_form:
+        offered_at: >-
+          When was the job offered to the candidate? (Optional)
+        declined_at: >-
+          When did the candidate decline the offer? (Optional)
