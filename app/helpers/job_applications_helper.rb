@@ -44,10 +44,11 @@ module JobApplicationsHelper
 
   def tag_status_options(job_application_status)
     case job_application_status
+    when "submitted", "reviewed" then %i[unsuccessful shortlisted interviewing offered]
     when "shortlisted"  then %i[unsuccessful interviewing offered]
-    when "interviewing" then %i[unsuccessful offered]
+    when "interviewing" then %i[unsuccessful_interview offered]
     else
-      %i[unsuccessful shortlisted interviewing offered]
+      []
     end
   end
 

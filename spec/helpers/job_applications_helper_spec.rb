@@ -32,6 +32,18 @@ RSpec.describe JobApplicationsHelper do
   describe "#tag_status_options" do
     subject { helper.tag_status_options(status) }
 
+    context "when status submitted" do
+      let(:status) { "submitted" }
+
+      it { is_expected.to match_array(%i[unsuccessful shortlisted interviewing offered]) }
+    end
+
+    context "when status reviewed" do
+      let(:status) { "reviewed" }
+
+      it { is_expected.to match_array(%i[unsuccessful shortlisted interviewing offered]) }
+    end
+
     context "when status shortlisted" do
       let(:status) { "shortlisted" }
 
@@ -41,13 +53,13 @@ RSpec.describe JobApplicationsHelper do
     context "when status interviewing" do
       let(:status) { "interviewing" }
 
-      it { is_expected.to match_array(%i[unsuccessful offered]) }
+      it { is_expected.to match_array(%i[unsuccessful_interview offered]) }
     end
 
     context "when status any other" do
       let(:status) { "unsuccessful" }
 
-      it { is_expected.to match_array(%i[unsuccessful shortlisted interviewing offered]) }
+      it { is_expected.to match_array([]) }
     end
   end
 

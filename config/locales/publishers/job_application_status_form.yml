@@ -79,6 +79,7 @@ en:
         status_options:
           submitted_html: New <span class="govuk-tag govuk-tag--blue">New</span>
           unsuccessful_html: Not considering <span class="govuk-tag govuk-tag--red">Not considering</span>
+          unsuccessful_interview_html: Interview unsuccessful <span class="govuk-tag govuk-tag--red">Not considering</span>
           reviewed_html: Reviewed <span class="govuk-tag govuk-tag--purple">Reviewed</span>
           shortlisted_html: Shortlisted <span class="govuk-tag govuk-tag--yellow">Shortlisted</span>
           interviewing_html: Interviewing <span class="govuk-tag govuk-tag--green">Interviewing</span>
