@@ -64,6 +64,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       case form.status
       when "interviewing" then redirect_to_references_and_self_disclosure(form.job_applications)
       when "offered"      then render_offered_form(form.job_applications, form.origin)
+      when "unsuccessful_interview" then render_unsuccessful_interview_form(form.job_applications, form.origin)
       else
         form.job_applications.each { it.update!(form.attributes) }
         redirect_to organisation_job_job_applications_path(vacancy.id, anchor: form.origin)
@@ -96,7 +97,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     form_class = Publishers::JobApplication::TagForm
     form_params = params
                     .fetch(ActiveModel::Naming.param_key(form_class), {})
-                    .permit(:origin, :status, :offered_at, :declined_at, { job_applications: [] })
+                    .permit(:origin, :status, :offered_at, :declined_at, :interview_feedback_received_at, { job_applications: [] })
     form_params[:job_applications] = vacancy.job_applications.where(id: Array(form_params[:job_applications]).compact_blank)
     form_params[:validate_status] = validate_status
 
@@ -113,6 +114,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     in { status: }      then render "tag"
     in { offered_at: }  then render "offered_date"
     in { declined_at: } then render "declined_date"
+    in { interview_feedback_received_at: } then render "feedback_date"
     else
       flash[form.origin] = form.errors.full_messages
       redirect_to organisation_job_job_applications_path(vacancy.id, anchor: form.origin)
@@ -153,5 +155,10 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   def render_offered_form(job_applications, origin)
     @form = Publishers::JobApplication::TagForm.new(job_applications:, origin:, status: "offered")
     render "offered_date"
+  end
+
+  def render_unsuccessful_interview_form(job_applications, origin)
+    @form = Publishers::JobApplication::TagForm.new(job_applications:, origin:, status: "unsuccessful_interview")
+    render "feedback_date"
   end
 end

@@ -93,7 +93,7 @@ RSpec.describe "Job applications" do
       let(:submitteds) { job_applications.select { %w[submitted reviewed].include?(it.status) } }
       let(:unsuccessfuls) { job_applications.select { %w[unsuccessful withdrawn].include?(it.status) } }
       let(:shortlisteds) { job_applications.select { it.status == "shortlisted" } }
-      let(:interviewings) { job_applications.select { it.status == "interviewing" } }
+      let(:interviewings) { job_applications.select { %w[interviewing unsuccessful_interview].include?(it.status) } }
 
       before do
         job_applications
@@ -286,6 +286,14 @@ RSpec.describe "Job applications" do
       before { request }
 
       it { is_expected.to render_template(:declined_date) }
+    end
+
+    context "when progressing to unsuccessful_interview" do
+      let(:status) { "unsuccessful_interview" }
+
+      before { request }
+
+      it { is_expected.to render_template(:feedback_date) }
     end
   end
 
