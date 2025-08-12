@@ -118,6 +118,8 @@ shared:
     - offered_at
     - declined_at
     - unsuccessful_interview_at
+    - interview_feedback_received_at
+    - interview_feedback_received
     - first_name
     - last_name
     - previous_names
