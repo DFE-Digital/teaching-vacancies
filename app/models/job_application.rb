@@ -55,7 +55,7 @@ class JobApplication < ApplicationRecord
   }
 
   # If you want to add a status, be sure to add a `status_at` column to the `job_applications` table
-  enum :status, { draft: 0, submitted: 1, reviewed: 2, shortlisted: 3, unsuccessful: 4, withdrawn: 5, interviewing: 6, offered: 7, declined: 8 }, default: 0
+  enum :status, { draft: 0, submitted: 1, reviewed: 2, shortlisted: 3, unsuccessful: 4, withdrawn: 5, interviewing: 6, offered: 7, declined: 8, unsuccessful_interview: 9 }, default: 0
   array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
 
   RELIGIOUS_REFERENCE_TYPES = { referee: 1, baptism_certificate: 2, baptism_date: 3, no_referee: 4 }.freeze
@@ -91,7 +91,7 @@ class JobApplication < ApplicationRecord
   scope :draft, -> { where(status: "draft") }
 
   # end of the road statuses for job application we cannot further update status at the point
-  TERMINAL_STATUSES = %w[withdrawn declined].freeze
+  TERMINAL_STATUSES = %w[withdrawn declined unsuccessful_interview].freeze
   scope :active_for_selection, -> { where.not(status: %w[draft] + TERMINAL_STATUSES) }
 
   validates :email_address, email_address: true, if: -> { email_address_changed? } # Allows data created prior to validation to still be valid

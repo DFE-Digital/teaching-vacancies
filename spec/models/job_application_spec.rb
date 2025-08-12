@@ -135,6 +135,12 @@ RSpec.describe JobApplication do
       it { is_expected.to be true }
     end
 
+    context "when status is unsuccessful_interview" do
+      let(:status) { "unsuccessful_interview" }
+
+      it { is_expected.to be true }
+    end
+
     described_class.statuses.except(*%w[draft] + described_class::TERMINAL_STATUSES).each_key do |status|
       context "when status is #{status}" do
         let(:status) { status }

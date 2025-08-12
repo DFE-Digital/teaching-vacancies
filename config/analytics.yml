@@ -117,6 +117,7 @@ shared:
     - withdrawn_at
     - offered_at
     - declined_at
+    - unsuccessful_interview_at
     - first_name
     - last_name
     - previous_names

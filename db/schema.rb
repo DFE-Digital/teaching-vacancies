@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_08_151134) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_11_102306) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -279,6 +279,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_08_151134) do
     t.string "type"
     t.datetime "offered_at"
     t.datetime "declined_at"
+    t.datetime "unsuccessful_interview_at"
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
