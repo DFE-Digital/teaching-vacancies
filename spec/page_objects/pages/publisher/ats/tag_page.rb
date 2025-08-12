@@ -8,11 +8,11 @@ module PageObjects
           element :form, "form"
           element :btn_save_and_continue, ".govuk-button.update-status"
           %w[submitted unsuccessful reviewed shortlisted interviewing offered unsuccessful-interview].each do |status|
-            element :"status_#{status.tr('-','_')}", "#publishers-job-application-tag-form-status-#{status}-field", visible: false
+            element :"status_#{status.tr('-', '_')}", "#publishers-job-application-tag-form-status-#{status}-field", visible: false
           end
 
           def select_and_submit(status)
-            public_send(:"status_#{status.tr('-','_')}").click
+            public_send(:"status_#{status.tr('-', '_')}").click
             btn_save_and_continue.click
 
             if status == "interviewing" && block_given?

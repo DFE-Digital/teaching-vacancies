@@ -244,7 +244,7 @@ RSpec.describe "check job application after status transition" do
         #
         # view job application
         #
-        publisher_ats_applications_page.tab_panel.job_applications.first.name.click
+        publisher_ats_applications_page.tab_panel.job_applications.first.name_link.click
         expect(publisher_application_page).to be_displayed(vacancy_id: vacancy.id, job_application_id: job_application.id)
       end
 
@@ -315,7 +315,7 @@ RSpec.describe "check job application after status transition" do
         #
         # view job application
         #
-        publisher_ats_applications_page.tab_panel.job_applications.first.name.click
+        publisher_ats_applications_page.tab_panel.job_applications.first.name_link.click
         expect(publisher_application_page).to be_displayed(vacancy_id: vacancy.id, job_application_id: job_application.id)
       end
 
@@ -337,7 +337,7 @@ RSpec.describe "check job application after status transition" do
     end
   end
 
-  describe "transition: interviewing to unsuccessful", :js do
+  describe "transition: interviewing to unsuccessful_interview", :js do
     let(:status) { "interviewing" }
 
     it "jobseeker and publisher can view job application" do
@@ -369,25 +369,13 @@ RSpec.describe "check job application after status transition" do
         expect(display_status).to have_text("interviewing")
 
         publisher_ats_applications_page.update_status(job_application) do |tag_page|
-          tag_page.select_and_submit("unsuccessful")
+          tag_page.select_and_submit("unsuccessful_interview", &:today)
         end
 
         publisher_ats_applications_page.select_tab(:tab_interviewing)
-        expect(publisher_ats_applications_page.tab_panel.job_applications).to be_empty
 
-        #
-        # check unsuccessful tab
-        #
-        publisher_ats_applications_page.select_tab(:tab_unsuccessful)
-
-        display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
-        expect(display_status).to have_text("not considering")
-
-        #
-        # view job application
-        #
-        publisher_ats_applications_page.tab_panel.job_applications.first.name.click
-        expect(publisher_application_page).to be_displayed(vacancy_id: vacancy.id, job_application_id: job_application.id)
+        candidate_name = jobseeker.job_applications.unsuccessful_interview.where.not(interview_feedback_received_at: nil).first.name
+        expect(publisher_ats_applications_page.tab_panel.job_applications.first.name).to have_text(candidate_name)
       end
 
       run_with_jobseeker(jobseeker) do
@@ -402,7 +390,7 @@ RSpec.describe "check job application after status transition" do
         #
         jobseeker_applications_page.click_on_job_application(job_application.id)
         expect(jobseeker_application_page).to be_displayed(id: job_application.id)
-        expect(jobseeker_application_page.tag).to have_text("unsuccessful")
+        expect(jobseeker_application_page.tag).to have_text("unsuccessful interview")
       end
     end
   end
