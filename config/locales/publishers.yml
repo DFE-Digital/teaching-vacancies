@@ -612,7 +612,6 @@ en:
         reference_requests:
           reference:
             can_give_ref: Can you give a reference for %{name}?
-            how_would_you_rate: How would you rate %{name}?
             can_share_ref: Can your reference be shared with %{name}?
             under_investigation_details: Under investigation details
             warning_details: Warning details
@@ -624,6 +623,7 @@ en:
             heading: What is the correct email address for %{name}?
           show:
             print: Print
+            how_would_you_rate: How would you rate %{name}?
             page_title: Reference
             mark_as_received: Mark as received
             collect_reference: Would you like to collect this reference through Teaching Vacancies?
