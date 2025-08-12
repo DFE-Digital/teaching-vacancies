@@ -4,7 +4,7 @@ module PageObjects
       module Ats
         class DeclineDateField < SitePrism::Section
           def self.selector(field)
-            %(input[name="publishers_job_application_tag_form[#{field}]"])
+            %(input[name="publishers_job_application_declined_form[#{field}]"])
           end
 
           element :day, selector("declined_at(3i)")

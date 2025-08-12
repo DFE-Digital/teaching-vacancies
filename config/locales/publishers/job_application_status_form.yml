@@ -23,10 +23,28 @@ en:
               blank: You must select one status
             job_applications:
               too_short: You must select at least one job application
+        publishers/job_application/offered_form:
+          attributes:
+            status:
+              blank: You must select one status
+            job_applications:
+              too_short: You must select at least one job application
             offered_at:
               invalid: Enter a valid date, for example, 27 3 2007
+        publishers/job_application/declined_form:
+          attributes:
+            status:
+              blank: You must select one status
+            job_applications:
+              too_short: You must select at least one job application
             declined_at:
               invalid: Enter a valid date, for example, 27 3 2007
+        publishers/job_application/feedback_form:
+          attributes:
+            status:
+              blank: You must select one status
+            job_applications:
+              too_short: You must select at least one job application
             interview_feedback_received_at:
               invalid: Enter a valid date, for example, 27 3 2007
 
@@ -43,10 +61,13 @@ en:
 
   helpers:
     hint:
-      publishers_job_application_tag_form:
-        offered_at: For example 24 2 2025
-        declined_at: For example 24 2 2025
+      publishers_job_application_feedback_form:
         interview_feedback_received_at: For example 24 2 2025
+      publishers_job_application_offered_form:
+        offered_at: For example 24 2 2025
+      publishers_job_application_declined_form:
+        declined_at: For example 24 2 2025
+      publishers_job_application_tag_form:
         status_options:
           submitted: Applications that have not been reviewed
           unsuccessful: Applications that you are not taking forward to interview. You can create an email to send to the applicant to let them know
@@ -122,9 +143,12 @@ en:
           Would you like Teaching Vacancies to contact the applicant?
 
       publishers_job_application_tag_form:
+      publishers_job_application_offered_form:
         offered_at: >-
           When was the job offered to the candidate? (Optional)
+      publishers_job_application_declined_form:
         declined_at: >-
           When did the candidate decline the offer? (Optional)
+      publishers_job_application_feedback_form:
         interview_feedback_received: Has the candidate received feedback?
         interview_feedback_received_at: What date was the candidate give feedback? (optional)

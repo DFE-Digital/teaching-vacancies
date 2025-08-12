@@ -222,7 +222,8 @@ RSpec.describe "Job applications" do
     let(:origin) { "new" }
     let(:status) { nil }
     let(:form_params) { { origin:, status:, job_applications: } }
-    let(:params) { { publishers_job_application_tag_form: form_params } }
+    let(:form_name) { "TagForm" }
+    let(:params) { { form_name:, publishers_job_application_tag_form: form_params } }
     let(:request) do
       post(update_tag_organisation_job_job_applications_path(vacancy.id), params:)
     end
@@ -275,6 +276,12 @@ RSpec.describe "Job applications" do
 
     context "when declined_at invalid" do
       let(:status) { "declined" }
+      let(:params) do
+        {
+          form_name: "DeclinedForm",
+          publishers_job_application_declined_form: form_params,
+        }
+      end
       let(:form_params) do
         { origin:, status:, job_applications: }.merge(
           "declined_at(1i)" => 2025,
@@ -300,21 +307,22 @@ RSpec.describe "Job applications" do
   describe "POST #offer" do
     subject { response }
 
-    let(:params) do
-      { publishers_job_application_tag_form: form_params }
-    end
     let(:vacancy) { create(:vacancy, job_title: "teacher-job") }
     let(:job_application_2) { create(:job_application, :status_submitted, vacancy: vacancy) }
     let(:job_applications) { [job_application.id, job_application_2.id] }
     let(:origin) { "new" }
-    let(:status) { nil }
     let(:form_params) do
       { origin:, status:, job_applications: }
     end
 
-    context "when offered_at invalid" do
+    describe "offered form" do
+      let(:params) do
+        {
+          form_name: "OfferedForm",
+          publishers_job_application_offered_form: form_params,
+        }
+      end
       let(:status) { "offered" }
-      let(:field) { :offered_at }
 
       context "when job applications ommitted" do
         let(:job_applications) { nil }
@@ -335,7 +343,7 @@ RSpec.describe "Job applications" do
 
         it "does not update date" do
           expect { post(offer_organisation_job_job_applications_path(vacancy.id), params:) }
-            .to not_change { job_application.reload.public_send(field) }.from(nil)
+            .to not_change { job_application.reload.offered_at }.from(nil)
         end
       end
 
@@ -368,8 +376,55 @@ RSpec.describe "Job applications" do
 
         it "update date" do
           expect { post(offer_organisation_job_job_applications_path(vacancy.id), params:) }
-            .to change { job_application.reload.public_send(field) }.from(nil).to(Date.new(2025, 12, 11))
+            .to change { job_application.reload.offered_at }.from(nil).to(Date.new(2025, 12, 11))
         end
+      end
+    end
+
+    describe "feedback form" do
+      let(:params) do
+        {
+          form_name: "FeedbackForm",
+          publishers_job_application_feedback_form: form_params,
+        }
+      end
+      let(:status) { "unsuccessful_interview" }
+
+      context "when params valid" do
+        let(:form_params) do
+          { origin:, status:, job_applications: }.merge(
+            "interview_feedback_received_at(1i)" => 2025,
+            "interview_feedback_received_at(2i)" => 12,
+            "interview_feedback_received_at(3i)" => 11,
+            "interview_feedback_received" => "true",
+          )
+        end
+
+        it "update job application" do
+          expect { post(offer_organisation_job_job_applications_path(vacancy.id), params:) }
+            .to change { job_application.reload.status }.from("submitted").to(status)
+          expect(response).to redirect_to organisation_job_job_applications_path(vacancy.id, anchor: origin)
+        end
+
+        it "update date" do
+          expect { post(offer_organisation_job_job_applications_path(vacancy.id), params:) }
+            .to change { job_application.reload.interview_feedback_received_at }.from(nil).to(Date.new(2025, 12, 11))
+        end
+      end
+
+      context "when params invalid" do
+        let(:form_params) do
+          { origin:, status:, job_applications: }.merge(
+            "interview_feedback_received_at(1i)" => 111,
+            "interview_feedback_received" => "true",
+          )
+        end
+
+        before do
+          post(offer_organisation_job_job_applications_path(vacancy.id), params:)
+        end
+
+        it { is_expected.to render_template("feedback_date") }
       end
     end
   end

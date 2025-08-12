@@ -3,6 +3,7 @@
 
 span.govuk-hint = t("publishers.vacancies.job_applications.update_application_status")
 = form_with(model: @form, url: offer_organisation_job_job_applications_path(vacancy.id), method: :post) do |f|
+  = hidden_field_tag :form_name, @form.name
   = f.govuk_error_summary
   = f.hidden_field :origin
   = f.hidden_field :status
