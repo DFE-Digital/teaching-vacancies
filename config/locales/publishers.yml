@@ -547,7 +547,14 @@ en:
           draft: Draft jobs - %{organisation_name}
           awaiting_feedback: Jobs awaiting feedbank - %{organisation_name}
       job_applications:
+<<<<<<< HEAD
         update_application_status: Update application status
+=======
+        messages:
+          create:
+            success: Message sent successfully
+            failure: Message could not be sent
+>>>>>>> aa0538447 (Messages working without rich text)
         interviewing_status:
           pre_interview_checks: Pre-interview checks
         header:

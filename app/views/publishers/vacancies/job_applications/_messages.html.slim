@@ -1,6 +1,14 @@
 .govuk-grid-row
   .govuk-grid-column-full
-    h2.govuk-heading-m Messages
+    / Action buttons
+    div class="govuk-!-margin-bottom-6"
+      = govuk_button_link_to "Print this page", "#", class: "govuk-button--secondary", "data-controller": "utils", "data-action": "click->utils#print" unless params[:show_form] == "true"
+      = govuk_button_link_to "Send message to candidate", url_for(params.to_unsafe_h.merge(show_form: "true")), class: "govuk-button--secondary govuk-!-margin-left-3" unless params[:show_form] == "true"
+
+    / Inset text (only show when form is not visible)
+    - unless params[:show_form] == "true"
+      = govuk_inset_text do
+        | If a candidate responds with their pre-interview documentation as an attachment, you can mark this as received and completed within the 'Pre-interview checks' section.
 
     / Display existing messages
     #messages-list
@@ -11,21 +19,24 @@
               h3.govuk-summary-card__title 
                 = "#{message.sender.given_name} #{message.sender.family_name} <#{message.sender.email}>"
             .govuk-summary-card__content
-              p.govuk-body = "Date: #{message.created_at&.strftime("%d %B %Y at %I:%M %p")}"
-              .message-content
-                == message.content
+              p.govuk-body class="govuk-!-font-weight-bold" = "Date: #{message.created_at&.strftime("%d %B %Y at %I:%M %p")}"
+              p.govuk-body class="govuk-!-font-weight-bold" = message.conversation.title
+              div.govuk-body class="message-content" = simple_format(message.content)
       - else
         p.govuk-body No messages have been sent yet.
 
-    / Message composition form
-    div class="govuk-!-margin-top-6"
-      h3.govuk-heading-s Send a new message
-      
-      = form_for @message_form, url: organisation_job_job_application_messages_path(@vacancy.id, @job_application.id), method: :post do |f|
-        = f.govuk_error_summary
-        = f.label :content, "Message content", class: "govuk-label govuk-label--s", id: "message-content-label"
-        p.govuk-hint You can copy and paste bullet points into the text box.
+    / Message composition form (only show when requested)
+    - if params[:show_form] == "true"
+      div class="govuk-!-margin-top-6"
+        h3.govuk-heading-s Send a new message
 
-        = f.text_area :content, rows: 6, class: "govuk-textarea"
+        = govuk_details summary_text: "How will this message be sent?" do
+          | Candidates will receive a copy of this message to their email and can also view the message when signed in to their Teaching Vacancies account.
+        
+        = form_for @message_form, url: organisation_job_job_application_messages_path(@vacancy.id, @job_application.id), method: :post do |f|
+          = f.govuk_error_summary
 
-        = f.govuk_submit "Send Message"
+          = f.text_area :content, rows: 6, class: "govuk-textarea"
+
+          = f.govuk_submit "Send message"
+          = govuk_link_to "Cancel", request.original_url, class: "govuk-!-margin-left-3"

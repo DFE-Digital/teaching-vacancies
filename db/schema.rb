@@ -902,6 +902,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_08_151134) do
   add_foreign_key "alert_runs", "subscriptions"
   add_foreign_key "batchable_job_applications", "job_application_batches"
   add_foreign_key "batchable_job_applications", "job_applications"
+  add_foreign_key "conversations", "job_applications"
   add_foreign_key "employments", "job_applications"
   add_foreign_key "employments", "jobseeker_profiles"
   add_foreign_key "equal_opportunities_reports", "vacancies"
