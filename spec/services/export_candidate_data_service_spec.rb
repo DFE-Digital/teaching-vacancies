@@ -40,8 +40,9 @@ RSpec.describe ExportCandidateDataService do
 
   describe ".call" do
     it "creates new instance and calls export" do
-      expect(described_class).to receive(:new).with(job_applications).and_call_original
-      expect_any_instance_of(described_class).to receive(:export) # rubocop:disable RSpec/AnyInstance
+      service_instance = instance_double(described_class)
+      allow(described_class).to receive(:new).with(job_applications).and_return(service_instance)
+      expect(service_instance).to receive(:export)
       described_class.call(job_applications)
     end
   end

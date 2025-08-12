@@ -137,6 +137,7 @@ class JobApplication < ApplicationRecord
 
   private
 
+  # predicate method used to ignore the automatic update of `offered_at` and `declined_at` as the are manually entered by publishers
   def ignore_for_offered_and_declined?
     %w[offered declined].exclude?(status)
   end

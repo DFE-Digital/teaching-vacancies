@@ -12,17 +12,6 @@ en:
             contact_applicants:
               inclusion: Select yes if you would like the service to email applicants that you are collecting references.
 
-        publishers/vacancies/job_applications/mark_reference_as_received_form:
-          attributes:
-            reference_satisfactory:
-              inclusion: Select yes if the reference received is satisfactory
-
-        publishers/vacancies/job_applications/change_email_address_form:
-          attributes:
-            email:
-              blank: Enter a valid email address
-              invalid: Enter a valid email address
-
         publishers/job_application/tag_form:
           attributes:
             status:
@@ -33,6 +22,17 @@ en:
               invalid: Enter a valid date, for example, 27 3 2007
             declined_at:
               invalid: Enter a valid date, for example, 27 3 2007
+
+        publishers/vacancies/job_applications/mark_reference_as_received_form:
+          attributes:
+            reference_satisfactory:
+              inclusion: Select yes if the reference received is satisfactory
+
+        publishers/vacancies/job_applications/change_email_address_form:
+          attributes:
+            email:
+              blank: Enter a valid email address
+              invalid: Enter a valid email address
 
   helpers:
     hint:
