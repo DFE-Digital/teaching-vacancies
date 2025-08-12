@@ -27,6 +27,8 @@ en:
               invalid: Enter a valid date, for example, 27 3 2007
             declined_at:
               invalid: Enter a valid date, for example, 27 3 2007
+            interview_feedback_received_at:
+              invalid: Enter a valid date, for example, 27 3 2007
 
         publishers/vacancies/job_applications/mark_reference_as_received_form:
           attributes:
@@ -44,6 +46,7 @@ en:
       publishers_job_application_tag_form:
         offered_at: For example 24 2 2025
         declined_at: For example 24 2 2025
+        interview_feedback_received_at: For example 24 2 2025
         status_options:
           submitted: Applications that have not been reviewed
           unsuccessful: Applications that you are not taking forward to interview. You can create an email to send to the applicant to let them know
@@ -123,3 +126,5 @@ en:
           When was the job offered to the candidate? (Optional)
         declined_at: >-
           When did the candidate decline the offer? (Optional)
+        interview_feedback_received: Has the candidate received feedback?
+        interview_feedback_received_at: What date was the candidate give feedback? (optional)

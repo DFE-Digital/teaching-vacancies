@@ -15,7 +15,7 @@ module Publishers
 
           it { is_expected.to validate_length_of(:job_applications) }
           it { is_expected.to validate_presence_of(:status) }
-          it { is_expected.to validate_inclusion_of(:status).in_array(%w[submitted unsuccessful reviewed shortlisted interviewing offered declined]) }
+          it { is_expected.to validate_inclusion_of(:status).in_array(%w[submitted unsuccessful reviewed shortlisted interviewing offered declined unsuccessful_interview]) }
         end
 
         context "when validate_status evaluates to falsey" do
@@ -28,11 +28,12 @@ module Publishers
 
       describe ".attributes" do
         subject(:attributes) do
-          described_class.new(job_applications:, status:, origin:, offered_at:, declined_at:).attributes
+          described_class.new(job_applications:, status:, origin:, offered_at:, declined_at:, interview_feedback_received_at:).attributes
         end
 
         let(:offered_at) { 1.day.ago }
-        let(:declined_at) { 1.day.ago }
+        let(:declined_at) { 2.days.ago }
+        let(:interview_feedback_received_at) { 3.days.ago }
 
         context "when status offered" do
           let(:status) { "offered" }
@@ -44,6 +45,12 @@ module Publishers
           let(:status) { "declined" }
 
           it { is_expected.to eq({ "status" => status, "declined_at" => declined_at }) }
+        end
+
+        context "when status unsuccessful_interview" do
+          let(:status) { "unsuccessful_interview" }
+
+          it { is_expected.to eq({ "status" => status, "interview_feedback_received_at" => interview_feedback_received_at }) }
         end
 
         context "when status any other" do
