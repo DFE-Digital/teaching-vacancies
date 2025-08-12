@@ -32,6 +32,16 @@ class TabPanelComponent < ApplicationComponent
     end
   end
 
+  def candidate_checkbox(application, index, form_tag)
+    return tag.span if application.terminal_status?
+
+    tag.div(class: "govuk-checkboxes--small") do
+      form_tag.govuk_check_box(:job_applications, application.id,
+                               link_errors: index.zero?,
+                               label: { hidden: true, text: "Select #{application.name}" })
+    end
+  end
+
   def display(application, field)
     helper_method = :"candidate_#{field}"
     return public_send(helper_method, application) if respond_to?(helper_method)
