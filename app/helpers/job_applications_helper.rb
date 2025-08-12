@@ -6,6 +6,7 @@ module JobApplicationsHelper
     unsuccessful: "not considering",
     withdrawn: "withdrawn",
     interviewing: "interviewing",
+    unsuccessful_interview: "not considering",
     offered: "job offered",
     declined: "job declined",
   }.freeze
@@ -19,6 +20,7 @@ module JobApplicationsHelper
     unsuccessful: "unsuccessful",
     withdrawn: "withdrawn",
     interviewing: "interviewing",
+    unsuccessful_interview: "unsuccessful interview",
     action_required: "action required",
     offered: "offered",
     declined: "declined",
@@ -34,6 +36,7 @@ module JobApplicationsHelper
     withdrawn: "yellow",
     action_required: "orange",
     interviewing: "green",
+    unsuccessful_interview: "red",
     offered: "pink",
     declined: "grey",
   }.freeze

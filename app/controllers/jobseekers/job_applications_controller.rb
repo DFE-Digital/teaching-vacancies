@@ -18,7 +18,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     active_drafts, expired_drafts = draft_job_applications.partition { |job_application| job_application.vacancy.expires_at.future? }
 
     # This is the primary sort order for application statuses on the index page
-    status_keys = %i[offered interviewing shortlisted reviewed submitted unsuccessful withdrawn declined].freeze
+    status_keys = %i[offered interviewing shortlisted reviewed submitted unsuccessful unsuccessful_interview withdrawn declined].freeze
 
     action_required = JobApplication.includes(:self_disclosure_request, :vacancy)
                                     .where(jobseeker: current_jobseeker)
