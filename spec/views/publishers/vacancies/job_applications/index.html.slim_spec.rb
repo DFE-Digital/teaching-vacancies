@@ -10,20 +10,25 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
       build_stubbed(:job_application, :status_reviewed, vacancy:),
     ]
   end
-  let(:unsuccessful) { JobApplication }
+  let(:unsuccessful) do
+    [
+      build_stubbed(:job_application, :status_unsuccessful, vacancy:),
+      build_stubbed(:job_application, :status_withdrawn, vacancy:),
+    ]
+  end
   let(:shortlisted) { build_stubbed_list(:job_application, 1, :status_shortlisted, vacancy:) }
-  let(:interviewing) { build_stubbed_list(:job_application, 1, :status_interviewing, vacancy:) }
+  let(:interviewing) { JobApplication }
   let(:offered) { JobApplication }
   let(:tabs_data) { { submitted:, unsuccessful:, shortlisted:, interviewing:, offered: }.stringify_keys }
 
   before do
-    list_unsuccessful = build_stubbed_list(:job_application, 1, :status_unsuccessful, vacancy:)
-    list_withdrawn = build_stubbed_list(:job_application, 1, :status_withdrawn, vacancy:)
-    allow(unsuccessful).to receive_messages(unsuccessful: list_unsuccessful, withdrawn: list_withdrawn)
-
     list_offered = build_stubbed_list(:job_application, 1, :status_offered, vacancy:)
     list_declined = build_stubbed_list(:job_application, 1, :status_declined, vacancy:)
     allow(offered).to receive_messages(offered: list_offered, declined: list_declined)
+
+    list_interviewing = build_stubbed_list(:job_application, 1, :status_interviewing, vacancy:)
+    list_unsuccessful_interview = build_stubbed_list(:job_application, 1, :status_unsuccessful_interview, vacancy:)
+    allow(interviewing).to receive_messages(interviewing: list_interviewing, unsuccessful_interview: list_unsuccessful_interview)
 
     assign :current_organisation, organisation
     assign :vacancy, vacancy
@@ -173,7 +178,7 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
     let(:submitted) { [] }
     let(:unsuccessful) { JobApplication }
     let(:shortlisted) { [] }
-    let(:interviewing) { [] }
+    let(:interviewing) { JobApplication }
 
     describe "the summary section" do
       it "shows breadcrumb with link to active jobs in dashboard" do
