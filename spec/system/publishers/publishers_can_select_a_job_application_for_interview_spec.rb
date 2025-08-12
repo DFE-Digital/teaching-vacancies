@@ -33,7 +33,8 @@ RSpec.describe "Publishers can select a job application for interview", :perform
     scenario "without selecting" do
       expect(publisher_ats_collect_references_page).to be_displayed
       click_on "Save and continue"
-      expect(publisher_ats_collect_references_page.errors.map(&:text)).to eq(["Select yes if you would like to collect references through the service"])
+      expect(publisher_ats_collect_references_page.errors.map(&:text))
+        .to eq(["Select yes if you would like to collect references through the service"])
     end
 
     context "when choosing yes for references and self disclosure" do
@@ -44,12 +45,17 @@ RSpec.describe "Publishers can select a job application for interview", :perform
         click_on "Save and continue"
       end
 
-      let(:emails_with_subjects) { ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map { |x| x.subject.split[..3].join(" ") } } }
+      let(:emails_with_subjects) do
+        ActionMailer::Base.deliveries
+                          .group_by { |mail| mail.to.first }
+                          .transform_values { |m| m.map { |x| x.subject.split[..3].join(" ") } }
+      end
 
       scenario "no selection" do
         expect(publisher_ats_ask_references_email_page).to be_displayed
         click_on "Save and continue"
-        expect(publisher_ats_ask_references_email_page.errors.map(&:text)).to eq(["Select yes if you would like the service to email applicants that you are collecting references."])
+        expect(publisher_ats_ask_references_email_page.errors.map(&:text))
+          .to eq(["Select yes if you would like the service to email candidates that you are collecting references."])
       end
 
       scenario "contacting applicant sends emails to referees and applicant" do

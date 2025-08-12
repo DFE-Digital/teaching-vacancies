@@ -15,7 +15,7 @@ en:
         publishers/job_application/references_contact_applicant_form:
           attributes:
             contact_applicants:
-              inclusion: Select yes if you would like the service to email applicants that you are collecting references.
+              inclusion: Select yes if you would like the service to email candidates that you are collecting references.
 
         publishers/job_application/tag_form:
           attributes:
@@ -114,8 +114,8 @@ en:
 
       publishers_job_application_references_contact_applicant_form:
         contact_applicants: >-
-          The applicant needs to be notified when you are collecting references.
-          Would you like Teaching Vacancies to contact the applicant?
+          The candidate needs to be notified when you are collecting references.
+          Would you like Teaching Vacancies to contact the candidate?
 
       publishers_job_application_tag_form:
         offered_at: >-

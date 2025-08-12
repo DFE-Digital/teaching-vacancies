@@ -611,7 +611,7 @@ en:
           status: Status
         reference_requests:
           reference:
-            can_give_ref: Can you give a reference for %{name}?
+            can_give_ref: Can you provide a reference for %{name}?
             can_share_ref: Can your reference be shared with %{name}?
             under_investigation_details: Under investigation details
             warning_details: Warning details

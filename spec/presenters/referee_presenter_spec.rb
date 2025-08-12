@@ -54,7 +54,7 @@ RSpec.describe RefereePresenter do
   describe ".reference_information" do
     context "when cannot give reference" do
       let(:job_reference) { build_stubbed(:job_reference, can_give_reference: false) }
-      let(:expected) { [["Can you give a reference for #{presenter.candidate_name}?", "No, I am unable to give them a reference"]] }
+      let(:expected) { [["Can you provide a reference for #{presenter.candidate_name}?", "No, I am unable to provide a reference"]] }
 
       it { expect(presenter.reference_information).to match_array(expected) }
     end
@@ -71,19 +71,19 @@ RSpec.describe RefereePresenter do
         end
         let(:expected) do
           [
-            ["Can you give a reference for #{presenter.candidate_name}?", "Yes, I can give them a reference"],
+            ["Can you provide a reference for #{presenter.candidate_name}?", "Yes, I can provide a reference"],
             ["Can your reference be shared with #{presenter.candidate_name}?", "No, it should be treated as confidential"],
             ["How long have you known the candidate and in what capacity?", "i know the candidate for 2 years"],
-            ["Applicants employment start date", "12 April 2012"],
-            ["Is the applicant currently employed at this organisation?", "No"],
-            ["Would you re-employ the applicant in the same job as they currently hold or held?", "Yes, wonderful"],
-            ["Would you re-employ the applicant in any role within your organisation?", "Yes, fantastic"],
-            ["Is the applicant currently under investigation for any matter (incl. conduct, capability, or performance) under any of your employment policies?", "Yes"],
+            ["When did the candidate start working at your organisation?", "12 April 2012"],
+            ["Is the candidate currently employed at this organisation?", "No"],
+            ["Would you re-employ the candidate in the same job as they currently hold or held?", "Yes, wonderful"],
+            ["Would you re-employ the candidate in any role within your organisation?", "Yes, fantastic"],
+            ["Is the candidate currently under investigation for any matter (incl. conduct, capability, or performance) under any of your organisation policies?", "Yes"],
             ["Under investigation details", "blah blah"],
-            ["Are there any warnings on the applicant’s record (Disciplinary, Performance, or Absence related) that have not been disposed of?", "No"],
-            ["Are you aware of any allegations or concerns that have been raised (whether formal or informal) about the applicant that relate to any safeguarding issues/ or the applicant’s behaviour towards adults at risk and/or children?", "No"],
-            ["If the individual is employed in a position where they are subject to a fit and proper persons check, have they been investigated for, or been found not fit to practice?", "No"],
-            ["To the best of your knowledge and with reference to the attached job description and person specification, are you satisfied that the applicant has the ability and is suitable to undertake this role?", "Yes"],
+            ["Are there any warnings on the candidate’s record (disciplinary, performance, or absence related) that have not been disposed of?", "No"],
+            ["Are you aware of any allegations or concerns that have been raised (whether formal or informal) about the candidate that relate to any safeguarding issues/ or the candidate’s behaviour towards adults at risk and/or children?", "No"],
+            ["If the candidate is employed in a position where they are subject to a fit and proper persons check, have they been investigated for, or been found not fit to practice?", "No"],
+            ["To the best of your knowledge and with reference to the attached job description and person specification, are you satisfied that the candidate has the ability and is suitable to undertake this role?", "Yes"],
           ]
         end
 
@@ -101,19 +101,19 @@ RSpec.describe RefereePresenter do
         end
         let(:expected) do
           [
-            ["Can you give a reference for #{presenter.candidate_name}?", "Yes, I can give them a reference"],
+            ["Can you provide a reference for #{presenter.candidate_name}?", "Yes, I can provide a reference"],
             ["Can your reference be shared with #{presenter.candidate_name}?", "No, it should be treated as confidential"],
             ["How long have you known the candidate and in what capacity?", "i know the candidate for 2 years"],
-            ["Applicants employment start date", "12 April 2012"],
-            ["Is the applicant currently employed at this organisation?", "No"],
-            ["Would you re-employ the applicant in the same job as they currently hold or held?", "Yes, wonderful"],
-            ["Would you re-employ the applicant in any role within your organisation?", "Yes, fantastic"],
-            ["Is the applicant currently under investigation for any matter (incl. conduct, capability, or performance) under any of your employment policies?", "No"],
-            ["Are there any warnings on the applicant’s record (Disciplinary, Performance, or Absence related) that have not been disposed of?", "Yes"],
+            ["When did the candidate start working at your organisation?", "12 April 2012"],
+            ["Is the candidate currently employed at this organisation?", "No"],
+            ["Would you re-employ the candidate in the same job as they currently hold or held?", "Yes, wonderful"],
+            ["Would you re-employ the candidate in any role within your organisation?", "Yes, fantastic"],
+            ["Is the candidate currently under investigation for any matter (incl. conduct, capability, or performance) under any of your organisation policies?", "No"],
+            ["Are there any warnings on the candidate’s record (disciplinary, performance, or absence related) that have not been disposed of?", "Yes"],
             ["Warning details", "use with caution"],
-            ["Are you aware of any allegations or concerns that have been raised (whether formal or informal) about the applicant that relate to any safeguarding issues/ or the applicant’s behaviour towards adults at risk and/or children?", "No"],
-            ["If the individual is employed in a position where they are subject to a fit and proper persons check, have they been investigated for, or been found not fit to practice?", "No"],
-            ["To the best of your knowledge and with reference to the attached job description and person specification, are you satisfied that the applicant has the ability and is suitable to undertake this role?", "Yes"],
+            ["Are you aware of any allegations or concerns that have been raised (whether formal or informal) about the candidate that relate to any safeguarding issues/ or the candidate’s behaviour towards adults at risk and/or children?", "No"],
+            ["If the candidate is employed in a position where they are subject to a fit and proper persons check, have they been investigated for, or been found not fit to practice?", "No"],
+            ["To the best of your knowledge and with reference to the attached job description and person specification, are you satisfied that the candidate has the ability and is suitable to undertake this role?", "Yes"],
           ]
         end
 
@@ -131,18 +131,18 @@ RSpec.describe RefereePresenter do
         end
         let(:expected) do
           [
-            ["Can you give a reference for #{presenter.candidate_name}?", "Yes, I can give them a reference"],
+            ["Can you provide a reference for #{presenter.candidate_name}?", "Yes, I can provide a reference"],
             ["Can your reference be shared with #{presenter.candidate_name}?", "No, it should be treated as confidential"],
             ["How long have you known the candidate and in what capacity?", "i know the candidate for 2 years"],
-            ["Applicants employment start date", "12 April 2012"],
-            ["Is the applicant currently employed at this organisation?", "No"],
-            ["Would you re-employ the applicant in the same job as they currently hold or held?", "Yes, wonderful"],
-            ["Would you re-employ the applicant in any role within your organisation?", "Yes, fantastic"],
-            ["Is the applicant currently under investigation for any matter (incl. conduct, capability, or performance) under any of your employment policies?", "No"],
-            ["Are there any warnings on the applicant’s record (Disciplinary, Performance, or Absence related) that have not been disposed of?", "No"],
-            ["Are you aware of any allegations or concerns that have been raised (whether formal or informal) about the applicant that relate to any safeguarding issues/ or the applicant’s behaviour towards adults at risk and/or children?", "No"],
-            ["If the individual is employed in a position where they are subject to a fit and proper persons check, have they been investigated for, or been found not fit to practice?", "No"],
-            ["To the best of your knowledge and with reference to the attached job description and person specification, are you satisfied that the applicant has the ability and is suitable to undertake this role?", "No"],
+            ["When did the candidate start working at your organisation?", "12 April 2012"],
+            ["Is the candidate currently employed at this organisation?", "No"],
+            ["Would you re-employ the candidate in the same job as they currently hold or held?", "Yes, wonderful"],
+            ["Would you re-employ the candidate in any role within your organisation?", "Yes, fantastic"],
+            ["Is the candidate currently under investigation for any matter (incl. conduct, capability, or performance) under any of your organisation policies?", "No"],
+            ["Are there any warnings on the candidate’s record (disciplinary, performance, or absence related) that have not been disposed of?", "No"],
+            ["Are you aware of any allegations or concerns that have been raised (whether formal or informal) about the candidate that relate to any safeguarding issues/ or the candidate’s behaviour towards adults at risk and/or children?", "No"],
+            ["If the candidate is employed in a position where they are subject to a fit and proper persons check, have they been investigated for, or been found not fit to practice?", "No"],
+            ["To the best of your knowledge and with reference to the attached job description and person specification, are you satisfied that the candidate has the ability and is suitable to undertake this role?", "No"],
             ["Warning details", "some reason"],
           ]
         end

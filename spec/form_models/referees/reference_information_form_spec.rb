@@ -11,11 +11,11 @@ module Referees
         expect(form).not_to be_valid
         expect(form.errors.messages)
           .to eq({
-            able_to_undertake_role: ["Select yes if the applicant has the ability and is suitable to undertake this role"],
+            able_to_undertake_role: ["Select yes if the candidate has the ability and is suitable to undertake this role"],
             allegations: ["Select yes if you aware of any allegations or concerns that have been raised about the candidate"],
-            not_fit_to_practice: ["Select yes if the applicant has been investigated for, or been found not fit to practice"],
-            under_investigation: ["Select yes if the applicant is currently under investigation for any matter"],
-            warnings: ["Select yes if there any warnings on the applicant’s record"],
+            not_fit_to_practice: ["Select yes if the candidate has been investigated for, or been found not fit to practice"],
+            under_investigation: ["Select yes if the candidate is currently under investigation for any matter"],
+            warnings: ["Select yes if there any warnings on the candidate’s record"],
             unable_to_undertake_reason: ["Please enter your concerns"],
           })
       end
