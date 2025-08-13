@@ -7,7 +7,7 @@ module Publishers
         before_action :set_job_application, :set_reference_request
 
         def show
-          @referee = @reference_request.referee
+          @referee = RefereePresenter.new(@reference_request.referee)
           respond_to do |format|
             format.html
             format.pdf { send_reference_pdf }
@@ -65,8 +65,7 @@ module Publishers
         end
 
         def send_reference_pdf
-          referee_presenter = RefereePresenter.new(@referee)
-          pdf = ReferencePdfGenerator.new(referee_presenter).generate
+          pdf = ReferencePdfGenerator.new(@referee).generate
 
           send_data(
             pdf.render,
