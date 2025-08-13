@@ -18,7 +18,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def show
-    redirect_to organisation_job_job_application_terminal_path(vacancy.id, @job_application) if @job_application.terminal_status?
+    redirect_to organisation_job_job_application_terminal_path(vacancy.id, @job_application) if @job_application.withdrawn?
 
     @notes_form = Publishers::JobApplication::NotesForm.new
 
