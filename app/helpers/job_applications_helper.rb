@@ -20,7 +20,7 @@ module JobApplicationsHelper
     unsuccessful: "unsuccessful",
     withdrawn: "withdrawn",
     interviewing: "interviewing",
-    unsuccessful_interview: "unsuccessful interview",
+    unsuccessful_interview: "unsuccessful",
     action_required: "action required",
     offered: "offered",
     declined: "declined",

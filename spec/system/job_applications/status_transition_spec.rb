@@ -390,7 +390,7 @@ RSpec.describe "check job application after status transition" do
         #
         jobseeker_applications_page.click_on_job_application(job_application.id)
         expect(jobseeker_application_page).to be_displayed(id: job_application.id)
-        expect(jobseeker_application_page.tag).to have_text("unsuccessful interview")
+        expect(jobseeker_application_page.tag).to have_text("unsuccessful")
       end
     end
   end
