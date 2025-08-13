@@ -133,15 +133,6 @@ class Vacancy < ApplicationRecord
   extend VacancyFulTextSearchQueryModule
   scope :search_by_full_text, ->(query) { vacancy_full_text_search_query(query) }
 
-  # effectively we have two different types of vacancy - external ones and internal ones
-  # these require seperate validaqtion rules - internal ones are built up over time by a user,
-  # so it is much harder to validate them at the model level.
-  # External ones are complete so they can be validated at this level (and have extra properties)
-  # the ExternalVacancyValidator tries to do this (by checking presence of certain fields), but it's really a separate type.
-  validates :external_reference,
-            uniqueness: { scope: :publisher_ats_api_client_id },
-            if: -> { publisher_ats_api_client_id.present? && external_reference.present? }
-
   validates :slug, presence: true
   validates :organisations, presence: true
 

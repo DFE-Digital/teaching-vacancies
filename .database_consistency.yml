@@ -75,3 +75,6 @@ Vacancy:
   type:
     NullConstraintChecker:
       enabled: false
+  index_kept_unique_vacancies_on_external_ref_and_client_id:
+    UniqueIndexChecker:
+      enabled: false # The valdation is done in the ExternalVacancyValidator as custom validation.
