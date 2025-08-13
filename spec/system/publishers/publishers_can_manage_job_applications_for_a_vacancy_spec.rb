@@ -72,7 +72,6 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
         expect(current_page.get_tab(tab_id)).to have_text("(#{count})")
       end
 
-      # shortlist some applications
       current_page.update_status(charlie, etha, hanane, said, yun) do |tag_page|
         tag_page.select_and_submit("shortlisted")
       end
@@ -109,18 +108,12 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
         expect(current_page.get_tab(tab_id)).to have_text("(#{count})")
       end
 
-      #
-      # display not considering tab
-      #
       current_page.select_tab(:tab_unsuccessful)
 
       expect(current_page.selected_tab).to have_text("Not considering")
       expect(current_page.tab_panel.job_applications[0].name).to have_text(britany.name)
       expect(current_page.tab_panel.job_applications[0].mapped_status).to eq(britany.reload.status)
 
-      #
-      # display shortlisted tab
-      #
       current_page.select_tab(:tab_shortlisted)
 
       expect(current_page.selected_tab).to have_text("Shortlisted")
@@ -130,11 +123,8 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
         expect(job_application.mapped_status).to eq(applicant.reload.status)
       end
 
-      #
-      # progress 2 applicants to interviewing
-      #
       current_page.update_status(etha, hanane) do |tag_page|
-        tag_page.select_and_submit("interviewing", &:external_pre_checks)
+        tag_page.select_and_submit("interviewing")
       end
 
       #
@@ -163,14 +153,8 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
         expect(job_application.mapped_status).to eq(applicant.reload.status)
       end
 
-      #
-      # applicant withdraws
-      #
       said.withdrawn!
 
-      #
-      # reload page and select shortlisted tab
-      #
       publisher_ats_applications_page.load(vacancy_id: vacancy.id)
       current_page.select_tab(:tab_shortlisted)
 
@@ -189,9 +173,6 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
         expect(job_application.mapped_status).to eq(applicant.reload.status)
       end
 
-      #
-      # dispaly interviewing tab
-      #
       current_page.select_tab(:tab_interviewing)
 
       expect(current_page.selected_tab).to have_text("Interviewing")

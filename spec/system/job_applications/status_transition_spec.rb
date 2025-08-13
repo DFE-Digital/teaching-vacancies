@@ -223,7 +223,7 @@ RSpec.describe "check job application after status transition" do
         expect(display_status).to have_text("shortlisted")
 
         publisher_ats_applications_page.update_status(job_application) do |tag_page|
-          tag_page.select_and_submit("interviewing", &:external_pre_checks)
+          tag_page.select_and_submit("interviewing")
         end
 
         #
