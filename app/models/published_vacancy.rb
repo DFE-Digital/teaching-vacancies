@@ -1,7 +1,13 @@
 # frozen_string_literal: true
 
 class PublishedVacancy < Vacancy
-  # this validates presence of certain fields for external vacancies
+  # Effectively we have two different types of published vacancies - external ones and internal ones.
+  # These require seperate validation rules.
+  #
+  # Internal ones are built up over time by a user, so it is much harder to validate them at the model level.
+  #
+  # External ones are complete so they can be validated at this level (and have extra properties).
+  # The ExternalVacancyValidator tries to do this, but it's really a separate type.
   validates_with ExternalVacancyValidator, if: :external?
 
   validate :enable_job_applications_cannot_be_changed_once_listed, if: -> { persisted? && listed? && enable_job_applications_changed? }
