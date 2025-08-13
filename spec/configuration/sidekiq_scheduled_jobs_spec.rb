@@ -26,8 +26,6 @@ RSpec.describe "Sidekiq configuration" do
       SetOrganisationSlugsOfBatchJob
       ImportFromVacancySourceJob
       TrackVacancyViewJob
-      SendVacancyApplicationChangeJob
-      EqualOpportunitiesReportUpdateJob
     ]
   end
 
