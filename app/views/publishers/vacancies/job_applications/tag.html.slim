@@ -19,7 +19,7 @@ h1.govuk-heading-l class="govuk-!-display-inline"
     = f.hidden_field :job_applications, multiple: true, value: ja.id
 
   = f.govuk_radio_buttons_fieldset :status, legend: nil do
-    - options = tag_status_options(@form.job_applications.first.status)
+    - options = tag_status_options(@form.origin)
     - options[..-2].each do |status|
       = f.govuk_radio_button :status, status
     = f.govuk_radio_divider

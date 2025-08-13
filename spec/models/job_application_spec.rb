@@ -120,6 +120,80 @@ RSpec.describe JobApplication do
     end
   end
 
+  describe "#next_statuses" do
+    subject { described_class.next_statuses(from_status) }
+
+    context "when from status is nil" do
+      let(:from_status) { nil }
+
+      it { is_expected.to match_array(%w[draft submitted reviewed shortlisted unsuccessful withdrawn interviewing offered declined unsuccessful_interview]) }
+    end
+
+    context "when from status is draft" do
+      let(:from_status) { "draft" }
+
+      it { is_expected.to match_array(%w[submitted]) }
+    end
+
+    context "when from status is submitted" do
+      let(:from_status) { "submitted" }
+
+      it { is_expected.to match_array(%w[unsuccessful shortlisted interviewing offered withdrawn]) }
+    end
+
+    context "when from status is shortlisted" do
+      let(:from_status) { "shortlisted" }
+
+      it { is_expected.to match_array(%w[unsuccessful interviewing offered withdrawn]) }
+    end
+
+    context "when from status is interviewing" do
+      let(:from_status) { "interviewing" }
+
+      it { is_expected.to match_array(%w[unsuccessful_interview offered withdrawn]) }
+    end
+
+    context "when from status is offered" do
+      let(:from_status) { "offered" }
+
+      it { is_expected.to match_array(%w[declined withdrawn]) }
+    end
+
+    context "when from status is any other status" do
+      let(:from_status) { "unsuccessful" }
+
+      it { is_expected.to match_array([]) }
+    end
+  end
+
+  describe "basic state machine" do
+    before do
+      job_application.status = status
+      job_application.valid?
+    end
+
+    context "with invalid status transition pre submission" do
+      let(:job_application) { create(:job_application, :status_draft) }
+      let(:status) { "withdrawn" }
+
+      it { expect(job_application.errors.details).to include(status: [{ error: "Invalid status transition from: draft to: withdrawn" }]) }
+    end
+
+    context "with invalid status transition post submission" do
+      let(:job_application) { create(:job_application, :status_interviewing) }
+      let(:status) { "submitted" }
+
+      it { expect(job_application.errors.details).to include(status: [{ error: "Invalid status transition from: interviewing to: submitted" }]) }
+    end
+
+    context "with valid status transition post submission" do
+      let(:job_application) { create(:job_application, :status_interviewing) }
+      let(:status) { "unsuccessful_interview" }
+
+      it { expect(job_application.errors.details).not_to include(status: [{ error: "Invalid status transition from: interviewing to: unsuccessful_interview" }]) }
+    end
+  end
+
   describe "terminal_status?" do
     subject { build_stubbed(:job_application, :"status_#{status}").terminal_status? }
 

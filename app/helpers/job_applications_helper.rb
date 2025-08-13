@@ -45,14 +45,9 @@ module JobApplicationsHelper
     VacancyTabsPresenter.tab_for(job_application_status)
   end
 
-  def tag_status_options(job_application_status)
-    case job_application_status
-    when "submitted", "reviewed" then %i[unsuccessful shortlisted interviewing offered]
-    when "shortlisted"  then %i[unsuccessful interviewing offered]
-    when "interviewing" then %i[unsuccessful_interview offered]
-    else
-      []
-    end
+  def tag_status_options(tab_origin)
+    job_application_status = VacancyTabsPresenter::TABS_DEFINITION[tab_origin].first
+    JobApplication.next_statuses(job_application_status) - %w[withdrawn]
   end
 
   def job_application_qualified_teacher_status_info(job_application)
