@@ -33,11 +33,13 @@ RSpec.describe "Publishers can select a job application for interview", :perform
     scenario "without selecting" do
       expect(publisher_ats_collect_references_page).to be_displayed
       click_on "Save and continue"
-      expect(publisher_ats_collect_references_page.errors.map(&:text)).to eq(["Select yes if you would like to collect references and self-disclosure through the service"])
+      expect(publisher_ats_collect_references_page.errors.map(&:text)).to eq(["Select yes if you would like to collect references through the service"])
     end
 
     context "when choosing yes for references and self disclosure" do
       before do
+        choose "Yes"
+        click_on "Save and continue"
         choose "Yes"
         click_on "Save and continue"
       end
@@ -59,7 +61,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
           .to eq({
             current_referee.email => ["Provide a reference for"],
             old_referee.email => ["Provide a reference for"],
-            job_application.email_address => ["Complete your self-disclosure form", "References are being collected"],
+            job_application.email_address => ["References are being collected", "Complete your self-disclosure form"],
           })
       end
 
@@ -149,9 +151,9 @@ RSpec.describe "Publishers can select a job application for interview", :perform
           end
 
           context "when reference contains issues" do
-            let(:investigation_details) { "under" }
-            let(:warning_details) { "danger will robinson" }
-            let(:undertake_reason) { "amerivans can do it" }
+            let(:investigation_details) { Faker::Adjective.negative }
+            let(:warning_details) { Faker::Adjective.negative }
+            let(:undertake_reason) { Faker::Adjective.negative }
 
             before do
               current_referee.job_reference.update!(attributes_for(:job_reference, :with_issues,
@@ -219,6 +221,8 @@ RSpec.describe "Publishers can select a job application for interview", :perform
       before do
         choose "No"
         click_on "Save and continue"
+        choose "No"
+        click_on "Save and continue"
       end
 
       it "does not send any emails" do
@@ -244,27 +248,63 @@ RSpec.describe "Publishers can select a job application for interview", :perform
           expect(publisher_ats_reference_request_page.timeline_titles.map(&:text)).to eq(["Marked as complete", "Marked as interviewing"])
         end
 
-        scenario "changing our mind and using TV after all" do
-          expect(publisher_ats_reference_request_page).to be_displayed
-          publisher_ats_reference_request_page.use_tv_anyway_link.click
+        context "when changing our mind and using TV after all" do
+          before do
+            publisher_ats_reference_request_page.use_tv_anyway_link.click
+          end
 
-          expect(publisher_ats_collect_references_page).to be_displayed
-          choose "Yes"
-          click_on "Save and continue"
+          context "without collecting references" do
+            before do
+              choose "No"
+              click_on "Save and continue"
+            end
 
-          expect(publisher_ats_ask_references_email_page).to be_displayed
-          # don't contact applicant
-          choose "No"
-          click_on "Save and continue"
+            it "redirects straight away back to the pre interview page" do
+              expect(publisher_ats_pre_interview_checks_page).to be_displayed
+            end
+          end
 
-          expect(publisher_ats_interviewing_page).to be_displayed
-          publisher_ats_interviewing_page.pre_interview_check_links.first.click
+          context "when collecting references" do
+            before do
+              choose "Yes"
+              click_on "Save and continue"
+            end
 
-          expect(publisher_ats_pre_interview_checks_page).to be_displayed
-          publisher_ats_pre_interview_checks_page.reference_links.first.click
+            scenario "errors" do
+              click_on "Save and continue"
+              expect(publisher_ats_pre_interview_checks_page.errors.map(&:text))
+                .to eq(["Select yes if you would like the service to email applicants that you are collecting references."])
+            end
 
-          expect(publisher_ats_reference_request_page).to be_displayed
-          expect(publisher_ats_reference_request_page.timeline_titles.map(&:text)).to eq(["Reference requested", "Marked as interviewing"])
+            scenario "not contacting applicant" do
+              choose "No"
+              click_on "Save and continue"
+              expect(ActionMailer::Base.deliveries.map(&:to).flatten)
+                .to contain_exactly("employer@contoso.com", "previous@contoso.com")
+
+              expect(publisher_ats_pre_interview_checks_page).to be_displayed
+              expect(publisher_ats_pre_interview_checks_page.reference_links.count).to eq(2)
+              publisher_ats_pre_interview_checks_page.reference_links.first.click
+
+              expect(publisher_ats_reference_request_page).to be_displayed
+              expect(publisher_ats_reference_request_page.timeline_titles.map(&:text))
+                .to eq(["Reference requested", "Marked as interviewing"])
+            end
+
+            scenario "contacting applicant" do
+              choose "Yes"
+              click_on "Save and continue"
+              expect(ActionMailer::Base.deliveries.map(&:to).flatten)
+                .to contain_exactly("employer@contoso.com", "previous@contoso.com", "jobseeker@contoso.com")
+
+              expect(publisher_ats_pre_interview_checks_page).to be_displayed
+              publisher_ats_pre_interview_checks_page.reference_links.last.click
+
+              expect(publisher_ats_reference_request_page).to be_displayed
+              expect(publisher_ats_reference_request_page.timeline_titles.map(&:text))
+                .to eq(["Reference requested", "Marked as interviewing"])
+            end
+          end
         end
       end
     end

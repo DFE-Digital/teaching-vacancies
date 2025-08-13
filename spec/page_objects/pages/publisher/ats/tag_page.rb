@@ -15,11 +15,6 @@ module PageObjects
             public_send(:"status_#{status}").click
             btn_save_and_continue.click
 
-            if status == "interviewing" && block_given?
-              ref_and_dis_page = PageObjects::Pages::Publisher::Ats::ReferenceAndSelfDisclosurePage.new
-              yield ref_and_dis_page if ref_and_dis_page.displayed?
-            end
-
             if status == "offered" && block_given?
               job_offer_date_page = PageObjects::Pages::Publisher::Ats::JobOfferDatePage.new
               yield job_offer_date_page if job_offer_date_page.displayed?

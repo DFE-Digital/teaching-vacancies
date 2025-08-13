@@ -1,14 +1,23 @@
-class Publishers::JobApplication::ReferencesContactApplicantForm
-  include ActiveModel::Model
-  include ActiveModel::Validations
-  include ActiveModel::Attributes
+module Publishers
+  module JobApplication
+    class ReferencesContactApplicantForm
+      include ActiveModel::Model
+      include ActiveModel::Validations
+      include ActiveModel::Attributes
 
-  attribute :contact_applicants, :boolean
-  validates :contact_applicants, inclusion: { in: [true, false], allow_nil: false }
+      FIELDS = %i[collect_self_disclosure collect_references contact_applicants].freeze
 
-  class << self
-    def fields
-      [:contact_applicants]
+      FIELDS.each do |field|
+        attribute field, :boolean
+      end
+
+      validates :contact_applicants, inclusion: { in: [true, false], allow_nil: false }
+
+      class << self
+        def fields
+          FIELDS
+        end
+      end
     end
   end
 end

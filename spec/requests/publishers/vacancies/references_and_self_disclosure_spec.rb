@@ -65,85 +65,11 @@ RSpec.describe "Job applications self disclosure" do
       end
     end
 
-    context "when collect_references_and_self_disclosure false" do
-      let(:params) do
-        {
-          publishers_job_application_collect_references_form: {
-            collect_references_and_self_disclosure: "false",
-          },
-        }
-      end
-      let(:request) do
-        patch(
-          organisation_job_job_application_batch_references_and_self_disclosure_path(
-            vacancy.id,
-            batch.id,
-            :collect_references,
-          ),
-          params:,
-        )
-      end
-
-      it { expect(request).to redirect_to(organisation_job_job_applications_path(vacancy.id, anchor: :interviewing)) }
-
-      it { expect { request }.to change(JobApplicationBatch, :count).by(-1) }
-      it { expect { request }.to change(SelfDisclosureRequest, :count).by(1) }
-      it { expect { request }.to change { job_application.reload.status }.to("interviewing") }
-    end
-
-    context "when collect_references_and_self_disclosure true" do
-      let(:params) do
-        {
-          publishers_job_application_collect_references_form: {
-            collect_references_and_self_disclosure: "true",
-          },
-        }
-      end
-      let(:request) do
-        patch(
-          organisation_job_job_application_batch_references_and_self_disclosure_path(
-            vacancy.id,
-            batch.id,
-            :collect_references,
-          ),
-          params:,
-        )
-      end
-
-      it { expect(request).to redirect_to(organisation_job_job_application_batch_references_and_self_disclosure_path(vacancy.id, batch.id, :ask_references_email)) }
-    end
-
     context "when contact_applicant false" do
       let(:params) do
         {
           publishers_job_application_references_contact_applicant_form: {
             contact_applicants: "false",
-          },
-        }
-      end
-      let(:request) do
-        patch(
-          organisation_job_job_application_batch_references_and_self_disclosure_path(
-            vacancy.id,
-            batch.id,
-            :ask_references_email,
-          ),
-          params:,
-        )
-      end
-
-      it { expect(request).to redirect_to(organisation_job_job_applications_path(vacancy.id, anchor: :interviewing)) }
-
-      it { expect { request }.to change(JobApplicationBatch, :count).by(-1) }
-      it { expect { request }.to change(SelfDisclosureRequest, :count).by(1) }
-      it { expect { request }.to change { job_application.reload.status }.to("interviewing") }
-    end
-
-    context "when contact_applicant true" do
-      let(:params) do
-        {
-          publishers_job_application_references_contact_applicant_form: {
-            contact_applicants: "true",
           },
         }
       end

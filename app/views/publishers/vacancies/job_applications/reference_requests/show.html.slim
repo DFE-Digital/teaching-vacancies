@@ -57,7 +57,8 @@
                     edit_organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, @reference_request.id)))
     - else
       .govuk-body
-        = govuk_link_to t(".collect_reference"), collect_references_organisation_job_job_application_path(vacancy.id, @job_application.id)
+        = govuk_link_to t(".collect_reference"),
+          organisation_job_job_application_collect_reference_flag_path(vacancy.id, @job_application.id, Wicked::FIRST_STEP)
 
   .govuk-grid-column-one-third
     = render TimelineComponent.new do |timeline|

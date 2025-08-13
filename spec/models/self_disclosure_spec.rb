@@ -5,12 +5,12 @@ RSpec.describe SelfDisclosure do
   let(:job_application) { build(:job_application, self_disclosure_request:) }
 
   describe "validation" do
-    subject { create(:self_disclosure) }
+    subject { build(:self_disclosure) }
 
     it { is_expected.to validate_uniqueness_of(:self_disclosure_request_id).case_insensitive }
   end
 
-  describe "#.find_or_create_by_and_prefill" do
+  describe "#find_or_create_by_and_prefill" do
     subject(:self_disclosure) { described_class.find_or_create_by_and_prefill!(job_application) }
 
     %i[previous_names city country postcode phone_number].each do |field|
@@ -36,7 +36,7 @@ RSpec.describe SelfDisclosure do
     end
   end
 
-  describe ".prefill" do
+  describe "#prefill" do
     subject(:self_disclosure) { build(:self_disclosure, :pending) }
 
     before { self_disclosure.prefill(job_application) }

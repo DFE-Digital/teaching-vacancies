@@ -4,8 +4,13 @@ en:
       models:
         publishers/job_application/collect_references_form:
           attributes:
-            collect_references_and_self_disclosure:
-              inclusion: Select yes if you would like to collect references and self-disclosure through the service
+            collect_references:
+              inclusion: Select yes if you would like to collect references through the service
+
+        publishers/job_application/collect_self_disclosure_form:
+          attributes:
+            collect_self_disclosure:
+              inclusion: Select yes if you would like to collect self disclosure through the service
 
         publishers/job_application/references_contact_applicant_form:
           attributes:
@@ -50,7 +55,7 @@ en:
           offered: Candidates that have been offered a job. Should they decline the offer you will have the option to update the status later.
 
       publishers_job_application_collect_references_form:
-        collect_references_and_self_disclosure_options:
+        collect_references_options:
           true: >-
             Both the candidate and their referees will receive an email with instructions
             to complete the necessary documentation. If you do not receive a response, you can send
@@ -80,7 +85,12 @@ en:
           offered_html: Job offered <span class="govuk-tag govuk-tag--pink">Job offered</span>
 
       publishers_job_application_collect_references_form:
-        collect_references_and_self_disclosure_options:
+        collect_references_options:
+          true: "Yes"
+          false: "No"
+
+      publishers_job_application_collect_self_disclosure_form:
+        collect_self_disclosure_options:
           true: "Yes"
           false: "No"
 
@@ -96,8 +106,11 @@ en:
 
     legend:
       publishers_job_application_collect_references_form:
-        collect_references_and_self_disclosure: >-
-          Would you like to collect references and self-disclosure through the Teaching Vacancies service?
+        collect_references: >-
+          Do you want to collect references through Teaching Vacancies?
+      publishers_job_application_collect_self_disclosure_form:
+        collect_self_disclosure: >-
+          Do you want to collect the self-disclosure form through Teaching Vacancies?
 
       publishers_job_application_references_contact_applicant_form:
         contact_applicants: >-

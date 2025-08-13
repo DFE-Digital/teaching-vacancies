@@ -8,6 +8,7 @@ RSpec.describe "Publishers manage self disclosure" do
   let(:vacancy) { create(:vacancy, :expired, organisations: [organisation], publisher: publisher) }
   let(:jobseeker) { create(:jobseeker, :with_personal_details) }
   let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy, jobseeker: jobseeker) }
+  let(:disclosure_request) { SelfDisclosureRequest.order(:created_at).last }
 
   describe "using TV self-disclosure form", :versioning do
     describe "emails and models" do
@@ -20,26 +21,21 @@ RSpec.describe "Publishers manage self disclosure" do
         choose "Yes"
         click_on "Save and continue"
         choose "Yes"
+        click_on "Save and continue"
+        choose "Yes"
+        click_on("Save and continue")
       end
 
       after { logout }
 
-      it "sends the notification email", :perform_enqueued do
-        click_on("Save and continue")
+      it "sends the notification email and creates self disclosure models", :perform_enqueued do
         expect(ActionMailer::Base.deliveries.map(&:to).flatten).to contain_exactly(job_application.email_address, job_application.email_address)
-      end
-
-      it "create the self disclosure request and model" do
-        expect {
-          click_on "Save and continue"
-        }.to change(SelfDisclosureRequest, :count).by(1)
-         .and change(SelfDisclosure, :count).by(1)
+        expect(SelfDisclosureRequest.count).to eq(1)
+        expect(SelfDisclosure.count).to eq(1)
       end
     end
 
     describe "visit self disclosure form" do
-      let(:disclosure_request) { SelfDisclosureRequest.order(:created_at).last }
-
       before do
         run_with_publisher_and_organisation(publisher, organisation) do
           publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
@@ -50,6 +46,8 @@ RSpec.describe "Publishers manage self disclosure" do
           click_on "Save and continue"
           choose "Yes"
           click_on "Save and continue"
+          choose "Yes"
+          click_on("Save and continue")
         end
       end
 
@@ -134,12 +132,14 @@ RSpec.describe "Publishers manage self disclosure" do
     end
   end
 
-  describe "not using TV self-disclosure" do
+  describe "not using TV self-disclosure", :versioning do
     before do
       login_publisher(publisher: publisher, organisation: organisation)
       publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
       click_on "Update application status"
       choose "Interviewing"
+      click_on "Save and continue"
+      choose "No"
       click_on "Save and continue"
       choose "No"
     end
@@ -160,26 +160,41 @@ RSpec.describe "Publishers manage self disclosure" do
     end
 
     describe "visit jobseeker self disclosure form" do
-      let(:request) { create(:self_disclosure_request, job_application_id: job_application.id) }
+      before do
+        click_on "Save and continue"
+        publisher_ats_self_disclosure_page.load(
+          vacancy_id: vacancy.id,
+          job_application_id: job_application.id,
+        )
+      end
 
-      before { request.manual! }
+      scenario "handling errors" do
+        publisher_ats_self_disclosure_page.goto_references_and_self_disclosure_form.click
+        click_on "Save and continue"
+        expect(publisher_ats_self_disclosure_page.errors.map(&:text))
+          .to eq(["Select yes if you would like to collect self disclosure through the service"])
+      end
 
-      context "when request is pending" do
-        it "publisher can go to the references and self_disclosure form" do
-          publisher_ats_self_disclosure_page.load(
-            vacancy_id: vacancy.id,
-            job_application_id: job_application.id,
-          )
-          expect(publisher_ats_self_disclosure_page.status.text).to eq("pending")
-          expect(publisher_ats_self_disclosure_page.button.text).to eq("Manually mark as complete")
-          expect(
-            publisher_ats_self_disclosure_page.goto_references_and_self_disclosure_form.text,
-          ).to eq("Would you like to collect this self-disclosure form through Teaching Vacancies?")
+      scenario "not really changing your mind" do
+        publisher_ats_self_disclosure_page.goto_references_and_self_disclosure_form.click
+        choose "No"
+        click_on "Save and continue"
+        expect(publisher_ats_pre_interview_checks_page).to be_displayed
+        expect(disclosure_request.reload.status).to eq("manual")
+      end
 
-          publisher_ats_self_disclosure_page.goto_references_and_self_disclosure_form.click
+      scenario "publisher changing their mind and choosing TV for self-disclosure" do
+        expect(publisher_ats_self_disclosure_page.status.text).to eq("pending")
+        expect(publisher_ats_self_disclosure_page.button.text).to eq("Manually mark as complete")
+        expect(
+          publisher_ats_self_disclosure_page.goto_references_and_self_disclosure_form.text,
+        ).to eq("Would you like to collect this self-disclosure form through Teaching Vacancies?")
 
-          expect(page).to have_content("Would you like to collect references and self-disclosure through the Teaching Vacancies service?")
-        end
+        publisher_ats_self_disclosure_page.goto_references_and_self_disclosure_form.click
+        choose "Yes"
+        click_on "Save and continue"
+        expect(publisher_ats_pre_interview_checks_page).to be_displayed
+        expect(disclosure_request.reload.status).to eq("sent")
       end
     end
   end

@@ -223,9 +223,16 @@ RSpec.describe "check job application after status transition" do
         expect(display_status).to have_text("shortlisted")
 
         publisher_ats_applications_page.update_status(job_application) do |tag_page|
-          tag_page.select_and_submit("interviewing", &:external_pre_checks)
+          tag_page.select_and_submit("interviewing")
         end
 
+        #
+        # without ATS references and self-disclosure collection through TV service
+        #
+        expect(publisher_ats_collect_references_page).to be_displayed(vacancy_id: vacancy.id)
+        publisher_ats_collect_references_page.answer_no
+        find("label[for='publishers-job-application-collect-self-disclosure-form-collect-self-disclosure-false-field']").click
+        click_on "Save and continue"
         #
         # display interviewing tab
         #
