@@ -27,7 +27,18 @@ Capybara.server = :puma, { Silent: true, Threads: "0:1" }
 
 require "capybara/cuprite"
 Capybara.register_driver(:cuprite_headless) do |app|
-  Capybara::Cuprite::Driver.new(app, headless: true, process_timeout: 30, window_size: [1400, 1400])
+  # The extra browser_options are required to run Cuprite within a devcontainer
+  Capybara::Cuprite::Driver.new(app,
+                                headless: true,
+                                process_timeout: 30,
+                                window_size: [1400, 1400],
+                                browser_options: {
+                                  "no-sandbox": nil,
+                                  "disable-gpu": nil,
+                                  "window-size": "1400,1400",
+                                  headless: "new",
+                                  "ozone-platform": "none",
+                                })
 end
 Capybara.register_driver(:cuprite_full) do |app|
   Capybara::Cuprite::Driver.new(app, headless: false, process_timeout: 30, window_size: [1400, 1800])
@@ -96,7 +107,8 @@ RSpec.configure do |config|
 
   # allow developers to see JS backed tests by default
   config.before(:each, type: :system, js: true) do
-    if ENV.key? "CI"
+    # In CI or devcontainers (without X11), use headless mode
+    if ENV.key?("CI") || ENV["DEVCONTAINER"] == "true"
       driven_by :cuprite_headless
     else
       driven_by :cuprite_full
