@@ -127,7 +127,6 @@ en:
           "1": I confirm the answers given in this form have been provided in good faith and are correct to the best of my knowledge and belief.
 
       referees_employment_reference_form:
-        how_do_you_know_the_candidate: How long have you known the candidate and in what capacity?
         currently_employed_options:
           true: "Yes"
           false: "No"
@@ -192,6 +191,7 @@ en:
           *rating_options
         leadership_options:
           *rating_options
+
     legend:
       referees_can_give_reference_form:
         can_give_reference: Can you provide a reference for %{name}?

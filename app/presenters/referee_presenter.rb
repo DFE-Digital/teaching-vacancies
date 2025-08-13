@@ -21,7 +21,7 @@ class RefereePresenter < BasePresenter
   def reference_information
     Enumerator.new do |y|
       y << [
-        I18n.t("publishers.vacancies.job_applications.reference_requests.reference.can_give_ref", name: referee.job_application.name),
+        I18n.t("helpers.legend.referees_can_give_reference_form.can_give_reference", name: referee.job_application.name),
         I18n.t("helpers.label.referees_can_give_reference_form.can_give_reference_options.#{reference.can_give_reference?}"),
       ]
 
@@ -53,7 +53,7 @@ class RefereePresenter < BasePresenter
 
   def reference_rows(yielder)
     yielder << [
-      I18n.t("publishers.vacancies.job_applications.reference_requests.reference.can_share_ref", name: referee.job_application.name),
+      I18n.t("helpers.legend.referees_can_share_reference_form.is_reference_sharable", name: referee.job_application.name),
       I18n.t("helpers.label.referees_can_share_reference_form.is_reference_sharable_options.#{reference.is_reference_sharable?}"),
     ]
 

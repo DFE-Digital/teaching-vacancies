@@ -611,8 +611,6 @@ en:
           status: Status
         reference_requests:
           reference:
-            can_give_ref: Can you provide a reference for %{name}?
-            can_share_ref: Can your reference be shared with %{name}?
             under_investigation_details: Under investigation details
             warning_details: Warning details
           reference_received:
@@ -655,9 +653,6 @@ en:
             by: by %{name}
             by_tvs: by Teaching Vacancies
             communication_history: Communication history
-            yes_share: Yes, if they request it
-            no_share: No
-            how_long: How long have you known the candidate and in what capacity?
           update:
             change_email_success: Email address updated and reference request sent
         tag:

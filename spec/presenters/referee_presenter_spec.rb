@@ -71,10 +71,10 @@ RSpec.describe RefereePresenter do
         end
         let(:expected) do
           [
-            ["Can you provide a reference for #{presenter.candidate_name}?", "Yes, I can provide a reference"],
-            ["Can your reference be shared with #{presenter.candidate_name}?", "No, it should be treated as confidential"],
-            ["How long have you known the candidate and in what capacity?", "i know the candidate for 2 years"],
-            ["When did the candidate start working at your organisation?", "12 April 2012"],
+            [I18n.t("helpers.legend.referees_can_give_reference_form.can_give_reference", name: presenter.candidate_name), "Yes, I can provide a reference"],
+            [I18n.t("helpers.legend.referees_can_share_reference_form.is_reference_sharable", name: presenter.candidate_name), "No, it should be treated as confidential"],
+            [I18n.t("helpers.legend.referees_employment_reference_form.how_do_you_know_the_candidate"), "i know the candidate for 2 years"],
+            [I18n.t("helpers.legend.referees_employment_reference_form.employment_start_date"), "12 April 2012"],
             ["Is the candidate currently employed at this organisation?", "No"],
             ["Would you re-employ the candidate in the same job as they currently hold or held?", "Yes, wonderful"],
             ["Would you re-employ the candidate in any role within your organisation?", "Yes, fantastic"],
@@ -101,10 +101,10 @@ RSpec.describe RefereePresenter do
         end
         let(:expected) do
           [
-            ["Can you provide a reference for #{presenter.candidate_name}?", "Yes, I can provide a reference"],
-            ["Can your reference be shared with #{presenter.candidate_name}?", "No, it should be treated as confidential"],
-            ["How long have you known the candidate and in what capacity?", "i know the candidate for 2 years"],
-            ["When did the candidate start working at your organisation?", "12 April 2012"],
+            [I18n.t("helpers.legend.referees_can_give_reference_form.can_give_reference", name: presenter.candidate_name), "Yes, I can provide a reference"],
+            [I18n.t("helpers.legend.referees_can_share_reference_form.is_reference_sharable", name: presenter.candidate_name), "No, it should be treated as confidential"],
+            [I18n.t("helpers.legend.referees_employment_reference_form.how_do_you_know_the_candidate"), "i know the candidate for 2 years"],
+            [I18n.t("helpers.legend.referees_employment_reference_form.employment_start_date"), "12 April 2012"],
             ["Is the candidate currently employed at this organisation?", "No"],
             ["Would you re-employ the candidate in the same job as they currently hold or held?", "Yes, wonderful"],
             ["Would you re-employ the candidate in any role within your organisation?", "Yes, fantastic"],
@@ -131,10 +131,10 @@ RSpec.describe RefereePresenter do
         end
         let(:expected) do
           [
-            ["Can you provide a reference for #{presenter.candidate_name}?", "Yes, I can provide a reference"],
-            ["Can your reference be shared with #{presenter.candidate_name}?", "No, it should be treated as confidential"],
-            ["How long have you known the candidate and in what capacity?", "i know the candidate for 2 years"],
-            ["When did the candidate start working at your organisation?", "12 April 2012"],
+            [I18n.t("helpers.legend.referees_can_give_reference_form.can_give_reference", name: presenter.candidate_name), "Yes, I can provide a reference"],
+            [I18n.t("helpers.legend.referees_can_share_reference_form.is_reference_sharable", name: presenter.candidate_name), "No, it should be treated as confidential"],
+            [I18n.t("helpers.legend.referees_employment_reference_form.how_do_you_know_the_candidate"), "i know the candidate for 2 years"],
+            [I18n.t("helpers.legend.referees_employment_reference_form.employment_start_date"), "12 April 2012"],
             ["Is the candidate currently employed at this organisation?", "No"],
             ["Would you re-employ the candidate in the same job as they currently hold or held?", "Yes, wonderful"],
             ["Would you re-employ the candidate in any role within your organisation?", "Yes, fantastic"],
