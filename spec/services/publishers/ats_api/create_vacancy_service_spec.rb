@@ -259,14 +259,11 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       end
     end
 
-    context "when a vacancy with the same external reference exists" do
+    context "when a non-deleted vacancy with the same external reference exists" do
       let(:external_reference) { "existing-ref" }
-      let(:vacancy_attributes) do
-        { external_reference: external_reference, publisher_ats_api_client_id: publisher_ats_api_client_id }
+      let!(:existing_vacancy) do
+        create(:vacancy, :external, external_reference:, publisher_ats_api_client_id: publisher_ats_api_client_id)
       end
-      let(:existing_vacancy) { create(:vacancy, :external, **vacancy_attributes) }
-
-      before { existing_vacancy }
 
       it "does not create a new vacancy" do
         expect { create_vacancy_service }.not_to change(PublishedVacancy, :count)
@@ -283,19 +280,22 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
           },
         )
       end
+    end
 
-      context "when the existing vacancy was discarded" do
-        let(:existing_vacancy) { create(:vacancy, :trashed, :external, **vacancy_attributes) }
+    context "when a deleted vacancy with the same external reference exists" do
+      let(:external_reference) { "existing-ref" }
+      let!(:existing_vacancy) do
+        create(:vacancy, :external, :trashed, external_reference:, publisher_ats_api_client_id: publisher_ats_api_client_id)
+      end
 
-        it "creates a new published vacancy with the same external reference" do
-          expect { create_vacancy_service }.to change { PublishedVacancy.kept.count }.by(1)
-          vacancy = PublishedVacancy.kept.last
-          expect(vacancy.external_reference).to eq(existing_vacancy.external_reference)
-        end
+      it "creates a new published vacancy with the same external reference" do
+        expect { create_vacancy_service }.to change { PublishedVacancy.kept.count }.by(1)
+        vacancy = PublishedVacancy.kept.last
+        expect(vacancy.external_reference).to eq(existing_vacancy.external_reference)
+      end
 
-        it "returns a success response" do
-          expect(create_vacancy_service).to eq(status: :created, json: { id: PublishedVacancy.kept.last.id })
-        end
+      it "returns a success response" do
+        expect(create_vacancy_service).to eq(status: :created, json: { id: PublishedVacancy.kept.last.id })
       end
     end
 
