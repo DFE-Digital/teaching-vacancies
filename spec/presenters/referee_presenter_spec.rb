@@ -51,7 +51,7 @@ RSpec.describe RefereePresenter do
     end
   end
 
-  describe ".reference_information" do
+  describe "#reference_information" do
     context "when cannot give reference" do
       let(:job_reference) { build_stubbed(:job_reference, can_give_reference: false) }
       let(:expected) { [["Can you provide a reference for #{presenter.candidate_name}?", "No, I am unable to provide a reference"]] }
@@ -60,94 +60,99 @@ RSpec.describe RefereePresenter do
     end
 
     context "when can give reference" do
-      context "with under_investigation" do
-        let(:job_reference) do
-          build_stubbed(:job_reference, :reference_given,
-                        email: "my@email.com",
-                        how_do_you_know_the_candidate: "i know the candidate for 2 years",
-                        employment_start_date: Date.new(2012, 4, 12),
-                        under_investigation: true,
-                        under_investigation_details: "blah blah")
-        end
-        let(:expected) do
-          [
-            [I18n.t("helpers.legend.referees_can_give_reference_form.can_give_reference", name: presenter.candidate_name), "Yes, I can provide a reference"],
-            [I18n.t("helpers.legend.referees_can_share_reference_form.is_reference_sharable", name: presenter.candidate_name), "No, it should be treated as confidential"],
-            [I18n.t("helpers.legend.referees_employment_reference_form.how_do_you_know_the_candidate"), "i know the candidate for 2 years"],
-            [I18n.t("helpers.legend.referees_employment_reference_form.employment_start_date"), "12 April 2012"],
-            ["Is the candidate currently employed at this organisation?", "No"],
-            ["Would you re-employ the candidate in the same job as they currently hold or held?", "Yes, wonderful"],
-            ["Would you re-employ the candidate in any role within your organisation?", "Yes, fantastic"],
-            ["Is the candidate currently under investigation for any matter (incl. conduct, capability, or performance) under any of your organisation policies?", "Yes"],
-            ["Under investigation details", "blah blah"],
-            ["Are there any warnings on the candidate’s record (disciplinary, performance, or absence related) that have not been disposed of?", "No"],
-            ["Are you aware of any allegations or concerns that have been raised (whether formal or informal) about the candidate that relate to any safeguarding issues/ or the candidate’s behaviour towards adults at risk and/or children?", "No"],
-            ["If the candidate is employed in a position where they are subject to a fit and proper persons check, have they been investigated for, or been found not fit to practice?", "No"],
-            ["To the best of your knowledge and with reference to the attached job description and person specification, are you satisfied that the candidate has the ability and is suitable to undertake this role?", "Yes"],
-          ]
-        end
-
-        it { expect(presenter.reference_information).to match_array(expected) }
+      let(:non_warning_fields) do
+        [
+          [I18n.t("helpers.legend.referees_can_give_reference_form.can_give_reference", name: presenter.candidate_name), "Yes, I can provide a reference"],
+          [I18n.t("helpers.legend.referees_can_share_reference_form.is_reference_sharable", name: presenter.candidate_name), "No, it should be treated as confidential"],
+          [I18n.t("helpers.label.referees_employment_reference_form.how_do_you_know_the_candidate"), job_reference.how_do_you_know_the_candidate],
+          [I18n.t("helpers.legend.referees_employment_reference_form.employment_start_date"), "12 April 2012"],
+          [I18n.t("helpers.legend.referees_employment_reference_form.currently_employed"), "No"],
+          [I18n.t("helpers.legend.referees_employment_reference_form.would_reemploy_current"), "Yes, wonderful"],
+          [I18n.t("helpers.legend.referees_employment_reference_form.would_reemploy_any"), "Yes, fantastic"],
+        ]
       end
 
-      context "with warnings" do
+      context "without any details fields" do
         let(:job_reference) do
           build_stubbed(:job_reference, :reference_given,
-                        email: "my@email.com",
-                        how_do_you_know_the_candidate: "i know the candidate for 2 years",
-                        employment_start_date: Date.new(2012, 4, 12),
-                        warnings: true,
-                        warning_details: "use with caution")
+                        employment_start_date: Date.new(2012, 4, 12))
         end
-        let(:expected) do
+        let(:warning_fields) do
           [
-            [I18n.t("helpers.legend.referees_can_give_reference_form.can_give_reference", name: presenter.candidate_name), "Yes, I can provide a reference"],
-            [I18n.t("helpers.legend.referees_can_share_reference_form.is_reference_sharable", name: presenter.candidate_name), "No, it should be treated as confidential"],
-            [I18n.t("helpers.legend.referees_employment_reference_form.how_do_you_know_the_candidate"), "i know the candidate for 2 years"],
-            [I18n.t("helpers.legend.referees_employment_reference_form.employment_start_date"), "12 April 2012"],
-            ["Is the candidate currently employed at this organisation?", "No"],
-            ["Would you re-employ the candidate in the same job as they currently hold or held?", "Yes, wonderful"],
-            ["Would you re-employ the candidate in any role within your organisation?", "Yes, fantastic"],
-            ["Is the candidate currently under investigation for any matter (incl. conduct, capability, or performance) under any of your organisation policies?", "No"],
-            ["Are there any warnings on the candidate’s record (disciplinary, performance, or absence related) that have not been disposed of?", "Yes"],
-            ["Warning details", "use with caution"],
-            ["Are you aware of any allegations or concerns that have been raised (whether formal or informal) about the candidate that relate to any safeguarding issues/ or the candidate’s behaviour towards adults at risk and/or children?", "No"],
-            ["If the candidate is employed in a position where they are subject to a fit and proper persons check, have they been investigated for, or been found not fit to practice?", "No"],
-            ["To the best of your knowledge and with reference to the attached job description and person specification, are you satisfied that the candidate has the ability and is suitable to undertake this role?", "Yes"],
+            [I18n.t("helpers.legend.referees_reference_information_form.under_investigation"), "No"],
+            [I18n.t("helpers.legend.referees_reference_information_form.warnings"), "No"],
+            [I18n.t("helpers.legend.referees_reference_information_form.allegations"), "No"],
+            [I18n.t("helpers.legend.referees_reference_information_form.not_fit_to_practice"), "No"],
+            [I18n.t("helpers.legend.referees_reference_information_form.able_to_undertake_role"), "Yes"],
           ]
         end
 
-        it { expect(presenter.reference_information).to match_array(expected) }
+        it { expect(presenter.reference_information).to match_array(non_warning_fields + warning_fields) }
+      end
+
+      context "when under_investigation" do
+        let(:job_reference) do
+          build_stubbed(:job_reference, :reference_given,
+                        employment_start_date: Date.new(2012, 4, 12),
+                        under_investigation: true,
+                        under_investigation_details: Faker::Lorem.sentence)
+        end
+        let(:expected) do
+          [
+            [I18n.t("helpers.legend.referees_reference_information_form.under_investigation"), "Yes"],
+            ["Under investigation details", job_reference.under_investigation_details],
+            [I18n.t("helpers.legend.referees_reference_information_form.warnings"), "No"],
+            [I18n.t("helpers.legend.referees_reference_information_form.allegations"), "No"],
+            [I18n.t("helpers.legend.referees_reference_information_form.not_fit_to_practice"), "No"],
+            [I18n.t("helpers.legend.referees_reference_information_form.able_to_undertake_role"), "Yes"],
+          ]
+        end
+
+        it { expect(presenter.reference_information.to_a - non_warning_fields).to match_array(expected) }
+      end
+
+      context "with warnings and allegations and not fit to praqctice" do
+        let(:job_reference) do
+          build_stubbed(:job_reference, :reference_given,
+                        employment_start_date: Date.new(2012, 4, 12),
+                        warnings: true,
+                        not_fit_to_practice: true,
+                        warning_details: Faker::Lorem.sentence,
+                        allegations: true)
+        end
+        let(:expected) do
+          [
+            [I18n.t("helpers.legend.referees_reference_information_form.under_investigation"), "No"],
+            [I18n.t("helpers.legend.referees_reference_information_form.warnings"), "Yes"],
+            ["Warning details", job_reference.warning_details],
+            [I18n.t("helpers.legend.referees_reference_information_form.allegations"), "Yes"],
+            [I18n.t("helpers.legend.referees_reference_information_form.not_fit_to_practice"), "Yes"],
+            [I18n.t("helpers.legend.referees_reference_information_form.able_to_undertake_role"), "Yes"],
+          ]
+        end
+
+        it { expect(presenter.reference_information.to_a - non_warning_fields).to match_array(expected) }
       end
 
       context "with unable to undertake role" do
         let(:job_reference) do
           build_stubbed(:job_reference, :reference_given,
-                        email: "my@email.com",
-                        how_do_you_know_the_candidate: "i know the candidate for 2 years",
                         employment_start_date: Date.new(2012, 4, 12),
                         able_to_undertake_role: false,
-                        unable_to_undertake_reason: "some reason")
+                        unable_to_undertake_reason: Faker::Lorem.sentence)
         end
         let(:expected) do
           [
-            [I18n.t("helpers.legend.referees_can_give_reference_form.can_give_reference", name: presenter.candidate_name), "Yes, I can provide a reference"],
-            [I18n.t("helpers.legend.referees_can_share_reference_form.is_reference_sharable", name: presenter.candidate_name), "No, it should be treated as confidential"],
-            [I18n.t("helpers.legend.referees_employment_reference_form.how_do_you_know_the_candidate"), "i know the candidate for 2 years"],
-            [I18n.t("helpers.legend.referees_employment_reference_form.employment_start_date"), "12 April 2012"],
-            ["Is the candidate currently employed at this organisation?", "No"],
-            ["Would you re-employ the candidate in the same job as they currently hold or held?", "Yes, wonderful"],
-            ["Would you re-employ the candidate in any role within your organisation?", "Yes, fantastic"],
-            ["Is the candidate currently under investigation for any matter (incl. conduct, capability, or performance) under any of your organisation policies?", "No"],
-            ["Are there any warnings on the candidate’s record (disciplinary, performance, or absence related) that have not been disposed of?", "No"],
-            ["Are you aware of any allegations or concerns that have been raised (whether formal or informal) about the candidate that relate to any safeguarding issues/ or the candidate’s behaviour towards adults at risk and/or children?", "No"],
-            ["If the candidate is employed in a position where they are subject to a fit and proper persons check, have they been investigated for, or been found not fit to practice?", "No"],
-            ["To the best of your knowledge and with reference to the attached job description and person specification, are you satisfied that the candidate has the ability and is suitable to undertake this role?", "No"],
-            ["Warning details", "some reason"],
+            [I18n.t("helpers.legend.referees_reference_information_form.under_investigation"), "No"],
+            [I18n.t("helpers.legend.referees_reference_information_form.warnings"), "No"],
+            [I18n.t("helpers.legend.referees_reference_information_form.allegations"), "No"],
+            [I18n.t("helpers.legend.referees_reference_information_form.not_fit_to_practice"), "No"],
+            [I18n.t("helpers.legend.referees_reference_information_form.able_to_undertake_role"), "No"],
+            ["Unable to undertake role details", job_reference.unable_to_undertake_reason],
           ]
         end
 
-        it { expect(presenter.reference_information).to match_array(expected) }
+        it { expect(presenter.reference_information.to_a - non_warning_fields).to match_array(expected) }
       end
     end
   end

@@ -612,6 +612,7 @@ en:
         reference_requests:
           reference:
             under_investigation_details: Under investigation details
+            unable_to_undertake_role_details: Unable to undertake role details
             warning_details: Warning details
           reference_received:
             caption: Update reference status

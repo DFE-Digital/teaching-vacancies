@@ -279,7 +279,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
             scenario "errors" do
               click_on "Save and continue"
               expect(publisher_ats_pre_interview_checks_page.errors.map(&:text))
-                .to eq(["Select yes if you would like the service to email applicants that you are collecting references."])
+                .to eq(["Select yes if you would like the service to email candidates that you are collecting references."])
             end
 
             scenario "not contacting applicant" do
