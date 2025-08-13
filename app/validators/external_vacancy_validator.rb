@@ -11,7 +11,7 @@ class ExternalVacancyValidator < ActiveModel::Validator
     validate_uniqueness_per_client(record)
     validate_no_duplicate_vacancy(record)
     validate_job_title_length(record)
-    validate_expiry_date(record)
+    validate_expiry_date(record) if record.expires_at.present?
   end
 
   private
@@ -26,7 +26,7 @@ class ExternalVacancyValidator < ActiveModel::Validator
   end
 
   def validate_no_duplicate_vacancy(record)
-    if record.find_duplicate_external_vacancy
+    if record.find_duplicate_external_vacancy.present?
       record.errors.add(:base, "A vacancy with the same job title, expiry date, contract type, working_patterns, phases and salary already exists for this organisation.")
     end
   end
@@ -44,8 +44,6 @@ class ExternalVacancyValidator < ActiveModel::Validator
   end
 
   def validate_expiry_date(record)
-    return if record.expires_at.blank?
-
     if record.expires_at <= Time.zone.today
       record.errors.add(:expires_at, "must be a future date")
     end
