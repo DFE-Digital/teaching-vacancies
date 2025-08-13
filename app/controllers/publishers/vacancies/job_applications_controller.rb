@@ -23,8 +23,6 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     @notes_form = Publishers::JobApplication::NotesForm.new
 
     raise ActionController::RoutingError, "Cannot view a draft application" if @job_application.draft?
-
-    @job_application.reviewed! if @job_application.submitted?
   end
 
   def download_pdf
