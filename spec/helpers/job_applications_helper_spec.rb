@@ -35,7 +35,7 @@ RSpec.describe JobApplicationsHelper do
     context "when tab_origin submitted" do
       let(:tab_origin) { "submitted" }
 
-      it { is_expected.to match_array(%i[unsuccessful shortlisted interviewing offered]) }
+      it { is_expected.to match_array(%w[unsuccessful shortlisted interviewing offered]) }
     end
 
     context "when tab_origin unsuccessful" do
@@ -47,19 +47,19 @@ RSpec.describe JobApplicationsHelper do
     context "when tab_origin shortlisted" do
       let(:tab_origin) { "shortlisted" }
 
-      it { is_expected.to match_array(%i[unsuccessful interviewing offered]) }
+      it { is_expected.to match_array(%w[unsuccessful interviewing offered]) }
     end
 
     context "when tab_origin interviewing" do
       let(:tab_origin) { "interviewing" }
 
-      it { is_expected.to match_array(%i[unsuccessful_interview offered]) }
+      it { is_expected.to match_array(%w[unsuccessful_interview offered]) }
     end
 
     context "when tab_origin offered" do
       let(:tab_origin) { "offered" }
 
-      it { is_expected.to match_array(%i[declined]) }
+      it { is_expected.to match_array(%w[declined]) }
     end
   end
 
