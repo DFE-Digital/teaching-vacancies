@@ -6,7 +6,7 @@ class Publishers::Vacancies::JobApplications::MessagesController < Publishers::V
 
     if @message_form.valid?
       conversation = find_or_create_conversation
-      Message.create(message_attributes.merge(conversation: conversation))
+      Message.create!(content: @message_form.content, sender: current_publisher, conversation: conversation)
       redirect_to organisation_job_job_application_path(id: @job_application.id, tab: "messages"), success: t(".success")
     else
       redirect_to organisation_job_job_application_path(id: @job_application.id, tab: "messages"), warning: t(".failure")
@@ -16,7 +16,7 @@ class Publishers::Vacancies::JobApplications::MessagesController < Publishers::V
   private
 
   def find_or_create_conversation
-    @job_application.conversations.first || 
+    @job_application.conversations.first ||
       @job_application.conversations.create!(title: Conversation.default_title_for(@job_application))
   end
 

@@ -9,7 +9,7 @@ class CreateMessages < ActiveRecord::Migration[7.2]
     end
 
     add_index :messages, :conversation_id
-    add_index :messages, [:sender_type, :sender_id], name: "index_messages_on_sender"
+    add_index :messages, %i[sender_type sender_id], name: "index_messages_on_sender"
     add_foreign_key :messages, :conversations
   end
 end

@@ -23,7 +23,7 @@
 
           = f.govuk_submit "Send message"
           = govuk_link_to "Cancel", request.original_url, class: "govuk-!-margin-left-3"
-          
+
     #messages-list
       - @messages.each do |message|
         .govuk-summary-card

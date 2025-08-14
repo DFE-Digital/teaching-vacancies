@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Publishers can send messages to job applicants", type: :system do
+RSpec.describe "Publishers can send messages to job applicants" do
   let(:organisation) { create(:school) }
   let(:publisher) { create(:publisher, organisations: [organisation]) }
   let(:vacancy) { create(:vacancy, :live, organisations: [organisation]) }
@@ -17,7 +17,7 @@ RSpec.describe "Publishers can send messages to job applicants", type: :system d
       expect(page).to have_link("Print this page")
       expect(page).to have_link("Send message to candidate")
       expect(page).to have_text("If a candidate responds with their pre-interview documentation")
-      expect(page).not_to have_css("textarea")
+      expect(page).to have_no_css("textarea")
       expect(page).to have_text("No messages have been sent yet.")
     end
 
@@ -31,9 +31,9 @@ RSpec.describe "Publishers can send messages to job applicants", type: :system d
       expect(page).to have_button("Send message")
       expect(page).to have_link("Cancel")
       expect(page).to have_text("How will this message be sent?")
-      expect(page).not_to have_link("Print this page")
-      expect(page).not_to have_link("Send message to candidate")
-      expect(page).not_to have_text("If a candidate responds with their pre-interview documentation")
+      expect(page).to have_no_link("Print this page")
+      expect(page).to have_no_link("Send message to candidate")
+      expect(page).to have_no_text("If a candidate responds with their pre-interview documentation")
     end
 
     it "allows publisher to send a message to the job applicant" do
@@ -73,7 +73,7 @@ RSpec.describe "Publishers can send messages to job applicants", type: :system d
       expect(page).to have_text("Previous message content")
       expect(page).to have_text("Regarding application: #{vacancy.job_title}")
       expect(page).to have_text(message.created_at.strftime("%d %B %Y at %I:%M %p"))
-      expect(page).not_to have_text("No messages have been sent yet.")
+      expect(page).to have_no_text("No messages have been sent yet.")
     end
 
     it "allows sending additional messages" do
