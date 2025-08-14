@@ -27,6 +27,9 @@ FactoryBot.define do
       allegations { false }
       not_fit_to_practice { false }
       able_to_undertake_role { true }
+      under_investigation_details { Faker::Lorem.sentence }
+      warning_details { Faker::Lorem.sentence }
+      unable_to_undertake_reason { Faker::Lorem.sentence }
 
       punctuality { "outstanding" }
       working_relationships { "outstanding" }
