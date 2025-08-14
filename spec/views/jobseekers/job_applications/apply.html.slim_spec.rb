@@ -11,9 +11,7 @@ RSpec.describe "jobseekers/job_applications/apply" do
   let(:form) { Jobseekers::JobApplication::PreSubmitForm.new(completed_steps:, all_steps:) }
 
   before do
-    without_partial_double_verification do
-      allow(view).to receive_messages(current_jobseeker:, vacancy:, job_application:)
-    end
+    allow(view).to receive_messages(current_jobseeker:, vacancy:, job_application:)
     assign :job_application, job_application
     assign :form, form
 

@@ -64,9 +64,11 @@ class Vacancy < ApplicationRecord
   enum :listed_elsewhere, { listed_paid: 0, listed_free: 1, listed_mix: 2, not_listed: 3, listed_dont_know: 4 }
   enum :start_date_type, { specific_date: 0, date_range: 1, other: 2, undefined: 3, asap: 4 }
 
+  # These are set when enable_job_applications is false. email is a legacy value no longer settable from front-end 24/7/2025
+  # cannot be validated as this is asked as a separate question from enable_job_applications
   enum :receive_applications, { email: 0, website: 1, uploaded_form: 2 }
-  enum :extension_reason, { no_applications: 0, didnt_find_right_candidate: 1, other_extension_reason: 2 }
 
+  enum :extension_reason, { no_applications: 0, didnt_find_right_candidate: 1, other_extension_reason: 2 }
   enum :religion_type, { no_religion: 0, other_religion: 1, catholic: 2 }
 
   belongs_to :publisher, optional: true
@@ -130,15 +132,6 @@ class Vacancy < ApplicationRecord
   scope :search_by_location, ->(location_query, radius_in_miles, polygon:, sort_by_distance:) { vacancy_location_query(location_query, radius_in_miles, polygon: polygon, sort_by_distance: sort_by_distance) }
   extend VacancyFulTextSearchQueryModule
   scope :search_by_full_text, ->(query) { vacancy_full_text_search_query(query) }
-
-  # effectively we have two different types of vacancy - external ones and internal ones
-  # these require seperate validaqtion rules - internal ones are built up over time by a user,
-  # so it is much harder to validate them at the model level.
-  # External ones are complete so they can be validated at this level (and have extra properties)
-  # the ExternalVacancyValidator tries to do this (by checking presence of certain fields), but it's really a separate type.
-  validates :external_reference,
-            uniqueness: { scope: :publisher_ats_api_client_id },
-            if: -> { publisher_ats_api_client_id.present? && external_reference.present? }
 
   validates :slug, presence: true
   validates :organisations, presence: true
