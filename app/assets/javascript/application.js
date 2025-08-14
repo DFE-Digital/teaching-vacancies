@@ -8,13 +8,12 @@ import $ from 'jquery';
 
 import { Application } from '@hotwired/stimulus';
 import Rails from 'rails-ujs';
+// required to support images in trix editor
+import * as ActiveStorage from '@rails/activestorage';
 import { initMojFrontEnd } from './init-moj-front-end';
 
 import 'trix';
 import '@rails/actiontext';
-
-// required to support images in trix editor
-import * as ActiveStorage from '@rails/activestorage';
 
 // view components
 import CookiesBannerController from './components/cookiesBanner/enhance';
