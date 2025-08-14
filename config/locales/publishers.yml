@@ -550,6 +550,10 @@ en:
         update_application_status: Update application status
         interviewing_status:
           pre_interview_checks: Pre-interview checks
+        messages:
+          create:
+            success: Message sent successfully
+            failure: Message could not be sent
         header:
           status_heading: Applicant status
           tabs:
