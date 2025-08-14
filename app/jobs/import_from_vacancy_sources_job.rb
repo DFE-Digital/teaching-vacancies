@@ -3,7 +3,6 @@ class ImportFromVacancySourcesJob < ApplicationJob
     Vacancies::Import::Sources::Broadbean,
     Vacancies::Import::Sources::Every,
     Vacancies::Import::Sources::Fusion,
-    Vacancies::Import::Sources::MyNewTerm,
     Vacancies::Import::Sources::VacancyPoster,
     Vacancies::Import::Sources::Ventrus,
   ].freeze
