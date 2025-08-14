@@ -28,9 +28,9 @@
       - @messages.each do |message|
         .govuk-summary-card
           .govuk-summary-card__title-wrapper
-            h3.govuk-summary-card__title 
+            h3.govuk-summary-card__title
               = "#{message.sender.given_name} #{message.sender.family_name} <#{message.sender.email}>"
           .govuk-summary-card__content
-            p.govuk-body class="govuk-!-font-weight-bold" = "Date: #{message.created_at&.strftime("%d %B %Y at %I:%M %p")}"
+            p.govuk-body class="govuk-!-font-weight-bold" = "Date: #{message.created_at&.strftime('%d %B %Y at %I:%M %p')}"
             p.govuk-body class="govuk-!-font-weight-bold" = message.conversation.title
-            div.govuk-body class="message-content" = simple_format(message.content)
+            p.govuk-body class="message-content" = simple_format(message.content)

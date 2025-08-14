@@ -442,7 +442,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_14_112047) do
   end
 
   create_table "messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.text "content"
+    t.text "content", null: false
     t.string "sender_type", null: false
     t.uuid "sender_id", null: false
     t.uuid "conversation_id", null: false
