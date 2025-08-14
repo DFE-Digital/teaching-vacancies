@@ -16,6 +16,6 @@
   - t.with_navigation_item text: "Messages", link: organisation_job_job_application_path(@vacancy.id, @job_application.id, tab: "messages"), active: (params[:tab] == "messages")
 
 - if params[:tab] == "messages"
-  = render "messages", job_application: @job_application, vacancy: @vacancy
+  = render "messages", job_application: @job_application, vacancy: @vacancy, message: @message, messages: @messages
 - else
   = render "application_details_and_notes", allow_edit: false, job_application: @job_application, vacancy: @vacancy
