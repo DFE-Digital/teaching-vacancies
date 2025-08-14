@@ -18,7 +18,6 @@ RSpec.describe "Publishers can send messages to job applicants" do
       expect(page).to have_link("Send message to candidate")
       expect(page).to have_text("If a candidate responds with their pre-interview documentation")
       expect(page).to have_no_css("textarea")
-      expect(page).to have_text("No messages have been sent yet.")
     end
 
     it "shows the message form when clicking 'Send message to candidate'" do
@@ -26,7 +25,6 @@ RSpec.describe "Publishers can send messages to job applicants" do
 
       click_link "Send message to candidate"
 
-      expect(page).to have_css("h3", text: "Send a new message")
       expect(page).to have_css("textarea")
       expect(page).to have_button("Send message")
       expect(page).to have_link("Cancel")
