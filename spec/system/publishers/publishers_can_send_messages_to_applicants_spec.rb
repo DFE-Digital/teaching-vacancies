@@ -10,6 +10,8 @@ RSpec.describe "Publishers can send messages to job applicants" do
     login_publisher(publisher: publisher, organisation: organisation)
   end
 
+  after { logout }
+
   context "when viewing a job application messages tab" do
     it "shows the correct interface by default" do
       visit organisation_job_job_application_path(vacancy.id, job_application.id, tab: "messages")
@@ -17,7 +19,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
       expect(page).to have_link("Print this page")
       expect(page).to have_link("Send message to candidate")
       expect(page).to have_text("If a candidate responds with their pre-interview documentation")
-      expect(page).to have_no_css("textarea")
+      expect(page).to have_no_css(".trix-content")
     end
 
     it "shows the message form when clicking 'Send message to candidate'" do
@@ -25,7 +27,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
 
       click_link "Send message to candidate"
 
-      expect(page).to have_css("textarea")
+      expect(page).to have_css(".trix-content")
       expect(page).to have_button("Send message")
       expect(page).to have_link("Cancel")
       expect(page).to have_text("How will this message be sent?")
@@ -34,13 +36,13 @@ RSpec.describe "Publishers can send messages to job applicants" do
       expect(page).to have_no_text("If a candidate responds with their pre-interview documentation")
     end
 
-    it "allows publisher to send a message to the job applicant" do
+    it "allows publisher to send a message to the job applicant", :js do
       visit organisation_job_job_application_path(vacancy.id, job_application.id, tab: "messages")
 
       click_link "Send message to candidate"
 
       message_content = "Hi John, I hope you're well. Just a quick reminder to complete your declaration form."
-      fill_in "publishers_job_application_messages_form[content]", with: message_content
+      fill_in_trix_editor "message_content", with: message_content
 
       click_button "Send message"
 
@@ -60,7 +62,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
     end
   end
 
-  context "when messages already exist" do
+  context "when messages already exist", :js do
     let!(:conversation) { create(:conversation, job_application: job_application) }
     let!(:message) { create(:message, conversation: conversation, sender: publisher, content: "Previous message content") }
 
@@ -80,7 +82,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
       click_link "Send message to candidate"
 
       new_message_content = "This is a follow-up message."
-      fill_in "publishers_job_application_messages_form[content]", with: new_message_content
+      fill_in_trix_editor "message_content", with: new_message_content
 
       click_button "Send message"
 

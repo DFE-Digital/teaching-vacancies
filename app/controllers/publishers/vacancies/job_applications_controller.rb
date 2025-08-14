@@ -21,7 +21,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     redirect_to organisation_job_job_application_terminal_path(vacancy.id, @job_application) if @job_application.withdrawn?
 
     @notes_form = Publishers::JobApplication::NotesForm.new
-    @message_form = Publishers::JobApplication::MessagesForm.new
+    @message = Message.new
     @messages = @job_application.conversations.includes(:messages).flat_map(&:messages).select { |m| m.created_at.present? }
 
     raise ActionController::RoutingError, "Cannot view a draft application" if @job_application.draft?
