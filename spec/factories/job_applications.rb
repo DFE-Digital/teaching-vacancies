@@ -192,6 +192,16 @@ FactoryBot.define do
     status { :interviewing }
   end
 
+  trait :status_unsuccessful_interview do
+    transient do
+      submitted_at { 4.days.ago }
+      interviewing_at { 2.days.ago }
+      unsuccessful_interview_at { 1.day.ago }
+    end
+
+    status { :unsuccessful_interview }
+  end
+
   trait :with_baptism_certificate do
     following_religion { true }
     religious_reference_type { :baptism_certificate }

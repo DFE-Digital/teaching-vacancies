@@ -3,7 +3,7 @@ class VacancyTabsPresenter
     submitted: %w[submitted reviewed],
     unsuccessful: %w[unsuccessful withdrawn],
     shortlisted: %w[shortlisted],
-    interviewing: %w[interviewing],
+    interviewing: %w[interviewing unsuccessful_interview],
     offered: %w[offered declined],
   }.stringify_keys
 

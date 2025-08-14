@@ -5,7 +5,7 @@ en:
         referees/can_give_reference_form:
           attributes:
             can_give_reference:
-              inclusion: Select yes if you can give the candidate a reference
+              inclusion: Select yes if you can provide the candidate with a reference
         referees/can_share_reference_form:
           attributes:
             is_reference_sharable:
@@ -13,15 +13,15 @@ en:
         referees/reference_information_form:
           attributes:
             under_investigation:
-              inclusion: Select yes if the applicant is currently under investigation for any matter
+              inclusion: Select yes if the candidate is currently under investigation for any matter
             warnings:
-              inclusion: Select yes if there any warnings on the applicant’s record
+              inclusion: Select yes if there any warnings on the candidate’s record
             allegations:
               inclusion: Select yes if you aware of any allegations or concerns that have been raised about the candidate
             not_fit_to_practice:
-              inclusion: Select yes if the applicant has been investigated for, or been found not fit to practice
+              inclusion: Select yes if the candidate has been investigated for, or been found not fit to practice
             able_to_undertake_role:
-              inclusion: Select yes if the applicant has the ability and is suitable to undertake this role
+              inclusion: Select yes if the candidate has the ability and is suitable to undertake this role
             unable_to_undertake_reason:
               blank: Please enter your concerns
             warning_details:
@@ -110,8 +110,8 @@ en:
     label:
       referees_can_give_reference_form:
         can_give_reference_options:
-          true: Yes, I can give them a reference
-          false: No, I am unable to give them a reference
+          true: Yes, I can provide a reference
+          false: No, I am unable to provide a reference
       referees_can_share_reference_form:
         is_reference_sharable_options:
           true: Yes, if they request it
@@ -127,7 +127,6 @@ en:
           "1": I confirm the answers given in this form have been provided in good faith and are correct to the best of my knowledge and belief.
 
       referees_employment_reference_form:
-        how_do_you_know_the_candidate: How long have you known the candidate and in what capacity?
         currently_employed_options:
           true: "Yes"
           false: "No"
@@ -137,7 +136,8 @@ en:
         would_reemploy_any_options:
           true: "Yes"
           false: "No"
-        reason_for_leaving: Reason for leaving/considering leaving your employment
+        how_do_you_know_the_candidate: How long have you known the candidate and in what capacity?
+        reason_for_leaving: Reason for leaving/considering leaving your organisation
         would_reemploy_current_reason: Please give reasons for your answer
         would_reemploy_any_reason: Please give reasons for your answer
 
@@ -192,34 +192,34 @@ en:
           *rating_options
         leadership_options:
           *rating_options
+
     legend:
       referees_can_give_reference_form:
-        can_give_reference: Can you give a reference for %{name}?
+        can_give_reference: Can you provide a reference for %{name}?
 
       referees_can_share_reference_form:
         is_reference_sharable: Can your reference be shared with %{name}?
 
       referees_employment_reference_form:
-        employment_start_date: Applicants employment start date
-        employment_end_date: Applicants employment end date
-        currently_employed: Is the applicant currently employed at this organisation?
-        would_reemploy_current: Would you re-employ the applicant in the same job as they currently hold or held?
-        would_reemploy_any: Would you re-employ the applicant in any role within your organisation?
-        how_do_you_know_the_candidate: How long have you known the candidate and in what capacity?
+        employment_start_date: When did the candidate start working at your organisation?
+        employment_end_date: Candidates employment end date
+        currently_employed: Is the candidate currently employed at this organisation?
+        would_reemploy_current: Would you re-employ the candidate in the same job as they currently hold or held?
+        would_reemploy_any: Would you re-employ the candidate in any role within your organisation?
 
       referees_reference_information_form:
         under_investigation: >-
-          Is the applicant currently under investigation for any matter (incl. conduct, capability, or performance) under any of your employment policies?
-        warnings: Are there any warnings on the applicant’s record (Disciplinary, Performance, or Absence related) that have not been disposed of?
+          Is the candidate currently under investigation for any matter (incl. conduct, capability, or performance) under any of your organisation policies?
+        warnings: Are there any warnings on the candidate’s record (disciplinary, performance, or absence related) that have not been disposed of?
         allegations: >-
-          Are you aware of any allegations or concerns that have been raised (whether formal or informal) about the applicant that relate to any
-          safeguarding issues/ or the applicant’s behaviour towards adults at risk and/or children?
+          Are you aware of any allegations or concerns that have been raised (whether formal or informal) about the candidate that relate to any
+          safeguarding issues/ or the candidate’s behaviour towards adults at risk and/or children?
         not_fit_to_practice: >-
-          If the individual is employed in a position where they are subject to a fit and proper persons check,
+          If the candidate is employed in a position where they are subject to a fit and proper persons check,
           have they been investigated for, or been found not fit to practice?
         able_to_undertake_role: >-
           To the best of your knowledge and with reference to the attached job description and person specification,
-          are you satisfied that the applicant has the ability and is suitable to undertake this role?
+          are you satisfied that the candidate has the ability and is suitable to undertake this role?
 
       referees_how_would_you_rate_form1:
         punctuality: Punctuality/timekeeping

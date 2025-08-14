@@ -43,6 +43,7 @@ RSpec.describe "publishers/vacancies/job_applications/tag" do
 
   describe "form status options" do
     context "when job applications have status submitted" do
+      let(:origin) { "submitted" }
       let(:job_applications) { build_stubbed_list(:job_application, 3, :status_submitted, vacancy:) }
 
       %i[unsuccessful shortlisted interviewing offered].each do |status|
@@ -53,6 +54,7 @@ RSpec.describe "publishers/vacancies/job_applications/tag" do
     end
 
     context "when job applications have status shortlisted" do
+      let(:origin) { "shortlisted" }
       let(:job_applications) { build_stubbed_list(:job_application, 3, :status_shortlisted, vacancy:) }
 
       %i[unsuccessful interviewing offered].each do |status|
@@ -63,9 +65,10 @@ RSpec.describe "publishers/vacancies/job_applications/tag" do
     end
 
     context "when job applications have status interviewing" do
+      let(:origin) { "interviewing" }
       let(:job_applications) { build_stubbed_list(:job_application, 3, :status_interviewing, vacancy:) }
 
-      %i[unsuccessful offered].each do |status|
+      %i[unsuccessful-interview offered].each do |status|
         it "shows a radio button for status '#{status}'" do
           expect(rendered).to have_css("#publishers-job-application-tag-form-status-#{status}-field")
         end

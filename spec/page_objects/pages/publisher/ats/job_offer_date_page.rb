@@ -4,7 +4,7 @@ module PageObjects
       module Ats
         class OfferDateField < SitePrism::Section
           def self.selector(field)
-            %(input[name="publishers_job_application_tag_form[#{field}]"])
+            %(input[name="publishers_job_application_offered_form[#{field}]"])
           end
 
           element :day, selector("offered_at(3i)")

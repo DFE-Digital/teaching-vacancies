@@ -29,7 +29,8 @@ RSpec.describe "Publishers can select a job application for interview" do
       end
 
       it "displays an error" do
-        expect(referee_can_give_reference_page.errors.map(&:text)).to eq(["Select yes if you can give the candidate a reference"])
+        expect(referee_can_give_reference_page.errors.map(&:text))
+          .to eq(["Select yes if you can provide the candidate with a reference"])
       end
     end
 
