@@ -12,7 +12,7 @@
         = govuk_button_link_to t("buttons.update_application_status"), tag_organisation_job_job_applications_path(@vacancy.id, params: { publishers_job_application_tag_form: { origin: tab_name(@job_application.status), job_applications: [@job_application.id] } }), class: "govuk-button--secondary"
 
 = tabs do |t|
-  - t.with_navigation_item text: "Application Details & Notes", link: organisation_job_job_application_path(@vacancy.id, @job_application.id, tab: "details"), active: (params[:tab].blank? || params[:tab] == "details")
+  - t.with_navigation_item text: "Application Details & Notes", link: organisation_job_job_application_path(@vacancy.id, @job_application.id, tab: "details"), active: params[:tab].blank? || params[:tab] == "details"
   - t.with_navigation_item text: "Messages", link: organisation_job_job_application_path(@vacancy.id, @job_application.id, tab: "messages"), active: (params[:tab] == "messages")
 
 - if params[:tab] == "messages"

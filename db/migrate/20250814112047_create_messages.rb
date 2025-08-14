@@ -1,7 +1,7 @@
 class CreateMessages < ActiveRecord::Migration[7.2]
   def change
     create_table :messages, id: :uuid, default: -> { "gen_random_uuid()" } do |t|
-      t.text :content
+      t.text :content, null: false
       t.string :sender_type, null: false
       t.uuid :sender_id, null: false
       t.uuid :conversation_id, null: false
