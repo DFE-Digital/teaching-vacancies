@@ -2,8 +2,14 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   include Jobseekers::QualificationFormConcerns
   include DatesHelper
 
-  before_action :set_job_application, only: %i[show download_pdf download_application_form pre_interview_checks]
+  FORMS = {
+    "TagForm" => Publishers::JobApplication::TagForm,
+    "OfferedForm" => Publishers::JobApplication::OfferedForm,
+    "DeclinedForm" => Publishers::JobApplication::DeclinedForm,
+    "FeedbackForm" => Publishers::JobApplication::FeedbackForm,
+  }.freeze
 
+  before_action :set_job_application, only: %i[show download_pdf download_application_form pre_interview_checks]
   before_action :set_job_applications, only: %i[index tag]
 
   def index
@@ -12,13 +18,11 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def show
-    redirect_to organisation_job_job_application_terminal_path(vacancy.id, @job_application) if @job_application.terminal_status?
+    redirect_to organisation_job_job_application_terminal_path(vacancy.id, @job_application) if @job_application.withdrawn?
 
     @notes_form = Publishers::JobApplication::NotesForm.new
 
     raise ActionController::RoutingError, "Cannot view a draft application" if @job_application.draft?
-
-    @job_application.reviewed! if @job_application.submitted?
   end
 
   def download_pdf
@@ -47,7 +51,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def tag
-    with_valid_tag_form do |form|
+    with_valid_form do |form|
       case params["target"]
       when "download" then download_selected(form.job_applications)
       when "export"   then export_selected(form.job_applications)
@@ -60,10 +64,11 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def update_tag
-    with_valid_tag_form(validate_status: true) do |form|
+    with_valid_form(validate_status: true) do |form|
       case form.status
       when "interviewing" then redirect_to_references_and_self_disclosure(form.job_applications)
       when "offered"      then render_offered_form(form.job_applications, form.origin)
+      when "unsuccessful_interview" then render_unsuccessful_interview_form(form.job_applications, form.origin)
       else
         form.job_applications.each { it.update!(form.attributes) }
         redirect_to organisation_job_job_applications_path(vacancy.id, anchor: form.origin)
@@ -72,7 +77,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def offer
-    with_valid_tag_form do |form|
+    with_valid_form do |form|
       form.job_applications.find_each { it.update!(form.attributes) }
       redirect_to organisation_job_job_applications_path(vacancy.id, anchor: form.origin)
     end
@@ -92,11 +97,11 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     @job_applications = vacancy.job_applications.not_draft
   end
 
-  def with_valid_tag_form(validate_status: false)
-    form_class = Publishers::JobApplication::TagForm
+  def with_valid_form(validate_status: false)
+    form_class = FORMS.fetch(params["form_name"], Publishers::JobApplication::TagForm)
     form_params = params
                     .fetch(ActiveModel::Naming.param_key(form_class), {})
-                    .permit(:origin, :status, :offered_at, :declined_at, { job_applications: [] })
+                    .permit(:origin, :status, :offered_at, :declined_at, :interview_feedback_received, :interview_feedback_received_at, { job_applications: [] })
     form_params[:job_applications] = vacancy.job_applications.where(id: Array(form_params[:job_applications]).compact_blank)
     form_params[:validate_status] = validate_status
 
@@ -113,6 +118,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     in { status: }      then render "tag"
     in { offered_at: }  then render "offered_date"
     in { declined_at: } then render "declined_date"
+    in { interview_feedback_received_at: } then render "feedback_date"
     else
       flash[form.origin] = form.errors.full_messages
       redirect_to organisation_job_job_applications_path(vacancy.id, anchor: form.origin)
@@ -146,12 +152,17 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def render_declined_form(job_applications, origin)
-    @form = Publishers::JobApplication::TagForm.new(job_applications:, origin:, status: "declined")
+    @form = Publishers::JobApplication::DeclinedForm.new(job_applications:, origin:, status: "declined")
     render "declined_date"
   end
 
   def render_offered_form(job_applications, origin)
-    @form = Publishers::JobApplication::TagForm.new(job_applications:, origin:, status: "offered")
+    @form = Publishers::JobApplication::OfferedForm.new(job_applications:, origin:, status: "offered")
     render "offered_date"
+  end
+
+  def render_unsuccessful_interview_form(job_applications, origin)
+    @form = Publishers::JobApplication::FeedbackForm.new(job_applications:, origin:, status: "unsuccessful_interview")
+    render "feedback_date"
   end
 end

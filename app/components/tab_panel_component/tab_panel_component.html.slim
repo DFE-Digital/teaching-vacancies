@@ -22,8 +22,7 @@
             - @candidates.each_with_index do |application, index|
               - body.with_row(html_attributes: { class: "application-#{application.status}" }) do |row|
                 - if @form.present?
-                  - row.with_cell(text: tag.div(f.govuk_check_box(:job_applications, application.id, link_errors: index.zero?, label: { hidden: true, text: "Select #{application.name}" }),
-                                    class: "govuk-checkboxes--small"))
+                  - row.with_cell(text: candidate_checkbox(application, index, f))
                 - @displayed_fields.each do |field|
                   - row.with_cell(text: display(application, field), html_attributes: { class: field.to_s })
 

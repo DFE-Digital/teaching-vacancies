@@ -10,7 +10,11 @@ span.govuk-hint = t("publishers.vacancies.job_applications.update_application_st
   - @form.job_applications.each do |ja|
     = f.hidden_field :job_applications, multiple: true, value: ja.id
 
-  = f.govuk_date_field :offered_at, label: { size: "s" }, legend: { size: "l" }
+  = f.govuk_radio_buttons_fieldset :interview_feedback_received, legend: { size: "l" }
+    = f.govuk_radio_button :interview_feedback_received, "true", label: { text: "Yes" } do
+      = f.govuk_date_field :interview_feedback_received_at, label: { size: "s" }, legend: { size: "s" }
+
+    = f.govuk_radio_button :interview_feedback_received, "false", label: { text: "No" }
 
   .govuk-button-group
     = f.govuk_submit t("buttons.continue")

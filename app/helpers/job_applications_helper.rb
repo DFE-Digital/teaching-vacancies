@@ -6,6 +6,7 @@ module JobApplicationsHelper
     unsuccessful: "not considering",
     withdrawn: "withdrawn",
     interviewing: "interviewing",
+    unsuccessful_interview: "not considering",
     offered: "job offered",
     declined: "job declined",
   }.freeze
@@ -19,6 +20,7 @@ module JobApplicationsHelper
     unsuccessful: "unsuccessful",
     withdrawn: "withdrawn",
     interviewing: "interviewing",
+    unsuccessful_interview: "unsuccessful",
     action_required: "action required",
     offered: "offered",
     declined: "declined",
@@ -34,6 +36,7 @@ module JobApplicationsHelper
     withdrawn: "yellow",
     action_required: "orange",
     interviewing: "green",
+    unsuccessful_interview: "red",
     offered: "pink",
     declined: "grey",
   }.freeze
@@ -42,13 +45,9 @@ module JobApplicationsHelper
     VacancyTabsPresenter.tab_for(job_application_status)
   end
 
-  def tag_status_options(job_application_status)
-    case job_application_status
-    when "shortlisted"  then %i[unsuccessful interviewing offered]
-    when "interviewing" then %i[unsuccessful offered]
-    else
-      %i[unsuccessful shortlisted interviewing offered]
-    end
+  def tag_status_options(tab_origin)
+    job_application_status = VacancyTabsPresenter::TABS_DEFINITION[tab_origin].first
+    JobApplication.next_statuses(job_application_status) - %w[withdrawn]
   end
 
   def job_application_qualified_teacher_status_info(job_application)

@@ -12,13 +12,14 @@ h1.govuk-heading-l class="govuk-!-display-inline"
         li = ja.name
 
 = form_with(model: @form, url: update_tag_organisation_job_job_applications_path(vacancy.id)) do |f|
+  = hidden_field_tag :form_name, @form.name
   = f.govuk_error_summary
   = f.hidden_field :origin, value: @form.origin
   - @form.job_applications.each do |ja|
     = f.hidden_field :job_applications, multiple: true, value: ja.id
 
   = f.govuk_radio_buttons_fieldset :status, legend: nil do
-    - options = tag_status_options(@form.job_applications.first.status)
+    - options = tag_status_options(@form.origin)
     - options[..-2].each do |status|
       = f.govuk_radio_button :status, status
     = f.govuk_radio_divider
@@ -26,3 +27,4 @@ h1.govuk-heading-l class="govuk-!-display-inline"
 
   .govuk-button-group
     = f.govuk_submit t("buttons.save_and_continue"), class: "update-status"
+    = govuk_button_link_to t("buttons.cancel"), organisation_job_job_applications_path(vacancy.id, anchor: @form.origin), secondary: true

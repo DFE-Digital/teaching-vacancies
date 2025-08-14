@@ -54,8 +54,31 @@ class JobApplication < ApplicationRecord
     non_catholic: 11,
   }
 
+  # basic state machine definition
+  # rubocop:disable Layout/HashAlignment
+  STATUS_TRANSITIONS = {
+    # initial transition, for current tests that have invalid status transitions.
+    # this is temporary while we revisit tests
+    nil            => %w[draft submitted reviewed shortlisted unsuccessful withdrawn interviewing offered declined unsuccessful_interview],
+
+    # initial transition, after all tests have been fixed
+    # nil          => %w[draft]
+
+    "draft"        => %w[submitted],
+    "submitted"    => %w[unsuccessful shortlisted interviewing offered withdrawn],
+    # reviewed is being phased out and is here to support existing data
+    "reviewed"     => %w[unsuccessful shortlisted interviewing offered withdrawn],
+    "shortlisted"  => %w[unsuccessful interviewing offered withdrawn],
+    "interviewing" => %w[unsuccessful_interview offered withdrawn],
+    "offered"      => %w[declined withdrawn],
+  }.freeze
+  # rubocop:enable Layout/HashAlignment
+
+  # end of the road statuses for job application we cannot further update status at the point
+  TERMINAL_STATUSES = %w[withdrawn declined unsuccessful_interview].freeze
+
   # If you want to add a status, be sure to add a `status_at` column to the `job_applications` table
-  enum :status, { draft: 0, submitted: 1, reviewed: 2, shortlisted: 3, unsuccessful: 4, withdrawn: 5, interviewing: 6, offered: 7, declined: 8 }, default: 0
+  enum :status, { draft: 0, submitted: 1, reviewed: 2, shortlisted: 3, unsuccessful: 4, withdrawn: 5, interviewing: 6, offered: 7, declined: 8, unsuccessful_interview: 9 }, default: 0
   array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
 
   RELIGIOUS_REFERENCE_TYPES = { referee: 1, baptism_certificate: 2, baptism_date: 3, no_referee: 4 }.freeze
@@ -90,13 +113,17 @@ class JobApplication < ApplicationRecord
   scope :after_submission, -> { where.not(status: :draft) }
   scope :draft, -> { where(status: "draft") }
 
-  # end of the road statuses for job application we cannot further update status at the point
-  TERMINAL_STATUSES = %w[withdrawn declined].freeze
   scope :active_for_selection, -> { where.not(status: %w[draft] + TERMINAL_STATUSES) }
 
   validates :email_address, email_address: true, if: -> { email_address_changed? } # Allows data created prior to validation to still be valid
 
   has_one_attached :baptism_certificate, service: :amazon_s3_documents
+
+  validate :status_transition, if: -> { status_changed? }
+
+  def self.next_statuses(from_status)
+    STATUS_TRANSITIONS.fetch(from_status, [])
+  end
 
   def terminal_status?
     status.in?(TERMINAL_STATUSES)
@@ -136,6 +163,14 @@ class JobApplication < ApplicationRecord
   end
 
   private
+
+  def status_transition
+    from, to = changes[:status]
+
+    if self.class.next_statuses(from).exclude?(to)
+      errors.add(:status, "Invalid status transition from: #{from} to: #{to}")
+    end
+  end
 
   # predicate method used to ignore the automatic update of `offered_at` and `declined_at` as the are manually entered by publishers
   def ignore_for_offered_and_declined?
