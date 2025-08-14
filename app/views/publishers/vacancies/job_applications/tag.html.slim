@@ -27,3 +27,4 @@ h1.govuk-heading-l class="govuk-!-display-inline"
 
   .govuk-button-group
     = f.govuk_submit t("buttons.save_and_continue"), class: "update-status"
+    = govuk_button_link_to t("buttons.cancel"), organisation_job_job_applications_path(vacancy.id, anchor: @form.origin), secondary: true
