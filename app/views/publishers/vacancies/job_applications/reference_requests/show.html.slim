@@ -14,6 +14,8 @@
             = govuk_tag(text: t("reference_requests.declined.status"), colour: t("reference_requests.declined.colour"))
         - else
           = govuk_tag(text: t("reference_requests.pending.status"), colour: t("reference_requests.pending.colour"))
+      - elsif @reference_request.marked_as_complete?
+        = govuk_tag(text: t("reference_requests.completed.status"), colour: t("reference_requests.completed.colour"))
       - else
         = govuk_tag(text: t("reference_requests.created.status"), colour: t("reference_requests.created.colour"))
 
