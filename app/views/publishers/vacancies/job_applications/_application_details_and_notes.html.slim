@@ -20,20 +20,4 @@
           - navigation.with_anchor text: t("jobseekers.job_applications.build.declarations.heading"), href: "#declarations"
 
   - r.with_sidebar do
-    .govuk-summary-card
-      .govuk-summary-card__title-wrapper
-        h2.govuk-summary-card__title = t("publishers.vacancies.job_applications.show.notes.heading")
-
-      .govuk-summary-card__content
-        - job_application.notes.each do |note|
-          p.govuk-body-m = note.content
-          p.govuk-body-s By #{note.publisher.given_name} #{note.publisher.family_name}, #{note.created_at}
-          = govuk_link_to(t("buttons.delete"), organisation_job_job_application_note_path(vacancy.id, job_application, note), method: :delete)
-          hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
-
-        = form_for @notes_form, url: organisation_job_job_application_notes_path(vacancy.id, job_application), html: { data: { "show-hidden-content-target": "content" } } do |f|
-          = f.govuk_error_summary
-
-          = f.govuk_text_area :content, rows: 5, max_chars: 150
-
-          = f.govuk_submit t("buttons.save_note")
+    = render PublisherNotesOnJobApplicationComponent.new(job_application: job_application, vacancy: vacancy, notes_form: @notes_form)

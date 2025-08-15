@@ -33,6 +33,12 @@ RSpec.describe "Jobseekers can manage their job applications" do
         create(:job_application, :status_interviewing, jobseeker: jobseeker,
                                                        vacancy: build(:vacancy, job_title: "Interviewing Job", organisations: [organisation]))
       end
+      let!(:application_with_action) do
+        create(:job_application, :status_interviewing,
+               self_disclosure_request: build(:self_disclosure_request, :sent),
+               jobseeker: jobseeker,
+               vacancy: build(:vacancy, job_title: "Action Required Job", organisations: [organisation]))
+      end
       let!(:withdrawn_job_application) do
         create(:job_application, :status_withdrawn, jobseeker: jobseeker,
                                                     vacancy: build(:vacancy, job_title: "Withdrawn Job", organisations: [organisation]))
@@ -54,16 +60,21 @@ RSpec.describe "Jobseekers can manage their job applications" do
           end
 
           within ".card-component:nth-child(2)" do
+            expect(page).to have_css(".card-component__header", text: application_with_action.vacancy.job_title)
+            expect(page).to have_css(".card-component__actions", text: "action required")
+          end
+
+          within ".card-component:nth-child(3)" do
             expect(page).to have_css(".card-component__header", text: interviewing_job_application.vacancy.job_title)
             expect(page).to have_css(".card-component__actions", text: "interviewing")
           end
 
-          within ".card-component:nth-child(3)" do
+          within ".card-component:nth-child(4)" do
             expect(page).to have_css(".card-component__header", text: shortlisted_job_application.vacancy.job_title)
             expect(page).to have_css(".card-component__actions", text: "shortlisted")
           end
 
-          within ".card-component:nth-child(4)" do
+          within ".card-component:nth-child(5)" do
             expect(page).to have_css(".card-component__header", text: submitted_job_application.vacancy.job_title)
             within ".card-component__body" do
               dt = find("dt", text: "Submitted")
@@ -72,17 +83,17 @@ RSpec.describe "Jobseekers can manage their job applications" do
             expect(page).to have_css(".card-component__actions", text: "submitted")
           end
 
-          within ".card-component:nth-child(5)" do
+          within ".card-component:nth-child(6)" do
             expect(page).to have_css(".card-component__header", text: unsuccessful_job_application.vacancy.job_title)
             expect(page).to have_css(".card-component__actions", text: "unsuccessful")
           end
 
-          within ".card-component:nth-child(6)" do
+          within ".card-component:nth-child(7)" do
             expect(page).to have_css(".card-component__header", text: withdrawn_job_application.vacancy.job_title)
             expect(page).to have_css(".card-component__actions", text: "withdrawn")
           end
 
-          within ".card-component:nth-child(7)" do
+          within ".card-component:nth-child(8)" do
             expect(page).to have_css(".card-component__header", text: deadline_passed_job_application.vacancy.job_title)
             expect(page).to have_css(".card-component__actions", text: "deadline passed")
           end

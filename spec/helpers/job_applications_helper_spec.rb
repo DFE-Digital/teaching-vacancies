@@ -1,6 +1,68 @@
 require "rails_helper"
 
 RSpec.describe JobApplicationsHelper do
+  describe "#tab_name" do
+    subject { helper.tab_name(status) }
+
+    context "when status reviewed" do
+      let(:status) { "reviewed" }
+
+      it { is_expected.to eq("submitted") }
+    end
+
+    context "when status withdrawn" do
+      let(:status) { "withdrawn" }
+
+      it { is_expected.to eq("unsuccessful") }
+    end
+
+    context "when status declined" do
+      let(:status) { "declined" }
+
+      it { is_expected.to eq("offered") }
+    end
+
+    context "when status any other" do
+      let(:status) { "interviewing" }
+
+      it { is_expected.to eq("interviewing") }
+    end
+  end
+
+  describe "#tag_status_options" do
+    subject { helper.tag_status_options(tab_origin) }
+
+    context "when tab_origin submitted" do
+      let(:tab_origin) { "submitted" }
+
+      it { is_expected.to match_array(%w[unsuccessful shortlisted interviewing offered]) }
+    end
+
+    context "when tab_origin unsuccessful" do
+      let(:tab_origin) { "unsuccessful" }
+
+      it { is_expected.to match_array([]) }
+    end
+
+    context "when tab_origin shortlisted" do
+      let(:tab_origin) { "shortlisted" }
+
+      it { is_expected.to match_array(%w[unsuccessful interviewing offered]) }
+    end
+
+    context "when tab_origin interviewing" do
+      let(:tab_origin) { "interviewing" }
+
+      it { is_expected.to match_array(%w[unsuccessful_interview offered]) }
+    end
+
+    context "when tab_origin offered" do
+      let(:tab_origin) { "offered" }
+
+      it { is_expected.to match_array(%w[declined]) }
+    end
+  end
+
   describe "#job_application_qualified_teacher_status_info" do
     subject { helper.job_application_qualified_teacher_status_info(job_application) }
 

@@ -1,3 +1,5 @@
+require "zip"
+
 class JobApplicationZipBuilder
   def initialize(vacancy:, job_applications:)
     @vacancy = vacancy

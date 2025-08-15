@@ -26,7 +26,7 @@ class DashboardComponent < ApplicationComponent
 
   def view_applicants(vacancy, job_applications_count)
     govuk_link_to(tag.span(t("jobs.manage.view_applicants", count: job_applications_count)) \
-                  + tag.span(" for #{vacancy.job_title}", class: "govuk-visually-hidden"),
+                    + tag.span(" for #{vacancy.job_title}", class: "govuk-visually-hidden"),
                   organisation_job_job_applications_path(vacancy.id),
                   class: "govuk-link--no-visited-state")
   end
