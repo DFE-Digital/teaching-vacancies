@@ -1,0 +1,12 @@
+@import 'govuk-frontend/dist/govuk/helpers/colour';
+
+// Message header styling for jobseeker and hiring staff messages
+.message-header--jobseeker {
+  background-color: govuk-colour('blue') !important;
+  color: govuk-colour('white') !important;
+}
+
+.message-header--staff {
+  background-color: govuk-colour('light-grey') !important;
+  color: govuk-colour('black') !important;
+}

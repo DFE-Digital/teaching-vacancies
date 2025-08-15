@@ -1,0 +1,25 @@
+.govuk-grid-row
+  .govuk-grid-column-full
+    - if @messages.any?
+      / Message composition form (only show when requested and conversation exists)
+      = render "shared/message_form", 
+               message_object: @message, 
+               form_url: jobseekers_job_application_messages_path(@job_application),
+               form_help_text: "How will this message be sent?",
+               form_help_content: "Hiring staff will receive a copy of this message to their email and can also view the message when signed in to their Teaching Vacancies account.",
+               current_user_type: "jobseeker"
+
+      / Action buttons - only show if conversation exists
+      div class="govuk-!-margin-bottom-6"
+        = govuk_button_link_to "Send message to hiring staff", url_for(params.to_unsafe_h.merge(show_form: "true")), class: "govuk-button--secondary" unless params[:show_form] == "true"
+    - else
+      / No messages yet
+      p.govuk-body = "No messages yet. Hiring staff can start a conversation with you here."
+
+    #messages-list
+      - @messages.each do |message|
+        = render "shared/message", 
+                 message: message, 
+                 current_user_type: "jobseeker",
+                 vacancy: vacancy,
+                 job_application: @job_application

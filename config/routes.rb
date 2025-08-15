@@ -115,6 +115,7 @@ Rails.application.routes.draw do
       get :post_submit
       post :withdraw
       resource :feedback, only: %i[create], controller: "job_applications/feedbacks"
+      resources :messages, only: %i[create], controller: "job_applications/messages"
       resources :self_disclosure, only: %i[show update], controller: "job_applications/self_disclosure" do
         get :completed, on: :collection
       end
@@ -405,6 +406,7 @@ Rails.application.routes.draw do
 
       resources :job_applications, only: %i[index show], controller: "publishers/vacancies/job_applications" do
         resources :notes, only: %i[create destroy], controller: "publishers/vacancies/job_applications/notes"
+        resources :messages, only: %i[create], controller: "publishers/vacancies/job_applications/messages"
         resources :reference_requests, only: %i[show update edit], controller: "publishers/vacancies/job_applications/reference_requests" do
           member do
             get :reference_received
