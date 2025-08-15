@@ -6,12 +6,6 @@ send_peak_times_email_reminder:
   class: 'SendPeakTimesEmailReminderJob'
   queue: default
 
-# TODO: uncomment and set the date when ready to send notification
-# send_vacancy_change_notification:
-#   cron: '0 3 1 7 *' # "At 03:00 on 1 of July."
-#   class: 'SendVacancyApplicationChangeJob'
-#   queue: default
-
 #
 # MONTHLY CRON JOBS
 #
