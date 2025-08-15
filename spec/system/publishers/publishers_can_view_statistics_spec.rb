@@ -15,7 +15,7 @@ RSpec.describe "Publishers can view statistics" do
   describe "vacancy stats page" do
     before do
       # This old vacancy shouldn't show up in the visible stats as its too old
-      create(:vacancy, publisher: publisher, organisations: [school], publish_on: 1.year.ago,
+      create(:vacancy, publisher: publisher, organisations: [school], publish_on: 1.year.ago, expiry_date: 1.year.ago,
                        vacancy_analytics: build(:vacancy_analytics,
                                                 referrer_counts: { "Google" => 600, "Magic" => 800 }))
       create(:vacancy, publisher: publisher, organisations: [school],
