@@ -77,9 +77,11 @@ RSpec.configure do |config|
     stub_request(:get, %r{maps.googleapis.com/maps/api/place/autocomplete}).to_return(status: 200, body: '{"predictions": []}', headers: {})
   end
 
-  config.before(:each, geocode: true) do
-    allow(Geocoder).to receive(:search).and_call_original
-    allow(Rails.application.config).to receive(:geocoder_lookup).and_return(:default)
+  config.before do |example|
+    unless example.metadata.fetch(:geocode, false)
+      allow(Geocoder).to receive(:search).and_raise
+      allow_any_instance_of(Geocoding).to receive(:coordinates).and_return(Geocoder::DEFAULT_STUB_COORDINATES)
+    end
   end
 
   config.around(:each, :dfe_analytics) do |example|

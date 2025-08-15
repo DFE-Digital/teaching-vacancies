@@ -11,17 +11,11 @@ class Geocoding
 
   attr_reader :location
 
-  def self.test_coordinates
-    Geocoder::DEFAULT_STUB_COORDINATES
-  end
-
   def initialize(location)
     @location = location
   end
 
   def coordinates
-    return self.class.test_coordinates if Rails.application.config.geocoder_lookup == :test
-
     Rails.cache.fetch([:geocoding, location], expires_in: CACHE_DURATION, skip_nil: true) do
       # 'components: "country:gb"' is used to restrict the results to within the UK.
       # When searching for a location outside the UK, the Google Geocoding API returns the UK centroid coordinates.
@@ -58,8 +52,6 @@ class Geocoding
   end
 
   def postcode_from_coordinates
-    return Geocoder::DEFAULT_LOCATION if Rails.application.config.geocoder_lookup == :test
-
     Rails.cache.fetch([:postcode_from_coords, location], expires_in: CACHE_DURATION, skip_nil: true) do
       result = Geocoder.search(location, lookup: :google).first
       if result.present?

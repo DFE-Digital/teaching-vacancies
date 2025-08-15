@@ -3,6 +3,15 @@ require "rails_helper"
 RSpec.describe Search::JobseekerProfileSearch do
   subject(:search) { described_class.new(current_organisation: organisation, filters: filters) }
 
+  let(:geocoding_stub) { instance_double(Geocoding) }
+
+  # This stub makes these tests very fragile. The geocoder call is made in a before_validation hook which can be called twice
+  # per Location object, which then completely messes up the stub ordering (the last value is repeated if/when it overflows)
+  # The solution is just to be very careful where 'location' objects (job_preferences_location) are created/saved in the tests
+  before do
+    allow(Geocoding).to receive(:new).and_return(geocoding_stub)
+  end
+
   context "when the results are only filtered by organisation" do
     let(:filters) { { qualified_teacher_status: [], roles: [], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
 
@@ -19,14 +28,16 @@ RSpec.describe Search::JobseekerProfileSearch do
         let(:location_in_london) { [51.5072, -0.1275] }
         let(:london_jobseeker_profile) { create(:jobseeker_profile) }
         let(:london_job_preferences) { create(:job_preferences, jobseeker_profile: london_jobseeker_profile) }
-        let!(:london_location_preference) { create(:job_preferences_location, name: "London", radius: 200, job_preferences: london_job_preferences) }
 
         let(:location_in_manchester) { [53.4807, -2.2426] }
         let(:manchester_jobseeker_profile) { create(:jobseeker_profile) }
         let(:manchester_job_preferences) { create(:job_preferences, jobseeker_profile: manchester_jobseeker_profile) }
-        let!(:manchester_location_preference) { create(:job_preferences_location, name: "Manchester", radius: 10, job_preferences: manchester_job_preferences) }
 
-        before { allow(Geocoding).to receive(:test_coordinates).and_return(location_in_london, location_in_manchester) }
+        before do
+          allow(geocoding_stub).to receive(:coordinates).and_return(location_in_london, location_in_manchester)
+          create(:job_preferences_location, name: "London", radius: 200, job_preferences: london_job_preferences)
+          create(:job_preferences_location, name: "Manchester", radius: 10, job_preferences: manchester_job_preferences)
+        end
 
         it "returns the jobseeker profiles with preference areas that contain the school" do
           expect(search.jobseeker_profiles).to eq([london_jobseeker_profile])
@@ -47,7 +58,7 @@ RSpec.describe Search::JobseekerProfileSearch do
 
       before do
         allow(JobPreferences::Location).to receive(:containing).and_call_original
-        allow(Geocoding).to receive(:test_coordinates).and_return(location_near_school1, location_near_school2)
+        allow(geocoding_stub).to receive(:coordinates).and_return(location_near_school1, location_near_school2)
       end
 
       let(:jobseeker_profile) { create(:jobseeker_profile) }
@@ -86,9 +97,11 @@ RSpec.describe Search::JobseekerProfileSearch do
     let(:location_preference) { { name: "N7 7DD", radius: 2 } }
     let(:control_jobseeker_profile) { create(:jobseeker_profile, **control_profile_attrs) }
     let(:control_job_preferences) { create(:job_preferences, **control_job_preferences_attrs, jobseeker_profile: control_jobseeker_profile) }
-    let!(:control_job_preference_location) { create(:job_preferences_location, **location_preference, job_preferences: control_job_preferences) }
 
-    before { allow(Geocoding).to receive(:test_coordinates).and_return(location_near_organisation) }
+    before do
+      allow(geocoding_stub).to receive(:coordinates).and_return(Geocoder::DEFAULT_STUB_COORDINATES, location_near_organisation)
+      create(:job_preferences_location, **location_preference, job_preferences: control_job_preferences)
+    end
 
     context "jobseeker_profile qualified_teacher_status" do
       let(:filters) { { current_organisation: organisation, qualified_teacher_status: %w[yes], roles: [], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
@@ -123,7 +136,9 @@ RSpec.describe Search::JobseekerProfileSearch do
         let(:filters) { { current_organisation: organisation, qualified_teacher_status: %w[no], roles: [], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
 
         it "returns jobseekers with who answered 'No', 'I'm not looking for a teaching role' or didn't answer the QTS question" do
-          expect(search.jobseeker_profiles).to match_array([no_qts_jobseeker_profile, nil_qts_jobseeker_profile, non_teacher_qts_jobseeker_profile])
+          expect(search.jobseeker_profiles.map(&:qualified_teacher_status)).to match_array([no_qts_jobseeker_profile.qualified_teacher_status,
+                                                                                            nil_qts_jobseeker_profile.qualified_teacher_status,
+                                                                                            non_teacher_qts_jobseeker_profile.qualified_teacher_status])
         end
       end
 

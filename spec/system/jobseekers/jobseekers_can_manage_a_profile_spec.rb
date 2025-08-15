@@ -2,9 +2,17 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can manage their profile" do
   let(:jobseeker) { create(:jobseeker) }
+  let(:geocoding_stub) { instance_double(Geocoding) }
+  let(:bexleyheath) { %w[0.14606549011864176 51.457814649098104] }
+  let(:organisation) do
+    create(:school,
+           publishers: [build(:publisher)],
+           geopoint: RGeo::Geographic.spherical_factory(srid: 4326).point(*bexleyheath))
+  end
+  let(:publisher) { organisation.publishers.first }
 
   before do
-    allow(Geocoding).to receive(:new).with(anything).and_call_original
+    allow(Geocoding).to receive(:new).with(anything).and_return(geocoding_stub)
     allow(Geocoding).to receive(:new).with("San Francisco").and_return(instance_double(Geocoding, uk_coordinates?: false))
   end
 
@@ -383,38 +391,25 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
   end
 
-  describe "toggling on and off" do
-    let(:publisher) { organisation.publishers.first }
-
-    let(:organisation) do
-      create(:school,
-             publishers: [build(:publisher)],
-             geopoint: RGeo::Geographic.spherical_factory(srid: 4326).point(*bexleyheath))
+  context "if the profile does not exist" do
+    it "does not appear in search results" do
+      run_with_publisher(publisher) do
+        visit publishers_jobseeker_profiles_path
+        expect(page).not_to have_css(".search-results__item")
+      end
     end
+  end
 
-    let(:bexleyheath) { %w[0.14606549011864176 51.457814649098104] }
-
+  describe "toggling on and off" do
     let!(:profile) { create(:jobseeker_profile, jobseeker:, job_preferences:, active: false) }
 
-    let(:job_preferences) do
-      build(:job_preferences,
-            jobseeker_profile: nil,
-            locations: build_list(:job_preferences_location, 1, radius: 200, job_preferences: nil))
-    end
+    let(:job_preferences) { build(:job_preferences) }
 
+    # beware - bexleyheath here is long/lat which is DB order, however Geocoder API
+    # returns lat/long so we have to reverse the order for the stub call
     before do
-      allow(Geocoding).to receive(:test_coordinates).and_return(bexleyheath)
-    end
-
-    context "if the profile does not exist" do
-      let!(:profile) { nil }
-
-      it "does not appear in search results" do
-        run_with_publisher(publisher) do
-          visit publishers_jobseeker_profiles_path
-          expect(page).not_to have_css(".search-results__item")
-        end
-      end
+      allow(geocoding_stub).to receive(:coordinates).and_return(bexleyheath.reverse)
+      create(:job_preferences_location, radius: 200, job_preferences: job_preferences)
     end
 
     context "if the profile is inactive" do
@@ -513,7 +508,10 @@ RSpec.describe "Jobseekers can manage their profile" do
   end
 
   describe "hiding profile from specific organisations" do
-    let(:bexleyheath) { ["0.14606549011864176", "51.457814649098104"] }
+    before do
+      allow(geocoding_stub).to receive(:coordinates).and_return(bexleyheath.reverse)
+      create(:job_preferences_location, radius: 200, job_preferences: job_preferences)
+    end
 
     let(:bexleyheath_geopoint) do
       RGeo::Geographic.spherical_factory(srid: 4326).point(*bexleyheath)
@@ -539,14 +537,7 @@ RSpec.describe "Jobseekers can manage their profile" do
 
     let!(:profile) { create(:jobseeker_profile, :with_personal_details, jobseeker:, job_preferences:, active: true) }
 
-    let(:job_preferences) do
-      build(:job_preferences,
-            locations: build_list(:job_preferences_location, 1, radius: 200))
-    end
-
-    before do
-      allow(Geocoding).to receive(:test_coordinates).and_return(bexleyheath)
-    end
+    let(:job_preferences) { build(:job_preferences) }
 
     it "allows the jobseeker to hide themselves from specific schools", :js do
       run_with_publisher(permitted_publisher) do
@@ -708,6 +699,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     before do
       login_as(jobseeker, scope: :jobseeker)
       visit jobseekers_profile_path
+      allow(geocoding_stub).to receive_messages(uk_coordinates?: true, coordinates: Geocoder::DEFAULT_STUB_COORDINATES)
     end
 
     after { logout }
