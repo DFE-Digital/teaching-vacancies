@@ -133,15 +133,14 @@ class Vacancy < ApplicationRecord
   scope :search_by_full_text, ->(query) { vacancy_full_text_search_query(query) }
 
   scope :active_in_current_academic_year, lambda {
-    august_31st = Date.current.end_of_year.months_ago(4)
-    academic_year_end = if Date.current >= august_31st
-                          august_31st + 1.year
-                        else
-                          august_31st
-                        end
-    academic_year_start = academic_year_end - 1.year
-    published_in_year = where(publish_on: academic_year_start..academic_year_end)
-    expired_in_year = where(expires_at: academic_year_start..academic_year_end)
+    sept_1st = Date.current.beginning_of_year.months_since(8)
+    academic_year_start = if Date.current < sept_1st
+                            sept_1st - 1.year
+                          else
+                            sept_1st
+                          end
+    published_in_year = where(publish_on: academic_year_start..Date.current)
+    expired_in_year = where(publish_on: ..Date.current, expires_at: academic_year_start..)
     published_in_year.or(expired_in_year)
   }
 
