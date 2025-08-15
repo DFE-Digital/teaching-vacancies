@@ -346,22 +346,32 @@ RSpec.describe Vacancy do
         create(:vacancy, expiry_date: current_sep1, publish_on: current_sep1, job_title: "current_1st_sept")
       end
 
-      context "when between September and December" do
+      context "when between current January and August" do
+        before do
+          travel_to Date.current.beginning_of_year.months_since(6)
+        end
+
+        it "finds current spans ans last august" do
+          expect(Vacancy.active_in_current_academic_year.map(&:job_title)).to contain_exactly("current_year", "spans_2_years", "expired_last_august")
+        end
+      end
+
+      context "when between current September and December" do
         before do
           travel_to Date.current.beginning_of_year.months_since(10)
         end
 
-        it "finds current aug/sept" do
+        it "finds current spans and sep 1" do
           expect(Vacancy.active_in_current_academic_year.map(&:job_title)).to contain_exactly("current_year", "spans_2_years", "current_1st_sept")
         end
       end
 
-      context "when between January and August" do
+      context "when between (next) January and August" do
         before do
           travel_to Date.current.end_of_year.months_since(6)
         end
 
-        it "finds previous aug/sept" do
+        it "finds the same as when in the previous 4 months" do
           expect(Vacancy.active_in_current_academic_year.map(&:job_title)).to contain_exactly("current_year", "spans_2_years", "current_1st_sept")
         end
       end
