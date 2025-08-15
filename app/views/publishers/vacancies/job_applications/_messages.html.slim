@@ -1,11 +1,9 @@
 .govuk-grid-row
   .govuk-grid-column-full
-    / Action buttons
     div class="govuk-!-margin-bottom-6"
       = govuk_button_link_to "Print this page", "#", class: "govuk-button--secondary", "data-controller": "utils", "data-action": "click->utils#print" unless params[:show_form] == "true"
       = govuk_button_link_to "Send message to candidate", url_for(params.to_unsafe_h.merge(show_form: "true")), class: "govuk-button--secondary govuk-!-margin-left-3" unless params[:show_form] == "true"
 
-    / Message composition form (only show when requested)
     - if params[:show_form] == "true"
       div class="govuk-!-margin-top-6"
         = govuk_details summary_text: "How will this message be sent?" do
@@ -15,13 +13,11 @@
           = f.govuk_error_summary
 
           .govuk-form-group
-            = f.govuk_label :content
             = f.rich_text_area :content
 
           = f.govuk_submit "Send message"
           = govuk_link_to "Cancel", request.original_url, class: "govuk-!-margin-left-3"
     - else
-      / Inset text (only show when form is not visible)
       = govuk_inset_text do
         | If a candidate responds with their pre-interview documentation as an attachment, you can mark this as received and completed within the 'Pre-interview checks' section.
 

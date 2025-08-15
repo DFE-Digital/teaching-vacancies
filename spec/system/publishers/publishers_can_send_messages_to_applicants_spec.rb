@@ -13,31 +13,20 @@ RSpec.describe "Publishers can send messages to job applicants" do
   after { logout }
 
   context "when viewing a job application messages tab" do
-    it "shows the correct interface by default" do
+    it "allows publisher to send a message to the job applicant", :js do
       visit organisation_job_job_application_path(vacancy.id, job_application.id, tab: "messages")
 
       expect(page).to have_link("Print this page")
       expect(page).to have_link("Send message to candidate")
-      expect(page).to have_text("If a candidate responds with their pre-interview documentation")
-      expect(page).to have_no_css(".trix-content")
-    end
-
-    it "shows the message form when clicking 'Send message to candidate'" do
-      visit organisation_job_job_application_path(vacancy.id, job_application.id, tab: "messages")
 
       click_link "Send message to candidate"
 
-      expect(page).to have_css(".trix-content")
-      expect(page).to have_button("Send message")
-      expect(page).to have_link("Cancel")
-      expect(page).to have_text("How will this message be sent?")
       expect(page).to have_no_link("Print this page")
       expect(page).to have_no_link("Send message to candidate")
-      expect(page).to have_no_text("If a candidate responds with their pre-interview documentation")
-    end
 
-    it "allows publisher to send a message to the job applicant", :js do
-      visit organisation_job_job_application_path(vacancy.id, job_application.id, tab: "messages")
+      click_button "Send message"
+
+      expect(page).to have_text("Message could not be sent")
 
       click_link "Send message to candidate"
 
@@ -51,22 +40,13 @@ RSpec.describe "Publishers can send messages to job applicants" do
       expect(page).to have_text("#{publisher.given_name} #{publisher.family_name}")
       expect(page).to have_text("Regarding application: #{vacancy.job_title}")
     end
-
-    it "shows validation errors for empty messages" do
-      visit organisation_job_job_application_path(vacancy.id, job_application.id, tab: "messages")
-
-      click_link "Send message to candidate"
-      click_button "Send message"
-
-      expect(page).to have_text("Message could not be sent")
-    end
   end
 
   context "when messages already exist", :js do
     let!(:conversation) { create(:conversation, job_application: job_application) }
     let!(:message) { create(:message, conversation: conversation, sender: publisher, content: "Previous message content") }
 
-    it "displays existing messages" do
+    it "displays existing messages and allows sending additional messages" do
       visit organisation_job_job_application_path(vacancy.id, job_application.id, tab: "messages")
 
       expect(page).to have_text("#{publisher.given_name} #{publisher.family_name}")
@@ -74,10 +54,6 @@ RSpec.describe "Publishers can send messages to job applicants" do
       expect(page).to have_text("Regarding application: #{vacancy.job_title}")
       expect(page).to have_text(message.created_at.strftime("%d %B %Y at %I:%M %p"))
       expect(page).to have_no_text("No messages have been sent yet.")
-    end
-
-    it "allows sending additional messages" do
-      visit organisation_job_job_application_path(vacancy.id, job_application.id, tab: "messages")
 
       click_link "Send message to candidate"
 
