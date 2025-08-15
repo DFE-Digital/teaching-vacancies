@@ -13,10 +13,9 @@ module VacanciesHelper
     return t("publishers.vacancies.application_form_type.uploaded_document") if vacancy.uploaded_form?
 
     if vacancy.enable_job_applications
-      case vacancy.religion_type
-      when "catholic"
+      if vacancy.catholic?
         t("publishers.vacancies.application_form_type.catholic")
-      when "other_religion"
+      elsif vacancy.other_religion?
         t("publishers.vacancies.application_form_type.other_religion")
       else
         t("publishers.vacancies.application_form_type.no_religion")

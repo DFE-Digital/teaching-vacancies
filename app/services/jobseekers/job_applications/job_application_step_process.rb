@@ -20,10 +20,9 @@ class Jobseekers::JobApplications::JobApplicationStepProcess
   def initialize(job_application:)
     @job_application = job_application
 
-    religious_steps = case job_application.vacancy.religion_type
-                      when "catholic"
+    religious_steps = if job_application.vacancy.catholic?
                         { catholic: [:catholic] }
-                      when "other_religion"
+                      elsif job_application.vacancy.other_religion?
                         { non_catholic: [:non_catholic] }
                       else
                         {}

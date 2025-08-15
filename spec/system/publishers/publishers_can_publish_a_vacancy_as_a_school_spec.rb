@@ -253,7 +253,7 @@ RSpec.describe "Creating a vacancy" do
 
         fill_from_visits_to_review(vacancy)
         expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
-        expect(Vacancy.find(created_vacancy.id).religion_type.to_sym).to eq(:catholic)
+        expect(Vacancy.find(created_vacancy.id)).to be_catholic
       end
 
       scenario "Church of England" do
@@ -262,7 +262,7 @@ RSpec.describe "Creating a vacancy" do
 
         fill_from_visits_to_review(vacancy)
         expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
-        expect(Vacancy.find(created_vacancy.id).religion_type.to_sym).to eq(:other_religion)
+        expect(Vacancy.find(created_vacancy.id)).to be_other_religion
       end
 
       scenario "No religion questions" do
@@ -271,7 +271,7 @@ RSpec.describe "Creating a vacancy" do
 
         fill_from_visits_to_review(vacancy)
         expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
-        expect(Vacancy.find(created_vacancy.id).religion_type.to_sym).to eq(:no_religion)
+        expect(Vacancy.find(created_vacancy.id)).to be_no_religion
       end
     end
 
