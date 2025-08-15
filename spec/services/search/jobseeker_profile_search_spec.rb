@@ -5,6 +5,9 @@ RSpec.describe Search::JobseekerProfileSearch do
 
   let(:geocoding_stub) { instance_double(Geocoding) }
 
+  # This stub makes these tests very fragile. The geocoder call is made in a before_validation hook which can be called twice
+  # per Location object, which then completely messes up the stub ordering (the last value is repeated if/when it overflows)
+  # The solution is just to be very careful where 'location' objects (job_preferences_location) are created/saved in the tests
   before do
     allow(Geocoding).to receive(:new).and_return(geocoding_stub)
   end
