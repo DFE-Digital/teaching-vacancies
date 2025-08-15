@@ -340,10 +340,10 @@ RSpec.describe Vacancy do
 
       before do
         create(:vacancy, expiry_date: 2.years.ago, publish_on: 2.years.ago, job_title: "expired_years_ago")
-        create(:vacancy, expiry_date: current_aug31, publish_on: current_aug31, job_title: "expired_this_august")
-        create(:vacancy, expiry_date: current_sep1, publish_on: current_sep1, job_title: "expired_this_september")
+        create(:vacancy, expiry_date: last_sep1, publish_on: current_aug31, job_title: "current_year")
+        create(:vacancy, expiry_date: current_aug31, publish_on: current_sep1, job_title: "spans_2_years")
         create(:vacancy, expiry_date: last_aug31, publish_on: last_aug31, job_title: "expired_last_august")
-        create(:vacancy, expiry_date: last_sep1, publish_on: last_sep1, job_title: "expired_last_september")
+        create(:vacancy, expiry_date: current_sep1, publish_on: current_sep1, job_title: "current_1st_sept")
       end
 
       context "when between September and December" do
@@ -352,7 +352,7 @@ RSpec.describe Vacancy do
         end
 
         it "finds current aug/sept" do
-          expect(Vacancy.active_in_current_academic_year.map(&:job_title)).to contain_exactly("expired_this_august", "expired_this_september")
+          expect(Vacancy.active_in_current_academic_year.map(&:job_title)).to contain_exactly("current_year", "spans_2_years", "current_1st_sept")
         end
       end
 
@@ -362,7 +362,7 @@ RSpec.describe Vacancy do
         end
 
         it "finds previous aug/sept" do
-          expect(Vacancy.active_in_current_academic_year.map(&:job_title)).to contain_exactly("expired_this_august", "expired_this_september")
+          expect(Vacancy.active_in_current_academic_year.map(&:job_title)).to contain_exactly("current_year", "spans_2_years", "current_1st_sept")
         end
       end
     end
