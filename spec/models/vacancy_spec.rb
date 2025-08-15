@@ -333,7 +333,7 @@ RSpec.describe Vacancy do
     let(:expires_later_today) { create(:vacancy, expires_at: 1.hour.from_now) }
 
     # rubocop:disable RSpec/IndexedLet
-    describe "#active_in_current_academic_year" do
+    describe ".active_in_current_academic_year" do
       let(:jun_1_2025) { Date.current.beginning_of_year.months_since(5) }
       let(:aug31_2025) { Date.current.end_of_year.months_ago(4) }
       let(:aug_31_2024) { aug31_2025 - 1.year }
