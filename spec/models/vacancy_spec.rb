@@ -356,7 +356,7 @@ RSpec.describe Vacancy do
         end
       end
 
-      context "when bwtween January and August" do
+      context "when between January and August" do
         before do
           travel_to Date.current.end_of_year.months_since(6)
         end
