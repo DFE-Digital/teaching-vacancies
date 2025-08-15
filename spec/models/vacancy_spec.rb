@@ -346,7 +346,7 @@ RSpec.describe Vacancy do
         create(:vacancy, expiry_date: last_sep1, publish_on: last_sep1, job_title: "expired_last_september")
       end
 
-      context "when bwtween Sepetmber and December" do
+      context "when between September and December" do
         before do
           travel_to Date.current.beginning_of_year.months_since(10)
         end
