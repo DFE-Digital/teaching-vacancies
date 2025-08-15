@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Publisher statistics" do
+RSpec.describe "Publisher all-time statistics" do
   let(:school) { create(:school) }
 
   let(:publisher) { create(:publisher, publisher_preferences: build_list(:publisher_preference, 1, organisation: school)) }
