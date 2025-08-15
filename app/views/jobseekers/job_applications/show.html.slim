@@ -6,7 +6,7 @@
     - link = govuk_link_to(t(".self_disclosure.form"), jobseekers_job_application_self_disclosure_path(job_application, Wicked::FIRST_STEP))
     - notification_banner.with_heading(text: t(".self_disclosure.cta_html", organisation:, link:))
 
-= render "banner"
+= render "jobseekers/job_applications/banner"
 
 = render "jobseekers/job_applications/show" do
   - if job_application.shortlisted?

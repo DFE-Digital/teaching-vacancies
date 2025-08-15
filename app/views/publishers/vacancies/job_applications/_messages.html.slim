@@ -4,30 +4,22 @@
       = govuk_button_link_to t(".print_page"), "#", class: "govuk-button--secondary", "data-controller": "utils", "data-action": "click->utils#print" unless params[:show_form] == "true"
       = govuk_button_link_to t(".send_message_to_candidate"), url_for(params.to_unsafe_h.merge(show_form: "true")), class: "govuk-button--secondary govuk-!-margin-left-3" unless params[:show_form] == "true"
 
-    - if params[:show_form] == "true"
-      div class="govuk-!-margin-top-6"
-        = govuk_details summary_text: t(".how_will_message_be_sent") do
-          = t(".message_sent_description")
+    = render "shared/message_form",
+             message_object: @message_form,
+             form_url: organisation_job_job_application_messages_path(vacancy.id, job_application.id),
+             form_help_text: t(".how_will_message_be_sent"),
+             form_help_content: t(".message_sent_description"),
+             current_user_type: "publisher"
 
-        = form_for message, url: organisation_job_job_application_messages_path(vacancy.id, job_application.id), method: :post do |f|
-          = f.govuk_error_summary
-
-          .govuk-form-group
-            = f.rich_text_area :content
-
-          = f.govuk_submit t(".send_message")
-          = govuk_link_to t(".cancel"), request.original_url, class: "govuk-!-margin-left-3"
-    - else
+    - unless params[:show_form] == "true"
+      / Inset text (only show when form is not visible)
       = govuk_inset_text do
         = t(".pre_interview_documentation_note")
 
     #messages-list
       - messages.each do |message|
-        .govuk-summary-card
-          .govuk-summary-card__title-wrapper
-            h3.govuk-summary-card__title
-              = "#{message.sender.given_name} #{message.sender.family_name} <#{message.sender.email}>"
-          .govuk-summary-card__content
-            p.govuk-body class="govuk-!-font-weight-bold" = "#{t('.date_prefix')} #{message.created_at&.strftime('%d %B %Y at %I:%M %p')}"
-            p.govuk-body class="govuk-!-font-weight-bold" = message.conversation.title
-            p.govuk-body class="message-content" = simple_format(message.content)
+        = render "shared/message",
+                 message: message,
+                 current_user_type: "publisher",
+                 vacancy: vacancy,
+                 job_application: job_application

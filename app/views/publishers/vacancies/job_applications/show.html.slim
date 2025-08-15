@@ -1,6 +1,6 @@
 - content_for :page_title_prefix, t(".page_title")
 
-= render "header", vacancy: @vacancy, job_application: @job_application
+= render "/publishers/vacancies/job_applications/header", vacancy: @vacancy, job_application: @job_application
 
 .govuk-grid-row class="govuk-!-margin-top-4"
   .govuk-grid-column-two-thirds
@@ -16,6 +16,6 @@
   - t.with_navigation_item text: "Messages", link: organisation_job_job_application_path(@vacancy.id, @job_application.id, tab: "messages"), active: (params[:tab] == "messages")
 
 - if params[:tab] == "messages"
-  = render "messages", job_application: @job_application, vacancy: @vacancy, message: @message, messages: @messages
+  = render "/publishers/vacancies/job_applications/messages", job_application: @job_application, vacancy: @vacancy, message: @message, messages: @messages
 - else
-  = render "application_details_and_notes", allow_edit: false, job_application: @job_application, vacancy: @vacancy
+  = render "/publishers/vacancies/job_applications/application_details_and_notes", allow_edit: false, job_application: @job_application, vacancy: @vacancy

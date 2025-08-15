@@ -1,0 +1,22 @@
+.govuk-grid-row
+  .govuk-grid-column-full
+    - if @messages.any?
+      = render "shared/message_form",
+               message_object: @message_form,
+               form_url: jobseekers_job_application_messages_path(@job_application),
+               form_help_text: t(".form_help_text"),
+               form_help_content: t(".form_help_content"),
+               current_user_type: "jobseeker"
+
+      div class="govuk-!-margin-bottom-6"
+        = govuk_button_link_to t(".send_message_button"), url_for(params.to_unsafe_h.merge(show_form: "true")), class: "govuk-button--secondary" unless params[:show_form] == "true"
+    - else
+      p.govuk-body = t(".no_messages_yet")
+
+    #messages-list
+      - @messages.each do |message|
+        = render "shared/message",
+                 message: message,
+                 current_user_type: "jobseeker",
+                 vacancy: vacancy,
+                 job_application: @job_application

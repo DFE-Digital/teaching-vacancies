@@ -110,6 +110,12 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def show
     raise ActionController::RoutingError, "Cannot view draft application" if job_application.draft?
+
+    if params[:tab] == "messages"
+      conversation = job_application.conversations.first
+      @messages = conversation&.messages&.order(created_at: :desc) || []
+      @message_form = Publishers::JobApplication::MessagesForm.new
+    end
   end
 
   def confirm_destroy

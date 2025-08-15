@@ -109,6 +109,7 @@ Rails.application.routes.draw do
       get :post_submit
       post :withdraw
       resource :feedback, only: %i[create], controller: "job_applications/feedbacks"
+      resources :messages, only: %i[create], controller: "job_applications/messages"
       resources :self_disclosure, only: %i[show update], controller: "job_applications/self_disclosure" do
         get :completed, on: :collection
       end
