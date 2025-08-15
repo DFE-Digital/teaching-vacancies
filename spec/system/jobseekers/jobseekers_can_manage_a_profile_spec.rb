@@ -405,6 +405,8 @@ RSpec.describe "Jobseekers can manage their profile" do
 
     let(:job_preferences) { build(:job_preferences) }
 
+    # beware - bexleyheath here is long/lat which is DB order, however Geocoder API
+    # returns lat/long so we have to reverse the order for the stub call
     before do
       allow(geocoding_stub).to receive(:coordinates).and_return(bexleyheath.reverse)
       create(:job_preferences_location, radius: 200, job_preferences: job_preferences)
