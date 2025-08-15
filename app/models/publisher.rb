@@ -15,12 +15,6 @@ class Publisher < ApplicationRecord
   devise :timeoutable
   self.timeout_in = 120.minutes # Overrides default Devise configuration
 
-  def vacancies_with_job_applications_submitted_yesterday
-    vacancies.distinct
-             .joins(:job_applications)
-             .where("DATE(job_applications.submitted_at) = ? AND job_applications.status = ?", Date.yesterday, 1)
-  end
-
   def papertrail_display_name
     "#{given_name} #{family_name}"
   end

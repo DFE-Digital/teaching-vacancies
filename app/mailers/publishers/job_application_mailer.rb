@@ -1,11 +1,10 @@
 class Publishers::JobApplicationMailer < Publishers::BaseMailer
   helper VacanciesHelper
 
-  def applications_received(publisher:)
+  def applications_received(vacancies:, recipient_email:)
     @template = template
-    @publisher = publisher
-    @vacancies = publisher.vacancies_with_job_applications_submitted_yesterday
-    @to = publisher.email
+    @vacancies = vacancies
+    @to = recipient_email
 
     @job_applications_count = @vacancies.sum { |vacancy| vacancy.job_applications.submitted_yesterday.count }
     @subject = I18n.t("publishers.job_application_mailer.applications_received.subject", count: @job_applications_count)
