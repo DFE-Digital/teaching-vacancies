@@ -134,8 +134,6 @@ module TeachingVacancies
     config.landing_pages = config_for(:landing_pages)
     config.campaign_pages = config_for(:campaign_pages)
 
-    config.maintenance_mode = ActiveModel::Type::Boolean.new.cast(ENV.fetch("MAINTENANCE_MODE", nil))
-
     config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets")
 
     # ViewComponent configuration

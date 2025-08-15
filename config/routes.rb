@@ -49,12 +49,6 @@ Rails.application.routes.draw do
     Rails.application.routes.url_helpers.post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "3-quick-ways-to-find-the-right-teaching-job")
   }
 
-  if Rails.application.config.maintenance_mode
-    # If in maintenance mode, route *all* requests to maintenance page
-    match "*path", to: "errors#maintenance", via: :all
-    root to: "errors#maintenance", as: "maintenance_root", via: :all
-  end
-
   # Deprecated routes should have a redirect added in `routes/legacy_redirects.rb` after they are
   # removed from the routes (if at all possible), so our users don't get 404s:
   draw :legacy_redirects
@@ -418,7 +412,6 @@ Rails.application.routes.draw do
   match "/404", as: :not_found, to: "errors#not_found", via: :all
   match "/422", as: :unprocessable_entity, to: "errors#unprocessable_entity", via: :all
   match "/500", as: :internal_server_error, to: "errors#internal_server_error", via: :all
-  match "/maintenance", as: :maintenance, to: "errors#maintenance", via: :all
 
   get "campaigns/",
       to: "vacancies#campaign_landing_page",

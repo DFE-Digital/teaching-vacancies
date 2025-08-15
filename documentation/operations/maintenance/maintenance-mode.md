@@ -1,25 +1,11 @@
 # Maintenance mode
 
-The application has a simple routing-level maintenance mode triggered by the `MAINTENANCE_MODE`
-environment variable. This needs the app to be restarted to enable maintenance mode, e.g. via
-a deploy or a `cf restage`. This is handy in case of a critical bug being discovered where we need
-to take the service offline, or in case of maintenance where we want to avoid users interacting
-with the service.
-
-When enabled, all requests of all types will be routed to the maintenance page (found under
-`app/views/errors/maintenance.html.erb`).
+The application has a github action to enable maintenance mode in 'actions/workflows/maintenance.yml'
 
 ### Enable Maintenance mode
 
-- Login to AKS: 
-  ```bash
-  az login --tenant 9c7d9dd3-840c-4b3f-818e-552865082e16
-  ```
-
-- Set maintenance mode environment variable: 
-  ```bash
-  kubectl  -n tv-production set env  deployment/teaching-vacancies-production MAINTENANCE_MODE=1
-  ```
+- Run the 'Set maintenance mode' workflow from https://github.com/DFE-Digital/teaching-vacancies/actions/workflows/maintenance.yml
+    choosing the environment (production, qa or staging) and enable
 
 - The pods will get automatically restarted with the new value. 
 
@@ -27,12 +13,7 @@ When enabled, all requests of all types will be routed to the maintenance page (
 
 ### Disable Maintenance mode
 
-- To disable maintenance mode, set the environment variable value to 0
-  ```bash
-  kubectl  -n tv-production set env  deployment/teaching-vacancies-production MAINTENANCE_MODE=0
-  ```
-
-- The pods will get automatically restarted with the new value. 
+- Run the worflow, choosing the environment (production, qa or staging) and disable
 
 - Check that the page is no longer in maintenance mode.
 
