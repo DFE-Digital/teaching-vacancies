@@ -132,6 +132,18 @@ class Vacancy < ApplicationRecord
   extend VacancyFulTextSearchQueryModule
   scope :search_by_full_text, ->(query) { vacancy_full_text_search_query(query) }
 
+  scope :active_in_current_academic_year, lambda {
+    sept_1st = Date.current.beginning_of_year.months_since(8)
+    academic_year_start = if Date.current < sept_1st
+                            sept_1st - 1.year
+                          else
+                            sept_1st
+                          end
+    published_in_year = where(publish_on: academic_year_start..Date.current)
+    expired_in_year = where(publish_on: ..Date.current, expires_at: academic_year_start..)
+    published_in_year.or(expired_in_year)
+  }
+
   # effectively we have two different types of vacancy - external ones and internal ones
   # these require seperate validaqtion rules - internal ones are built up over time by a user,
   # so it is much harder to validate them at the model level.
