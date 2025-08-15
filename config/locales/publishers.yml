@@ -608,6 +608,7 @@ en:
           created_at: Created %{date}
           references: References
           last_action: Last action
+          self_disclosure: Self-disclosure
           status: Status
         reference_requests:
           reference:
