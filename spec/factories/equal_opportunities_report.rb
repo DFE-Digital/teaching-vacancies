@@ -3,7 +3,7 @@ FactoryBot.define do
     vacancy
 
     total_submissions { 1 }
-    disability_no { 1 }
+    disability_no { 0 }
     disability_prefer_not_to_say { 0 }
     disability_yes { 0 }
     gender_man { 0 }
@@ -20,7 +20,7 @@ FactoryBot.define do
     ethnicity_asian { 0 }
     ethnicity_black { 0 }
     ethnicity_mixed { 0 }
-    ethnicity_other { 1 }
+    ethnicity_other { 0 }
     ethnicity_prefer_not_to_say { 0 }
     ethnicity_white { 0 }
     ethnicity_other_descriptions { [Faker::Lorem.paragraph(sentence_count: 1)] }
@@ -34,7 +34,7 @@ FactoryBot.define do
     religion_prefer_not_to_say { 0 }
     religion_sikh { 0 }
     religion_other_descriptions { [Faker::Lorem.paragraph(sentence_count: 1)] }
-    age_under_twenty_five { 1 }
+    age_under_twenty_five { 0 }
     age_twenty_five_to_twenty_nine { 0 }
     age_prefer_not_to_say { 0 }
     age_thirty_to_thirty_nine { 0 }
