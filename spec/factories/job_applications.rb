@@ -192,6 +192,16 @@ FactoryBot.define do
     status { :interviewing }
   end
 
+  trait :status_unsuccessful_interview do
+    transient do
+      submitted_at { 4.days.ago }
+      interviewing_at { 2.days.ago }
+      unsuccessful_interview_at { 1.day.ago }
+    end
+
+    status { :unsuccessful_interview }
+  end
+
   trait :with_baptism_certificate do
     following_religion { true }
     religious_reference_type { :baptism_certificate }
@@ -201,5 +211,28 @@ FactoryBot.define do
         "application/pdf",
       )
     end
+  end
+
+  trait :status_offered do
+    transient do
+      submitted_at { 5.days.ago }
+      shortlisted_at { 4.days.ago }
+      interviewing_at { 2.days.ago }
+      offered_at { 1.day.ago }
+    end
+
+    status { :offered }
+  end
+
+  trait :status_declined do
+    transient do
+      submitted_at { 5.days.ago }
+      shortlisted_at { 4.days.ago }
+      interviewing_at { 2.days.ago }
+      offered_at { 1.day.ago }
+      declined_at { Time.zone.now }
+    end
+
+    status { :declined }
   end
 end
