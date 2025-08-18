@@ -198,20 +198,6 @@ en:
         multiple_job_alerts_link_text: create multiple job alerts
 
   publishers:
-    vacancy_change_mailer:
-       notify:
-        subject: Changes to using your own application form on Teaching Vacancies
-        dear: "Dear %{name},"
-        content: |
-          We’re writing to let you know about a change to how using your own application form for hiring staff works on the Teaching Vacancies service.
-          From now on, if you upload your own application form for a job listing, applicants will download, complete and then upload the finished form to Teaching Vacancies. This means you’ll need to sign in to Teaching Vacancies to review applications, rather than receiving them directly from applicants by email.
-          You will receive one email daily from Teaching Vacancies which includes a summary of any applications submitted in the last 24 hours.
-          Any live job listings you currently have on Teaching Vacancies will not be affected by this change.
-        footer: |
-          If you have any questions about this process, please contact %{link}
-          Kind regards,
-          The Teaching Vacancies team
-
     job_application_data_expiry_mailer:
       job_application_data_expiry:
         expiry: From %{expiration_date}, you will no longer be able to access applications for %{job_title} listed in %{published_month}

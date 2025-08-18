@@ -15,7 +15,7 @@ class JobApplicationPdf
   end
 
   def religious_application?
-    vacancy.religion_type.present? && !vacancy.no_religion?
+    vacancy.catholic? || vacancy.other_religion?
   end
 
   def header_text
@@ -113,7 +113,7 @@ class JobApplicationPdf
   end
 
   def religious_information
-    religious_data = if vacancy.religion_type == "catholic"
+    religious_data = if vacancy.catholic?
                        catholic_religious_information
                      else
                        non_catholic_religious_information

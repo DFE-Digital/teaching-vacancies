@@ -133,66 +133,66 @@ RSpec.describe VacanciesHelper do
   end
 
   describe "#vacancy_form_type" do
-    let(:vacancy) { instance_double(Vacancy) }
-
     context "when vacancy uses uploaded form" do
-      it "returns uploaded_document translation" do
-        allow(vacancy).to receive(:uploaded_form?).and_return(true)
+      let(:vacancy) { build_stubbed(:vacancy, :with_uploaded_application_form) }
 
+      it {
         expect(helper.vacancy_form_type(vacancy)).to eq(
           t("publishers.vacancies.application_form_type.uploaded_document"),
         )
-      end
+      }
     end
 
     context "when job applications are enabled" do
-      before do
-        allow(vacancy).to receive_messages(uploaded_form?: false, enable_job_applications: true)
+      context "when religion_type is catholic" do
+        let(:vacancy) { build_stubbed(:vacancy, religion_type: :catholic) }
+
+        it {
+          expect(helper.vacancy_form_type(vacancy)).to eq(
+            t("publishers.vacancies.application_form_type.catholic"),
+          )
+        }
       end
 
-      it "returns catholic translation if religion_type is catholic" do
-        allow(vacancy).to receive(:religion_type).and_return("catholic")
+      context "when religion_type is other_religion" do
+        let(:vacancy) { build_stubbed(:vacancy, religion_type: :other_religion) }
 
-        expect(helper.vacancy_form_type(vacancy)).to eq(
-          t("publishers.vacancies.application_form_type.catholic"),
-        )
+        it {
+          expect(helper.vacancy_form_type(vacancy)).to eq(
+            t("publishers.vacancies.application_form_type.other_religion"),
+          )
+        }
       end
 
-      it "returns other_religion translation if religion_type is other_religion" do
-        allow(vacancy).to receive(:religion_type).and_return("other_religion")
+      context "when religion_type is no_religion" do
+        let(:vacancy) { build_stubbed(:vacancy, religion_type: :no_religion) }
 
-        expect(helper.vacancy_form_type(vacancy)).to eq(
-          t("publishers.vacancies.application_form_type.other_religion"),
-        )
+        it {
+          expect(helper.vacancy_form_type(vacancy)).to eq(
+            t("publishers.vacancies.application_form_type.no_religion"),
+          )
+        }
       end
 
-      it "returns no_religion translation for any other religion_type" do
-        allow(vacancy).to receive(:religion_type).and_return("non_religious")
+      context "when religion_type is nil" do
+        let(:vacancy) { build_stubbed(:vacancy, religion_type: nil) }
 
-        expect(helper.vacancy_form_type(vacancy)).to eq(
-          t("publishers.vacancies.application_form_type.no_religion"),
-        )
-      end
-
-      it "returns no_religion translation when religion_type is nil" do
-        allow(vacancy).to receive(:religion_type).and_return(nil)
-
-        expect(helper.vacancy_form_type(vacancy)).to eq(
-          t("publishers.vacancies.application_form_type.no_religion"),
-        )
+        it {
+          expect(helper.vacancy_form_type(vacancy)).to eq(
+            t("publishers.vacancies.application_form_type.no_religion"),
+          )
+        }
       end
     end
 
     context "when job applications are not enabled" do
-      before do
-        allow(vacancy).to receive_messages(uploaded_form?: false, enable_job_applications: false)
-      end
+      let(:vacancy) { build_stubbed(:vacancy, :no_tv_applications) }
 
-      it "returns other translation" do
+      it {
         expect(helper.vacancy_form_type(vacancy)).to eq(
           t("publishers.vacancies.application_form_type.other"),
         )
-      end
+      }
     end
   end
 

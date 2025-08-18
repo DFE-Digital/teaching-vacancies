@@ -26,7 +26,6 @@ shared:
   - jobseeker_draft_application_only
   - jobseeker_unapplied_saved_vacancy
   - jobseeker_peak_times_reminder
-  - publisher_notify
   - publisher_applications_received
   - publisher_collect_references
   - publisher_declaration_received

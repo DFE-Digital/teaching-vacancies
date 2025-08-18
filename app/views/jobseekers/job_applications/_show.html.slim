@@ -13,7 +13,7 @@
           - navigation.with_anchor text: t(".professional_body_memberships.heading"), href: "#professional_body_memberships"
           - navigation.with_anchor text: t(".employment_history.heading"), href: "#employment_history"
           - navigation.with_anchor text: t(".personal_statement.heading"), href: "#personal_statement"
-          - if vacancy.religion_type.present?
+          - if vacancy.catholic? || vacancy.other_religion?
             - navigation.with_anchor text: t(".religious_information.heading"), href: "#following_religion"
           - navigation.with_anchor text: t(".referees.heading"), href: "#referees"
           - navigation.with_anchor text: t(".ask_for_support.heading"), href: "#ask_for_support"
