@@ -1,43 +1,50 @@
-= job_application_review(job_application, allow_edit: local_assigns[:allow_edit]) do |r|
-  - render "jobseekers/job_applications/job_application_review_sections", r: r, jobseeker: current_jobseeker
-  - r.with_above do
-    = yield
+= yield
 
-    - unless vacancy.uploaded_form?
-      .with_anchor-link-list class="govuk-!-display-none-print"
-        = navigation_list(title: t(".application_sections")) do |navigation|
-          - navigation.with_anchor text: t(".personal_details.heading"), href: "#personal_details"
-          - navigation.with_anchor text: t(".professional_status.heading"), href: "#professional_status"
-          - navigation.with_anchor text: t(".qualifications.heading"), href: "#qualifications"
-          - navigation.with_anchor text: t(".training_and_cpds.heading"), href: "#training_and_cpds"
-          - navigation.with_anchor text: t(".professional_body_memberships.heading"), href: "#professional_body_memberships"
-          - navigation.with_anchor text: t(".employment_history.heading"), href: "#employment_history"
-          - navigation.with_anchor text: t(".personal_statement.heading"), href: "#personal_statement"
-          - if vacancy.catholic? || vacancy.other_religion?
-            - navigation.with_anchor text: t(".religious_information.heading"), href: "#following_religion"
-          - navigation.with_anchor text: t(".referees.heading"), href: "#referees"
-          - navigation.with_anchor text: t(".ask_for_support.heading"), href: "#ask_for_support"
-          - navigation.with_anchor text: t(".declarations.heading"), href: "#declarations"
+= tabs do |t|
+  - t.with_navigation_item text: "Application", link: jobseekers_job_application_path(job_application, tab: "application"), active: params[:tab].blank? || params[:tab] == "application"
+  - t.with_navigation_item text: "Messages", link: jobseekers_job_application_path(job_application, tab: "messages"), active: (params[:tab] == "messages")
 
-  - r.with_sidebar(classes: %w[govuk-!-display-none-print]) do
-    h2.govuk-heading-m = t(".timeline")
+- if params[:tab] == "messages"
+  = render "messages", job_application: job_application, vacancy: vacancy
+- else
+  = job_application_review(job_application, allow_edit: local_assigns[:allow_edit]) do |r|
+    - render "jobseekers/job_applications/job_application_review_sections", r: r, jobseeker: current_jobseeker
+    - r.with_above do
+      - unless vacancy.uploaded_form?
+        .with_anchor-link-list class="govuk-!-display-none-print"
+          = navigation_list(title: t(".application_sections")) do |navigation|
+            - navigation.with_anchor text: t(".personal_details.heading"), href: "#personal_details"
+            - navigation.with_anchor text: t(".professional_status.heading"), href: "#professional_status"
+            - navigation.with_anchor text: t(".qualifications.heading"), href: "#qualifications"
+            - navigation.with_anchor text: t(".training_and_cpds.heading"), href: "#training_and_cpds"
+            - navigation.with_anchor text: t(".professional_body_memberships.heading"), href: "#professional_body_memberships"
+            - navigation.with_anchor text: t(".employment_history.heading"), href: "#employment_history"
+            - navigation.with_anchor text: t(".personal_statement.heading"), href: "#personal_statement"
+            - if vacancy.religion_type.present?
+              - navigation.with_anchor text: t(".religious_information.heading"), href: "#following_religion"
+            - navigation.with_anchor text: t(".referees.heading"), href: "#referees"
+            - navigation.with_anchor text: t(".ask_for_support.heading"), href: "#ask_for_support"
+            - navigation.with_anchor text: t(".declarations.heading"), href: "#declarations"
 
-    = render TimelineComponent.new do |timeline|
-      - if job_application.self_disclosure_request&.completed?
-        - version = job_application.self_disclosure_request.versions.first
-        - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.self_disclosure_completed"),
-                        value: format_time_to_datetime_at(version.created_at))
-      - if job_application.withdrawn_at?
-        - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.withdrawn"),
-                        value: format_time_to_datetime_at(job_application.withdrawn_at))
-      - if job_application.unsuccessful_at?
-        - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.#{current_jobseeker.present? ? 'unsuccessful' : 'rejected'}"),
-                        value: format_time_to_datetime_at(job_application.unsuccessful_at))
-      - if job_application.shortlisted_at?
-        - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.shortlisted"),
-                        value: format_time_to_datetime_at(job_application.shortlisted_at))
-      - if job_application.reviewed_at?
-        - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.reviewed"),
-                        value: format_time_to_datetime_at(job_application.reviewed_at))
-      - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.submitted"),
-                      value: format_time_to_datetime_at(job_application.submitted_at))
+    - r.with_sidebar(classes: %w[govuk-!-display-none-print]) do
+      h2.govuk-heading-m = t(".timeline")
+
+      = render TimelineComponent.new do |timeline|
+        - if job_application.self_disclosure_request&.completed?
+          - version = job_application.self_disclosure_request.versions.first
+          - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.self_disclosure_completed"),
+                          value: format_time_to_datetime_at(version.created_at))
+        - if job_application.withdrawn_at?
+          - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.withdrawn"),
+                          value: format_time_to_datetime_at(job_application.withdrawn_at))
+        - if job_application.unsuccessful_at?
+          - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.#{current_jobseeker.present? ? 'unsuccessful' : 'rejected'}"),
+                          value: format_time_to_datetime_at(job_application.unsuccessful_at))
+        - if job_application.shortlisted_at?
+          - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.shortlisted"),
+                          value: format_time_to_datetime_at(job_application.shortlisted_at))
+        - if job_application.reviewed_at?
+          - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.reviewed"),
+                          value: format_time_to_datetime_at(job_application.reviewed_at))
+        - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.submitted"),
+                        value: format_time_to_datetime_at(job_application.submitted_at))

@@ -10,6 +10,7 @@ class Jobseeker < ApplicationRecord
   has_many :job_applications, dependent: :destroy
   has_many :saved_jobs, dependent: :destroy
   has_many :emergency_login_keys, as: :owner
+  has_many :messages, as: :sender, dependent: :destroy
   has_one :jobseeker_profile
 
   scope :active, -> { where(account_closed_on: nil) }
