@@ -17,22 +17,26 @@
     = f.govuk_check_box :agreed_for_processing,
       true,
       multiple: false,
-      link_errors: true,
-      label: { text: t(".agreed_for_processing") }
+      link_errors: true
+
     = f.govuk_check_box :agreed_for_criminal_record,
       true,
       multiple: false,
-      link_errors: true,
-      label: { text: t(".agreed_for_criminal_record") }
+      link_errors: false
+
     = f.govuk_check_box :agreed_for_organisation_update,
       true,
       multiple: false,
-      link_errors: true,
-      label: { text: t(".agreed_for_organisation_update") }
+      link_errors: false
+
     = f.govuk_check_box :agreed_for_information_sharing,
       true,
       multiple: false,
-      link_errors: true,
-      label: { text: t(".agreed_for_information_sharing") }
+      link_errors: false
+
+    = f.govuk_check_box :true_and_complete,
+      true,
+      multiple: false,
+      link_errors: false
 
     = f.govuk_submit t("buttons.save_and_continue")

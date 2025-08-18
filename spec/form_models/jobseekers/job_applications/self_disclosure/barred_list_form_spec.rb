@@ -2,13 +2,29 @@ require "rails_helper"
 
 module Jobseekers::JobApplications::SelfDisclosure
   RSpec.describe BarredListForm, type: :model do
-    before { allow(Shoulda::Matchers).to receive(:warn) }
+    context "with an empty form" do
+      let(:form) { described_class.new }
 
-    %i[
-      is_barred
-      has_been_referred
-    ].each do |field|
-      it { is_expected.to validate_inclusion_of(field).in_array([true, false]) }
+      it "has the correct errors" do
+        expect(form).not_to be_valid
+        expect(form.errors.messages).to eq(
+          {
+            is_barred: ["Select no if you have not been included on the list of people barred from/listed as unsuitable to engage in regulated activity/work with children"],
+            has_been_referred: ["Select no if you have not been referred to the Disclosure and Barring Service"],
+          },
+        )
+      end
+    end
+
+    context "with an full form" do
+      let(:form) do
+        described_class.new(is_barred: true,
+                            has_been_referred: true)
+      end
+
+      it "is valid" do
+        expect(form).to be_valid
+      end
     end
   end
 end

@@ -1,13 +1,14 @@
-module Jobseekers::JobApplications::SelfDisclosure
-  class ConfirmationForm < BaseForm
-    attribute :agreed_for_processing, :boolean
-    attribute :agreed_for_criminal_record, :boolean
-    attribute :agreed_for_organisation_update, :boolean
-    attribute :agreed_for_information_sharing, :boolean
+module Jobseekers
+  module JobApplications
+    module SelfDisclosure
+      class ConfirmationForm < BaseForm
+        FIELDS = %i[agreed_for_processing agreed_for_criminal_record agreed_for_organisation_update agreed_for_information_sharing true_and_complete].freeze
 
-    validates :agreed_for_processing, inclusion: { in: [true] }
-    validates :agreed_for_criminal_record, inclusion: { in: [true] }
-    validates :agreed_for_organisation_update, inclusion: { in: [true] }
-    validates :agreed_for_information_sharing, inclusion: { in: [true] }
+        FIELDS.each do |field|
+          attribute field, :boolean
+          validates field, inclusion: { in: [true] }
+        end
+      end
+    end
   end
 end

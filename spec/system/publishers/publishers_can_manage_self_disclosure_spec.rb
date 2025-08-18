@@ -70,6 +70,8 @@ RSpec.describe "Publishers manage self disclosure" do
       end
 
       context "when completed by jobseeker", :perform_enqueued do
+        let(:dummy_self_disclosure) { build(:self_disclosure) }
+
         before do
           # clear the mail queue so that we can show just the publisher notification email being sent
           ActionMailer::Base.deliveries.clear
@@ -78,29 +80,10 @@ RSpec.describe "Publishers manage self disclosure" do
             within ".govuk-notification-banner__heading" do
               find("a").click
             end
-            fill_in "jobseekers_job_applications_self_disclosure_personal_details_form[date_of_birth(1i)]", with: 2007
-            fill_in "jobseekers_job_applications_self_disclosure_personal_details_form[date_of_birth(2i)]", with: 5
-            fill_in "jobseekers_job_applications_self_disclosure_personal_details_form[date_of_birth(3i)]", with: 26
-
-            find("label[for='jobseekers-job-applications-self-disclosure-personal-details-form-has-unspent-convictions-true-field']").click
-            find("label[for='jobseekers-job-applications-self-disclosure-personal-details-form-has-spent-convictions-true-field']").click
-            click_on "Save and continue"
-
-            find("label[for='jobseekers-job-applications-self-disclosure-barred-list-form-is-barred-true-field']").click
-            find("label[for='jobseekers-job-applications-self-disclosure-barred-list-form-has-been-referred-true-field']").click
-            click_on "Save and continue"
-
-            find("label[for='jobseekers-job-applications-self-disclosure-conduct-form-is-known-to-children-services-true-field']").click
-            find("label[for='jobseekers-job-applications-self-disclosure-conduct-form-has-been-dismissed-true-field']").click
-            find("label[for='jobseekers-job-applications-self-disclosure-conduct-form-has-been-disciplined-true-field']").click
-            find("label[for='jobseekers-job-applications-self-disclosure-conduct-form-has-been-disciplined-by-regulatory-body-true-field']").click
-            click_on "Save and continue"
-
-            find("label[for='jobseekers-job-applications-self-disclosure-confirmation-form-agreed-for-processing-true-field']").click
-            find("label[for='jobseekers-job-applications-self-disclosure-confirmation-form-agreed-for-criminal-record-true-field']").click
-            find("label[for='jobseekers-job-applications-self-disclosure-confirmation-form-agreed-for-organisation-update-true-field']").click
-            find("label[for='jobseekers-job-applications-self-disclosure-confirmation-form-agreed-for-information-sharing-true-field']").click
-            click_on "Save and continue"
+            jobseeker_self_disclosure_personal_details_page.fill_in_and_submit_form(dummy_self_disclosure)
+            jobseeker_self_disclosure_barred_list_page.fill_in_and_submit_form(dummy_self_disclosure)
+            jobseeker_self_disclosure_conduct_page.fill_in_and_submit_form(dummy_self_disclosure)
+            jobseeker_self_disclosure_confirmation_page.fill_in_and_submit_form(dummy_self_disclosure)
           end
         end
 

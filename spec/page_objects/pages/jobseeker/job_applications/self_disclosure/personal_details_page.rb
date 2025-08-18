@@ -8,7 +8,7 @@ module PageObjects
       module JobApplications
         module SelfDisclosure
           class PersonalDetailPage < BasePage
-            set_url "jobseekers/job_applications/{job_application_id}/self_disclosure/personal_details"
+            set_url "/jobseekers/job_applications/{job_application_id}/self_disclosure/personal_details"
 
             %i[
               name
