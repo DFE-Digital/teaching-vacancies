@@ -24,7 +24,9 @@ class Jobseekers::SubscriptionMailer < Jobseekers::BaseMailer
   end
 
   def jobseeker
-    @jobseeker ||= Jobseeker.find_by(email: subscription.email.downcase)
+    return @jobseeker if defined?(@jobseeker)
+
+    @jobseeker = Jobseeker.find_by(email: subscription.email.downcase)
   end
 
   def subscription

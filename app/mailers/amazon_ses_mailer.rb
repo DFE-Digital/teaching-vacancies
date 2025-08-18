@@ -4,6 +4,7 @@
 # :nocov:
 class AmazonSesMailer < ActionMailer::Base
   include MailerAnalyticsEvents
+
   helper NotifyViewsHelper
 
   helper_method :uid, :utm_campaign

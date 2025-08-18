@@ -6,6 +6,7 @@ class JobApplicationPdf
   Table = Data.define(:rows) do
     include Enumerable
     extend Forwardable
+
     def_delegators :rows, :each, :==, :<<, :empty?
   end
 

@@ -1,5 +1,6 @@
 class Search::SchoolSearch
   extend Forwardable
+
   def_delegators :location_search, :point_coordinates, :polygon
 
   attr_reader :search_criteria, :name, :location, :radius, :organisation_types, :school_types, :original_scope

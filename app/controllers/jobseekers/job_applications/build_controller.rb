@@ -1,5 +1,6 @@
 class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications::BaseController
   include Jobseekers::QualificationFormConcerns
+
   before_action :strip_empty_working_patterns_checkboxes, only: %i[update]
 
   helper_method :back_path, :employments, :job_application, :qualification_form_param_key, :redirect_to_review?, :vacancy

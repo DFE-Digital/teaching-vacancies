@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Application feature reminder" do
   let(:organisation) { create(:school) }
   let(:publisher) { create(:publisher) }
-  let(:last_vacancy) { Vacancy.order("created_at").last }
+  let(:last_vacancy) { Vacancy.order(:created_at).last }
 
   before { login_publisher(publisher:, organisation:, allow_reminders: true) }
 

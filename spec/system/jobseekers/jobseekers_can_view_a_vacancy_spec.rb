@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Viewing a single published vacancy" do
   include ActiveJob::TestHelper
+
   let(:school) { create(:school) }
 
   context "when the vacancy status is published" do
