@@ -42,7 +42,7 @@ class TabPanelComponent < ApplicationComponent
     end
   end
 
-  def display(application, field)
+  def displayed_value(application, field)
     helper_method = :"candidate_#{field}"
     return public_send(helper_method, application) if respond_to?(helper_method)
 
