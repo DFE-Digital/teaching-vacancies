@@ -1,17 +1,7 @@
-- sender_is_current_user = (current_user_type == "jobseeker" && message.sender_type == "Jobseeker") || (current_user_type == "publisher" && message.sender_type == "Publisher")
 .govuk-summary-card
-  .govuk-summary-card__title-wrapper class="#{'message-header--jobseeker' if sender_is_current_user} #{'message-header--staff' unless sender_is_current_user}"
+  .govuk-summary-card__title-wrapper class=message_card_title_class(message, current_user_type)
     h3.govuk-summary-card__title
-      - if current_user_type == "jobseeker"
-        - if message.sender_type == "Jobseeker"
-          = "#{job_application.name} <#{message.sender.email}>"
-        - else
-          = "#{message.sender.given_name} #{message.sender.family_name}, #{vacancy.organisation_name} <via Teaching Vacancies>"
-      - else
-        - if message.sender_type == "Publisher"
-          = "#{message.sender.given_name} #{message.sender.family_name}, #{current_organisation.name} <via Teaching Vacancies>"
-        - else
-          = "#{job_application.name} <#{message.sender.email}>"
+      = message_sender_display_name(message, job_application, vacancy)
   .govuk-summary-card__content
     p.govuk-body class="govuk-!-font-weight-bold" = "Date: #{message.created_at&.strftime('%d %B %Y at %I:%M %p')}"
     p.govuk-body class="govuk-!-font-weight-bold" = message.conversation.title

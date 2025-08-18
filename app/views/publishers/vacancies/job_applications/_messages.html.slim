@@ -5,13 +5,13 @@
       = govuk_button_link_to t(".send_message_to_candidate"), url_for(params.to_unsafe_h.merge(show_form: "true")), class: "govuk-button--secondary govuk-!-margin-left-3" unless params[:show_form] == "true"
 
     / Message composition form (only show when requested)
-    = render "shared/message_form", 
-             message_object: message, 
+    = render "shared/message_form",
+             message_object: message,
              form_url: organisation_job_job_application_messages_path(vacancy.id, job_application.id),
              form_help_text: "How will this message be sent?",
              form_help_content: "Candidates will receive a copy of this message to their email and can also view the message when signed in to their Teaching Vacancies account.",
              current_user_type: "publisher"
-    
+
     - unless params[:show_form] == "true"
       / Inset text (only show when form is not visible)
       = govuk_inset_text do
@@ -19,8 +19,8 @@
 
     #messages-list
       - messages.each do |message|
-        = render "shared/message", 
-                 message: message, 
+        = render "shared/message",
+                 message: message,
                  current_user_type: "publisher",
                  vacancy: vacancy,
                  job_application: job_application

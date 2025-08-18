@@ -103,11 +103,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_14_152819) do
     t.uuid "job_application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "employment_type", default: 0
-    t.text "reason_for_break", default: ""
     t.text "organisation_ciphertext"
     t.text "job_title_ciphertext"
     t.text "main_duties_ciphertext"
+    t.integer "employment_type", default: 0
+    t.text "reason_for_break", default: ""
     t.uuid "jobseeker_profile_id"
     t.text "reason_for_leaving"
     t.boolean "is_current_role", default: false, null: false
@@ -293,9 +293,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_14_152819) do
     t.boolean "has_close_relationships"
     t.boolean "has_right_to_work_in_uk"
     t.boolean "has_safeguarding_issue"
-    t.string "application_type", default: "full", null: false
-    t.string "type"
     t.boolean "notify_before_contact_referers"
+    t.string "type"
     t.datetime "offered_at"
     t.datetime "declined_at"
     t.datetime "unsuccessful_interview_at"
@@ -410,10 +409,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_14_152819) do
     t.datetime "updated_at", null: false
     t.date "account_closed_on"
     t.text "current_sign_in_ip_ciphertext"
+    t.string "govuk_one_login_id"
     t.text "last_sign_in_ip_ciphertext"
     t.string "account_merge_confirmation_code"
     t.datetime "account_merge_confirmation_code_generated_at"
-    t.string "govuk_one_login_id"
     t.boolean "email_opt_out", default: false, null: false
     t.integer "email_opt_out_reason"
     t.text "email_opt_out_comment"
@@ -847,8 +846,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_14_152819) do
     t.boolean "include_additional_documents"
     t.boolean "visa_sponsorship_available"
     t.boolean "is_parental_leave_cover"
-    t.boolean "is_job_share"
     t.string "hourly_rate"
+    t.boolean "is_job_share"
     t.string "flexi_working"
     t.integer "extension_reason"
     t.string "other_extension_reason_details"

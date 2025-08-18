@@ -2,8 +2,8 @@
   .govuk-grid-column-full
     - if @messages.any?
       / Message composition form (only show when requested and conversation exists)
-      = render "shared/message_form", 
-               message_object: @message, 
+      = render "shared/message_form",
+               message_object: @message,
                form_url: jobseekers_job_application_messages_path(@job_application),
                form_help_text: "How will this message be sent?",
                form_help_content: "Hiring staff will receive a copy of this message to their email and can also view the message when signed in to their Teaching Vacancies account.",
@@ -18,8 +18,8 @@
 
     #messages-list
       - @messages.each do |message|
-        = render "shared/message", 
-                 message: message, 
+        = render "shared/message",
+                 message: message,
                  current_user_type: "jobseeker",
                  vacancy: vacancy,
                  job_application: @job_application
