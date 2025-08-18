@@ -83,12 +83,12 @@ en:
         jobseekers/job_applications/self_disclosure/confirmation_form:
           attributes:
             agreed_for_processing:
-              inclusion: Agree for your information to be processed in order to complete the declaration
+              accepted: Agree for your information to be processed in order to complete the declaration
             agreed_for_criminal_record:
-              inclusion: Agree criminal record option in order to complete the declaration
+              accepted: Agree criminal record option in order to complete the declaration
             agreed_for_organisation_update:
-              inclusion: Agree to update the school in order to complete the declaration
+              accepted: Agree to update the school in order to complete the declaration
             agreed_for_information_sharing:
-              inclusion: Agree for information sharing in order to complete the declaration
+              accepted: Agree for information sharing in order to complete the declaration
             true_and_complete:
-              inclusion: Agree that information is true and complete in order to complete the declaration
+              accepted: Agree that information is true and complete in order to complete the declaration

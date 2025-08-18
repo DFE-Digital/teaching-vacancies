@@ -14,29 +14,10 @@
   = form_with(model: @form, url: wizard_path(step), method: :patch) do |f|
     = f.govuk_error_summary
 
-    = f.govuk_check_box :agreed_for_processing,
-      true,
-      multiple: false,
-      link_errors: true
-
-    = f.govuk_check_box :agreed_for_criminal_record,
-      true,
-      multiple: false,
-      link_errors: false
-
-    = f.govuk_check_box :agreed_for_organisation_update,
-      true,
-      multiple: false,
-      link_errors: false
-
-    = f.govuk_check_box :agreed_for_information_sharing,
-      true,
-      multiple: false,
-      link_errors: false
-
-    = f.govuk_check_box :true_and_complete,
-      true,
-      multiple: false,
-      link_errors: false
+    - Jobseekers::JobApplications::SelfDisclosure::ConfirmationForm::FIELDS.each do |field|
+      = f.govuk_check_box field,
+        true,
+        multiple: false,
+        link_errors: true
 
     = f.govuk_submit t("buttons.save_and_continue")

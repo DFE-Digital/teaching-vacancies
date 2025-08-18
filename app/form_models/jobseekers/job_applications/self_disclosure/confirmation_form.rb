@@ -6,7 +6,7 @@ module Jobseekers
 
         FIELDS.each do |field|
           attribute field, :boolean
-          validates field, inclusion: { in: [true] }
+          validates field, acceptance: { allow_nil: false }
         end
       end
     end
