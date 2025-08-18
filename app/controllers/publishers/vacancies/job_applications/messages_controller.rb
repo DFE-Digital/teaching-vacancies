@@ -8,9 +8,9 @@ class Publishers::Vacancies::JobApplications::MessagesController < Publishers::V
     if message.valid?
       conversation.save! unless conversation.persisted?
       message.save!
-      redirect_to organisation_job_job_application_path(@vacancy.id, @job_application.id, tab: "messages"), success: t("publishers.vacancies.job_applications.messages.create.success")
+      redirect_to organisation_job_job_application_path(@vacancy.id, @job_application.id, tab: "messages"), success: t(".success")
     else
-      redirect_to organisation_job_job_application_path(@vacancy.id, @job_application.id, tab: "messages"), warning: t("publishers.vacancies.job_applications.messages.create.failure")
+      redirect_to organisation_job_job_application_path(@vacancy.id, @job_application.id, tab: "messages"), warning: t(".failure")
     end
   end
 

@@ -99,7 +99,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
       expect(page).to have_text("Message sent successfully")
       expect(page).to have_text("Hello from publisher")
       expect(page).to have_text(jobseeker_reply)
-      expect(page).to have_text("#{job_application.name}")
+      expect(page).to have_text(job_application.name.to_s)
       expect(conversation.reload.messages.count).to eq(2)
     end
 
@@ -113,7 +113,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
 
       expect(page).to have_text("Hello from publisher")
       expect(page).to have_text("Jobseeker reply content")
-      expect(page).to have_text("#{job_application.name}")
+      expect(page).to have_text(job_application.name.to_s)
       expect(page).to have_text("#{publisher.given_name} #{publisher.family_name}")
     end
 
@@ -147,7 +147,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
       job_application_without_messages = create(:job_application, :submitted, vacancy: vacancy)
       logout
       login_as(job_application_without_messages.jobseeker, scope: :jobseeker)
-      
+
       visit jobseekers_job_application_path(job_application_without_messages, tab: "messages")
 
       expect(page).to have_text("No messages yet. Hiring staff can start a conversation with you here.")
