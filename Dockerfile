@@ -1,10 +1,10 @@
  # Some packages are defined here with a hardcoded version to resolve vulnerabilities in the packages coming with
  # Alpine v3.22.
- # TODO: Regularly check in the alpine ruby "3.4.4-alpine3.22" images for its latest upgraded packages so we can remove
+ # TODO: Regularly check in the alpine ruby "3.4.5-alpine3.22" images for its latest upgraded packages so we can remove
  # the hardcoded versions below when they have been updated in the alpine ruby image.
-ARG PROD_PACKAGES="imagemagick libpng libjpeg libxml2 libxslt libpq tzdata shared-mime-info postgresql15 openssl=3.5.1-r0 icu=76.1-r1"
+ARG PROD_PACKAGES="imagemagick libpng libjpeg libxml2 libxslt libpq tzdata shared-mime-info postgresql15"
 
-FROM ruby:3.4.4-alpine3.22 AS builder
+FROM ruby:3.4.5-alpine3.22 AS builder
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ ENV DEV_PACKAGES="gcc libc-dev make yaml-dev yarn postgresql15-dev build-base gi
 RUN apk add --no-cache $PROD_PACKAGES $DEV_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
-RUN gem install bundler:2.3.5 --no-document
+RUN gem install bundler:2.7.1 --no-document
 
 
 COPY Gemfile* ./
@@ -48,7 +48,7 @@ RUN rm -rf node_modules log tmp yarn.lock && \
 
 
 # this stage reduces the image size.
-FROM ruby:3.4.4-alpine3.22 AS production
+FROM ruby:3.4.5-alpine3.22 AS production
 
 WORKDIR /app
 
@@ -56,7 +56,7 @@ ARG PROD_PACKAGES
 RUN apk -U upgrade && apk add --no-cache $PROD_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
-RUN gem install bundler:2.3.5 --no-document
+RUN gem install bundler:2.7.1 --no-document
 
 COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
