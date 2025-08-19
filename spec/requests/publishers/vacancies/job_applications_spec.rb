@@ -95,15 +95,15 @@ RSpec.describe "Job applications" do
     end
   end
 
-  describe "GET #download_pdf" do
+  describe "GET #download" do
     context "when the job application status is not draft or withdrawn" do
       it "sends a PDF file" do
-        get organisation_job_job_application_download_pdf_path(vacancy.id, job_application.id)
+        get organisation_job_job_application_download_path(vacancy.id, job_application.id)
 
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq("application/pdf")
         expect(response.headers["Content-Disposition"]).to include("inline")
-        expect(response.headers["Content-Disposition"]).to include("job_application_#{job_application.id}.pdf")
+        expect(response.headers["Content-Disposition"]).to include("application_form.pdf")
       end
     end
   end
