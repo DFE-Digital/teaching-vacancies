@@ -578,3 +578,16 @@ shared:
     - agreed_for_criminal_record
     - agreed_for_organisation_update
     - agreed_for_information_sharing
+  :messages:
+    - id
+    - sender_type
+    - sender_id
+    - conversation_id
+    - created_at
+    - updated_at
+  :conversations:
+    - id
+    - job_application_id
+    - title
+    - created_at
+    - updated_at
