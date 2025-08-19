@@ -228,7 +228,7 @@ module VacanciesHelper
                 tooltip: { textStyle: text_style },
                 vAxis: { textStyle: text_style },
               },
-              height: "#{60 + referrer_counts.size * 40}px",
+              height: "#{60 + (referrer_counts.size * 40)}px",
               colors: [gov_uk_blue]
   end
 
