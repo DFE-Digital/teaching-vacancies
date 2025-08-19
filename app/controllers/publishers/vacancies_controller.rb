@@ -2,7 +2,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   before_action :invent_job_alert_search_criteria, only: %i[show preview]
   before_action :redirect_to_new_features_reminder, only: %i[create]
 
-  before_action :show_publisher_preferences, only: %i[index]
+  before_action :set_publisher_preference, only: %i[index]
   before_action :redirect_to_show_publisher_profile_incomplete, only: %i[index], if: -> { signing_in? }, unless: -> { current_organisation.profile_complete? }
 
   helper_method :vacancy_statistics_form
@@ -28,7 +28,6 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
 
   def index
     @selected_type = (params[:type] || :live).to_sym
-    @publisher_preference = PublisherPreference.find_or_create_by(publisher: current_publisher, organisation: current_organisation)
     @sort = Publishers::VacancySort.new(current_organisation, @selected_type).update(sort_by: params[:sort_by])
 
     scope = if @selected_type == :draft
@@ -108,11 +107,13 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     ).none?
   end
 
-  def show_publisher_preferences
-    return unless current_organisation.local_authority?
-    return if PublisherPreference.find_by(publisher: current_publisher, organisation: current_organisation)
-
-    redirect_to new_publishers_publisher_preference_path
+  def set_publisher_preference
+    if current_organisation.local_authority? # Local Authorities publisher need to set their preference for the local authority
+      @publisher_preference = PublisherPreference.find_by(publisher: current_publisher, organisation: current_organisation)
+      redirect_to new_publishers_publisher_preference_path if @publisher_preference.nil?
+    else # Other orgs (MATs and Schools) get default publisher preferences.
+      @publisher_preference = PublisherPreference.find_or_create_by(publisher: current_publisher, organisation: current_organisation)
+    end
   end
 
   def vacancy_statistics_form(vacancy)
