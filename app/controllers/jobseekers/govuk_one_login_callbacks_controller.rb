@@ -1,5 +1,6 @@
 class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksController
   include Jobseekers::GovukOneLogin::Errors
+
   # Devise redirects response from Govuk One Login to this method.
   # The request parameters contain the response from Govuk One Login from the user authentication through their portal.
   # rubocop:disable Metrics/MethodLength

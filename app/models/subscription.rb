@@ -10,6 +10,7 @@ class Subscription < ApplicationRecord
   # b) on removal (because we need to process feedback when removing)
   #   in this second case, the subscription will be destroyed by rake task the following day
   include Discard::Model
+
   self.discard_column = :unsubscribed_at
 
   validates :email, email_address: true, if: -> { email_changed? } # Allows data created prior to validation to still be valid

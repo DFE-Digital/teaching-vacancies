@@ -107,7 +107,9 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   end
 
   def client
-    @client ||= PublisherAtsApiClient.find_by(api_key: request.headers["X-Api-Key"])
+    return @client if defined?(@client)
+
+    @client = PublisherAtsApiClient.find_by(api_key: request.headers["X-Api-Key"])
   end
 
   def authenticate_client!

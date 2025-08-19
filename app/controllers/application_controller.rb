@@ -98,7 +98,9 @@ class ApplicationController < ActionController::Base
   end
 
   def current_organisation
-    @current_organisation ||= Organisation.find_by(id: session[:publisher_organisation_id])
+    return @current_organisation if defined?(@current_organisation)
+
+    @current_organisation = Organisation.find_by(id: session[:publisher_organisation_id])
   end
   helper_method :current_organisation
 

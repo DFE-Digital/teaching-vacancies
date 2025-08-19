@@ -127,10 +127,13 @@ class Vacancy < ApplicationRecord
   # we need these 3 tiny modules to provide 'scoping glue' between the model and the queries
   # so that if we can use PublishedVacancy and DraftVacancy safely
   extend VacancyFilterQueryModule
+
   scope :search_by_filter, ->(filters) { vacancy_filter_query(filters) }
   extend VacancyLocationQueryModule
+
   scope :search_by_location, ->(location_query, radius_in_miles, polygon:, sort_by_distance:) { vacancy_location_query(location_query, radius_in_miles, polygon: polygon, sort_by_distance: sort_by_distance) }
   extend VacancyFulTextSearchQueryModule
+
   scope :search_by_full_text, ->(query) { vacancy_full_text_search_query(query) }
 
   validates :slug, presence: true

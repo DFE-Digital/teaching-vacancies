@@ -11,6 +11,7 @@
 # should be an array of `SortOption`s.
 class RecordSort
   include Enumerable
+
   attr_reader :sort_by, :order
 
   delegate :each, to: :options

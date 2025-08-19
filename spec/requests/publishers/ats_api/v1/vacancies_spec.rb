@@ -57,9 +57,9 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           body = response.parsed_body
           expect(body.keys).to match_array(%w[vacancies meta])
           # Contain all the client vacancies
-          expect(body["vacancies"].map { |v| v["external_reference"] }).to contain_exactly(vacancy_published.external_reference,
-                                                                                           vacancy_unpublished.external_reference,
-                                                                                           vacancy_expired.external_reference)
+          expect(body["vacancies"].pluck("external_reference")).to contain_exactly(vacancy_published.external_reference,
+                                                                                   vacancy_unpublished.external_reference,
+                                                                                   vacancy_expired.external_reference)
           expect(body["meta"]["totalPages"]).to eq(1)
         end
       end

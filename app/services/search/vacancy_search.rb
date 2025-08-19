@@ -1,5 +1,6 @@
 class Search::VacancySearch
   extend Forwardable
+
   def_delegators :location_search, :point_coordinates, :polygon
 
   attr_reader :search_criteria, :keyword, :location, :radius, :organisation_slug, :sort, :original_scope
