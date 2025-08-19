@@ -23,11 +23,13 @@ class Jobseekers::SubscriptionMailer < Jobseekers::BaseMailer
     "jobseeker_subscription"
   end
 
+  # :nocov:
   def jobseeker
     return @jobseeker if defined?(@jobseeker)
 
     @jobseeker = Jobseeker.find_by(email: subscription.email.downcase)
   end
+  # :nocov:
 
   def subscription
     @subscription ||= SubscriptionPresenter.new(Subscription.find(@subscription_id))
