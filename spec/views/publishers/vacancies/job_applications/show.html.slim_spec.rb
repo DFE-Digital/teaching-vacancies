@@ -5,9 +5,9 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
   let(:organisations) { build_stubbed_list(:school, 1) }
   let(:job_applications) do
     build_stubbed_list(:job_application, 1,
+                       :"status_#{status}",
                        training_and_cpds: build_stubbed_list(:training_and_cpd, 1),
-                       working_patterns: %w[full_time part_time],
-                       status:)
+                       working_patterns: %w[full_time part_time])
   end
   let(:job_application) do
     vacancy.job_applications.first
@@ -102,7 +102,7 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
   context "when the job application is an uploaded job application" do
     let(:uploaded_form_vacancy) { create(:vacancy, :expired, receive_applications: 2, job_title: "Yup this is the one") }
     let(:uploaded_job_application) do
-      create(:uploaded_job_application, :status_submitted, :with_uploaded_application_form, vacancy: uploaded_form_vacancy)
+      build_stubbed(:uploaded_job_application, :status_submitted, :with_uploaded_application_form, vacancy: uploaded_form_vacancy)
     end
 
     before do

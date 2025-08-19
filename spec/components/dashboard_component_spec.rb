@@ -35,7 +35,7 @@ RSpec.describe DashboardComponent, type: :component do
 
         let(:vacancies) do
           create_list(:vacancy, 1, job_title: job_title,
-                                   job_applications: build_list(:job_application, 1, :status_submitted),
+                                   job_applications: create_list(:job_application, 1, :status_submitted),
                                    organisations: [organisation])
           organisation.vacancies
         end
@@ -90,7 +90,7 @@ RSpec.describe DashboardComponent, type: :component do
         let(:closed_school) { create(:school, :closed, name: "Closed school") }
         let(:vacancies) do
           create_list(:vacancy, 1, job_title: job_title,
-                                   job_applications: build_list(:job_application, 1, :status_submitted),
+                                   job_applications: create_list(:job_application, 1, :status_submitted),
                                    organisations: [organisation])
           organisation.vacancies
         end
@@ -142,7 +142,7 @@ RSpec.describe DashboardComponent, type: :component do
         let(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: organisation, schools: [open_school]) }
         let(:vacancies) do
           create_list(:vacancy, 1, job_title: job_title,
-                                   job_applications: build_list(:job_application, 1, :status_submitted),
+                                   job_applications: create_list(:job_application, 1, :status_submitted),
                                    organisations: [open_school])
           open_school.vacancies
         end

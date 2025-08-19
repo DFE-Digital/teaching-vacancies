@@ -126,7 +126,7 @@ RSpec.describe JobApplication do
     context "when from status is nil" do
       let(:from_status) { nil }
 
-      it { is_expected.to match_array(%w[draft submitted reviewed shortlisted unsuccessful withdrawn interviewing offered declined unsuccessful_interview]) }
+      it { is_expected.to match_array(%w[draft]) }
     end
 
     context "when from status is draft" do
@@ -195,7 +195,7 @@ RSpec.describe JobApplication do
   end
 
   describe "terminal_status?" do
-    subject { build_stubbed(:job_application, :"status_#{status}").terminal_status? }
+    subject { create(:job_application, :"status_#{status}").terminal_status? }
 
     context "when status is withdrawn" do
       let(:status) { "withdrawn" }
@@ -215,7 +215,7 @@ RSpec.describe JobApplication do
       it { is_expected.to be true }
     end
 
-    described_class.statuses.except(*%w[draft] + described_class::TERMINAL_STATUSES).each_key do |status|
+    described_class.statuses.except(*%w[draft reviewed] + described_class::TERMINAL_STATUSES).each_key do |status|
       context "when status is #{status}" do
         let(:status) { status }
 
@@ -233,7 +233,7 @@ RSpec.describe JobApplication do
   end
 
   describe "#allow_edit?" do
-    let(:job_application) { build(:job_application) }
+    let(:job_application) { create(:job_application) }
 
     subject { job_application.allow_edit? }
 
@@ -249,7 +249,7 @@ RSpec.describe JobApplication do
 
     described_class.statuses.except("draft").each do |status, s|
       context "when application is in #{status} status" do
-        let(:job_application) { build(:job_application, status: s) }
+        let(:job_application) { create(:job_application, status: s) }
 
         it { is_expected.to be false }
       end

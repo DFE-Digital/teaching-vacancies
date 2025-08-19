@@ -4,7 +4,7 @@ RSpec.describe "Job applications self disclosure" do
   let(:vacancy) { create(:vacancy) }
   let(:organisation) { vacancy.organisations.first }
   let(:job_application) { create(:job_application, :status_submitted, vacancy:) }
-  let(:self_disclosure_request) { create(:self_disclosure_request, job_application:) }
+  let(:self_disclosure_request) { create(:self_disclosure_request, :sent, job_application:) }
   let(:self_disclosure) { create(:self_disclosure, self_disclosure_request:) }
   let(:publisher) { create(:publisher, accepted_terms_at: 1.day.ago) }
 

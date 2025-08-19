@@ -10,7 +10,7 @@ RSpec.describe "check job application after status transition" do
 
   before do
     JobApplication.statuses.each_key do |status|
-      create(:job_application, :"status_#{status}", jobseeker:)
+      create(:job_application, :"status_#{status}", jobseeker:, create_references: false, create_self_disclosure: false)
     end
 
     if job_application.present?
@@ -374,8 +374,8 @@ RSpec.describe "check job application after status transition" do
 
         publisher_ats_applications_page.select_tab(:tab_interviewing)
 
-        candidate_name = jobseeker.job_applications.unsuccessful_interview.where.not(interview_feedback_received_at: nil).first.name
-        expect(publisher_ats_applications_page.tab_panel.job_applications.first.name).to have_text(candidate_name)
+        expect(job_application.reload.status).to eq("unsuccessful_interview")
+        expect(publisher_ats_applications_page.tab_panel.job_applications.first.name).to have_text(job_application.name)
       end
 
       run_with_jobseeker(jobseeker) do

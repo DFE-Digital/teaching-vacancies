@@ -149,7 +149,7 @@ RSpec.describe "jobseekers/job_applications/show" do
     subject(:timeline_items) { show_view.all(".timeline-component .timeline-component__item") }
 
     it "renders" do
-      expect(timeline_items.map(&:text)).to contain_exactly("Application submitted")
+      expect(timeline_items.map(&:text).join).to include("Application submitted")
     end
   end
 

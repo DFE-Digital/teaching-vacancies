@@ -57,13 +57,7 @@ class JobApplication < ApplicationRecord
   # basic state machine definition
   # rubocop:disable Layout/HashAlignment
   STATUS_TRANSITIONS = {
-    # initial transition, for current tests that have invalid status transitions.
-    # this is temporary while we revisit tests
-    nil            => %w[draft submitted reviewed shortlisted unsuccessful withdrawn interviewing offered declined unsuccessful_interview],
-
-    # initial transition, after all tests have been fixed
-    # nil          => %w[draft]
-
+    nil            => %w[draft],
     "draft"        => %w[submitted],
     "submitted"    => %w[unsuccessful shortlisted interviewing offered withdrawn],
     # reviewed is being phased out and is here to support existing data
