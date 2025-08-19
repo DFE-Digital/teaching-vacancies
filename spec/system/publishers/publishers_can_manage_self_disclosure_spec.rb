@@ -7,7 +7,7 @@ RSpec.describe "Publishers manage self disclosure" do
   let(:organisation) { create(:school) }
   let(:vacancy) { create(:vacancy, :expired, organisations: [organisation], publisher: publisher) }
   let(:jobseeker) { create(:jobseeker, :with_personal_details) }
-  let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy, jobseeker: jobseeker) }
+  let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy, jobseeker: jobseeker, create_self_disclosure: false) }
   let(:disclosure_request) { SelfDisclosureRequest.order(:created_at).last }
 
   describe "using TV self-disclosure form", :versioning do

@@ -3,7 +3,9 @@ require "rails_helper"
 RSpec.describe TabPanelComponent, type: :component do
   subject!(:tab_panel) { Capybara.string(render_component) }
 
-  let(:render_component) { render_inline(described_class.new(tab_name:, vacancy:, candidates:, form:)) }
+  let(:component) { described_class.new(tab_name:, vacancy:, candidates:, form:, displayed_fields:) }
+  let(:render_component) { render_inline(component) }
+  let(:displayed_fields) { %i[name email_address status] }
   let(:form) { nil }
   let(:tab_name) { "submitted" }
   let(:vacancy) { build_stubbed(:vacancy) }
@@ -55,5 +57,32 @@ RSpec.describe TabPanelComponent, type: :component do
     it "renders empty section" do
       expect(tab_panel.find(".empty-section-component")).to be_present
     end
+  end
+
+  context "when rendering candidate's offered_at date" do
+    let(:candidates) { build_stubbed_list(:job_application, 1, :status_offered, vacancy:, offered_at: Time.zone.now) }
+    let(:displayed_fields) { %i[name email_address offered_at] }
+    let(:expected_date) { candidates.first.offered_at.to_fs(:day_month_year) }
+
+    it { expect(tab_panel.find(".offered_at")).to have_text(expected_date) }
+    it { expect(component.candidate_offered_at(candidates.first)).to eq(expected_date) }
+  end
+
+  context "when rendering candidate's declined_at date" do
+    let(:candidates) { build_stubbed_list(:job_application, 1, :status_declined, vacancy:, declined_at: Time.zone.now) }
+    let(:displayed_fields) { %i[name email_address declined_at] }
+    let(:expected_date) { candidates.first.declined_at.to_fs(:day_month_year) }
+
+    it { expect(tab_panel.find(".declined_at")).to have_text(expected_date) }
+    it { expect(component.candidate_declined_at(candidates.first)).to eq(expected_date) }
+  end
+
+  context "when rendering candidate's feedback date" do
+    let(:candidates) { build_stubbed_list(:job_application, 1, :status_unsuccessful_interview, vacancy:, interview_feedback_received_at: Time.zone.now) }
+    let(:displayed_fields) { %i[name email_address interview_feedback_received_at] }
+    let(:expected_date) { candidates.first.interview_feedback_received_at.to_fs(:day_month_year) }
+
+    it { expect(tab_panel.find(".interview_feedback_received_at")).to have_text(expected_date) }
+    it { expect(component.candidate_interview_feedback_received_at(candidates.first)).to eq(expected_date) }
   end
 end

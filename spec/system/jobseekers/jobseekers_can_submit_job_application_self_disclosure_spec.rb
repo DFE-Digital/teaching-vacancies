@@ -7,7 +7,7 @@ RSpec.describe "Jobseekers can submit job application self disclosure" do
   let(:organisations) { [create(:school)] }
   let(:vacancy) { create(:vacancy, organisations:) }
   let(:job_application) { create(:job_application, :status_submitted, vacancy:, jobseeker:) }
-  let(:self_disclosure_request) { create(:self_disclosure_request, job_application:) }
+  let(:self_disclosure_request) { create(:self_disclosure_request, :sent, job_application:) }
   let(:self_disclosure) { create(:self_disclosure, :pending, self_disclosure_request:) }
 
   before do

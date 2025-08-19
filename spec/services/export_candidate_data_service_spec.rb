@@ -25,7 +25,7 @@ RSpec.describe ExportCandidateDataService do
   let(:self_disclosure) { create(:self_disclosure, self_disclosure_request:) }
   # job application
   let(:job_application) do
-    create(:job_application, :status_offered, vacancy:, first_name: "John", last_name: "Doe")
+    create(:job_application, :status_offered, vacancy:, first_name: "John", last_name: "Doe", create_self_disclosure: false, create_references: false)
   end
   let(:job_applications) { [job_application] }
   # service
