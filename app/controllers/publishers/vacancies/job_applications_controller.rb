@@ -22,7 +22,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
     @notes_form = Publishers::JobApplication::NotesForm.new
     @message = Message.new
-    @messages = @job_application.conversations.includes(:messages).flat_map(&:messages).select { |m| m.created_at.present? }
+    @messages = @job_application.conversations.includes(:messages).flat_map(&:messages)
 
     raise ActionController::RoutingError, "Cannot view a draft application" if @job_application.draft?
   end
