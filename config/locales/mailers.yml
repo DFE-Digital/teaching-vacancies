@@ -244,7 +244,7 @@ en:
 
           Kind regards,
           Teaching Vacancies team
-      declaration_received:
+      self_disclosure_received:
         subject: You have received a self-disclosure form for %{job_title} at %{organisation_name}
         title: Dear %{name}
         sign_in: Teaching Vacancies account
