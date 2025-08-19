@@ -1,0 +1,70 @@
+require "rails_helper"
+
+RSpec.describe "Publishers can send messages to job applicants" do
+  let(:organisation) { create(:school) }
+  let(:publisher) { create(:publisher, organisations: [organisation]) }
+  let(:vacancy) { create(:vacancy, :live, organisations: [organisation]) }
+  let(:job_application) { create(:job_application, :submitted, vacancy: vacancy) }
+
+  before do
+    login_publisher(publisher: publisher, organisation: organisation)
+  end
+
+  after { logout }
+
+  context "when viewing a job application messages tab" do
+    it "allows publisher to send a message to the job applicant", :js do
+      visit organisation_job_job_application_path(vacancy.id, job_application.id, tab: "messages")
+
+      expect(page).to have_link("Print this page")
+      expect(page).to have_link("Send message to candidate")
+
+      click_link "Send message to candidate"
+
+      expect(page).to have_no_link("Print this page")
+      expect(page).to have_no_link("Send message to candidate")
+
+      click_button "Send message"
+
+      expect(page).to have_text("Message could not be sent")
+
+      click_link "Send message to candidate"
+
+      message_content = "Hi John, I hope you're well. Just a quick reminder to complete your declaration form."
+      fill_in_trix_editor "message_content", with: message_content
+
+      click_button "Send message"
+
+      expect(page).to have_text("Message sent successfully")
+      expect(page).to have_text(message_content)
+      expect(page).to have_text("#{publisher.given_name} #{publisher.family_name}")
+      expect(page).to have_text("Regarding application: #{vacancy.job_title}")
+    end
+  end
+
+  context "when messages already exist", :js do
+    let!(:conversation) { create(:conversation, job_application: job_application) }
+    let!(:message) { create(:message, conversation: conversation, sender: publisher, content: "Previous message content") }
+
+    it "displays existing messages and allows sending additional messages" do
+      visit organisation_job_job_application_path(vacancy.id, job_application.id, tab: "messages")
+
+      expect(page).to have_text("#{publisher.given_name} #{publisher.family_name}")
+      expect(page).to have_text("Previous message content")
+      expect(page).to have_text("Regarding application: #{vacancy.job_title}")
+      expect(page).to have_text(message.created_at.strftime("%d %B %Y at %I:%M %p"))
+      expect(page).to have_no_text("No messages have been sent yet.")
+
+      click_link "Send message to candidate"
+
+      new_message_content = "This is a follow-up message."
+      fill_in_trix_editor "message_content", with: new_message_content
+
+      click_button "Send message"
+
+      expect(page).to have_text("Previous message content")
+      expect(page).to have_text(new_message_content)
+      expect(conversation.reload.messages.count).to eq(2)
+    end
+  end
+end
