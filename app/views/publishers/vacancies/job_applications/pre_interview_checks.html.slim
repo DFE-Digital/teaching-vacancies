@@ -5,7 +5,7 @@
 .govuk-grid-row class="govuk-!-margin-top-4"
   .govuk-grid-column-two-thirds
     .govuk-button-group class="govuk-!-display-none-print"
-      = govuk_button_link_to t("buttons.download_pdf_application"), organisation_job_job_application_download_pdf_path(vacancy.id, @job_application.id)
+      = govuk_button_link_to t("buttons.download_application"), organisation_job_job_application_download_path(@vacancy.id, @job_application.id)
       = govuk_button_link_to t("buttons.update_application_status"), tag_organisation_job_job_applications_path(@vacancy.id, params: { publishers_job_application_tag_form: { origin: tab_name(@job_application.status), job_applications: [@job_application.id] } }), class: "govuk-button--secondary"
 = govuk_table html_attributes: { id: "references" } do |table|
   - table.with_head do |head|
