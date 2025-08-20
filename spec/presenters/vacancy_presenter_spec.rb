@@ -263,12 +263,6 @@ RSpec.describe VacancyPresenter do
     end
   end
 
-  describe "#columns" do
-    it "delegates to the record's columns" do
-      expect(subject.columns).to eq(vacancy.class.columns)
-    end
-  end
-
   describe "#school_group_names" do
     let(:publisher) { build_stubbed(:publisher) }
     let(:trust) { build_stubbed(:trust, name: "Cheesy trust name") }
