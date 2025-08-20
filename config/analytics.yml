@@ -348,8 +348,10 @@ shared:
     - id
     - created_at
     - updated_at
+    - allegations
     - complete
     - can_give_reference
+    - email
     - is_reference_sharable
     - reference_id
     - employment_start_date
@@ -358,13 +360,12 @@ shared:
     - would_reemploy_current
     - would_reemploy_any
     - name
+    - not_provided_reason
     - job_title
     - phone_number
-    - email
     - organisation
     - under_investigation
     - warnings
-    - allegations
     - not_fit_to_practice
     - able_to_undertake_role
     - punctuality

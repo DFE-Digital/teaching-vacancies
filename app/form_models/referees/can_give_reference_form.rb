@@ -2,13 +2,15 @@
 
 module Referees
   class CanGiveReferenceForm < ReferenceForm
-    ATTRIBUTES = [:can_give_reference].freeze
+    BOOLEAN_ATTRIBUTES = [:can_give_reference].freeze
 
-    ATTRIBUTES.each do |field|
+    BOOLEAN_ATTRIBUTES.each do |field|
       attribute field, :boolean
 
       validates field, inclusion: { in: [true, false], allow_nil: false }
     end
+
+    attribute :not_provided_reason
 
     def params_to_save
       if can_give_reference
@@ -20,7 +22,7 @@ module Referees
 
     class << self
       def storable_fields
-        ATTRIBUTES
+        BOOLEAN_ATTRIBUTES + [:not_provided_reason]
       end
     end
   end

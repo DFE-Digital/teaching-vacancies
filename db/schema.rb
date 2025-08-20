@@ -353,6 +353,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_18_160141) do
     t.string "warning_details_ciphertext"
     t.string "unable_to_undertake_reason_ciphertext"
     t.string "employment_end_date_ciphertext"
+    t.string "not_provided_reason"
     t.index ["reference_id"], name: "index_job_references_on_reference_id", unique: true
   end
 

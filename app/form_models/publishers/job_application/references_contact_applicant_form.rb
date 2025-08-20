@@ -5,7 +5,7 @@ module Publishers
       include ActiveModel::Validations
       include ActiveModel::Attributes
 
-      FIELDS = %i[collect_self_disclosure collect_references contact_applicants].freeze
+      FIELDS = %i[collect_references contact_applicants].freeze
 
       FIELDS.each do |field|
         attribute field, :boolean
