@@ -29,7 +29,7 @@
     "leaflet.markercluster": "^1.5.3",
     "lodash": "^4.17.21",
     "rails-ujs": "^5.2.8",
-    "tough-cookie": "^5.1.2"
+    "tough-cookie": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.28.0",
