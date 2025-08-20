@@ -32,8 +32,7 @@ The Department for Education (DfE) has been taking action to help schools suppor
 
 * [improving workload and wellbeing](https://www.gov.uk/guidance/improve-workload-and-wellbeing-for-school-staff)
 * [looking after their mental health](https://www.gov.uk/guidance/education-staff-wellbeing-charter)
-* enabling [flexible working opportunities](https://www.gov.uk/government/collections/flexible-working-resources-for-teachers-and-schools) 
-* putting in place [behaviour hubs](https://behaviourhubs.co.uk/)
+* enabling [flexible working opportunities](https://www.gov.uk/government/collections/flexible-working-resources-for-teachers-and-schools)
 
 ## Get a return to teaching adviser
 If you have previously taught or trained to teach in the UK, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers).
@@ -43,7 +42,7 @@ Advisers can give you free one-to-one support with:
   * the applications process, such as writing personal statements and preparing for interviews
   * accessing courses to enhance your subject knowledge or teaching practice, such as national professional qualifications (NPQs)
   * finding teaching vacancies
-  * accessing themed webinars and networking opportunities
+  * accessing themed webinars
 
 You can chat by phone, text or email, as little or as often as you need.
 
