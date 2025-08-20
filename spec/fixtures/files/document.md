@@ -3,6 +3,7 @@ order: 1
 title: Title
 meta_description: Meta description
 date_posted: 01/01/2022
+date_updated: 01/01/2022
 category_tags: category 1, category 2, category 3
 ---
 ## First heading

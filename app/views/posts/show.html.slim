@@ -16,8 +16,15 @@
 
     == @post.content
 
+    - if @post.date_updated
+      span.govuk-body-s
+        = t(".updated_on")
+        time datetime=@post.date_updated.to_fs(:db)
+          =< @post.date_updated.to_fs
+      br
+
     - if @post.date_posted
       span.govuk-body-s
         = t(".published_on")
-        time datetime=@post.date_posted.to_formatted_s(:db)
-          =< @post.date_posted.to_formatted_s
+        time datetime=@post.date_posted.to_fs(:db)
+          =< @post.date_posted.to_fs

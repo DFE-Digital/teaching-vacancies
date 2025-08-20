@@ -234,6 +234,7 @@ en:
     show:
       contents: Contents
       published_on: Published on
+      updated_on: Updated on
     subcategory:
       get-help-hiring:
         how-to-create-job-listings-and-accept-applications: >-
