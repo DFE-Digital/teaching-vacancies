@@ -9,21 +9,28 @@ card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/how-
 
 ![One student looking into a microscope while another student observes.](/content-assets/jobseeker-guides/return-to-teaching-in-england/how-to-apply-for-classroom-experience.png)
 
-When you contact a school to arrange classroom experience, you should include a short cover letter and CV. 
+When you find a school you'd like to arrange classroom experience with, you should contact them by email (the school's email address can usually be found on their website). 
 
-Where possible, you should contact the school by email, which can usually be found on the school’s website.
+Send them a short cover note to tell them you're a returning teacher looking for classroom experience, along with your CV.
+
+In your cover note, you may want to include:
+
+* the key stages you have previously taught and, if applying for secondary, the main subjects you can teach
+* when you last taught
+* the ideal length of time you would like the experience to last
+* anything unique or specific from your previous experience that you think may showcase your skills
+
+If the school you have contacted is unable to provide you with classroom experience, you may want to ask if there are opportunities in other schools in their trust or area they are aware of, or request they keep you in mind for further opportunities.
 
 ## What to include in your CV 
  
 Typically CVs are no longer than 2 pages and include: 
 
 * your contact details and Teacher Reference Number (TRN), if you have one  
-* correct spelling, punctuation and grammar  
 * your job history and qualifications in reverse chronological order, with your most recent job or qualification first 
 * the details and responsibilities from your previous roles 
 * specific details about your qualifications   
-* any other relevant experience you may have  
-* the job title and contact details for your referees
+* any other relevant experience you may have
 
 ## Disclosure and Barring Service (DBS) checks 
  

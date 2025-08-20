@@ -35,13 +35,13 @@ You can find additional support on [Get support returning to teaching](/jobseeke
     <div class="govuk-accordion__section-header">
       <h2 class="govuk-accordion__section-heading">
         <span class="govuk-accordion__section-button" id="accordion-default-heading-2">
-          Get classroom experience
+          Update your classroom experience
         </span>
       </h2>
     </div>
     <div id="accordion-default-content-2" class="govuk-accordion__section-content">
       <p class="govuk-body">
-        You should spend time in a classroom to see if you're ready to return to teaching. Classroom experience can also help you secure a strong teaching reference for your applications. 
+        Spending time in a classroom is a great way to see if you're ready to return to teaching and to strengthen your application. Classroom experience can also help you secure a strong teaching reference for your applications. 
       </p>
       <p class="govuk-body">
         <a href="/jobseeker-guides/return-to-teaching-in-england/find-classroom-experience">Finding classroom experience for returning teachers</a>
@@ -103,7 +103,7 @@ You can find additional support on [Get support returning to teaching](/jobseeke
     </div>
     <div id="accordion-default-content-4" class="govuk-accordion__section-content">
       <p class="govuk-body">
-        Once you're invited for an interview, you should confirm your attendance with the school. You should also review the selection process requirements, which may include:  
+        Once you're invited for an interview, you'll need to confirm your attendance with the school. You should also review the selection process requirements, which may include:  
       </p>
       <ul>
         <li>teaching a lesson</li>
