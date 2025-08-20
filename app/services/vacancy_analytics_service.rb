@@ -1,11 +1,11 @@
 class VacancyAnalyticsService
   REDIS_KEY_PREFIX = "vacancy_referrer_stats".freeze
 
-  def self.track_visit(vacancy_id, referrer_url)
+  def self.track_visit(vacancy_id, referrer_url, hostname)
     return if vacancy_id.blank?
 
     # Generate a Redis key for this vacancy and referrer
-    redis_key = "#{REDIS_KEY_PREFIX}:#{vacancy_id}:#{normalize_referrer(referrer_url)}"
+    redis_key = "#{REDIS_KEY_PREFIX}:#{vacancy_id}:#{normalize_referrer(referrer_url, hostname)}"
     # Increment the counter in Redis
     Redis.current.incr(redis_key)
   end
@@ -52,14 +52,22 @@ class VacancyAnalyticsService
     end
   end
 
-  def self.normalize_referrer(url)
-    return "direct" if url.blank?
-
-    begin
-      uri = URI.parse(url)
-      uri.host.presence || "unknown"
-    rescue URI::InvalidURIError
-      "invalid"
+  class << self
+    def normalize_referrer(referrer_url, hostname)
+      if referrer_url.blank?
+        "direct"
+      else
+        begin
+          uri = URI.parse(referrer_url)
+          if uri.host.present?
+            uri.host == hostname ? "direct" : uri.host
+          else
+            "unknown"
+          end
+        rescue URI::InvalidURIError
+          "invalid"
+        end
+      end
     end
   end
 end
