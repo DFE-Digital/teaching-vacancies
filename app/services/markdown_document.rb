@@ -42,6 +42,10 @@ class MarkdownDocument
     Date.parse(@front_matter["date_posted"]) if @front_matter["date_posted"]
   end
 
+  def date_updated
+    Date.parse(@front_matter["date_updated"]) if @front_matter["date_updated"]
+  end
+
   def meta_description
     @front_matter["meta_description"]
   end
