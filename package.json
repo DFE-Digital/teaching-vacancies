@@ -32,8 +32,8 @@
     "tough-cookie": "^6.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.0",
-    "@babel/preset-env": "^7.28.0",
+    "@babel/core": "^7.28.3",
+    "@babel/preset-env": "^7.28.3",
     "concurrently": "^9.2.0",
     "dotenv": "^17.2.1",
     "esbuild": "^0.25.9",
