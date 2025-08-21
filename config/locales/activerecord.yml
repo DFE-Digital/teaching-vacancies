@@ -607,6 +607,11 @@ en:
               blank: Enter a note
               too_long: A note must not be more than 150 characters
 
+        publishers/job_application/messages_form:
+          attributes:
+            content:
+              blank: Please enter your message
+
         publishers/job_application/tag_form:
           attributes:
             job_applications:

@@ -26,12 +26,13 @@ RSpec.describe "Publishers can send messages to job applicants" do
 
       click_button "Send message"
 
-      expect(page).to have_text("Message could not be sent")
-
-      click_link "Send message to candidate"
+      expect(page).to have_css("h2.govuk-error-summary__title", text: "There is a problem")
+      within(".govuk-error-summary__body") do
+        expect(page).to have_link("Please enter your message")
+      end
 
       message_content = "Hi John, I hope you're well. Just a quick reminder to complete your declaration form."
-      fill_in_trix_editor "message_content", with: message_content
+      fill_in_trix_editor "publishers_job_application_messages_form_content", with: message_content
 
       click_button "Send message"
 
@@ -58,13 +59,84 @@ RSpec.describe "Publishers can send messages to job applicants" do
       click_link "Send message to candidate"
 
       new_message_content = "This is a follow-up message."
-      fill_in_trix_editor "message_content", with: new_message_content
+      fill_in_trix_editor "publishers_job_application_messages_form_content", with: new_message_content
 
       click_button "Send message"
 
       expect(page).to have_text("Previous message content")
       expect(page).to have_text(new_message_content)
       expect(conversation.reload.messages.count).to eq(2)
+    end
+  end
+
+  context "when jobseeker replies to messages" do
+    let(:jobseeker) { job_application.jobseeker }
+    let!(:conversation) { create(:conversation, job_application: job_application) }
+    let!(:publisher_message) { create(:message, conversation: conversation, sender: publisher, content: "Hello from publisher") }
+    let!(:job_application_without_messages) { create(:job_application, :submitted, vacancy: vacancy, jobseeker: jobseeker) }
+
+    before do
+      login_as(jobseeker, scope: :jobseeker)
+    end
+
+    it "displays existing publisher messages to jobseeker and allows jobseeker to reply to publisher messages", :js do
+      visit jobseekers_job_application_path(job_application, tab: "messages")
+
+      expect(page).to have_text("#{publisher.given_name} #{publisher.family_name}")
+      expect(page).to have_text("Hello from publisher")
+      expect(page).to have_text("Regarding application: #{vacancy.job_title}")
+      expect(page).to have_text(publisher_message.created_at.strftime("%d %B %Y at %I:%M %p"))
+
+      expect(page).to have_link("Send message to hiring staff")
+      expect(page).to have_no_link("Print this page")
+      expect(page).to have_no_text("If a candidate responds with their pre-interview documentation")
+
+      click_link "Send message to hiring staff"
+
+      expect(page).to have_css(".trix-content")
+      expect(page).to have_button("Send message")
+      expect(page).to have_link("Cancel")
+      expect(page).to have_text("How will this message be sent?")
+
+      # cannot send empty message
+      click_button "Send message"
+
+      expect(page).to have_css("h2.govuk-error-summary__title", text: "There is a problem")
+      within(".govuk-error-summary__body") do
+        expect(page).to have_link("Please enter your message")
+      end
+
+      jobseeker_reply = "Thank you for your message. I look forward to hearing from you."
+      fill_in_trix_editor "publishers_job_application_messages_form_content", with: jobseeker_reply
+
+      click_button "Send message"
+
+      expect(page).to have_text("Message sent successfully")
+      expect(page).to have_text("Hello from publisher")
+      expect(page).to have_text(jobseeker_reply)
+      expect(page).to have_text(job_application.name.to_s)
+      expect(conversation.reload.messages.count).to eq(2)
+    end
+
+    it "shows jobseeker reply in publisher interface" do
+      create(:message, conversation: conversation, sender: jobseeker, content: "Jobseeker reply content")
+
+      login_publisher(publisher: publisher, organisation: organisation)
+
+      visit organisation_job_job_application_path(vacancy.id, job_application.id, tab: "messages")
+
+      expect(page).to have_text("Hello from publisher")
+      expect(page).to have_text("Jobseeker reply content")
+      expect(page).to have_text(job_application.name.to_s)
+      expect(page).to have_text("#{publisher.given_name} #{publisher.family_name}")
+    end
+
+    it "shows no messages interface when no conversation exists" do
+      visit jobseekers_job_application_path(job_application_without_messages, tab: "messages")
+
+      expect(page).to have_text("No messages yet. Hiring staff can start a conversation with you here.")
+      expect(page).to have_no_link("Send message to hiring staff")
+      expect(page).to have_no_css(".trix-content")
     end
   end
 end
