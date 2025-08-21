@@ -55,7 +55,11 @@ class Organisation < ApplicationRecord
 
   scope :with_live_vacancies, lambda {
     organisations = Vacancy.live.map(&:organisations).flatten.uniq
-    all_organisations = organisations.map { |org| [org] + org.school_groups }.flatten
+    local_authorities_extra_schools = Rails.configuration.local_authorities_extra_schools.to_h.transform_keys(&:to_s)
+
+    local_authorities = local_authorities_extra_schools.select { |_la_code, school_urns| school_urns.any? { |urn| organisations.map(&:urn).include? urn.to_s } }
+
+    all_organisations = organisations.map { |org| [org] + org.school_groups }.flatten + SchoolGroup.where(local_authority_code: local_authorities.keys)
     where(id: all_organisations.map(&:id))
   }
 
