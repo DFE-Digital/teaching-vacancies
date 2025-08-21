@@ -2,7 +2,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    - if vacancy.listed?
+    - if vacancy.live?
       = render "publishers/vacancies/review_banners/published", vacancy: vacancy
 
     - elsif vacancy.draft? && all_steps_valid

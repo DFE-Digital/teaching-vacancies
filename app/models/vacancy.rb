@@ -145,14 +145,14 @@ class Vacancy < ApplicationRecord
   has_noticed_notifications
   has_paper_trail on: [:update],
                   only: ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG,
-                  if: proc(&:listed?)
+                  if: proc(&:live?)
 
   # Publisher will need to set a new publish date if wanting to re-publish an scheduled vacancy turned back to a draft.
   before_save -> { self.publish_on = nil if type_changed?(from: "PublishedVacancy", to: "DraftVacancy") }
 
   self.ignored_columns += %i[personal_statement_guidance how_to_apply school_visits_details]
 
-  after_save :reset_markers, if: -> { saved_change_to_type? && (listed? || pending?) }
+  after_save :reset_markers, if: -> { saved_change_to_type? && (live? || pending?) }
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[8:00 9:00 12:00 15:00 23:59].freeze
@@ -194,8 +194,7 @@ class Vacancy < ApplicationRecord
     organisations.one? && organisations.first.trust?
   end
 
-  # TODO: This method matches conditions of :live scope, not :listed. We should rename it
-  def listed?
+  def live?
     published? && expires_at&.future? && (publish_on&.today? || publish_on&.past?)
   end
 
@@ -315,7 +314,7 @@ class Vacancy < ApplicationRecord
                          points = organisations.filter_map(&:geopoint)
                          points.presence && points.first.factory.multi_point(points)
                        end
-    reset_markers if persisted? && (listed? || pending?)
+    reset_markers if persisted? && (live? || pending?)
   end
 end
 # rubocop:enable Metrics/ClassLength

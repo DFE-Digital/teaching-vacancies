@@ -31,7 +31,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
     result = Publishers::AtsApi::UpdateVacancyService.call(@vacancy, vacancy_params)
 
     if result[:status] == :ok
-      UpdateGoogleIndexQueueJob.perform_later(job_url(@vacancy)) if @vacancy.listed?
+      UpdateGoogleIndexQueueJob.perform_later(job_url(@vacancy)) if @vacancy.live?
       render :show
     else
       render result.slice(:json, :status)

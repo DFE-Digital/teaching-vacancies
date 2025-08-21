@@ -1,5 +1,5 @@
 json.id vacancy.id
-json.public_url vacancy.listed? ? job_url(vacancy) : nil
+json.public_url vacancy.live? ? job_url(vacancy) : nil
 json.external_advert_url vacancy.external_advert_url
 json.publish_on vacancy.publish_on
 json.expires_at vacancy.expires_at

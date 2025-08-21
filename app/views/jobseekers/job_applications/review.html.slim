@@ -5,7 +5,7 @@
     = render "banner"
 
   - r.with_above do
-    - unless vacancy.listed?
+    - unless vacancy.live?
       = govuk_notification_banner title_text: t("banners.important") do
         p.govuk-body = t(".deadline_passed")
 
@@ -50,6 +50,6 @@
         p.govuk-body
           = t(".confirmation.resubmission_warning")
 
-        - if vacancy.listed?
+        - if vacancy.live?
           = f.govuk_submit t("buttons.submit_application") do
             = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"

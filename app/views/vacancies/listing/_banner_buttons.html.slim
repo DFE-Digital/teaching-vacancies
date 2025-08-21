@@ -1,5 +1,5 @@
 .govuk-grid-row.banner-buttons
-  - if (vacancy.enable_job_applications? || vacancy.uploaded_form?) && vacancy.listed?
+  - if (vacancy.enable_job_applications? || vacancy.uploaded_form?) && vacancy.live?
     .govuk-grid-column-one-third
       - if job_application
         - if job_application.draft?
