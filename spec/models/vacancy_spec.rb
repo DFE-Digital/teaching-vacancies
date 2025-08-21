@@ -187,25 +187,25 @@ RSpec.describe Vacancy do
 
       it "does not break if #expires_at is nil" do
         subject.expires_at = nil
-        expect { subject.listed? }.not_to raise_error
+        expect { subject.live? }.not_to raise_error
       end
 
       it "checks #expires_at is in the future" do
         allow(subject).to receive(:expires_at).and_return(datetime)
         expect(datetime).to receive(:future?)
-        subject.listed?
+        subject.live?
       end
 
       it "checks #published?" do
         expect(subject).to receive(:published?)
-        subject.listed?
+        subject.live?
       end
 
       context "when draft" do
         let(:vacancy) { build(:draft_vacancy) }
 
         it 'checks if #published == "draft" (yields published? == false)' do
-          expect(subject.listed?).to be_falsey
+          expect(subject.live?).to be_falsey
         end
       end
 
@@ -218,22 +218,22 @@ RSpec.describe Vacancy do
 
         it "checks if #publish_on is in the past" do
           expect(datetime).to receive(:past?)
-          subject.listed?
+          subject.live?
         end
 
         it "checks if #publish_on is today" do
           expect(datetime).to receive(:today?)
-          subject.listed?
+          subject.live?
         end
 
         it "does not break if publish_on is nil" do
           subject.publish_on = nil
-          expect { subject.listed? }.not_to raise_error
+          expect { subject.live? }.not_to raise_error
         end
       end
 
       it "return true if all the conditions are met" do
-        expect(subject.listed?).to be_truthy
+        expect(subject.live?).to be_truthy
       end
     end
   end

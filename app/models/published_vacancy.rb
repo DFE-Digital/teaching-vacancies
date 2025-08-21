@@ -10,7 +10,7 @@ class PublishedVacancy < Vacancy
   # The ExternalVacancyValidator tries to do this, but it's really a separate type.
   validates_with ExternalVacancyValidator, if: :external?
 
-  validate :enable_job_applications_cannot_be_changed_once_listed, if: -> { persisted? && listed? && enable_job_applications_changed? }
+  validate :enable_job_applications_cannot_be_changed_once_listed, if: -> { persisted? && live? && enable_job_applications_changed? }
 
   validates :publish_on, presence: true
 

@@ -33,7 +33,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
 
   def update_vacancy
     vacancy.update(form.params_to_save)
-    update_google_index(vacancy) if vacancy.listed?
+    update_google_index(vacancy) if vacancy.live?
   end
 
   def event_type

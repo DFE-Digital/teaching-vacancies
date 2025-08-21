@@ -6,7 +6,7 @@
 
     = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
 
-    - if vacancy.listed?
+    - if vacancy.live?
       = f.hidden_field :application_form_type, :other
     - else
       = f.govuk_radio_buttons_fieldset :application_form_type, legend: nil do
