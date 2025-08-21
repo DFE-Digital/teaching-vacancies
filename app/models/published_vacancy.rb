@@ -38,7 +38,7 @@ class PublishedVacancy < Vacancy
   end
 
   def published?
-    true
+    discarded_at.nil?
   end
 
   def find_external_reference_conflict_vacancy

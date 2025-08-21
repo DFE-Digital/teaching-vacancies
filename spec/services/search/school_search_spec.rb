@@ -23,7 +23,7 @@ RSpec.describe Search::SchoolSearch do
   let(:job_availability) { nil }
   let(:radius) { 10 }
 
-  let(:scope) { School.all }
+  let(:scope) { Organisation.all }
 
   describe "#wider_search_suggestions" do
     let(:school_search) { described_class.new(form_hash, scope: scope) }
@@ -46,106 +46,145 @@ RSpec.describe Search::SchoolSearch do
     end
   end
 
-  context "when no filters (except for radius) are given" do
-    it "returns unmodified scope" do
-      expect(subject.organisations.to_sql).to eq(scope.to_sql)
-    end
-  end
+  describe "#organisations" do
+    context "with job availability filter (can only be set true)" do
+      let(:job_availability) { ["true"] }
 
-  context "when location and radius are given" do
-    let(:location) { "Sevenoaks" }
+      before do
+        create(:school, name: "Empty", school_groups: [empty_group])
+        active = create(:school, name: "Active", school_groups: [active_group])
+        create(:vacancy, organisations: [active])
+      end
 
-    it "returns scope modified by location search" do
-      expect(subject.organisations.to_sql).to eq(scope.search_by_location(location, radius).to_sql)
-    end
-  end
+      context "when the organisation is a trust" do
+        let(:empty_group) { create(:trust, name: "Empty Trust") }
+        let(:active_group) { create(:trust, name: "Trust") }
 
-  context "when only name is given" do
-    let(:radius) { nil }
-    let(:name) { "Bexleyheath Academy" }
+        it "returns school and trust with vacancy" do
+          expect(subject.organisations.map(&:name)).to contain_exactly("Active", "Trust")
+        end
+      end
 
-    it "returns scope modified by name search" do
-      expect(subject.organisations.to_sql).to eq(scope.search_by_name(name).to_sql)
-    end
-  end
+      context "when the organisation is a local authority" do
+        let(:empty_group) { create(:local_authority, name: "Empty LA") }
+        let(:active_group) { create(:local_authority, name: "LA") }
+        let(:extra_group) { create(:local_authority, name: "Extra") }
+        let(:local_authorities_extra_schools) { { extra_group.local_authority_code.to_i => [extra_school.urn.to_i] } }
+        let(:extra_school) { create(:school, name: "Extra School") }
 
-  context "when organisation_types are given" do
-    let!(:academies) { create(:school, name: "Academy1", school_type: "Academies") }
-    let!(:academy) { create(:school, name: "Academy2", school_type: "Academy") }
-    let!(:free_school) { create(:school, name: "Freeschool1", school_type: "Free school") }
-    let!(:free_schools) { create(:school, name: "Freeschool2", school_type: "Free schools") }
-    let!(:local_authority_school) { create(:school, name: "local authority", school_type: "Local authority maintained schools") }
-    let!(:other_school) { create(:school, name: "local authority", school_type: "Something else") }
+        before do
+          create(:vacancy, organisations: [extra_school])
 
-    context "when organisation_types == ['Academy']" do
-      let(:organisation_types) { ["Academy"] }
+          allow(Rails.configuration).to receive(:local_authorities_extra_schools).and_return(local_authorities_extra_schools)
+        end
 
-      it "will return academies and free schools" do
-        expect(subject.organisations).to contain_exactly(academies, academy, free_school, free_schools)
+        it "returns school and trust with vacancy" do
+          expect(subject.organisations.map(&:name)).to contain_exactly("Active", "LA local authority", "Extra School", "Extra local authority")
+        end
       end
     end
 
-    context "when organisation_types == ['Local authority maintained schools']" do
-      let(:organisation_types) { ["Local authority maintained schools"] }
-
-      it "will return local authority maintained schools" do
-        expect(subject.organisations).to contain_exactly(local_authority_school)
+    context "when no filters (except for radius) are given" do
+      it "returns unmodified scope" do
+        expect(subject.organisations.to_sql).to eq(scope.to_sql)
       end
     end
 
-    context "when organisation_types is empty" do
-      it "will return all schools" do
-        expect(subject.organisations).to contain_exactly(academies, academy, free_school, free_schools, local_authority_school, other_school)
+    context "when location and radius are given" do
+      let(:location) { "Sevenoaks" }
+
+      it "returns scope modified by location search" do
+        expect(subject.organisations.to_sql).to eq(scope.search_by_location(location, radius).to_sql)
       end
     end
 
-    context "when organisation_types includes both 'Academy' and 'Local authority maintained schools'" do
-      let(:organisation_types) { ["Academy", "Local authority maintained schools"] }
-      it "will return local authority maintained schools, academies and free schools" do
-        expect(subject.organisations).to contain_exactly(academies, academy, free_school, free_schools, local_authority_school)
-      end
-    end
-  end
+    context "when only name is given" do
+      let(:radius) { nil }
+      let(:name) { "Bexleyheath Academy" }
 
-  context "when school_types are given" do
-    let(:special_school1) { create(:school, name: "Community special school", detailed_school_type: "Community special school") }
-    let(:special_school2) { create(:school, name: "Foundation special school", detailed_school_type: "Foundation special school") }
-    let(:special_school3) { create(:school, name: "Non-maintained special school", detailed_school_type: "Non-maintained special school") }
-    let(:special_school4) { create(:school, name: "Academy special converter", detailed_school_type: "Academy special converter") }
-    let(:special_school5) { create(:school, name: "Academy special sponsor led", detailed_school_type: "Academy special sponsor led") }
-    let(:special_school6) { create(:school, name: "Non-maintained special school", detailed_school_type: "Free schools special") }
-    let(:faith_school) { create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "anything" }) }
-    let(:non_faith_school1) { create(:school, name: "nonfaith1", gias_data: { "ReligiousCharacter (name)" => "" }) }
-    let(:non_faith_school2) { create(:school, name: "nonfaith2", gias_data: { "ReligiousCharacter (name)" => "Does not apply" }) }
-    let(:non_faith_school3) { create(:school, name: "nonfaith3", gias_data: { "ReligiousCharacter (name)" => "None" }) }
-    let!(:other_school) { create(:school, name: "other", detailed_school_type: "Something else") }
-
-    context "when school_types == ['faith_school']" do
-      let(:school_types) { ["faith_school"] }
-
-      it "will return faith schools" do
-        expect(subject.organisations).to contain_exactly(faith_school)
+      it "returns scope modified by name search" do
+        expect(subject.organisations.to_sql).to eq(scope.search_by_name(name).to_sql)
       end
     end
 
-    context "when school_types == ['special_school']" do
-      let(:school_types) { ["special_school"] }
+    context "when organisation_types are given" do
+      let!(:academies) { create(:school, name: "Academy1", school_type: "Academies") }
+      let!(:academy) { create(:school, name: "Academy2", school_type: "Academy") }
+      let!(:free_school) { create(:school, name: "Freeschool1", school_type: "Free school") }
+      let!(:free_schools) { create(:school, name: "Freeschool2", school_type: "Free schools") }
+      let!(:local_authority_school) { create(:school, name: "local authority", school_type: "Local authority maintained schools") }
+      let!(:other_school) { create(:school, name: "local authority", school_type: "Something else") }
 
-      it "will return special schools" do
-        expect(subject.organisations).to contain_exactly(special_school1, special_school2, special_school3, special_school4, special_school5, special_school6)
+      context "when organisation_types == ['Academy']" do
+        let(:organisation_types) { ["Academy"] }
+
+        it "will return academies and free schools" do
+          expect(subject.organisations).to contain_exactly(academies, academy, free_school, free_schools)
+        end
+      end
+
+      context "when organisation_types == ['Local authority maintained schools']" do
+        let(:organisation_types) { ["Local authority maintained schools"] }
+
+        it "will return local authority maintained schools" do
+          expect(subject.organisations).to contain_exactly(local_authority_school)
+        end
+      end
+
+      context "when organisation_types is empty" do
+        it "will return all schools" do
+          expect(subject.organisations).to contain_exactly(academies, academy, free_school, free_schools, local_authority_school, other_school)
+        end
+      end
+
+      context "when organisation_types includes both 'Academy' and 'Local authority maintained schools'" do
+        let(:organisation_types) { ["Academy", "Local authority maintained schools"] }
+        it "will return local authority maintained schools, academies and free schools" do
+          expect(subject.organisations).to contain_exactly(academies, academy, free_school, free_schools, local_authority_school)
+        end
       end
     end
 
-    context "when school_types is empty" do
-      it "will return all schools" do
-        expect(subject.organisations).to contain_exactly(special_school1, special_school2, special_school3, special_school4, special_school5, special_school6, faith_school, other_school, non_faith_school1, non_faith_school2, non_faith_school3)
-      end
-    end
+    context "when school_types are given" do
+      let(:special_school1) { create(:school, name: "Community special school", detailed_school_type: "Community special school") }
+      let(:special_school2) { create(:school, name: "Foundation special school", detailed_school_type: "Foundation special school") }
+      let(:special_school3) { create(:school, name: "Non-maintained special school", detailed_school_type: "Non-maintained special school") }
+      let(:special_school4) { create(:school, name: "Academy special converter", detailed_school_type: "Academy special converter") }
+      let(:special_school5) { create(:school, name: "Academy special sponsor led", detailed_school_type: "Academy special sponsor led") }
+      let(:special_school6) { create(:school, name: "Non-maintained special school", detailed_school_type: "Free schools special") }
+      let(:faith_school) { create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "anything" }) }
+      let(:non_faith_school1) { create(:school, name: "nonfaith1", gias_data: { "ReligiousCharacter (name)" => "" }) }
+      let(:non_faith_school2) { create(:school, name: "nonfaith2", gias_data: { "ReligiousCharacter (name)" => "Does not apply" }) }
+      let(:non_faith_school3) { create(:school, name: "nonfaith3", gias_data: { "ReligiousCharacter (name)" => "None" }) }
+      let!(:other_school) { create(:school, name: "other", detailed_school_type: "Something else") }
 
-    context "when school_types includes both 'faith_school' and 'special_school'" do
-      let(:school_types) { %w[faith_school special_school] }
-      it "will return special schools and faith schools" do
-        expect(subject.organisations).to contain_exactly(special_school1, special_school2, special_school3, special_school4, special_school5, special_school6, faith_school)
+      context "when school_types == ['faith_school']" do
+        let(:school_types) { ["faith_school"] }
+
+        it "will return faith schools" do
+          expect(subject.organisations).to contain_exactly(faith_school)
+        end
+      end
+
+      context "when school_types == ['special_school']" do
+        let(:school_types) { ["special_school"] }
+
+        it "will return special schools" do
+          expect(subject.organisations).to contain_exactly(special_school1, special_school2, special_school3, special_school4, special_school5, special_school6)
+        end
+      end
+
+      context "when school_types is empty" do
+        it "will return all schools" do
+          expect(subject.organisations).to contain_exactly(special_school1, special_school2, special_school3, special_school4, special_school5, special_school6, faith_school, other_school, non_faith_school1, non_faith_school2, non_faith_school3)
+        end
+      end
+
+      context "when school_types includes both 'faith_school' and 'special_school'" do
+        let(:school_types) { %w[faith_school special_school] }
+        it "will return special schools and faith schools" do
+          expect(subject.organisations).to contain_exactly(special_school1, special_school2, special_school3, special_school4, special_school5, special_school6, faith_school)
+        end
       end
     end
   end

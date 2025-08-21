@@ -5,7 +5,7 @@ class Search::SchoolSearch
 
   attr_reader :search_criteria, :name, :location, :radius, :organisation_types, :school_types, :original_scope
 
-  def initialize(search_criteria, scope: Organisation.all)
+  def initialize(search_criteria, scope:)
     @search_criteria = search_criteria
     @name = search_criteria[:name]
     @location = search_criteria[:location]
@@ -87,15 +87,10 @@ class Search::SchoolSearch
   end
 
   def apply_job_availability_filter(scope)
-    return scope unless @search_criteria.key?(:job_availability)
-
-    vacancy_ids = Vacancy.live.select(:id)
-    organisation_ids = OrganisationVacancy.where(vacancy_id: vacancy_ids).select(:organisation_id)
-
-    if @search_criteria[:job_availability].first == "true"
-      scope.where(id: organisation_ids)
+    if @search_criteria.key?(:job_availability)
+      scope.with_live_vacancies
     else
-      scope.where.not(id: organisation_ids)
+      scope
     end
   end
 

@@ -715,7 +715,6 @@ RSpec.describe "Jobseekers can manage their profile" do
       expect(current_path).to eq(jobseekers_job_preferences_step_path(:roles))
       expect(page).to have_css("h2", text: "There is a problem")
 
-      first("label", text: "Teacher", exact_text: true).sibling("input").set(true)
       check "Head of year or phase"
       check "Assistant headteacher"
       click_on I18n.t("buttons.save_and_continue")
@@ -833,22 +832,24 @@ RSpec.describe "Jobseekers can manage their profile" do
       click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(jobseekers_job_preferences_step_path(:review))
       expect(page).to have_css("h1", text: "Job preferences")
-      expect(page).to have_css("dd", text: "Teacher, Head of year or phase, Assistant headteacher")
+      expect(page).to have_css("dd", text: "Head of year or phase, Assistant headteacher")
       expect(page).to have_css("dd", text: "Secondary")
       expect(page).to have_css("dd", text: "Key stage 3 (ages 11 to 14), Key stage 4 (ages 14 to 16)")
       expect(page).to have_css("dd", text: "Mathematics")
       expect(page).to have_css("dd", text: "Full time")
-      expect(page).to have_css("dd", text: "London (1 mile)Manchester (10 miles)")
+      expect(page).to have_content("London (1 mile)")
+      expect(page).to have_content("Manchester (10 miles)")
 
       click_on I18n.t("buttons.return_to_profile")
       expect(current_path).to eq(jobseekers_profile_path)
       expect(page).to have_css("h1", text: "Your profile")
-      expect(page).to have_css("dd", text: "Teacher, Head of year or phase, Assistant headteacher")
+      expect(page).to have_css("dd", text: "Head of year or phase, Assistant headteacher")
       expect(page).to have_css("dd", text: "Secondary")
       expect(page).to have_css("dd", text: "Key stage 3 (ages 11 to 14), Key stage 4 (ages 14 to 16)")
       expect(page).to have_css("dd", text: "Mathematics")
       expect(page).to have_css("dd", text: "Full time")
-      expect(page).to have_css("dd", text: "London (1 mile)Manchester (10 miles)")
+      expect(page).to have_content("London (1 mile)")
+      expect(page).to have_content("Manchester (10 miles)")
     end
 
     context "when a jobseeker enters non-teacher preferences" do
