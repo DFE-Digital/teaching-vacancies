@@ -7,8 +7,8 @@ module Publishers
 
       FORMS = {
         collect_references: Publishers::JobApplication::CollectReferencesForm,
-        collect_self_disclosure: Publishers::JobApplication::CollectSelfDisclosureForm,
         ask_references_email: Publishers::JobApplication::ReferencesContactApplicantForm,
+        collect_self_disclosure: Publishers::JobApplication::CollectSelfDisclosureForm,
       }.freeze
 
       private

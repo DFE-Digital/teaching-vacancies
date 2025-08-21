@@ -8,6 +8,7 @@ class SelfDisclosure < ApplicationRecord
                 :is_known_to_children_services, :has_been_dismissed, :has_been_disciplined,
                 :has_been_disciplined_by_regulatory_body, :agreed_for_processing,
                 :agreed_for_criminal_record, :agreed_for_organisation_update,
+                :true_and_complete,
                 :agreed_for_information_sharing, type: :boolean
 
   validates :self_disclosure_request_id, uniqueness: true

@@ -5,13 +5,13 @@ class Publishers::SelfDisclosureReceivedNotifier < ApplicationNotifier
 
   deliver_by :email do |config|
     config.mailer = "Publishers::CollectReferencesMailer"
-    config.method = "declaration_received"
+    config.method = "self_disclosure_received"
     config.args = :job_application
   end
 
   notification_methods do
     def message
-      t("notifications.publishers/self_declaration_received_notification.message_html", link: disclosure_link)
+      t("notifications.publishers/self_disclosure_received_notification.message_html", link: disclosure_link)
     end
     include DatesHelper
     include ActionView::Helpers::UrlHelper
@@ -25,7 +25,7 @@ class Publishers::SelfDisclosureReceivedNotifier < ApplicationNotifier
     private
 
     def disclosure_link
-      govuk_link_to t("notifications.publishers/self_declaration_received_notification.disclosure_received"),
+      govuk_link_to t("notifications.publishers/self_disclosure_received_notification.disclosure_received"),
                     organisation_job_job_application_self_disclosure_path(job_application.vacancy.id, job_application.id),
                     class: "govuk-link--no-visited-state"
     end

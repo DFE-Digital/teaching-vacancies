@@ -9,36 +9,30 @@ module Publishers
       steps(*FORMS.keys)
 
       def show
-        if step != Wicked::FINISH_STEP
-          @form = case step
-                  when :collect_references
-                    form_class.new
-                  when :collect_self_disclosure
-                    form_class.new collect_references: params[:collect_references]
-                  else
-                    form_class.new collect_references: params[:collect_references],
-                                   collect_self_disclosure: params[:collect_self_disclosure]
-                  end
+        @form = case step
+                when :collect_references
+                  form_class.new
+                when :ask_references_email
+                  form_class.new collect_references: params[:collect_references]
+                else
+                  form_class.new collect_references: params[:collect_references],
+                                 contact_applicants: params[:contact_applicants]
+                end
+        if step == :ask_references_email && !@form.collect_references
+          skip_step
         end
         render_wizard
       end
 
-      # rubocop:disable Metrics/MethodLength
       def update
         @form = form_for_update
         if @form.valid?
           case step
           when :collect_references
             redirect_to next_wizard_path collect_references: @form.collect_references
-          when :collect_self_disclosure
-            # if both questions are 'no' we go straight to the finish line
-            if @form.collect_references || @form.collect_self_disclosure
-              redirect_to next_wizard_path collect_references: @form.collect_references,
-                                           collect_self_disclosure: @form.collect_self_disclosure
-            else
-              complete_process
-              redirect_to finish_wizard_path
-            end
+          when :ask_references_email
+            redirect_to next_wizard_path collect_references: @form.collect_references,
+                                         contact_applicants: @form.contact_applicants
           else
             complete_process
             redirect_to finish_wizard_path
@@ -47,7 +41,6 @@ module Publishers
           render step
         end
       end
-      # rubocop:enable Metrics/MethodLength
 
       private
 

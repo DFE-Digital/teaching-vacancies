@@ -41,8 +41,6 @@ RSpec.describe "Publishers can select a job application for interview", :perform
       before do
         choose "Yes"
         click_on "Save and continue"
-        choose "Yes"
-        click_on "Save and continue"
       end
 
       let(:emails_with_subjects) do
@@ -61,6 +59,8 @@ RSpec.describe "Publishers can select a job application for interview", :perform
       scenario "contacting applicant sends emails to referees and applicant" do
         choose "Yes"
         click_on "Save and continue"
+        choose "Yes"
+        click_on "Save and continue"
         expect(publisher_ats_applications_page).to be_displayed
 
         expect(emails_with_subjects)
@@ -74,6 +74,8 @@ RSpec.describe "Publishers can select a job application for interview", :perform
       context "when not contacting applicant", :versioning do
         before do
           choose "No"
+          click_on "Save and continue"
+          choose "Yes"
           click_on "Save and continue"
           find_by_id("interviewing") # make sure controller has finished its jobs
         end
@@ -312,6 +314,34 @@ RSpec.describe "Publishers can select a job application for interview", :perform
             end
           end
         end
+      end
+    end
+
+    context "without self disclosures" do
+      before do
+        choose "Yes"
+        click_on "Save and continue"
+        choose "No"
+        click_on "Save and continue"
+        choose "No"
+        click_on "Save and continue"
+      end
+
+      it "loops back to job applications" do
+        expect(publisher_ats_applications_page).to be_displayed
+      end
+    end
+
+    context "without references" do
+      before do
+        choose "No"
+        click_on "Save and continue"
+      end
+
+      it "only asks the self-disclosure question" do
+        choose "Yes"
+        click_on "Save and continue"
+        expect(publisher_ats_applications_page).to be_displayed
       end
     end
   end

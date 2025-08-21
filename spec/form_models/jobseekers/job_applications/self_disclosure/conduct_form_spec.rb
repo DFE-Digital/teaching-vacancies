@@ -2,15 +2,34 @@ require "rails_helper"
 
 module Jobseekers::JobApplications::SelfDisclosure
   RSpec.describe ConductForm, type: :model do
-    before { allow(Shoulda::Matchers).to receive(:warn) }
+    context "with an empty form" do
+      let(:form) { described_class.new }
 
-    %i[
-      is_known_to_children_services
-      has_been_dismissed
-      has_been_disciplined
-      has_been_disciplined_by_regulatory_body
-    ].each do |field|
-      it { is_expected.to validate_inclusion_of(field).in_array([true, false]) }
+      it "has the correct errors" do
+        expect(form).not_to be_valid
+        expect(form.errors.messages).to eq(
+          {
+            is_known_to_children_services: ["Select no if you have never been known to any children’s services department"],
+            has_been_dismissed: ["Select no if you have never been dismissed for misconduct from any paid or voluntary position previously held by you"],
+            has_been_disciplined: ["Select no if you have never been under investigation for or subject to any disciplinary sanctions"],
+            has_been_disciplined_by_regulatory_body: ["Select no if you have never been subject to any sanctions being placed on your professional registration"],
+
+          },
+        )
+      end
+    end
+
+    context "with an full form" do
+      let(:form) do
+        described_class.new(is_known_to_children_services: true,
+                            has_been_dismissed: true,
+                            has_been_disciplined: true,
+                            has_been_disciplined_by_regulatory_body: true)
+      end
+
+      it "is valid" do
+        expect(form).to be_valid
+      end
     end
   end
 end

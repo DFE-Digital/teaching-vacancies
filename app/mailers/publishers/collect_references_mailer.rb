@@ -20,7 +20,7 @@ module Publishers
                                                                organisation_name: @organisation_name))
     end
 
-    def declaration_received(job_application)
+    def self_disclosure_received(job_application)
       @job_application = job_application
 
       send_email(to: job_application.vacancy.publisher.email,

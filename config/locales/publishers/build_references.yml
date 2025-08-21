@@ -5,12 +5,13 @@ en:
         page_title: Provide a reference for %{name}
         heading: Provide a reference for %{name}
         caption: >-
-          %{name} has been invited for an interview at %{school} for the %{role} position.
+          %{name} has been invited for an interview at %{school} for the %{role} role.
           They have said that you can provide a reference.
       can_share:
         page_title: Provide a reference for %{name}
         heading: Provide a reference for %{name}
-        caption: >-
+        caption: Page 1 of 8
+        can_choose: >-
           You can choose whether %{name} should be able to see the contents of your reference or if it should be confidential.
       completed:
         page_title: Reference completed
@@ -24,7 +25,7 @@ en:
       fit_and_proper_persons:
         page_title: Professional and character reference enquiry for %{name}
         heading: Regulation 19 – Fit and proper person requirements
-        caption: Part 1 of 5
+        caption: Page 2 of 8
         reg_19: >-
           The post applied for is subject to Regulation 19(3)(a) of the Health and Social Care Act (Regulated Activities) Regulations 2014
           which requires us to ensure all “Persons employed” by our organisation (including agency, bank staff and volunteers) must:
@@ -69,7 +70,7 @@ en:
 
       employment_reference:
         page_title: Professional and character reference enquiry for %{name}
-        caption: Part 2 of 5
+        caption: Page 3 of 8
         heading: Professional and character reference enquiry for %{name}
         candidate_details: Candidate details
         full_name: Full name
@@ -79,7 +80,7 @@ en:
       reference_information:
         page_title: Provide a reference for %{name}
         heading: Reference enquiry for %{name}
-        caption: Part 3 of 5
+        caption: Page 4 of 8
         must_report: You must ensure this has been reported to the Teaching Regulation Agency (TRA)
         give_investigation_details: >-
           As you have chosen yes, please give details
@@ -90,19 +91,19 @@ en:
       how_would_you_rate_part_1:
         page_title: How would you rate %{name}?
         heading: Reference enquiry for %{name}
-        caption: Part 4 of 5
+        caption: Page 5 of 8
 
       how_would_you_rate_part_2:
         page_title: How would you rate %{name}?
         heading: Reference enquiry for %{name}
-        caption: Part 4 of 5
+        caption: Page 6 of 8
 
       how_would_you_rate_part_3:
         page_title: How would you rate %{name}?
         heading: Reference enquiry for %{name}
-        caption: Part 4 of 5
+        caption: Page 7 of 8
 
       referee_details:
         page_title: Referee Details
         heading: Reference enquiry for %{name}
-        caption: Part 5 of 5
+        caption: Page 8 of 8

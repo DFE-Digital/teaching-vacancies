@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_11_123304) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_18_160141) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -353,6 +353,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_11_123304) do
     t.string "warning_details_ciphertext"
     t.string "unable_to_undertake_reason_ciphertext"
     t.string "employment_end_date_ciphertext"
+    t.string "not_provided_reason"
     t.index ["reference_id"], name: "index_job_references_on_reference_id", unique: true
   end
 
@@ -702,6 +703,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_11_123304) do
     t.uuid "self_disclosure_request_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "true_and_complete_ciphertext"
     t.index ["self_disclosure_request_id"], name: "index_self_disclosures_on_self_disclosure_request_id", unique: true
   end
 

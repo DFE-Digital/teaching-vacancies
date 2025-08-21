@@ -13,6 +13,7 @@ p = t(".caption", name: @referee.job_application.name,
   = f.govuk_radio_buttons_fieldset :can_give_reference,
     legend: { size: "m", text: t("helpers.legend.referees_can_give_reference_form.can_give_reference", name: @referee.job_application.name) } do
     = f.govuk_radio_button :can_give_reference, "true"
-    = f.govuk_radio_button :can_give_reference, "false"
+    = f.govuk_radio_button :can_give_reference, "false" do
+      = f.govuk_text_area :not_provided_reason, rows: 5, max_chars: 200
 
   = f.govuk_submit t("buttons.continue")

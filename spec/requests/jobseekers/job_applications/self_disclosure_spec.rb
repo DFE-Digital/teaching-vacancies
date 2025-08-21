@@ -87,6 +87,7 @@ RSpec.describe "Job applications self disclosure" do
             "agreed_for_criminal_record" => "true",
             "agreed_for_organisation_update" => "true",
             "agreed_for_information_sharing" => "true",
+            "true_and_complete" => "true",
           },
         }
       end

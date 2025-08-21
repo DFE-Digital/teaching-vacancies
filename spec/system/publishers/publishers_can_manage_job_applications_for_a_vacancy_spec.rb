@@ -110,9 +110,9 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
       current_page.select_tab(:tab_unsuccessful)
 
-      expect(current_page.selected_tab).to have_text("Not considering")
+      expect(current_page.selected_tab).to have_text("Not progressing")
       expect(current_page.tab_panel.job_applications[0].name).to have_text(britany.name)
-      expect(current_page.tab_panel.job_applications[0].mapped_status).to eq(britany.reload.status)
+      expect(current_page.tab_panel.job_applications[0].mapped_status).to eq("not progressing")
 
       current_page.select_tab(:tab_shortlisted)
 

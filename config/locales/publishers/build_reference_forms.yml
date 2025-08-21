@@ -112,6 +112,7 @@ en:
         can_give_reference_options:
           true: Yes, I can provide a reference
           false: No, I am unable to provide a reference
+        not_provided_reason: Optional reason why
       referees_can_share_reference_form:
         is_reference_sharable_options:
           true: Yes, if they request it
