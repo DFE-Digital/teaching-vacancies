@@ -80,13 +80,18 @@ remove_invalid_subscriptions:
   class: 'RemoveInvalidSubscriptionsJob'
   queue: low
 
-delete_old_applications:
+hard_delete_retention_policy:
   cron: '0 05 * * *' # "At 05:00."
-  class: 'DeleteOldNonDraftJobApplicationsJob'
+  class: 'HardDeleteRetentionPolicyJob'
+  queue: low
+
+soft_delete_retention_policy:
+  cron: '30 05 * * *' # "At 05:30."
+  class: 'SoftDeleteRetentionPolicyJob'
   queue: low
 
 delete_old_alert_runs:
-  cron: '10 5 * * *' # "At 05:10."
+  cron: '40 5 * * *' # "At 05:40."
   class: 'DeleteOldAlertRunsJob'
   queue: low
 
