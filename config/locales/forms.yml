@@ -53,7 +53,7 @@ en:
     delete_photo: Delete photo
     delete_subject: Delete subject
     dismiss: Dismiss
-    download_pdf_application: Download application
+    download_application: Download application
     download_application_form: Download an application form - %{size}
     download_submitted_application_form: Download submitted application form - %{size}
     download_stats: Download statistics (csv, 0.2KB)

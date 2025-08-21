@@ -3,7 +3,7 @@
 class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseController
   include Jobseekers::QualificationFormConcerns
 
-  before_action :set_job_application, only: %i[review apply pre_submit submit post_submit show confirm_destroy destroy confirm_withdraw withdraw]
+  before_action :set_job_application, only: %i[review apply pre_submit submit post_submit show confirm_destroy destroy confirm_withdraw withdraw download]
 
   before_action :raise_cannot_apply, unless: -> { vacancy.allow_job_applications? }, only: %i[new create]
   before_action :redirect_if_job_application_exists, only: %i[new create]
@@ -110,6 +110,11 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def show
     raise ActionController::RoutingError, "Cannot view draft application" if job_application.draft?
+  end
+
+  def download
+    document = job_application.submitted_application_form
+    send_data(document.data, filename: document.filename, disposition: "inline")
   end
 
   def confirm_destroy

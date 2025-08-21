@@ -134,7 +134,7 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
       expect(rendered).to have_css(".govuk-summary-list__key", text: "Teacher reference number (TRN)")
       expect(rendered).to have_css(".govuk-summary-list__value", text: uploaded_job_application.teacher_reference_number)
 
-      expect(rendered).to have_link("Download application", href: organisation_job_job_application_download_application_form_path(uploaded_job_application.vacancy.id, uploaded_job_application))
+      expect(rendered).to have_link("Download application", href: organisation_job_job_application_download_path(uploaded_job_application.vacancy.id, uploaded_job_application))
     end
   end
 

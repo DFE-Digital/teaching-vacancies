@@ -47,17 +47,7 @@ class ExportCandidateDataService
   end
 
   def application_form(job_application)
-    vacancy = job_application.vacancy
-    if vacancy.uploaded_form?
-      return Document["no_application_form.txt", "the candidate has no application for on record"] unless job_application.application_form.attached?
-
-      blob = job_application.application_form.blob
-      extension = File.extname(blob.filename.to_s)
-      Document["application_form#{extension}", blob]
-    else
-      pdf = JobApplicationPdfGenerator.new(job_application).generate
-      Document["application_form.pdf", pdf.render]
-    end
+    job_application.submitted_application_form
   end
 
   def references(job_application)

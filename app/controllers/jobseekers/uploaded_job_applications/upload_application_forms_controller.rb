@@ -1,5 +1,5 @@
 class Jobseekers::UploadedJobApplications::UploadApplicationFormsController < Jobseekers::JobApplications::BaseController
-  before_action :set_job_application, except: :download_submitted_form
+  before_action :set_job_application
 
   def edit
     @form = Jobseekers::UploadedJobApplication::UploadApplicationFormForm.new
@@ -15,20 +15,6 @@ class Jobseekers::UploadedJobApplications::UploadApplicationFormsController < Jo
       redirect_to jobseekers_job_application_apply_path(@job_application)
     else
       render :edit
-    end
-  end
-
-  def download_submitted_form
-    submitted_job_application = current_jobseeker.job_applications.after_submission.find_by(id: params[:uploaded_job_application_id])
-    if submitted_job_application&.application_form.present?
-      send_data(
-        submitted_job_application.application_form.download,
-        filename: submitted_job_application.application_form.filename.to_s,
-        type: submitted_job_application.application_form.content_type,
-        disposition: "inline",
-      )
-    else
-      redirect_to jobseekers_job_applications_path, alert: I18n.t("jobseekers.uploaded_job_applications.upload_application_form.not_authorized_to_download")
     end
   end
 
