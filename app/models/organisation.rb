@@ -53,6 +53,12 @@ class Organisation < ApplicationRecord
 
   scope :only_faith_schools, -> { where.not("gias_data ->> 'ReligiousCharacter (name)' IN (?)", NON_FAITH_RELIGIOUS_CHARACTER_TYPES) }
 
+  scope :with_live_vacancies, lambda {
+    organisations = Vacancy.live.map(&:organisations).flatten.uniq
+    all_organisations = organisations.map { |org| [org] + org.school_groups }.flatten
+    where(id: all_organisations.map(&:id))
+  }
+
   validates :email, email_address: true, if: -> { email_changed? } # Allows data created prior to validation to still be valid
 
   alias_attribute :data, :gias_data
