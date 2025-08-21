@@ -1,4 +1,6 @@
 class ReferenceRequest < ApplicationRecord
+  include Discard::Model
+
   validates :token, presence: true
 
   belongs_to :referee, foreign_key: :reference_id, inverse_of: :reference_request

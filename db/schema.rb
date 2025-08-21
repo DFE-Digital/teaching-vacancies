@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_21_110801) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_21_150301) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -282,6 +282,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_21_110801) do
     t.datetime "unsuccessful_interview_at"
     t.datetime "interview_feedback_received_at"
     t.boolean "interview_feedback_received"
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_job_applications_on_discarded_at"
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["status", "submitted_at"], name: "index_job_applications_on_status_and_submitted_at", where: "(status <> 0)"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
@@ -354,6 +356,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_21_110801) do
     t.string "warning_details_ciphertext"
     t.string "unable_to_undertake_reason_ciphertext"
     t.string "employment_end_date_ciphertext"
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_job_references_on_discarded_at"
     t.index ["reference_id"], name: "index_job_references_on_reference_id", unique: true
   end
 
@@ -634,6 +638,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_21_110801) do
     t.string "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_reference_requests_on_discarded_at"
     t.index ["reference_id"], name: "index_reference_requests_on_reference_id", unique: true
   end
 
@@ -675,6 +681,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_21_110801) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_self_disclosure_requests_on_discarded_at"
     t.index ["job_application_id"], name: "index_self_disclosure_requests_on_job_application_id", unique: true
   end
 
@@ -703,6 +711,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_21_110801) do
     t.uuid "self_disclosure_request_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_self_disclosures_on_discarded_at"
     t.index ["self_disclosure_request_id"], name: "index_self_disclosures_on_self_disclosure_request_id", unique: true
   end
 
