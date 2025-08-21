@@ -1,0 +1,24 @@
+- content_for :page_title_prefix, current_organisation.name
+
+.govuk-grid-row
+  .govuk-grid-column-full
+    h1.govuk-heading-xl Candidate messages
+
+    - if @conversations.any?
+      = govuk_table do |table|
+        - table.with_head do |head|
+          - head.with_row do |row|
+            - row.with_cell text: "Name"
+            - row.with_cell text: "Application"
+            - row.with_cell text: "Date and time"
+        - table.with_body do |body|
+          - @conversations.each do |job_application|
+            - latest_message = job_application.conversations.joins(:messages).merge(Message.order(created_at: :desc)).first&.messages&.first
+            - body.with_row do |row|
+              - row.with_cell do
+                = govuk_link_to job_application.name, organisation_job_job_application_path(job_application.vacancy.id, job_application.id, tab: "messages")
+              - row.with_cell text: "#{job_application.vacancy.job_title} - #{job_application.status.humanize}"
+              - row.with_cell text: latest_message&.created_at&.strftime("%d %B %Y<br/>%l:%M%P")&.html_safe
+    - else
+      = govuk_inset_text do
+        p No messages yet.

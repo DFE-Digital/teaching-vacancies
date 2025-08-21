@@ -7,6 +7,10 @@ module NavigationsHelper
     current_page?(organisation_jobs_with_type_path) || request.original_fullpath =~ %r{^/organisation/jobs}
   end
 
+  def candidate_messages_active?
+    current_page?(publishers_candidate_messages_path) || request.original_fullpath =~ %r{^/publishers/candidate_messages}
+  end
+
   def schools_in_your_trust_active?
     request.original_fullpath =~ %r{^/publishers/schools}
   end
