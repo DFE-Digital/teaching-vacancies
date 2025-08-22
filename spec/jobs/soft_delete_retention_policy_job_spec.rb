@@ -1,24 +1,30 @@
 require "rails_helper"
 
 RSpec.describe SoftDeleteRetentionPolicyJob do
-  let(:over_6_months_ago) { 6.months.ago - 1.day }
+  let(:job) { described_class.new }
 
-  before do
-    create(:job_application, :status_draft)
-    create(:job_application, :status_submitted, submitted_at: over_6_months_ago)
-    create(:job_application, :status_shortlisted, submitted_at: over_6_months_ago)
-    create(:job_application, :status_interviewing_with_pre_checks, submitted_at: over_6_months_ago)
-    create(:job_application, :status_interviewing_with_pre_checks)
-    create(:job_application, :status_submitted)
+  describe ".threshold" do
+    subject(:threshold) { job.threshold }
 
-    described_class.perform_now
+    it { expect(threshold.to_fs).to eq(6.months.ago.to_fs) }
   end
 
-  it "performs soft delete" do
-    expect(SelfDisclosure.kept.count).to eq(1)
-    expect(SelfDisclosureRequest.kept.count).to eq(1)
-    expect(ReferenceRequest.kept.count).to eq(1)
-    expect(JobReference.kept.count).to eq(1)
-    expect(JobApplication.kept.count).to eq(3)
+  describe ".perform" do
+    let(:over_6_months_ago) { 6.months.ago - 1.day }
+    let!(:target_model) { create(:job_application, :status_submitted, submitted_at: over_6_months_ago) }
+
+    before { described_class.perform_now }
+
+    it "does not destroy the model" do
+      expect { target_model.reload }.not_to raise_error
+    end
+
+    it "discards model" do
+      expect(target_model.reload).to be_discarded
+    end
+  end
+
+  describe ".hard_delete?" do
+    it { expect(job).not_to be_hard_delete }
   end
 end

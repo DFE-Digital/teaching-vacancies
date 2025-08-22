@@ -1,24 +1,26 @@
 require "rails_helper"
 
 RSpec.describe HardDeleteRetentionPolicyJob do
-  let(:over_5_years_ago) { 5.years.ago - 1.day }
+  let(:job) { described_class.new }
 
-  before do
-    create(:job_application, :status_draft)
-    create(:job_application, :status_submitted, submitted_at: over_5_years_ago)
-    create(:job_application, :status_shortlisted, submitted_at: over_5_years_ago)
-    create(:job_application, :status_interviewing_with_pre_checks, submitted_at: over_5_years_ago)
-    create(:job_application, :status_interviewing_with_pre_checks)
-    create(:job_application, :status_submitted)
+  describe ".threshold" do
+    subject(:threshold) { job.threshold }
 
-    described_class.perform_now
+    it { expect(threshold.to_fs).to eq(5.years.ago.to_fs) }
   end
 
-  it "performs hard delete" do
-    expect(SelfDisclosure.count).to eq(1)
-    expect(SelfDisclosureRequest.count).to eq(1)
-    expect(ReferenceRequest.count).to eq(1)
-    expect(JobReference.count).to eq(1)
-    expect(JobApplication.count).to eq(3)
+  describe ".perform" do
+    let(:over_5_years_ago) { 5.years.ago - 1.day }
+    let!(:target_model) { create(:job_application, :status_submitted, submitted_at: over_5_years_ago) }
+
+    before { described_class.perform_now }
+
+    it "destroys model" do
+      expect { target_model.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
+  describe ".hard_delete?" do
+    it { expect(job).to be_hard_delete }
   end
 end

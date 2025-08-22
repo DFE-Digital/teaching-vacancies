@@ -3,21 +3,29 @@ class RetentionPolicyJob < ApplicationJob
 
   def scopes
     Enumerator.new do |y|
-      job_applications = JobApplication.after_submission.where(submitted_at: ...threshold)
+      JobApplication.after_submission.where(submitted_at: ...threshold).tap do |job_applications|
+        # self-disclosure data
+        y << SelfDisclosure.joins(self_disclosure_request: :job_application).merge(job_applications)
+        y << SelfDisclosureRequest.joins(:job_application).merge(job_applications)
+        # reference data
+        y << JobReference.joins(referee: :job_application).merge(job_applications)
+        y << ReferenceRequest.joins(referee: :job_application).merge(job_applications)
+        # qualifying active job applications
+        y << job_applications
+      end
 
-      # self-disclosure data
-      y << SelfDisclosure.joins(self_disclosure_request: :job_application).merge(job_applications)
-      y << SelfDisclosureRequest.joins(:job_application).merge(job_applications)
+      # draft job application when vacancy expired
+      y << JobApplication.joins(:vacancy).draft.where(updated_at: ...threshold).merge(Vacancy.expired)
 
-      # references data
-      y << JobReference.joins(referee: :job_application).merge(job_applications)
-      y << ReferenceRequest.joins(referee: :job_application).merge(job_applications)
-
-      y << job_applications
+      y << Feedback.where(created_at: ...threshold) if hard_delete?
     end
   end
 
   def threshold
-    raise "define thresold period"
+    raise "define thresold period in subclass"
+  end
+
+  def hard_delete?
+    false
   end
 end
