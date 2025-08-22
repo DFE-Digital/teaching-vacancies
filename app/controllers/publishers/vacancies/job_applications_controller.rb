@@ -55,7 +55,6 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       case params["target"]
       when "download" then download_selected(form.job_applications)
       when "export"   then export_selected(form.job_applications)
-      when "emails"   then copy_emails_selected(form.job_applications)
       when "declined" then render_declined_form(form.job_applications, form.origin)
       else # when "update_status"
         render "tag"
@@ -98,7 +97,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def with_valid_form(validate_status: false)
-    form_class = FORMS.fetch(params["form_name"], Publishers::JobApplication::TagForm)
+    form_class = FORMS.fetch(params[:form_name], Publishers::JobApplication::TagForm)
     form_params = params
                     .fetch(ActiveModel::Naming.param_key(form_class), {})
                     .permit(:origin, :status, :offered_at, :declined_at, :interview_feedback_received, :interview_feedback_received_at, { job_applications: [] })
@@ -137,10 +136,6 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   def export_selected(selection)
     zip_data = ExportCandidateDataService.call(selection)
     send_data(zip_data.string, filename: "applications_offered_#{vacancy.job_title}.zip")
-  end
-
-  def copy_emails_selected(selection)
-    send_data(selection.pluck(:email_address).to_json, filename: "applications_emails_#{vacancy.job_title}.json")
   end
 
   def redirect_to_references_and_self_disclosure(job_applications)

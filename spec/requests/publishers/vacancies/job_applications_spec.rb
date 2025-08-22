@@ -172,22 +172,6 @@ RSpec.describe "Job applications" do
       end
     end
 
-    context "when copying emails" do
-      let(:target) { "emails" }
-
-      it "sends json files with emails" do
-        expect(response).to have_http_status(:ok)
-        expect(response.content_type).to eq("application/json")
-        expect(response.headers["Content-Disposition"]).to include("applications_emails_#{vacancy.job_title}.json")
-      end
-
-      context "when no job application selected" do
-        let(:job_applications) { [] }
-
-        it { is_expected.to redirect_to(organisation_job_job_applications_path(vacancy.id, anchor: origin)) }
-      end
-    end
-
     context "when declining job offer" do
       let(:target) { "declined" }
 

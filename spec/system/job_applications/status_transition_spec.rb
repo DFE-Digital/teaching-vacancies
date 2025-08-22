@@ -149,10 +149,8 @@ RSpec.describe "check job application after status transition" do
     it "allows the publisher to shortlist a submitted job application and the jobseeker to see it as shortlisted afterwards" do
       run_with_publisher(publisher) do
         publisher_ats_applications_page.load(vacancy_id: vacancy.id)
+        sleep 100
 
-        #
-        # check tab new
-        #
         publisher_ats_applications_page.select_tab(:tab_submitted)
         expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
 
