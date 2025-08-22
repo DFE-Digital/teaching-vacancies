@@ -64,7 +64,8 @@ FactoryBot.define do
 
   factory :reference_request do
     token { SecureRandom.uuid }
-    status { :requested }
+    status { :created }
     email { Faker::Internet.email(domain: "contoso.com") }
+    marked_as_complete { false }
   end
 end
