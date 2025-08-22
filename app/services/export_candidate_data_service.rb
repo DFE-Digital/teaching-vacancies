@@ -62,7 +62,7 @@ class ExportCandidateDataService
 
   def references(job_application)
     requests = job_application.referees.filter_map(&:reference_request)
-    return Document["no_references.txt", "no request has been sent"] if requests.blank?
+    return Document["no_references_found.txt", "No references have been requested through Teaching Vacancies."] if requests.blank?
 
     requests.map do |request|
       referee_presenter = RefereePresenter.new(request.referee)
@@ -72,7 +72,7 @@ class ExportCandidateDataService
   end
 
   def self_disclosure(job_application)
-    return Document["no_self_disclosure.txt", "the candidate has no self-disclosure on record"] unless job_application.self_disclosure
+    return Document["no_declarations_found.txt", "No self-disclosure form has been submitted through Teaching Vacancies."] unless job_application.self_disclosure
 
     self_disclosure = SelfDisclosurePresenter.new(job_application)
     pdf = SelfDisclosurePdfGenerator.new(self_disclosure).generate

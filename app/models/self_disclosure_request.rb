@@ -1,4 +1,6 @@
 class SelfDisclosureRequest < ApplicationRecord
+  include Discard::Model
+
   belongs_to :job_application
   has_one :self_disclosure
 

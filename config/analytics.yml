@@ -166,6 +166,7 @@ shared:
     - working_pattern_details
     - notify_before_contact_referers
     - type
+    - discarded_at
   job_preferences_locations:
     - id
     - job_preferences_id
@@ -386,6 +387,7 @@ shared:
     - under_investigation_details
     - warning_details
     - unable_to_undertake_reason
+    - discarded_at
   reference_requests:
     - id
     - reference_id
@@ -394,6 +396,7 @@ shared:
     - updated_at
     - marked_as_complete
     - email
+    - discarded_at
   saved_jobs:
     - id
     - jobseeker_id
@@ -552,6 +555,7 @@ shared:
     - status
     - created_at
     - updated_at
+    - discarded_at
   :self_disclosures:
     - id
     - self_disclosure_request_id
@@ -578,3 +582,4 @@ shared:
     - agreed_for_criminal_record
     - agreed_for_organisation_update
     - agreed_for_information_sharing
+    - discarded_at

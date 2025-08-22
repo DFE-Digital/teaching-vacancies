@@ -1,4 +1,6 @@
 class SelfDisclosure < ApplicationRecord
+  include Discard::Model
+
   belongs_to :self_disclosure_request
 
   has_encrypted :name, :previous_names, :address_line_1, :address_line_2, :city, :country, :postcode,

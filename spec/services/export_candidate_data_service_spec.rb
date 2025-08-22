@@ -153,8 +153,8 @@ RSpec.describe ExportCandidateDataService do
     context "when request has not been sent to referee" do
       let(:reference_requests) { [] }
 
-      it { expect(documents.filename).to eq("no_references.txt") }
-      it { expect(documents.data).to eq("no request has been sent") }
+      it { expect(documents.filename).to eq("no_references_found.txt") }
+      it { expect(documents.data).to eq("No references have been requested through Teaching Vacancies.") }
     end
   end
 
@@ -169,8 +169,8 @@ RSpec.describe ExportCandidateDataService do
     context "when job application has no self disclosure" do
       let(:self_disclosure) { nil }
 
-      it { expect(document.filename).to eq("no_self_disclosure.txt") }
-      it { expect(document.data).to eq("the candidate has no self-disclosure on record") }
+      it { expect(document.filename).to eq("no_declarations_found.txt") }
+      it { expect(document.data).to eq("No self-disclosure form has been submitted through Teaching Vacancies.") }
     end
   end
 end

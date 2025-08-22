@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class JobReference < ApplicationRecord
+  include Discard::Model
+
   RATINGS_FIELDS_1 = %i[punctuality working_relationships customer_care adapt_to_change].freeze
   RATINGS_FIELDS_2 = %i[deal_with_conflict prioritise_workload team_working communication].freeze
   RATINGS_FIELDS_3 = %i[problem_solving general_attitude technical_competence leadership].freeze
