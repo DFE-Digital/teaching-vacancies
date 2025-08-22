@@ -219,7 +219,12 @@ Rails.application.routes.draw do
       post :consume, on: :member
     end
     resources :jobseeker_profiles, only: %i[index show]
-    resources :candidate_messages, only: %i[index]
+    resources :candidate_messages, only: %i[index] do
+      collection do
+        patch :archive
+        patch :unarchive
+      end
+    end
     resource :new_features, only: %i[] do
       get :reminder
     end
