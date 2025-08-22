@@ -30,7 +30,7 @@
           - @button_groups.each do |group|
             .govuk-button-group
               - group.each do |value|
-                = f.govuk_submit t(value, scope: "tabs.buttons"), name: "target", value:, secondary: value != :download && value != :export
+                = f.govuk_submit t(value, scope: "tabs.buttons"), name: "tag_action", value:, secondary: value != :download && value != :export
 
       - else
         = render EmptySectionComponent.new title: t("tabs.#{@tab_name}.none")

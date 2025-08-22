@@ -5,7 +5,7 @@ class TabPanelComponent < ApplicationComponent
                  vacancy:,
                  candidates:,
                  displayed_fields: %i[name email_address status],
-                 button_groups: [%i[download update_status emails]],
+                 button_groups: [%i[download update_status]],
                  form: nil)
     super(classes: [], html_attributes: {})
     @tab_name = tab_name
@@ -33,30 +33,28 @@ class TabPanelComponent < ApplicationComponent
   end
 
   def candidate_checkbox(application, index, form_tag)
-    return tag.span if application.terminal_status?
-
-    tag.div(class: "govuk-checkboxes--small") do
-      form_tag.govuk_check_box(:job_applications, application.id,
-                               link_errors: index.zero?,
-                               label: { hidden: true, text: "Select #{application.name}" })
+    if application.terminal_status?
+      tag.span
+    else
+      tag.div(class: "govuk-checkboxes--small") do
+        form_tag.govuk_check_box(:job_applications, application.id,
+                                 link_errors: index.zero?,
+                                 label: { hidden: true, text: "Select #{application.name}" })
+      end
     end
   end
 
   def displayed_value(application, field)
     helper_method = :"candidate_#{field}"
-    return public_send(helper_method, application) if respond_to?(helper_method)
-
-    application[field]
+    if respond_to?(helper_method)
+      public_send(helper_method, application)
+    else
+      application.public_send(field)
+    end
   end
 
   def candidate_name(application)
-    if application.terminal_status?
-      tag.span do
-        application.name
-      end
-    else
-      govuk_link_to(application.name, organisation_job_job_application_path(@vacancy.id, application))
-    end
+    govuk_link_to(application.name, organisation_job_job_application_path(@vacancy.id, application))
   end
 
   def candidate_status(application)

@@ -65,34 +65,6 @@ RSpec.describe "Job applications" do
         expect(response).to have_http_status(:not_found)
       end
     end
-
-    context "when renders index" do
-      let(:job_applications) do
-        JobApplication.statuses.except("draft").map do |status, _|
-          create(:job_application, :"status_#{status}", vacancy:)
-        end
-      end
-      let(:submitteds) { job_applications.select { %w[submitted reviewed].include?(it.status) } }
-      let(:unsuccessfuls) { job_applications.select { %w[unsuccessful withdrawn].include?(it.status) } }
-      let(:shortlisteds) { job_applications.select { it.status == "shortlisted" } }
-      let(:interviewings) { job_applications.select { %w[interviewing unsuccessful_interview].include?(it.status) } }
-
-      before do
-        job_applications
-        get(organisation_job_job_applications_path(vacancy.id))
-      end
-
-      it "with correct template" do
-        expect(response).to render_template(:index)
-      end
-
-      it "assigns tabs_data variable" do
-        expect(assigns[:tabs_data]["submitted"]).to match_array(submitteds)
-        expect(assigns[:tabs_data]["unsuccessful"]).to match_array(unsuccessfuls)
-        expect(assigns[:tabs_data]["shortlisted"]).to match_array(shortlisteds)
-        expect(assigns[:tabs_data]["interviewing"]).to match_array(interviewings)
-      end
-    end
   end
 
   describe "GET #download" do
@@ -119,7 +91,7 @@ RSpec.describe "Job applications" do
           job_applications:,
           origin:,
         },
-        target:,
+        tag_action: target,
       }
     end
     let(:job_applications) { [job_application.id, job_application_2.id] }
@@ -163,22 +135,6 @@ RSpec.describe "Job applications" do
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq("application/zip")
         expect(response.headers["Content-Disposition"]).to include("applications_offered_#{vacancy.job_title}.zip")
-      end
-
-      context "when no job application selected" do
-        let(:job_applications) { [] }
-
-        it { is_expected.to redirect_to(organisation_job_job_applications_path(vacancy.id, anchor: origin)) }
-      end
-    end
-
-    context "when copying emails" do
-      let(:target) { "emails" }
-
-      it "sends json files with emails" do
-        expect(response).to have_http_status(:ok)
-        expect(response.content_type).to eq("application/json")
-        expect(response.headers["Content-Disposition"]).to include("applications_emails_#{vacancy.job_title}.json")
       end
 
       context "when no job application selected" do

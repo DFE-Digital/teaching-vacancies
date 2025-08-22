@@ -10,7 +10,6 @@ en:
     buttons:
       download: Download selected
       update_status: Update application status
-      emails: Copy selected emails
       declined: Mark offer as declined
       export: Download selected
     submitted:

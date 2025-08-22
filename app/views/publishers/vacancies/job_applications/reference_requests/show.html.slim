@@ -1,23 +1,16 @@
 - content_for :page_title_prefix, t(".page_title")
 
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("app.back_link"), href: pre_interview_checks_organisation_job_job_application_path(vacancy.id, @job_application), html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
+
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     span.govuk-caption-l = @referee.name
     h1.govuk-heading-l = @referee.job_application.name
 
     .govuk-body
-      - if @reference_request.sent?
-        - if @referee.job_reference.complete?
-          - if @referee.job_reference.can_give_reference?
-            = govuk_tag(text: t("reference_requests.received.status"), colour: t("reference_requests.received.colour"))
-          - else
-            = govuk_tag(text: t("reference_requests.declined.status"), colour: t("reference_requests.declined.colour"))
-        - else
-          = govuk_tag(text: t("reference_requests.pending.status"), colour: t("reference_requests.pending.colour"))
-      - elsif @reference_request.marked_as_complete?
-        = govuk_tag(text: t("reference_requests.completed.status"), colour: t("reference_requests.completed.colour"))
-      - else
-        = govuk_tag(text: t("reference_requests.created.status"), colour: t("reference_requests.created.colour"))
+      - status = reference_request_status(@reference_request, @referee.job_reference)
+      = govuk_tag(text: t("reference_requests.#{status}.status"), colour: t("reference_requests.#{status}.colour"))
 
     .govuk-body = t(".once_the_reference_is_received")
 

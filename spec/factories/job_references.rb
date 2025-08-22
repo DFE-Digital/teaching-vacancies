@@ -47,7 +47,6 @@ FactoryBot.define do
     end
 
     trait :with_issues do
-      complete { true }
       under_investigation { true }
       warnings { true }
       able_to_undertake_role { false }
@@ -61,5 +60,12 @@ FactoryBot.define do
       complete { true }
       can_give_reference { false }
     end
+  end
+
+  factory :reference_request do
+    token { SecureRandom.uuid }
+    status { :created }
+    email { Faker::Internet.email(domain: "contoso.com") }
+    marked_as_complete { false }
   end
 end

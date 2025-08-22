@@ -1,6 +1,6 @@
-= render TabPanelComponent.new(tab_name:, vacancy:, form:, candidates: candidates.interviewing)
+= render TabPanelComponent.new(tab_name:, vacancy:, form:, candidates: candidates.fetch("interviewing"))
 
-- if candidates.unsuccessful_interview.any?
+- if candidates.fetch("unsuccessful_interview").any?
   = govuk_section_break(visible: true, size: "xl")
 
-  = render TabPanelComponent.new(vacancy:, candidates: candidates.unsuccessful_interview, tab_name: "unsuccessful_interview", displayed_fields: %i[name email_address interview_feedback_received_at])
+  = render TabPanelComponent.new(vacancy:, candidates: candidates.fetch("unsuccessful_interview"), tab_name: "unsuccessful_interview", displayed_fields: %i[name email_address interview_feedback_received_at])
