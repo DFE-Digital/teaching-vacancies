@@ -50,13 +50,7 @@ class TabPanelComponent < ApplicationComponent
   end
 
   def candidate_name(application)
-    if application.terminal_status?
-      tag.span do
-        application.name
-      end
-    else
-      govuk_link_to(application.name, organisation_job_job_application_path(@vacancy.id, application))
-    end
+    govuk_link_to(application.name, organisation_job_job_application_path(@vacancy.id, application))
   end
 
   def candidate_status(application)
