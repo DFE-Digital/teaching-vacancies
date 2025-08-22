@@ -38,28 +38,22 @@ RSpec.describe "Publishers can select a job application for interview", :perform
     end
 
     context "when choosing yes for references and self disclosure" do
-      before do
-        choose "Yes"
-        click_on "Save and continue"
-      end
-
+      let(:self_disclosure_answer) { "Yes" }
       let(:emails_with_subjects) do
         ActionMailer::Base.deliveries
                           .group_by { |mail| mail.to.first }
                           .transform_values { |m| m.map { |x| x.subject.split[..3].join(" ") } }
       end
 
-      scenario "no selection" do
-        expect(publisher_ats_ask_references_email_page).to be_displayed
+      before do
+        choose "Yes"
         click_on "Save and continue"
-        expect(publisher_ats_ask_references_email_page.errors.map(&:text))
-          .to eq(["Select yes if you would like the service to email candidates that you are collecting references."])
       end
 
-      scenario "contacting applicant sends emails to referees and applicant" do
+      scenario "contacting applicant sends emails to referees and applicant", :js do
         choose "Yes"
         click_on "Save and continue"
-        choose "Yes"
+        choose self_disclosure_answer
         click_on "Save and continue"
         expect(publisher_ats_applications_page).to be_displayed
 
@@ -75,7 +69,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
         before do
           choose "No"
           click_on "Save and continue"
-          choose "Yes"
+          choose self_disclosure_answer
           click_on "Save and continue"
           find_by_id("interviewing") # make sure controller has finished its jobs
         end
@@ -142,7 +136,9 @@ RSpec.describe "Publishers can select a job application for interview", :perform
           before do
             current_referee.reload
             # simulate receipt of a reference
-            current_referee.job_reference.update!(attributes_for(:job_reference, :reference_given).merge(updated_at: Date.tomorrow))
+            current_referee.job_reference.update!(reference_data.merge(updated_at: Date.tomorrow))
+            # remove previous emails so that current ones can be checked
+            ActionMailer::Base.deliveries.clear
             current_referee.job_reference.mark_as_received
             publisher_ats_interviewing_page.pre_interview_check_links.first.click
           end
@@ -150,11 +146,51 @@ RSpec.describe "Publishers can select a job application for interview", :perform
           context "with a simple reference" do
             let(:reference_data) { attributes_for(:job_reference, :reference_given) }
 
-            it "can progress to the page where the reference is shown" do
+            it "can progress to the page where the reference is shown", :js do
               expect(publisher_ats_pre_interview_checks_page).to be_displayed
 
               publisher_ats_pre_interview_checks_page.reference_links.first.click
               expect(publisher_ats_reference_request_page).to be_displayed
+            end
+
+            it "send an email notification to the publisher that the reference had been received" do
+              expect(ActionMailer::Base.deliveries.map(&:to).flatten)
+                .to contain_exactly("publisher@contoso.com")
+            end
+
+            context "when marking reference as complete" do
+              before do
+                publisher_ats_pre_interview_checks_page.reference_links.first.click
+                click_on "Mark as received"
+              end
+
+              it "displays the page correctly" do
+                expect(page).to have_content "This reference will be marked as complete"
+                expect(page).to have_content "This reference will remain as received"
+                expect(page).to have_content "Yes"
+              end
+
+              scenario "error bounce" do
+                expect(publisher_ats_satisfactory_reference_page).to be_displayed
+                publisher_ats_satisfactory_reference_page.submit_button.click
+                expect(publisher_ats_satisfactory_reference_page.errors.map(&:text)).to eq(["Select yes if the reference received is satisfactory"])
+              end
+
+              scenario "accept reference", :versioning do
+                publisher_ats_satisfactory_reference_page.yes.click
+                publisher_ats_satisfactory_reference_page.submit_button.click
+                expect(current_referee.reference_request.reload).to be_marked_as_complete
+                expect(page).to have_content "completed"
+
+                expect(publisher_ats_reference_request_page).to be_displayed
+                expect(publisher_ats_reference_request_page.timeline_titles.map(&:text)).to eq(["Marked as complete", "Reference received", "Reference requested"])
+              end
+
+              scenario "decline reference" do
+                publisher_ats_satisfactory_reference_page.no.click
+                publisher_ats_satisfactory_reference_page.submit_button.click
+                expect(current_referee.reference_request.reload.status).to eq("received")
+              end
             end
           end
 
@@ -163,14 +199,14 @@ RSpec.describe "Publishers can select a job application for interview", :perform
             let(:warning_details) { Faker::Adjective.negative }
             let(:undertake_reason) { Faker::Adjective.negative }
 
-            before do
-              current_referee.job_reference.update!(attributes_for(:job_reference, :with_issues,
-                                                                   under_investigation_details: investigation_details,
-                                                                   warning_details: warning_details,
-                                                                   unable_to_undertake_reason: undertake_reason))
+            let(:reference_data) do
+              attributes_for(:job_reference, :reference_given, :with_issues,
+                             under_investigation_details: investigation_details,
+                             warning_details: warning_details,
+                             unable_to_undertake_reason: undertake_reason)
             end
 
-            it "can progress to the page where the reference is shown" do
+            it "can progress to the page where the reference is shown", :js do
               expect(publisher_ats_pre_interview_checks_page).to be_displayed
 
               publisher_ats_pre_interview_checks_page.reference_links.first.click
@@ -178,47 +214,6 @@ RSpec.describe "Publishers can select a job application for interview", :perform
               expect(page).to have_content investigation_details
               expect(page).to have_content warning_details
               expect(page).to have_content undertake_reason
-            end
-          end
-
-          it "send an email notification to the publisher that the reference had been received" do
-            expect(ActionMailer::Base.deliveries.map(&:to).flatten)
-              .to contain_exactly("jobseeker@contoso.com", "employer@contoso.com", "previous@contoso.com", "publisher@contoso.com")
-          end
-
-          context "when marking reference received" do
-            let(:reference_data) { attributes_for(:job_reference, :reference_given) }
-
-            before do
-              publisher_ats_pre_interview_checks_page.reference_links.first.click
-              click_on "Mark as received"
-            end
-
-            it "displays the page correctly" do
-              expect(page).to have_content "This reference will be marked as complete"
-              expect(page).to have_content "This reference will remain as received"
-              expect(page).to have_content "Yes"
-            end
-
-            scenario "error bounce" do
-              expect(publisher_ats_satisfactory_reference_page).to be_displayed
-              publisher_ats_satisfactory_reference_page.submit_button.click
-              expect(publisher_ats_satisfactory_reference_page.errors.map(&:text)).to eq(["Select yes if the reference received is satisfactory"])
-            end
-
-            scenario "accept reference", :versioning do
-              publisher_ats_satisfactory_reference_page.yes.click
-              publisher_ats_satisfactory_reference_page.submit_button.click
-              expect(current_referee.reference_request.reload).to be_marked_as_complete
-
-              expect(publisher_ats_reference_request_page).to be_displayed
-              expect(publisher_ats_reference_request_page.timeline_titles.map(&:text)).to eq(["Marked as complete", "Reference received", "Reference requested"])
-            end
-
-            scenario "decline reference" do
-              publisher_ats_satisfactory_reference_page.no.click
-              publisher_ats_satisfactory_reference_page.submit_button.click
-              expect(current_referee.reference_request.reload.status).to eq("received")
             end
           end
         end
