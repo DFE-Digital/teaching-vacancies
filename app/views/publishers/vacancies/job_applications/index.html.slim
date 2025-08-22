@@ -6,8 +6,8 @@
   .govuk-grid-column-full
     - if @vacancy.within_data_access_period?
       = govuk_tabs do |tabs|
-        - @tabs_data.each do |tab_name, candidates|
-          - tabs.with_tab(label: t("tabs.#{tab_name}.label", count: candidates.count), id: tab_name)
+        - job_applications_to_tabs(@job_applications).each do |tab_name, candidates|
+          - tabs.with_tab(label: t("tabs.#{tab_name}.label", count: candidates.values.sum(&:count)), id: tab_name)
             = render "tab_#{tab_name}", form: @form, vacancy: @vacancy, candidates:, tab_name:
 
     - else

@@ -5,7 +5,7 @@ class TabPanelComponent < ApplicationComponent
                  vacancy:,
                  candidates:,
                  displayed_fields: %i[name email_address status],
-                 button_groups: [%i[download update_status emails]],
+                 button_groups: [%i[download update_status]],
                  form: nil)
     super(classes: [], html_attributes: {})
     @tab_name = tab_name
@@ -50,13 +50,7 @@ class TabPanelComponent < ApplicationComponent
   end
 
   def candidate_name(application)
-    if application.terminal_status?
-      tag.span do
-        application.name
-      end
-    else
-      govuk_link_to(application.name, organisation_job_job_application_path(@vacancy.id, application))
-    end
+    govuk_link_to(application.name, organisation_job_job_application_path(@vacancy.id, application))
   end
 
   def candidate_status(application)
