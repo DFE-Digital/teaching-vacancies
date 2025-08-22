@@ -110,9 +110,10 @@ FactoryBot.define do
       end
 
       if options.create_references
-        referee_one = build(:referee, job_application:)
+        referee_one = build(:referee, job_application:, is_most_recent_employer: true)
         build(:reference_request, :reference_received, referee: referee_one)
         build(:job_reference, :reference_given, referee: referee_one)
+        job_application.referees << referee_one
       end
     end
 
