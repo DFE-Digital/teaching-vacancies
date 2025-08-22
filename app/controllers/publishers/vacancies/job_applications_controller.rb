@@ -14,7 +14,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def index
     @form = Publishers::JobApplication::TagForm.new
-    @tabs_data = VacancyTabsPresenter.tabs_data(vacancy)
+    @job_applications = vacancy.job_applications.not_draft.order(updated_at: :desc).group_by(&:status)
   end
 
   def show

@@ -8,10 +8,9 @@ class VacancyTabsPresenter
   }.stringify_keys
 
   class << self
-    def tabs_data(vacancy)
-      TABS_DEFINITION.transform_values do |statuses|
-        ordering = statuses.map { :"#{it}_at" }.index_with { :desc }
-        vacancy.job_applications.where(status: statuses).order(ordering)
+    def job_applications_to_tabs(job_applications_hash)
+      TABS_DEFINITION.transform_values do |status_list|
+        status_list.index_with { |status| job_applications_hash.fetch(status, []) }
       end
     end
 
@@ -22,11 +21,7 @@ class VacancyTabsPresenter
     private
 
     def reverse_lookup
-      return @reverse_lookup if @reverse_lookup.present?
-
-      @reverse_lookup = TABS_DEFINITION.transform_values(&:itself).invert.merge(
-        TABS_DEFINITION.flat_map { |k, v| v.map { |val| [val, k] } }.to_h,
-      )
+      @reverse_lookup ||= TABS_DEFINITION.invert.flat_map { |keys, v| keys.map { |k| [k, v] } }.to_h
     end
   end
 end

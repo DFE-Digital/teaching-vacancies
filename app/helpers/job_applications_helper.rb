@@ -45,6 +45,8 @@ module JobApplicationsHelper
     VacancyTabsPresenter.tab_for(job_application_status)
   end
 
+  delegate :job_applications_to_tabs, to: :VacancyTabsPresenter
+
   def tag_status_options(tab_origin)
     job_application_status = VacancyTabsPresenter::TABS_DEFINITION[tab_origin].first
     JobApplication.next_statuses(job_application_status) - %w[withdrawn]
@@ -63,7 +65,7 @@ module JobApplicationsHelper
     end
   end
 
-  def end_date(date, index = 1)
+  def end_date(date, index)
     return "present" if index.zero?
 
     date.to_fs(:month_year)

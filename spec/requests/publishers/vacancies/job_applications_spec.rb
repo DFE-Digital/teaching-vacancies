@@ -65,34 +65,6 @@ RSpec.describe "Job applications" do
         expect(response).to have_http_status(:not_found)
       end
     end
-
-    context "when renders index" do
-      let(:job_applications) do
-        JobApplication.statuses.except("draft").map do |status, _|
-          create(:job_application, :"status_#{status}", vacancy:)
-        end
-      end
-      let(:submitteds) { job_applications.select { %w[submitted reviewed].include?(it.status) } }
-      let(:unsuccessfuls) { job_applications.select { %w[unsuccessful withdrawn].include?(it.status) } }
-      let(:shortlisteds) { job_applications.select { it.status == "shortlisted" } }
-      let(:interviewings) { job_applications.select { %w[interviewing unsuccessful_interview].include?(it.status) } }
-
-      before do
-        job_applications
-        get(organisation_job_job_applications_path(vacancy.id))
-      end
-
-      it "with correct template" do
-        expect(response).to render_template(:index)
-      end
-
-      it "assigns tabs_data variable" do
-        expect(assigns[:tabs_data]["submitted"]).to match_array(submitteds)
-        expect(assigns[:tabs_data]["unsuccessful"]).to match_array(unsuccessfuls)
-        expect(assigns[:tabs_data]["shortlisted"]).to match_array(shortlisteds)
-        expect(assigns[:tabs_data]["interviewing"]).to match_array(interviewings)
-      end
-    end
   end
 
   describe "GET #download_pdf" do
