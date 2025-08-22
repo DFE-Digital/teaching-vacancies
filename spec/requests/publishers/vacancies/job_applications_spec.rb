@@ -119,7 +119,7 @@ RSpec.describe "Job applications" do
           job_applications:,
           origin:,
         },
-        target:,
+        tag_action: target,
       }
     end
     let(:job_applications) { [job_application.id, job_application_2.id] }

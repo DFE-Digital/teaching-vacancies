@@ -52,7 +52,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def tag
     with_valid_form do |form|
-      case params["target"]
+      case params[:tag_action]
       when "download" then download_selected(form.job_applications)
       when "export"   then export_selected(form.job_applications)
       when "declined" then render_declined_form(form.job_applications, form.origin)
