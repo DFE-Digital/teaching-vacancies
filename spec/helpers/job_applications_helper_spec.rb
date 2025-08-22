@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe JobApplicationsHelper do
   describe "all job application statuses except draft are listed" do
-    subject { VacancyTabsPresenter::TABS_DEFINITION.values.flatten }
+    subject { JobApplicationsHelper::TABS_DEFINITION.values.flatten }
 
     it { is_expected.to match_array(JobApplication.statuses.except(:draft).keys) }
   end
