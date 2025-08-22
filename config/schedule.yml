@@ -65,9 +65,9 @@ send_draft_applications_email:
   class: 'SendEmailForDraftJobApplicationsJob'
   queue: default
 
-delete_old_feedback:
+hard_delete_retention_policy:
   cron: '0 3 * * *' # "At 03:00."
-  class: 'DeleteOldFeedbackJob'
+  class: 'HardDeleteRetentionPolicyJob'
   queue: default
 
 remove_vacancies_that_expired_yesterday_from_google_index:
@@ -80,13 +80,8 @@ remove_invalid_subscriptions:
   class: 'RemoveInvalidSubscriptionsJob'
   queue: low
 
-hard_delete_retention_policy:
-  cron: '0 05 * * *' # "At 05:00."
-  class: 'HardDeleteRetentionPolicyJob'
-  queue: low
-
 soft_delete_retention_policy:
-  cron: '30 05 * * *' # "At 05:30."
+  cron: '0 05 * * *' # "At 05:00."
   class: 'SoftDeleteRetentionPolicyJob'
   queue: low
 
@@ -123,11 +118,6 @@ destroy_inactive_accounts:
 email_feedback_prompt:
   cron: '0 09 * * *' # "At 09:00."
   class: 'SendExpiredVacancyFeedbackPromptJob'
-  queue: low
-
-withdraw_stale_drafts:
-  cron: '0 10 * * *' # At 10:00.
-  class: 'DeleteOldDraftApplicationsForExpiredVacanciesJob'
   queue: low
 
 queue_daily_alerts:
