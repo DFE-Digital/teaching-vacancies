@@ -18,7 +18,7 @@ Returning to teaching after a break might be easier than you think.
 
 Time away and different life experiences can help give you a fresh perspective on being a teacher.
 
-Schools are interested in recruiting former teachers like you so you can continue your teaching career with them.
+Schools are interested in recruiting former teachers like you, so that you can continue your teaching career with them.
 
 A return to teaching provides you with an opportunity to take greater control of your career to shape a role that suits your skills, ambition and situation.
 
