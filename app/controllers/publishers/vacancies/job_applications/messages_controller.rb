@@ -9,9 +9,8 @@ class Publishers::Vacancies::JobApplications::MessagesController < Publishers::V
       Message.create!(content: message_form.content, sender: current_publisher, conversation: conversation)
       redirect_to organisation_job_job_application_path(@vacancy.id, @job_application.id, tab: "messages"), success: t(".success")
     else
-      # Set params to simulate the show action with show_form=true and tab=messages
-      params[:tab] = "messages"
-      params[:show_form] = "true"
+      @tab = "messages"
+      @show_form = "true"
 
       conversation = @job_application.conversations.first
       @messages = if conversation&.messages
@@ -20,6 +19,7 @@ class Publishers::Vacancies::JobApplications::MessagesController < Publishers::V
                     []
                   end
       @message_form = message_form
+      @notes_form = Publishers::JobApplication::NotesForm.new
 
       render "publishers/vacancies/job_applications/show", status: :unprocessable_entity
     end

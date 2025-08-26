@@ -1,10 +1,10 @@
 = yield
 
 = tabs do |t|
-  - t.with_navigation_item text: "Application", link: jobseekers_job_application_path(job_application, tab: "application"), active: params[:tab].blank? || params[:tab] == "application"
-  - t.with_navigation_item text: "Messages", link: jobseekers_job_application_path(job_application, tab: "messages"), active: (params[:tab] == "messages")
+  - t.with_navigation_item text: "Application", link: jobseekers_job_application_path(job_application, tab: "application"), active: @tab.nil? || @tab == "application"
+  - t.with_navigation_item text: "Messages", link: jobseekers_job_application_path(job_application, tab: "messages"), active: (@tab == "messages")
 
-- if params[:tab] == "messages"
+- if @tab == "messages"
   = render "jobseekers/job_applications/messages", job_application: job_application, vacancy: vacancy
 - else
   = job_application_review(job_application, allow_edit: local_assigns[:allow_edit]) do |r|

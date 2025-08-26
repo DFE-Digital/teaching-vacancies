@@ -30,7 +30,7 @@
   max-width: 100% !important;
 }
 
-/* Hide attachment button in Trix toolbar */
+/* Hide attachment button in Trix toolbar as we do not support uploads yet */
 trix-toolbar .trix-button--icon-attach {
   display: none !important;
 }

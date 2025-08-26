@@ -9,7 +9,7 @@
                current_user_type: "jobseeker"
 
       div class="govuk-!-margin-bottom-6"
-        = govuk_button_link_to t(".send_message_button"), url_for(params.to_unsafe_h.merge(show_form: "true")), class: "govuk-button--secondary" unless params[:show_form] == "true"
+        = govuk_button_link_to t(".send_message_button"), url_for(params.to_unsafe_h.merge(show_form: "true")), class: "govuk-button--secondary" unless @show_form == "true"
     - else
       p.govuk-body = t(".no_messages_yet")
 

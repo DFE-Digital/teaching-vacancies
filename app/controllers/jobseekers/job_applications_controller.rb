@@ -112,6 +112,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     raise ActionController::RoutingError, "Cannot view draft application" if job_application.draft?
 
     if params[:tab] == "messages"
+      @tab = "messages"
       conversation = job_application.conversations.first
       @messages = conversation&.messages&.order(created_at: :desc) || []
       @message_form = Publishers::JobApplication::MessagesForm.new

@@ -11,9 +11,7 @@ class Jobseekers::JobApplications::MessagesController < Jobseekers::JobApplicati
       Message.create!(content: message_form.content, sender: current_jobseeker, conversation: conversation)
       redirect_to jobseekers_job_application_path(@job_application, tab: "messages"), success: t("publishers.vacancies.job_applications.messages.create.success")
     else
-      # Set params to simulate the show action with show_form=true and tab=messages
-      params[:tab] = "messages"
-      params[:show_form] = "true"
+      @tab = "messages"
 
       conversation = @job_application.conversations.first
       @messages = conversation.messages.order(created_at: :desc)
@@ -26,7 +24,7 @@ class Jobseekers::JobApplications::MessagesController < Jobseekers::JobApplicati
   private
 
   def ensure_conversation_exists
-    unless @job_application.conversations.exists?
+    unless @job_application.conversations.any?
       redirect_to jobseekers_job_application_path(@job_application, tab: "messages"), warning: "No conversation exists to reply to"
     end
   end
