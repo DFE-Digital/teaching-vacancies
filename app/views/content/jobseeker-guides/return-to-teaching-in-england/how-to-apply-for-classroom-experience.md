@@ -20,7 +20,7 @@ In your cover note, you may want to include:
 * the ideal length of time you would like the experience to last
 * anything unique or specific from your previous experience that you think may showcase your skills
 
-If the school you have contacted is unable to provide you with classroom experience, you may want to ask if there are opportunities in other schools in their trust or area that they are aware of, or request that they keep you in mind for further opportunities.
+If the school you have contacted is unable to provide you with classroom experience, you may want to ask if there are opportunities in other schools in their trust or area that they are aware of, or request that they keep you in mind for future opportunities.
 
 ## What to include in your CV 
  
