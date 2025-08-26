@@ -56,7 +56,7 @@ If you qualified as a teacher outside the UK, to get a return to teaching advise
 
 You can [find out more about teaching in England as a non-UK citizen](https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas).
 
-[Call us on 0800 389 2500 to check if you’re eligible for an adviser](tel:08003892500).
+Call us on [0800 389 2500](tel:08003892500) to check if you’re eligible for an adviser.
 
 [Get a return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers).
 
