@@ -11,7 +11,7 @@ card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/upda
 
 If you’re returning to teaching, refreshing your subject and teaching knowledge will improve your confidence and prepare you for your return to the classroom.
 
-Consider what is important to update yourself on, and how you can bring yourself up to date at a pace that suits you.
+Consider what is important to update yourself on and how you can bring yourself up to date at a pace that suits you.
 
 You might find it helpful to:
 
