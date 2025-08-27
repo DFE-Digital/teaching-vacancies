@@ -6,7 +6,7 @@ class Publishers::Vacancies::JobApplications::MessagesController < Publishers::V
 
     if message_form.valid?
       conversation = find_or_create_conversation
-      Message.create!(content: message_form.content, sender: current_publisher, conversation: conversation)
+      PublisherMessage.create!(content: message_form.content, sender: current_publisher, conversation: conversation)
       redirect_to organisation_job_job_application_path(@vacancy.id, @job_application.id, tab: "messages"), success: t(".success")
     else
       @tab = "messages"

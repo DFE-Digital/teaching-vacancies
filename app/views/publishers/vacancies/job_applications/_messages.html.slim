@@ -17,9 +17,4 @@
         = t(".pre_interview_documentation_note")
 
     #messages-list
-      - messages.each do |message|
-        = render "shared/message",
-                 message: message,
-                 current_user_type: "publisher",
-                 vacancy: vacancy,
-                 job_application: job_application
+      = render partial: messages, locals: { current_user: current_user, job_application: job_application }

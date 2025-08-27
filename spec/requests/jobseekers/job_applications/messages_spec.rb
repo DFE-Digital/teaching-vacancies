@@ -52,7 +52,7 @@ RSpec.describe "Jobseekers::JobApplications::Messages" do
         end
 
         context "when conversation has existing messages" do
-          let!(:existing_message) { create(:message, conversation: conversation, content: "Previous message") }
+          let!(:existing_message) { create(:jobseeker_message, conversation: conversation, content: "Previous message") }
 
           it "renders show with existing messages and validation errors" do
             expect {

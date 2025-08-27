@@ -5,7 +5,7 @@
   - t.with_navigation_item text: "Messages", link: jobseekers_job_application_path(job_application, tab: "messages"), active: (@tab == "messages")
 
 - if @tab == "messages"
-  = render "jobseekers/job_applications/messages", job_application: job_application, vacancy: vacancy
+  = render "jobseekers/job_applications/messages", job_application: job_application, vacancy: vacancy, current_user: current_user, messages: @messages
 - else
   = job_application_review(job_application, allow_edit: local_assigns[:allow_edit]) do |r|
     - render "jobseekers/job_applications/job_application_review_sections", r: r, jobseeker: current_jobseeker

@@ -45,7 +45,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
 
   context "when messages already exist", :js do
     let!(:conversation) { create(:conversation, job_application: job_application) }
-    let!(:message) { create(:message, conversation: conversation, sender: publisher, content: "Previous message content") }
+    let!(:message) { create(:publisher_message, conversation: conversation, sender: publisher, content: "Previous message content") }
 
     it "displays existing messages and allows sending additional messages" do
       visit organisation_job_job_application_path(vacancy.id, job_application.id, tab: "messages")
@@ -85,7 +85,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
   context "when jobseeker replies to messages" do
     let(:jobseeker) { job_application.jobseeker }
     let!(:conversation) { create(:conversation, job_application: job_application) }
-    let!(:publisher_message) { create(:message, conversation: conversation, sender: publisher, content: "Hello from publisher") }
+    let!(:publisher_message) { create(:publisher_message, conversation: conversation, sender: publisher, content: "Hello from publisher") }
     let!(:job_application_without_messages) { create(:job_application, :submitted, vacancy: vacancy, jobseeker: jobseeker) }
 
     before do
@@ -132,7 +132,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
     end
 
     it "shows jobseeker reply in publisher interface" do
-      create(:message, conversation: conversation, sender: jobseeker, content: "Jobseeker reply content")
+      create(:jobseeker_message, conversation: conversation, sender: jobseeker, content: "Jobseeker reply content")
 
       login_publisher(publisher: publisher, organisation: organisation)
 
