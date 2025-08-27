@@ -1,8 +1,1 @@
-.govuk-summary-card
-  .govuk-summary-card__title-wrapper class=message_card_title_class(publisher_message, current_user)
-    h3.govuk-summary-card__title
-      = publisher_message_display_name(publisher_message, vacancy)
-  .govuk-summary-card__content
-    p.govuk-body class="govuk-!-font-weight-bold" = "Date: #{publisher_message.created_at.strftime('%d %B %Y at %I:%M %p')}"
-    p.govuk-body class="govuk-!-font-weight-bold" = publisher_message.conversation.title
-    p.govuk-body class="message-content" = simple_format(publisher_message.content)
+= render "shared/publisher_message", message: publisher_message, current_user: current_user, job_application: job_application

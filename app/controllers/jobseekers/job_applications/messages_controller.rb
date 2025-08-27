@@ -16,7 +16,6 @@ class Jobseekers::JobApplications::MessagesController < Jobseekers::JobApplicati
       conversation = @job_application.conversations.first
       @messages = conversation.messages.order(created_at: :desc)
       @message_form = message_form
-      @current_user = current_jobseeker
 
       render "jobseekers/job_applications/show", status: :unprocessable_entity
     end
