@@ -20,7 +20,7 @@ To get more school experience, you should:
 
 ## Contact a school
 
-The [Get information About Schools site](https://get-information-schools.service.gov.uk/?) has a list of all the educational establishments in England and Wales. You can find suitable schools to contact by filtering your search by education phase and location.
+The [Get Information about Schools site](https://get-information-schools.service.gov.uk/?) has a list of all the educational establishments in England and Wales. You can find suitable schools to contact by filtering your search by education phase and location.
 
 You may need to contact several schools in your area before finding one that can offer classroom experience.
 
