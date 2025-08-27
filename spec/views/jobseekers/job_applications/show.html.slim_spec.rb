@@ -56,6 +56,7 @@ RSpec.describe "jobseekers/job_applications/show" do
 
     context "with inactive application" do
       let(:job_application) { build_stubbed(:job_application, :status_unsuccessful_interview, jobseeker:, vacancy:) }
+      let(:self_disclosure_request) { build_stubbed(:self_disclosure_request, :sent, job_application:) }
 
       it "renders section" do
         expect(banner).to have_css(selectors[:tag], text: "unsuccessful")

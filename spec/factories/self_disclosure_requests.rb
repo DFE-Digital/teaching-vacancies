@@ -11,11 +11,6 @@ FactoryBot.define do
 
   trait :received do
     status { "received" }
-
-    after(:create) do |request|
-      request.sent!
-      request.received!
-    end
   end
 
   trait :manual do

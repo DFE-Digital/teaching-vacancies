@@ -15,20 +15,9 @@ FactoryBot.define do
 
   trait :reference_requested do
     status { :requested }
-
-    after(:create) do |request|
-      request.created!
-      request.requested!
-    end
   end
 
   trait :reference_received do
     status { :received }
-
-    after(:create) do |request|
-      request.created!
-      request.requested!
-      request.received!
-    end
   end
 end
