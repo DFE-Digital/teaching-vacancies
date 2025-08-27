@@ -23,8 +23,7 @@ gem "activerecord-session_store"
 gem "active_storage_validations"
 gem "addressable"
 gem "array_enum"
-# something strange with 1.189.1 - it hangs for 6 hours on install
-gem "aws-sdk-s3", "< 1.189.1", require: false
+gem "aws-sdk-s3"
 gem "breasal"
 gem "devise"
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.7"
@@ -123,9 +122,7 @@ group :development, :test do
   gem "rspec-rails"
   gem "rswag-specs"
   gem "slim_lint", require: false
-  # https://github.com/grodowski/undercover/issues/220
-  # v 0.6 doesn't respect :nocov: tags properly
-  gem "undercover", "< 0.6", require: false
+  gem "undercover", require: false
 end
 
 group :test do
@@ -139,7 +136,8 @@ group :test do
   gem "selenium-webdriver"
   gem "shoulda-matchers"
   gem "simplecov", require: false
-  gem "simplecov-lcov", require: false
+  # Lcov 0.9 breaks undercover's LCov parser
+  gem "simplecov-lcov", "< 0.9", require: false
   gem "site_prism"
   gem "uri-query_params"
   gem "vcr"

@@ -22,13 +22,9 @@ updates:
       - dependency-name: "redis"
         update-types: ["version-update:semver-major"]
 
-      # TODO: Remove this ignore config once undercover issue has been resolved
-      # Undercover 0.6.x doesn't seeem to respect :nocov: directives properly
-      - dependency-name: "undercover"
-        update-types: ["version-update:semver-major", "version-update:semver-minor"]
-
-      # TODO: Remove this ignore config once issue with aws-sdk-s3 has been resolved
-      - dependency-name: "aws-sdk-s3"
+      # TODO: Remove this ignore config once undercover is able to parse output
+#     # from simplecov-lcov 0.9
+      - dependency-name: "simplecov-lcov"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
 
     groups:
