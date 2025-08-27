@@ -33,6 +33,7 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     add_filter %r{.rake$}
     add_filter "app/services/custom_log_formatter.rb"
     add_filter "app/controllers/robots_controller.rb"
+    add_filter "app/controllers/previews_controller.rb"
     add_filter "app/controllers/sha_controller.rb"
     add_filter "app/jobs/set_organisation_slugs_job.rb"
 
@@ -52,6 +53,6 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     #
     # possibly the tests are stable now?
     # SD 14/7/25 branch coverage still appears to be ~ .1% unstable
-    minimum_coverage line: 96.45, branch: 82.76
+    minimum_coverage line: 96.75, branch: 83.53
   end
 end

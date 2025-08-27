@@ -3,10 +3,6 @@ class VacancyPresenter < BasePresenter
 
   HTML_STRIP_REGEX = %r{(&nbsp;|<div>|</div>|<!--block-->)+}
 
-  def columns
-    model.class.columns
-  end
-
   def benefits_details
     simple_format(fix_bullet_points(model.benefits_details)) if model.benefits_details.present?
   end
