@@ -13,10 +13,10 @@ class CopyVacancyAsaTemplate
         vacancy.supporting_documents.each { |supporting_document| new_vacancy.supporting_documents.attach(supporting_document.blob) }
 
         new_vacancy.include_additional_documents = true
-        new_vacancy.completed_steps = current_steps(vacancy)
+        new_vacancy.completed_steps = completed_steps(vacancy)
       else
         new_vacancy.include_additional_documents = nil
-        new_vacancy.completed_steps = current_steps(vacancy) - %w[documents]
+        new_vacancy.completed_steps = completed_steps(vacancy) - %w[documents]
       end
 
       # convert legacy email vacancies into uploaded ones
@@ -49,7 +49,7 @@ class CopyVacancyAsaTemplate
                                     safeguarding_information: nil)
     end
 
-    def current_steps(vacancy)
+    def completed_steps(vacancy)
       process = Publishers::Vacancies::VacancyStepProcess.new(:review,
                                                               vacancy: vacancy,
                                                               organisation: vacancy.organisation)
