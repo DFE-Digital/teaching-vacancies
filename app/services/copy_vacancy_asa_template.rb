@@ -2,6 +2,8 @@ class CopyVacancyAsaTemplate
   # don't call this code directly - it needs to send analytics events
   # via a controller
   class << self
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength
     def call(vacancy)
       new_vacancy = vacancy.dup
       new_vacancy.type = "DraftVacancy"
@@ -11,43 +13,54 @@ class CopyVacancyAsaTemplate
         vacancy.supporting_documents.each { |supporting_document| new_vacancy.supporting_documents.attach(supporting_document.blob) }
 
         new_vacancy.include_additional_documents = true
+        new_vacancy.completed_steps = completed_steps(vacancy)
       else
         new_vacancy.include_additional_documents = nil
+        new_vacancy.completed_steps = completed_steps(vacancy) - %w[documents]
       end
 
-      # :nocov:
-      reset_date_fields(new_vacancy) if vacancy.publish_on&.past?
-      # :nocov:
+      # convert legacy email vacancies into uploaded ones
+      new_vacancy.receive_applications = :uploaded_form if vacancy.email?
+
+      if vacancy.publish_on&.past?
+        reset_date_fields(new_vacancy)
+        new_vacancy.completed_steps -= %w[start_date important_dates]
+      end
 
       reset_legacy_fields(new_vacancy)
-      new_vacancy.completed_steps = current_steps(vacancy)
-      new_vacancy.organisations = vacancy.organisations
-      new_vacancy.send(:set_slug)
-      new_vacancy.save!(validate: false)
-      new_vacancy
+      new_vacancy.tap do |v|
+        v.organisations = vacancy.organisations
+        v.send(:set_slug)
+        v.save!(validate: false)
+      end
     end
+    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize
 
     private
 
     def reset_date_fields(new_vacancy)
-      new_vacancy.expires_at = nil
-      new_vacancy.start_date_type = nil
-      new_vacancy.starts_on = nil
-      new_vacancy.earliest_start_date = nil
-      new_vacancy.latest_start_date = nil
-      new_vacancy.other_start_date_details = nil
-      new_vacancy.publish_on = nil
+      new_vacancy.assign_attributes(expires_at: nil, start_date_type: nil, starts_on: nil,
+                                    earliest_start_date: nil, latest_start_date: nil, other_start_date_details: nil, publish_on: nil)
     end
 
     def reset_legacy_fields(new_vacancy)
-      new_vacancy.safeguarding_information_provided = nil
-      new_vacancy.safeguarding_information = nil
+      new_vacancy.assign_attributes(safeguarding_information_provided: nil,
+                                    safeguarding_information: nil)
     end
 
-    def current_steps(vacancy)
-      Publishers::Vacancies::VacancyStepProcess.new(:job_role,
-                                                    vacancy: vacancy,
-                                                    organisation: vacancy.organisation).steps
+    def completed_steps(vacancy)
+      process = Publishers::Vacancies::VacancyStepProcess.new(:review,
+                                                              vacancy: vacancy,
+                                                              organisation: vacancy.organisation)
+      (process.steps - [:review]).select do |step_name|
+        step_form_class = File.join("publishers/job_listing", "#{step_name}_form").camelize.constantize
+
+        params = step_form_class.load_form(vacancy)
+                                .merge(current_organisation: @organisation)
+
+        step_form_class.new(params, vacancy).valid?
+      end
     end
   end
 end

@@ -21,9 +21,11 @@ class Publishers::VacancyFormSequence < FormSequence
   private
 
   def validatable_steps
-    return dependent_steps if @vacancy.published?
-
-    super
+    if @vacancy.published?
+      dependent_steps
+    else
+      super
+    end
   end
 
   def dependent_steps # rubocop:disable Metrics/MethodLength
