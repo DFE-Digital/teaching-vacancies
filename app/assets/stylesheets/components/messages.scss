@@ -1,12 +1,12 @@
 @import 'govuk-frontend/dist/govuk/helpers/colour';
 
 // Message header styling for sender messages (blue) and recipient messages (grey)
-.message-header--blue {
+.message-header--sender {
   background-color: govuk-colour('blue');
   color: govuk-colour('white');
 }
 
-.message-header--grey {
+.message-header--recipient {
   background-color: govuk-colour('light-grey');
   color: govuk-colour('black');
 }

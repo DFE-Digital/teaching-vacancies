@@ -8,7 +8,7 @@ class Jobseekers::JobApplications::MessagesController < Jobseekers::JobApplicati
 
     if message_form.valid?
       conversation = @job_application.conversations.first
-      Message.create!(content: message_form.content, sender: current_jobseeker, conversation: conversation)
+      JobseekerMessage.create!(content: message_form.content, sender: current_jobseeker, conversation: conversation)
       redirect_to jobseekers_job_application_path(@job_application, tab: "messages"), success: t("publishers.vacancies.job_applications.messages.create.success")
     else
       @tab = "messages"
