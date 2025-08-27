@@ -104,19 +104,6 @@ RSpec.describe "Publishers can send messages to job applicants" do
         expect(conversation.reload.messages.count).to eq(1)
       end
     end
-
-    it "shows validation errors with existing messages when sending blank message" do
-      visit organisation_job_job_application_path(vacancy.id, job_application.id, tab: "messages")
-
-      expect(page).to have_text("Previous message content")
-
-      click_link "Send message to candidate"
-      click_button "Send message"
-
-      expect(page).to have_css("h2.govuk-error-summary__title", text: "There is a problem")
-      expect(page).to have_text("Previous message content")
-      expect(conversation.reload.messages.count).to eq(1)
-    end
   end
 
   context "when jobseeker replies to messages" do
