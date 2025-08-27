@@ -580,7 +580,6 @@ shared:
     - agreed_for_information_sharing
   :messages:
     - id
-    - sender_type
     - sender_id
     - conversation_id
     - created_at
