@@ -1,13 +1,4 @@
 module MessagesHelper
-  # Note: This os now only used in tests
-  def message_sender_display_name(message, job_application, vacancy)
-    if message.sender_type == "Publisher"
-      publisher_message_display_name(message, vacancy)
-    else
-      jobseeker_message_display_name(message, job_application)
-    end
-  end
-
   def publisher_message_display_name(message, vacancy)
     "#{message.sender.given_name} #{message.sender.family_name}, #{vacancy.organisation_name} <via Teaching Vacancies>"
   end
@@ -16,7 +7,11 @@ module MessagesHelper
     "#{job_application.name} <#{message.sender.email}>"
   end
 
-  def message_card_title_class(message, current_user)
-    message.sender == current_user ? "message-header--blue" : "message-header--grey"
+  def jobseeker_message_card_title_class(message, current_user)
+    message.sender == current_user ? "message-header--sender" : "message-header--recipient"
+  end
+
+  def publisher_message_card_title_class(message, job_application)
+    message.sender == job_application.jobseeker ? "message-header--recipient" : "message-header--sender"
   end
 end
