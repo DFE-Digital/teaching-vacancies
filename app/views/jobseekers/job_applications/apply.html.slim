@@ -5,7 +5,7 @@
     = render "banner"
 
   - r.with_above do
-    - unless vacancy.listed?
+    - unless vacancy.live?
       = govuk_notification_banner title_text: t("banners.important") do
         p.govuk-body = t(".deadline_passed")
 
@@ -91,5 +91,5 @@
       = form_for @form, url: jobseekers_job_application_pre_submit_path(@job_application), method: :post do |f|
         = f.govuk_error_summary
 
-        - if vacancy.listed?
+        - if vacancy.live?
           = f.govuk_submit t(".review_application")

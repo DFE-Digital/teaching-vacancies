@@ -83,7 +83,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def submit
-    raise ActionController::RoutingError, "Cannot submit application for non-listed job" unless vacancy.listed?
+    raise ActionController::RoutingError, "Cannot submit application for non-listed job" unless vacancy.live?
     raise ActionController::RoutingError, "Cannot submit non-draft application" unless job_application.draft?
 
     @review_form = Jobseekers::JobApplication::ReviewForm.new(review_form_params)

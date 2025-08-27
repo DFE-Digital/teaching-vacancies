@@ -55,9 +55,9 @@ RSpec.describe "Documents" do
         expect(vacancy.reload.completed_steps).to include("application_form")
       end
 
-      context "when the vacancy is listed" do
+      context "when the vacancy is live" do
         before do
-          allow(vacancy).to receive(:listed?).and_return(true)
+          allow(vacancy).to receive(:live?).and_return(true)
           allow_any_instance_of(Publishers::Vacancies::BaseController).to receive(:update_google_index)
         end
 
