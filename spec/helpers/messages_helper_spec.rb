@@ -45,4 +45,38 @@ RSpec.describe MessagesHelper do
       end
     end
   end
+
+  describe "#publisher_message_card_title_class" do
+    let(:job_application) { build_stubbed(:job_application, jobseeker: jobseeker) }
+
+    context "when sender is the jobseeker" do
+      it "returns recipient class" do
+        message = build_stubbed(:jobseeker_message, sender: jobseeker)
+        expect(helper.publisher_message_card_title_class(message, job_application)).to eq("message-header--recipient")
+      end
+    end
+
+    context "when sender is not the jobseeker" do
+      it "returns sender class" do
+        message = build_stubbed(:publisher_message, sender: publisher)
+        expect(helper.publisher_message_card_title_class(message, job_application)).to eq("message-header--sender")
+      end
+    end
+  end
+
+  describe "#jobseeker_message_card_title_class" do
+    context "when sender is current user" do
+      it "returns sender class" do
+        message = build_stubbed(:jobseeker_message, sender: jobseeker)
+        expect(helper.jobseeker_message_card_title_class(message, jobseeker)).to eq("message-header--sender")
+      end
+    end
+
+    context "when sender is not current user" do
+      it "returns recipient class" do
+        message = build_stubbed(:publisher_message, sender: publisher)
+        expect(helper.jobseeker_message_card_title_class(message, jobseeker)).to eq("message-header--recipient")
+      end
+    end
+  end
 end
