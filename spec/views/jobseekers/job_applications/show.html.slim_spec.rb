@@ -27,22 +27,46 @@ RSpec.describe "jobseekers/job_applications/show" do
         delete_btn: ".delete-application",
         withdraw_btn: ".withdraw-application",
         download_btn: ".print-application",
+        vacancy_form_btn: ".vacancy-form",
         view_link: ".view-listing-link",
       }
     end
 
-    it "renders section" do
+    it "displays common elements" do
       expect(banner).to have_css(selectors[:header], text: "#{vacancy.job_title} at #{vacancy.organisation.name}")
-      expect(banner).to have_css(selectors[:tag], text: "shortlisted")
-
       expect(banner).to have_css(selectors[:view_link], text: "View this listing (opens in new tab)")
       expect(banner).to have_link("View this listing (opens in new tab)", href: job_path(vacancy))
+    end
 
-      expect(banner).to have_css(selectors[:download_btn])
-      expect(banner).to have_css(selectors[:withdraw_btn])
-      expect(banner).to have_link("Withdraw", href: jobseekers_job_application_confirm_withdraw_path(job_application))
+    context "with active application" do
+      let(:job_application) { build_stubbed(:job_application, :status_shortlisted, jobseeker:, vacancy:) }
 
-      expect(banner).to have_no_css(selectors[:delete_btn])
+      it "renders section" do
+        expect(banner).to have_css(selectors[:tag], text: "shortlisted")
+
+        expect(banner).to have_css(selectors[:withdraw_btn])
+        expect(banner).to have_link("Withdraw", href: jobseekers_job_application_confirm_withdraw_path(job_application))
+        expect(banner).to have_css(selectors[:download_btn])
+        expect(banner).to have_link("Download application", href: jobseekers_job_application_download_path(job_application))
+
+        expect(banner).to have_no_css(selectors[:delete_btn])
+        expect(banner).to have_no_css(selectors[:vacancy_form_btn])
+      end
+    end
+
+    context "with inactive application" do
+      let(:job_application) { build_stubbed(:job_application, :status_unsuccessful_interview, jobseeker:, vacancy:) }
+
+      it "renders section" do
+        expect(banner).to have_css(selectors[:tag], text: "unsuccessful")
+
+        expect(banner).to have_css(selectors[:download_btn])
+        expect(banner).to have_link("Download application", href: jobseekers_job_application_download_path(job_application))
+
+        expect(banner).to have_no_css(selectors[:delete_btn])
+        expect(banner).to have_no_css(selectors[:withdraw_btn])
+        expect(banner).to have_no_css(selectors[:vacancy_form_btn])
+      end
     end
   end
 

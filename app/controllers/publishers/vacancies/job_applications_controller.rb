@@ -9,7 +9,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     "FeedbackForm" => Publishers::JobApplication::FeedbackForm,
   }.freeze
 
-  before_action :set_job_application, only: %i[show download_pdf download_application_form pre_interview_checks]
+  before_action :set_job_application, only: %i[show download pre_interview_checks]
   before_action :set_job_applications, only: %i[index tag]
 
   def index
@@ -25,29 +25,9 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     raise ActionController::RoutingError, "Cannot view a draft application" if @job_application.draft?
   end
 
-  def download_pdf
-    pdf = JobApplicationPdfGenerator.new(@job_application).generate
-
-    send_data(
-      pdf.render,
-      filename: "job_application_#{@job_application.id}.pdf",
-      type: "application/pdf",
-      disposition: "inline",
-    )
-  end
-
-  def download_application_form
-    unless @job_application.application_form.attached?
-      redirect_to organisation_job_job_application_path(vacancy.id, @job_application.id), alert: I18n.t("publishers.vacancies.job_applications.download_pdf.no_file")
-      return
-    end
-
-    send_data(
-      @job_application.application_form.download,
-      filename: @job_application.application_form.filename.to_s,
-      type: @job_application.application_form.content_type,
-      disposition: "inline",
-    )
+  def download
+    document = @job_application.submitted_application_form
+    send_data(document.data, filename: document.filename, disposition: "inline")
   end
 
   def tag
