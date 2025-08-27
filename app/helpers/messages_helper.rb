@@ -1,4 +1,5 @@
 module MessagesHelper
+  # Note: This os now only used in tests
   def message_sender_display_name(message, job_application, vacancy)
     if message.sender_type == "Publisher"
       publisher_message_display_name(message, vacancy)
