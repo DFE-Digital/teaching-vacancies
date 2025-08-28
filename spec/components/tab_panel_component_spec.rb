@@ -31,6 +31,23 @@ RSpec.describe TabPanelComponent, type: :component do
     it "has buttons" do
       expect(tab_panel.all(".govuk-button-group")).not_to be_empty
     end
+
+    describe "#candidate_name" do
+      let(:candidate) { build_stubbed(:job_application, :status_submitted, vacancy:) }
+      let(:candidates) { [candidate] }
+
+      it "has a link to the candidate" do
+        expect(tab_panel.all("a").map(&:text)).to include(candidate.name)
+      end
+
+      context "with a withdrawn candidate" do
+        let(:candidate) { build_stubbed(:job_application, :status_withdrawn, vacancy:) }
+
+        it "does not link to the candidate" do
+          expect(tab_panel.all("a").map(&:text)).not_to include(candidate.name)
+        end
+      end
+    end
   end
 
   context "when form is nil" do

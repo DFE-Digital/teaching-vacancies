@@ -3,13 +3,15 @@ FactoryBot.define do
     referee
     token { SecureRandom.uuid }
     status { :created }
+    email { Faker::Internet.email(domain: "contoso.com") }
+    marked_as_complete { false }
 
     after(:stub) do |request|
-      request.email = request.referee&.email
+      request.email = request.referee.email if request.referee
     end
 
     after(:build) do |request|
-      request.email = request.referee&.email
+      request.email = request.referee.email if request.referee
     end
   end
 

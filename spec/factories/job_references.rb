@@ -47,7 +47,6 @@ FactoryBot.define do
     end
 
     trait :with_issues do
-      complete { true }
       under_investigation { true }
       warnings { true }
       able_to_undertake_role { false }

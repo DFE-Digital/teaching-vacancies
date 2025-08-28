@@ -7,7 +7,7 @@
     .govuk-button-group class="govuk-!-display-none-print"
       = govuk_button_link_to t("buttons.download_application"), organisation_job_job_application_download_path(@vacancy.id, @job_application.id)
       - if @job_application.offered?
-        = govuk_button_link_to t("buttons.offer_declined"), tag_organisation_job_job_applications_path(@vacancy.id, params: { publishers_job_application_tag_form: { origin: tab_name(@job_application.status), job_applications: [@job_application.id] }, target: "declined" }), class: "govuk-button--secondary"
+        = govuk_button_link_to t("buttons.offer_declined"), tag_organisation_job_job_applications_path(@vacancy.id, params: { publishers_job_application_tag_form: { origin: tab_name(@job_application.status), job_applications: [@job_application.id] }, tag_action: "declined" }), class: "govuk-button--secondary"
       - elsif !@job_application.terminal_status?
         = govuk_button_link_to t("buttons.update_application_status"), tag_organisation_job_job_applications_path(@vacancy.id, params: { publishers_job_application_tag_form: { origin: tab_name(@job_application.status), job_applications: [@job_application.id] } }), class: "govuk-button--secondary"
 

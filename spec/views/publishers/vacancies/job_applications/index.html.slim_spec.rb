@@ -17,23 +17,19 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
     ]
   end
   let(:shortlisted) { build_stubbed_list(:job_application, 1, :status_shortlisted, vacancy:) }
-  let(:interviewing) { JobApplication }
-  let(:offered) { JobApplication }
-  let(:tabs_data) { { submitted:, unsuccessful:, shortlisted:, interviewing:, offered: }.stringify_keys }
 
   before do
     list_offered = build_stubbed_list(:job_application, 1, :status_offered, vacancy:)
     list_declined = build_stubbed_list(:job_application, 1, :status_declined, vacancy:)
-    allow(offered).to receive_messages(offered: list_offered, declined: list_declined)
 
     list_interviewing = build_stubbed_list(:job_application, 1, :status_interviewing, vacancy:)
     list_unsuccessful_interview = build_stubbed_list(:job_application, 1, :status_unsuccessful_interview, vacancy:)
-    allow(interviewing).to receive_messages(interviewing: list_interviewing, unsuccessful_interview: list_unsuccessful_interview)
 
     assign :current_organisation, organisation
     assign :vacancy, vacancy
     assign :form, Publishers::JobApplication::TagForm.new
-    assign :tabs_data, tabs_data
+
+    assign :job_applications, (submitted + unsuccessful + shortlisted + list_offered + list_declined + list_interviewing + list_unsuccessful_interview).group_by(&:status)
 
     render
   end
@@ -176,9 +172,8 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
 
   context "when a vacancy is active and it has no applications" do
     let(:submitted) { [] }
-    let(:unsuccessful) { JobApplication }
+    let(:unsuccessful) { [] }
     let(:shortlisted) { [] }
-    let(:interviewing) { JobApplication }
 
     describe "the summary section" do
       it "shows breadcrumb with link to active jobs in dashboard" do

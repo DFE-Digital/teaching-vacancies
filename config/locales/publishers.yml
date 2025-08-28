@@ -601,7 +601,7 @@ en:
             heading: Notes
         pre_interview_checks:
           page_title: Pre Interview Checks
-          sent_at: Request sent %{date}
+          pending_at: Request sent %{date}
           completed_at: Completed %{date}
           received_at: Received %{date}
           declined_at: Declined %{date}
