@@ -19,7 +19,7 @@ RSpec.describe "Publishers can select a job application for interview" do
     let(:reference_request) { create(:reference_request, referee: referee) }
 
     before do
-      create(:job_reference, referee: referee)
+      create(:job_reference, reference_request: reference_request)
       referee_can_give_reference_page.load(reference_id: reference_request.id, token: reference_request.token)
     end
 

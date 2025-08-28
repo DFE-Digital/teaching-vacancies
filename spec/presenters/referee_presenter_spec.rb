@@ -4,7 +4,8 @@ RSpec.describe RefereePresenter do
   subject(:presenter) { described_class.new(referee) }
 
   let(:job_reference) { build_stubbed(:job_reference) }
-  let(:referee) { build_stubbed(:referee, job_reference:) }
+  let(:referee) { build_stubbed(:referee, reference_request:) }
+  let(:reference_request) { build_stubbed(:reference_request, job_reference:) }
 
   describe ".candidate_name" do
     subject(:presenter) { described_class.new(referee).candidate_name }

@@ -35,8 +35,8 @@ RSpec.describe "Publishers can view their notifications" do
           v = create(:vacancy, organisations: [organisation], publisher: publisher, job_title: "#{delay} ago")
           application = create(:job_application, :status_submitted, vacancy: v, create_details: true)
 
-          create(:reference_request, referee: application.referees.first)
-          job_reference = create(:job_reference, :reference_given, referee: application.referees.first)
+          req = create(:reference_request, referee: application.referees.first)
+          job_reference = create(:job_reference, :reference_given, reference_request: req)
 
           Publishers::ReferenceReceivedNotifier.with(record: job_reference)
                                                .deliver

@@ -79,7 +79,7 @@ module Referees
     def set_reference
       @reference_request = ReferenceRequest.active_token(token)
                                            .find(params[:reference_id])
-      @reference = @reference_request.referee.job_reference
+      @reference = @reference_request.job_reference
       @referee = @reference_request.referee
     end
 

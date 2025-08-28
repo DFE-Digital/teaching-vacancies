@@ -1,6 +1,6 @@
 class Publishers::ReferenceReceivedNotifier < ApplicationNotifier
   recipients do
-    record.referee.job_application.vacancy.publisher
+    record.reference_request.referee.job_application.vacancy.publisher
   end
 
   deliver_by :email do |config|
@@ -27,17 +27,17 @@ class Publishers::ReferenceReceivedNotifier < ApplicationNotifier
 
     def reference_link
       govuk_link_to t("notifications.publishers/reference_received_notification.reference_received"),
-                    organisation_job_job_application_reference_request_path(job_application.vacancy.id, job_application.id, event.record.referee.reference_request),
+                    organisation_job_job_application_reference_request_path(job_application.vacancy.id, job_application.id, event.record.reference_request),
                     class: "govuk-link--no-visited-state"
     end
 
     def job_application
-      record.referee.job_application
+      record.reference_request.referee.job_application
     end
   end
 
   # this gets passed the notification as a a parameter 'just in case'
   def reference_request(*)
-    record.referee.reference_request
+    record.reference_request
   end
 end

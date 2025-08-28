@@ -1,6 +1,6 @@
 class SelfDisclosureRequest < ApplicationRecord
   belongs_to :job_application
-  has_one :self_disclosure
+  has_one :self_disclosure, dependent: :destroy
 
   enum :status, { manual: 0, manually_completed: 1, sent: 2, received: 3 }
 

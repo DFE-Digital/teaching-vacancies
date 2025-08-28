@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_18_160141) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_28_110645) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -313,7 +313,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_18_160141) do
   end
 
   create_table "job_references", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "reference_id", null: false
     t.boolean "complete", default: false, null: false
     t.boolean "can_give_reference"
     t.boolean "is_reference_sharable"
@@ -354,7 +353,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_18_160141) do
     t.string "unable_to_undertake_reason_ciphertext"
     t.string "employment_end_date_ciphertext"
     t.string "not_provided_reason"
-    t.index ["reference_id"], name: "index_job_references_on_reference_id", unique: true
+    t.uuid "reference_request_id", null: false
+    t.index ["reference_request_id"], name: "index_job_references_on_reference_request_id", unique: true
   end
 
   create_table "jobseeker_profile_excluded_organisations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -881,7 +881,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_18_160141) do
   add_foreign_key "job_applications", "vacancies"
   add_foreign_key "job_preferences", "jobseeker_profiles"
   add_foreign_key "job_preferences_locations", "job_preferences", column: "job_preferences_id"
-  add_foreign_key "job_references", "references"
+  add_foreign_key "job_references", "reference_requests"
   add_foreign_key "jobseeker_profile_excluded_organisations", "jobseeker_profiles"
   add_foreign_key "jobseeker_profile_excluded_organisations", "organisations"
   add_foreign_key "jobseeker_profiles", "jobseekers"

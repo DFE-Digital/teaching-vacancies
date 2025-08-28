@@ -5,7 +5,7 @@ class RefereePresenter < BasePresenter
 
   def initialize(referee)
     super
-    @reference = referee.job_reference
+    @reference = referee.reference_request.job_reference
   end
 
   attr_reader :reference

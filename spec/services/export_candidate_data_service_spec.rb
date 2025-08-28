@@ -17,8 +17,8 @@ RSpec.describe ExportCandidateDataService do
   end
   let(:reference_requests) { [reference_request_one, reference_request_two] }
   # references
-  let(:job_reference_one) { create(:job_reference, :reference_given, referee: referee_one) }
-  let(:job_reference_two) { create(:job_reference, referee: referee_two, can_give_reference: false) }
+  let(:job_reference_one) { create(:job_reference, :reference_given, reference_request: reference_request_one) }
+  let(:job_reference_two) { create(:job_reference, reference_request: reference_request_two, can_give_reference: false) }
   let(:job_references) { [job_reference_one, job_reference_two] }
   # self disclosure
   let(:self_disclosure_request) { create(:self_disclosure_request, job_application:) }
@@ -119,6 +119,7 @@ RSpec.describe ExportCandidateDataService do
 
     context "when request has not been sent to referee" do
       let(:reference_requests) { [] }
+      let(:job_references) { [] }
 
       it { expect(documents.filename).to eq("no_references_found.txt") }
       it { expect(documents.data).to eq("No references have been requested through Teaching Vacancies.") }

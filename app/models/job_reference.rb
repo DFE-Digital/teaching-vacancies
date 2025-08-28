@@ -12,9 +12,9 @@ class JobReference < ApplicationRecord
 
   REASON_DETAILS_FIELDS = %i[under_investigation_details warning_details unable_to_undertake_reason].freeze
 
-  belongs_to :referee, foreign_key: :reference_id, inverse_of: :job_reference
+  belongs_to :reference_request, inverse_of: :job_reference
 
-  validates :reference_id, uniqueness: true
+  validates :reference_request_id, uniqueness: true
 
   has_encrypted :employment_start_date, type: :date
   has_encrypted :employment_end_date, type: :date
@@ -39,7 +39,7 @@ class JobReference < ApplicationRecord
 
   def mark_as_received
     # invalidate token after reference is complete
-    referee.reference_request.update!(status: :received, token: SecureRandom.uuid)
+    reference_request.update!(status: :received, token: SecureRandom.uuid)
     Publishers::ReferenceReceivedNotifier.with(record: self).deliver
   end
 end
