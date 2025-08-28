@@ -54,7 +54,11 @@ class TabPanelComponent < ApplicationComponent
   end
 
   def candidate_name(application)
-    govuk_link_to(application.name, organisation_job_job_application_path(@vacancy.id, application))
+    if application.withdrawn?
+      tag.span application.name
+    else
+      govuk_link_to(application.name, organisation_job_job_application_path(@vacancy.id, application))
+    end
   end
 
   def candidate_status(application)
