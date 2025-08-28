@@ -84,6 +84,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_28_110645) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "archived", default: false, null: false
+    t.index ["archived"], name: "index_conversations_on_archived"
     t.index ["job_application_id"], name: "index_conversations_on_job_application_id"
   end
 

@@ -60,6 +60,21 @@ en:
         one: Working pattern changed to %{new_value}
         other: Working patterns changed to %{new_value}
       show_value_changed: "%{attribute} changed to %{new_value}"
+    candidate_messages:
+      toggle_archive:
+        archived: "You have moved messages to archived"
+        unarchived: "You have moved messages to inbox"
+      index:
+        table_headers:
+          name: "Name"
+          application: "Application" 
+          date_and_time: "Date and time"
+        buttons:
+          archive: "Archive"
+          unarchive: "Unarchive"
+        empty_state:
+          no_messages: "No messages yet."
+          no_archived_messages: "No archived messages yet."
     incomplete_profile:
       complete_link_text: Complete your %{organisation_type} profile
       heading: Complete your %{organisation_type} profile
