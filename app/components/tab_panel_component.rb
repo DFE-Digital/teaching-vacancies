@@ -5,7 +5,7 @@ class TabPanelComponent < ApplicationComponent
                  vacancy:,
                  candidates:,
                  displayed_fields: %i[name email_address status],
-                 button_groups: [%i[download update_status]],
+                 button_group: %i[download update_status],
                  form: nil)
     super(classes: [], html_attributes: {})
     @tab_name = tab_name
@@ -13,7 +13,7 @@ class TabPanelComponent < ApplicationComponent
     @form = form
     @candidates = candidates
     @displayed_fields = displayed_fields
-    @button_groups = button_groups
+    @button_group = button_group
   end
 
   def form_with_args
