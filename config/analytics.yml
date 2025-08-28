@@ -582,11 +582,11 @@ shared:
     - true_and_complete
   :messages:
     - id
-    - sender_type
     - sender_id
     - conversation_id
     - created_at
     - updated_at
+    - type
   :conversations:
     - id
     - job_application_id

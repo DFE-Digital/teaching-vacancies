@@ -1,0 +1,8 @@
+.govuk-summary-card
+  .govuk-summary-card__title-wrapper class=jobseeker_message_card_title_class(message, current_user)
+    h3.govuk-summary-card__title
+      = jobseeker_message_display_name(message, job_application)
+  .govuk-summary-card__content
+    p.govuk-body class="govuk-!-font-weight-bold" = "Date: #{message.created_at.to_fs(:date_at_time)}"
+    p.govuk-body class="govuk-!-font-weight-bold" = message.conversation.title
+    p.govuk-body class="message-content" = simple_format(message.content)
