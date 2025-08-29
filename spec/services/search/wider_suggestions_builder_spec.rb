@@ -63,7 +63,7 @@ RSpec.describe Search::WiderSuggestionsBuilder do
       end
 
       context "when initial_search is a Search::SchoolSearch" do
-        let(:initial_search) { Search::SchoolSearch.new(search_params) }
+        let(:initial_search) { Search::SchoolSearch.new(search_params, scope: Organisation.all) }
 
         it { expect(suggestions).to eq(expected_suggestions) }
       end
