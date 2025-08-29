@@ -30,8 +30,7 @@ RSpec.describe Geocoding, :dfe_analytics, geocode: true do
       end
 
       it "does not trigger a Google Geocoding API hit event" do
-        subject.coordinates
-        expect(:google_geocoding_api_hit).not_to have_been_enqueued_as_analytics_event
+        expect { subject.coordinates }.not_to have_sent_analytics_event_types(:google_geocoding_api_hit)
       end
     end
 
@@ -156,8 +155,7 @@ RSpec.describe Geocoding, :dfe_analytics, geocode: true do
       end
 
       it "does not trigger a Google Geocoding API hit event" do
-        subject.postcode_from_coordinates
-        expect(:google_geocoding_api_hit).not_to have_been_enqueued_as_analytics_event
+        expect { subject.postcode_from_coordinates }.not_to have_sent_analytics_event_types(:google_geocoding_api_hit)
       end
     end
 

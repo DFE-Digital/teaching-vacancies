@@ -1,0 +1,51 @@
+en:
+  tabs:
+    headers:
+      name: Name
+      email_address: Contact details
+      status: Application status
+      offered_at: Offer date
+      declined_at: Decline date
+      interview_feedback_received_at: Feedback date
+    buttons:
+      download: Download selected
+      update_status: Update application status
+      declined: Mark offer as declined
+      export: Download selected
+    submitted:
+      label: "New (%{count})"
+      heading: New applications
+      none: There are no pending applications
+      hint: ""
+    unsuccessful:
+      label: "Not progressing (%{count})"
+      heading: Applications not progressing
+      none: No applications have been marked for rejection
+      hint: >-
+        This section includes people that your school are not considering for this role,
+        as well as those who have withdrawn their applications.
+    shortlisted:
+      label: "Shortlisted (%{count})"
+      heading: Shortlisted applications
+      none: No applications have been shortlisted yet
+      hint: ""
+    interviewing:
+      label: "Interviewing (%{count})"
+      heading: Interviewing applications
+      none: No applications have been marked for interview yet
+      pre_interview_checks: Pre-interview checks
+      hint: ""
+    offered:
+      label: "Job offered (%{count})"
+      heading: Candidate offered a job
+      hint: ""
+      none: No applications have been offered yet
+      offered_inset: When you download this data, you will receive a ZIP file. This file contains all the selected candidate's personally identifiable information and application details.
+    declined:
+      heading: Offer declined
+      none: No applications have been declined yet
+      hint: ""
+    unsuccessful_interview:
+      heading: Interview unsuccessful
+      none: No applications have had a unsuccessful interview yet
+      hint: ""

@@ -271,6 +271,21 @@ RSpec.describe "Job applications" do
       end
     end
 
+    describe "GET #download" do
+      let(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+
+      context "when the job application status is not draft or withdrawn" do
+        it "sends a PDF file" do
+          get jobseekers_job_application_download_path(job_application)
+
+          expect(response).to have_http_status(:ok)
+          expect(response.content_type).to eq("application/pdf")
+          expect(response.headers["Content-Disposition"]).to include("inline")
+          expect(response.headers["Content-Disposition"]).to include("application_form.pdf")
+        end
+      end
+    end
+
     describe "GET #confirm_destroy" do
       context "when the application is a draft" do
         let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }

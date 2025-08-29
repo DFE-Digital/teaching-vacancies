@@ -1,6 +1,137 @@
 require "rails_helper"
 
 RSpec.describe JobApplicationsHelper do
+  describe "all job application statuses except draft are listed" do
+    subject { JobApplicationsHelper::TABS_DEFINITION.values.flatten }
+
+    it { is_expected.to match_array(JobApplication.statuses.except(:draft).keys) }
+  end
+
+  describe "#tab_name" do
+    subject { helper.tab_name(status) }
+
+    context "when status declined" do
+      let(:status) { "declined" }
+
+      it { is_expected.to eq("offered") }
+    end
+
+    context "when interviewing" do
+      let(:status) { "interviewing" }
+
+      it { is_expected.to eq("interviewing") }
+    end
+
+    context "when offered" do
+      let(:status) { "offered" }
+
+      it { is_expected.to eq("offered") }
+    end
+
+    context "when status reviewed" do
+      let(:status) { "reviewed" }
+
+      it { is_expected.to eq("submitted") }
+    end
+
+    context "when shortlisted" do
+      let(:status) { "shortlisted" }
+
+      it { is_expected.to eq("shortlisted") }
+    end
+
+    context "when submitted" do
+      let(:status) { "submitted" }
+
+      it { is_expected.to eq("submitted") }
+    end
+
+    context "when unsuccessful" do
+      let(:status) { "unsuccessful" }
+
+      it { is_expected.to eq("unsuccessful") }
+    end
+
+    context "when status withdrawn" do
+      let(:status) { "withdrawn" }
+
+      it { is_expected.to eq("unsuccessful") }
+    end
+  end
+
+  describe "#job_applications_to_tabs" do
+    subject(:tabs_data) { helper.job_applications_to_tabs(job_applications.group_by(&:status)) }
+
+    let(:job_applications) do
+      JobApplication.statuses.except(:draft).keys
+                    .map { |status| build_stubbed_list(:job_application, 2, :"status_#{status}") }
+                    .flatten
+    end
+
+    it "returns tabs names" do
+      expect(tabs_data.keys).to match_array(%w[submitted unsuccessful shortlisted interviewing offered])
+    end
+
+    it "contains all job application for tab submitted" do
+      expect(tabs_data["submitted"].values.sum(&:count)).to eq(4)
+      expect(tabs_data["submitted"].values.flatten.map(&:status).uniq).to match_array(%w[submitted reviewed])
+    end
+
+    it "contains all job application for tab unsuccessful" do
+      expect(tabs_data["unsuccessful"].values.sum(&:count)).to eq(4)
+      expect(tabs_data["unsuccessful"].values.flatten.map(&:status).uniq).to match_array(%w[unsuccessful withdrawn])
+    end
+
+    it "contains all job application for tab shortlisted" do
+      expect(tabs_data["shortlisted"].values.sum(&:count)).to eq(2)
+      expect(tabs_data["shortlisted"].values.flatten.map(&:status).uniq).to match_array(%w[shortlisted])
+    end
+
+    it "contains all job application for tab interviewing" do
+      expect(tabs_data["interviewing"].values.sum(&:count)).to eq(4)
+      expect(tabs_data["interviewing"].values.flatten.map(&:status).uniq).to match_array(%w[interviewing unsuccessful_interview])
+    end
+
+    it "contains all job application for tab offered" do
+      expect(tabs_data["offered"].values.sum(&:count)).to eq(4)
+      expect(tabs_data["offered"].values.flatten.map(&:status).uniq).to match_array(%w[offered declined])
+    end
+  end
+
+  describe "#tag_status_options" do
+    subject { helper.tag_status_options(tab_origin) }
+
+    context "when tab_origin submitted" do
+      let(:tab_origin) { "submitted" }
+
+      it { is_expected.to match_array(%w[unsuccessful shortlisted interviewing offered]) }
+    end
+
+    context "when tab_origin unsuccessful" do
+      let(:tab_origin) { "unsuccessful" }
+
+      it { is_expected.to match_array([]) }
+    end
+
+    context "when tab_origin shortlisted" do
+      let(:tab_origin) { "shortlisted" }
+
+      it { is_expected.to match_array(%w[unsuccessful interviewing offered]) }
+    end
+
+    context "when tab_origin interviewing" do
+      let(:tab_origin) { "interviewing" }
+
+      it { is_expected.to match_array(%w[unsuccessful_interview offered]) }
+    end
+
+    context "when tab_origin offered" do
+      let(:tab_origin) { "offered" }
+
+      it { is_expected.to match_array(%w[declined]) }
+    end
+  end
+
   describe "#job_application_qualified_teacher_status_info" do
     subject { helper.job_application_qualified_teacher_status_info(job_application) }
 

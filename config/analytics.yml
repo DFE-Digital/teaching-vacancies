@@ -115,6 +115,11 @@ shared:
     - unsuccessful_at
     - interviewing_at
     - withdrawn_at
+    - offered_at
+    - declined_at
+    - unsuccessful_interview_at
+    - interview_feedback_received_at
+    - interview_feedback_received
     - first_name
     - last_name
     - previous_names
@@ -339,6 +344,57 @@ shared:
     - created_at
     - updated_at
     - is_most_recent_employer
+  job_references:
+    - id
+    - created_at
+    - updated_at
+    - allegations
+    - complete
+    - can_give_reference
+    - email
+    - is_reference_sharable
+    - reference_request_id
+    - employment_start_date
+    - employment_end_date
+    - currently_employed
+    - would_reemploy_current
+    - would_reemploy_any
+    - name
+    - not_provided_reason
+    - job_title
+    - phone_number
+    - organisation
+    - under_investigation
+    - warnings
+    - not_fit_to_practice
+    - able_to_undertake_role
+    - punctuality
+    - working_relationships
+    - customer_care
+    - adapt_to_change
+    - deal_with_conflict
+    - prioritise_workload
+    - team_working
+    - communication
+    - problem_solving
+    - general_attitude
+    - technical_competence
+    - leadership
+    - how_do_you_know_the_candidate
+    - reason_for_leaving
+    - would_reemploy_current_reason
+    - would_reemploy_any_reason
+    - under_investigation_details
+    - warning_details
+    - unable_to_undertake_reason
+  reference_requests:
+    - id
+    - reference_id
+    - status
+    - created_at
+    - updated_at
+    - marked_as_complete
+    - email
   saved_jobs:
     - id
     - jobseeker_id
@@ -491,3 +547,36 @@ shared:
     - exam_taken
     - jobseeker_profile_id
     - job_application_id
+  :self_disclosure_requests:
+    - id
+    - job_application_id
+    - status
+    - created_at
+    - updated_at
+  :self_disclosures:
+    - id
+    - self_disclosure_request_id
+    - created_at
+    - updated_at
+    - name
+    - previous_names
+    - address_line_1
+    - address_line_2
+    - city
+    - country
+    - postcode
+    - phone_number
+    - date_of_birth
+    - has_unspent_convictions
+    - has_spent_convictions
+    - is_barred
+    - has_been_referred
+    - is_known_to_children_services
+    - has_been_dismissed
+    - has_been_disciplined
+    - has_been_disciplined_by_regulatory_body
+    - agreed_for_processing
+    - agreed_for_criminal_record
+    - agreed_for_organisation_update
+    - agreed_for_information_sharing
+    - true_and_complete

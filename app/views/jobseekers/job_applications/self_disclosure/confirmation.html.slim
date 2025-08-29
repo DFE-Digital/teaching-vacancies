@@ -1,0 +1,23 @@
+- content_for :page_title_prefix, t(".page_title")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("app.back_link"), href: previous_wizard_path, html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
+
+.govuk-grid-row
+  div
+    span.govuk-caption-m = "Part 4 of 4"
+    h1.govuk-heading-l = t(".heading", job_title: @job_application.vacancy.job_title)
+    h2.govuk-heading-m = t(".confirmation_declaration")
+    - t(".description").each do |text|
+      p.govuk-hint = text
+
+  = form_with(model: @form, url: wizard_path(step), method: :patch) do |f|
+    = f.govuk_error_summary
+
+    - Jobseekers::JobApplications::SelfDisclosure::ConfirmationForm::FIELDS.each do |field|
+      = f.govuk_check_box field,
+        true,
+        multiple: false,
+        link_errors: true
+
+    = f.govuk_submit t("buttons.save_and_continue")

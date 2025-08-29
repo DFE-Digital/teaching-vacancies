@@ -2,10 +2,12 @@ FactoryBot.define do
   factory :job_application do
     transient do
       draft_at { 2.weeks.ago }
+      status { :draft }
       create_details { false }
+      create_self_disclosure { false }
+      create_references { false }
     end
 
-    status { :draft }
     jobseeker
     vacancy
 
@@ -61,7 +63,61 @@ FactoryBot.define do
     completed_steps { JobApplication.completed_steps.keys }
     in_progress_steps { [] }
 
-    after :create do |job_application, options|
+    after(:stub) do |job_application, options|
+      if options.create_details
+        build_stubbed_list(:referee, 1, job_application: job_application, is_most_recent_employer: true)
+        build_stubbed_list(:qualification, 3, job_application: job_application)
+        build_stubbed_list(:training_and_cpd, 2, job_application: job_application)
+      end
+
+      if options.create_self_disclosure
+        self_disclosure_request = build_stubbed(:self_disclosure_request, :received, job_application:)
+        build_stubbed(:self_disclosure, self_disclosure_request:)
+      end
+
+      if options.create_references
+        referee_one = build_stubbed(:referee, job_application:)
+        req_one = build_stubbed(:reference_request, :reference_received, referee: referee_one)
+        build_stubbed(:job_reference, :reference_given, reference_request: req_one)
+      end
+
+      job_application.assign_attributes(
+        # move status here to skip state machine validation
+        status: options.status,
+        draft_at: options.draft_at,
+        submitted_at: options.submitted_at,
+        unsuccessful_at: options.unsuccessful_at,
+        reviewed_at: options.reviewed_at,
+        shortlisted_at: options.shortlisted_at,
+        interviewing_at: options.interviewing_at,
+        unsuccessful_interview_at: options.unsuccessful_interview_at,
+        offered_at: options.offered_at,
+        declined_at: options.declined_at,
+        withdrawn_at: options.withdrawn_at,
+      )
+    end
+
+    after(:build) do |job_application, options|
+      if options.create_details
+        build_list(:referee, 1, job_application: job_application, is_most_recent_employer: true)
+        build_list(:qualification, 3, job_application: job_application)
+        build_list(:training_and_cpd, 2, job_application: job_application)
+      end
+
+      if options.create_self_disclosure
+        self_disclosure_request = build(:self_disclosure_request, :received, job_application:)
+        build(:self_disclosure, self_disclosure_request:)
+      end
+
+      if options.create_references
+        referee_one = build(:referee, job_application:, is_most_recent_employer: true)
+        req_one = build(:reference_request, :reference_received, referee: referee_one)
+        build(:job_reference, :reference_given, reference_request: req_one)
+        job_application.referees << referee_one
+      end
+    end
+
+    after(:create) do |job_application, options|
       if options.create_details
         create_list(:referee, 1, job_application: job_application, is_most_recent_employer: true)
         create_list(:qualification, 3, job_application: job_application)
@@ -69,11 +125,17 @@ FactoryBot.define do
       end
 
       job_application.update_columns(
+        # move status here to skip state machine validation
+        status: options.status,
         draft_at: options.draft_at,
-        reviewed_at: options.reviewed_at,
-        shortlisted_at: options.shortlisted_at,
         submitted_at: options.submitted_at,
         unsuccessful_at: options.unsuccessful_at,
+        reviewed_at: options.reviewed_at,
+        shortlisted_at: options.shortlisted_at,
+        interviewing_at: options.interviewing_at,
+        unsuccessful_interview_at: options.unsuccessful_interview_at,
+        offered_at: options.offered_at,
+        declined_at: options.declined_at,
         withdrawn_at: options.withdrawn_at,
       )
     end
@@ -86,9 +148,8 @@ FactoryBot.define do
   trait :status_draft do
     transient do
       create_details { false }
+      status { :draft }
     end
-
-    status { :draft }
 
     # Personal details
     first_name { "" }
@@ -135,42 +196,38 @@ FactoryBot.define do
     completed_steps { [] }
   end
 
+  trait :status_submitted do
+    transient do
+      submitted_at { 4.days.ago }
+      status { :submitted }
+    end
+  end
+
   trait :status_reviewed do
     transient do
       submitted_at { 4.days.ago }
       reviewed_at { 3.days.ago }
+      status { :reviewed }
     end
-
-    status { :reviewed }
   end
 
   trait :status_shortlisted do
     transient do
       submitted_at { 4.days.ago }
-      reviewed_at { 3.days.ago }
-      shortlisted_at { 2.days.ago }
+      shortlisted_at { 3.days.ago }
+      status { :shortlisted }
     end
 
-    status { :shortlisted }
     further_instructions { Faker::Lorem.paragraph(sentence_count: 2) }
-  end
-
-  trait :status_submitted do
-    transient do
-      submitted_at { 4.days.ago }
-    end
-
-    status { :submitted }
   end
 
   trait :status_unsuccessful do
     transient do
       submitted_at { 4.days.ago }
-      reviewed_at { 3.days.ago }
-      unsuccessful_at { 2.days.ago }
+      unsuccessful_at { 3.days.ago }
+      status { :unsuccessful }
     end
 
-    status { :unsuccessful }
     rejection_reasons { Faker::Lorem.paragraph(sentence_count: 1) }
   end
 
@@ -178,18 +235,66 @@ FactoryBot.define do
     transient do
       submitted_at { 4.days.ago }
       withdrawn_at { 2.days.ago }
+      status { :withdrawn }
     end
-
-    status { :withdrawn }
   end
 
   trait :status_interviewing do
     transient do
       submitted_at { 4.days.ago }
+      shortlisted_at { 3.days.ago }
       interviewing_at { 2.days.ago }
+      status { :interviewing }
+    end
+  end
+
+  trait :status_interviewing_with_pre_checks do
+    transient do
+      submitted_at { 4.days.ago }
+      interviewing_at { 2.days.ago }
+      status { :interviewing }
+      create_self_disclosure { true }
+      create_references { true }
+    end
+  end
+
+  trait :status_unsuccessful_interview do
+    transient do
+      status { :unsuccessful_interview }
+      submitted_at { 4.days.ago }
+      interviewing_at { 2.days.ago }
+      unsuccessful_interview_at { 1.day.ago }
+      create_self_disclosure { true }
+      create_references { true }
     end
 
-    status { :interviewing }
+    interview_feedback_received_at { Time.zone.now }
+    interview_feedback_received { true }
+  end
+
+  trait :status_offered do
+    transient do
+      status { :offered }
+      submitted_at { 4.days.ago }
+      shortlisted_at { 3.days.ago }
+      interviewing_at { 2.days.ago }
+      offered_at { 1.day.ago }
+      create_self_disclosure { true }
+      create_references { true }
+    end
+  end
+
+  trait :status_declined do
+    transient do
+      status { :declined }
+      submitted_at { 5.days.ago }
+      shortlisted_at { 4.days.ago }
+      interviewing_at { 2.days.ago }
+      offered_at { 1.day.ago }
+      declined_at { Time.zone.now }
+      create_self_disclosure { true }
+      create_references { true }
+    end
   end
 
   trait :with_baptism_certificate do

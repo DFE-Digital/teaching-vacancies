@@ -4,13 +4,15 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
   let(:vacancy) { build_stubbed(:vacancy, :expired, organisations:, job_applications:) }
   let(:organisations) { build_stubbed_list(:school, 1) }
   let(:job_applications) do
-    build_stubbed_list(:job_application, 1, :status_submitted,
+    build_stubbed_list(:job_application, 1,
+                       :"status_#{status}",
                        training_and_cpds: build_stubbed_list(:training_and_cpd, 1),
                        working_patterns: %w[full_time part_time])
   end
   let(:job_application) do
     vacancy.job_applications.first
   end
+  let(:status) { "submitted" }
 
   before do
     assign :vacancy, vacancy
@@ -100,7 +102,7 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
   context "when the job application is an uploaded job application" do
     let(:uploaded_form_vacancy) { create(:vacancy, :expired, receive_applications: 2, job_title: "Yup this is the one") }
     let(:uploaded_job_application) do
-      create(:uploaded_job_application, :status_submitted, :with_uploaded_application_form, vacancy: uploaded_form_vacancy)
+      build_stubbed(:uploaded_job_application, :status_submitted, :with_uploaded_application_form, vacancy: uploaded_form_vacancy)
     end
 
     before do
@@ -132,7 +134,28 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
       expect(rendered).to have_css(".govuk-summary-list__key", text: "Teacher reference number (TRN)")
       expect(rendered).to have_css(".govuk-summary-list__value", text: uploaded_job_application.teacher_reference_number)
 
-      expect(rendered).to have_link("Download application", href: organisation_job_job_application_download_application_form_path(uploaded_job_application.vacancy.id, uploaded_job_application))
+      expect(rendered).to have_link("Download application", href: organisation_job_job_application_download_path(uploaded_job_application.vacancy.id, uploaded_job_application))
+    end
+  end
+
+  describe "action buttons" do
+    context "when status not terminal" do
+      let(:status) { "interviewing" }
+
+      it { expect(rendered).to have_link("Update application status") }
+    end
+
+    context "when status terminal" do
+      let(:status) { "withdrawn" }
+
+      it { expect(rendered).to have_no_link("Update application status") }
+    end
+
+    context "when status offered" do
+      let(:status) { "offered" }
+
+      it { expect(rendered).to have_link("Mark offer as declined") }
+      it { expect(rendered).to have_no_link("Update application status") }
     end
   end
 end

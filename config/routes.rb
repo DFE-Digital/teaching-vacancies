@@ -80,9 +80,7 @@ Rails.application.routes.draw do
 
     resources :uploaded_job_applications, only: [] do
       resource :personal_details, only: %i[edit update], module: :uploaded_job_applications
-      resource :upload_application_form, only: %i[edit update], module: :uploaded_job_applications do
-        get :download_submitted_form, on: :collection
-      end
+      resource :upload_application_form, only: %i[edit update], module: :uploaded_job_applications
     end
 
     resources :job_applications, only: %i[index show destroy] do
@@ -108,7 +106,11 @@ Rails.application.routes.draw do
       post :submit
       get :post_submit
       post :withdraw
+      get :download
       resource :feedback, only: %i[create], controller: "job_applications/feedbacks"
+      resources :self_disclosure, only: %i[show update], controller: "job_applications/self_disclosure" do
+        get :completed, on: :collection
+      end
     end
 
     scope as: :job, path: ":job_id" do
@@ -396,11 +398,35 @@ Rails.application.routes.draw do
 
       resources :job_applications, only: %i[index show], controller: "publishers/vacancies/job_applications" do
         resources :notes, only: %i[create destroy], controller: "publishers/vacancies/job_applications/notes"
-        get :download_pdf
-        get :download_application_form
-        get :withdrawn
+        resources :reference_requests, only: %i[show update edit], controller: "publishers/vacancies/job_applications/reference_requests" do
+          member do
+            get :reference_received
+            patch :mark_as_received
+          end
+        end
+        get :download
+        get :terminal
         get :tag, on: :collection
         post :update_tag, on: :collection
+        post :offer, on: :collection
+        member do
+          get :pre_interview_checks
+        end
+        resource :self_disclosure, only: %i[show update], controller: "publishers/vacancies/job_applications/self_disclosure"
+        resources :collect_reference_flags, only: %i[show update], controller: "publishers/vacancies/collect_reference_flags"
+        resources :collect_self_disclosure_flags, only: %i[show update], controller: "publishers/vacancies/collect_self_disclosure_flags"
+      end
+      resources :job_application_batches, only: %i[] do
+        resources :references_and_self_disclosure, only: %i[show update], controller: "publishers/vacancies/references_and_self_disclosure"
+      end
+    end
+  end
+
+  resources :references, only: %i[] do
+    resources :build, only: %i[show update], controller: "referees/build_references" do
+      collection do
+        get :completed
+        get :no_reference
       end
     end
   end

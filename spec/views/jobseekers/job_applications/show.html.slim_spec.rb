@@ -6,9 +6,13 @@ RSpec.describe "jobseekers/job_applications/show" do
   let(:vacancy) { build_stubbed(:vacancy) }
   let(:job_application) { build_stubbed(:job_application, :status_shortlisted, jobseeker:, vacancy:) }
   let(:current_jobseeker) { jobseeker }
+  let(:self_disclosure_request) { nil }
 
   before do
-    allow(view).to receive_messages(current_jobseeker:, job_application:, vacancy:)
+    job_application.self_disclosure_request = self_disclosure_request if self_disclosure_request
+    without_partial_double_verification do
+      allow(view).to receive_messages(current_jobseeker:, job_application:, vacancy:)
+    end
 
     render
   end
@@ -23,22 +27,47 @@ RSpec.describe "jobseekers/job_applications/show" do
         delete_btn: ".delete-application",
         withdraw_btn: ".withdraw-application",
         download_btn: ".print-application",
+        vacancy_form_btn: ".vacancy-form",
         view_link: ".view-listing-link",
       }
     end
 
-    it "renders section" do
+    it "displays common elements" do
       expect(banner).to have_css(selectors[:header], text: "#{vacancy.job_title} at #{vacancy.organisation.name}")
-      expect(banner).to have_css(selectors[:tag], text: "shortlisted")
-
       expect(banner).to have_css(selectors[:view_link], text: "View this listing (opens in new tab)")
       expect(banner).to have_link("View this listing (opens in new tab)", href: job_path(vacancy))
+    end
 
-      expect(banner).to have_css(selectors[:download_btn])
-      expect(banner).to have_css(selectors[:withdraw_btn])
-      expect(banner).to have_link("Withdraw", href: jobseekers_job_application_confirm_withdraw_path(job_application))
+    context "with active application" do
+      let(:job_application) { build_stubbed(:job_application, :status_shortlisted, jobseeker:, vacancy:) }
 
-      expect(banner).to have_no_css(selectors[:delete_btn])
+      it "renders section" do
+        expect(banner).to have_css(selectors[:tag], text: "shortlisted")
+
+        expect(banner).to have_css(selectors[:withdraw_btn])
+        expect(banner).to have_link("Withdraw", href: jobseekers_job_application_confirm_withdraw_path(job_application))
+        expect(banner).to have_css(selectors[:download_btn])
+        expect(banner).to have_link("Download application", href: jobseekers_job_application_download_path(job_application))
+
+        expect(banner).to have_no_css(selectors[:delete_btn])
+        expect(banner).to have_no_css(selectors[:vacancy_form_btn])
+      end
+    end
+
+    context "with inactive application" do
+      let(:job_application) { build_stubbed(:job_application, :status_unsuccessful_interview, jobseeker:, vacancy:) }
+      let(:self_disclosure_request) { build_stubbed(:self_disclosure_request, :sent, job_application:) }
+
+      it "renders section" do
+        expect(banner).to have_css(selectors[:tag], text: "unsuccessful")
+
+        expect(banner).to have_css(selectors[:download_btn])
+        expect(banner).to have_link("Download application", href: jobseekers_job_application_download_path(job_application))
+
+        expect(banner).to have_no_css(selectors[:delete_btn])
+        expect(banner).to have_no_css(selectors[:withdraw_btn])
+        expect(banner).to have_no_css(selectors[:vacancy_form_btn])
+      end
     end
   end
 
@@ -145,7 +174,43 @@ RSpec.describe "jobseekers/job_applications/show" do
     subject(:timeline_items) { show_view.all(".timeline-component .timeline-component__item") }
 
     it "renders" do
-      expect(timeline_items.map(&:text)).to contain_exactly("Application submitted")
+      expect(timeline_items.map(&:text).join).to include("Application submitted")
+    end
+  end
+
+  describe "self disclosure request banner" do
+    let(:scope) { "jobseekers.job_applications.show.self_disclosure" }
+    let(:call_to_action) do
+      I18n.t(
+        ".cta_html",
+        scope:,
+        organisation: job_application.vacancy.organisation.name,
+        link: "self-disclosure form",
+      )
+    end
+    let(:form_path) do
+      jobseekers_job_application_self_disclosure_path(job_application, Wicked::FIRST_STEP)
+    end
+
+    context "when self_disclosure_request sent" do
+      let(:job_application) { create(:job_application, :status_interviewing) }
+      let(:self_disclosure_request) { create(:self_disclosure_request, :sent, job_application:) }
+
+      it { expect(rendered).to have_content(call_to_action) }
+      it { expect(rendered).to have_link(I18n.t(".form", scope:), href: form_path) }
+    end
+
+    context "when self_disclosure_request manual" do
+      let(:job_application) { create(:job_application, :status_interviewing) }
+      let(:self_disclosure_request) { create(:self_disclosure_request, :manual) }
+
+      it { expect(rendered).to have_no_content(call_to_action) }
+      it { expect(rendered).to have_no_link(I18n.t(".form", scope:), href: form_path) }
+    end
+
+    context "when job application not status interviewing" do
+      it { expect(rendered).to have_no_content(call_to_action) }
+      it { expect(rendered).to have_no_link(I18n.t(".form", scope:), href: form_path) }
     end
   end
 end

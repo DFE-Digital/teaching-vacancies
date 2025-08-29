@@ -1,20 +1,13 @@
 require "rails_helper"
 
 RSpec.describe DeleteOldDraftApplicationsForExpiredVacanciesJob do
-  before do
-    vacancy.save!
-    JobApplication.draft.first.update!(updated_at: 6.years.ago)
-    described_class.perform_now
-  end
-
   context "with an expired vacancy" do
-    let(:vacancy) do
-      build(:vacancy, :expired,
-            job_applications: [
-              build(:job_application, :status_draft),
-              build(:job_application, :status_draft),
-              build(:job_application, :status_submitted),
-            ])
+    before do
+      vacancy = create(:vacancy, :expired)
+      create(:job_application, :status_draft, vacancy:, updated_at: 6.years.ago)
+      create(:job_application, :status_draft, vacancy:)
+      create(:job_application, :status_submitted, vacancy:)
+      described_class.perform_now
     end
 
     it "deletes the old draft application" do
@@ -23,8 +16,10 @@ RSpec.describe DeleteOldDraftApplicationsForExpiredVacanciesJob do
   end
 
   context "with an unexpired vacancy" do
-    let(:vacancy) do
-      build(:vacancy, job_applications: [build(:job_application, :status_draft)])
+    before do
+      vacancy = create(:vacancy)
+      create(:job_application, :status_draft, vacancy:, updated_at: 6.years.ago)
+      described_class.perform_now
     end
 
     it "does not touch draft applications" do

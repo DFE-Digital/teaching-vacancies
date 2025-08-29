@@ -547,6 +547,7 @@ en:
           draft: Draft jobs - %{organisation_name}
           awaiting_feedback: Jobs awaiting feedbank - %{organisation_name}
       job_applications:
+        update_application_status: Update application status
         interviewing_status:
           pre_interview_checks: Pre-interview checks
         header:
@@ -560,11 +561,6 @@ en:
             after: Deadline passed
             before: Application deadline
           expired_more_than_year: In line with our data retention policy you are no longer able to view applications for this job.
-          no_applicants: Nobody has applied for this job yet
-          no_new: There are no pending applications
-          no_rejected: No applications have been marked for rejection
-          no_interviewing: No applications have been marked for interview yet
-          no_shortlisted: No applications have been shortlisted yet
           received: Received on
           rejected:
             one: Rejected application
@@ -578,18 +574,6 @@ en:
           submitted:
             one: Unread application
             other: Unread applications
-        candidates:
-          name: Name
-          contact_details: Contact details
-          application_status: Application status
-          update_application_status: Update application status
-          download_selected: Download selected
-        interviewing:
-          name: Name
-          contact_details: Contact details
-          application_status: Application status
-          update_application_status: Update application status
-          download_selected: Download selected
         notes:
           create:
             success: A note has been added
@@ -617,21 +601,74 @@ en:
             heading: Notes
         pre_interview_checks:
           page_title: Pre Interview Checks
+          pending_at: Request sent %{date}
+          completed_at: Completed %{date}
+          received_at: Received %{date}
+          declined_at: Declined %{date}
+          created_at: Created %{date}
+          references: References
+          last_action: Last action
+          self_disclosure: Self-disclosure
+          status: Status
+        reference_requests:
+          reference:
+            under_investigation_details: Under investigation details
+            unable_to_undertake_role_details: Unable to undertake role details
+            warning_details: Warning details
+          reference_received:
+            caption: Update reference status
+            heading: Is %{name}'s reference satisfactory?
+          edit:
+            caption: Update referee information
+            heading: What is the correct email address for %{name}?
+          show:
+            print: Print
+            how_would_you_rate: How would you rate %{name}?
+            page_title: Reference
+            mark_as_received: Mark as received
+            collect_reference: Would you like to collect this reference through Teaching Vacancies?
+            change_email_address_html: If the candidate has entered the referee's email address incorrectly, %{link}
+            change_email_link_text: you can amend it.
+            this_referee_will_not_provide_a_reference: >-
+              This referee will not provide a reference for this candidate.
+              You will need to request a new referee from this candidate.
+            once_the_reference_is_received: >-
+              Once the reference is received you will be able to view it on this page.
+              If you do not receive the reference within 1 week, you will be able to send a reminder.
+            more_urgent: >-
+              If the request is more urgent, you should reach out to the referee directly.
+              If you have sent and received your own reference form for this referee, you can manually mark it as received.
+            referee_details:
+              heading: Referee details
+              name: Name
+              job_title: Job title
+              organisation: Organisation
+              relationship: Relationship to applicant
+              email: Email address
+              phone_number: Phone number
+            reference_requested: Reference requested
+            reference_email_changed: Reference email changed to %{email}
+            reference_received: Reference received
+            reference_declined: Reference declined
+            reference_created: Marked as interviewing
+            marked_as_complete: Marked as complete
+            by: by %{name}
+            by_tvs: by Teaching Vacancies
+            communication_history: Communication history
+          update:
+            change_email_success: Email address updated and reference request sent
         tag:
           page_title: Update application status
-          what_application_status_single: What application status do you want to assign to %{name}?
-          what_application_status_multiple: What application status do you want to assign to these applicants?
+          what_application_status:
+            one: What application status do you want to assign to this applicant?
+            other: What application status do you want to assign to these applicants?
           applicants: Applicants
-        collect_references:
-          page_title: Collect references and declarations
-        ask_references_email:
-          page_title: Contact applicant for references
         update_status:
           unsuccessful: "%{name} has been sent an email telling them their application has not been successful"
           shortlisted: "%{name} has been sent an email telling them that they have been shortlisted"
-        withdrawn:
-          content: The candidate has withdrawn their application and you cannot view it any more.
-          heading: This application has been withdrawn
+        terminal:
+          content: The candidate is no longer available for consideration and you cannot view it any more.
+          heading: This application is no longer accessible
           page_title: Application withdrawn
           view_more_applications: View more applications
         visa_sponsorship:
@@ -645,6 +682,13 @@ en:
           eligibility_link_text: Find out about eligible support roles and salary requirements (opens in new tab).
         download_pdf:
           no_file: "No file has been uploaded."
+        base:
+          collect_references:
+            page_title: Collect references
+          ask_references_email:
+            page_title: Contact applicant for references
+          collect_self_disclosure:
+            page_title: Collect self disclosures
       live:
         notice: You can only view active jobs
       review:

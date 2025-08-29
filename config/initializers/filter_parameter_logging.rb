@@ -60,8 +60,47 @@ Rails.application.config.filter_parameters += %i[
   ethos_and_aims
   baptism_address
   baptism_date
+  employment_start_date
+  employment_end_date
   faith
   place_of_worship
+  punctuality
+  working_relationships
+  customer_care
+  adapt_to_change
+  deal_with_conflict
+  prioritise_workload
+  team_working
+  communication
+  problem_solving
+  general_attitude
+  technical_competence
+  leadership
+  under_investigation
+  warnings
+  allegations
+  not_fit_to_practice
+  able_to_undertake_role
+  country
+  address_line_1
+  address_line_2
+  date_of_birth
+  has_unspent_convictions
+  has_spent_convictions
+  is_barred
+  has_been_refered
+  is_known_to_children_services
+  has_been_dismissed
+  has_been_disciplined
+  has_been_disciplined_by_regulatory_body
+  agreed_for_processing
+  agreed_for_criminal_record
+  agreed_for_organisation_update
+  agreed_for_information_sharing
+  not_provided_reason
+  under_investigation_details
+  warning_details
+  unable_to_undertake_reason
 ] + [
   /^age$/i,
 ]

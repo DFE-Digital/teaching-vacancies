@@ -1,0 +1,23 @@
+- content_for :page_title_prefix, t(".page_title")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("app.back_link"), href: pre_interview_checks_organisation_job_job_application_path(vacancy.id, @job_application), html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    span.govuk-caption-l = @self_disclosure.header_text
+    h1.govuk-heading-xl class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
+      = @self_disclosure.applicant_name
+
+    - if @self_disclosure.request.completed?
+      = render "jobseekers/job_applications/self_disclosure/review/completed"
+    - else
+      = render "jobseekers/job_applications/self_disclosure/review/pending"
+
+  .govuk-grid-column-one-third
+    = render TimelineComponent.new do |timeline|
+      - timeline.with_heading(title: t(".communication_history"))
+      - @self_disclosure.events.each do |key, value|
+        - timeline.with_item(key:, value:)
+
+    = render PublisherNotesOnJobApplicationComponent.new(job_application: @job_application, vacancy: vacancy, notes_form: @notes_form, return_to_url: organisation_job_job_application_self_disclosure_path(vacancy.id, @job_application.id))
