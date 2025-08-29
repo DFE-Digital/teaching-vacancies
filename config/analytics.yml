@@ -353,7 +353,7 @@ shared:
     - can_give_reference
     - email
     - is_reference_sharable
-    - reference_id
+    - reference_request_id
     - employment_start_date
     - employment_end_date
     - currently_employed

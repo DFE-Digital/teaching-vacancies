@@ -3,7 +3,8 @@ require "pdf/inspector"
 
 RSpec.describe ReferencePdfGenerator do
   let(:job_reference) { build_stubbed(:job_reference, :reference_given) }
-  let(:referee) { build_stubbed(:referee, job_reference:) }
+  let(:reference_request) { build_stubbed(:reference_request, job_reference:) }
+  let(:referee) { build_stubbed(:referee, reference_request:) }
   let(:presenter) { RefereePresenter.new(referee) }
   let(:generator) { described_class.new(presenter) }
 

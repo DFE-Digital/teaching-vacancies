@@ -77,8 +77,8 @@ FactoryBot.define do
 
       if options.create_references
         referee_one = build_stubbed(:referee, job_application:)
-        build_stubbed(:reference_request, :reference_received, referee: referee_one)
-        build_stubbed(:job_reference, :reference_given, referee: referee_one)
+        req_one = build_stubbed(:reference_request, :reference_received, referee: referee_one)
+        build_stubbed(:job_reference, :reference_given, reference_request: req_one)
       end
 
       job_application.assign_attributes(
@@ -111,8 +111,8 @@ FactoryBot.define do
 
       if options.create_references
         referee_one = build(:referee, job_application:, is_most_recent_employer: true)
-        build(:reference_request, :reference_received, referee: referee_one)
-        build(:job_reference, :reference_given, referee: referee_one)
+        req_one = build(:reference_request, :reference_received, referee: referee_one)
+        build(:job_reference, :reference_given, reference_request: req_one)
         job_application.referees << referee_one
       end
     end

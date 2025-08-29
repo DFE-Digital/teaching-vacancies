@@ -65,7 +65,7 @@ RSpec.describe "Publishers can add notes to a job application" do
       let(:reference_request) { create(:reference_request, referee: referee) }
 
       before do
-        create(:job_reference, referee: referee)
+        create(:job_reference, reference_request: reference_request)
       end
 
       context "with a note" do

@@ -8,12 +8,10 @@ RSpec.describe "Job applications reference request" do
   let(:reference_request) do
     referee.create_reference_request!(token: SecureRandom.uuid, status: :received, email: referee.email)
   end
-  let(:job_reference) { create(:job_reference, :reference_given, referee:) }
   let(:publisher) { create(:publisher, accepted_terms_at: 1.day.ago) }
 
   before do
-    reference_request
-    job_reference
+    create(:job_reference, :reference_given, reference_request:)
     # rubocop:disable RSpec/AnyInstance
     allow_any_instance_of(ApplicationController).to receive(:current_organisation).and_return(organisation)
     # rubocop:enable RSpec/AnyInstance

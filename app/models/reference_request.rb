@@ -2,6 +2,7 @@ class ReferenceRequest < ApplicationRecord
   validates :token, presence: true
 
   belongs_to :referee, foreign_key: :reference_id, inverse_of: :reference_request
+  has_one :job_reference, dependent: :destroy
 
   validates :reference_id, uniqueness: true
 
@@ -39,7 +40,7 @@ class ReferenceRequest < ApplicationRecord
     def create_for_external!(job_application)
       job_application.referees.each do |referee|
         reference_request = create_reference_request!(referee)
-        referee.create_job_reference!
+        reference_request.create_job_reference!
         Publishers::CollectReferencesMailer.collect_references(reference_request).deliver_later
       end
     end
