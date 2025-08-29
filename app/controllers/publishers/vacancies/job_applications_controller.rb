@@ -23,7 +23,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     @show_form = params["show_form"]
     @notes_form = Publishers::JobApplication::NotesForm.new
     @message_form = Publishers::JobApplication::MessagesForm.new
-    @messages = @job_application.conversations.includes(:messages).flat_map(&:messages)
+    @messages = @job_application.conversations.includes(:messages).flat_map(&:messages).sort_by(&:created_at).reverse
 
     raise ActionController::RoutingError, "Cannot view a draft application" if @job_application.draft?
   end
