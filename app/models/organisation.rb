@@ -54,12 +54,16 @@ class Organisation < ApplicationRecord
   scope :only_faith_schools, -> { where.not("gias_data ->> 'ReligiousCharacter (name)' IN (?)", NON_FAITH_RELIGIOUS_CHARACTER_TYPES) }
 
   scope :with_live_vacancies, lambda {
-    organisations = Vacancy.live.map(&:organisations).flatten.uniq
+    # use inner/right join to just select organisations with live vacancies
+    organisations = joins(:vacancies).merge(Vacancy.live)
     local_authorities_extra_schools = Rails.configuration.local_authorities_extra_schools.to_h.transform_keys(&:to_s)
 
-    local_authorities = local_authorities_extra_schools.select { |_la_code, school_urns| school_urns.any? { |urn| organisations.map(&:urn).include? urn.to_s } }
+    la_codes = local_authorities_extra_schools.select { |_la_code, school_urns| school_urns.any? { |urn| organisations.any? { |o| o.urn == urn.to_s } } }
+                                              .keys
 
-    all_organisations = organisations.map { |org| [org] + org.school_groups }.flatten + SchoolGroup.where(local_authority_code: local_authorities.keys)
+    groups, schools = organisations.partition(&:school_group?)
+
+    all_organisations = groups + schools.map { |school| [school] + school.school_groups }.flatten + SchoolGroup.where(local_authority_code: la_codes)
     where(id: all_organisations.map(&:id))
   }
 
