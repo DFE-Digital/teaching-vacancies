@@ -13,7 +13,6 @@ en:
         label: Job availability
         options:
           true: Only show school with jobs available
-          false: Does not have any jobs
     about:
       at_one_school: About %{organisation}
       at_multiple_schools: About the schools

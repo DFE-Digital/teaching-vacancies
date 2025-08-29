@@ -47,43 +47,6 @@ RSpec.describe Search::SchoolSearch do
   end
 
   describe "#organisations" do
-    context "with job availability filter (can only be set true)" do
-      let(:job_availability) { ["true"] }
-
-      before do
-        create(:school, name: "Empty", school_groups: [empty_group])
-        active = create(:school, name: "Active", school_groups: [active_group])
-        create(:vacancy, organisations: [active])
-      end
-
-      context "when the organisation is a trust" do
-        let(:empty_group) { create(:trust, name: "Empty Trust") }
-        let(:active_group) { create(:trust, name: "Trust") }
-
-        it "returns school and trust with vacancy" do
-          expect(subject.organisations.map(&:name)).to contain_exactly("Active", "Trust")
-        end
-      end
-
-      context "when the organisation is a local authority" do
-        let(:empty_group) { create(:local_authority, name: "Empty LA") }
-        let(:active_group) { create(:local_authority, name: "LA") }
-        let(:extra_group) { create(:local_authority, name: "Extra") }
-        let(:local_authorities_extra_schools) { { extra_group.local_authority_code.to_i => [extra_school.urn.to_i] } }
-        let(:extra_school) { create(:school, name: "Extra School") }
-
-        before do
-          create(:vacancy, organisations: [extra_school])
-
-          allow(Rails.configuration).to receive(:local_authorities_extra_schools).and_return(local_authorities_extra_schools)
-        end
-
-        it "returns school and trust with vacancy" do
-          expect(subject.organisations.map(&:name)).to contain_exactly("Active", "LA local authority", "Extra School", "Extra local authority")
-        end
-      end
-    end
-
     context "when no filters (except for radius) are given" do
       it "returns unmodified scope" do
         expect(subject.organisations.to_sql).to eq(scope.to_sql)

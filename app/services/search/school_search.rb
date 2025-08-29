@@ -61,7 +61,9 @@ class Search::SchoolSearch
     scope = scope.where(phase: key_stage_phases) if key_stage_phases
     scope = apply_organisation_type_filter(scope)
     scope = apply_school_type_filter(scope)
-    apply_job_availability_filter(scope)
+    scope = scope.with_live_vacancies if @search_criteria.key?(:job_availability)
+
+    scope
   end
 
   def marker_for_map(vacancy_id, organisation_id, geopoint)
@@ -84,14 +86,6 @@ class Search::SchoolSearch
 
     School::PHASE_TO_KEY_STAGES_MAPPINGS.select { |_, v| @search_criteria[:key_stage].intersect?(v.map(&:to_s)) }
                                         .map { |m| m.first.to_s }
-  end
-
-  def apply_job_availability_filter(scope)
-    if @search_criteria.key?(:job_availability)
-      scope.with_live_vacancies
-    else
-      scope
-    end
   end
 
   def apply_organisation_type_filter(scope)
