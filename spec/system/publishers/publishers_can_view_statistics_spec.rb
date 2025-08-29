@@ -17,16 +17,16 @@ RSpec.describe "Publishers can view statistics" do
       # This old vacancy shouldn't show up in the visible stats as its too old
       create(:vacancy, publisher: publisher, organisations: [school], publish_on: 1.year.ago, expiry_date: 1.year.ago,
                        vacancy_analytics: build(:vacancy_analytics,
-                                                referrer_counts: { "Google" => 600, "Magic" => 800 }))
+                                                referrer_counts: { "google.com" => 600, "magic.co.uk" => 800 }))
       create(:vacancy, publisher: publisher, organisations: [school],
                        vacancy_analytics: build(:vacancy_analytics,
-                                                referrer_counts: { "Google" => 6, "Magic" => 8 }))
+                                                referrer_counts: { "google.com" => 6, "magic.co.uk" => 8 }))
       create(:vacancy, publisher: publisher, organisations: [school],
                        vacancy_analytics: build(:vacancy_analytics,
-                                                referrer_counts: { "Google" => 4, "Yahoo" => 12, "LinkedIn" => 13 }))
+                                                referrer_counts: { "google.com" => 4, "yahoo.co.uk" => 12, "linkedin.com" => 13 }))
       create(:vacancy, publisher: publisher, organisations: [school],
                        vacancy_analytics: build(:vacancy_analytics,
-                                                referrer_counts: { "Google" => 14, "Indeed" => 5, "LinkedIn" => 17 }))
+                                                referrer_counts: { "google.com" => 14, "indeed.co.uk" => 5, "linkedin.com" => 17 }))
     end
 
     it "adds up the stats for each referrer" do
@@ -35,7 +35,7 @@ RSpec.describe "Publishers can view statistics" do
       find_by_id("accessible").click
 
       within("#analytics") do
-        expect(all(".govuk-summary-list__row").map(&:text)).to eq(%w[LinkedIn30 Google24 Yahoo12 Magic8 Indeed5])
+        expect(all(".govuk-summary-list__row").map(&:text)).to eq(%w[Linkedin.com30 Google.com24 Yahoo.co.uk12 Magic.co.uk8 Indeed.co.uk5])
       end
     end
   end

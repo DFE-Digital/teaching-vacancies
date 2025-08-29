@@ -8,5 +8,5 @@ h3.govuk-heading-m = t(".job_source")
   = govuk_summary_list html_attributes: { id: "analytics" } do |summary_list|
     - sort_referrer_counts(referrer_counts).each do |key, value|
       - summary_list.with_row do |row|
-        - row.with_key text: key
+        - row.with_key text: key.humanize
         - row.with_value text: value
