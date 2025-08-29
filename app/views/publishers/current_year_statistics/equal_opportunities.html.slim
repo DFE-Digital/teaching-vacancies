@@ -1,4 +1,7 @@
-= render("navigation")
+= render("page_header")
+p.govuk-body = t(".application_counts", count: @age_counts.values.sum)
+= render("navigation_menu")
+
 
 / where there are large groups, render bar charts rather than donuts
 / The labels are very long with Ethnicity and religion

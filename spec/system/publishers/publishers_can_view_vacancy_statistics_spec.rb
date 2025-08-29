@@ -23,13 +23,13 @@ RSpec.describe "Publishers can view vacancy statastics" do
     let(:vacancy) do
       create(:vacancy, organisations: [organisation],
                        vacancy_analytics: build(:vacancy_analytics,
-                                                referrer_counts: { "Direct" => 14, "Ask Jeeves" => 24, "LinkedIn" => 22, "Also Rans" => 15 }))
+                                                referrer_counts: { "direct" => 14, "askjeeves.co.uk" => 24, "linkedin.com" => 22, "alsorans.net" => 15 }))
     end
 
     it "cam switch between views" do
       find_by_id("accessible").click
       within("#analytics") do
-        expect(all(".govuk-summary-list__row").map(&:text)).to eq(["Ask Jeeves24", "LinkedIn22", "Also Rans15", "Direct14"])
+        expect(all(".govuk-summary-list__row").map(&:text)).to eq(["Askjeeves.co.uk24", "Linkedin.com22", "Alsorans.net15", "Direct14"])
       end
     end
   end
