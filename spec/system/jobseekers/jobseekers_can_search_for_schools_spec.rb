@@ -70,7 +70,6 @@ RSpec.describe "Searching on the schools page" do
       expect(page).to have_link no_vacancies.name
       check I18n.t("organisations.filters.job_availability.options.true")
       click_on I18n.t("buttons.apply_filters")
-      # sleep 60
       expect(page).not_to have_link no_vacancies.name
     end
   end
