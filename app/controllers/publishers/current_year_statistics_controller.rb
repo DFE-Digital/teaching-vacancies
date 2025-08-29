@@ -6,6 +6,7 @@ module Publishers
 
     def index
       @referrer_counts = listing_data
+      @vacancy_counts = vacancies.count
     end
 
     def equal_opportunities

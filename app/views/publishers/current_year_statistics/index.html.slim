@@ -3,6 +3,8 @@
 
 p.govuk-body = t(".this_data")
 
+p.govuk-body = t(".vacancy_counts", count: @vacancy_counts)
+
 p.govuk-body = t(".download_stats")
 
 = govuk_button_link_to t("buttons.download_stats"), publishers_all_time_statistics_path(format: :csv), class: "govuk-button--secondary"
