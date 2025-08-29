@@ -2,6 +2,10 @@
 p.govuk-body = t(".application_counts", count: @age_counts.values.sum)
 = render("navigation_menu")
 
+p.govuk-body = t(".download_stats")
+
+= govuk_button_link_to t("buttons.download_stats"), equal_opportunities_publishers_all_time_statistics_path(format: :csv), class: "govuk-button--secondary"
+
 
 / where there are large groups, render bar charts rather than donuts
 / The labels are very long with Ethnicity and religion
