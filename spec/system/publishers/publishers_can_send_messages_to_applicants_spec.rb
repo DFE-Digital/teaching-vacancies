@@ -31,7 +31,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
       # https://github.com/rspec/rspec-rails/issues/396 suggests setting the partial lookup path
       # view.lookup_context.prefixes << 'intranet/application' << 'application' but it didn't seem to work
       it "shows the correct headers for each message", :js do
-        expect(all(".govuk-summary-card__title-wrapper").map { |x| x[:class].split.last }).to eq(["message-header--sender", "message-header--sender", "message-header--recipient"])
+        expect(all(".govuk-summary-card__title-wrapper").map { |x| x[:class].split.last }).to eq(["message-header--recipient", "message-header--sender", "message-header--sender"])
       end
     end
 
@@ -86,9 +86,10 @@ RSpec.describe "Publishers can send messages to job applicants" do
 
         click_button "Send message"
 
-        expect(page).to have_text("Previous message content")
-        expect(page).to have_text(new_message_content)
         expect(conversation.reload.messages.count).to eq(2)
+        message_cards = all(".govuk-summary-card")
+        expect(message_cards.first).to have_text(new_message_content)
+        expect(message_cards.last).to have_text("Previous message content")
       end
 
       it "shows validation errors with existing messages when sending blank message" do
@@ -149,10 +150,11 @@ RSpec.describe "Publishers can send messages to job applicants" do
       click_button "Send message"
 
       expect(page).to have_text("Message sent successfully")
-      expect(page).to have_text("Hello from publisher")
-      expect(page).to have_text(jobseeker_reply)
       expect(page).to have_text(job_application.name.to_s)
       expect(conversation.reload.messages.count).to eq(2)
+      message_cards = all(".govuk-summary-card")
+      expect(message_cards.first).to have_text(jobseeker_reply)
+      expect(message_cards.last).to have_text("Hello from publisher")
     end
 
     it "shows jobseeker reply in publisher interface" do
