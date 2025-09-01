@@ -86,7 +86,7 @@ gem "slim-rails"
 gem "validate_url"
 gem "valid_email2"
 # this upgrade creates 848 test failures
-gem "view_component", "< 4"
+gem "view_component", "< 5"
 gem "wicked"
 gem "xml-sitemap"
 gem "zendesk_api"
