@@ -252,22 +252,25 @@ RSpec.describe JobApplication do
   describe "terminal_status?" do
     subject { create(:job_application, :"status_#{status}").terminal_status? }
 
-    context "when status is withdrawn" do
-      let(:status) { "withdrawn" }
+    context "with all statuses" do
+      {
+        draft: false,
+        submitted: false,
+        reviewed: false,
+        shortlisted: false,
+        unsuccessful: true,
+        withdrawn: true,
+        interviewing: false,
+        offered: false,
+        declined: true,
+        unsuccessful_interview: true,
+      }.each do |status_value, terminal|
+        context "when status is set to #{status_value}" do
+          let(:status) { status_value }
 
-      it { is_expected.to be true }
-    end
-
-    context "when status is declined" do
-      let(:status) { "declined" }
-
-      it { is_expected.to be true }
-    end
-
-    context "when status is unsuccessful_interview" do
-      let(:status) { "unsuccessful_interview" }
-
-      it { is_expected.to be true }
+          it { is_expected.to be terminal }
+        end
+      end
     end
 
     described_class.statuses.except(*%w[draft reviewed] + described_class::TERMINAL_STATUSES).each_key do |status|

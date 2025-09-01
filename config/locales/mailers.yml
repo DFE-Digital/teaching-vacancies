@@ -116,11 +116,11 @@ en:
       self_disclosure:
         subject: Complete your self-disclosure form for %{job_title} at %{organisation_name}
         dear: Dear %{name}
-        self_disclosure_form: Teaching Vacancies account
+        self_disclosure_form: Complete and submit your self-disclosure form for this application
         body: |
           %{school_name} has requested that you complete your self-disclosure form as part of your application for %{job_title} at %{school_name}.
 
-          Sign in to your %{link} to complete your self-disclosure form.
+          %{link}.
 
           If you are having issues completing the form, email [teaching.vacancies@education.gov.uk](mailto:teaching.vacancies@education.gov.uk).
 

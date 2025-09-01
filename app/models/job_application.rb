@@ -54,7 +54,7 @@ class JobApplication < ApplicationRecord
     non_catholic: 11,
   }
 
-  # basic state machine definition
+  # hash of valid state transitions - input state to output
   # rubocop:disable Layout/HashAlignment
   STATUS_TRANSITIONS = {
     nil            => %w[draft],
@@ -68,13 +68,13 @@ class JobApplication < ApplicationRecord
   }.freeze
   # rubocop:enable Layout/HashAlignment
 
-  # end of the road statuses for job application we cannot further update status at the point
-  TERMINAL_STATUSES = %w[withdrawn declined unsuccessful_interview].freeze
-  INACTIVE_STATUSES = %w[draft] + TERMINAL_STATUSES
-
   # If you want to add a status, be sure to add a `status_at` column to the `job_applications` table
   enum :status, { draft: 0, submitted: 1, reviewed: 2, shortlisted: 3, unsuccessful: 4, withdrawn: 5, interviewing: 6, offered: 7, declined: 8, unsuccessful_interview: 9 }, default: 0
   array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
+
+  # end of the road statuses for job application we cannot further update status at the point
+  TERMINAL_STATUSES = (statuses.keys.map(&:to_s) - STATUS_TRANSITIONS.keys).freeze
+  INACTIVE_STATUSES = (%w[draft] + TERMINAL_STATUSES).freeze
 
   RELIGIOUS_REFERENCE_TYPES = { referee: 1, baptism_certificate: 2, baptism_date: 3, no_referee: 4 }.freeze
 
