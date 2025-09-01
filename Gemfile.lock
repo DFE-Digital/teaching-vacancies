@@ -1010,6 +1010,7 @@ DEPENDENCIES
   valid_email2
   validate_url
   vcr
+  view_component (< 4)
   web-console
   webmock
   wicked
