@@ -345,24 +345,22 @@ en:
         applicant_gender: Gender
         applicant_orientation: Sexual orientation
         applicant_religion: Religion
-        application_counts: You have received %{count} applications this acedemic year
+        application_counts: You have received %{count} applications this acedemic year.
         download_stats: >-
-          Select "Download statistics" to download all historical equal opportunities data.
+          Select 'Download statistics' to download all historical equal opportunities data.
       index:
-        vacancy_counts: You have posted %{count} job listings this acedemic year
+        vacancy_counts: You have posted %{count} job listings this academic year.
+        download_stats: >-
+          Select 'Download statistics' to download all historical job listing data.
+      page_header:
+        equal_opportunities: Equal opportunities
+        overview: Overview
         this_data: >-
           This data is from the current academic year. If a job is live in two academic years (for example from
           August 2025 to September 2025) it will be counted for both academic years. This data resets each academic year.
-        download_stats: >-
-          Select "Download statistics" to download all historical job listing data.
-      page_header:
-        title: Statistics dashboard
         this_may_include: >-
           This may include data from people who have withdrawn their applications.
           This is to ensure the anonymity of applications who submit equal opportunities information.
-      navigation_menu:
-        equal_opportunities: Equal opportunities
-        overview: Overview
         title: Statistics dashboard
     temp_login:
       check_your_email:
