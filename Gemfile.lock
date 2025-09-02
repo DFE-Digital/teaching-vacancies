@@ -323,6 +323,10 @@ GEM
     guard-rubocop (1.5.0)
       guard (~> 2.0)
       rubocop (< 2.0)
+    guard-slim_lint (1.2.0)
+      guard (~> 2.2)
+      guard-compat (~> 1.2)
+      slim_lint (~> 0.17)
     hashdiff (1.1.2)
     hashery (2.1.2)
     hashie (5.0.0)
@@ -932,6 +936,7 @@ DEPENDENCIES
   govuk_design_system_formbuilder (~> 5.11.0)
   guard-rspec
   guard-rubocop (~> 1.5)
+  guard-slim_lint
   high_voltage
   httparty
   ipaddr
