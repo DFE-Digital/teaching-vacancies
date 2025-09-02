@@ -5,7 +5,7 @@ RSpec.describe "organisations/index" do
 
   before do
     assign :search_form, SchoolSearchForm.new(search_criteria)
-    assign :school_search, Search::SchoolSearch.new(search_criteria, scope: Organisation.all)
+    assign :school_search, Search::SchoolSearch.new(search_criteria)
     assign :pagy, Pagy.new(count: 0)
     assign :schools, []
     render

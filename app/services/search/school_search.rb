@@ -5,7 +5,7 @@ class Search::SchoolSearch
 
   attr_reader :search_criteria, :name, :location, :radius, :organisation_types, :school_types, :original_scope
 
-  def initialize(search_criteria, scope:)
+  def initialize(search_criteria, scope: Organisation.visible_to_jobseekers)
     @search_criteria = search_criteria
     @name = search_criteria[:name]
     @location = search_criteria[:location]

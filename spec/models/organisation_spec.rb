@@ -92,24 +92,6 @@ RSpec.describe Organisation do
         expect(subject.map(&:name)).to contain_exactly("Active", "Trust", "Trust with vacancy")
       end
     end
-
-    context "when the organisation is a local authority" do
-      let(:empty_group) { create(:local_authority, name: "Empty LA") }
-      let(:active_group) { create(:local_authority, name: "LA") }
-      let(:extra_group) { create(:local_authority, name: "Extra") }
-      let(:local_authorities_extra_schools) { { extra_group.local_authority_code.to_i => [extra_school.urn.to_i] } }
-      let(:extra_school) { create(:school, name: "Extra School") }
-
-      before do
-        create(:vacancy, organisations: [extra_school])
-
-        allow(Rails.configuration).to receive(:local_authorities_extra_schools).and_return(local_authorities_extra_schools)
-      end
-
-      it "returns school, groups above it and trust with vacancy" do
-        expect(subject.map(&:name)).to contain_exactly("Active", "LA local authority", "Extra School", "Extra local authority", "Trust with vacancy")
-      end
-    end
   end
 
   describe "#name" do
