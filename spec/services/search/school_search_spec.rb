@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Search::SchoolSearch do
-  subject { described_class.new(form_hash, scope: scope) }
-
   let(:form_hash) do
     {
       name: name,
@@ -40,6 +38,8 @@ RSpec.describe Search::SchoolSearch do
   end
 
   describe "#location_search" do
+    subject { described_class.new(form_hash, scope: scope) }
+
     it "uses Search::LocationBuilder" do
       expect(Search::LocationBuilder).to receive(:new).with(location, radius)
       subject.location_search
@@ -48,12 +48,16 @@ RSpec.describe Search::SchoolSearch do
 
   describe "#organisations" do
     context "when no filters (except for radius) are given" do
+      subject { described_class.new(form_hash, scope: scope) }
+
       it "returns unmodified scope" do
         expect(subject.organisations.to_sql).to eq(scope.to_sql)
       end
     end
 
     context "when location and radius are given" do
+      subject { described_class.new(form_hash, scope: scope) }
+
       let(:location) { "Sevenoaks" }
 
       it "returns scope modified by location search" do
@@ -62,6 +66,8 @@ RSpec.describe Search::SchoolSearch do
     end
 
     context "when only name is given" do
+      subject { described_class.new(form_hash, scope: scope) }
+
       let(:radius) { nil }
       let(:name) { "Bexleyheath Academy" }
 
@@ -71,12 +77,23 @@ RSpec.describe Search::SchoolSearch do
     end
 
     context "when organisation_types are given" do
-      let!(:academies) { create(:school, name: "Academy1", school_type: "Academies") }
-      let!(:academy) { create(:school, name: "Academy2", school_type: "Academy") }
-      let!(:free_school) { create(:school, name: "Freeschool1", school_type: "Free school") }
-      let!(:free_schools) { create(:school, name: "Freeschool2", school_type: "Free schools") }
-      let!(:local_authority_school) { create(:school, name: "local authority", school_type: "Local authority maintained schools") }
-      let!(:other_school) { create(:school, name: "local authority", school_type: "Something else") }
+      subject { described_class.new(form_hash) }
+
+      # for schools to be considered 'in-scope' for school search, they must be part of a group with a publisher
+      before do
+        create(:publisher, organisations: [school_group])
+      end
+
+      let(:school_group) do
+        create(:school_group, schools: [academies, academy, free_school, free_schools, local_authority_school, other_school])
+      end
+
+      let(:academies) { create(:school, name: "Academy1", school_type: "Academies") }
+      let(:academy) { create(:school, name: "Academy2", school_type: "Academy") }
+      let(:free_school) { create(:school, name: "Freeschool1", school_type: "Free school") }
+      let(:free_schools) { create(:school, name: "Freeschool2", school_type: "Free schools") }
+      let(:local_authority_school) { create(:school, name: "local authority", school_type: "Local authority maintained schools") }
+      let(:other_school) { create(:school, name: "local authority", school_type: "Something else") }
 
       context "when organisation_types == ['Academy']" do
         let(:organisation_types) { ["Academy"] }
@@ -109,6 +126,28 @@ RSpec.describe Search::SchoolSearch do
     end
 
     context "when school_types are given" do
+      subject { described_class.new(form_hash) }
+
+      # for schools to be considered 'in-scope' for school search, they must be part of a group with a publisher
+      before do
+        create(:publisher, organisations: [school_group])
+      end
+
+      let(:school_group) do
+        create(:school_group, schools: [special_school1,
+                                        special_school2,
+                                        special_school3,
+                                        special_school4,
+                                        special_school5,
+                                        special_school6,
+                                        faith_school,
+                                        non_faith_school1,
+                                        non_faith_school2,
+                                        non_faith_school3,
+                                        other_school])
+      end
+
+      # One special school for each of the special school detailed school types
       let(:special_school1) { create(:school, name: "Community special school", detailed_school_type: "Community special school") }
       let(:special_school2) { create(:school, name: "Foundation special school", detailed_school_type: "Foundation special school") }
       let(:special_school3) { create(:school, name: "Non-maintained special school", detailed_school_type: "Non-maintained special school") }
@@ -119,7 +158,7 @@ RSpec.describe Search::SchoolSearch do
       let(:non_faith_school1) { create(:school, name: "nonfaith1", gias_data: { "ReligiousCharacter (name)" => "" }) }
       let(:non_faith_school2) { create(:school, name: "nonfaith2", gias_data: { "ReligiousCharacter (name)" => "Does not apply" }) }
       let(:non_faith_school3) { create(:school, name: "nonfaith3", gias_data: { "ReligiousCharacter (name)" => "None" }) }
-      let!(:other_school) { create(:school, name: "other", detailed_school_type: "Something else") }
+      let(:other_school) { create(:school, name: "other", detailed_school_type: "Something else") }
 
       context "when school_types == ['faith_school']" do
         let(:school_types) { ["faith_school"] }
@@ -153,6 +192,8 @@ RSpec.describe Search::SchoolSearch do
   end
 
   context "when clearing filters" do
+    subject { described_class.new(form_hash) }
+
     let(:name) { "Bexleyheath Academy" }
     let(:location) { "Sevenoaks" }
     let(:organisation_types) { ["Academy"] }
