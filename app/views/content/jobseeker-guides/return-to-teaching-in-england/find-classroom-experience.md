@@ -3,6 +3,7 @@ order: 103
 title: Finding classroom experience for returning teachers
 meta_description: Gain teaching experience before returning. Find volunteering opportunities, learn what schools look for, and teach different subjects.
 date_posted: 17/02/2025
+date_updated: 28/08/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/find-classroom-experience.jpg"
 ---
