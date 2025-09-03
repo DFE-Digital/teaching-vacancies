@@ -619,6 +619,11 @@ en:
           body: "%{organisation} will be in touch soon with more information about next steps."
         status_heading: Application status
         timeline: Timeline
+      messages:
+        form_help_text: How will this message be sent?
+        form_help_content: Hiring staff will receive a copy of this message to their email and can also view the message when signed in to their Teaching Vacancies account.
+        send_message_button: Send message to hiring staff
+        no_messages_yet: No messages yet. Hiring staff can start a conversation with you here.
       status_timestamps:
         rejected: Rejected
         reviewed: Reviewed
