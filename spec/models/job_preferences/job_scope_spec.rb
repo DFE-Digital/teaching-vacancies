@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe JobPreferences::JobScope do
-  let(:original_scope) { Vacancy.live }
+  let(:original_scope) { PublishedVacancy.live }
 
   let!(:vacancy1) do
     create(:vacancy,
