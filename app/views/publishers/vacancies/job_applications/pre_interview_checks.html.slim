@@ -1,0 +1,48 @@
+- content_for :page_title_prefix, t(".page_title")
+
+= render "header", vacancy: @vacancy, job_application: @job_application
+
+.govuk-grid-row class="govuk-!-margin-top-4"
+  .govuk-grid-column-two-thirds
+    .govuk-button-group class="govuk-!-display-none-print"
+      = govuk_button_link_to t("buttons.download_application"), organisation_job_job_application_download_path(@vacancy.id, @job_application.id)
+      = govuk_button_link_to t("buttons.update_application_status"), tag_organisation_job_job_applications_path(@vacancy.id, params: { publishers_job_application_tag_form: { origin: tab_name(@job_application.status), job_applications: [@job_application.id] } }), class: "govuk-button--secondary"
+= govuk_table html_attributes: { id: "references" } do |table|
+  - table.with_head do |head|
+    - head.with_row do |row|
+      - row.with_cell(text: t(".references"))
+      - row.with_cell(text: t(".last_action"))
+      - row.with_cell(text: t(".status"))
+
+  - table.with_body do |body|
+    - @reference_requests.each do |reference_request|
+      - body.with_row do |row|
+        - row.with_cell(text: govuk_link_to(reference_request.referee.name, organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, reference_request)))
+        - status = reference_request_status(reference_request, reference_request.referee.job_reference)
+
+        - row.with_cell(text: t(".#{status}_at", date: reference_request.updated_at.to_fs(:time_on_date)))
+        - row.with_cell(text: govuk_tag(text: t("reference_requests.#{status}.status"), colour: t("reference_requests.#{status}.colour")))
+
+= govuk_table do |table|
+  - table.with_head do |head|
+    - head.with_row do |row|
+      - row.with_cell(text: t(".self_disclosure"))
+      - row.with_cell(text: t(".last_action"))
+      - row.with_cell(text: t(".status"))
+  - table.with_body do |body|
+    - if @job_application.self_disclosure_request
+      - body.with_row do |row|
+        - row.with_cell do
+          = govuk_link_to("Self-disclosure form", organisation_job_job_application_self_disclosure_path(vacancy.id, @job_application.id))
+        - if @job_application.self_disclosure_request.completed?
+          - row.with_cell(text: t(".completed_at", date: @job_application.self_disclosure_request.updated_at.to_fs(:time_on_date)))
+          - row.with_cell do
+            = govuk_tag(text: t("reference_requests.completed.status"), colour: t("reference_requests.completed.colour"))
+        - elsif @job_application.self_disclosure_request.sent?
+          - row.with_cell(text: t(".pending_at", date: @job_application.self_disclosure_request.updated_at.to_fs(:time_on_date)))
+          - row.with_cell do
+            = govuk_tag(text: t("reference_requests.pending.status"), colour: t("reference_requests.pending.colour"))
+        - else
+          - row.with_cell(text: t(".created_at", date: @job_application.self_disclosure_request.updated_at.to_fs(:time_on_date)))
+          - row.with_cell do
+            = govuk_tag(text: t("reference_requests.created.status"), colour: t("reference_requests.created.colour"))

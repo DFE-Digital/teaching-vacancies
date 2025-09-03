@@ -23,6 +23,10 @@
     h2.govuk-heading-m = t(".timeline")
 
     = render TimelineComponent.new do |timeline|
+      - if job_application.self_disclosure_request&.completed?
+        - version = job_application.self_disclosure_request.versions.first
+        - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.self_disclosure_completed"),
+                        value: format_time_to_datetime_at(version.created_at))
       - if job_application.withdrawn_at?
         - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.withdrawn"),
                         value: format_time_to_datetime_at(job_application.withdrawn_at))

@@ -17,6 +17,7 @@ shared:
   - jobseeker_inactive_account
   - jobseeker_job_listing_ended_early
   - jobseeker_request_account_transfer
+  - jobseeker_self_disclosure
   - jobseeker_sign_in_attempt
   - jobseeker_subscription_alert
   - jobseeker_subscription_confirmation
@@ -26,9 +27,13 @@ shared:
   - jobseeker_unapplied_saved_vacancy
   - jobseeker_peak_times_reminder
   - publisher_applications_received
+  - publisher_collect_references
+  - publisher_inform_applicant_about_references
   - publisher_invite_to_apply
   - publisher_job_application_data_expiry
   - publisher_prompt_for_feedback
+  - publisher_reference_received
+  - publisher_self_disclosure_received
   - publisher_sign_in_fallback
   - publisher_vacancy_relisted
   - search_performed

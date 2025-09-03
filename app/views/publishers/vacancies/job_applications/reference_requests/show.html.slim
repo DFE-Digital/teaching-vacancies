@@ -1,0 +1,81 @@
+- content_for :page_title_prefix, t(".page_title")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("app.back_link"), href: pre_interview_checks_organisation_job_job_application_path(vacancy.id, @job_application), html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    span.govuk-caption-l = @referee.name
+    h1.govuk-heading-l = @referee.job_application.name
+
+    .govuk-body
+      - status = reference_request_status(@reference_request, @referee.job_reference)
+      = govuk_tag(text: t("reference_requests.#{status}.status"), colour: t("reference_requests.#{status}.colour"))
+
+    .govuk-body = t(".once_the_reference_is_received")
+
+    .govuk-body = t(".more_urgent")
+
+    .govuk-button-group
+      - if @reference_request.sent? && @referee.job_reference.complete? && @referee.job_reference.can_give_reference?
+        = govuk_button_link_to t(".print"), organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, @reference_request.id, format: :pdf), class: "govuk-button--secondary"
+      - unless @referee.job_reference&.complete? && !@referee.job_reference.can_give_reference?
+        = govuk_button_link_to t(".mark_as_received"), reference_received_organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, @reference_request.id), class: "govuk-button--secondary"
+
+    .h2.govuk-heading-m = t(".referee_details.heading")
+
+    = govuk_summary_list do |summary_list|
+      - @referee.referee_details.each do |key, value|
+        = summary_list.with_row do |row|
+          - row.with_key(text: key)
+          - row.with_value(text: value)
+
+    - if @reference_request.sent?
+      - if @referee.job_reference.complete?
+        - if @referee.job_reference.can_give_reference?
+          - @referee.reference_information.each do |key, value|
+            .govuk-heading-m = key
+            .govuk-body = value
+
+          .govuk-heading-l
+            = t(".how_would_you_rate", name: @referee.candidate_name)
+          - @referee.candidate_ratings.each do |key, value|
+            .govuk-heading-m = key
+            .govuk-body = value
+
+        - else
+          = govuk_warning_text(text: t(".this_referee_will_not_provide_a_reference"))
+      - else
+        .govuk-body
+          = t(".change_email_address_html",
+            link: govuk_link_to(t(".change_email_link_text"),
+                    edit_organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, @reference_request.id)))
+    - else
+      .govuk-body
+        = govuk_link_to t(".collect_reference"),
+          organisation_job_job_application_collect_reference_flag_path(vacancy.id, @job_application.id, Wicked::FIRST_STEP)
+
+  .govuk-grid-column-one-third
+    = render TimelineComponent.new do |timeline|
+      - timeline.with_heading(title: t(".communication_history"))
+      - @reference_request.versions.reverse_each do |version|
+        - actor = version.actor.present? ? t(".by", name: version.actor.papertrail_display_name) : t(".by_tvs")
+        - value = "#{actor} - #{version.created_at.to_formatted_s}"
+
+        - if version.changeset.key? "status"
+          - case version.changeset["status"].last
+          - when "created"
+            - timeline.with_item(key: t(".reference_created"), value: value)
+          - when "received"
+            - if @referee.job_reference.can_give_reference?
+              - timeline.with_item(key: t(".reference_received"), value: value)
+            - else
+              - timeline.with_item(key: t(".reference_declined"), value: value)
+          - when "requested"
+            - timeline.with_item(key: t(".reference_requested"), value: value)
+        - elsif version.changeset.key? "email"
+          - timeline.with_item(key: t(".reference_email_changed", email: version.changeset["email"].last), value: value)
+        - elsif version.changeset.key? "marked_as_complete"
+          - timeline.with_item(key: t(".marked_as_complete"), value: value)
+
+    = render PublisherNotesOnJobApplicationComponent.new(job_application: @job_application, vacancy: vacancy, notes_form: @notes_form, return_to_url: organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, params[:id]))

@@ -1,0 +1,10 @@
+span.govuk-caption-l = t(".caption")
+h1.govuk-heading-l = t(".heading", name: @reference_request.referee.name)
+
+= form_with model: @form, url: organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, @reference_request.id), method: :patch do |f|
+
+  = f.govuk_error_summary
+
+  = f.govuk_email_field :email, label: nil, width: "two-thirds", required: true
+
+  = f.govuk_submit t("buttons.save_and_continue")

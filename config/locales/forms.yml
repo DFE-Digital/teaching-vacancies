@@ -31,6 +31,7 @@ en:
     close_account: Close account
     complete_personal_details: Complete personal details
     complete_section: Complete section
+    confirm_and_submit: Confirm and submit
     confirm_deletion: Delete job listing
     confirm_destroy: Yes I am sure - delete this entry
     confirm_rejection: Confirm rejection
@@ -52,7 +53,7 @@ en:
     delete_photo: Delete photo
     delete_subject: Delete subject
     dismiss: Dismiss
-    download_pdf_application: Download application
+    download_application: Download application
     download_application_form: Download an application form - %{size}
     download_submitted_application_form: Download submitted application form - %{size}
     download_stats: Download statistics (csv, 0.2KB)
@@ -66,6 +67,7 @@ en:
     job_listing: Job listing
     make_changes: Make changes
     one_login_sign_in: Continue to GOV.UK One Login
+    offer_declined: Mark offer as declined
     preview_job_listing: Preview job listing
     profile_update:
       logo: Update organisation logo

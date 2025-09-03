@@ -15,6 +15,61 @@ RSpec.describe JobApplication do
     end
   end
 
+  describe "#active_status?" do
+    subject { job_application.active_status? }
+
+    (%w[draft] + described_class::INACTIVE_STATUSES).each do |status|
+      context "when status #{status}" do
+        let(:job_application) { build_stubbed(:job_application, :"status_#{status}") }
+
+        it { is_expected.to be false }
+      end
+    end
+
+    (described_class.statuses.keys - described_class::INACTIVE_STATUSES - %w[draft]).each do |status|
+      context "when status #{status}" do
+        let(:job_application) { build_stubbed(:job_application, :"status_#{status}") }
+
+        it { is_expected.to be true }
+      end
+    end
+  end
+
+  describe "#submitted_application_form" do
+    subject(:document) { job_application.submitted_application_form }
+
+    context "with uploaded application form" do
+      let(:vacancy) { build_stubbed(:vacancy, :with_uploaded_application_form) }
+
+      context "when application form is attached" do
+        let(:job_application) do
+          create(:uploaded_job_application,
+                 :with_uploaded_application_form,
+                 :status_submitted)
+        end
+
+        it { expect(document.filename).to eq("application_form.pdf") }
+        it { expect(document.data).to be_present }
+      end
+
+      context "when uploaded application form is not attached" do
+        let(:job_application) do
+          build_stubbed(:uploaded_job_application, :status_submitted)
+        end
+
+        it { expect(document.filename).to eq("no_application_form.txt") }
+        it { expect(document.data).to eq("the candidate has no application for on record") }
+      end
+    end
+
+    context "with TV application form" do
+      let(:job_application) { build_stubbed(:job_application, :status_submitted) }
+
+      it { expect(document.filename).to eq("application_form.pdf") }
+      it { expect(document.data).to include("%PDF-") }
+    end
+  end
+
   describe ".fill_in_report_and_reset_attributes!" do
     let(:job_application) do
       create(
@@ -120,6 +175,113 @@ RSpec.describe JobApplication do
     end
   end
 
+  describe "#next_statuses" do
+    subject { described_class.next_statuses(from_status) }
+
+    context "when from status is nil" do
+      let(:from_status) { nil }
+
+      it { is_expected.to match_array(%w[draft]) }
+    end
+
+    context "when from status is draft" do
+      let(:from_status) { "draft" }
+
+      it { is_expected.to match_array(%w[submitted]) }
+    end
+
+    context "when from status is submitted" do
+      let(:from_status) { "submitted" }
+
+      it { is_expected.to match_array(%w[unsuccessful shortlisted interviewing offered withdrawn]) }
+    end
+
+    context "when from status is shortlisted" do
+      let(:from_status) { "shortlisted" }
+
+      it { is_expected.to match_array(%w[unsuccessful interviewing offered withdrawn]) }
+    end
+
+    context "when from status is interviewing" do
+      let(:from_status) { "interviewing" }
+
+      it { is_expected.to match_array(%w[unsuccessful_interview offered withdrawn]) }
+    end
+
+    context "when from status is offered" do
+      let(:from_status) { "offered" }
+
+      it { is_expected.to match_array(%w[declined withdrawn]) }
+    end
+
+    context "when from status is any other status" do
+      let(:from_status) { "unsuccessful" }
+
+      it { is_expected.to match_array([]) }
+    end
+  end
+
+  describe "basic state machine" do
+    before do
+      job_application.status = status
+      job_application.valid?
+    end
+
+    context "with invalid status transition pre submission" do
+      let(:job_application) { create(:job_application, :status_draft) }
+      let(:status) { "withdrawn" }
+
+      it { expect(job_application.errors.details).to include(status: [{ error: "Invalid status transition from: draft to: withdrawn" }]) }
+    end
+
+    context "with invalid status transition post submission" do
+      let(:job_application) { create(:job_application, :status_interviewing) }
+      let(:status) { "submitted" }
+
+      it { expect(job_application.errors.details).to include(status: [{ error: "Invalid status transition from: interviewing to: submitted" }]) }
+    end
+
+    context "with valid status transition post submission" do
+      let(:job_application) { create(:job_application, :status_interviewing) }
+      let(:status) { "unsuccessful_interview" }
+
+      it { expect(job_application.errors.details).not_to include(status: [{ error: "Invalid status transition from: interviewing to: unsuccessful_interview" }]) }
+    end
+  end
+
+  describe "terminal_status?" do
+    subject { create(:job_application, :"status_#{status}").terminal_status? }
+
+    context "with all statuses" do
+      {
+        draft: false,
+        submitted: false,
+        reviewed: false,
+        shortlisted: false,
+        unsuccessful: true,
+        withdrawn: true,
+        interviewing: false,
+        offered: false,
+        declined: true,
+        unsuccessful_interview: true,
+      }.each do |status_value, terminal|
+        context "when status is set to #{status_value}" do
+          let(:status) { status_value }
+
+          it { is_expected.to be terminal }
+        end
+      end
+    end
+
+    described_class.statuses.except(*%w[draft reviewed] + described_class::TERMINAL_STATUSES).each_key do |status|
+      context "when status is #{status}" do
+        let(:status) { status }
+
+        it { is_expected.to be false }
+      end
+    end
+  end
+
   describe "#name" do
     subject { build_stubbed(:job_application, first_name: "Brilliant", last_name: "Name") }
 
@@ -129,7 +291,7 @@ RSpec.describe JobApplication do
   end
 
   describe "#allow_edit?" do
-    let(:job_application) { build(:job_application) }
+    let(:job_application) { create(:job_application) }
 
     subject { job_application.allow_edit? }
 
@@ -145,7 +307,7 @@ RSpec.describe JobApplication do
 
     described_class.statuses.except("draft").each do |status, s|
       context "when application is in #{status} status" do
-        let(:job_application) { build(:job_application, status: s) }
+        let(:job_application) { create(:job_application, status: s) }
 
         it { is_expected.to be false }
       end

@@ -1,30 +1,30 @@
 - content_for :page_title_prefix, t(".page_title")
 
-- if @form.job_applications.one?
-  h1.govuk-heading-l class="govuk-!-display-inline"
-    = t(".what_application_status_single", name: @form.job_applications.first.name)
-- else
-  h1.govuk-heading-l class="govuk-!-display-inline"
-    = t(".what_application_status_multiple")
-  = govuk_inset_text do
-    = t(".applicants")
+p.govuk-hint = t("publishers.vacancies.job_applications.update_application_status")
+h1.govuk-heading-l class="govuk-!-display-inline"
+  = t(".what_application_status", count: @form.job_applications.count)
 
-    p.govuk-body
-      ul
-        - @form.job_applications.each do |ja|
-          li = ja.name
+= govuk_inset_text do
+  = t(".applicants")
+  p.govuk-body
+    ul
+      - @form.job_applications.each do |ja|
+        li = ja.name
 
 = form_with(model: @form, url: update_tag_organisation_job_job_applications_path(vacancy.id)) do |f|
+  = hidden_field_tag :form_name, @form.name
   = f.govuk_error_summary
   = f.hidden_field :origin, value: @form.origin
   - @form.job_applications.each do |ja|
     = f.hidden_field :job_applications, multiple: true, value: ja.id
 
   = f.govuk_radio_buttons_fieldset :status, legend: nil do
-    - @form.class::VALID_STATUSES[..-2].each do |status|
+    - options = tag_status_options(@form.origin)
+    - options[..-2].each do |status|
       = f.govuk_radio_button :status, status
     = f.govuk_radio_divider
-    = f.govuk_radio_button :status, @form.class::VALID_STATUSES.last
+    = f.govuk_radio_button :status, options.last
 
   .govuk-button-group
     = f.govuk_submit t("buttons.save_and_continue"), class: "update-status"
+    = govuk_button_link_to t("buttons.cancel"), organisation_job_job_applications_path(vacancy.id, anchor: @form.origin), secondary: true

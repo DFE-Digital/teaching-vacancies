@@ -9,10 +9,15 @@ module PageObjects
 
       {
         publisher_application: "Publisher::JobApplicationPage",
+        publisher_ats_ask_references_email: "Publisher::Ats::AskReferencesEmailPage",
+        publisher_ats_collect_references: "Publisher::Ats::CollectReferencesPage",
         publisher_applications_awaiting_feedback: "Publisher::JobApplicationsAwaitingFeedbackPage",
         publisher_vacancy: "Publisher::VacancyPage",
         publisher_ats_applications: "Publisher::Ats::JobApplicationsPage",
         publisher_ats_interviewing: "Publisher::Ats::InterviewingApplicationsPage",
+        publisher_ats_pre_interview_checks: "Publisher::Ats::PreInterviewChecksPage",
+        publisher_ats_reference_request: "Publisher::Ats::ReferenceRequestPage",
+        publisher_ats_satisfactory_reference: "Publisher::Ats::SatisfactoryReferencePage",
         publisher_ats_tag: "Publisher::Ats::TagPage",
         publisher_include_additional_documents: "Publisher::IncludeAdditionalDocumentsPage",
         publisher_job_title: "Publisher::JobTitlePage",
@@ -39,6 +44,19 @@ module PageObjects
         jobseeker_application: "Jobseeker::JobApplicationPage",
         jobseeker_application_apply: "Jobseeker::JobApplicationApplyPage",
         jobseeker_application_start: "Jobseeker::JobApplicationStartPage",
+        publisher_ats_self_disclosure: "Publisher::Ats::SelfDisclosurePage",
+        jobseeker_self_disclosure_personal_details: "Jobseeker::JobApplications::SelfDisclosure::PersonalDetailPage",
+        jobseeker_self_disclosure_barred_list: "Jobseeker::JobApplications::SelfDisclosure::BarredListPage",
+        jobseeker_self_disclosure_conduct: "Jobseeker::JobApplications::SelfDisclosure::ConductPage",
+        jobseeker_self_disclosure_confirmation: "Jobseeker::JobApplications::SelfDisclosure::ConfirmationPage",
+        jobseeker_self_disclosure_completed: "Jobseeker::JobApplications::SelfDisclosure::CompletedPage",
+        referee_can_give_reference: "Publisher::Ats::Referee::CanGiveReferencePage",
+        referee_employment_reference: "Publisher::Ats::Referee::EmploymentReferencePage",
+        referee_reference_information: "Publisher::Ats::Referee::ReferenceInformationPage",
+        referee_how_would_you_rate1: "Publisher::Ats::Referee::HowWouldYouRatePage1",
+        referee_how_would_you_rate2: "Publisher::Ats::Referee::HowWouldYouRatePage2",
+        referee_how_would_you_rate3: "Publisher::Ats::Referee::HowWouldYouRatePage3",
+        referee_referee_details: "Publisher::Ats::Referee::RefereeDetailsPage",
       }.each do |page_name, page_class|
         full_page_class = "PageObjects::Pages::#{page_class}"
 

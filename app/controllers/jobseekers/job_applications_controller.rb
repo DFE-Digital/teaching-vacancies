@@ -1,7 +1,9 @@
+# rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/ClassLength
 class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseController
   include Jobseekers::QualificationFormConcerns
 
-  before_action :set_job_application, only: %i[review apply pre_submit submit post_submit show confirm_destroy destroy confirm_withdraw withdraw]
+  before_action :set_job_application, only: %i[review apply pre_submit submit post_submit show confirm_destroy destroy confirm_withdraw withdraw download]
 
   before_action :raise_cannot_apply, unless: -> { vacancy.allow_job_applications? }, only: %i[new create]
   before_action :redirect_if_job_application_exists, only: %i[new create]
@@ -16,14 +18,20 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     active_drafts, expired_drafts = draft_job_applications.partition { |job_application| job_application.vacancy.expires_at.future? }
 
     # This is the primary sort order for application statuses on the index page
-    status_keys = %i[interviewing shortlisted reviewed submitted unsuccessful withdrawn].freeze
+    status_keys = %i[offered interviewing shortlisted reviewed submitted unsuccessful unsuccessful_interview withdrawn declined].freeze
+
+    action_required = JobApplication.includes(:self_disclosure_request, :vacancy)
+                                    .where(jobseeker: current_jobseeker)
+                                    .joins(:self_disclosure_request)
+                                    .merge(SelfDisclosureRequest.sent)
+                                    .interviewing.order(submitted_at: :desc)
 
     active_job_applications = current_jobseeker.job_applications
                                                 .includes(:vacancy)
                                                 .where.not(status: :draft)
                                                 .order(submitted_at: :desc)
-                                                .sort_by { |x| status_keys.index(x.status.to_sym) }
-    @job_applications = active_drafts + active_job_applications + expired_drafts
+                                                .sort_by { |x| status_keys.index(x.status.to_sym) } - action_required
+    @job_applications = active_drafts + action_required + active_job_applications + expired_drafts
   end
 
   def new
@@ -102,6 +110,11 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def show
     raise ActionController::RoutingError, "Cannot view draft application" if job_application.draft?
+  end
+
+  def download
+    document = job_application.submitted_application_form
+    send_data(document.data, filename: document.filename, disposition: "inline")
   end
 
   def confirm_destroy
@@ -247,3 +260,5 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     previous_application? || profile.present?
   end
 end
+# rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/ClassLength

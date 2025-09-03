@@ -104,8 +104,10 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_organisation
 
+  # This method needs to be different for paper_trial - possibly because PT
+  # doesn't expect the ID to be a UUID (aka string)
   def user_for_paper_trail
-    current_publisher || current_support_user
+    current_publisher || current_support_user || current_jobseeker
   end
 
   def set_sentry_user

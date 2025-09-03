@@ -3,9 +3,12 @@ module JobApplicationsHelper
     submitted: "unread",
     reviewed: "reviewed",
     shortlisted: "shortlisted",
-    unsuccessful: "rejected",
+    unsuccessful: "not progressing",
     withdrawn: "withdrawn",
     interviewing: "interviewing",
+    unsuccessful_interview: "not progressing",
+    offered: "job offered",
+    declined: "job declined",
   }.freeze
 
   JOBSEEKER_STATUS_MAPPINGS = {
@@ -17,6 +20,10 @@ module JobApplicationsHelper
     unsuccessful: "unsuccessful",
     withdrawn: "withdrawn",
     interviewing: "interviewing",
+    unsuccessful_interview: "unsuccessful",
+    action_required: "action required",
+    offered: "offered",
+    declined: "declined",
   }.freeze
 
   JOB_APPLICATION_STATUS_TAG_COLOURS = {
@@ -24,11 +31,43 @@ module JobApplicationsHelper
     draft: "pink",
     submitted: "blue",
     reviewed: "purple",
-    shortlisted: "green",
+    shortlisted: "yellow",
     unsuccessful: "red",
-    withdrawn: "yellow",
-    interviewing: "turquoise",
+    withdrawn: "grey",
+    action_required: "orange",
+    interviewing: "green",
+    unsuccessful_interview: "red",
+    offered: "pink",
+    declined: "grey",
   }.freeze
+
+  TABS_DEFINITION = {
+    submitted: %w[submitted reviewed],
+    unsuccessful: %w[unsuccessful withdrawn],
+    shortlisted: %w[shortlisted],
+    interviewing: %w[interviewing unsuccessful_interview],
+    offered: %w[offered declined],
+  }.stringify_keys.freeze
+
+  REVERSE_TABS_LOOKUP = TABS_DEFINITION.invert
+                                       .flat_map { |keys, v| keys.map { |k| [k, v] } }
+                                       .to_h.freeze
+
+  def job_applications_to_tabs(job_applications_hash)
+    TABS_DEFINITION.transform_values do |status_list|
+      # There might not be any applications with a particular status, so fill with empty list
+      status_list.index_with { |status| job_applications_hash.fetch(status, []) }
+    end
+  end
+
+  def tab_name(job_application_status)
+    REVERSE_TABS_LOOKUP.fetch(job_application_status)
+  end
+
+  def tag_status_options(tab_origin)
+    job_application_status = TABS_DEFINITION[tab_origin].first
+    JobApplication.next_statuses(job_application_status) - %w[withdrawn]
+  end
 
   def job_application_qualified_teacher_status_info(job_application)
     case job_application.qualified_teacher_status
@@ -43,7 +82,7 @@ module JobApplicationsHelper
     end
   end
 
-  def end_date(date, index = 1)
+  def end_date(date, index)
     return "present" if index.zero?
 
     date.to_fs(:month_year)

@@ -1,7 +1,7 @@
 class JobApplication < ApplicationRecord
-  before_save :update_status_timestamp, if: :will_save_change_to_status?
-  before_save :anonymise_report, if: :will_save_change_to_status?
+  before_save :update_status_timestamp, if: %i[will_save_change_to_status? ignore_for_offered_and_declined?]
   before_save :reset_support_needed_details
+  before_update :anonymise_report, if: -> { will_save_change_to_status? && status == "submitted" }
 
   extend ArrayEnum
 
@@ -54,9 +54,27 @@ class JobApplication < ApplicationRecord
     non_catholic: 11,
   }
 
+  # hash of valid state transitions - input state to output
+  # rubocop:disable Layout/HashAlignment
+  STATUS_TRANSITIONS = {
+    nil            => %w[draft],
+    "draft"        => %w[submitted],
+    "submitted"    => %w[unsuccessful shortlisted interviewing offered withdrawn],
+    # reviewed is being phased out and is here to support existing data
+    "reviewed"     => %w[unsuccessful shortlisted interviewing offered withdrawn],
+    "shortlisted"  => %w[unsuccessful interviewing offered withdrawn],
+    "interviewing" => %w[unsuccessful_interview offered withdrawn],
+    "offered"      => %w[declined withdrawn],
+  }.freeze
+  # rubocop:enable Layout/HashAlignment
+
   # If you want to add a status, be sure to add a `status_at` column to the `job_applications` table
-  enum :status, { draft: 0, submitted: 1, reviewed: 2, shortlisted: 3, unsuccessful: 4, withdrawn: 5, interviewing: 6 }, default: 0
+  enum :status, { draft: 0, submitted: 1, reviewed: 2, shortlisted: 3, unsuccessful: 4, withdrawn: 5, interviewing: 6, offered: 7, declined: 8, unsuccessful_interview: 9 }, default: 0
   array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
+
+  # end of the road statuses for job application we cannot further update status at the point
+  TERMINAL_STATUSES = (statuses.keys.map(&:to_s) - STATUS_TRANSITIONS.keys).freeze
+  INACTIVE_STATUSES = (%w[draft] + TERMINAL_STATUSES).freeze
 
   RELIGIOUS_REFERENCE_TYPES = { referee: 1, baptism_certificate: 2, baptism_date: 3, no_referee: 4 }.freeze
 
@@ -81,6 +99,8 @@ class JobApplication < ApplicationRecord
   has_many :professional_body_memberships, dependent: :destroy
 
   has_many :feedbacks, dependent: :destroy, inverse_of: :job_application
+  has_one :self_disclosure_request, dependent: :destroy
+  has_one :self_disclosure, through: :self_disclosure_request
 
   has_noticed_notifications
 
@@ -88,11 +108,39 @@ class JobApplication < ApplicationRecord
   scope :after_submission, -> { where.not(status: :draft) }
   scope :draft, -> { where(status: "draft") }
 
-  scope :active_for_selection, -> { where.not(status: %w[draft withdrawn]) }
+  scope :active_for_selection, -> { where.not(status: INACTIVE_STATUSES) }
 
   validates :email_address, email_address: true, if: -> { email_address_changed? } # Allows data created prior to validation to still be valid
 
   has_one_attached :baptism_certificate, service: :amazon_s3_documents
+
+  validate :status_transition, if: -> { status_changed? }
+
+  def self.next_statuses(from_status)
+    STATUS_TRANSITIONS.fetch(from_status, [])
+  end
+
+  def terminal_status?
+    status.in?(TERMINAL_STATUSES)
+  end
+
+  def active_status?
+    INACTIVE_STATUSES.exclude?(status)
+  end
+
+  Document = Data.define(:filename, :data)
+
+  def submitted_application_form
+    if vacancy.uploaded_form?
+      return Document["no_application_form.txt", "the candidate has no application for on record"] unless application_form.attached?
+
+      extension = File.extname(application_form.filename.to_s)
+      Document["application_form#{extension}", application_form.download]
+    else
+      pdf = JobApplicationPdfGenerator.new(self).generate
+      Document["application_form.pdf", pdf.render]
+    end
+  end
 
   def name
     "#{first_name} #{last_name}"
@@ -129,13 +177,24 @@ class JobApplication < ApplicationRecord
 
   private
 
+  def status_transition
+    from, to = changes[:status]
+
+    if self.class.next_statuses(from).exclude?(to)
+      errors.add(:status, "Invalid status transition from: #{from} to: #{to}")
+    end
+  end
+
+  # predicate method used to ignore the automatic update of `offered_at` and `declined_at` as the are manually entered by publishers
+  def ignore_for_offered_and_declined?
+    %w[offered declined].exclude?(status)
+  end
+
   def update_status_timestamp
     self["#{status}_at"] = Time.current
   end
 
   def anonymise_report
-    return unless status == "submitted"
-
     EqualOpportunitiesReportUpdateJob.perform_later(id)
   end
 

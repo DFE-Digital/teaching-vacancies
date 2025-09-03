@@ -25,18 +25,10 @@ RSpec.describe "Publishers::Vacancies::JobApplicationsController#download_applic
     end
 
     it "sends the application form file" do
-      get organisation_job_job_application_download_application_form_path(vacancy.id, job_application.id)
+      get organisation_job_job_application_download_path(vacancy.id, job_application.id)
 
       expect(response).to be_successful
       expect(response.body).to include("%PDF")
-    end
-  end
-
-  context "when the application form is not attached" do
-    it "redirects to the upload form" do
-      get organisation_job_job_application_download_application_form_path(vacancy.id, job_application.id)
-
-      expect(response).to redirect_to(organisation_job_job_application_path(vacancy.id, job_application.id))
     end
   end
 end
