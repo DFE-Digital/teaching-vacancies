@@ -14,6 +14,8 @@
     "@hotwired/stimulus": "^3.2.2",
     "@ministryofjustice/frontend": "^3.7.2",
     "@sentry/browser": "10.14.0",
+    "@rails/actiontext": "^7.2.201",
+    "@rails/activestorage": "^7.2.201",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^3.0.1",
     "axios": "^1.12.2",
@@ -30,7 +32,8 @@
     "lodash": "^4.17.21",
     "moment": "^2.30.1",
     "rails-ujs": "^5.2.8",
-    "tough-cookie": "^6.0.0"
+    "tough-cookie": "^6.0.0",
+    "trix": "^2.1.13"
   },
   "devDependencies": {
     "@babel/core": "^7.28.4",

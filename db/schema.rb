@@ -21,6 +21,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_140615) do
   enable_extension "postgis"
   enable_extension "uuid-ossp"
 
+  create_table "action_text_rich_texts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.text "body"
+    t.string "record_type", null: false
+    t.uuid "record_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+  end
+
   create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -67,6 +77,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_140615) do
     t.datetime "updated_at", null: false
     t.index ["job_application_batch_id"], name: "index_batchable_job_applications_on_job_application_batch_id"
     t.index ["job_application_id"], name: "index_batchable_job_applications_on_job_application_id"
+  end
+
+  create_table "conversations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "job_application_id", null: false
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_application_id"], name: "index_conversations_on_job_application_id"
   end
 
   create_table "emergency_login_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -432,6 +450,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_140615) do
     t.index ["geopoint"], name: "index_markers_on_geopoint", using: :gist
     t.index ["organisation_id"], name: "index_markers_on_organisation_id"
     t.index ["vacancy_id"], name: "index_markers_on_vacancy_id"
+  end
+
+  create_table "messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "sender_type", null: false
+    t.uuid "sender_id", null: false
+    t.uuid "conversation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["sender_type", "sender_id"], name: "index_messages_on_sender"
   end
 
   create_table "notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -876,6 +904,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_140615) do
   add_foreign_key "alert_runs", "subscriptions"
   add_foreign_key "batchable_job_applications", "job_application_batches"
   add_foreign_key "batchable_job_applications", "job_applications"
+  add_foreign_key "conversations", "job_applications"
   add_foreign_key "employments", "job_applications"
   add_foreign_key "employments", "jobseeker_profiles"
   add_foreign_key "equal_opportunities_reports", "vacancies"
@@ -897,6 +926,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_140615) do
   add_foreign_key "local_authority_publisher_schools", "publisher_preferences"
   add_foreign_key "markers", "organisations"
   add_foreign_key "markers", "vacancies"
+  add_foreign_key "messages", "conversations"
   add_foreign_key "notes", "job_applications"
   add_foreign_key "notes", "publishers"
   add_foreign_key "organisation_publisher_preferences", "organisations"
