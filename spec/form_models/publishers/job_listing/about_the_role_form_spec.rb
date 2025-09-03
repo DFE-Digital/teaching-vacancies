@@ -3,13 +3,24 @@ require "rails_helper"
 RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
   subject { described_class.new(params, vacancy) }
 
-  let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"]) }
+  let(:job_roles) { %w[teacher] }
+  let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles:) }
   let(:organisation) { build_stubbed(:school) }
   let(:params) { {} }
 
   before { subject.valid? }
 
-  it { is_expected.to validate_inclusion_of(:ect_status).in_array(Vacancy.ect_statuses.keys) }
+  context "when vacancy job roles contains `teacher`" do
+    let(:job_roles) { %w[teacher] }
+
+    it { is_expected.to validate_inclusion_of(:ect_status).in_array(DraftVacancy.ect_statuses.keys) }
+  end
+
+  context "when vacancy job roles does not contain `teacher`" do
+    let(:job_roles) { nil }
+
+    it { is_expected.not_to validate_inclusion_of(:ect_status).in_array(DraftVacancy.ect_statuses.keys) }
+  end
 
   describe "skills_and_experience" do
     let(:error) { %i[skills_and_experience blank] }

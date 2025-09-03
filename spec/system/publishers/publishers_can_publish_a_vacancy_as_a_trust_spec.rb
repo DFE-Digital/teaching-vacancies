@@ -7,7 +7,7 @@ RSpec.describe "Creating a vacancy" do
   let(:school2) { create(:school, :not_applicable, name: "Second school") }
   let(:school3) { create(:school, :closed, name: "Closed school") }
   let(:vacancy) { build(:vacancy, :secondary, :no_tv_applications, :central_office, :ect_suitable, job_roles: ["teacher"], organisations: [school_group]) }
-  let(:created_vacancy) { Vacancy.last }
+  let(:created_vacancy) { DraftVacancy.last }
 
   after { logout }
 
