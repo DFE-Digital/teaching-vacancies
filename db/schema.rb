@@ -410,8 +410,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_140615) do
     t.datetime "updated_at", null: false
     t.date "account_closed_on"
     t.text "current_sign_in_ip_ciphertext"
-    t.text "last_sign_in_ip_ciphertext"
     t.string "govuk_one_login_id"
+    t.text "last_sign_in_ip_ciphertext"
     t.string "account_merge_confirmation_code"
     t.datetime "account_merge_confirmation_code_generated_at"
     t.boolean "email_opt_out", default: false, null: false
@@ -453,13 +453,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_140615) do
   end
 
   create_table "messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "sender_type", null: false
     t.uuid "sender_id", null: false
     t.uuid "conversation_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "type", null: false
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
-    t.index ["sender_type", "sender_id"], name: "index_messages_on_sender"
+    t.index ["sender_id"], name: "index_messages_on_sender_id"
   end
 
   create_table "notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
