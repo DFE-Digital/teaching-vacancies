@@ -1,5 +1,5 @@
 class Publishers::JobListing::EducationPhasesForm < Publishers::JobListing::VacancyForm
-  validates :phases, presence: true, inclusion: { in: Vacancy.phases.keys }
+  validates :phases, presence: true, inclusion: { in: DraftVacancy.phases.keys }
 
   def self.fields
     %i[phases]
