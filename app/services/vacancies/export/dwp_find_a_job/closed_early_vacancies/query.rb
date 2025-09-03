@@ -12,7 +12,7 @@ module Vacancies::Export::DwpFindAJob::ClosedEarlyVacancies
     # The EXTRACT(EPOCH FROM...) query selects vacancies with a difference between the update and expiry timestamps
     # of 60 seconds max.
     def vacancies
-      Vacancy.internal.expired
+      PublishedVacancy.internal.expired
         .where("expires_at > ?", from_date)
         .where("EXTRACT(EPOCH FROM (updated_at::timestamp - expires_at::timestamp))::integer BETWEEN -60 AND 60")
     end

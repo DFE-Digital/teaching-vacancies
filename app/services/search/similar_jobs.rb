@@ -14,7 +14,7 @@ class Search::SimilarJobs
   end
 
   def similar_jobs
-    @similar_jobs ||= Vacancy.live.where(id: similar_job_ids).first(NUMBER_OF_SIMILAR_JOBS)
+    @similar_jobs ||= PublishedVacancy.live.where(id: similar_job_ids).first(NUMBER_OF_SIMILAR_JOBS)
   end
 
   private
