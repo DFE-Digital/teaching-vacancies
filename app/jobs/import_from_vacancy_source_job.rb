@@ -49,7 +49,7 @@ class ImportFromVacancySourceJob < ApplicationJob
   end
 
   def mark_removed_vacancies_from_source
-    Vacancy.live
+    PublishedVacancy.live
            .where(external_source: @source_name)
            .where.not(external_reference: @external_references)
            .update_all(discarded_at: Time.current)

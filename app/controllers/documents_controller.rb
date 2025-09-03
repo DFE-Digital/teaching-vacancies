@@ -7,7 +7,7 @@ class DocumentsController < ApplicationController
   private
 
   def vacancy
-    @vacancy ||= Vacancy.friendly.find(params[:job_id])
+    @vacancy ||= PublishedVacancy.friendly.find(params[:job_id])
   end
 
   def application_form?
