@@ -1681,6 +1681,27 @@
   resolved "https://registry.yarnpkg.com/@pkgr/core/-/core-0.2.7.tgz#eb5014dfd0b03e7f3ba2eeeff506eed89b028058"
   integrity sha512-YLT9Zo3oNPJoBjBc4q8G2mjU4tqIbf5CEOORbUUr48dCD9q3umJ3IPlVqOqDakPfd2HuwccBaqlGhN4Gmr5OWg==
 
+"@rails/actiontext@^7.2.201":
+  version "7.2.202"
+  resolved "https://registry.yarnpkg.com/@rails/actiontext/-/actiontext-7.2.202.tgz#5d7cc2135a85af3c951288b6184eb475dd7711a9"
+  integrity sha512-Fb851rKGVCB2zzdKnMZfCdatoUDkuDPzqgM+ILOegyM9Iel07GT93rHHkmh+XZuP6xFMoYaJgOZtkNe1nEyw5g==
+  dependencies:
+    "@rails/activestorage" ">= 7.2.0-alpha"
+
+"@rails/activestorage@>= 7.2.0-alpha":
+  version "8.0.201"
+  resolved "https://registry.yarnpkg.com/@rails/activestorage/-/activestorage-8.0.201.tgz#2d6dd9e7be24b2d57c83124d8189a06f27c8278b"
+  integrity sha512-nwc2UnffHA3lgStYP01JUF9ni9dZTPX7YJESj5qRjrox4Q3oA7bDErKySP6bS9fOTcwtrPvTHBH95gKpLEic6Q==
+  dependencies:
+    spark-md5 "^3.0.1"
+
+"@rails/activestorage@^7.2.201":
+  version "7.2.202"
+  resolved "https://registry.yarnpkg.com/@rails/activestorage/-/activestorage-7.2.202.tgz#a4fcd43b1b18c9c382606ea69a38cebf76fd3e68"
+  integrity sha512-VGC7MimZsM65ac2u3kQulonGnD0BRfULNe8xCsr86ONCefC50td6GdNgpdDPoCQFnakx4Yvnj9Ni2Q+y3KpHww==
+  dependencies:
+    spark-md5 "^3.0.1"
+
 "@rtsao/scc@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@rtsao/scc/-/scc-1.1.0.tgz#927dd2fae9bc3361403ac2c7a00c32ddce9ad7e8"
@@ -2858,7 +2879,7 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
-dompurify@^3.2.6:
+dompurify@^3.2.5, dompurify@^3.2.6:
   version "3.2.6"
   resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.2.6.tgz#ca040a6ad2b88e2a92dc45f38c79f84a714a1cad"
   integrity sha512-/2GogDQlohXPZe6D6NOgQvXLPSYBqIWMnZ8zzOhn09REE4eyAzb+Hed3jhoM9OkuaJ8P6ZGTTVWQKAi8ieIzfQ==
@@ -6165,6 +6186,11 @@ source-map@^0.6.0:
   resolved "https://registry.npmjs.org/source-map/-/source-map-0.6.1.tgz"
   integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
 
+spark-md5@^3.0.1:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/spark-md5/-/spark-md5-3.0.2.tgz#7952c4a30784347abcee73268e473b9c0167e3fc"
+  integrity sha512-wcFzz9cDfbuqe0FZzfi2or1sgyIrsDwmPwfZC4hiNidPdPINjeUwNfv5kldczoEAcjl9Y1L3SM7Uz2PUEQzxQw==
+
 spdx-correct@^3.0.0:
   version "3.1.1"
   resolved "https://registry.npmjs.org/spdx-correct/-/spdx-correct-3.1.1.tgz"
@@ -6580,6 +6606,13 @@ trim-newlines@^4.0.2:
   version "4.1.1"
   resolved "https://registry.npmjs.org/trim-newlines/-/trim-newlines-4.1.1.tgz"
   integrity sha512-jRKj0n0jXWo6kh62nA5TEh3+4igKDXLvzBJcPpiizP7oOolUrYIxmVBG9TOtHYFHoddUk6YvAkGeGoSVTXfQXQ==
+
+trix@^2.1.13:
+  version "2.1.15"
+  resolved "https://registry.yarnpkg.com/trix/-/trix-2.1.15.tgz#fabad796ea779a8ae96522402fbc214cbfc4015f"
+  integrity sha512-LoaXWczdTUV8+3Box92B9b1iaDVbxD14dYemZRxi3PwY+AuDm97BUJV2aHLBUFPuDABhxp0wzcbf0CxHCVmXiw==
+  dependencies:
+    dompurify "^3.2.5"
 
 tsconfig-paths@^3.15.0:
   version "3.15.0"
