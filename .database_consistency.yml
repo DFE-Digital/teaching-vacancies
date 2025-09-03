@@ -78,3 +78,18 @@ Vacancy:
   index_kept_unique_vacancies_on_external_ref_and_client_id:
     UniqueIndexChecker:
       enabled: false # The valdation is done in the ExternalVacancyValidator as custom validation.
+Message:
+  type:
+    NullConstraintChecker:
+      enabled: false
+
+# STI Message classes - sender_id can point to different tables (Jobseeker or Publisher)
+# so traditional foreign key constraints don't apply
+JobseekerMessage:
+  sender:
+    ForeignKeyChecker:
+      enabled: false
+PublisherMessage:
+  sender:
+    ForeignKeyChecker:
+      enabled: false
