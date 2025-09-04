@@ -120,6 +120,10 @@ class JobApplication < ApplicationRecord
     STATUS_TRANSITIONS.fetch(from_status, [])
   end
 
+  def post_interview_status?
+    status.in?(%w[interviewing offered declined unsuccessful_interview])
+  end
+
   def terminal_status?
     status.in?(TERMINAL_STATUSES)
   end
