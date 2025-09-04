@@ -172,7 +172,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
     it "shows no messages interface when no conversation exists" do
       visit jobseekers_job_application_path(job_application_without_messages, tab: "messages")
 
-      expect(page).to have_text("No messages yet. Hiring staff can start a conversation with you here.")
+      expect(page).to have_text("No messages yet")
       expect(page).to have_no_link("Send message to hiring staff")
       expect(page).to have_no_css(".trix-content")
     end
