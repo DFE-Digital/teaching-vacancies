@@ -9,10 +9,10 @@ RSpec.describe "Creating a vacancy" do
   let(:vacancy) { build(:vacancy, :secondary, :no_tv_applications, :central_office, :ect_suitable, job_roles: ["teacher"], organisations: [school_group]) }
   let(:created_vacancy) { Vacancy.last }
 
+  before { login_publisher(publisher: publisher, organisation: school_group) }
   after { logout }
 
   scenario "publishes a vacancy" do
-    login_publisher(publisher: publisher, organisation: school_group)
     visit organisation_jobs_with_type_path
     click_on I18n.t("buttons.create_job")
     expect(current_path).to eq(organisation_jobs_start_path)

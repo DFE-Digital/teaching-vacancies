@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Jobseekers
-  class NotificationsController < ApplicationController
+  class NotificationsController < BaseController
     NOTIFICATIONS_PER_PAGE = 30
 
     before_action :load_notifications
