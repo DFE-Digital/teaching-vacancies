@@ -113,6 +113,7 @@ group :development, :test do
   gem "dotenv-rails"
   gem "guard-rspec", require: false
   gem "guard-rubocop", "~> 1.5", require: false
+  gem "guard-slim_lint"
   gem "launchy", "~> 3.1"
   gem "parallel_tests"
   gem "pdf-inspector", require: "pdf/inspector"
