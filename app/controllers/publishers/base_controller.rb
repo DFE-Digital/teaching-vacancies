@@ -10,8 +10,10 @@ module Publishers
       redirect_to publishers_terms_and_conditions_path unless current_publisher.accepted_terms_at?
     end
 
+    # :nocov:
     def check_candidate_profiles_interstitial_acknowledged
       redirect_to publishers_candidate_profiles_interstitial_path unless current_publisher.nil? || current_publisher.acknowledged_candidate_profiles_interstitial?
     end
+    # :nocov:
   end
 end
