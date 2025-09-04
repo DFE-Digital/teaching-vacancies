@@ -1498,7 +1498,6 @@ Rails/WhereExists:
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/WhereRange:
   Exclude:
-    - 'app/controllers/publishers/notifications_controller.rb'
     - 'app/jobs/delete_old_feedback_job.rb'
     - 'app/jobs/delete_old_non_draft_job_applications_job.rb'
     - 'app/models/vacancy.rb'

@@ -159,15 +159,6 @@ en:
         how_applications_work_link: How applications work on Teaching Vacancies (opens in new tab).
         page_title: A reminder about applications
         link_text: GOV.UK Find a job service
-    notifications:
-      index:
-        heading: Notifications
-        no_notifications: You have no notifications.
-        skip_link: Skip to notifications
-        title:
-          zero: No unread notifications
-          one: 1 unread notification
-          other: "%{count} unread notifications"
     organisations:
       description:
         edit:

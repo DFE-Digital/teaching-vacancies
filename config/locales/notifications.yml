@@ -45,6 +45,8 @@ en:
     publishers/reference_received_notification:
       message_html: You have received a %{link}
       reference_received: reference for a candidate
+    jobseekers/self_disclosure_request_received_notification:
+      message_html: You have received a request to complete a %{link}
 
   errors:
     jobs:
@@ -60,3 +62,25 @@ en:
       failure: An unexpected error occured. We have been notified.
     subscriptions:
       already_exists: You're already subscribed to an alert for these search criteria
+
+  jobseekers:
+    notifications:
+      index:
+        heading: Notifications
+        no_notifications: You have no notifications.
+        skip_link: Skip to notifications
+        title:
+          zero: No unread notifications
+          one: 1 unread notification
+          other: "%{count} unread notifications"
+
+  publishers:
+    notifications:
+      index:
+        heading: Notifications
+        no_notifications: You have no notifications.
+        skip_link: Skip to notifications
+        title:
+          zero: No unread notifications
+          one: 1 unread notification
+          other: "%{count} unread notifications"

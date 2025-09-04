@@ -198,6 +198,8 @@ Rails.application.routes.draw do
     resource :account_feedback, only: %i[new create]
     resource :request_account_transfer_email, only: %i[new create]
     resource :account_transfer, only: %i[new create]
+
+    resources :notifications, only: %i[index]
   end
 
   devise_for :publishers, controllers: {

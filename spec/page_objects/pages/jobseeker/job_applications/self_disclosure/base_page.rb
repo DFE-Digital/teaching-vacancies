@@ -25,9 +25,9 @@ module PageObjects
                 value = model.public_send(field)&.to_s
                 case value
                 when "true"
-                  public_send(field).first.set(true)
+                  public_send(field, visible: false).first.set(true)
                 when "false"
-                  public_send(field).last.set(true)
+                  public_send(field, visible: false).last.set(true)
                 end
               end
 
