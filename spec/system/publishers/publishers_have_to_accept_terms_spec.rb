@@ -8,9 +8,9 @@ RSpec.describe "Publishers can accept terms and conditions" do
 
     before { login_publisher(publisher: publisher, organisation: school) }
 
-    context "not signing out" do
-      after { logout }
+    after { logout }
 
+    context "not signing out" do
       scenario "they will see the terms and conditions" do
         visit organisation_jobs_with_type_path
 

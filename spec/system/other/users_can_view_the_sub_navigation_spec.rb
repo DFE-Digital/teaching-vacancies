@@ -43,6 +43,8 @@ RSpec.describe "Sub navigation for users to sign in and out" do
       visit root_path
     end
 
+    after { logout }
+
     it "renders the publisher secondary subnav" do
       expect(page).to have_css("#publisher-nav")
     end

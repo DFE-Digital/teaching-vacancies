@@ -28,7 +28,7 @@ RSpec.describe "Publishers can view their notifications" do
 
   context "when paginating", :versioning do
     before do
-      stub_const("Publishers::NotificationsController::NOTIFICATIONS_PER_PAGE", 2)
+      stub_const("NotificationsController::NOTIFICATIONS_PER_PAGE", 2)
 
       [3, 2, 1].each do |delay|
         travel_to delay.days.ago do
@@ -67,7 +67,7 @@ RSpec.describe "Publishers can view their notifications" do
 
       click_on "Next"
       # wait for page load
-      find(".govuk-pagination__prev", wait: 10)
+      find(".govuk-pagination__prev")
 
       within "#notifications-results" do
         expect(page).to have_css("div", class: "notification__tag", text: "new", count: 2)
