@@ -3,6 +3,7 @@ order: 102
 title: Refresh your subject and teaching knowledge
 meta_description: Refresh your subject knowledge with enhancement and refresher advice. Stay updated on new curriculum changes for returning teachers.
 date_posted: 17/02/2025
+date_updated: 28/08/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/update-your-subject-and-teaching-knowledge.png"
 ---
