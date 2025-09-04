@@ -413,6 +413,7 @@ GEM
     multi_json (1.17.0)
     multi_xml (0.6.0)
     multipart-post (2.4.1)
+    mutex_m (0.3.0)
     nenv (0.3.0)
     net-http (0.6.0)
       uri
@@ -952,6 +953,7 @@ DEPENDENCIES
   mimemagic
   mini_magick
   mock_redis
+  mutex_m
   net-pop!
   net-sftp
   nokogiri
