@@ -1,6 +1,4 @@
 class NotificationsController < ApplicationController
-  include ReturnPathTracking
-
   NOTIFICATIONS_PER_PAGE = 30
 
   before_action :load_notifications
