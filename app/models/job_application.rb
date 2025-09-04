@@ -93,6 +93,7 @@ class JobApplication < ApplicationRecord
 
   has_many :notes, dependent: :destroy
   has_many :qualifications, dependent: :destroy
+  has_many :conversations, dependent: :destroy
   has_many :employments, dependent: :destroy
   has_many :referees, dependent: :destroy
   has_many :training_and_cpds, dependent: :destroy
