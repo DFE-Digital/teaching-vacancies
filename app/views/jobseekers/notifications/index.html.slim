@@ -1,0 +1,25 @@
+- content_for :page_title_prefix, t(".title", count: @unread_count)
+
+- if @notifications.any?
+  - content_for :skip_links do
+    = govuk_skip_link(href: "#notifications-results", text: t(".skip_link"))
+
+.govuk-grid-row
+  .govuk-grid-column-full
+    h1.govuk-heading-xl class="govuk-!-margin-bottom-3" = t(".heading")
+
+    - if @notifications.any?
+      #notifications-results
+        .govuk-grid-row
+          .govuk-grid-column-full
+            .govuk-body.float-right
+              = pagy_stats(@pagy, type: "notification")
+
+        = render partial: "notification", collection: @notifications, as: :notification
+
+        .govuk-grid-row
+          .govuk-grid-column-full
+            = govuk_pagination(pagy: @pagy)
+    - else
+      = render EmptySectionComponent.new do
+        = t(".no_notifications")

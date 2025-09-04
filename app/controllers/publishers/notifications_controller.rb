@@ -13,7 +13,7 @@ class Publishers::NotificationsController < Publishers::BaseController
 
   def load_notifications
     @raw_notifications = current_publisher.notifications
-                                        .where("created_at >= ?", Time.current - DATA_ACCESS_PERIOD_FOR_PUBLISHERS)
+                                        .where(created_at: (Time.current - DATA_ACCESS_PERIOD_FOR_PUBLISHERS)..)
                                         .newest_first
   end
 
