@@ -606,7 +606,9 @@ en:
           received_at: Received %{date}
           declined_at: Declined %{date}
           created_at: Created %{date}
-          references: References
+          form_requests: Form requests
+          reference: Reference
+          request_type: Request type
           last_action: Last action
           self_disclosure: Self-disclosure
           status: Status

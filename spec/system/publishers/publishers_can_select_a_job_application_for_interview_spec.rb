@@ -50,7 +50,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
         click_on "Save and continue"
       end
 
-      scenario "contacting applicant sends emails to referees and applicant", :js do
+      scenario "contacting applicant sends emails to referees and applicant" do
         choose "Yes"
         click_on "Save and continue"
         choose self_disclosure_answer
@@ -146,7 +146,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
           context "with a simple reference" do
             let(:reference_data) { attributes_for(:job_reference, :reference_given) }
 
-            it "can progress to the page where the reference is shown", :js do
+            it "can progress to the page where the reference is shown" do
               expect(publisher_ats_pre_interview_checks_page).to be_displayed
 
               publisher_ats_pre_interview_checks_page.reference_links.first.click
@@ -206,7 +206,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
                              unable_to_undertake_reason: undertake_reason)
             end
 
-            it "can progress to the page where the reference is shown", :js do
+            it "can progress to the page where the reference is shown" do
               expect(publisher_ats_pre_interview_checks_page).to be_displayed
 
               publisher_ats_pre_interview_checks_page.reference_links.first.click
@@ -286,7 +286,8 @@ RSpec.describe "Publishers can select a job application for interview", :perform
                 .to contain_exactly("employer@contoso.com", "previous@contoso.com")
 
               expect(publisher_ats_pre_interview_checks_page).to be_displayed
-              expect(publisher_ats_pre_interview_checks_page.reference_links.count).to eq(2)
+              # This now includes the self disclosure
+              expect(publisher_ats_pre_interview_checks_page.reference_links.count).to eq(3)
               publisher_ats_pre_interview_checks_page.reference_links.first.click
 
               expect(publisher_ats_reference_request_page).to be_displayed
@@ -301,7 +302,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
                 .to contain_exactly("employer@contoso.com", "previous@contoso.com", "jobseeker@contoso.com")
 
               expect(publisher_ats_pre_interview_checks_page).to be_displayed
-              publisher_ats_pre_interview_checks_page.reference_links.last.click
+              publisher_ats_pre_interview_checks_page.reference_links.first.click
 
               expect(publisher_ats_reference_request_page).to be_displayed
               expect(publisher_ats_reference_request_page.timeline_titles.map(&:text))
