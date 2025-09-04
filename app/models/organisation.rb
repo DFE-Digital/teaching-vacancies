@@ -53,6 +53,17 @@ class Organisation < ApplicationRecord
 
   scope :only_faith_schools, -> { where.not("gias_data ->> 'ReligiousCharacter (name)' IN (?)", NON_FAITH_RELIGIOUS_CHARACTER_TYPES) }
 
+  # This can safely ignore the 'extra' LA mappings as it is always called with a scope which excludes LAs in the first place
+  scope :with_live_vacancies, lambda {
+    # use inner/right join to just select organisations with live vacancies
+    organisations = joins(:vacancies).merge(Vacancy.live)
+
+    groups, schools = organisations.partition(&:school_group?)
+
+    all_organisations = groups + schools.map { |school| [school] + school.school_groups }.flatten
+    where(id: all_organisations.map(&:id))
+  }
+
   validates :email, email_address: true, if: -> { email_changed? } # Allows data created prior to validation to still be valid
 
   alias_attribute :data, :gias_data

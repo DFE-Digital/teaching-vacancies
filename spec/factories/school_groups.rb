@@ -47,7 +47,8 @@ FactoryBot.define do
   factory :local_authority, parent: :school_group do
     name { "#{Faker::Address.state_abbr} LA" }
     group_type { "local_authority" }
-    local_authority_code { Faker::Number.number(digits: 3).to_s }
+    # needs to be unique3 digit code
+    sequence(:local_authority_code) { |n| (n + 100).to_s }
     safeguarding_information { Faker::Lorem.paragraph(sentence_count: 1) }
   end
 end
