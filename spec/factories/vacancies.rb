@@ -29,6 +29,10 @@ FactoryBot.define do
 
     publisher
 
+    transient do
+      expiry_date { 6.months.from_now }
+    end
+
     actual_salary { factory_rand(20_000..100_000) }
     enable_job_applications { true }
     benefits { true }
@@ -43,7 +47,7 @@ FactoryBot.define do
     contract_type { :permanent }
     further_details_provided { true }
     further_details { Faker::Lorem.sentence(word_count: factory_rand(50..300)) }
-    expires_at { 6.months.from_now.change(hour: 9, minute: 0, second: 0) }
+    expires_at { expiry_date.change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
     include_additional_documents { false }
     job_title { generate(:job_title) }
@@ -153,31 +157,31 @@ FactoryBot.define do
       to_create { |instance| instance.save(validate: false) }
       sequence(:slug) { |n| "slug-#{n}" }
       publish_on { Date.current - 1.month }
-      expires_at { 2.weeks.ago.change(hour: 9, minute: 0) }
+      expiry_date { 2.weeks.ago }
     end
 
     trait :expired_yesterday do
-      expires_at { 1.day.ago.change(hour: 9, minute: 0) }
+      expiry_date { 1.day.ago }
     end
 
     trait :expired_years_ago do
-      expires_at { 2.years.ago.change(hour: 9, minute: 0) }
+      expiry_date { 2.years.ago }
     end
 
     trait :expires_tomorrow do
-      expires_at { 1.day.from_now.change(hour: 9, minute: 0) }
+      expiry_date { 1.day.from_now }
     end
 
     trait :future_publish do
       publish_on { Date.current + 6.months }
-      expires_at { 18.months.from_now.change(hour: 9, minute: 0) }
+      expiry_date { 18.months.from_now }
       starts_on { 18.months.from_now + 2.months }
     end
 
     trait :past_publish do
       sequence(:slug) { |n| "slug-#{n}" }
       publish_on { Date.current - 1.day }
-      expires_at { 2.months.from_now.change(hour: 9, minute: 0) }
+      expiry_date { 2.months.from_now }
       starts_on { Date.current + 3.months }
     end
 

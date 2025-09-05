@@ -1,0 +1,11 @@
+- content_for :page_title_prefix, t(".title")
+
+h1.govuk-heading-l = t(".title")
+
+p.govuk-body = t(".this_may_include")
+
+= tabs html_attributes: { "aria-label": "Tabs navigation for stats dashboard" } do |tabs|
+  - tabs.with_navigation_item text: t(".overview"), link: publishers_current_year_statistics_path
+  - tabs.with_navigation_item text: t(".equal_opportunities"), link: equal_opportunities_publishers_current_year_statistics_path
+
+p.govuk-body = t(".this_data")

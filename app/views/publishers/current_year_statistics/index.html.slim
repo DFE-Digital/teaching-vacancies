@@ -1,0 +1,10 @@
+= render("page_header")
+
+p.govuk-body = t(".vacancy_counts_html", link: (govuk_link_to t(".vacancy_counts_link", count: @vacancy_counts), organisation_jobs_path))
+
+p.govuk-body = t(".download_stats")
+
+= govuk_button_link_to t("buttons.download_stats"), publishers_all_time_statistics_path(format: :csv), class: "govuk-button--secondary"
+
+= render "publishers/vacancies/statistics/vacancy_view_stats", chart: @bar_chart, referrer_counts: @referrer_counts,
+  link: publishers_current_year_statistics_path, accessible_link: publishers_current_year_statistics_path(view: "table")
