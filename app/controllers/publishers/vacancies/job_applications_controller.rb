@@ -9,7 +9,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     "FeedbackForm" => Publishers::JobApplication::FeedbackForm,
   }.freeze
 
-  before_action :set_job_application, only: %i[show download pre_interview_checks]
+  before_action :set_job_application, only: %i[show download pre_interview_checks messages]
   before_action :set_job_applications, only: %i[index tag]
 
   def index
@@ -19,11 +19,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def show
     redirect_to organisation_job_job_application_terminal_path(vacancy.id, @job_application) if @job_application.withdrawn?
-    @tab = params["tab"]
-    @show_form = params["show_form"]
     @notes_form = Publishers::JobApplication::NotesForm.new
-    @message_form = Publishers::JobApplication::MessagesForm.new
-    @messages = @job_application.conversations.includes(:messages).flat_map(&:messages).sort_by(&:created_at).reverse
 
     raise ActionController::RoutingError, "Cannot view a draft application" if @job_application.draft?
   end
@@ -69,6 +65,12 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def pre_interview_checks
     @reference_requests = @job_application.referees.filter_map(&:reference_request)
+  end
+
+  def messages
+    @show_form = params["show_form"]
+    @message_form = Publishers::JobApplication::MessagesForm.new
+    @messages = @job_application.conversations.includes(:messages).flat_map(&:messages).sort_by(&:created_at).reverse
   end
 
   private

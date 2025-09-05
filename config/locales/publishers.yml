@@ -566,6 +566,7 @@ en:
         interviewing_status:
           pre_interview_checks: Pre-interview checks
         messages:
+          page_title: "Messages"
           create:
             success: Message sent successfully
             failure: Message could not be sent

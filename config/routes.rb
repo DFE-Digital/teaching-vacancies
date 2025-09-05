@@ -419,6 +419,9 @@ Rails.application.routes.draw do
         member do
           get :pre_interview_checks
         end
+        member do
+          get :messages
+        end
         resource :self_disclosure, only: %i[show update], controller: "publishers/vacancies/job_applications/self_disclosure"
         resources :collect_reference_flags, only: %i[show update], controller: "publishers/vacancies/collect_reference_flags"
         resources :collect_self_disclosure_flags, only: %i[show update], controller: "publishers/vacancies/collect_self_disclosure_flags"
