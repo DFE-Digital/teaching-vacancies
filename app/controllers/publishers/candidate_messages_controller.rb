@@ -11,7 +11,7 @@ class Publishers::CandidateMessagesController < Publishers::BaseController
 
     @conversations = @tab == "archive" ? conversations_query.archived : conversations_query.inbox
 
-    @inbox_count = conversations_query.inbox.length
+    @inbox_count = conversations_query.inbox.count { |conversation| conversation.has_unread_messages_for_publishers? }
   end
 
   def toggle_archive

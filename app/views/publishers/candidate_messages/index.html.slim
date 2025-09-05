@@ -27,7 +27,7 @@
             - @conversations.each do |conversation|
               - job_application = conversation.job_application
               - latest_message = conversation.messages.order(created_at: :desc).first
-              - body.with_row do |row|
+              - body.with_row html_attributes: { class: ("conversation--unread" if conversation.has_unread_messages_for_publishers?) } do |row|
                 - row.with_cell do
                   .govuk-checkboxes--small
                     = f.govuk_check_box :conversations, conversation.id, multiple: true, label: { hidden: true, text: "Select #{job_application.name}" }

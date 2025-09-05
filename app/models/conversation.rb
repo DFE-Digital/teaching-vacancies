@@ -8,4 +8,8 @@ class Conversation < ApplicationRecord
   def self.default_title_for(job_application)
     "Regarding application: #{job_application.vacancy.job_title}"
   end
+
+  def has_unread_messages_for_publishers?
+    messages.any? { |msg| msg.is_a?(JobseekerMessage) && msg.unread? }
+  end
 end

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Publishers can archive and unarchive candidate messages", :js do
+RSpec.describe "Publishers can view candidate messages", :js do
   let(:organisation) { create(:school) }
   let(:publisher) { create(:publisher) }
   let(:jobseeker) { create(:jobseeker) }
@@ -130,6 +130,34 @@ RSpec.describe "Publishers can archive and unarchive candidate messages", :js do
       visit publishers_candidate_messages_path(tab: "archive")
 
       expect(page).to have_content("No archived messages yet.")
+    end
+  end
+
+  describe "reading messages" do
+    let(:vacancy) { create(:vacancy, :live, organisations: [organisation]) }
+    let(:job_application) { create(:job_application, :submitted, vacancy: vacancy) }
+    let(:jobseeker) { job_application.jobseeker }
+    let!(:conversation) { create(:conversation, job_application: job_application) }
+
+    it "updates inbox total and marks message as read" do
+      create(:jobseeker_message, conversation: conversation, sender: jobseeker, read: false)
+
+      visit publishers_candidate_messages_path
+      expect(page).to have_content("Inbox (1)")
+      
+      within("table tbody") do
+        expect(page).to have_css("tr.conversation--unread")
+      end
+
+      visit messages_organisation_job_job_application_path(vacancy.id, job_application.id)
+
+      visit publishers_candidate_messages_path
+
+      expect(page).to have_content("Inbox (0)")
+
+      within("table tbody") do
+        expect(page).not_to have_css("tr.conversation--unread")
+      end
     end
   end
 end
