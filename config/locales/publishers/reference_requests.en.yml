@@ -6,6 +6,9 @@ en:
     received:
       status: received
       colour: purple
+    action:
+      status: Action needed
+      colour: red
     declined:
       status: unavailable
       colour: red

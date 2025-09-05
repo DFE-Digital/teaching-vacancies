@@ -1,0 +1,48 @@
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("app.back_link"), href: pre_interview_checks_organisation_job_job_application_path(@vacancy.id, @job_application), html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+
+    span.govuk-caption-l
+      = t("jobseekers.job_applications.caption", job_title: @vacancy.job_title, organisation: @vacancy.organisation_name)
+    h1.govuk-heading-l = t(".heading")
+
+    - status = religious_request_status(@job_application.religious_reference_request)
+
+    p.govuk-body = govuk_tag(text: t("reference_requests.#{status}.status"), colour: t("reference_requests.#{status}.colour"))
+
+    p.govuk-body = t(".cannot_be_collected")
+    p.govuk-body = t(".can_manually_mark")
+
+    = form_with model: @job_application, url: organisation_job_job_application_religious_reference_path(@vacancy.id, @job_application.id), method: :patch do |f|
+      = f.govuk_error_summary
+
+      = f.hidden_field :status, value: @job_application.religious_reference_request.action_needed? ? "requested" : "complete"
+
+      .govuk-button-group
+        - if @job_application.religious_reference_request.action_needed?
+          = f.govuk_submit t(".mark_as_requested"), secondary: true
+        - else
+          = f.govuk_submit t(".mark_as_complete"), secondary: true
+
+        = govuk_link_to t(".cancel_and_return"), pre_interview_checks_organisation_job_job_application_path(@vacancy.id, @job_application.id)
+
+  .govuk-grid-column-one-third
+    = render TimelineComponent.new do |timeline|
+      - timeline.with_heading(title: t(".communication_history"))
+      - @job_application.religious_reference_request.versions.reverse_each do |version|
+        - actor = version.actor.present? ? t(".by", name: version.actor.papertrail_display_name) : t(".by_tvs")
+        - value = "#{actor} - #{version.created_at.to_formatted_s}"
+
+        - if version.changeset.key? "status"
+          - case version.changeset["status"].last
+            - when "action_needed"
+              - timeline.with_item(key: t(".reference_created"), value: value)
+            - when "requested"
+              - timeline.with_item(key: t(".reference_requested"), value: value)
+            - when "completed"
+              - timeline.with_item(key: t(".reference_completed"), value: value)
+
+    = render PublisherNotesOnJobApplicationComponent.new(job_application: @job_application, vacancy: @vacancy, notes_form: @notes_form,
+            return_to_url: edit_organisation_job_job_application_religious_reference_path(@vacancy.id, @job_application.id))
