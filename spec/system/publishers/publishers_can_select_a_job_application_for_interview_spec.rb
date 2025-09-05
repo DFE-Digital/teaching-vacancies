@@ -8,23 +8,70 @@ RSpec.describe "Publishers can select a job application for interview", :perform
   let(:organisation) { create(:school) }
   let(:vacancy) { create(:vacancy, :expired, organisations: [organisation], job_title: job_title, publisher: publisher) }
   let(:jobseeker) { create(:jobseeker, email: "jobseeker@contoso.com") }
-  let(:job_application) do
-    create(:job_application, :status_submitted,
-           email_address: jobseeker.email,
-           vacancy: vacancy, jobseeker: jobseeker)
-  end
   let!(:current_referee) { create(:referee, email: "employer@contoso.com", is_most_recent_employer: true, job_application: job_application) }
   let!(:old_referee) { create(:referee, email: "previous@contoso.com", is_most_recent_employer: false, job_application: job_application) }
 
   before do
     login_publisher(publisher: publisher, organisation: organisation)
-    publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
   end
 
   after { logout }
 
-  describe "interview flow" do
+  # needs JS driver to prevent tests seeing multiple tabs at once
+  context "when selecting multiple candidates", :js do
+    let(:job_application) do
+      create(:job_application, :status_submitted,
+             notify_before_contact_referers: false,
+             email_address: jobseeker.email,
+             vacancy: vacancy, jobseeker: jobseeker)
+    end
+
+    let!(:extra_job_application) do
+      create(:job_application, :status_submitted, notify_before_contact_referers: contact_referee,
+                                                  vacancy: vacancy)
+    end
+
     before do
+      publisher_ats_applications_page.load(vacancy_id: vacancy.id)
+      publisher_ats_applications_page.select_candidate(job_application)
+      publisher_ats_applications_page.select_candidate(extra_job_application)
+      click_on "Update application status"
+      choose "Interviewing"
+    end
+
+    context "when someone needs contacting" do
+      let(:contact_referee) { true }
+
+      it "shows the contact references form" do
+        click_on "Save and continue"
+        choose "Yes"
+        click_on "Save and continue"
+        expect(page).to have_content "notified when you are collecting references"
+      end
+    end
+
+    context "when no-one needs contacting" do
+      let(:contact_referee) { false }
+
+      it "does not show the contact references form" do
+        click_on "Save and continue"
+        choose "Yes"
+        click_on "Save and continue"
+        expect(page).to have_no_content "notified when you are collecting references"
+      end
+    end
+  end
+
+  context "when selecting a single candidate" do
+    let(:job_application) do
+      create(:job_application, :status_submitted,
+             notify_before_contact_referers: true,
+             email_address: jobseeker.email,
+             vacancy: vacancy, jobseeker: jobseeker)
+    end
+
+    before do
+      publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
       click_on "Update application status"
       choose "Interviewing"
       click_on "Save and continue"

@@ -18,16 +18,14 @@ RSpec.describe "Publishers manage self disclosure" do
         click_on "Update application status"
         choose "Interviewing"
         click_on "Save and continue"
-        choose "Yes"
-        click_on "Save and continue"
-        choose "Yes"
+        choose "No"
         click_on "Save and continue"
         choose "Yes"
         click_on "Save and continue"
       end
 
       it "sends the notification email and creates self disclosure models", :perform_enqueued do
-        expect(ActionMailer::Base.deliveries.map(&:to).flatten).to contain_exactly(job_application.email_address, job_application.email_address)
+        expect(ActionMailer::Base.deliveries.map(&:to).flatten).to contain_exactly(job_application.email_address)
         expect(SelfDisclosureRequest.count).to eq(1)
         expect(SelfDisclosure.count).to eq(1)
       end
@@ -40,9 +38,7 @@ RSpec.describe "Publishers manage self disclosure" do
           click_on "Update application status"
           choose "Interviewing"
           click_on "Save and continue"
-          choose "Yes"
-          click_on "Save and continue"
-          choose "Yes"
+          choose "No"
           click_on "Save and continue"
           choose "Yes"
           click_on("Save and continue")

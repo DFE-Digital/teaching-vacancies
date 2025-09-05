@@ -57,7 +57,7 @@ FactoryBot.define do
     safeguarding_issue_details { Faker::Lorem.paragraph(sentence_count: 1) }
     has_right_to_work_in_uk { true }
 
-    # Referees
+    # This field should really be called notify_before_contact_referees
     notify_before_contact_referers { false }
 
     completed_steps { JobApplication.completed_steps.keys }
