@@ -127,7 +127,6 @@ RSpec.describe "Publishers can send messages to job applicants" do
 
       expect(page).to have_link("Send message to hiring staff")
       expect(page).to have_no_link("Print this page")
-      expect(page).to have_no_text("If a candidate responds with their pre-interview documentation")
 
       click_link "Send message to hiring staff"
 

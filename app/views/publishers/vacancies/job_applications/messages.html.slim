@@ -14,10 +14,5 @@
               form_help_text: t(".how_will_message_be_sent"),
               form_help_content: t(".message_sent_description")
 
-    - unless @show_form == "true"
-      / Inset text (only show when form is not visible)
-      = govuk_inset_text do
-        = t(".pre_interview_documentation_note")
-
     #messages-list
       = render partial: @messages, locals: { current_user: current_user, job_application: @job_application }
