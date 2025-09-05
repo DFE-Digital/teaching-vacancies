@@ -395,6 +395,12 @@ shared:
     - updated_at
     - marked_as_complete
     - email
+  religious_reference_requests:
+    - id
+    - job_application_id
+    - status
+    - created_at
+    - updated_at
   saved_jobs:
     - id
     - jobseeker_id
