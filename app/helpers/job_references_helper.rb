@@ -16,4 +16,12 @@ module JobReferencesHelper
       "created"
     end
   end
+
+  def religious_request_status(job_application)
+    if job_application.religious_reference_received?
+      "received"
+    else
+      "action"
+    end
+  end
 end
