@@ -1,6 +1,6 @@
 = render("page_header")
 
-p.govuk-body = t(".vacancy_counts", count: @vacancy_counts)
+p.govuk-body = t(".vacancy_counts_html", link: (govuk_link_to t(".vacancy_counts_link", count: @vacancy_counts), organisation_jobs_path))
 
 p.govuk-body = t(".download_stats")
 

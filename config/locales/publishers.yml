@@ -349,7 +349,8 @@ en:
         download_stats: >-
           Select 'Download statistics' to download all historical equal opportunities data.
       index:
-        vacancy_counts: You have posted %{count} job listings this academic year.
+        vacancy_counts_html: You have posted %{link}.
+        vacancy_counts_link: "%{count} job listings this academic year"
         download_stats: >-
           Select 'Download statistics' to download all historical job listing data.
       page_header:
