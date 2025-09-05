@@ -21,7 +21,7 @@ class Api::MarkersController < Api::ApplicationController
   private
 
   def vacancy
-    @vacancy ||= Vacancy.find(params[:id])
+    @vacancy ||= PublishedVacancy.find(params[:id])
   end
 
   def organisation

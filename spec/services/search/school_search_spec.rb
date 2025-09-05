@@ -105,6 +105,22 @@ RSpec.describe Search::SchoolSearch do
         expect(subject.organisations).to contain_exactly(academies, academy, free_school, free_schools, local_authority_school)
       end
     end
+
+    context "when job_availability is true" do
+      let(:job_availability) { %w[true] }
+
+      it "will return not schools" do
+        expect(subject.organisations).to be_empty
+      end
+    end
+
+    context "when job_availability is false" do
+      let(:job_availability) { %w[false] }
+
+      it "will return all schools" do
+        expect(subject.organisations).to contain_exactly(academies, academy, free_school, free_schools, local_authority_school, other_school)
+      end
+    end
   end
 
   context "when school_types are given" do

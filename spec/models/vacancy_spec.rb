@@ -247,7 +247,7 @@ RSpec.describe Vacancy do
         expired_earlier_today.send :set_slug
         expired_earlier_today.save(validate: false)
 
-        results = Vacancy.applicable
+        results = PublishedVacancy.applicable
         expect(results).to include(expires_later_today)
         expect(results).to_not include(expired_earlier_today)
       end
@@ -260,7 +260,7 @@ RSpec.describe Vacancy do
         expired.send :set_slug
         expired.save(validate: false)
 
-        expect(Vacancy.expired.count).to eq(1)
+        expect(PublishedVacancy.expired.count).to eq(1)
       end
     end
 
@@ -270,7 +270,8 @@ RSpec.describe Vacancy do
         create(:draft_vacancy, :expired_yesterday)
         create(:vacancy, :expires_tomorrow)
 
-        expect(Vacancy.expired_yesterday.count).to eq(2)
+        expect(PublishedVacancy.expired_yesterday.count).to eq(1)
+        expect(DraftVacancy.expired_yesterday.count).to eq(1)
       end
     end
 
@@ -278,8 +279,8 @@ RSpec.describe Vacancy do
       let(:expired_years_ago) { build(:vacancy, expires_at: 2.years.ago) }
 
       it "retrieves vacancies that expired not more than one year ago" do
-        expect(Vacancy.expires_within_data_access_period).to_not include(expired_years_ago)
-        expect(Vacancy.expires_within_data_access_period).to include(expired_earlier_today)
+        expect(PublishedVacancy.expires_within_data_access_period).to_not include(expired_years_ago)
+        expect(PublishedVacancy.expires_within_data_access_period).to include(expired_earlier_today)
       end
     end
 
@@ -288,14 +289,14 @@ RSpec.describe Vacancy do
         published = create_list(:vacancy, 5)
         create_list(:vacancy, 3, :future_publish)
 
-        expect(Vacancy.listed.count).to eq(published.count)
+        expect(PublishedVacancy.listed.count).to eq(published.count)
       end
     end
 
     describe "#live" do
       it "includes vacancies till expiry time" do
-        expect(Vacancy.live).to include(expires_later_today)
-        expect(Vacancy.live).to_not include(expired_earlier_today)
+        expect(PublishedVacancy.live).to include(expires_later_today)
+        expect(PublishedVacancy.live).to_not include(expired_earlier_today)
       end
     end
 
@@ -304,7 +305,7 @@ RSpec.describe Vacancy do
         create_list(:vacancy, 5)
         pending = create_list(:vacancy, 3, :future_publish)
 
-        expect(Vacancy.pending.count).to eq(pending.count)
+        expect(PublishedVacancy.pending.count).to eq(pending.count)
       end
     end
 
@@ -314,7 +315,7 @@ RSpec.describe Vacancy do
         old_expired_and_awaiting_feedback = create(:vacancy, :expired, expires_at: 3.months.ago)
         recent_expired_and_not_awaiting_feedback = create(:vacancy, :expired, expires_at: 1.month.ago, listed_elsewhere: :listed_paid)
 
-        results = Vacancy.awaiting_feedback_recently_expired
+        results = PublishedVacancy.awaiting_feedback_recently_expired
 
         expect(results).to include(recent_expired_and_awaiting_feedback)
         expect(results).not_to include(old_expired_and_awaiting_feedback)
@@ -427,7 +428,7 @@ RSpec.describe Vacancy do
 
   context "stats updated at" do
     let(:expired_job) { create(:vacancy, :expired) }
-    let(:stats_updated_at) { Vacancy.find(expired_job.id).stats_updated_at }
+    let(:stats_updated_at) { PublishedVacancy.find(expired_job.id).stats_updated_at }
 
     it { expect(stats_updated_at).to be_nil }
 
@@ -581,11 +582,11 @@ RSpec.describe Vacancy do
     end
 
     it "matches external scopes" do
-      expect(Vacancy.external).to contain_exactly(ats_api_client_vacancy, external_source_vacancy)
+      expect(PublishedVacancy.external).to contain_exactly(ats_api_client_vacancy, external_source_vacancy)
     end
 
     it "matches internal scopes" do
-      expect(Vacancy.internal.map(&:job_title)).to contain_exactly(internal_vacancy.job_title)
+      expect(PublishedVacancy.internal.map(&:job_title)).to contain_exactly(internal_vacancy.job_title)
     end
   end
 

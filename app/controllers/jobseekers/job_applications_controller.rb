@@ -228,7 +228,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def vacancy
     @vacancy ||= if params[:job_id].present?
-                   Vacancy.live.find(params[:job_id])
+                   PublishedVacancy.live.find(params[:job_id])
                  else
                    job_application.vacancy
                  end
