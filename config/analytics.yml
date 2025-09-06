@@ -587,6 +587,7 @@ shared:
     - created_at
     - updated_at
     - type
+    - read
   :conversations:
     - id
     - job_application_id

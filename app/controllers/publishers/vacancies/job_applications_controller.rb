@@ -71,7 +71,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     @show_form = params["show_form"]
     @message_form = Publishers::JobApplication::MessagesForm.new
     @messages = @job_application.conversations.includes(:messages).flat_map(&:messages).sort_by(&:created_at).reverse
-    
+
     # Mark jobseeker messages as read when publisher views them
     jobseeker_messages = @messages.select { |msg| msg.is_a?(JobseekerMessage) && msg.unread? }
     jobseeker_messages.each(&:mark_as_read!)

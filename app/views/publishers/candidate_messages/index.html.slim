@@ -5,8 +5,8 @@
     h1.govuk-heading-xl Candidate messages
 
     = tabs do |t|
-      - t.with_navigation_item text: "Inbox (#{@inbox_count})", link: publishers_candidate_messages_path, active: @tab == "inbox"
-      - t.with_navigation_item text: "Archive", link: publishers_candidate_messages_path(tab: "archive"), active: @tab == "archive"
+      - t.with_navigation_item text: "Inbox (#{@inbox_count})", link: publishers_candidate_messages_path
+      - t.with_navigation_item text: "Archive", link: publishers_candidate_messages_path(tab: "archive")
 
     - if @conversations.any?
       = form_with url: toggle_archive_publishers_candidate_messages_path, method: :patch, local: true do |f|
@@ -33,7 +33,7 @@
                     = f.govuk_check_box :conversations, conversation.id, multiple: true, label: { hidden: true, text: "Select #{job_application.name}" }
                 - row.with_cell do
                   = govuk_link_to job_application.name, organisation_job_job_application_path(job_application.vacancy.id, job_application.id, tab: "messages")
-                - row.with_cell text: "#{job_application.vacancy.job_title}"
+                - row.with_cell text: job_application.vacancy.job_title
                 - row.with_cell text: latest_message.created_at.to_fs(:default)
     - else
       = govuk_inset_text do

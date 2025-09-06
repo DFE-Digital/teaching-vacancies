@@ -144,7 +144,7 @@ RSpec.describe "Publishers can view candidate messages", :js do
 
       visit publishers_candidate_messages_path
       expect(page).to have_content("Inbox (1)")
-      
+
       within("table tbody") do
         expect(page).to have_css("tr.conversation--unread")
       end
@@ -156,7 +156,7 @@ RSpec.describe "Publishers can view candidate messages", :js do
       expect(page).to have_content("Inbox (0)")
 
       within("table tbody") do
-        expect(page).not_to have_css("tr.conversation--unread")
+        expect(page).to have_no_css("tr.conversation--unread")
       end
     end
   end
