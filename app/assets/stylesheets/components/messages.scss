@@ -10,3 +10,21 @@
   background-color: govuk-colour('light-grey');
   color: govuk-colour('black');
 }
+
+// Unread message styling - light grey background and bold text
+.message--unread {
+  background-color: govuk-colour('light-grey');
+  
+  // Make all text within unread messages bold
+  .govuk-summary-card__title,
+  .govuk-summary-card__content,
+  .govuk-summary-card__actions {
+    font-weight: bold;
+  }
+}
+
+// Unread conversation styling for table rows
+.conversation--unread {
+  background-color: govuk-colour('light-grey');
+  font-weight: bold;
+}

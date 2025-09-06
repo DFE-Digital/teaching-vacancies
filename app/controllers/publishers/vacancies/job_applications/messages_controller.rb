@@ -7,7 +7,7 @@ class Publishers::Vacancies::JobApplications::MessagesController < Publishers::V
     if message_form.valid?
       conversation = find_or_create_conversation
       PublisherMessage.create!(content: message_form.content, sender: current_publisher, conversation: conversation)
-      redirect_to organisation_job_job_application_path(@vacancy.id, @job_application.id, tab: "messages"), success: t(".success")
+      redirect_to messages_organisation_job_job_application_path(@vacancy.id, @job_application.id), success: t(".success")
     else
       @tab = "messages"
       @show_form = "true"
@@ -21,7 +21,7 @@ class Publishers::Vacancies::JobApplications::MessagesController < Publishers::V
       @message_form = message_form
       @notes_form = Publishers::JobApplication::NotesForm.new
 
-      render "publishers/vacancies/job_applications/show", status: :unprocessable_entity
+      render "publishers/vacancies/job_applications/messages", status: :unprocessable_entity
     end
   end
 
