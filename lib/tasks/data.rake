@@ -77,3 +77,29 @@ namespace :publishers do
     Publisher.update_all(dismissed_new_features_page_at: nil)
   end
 end
+
+# :nocov:
+namespace :pre_interviewing_requests do
+  desc "Set common pre interviewing request status to self disclosure request and reference request"
+  task set_statuses: :environment do
+    # from :status, { manual: 0, manually_completed: 1, sent: 2, received: 3 }
+    # to :status, { created: 10, requested: 11, received: 12, completed: 13, declined: 14 }
+    SelfDisclosureRequest.where(status: 0).update_all(status: 10)
+    SelfDisclosureRequest.where(status: 1).update_all(status: 13)
+    SelfDisclosureRequest.where(status: 2).update_all(status: 11)
+    SelfDisclosureRequest.where(status: 3).update_all(status: 12)
+
+    # from :status, { created: 0, requested: 1, received: 2 }
+    # to :status, { created: 10, requested: 11, received: 12, completed: 13, declined: 14 }
+    ReferenceRequest.where(status: 0).update_all(status: 10)
+    ReferenceRequest.where(status: 1).update_all(status: 11)
+    ReferenceRequest.where(status: 2).update_all(status: 12)
+    ReferenceRequest.joins(:job_reference)
+      .merge(JobReference.where(complete: true, can_give_reference: true))
+      .update_all(status: 13)
+    ReferenceRequest.joins(:job_reference)
+      .merge(JobReference.where(complete: true, can_give_reference: false))
+      .update_all(status: 14)
+  end
+end
+# :nocov:
