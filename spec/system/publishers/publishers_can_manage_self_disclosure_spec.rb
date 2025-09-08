@@ -105,7 +105,30 @@ RSpec.describe "Publishers manage self disclosure", :perform_enqueued do
         end
       end
 
-      context "when completed by jobseeker" do
+      it "can be manually marked as complete by publisher" do
+        run_with_publisher_and_organisation(publisher, organisation) do
+          publisher_ats_self_disclosure_page.load(
+            vacancy_id: vacancy.id,
+            job_application_id: job_application.id,
+          )
+
+          expect(publisher_ats_self_disclosure_page.status.text).to eq("pending")
+          expect(publisher_ats_self_disclosure_page.button.text).to eq("Mark as received")
+          expect(publisher_ats_self_disclosure_page).not_to have_goto_references_and_self_disclosure_form
+
+          publisher_ats_self_disclosure_page.button.click
+
+          expect(publisher_ats_self_disclosure_page.status).to have_text("received")
+          expect(publisher_ats_self_disclosure_page.button).to have_text("Mark as completed")
+
+          publisher_ats_self_disclosure_page.button.click
+
+          expect(publisher_ats_self_disclosure_page.banner_title.text).to eq("Success")
+          expect(publisher_ats_self_disclosure_page.status.text).to eq("completed")
+        end
+      end
+
+      context "when sent by jobseeker", :perform_enqueued do
         let(:dummy_self_disclosure) { build(:self_disclosure) }
 
         before do
@@ -139,8 +162,8 @@ RSpec.describe "Publishers manage self disclosure", :perform_enqueued do
               .to eq(["#{jobseeker.jobseeker_profile.personal_details.first_name} #{jobseeker.jobseeker_profile.personal_details.last_name} - #{Date.current.to_fs.strip}",
                       "Teaching Vacancies - #{Date.current.to_fs.strip}"])
 
-            expect(publisher_ats_self_disclosure_page.status.text).to eq("completed")
-            expect(publisher_ats_self_disclosure_page.button.text).to eq("Download self-disclosure")
+            expect(publisher_ats_self_disclosure_page.status).to have_text("received")
+            expect(publisher_ats_self_disclosure_page.button).to have_text("Mark as completed")
             expect(publisher_ats_self_disclosure_page.personal_details.heading.text).to eq("Personal details")
             expect(publisher_ats_self_disclosure_page.criminal_details.heading.text).to eq("Criminal record self-disclosure")
             expect(publisher_ats_self_disclosure_page.conduct_details.heading.text).to eq("Conduct self-disclosure")
@@ -199,12 +222,12 @@ RSpec.describe "Publishers manage self disclosure", :perform_enqueued do
         choose "No"
         click_on "Save and continue"
         expect(publisher_ats_pre_interview_checks_page).to be_displayed
-        expect(disclosure_request.reload.status).to eq("manual")
+        expect(disclosure_request.reload.status).to eq("created")
       end
 
       scenario "publisher changing their mind and choosing TV for self-disclosure" do
-        expect(publisher_ats_self_disclosure_page.status.text).to eq("pending")
-        expect(publisher_ats_self_disclosure_page.button.text).to eq("Manually mark as complete")
+        expect(publisher_ats_self_disclosure_page.status).to have_text("created")
+        expect(publisher_ats_self_disclosure_page.button).to have_text("Mark as received")
         expect(
           publisher_ats_self_disclosure_page.goto_references_and_self_disclosure_form.text,
         ).to eq("Would you like to collect this self-disclosure form through Teaching Vacancies?")
@@ -213,7 +236,7 @@ RSpec.describe "Publishers manage self disclosure", :perform_enqueued do
         choose "Yes"
         click_on "Save and continue"
         expect(publisher_ats_pre_interview_checks_page).to be_displayed
-        expect(disclosure_request.reload.status).to eq("sent")
+        expect(disclosure_request.reload.status).to eq("requested")
       end
     end
   end

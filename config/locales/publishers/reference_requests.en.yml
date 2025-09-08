@@ -1,6 +1,9 @@
 en:
   reference_requests:
-    pending:
+    created:
+      status: created
+      colour: grey
+    requested:
       status: pending
       colour: blue
     received:
@@ -12,9 +15,7 @@ en:
     declined:
       status: unavailable
       colour: red
-    created:
-      status: created
-      colour: grey
     completed:
       status: completed
       colour: green
+      success_msg: This request form has been marked as completed

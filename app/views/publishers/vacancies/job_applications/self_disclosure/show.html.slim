@@ -9,7 +9,22 @@
     h1.govuk-heading-xl class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
       = @self_disclosure.applicant_name
 
-    - if @self_disclosure.request.completed?
+    .govuk-body
+      - status = @self_disclosure.request.status
+      = govuk_tag(text: t("reference_requests.#{status}.status"), colour: t("reference_requests.#{status}.colour"))
+
+    .govuk-button-group
+      - if @self_disclosure.request.completed? && @self_disclosure.model
+        = govuk_button_link_to t(".print"), organisation_job_job_application_self_disclosure_path(vacancy.id, @job_application.id, format: :pdf), class: "govuk-button--secondary"
+
+      - if @self_disclosure.request.received?
+        = form_with(url: organisation_job_job_application_self_disclosure_path(vacancy.id, @job_application.id), method: :patch) do |f|
+          = f.hidden_field :status, value: :completed
+          - if @self_disclosure.model
+            = govuk_button_link_to t(".print"), organisation_job_job_application_self_disclosure_path(vacancy.id, @job_application.id, format: :pdf), class: "govuk-button--secondary"
+          = f.govuk_submit t(".mark_as_completed"), class: "govuk-button--secondary progress"
+
+    - if @self_disclosure.request.received? || @self_disclosure.request.completed?
       = render "jobseekers/job_applications/self_disclosure/review/completed"
     - else
       = render "jobseekers/job_applications/self_disclosure/review/pending"

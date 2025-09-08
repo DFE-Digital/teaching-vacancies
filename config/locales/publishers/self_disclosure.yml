@@ -6,3 +6,6 @@ en:
           show:
             communication_history: Communication history
             page_title: Self-disclosure form
+            print: Print this page
+            mark_as_completed: Mark as completed
+            self_disclosure_received: Self-disclosure received

@@ -87,19 +87,19 @@ RSpec.describe "jobseekers/job_applications/index" do
     let(:tag_text) { "action required" }
     let(:job_applications) { [job_application] }
 
-    context "when self_disclosure_request sent" do
+    context "when self_disclosure_request requested" do
       let(:job_application) do
         build_stubbed(:job_application, :status_interviewing,
-                      self_disclosure_request: build_stubbed(:self_disclosure_request, :sent))
+                      self_disclosure_request: build_stubbed(:self_disclosure_request, :requested))
       end
 
       it { expect(rendered).to have_content(tag_text) }
     end
 
-    context "when self_disclosure_request manual" do
+    context "when self_disclosure_request created" do
       let(:job_application) do
         build_stubbed(:job_application, :status_interviewing,
-                      self_disclosure_request: build_stubbed(:self_disclosure_request, :manual))
+                      self_disclosure_request: build_stubbed(:self_disclosure_request, :created))
       end
 
       it { expect(rendered).to have_no_content(tag_text) }

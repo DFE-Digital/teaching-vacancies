@@ -6,8 +6,8 @@ module PageObjects
           set_url "/organisation/jobs/{vacancy_id}/job_applications/{job_application_id}/self_disclosure"
 
           element :status, "#main-content .govuk-tag"
-          element :button, ".govuk-grid-column-two-thirds .govuk-button"
-          element :goto_references_and_self_disclosure_form, "a.govuk-link:nth-child(7)"
+          element :button, ".govuk-grid-column-two-thirds .govuk-button.progress"
+          element :goto_references_and_self_disclosure_form, "a.tv-collection"
           element :banner_title, "#govuk-notification-banner-title"
 
           section :personal_details, Sections::SelfDisclosure::PersonalDetailsSection, ".personal-details"

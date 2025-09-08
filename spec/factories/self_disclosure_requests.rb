@@ -3,15 +3,19 @@ FactoryBot.define do
     job_application
   end
 
-  trait :sent do
-    status { "sent" }
+  trait :requested do
+    status { "requested" }
+
+    after(:create, &:requested!)
   end
 
   trait :received do
     status { "received" }
   end
 
-  trait :manual do
-    status { "manual" }
+  trait :created do
+    status { "created" }
+
+    after(:create, &:created!)
   end
 end

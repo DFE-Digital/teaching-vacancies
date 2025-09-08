@@ -4,7 +4,7 @@ RSpec.describe "Job applications self disclosure" do
   let(:vacancy) { create(:vacancy) }
   let(:organisation) { vacancy.organisations.first }
   let(:job_application) { create(:job_application, :status_submitted, vacancy:) }
-  let(:self_disclosure_request) { create(:self_disclosure_request, :sent, job_application:) }
+  let(:self_disclosure_request) { create(:self_disclosure_request, :requested, job_application:) }
   let(:self_disclosure) { create(:self_disclosure, self_disclosure_request:) }
   let(:publisher) { create(:publisher, accepted_terms_at: 1.day.ago) }
 
@@ -42,17 +42,36 @@ RSpec.describe "Job applications self disclosure" do
 
   describe "PATCH #update" do
     let(:request) do
-      patch(organisation_job_job_application_self_disclosure_path(vacancy.id, job_application.id))
+      patch(organisation_job_job_application_self_disclosure_path(vacancy.id, job_application.id), params:)
+    end
+    let(:params) { { status: } }
+    let(:status) { :received }
+
+    context "when requested to received" do
+      let(:status) { :received }
+
+      it "updates request status" do
+        expect { request }
+        .to change { self_disclosure_request.reload.status }.from("requested").to("received")
+      end
+    end
+
+    context "when received to completed" do
+      let(:status) { :completed }
+
+      before { self_disclosure_request.received! }
+
+      it "updates request status" do
+        expect { request }
+        .to change { self_disclosure_request.reload.status }.from("received").to("completed")
+
+        expect(response.request.flash[:success]).to include(I18n.t("reference_requests.completed.success_msg"))
+      end
     end
 
     it "redirects to job application" do
       expect(request)
         .to redirect_to(organisation_job_job_application_self_disclosure_path(vacancy.id, job_application.id))
-    end
-
-    it "updates request status" do
-      expect { request }
-        .to change { self_disclosure_request.reload.status }.from("sent").to("manually_completed")
     end
   end
 end

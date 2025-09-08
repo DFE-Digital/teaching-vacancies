@@ -40,6 +40,33 @@ RSpec.describe SelfDisclosurePresenter do
     end
   end
 
+  describe ".events" do
+    before do
+      PaperTrail.enabled = true
+      job_application.self_disclosure_request = request
+    end
+
+    after { PaperTrail.enabled = false }
+
+    context "with no status change" do
+      let(:request) { create(:self_disclosure_request) }
+
+      it { expect(presenter.events).to be_empty }
+    end
+
+    context "with a status change" do
+      let(:request) { create(:self_disclosure_request, :requested) }
+
+      it { expect(presenter.events.size).to eq(1) }
+
+      it "returns event timeline" do
+        label, msg = presenter.events.first
+        expect(label).to eq("Requested")
+        expect(msg).to include("TVS - ")
+      end
+    end
+  end
+
   describe ".sections" do
     let(:sections) { presenter.sections.to_a }
 

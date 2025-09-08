@@ -18,19 +18,10 @@ class SelfDisclosurePresenter
   attr_reader :model, :job_application, :request
 
   def events
-    request.versions.reverse_each.map do |version|
+    request.versions.reverse_each.filter_map do |version|
       next unless version.changeset.key?("status")
 
-      label = case version.changeset["status"].last
-              in "manually_completed"
-                t(".event.manually_completed")
-              in "manual"
-                t(".event.managed_outside_tv")
-              in "received"
-                t(".event.completed")
-              in "sent"
-                t(".event.requested")
-              end
+      label = t(".event.#{version.changeset['status'].last}")
       actor = version.actor&.papertrail_display_name || "Teaching Vacancies"
       timestamp = version.created_at.to_fs
       [label, "#{actor} - #{timestamp}"]

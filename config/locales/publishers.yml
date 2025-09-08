@@ -605,16 +605,17 @@ en:
             heading: Notes
         pre_interview_checks:
           page_title: Pre Interview Checks
-          pending_at: Request sent %{date}
-          completed_at: Completed %{date}
-          received_at: Received %{date}
-          declined_at: Declined %{date}
           created_at: Created %{date}
           form_requests: Form requests
           reference: Reference
           religious_reference: Religious Reference
           action_needed: Action needed
           request_type: Request type
+          requested_at: Request sent %{date}
+          received_at: Received %{date}
+          completed_at: Completed %{date}
+          declined_at: Declined %{date}
+          references: References
           last_action: Last action
           self_disclosure: Self-disclosure
           status: Status

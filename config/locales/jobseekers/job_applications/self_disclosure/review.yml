@@ -6,18 +6,19 @@ en:
           pending:
             line_1: Once the self-disclosure form is received you will be able to view it on this page. You will be able to send a reminder one week after the request.
             line_2: If the request is more urgent, you should reach out to the applicant directly. If you do not receive the self-disclosure form within one week, you will be able to send a reminder.
-            manually_complete: Manually mark as complete
+            mark_as_received: Mark as received
+            mark_as_completed: Mark as completed
             collect_through_tv: Would you like to collect this self-disclosure form through Teaching Vacancies?
 
           completed:
             event:
               completed: Completed
+              received: Received
               requested: Requested
-              manually_completed: Manually completed
-              managed_outside_tv: Managed outside Teaching Vacancies
+              created: Managed outside Teaching Vacancies
             self_disclosure_form: Self-disclosure form
-            manually_completed: This self-disclosure form has been marked as completed.
-            print: Download self-disclosure
+            manually_received: This self-disclosure form has been marked as received.
+            print: Print self-disclosure
             "true": "Yes"
             "false": "No"
             n_a: N/A

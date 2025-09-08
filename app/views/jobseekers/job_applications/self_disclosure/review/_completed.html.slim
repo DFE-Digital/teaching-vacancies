@@ -1,12 +1,4 @@
-.govuk-body
-  = govuk_tag(text: t("reference_requests.completed.status"), colour: t("reference_requests.completed.colour"))
-
-- if @self_disclosure.request.manually_completed?
-  .govuk-body = t(".manually_completed")
-
-- else
-  = govuk_button_link_to t(".print"), organisation_job_job_application_self_disclosure_path(vacancy.id, @job_application.id, format: :pdf), class: "govuk-button--secondary"
-
+- if @self_disclosure.model
   .personal-details
      h2.govuk-heading-m = t(".personal_details")
      = govuk_summary_list do |summary_list|
@@ -23,3 +15,10 @@
           - if question.present?
             .govuk-body{class="govuk-!-font-weight-bold"} = question
           .govuk-body = answer
+
+- elsif @self_disclosure.request.completed?
+  .govuk-body = t(".manually_completed")
+
+- elsif @self_disclosure.request.received?
+  / received status when managed outside TVS
+  .govuk-body = t(".manually_received")
