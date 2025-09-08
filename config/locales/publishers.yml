@@ -577,6 +577,8 @@ en:
           send_message: "Send message"
           cancel: "Cancel"
           date_prefix: "Date:"
+          no_messages_yet: "No messages yet."
+          messaging_not_available: "Messaging is not available for this application."
         header:
           status_heading: Applicant status
           tabs:

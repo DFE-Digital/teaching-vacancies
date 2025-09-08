@@ -1,6 +1,6 @@
 .govuk-grid-row
   .govuk-grid-column-full
-    - if messages.any?
+    - if can_send_message?(@job_application, current_user)
       = render "shared/message_form",
                message_object: @message_form,
                form_url: jobseekers_job_application_messages_path(@job_application),
@@ -12,5 +12,8 @@
     - else
       p.govuk-body = t(".no_messages_yet")
 
-    #messages-list
-      = render partial: messages, locals: { current_user: current_user }
+    - if messages.any?
+      #messages-list
+        = render partial: messages, locals: { current_user: current_user }
+    - else
+      p.govuk-body = t(".no_messages_yet")
