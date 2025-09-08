@@ -22,7 +22,7 @@
 
   - if job_application.draft? && job_application.vacancy.expired?
     - card.with_action_item link: job_application_status_tag(:deadline_passed)
-  - elsif job_application.interviewing? && job_application.self_disclosure_request.present? && job_application.self_disclosure_request.sent?
+  - elsif job_application.interviewing? && job_application.self_disclosure_request.present? && job_application.self_disclosure_request.requested?
     - card.with_action_item link: job_application_status_tag(:action_required)
   - else
     - card.with_action_item link: job_application_status_tag(job_application.status)

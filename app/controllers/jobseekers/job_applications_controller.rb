@@ -23,7 +23,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     action_required = JobApplication.includes(:self_disclosure_request, :vacancy)
                                     .where(jobseeker: current_jobseeker)
                                     .joins(:self_disclosure_request)
-                                    .merge(SelfDisclosureRequest.sent)
+                                    .merge(SelfDisclosureRequest.requested)
                                     .interviewing.order(submitted_at: :desc)
 
     active_job_applications = current_jobseeker.job_applications

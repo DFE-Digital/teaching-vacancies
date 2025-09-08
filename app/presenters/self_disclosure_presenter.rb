@@ -17,27 +17,16 @@ class SelfDisclosurePresenter
 
   attr_reader :model, :job_application, :request
 
-  # :nocov:
   def events
-    request.versions.reverse_each.map do |version|
+    request.versions.reverse_each.filter_map do |version|
       next unless version.changeset.key?("status")
 
-      label = case version.changeset["status"].last
-              in "manually_completed"
-                t(".event.manually_completed")
-              in "manual"
-                t(".event.managed_outside_tv")
-              in "received"
-                t(".event.completed")
-              in "sent"
-                t(".event.requested")
-              end
+      label = t(".event.#{version.changeset['status'].last}")
       actor = version.actor&.papertrail_display_name || "TVS"
       timestamp = version.created_at.to_fs
       [label, "#{actor} - #{timestamp}"]
     end
   end
-  # :nocov:
 
   def personal_details
     Enumerator.new do |y|
