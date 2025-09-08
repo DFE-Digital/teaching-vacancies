@@ -6,6 +6,8 @@ module Publishers
     before_action :check_terms_and_conditions
     before_action :check_candidate_profiles_interstitial_acknowledged
 
+    helper_method :current_user
+
     def check_terms_and_conditions
       redirect_to publishers_terms_and_conditions_path unless current_publisher.accepted_terms_at?
     end

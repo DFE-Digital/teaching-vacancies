@@ -1,3 +1,7 @@
+- content_for :page_title_prefix, t(".page_title")
+
+= render "publishers/vacancies/job_applications/header", vacancy: @vacancy, job_application: @job_application
+
 .govuk-grid-row
   .govuk-grid-column-full
     div class="govuk-!-margin-bottom-6"
@@ -6,14 +10,9 @@
     - if @show_form
       = render "shared/message_form",
               message_object: @message_form,
-              form_url: organisation_job_job_application_messages_path(vacancy.id, job_application.id),
+              form_url: organisation_job_job_application_messages_path(vacancy.id, @job_application.id),
               form_help_text: t(".how_will_message_be_sent"),
               form_help_content: t(".message_sent_description")
 
-    - unless @show_form == "true"
-      / Inset text (only show when form is not visible)
-      = govuk_inset_text do
-        = t(".pre_interview_documentation_note")
-
     #messages-list
-      = render partial: messages, locals: { current_user: current_user, job_application: job_application }
+      = render partial: @messages, locals: { current_user: current_user, job_application: @job_application }
