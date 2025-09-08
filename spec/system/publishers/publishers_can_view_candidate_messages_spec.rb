@@ -2,11 +2,11 @@ require "rails_helper"
 
 RSpec.describe "Publishers can view candidate messages", :js do
   let(:organisation) { create(:school) }
-  let(:publisher) { create(:publisher) }
+  let(:publisher) { create(:publisher, organisations: [organisation]) }
   let(:jobseeker) { create(:jobseeker) }
 
-  let(:health_vacancy) { create(:vacancy, :live, publisher_organisation: organisation) }
-  let(:music_vacancy) { create(:vacancy, :live, publisher_organisation: organisation) }
+  let(:health_vacancy) { create(:vacancy, :live, organisations: [organisation]) }
+  let(:music_vacancy) { create(:vacancy, :live, organisations: [organisation]) }
 
   let(:health_job_application) { create(:job_application, :status_submitted, vacancy: health_vacancy, jobseeker: jobseeker) }
   let(:music_job_application) { create(:job_application, :status_submitted, vacancy: music_vacancy, jobseeker: jobseeker) }
