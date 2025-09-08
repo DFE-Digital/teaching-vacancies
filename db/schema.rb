@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema[7.2].define(version: 2025_09_09_140615) do
+=======
+ActiveRecord::Schema[7.2].define(version: 2025_09_05_144201) do
+>>>>>>> ac4090ad3 (Message archiving (#8020))
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -84,6 +88,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_140615) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "archived", default: false, null: false
+    t.index ["archived"], name: "index_conversations_on_archived"
     t.index ["job_application_id"], name: "index_conversations_on_job_application_id"
   end
 
@@ -458,6 +464,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_140615) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "type", null: false
+    t.boolean "read", default: false, null: false
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
     t.index ["sender_id"], name: "index_messages_on_sender_id"
   end
