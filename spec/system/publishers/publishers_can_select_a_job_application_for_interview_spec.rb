@@ -25,17 +25,29 @@ RSpec.describe "Publishers can select a job application for interview", :perform
       click_on "Save and continue"
     end
 
-    context "with a non-religious vacancy" do
+    context "with a religious vacancy" do
       let(:job_application) do
         create(:job_application, :status_submitted,
-               notify_before_contact_referers: true,
                email_address: jobseeker.email,
                vacancy: vacancy, jobseeker: jobseeker)
       end
+      let(:vacancy) { create(:vacancy, :catholic, :expired, organisations: [organisation], publisher: publisher) }
+
+      it "shows religious warning text" do
+        expect(page).to have_content("cannot collect religious references ")
+      end
+    end
+
+    context "with a non-religious vacancy" do
       let(:vacancy) { create(:vacancy, :expired, organisations: [organisation], publisher: publisher) }
+      let(:job_application) do
+        create(:job_application, :status_submitted,
+               email_address: jobseeker.email,
+               vacancy: vacancy, jobseeker: jobseeker)
+      end
 
       it "doesnt show religious warning text" do
-        expect(page).to have_no_content(cannot_collect)
+        expect(page).to have_no_content("cannot collect religious references ")
       end
 
       scenario "without selecting" do
