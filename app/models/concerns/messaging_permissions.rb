@@ -1,7 +1,6 @@
 module MessagingPermissions
   extend ActiveSupport::Concern
 
-  # Jobseeker permissions
   def can_jobseeker_initiate_message?
     case status
     when "interviewing", "unsuccessful_interview", "offered", "declined"
@@ -20,7 +19,6 @@ module MessagingPermissions
     end
   end
 
-  # Publisher/hiring staff permissions
   def can_publisher_send_message?
     case status
     when "withdrawn"

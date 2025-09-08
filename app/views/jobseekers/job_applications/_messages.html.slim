@@ -6,6 +6,11 @@
                form_url: jobseekers_job_application_messages_path(@job_application),
                form_help_text: t(".form_help_text"),
                form_help_content: t(".form_help_content")
+    - else
+      p.govuk-body-m = t(".messaging_not_available")
 
-    #messages-list
-      = render partial: messages, locals: { current_user: current_user }
+    - if messages.any?
+      #messages-list
+        = render partial: messages, locals: { current_user: current_user }
+    - else
+      p.govuk-body-m = t(".no_messages_yet")
