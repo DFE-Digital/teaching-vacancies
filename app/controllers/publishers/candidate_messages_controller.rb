@@ -5,7 +5,7 @@ class Publishers::CandidateMessagesController < Publishers::BaseController
     organisations_conversations = Conversation.for_organisation(current_organisation.id)
                                               .with_latest_message_date
                                               .includes(job_application: :vacancy, messages: :sender)
-                                              .order("latest_message_at DESC")
+                                              .order(latest_message_at: :desc)
 
     @conversations = @tab == "archive" ? organisations_conversations.archived : organisations_conversations.inbox
 
@@ -18,8 +18,7 @@ class Publishers::CandidateMessagesController < Publishers::BaseController
   def toggle_archive
     conversation_ids = params[:conversations] || []
 
-    Conversation.joins(job_application: :vacancy)
-                .merge(Vacancy.in_organisation_ids(current_organisation.id))
+    Conversation.for_organisation(current_organisation.id)
                 .where(id: conversation_ids)
                 .update_all(archived: params[:archive_action] == "archive")
 
