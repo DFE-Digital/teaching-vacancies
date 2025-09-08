@@ -650,6 +650,7 @@ en:
             how_would_you_rate: How would you rate %{name}?
             page_title: Reference
             mark_as_received: Mark as received
+            mark_as_completed: Mark as completed
             collect_reference: Would you like to collect this reference through Teaching Vacancies?
             change_email_address_html: If the candidate has entered the referee's email address incorrectly, %{link}
             change_email_link_text: you can amend it.
@@ -670,12 +671,13 @@ en:
               relationship: Relationship to applicant
               email: Email address
               phone_number: Phone number
-            reference_requested: Reference requested
+            event:
+              created: Marked as interviewing
+              requested: Reference requested
+              received: Reference received
+              declined: Reference declined
+              completed: Marked as complete
             reference_email_changed: Reference email changed to %{email}
-            reference_received: Reference received
-            reference_declined: Reference declined
-            reference_created: Marked as interviewing
-            marked_as_complete: Marked as complete
             by: by %{name}
             by_tvs: by Teaching Vacancies
             communication_history: Communication history

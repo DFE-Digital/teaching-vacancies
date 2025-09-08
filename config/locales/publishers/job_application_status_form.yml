@@ -48,11 +48,6 @@ en:
             interview_feedback_received_at:
               invalid: Enter a valid date, for example, 27 3 2007
 
-        publishers/vacancies/job_applications/mark_reference_as_received_form:
-          attributes:
-            reference_satisfactory:
-              inclusion: Select yes if the reference received is satisfactory
-
         publishers/vacancies/job_applications/change_email_address_form:
           attributes:
             email:
@@ -93,11 +88,6 @@ en:
         contact_applicants_options:
           false: You will need to reach out to the candidate directly to inform them you will be collecting references.
 
-      publishers_vacancies_job_applications_mark_reference_as_received_form:
-        reference_satisfactory_options:
-          true: "This reference will be marked as complete"
-          false: "This reference will remain as received"
-
     label:
       publishers_job_application_tag_form:
         status_options:
@@ -121,11 +111,6 @@ en:
 
       publishers_job_application_references_contact_applicant_form:
         contact_applicants_options:
-          true: "Yes"
-          false: "No"
-
-      publishers_vacancies_job_applications_mark_reference_as_received_form:
-        reference_satisfactory_options:
           true: "Yes"
           false: "No"
 

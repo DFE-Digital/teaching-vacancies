@@ -222,7 +222,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
           context "when the reference is declined" do
             before do
               current_referee.reload.job_reference.update!(attributes_for(:job_reference, :reference_declined).merge(updated_at: Date.tomorrow))
-              current_referee.reload.reference_request.update!(status: :received)
+              current_referee.reload.reference_request.update!(status: :declined)
             end
 
             it "shows the reference as declined" do
@@ -295,35 +295,15 @@ RSpec.describe "Publishers can select a job application for interview", :perform
               context "when marking reference as complete" do
                 before do
                   publisher_ats_pre_interview_checks_page.reference_links.first.click
-                  click_on "Mark as received"
                 end
 
                 it "displays the page correctly" do
-                  expect(page).to have_content "This reference will be marked as complete"
-                  expect(page).to have_content "This reference will remain as received"
-                  expect(page).to have_content "Yes"
-                end
-
-                scenario "error bounce" do
-                  expect(publisher_ats_satisfactory_reference_page).to be_displayed
-                  publisher_ats_satisfactory_reference_page.submit_button.click
-                  expect(publisher_ats_satisfactory_reference_page.errors.map(&:text)).to eq(["Select yes if the reference received is satisfactory"])
-                end
-
-                scenario "accept reference", :versioning do
-                  publisher_ats_satisfactory_reference_page.yes.click
-                  publisher_ats_satisfactory_reference_page.submit_button.click
-                  expect(current_referee.reference_request.reload).to be_marked_as_complete
-                  expect(page).to have_content "completed"
+                  click_on "Mark as completed"
 
                   expect(publisher_ats_reference_request_page).to be_displayed
+                  expect(current_referee.reference_request.reload).to be_completed
+                  expect(page).to have_content "completed"
                   expect(publisher_ats_reference_request_page.timeline_titles.map(&:text)).to eq(["Marked as complete", "Reference received", "Reference requested"])
-                end
-
-                scenario "decline reference" do
-                  publisher_ats_satisfactory_reference_page.no.click
-                  publisher_ats_satisfactory_reference_page.submit_button.click
-                  expect(current_referee.reference_request.reload.status).to eq("received")
                 end
               end
             end
@@ -376,13 +356,9 @@ RSpec.describe "Publishers can select a job application for interview", :perform
           scenario "accepting an out of band reference" do
             click_on "Mark as received"
 
-            expect(publisher_ats_satisfactory_reference_page).to be_displayed
-            publisher_ats_satisfactory_reference_page.yes.click
-            publisher_ats_satisfactory_reference_page.submit_button.click
-
             expect(publisher_ats_reference_request_page).to be_displayed
-            expect(current_referee.reference_request.reload).to be_marked_as_complete
-            expect(publisher_ats_reference_request_page.timeline_titles.map(&:text)).to eq(["Marked as complete", "Marked as interviewing"])
+            expect(current_referee.reference_request.reload).to be_received
+            expect(publisher_ats_reference_request_page.timeline_titles.map(&:text)).to eq(["Reference received", "Marked as interviewing"])
           end
 
           context "when changing our mind and using TV after all" do

@@ -412,8 +412,7 @@ Rails.application.routes.draw do
         resources :notes, only: %i[create destroy], controller: "publishers/vacancies/job_applications/notes"
         resources :reference_requests, only: %i[show update edit], controller: "publishers/vacancies/job_applications/reference_requests" do
           member do
-            get :reference_received
-            patch :mark_as_received
+            patch :progress
           end
         end
         get :download

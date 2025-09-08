@@ -38,8 +38,14 @@ class JobReference < ApplicationRecord
   has_encrypted :would_reemploy_any_reason
 
   def mark_as_received
-    # invalidate token after reference is complete
+    # invalidate token after reference is received
     reference_request.update!(status: :received, token: SecureRandom.uuid)
+    Publishers::ReferenceReceivedNotifier.with(record: self).deliver
+  end
+
+  def mark_as_declined
+    # invalidate token after reference is declined
+    reference_request.update!(status: :declined, token: SecureRandom.uuid)
     Publishers::ReferenceReceivedNotifier.with(record: self).deliver
   end
 end
