@@ -60,6 +60,21 @@ en:
         one: Working pattern changed to %{new_value}
         other: Working patterns changed to %{new_value}
       show_value_changed: "%{attribute} changed to %{new_value}"
+    candidate_messages:
+      toggle_archive:
+        archived: "You have moved messages to archived"
+        unarchived: "You have moved messages to inbox"
+      index:
+        table_headers:
+          name: "Name"
+          application: "Application" 
+          date_and_time: "Date and time"
+        buttons:
+          archive: "Archive message"
+          unarchive: "Unarchive message"
+        empty_state:
+          no_messages: "No messages yet."
+          no_archived_messages: "No archived messages yet."
     incomplete_profile:
       complete_link_text: Complete your %{organisation_type} profile
       heading: Complete your %{organisation_type} profile
@@ -542,6 +557,7 @@ en:
         interviewing_status:
           pre_interview_checks: Pre-interview checks
         messages:
+          page_title: "Messages"
           create:
             success: Message sent successfully
             failure: Message could not be sent
@@ -551,7 +567,6 @@ en:
           message_sent_description: "Candidates will receive a copy of this message to their email and can also view the message when signed in to their Teaching Vacancies account."
           send_message: "Send message"
           cancel: "Cancel"
-          pre_interview_documentation_note: "If a candidate responds with their pre-interview documentation as an attachment, you can mark this as received and completed within the 'Pre-interview checks' section."
           date_prefix: "Date:"
         header:
           status_heading: Applicant status
