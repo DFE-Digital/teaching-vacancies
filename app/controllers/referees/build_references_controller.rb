@@ -47,7 +47,10 @@ module Referees
       if @form.valid?
         @reference.update!(@form.params_to_save)
         # invalidate token after reference is complete
-        if @reference.complete?
+        if !@reference.can_give_reference?
+          @reference.mark_as_declined
+          next_token = @reference_request.token
+        elsif @reference.complete?
           @reference.mark_as_received
           next_token = @reference_request.token
         else
