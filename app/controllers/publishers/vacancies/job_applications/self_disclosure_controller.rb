@@ -12,9 +12,9 @@ class Publishers::Vacancies::JobApplications::SelfDisclosureController < Publish
   end
 
   def update
-    @job_application.self_disclosure_request.manually_completed!
+    @job_application.self_disclosure_request.update!(status: params[:status])
 
-    flash[:success] = t("jobseekers.job_applications.self_disclosure.review.completed.manually_completed")
+    flash[:success] = t("reference_requests.completed.success_msg") if @job_application.self_disclosure_request.completed?
     redirect_to organisation_job_job_application_self_disclosure_path(vacancy.id, @job_application.id)
   end
 
@@ -26,7 +26,6 @@ class Publishers::Vacancies::JobApplications::SelfDisclosureController < Publish
     send_data(
       pdf.render,
       filename: "self_disclosure_#{@self_disclosure.model.id}.pdf",
-      type: "application/pdf",
       disposition: "inline",
     )
   end

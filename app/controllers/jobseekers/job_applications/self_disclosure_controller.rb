@@ -1,7 +1,7 @@
 class Jobseekers::JobApplications::SelfDisclosureController < Jobseekers::BaseController
   include Wicked::Wizard
 
-  before_action :redirect_when_self_disclosure_not_pending, except: :completed
+  before_action :redirect_when_self_disclosure_not_pending, except: :completed, if: -> { !job_application.self_disclosure_request.requested? }
   before_action :set_form, except: :completed
 
   FORMS = {
@@ -61,8 +61,6 @@ class Jobseekers::JobApplications::SelfDisclosureController < Jobseekers::BaseCo
   end
 
   def redirect_when_self_disclosure_not_pending
-    return if self_disclosure && self_disclosure.self_disclosure_request.sent?
-
     redirect_to(jobseekers_job_application_path(job_application))
   end
 
