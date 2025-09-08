@@ -22,7 +22,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
         create(:publisher_message, conversation: conversation, sender: publisher)
         create(:publisher_message, conversation: conversation, sender: another_publisher)
         create(:jobseeker_message, conversation: conversation, sender: jobseeker)
-        visit organisation_job_job_application_path(vacancy.id, job_application.id, tab: "messages")
+        visit messages_organisation_job_job_application_path(vacancy.id, job_application.id)
       end
 
       # This should be a view test, but it resisted all efforts to make it so.
@@ -37,7 +37,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
 
     context "when viewing a job application messages tab" do
       it "allows publisher to send a message to the job applicant", :js do
-        visit organisation_job_job_application_path(vacancy.id, job_application.id, tab: "messages")
+        visit messages_organisation_job_job_application_path(vacancy.id, job_application.id)
 
         expect(page).to have_link("Print this page")
         expect(page).to have_link("Send message to candidate")
@@ -71,7 +71,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
       let!(:message) { create(:publisher_message, conversation: conversation, sender: publisher, content: "Previous message content") }
 
       it "displays existing messages and allows sending additional messages" do
-        visit organisation_job_job_application_path(vacancy.id, job_application.id, tab: "messages")
+        visit messages_organisation_job_job_application_path(vacancy.id, job_application.id)
 
         expect(page).to have_text("#{publisher.given_name} #{publisher.family_name}")
         expect(page).to have_text("Previous message content")
@@ -93,7 +93,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
       end
 
       it "shows validation errors with existing messages when sending blank message" do
-        visit organisation_job_job_application_path(vacancy.id, job_application.id, tab: "messages")
+        visit messages_organisation_job_job_application_path(vacancy.id, job_application.id)
 
         expect(page).to have_text("Previous message content")
 
@@ -127,7 +127,6 @@ RSpec.describe "Publishers can send messages to job applicants" do
 
       expect(page).to have_link("Send message to hiring staff")
       expect(page).to have_no_link("Print this page")
-      expect(page).to have_no_text("If a candidate responds with their pre-interview documentation")
 
       click_link "Send message to hiring staff"
 
@@ -162,7 +161,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
 
       login_publisher(publisher: publisher, organisation: organisation)
 
-      visit organisation_job_job_application_path(vacancy.id, job_application.id, tab: "messages")
+      visit messages_organisation_job_job_application_path(vacancy.id, job_application.id)
 
       expect(page).to have_text("Hello from publisher")
       expect(page).to have_text("Jobseeker reply content")

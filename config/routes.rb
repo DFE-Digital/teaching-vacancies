@@ -220,6 +220,11 @@ Rails.application.routes.draw do
       post :consume, on: :member
     end
     resources :jobseeker_profiles, only: %i[index show]
+    resources :candidate_messages, only: %i[index] do
+      collection do
+        patch :toggle_archive
+      end
+    end
     resource :new_features, only: %i[] do
       get :reminder
     end
@@ -427,6 +432,9 @@ Rails.application.routes.draw do
           get :pre_interview_checks
         end
         resource :religious_reference, only: %i[edit update], controller: "publishers/vacancies/job_applications/religious_references"
+        member do
+          get :messages
+        end
         resource :self_disclosure, only: %i[show update], controller: "publishers/vacancies/job_applications/self_disclosure"
         resources :collect_reference_flags, only: %i[show update], controller: "publishers/vacancies/collect_reference_flags"
         resources :collect_self_disclosure_flags, only: %i[show update], controller: "publishers/vacancies/collect_self_disclosure_flags"
