@@ -5,9 +5,12 @@
 .govuk-grid-row
   .govuk-grid-column-full
     div class="govuk-!-margin-bottom-6"
-      = govuk_button_link_to t(".print_page"), "#", class: "govuk-button--secondary", "data-controller": "utils", "data-action": "click->utils#print" unless @show_form == "true"
-      = govuk_button_link_to t(".send_message_to_candidate"), url_for(params.to_unsafe_h.merge(show_form: "true")), class: "govuk-button--secondary govuk-!-margin-left-3" unless @show_form == "true"
-    - if @show_form
+       - unless @show_form == "true"
+        = govuk_button_link_to t(".print_page"), "#", class: "govuk-button--secondary", "data-controller": "utils", "data-action": "click->utils#print"
+        - if can_send_message?(@job_application, current_user)
+          = govuk_button_link_to t(".send_message_to_candidate"), url_for(params.to_unsafe_h.merge(show_form: "true")), class: "govuk-button--secondary govuk-!-margin-left-3"
+
+    - if @show_form == "true" && can_send_message?(@job_application, current_user)
       = render "shared/message_form",
               message_object: @message_form,
               form_url: organisation_job_job_application_messages_path(vacancy.id, @job_application.id),
