@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe MessagingPermissions do
+RSpec.describe MessagingHelper do
   let(:job_application) { create(:job_application, status: status) }
 
   describe "#can_jobseeker_initiate_message?" do
@@ -10,7 +10,7 @@ RSpec.describe MessagingPermissions do
           let(:status) { allowed_status }
 
           it "returns true" do
-            expect(job_application.can_jobseeker_initiate_message?).to be true
+            expect(helper.can_jobseeker_initiate_message?(job_application)).to be true
           end
         end
       end
@@ -22,7 +22,7 @@ RSpec.describe MessagingPermissions do
           let(:status) { disallowed_status }
 
           it "returns false" do
-            expect(job_application.can_jobseeker_initiate_message?).to be false
+            expect(helper.can_jobseeker_initiate_message?(job_application)).to be false
           end
         end
       end
@@ -36,7 +36,7 @@ RSpec.describe MessagingPermissions do
           let(:status) { allowed_status }
 
           it "returns true" do
-            expect(job_application.can_jobseeker_reply_to_message?).to be true
+            expect(helper.can_jobseeker_reply_to_message?(job_application)).to be true
           end
         end
       end
@@ -48,7 +48,7 @@ RSpec.describe MessagingPermissions do
           let(:status) { disallowed_status }
 
           it "returns false" do
-            expect(job_application.can_jobseeker_reply_to_message?).to be false
+            expect(helper.can_jobseeker_reply_to_message?(job_application)).to be false
           end
         end
       end
@@ -62,7 +62,7 @@ RSpec.describe MessagingPermissions do
           let(:status) { allowed_status }
 
           it "returns true" do
-            expect(job_application.can_publisher_send_message?).to be true
+            expect(helper.can_publisher_send_message?(job_application)).to be true
           end
         end
       end
@@ -73,7 +73,7 @@ RSpec.describe MessagingPermissions do
         let(:status) { "withdrawn" }
 
         it "returns false" do
-          expect(job_application.can_publisher_send_message?).to be false
+          expect(helper.can_publisher_send_message?(job_application)).to be false
         end
       end
     end

@@ -7,7 +7,6 @@ RSpec.describe "publishers/vacancies/job_applications/messages.html.slim" do
   let(:job_application) { create(:job_application, :submitted, vacancy: vacancy) }
   let(:messages) { [] }
 
-<<<<<<< HEAD
   let(:message_form) do
     instance_double(Publishers::JobApplication::MessagesForm,
                     model_name: instance_double(ActiveModel::Name, param_key: "publishers_job_application_messages_form"),
@@ -19,15 +18,6 @@ RSpec.describe "publishers/vacancies/job_applications/messages.html.slim" do
 
   before do
     assign(:show_form, "true")
-=======
-  before do
-    assign(:show_form, "true")
-    # rubocop:disable RSpec/VerifiedDoubles
-    model_name = double("ModelName", param_key: "publishers_job_application_messages_form")
-    errors = double("Errors", empty?: true, any?: false)
-    message_form = double("MessageForm", model_name: model_name, to_key: nil, persisted?: false, errors: errors, content: "")
-    # rubocop:enable RSpec/VerifiedDoubles
->>>>>>> 81ce69127 (Add tests)
     assign(:message_form, message_form)
     assign(:vacancy, vacancy)
     assign(:job_application, job_application)
@@ -38,11 +28,7 @@ RSpec.describe "publishers/vacancies/job_applications/messages.html.slim" do
 
   context "when messaging is allowed" do
     before do
-<<<<<<< HEAD
       allow(job_application).to receive(:can_publisher_send_message?).and_return(true)
-=======
-      allow(view).to receive(:can_send_message?).with(job_application, publisher).and_return(true)
->>>>>>> 81ce69127 (Add tests)
     end
 
     it "shows send message button and hides disabled messages button button" do
@@ -84,11 +70,7 @@ RSpec.describe "publishers/vacancies/job_applications/messages.html.slim" do
 
     before do
       assign(:messages, messages)
-<<<<<<< HEAD
       allow(job_application).to receive(:can_publisher_send_message?).and_return(false)
-=======
-      allow(view).to receive(:can_send_message?).with(job_application, publisher).and_return(false)
->>>>>>> 81ce69127 (Add tests)
       allow(view).to receive(:render).and_call_original
       allow(view).to receive(:render).with(partial: messages, locals: { current_user: publisher, job_application: job_application }).and_return("Previous message content")
     end
