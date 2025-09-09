@@ -35,7 +35,7 @@ RSpec.describe "Jobseekers can manage their job applications" do
       end
       let!(:application_with_action) do
         create(:job_application, :status_interviewing,
-               self_disclosure_request: build(:self_disclosure_request, :sent),
+               self_disclosure_request: build(:self_disclosure_request, :requested),
                jobseeker: jobseeker,
                vacancy: build(:vacancy, job_title: "Action Required Job", organisations: [organisation]))
       end

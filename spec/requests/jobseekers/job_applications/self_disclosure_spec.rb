@@ -21,19 +21,25 @@ RSpec.describe "Job applications self disclosure" do
     end
 
     context "when the self disclosure is managed outside TV" do
-      let(:status) { "manual" }
+      let(:status) { "created" }
 
       it { expect(response).to redirect_to(jobseekers_job_application_path(job_application)) }
     end
 
     context "when the self disclosure is pending" do
-      let(:status) { "sent" }
+      let(:status) { "requested" }
 
       it { expect(response).to have_http_status(:ok) }
     end
 
-    context "when the self disclosure has been completed" do
+    context "when the self disclosure has been received" do
       let(:status) { "received" }
+
+      it { expect(response).to redirect_to(jobseekers_job_application_path(job_application)) }
+    end
+
+    context "when the self disclosure has been completed" do
+      let(:status) { "completed" }
 
       it { expect(response).to redirect_to(jobseekers_job_application_path(job_application)) }
     end
@@ -45,7 +51,7 @@ RSpec.describe "Job applications self disclosure" do
     let(:request) do
       patch jobseekers_job_application_self_disclosure_path(job_application, :personal_details), params:
     end
-    let(:status) { "sent" }
+    let(:status) { "requested" }
     let(:params) do
       {
         jobseekers_job_applications_self_disclosure_personal_details_form: {
@@ -92,7 +98,7 @@ RSpec.describe "Job applications self disclosure" do
         }
       end
 
-      it { expect { request }.to change { self_disclosure_request.reload.status }.from("sent").to("received") }
+      it { expect { request }.to change { self_disclosure_request.reload.status }.from("requested").to("received") }
       it { expect(request).to redirect_to completed_jobseekers_job_application_self_disclosure_index_path(job_application) }
     end
 
