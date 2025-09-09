@@ -24,7 +24,7 @@ RSpec.describe "publishers/vacancies/job_applications/messages.html.slim" do
 
   context "when messaging is allowed" do
     before do
-      allow(view).to receive(:can_send_message?).with(job_application, publisher).and_return(true)
+      allow(view).to receive(:can_publisher_send_message?).with(job_application).and_return(true)
     end
 
     it "shows send message button and hides disabled messages button button" do
@@ -66,7 +66,7 @@ RSpec.describe "publishers/vacancies/job_applications/messages.html.slim" do
 
     before do
       assign(:messages, messages)
-      allow(view).to receive(:can_send_message?).with(job_application, publisher).and_return(false)
+      allow(view).to receive(:can_publisher_send_message?).with(job_application).and_return(false)
       allow(view).to receive(:render).and_call_original
       allow(view).to receive(:render).with(partial: messages, locals: { current_user: publisher, job_application: job_application }).and_return("Previous message content")
     end

@@ -44,14 +44,4 @@ module ApplicationHelper
   def kcsie_link
     "https://www.gov.uk/government/publications/keeping-children-safe-in-education--2"
   end
-
-  def can_send_message?(job_application, user)
-    if user.is_a?(Jobseeker)
-      job_application.conversations.any? ? job_application.can_jobseeker_reply_to_message? : job_application.can_jobseeker_initiate_message?
-    elsif user.is_a?(Publisher)
-      job_application.can_publisher_send_message?
-    else
-      false
-    end
-  end
 end

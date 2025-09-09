@@ -19,7 +19,7 @@ RSpec.describe "jobseekers/job_applications/_messages.html.slim" do
 
   context "when messaging is allowed" do
     before do
-      allow(view).to receive(:can_send_message?).with(job_application, jobseeker).and_return(true)
+      allow(view).to receive(:can_jobseeker_send_message?).with(job_application).and_return(true)
     end
 
     it "shows 'Send message' button and no disabled message" do
@@ -56,7 +56,7 @@ RSpec.describe "jobseekers/job_applications/_messages.html.slim" do
 
   context "when messaging is not allowed" do
     before do
-      allow(view).to receive(:can_send_message?).with(job_application, jobseeker).and_return(false)
+      allow(view).to receive(:can_jobseeker_send_message?).with(job_application).and_return(false)
     end
 
     it "shows disabled messaging message and no 'Send message to hiring staff' button with no messages" do
