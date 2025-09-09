@@ -108,6 +108,7 @@ Rails.application.routes.draw do
       post :withdraw
       get :download
       resource :feedback, only: %i[create], controller: "job_applications/feedbacks"
+      resources :messages, only: %i[create], controller: "job_applications/messages"
       resources :self_disclosure, only: %i[show update], controller: "job_applications/self_disclosure" do
         get :completed, on: :collection
       end
@@ -217,6 +218,11 @@ Rails.application.routes.draw do
       post :consume, on: :member
     end
     resources :jobseeker_profiles, only: %i[index show]
+    resources :candidate_messages, only: %i[index] do
+      collection do
+        patch :toggle_archive
+      end
+    end
     resource :new_features, only: %i[] do
       get :reminder
     end
@@ -398,6 +404,7 @@ Rails.application.routes.draw do
 
       resources :job_applications, only: %i[index show], controller: "publishers/vacancies/job_applications" do
         resources :notes, only: %i[create destroy], controller: "publishers/vacancies/job_applications/notes"
+        resources :messages, only: %i[create], controller: "publishers/vacancies/job_applications/messages"
         resources :reference_requests, only: %i[show update edit], controller: "publishers/vacancies/job_applications/reference_requests" do
           member do
             get :reference_received
@@ -411,6 +418,9 @@ Rails.application.routes.draw do
         post :offer, on: :collection
         member do
           get :pre_interview_checks
+        end
+        member do
+          get :messages
         end
         resource :self_disclosure, only: %i[show update], controller: "publishers/vacancies/job_applications/self_disclosure"
         resources :collect_reference_flags, only: %i[show update], controller: "publishers/vacancies/collect_reference_flags"
