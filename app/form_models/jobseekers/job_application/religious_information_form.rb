@@ -31,8 +31,8 @@ module Jobseekers
       validates :faith, presence: true, if: -> { section_completed && following_religion }
 
       validates :religious_referee_name, :religious_referee_address, :religious_referee_role, :religious_referee_email,
-                presence: true, if: -> { section_completed && following_religion && religious_reference_type == "referee" }
-      validates :religious_referee_email, email: true, if: -> { section_completed && following_religion && religious_reference_type == "referee" }
+                presence: true, if: -> { section_completed && following_religion && religious_reference_type == "religious_referee" }
+      validates :religious_referee_email, email: true, if: -> { section_completed && following_religion && religious_reference_type == "religious_referee" }
     end
   end
 end

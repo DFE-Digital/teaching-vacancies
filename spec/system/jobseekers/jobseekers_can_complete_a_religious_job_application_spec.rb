@@ -63,7 +63,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
         context "with a referee" do
           before do
-            find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-referee-field']").click
+            find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-religious-referee-field']").click
           end
 
           it "produces the correct error messages" do
@@ -102,7 +102,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
             end
 
             it "contains the entered information" do
-              expect(job_application.reload).to have_attributes(religious_reference_type: "referee")
+              expect(job_application.reload).to have_attributes(religious_reference_type: "religious_referee")
             end
 
             it "can submit application" do
@@ -179,7 +179,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
         context "without a referee" do
           before do
-            find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-no-referee-field']").click
+            find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-no-religious-referee-field']").click
           end
 
           it "allows jobseeker to not specify a religious referee" do
@@ -260,7 +260,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
             context "without a referee" do
               before do
-                find("label[for='jobseekers-job-application-non-catholic-form-religious-reference-type-no-referee-field']").click
+                find("label[for='jobseekers-job-application-non-catholic-form-religious-reference-type-no-religious-referee-field']").click
               end
 
               it "completes the journey" do
@@ -274,7 +274,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
             context "when entering a referee" do
               before do
-                find("label[for='jobseekers-job-application-non-catholic-form-religious-reference-type-referee-field']").click
+                find("label[for='jobseekers-job-application-non-catholic-form-religious-reference-type-religious-referee-field']").click
               end
 
               it "errors when not entered" do

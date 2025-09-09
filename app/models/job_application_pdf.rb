@@ -244,7 +244,7 @@ class JobApplicationPdf
   # rubocop:disable Metrics/MethodLength
   def religious_reference_data(religious_reference_type)
     case religious_reference_type
-    when "referee"
+    when "religious_referee"
       [
         [I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_name"), job_application.religious_referee_name],
         [I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_address"), job_application.religious_referee_address],

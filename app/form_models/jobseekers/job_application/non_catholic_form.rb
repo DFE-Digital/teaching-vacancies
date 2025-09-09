@@ -19,7 +19,7 @@ module Jobseekers
 
       validates_presence_of :ethos_and_aims
 
-      validates :religious_reference_type, inclusion: { in: %w[referee no_referee], nil: false }, if: -> { non_catholic_section_completed && following_religion }
+      validates :religious_reference_type, inclusion: { in: %w[religious_referee no_religious_referee], nil: false }, if: -> { non_catholic_section_completed && following_religion }
 
       completed_attribute(:non_catholic)
 

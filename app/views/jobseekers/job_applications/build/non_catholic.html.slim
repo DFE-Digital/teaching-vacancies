@@ -23,13 +23,13 @@
           = f.govuk_text_area :place_of_worship, label: { size: "s" }, rows: 6
 
           = f.govuk_radio_buttons_fieldset :religious_reference_type do
-            = f.govuk_radio_button :religious_reference_type, :referee, link_errors: true do
+            = f.govuk_radio_button :religious_reference_type, :religious_referee, link_errors: true do
               = f.govuk_text_field :religious_referee_name
               = f.govuk_text_area :religious_referee_address, rows: 6
               = f.govuk_text_field :religious_referee_role
               = f.govuk_text_field :religious_referee_email
               = f.govuk_text_field :religious_referee_phone
-            = f.govuk_radio_button :religious_reference_type, :no_referee
+            = f.govuk_radio_button :religious_reference_type, :no_religious_referee
 
         = f.govuk_radio_button :following_religion, "false"
 

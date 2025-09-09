@@ -3,7 +3,7 @@
 module Publishers
   module Vacancies
     module JobApplications
-      class ReferenceRequestsController < Publishers::Vacancies::JobApplications::BaseController
+      class ReferenceRequestsController < BaseController
         before_action :set_job_application, :set_reference_request
 
         def show
