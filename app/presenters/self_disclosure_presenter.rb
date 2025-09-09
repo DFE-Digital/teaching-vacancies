@@ -12,7 +12,7 @@ class SelfDisclosurePresenter
   def initialize(job_application)
     @job_application = job_application
     @request = job_application.self_disclosure_request
-    @model = job_application.self_disclosure
+    @model = job_application.self_disclosure_request.self_disclosure
   end
 
   attr_reader :model, :job_application, :request
