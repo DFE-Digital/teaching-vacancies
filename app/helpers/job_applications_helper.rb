@@ -186,7 +186,7 @@ module JobApplicationsHelper
     JobApplication.new(job_application_attributes.merge(
                          following_religion: true,
                          faith: "Anglican",
-                         religious_reference_type: "referee",
+                         religious_reference_type: "religious_referee",
                          religious_referee_name: Faker::Name.name,
                          religious_referee_address: Faker::Address.full_address,
                          ethos_and_aims: "I am person of deep faith and wish to inspire the children I teach though God's teachings",

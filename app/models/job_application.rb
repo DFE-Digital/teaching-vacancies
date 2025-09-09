@@ -76,7 +76,7 @@ class JobApplication < ApplicationRecord
   TERMINAL_STATUSES = (statuses.keys.map(&:to_s) - STATUS_TRANSITIONS.keys).freeze
   INACTIVE_STATUSES = (%w[draft] + TERMINAL_STATUSES).freeze
 
-  RELIGIOUS_REFERENCE_TYPES = { referee: 1, baptism_certificate: 2, baptism_date: 3, no_referee: 4 }.freeze
+  RELIGIOUS_REFERENCE_TYPES = { religious_referee: 1, baptism_certificate: 2, baptism_date: 3, no_religious_referee: 4 }.freeze
 
   enum :religious_reference_type, RELIGIOUS_REFERENCE_TYPES
 

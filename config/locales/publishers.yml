@@ -608,6 +608,8 @@ en:
           created_at: Created %{date}
           form_requests: Form requests
           reference: Reference
+          religious_reference: Religious Reference
+          action_needed: Action needed
           request_type: Request type
           last_action: Last action
           self_disclosure: Self-disclosure
@@ -687,8 +689,12 @@ en:
         base:
           collect_references:
             page_title: Collect references
+            warning_text: You cannot collect religious references or documents using Teaching Vacancies. To get any additional information, contact the candidate directly.
           ask_references_email:
             page_title: Contact applicant for references
+            one_or_more_needs_contacting: >-
+              One of the candidates you have selected to interview needs to be notified when you are
+              collecting references. Do you want Teaching Vacancies to contact the candidate?
           collect_self_disclosure:
             page_title: Collect self disclosures
       live:
