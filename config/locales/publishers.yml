@@ -738,6 +738,7 @@ en:
           collect_references:
             page_title: Collect references
             warning_text: You cannot collect religious references or documents using Teaching Vacancies. To get any additional information, contact the candidate directly.
+            preview_online_job_reference: Download a preview of the Teaching Vacancies' reference form
           ask_references_email:
             page_title: Contact applicant for references
             one_or_more_needs_contacting: >-
@@ -745,6 +746,7 @@ en:
               collecting references. Do you want Teaching Vacancies to contact the candidate?
           collect_self_disclosure:
             page_title: Collect self disclosures
+            preview_online_self_disclosure: Download a preview of the Teaching Vacancies' self-disclosure form
       live:
         notice: You can only view active jobs
       review:
