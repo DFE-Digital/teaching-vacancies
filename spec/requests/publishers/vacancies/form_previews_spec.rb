@@ -16,25 +16,35 @@ RSpec.describe "Publishers::Vacancies::FormPreviewController" do
   after { sign_out(publisher) }
 
   describe "GET #show" do
-    it "sends a plain PDF file" do
-      get organisation_job_form_preview_path(vacancy.id, :plain)
+    context "when job_application" do
+      %i[plain catholic religious].each do |sample|
+        it "sends a #{sample} PDF file" do
+          get organisation_job_form_preview_path(vacancy.id, sample)
 
-      expect(response).to have_http_status(:ok)
-      expect(response.content_type).to eq("application/pdf")
+          expect(response).to have_http_status(:ok)
+          expect(response.content_type).to eq("application/pdf")
+          expect(response.body).to include("%PDF")
+          expect(response.headers["Content-Disposition"]).to include(/job_application_\d+\.pdf/)
+        end
+      end
     end
 
-    it "sends a catholic PDF file" do
-      get organisation_job_form_preview_path(vacancy.id, :catholic)
+    it "sends a self-disclosure PDF file" do
+      get organisation_job_form_preview_path(vacancy.id, :self_disclosure)
 
       expect(response).to have_http_status(:ok)
       expect(response.content_type).to eq("application/pdf")
+      expect(response.body).to include("%PDF")
+      expect(response.headers["Content-Disposition"]).to include(/self_disclosure_\d+\.pdf/)
     end
 
-    it "sends a religious PDF file" do
-      get organisation_job_form_preview_path(vacancy.id, :religious)
+    it "sends a job reference PDF file" do
+      get organisation_job_form_preview_path(vacancy.id, :job_reference)
 
       expect(response).to have_http_status(:ok)
       expect(response.content_type).to eq("application/pdf")
+      expect(response.body).to include("%PDF")
+      expect(response.headers["Content-Disposition"]).to include(/job_reference_\d+\.pdf/)
     end
   end
 end
