@@ -123,7 +123,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
 
             let(:new_email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
 
-            scenario "with a good email" do
+            scenario "with a valid email" do
               fill_in "publishers-vacancies-job-applications-change-email-address-form-email-field", with: new_email
               click_on I18n.t("buttons.save_and_continue")
               expect(page).to have_content(new_email)
