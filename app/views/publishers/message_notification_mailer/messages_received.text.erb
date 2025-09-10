@@ -1,0 +1,15 @@
+Dear <%= @publisher.given_name %>,
+
+<% if @message_count == 1 %>
+You have received a message in your Teaching Vacancies account.
+<% else %>
+You have received <%= @message_count %> messages in your Teaching Vacancies account.
+<% end %>
+
+<%= t("publishers.message_notification_mailer.messages_received.sign_in_prompt", sign_in_link: "[sign in to your Teaching Vacancies account](#{publishers_candidate_messages_url})") %>
+
+Kind regards,
+
+Teaching Vacancies team
+
+<%= t("shared.footer", home_page_link: home_page_link) %>
