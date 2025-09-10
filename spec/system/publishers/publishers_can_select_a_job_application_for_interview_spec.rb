@@ -29,6 +29,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
       let(:job_application) do
         create(:job_application, :status_submitted,
                email_address: jobseeker.email,
+               notify_before_contact_referers: true,
                vacancy: vacancy, jobseeker: jobseeker)
       end
       let(:vacancy) { create(:vacancy, :catholic, :expired, organisations: [organisation], publisher: publisher) }
@@ -42,6 +43,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
       let(:vacancy) { create(:vacancy, :expired, organisations: [organisation], publisher: publisher) }
       let(:job_application) do
         create(:job_application, :status_submitted,
+               notify_before_contact_referers: true,
                email_address: jobseeker.email,
                vacancy: vacancy, jobseeker: jobseeker)
       end
