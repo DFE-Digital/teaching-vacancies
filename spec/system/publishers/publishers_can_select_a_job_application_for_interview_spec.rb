@@ -85,7 +85,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
         expect(page).to have_content(cannot_collect)
       end
 
-      context "when editing a religious reference" do
+      context "when editing a religious reference", :versioning do
         before do
           choose "Yes"
           click_on "Save and continue"
@@ -122,7 +122,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
               end
             end
 
-            it "allows the reference to be marked as complete" do
+            it "allows the reference to be marked as complete", :js do
               click_on "Mark as complete"
               within "#religious_reference" do
                 expect(page).to have_content "completed"
@@ -133,7 +133,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
           describe "adding a note" do
             let(:note_content) { Faker::Ancient.hero }
 
-            it "allows notes to be added without disturbing the flow", :js do
+            it "allows notes to be added without disturbing the flow" do
               notes = find_by_id("publishers-job-application-notes-form-content-field")
               notes.fill_in with: note_content
               click_on "Save note"

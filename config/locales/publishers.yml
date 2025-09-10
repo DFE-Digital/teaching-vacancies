@@ -622,6 +622,12 @@ en:
             can_manually_mark: You can manually mark the reference as received here for record keeping purposes.
             mark_as_requested: Mark as requested
             mark_as_complete: Mark as complete
+            communication_history: Communication history
+            reference_created: Reference needs action
+            reference_requested: Reference requested
+            reference_completed: Reference completed
+            by: By %{name}
+            by_tvs: By Teaching Vacancies
             cancel_and_return: Cancel and return to pre-interview checks
         reference_requests:
           reference:

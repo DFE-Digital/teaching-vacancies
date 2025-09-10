@@ -651,7 +651,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_140615) do
     t.index ["job_application_id"], name: "index_references_on_job_application_id"
   end
 
-  create_table "religious_reference_requests", force: :cascade do |t|
+  create_table "religious_reference_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "job_application_id", null: false
     t.integer "status", null: false
     t.datetime "created_at", null: false
