@@ -48,6 +48,7 @@ module "web_application" {
   cluster_configuration_map  = module.cluster_data.configuration_map
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
+  run_as_non_root            = var.run_as_non_root
 
   docker_image           = var.app_docker_image
   command                = var.aks_web_app_start_command
@@ -71,6 +72,7 @@ module "worker_application" {
   cluster_configuration_map  = module.cluster_data.configuration_map
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
+  run_as_non_root            = var.run_as_non_root
 
   docker_image   = var.app_docker_image
   command        = ["/bin/sh", "-c", "bundle exec sidekiq -C config/sidekiq.yml"]
