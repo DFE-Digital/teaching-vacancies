@@ -5,14 +5,13 @@ RSpec.describe "jobseekers/job_applications/_messages.html.slim" do
   let(:job_application) { create(:job_application, :submitted, jobseeker: jobseeker) }
   let(:messages) { [] }
 
-  let(:message_form) do 
-    instance_double("Publishers::JobApplication::MessagesForm",
-      model_name: instance_double("ActiveModel::Name", param_key: "publishers_job_application_messages_form"),
-      to_key: nil,
-      persisted?: false,
-      errors: instance_double("ActiveModel::Errors", empty?: true, any?: false),
-      content: ""
-    )
+  let(:message_form) do
+    instance_double(Publishers::JobApplication::MessagesForm,
+                    model_name: instance_double(ActiveModel::Name, param_key: "publishers_job_application_messages_form"),
+                    to_key: nil,
+                    persisted?: false,
+                    errors: instance_double(ActiveModel::Errors, empty?: true, any?: false),
+                    content: "")
   end
 
   before do
@@ -24,7 +23,7 @@ RSpec.describe "jobseekers/job_applications/_messages.html.slim" do
 
   context "when messaging is allowed" do
     before do
-      allow(view).to receive(:can_jobseeker_send_message?).with(job_application).and_return(true)
+      allow(job_application).to receive(:can_jobseeker_send_message?).and_return(true)
     end
 
     it "shows 'Send message' button and no disabled message" do
@@ -61,7 +60,7 @@ RSpec.describe "jobseekers/job_applications/_messages.html.slim" do
 
   context "when messaging is not allowed" do
     before do
-      allow(view).to receive(:can_jobseeker_send_message?).with(job_application).and_return(false)
+      allow(job_application).to receive(:can_jobseeker_send_message?).and_return(false)
     end
 
     it "shows disabled messaging message and no 'Send message to hiring staff' button with no messages" do

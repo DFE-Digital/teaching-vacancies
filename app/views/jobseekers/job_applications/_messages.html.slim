@@ -1,6 +1,6 @@
 .govuk-grid-row
   .govuk-grid-column-full
-    - if can_jobseeker_send_message?(@job_application)
+    - if @job_application.can_jobseeker_send_message?
       = render "shared/message_form",
                message_object: @message_form,
                form_url: jobseekers_job_application_messages_path(@job_application),
