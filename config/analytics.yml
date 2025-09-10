@@ -166,7 +166,6 @@ shared:
     - working_pattern_details
     - notify_before_contact_referers
     - type
-    - religious_reference_received
   job_preferences_locations:
     - id
     - job_preferences_id
