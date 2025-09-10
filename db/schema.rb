@@ -915,6 +915,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_140615) do
   add_foreign_key "qualifications", "jobseeker_profiles"
   add_foreign_key "reference_requests", "references"
   add_foreign_key "references", "job_applications"
+  add_foreign_key "religious_reference_requests", "job_applications"
   add_foreign_key "saved_jobs", "jobseekers"
   add_foreign_key "saved_jobs", "vacancies"
   add_foreign_key "school_group_memberships", "organisations", column: "school_group_id"
