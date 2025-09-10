@@ -5,6 +5,7 @@ RSpec.describe "jobseekers/job_applications/_messages.html.slim" do
   let(:job_application) { create(:job_application, :submitted, jobseeker: jobseeker) }
   let(:messages) { [] }
 
+<<<<<<< HEAD
   let(:message_form) do
     instance_double(Publishers::JobApplication::MessagesForm,
                     model_name: instance_double(ActiveModel::Name, param_key: "publishers_job_application_messages_form"),
@@ -12,6 +13,16 @@ RSpec.describe "jobseekers/job_applications/_messages.html.slim" do
                     persisted?: false,
                     errors: instance_double(ActiveModel::Errors, empty?: true, any?: false),
                     content: "")
+=======
+  let(:message_form) do 
+    instance_double("Publishers::JobApplication::MessagesForm",
+      model_name: instance_double("ActiveModel::Name", param_key: "publishers_job_application_messages_form"),
+      to_key: nil,
+      persisted?: false,
+      errors: instance_double("ActiveModel::Errors", empty?: true, any?: false),
+      content: ""
+    )
+>>>>>>> 32f7b2eb9 (Use instance_doubles)
   end
 
   before do
