@@ -7,13 +7,18 @@ RSpec.describe "publishers/vacancies/job_applications/messages.html.slim" do
   let(:job_application) { create(:job_application, :submitted, vacancy: vacancy) }
   let(:messages) { [] }
 
+  let(:message_form) do 
+    instance_double("Publishers::JobApplication::MessagesForm",
+      model_name: instance_double("ActiveModel::Name", param_key: "publishers_job_application_messages_form"),
+      to_key: nil,
+      persisted?: false,
+      errors: instance_double("ActiveModel::Errors", empty?: true, any?: false),
+      content: ""
+    )
+  end
+
   before do
     assign(:show_form, "true")
-    # rubocop:disable RSpec/VerifiedDoubles
-    model_name = double("ModelName", param_key: "publishers_job_application_messages_form")
-    errors = double("Errors", empty?: true, any?: false)
-    message_form = double("MessageForm", model_name: model_name, to_key: nil, persisted?: false, errors: errors, content: "")
-    # rubocop:enable RSpec/VerifiedDoubles
     assign(:message_form, message_form)
     assign(:vacancy, vacancy)
     assign(:job_application, job_application)
