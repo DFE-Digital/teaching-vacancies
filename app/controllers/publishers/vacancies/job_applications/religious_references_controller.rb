@@ -11,8 +11,14 @@ module Publishers
         end
 
         def update
-          @job_application.update!(religious_reference_received: true)
+          @job_application.religious_reference_request.update!(religious_reference_params)
           redirect_to pre_interview_checks_organisation_job_job_application_path(@vacancy.id, @job_application.id)
+        end
+
+        private
+
+        def religious_reference_params
+          params.require(:job_application).permit(:status)
         end
       end
     end

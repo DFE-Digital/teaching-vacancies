@@ -25,8 +25,8 @@
         - row.with_cell(text: t(".#{status}_at", date: reference_request.updated_at.to_fs(:time_on_date)))
         - row.with_cell(text: govuk_tag(text: t("reference_requests.#{status}.status"), colour: t("reference_requests.#{status}.colour")))
 
-    - if @job_application.religious_referee?
-      - status = religious_request_status(@job_application)
+    - if @job_application.religious_reference_request.present?
+      - status = religious_request_status(@job_application.religious_reference_request)
 
       - body.with_row html_attributes: { id: "religious_reference" } do |row|
         - row.with_cell(text: t(".religious_reference"))

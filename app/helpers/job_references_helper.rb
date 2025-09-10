@@ -17,11 +17,13 @@ module JobReferencesHelper
     end
   end
 
-  def religious_request_status(job_application)
-    if job_application.religious_reference_received?
-      "received"
-    else
+  def religious_request_status(religious_reference_request)
+    if religious_reference_request.action_required?
       "action"
+    elsif religious_reference_request.requested?
+      "pending"
+    else
+      "completed"
     end
   end
 end
