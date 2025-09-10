@@ -282,7 +282,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_140615) do
     t.datetime "unsuccessful_interview_at"
     t.datetime "interview_feedback_received_at"
     t.boolean "interview_feedback_received"
-    t.boolean "religious_reference_received", default: false, null: false
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
@@ -650,6 +649,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_140615) do
     t.text "phone_number_ciphertext"
     t.boolean "is_most_recent_employer"
     t.index ["job_application_id"], name: "index_references_on_job_application_id"
+  end
+
+  create_table "religious_reference", force: :cascade do |t|
+    t.bigint "job_applications_id"
+    t.boolean "religious_reference_received", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_applications_id"], name: "index_religious_reference_on_job_applications_id"
   end
 
   create_table "saved_jobs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

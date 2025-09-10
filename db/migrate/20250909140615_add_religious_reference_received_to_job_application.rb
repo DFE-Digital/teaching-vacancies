@@ -1,5 +1,9 @@
 class AddReligiousReferenceReceivedToJobApplication < ActiveRecord::Migration[7.2]
   def change
-    add_column :job_applications, :religious_reference_received, :boolean, default: false, null: false
+    create_table :religious_reference do |t|
+      t.references :job_applications
+      t.boolean :religious_reference_received, default: false, null: false
+      t.timestamps
+    end
   end
 end
