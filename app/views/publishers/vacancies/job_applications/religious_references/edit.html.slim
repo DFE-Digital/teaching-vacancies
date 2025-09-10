@@ -18,10 +18,14 @@
     = form_with model: @job_application, url: organisation_job_job_application_religious_reference_path(@vacancy.id, @job_application.id), method: :patch do |f|
       = f.govuk_error_summary
 
-      = f.hidden_field :status, value: 'requested'
+      = f.hidden_field :status, value: @job_application.religious_reference_request.action_needed? ? "requested" : "complete"
 
       .govuk-button-group
-        = f.govuk_submit t(".mark_as_received"), secondary: true
+        - if @job_application.religious_reference_request.action_needed?
+          = f.govuk_submit t(".mark_as_requested"), secondary: true
+        - else
+          = f.govuk_submit t(".mark_as_complete"), secondary: true
+
         = govuk_link_to t(".cancel_and_return"), pre_interview_checks_organisation_job_job_application_path(@vacancy.id, @job_application.id)
 
   .govuk-grid-column-one-third

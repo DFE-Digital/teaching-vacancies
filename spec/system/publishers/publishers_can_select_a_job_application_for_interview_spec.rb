@@ -107,9 +107,27 @@ RSpec.describe "Publishers can select a job application for interview", :perform
             end
           end
 
-          it "allows the reference to be marked as complete" do
-            click_on "Mark as received"
-            expect(page).to have_no_content action_needed
+          it "allows the reference to be marked as requested" do
+            click_on "Mark as requested"
+            within "#religious_reference" do
+              expect(page).to have_content "pending"
+            end
+          end
+
+          describe "completing a religious reference" do
+            before do
+              click_on "Mark as requested"
+              within "#religious_reference" do
+                find("a").click
+              end
+            end
+
+            it "allows the reference to be marked as complete" do
+              click_on "Mark as complete"
+              within "#religious_reference" do
+                expect(page).to have_content "completed"
+              end
+            end
           end
 
           describe "adding a note" do

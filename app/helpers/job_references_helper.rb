@@ -18,7 +18,7 @@ module JobReferencesHelper
   end
 
   def religious_request_status(religious_reference_request)
-    if religious_reference_request.action_required?
+    if religious_reference_request.action_needed?
       "action"
     elsif religious_reference_request.requested?
       "pending"

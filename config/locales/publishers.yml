@@ -620,7 +620,8 @@ en:
             action_needed: Action needed
             cannot_be_collected: The relgious reference required for this role cannot be collected using Teaching Vacancies.
             can_manually_mark: You can manually mark the reference as received here for record keeping purposes.
-            mark_as_received: Mark as received
+            mark_as_requested: Mark as requested
+            mark_as_complete: Mark as complete
             cancel_and_return: Cancel and return to pre-interview checks
         reference_requests:
           reference:
