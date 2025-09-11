@@ -20,7 +20,7 @@ class VacanciesController < ApplicationController
     end
 
     vacancy = PublishedVacancy.listed.friendly.find(params[:id])
-    TrackVacancyViewJob.perform_later(vacancy_id: vacancy.id, referrer_url: request.referer)
+    TrackVacancyViewJob.perform_later(vacancy_id: vacancy.id, referrer_url: request.referer, hostname: request.host) if request.referer.present?
     @saved_job = current_jobseeker&.saved_jobs&.find_by(vacancy: vacancy)
     @job_application = current_jobseeker&.job_applications&.find_by(vacancy: vacancy)
     @invented_job_alert_search_criteria = Search::CriteriaInventor.new(vacancy).criteria

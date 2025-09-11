@@ -126,7 +126,9 @@ group :development, :test do
   gem "rspec-rails"
   gem "rswag-specs"
   gem "slim_lint", require: false
-  gem "undercover", require: false
+  # TODO: Remove this ignore config once undercover issue with :nocov: and ignored files is fixed
+  # undercover 0.8.0 claims to have fixed this, but adding or updating rake tasks raises coverage issues
+  gem "undercover", "< 0.6", require: false
 end
 
 group :test do
