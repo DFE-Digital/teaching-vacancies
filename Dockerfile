@@ -69,7 +69,7 @@ ENV ENV="/root/.ashrc"
 ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
 
-RUN mkdir /app/tmp
+RUN mkdir -p /app/tmp /app/log
 RUN chown -hR appuser:appgroup /app/tmp /app/log
 USER 10001
 EXPOSE 3000
