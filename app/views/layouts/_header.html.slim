@@ -11,6 +11,7 @@
   - elsif jobseeker_signed_in?
     = header.with_navigation_item text: t("nav.create_a_job_alert"), href: new_subscription_path
     = header.with_navigation_item text: t("nav.your_profile"), href: jobseekers_profile_path
+    = header.with_navigation_item text: t("nav.notifications_html", count: current_jobseeker.notifications.unread.count), href: jobseekers_notifications_path
     = header.with_navigation_item text: t("nav.your_account"), href: jobseekers_account_path, active: your_account_active?
     = header.with_navigation_item text: t("nav.sign_out"), href: jobseeker_logout_uri.to_s
   - elsif support_user_signed_in?

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Publishers manage self disclosure" do
+RSpec.describe "Publishers manage self disclosure", :perform_enqueued do
   include ActiveJob::TestHelper
 
   let(:publisher) { create(:publisher, email: "publisher@contoso.com") }
@@ -11,9 +11,8 @@ RSpec.describe "Publishers manage self disclosure" do
   let(:disclosure_request) { SelfDisclosureRequest.order(:created_at).last }
 
   describe "using TV self-disclosure form", :versioning do
-    describe "emails and models" do
-      before do
-        login_publisher(publisher: publisher, organisation: organisation)
+    before do
+      run_with_publisher_and_organisation(publisher, organisation) do
         publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
         click_on "Update application status"
         choose "Interviewing"
@@ -21,30 +20,17 @@ RSpec.describe "Publishers manage self disclosure" do
         choose "No"
         click_on "Save and continue"
         choose "Yes"
-        click_on "Save and continue"
-      end
-
-      it "sends the notification email and creates self disclosure models", :perform_enqueued do
-        expect(ActionMailer::Base.deliveries.map(&:to).flatten).to contain_exactly(job_application.email_address)
-        expect(SelfDisclosureRequest.count).to eq(1)
-        expect(SelfDisclosure.count).to eq(1)
+        click_on("Save and continue")
       end
     end
 
-    describe "visit self disclosure form" do
-      before do
-        run_with_publisher_and_organisation(publisher, organisation) do
-          publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
-          click_on "Update application status"
-          choose "Interviewing"
-          click_on "Save and continue"
-          choose "No"
-          click_on "Save and continue"
-          choose "Yes"
-          click_on("Save and continue")
-        end
-      end
+    it "sends the notification email and creates self disclosure models" do
+      expect(ActionMailer::Base.deliveries.map(&:to).flatten).to contain_exactly(job_application.email_address)
+      expect(SelfDisclosureRequest.count).to eq(1)
+      expect(SelfDisclosure.count).to eq(1)
+    end
 
+    describe "visit self disclosure form" do
       it "can be manually marked as complete by publisher" do
         run_with_publisher_and_organisation(publisher, organisation) do
           publisher_ats_self_disclosure_page.load(
@@ -63,7 +49,18 @@ RSpec.describe "Publishers manage self disclosure" do
         end
       end
 
-      context "when completed by jobseeker", :perform_enqueued do
+      it "shows as a notification to the jobseeker", :js do
+        run_with_jobseeker(jobseeker) do
+          visit jobseekers_job_application_path job_application
+          find(".count-badge").click
+          within ".notification" do
+            find("a").click
+          end
+          expect(page).to have_current_path jobseekers_job_application_self_disclosure_path(job_application, :personal_details)
+        end
+      end
+
+      context "when completed by jobseeker" do
         let(:dummy_self_disclosure) { build(:self_disclosure) }
 
         before do
@@ -126,7 +123,7 @@ RSpec.describe "Publishers manage self disclosure" do
     it "does not send any notification email" do
       expect {
         click_on "Save and continue"
-      }.not_to have_enqueued_email(Jobseekers::JobApplicationMailer, :self_disclosure)
+      }.not_to change(ActionMailer::Base.deliveries, :count)
     end
 
     it "creates a self disclosure request" do

@@ -1,6 +1,6 @@
-class Jobseekers::BaseController < ApplicationController
-  include ReturnPathTracking
-  include Authenticated
-
-  self.authentication_scope = :jobseeker
+module Jobseekers
+  class BaseController < ApplicationController
+    include ReturnPathTracking
+    include LoginRequired
+  end
 end

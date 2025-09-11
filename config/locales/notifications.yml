@@ -45,6 +45,16 @@ en:
     publishers/reference_received_notification:
       message_html: You have received a %{link}
       reference_received: reference for a candidate
+    jobseekers/self_disclosure_request_received_notification:
+      message_html: You have received a request to complete a %{link}
+    index:
+      heading: Notifications
+      no_notifications: You have no notifications.
+      skip_link: Skip to notifications
+      title:
+        zero: No unread notifications
+        one: 1 unread notification
+        other: "%{count} unread notifications"
 
   errors:
     jobs:

@@ -37,12 +37,6 @@ RSpec.describe SelfDisclosureRequest do
       it { expect(request.self_disclosure).to be_present }
       it { expect(request.status).to eq("sent") }
     end
-
-    it "sends the notification email" do
-      expect { described_class.create_and_notify!(job_application) }
-        .to have_enqueued_email(Jobseekers::JobApplicationMailer, :self_disclosure)
-        .with(job_application)
-    end
   end
 
   describe "#completed?" do
