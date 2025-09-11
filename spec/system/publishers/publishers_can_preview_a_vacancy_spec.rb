@@ -15,6 +15,10 @@ RSpec.describe "Publishers can preview a vacancy" do
       click_on I18n.t("publishers.vacancies.show.heading_component.action.preview")
     end
 
+    it "passes a11y", :a11y do
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+    end
+
     context "when the job has been scheduled" do
       let(:vacancy) { create(:vacancy, :secondary, :future_publish, :ect_suitable, job_roles: %w[teacher other_support], organisations: [school]) }
 

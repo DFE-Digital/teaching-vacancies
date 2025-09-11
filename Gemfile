@@ -107,6 +107,8 @@ group :development do
 end
 
 group :development, :test do
+  gem "axe-core-capybara"
+  gem "axe-core-rspec"
   gem "brakeman"
   gem "byebug", platforms: %i[mri windows]
   gem "database_consistency", require: false

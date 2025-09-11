@@ -50,6 +50,10 @@ RSpec.describe "Jobseekers can manage their job applications" do
 
       before { visit jobseekers_job_applications_path }
 
+      it "passes a11y", :a11y do
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+      end
+
       context "when the jobseeker views job applications" do
         it "shows job applications in draft/submitted/shortlisted/passed order" do
           expect(page).to have_css("h1.govuk-heading-l", text: I18n.t("jobseekers.job_applications.index.page_title"))

@@ -25,6 +25,11 @@ RSpec.describe "Jobseekers can complete a religious job application" do
       choose "Yes, I've completed this section"
     end
 
+    it "passes a11y", :a11y do
+      # - ARIA attribute is not allowed: aria-expanded="false"
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+    end
+
     it "validates first religion step" do
       expect(page).to have_content(I18n.t("jobseekers.job_applications.build.catholic.preference_to_catholics"))
       validates_step_complete
@@ -85,6 +90,10 @@ RSpec.describe "Jobseekers can complete a religious job application" do
               choose "Yes, I've completed this section"
               click_on I18n.t("buttons.save_and_continue")
               complete_from_references_page
+            end
+
+            it "passes a11y", :a11y do
+              expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
             end
 
             it "has a correct change link" do
@@ -209,6 +218,11 @@ RSpec.describe "Jobseekers can complete a religious job application" do
     context "when on page 2" do
       before do
         fill_in I18n.t("helpers.label.jobseekers_job_application_non_catholic_form.ethos_and_aims"), with: Faker::Lorem.sentence
+      end
+
+      it "passes a11y", :a11y do
+        # - ARIA attribute is not allowed: aria-expanded="false"
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
       end
 
       it "show the correct error" do

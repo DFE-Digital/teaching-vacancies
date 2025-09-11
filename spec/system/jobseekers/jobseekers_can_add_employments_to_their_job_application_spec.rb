@@ -54,6 +54,11 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
       visit current_path
     end
 
+    it "passes a11y", :a11y do
+      # lists are not allowed to have direct 'a' children
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "list"
+    end
+
     it "displays employment history from newest to oldest job, shows any errors and prevents saving until fixed" do
       expect(all(".govuk-summary-card__title").map(&:text)).to eq ["The Best Teacher", "Old job", "Oldest job"]
 

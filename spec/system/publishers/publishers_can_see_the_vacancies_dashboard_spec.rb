@@ -22,6 +22,10 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
     expect(page).to have_content(vacancy.skills_and_experience)
   end
 
+  it "passes a11y", :a11y do
+    expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+  end
+
   context "viewing the lists of jobs on the school page" do
     let!(:published_vacancy) { create(:vacancy, organisations: [school]) }
     let!(:draft_vacancy) { create(:draft_vacancy, organisations: [school]) }

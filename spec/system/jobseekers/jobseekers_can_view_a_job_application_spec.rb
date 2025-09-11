@@ -27,6 +27,10 @@ RSpec.describe "Jobseekers can view a job application" do
          declarations]
     end
 
+    it "passes a11y", :a11y do
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+    end
+
     it "displays all the relevant job application information (including professional status data)" do
       expect(page).to have_content(vacancy.job_title)
       expect(page).to have_content(job_application.status)
