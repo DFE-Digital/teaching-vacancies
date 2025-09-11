@@ -87,12 +87,11 @@ RSpec.describe "Searching on the schools page" do
         create(:vacancy, organisations: [school])
       end
       visit organisations_path
+      check I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.academy")
+      click_on I18n.t("buttons.search")
     end
 
     it "allows user to filter by academies and local authorities" do
-      check I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.academy")
-      click_on I18n.t("buttons.search")
-
       expect_page_to_show_schools([academy_school1, academy_school2, free_school1, free_school2])
       expect_page_not_to_show_schools([local_authority_school, secondary_school, special_school1, primary_school])
 
@@ -101,6 +100,11 @@ RSpec.describe "Searching on the schools page" do
 
       expect_page_to_show_schools([local_authority_school, academy_school1, academy_school2, free_school1, free_school2])
       expect_page_not_to_show_schools([secondary_school, special_school1, primary_school])
+    end
+
+    it "passes a11y", :a11y do
+      #  h4 without h3 (or even h2?)
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
     end
   end
 

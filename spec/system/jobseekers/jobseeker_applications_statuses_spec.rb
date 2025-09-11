@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers applications statuses" do
-  let!(:jobseeker) { create(:jobseeker) }
+  let!(:jobseeker) { create(:jobseeker, jobseeker_profile: jobseeker_profile) }
   let(:vacancy) { create(:vacancy, organisations: [school], visa_sponsorship_available: true) }
   let(:school) { create(:school) }
 
@@ -12,16 +12,27 @@ RSpec.describe "Jobseekers applications statuses" do
   after { logout }
 
   context "when the jobseeker has a profile" do
-    context "when the jobseeker has completed details in their profile" do
-      let!(:jobseeker_profile) { create(:jobseeker_profile, :completed, jobseeker: jobseeker) }
+    before do
+      visit job_path(vacancy)
+    end
 
-      it "shows all sections with the status tag 'incomplete'" do
-        visit job_path(vacancy)
+    context "when the jobseeker has completed details in their profile", :a11y do
+      let(:jobseeker_profile) { build(:jobseeker_profile, :completed) }
+
+      it "passes accessibility checks" do
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+      end
+
+      it "shows all sections with the status tag 'incomplete'", :js do
         within ".banner-buttons" do
           click_on I18n.t("jobseekers.job_applications.banner_links.apply")
         end
 
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+
         click_button "Start application"
+
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
 
         expect(page).to have_css("#personal_details", text: I18n.t("shared.status_tags.incomplete"))
         expect(page).to have_css("#professional_status", text: I18n.t("shared.status_tags.incomplete"))
@@ -32,10 +43,9 @@ RSpec.describe "Jobseekers applications statuses" do
     end
 
     context "when the jobseeker has not completed any details in their profile" do
-      let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker, qualified_teacher_status: nil) }
+      let(:jobseeker_profile) { build(:jobseeker_profile, qualified_teacher_status: nil) }
 
       it "shows all sections with the status tag 'incomplete'" do
-        visit job_path(vacancy)
         within ".banner-buttons" do
           click_on I18n.t("jobseekers.job_applications.banner_links.apply")
         end

@@ -3,35 +3,55 @@ require "rails_helper"
 RSpec.describe "Jobseekers can add references to their job application" do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
-  let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
+  let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy, referees: referees) }
 
-  before { login_as(jobseeker, scope: :jobseeker) }
+  before do
+    login_as(jobseeker, scope: :jobseeker)
+    visit jobseekers_job_application_build_path(job_application, :referees)
+  end
 
   after { logout }
 
-  it "allows jobseekers to add references" do
-    visit jobseekers_job_application_build_path(job_application, :referees)
+  context "without referees" do
+    let(:referees) { [] }
 
-    expect(page).to have_content("No referees specified")
+    it "passes a11y", :a11y do
+      # ARIA attribute is not allowed: aria-expanded="false"
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+    end
 
-    click_on I18n.t("buttons.add_reference")
-    expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :referees))
-    validates_step_complete(button: I18n.t("buttons.save_reference"))
+    it "shows no referees" do
+      expect(page).to have_content("No referees specified")
+    end
 
-    fill_in_referee
+    context "when adding a referee" do
+      before do
+        click_on I18n.t("buttons.add_reference")
+      end
 
-    click_on I18n.t("buttons.save_reference")
+      it "passes a11y", :a11y do
+        # ARIA attribute is not allowed: aria-expanded="false"
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+      end
 
-    expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :referees))
-    expect(page).to have_content("Jim Referee")
+      it "allows jobseekers to add references" do
+        expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :referees))
+        validates_step_complete(button: I18n.t("buttons.save_reference"))
+
+        fill_in_referee
+
+        click_on I18n.t("buttons.save_reference")
+
+        expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :referees))
+        expect(page).to have_content("Jim Referee")
+      end
+    end
   end
 
   context "when there is at least one reference" do
-    let!(:referee) { create(:referee, name: "John", job_application: job_application) }
+    let(:referees) { build_list(:referee, 1, name: "John") }
 
     it "allows jobseekers to delete references" do
-      visit jobseekers_job_application_build_path(job_application, :referees)
-
       click_on I18n.t("buttons.delete")
 
       expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :referees))
@@ -40,8 +60,6 @@ RSpec.describe "Jobseekers can add references to their job application" do
     end
 
     it "allows jobseekers to edit references" do
-      visit jobseekers_job_application_build_path(job_application, :referees)
-
       click_on I18n.t("buttons.change")
 
       fill_in "Name", with: ""

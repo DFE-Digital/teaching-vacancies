@@ -3,15 +3,19 @@ require "rails_helper"
 RSpec.describe "Jobseekers can add professional body memberships to their job application" do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
-  let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
+  let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy, professional_body_memberships: professional_body_memberships) }
 
-  before { login_as(jobseeker, scope: :jobseeker) }
+  before do
+    login_as(jobseeker, scope: :jobseeker)
+    visit jobseekers_job_application_build_path(job_application, :professional_body_memberships)
+  end
 
   after { logout }
 
   context "when adding a professional body membership" do
+    let(:professional_body_memberships) { [] }
+
     before do
-      visit jobseekers_job_application_build_path(job_application, :professional_body_memberships)
       click_on I18n.t("buttons.add_professional_body_membership")
     end
 
@@ -42,13 +46,20 @@ RSpec.describe "Jobseekers can add professional body memberships to their job ap
   end
 
   context "when jobseeker has existing professional body membership" do
-    before do
-      create(:professional_body_membership, job_application: job_application)
-      visit jobseekers_job_application_build_path(job_application, :professional_body_memberships)
+    let(:professional_body_memberships) do
+      build_list(:professional_body_membership, 1)
     end
 
-    it "allows jobseekers to edit the professional body membership" do
+    it "passes a11y", :a11y do
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+    end
+
+    it "allows jobseekers to edit the professional body membership", :a11y do
       click_on I18n.t("buttons.change")
+
+      # h3 without a corresponding h2?
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
+
       expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :professional_body_memberships))
       fill_in "Name of professional body", with: ""
       click_on I18n.t("buttons.save_and_continue")

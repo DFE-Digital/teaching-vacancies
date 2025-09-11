@@ -5,13 +5,18 @@ RSpec.describe "Jobseekers can edit a draft job application" do
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let(:job_application) { create(:job_application, first_name: "Steve", jobseeker: jobseeker, vacancy: vacancy) }
 
-  before { login_as(jobseeker, scope: :jobseeker) }
+  before do
+    login_as(jobseeker, scope: :jobseeker)
+    visit jobseekers_job_application_review_path(job_application)
+  end
 
   after { logout }
 
-  it "allows jobseekers to edit job application from review page" do
-    visit jobseekers_job_application_review_path(job_application)
+  it "passes a11y", :a11y do
+    expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+  end
 
+  it "allows jobseekers to edit job application from review page" do
     within ".review-component__section#personal_details" do
       click_on "Change"
     end
