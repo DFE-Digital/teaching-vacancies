@@ -5,6 +5,12 @@ RSpec.describe "Searching on the schools page" do
   let(:primary_school) { create(:school, name: "St Peters", phase: "primary") }
   let(:special_school1) { create(:school, name: "Community special school", phase: "secondary", detailed_school_type: "Community special school") }
 
+  let!(:no_vacancies) do
+    create(:school, name: "No Vacancies").tap do |nv|
+      create(:publisher, organisations: [nv])
+    end
+  end
+
   before do
     [secondary_school, primary_school, special_school1].each do |school|
       create(:publisher, organisations: [school])
@@ -56,6 +62,15 @@ RSpec.describe "Searching on the schools page" do
 
       expect(page).not_to have_link(I18n.t("organisations.search.results.phases.secondary"))
       expect(page).not_to have_link(I18n.t("organisations.filters.special_school"))
+    end
+  end
+
+  context "when filtering by vacancies" do
+    it "allows filtering by schools with vacancies" do
+      expect(page).to have_link no_vacancies.name
+      check I18n.t("organisations.filters.job_availability.options.true")
+      click_on I18n.t("buttons.apply_filters")
+      expect(page).not_to have_link no_vacancies.name
     end
   end
 

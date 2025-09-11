@@ -5,8 +5,8 @@ class Api::OrganisationsController < Api::ApplicationController
   MAX_RESULTS = 100
 
   def index
-    suggestions = Search::SchoolSearch.new({ name: query }, scope: search_scope)
-      .organisations.limit(MAX_RESULTS).map { |s| "#{s.name} (#{s.postcode})" }
+    suggestions = Search::SchoolSearch.new({ name: query })
+      .organisations.order(:name).limit(MAX_RESULTS).map { |s| "#{s.name} (#{s.postcode})" }
 
     render json: { query:, suggestions: }
   end
@@ -15,10 +15,6 @@ class Api::OrganisationsController < Api::ApplicationController
 
   def query
     params[:query]
-  end
-
-  def search_scope
-    Organisation.visible_to_jobseekers.order(:name)
   end
 
   def check_valid_params
