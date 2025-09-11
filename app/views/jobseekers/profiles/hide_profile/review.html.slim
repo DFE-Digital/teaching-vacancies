@@ -8,6 +8,6 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-l = t(".page_title")
 
-    = render "summary"
+    = render "summary", profile: @profile
 
     = govuk_button_link_to t("buttons.return_to_profile"), jobseekers_profile_path, classes: "govuk-!-margin-bottom-5"
