@@ -35,11 +35,20 @@ RSpec.describe "Jobseekers can manage their profile" do
           click_link("Add personal details")
         end
 
+        it "passes a11y", :a11y do
+          expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+        end
+
         context "when on the phone number screen" do
           before do
             fill_in "personal_details_form[first_name]", with: first_name
             fill_in "personal_details_form[last_name]", with: last_name
             click_on I18n.t("buttons.save_and_continue")
+          end
+
+          it "passes a11y", :a11y do
+            # aria-expanded false on input field
+            expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
           end
 
           it "asks for a phone number" do
@@ -51,6 +60,10 @@ RSpec.describe "Jobseekers can manage their profile" do
               choose "Yes"
               fill_in "personal_details_form[phone_number]", with: phone_number
               click_on I18n.t("buttons.save_and_continue")
+            end
+
+            it "passes a11y", :a11y do
+              expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
             end
 
             it "allows the jobseeker to fill in their personal details" do

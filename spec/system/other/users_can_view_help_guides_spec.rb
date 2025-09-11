@@ -8,6 +8,10 @@ RSpec.describe "Users can view help guides" do
       it "renders the post with the correct title" do
         expect(page).to have_content("How to accept job applications")
       end
+
+      it "passes a11y", :a11y do
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+      end
     end
 
     context "when the post does not exist" do

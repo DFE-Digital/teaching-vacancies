@@ -23,6 +23,10 @@ RSpec.describe "Jobseekers can create a job alert from a mailing campaign", reca
     end
   end
 
+  it "passes a11y", :a11y do
+    expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+  end
+
   scenario "the landing form has default values when not set from the URL parameters" do
     expect(page).to have_css("h1", text: "Welcome to Teaching Vacancies!", exact_text: true)
     expect(page).to have_css("p", text: "Get teaching jobs sent straight to your inbox.")

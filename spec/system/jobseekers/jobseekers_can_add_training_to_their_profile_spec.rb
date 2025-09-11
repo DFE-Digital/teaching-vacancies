@@ -18,6 +18,10 @@ RSpec.describe "Jobseekers can add training to their profile" do
         click_on "Add training"
       end
 
+      it "passes a11y", :a11y do
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+      end
+
       it "allows jobseekers to add training" do
         click_on "Save and continue"
 

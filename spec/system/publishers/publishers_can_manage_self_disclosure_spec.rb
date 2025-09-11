@@ -60,6 +60,30 @@ RSpec.describe "Publishers manage self disclosure", :perform_enqueued do
         end
       end
 
+      describe "jobseeker filling in form" do
+        let(:dummy_self_disclosure) { build(:self_disclosure) }
+
+        before do
+          login_as(jobseeker, scope: :jobseeker)
+          visit jobseekers_job_application_path job_application
+          within ".govuk-notification-banner__heading" do
+            find("a").click
+          end
+        end
+
+        after { logout }
+
+        it "passes a11y", :a11y do
+          expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+          jobseeker_self_disclosure_personal_details_page.fill_in_and_submit_form(dummy_self_disclosure)
+          expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+          jobseeker_self_disclosure_barred_list_page.fill_in_and_submit_form(dummy_self_disclosure)
+          expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+          jobseeker_self_disclosure_conduct_page.fill_in_and_submit_form(dummy_self_disclosure)
+          expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+        end
+      end
+
       context "when completed by jobseeker" do
         let(:dummy_self_disclosure) { build(:self_disclosure) }
 

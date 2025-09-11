@@ -15,6 +15,11 @@ RSpec.describe "Jobseekers can add references to their job application" do
   context "without referees" do
     let(:referees) { [] }
 
+    it "passes a11y", :a11y do
+      # ARIA attribute is not allowed: aria-expanded="false"
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+    end
+
     it "shows no referees" do
       expect(page).to have_content("No referees specified")
     end
@@ -22,6 +27,11 @@ RSpec.describe "Jobseekers can add references to their job application" do
     context "when adding a referee" do
       before do
         click_on I18n.t("buttons.add_reference")
+      end
+
+      it "passes a11y", :a11y do
+        # ARIA attribute is not allowed: aria-expanded="false"
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
       end
 
       it "allows jobseekers to add references" do

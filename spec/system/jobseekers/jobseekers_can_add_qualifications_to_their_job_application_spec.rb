@@ -20,6 +20,11 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
       expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :qualifications))
     end
 
+    it "passes a11y", :a11y do
+      # h3 with no h2
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
+    end
+
     it "allows jobseekers to add a graduate degree" do
       validates_step_complete(button: I18n.t("buttons.continue"))
       select_qualification_category("Undergraduate degree")
@@ -62,6 +67,11 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
 
       before do
         click_on I18n.t("buttons.change")
+      end
+
+      it "passes a11y", :a11y do
+        # area-expanded on input
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
       end
 
       it "allows jobseekers to edit the qualification" do

@@ -14,6 +14,10 @@ RSpec.describe "Jobseekers can delete a draft job application" do
 
   after { logout }
 
+  it "passes a11y", :a11y do
+    expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+  end
+
   it "allows deleting the draft permanently" do
     click_on I18n.t("buttons.delete_application")
     expect { click_on I18n.t("jobseekers.job_applications.confirm_destroy.confirm") }.to change(JobApplication, :count).by(-1)

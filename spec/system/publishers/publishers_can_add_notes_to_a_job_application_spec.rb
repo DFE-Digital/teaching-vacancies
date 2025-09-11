@@ -21,6 +21,10 @@ RSpec.describe "Publishers can add notes to a job application" do
         publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
       end
 
+      it "passes a11y", :a11y do
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+      end
+
       it "shows the current notes" do
         expect(publisher_application_page).to be_displayed
 
