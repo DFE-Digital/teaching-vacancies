@@ -70,7 +70,7 @@ ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
 
 RUN mkdir /app/tmp
-RUN chown -hR appuser:appgroup /app/tmp
+RUN chown -hR appuser:appgroup /app/tmp /app/log
 USER 10001
 EXPOSE 3000
 CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions && bundle exec rails s
