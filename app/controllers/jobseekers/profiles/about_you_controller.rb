@@ -3,7 +3,7 @@ class Jobseekers::Profiles::AboutYouController < Jobseekers::ProfilesController
 
   def update
     if form.valid?
-      profile.update(about_you: form.about_you)
+      @profile.update(about_you: form.about_you)
       redirect_to jobseekers_profile_about_you_path
     else
       render :edit
@@ -21,7 +21,7 @@ class Jobseekers::Profiles::AboutYouController < Jobseekers::ProfilesController
   def form_attributes
     case action_name
     when "edit"
-      profile.slice(:about_you)
+      @profile.slice(:about_you)
     when "update"
       form_params
     end

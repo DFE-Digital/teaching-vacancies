@@ -87,6 +87,29 @@ en:
         show_job_link: "View %{job_title} job"
         show_job_link_with_organisation: "View %{job_title} at %{organisation_name} job"
         edit_link_text: Change your job alert search on Teaching Vacancies
+    profiles_mailer:
+      disable_inactive_profile:
+        subject: Your Teaching Vacancies profile has been deactivated due to inactivity
+        link: sign in to your Teaching Vacancies account.
+        footer: |
+          If you have followed the above advice and cannot reactivate your profile, contact %{link} for assistance.
+
+          Kind regards,
+          Teaching Vacancies team
+      inactive_profile_warning:
+        subject: Your Teaching Vacancies profile will be deactivated soon
+        link: sign in to your Teaching Vacancies account.
+        footer: |
+          Kind regards,
+          Teaching Vacancies team
+      disable_profile_due_to_new_fields:
+        subject: Your Teaching Vacancies profile has been deactivated due to missing information
+        link: sign in to your Teaching Vacancies account.
+        footer: |
+          If you have followed the above advice and cannot reactivate your profile, contact %{link} for assistance.
+
+          Kind regards,
+          Teaching Vacancies team
     job_application_mailer:
       shared: &job_application_mailer_shared
         intro: Your application for %{job_title} at %{organisation_name}

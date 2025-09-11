@@ -1,6 +1,6 @@
 class Jobseekers::Profiles::HideProfileController < Jobseekers::ProfilesController
   def show
-    @form = Jobseekers::Profile::HideProfileForm.new(requested_hidden_profile: profile.requested_hidden_profile)
+    @form = Jobseekers::Profile::HideProfileForm.new(requested_hidden_profile: @profile.requested_hidden_profile)
   end
 
   def confirm_hide
@@ -9,9 +9,9 @@ class Jobseekers::Profiles::HideProfileController < Jobseekers::ProfilesControll
       .permit(:requested_hidden_profile)
 
     if (@form = Jobseekers::Profile::HideProfileForm.new(form_params)).valid?
-      profile.update!(requested_hidden_profile: @form.requested_hidden_profile)
+      @profile.update!(requested_hidden_profile: @form.requested_hidden_profile)
 
-      if profile.requested_hidden_profile?
+      if @profile.requested_hidden_profile?
         redirect_to add_jobseekers_profile_hide_profile_path
       else
         redirect_to review_jobseekers_profile_hide_profile_path
@@ -65,11 +65,11 @@ class Jobseekers::Profiles::HideProfileController < Jobseekers::ProfilesControll
   end
 
   def delete
-    @exclusion = profile.organisation_exclusions.find(params[:exclusion_id])
+    @exclusion = @profile.organisation_exclusions.find(params[:exclusion_id])
   end
 
   def destroy
-    exclusion = profile.organisation_exclusions.find(params[:exclusion_id])
+    exclusion = @profile.organisation_exclusions.find(params[:exclusion_id])
     exclusion.destroy
     redirect_to schools_jobseekers_profile_hide_profile_path
   end
@@ -84,10 +84,10 @@ class Jobseekers::Profiles::HideProfileController < Jobseekers::ProfilesControll
 
   def hide_school(form)
     if form.valid?
-      if profile.excluded_organisations.include?(form.organisation)
+      if @profile.excluded_organisations.include?(form.organisation)
         flash[:important] = t("jobseekers.profiles.hide_profile.schools.already_hidden", name: form.organisation.name)
       else
-        profile.excluded_organisations << form.organisation
+        @profile.excluded_organisations << form.organisation
       end
 
       redirect_to schools_jobseekers_profile_hide_profile_path

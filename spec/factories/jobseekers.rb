@@ -3,6 +3,10 @@ FactoryBot.define do
     email { Faker::Internet.unique.email(domain: "contoso.com") }
     govuk_one_login_id { "urn:fdc:gov.uk:2022:#{SecureRandom.hex}" }
 
+    trait :for_seed_data do
+      last_sign_in_at { 5.months.ago + rand(7).days }
+    end
+
     trait :with_profile do
       after(:create) do |jobseeker|
         create(:jobseeker_profile, jobseeker: jobseeker)

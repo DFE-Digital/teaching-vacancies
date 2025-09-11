@@ -23,5 +23,11 @@ FactoryBot.define do
     trait :with_locations do
       locations { [build(:job_preferences_location, name: Faker::Address.postcode, radius: Faker::Number.between(from: 1, to: 200), job_preferences: instance)] }
     end
+
+    trait :incomplete do
+      builder_completed { false }
+      completed_steps { {} }
+      working_pattern_details { nil }
+    end
   end
 end

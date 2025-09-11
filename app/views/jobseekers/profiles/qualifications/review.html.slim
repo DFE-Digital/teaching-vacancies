@@ -8,9 +8,9 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-l = t(".page_title")
 
-    - if profile.qualifications.any?
-      = render "jobseekers/qualifications/qualifications", qualifications: profile.qualifications
+    - if @profile.qualifications.any?
+      = render "jobseekers/qualifications/qualifications", qualifications: @profile.qualifications
 
     .govuk-button-group
-      = govuk_button_link_to t("buttons.add_qualification"), select_category_jobseekers_profile_qualifications_path(profile), class: "govuk-button--secondary govuk-!-margin-bottom-0"
+      = govuk_button_link_to t("buttons.add_qualification"), select_category_jobseekers_profile_qualifications_path(@profile), class: "govuk-button--secondary govuk-!-margin-bottom-0"
       = govuk_button_link_to t("buttons.return_to_profile"), jobseekers_profile_path

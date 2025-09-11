@@ -827,6 +827,9 @@ en:
         hide_profile: Hide profile from schools or trusts
         imported: You have recently submitted a job application, so some of your details have been imported into your profile.
         page_description: Your profile allows schools to contact you, based on the details in your profile.
+        inactive_profile: >-
+          Your profile is inactive. You can reactivate it by selecting 'Turn on profile'.
+          When your profile is active, schools and trust hiring staff can view your details and contact you about jobs by email.
         page_title: Your profile
         preview_and_turn_off_profile: Preview and turn off profile
         preview_and_turn_on_profile: Preview and turn on profile
@@ -848,7 +851,8 @@ en:
         confirm_turn_off: Confirm that you want to turn off your profile
         confirm_turn_on: Confirm that you want to turn on your profile
       toggle:
-        not_ready: You must complete your personal details and job preferences before you turn on your profile
+        not_ready: >-
+          You must complete your personal details, job preferences, professional status, qualifications and work history before you turn on your profile
       about_you:
         edit:
           page_title: About You

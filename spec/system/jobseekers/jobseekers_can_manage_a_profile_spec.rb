@@ -104,6 +104,12 @@ RSpec.describe "Jobseekers can manage their profile" do
           expect(page).not_to have_content(old_phone_number)
           expect(page).to have_content("No, I already have the right to work in the UK")
         end
+
+        it "can be previewed" do
+          within "#top_links" do
+            click_on "Preview profile"
+          end
+        end
       end
     end
 
@@ -425,7 +431,9 @@ RSpec.describe "Jobseekers can manage their profile" do
 
     context "when profile contains minimum information required for publishing" do
       let!(:profile) do
-        create(:jobseeker_profile, :with_personal_details, :with_job_preferences,
+        create(:jobseeker_profile, :with_personal_details,
+               :with_qualifications,
+               employments: build_list(:employment, 1, :current_role, job_application: nil),
                job_preferences:,
                jobseeker:,
                active: false)
