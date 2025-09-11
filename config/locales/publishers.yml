@@ -578,7 +578,7 @@ en:
           cancel: "Cancel"
           date_prefix: "Date:"
           no_messages_yet: No messages yet
-          messaging_not_available: Messaging is not available for this application.
+          messaging_after_rejection: You have chosen to not progress this application. You can send this applicant a message, but they cannot reply.
         header:
           status_heading: Applicant status
           tabs:
