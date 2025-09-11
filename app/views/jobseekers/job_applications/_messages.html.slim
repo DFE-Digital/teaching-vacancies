@@ -1,16 +1,16 @@
 .govuk-grid-row
   .govuk-grid-column-full
-    - if messages.any?
+    - if @job_application.can_jobseeker_send_message?
       = render "shared/message_form",
                message_object: @message_form,
                form_url: jobseekers_job_application_messages_path(@job_application),
                form_help_text: t(".form_help_text"),
                form_help_content: t(".form_help_content")
-
-      div class="govuk-!-margin-bottom-6"
-        = govuk_button_link_to t(".send_message_button"), url_for(params.to_unsafe_h.merge(show_form: "true")), class: "govuk-button--secondary" unless @show_form == "true"
     - else
-      p.govuk-body = t(".no_messages_yet")
+      p.govuk-body-m = t(".messaging_not_available")
 
-    #messages-list
-      = render partial: messages, locals: { current_user: current_user }
+    - if messages.any?
+      #messages-list
+        = render partial: messages, locals: { current_user: current_user }
+    - else
+      p.govuk-body-m = t(".no_messages_yet")
