@@ -219,6 +219,12 @@ en:
         unsubscribe_link_text: Unsubscribe here
         multiple_job_alerts: To track more jobs with different criteria, you can %{link}
         multiple_job_alerts_link_text: create multiple job alerts
+    message_mailer:
+      message_received:
+        unsuccessful:
+          subject: "Your application for %{job_title} at %{organisation_name} has been unsuccessful"
+        default:
+          subject: "Sign in to Teaching Vacancies to read your messages"
 
   publishers:
     job_application_data_expiry_mailer:

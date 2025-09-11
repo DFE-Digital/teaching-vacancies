@@ -1,0 +1,19 @@
+Dear <%= @jobseeker.given_name %>,
+
+<% if @job_application.status == "unsuccessful" %>
+Your application for <%= @vacancy.job_title %> at <%= @organisation.name %> was unsuccessful.
+
+Sign in to your [Teaching Vacancies account](https://teaching-vacancies.service.gov.uk/jobseekers/sign-in) to view the message from <%= @organisation.name %>.
+<% else %>
+You have received a message in your Teaching Vacancies account about the <%= @vacancy.job_title %> role.
+
+You can [access a preview of this message](deep link to message preview), but you'll need to [sign in to your Teaching Vacancies account](https://teaching-vacancies.service.gov.uk/jobseekers/sign-in) to view the message in full and reply to it.
+
+You cannot reply to the message by responding to this email.
+<% end %>
+
+Kind regards,
+
+Teaching Vacancies team
+
+<%= t("shared.footer", home_page_link: home_page_link) %>
