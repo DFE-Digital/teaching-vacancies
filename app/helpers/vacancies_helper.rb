@@ -211,4 +211,28 @@ module VacanciesHelper
 
     organisation_slug
   end
+
+  def vacancy_statistics_bar_chart(referrer_counts)
+    text_style = {
+      color: "#000000",
+      fontSize: 20,
+      fontName: "GDS Transport",
+    }
+
+    gov_uk_blue = "#1d70b8"
+
+    # sort with highest value on top - using a hash results in an arbitrary ordering
+    bar_chart sort_referrer_counts(referrer_counts),
+              library: {
+                hAxis: { textStyle: text_style },
+                tooltip: { textStyle: text_style },
+                vAxis: { textStyle: text_style },
+              },
+              height: "#{60 + (referrer_counts.size * 40)}px",
+              colors: [gov_uk_blue]
+  end
+
+  def sort_referrer_counts(referrer_counts)
+    referrer_counts.map { |k, v| [k, v] }.sort_by { |_k, v| -v }
+  end
 end
