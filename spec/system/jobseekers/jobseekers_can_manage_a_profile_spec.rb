@@ -580,7 +580,7 @@ RSpec.describe "Jobseekers can manage their profile" do
 
         expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.schools.already_hidden", name: forbidden_organisation.name))
 
-        # make sure reviee page loads ok
+        # make sure review page loads ok
         choose "No", visible: false
         click_on I18n.t("buttons.save_and_continue")
         expect(page).to have_content forbidden_organisation.name
