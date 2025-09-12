@@ -15,7 +15,7 @@ class Publishers::JobListing::RelistForm < BaseForm
   validates :expires_at, date: { on_or_after: :now, on_or_before: :far_future }
   validates :expiry_time, inclusion: { in: Vacancy::EXPIRY_TIME_OPTIONS }
 
-  validates :extension_reason, inclusion: { in: DraftVacancy.extension_reasons.keys }
+  validates :extension_reason, inclusion: { in: Vacancy.extension_reasons.keys }
 
   def initialize(params = {})
     @params = params

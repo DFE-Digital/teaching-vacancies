@@ -1,6 +1,6 @@
 class Publishers::JobListing::JobRoleForm < Publishers::JobListing::VacancyForm
   validates :job_roles, presence: { message: "At least one job role is required" }
-  validate :job_roles_inclusion, if: -> { job_roles.present? }
+  validate :job_roles_inclusion
 
   def self.fields
     %i[job_roles]
@@ -24,8 +24,10 @@ class Publishers::JobListing::JobRoleForm < Publishers::JobListing::VacancyForm
   end
 
   def job_roles_inclusion
+    return unless job_roles
+
     job_roles.each do |role|
-      errors.add(:job_roles, "Invalid job role") unless DraftVacancy.job_roles.key?(role)
+      errors.add(:job_roles, "Invalid job role") unless Vacancy.job_roles.key?(role)
     end
   end
 end

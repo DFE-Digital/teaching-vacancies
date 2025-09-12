@@ -36,7 +36,7 @@ class Publishers::JobseekerProfileSearchForm
   end
 
   def education_phase_options
-    DraftVacancy.phases.keys.map { |i| [i, I18n.t(i, scope: "publishers.jobseeker_profiles.filters.education_phase_options")] }
+    Vacancy.phases.keys.map { |i| [i, I18n.t(i, scope: "publishers.jobseeker_profiles.filters.education_phase_options")] }
   end
 
   def key_stage_options
