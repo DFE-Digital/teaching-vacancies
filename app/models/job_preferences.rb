@@ -35,6 +35,6 @@ class JobPreferences < ApplicationRecord
   end
 
   def key_stages_for_phases
-    phases.map { |phase| PublishedVacancy::PHASES_TO_KEY_STAGES_MAPPINGS[phase.to_sym] }.flatten.uniq.sort
+    phases.map { |phase| Vacancy::PHASES_TO_KEY_STAGES_MAPPINGS[phase.to_sym] }.flatten.uniq.sort
   end
 end

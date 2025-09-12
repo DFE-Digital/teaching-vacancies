@@ -78,11 +78,11 @@ class Jobseekers::SubscriptionForm < BaseForm
 
   def set_facet_options
     @visa_sponsorship_availability_options =  [["true", I18n.t("jobs.filters.visa_sponsorship_availability.subscriptions")]]
-    @teaching_job_role_options = PublishedVacancy::TEACHING_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.#{option}")] }
-    @support_job_role_options = PublishedVacancy::SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.support_job_role_options.#{option}")] }
-    @phase_options = PublishedVacancy.phases.keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_education_phases_form.phases_options.#{option}")] }
+    @teaching_job_role_options = Vacancy::TEACHING_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.#{option}")] }
+    @support_job_role_options = Vacancy::SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.support_job_role_options.#{option}")] }
+    @phase_options = Vacancy.phases.keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_education_phases_form.phases_options.#{option}")] }
     @ect_status_options = [["ect_suitable", I18n.t("jobs.filters.ect_suitable")]]
-    @working_pattern_options = PublishedVacancy.working_patterns.keys.map do |option|
+    @working_pattern_options = Vacancy.working_patterns.keys.map do |option|
       [option, I18n.t("helpers.label.publishers_job_listing_contract_information_form.working_patterns_options.#{option}")]
     end
   end

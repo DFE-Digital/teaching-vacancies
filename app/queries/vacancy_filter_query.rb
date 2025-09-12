@@ -83,7 +83,7 @@ class VacancyFilterQuery < ApplicationQuery
   def job_roles(filter)
     return if filter.blank?
 
-    map_legacy_job_roles(filter).reject { |job_role| PublishedVacancy.job_roles.exclude? job_role } # Avoids exceptions raised by ArrayEnum when the job role is not valid
+    map_legacy_job_roles(filter).reject { |job_role| Vacancy.job_roles.exclude? job_role } # Avoids exceptions raised by ArrayEnum when the job role is not valid
   end
 
   def add_working_patterns_filters(working_patterns, built_scope)
@@ -91,7 +91,7 @@ class VacancyFilterQuery < ApplicationQuery
 
     # Removes working patterns not defined in the model enumerable values (EG: legacy working patterns)
     # Watch out: any legacy non-enum defined working patterns mapping must be done before this call.
-    working_patterns &= PublishedVacancy.working_patterns.keys
+    working_patterns &= Vacancy.working_patterns.keys
     return built_scope if working_patterns.empty?
 
     # ALERT: "job_share" is still defined in Vacancy.working_patterns enum. If removed from there these mappings need to
@@ -110,7 +110,7 @@ class VacancyFilterQuery < ApplicationQuery
 
     # Removes phases not defined in the model enumerable values (EG: legacy phases)
     # Watch out: any legacy non-enum defined phases mapping must be done before this call.
-    phases &= PublishedVacancy.phases.keys
+    phases &= Vacancy.phases.keys
     if phases.any?
       built_scope.with_any_of_phases(phases)
     else

@@ -7,11 +7,11 @@ class JobPreferences < ApplicationRecord
 
     def call
       scope
-        .where("phases <@ ARRAY[?]::int[]", PublishedVacancy.phases.values_at(*job_preferences.phases))
+        .where("phases <@ ARRAY[?]::int[]", Vacancy.phases.values_at(*job_preferences.phases))
         .then { |scope| apply_job_roles(scope) }
         .then { |scope| apply_key_stages(scope) }
         .then { |scope| apply_subjects(scope) }
-        .where("working_patterns && ARRAY[?]::int[]", PublishedVacancy.working_patterns.values_at(*job_preferences.working_patterns))
+        .where("working_patterns && ARRAY[?]::int[]", Vacancy.working_patterns.values_at(*job_preferences.working_patterns))
     end
 
     private
@@ -28,7 +28,7 @@ class JobPreferences < ApplicationRecord
 
     def apply_key_stages(scope)
       scope.where(key_stages: nil).or(
-        scope.where("key_stages <@ ARRAY[?]::integer[]", PublishedVacancy.key_stages.values_at(*job_preferences.key_stages)),
+        scope.where("key_stages <@ ARRAY[?]::integer[]", Vacancy.key_stages.values_at(*job_preferences.key_stages)),
       )
     end
 
