@@ -1,6 +1,6 @@
 - content_for :breadcrumbs do
   nav.govuk-breadcrumbs aria-label="Breadcrumbs"
-  = govuk_back_link text: t("buttons.back"), href: back_path, html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
+  = govuk_back_link text: t("buttons.back"), href: back_path, html_attributes: { "aria-label" => "Back navigation" }
 
 span.govuk-caption-l = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.organisation_name)
 h1.govuk-heading-xl = t("jobseekers.job_applications.heading")

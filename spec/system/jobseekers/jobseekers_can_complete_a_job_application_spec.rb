@@ -4,16 +4,25 @@ RSpec.describe "Jobseekers can complete a job application" do
   let(:jobseeker) { create(:jobseeker) }
   let(:organisation) { create(:school) }
 
-  before { login_as(jobseeker, scope: :jobseeker) }
+  before do
+    login_as(jobseeker, scope: :jobseeker)
+    visit job_path(vacancy)
+    # There are 2 apply buttons here with identical text - use the one at the top of the form
+    within ".banner-buttons" do
+      click_on("Apply for this job")
+    end
+  end
 
   after { logout }
 
   context "when job application is a using the native job application" do
     let(:vacancy) { create(:vacancy, job_roles: ["teacher"], organisations: [organisation]) }
 
-    it "allows jobseekers to complete an application and go to review page" do
-      visit job_path(vacancy)
-      all("button", text: "Apply for this job").last.click
+    it "passes a11y", :a11y do
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+    end
+
+    it "allows jobseekers to complete an application and go to review page", :a11y do
       click_button "Start application"
       click_on(I18n.t("jobseekers.job_applications.build.personal_details.heading"))
       validates_step_complete
@@ -77,6 +86,9 @@ RSpec.describe "Jobseekers can complete a job application" do
       expect(page).to have_css("#employment_history", text: I18n.t("shared.status_tags.complete"))
 
       click_on(I18n.t("jobseekers.job_applications.build.personal_statement.heading"))
+
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+
       validates_step_complete
       fill_in_personal_statement
       click_on I18n.t("buttons.save_and_continue")
@@ -98,18 +110,30 @@ RSpec.describe "Jobseekers can complete a job application" do
       expect(page).to have_css("#referees", text: I18n.t("shared.status_tags.complete"))
 
       click_on(I18n.t("jobseekers.job_applications.build.equal_opportunities.heading"))
+
+      # - ARIA attribute is not allowed: aria-expanded="false"
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+
       validates_step_complete
       fill_in_equal_opportunities
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_css("#equal_opportunities", text: I18n.t("shared.status_tags.complete"))
 
       click_on(I18n.t("jobseekers.job_applications.build.ask_for_support.heading"))
+
+      # - ARIA attribute is not allowed: aria-expanded="false"
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+
       validates_step_complete
       fill_in_ask_for_support
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_css("#ask_for_support", text: I18n.t("shared.status_tags.complete"))
 
       click_on(I18n.t("jobseekers.job_applications.build.declarations.heading"))
+
+      # - ARIA attribute is not allowed: aria-expanded="false"
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+
       validates_step_complete
       fill_in_declarations
       click_on I18n.t("buttons.save_and_continue")
@@ -121,21 +145,16 @@ RSpec.describe "Jobseekers can complete a job application" do
   end
 
   context "when job application has a custom uploaded job application" do
-    let(:vacancy) { create(:vacancy, :with_application_form, job_roles: ["teacher"], organisations: [organisation]) }
+    let(:vacancy) { create(:vacancy, :with_uploaded_application_form, job_roles: ["teacher"], organisations: [organisation]) }
 
-    before do
-      vacancy.receive_applications = "uploaded_form"
-      vacancy.save!
-    end
-
-    it "allows jobseekers to complete an application and go to review page" do
-      visit job_path(vacancy)
-      all("button", text: "Apply for this job").last.click
+    it "errors on the review button" do
       click_button "Review application"
       within(".govuk-error-summary__body") do
         expect(page).to have_link("Complete your personal details")
       end
+    end
 
+    it "allows jobseekers to complete an application and go to review page" do
       click_link(I18n.t("jobseekers.job_applications.build.personal_details.heading"))
       validates_step_complete
       choose I18n.t("helpers.label.jobseekers_job_application_personal_details_form.personal_details_section_completed_options.false")

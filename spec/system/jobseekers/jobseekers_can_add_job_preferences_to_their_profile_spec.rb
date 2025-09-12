@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can add job preferences to their profile" do
-  let!(:jobseeker) { create(:jobseeker, :with_profile) }
+  let!(:jobseeker) { create(:jobseeker, jobseeker_profile: build(:jobseeker_profile, job_preferences: job_preferences)) }
 
   before do
     login_as(jobseeker, scope: :jobseeker)
@@ -10,13 +10,21 @@ RSpec.describe "Jobseekers can add job preferences to their profile" do
   after { logout }
 
   describe "changing job preferences" do
+    before do
+      visit jobseekers_profile_path
+    end
+
     context "when adding job preferences" do
-      before do
-        visit jobseekers_profile_path
+      let(:job_preferences) { nil }
+
+      it "passes a11y", :a11y do
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
       end
 
-      it "allows jobseekers to add job preferences" do
+      it "allows jobseekers to add job preferences", :a11y do
         click_on "Add job preferences"
+
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
 
         check "Headteacher"
         click_on "Save and continue"
@@ -49,16 +57,19 @@ RSpec.describe "Jobseekers can add job preferences to their profile" do
     end
 
     context "when editing job preferences" do
-      before do
-        create(:job_preferences, :with_locations, working_patterns: %w[part_time], working_pattern_details: "I cannot work on Mondays or Fridays", jobseeker_profile: jobseeker.jobseeker_profile)
-        visit jobseekers_profile_path
+      let(:job_preferences) do
+        build(:job_preferences, :with_locations, working_patterns: %w[part_time], working_pattern_details: "I cannot work on Mondays or Fridays")
       end
 
-      it "allows jobseeker to edit job preferences" do
+      it "allows jobseeker to edit job preferences", :a11y do
         expect(page).to have_css(".govuk-summary-list__key", text: "Working pattern details")
         expect(page).to have_css(".govuk-summary-list__value", text: "I cannot work on Mondays or Fridays")
 
         click_on("Change Working pattern details")
+
+        # h1 missing?
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "page-has-heading-one"
+
         fill_in "job-preferences-working-pattern-details-field", with: "On second thoughts, I can only work Wednesdays"
         click_on "Save and continue"
 

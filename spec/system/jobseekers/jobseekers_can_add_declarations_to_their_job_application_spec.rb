@@ -5,12 +5,19 @@ RSpec.describe "Jobseekers can disclose close relationships or safeguarding issu
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let!(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
 
-  before { login_as(jobseeker, scope: :jobseeker) }
+  before do
+    login_as(jobseeker, scope: :jobseeker)
+    visit jobseekers_job_application_build_path(job_application, :declarations)
+  end
 
   after { logout }
 
+  it "passes a11y", :a11y do
+    #  aria-expanded not allowed on input tag from design system?
+    expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+  end
+
   it "allows jobseekers to add their declarations" do
-    visit jobseekers_job_application_build_path(job_application, :declarations)
     choose I18n.t("helpers.label.jobseekers_job_application_declarations_form.declarations_section_completed_options.true")
 
     click_on "Save and continue"

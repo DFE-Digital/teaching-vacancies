@@ -129,7 +129,7 @@ RSpec.describe "Documents" do
 
     context "when an application form has been staged for replacement" do
       context "when a replacement application form has been provided" do
-        let(:vacancy) { create(:vacancy, :with_application_form, enable_job_applications: false, receive_applications: "email", organisations: [organisation]) }
+        let(:vacancy) { create(:vacancy, :with_uploaded_application_form, enable_job_applications: false, receive_applications: "email", organisations: [organisation]) }
         let(:old_file) { vacancy.application_form }
         let(:replacement_file) { fixture_file_upload("blank_job_spec.pdf") }
         let(:request) do

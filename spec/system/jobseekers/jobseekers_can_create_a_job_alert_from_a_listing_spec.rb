@@ -18,21 +18,31 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
     visit job_path(vacancy)
   end
 
-  scenario "can click on the first link to create a job alert using data from the vacancy", :dfe_analytics do
-    click_on I18n.t("jobs.alert.similar.terse")
-    expect(:vacancy_create_job_alert_clicked).to have_been_enqueued_as_analytics_event(with_data: { vacancy_id: vacancy.id }) # rubocop:disable RSpec/ExpectActual
+  describe "creating a job alert" do
+    before do
+      click_on I18n.t("jobs.alert.similar.terse")
+    end
 
-    expect(page).to have_content(I18n.t("subscriptions.new.title"))
-    expect_search_criteria_to_be_populated
-    click_on I18n.t("buttons.subscribe")
-    expect(page).to have_content("There is a problem")
+    it "passes a11y", :a11y do
+      # h3 without h2?
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
+    end
 
-    fill_in_subscription_fields
+    scenario "can click on the first link to create a job alert using data from the vacancy", :dfe_analytics do
+      expect(:vacancy_create_job_alert_clicked).to have_been_enqueued_as_analytics_event(with_data: { vacancy_id: vacancy.id }) # rubocop:disable RSpec/ExpectActual
 
-    message_delivery = instance_double(ActionMailer::MessageDelivery)
-    expect(Jobseekers::SubscriptionMailer).to receive(:confirmation) { message_delivery }
-    expect(message_delivery).to receive(:deliver_later)
-    click_on I18n.t("buttons.subscribe")
+      expect(page).to have_content(I18n.t("subscriptions.new.title"))
+      expect_search_criteria_to_be_populated
+      click_on I18n.t("buttons.subscribe")
+      expect(page).to have_content("There is a problem")
+
+      fill_in_subscription_fields
+
+      message_delivery = instance_double(ActionMailer::MessageDelivery)
+      expect(Jobseekers::SubscriptionMailer).to receive(:confirmation) { message_delivery }
+      expect(message_delivery).to receive(:deliver_later)
+      click_on I18n.t("buttons.subscribe")
+    end
   end
 
   scenario "can click on the second link to create a job alert using data from the vacancy", :dfe_analytics do
