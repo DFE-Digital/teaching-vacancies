@@ -13,13 +13,13 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
   context "when vacancy job roles contains `teacher`" do
     let(:job_roles) { %w[teacher] }
 
-    it { is_expected.to validate_inclusion_of(:ect_status).in_array(DraftVacancy.ect_statuses.keys) }
+    it { is_expected.to validate_inclusion_of(:ect_status).in_array(Vacancy.ect_statuses.keys) }
   end
 
   context "when vacancy job roles does not contain `teacher`" do
     let(:job_roles) { nil }
 
-    it { is_expected.not_to validate_inclusion_of(:ect_status).in_array(DraftVacancy.ect_statuses.keys) }
+    it { is_expected.not_to validate_inclusion_of(:ect_status).in_array(Vacancy.ect_statuses.keys) }
   end
 
   describe "skills_and_experience" do
