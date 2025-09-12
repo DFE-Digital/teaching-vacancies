@@ -52,6 +52,6 @@ class Jobseekers::SavedJobsController < Jobseekers::BaseController
   end
 
   def vacancy
-    @vacancy ||= Vacancy.listed.find(saved_job_params[:job_id])
+    @vacancy ||= PublishedVacancy.listed.find(saved_job_params[:job_id])
   end
 end

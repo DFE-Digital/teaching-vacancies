@@ -10,7 +10,7 @@ RSpec.describe "Creating a vacancy" do
           job_roles: ["teacher"],
           publish_on: Date.current)
   end
-  let(:created_vacancy) { Vacancy.last }
+  let(:created_vacancy) { DraftVacancy.last }
 
   before { login_publisher(publisher: publisher, organisation: school) }
 
@@ -253,7 +253,7 @@ RSpec.describe "Creating a vacancy" do
 
         fill_from_visits_to_review(vacancy)
         expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
-        expect(Vacancy.find(created_vacancy.id)).to be_catholic
+        expect(DraftVacancy.find(created_vacancy.id)).to be_catholic
       end
 
       scenario "Church of England" do
@@ -262,7 +262,7 @@ RSpec.describe "Creating a vacancy" do
 
         fill_from_visits_to_review(vacancy)
         expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
-        expect(Vacancy.find(created_vacancy.id)).to be_other_religion
+        expect(DraftVacancy.find(created_vacancy.id)).to be_other_religion
       end
 
       scenario "No religion questions" do
@@ -271,7 +271,7 @@ RSpec.describe "Creating a vacancy" do
 
         fill_from_visits_to_review(vacancy)
         expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
-        expect(Vacancy.find(created_vacancy.id)).to be_no_religion
+        expect(DraftVacancy.find(created_vacancy.id)).to be_no_religion
       end
     end
 
@@ -283,7 +283,7 @@ RSpec.describe "Creating a vacancy" do
 
       it "doesnt ask religion questions" do
         expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :how_to_receive_applications))
-        expect(Vacancy.find(created_vacancy.id)).to have_attributes(enable_job_applications: false, religion_type: nil)
+        expect(DraftVacancy.find(created_vacancy.id)).to have_attributes(enable_job_applications: false, religion_type: nil)
       end
     end
   end

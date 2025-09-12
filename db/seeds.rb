@@ -80,7 +80,7 @@ JobApplication.statuses.count.times { |i| FactoryBot.create(:jobseeker, email: "
 
 emails_without_applications = ["jobseeker@contoso.com"] + user_emails
 # Job Applications
-Vacancy.listed.each do |vacancy|
+PublishedVacancy.listed.each do |vacancy|
   statuses = JobApplication.statuses.keys
   # only add fake job applications to non-DFE jobseekers
   Jobseeker.where.not(email: emails_without_applications).each do |jobseeker|

@@ -40,7 +40,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         click_on I18n.t("buttons.save_and_continue")
 
         expect(current_path).to eq(organisation_job_review_path(vacancy.id))
-        expect(page).to have_content(Vacancy.find(vacancy.id).job_roles.first.humanize)
+        expect(page).to have_content(DraftVacancy.find(vacancy.id).job_roles.first.humanize)
       end
     end
   end
@@ -68,7 +68,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         fill_in_job_location_form_fields([another_primary_school])
         click_on I18n.t("buttons.save_and_finish_later")
 
-        expect(Vacancy.find(vacancy.id).organisations).to contain_exactly(another_primary_school)
+        expect(DraftVacancy.find(vacancy.id).organisations).to contain_exactly(another_primary_school)
 
         within "#job_details" do
           find("a").click
@@ -76,7 +76,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         fill_in_job_location_form_fields([primary_school, another_primary_school])
         click_on I18n.t("buttons.save_and_finish_later")
 
-        expect(Vacancy.find(vacancy.id).organisations).to contain_exactly(primary_school, another_primary_school)
+        expect(DraftVacancy.find(vacancy.id).organisations).to contain_exactly(primary_school, another_primary_school)
       end
 
       context "when the new job location is the trust's central office" do
