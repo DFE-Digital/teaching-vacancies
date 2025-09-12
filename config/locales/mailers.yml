@@ -222,8 +222,10 @@ en:
       message_received:
         unsuccessful:
           subject: "Your application for %{job_title} at %{organisation_name} has been unsuccessful"
+          sign_in_prompt: "Sign in to your %{sign_in_link} to view the message from %{organisation_name}."
         default:
           subject: "Sign in to Teaching Vacancies to read your messages"
+          sign_in_prompt: "You'll need to %{sign_in_link} to view the message in full and reply to it."
 
   publishers:
     job_application_data_expiry_mailer:
