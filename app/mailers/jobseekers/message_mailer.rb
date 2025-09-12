@@ -1,5 +1,5 @@
 class Jobseekers::MessageMailer < Jobseekers::BaseMailer
-  def message_received(message:)
+  def message_received(message)
     @message = message
     @jobseeker = message.conversation.job_application.jobseeker
     @job_application = message.conversation.job_application
