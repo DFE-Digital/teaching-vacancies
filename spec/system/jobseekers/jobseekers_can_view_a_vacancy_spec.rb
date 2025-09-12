@@ -24,17 +24,17 @@ RSpec.describe "Viewing a single published vacancy" do
       verify_vacancy_show_page_details(vacancy)
     end
 
-    scenario "tracks the view in Redis", :perform_enqueued do
+    scenario "tracks the view in Redis" do
       mock_redis = MockRedis.new
       allow(Redis).to receive(:current).and_return(mock_redis)
 
       referrer_url = "https://example.com/some/path?utm=123"
       redis_key = "vacancy_referrer_stats:#{vacancy.id}:example.com"
 
-      # perform_enqueued_jobs do
-      page.driver.header("Referer", referrer_url)
-      visit job_path(vacancy)
-      # end
+      perform_enqueued_jobs do
+        page.driver.header("Referer", referrer_url)
+        visit job_path(vacancy)
+      end
       expect(Redis.current.get(redis_key).to_i).to be > 0
     end
 
