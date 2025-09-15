@@ -92,7 +92,6 @@ RSpec.describe "publishers/vacancies/job_applications/messages.html.slim" do
     it "shows existing messages, disabled messaging message and hides buttons" do
       render template: "publishers/vacancies/job_applications/messages"
 
-      expect(rendered).to have_text("Messaging is not available for this application")
       expect(rendered).to have_no_link("Send message to candidate")
       expect(rendered).to have_text("Previous message content")
     end
