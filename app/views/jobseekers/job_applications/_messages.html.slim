@@ -6,13 +6,12 @@
                form_url: jobseekers_job_application_messages_path(@job_application),
                form_help_text: t(".form_help_text"),
                form_help_content: t(".form_help_content")
+    - elsif @job_application.withdrawn?
+      = govuk_warning_text(text: t(".messaging_not_available.withdrawn"))
+    - elsif @job_application.can_jobseeker_reply_to_message?
+      = govuk_warning_text(text: t(".messaging_not_available.cannot_initiate"))
     - else
-      - if @job_application.withdrawn?
-        = govuk_warning_text(text: t(".messaging_not_available.withdrawn"))
-      - elsif @job_application.can_jobseeker_reply_to_message?
-        = govuk_warning_text(text: t(".messaging_not_available.cannot_initiate"))
-      - else
-        = govuk_warning_text(text: t(".messaging_not_available.cannot_message_at_all"))
+      = govuk_warning_text(text: t(".messaging_not_available.cannot_message_at_all"))
 
     - if messages.any?
       #messages-list

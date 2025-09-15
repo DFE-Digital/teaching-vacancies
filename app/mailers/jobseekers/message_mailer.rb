@@ -6,13 +6,13 @@ class Jobseekers::MessageMailer < Jobseekers::BaseMailer
     @vacancy = @job_application.vacancy
     @organisation = @vacancy.organisation
 
-    if @job_application.status == "unsuccessful"
-      @subject = I18n.t("jobseekers.message_mailer.message_received.unsuccessful.subject", 
-                       job_title: @vacancy.job_title, 
-                       organisation_name: @organisation.name)
-    else
-      @subject = I18n.t("jobseekers.message_mailer.message_received.default.subject")
-    end
+    @subject = if @job_application.status == "unsuccessful"
+                 I18n.t("jobseekers.message_mailer.message_received.unsuccessful.subject",
+                        job_title: @vacancy.job_title,
+                        organisation_name: @organisation.name)
+               else
+                 I18n.t("jobseekers.message_mailer.message_received.default.subject")
+               end
 
     send_email(to: @jobseeker.email, subject: @subject)
   end

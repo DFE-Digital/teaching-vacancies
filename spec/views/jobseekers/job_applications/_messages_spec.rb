@@ -78,8 +78,7 @@ RSpec.describe "jobseekers/job_applications/_messages.html.slim" do
 
     context "when jobseeker can reply but not initiate" do
       before do
-        allow(job_application).to receive(:withdrawn?).and_return(false)
-        allow(job_application).to receive(:can_jobseeker_reply_to_message?).and_return(true)
+        allow(job_application).to receive_messages(withdrawn?: false, can_jobseeker_reply_to_message?: true)
       end
 
       it "shows cannot initiate warning" do
@@ -92,8 +91,7 @@ RSpec.describe "jobseekers/job_applications/_messages.html.slim" do
 
     context "when jobseeker cannot message at all" do
       before do
-        allow(job_application).to receive(:withdrawn?).and_return(false)
-        allow(job_application).to receive(:can_jobseeker_reply_to_message?).and_return(false)
+        allow(job_application).to receive_messages(withdrawn?: false, can_jobseeker_reply_to_message?: false)
       end
 
       it "shows cannot message at all warning" do

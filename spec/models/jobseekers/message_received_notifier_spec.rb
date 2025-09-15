@@ -13,19 +13,19 @@ RSpec.describe Jobseekers::MessageReceivedNotifier do
 
     it "returns the jobseeker from the job application" do
       notification = described_class.with(message: message)
-      
+
       expect(notification.recipients).to eq([jobseeker])
     end
   end
 
   describe "#message_text" do
-    subject { described_class.with(message: message).new.message_text }
+    subject(:message_text) { described_class.with(message: message).new.message_text }
 
     context "when job application is unsuccessful" do
       let(:status) { "unsuccessful" }
 
       it "returns the unsuccessful message" do
-        expect(subject).to include("Your application for Math Teacher at Test School was unsuccessful")
+        expect(message_text).to include("Your application for Math Teacher at Test School was unsuccessful")
       end
     end
 
@@ -33,7 +33,7 @@ RSpec.describe Jobseekers::MessageReceivedNotifier do
       let(:status) { "submitted" }
 
       it "returns the default message" do
-        expect(subject).to include("You have received a message about the Math Teacher role")
+        expect(message_text).to include("You have received a message about the Math Teacher role")
       end
     end
   end

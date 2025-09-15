@@ -4,6 +4,7 @@ class SendMessagesReceivedYesterdayJob < ApplicationJob
   def perform
     publishers_with_messages_received_yesterday.each do |publisher|
       next unless publisher.email?
+
       message_count = count_messages_for_publisher(publisher)
       Publishers::MessageNotificationMailer.messages_received(publisher: publisher, message_count: message_count).deliver
       Rails.logger.info("Sidekiq: Sending messages received yesterday for publisher id: #{publisher.id}, count: #{message_count}")
