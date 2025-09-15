@@ -368,4 +368,101 @@ RSpec.describe "Job applications" do
       end
     end
   end
+
+  describe "GET interview_date" do
+    it "renders add interview date form page" do
+      expect(get(interview_datetime_organisation_job_job_application_path(vacancy.id, job_application.id))).to render_template(:interview_datetime)
+    end
+  end
+
+  describe "PATCH interview_date" do
+    subject { response }
+
+    let(:job_application) { create(:job_application, :status_interviewing, vacancy:) }
+    let(:update_request) do
+      patch(
+        update_interview_datetime_organisation_job_job_application_path(vacancy.id, job_application.id),
+        params:,
+      )
+    end
+
+    context "when successful" do
+      let(:params) do
+        {
+          publishers_job_application_interview_date_form: {
+            "interviewing_at(1i)" => 2025,
+            "interviewing_at(2i)" => 9,
+            "interviewing_at(3i)" => 1,
+            "time"                => "10:45",
+          },
+        }
+      end
+      let(:previous_datetime) { job_application.interviewing_at }
+      let(:expected_datetime) { Time.zone.local(2025, 9, 1, 10, 45) }
+
+      it "updates job application interviewing_at" do
+        expect { update_request }.to change { job_application.reload.interviewing_at }.from(previous_datetime).to(expected_datetime)
+      end
+    end
+
+    context "with missing params" do
+      let(:params) { {} }
+
+      before { update_request }
+
+      it { is_expected.to render_template(:interview_datetime) }
+    end
+
+    context "with bad date params" do
+      let(:params) do
+        {
+          publishers_job_application_interview_date_form: {
+            "interviewing_at(1i)" => 2025,
+            "interviewing_at(2i)" => 90,
+            "interviewing_at(3i)" => 1,
+            "time"                => "10:45",
+          },
+        }
+      end
+
+      before { update_request }
+
+      it { is_expected.to render_template(:interview_datetime) }
+    end
+
+    context "with bad time params" do
+      let(:params) do
+        {
+          publishers_job_application_interview_date_form: {
+            "interviewing_at(1i)" => 2025,
+            "interviewing_at(2i)" => 9,
+            "interviewing_at(3i)" => 1,
+            "time"                => "45:10",
+          },
+        }
+      end
+
+      before { update_request }
+
+      it { is_expected.to render_template(:interview_datetime) }
+    end
+
+    context "whem job aplication not in interviewing state" do
+      let(:params) do
+        {
+          publishers_job_application_interview_date_form: {
+            "interviewing_at(1i)" => 2025,
+            "interviewing_at(2i)" => 9,
+            "interviewing_at(3i)" => 1,
+            "time"                => "10:45",
+          },
+        }
+      end
+      let(:job_application) { create(:job_application, :status_submitted, vacancy:) }
+
+      before { update_request }
+
+      it { is_expected.to render_template(:interview_datetime) }
+    end
+  end
 end

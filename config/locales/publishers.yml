@@ -538,6 +538,14 @@ en:
           draft: Draft jobs - %{organisation_name}
           awaiting_feedback: Jobs awaiting feedbank - %{organisation_name}
       job_applications:
+        interview_datetime:
+          page_title: Add interview date
+          add_interview_date: Add interview date
+          schedule_interview_datetime: What date and time have you scheduled %{name}'s interview?
+          inset: >-
+            If the interiew date or time changes you can update it in the candidate's application action.
+            Changing the interview date and time will not update this information for the candidate.
+            It is for internal reference only.
         update_application_status: Update application status
         interviewing_status:
           pre_interview_checks: Pre-interview checks
