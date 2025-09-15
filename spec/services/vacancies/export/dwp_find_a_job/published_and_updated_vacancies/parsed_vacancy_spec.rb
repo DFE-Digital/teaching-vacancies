@@ -318,7 +318,7 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated::ParsedVacanc
     end
 
     it "has a type_id mapping for all defined contract types" do
-      Vacancy.contract_types.each_key do |contract_type|
+      PublishedVacancy.contract_types.each_key do |contract_type|
         allow(vacancy).to receive(:contract_type).and_return(contract_type)
 
         expect { parsed.type_id }.not_to raise_error

@@ -22,7 +22,7 @@ RSpec.describe "Publishers can end a job listing early" do
     choose I18n.t("helpers.label.publishers_job_listing_end_listing_form.hired_status_options.hired_other_free")
     choose I18n.t("helpers.label.publishers_job_listing_end_listing_form.listed_elsewhere_options.listed_free")
 
-    expect { click_on I18n.t("buttons.end_listing") }.to change { Vacancy.live.count }.from(1).to(0)
+    expect { click_on I18n.t("buttons.end_listing") }.to change { PublishedVacancy.live.count }.from(1).to(0)
 
     expect(current_path).to eq(organisation_job_path(vacancy.id))
   end

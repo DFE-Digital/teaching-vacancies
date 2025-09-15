@@ -28,6 +28,7 @@ class Publishers::Vacancies::ExpiredFeedbacksController < Publishers::Vacancies:
   def vacancy
     return @vacancy if defined?(@vacancy)
 
+    # Use generic Vacancy here as it applies to both Draft and Published
     signed_vacancy = Vacancy.find_signed(params[:job_id])
 
     if signed_vacancy
