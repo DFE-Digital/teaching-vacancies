@@ -17,8 +17,8 @@
           .govuk-body = answer
 
 - elsif @self_disclosure.request.completed?
-  .govuk-body = t(".manually_completed")
+  .govuk-body = t(".completed")
 
 - elsif @self_disclosure.request.received?
   / received status when managed outside TVS
-  .govuk-body = t(".manually_received")
+  .govuk-body = t(".received")

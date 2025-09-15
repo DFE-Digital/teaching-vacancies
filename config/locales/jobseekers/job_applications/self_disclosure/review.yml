@@ -17,7 +17,8 @@ en:
               requested: Requested
               created: Managed outside Teaching Vacancies
             self_disclosure_form: Self-disclosure form
-            manually_received: This self-disclosure form has been marked as received.
+            received: This self-disclosure form has been marked as received.
+            completed: This self-disclosure form has been marked as completed.
             print: Print self-disclosure
             "true": "Yes"
             "false": "No"
