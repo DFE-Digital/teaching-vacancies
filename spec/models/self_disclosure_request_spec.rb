@@ -16,7 +16,7 @@ RSpec.describe SelfDisclosureRequest do
       let(:request) { job_application.self_disclosure_request }
 
       it { expect(request.self_disclosure).to be_nil }
-      it { expect(request.status).to eq("manual") }
+      it { expect(request.status).to eq("created") }
     end
 
     it "does not send the notification email" do
@@ -35,53 +35,13 @@ RSpec.describe SelfDisclosureRequest do
       let(:request) { job_application.self_disclosure_request }
 
       it { expect(request.self_disclosure).to be_present }
-      it { expect(request.status).to eq("sent") }
+      it { expect(request.status).to eq("requested") }
     end
 
     it "sends the notification email" do
       expect { described_class.create_and_notify!(job_application) }
         .to have_enqueued_email(Jobseekers::JobApplicationMailer, :self_disclosure)
         .with(job_application)
-    end
-  end
-
-  describe "#completed?" do
-    subject { described_class.new(status:).completed? }
-
-    %i[manual sent].each do |status|
-      context "when #{status}" do
-        let(:status) { status }
-
-        it { is_expected.to be false }
-      end
-    end
-
-    %i[manually_completed received].each do |status|
-      context "when #{status}" do
-        let(:status) { status }
-
-        it { is_expected.to be true }
-      end
-    end
-  end
-
-  describe ".pending?" do
-    subject { described_class.new(status:).pending? }
-
-    %i[manual sent].each do |status|
-      context "when #{status}" do
-        let(:status) { status }
-
-        it { is_expected.to be true }
-      end
-    end
-
-    %i[manually_completed received].each do |status|
-      context "when #{status}" do
-        let(:status) { status }
-
-        it { is_expected.to be false }
-      end
     end
   end
 end
