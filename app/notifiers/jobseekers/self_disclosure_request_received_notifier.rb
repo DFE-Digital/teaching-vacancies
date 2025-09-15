@@ -12,7 +12,9 @@ module Jobseekers
 
     notification_methods do
       def message
-        t("notifications.jobseekers/self_disclosure_request_received_notification.message_html", link: disclosure_link)
+        t("notifications.jobseekers/self_disclosure_request_received_notification.message_html",
+          link: disclosure_link, job_title: job_application.vacancy.job_title,
+          school_name: job_application.vacancy.organisation.name)
       end
 
       include DatesHelper
@@ -27,7 +29,7 @@ module Jobseekers
       private
 
       def disclosure_link
-        govuk_link_to t("notifications.publishers/self_disclosure_received_notification.disclosure_received"),
+        govuk_link_to t("notifications.jobseekers/self_disclosure_request_received_notification.disclosure_received"),
                       jobseekers_job_application_self_disclosure_path(job_application, Wicked::FIRST_STEP),
                       class: "govuk-link--no-visited-state"
       end

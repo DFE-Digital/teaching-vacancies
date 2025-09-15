@@ -46,7 +46,8 @@ en:
       message_html: You have received a %{link}
       reference_received: reference for a candidate
     jobseekers/self_disclosure_request_received_notification:
-      message_html: You have received a request to complete a %{link}
+      message_html: You have received a request to complete a %{link} for %{job_title} at %{school_name}
+      disclosure_received: self-disclosure form request
     index:
       heading: Notifications
       no_notifications: You have no notifications.
