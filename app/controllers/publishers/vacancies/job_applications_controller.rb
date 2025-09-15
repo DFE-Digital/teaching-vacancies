@@ -9,6 +9,7 @@ module Publishers
         "OfferedForm" => Publishers::JobApplication::OfferedForm,
         "DeclinedForm" => Publishers::JobApplication::DeclinedForm,
         "FeedbackForm" => Publishers::JobApplication::FeedbackForm,
+        "InterviewDatetimeForm" => Publishers::JobApplication::InterviewDatetimeForm,
       }.freeze
 
       before_action :set_job_application, only: %i[show download pre_interview_checks messages download_messages]
@@ -37,6 +38,7 @@ module Publishers
           when "export"   then export_selected(form.job_applications)
           when "declined" then render_declined_form(form.job_applications, form.origin)
           when "offered"  then render_offered_form(form.job_applications, form.origin)
+          when "interview_datetime" then render_interview_datetime_form(form.job_applications, form.origin)
           when "unsuccessful_interview" then render_unsuccessful_interview_form(form.job_applications, form.origin)
           else # when "update_status"
             render "tag"
@@ -58,7 +60,7 @@ module Publishers
       end
 
       def offer
-        with_valid_form(@job_applications) do |form|
+        with_valid_form(@job_applications, validate_status: true) do |form|
           form.job_applications.each { it.update!(form.attributes) }
           redirect_to organisation_job_job_applications_path(@vacancy.id, anchor: form.origin)
         end
@@ -105,8 +107,9 @@ module Publishers
         form_class = FORMS.fetch(params[:form_name], Publishers::JobApplication::TagForm)
         form_params = params
                         .fetch(ActiveModel::Naming.param_key(form_class), {})
-                        .permit(:origin, :status, :offered_at, :declined_at, :interview_feedback_received, :interview_feedback_received_at, { job_applications: [] })
+                        .permit(:origin, :status, :offered_at, :declined_at, :interview_feedback_received, :interview_feedback_received_at, :interview_date, :interview_time, { job_applications: [] })
         form_params[:job_applications] = job_applications.select { |ja| Array(form_params[:job_applications]).include?(ja.id) }
+
         form_params[:validate_status] = validate_status
 
         @form = form_class.new(form_params)
@@ -123,6 +126,9 @@ module Publishers
         in { offered_at: }  then render "offered_date"
         in { declined_at: } then render "declined_date"
         in { interview_feedback_received_at: } then render "feedback_date"
+        in { interview_date: } then render "interview_datetime"
+        in { interview_time: } then render "interview_datetime" # rubocop:disable Lint/DuplicateBranch
+        in { job_application: } then render "interview_datetime" # rubocop:disable Lint/DuplicateBranch
         else
           flash[form.origin] = form.errors.full_messages
           redirect_to organisation_job_job_applications_path(@vacancy.id, anchor: form.origin)
@@ -164,6 +170,17 @@ module Publishers
       def render_unsuccessful_interview_form(job_applications, origin)
         @form = Publishers::JobApplication::FeedbackForm.new(job_applications:, origin:, status: "unsuccessful_interview")
         render "feedback_date"
+      end
+
+      def render_interview_datetime_form(job_applications, origin)
+        job_application = job_applications.first
+        @form = Publishers::JobApplication::InterviewDatetimeForm.new(
+          job_applications:,
+          interview_date: job_application.interviewing_at,
+          interview_time: job_application.interviewing_at&.to_fs(:time_only),
+          origin:,
+        )
+        render "interview_datetime"
       end
     end
   end

@@ -120,4 +120,19 @@ RSpec.describe TabPanelComponent, type: :component do
       it { expect(tab_panel.find(".interview_feedback_received_at")).to have_link("Add feedback date", href: Rails.application.routes.url_helpers.tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: :interviewing, job_applications: [candidates.first] }, tag_action: "unsuccessful_interview" })) }
     end
   end
+
+  context "when rendering candidate's interview datetime" do
+    let(:candidates) { build_stubbed_list(:job_application, 1, :status_interviewing, vacancy:, interviewing_at: Time.zone.now) }
+    let(:displayed_fields) { %i[name email_address interviewing_at] }
+    let(:expected_date) { candidates.first.interviewing_at.to_fs }
+
+    it { expect(tab_panel.find(".interviewing_at")).to have_text(expected_date) }
+    it { expect(component.candidate_interviewing_at(candidates.first)).to eq(expected_date) }
+
+    context "when date nil" do
+      let(:candidates) { build_stubbed_list(:job_application, 1, :status_interviewing, vacancy:, interviewing_at: nil) }
+
+      it { expect(tab_panel.find(".interviewing_at")).to have_link("Add interview date and time", href: Rails.application.routes.url_helpers.tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: :interviewing, job_applications: [candidates.first] }, tag_action: "interview_datetime" })) }
+    end
+  end
 end

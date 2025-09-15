@@ -1,0 +1,21 @@
+- content_for :page_title_prefix, t(".page_title")
+
+p.govuk-hint = t(".add_interview_date")
+h1.govuk-heading-l class="govuk-!-display-inline"
+  = t(".schedule_interview_datetime", name: @form.job_application.name)
+
+p.govuk-body = t(".inset")
+
+= form_with(model: @form, url: offer_organisation_job_job_applications_path(vacancy.id), method: :post) do |f|
+  = f.govuk_error_summary
+  = hidden_field_tag :form_name, @form.name
+  = f.hidden_field :origin
+  - @form.job_applications.each do |ja|
+    = f.hidden_field :job_applications, multiple: true, value: ja.id
+
+  = f.govuk_date_field :interview_date, legend: { size: "m" }
+  = f.govuk_text_field :interview_time, legend: { size: "m" }, width: 4
+
+  .govuk-button-group
+    = f.govuk_submit t("buttons.save_and_continue"), class: "update-status"
+    = govuk_button_link_to t("buttons.cancel"), organisation_job_job_applications_path(vacancy.id, anchor: :interviewing), secondary: true
