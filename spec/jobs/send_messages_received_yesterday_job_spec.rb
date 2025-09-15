@@ -11,7 +11,9 @@ RSpec.describe SendMessagesReceivedYesterdayJob do
 
     before do
       allow(Publishers::MessageNotificationMailer).to receive(:messages_received).and_call_original
+      # rubocop:disable RSpec/AnyInstance
       allow_any_instance_of(ActionMailer::MessageDelivery).to receive(:deliver_later)
+      # rubocop:enable RSpec/AnyInstance
     end
 
     context "when there are unread messages from yesterday" do
@@ -92,7 +94,7 @@ RSpec.describe SendMessagesReceivedYesterdayJob do
 
       it "only counts unread messages from yesterday" do
         travel_to(1.day.ago) do
-          # Create one more unread message and one read message  
+          # Create one more unread message and one read message
           create(:jobseeker_message, conversation: conversation, sender: jobseeker, read: false)
           create(:jobseeker_message, conversation: conversation, sender: jobseeker, read: true)
         end
@@ -112,7 +114,7 @@ RSpec.describe SendMessagesReceivedYesterdayJob do
       before do
         # Create unread message from today
         create(:jobseeker_message, conversation: conversation, sender: jobseeker, read: false)
-        
+
         # Create unread message from 2 days ago
         travel_to(2.days.ago) do
           create(:jobseeker_message, conversation: conversation, sender: jobseeker, read: false)
@@ -122,7 +124,7 @@ RSpec.describe SendMessagesReceivedYesterdayJob do
       it "does not send any emails" do
         expect {
           described_class.new.perform
-        }.not_to change { ActionMailer::Base.deliveries.size }
+        }.not_to(change { ActionMailer::Base.deliveries.size })
       end
     end
 
@@ -141,7 +143,7 @@ RSpec.describe SendMessagesReceivedYesterdayJob do
       it "does not send emails to publishers without email addresses" do
         expect {
           described_class.new.perform
-        }.not_to change { ActionMailer::Base.deliveries.size }
+        }.not_to(change { ActionMailer::Base.deliveries.size })
       end
     end
 
@@ -155,7 +157,7 @@ RSpec.describe SendMessagesReceivedYesterdayJob do
       it "does not send emails for publisher messages" do
         expect {
           described_class.new.perform
-        }.not_to change { ActionMailer::Base.deliveries.size }
+        }.not_to(change { ActionMailer::Base.deliveries.size })
       end
     end
 
@@ -170,7 +172,7 @@ RSpec.describe SendMessagesReceivedYesterdayJob do
       it "does not send emails for already read messages" do
         expect {
           described_class.new.perform
-        }.not_to change { ActionMailer::Base.deliveries.size }
+        }.not_to(change { ActionMailer::Base.deliveries.size })
       end
     end
   end

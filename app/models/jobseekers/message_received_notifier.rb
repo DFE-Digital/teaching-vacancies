@@ -10,14 +10,15 @@ module Jobseekers
       config.args = :message
     end
 
+    # rubocop:disable Metrics/BlockLength
     notification_methods do
       def message_text
         if unsuccessful_application?
-          t("notifications.jobseekers/message_received_notification.unsuccessful.message_html", 
+          t("notifications.jobseekers/message_received_notification.unsuccessful.message_html",
             job_title: job_title,
             school_name: school_name)
         else
-          t("notifications.jobseekers/message_received_notification.default.message_html", 
+          t("notifications.jobseekers/message_received_notification.default.message_html",
             job_title: job_title)
         end
       end
@@ -48,6 +49,7 @@ module Jobseekers
         job_application.vacancy.organisation.name
       end
     end
+    # rubocop:enable Metrics/BlockLength
 
     def message(*)
       record
