@@ -1,9 +1,11 @@
 doctype html
 html.govuk-template.govuk-template--rebranded.app-html-class lang="en"
   head
-    = render "layouts/vwo_head" if consented_to_extra_cookies?
-    = render "layouts/clarity_head" if consented_to_extra_cookies?
-    = render "layouts/google_tag_manager_head" if consented_to_extra_cookies?
+    - if consented_to_extra_cookies?
+      = render "layouts/vwo_head"
+      = render "layouts/clarity_head"
+      = render "layouts/google_tag_manager_head"
+      = render "layouts/facebook_pixel_head"
     = render "layouts/head_meta"
     = render "layouts/head_links"
     title #{content_for :page_title_prefix} - #{t("app.title")} - GOV.UK
@@ -13,7 +15,9 @@ html.govuk-template.govuk-template--rebranded.app-html-class lang="en"
 
   body class=body_class
     = render "layouts/cookies_banner"
-    = render "layouts/google_tag_manager_body" if consented_to_extra_cookies?
+    - if consented_to_extra_cookies?
+      = render "layouts/google_tag_manager_body"
+      = render "layouts/facebook_pixel_body"
     = render "layouts/add_js_enabled_class_to_body"
     = render "layouts/skip_links"
     = render EnvironmentBannerComponent.new
