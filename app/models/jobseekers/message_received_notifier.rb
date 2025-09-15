@@ -49,10 +49,10 @@ module Jobseekers
         job_application.vacancy.organisation.name
       end
     end
-    # rubocop:enable Metrics/BlockLength
 
     def message(*)
       record
     end
   end
+  # rubocop:enable Metrics/BlockLength
 end

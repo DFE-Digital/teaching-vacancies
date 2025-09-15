@@ -120,7 +120,7 @@ RSpec.describe "jobseekers/job_applications/_messages.html.slim" do
       it "shows existing messages, disabled messaging message and no 'Send message to hiring staff' button" do
         render partial: "jobseekers/job_applications/messages", locals: { messages: messages }
 
-        expect(rendered).to have_text("Messaging is not available for this application")
+        expect(rendered).to have_text("You cannot contact the school at this stage in your application")
         expect(rendered).to have_css("#messages-list")
         expect(rendered).to have_text("Previous message content")
         expect(rendered).to have_no_text(I18n.t("jobseekers.job_applications.messages.no_messages_yet"))
