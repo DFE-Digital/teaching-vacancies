@@ -179,6 +179,12 @@ RSpec.describe "Job applications" do
 
       it { is_expected.to render_template(:declined_date) }
     end
+
+    context "when add interview datetime" do
+      let(:target) { "interview_datetime" }
+
+      it { is_expected.to render_template(:interview_datetime) }
+    end
   end
 
   describe "POST #update_tag" do
@@ -395,6 +401,69 @@ RSpec.describe "Job applications" do
         end
 
         it { is_expected.to render_template("feedback_date") }
+      end
+    end
+
+    describe "interview datetime form" do
+      let(:origin) { "interviewing" }
+      let(:params) do
+        {
+          form_name: "InterviewDatetimeForm",
+          publishers_job_application_interview_datetime_form: form_params,
+        }
+      end
+      let(:status) { "interviewing" }
+
+      context "when params valid" do
+        let(:form_params) do
+          { origin:, job_applications: }.merge(
+            "interview_date(1i)" => 2025,
+            "interview_date(2i)" => 9,
+            "interview_date(3i)" => 1,
+            "interview_time"     => "10:45am", # rubocop:disable Layout/HashAlignment
+          )
+        end
+
+        it "update interviewing_at" do
+          old_interviewing_at = job_application.interviewing_at
+          expect { post(offer_organisation_job_job_applications_path(vacancy.id), params:) }
+            .to change { job_application.reload.interviewing_at }.from(old_interviewing_at).to(Time.zone.local(2025, 9, 1, 10, 45))
+          expect(response).to redirect_to organisation_job_job_applications_path(vacancy.id, anchor: origin)
+        end
+      end
+
+      context "when params invalid date" do
+        let(:form_params) do
+          { origin:, job_applications: }.merge(
+            "interview_date(1i)" => 2025,
+            "interview_date(2i)" => 9,
+            "interview_date(3i)" => "badday",
+            "interview_time"     => "10:45am", # rubocop:disable Layout/HashAlignment
+          )
+        end
+
+        before do
+          post(offer_organisation_job_job_applications_path(vacancy.id), params:)
+        end
+
+        it { is_expected.to render_template("interview_datetime") }
+      end
+
+      context "when params invalid time" do
+        let(:form_params) do
+          { origin:, job_applications: }.merge(
+            "interview_date(1i)" => 2025,
+            "interview_date(2i)" => 9,
+            "interview_date(3i)" => 1,
+            "interview_time"     => "45:99am", # rubocop:disable Layout/HashAlignment
+          )
+        end
+
+        before do
+          post(offer_organisation_job_job_applications_path(vacancy.id), params:)
+        end
+
+        it { is_expected.to render_template("interview_datetime") }
       end
     end
   end

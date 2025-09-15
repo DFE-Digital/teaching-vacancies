@@ -12,6 +12,15 @@ h1.govuk-heading-xl class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
   = job_application.name
   = publisher_job_application_status_tag(job_application.status, classes: ["govuk-!-margin-left-2"])
 
+- if job_application.interviewing?
+  = govuk_inset_text do
+    - if job_application.interviewing_at
+      p.govuk-body = t(".interviewing_at", datetime: job_application.interviewing_at.to_fs)
+      = govuk_link_to(t(".change_interview_datetime"), tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_interview_datetime_form: { origin: tab_name(job_application.status), job_applications: [job_application.id] }, tag_action: "interview_datetime", form_name: "InterviewDatetimeForm" }))
+
+    - else
+      = govuk_link_to(t(".add_interview_datetime"), tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_interview_datetime_form: { origin: tab_name(job_application.status), job_applications: [job_application.id] }, tag_action: "interview_datetime", form_name: "InterviewDatetimeForm" }))
+
 = tabs do |tabs|
   - tabs.with_navigation_item text: t(".tabs.application"), link: organisation_job_job_application_path(vacancy.id, job_application)
   - if job_application.has_pre_interview_checks?
