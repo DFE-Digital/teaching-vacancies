@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class JobApplication < ApplicationRecord
   before_save :update_status_timestamp, if: -> { will_save_change_to_status? && %w[offered declined].exclude?(status) }
   before_save :reset_support_needed_details
@@ -182,6 +183,37 @@ class JobApplication < ApplicationRecord
     save!
   end
 
+  def can_jobseeker_send_message?
+    conversations.any? ? can_jobseeker_reply_to_message? : can_jobseeker_initiate_message?
+  end
+
+  def can_jobseeker_initiate_message?
+    case status
+    when "interviewing", "unsuccessful_interview", "offered", "declined"
+      true
+    else
+      false
+    end
+  end
+
+  def can_jobseeker_reply_to_message?
+    case status
+    when "submitted", "shortlisted", "interviewing", "unsuccessful_interview", "offered", "declined"
+      true
+    else
+      false
+    end
+  end
+
+  def can_publisher_send_message?
+    case status
+    when "withdrawn"
+      false
+    else
+      true
+    end
+  end
+
   private
 
   def status_transition
@@ -225,3 +257,4 @@ class JobApplication < ApplicationRecord
     self[:support_needed_details] = "" unless is_support_needed?
   end
 end
+# rubocop:enable Metrics/ClassLength
