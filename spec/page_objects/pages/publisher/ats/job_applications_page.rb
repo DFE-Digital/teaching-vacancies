@@ -17,6 +17,7 @@ module PageObjects
           element :interview_feedback_received_at, ".interview_feedback_received_at"
           element :declined_at, ".declined_at"
           element :offered_at, ".offered_at"
+          element :interview_date, ".interviewing_at"
 
           STATUS_MAPPING = {
             "unread" => "submitted",

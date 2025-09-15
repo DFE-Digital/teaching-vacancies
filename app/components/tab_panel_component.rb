@@ -7,7 +7,7 @@ class TabPanelComponent < ApplicationComponent
                  displayed_fields: %i[name email_address status],
                  button_group: %i[download update_status],
                  form: nil)
-    super(classes: [], html_attributes: {})
+    super(classes: [], html_attributes: { class: "tab-#{tab_name}" })
     @tab_name = tab_name
     @vacancy = vacancy
     @form = form
@@ -94,6 +94,16 @@ class TabPanelComponent < ApplicationComponent
       application.interview_feedback_received_at.to_fs(:day_month_year)
     else
       govuk_link_to(t("tabs.offered.add_feedback_date"), tag_organisation_job_job_applications_path(application.vacancy.id, params: { publishers_job_application_tag_form: { origin: :interviewing, job_applications: [application.id] }, tag_action: "unsuccessful_interview" }))
+    end
+  end
+
+  def candidate_interviewing_at(application)
+    if application.interviewing_at
+      application.interviewing_at.to_fs
+    else
+      tag.span do
+        govuk_link_to(t("tabs.interviewing.add_interview_datetime"), tag_organisation_job_job_applications_path(application.vacancy.id, params: { publishers_job_application_tag_form: { origin: :interviewing, job_applications: [application.id] }, tag_action: "interview_datetime" }))
+      end
     end
   end
 end
