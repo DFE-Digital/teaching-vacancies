@@ -57,4 +57,17 @@ RSpec.describe NotifyViewsHelper do
         .to eq(helper.notify_link(expected_link, "Stop receiving emails from Teaching Vacancies"))
     end
   end
+
+  describe "#publisher_candidate_messages_link" do
+    let(:utm_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "daily_alert" } }
+
+    before { allow(helper).to receive(:utm_params).and_return(utm_params) }
+
+    it "generates the candidate messages link with UTM parameters" do
+      expected_url = helper.publishers_candidate_messages_url(utm_params)
+      expected_link = helper.notify_link(expected_url, "View your messages")
+
+      expect(helper.publisher_candidate_messages_link).to eq(expected_link)
+    end
+  end
 end

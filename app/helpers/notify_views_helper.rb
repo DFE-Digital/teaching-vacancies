@@ -96,6 +96,11 @@ module NotifyViewsHelper
     notify_link(url, t(".view_applications", count: vacancy.job_applications.submitted_yesterday.count, job_title: vacancy.job_title))
   end
 
+  def publisher_candidate_messages_link
+    url = publishers_candidate_messages_url(**utm_params)
+    notify_link(url, "View your messages")
+  end
+
   def show_link(vacancy)
     url = job_url(vacancy, **utm_params)
     if vacancy.organisations.many?
