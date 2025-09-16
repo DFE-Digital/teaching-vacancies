@@ -6,14 +6,15 @@ RSpec.describe "Jobseekers can delete a draft job application" do
   let(:vacancy) { create(:vacancy, organisations: [organisation]) }
   let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
-  before { login_as(jobseeker, scope: :jobseeker) }
+  before do
+    login_as(jobseeker, scope: :jobseeker)
+    visit jobseekers_job_applications_path
+    click_on job_application.vacancy.job_title
+  end
 
   after { logout }
 
   it "allows deleting the draft permanently" do
-    visit jobseekers_job_applications_path
-
-    click_on job_application.vacancy.job_title
     click_on I18n.t("buttons.delete_application")
     expect { click_on I18n.t("jobseekers.job_applications.confirm_destroy.confirm") }.to change(JobApplication, :count).by(-1)
 

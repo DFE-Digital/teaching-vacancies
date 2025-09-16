@@ -3,16 +3,22 @@ require "rails_helper"
 RSpec.describe "Jobseeker can add training and cpds to their job application" do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
-  let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
+  let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy, training_and_cpds: training_and_cpds) }
 
-  before { login_as(jobseeker, scope: :jobseeker) }
+  before do
+    login_as(jobseeker, scope: :jobseeker)
+    visit jobseekers_job_application_build_path(job_application, :training_and_cpds)
+  end
 
   after { logout }
 
-  context "adding training" do
+  describe "adding training" do
+    let(:training_and_cpds) { [] }
+
     it "allows jobseeker to add training" do
-      visit jobseekers_job_application_build_path(job_application, :training_and_cpds)
       click_on "Add training"
+
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
 
       click_on "Save and continue"
 
@@ -24,42 +30,40 @@ RSpec.describe "Jobseeker can add training and cpds to their job application" do
 
       fill_in_and_submit_training_form("Rock climbing instructional course", "Training org", "A", "2024", "6 months")
 
-      expect(current_path).to eq("/jobseekers/job_applications/#{job_application.id}/build/training_and_cpds")
+      expect(page).to have_current_path("/jobseekers/job_applications/#{job_application.id}/build/training_and_cpds", ignore_query: true)
 
       expect_page_to_have_values("Rock climbing instructional course", "Training org", "A", "2024", "6 months")
     end
   end
 
-  context "editing training" do
-    let!(:training_and_cpds) { create(:training_and_cpd, job_application: job_application) }
+  describe "editing training" do
+    let(:training_and_cpds) { build_list(:training_and_cpd, 1) }
 
     it "allows jobseeker to edit existing training" do
-      visit jobseekers_job_application_build_path(job_application, :training_and_cpds)
       expect_page_to_have_values("Rock climbing", "TeachTrainLtd", "Pass", "2020", "1 year")
 
       click_link "Change"
 
       fill_in_and_submit_training_form("Choir singing instructional course", "Training org", "A", "2024", "6 months")
 
-      expect(current_path).to eq("/jobseekers/job_applications/#{job_application.id}/build/training_and_cpds")
+      expect(page).to have_current_path("/jobseekers/job_applications/#{job_application.id}/build/training_and_cpds", ignore_query: true)
 
       expect_page_to_have_values("Choir singing instructional course", "Training org", "A", "2024", "6 months")
       expect_page_not_to_have_values("Rock climbing", "TeachTrainLtd", "Pass", "2020", "1 year")
     end
   end
 
-  context "deleting training" do
-    let!(:training_and_cpds) { create(:training_and_cpd, job_application: job_application) }
+  describe "deleting training" do
+    let(:training_and_cpds) { build_list(:training_and_cpd, 1) }
 
     it "allows jobseeker to edit existing training" do
-      visit jobseekers_job_application_build_path(job_application, :training_and_cpds)
       expect_page_to_have_values("Rock climbing", "TeachTrainLtd", "Pass", "2020", "1 year")
 
       click_link "Delete"
 
       expect(page).to have_css("div.govuk-notification-banner__content p.govuk-notification-banner__heading", text: "Training deleted")
 
-      expect(current_path).to eq("/jobseekers/job_applications/#{job_application.id}/build/training_and_cpds")
+      expect(page).to have_current_path("/jobseekers/job_applications/#{job_application.id}/build/training_and_cpds", ignore_query: true)
 
       expect_page_not_to_have_values("Rock climbing", "TeachTrainLtd", "Pass", "2020", "1 year")
     end
@@ -92,10 +96,10 @@ RSpec.describe "Jobseeker can add training and cpds to their job application" do
   end
 
   def expect_page_not_to_have_values(name, provider, grade, year, course_length)
-    expect(page).not_to have_css(".govuk-summary-list__value", text: name)
-    expect(page).not_to have_css(".govuk-summary-list__value", text: provider)
-    expect(page).not_to have_css(".govuk-summary-list__value", text: grade)
-    expect(page).not_to have_css(".govuk-summary-list__value", text: year)
-    expect(page).not_to have_css(".govuk-summary-list__value", text: course_length)
+    expect(page).to have_no_css(".govuk-summary-list__value", text: name)
+    expect(page).to have_no_css(".govuk-summary-list__value", text: provider)
+    expect(page).to have_no_css(".govuk-summary-list__value", text: grade)
+    expect(page).to have_no_css(".govuk-summary-list__value", text: year)
+    expect(page).to have_no_css(".govuk-summary-list__value", text: course_length)
   end
 end

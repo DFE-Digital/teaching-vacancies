@@ -3,46 +3,56 @@ require "rails_helper"
 RSpec.describe "Jobseekers can add employments and breaks to their job application" do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
-  let!(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
+  let!(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy, employments: employments) }
 
-  before { login_as(jobseeker, scope: :jobseeker) }
+  before do
+    login_as(jobseeker, scope: :jobseeker)
+    visit jobseekers_job_application_build_path(job_application, :employment_history)
+  end
 
   after { logout }
 
-  it "allows jobseekers to add employment history, including a current role" do
-    visit jobseekers_job_application_build_path(job_application, :employment_history)
+  context "with no employment history" do
+    let(:employments) { [] }
 
-    click_on I18n.t("buttons.add_work_history")
-    expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :employment_history))
-    validates_step_complete(button: I18n.t("buttons.save_employment"))
-    fill_in_current_role(form: "jobseekers_job_application_details_employment_form")
+    it "allows jobseekers to add employment history, including a current role" do
+      click_on I18n.t("buttons.add_work_history")
+      expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :employment_history))
+      validates_step_complete(button: I18n.t("buttons.save_employment"))
+      fill_in_current_role(form: "jobseekers_job_application_details_employment_form")
 
-    click_on I18n.t("buttons.save_employment")
+      click_on I18n.t("buttons.save_employment")
 
-    expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :employment_history))
-    expect(page).to have_content("The Best Teacher")
-    expect(page).to have_content("English KS1")
+      expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :employment_history))
+      expect(page).to have_content("The Best Teacher")
+      expect(page).to have_content("English KS1")
 
-    click_on I18n.t("buttons.add_work_history")
-    validates_step_complete(button: I18n.t("buttons.save_employment"))
+      click_on I18n.t("buttons.add_work_history")
+      validates_step_complete(button: I18n.t("buttons.save_employment"))
 
-    fill_in_employment_history(job_title: "Another teaching job")
+      fill_in_employment_history(job_title: "Another teaching job")
 
-    click_on I18n.t("buttons.save_employment")
+      click_on I18n.t("buttons.save_employment")
 
-    expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :employment_history))
-    expect(page).to have_content("Another teaching job")
-    expect(page).to have_content(Date.new(2020, 7, 1).to_formatted_s(:month_year))
+      expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :employment_history))
+      expect(page).to have_content("Another teaching job")
+      expect(page).to have_content(Date.new(2020, 7, 1).to_formatted_s(:month_year))
+    end
   end
 
   context "with an employmeent history" do
+    let(:employments) do
+      b = build(:employment, job_title: "Old job", started_on: Date.new(2019, 7, 1), ended_on: Date.new(2020, 7, 1))
+      c = build(:employment, :current_role, job_title: "The Best Teacher", started_on: Date.new(2020, 7, 1))
+
+      # visit jobseekers_job_application_build_path(job_application, :employment_history)
+      [b, c]
+    end
+
     before do
       build(:employment, reason_for_leaving: nil, job_application: job_application, job_title: "Oldest job",
                          started_on: Date.new(2015, 7, 1), ended_on: Date.new(2019, 7, 1)).save!(validate: false)
-      create(:employment, job_application: job_application, job_title: "Old job", started_on: Date.new(2019, 7, 1), ended_on: Date.new(2020, 7, 1))
-      create(:employment, :current_role, job_application: job_application, job_title: "The Best Teacher", started_on: Date.new(2020, 7, 1))
-
-      visit jobseekers_job_application_build_path(job_application, :employment_history)
+      visit current_path
     end
 
     it "displays employment history from newest to oldest job, shows any errors and prevents saving until fixed" do
@@ -65,9 +75,11 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
   end
 
   context "managing employment history gaps" do
-    before do
-      create(:employment, :job, job_application: job_application, started_on: Date.parse("2021-01-01"), ended_on: Date.parse("2021-02-01"))
-      create(:employment, :job, :current_role, job_application: job_application, started_on: Date.parse("2021-06-01"))
+    let(:employments) do
+      a = build(:employment, :job, started_on: Date.parse("2021-01-01"), ended_on: Date.parse("2021-02-01"))
+      b = build(:employment, :job, :current_role, started_on: Date.parse("2021-06-01"))
+
+      [a, b]
     end
 
     it "allows jobseekers to add, change and delete gaps in employment with prefilled start and end date" do
@@ -116,11 +128,15 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
   end
 
   context "when there is at least one role" do
-    let!(:employment) { create(:employment, organisation: "A school", job_application: job_application, started_on: Date.parse("2021-01-01"), ended_on: Date.parse("2021-02-01")) }
-    let!(:employment2) { create(:employment, :current_role, job_title: "current role", organisation: "Some other place", job_application: job_application, started_on: Date.parse("2022-02-01")) }
+    let(:employments) do
+      a = build(:employment, organisation: "A school", started_on: Date.parse("2021-01-01"), ended_on: Date.parse("2021-02-01"))
+      b = build(:employment, :current_role, job_title: "current role", organisation: "Some other place", started_on: Date.parse("2022-02-01"))
+
+      [a, b]
+    end
 
     it "allows jobseekers to delete employment history" do
-      visit jobseekers_job_application_build_path(job_application, :employment_history)
+      # visit jobseekers_job_application_build_path(job_application, :employment_history)
 
       click_on "Delete Teacher"
 
@@ -130,7 +146,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
     end
 
     it "allows jobseekers to edit employment history" do
-      visit jobseekers_job_application_build_path(job_application, :employment_history)
+      # visit jobseekers_job_application_build_path(job_application, :employment_history)
 
       click_on "Change Teacher"
 

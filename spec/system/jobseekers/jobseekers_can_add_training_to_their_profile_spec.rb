@@ -1,21 +1,24 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can add training to their profile" do
-  let(:jobseeker) { create(:jobseeker) }
-  let!(:profile) { create(:jobseeker_profile, jobseeker:) }
+  let(:jobseeker) { create(:jobseeker, jobseeker_profile: build(:jobseeker_profile, training_and_cpds: trainings)) }
 
   before do
     login_as(jobseeker, scope: :jobseeker)
+    visit jobseekers_profile_path
   end
 
   after { logout }
 
   describe "changing training details" do
     context "adding training" do
-      before { visit jobseekers_profile_path }
+      let(:trainings) { [] }
+
+      before do
+        click_on "Add training"
+      end
 
       it "allows jobseekers to add training" do
-        click_on "Add training"
         click_on "Save and continue"
 
         expect(page).to have_css("h2.govuk-error-summary__title", text: "There is a problem")
@@ -37,10 +40,7 @@ RSpec.describe "Jobseekers can add training to their profile" do
     end
 
     context "editing training" do
-      before do
-        create(:training_and_cpd, jobseeker_profile: profile)
-        visit jobseekers_profile_path
-      end
+      let(:trainings) { build_list(:training_and_cpd, 1) }
 
       it "allows jobseeker to edit training" do
         expect_page_to_have_values("Rock climbing", "TeachTrainLtd", "Pass", "2020", "1 year")
@@ -62,10 +62,7 @@ RSpec.describe "Jobseekers can add training to their profile" do
     end
 
     context "deleting training" do
-      before do
-        create(:training_and_cpd, jobseeker_profile: profile)
-        visit jobseekers_profile_path
-      end
+      let(:trainings) { build_list(:training_and_cpd, 1) }
 
       it "allows users to delete training" do
         expect_page_to_have_values("Rock climbing", "TeachTrainLtd", "Pass", "2020", "1 year")

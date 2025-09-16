@@ -15,31 +15,63 @@ RSpec.describe "Publishers can edit a draft vacancy" do
     context "with an incomplete draft" do
       let(:vacancy) { create(:draft_vacancy, :with_contract_details, :ect_suitable, job_roles: [], organisations: [primary_school], phases: %w[primary]) }
 
-      it "can edit a draft" do
+      before do
         within "#job_details" do
           find("a").click
         end
         click_on I18n.t("buttons.save_and_continue")
+      end
 
+      it "can edit a draft" do
         fill_in_job_role_form_fields("teaching_assistant")
         click_on I18n.t("buttons.save_and_continue")
 
+        # page load wait
+        find("form.new_publishers_job_listing_key_stages_form")
         expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :key_stages))
+
         fill_in_key_stages_form_fields(vacancy.key_stages_for_phases)
         click_on I18n.t("buttons.save_and_continue")
+        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :contract_information))
 
         click_on I18n.t("buttons.save_and_continue")
-        click_on I18n.t("buttons.save_and_continue")
-        click_on I18n.t("buttons.save_and_continue")
-        click_on I18n.t("buttons.save_and_continue")
-        click_on I18n.t("buttons.save_and_continue")
-        click_on I18n.t("buttons.save_and_continue")
-        click_on I18n.t("buttons.save_and_continue")
-        click_on I18n.t("buttons.save_and_continue")
-        click_on I18n.t("buttons.save_and_continue")
-        click_on I18n.t("buttons.save_and_continue")
+        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :start_date))
 
+        click_on I18n.t("buttons.save_and_continue")
+        # page load wait
+        find("form.new_publishers_job_listing_pay_package_form")
+        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :pay_package))
+
+        click_on I18n.t("buttons.save_and_continue")
+        # page load wait
+        find("form.new_publishers_job_listing_about_the_role_form")
+        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :about_the_role))
+
+        click_on I18n.t("buttons.save_and_continue")
+        # page load wait
+        find("form.new_publishers_job_listing_include_additional_documents_form")
+        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :include_additional_documents))
+
+        click_on I18n.t("buttons.save_and_continue")
+        # page load wait
+        find("form.new_publishers_job_listing_school_visits_form")
+        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :school_visits))
+
+        click_on I18n.t("buttons.save_and_continue")
+        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :visa_sponsorship))
+
+        click_on I18n.t("buttons.save_and_continue")
+        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :important_dates))
+
+        click_on I18n.t("buttons.save_and_continue")
+        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :applying_for_the_job))
+
+        click_on I18n.t("buttons.save_and_continue")
+        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :contact_details))
+
+        click_on I18n.t("buttons.save_and_continue")
         expect(current_path).to eq(organisation_job_review_path(vacancy.id))
+
         expect(page).to have_content(DraftVacancy.find(vacancy.id).job_roles.first.humanize)
       end
     end
@@ -54,11 +86,13 @@ RSpec.describe "Publishers can edit a draft vacancy" do
     before { visit organisation_job_path(vacancy.id) }
 
     context "when editing the job location" do
-      scenario "successfully updating the job location" do
+      before do
         within "#job_details" do
           find("a").click
         end
+      end
 
+      scenario "successfully updating the job location" do
         fill_in_job_location_form_fields([another_primary_school])
         click_on I18n.t("buttons.save_and_finish_later")
 
@@ -81,9 +115,6 @@ RSpec.describe "Publishers can edit a draft vacancy" do
 
       context "when the new job location is the trust's central office" do
         scenario "the education phase has to be set" do
-          within "#job_details" do
-            find("a").click
-          end
           fill_in_job_location_form_fields([trust])
           click_on I18n.t("buttons.save_and_finish_later")
           click_on "Complete job listing"
@@ -98,9 +129,6 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         let(:another_not_applicable_school) { create(:school, name: "Another not school", phase: "not_applicable") }
 
         scenario "the education phase has to be set" do
-          within "#job_details" do
-            find("a").click
-          end
           fill_in_job_location_form_fields([not_applicable_school, another_not_applicable_school])
           displays_all_vacancy_organisations?([not_applicable_school, another_not_applicable_school])
           click_on I18n.t("buttons.save_and_continue")
@@ -116,9 +144,6 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         let(:trust) { create(:trust, schools: [primary_school, secondary_school]) }
 
         scenario "key_stages has to be set again" do
-          within "#job_details" do
-            find("a").click
-          end
           fill_in_job_location_form_fields([secondary_school])
           click_on I18n.t("buttons.save_and_continue")
 

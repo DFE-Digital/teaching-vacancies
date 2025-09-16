@@ -14,7 +14,7 @@ RSpec.describe "copy" do
   after { sign_out(publisher) }
 
   describe "POST /copy" do
-    let(:vacancy) { create(:vacancy, :with_application_form, :with_supporting_documents, organisations: [organisation]) }
+    let(:vacancy) { create(:vacancy, :with_uploaded_application_form, :with_supporting_documents, organisations: [organisation]) }
 
     it "sends analytics events", :dfe_analytics do
       post organisation_job_copy_path(vacancy.id)
