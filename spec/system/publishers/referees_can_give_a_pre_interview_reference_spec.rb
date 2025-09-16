@@ -69,6 +69,8 @@ RSpec.describe "Publishers can select a job application for interview" do
         choose I18n.t("helpers.label.referees_can_share_reference_form.is_reference_sharable_options.false")
         click_on I18n.t("buttons.continue")
         # click through fit-and-proper-person blurb
+        # wait for page
+        find("form[action='/references/#{reference_request.id}/build/fit_and_proper_persons']")
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
         click_on I18n.t("buttons.continue")
 
