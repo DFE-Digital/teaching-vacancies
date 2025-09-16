@@ -239,9 +239,11 @@ RSpec.describe "Publisher authentication" do
     let(:publisher) { create(:publisher) }
     let(:school) { create(:school) }
 
-    scenario "as an authenticated user" do
-      login_publisher(publisher: publisher, organisation: school)
+    before { login_publisher(publisher: publisher, organisation: school) }
 
+    after { logout }
+
+    scenario "as an authenticated user" do
       visit root_path
 
       click_on(I18n.t("nav.sign_out"))

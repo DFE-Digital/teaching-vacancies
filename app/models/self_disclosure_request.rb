@@ -20,10 +20,11 @@ class SelfDisclosureRequest < ApplicationRecord
       if request.present?
         request.update!(status: :sent)
       else
-        job_application.create_self_disclosure_request!(status: :sent)
+        request = job_application.create_self_disclosure_request!(status: :sent)
       end
       SelfDisclosure.find_or_create_by_and_prefill!(job_application)
-      Jobseekers::JobApplicationMailer.self_disclosure(job_application).deliver_later
+      Jobseekers::SelfDisclosureRequestReceivedNotifier.with(record: request)
+                                                .deliver
     end
   end
 
