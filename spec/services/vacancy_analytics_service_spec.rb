@@ -17,32 +17,36 @@ RSpec.describe VacancyAnalyticsService do
 
     it "increments the Redis counter for a normalized referrer" do
       expect {
-        described_class.track_visit(vacancy.id, referrer_url, "https://google.com/")
+        described_class.track_visit(vacancy.id, referrer_url, "https://google.com/", {})
       }.to change { Redis.current.get(redis_key).to_i }.by(1)
     end
 
     it "does nothing if vacancy id is blank" do
       expect {
-        described_class.track_visit(nil, referrer_url, hostname)
+        described_class.track_visit(nil, referrer_url, hostname, {})
       }.not_to(change { Redis.current.keys("vacancy_referrer_stats:*").count })
     end
   end
 
   describe ".normalize_referrer" do
     it "returns the hostname from a valid URL" do
-      expect(described_class.normalize_referrer("https://google.com/whatever", hostname)).to eq("google.com")
+      expect(described_class.normalize_referrer("https://google.com/whatever", hostname, {})).to eq("google.com")
     end
 
-    it "returns 'direct' for a local URL" do
-      expect(described_class.normalize_referrer(referrer_url, hostname)).to eq("direct")
+    it "returns 'internal' for a URL with the same host as the request" do
+      expect(described_class.normalize_referrer(referrer_url, hostname, {})).to eq("internal")
     end
 
-    it "returns 'unknown' if the host is missing" do
-      expect(described_class.normalize_referrer("/whatever", hostname)).to eq("unknown")
+    it "returns 'internal' if the host is missing" do
+      expect(described_class.normalize_referrer("/whatever", hostname, {})).to eq("internal")
     end
 
     it "returns 'invalid' for malformed URLs" do
-      expect(described_class.normalize_referrer("%%%", hostname)).to eq("invalid")
+      expect(described_class.normalize_referrer("%%%", hostname, {})).to eq("invalid")
+    end
+
+    it "returns 'jobalert' if the utm_medium is set" do
+      expect(described_class.normalize_referrer(referrer_url, hostname, { utm_medium: "email" })).to eq("jobalert")
     end
   end
 
