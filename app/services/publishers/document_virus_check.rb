@@ -21,7 +21,7 @@ class Publishers::DocumentVirusCheck
     drive_service.get_file(
       uploaded_file.id,
       acknowledge_abuse: false,
-      download_dest: uploaded_file.id.to_s,
+      download_dest: Rails.root.join("tmp", uploaded_file.id.to_s).to_s,
     )
 
     true
@@ -31,7 +31,7 @@ class Publishers::DocumentVirusCheck
     raise e
   ensure
     if drive_service
-      FileUtils.rm_rf(uploaded_file.id.to_s)
+      FileUtils.rm_rf(Rails.root.join("tmp", uploaded_file.id.to_s).to_s)
       drive_service.delete_file(uploaded_file.id)
     end
   end

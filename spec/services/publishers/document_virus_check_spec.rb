@@ -36,7 +36,7 @@ RSpec.describe Publishers::DocumentVirusCheck do
     context "when the file downloads fine" do
       before do
         expect(drive_service).to receive(:get_file)
-          .with("0xDECAFBAD", acknowledge_abuse: false, download_dest: "0xDECAFBAD")
+          .with("0xDECAFBAD", acknowledge_abuse: false, download_dest: Rails.root.join("tmp/0xDECAFBAD").to_s)
           .and_return(true)
       end
 
@@ -46,7 +46,7 @@ RSpec.describe Publishers::DocumentVirusCheck do
 
       it "deletes the temporary downloaded file and the file on Google Drive" do
         expect(drive_service).to receive(:delete_file).with("0xDECAFBAD")
-        expect(FileUtils).to receive(:rm_rf).with("0xDECAFBAD").and_return(true)
+        expect(FileUtils).to receive(:rm_rf).with(Rails.root.join("tmp/0xDECAFBAD").to_s).and_return(true)
 
         subject.safe?
       end
@@ -55,7 +55,7 @@ RSpec.describe Publishers::DocumentVirusCheck do
     context "when the file does not download due to a virus" do
       before do
         expect(drive_service).to receive(:get_file)
-          .with("0xDECAFBAD", acknowledge_abuse: false, download_dest: "0xDECAFBAD")
+          .with("0xDECAFBAD", acknowledge_abuse: false, download_dest: Rails.root.join("tmp/0xDECAFBAD").to_s)
           .and_raise(Google::Apis::ClientError.new("Whoops", status_code: 403))
       end
 
@@ -90,7 +90,7 @@ RSpec.describe Publishers::DocumentVirusCheck do
       before do
         expect(drive_service)
           .to receive(:get_file)
-                .with("0xDECAFBAD", acknowledge_abuse: false, download_dest: "0xDECAFBAD")
+                .with("0xDECAFBAD", acknowledge_abuse: false, download_dest: Rails.root.join("tmp/0xDECAFBAD").to_s)
                 .and_raise(error)
       end
 
