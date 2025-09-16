@@ -106,7 +106,7 @@ queue_applications_received:
   queue: default
 
 queue_messages_received:
-  cron: '0 7 * * *' # "At 06:00."
+  cron: '0 7 * * *' # "At 07:00."
   class: 'SendMessagesReceivedYesterdayJob'
   queue: default
 
