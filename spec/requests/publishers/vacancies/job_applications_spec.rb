@@ -383,7 +383,7 @@ RSpec.describe "Job applications" do
       end
 
       it { expect(assigns(:form).interview_date).to eq(job_application.interviewing_at) }
-      it { expect(assigns(:form).interview_time).to eq(job_application.interviewing_at.to_fs(:time_only)) }
+      it { expect(assigns(:form).interview_time.to_s).to eq(job_application.interviewing_at.to_fs(:time_only)) }
     end
 
     context "when interviewing_at missing" do

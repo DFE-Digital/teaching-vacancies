@@ -52,10 +52,10 @@ en:
             job_application:
               invalid: Candidate must be interviewing state
             interview_date:
-              blank: Enter a valid date, for example, 27 3 2007
+              blank: You must enter an interview date
               invalid: Enter a valid date, for example, 27 3 2007
             interview_time:
-              blank: Enter a valid time, for example, 10:45
+              blank: You must an interview time
               invalid: Enter a valid time, for example, 9am or 2:30pm
 
         publishers/vacancies/job_applications/mark_reference_as_received_form:
