@@ -69,7 +69,11 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def interview_datetime
-    @form = Publishers::JobApplication::InterviewDatetimeForm.new(job_application: @job_application)
+    @form = Publishers::JobApplication::InterviewDatetimeForm.new(
+      job_application: @job_application,
+      interview_date: @job_application.interviewing_at,
+      interview_time: @job_application.interviewing_at&.to_fs(:time_only),
+    )
   end
 
   def update_interview_datetime

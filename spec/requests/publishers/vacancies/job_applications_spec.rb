@@ -372,6 +372,28 @@ RSpec.describe "Job applications" do
   describe "GET interview_date" do
     it "renders add interview date form page" do
       expect(get(interview_datetime_organisation_job_job_application_path(vacancy.id, job_application.id))).to render_template(:interview_datetime)
+      expect(assigns(:form).job_application.id).to eq(job_application.id)
+    end
+
+    context "when interviewing_at present" do
+      let(:job_application) { create(:job_application, :status_interviewing, vacancy:, interviewing_at: 1.day.ago) }
+
+      before do
+        get(interview_datetime_organisation_job_job_application_path(vacancy.id, job_application.id))
+      end
+
+      it { expect(assigns(:form).interview_date).to eq(job_application.interviewing_at) }
+      it { expect(assigns(:form).interview_time).to eq(job_application.interviewing_at.to_fs(:time_only)) }
+    end
+
+    context "when interviewing_at missing" do
+      before do
+        job_application.interviewing_at = nil
+        get(interview_datetime_organisation_job_job_application_path(vacancy.id, job_application.id))
+      end
+
+      it { expect(assigns(:form).interview_date).to be_nil }
+      it { expect(assigns(:form).interview_time).to be_nil }
     end
   end
 
@@ -389,7 +411,7 @@ RSpec.describe "Job applications" do
     context "when successful" do
       let(:params) do
         {
-          publishers_job_application_interview_date_form: {
+          publishers_job_application_interview_datetime_form: {
             "interview_date(1i)" => 2025,
             "interview_date(2i)" => 9,
             "interview_date(3i)" => 1,
@@ -421,7 +443,7 @@ RSpec.describe "Job applications" do
     context "with bad date params" do
       let(:params) do
         {
-          publishers_job_application_interview_date_form: {
+          publishers_job_application_interview_datetime_form: {
             "interview_date(1i)" => 2025,
             "interview_date(2i)" => 90,
             "interview_date(3i)" => 1,
@@ -438,7 +460,7 @@ RSpec.describe "Job applications" do
     context "with bad time params" do
       let(:params) do
         {
-          publishers_job_application_interview_date_form: {
+          publishers_job_application_interview_datetime_form: {
             "interview_date(1i)" => 2025,
             "interview_date(2i)" => 9,
             "interview_date(3i)" => 1,
@@ -455,7 +477,7 @@ RSpec.describe "Job applications" do
     context "whem job aplication not in interviewing state" do
       let(:params) do
         {
-          publishers_job_application_interview_date_form: {
+          publishers_job_application_interview_datetime_form: {
             "interview_date(1i)" => 2025,
             "interview_date(2i)" => 9,
             "interview_date(3i)" => 1,
