@@ -21,6 +21,8 @@ class Publishers::JobApplication::InterviewDatetimeForm
       interview_time.hour,
       interview_time.min,
     )
+  rescue StandardError
+    raise ArgumentError, "invalid interview_date or interview_time"
   end
 
   private

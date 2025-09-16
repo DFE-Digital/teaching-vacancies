@@ -28,7 +28,7 @@ module Publishers
         context "with invalid params" do
           let(:interview_time) { "aastesth" }
 
-          it { expect { form.interviewing_at }.to raise_error(NoMethodError) }
+          it { expect { form.interviewing_at }.to raise_error(ArgumentError, "invalid interview_date or interview_time") }
         end
       end
 
