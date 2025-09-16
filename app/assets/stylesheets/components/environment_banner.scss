@@ -40,11 +40,6 @@
     @include striped-banner(govuk-colour('yellow', 25));
   }
 
-  // added as default yellow failed contrast rule in accessiblity tests
-  &--development {
-    @include striped-banner(govuk-colour('light-green', 25));
-  }
-
   &--user-testing {
     @include striped-banner(govuk-colour('turquoise'), 10);
     color: govuk-colour('white');
