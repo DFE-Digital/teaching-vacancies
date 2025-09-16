@@ -68,6 +68,8 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
         click_on I18n.t("buttons.save_and_continue")
+        #  wait for page load
+        find(".govuk-notification-banner")
         expect(current_path).to eq(organisation_job_review_path(vacancy.id))
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
 
