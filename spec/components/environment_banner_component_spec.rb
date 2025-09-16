@@ -22,6 +22,14 @@ RSpec.describe EnvironmentBannerComponent, type: :component do
       end
     end
 
+    context "when app_role is test" do
+      let(:app_role) { "test" }
+
+      it "does not render" do
+        expect(subject.render?).to eq(false)
+      end
+    end
+
     context "when app_role is anything else" do
       let(:app_role) { "wow" }
 
