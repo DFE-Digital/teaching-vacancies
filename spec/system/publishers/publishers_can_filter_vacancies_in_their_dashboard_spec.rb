@@ -21,7 +21,11 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
 
     context "when viewing active jobs tab" do
       context "when applying filters" do
-        before { visit organisation_jobs_with_type_path(:live) }
+        before {
+          visit organisation_jobs_with_type_path(:live)
+          # wait for page load
+          find(".dashboard-component")
+        }
 
         it "passes a11y", :a11y do
           expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
