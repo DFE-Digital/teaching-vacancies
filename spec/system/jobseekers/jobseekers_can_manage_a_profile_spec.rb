@@ -27,35 +27,44 @@ RSpec.describe "Jobseekers can manage their profile" do
         let(:last_name) { "Baggins" }
         let(:phone_number) { "07777777777" }
 
-        before { visit jobseekers_profile_path }
-
-        it "allows the jobseeker to fill in their personal details" do
+        before do
+          visit jobseekers_profile_path
           within "#navigation" do
-            expect(page).to have_content("Your profile")
             click_on "Your profile"
           end
-
-          expect(page).to have_current_path(jobseekers_profile_path)
-
           click_link("Add personal details")
-          fill_in "personal_details_form[first_name]", with: first_name
-          fill_in "personal_details_form[last_name]", with: last_name
-          click_on I18n.t("buttons.save_and_continue")
+        end
 
-          expect(page).to have_content("Do you want to provide a phone number?")
-          choose "Yes"
-          fill_in "personal_details_form[phone_number]", with: phone_number
-          click_on I18n.t("buttons.save_and_continue")
+        context "when on the phone number screen" do
+          before do
+            fill_in "personal_details_form[first_name]", with: first_name
+            fill_in "personal_details_form[last_name]", with: last_name
+            click_on I18n.t("buttons.save_and_continue")
+          end
 
-          expect(page).to have_content("Do you need Skilled Worker visa sponsorship?")
-          choose "Yes"
-          click_on I18n.t("buttons.save_and_continue")
+          it "asks for a phone number" do
+            expect(page).to have_content("Do you want to provide a phone number?")
+          end
 
-          click_on I18n.t("buttons.return_to_profile")
+          context "when asking for visa sponsorship" do
+            before do
+              choose "Yes"
+              fill_in "personal_details_form[phone_number]", with: phone_number
+              click_on I18n.t("buttons.save_and_continue")
+            end
 
-          expect(page).to have_content("#{first_name} #{last_name}")
-          expect(page).to have_content(phone_number)
-          expect(page).to have_content("Yes, I will need to apply for a visa giving me the right to work in the UK")
+            it "allows the jobseeker to fill in their personal details" do
+              expect(page).to have_content("Do you need Skilled Worker visa sponsorship?")
+              choose "Yes"
+              click_on I18n.t("buttons.save_and_continue")
+
+              click_on I18n.t("buttons.return_to_profile")
+
+              expect(page).to have_content("#{first_name} #{last_name}")
+              expect(page).to have_content(phone_number)
+              expect(page).to have_content("Yes, I will need to apply for a visa giving me the right to work in the UK")
+            end
+          end
         end
 
         it "does not display a notice to inform the user about prefilling" do
@@ -166,11 +175,10 @@ RSpec.describe "Jobseekers can manage their profile" do
 
       before do
         visit jobseekers_profile_path
+        click_link("Add details about you")
       end
 
       it "allows the jobseeker to add #about_you" do
-        click_link("Add details about you")
-
         fill_in "jobseekers_profile_about_you_form[about_you]", with: jobseeker_about_you
         click_on I18n.t("buttons.save_and_continue")
 

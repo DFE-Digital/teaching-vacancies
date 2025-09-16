@@ -5,7 +5,11 @@ RSpec.describe "Application feature reminder" do
   let(:publisher) { create(:publisher) }
   let(:last_vacancy) { DraftVacancy.order(:created_at).last }
 
-  before { login_publisher(publisher:, organisation:, allow_reminders: true) }
+  before do
+    login_publisher(publisher:, organisation:, allow_reminders: true)
+    visit organisation_jobs_with_type_path
+    click_on I18n.t("buttons.create_job")
+  end
 
   after { logout }
 
@@ -13,8 +17,6 @@ RSpec.describe "Application feature reminder" do
     let!(:vacancy) { create(:vacancy, enable_job_applications: true, publisher:, organisations: [organisation]) }
 
     it "does not show reminder page when creating a job" do
-      visit organisation_jobs_with_type_path
-      click_on I18n.t("buttons.create_job")
       expect(current_path).to eq(organisation_jobs_start_path)
       click_on I18n.t("buttons.create_job")
       expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_title))
@@ -27,8 +29,6 @@ RSpec.describe "Application feature reminder" do
     let!(:vacancy) { create(:vacancy, enable_job_applications: false, publisher:, organisations: [organisation]) }
 
     it "shows reminder page before first step of create job and does not show it twice in the same session" do
-      visit organisation_jobs_with_type_path
-      click_on I18n.t("buttons.create_job")
       expect(current_path).to eq(organisation_jobs_start_path)
       click_on I18n.t("buttons.create_job")
       expect(page).to have_content(I18n.t("publishers.new_features.reminder.page_title"))
@@ -49,8 +49,6 @@ RSpec.describe "Application feature reminder" do
       let(:last_vacancy) { PublishedVacancy.order(:created_at).last }
 
       it "does not show reminder page" do
-        visit organisation_jobs_with_type_path
-        click_on I18n.t("buttons.create_job")
         expect(current_path).to eq(organisation_jobs_start_path)
         click_on I18n.t("buttons.create_job")
         visit organisation_job_path(vacancy.id)

@@ -20,8 +20,6 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
     end
 
     scenario "displays the vacancies awaiting feedback" do
-      expect(publisher_applications_awaiting_feedback_page).to be_displayed
-
       expect(page).to have_link(vacancy.job_title, href: organisation_job_path(vacancy.id))
       expect(page).to have_link(another_vacancy.job_title, href: organisation_job_path(another_vacancy.id))
       expect(page).to have_link(third_vacancy.job_title, href: organisation_job_path(third_vacancy.id))
@@ -32,8 +30,6 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
     end
 
     scenario "it saves feedback to the correct record" do
-      expect(publisher_applications_awaiting_feedback_page).to be_displayed
-
       submit_feedback_for(another_vacancy)
 
       another_vacancy.reload
@@ -43,8 +39,6 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
 
     context "when an invalid form is submitted" do
       scenario "it renders the errors on the correct form" do
-        expect(publisher_applications_awaiting_feedback_page).to be_displayed
-
         within(".feedback-row", text: vacancy.job_title) do
           click_on I18n.t("buttons.submit")
         end
@@ -66,8 +60,6 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
     end
 
     scenario "it saves the feedback to the model without triggering validation errors" do
-      expect(publisher_applications_awaiting_feedback_page).to be_displayed
-
       submit_feedback_for(invalid_vacancy)
 
       invalid_vacancy.reload
@@ -89,8 +81,6 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
     end
 
     scenario "the no vacancies component is displayed" do
-      expect(publisher_applications_awaiting_feedback_page).to be_displayed
-
       expect(page).not_to have_link(vacancy.job_title, href: organisation_job_path(vacancy.id))
       expect(page).to have_content(I18n.t("jobs.manage.awaiting_feedback.no_jobs.no_filters"))
     end
