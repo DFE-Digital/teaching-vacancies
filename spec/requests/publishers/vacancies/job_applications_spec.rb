@@ -415,7 +415,7 @@ RSpec.describe "Job applications" do
             "interview_date(1i)" => 2025,
             "interview_date(2i)" => 9,
             "interview_date(3i)" => 1,
-            "interview_time"     => "10:45",
+            "interview_time"     => "10:45", # rubocop:disable Layout/HashAlignment
           },
         }
       end
@@ -447,7 +447,7 @@ RSpec.describe "Job applications" do
             "interview_date(1i)" => 2025,
             "interview_date(2i)" => 90,
             "interview_date(3i)" => 1,
-            "interview_time"     => "10:45",
+            "interview_time"     => "10:45", # rubocop:disable Layout/HashAlignment
           },
         }
       end
@@ -464,7 +464,7 @@ RSpec.describe "Job applications" do
             "interview_date(1i)" => 2025,
             "interview_date(2i)" => 9,
             "interview_date(3i)" => 1,
-            "interview_time"     => "45:10",
+            "interview_time"     => "45:10", # rubocop:disable Layout/HashAlignment
           },
         }
       end
@@ -474,14 +474,14 @@ RSpec.describe "Job applications" do
       it { is_expected.to render_template(:interview_datetime) }
     end
 
-    context "whem job aplication not in interviewing state" do
+    context "when job aplication not in interviewing state" do
       let(:params) do
         {
           publishers_job_application_interview_datetime_form: {
             "interview_date(1i)" => 2025,
             "interview_date(2i)" => 9,
             "interview_date(3i)" => 1,
-            "interview_time"     => "10:45",
+            "interview_time"     => "10:45", # rubocop:disable Layout/HashAlignment
           },
         }
       end
