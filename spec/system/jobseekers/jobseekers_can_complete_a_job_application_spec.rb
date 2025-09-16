@@ -140,6 +140,8 @@ RSpec.describe "Jobseekers can complete a job application" do
       expect(page).to have_css("#declarations", text: I18n.t("shared.status_tags.complete"))
       click_on "Review application"
 
+      # wait for page load
+      find(".govuk-list.review-component__sections")
       expect(current_path).to eq(jobseekers_job_application_review_path(JobApplication.last))
     end
   end
