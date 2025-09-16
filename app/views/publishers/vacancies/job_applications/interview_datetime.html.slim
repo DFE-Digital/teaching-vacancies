@@ -2,13 +2,15 @@
 
 p.govuk-hint = t(".add_interview_date")
 h1.govuk-heading-l class="govuk-!-display-inline"
-  = t(".schedule_interview_datetime", name: @job_application.name)
+  = t(".schedule_interview_datetime", name: @form.job_application.name)
 
-= form_with(model: @form, url: update_interview_datetime_organisation_job_job_application_path(vacancy.id, @job_application.id)) do |f|
+p.govuk-body = t(".inset")
+
+= form_with(model: @form, url: update_interview_datetime_organisation_job_job_application_path(vacancy.id, @form.job_application.id), method: :patch) do |f|
   = f.govuk_error_summary
 
-  = f.govuk_date_field :interviewing_at, label: { size: "s" }, legend: { size: "l" }
-  = f.govuk_text_field :time, label: { size: "s" }, legend: { size: "l" }
+  = f.govuk_date_field :interview_date, legend: { size: "m" }
+  = f.govuk_text_field :interview_time, legend: { size: "m" }, width: 4
 
   .govuk-button-group
     = f.govuk_submit t("buttons.save_and_continue"), class: "update-status"

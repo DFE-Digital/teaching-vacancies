@@ -390,10 +390,10 @@ RSpec.describe "Job applications" do
       let(:params) do
         {
           publishers_job_application_interview_date_form: {
-            "interviewing_at(1i)" => 2025,
-            "interviewing_at(2i)" => 9,
-            "interviewing_at(3i)" => 1,
-            "time"                => "10:45",
+            "interview_date(1i)" => 2025,
+            "interview_date(2i)" => 9,
+            "interview_date(3i)" => 1,
+            "interview_time"     => "10:45",
           },
         }
       end
@@ -402,6 +402,11 @@ RSpec.describe "Job applications" do
 
       it "updates job application interviewing_at" do
         expect { update_request }.to change { job_application.reload.interviewing_at }.from(previous_datetime).to(expected_datetime)
+      end
+
+      it "redirects to interviewing tab" do
+        update_request
+        expect(response).to redirect_to(organisation_job_job_applications_path(vacancy.id, anchor: :interviewing))
       end
     end
 
@@ -417,10 +422,10 @@ RSpec.describe "Job applications" do
       let(:params) do
         {
           publishers_job_application_interview_date_form: {
-            "interviewing_at(1i)" => 2025,
-            "interviewing_at(2i)" => 90,
-            "interviewing_at(3i)" => 1,
-            "time"                => "10:45",
+            "interview_date(1i)" => 2025,
+            "interview_date(2i)" => 90,
+            "interview_date(3i)" => 1,
+            "interview_time"     => "10:45",
           },
         }
       end
@@ -434,10 +439,10 @@ RSpec.describe "Job applications" do
       let(:params) do
         {
           publishers_job_application_interview_date_form: {
-            "interviewing_at(1i)" => 2025,
-            "interviewing_at(2i)" => 9,
-            "interviewing_at(3i)" => 1,
-            "time"                => "45:10",
+            "interview_date(1i)" => 2025,
+            "interview_date(2i)" => 9,
+            "interview_date(3i)" => 1,
+            "interview_time"     => "45:10",
           },
         }
       end
@@ -451,10 +456,10 @@ RSpec.describe "Job applications" do
       let(:params) do
         {
           publishers_job_application_interview_date_form: {
-            "interviewing_at(1i)" => 2025,
-            "interviewing_at(2i)" => 9,
-            "interviewing_at(3i)" => 1,
-            "time"                => "10:45",
+            "interview_date(1i)" => 2025,
+            "interview_date(2i)" => 9,
+            "interview_date(3i)" => 1,
+            "interview_time"     => "10:45",
           },
         }
       end

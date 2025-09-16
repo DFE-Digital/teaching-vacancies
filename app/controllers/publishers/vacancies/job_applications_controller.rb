@@ -69,19 +69,20 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def interview_datetime
-    @form = Publishers::JobApplication::InterviewDateForm.new(job_application: @job_application)
+    @form = Publishers::JobApplication::InterviewDatetimeForm.new(job_application: @job_application)
   end
 
   def update_interview_datetime
-    form_key = ActiveModel::Naming.param_key(Publishers::JobApplication::InterviewDateForm)
+    form_key = ActiveModel::Naming.param_key(Publishers::JobApplication::InterviewDatetimeForm)
     form_params = params
                     .fetch(form_key, {})
-                    .permit(:interviewing_at, :time)
+                    .permit(:interview_date, :interview_time)
                     .merge(job_application: @job_application)
 
-    @form = Publishers::JobApplication::InterviewDateForm.new(form_params)
+    @form = Publishers::JobApplication::InterviewDatetimeForm.new(form_params)
     if @form.valid?
-      @job_application.update!(interviewing_at: @form.interviewing_datetime_at)
+      @job_application.update!(interviewing_at: @form.interviewing_at)
+      redirect_to organisation_job_job_applications_path(vacancy.id, anchor: :interviewing)
     else
       render :interview_datetime
     end
