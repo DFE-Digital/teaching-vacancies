@@ -50,7 +50,6 @@ RUN rm -rf node_modules log tmp yarn.lock && \
 # this stage reduces the image size.
 FROM ruby:3.4.5-alpine3.22 AS production
 
-RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
 WORKDIR /app
 
 ARG PROD_PACKAGES
@@ -67,8 +66,5 @@ ENV ENV="/root/.ashrc"
 ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
 
-RUN mkdir -p /app/tmp /app/log
-RUN chown -hR appuser:appgroup /app/tmp /app/log
-USER 10001
 EXPOSE 3000
 CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions && bundle exec rails s
