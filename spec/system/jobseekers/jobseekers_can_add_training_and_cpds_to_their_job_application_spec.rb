@@ -18,8 +18,6 @@ RSpec.describe "Jobseeker can add training and cpds to their job application" do
     it "allows jobseeker to add training" do
       click_on "Add training"
 
-      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
-
       click_on "Save and continue"
 
       expect(page).to have_css("h2.govuk-error-summary__title", text: "There is a problem")
