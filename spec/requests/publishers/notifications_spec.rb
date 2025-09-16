@@ -8,7 +8,7 @@ RSpec.describe "Publisher notifications" do
 
   before do
     Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application).deliver(publisher)
-    allow_any_instance_of(Publishers::BaseController).to receive(:current_organisation).and_return(organisation)
+    allow_any_instance_of(Publishers::NotificationsController).to receive(:current_organisation).and_return(organisation)
     sign_in(publisher, scope: :publisher)
   end
 

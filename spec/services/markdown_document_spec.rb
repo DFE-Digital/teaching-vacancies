@@ -74,6 +74,22 @@ RSpec.describe MarkdownDocument do
     end
   end
 
+  describe "#date_updated" do
+    context "when there is a date in the front matter" do
+      it "returns a Date" do
+        expect(subject.date_updated).to eq(Date.parse("01/01/2022"))
+      end
+    end
+
+    context "when there is no date in the front matter" do
+      let(:document_content) { file_fixture("document_no_front_matter.md").read }
+
+      it "returns nil" do
+        expect(subject.date_updated).to eq(nil)
+      end
+    end
+  end
+
   describe "#meta_description" do
     it "returns the meta description" do
       expect(subject.meta_description).to eq("Meta description")

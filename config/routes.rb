@@ -49,12 +49,6 @@ Rails.application.routes.draw do
     Rails.application.routes.url_helpers.post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "3-quick-ways-to-find-the-right-teaching-job")
   }
 
-  if Rails.application.config.maintenance_mode
-    # If in maintenance mode, route *all* requests to maintenance page
-    match "*path", to: "errors#maintenance", via: :all
-    root to: "errors#maintenance", as: "maintenance_root", via: :all
-  end
-
   # Deprecated routes should have a redirect added in `routes/legacy_redirects.rb` after they are
   # removed from the routes (if at all possible), so our users don't get 404s:
   draw :legacy_redirects
@@ -84,6 +78,11 @@ Rails.application.routes.draw do
       get :consume, on: :member
     end
 
+    resources :uploaded_job_applications, only: [] do
+      resource :personal_details, only: %i[edit update], module: :uploaded_job_applications
+      resource :upload_application_form, only: %i[edit update], module: :uploaded_job_applications
+    end
+
     resources :job_applications, only: %i[index show destroy] do
       resources :build, only: %i[show update], controller: "job_applications/build"
       resources :employments, only: %i[new create edit update destroy], controller: "job_applications/employments"
@@ -107,15 +106,16 @@ Rails.application.routes.draw do
       post :submit
       get :post_submit
       post :withdraw
+      get :download
       resource :feedback, only: %i[create], controller: "job_applications/feedbacks"
+      resources :self_disclosure, only: %i[show update], controller: "job_applications/self_disclosure" do
+        get :completed, on: :collection
+      end
     end
 
     scope as: :job, path: ":job_id" do
-      resource :job_application, only: %i[new create] do
-        get :about_your_application
-        get :new_quick_apply
-        post :quick_apply
-      end
+      resource :job_application, only: %i[new create]
+      resource :uploaded_job_application, only: %i[create], controller: "uploaded_job_applications"
     end
 
     resource :profile, only: %i[show] do
@@ -198,6 +198,8 @@ Rails.application.routes.draw do
     resource :account_feedback, only: %i[new create]
     resource :request_account_transfer_email, only: %i[new create]
     resource :account_transfer, only: %i[new create]
+
+    resources :notifications, only: %i[index]
   end
 
   devise_for :publishers, controllers: {
@@ -206,8 +208,12 @@ Rails.application.routes.draw do
 
   namespace :publishers do
     resource :account do
+      # Unsubscribe from expired vacancy feedback emails
       get "confirm-unsubscribe", to: "accounts#confirm_unsubscribe"
       patch "unsubscribe", to: "accounts#unsubscribe"
+      # Opt out from mail communications from Teaching Vacancies
+      get "confirm-email-opt-out", to: "accounts#confirm_email_opt_out"
+      patch "email-opt-out", to: "accounts#email_opt_out"
     end
     resources :login_keys, only: %i[show new create] do
       post :consume, on: :member
@@ -375,6 +381,7 @@ Rails.application.routes.draw do
       get :confirm_destroy
       get :convert_to_draft
       get :preview
+      resources :form_previews, only: %i[show], controller: "publishers/vacancies/form_previews"
       get :review
       post :publish, to: "publishers/vacancies/publish#create"
       get :publish, to: "publishers/vacancies/publish#create"
@@ -393,23 +400,46 @@ Rails.application.routes.draw do
 
       resources :job_applications, only: %i[index show], controller: "publishers/vacancies/job_applications" do
         resources :notes, only: %i[create destroy], controller: "publishers/vacancies/job_applications/notes"
-        get :download_pdf
-        get :withdrawn
+        resources :reference_requests, only: %i[show update edit], controller: "publishers/vacancies/job_applications/reference_requests" do
+          member do
+            get :reference_received
+            patch :mark_as_received
+          end
+        end
+        get :download
+        get :terminal
         get :tag, on: :collection
-        get :tag_single, on: :member
         post :update_tag, on: :collection
+        post :offer, on: :collection
+        member do
+          get :pre_interview_checks
+        end
+        resource :self_disclosure, only: %i[show update], controller: "publishers/vacancies/job_applications/self_disclosure"
+        resources :collect_reference_flags, only: %i[show update], controller: "publishers/vacancies/collect_reference_flags"
+        resources :collect_self_disclosure_flags, only: %i[show update], controller: "publishers/vacancies/collect_self_disclosure_flags"
+      end
+      resources :job_application_batches, only: %i[] do
+        resources :references_and_self_disclosure, only: %i[show update], controller: "publishers/vacancies/references_and_self_disclosure"
+      end
+    end
+  end
+
+  resources :references, only: %i[] do
+    resources :build, only: %i[show update], controller: "referees/build_references" do
+      collection do
+        get :completed
+        get :no_reference
       end
     end
   end
 
   # Well known URLs
-  get ".well-known/change-password", to: redirect(status: 302) { Rails.application.routes.url_helpers.edit_jobseeker_registration_path(password_update: true) }
+  get ".well-known/change-password", to: redirect(status: 302) { "https://home.account.gov.uk/security" }
 
   match "/401", as: :unauthorised, to: "errors#unauthorised", via: :all
   match "/404", as: :not_found, to: "errors#not_found", via: :all
   match "/422", as: :unprocessable_entity, to: "errors#unprocessable_entity", via: :all
   match "/500", as: :internal_server_error, to: "errors#internal_server_error", via: :all
-  match "/maintenance", as: :maintenance, to: "errors#maintenance", via: :all
 
   get "campaigns/",
       to: "vacancies#campaign_landing_page",

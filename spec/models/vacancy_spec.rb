@@ -18,13 +18,13 @@ RSpec.describe Vacancy do
 
     it "publish_on is not removed when converting a draft to a published vacancy" do
       vacancy = create(:draft_vacancy, publish_on: Date.current)
-      vacancy.update(status: :published)
+      vacancy.update!(type: "PublishedVacancy")
       expect(vacancy.publish_on).to be_present
     end
 
     it "publish_on is removed when converting a published vacancy back into a draft" do
       vacancy = create(:vacancy, publish_on: Date.current)
-      expect { vacancy.update(status: :draft) }.to change { vacancy.publish_on }.from(Date.current).to(nil)
+      expect { vacancy.update(type: "DraftVacancy") }.to change { vacancy.publish_on }.from(Date.current).to(nil)
     end
   end
 
@@ -64,97 +64,7 @@ RSpec.describe Vacancy do
         invalid_school = School.new(email: "invalid")
         expect(invalid_school).not_to be_valid
 
-        expect(Vacancy.new(organisations: [invalid_school], publisher: publisher, status: "draft")).to be_valid
-      end
-    end
-
-    describe "conflict validation" do
-      let(:school) { create(:school) }
-      let(:publisher_ats_api_client) { create(:publisher_ats_api_client) }
-
-      subject(:new_vacancy) do
-        build(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
-      end
-
-      context "when there a vacancy with the same ATS client ID but with different external reference" do
-        before do
-          create(:vacancy, :external, external_reference: "REF456", publisher_ats_api_client:, organisations: [school])
-        end
-
-        it "the new vacancy is valid" do
-          expect(new_vacancy).to be_valid
-        end
-      end
-
-      context "when there a vacancy with the same ATS client ID and external reference" do
-        before do
-          create(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
-        end
-
-        it "the new vacancy is invalid" do
-          expect(new_vacancy).not_to be_valid
-          expect(new_vacancy.errors[:external_reference])
-            .to include("A vacancy with the provided ATS client ID and external reference already exists.")
-        end
-      end
-    end
-
-    describe "duplicate validation" do
-      let(:school) { create(:school) }
-      let(:publisher_ats_api_client) { create(:publisher_ats_api_client) }
-
-      subject(:new_vacancy) do
-        build(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
-      end
-
-      context "when there is a vacancy with some shared info but not all required fields to be considered duplicated" do
-        before do
-          create(:vacancy,
-                 organisations: [school],
-                 job_title: new_vacancy.job_title,
-                 expires_at: new_vacancy.expires_at,
-                 working_patterns: new_vacancy.working_patterns)
-        end
-
-        it "the new vacancy is valid" do
-          expect(new_vacancy).to be_valid
-        end
-      end
-
-      context "when there is an existing vacancy sharing all required fields to be considered duplicated" do
-        before do
-          create(:vacancy,
-                 organisations: [school],
-                 job_title: new_vacancy.job_title,
-                 expires_at: new_vacancy.expires_at,
-                 working_patterns: new_vacancy.working_patterns,
-                 contract_type: new_vacancy.contract_type,
-                 phases: new_vacancy.phases,
-                 salary: new_vacancy.salary)
-        end
-
-        it "the new vacancy is invalid" do
-          expect(new_vacancy).not_to be_valid
-          expect(new_vacancy.errors[:base])
-            .to include("A vacancy with the same job title, expiry date, contract type, working_patterns, phases and salary already exists for this organisation.")
-        end
-      end
-
-      context "when there is an existing vacancy sharing all required fields to be considered duplicated but belongs to a different organisation" do
-        before do
-          create(:vacancy,
-                 organisations: [create(:school)],
-                 job_title: new_vacancy.job_title,
-                 expires_at: new_vacancy.expires_at,
-                 working_patterns: new_vacancy.working_patterns,
-                 contract_type: new_vacancy.contract_type,
-                 phases: new_vacancy.phases,
-                 salary: new_vacancy.salary)
-        end
-
-        it "the new vacancy is valid" do
-          expect(new_vacancy).to be_valid
-        end
+        expect(DraftVacancy.new(organisations: [invalid_school], publisher: publisher)).to be_valid
       end
     end
 
@@ -183,10 +93,6 @@ RSpec.describe Vacancy do
     it "removes google index" do
       url = Rails.application.routes.url_helpers.job_url(subject)
       expect { subject.trash! }.to have_enqueued_job(RemoveGoogleIndexQueueJob).with(url)
-    end
-
-    it "doesnt remove google index when expensive jobs are disabled", :disable_expensive_jobs do
-      expect { subject.trash! }.not_to have_enqueued_job(RemoveGoogleIndexQueueJob)
     end
 
     it "removes attachements" do
@@ -281,25 +187,25 @@ RSpec.describe Vacancy do
 
       it "does not break if #expires_at is nil" do
         subject.expires_at = nil
-        expect { subject.listed? }.not_to raise_error
+        expect { subject.live? }.not_to raise_error
       end
 
       it "checks #expires_at is in the future" do
         allow(subject).to receive(:expires_at).and_return(datetime)
         expect(datetime).to receive(:future?)
-        subject.listed?
+        subject.live?
       end
 
       it "checks #published?" do
         expect(subject).to receive(:published?)
-        subject.listed?
+        subject.live?
       end
 
       context "when draft" do
         let(:vacancy) { build(:draft_vacancy) }
 
         it 'checks if #published == "draft" (yields published? == false)' do
-          expect(subject.listed?).to be_falsey
+          expect(subject.live?).to be_falsey
         end
       end
 
@@ -312,22 +218,22 @@ RSpec.describe Vacancy do
 
         it "checks if #publish_on is in the past" do
           expect(datetime).to receive(:past?)
-          subject.listed?
+          subject.live?
         end
 
         it "checks if #publish_on is today" do
           expect(datetime).to receive(:today?)
-          subject.listed?
+          subject.live?
         end
 
         it "does not break if publish_on is nil" do
           subject.publish_on = nil
-          expect { subject.listed? }.not_to raise_error
+          expect { subject.live? }.not_to raise_error
         end
       end
 
       it "return true if all the conditions are met" do
-        expect(subject.listed?).to be_truthy
+        expect(subject.live?).to be_truthy
       end
     end
   end
@@ -341,7 +247,7 @@ RSpec.describe Vacancy do
         expired_earlier_today.send :set_slug
         expired_earlier_today.save(validate: false)
 
-        results = Vacancy.applicable
+        results = PublishedVacancy.applicable
         expect(results).to include(expires_later_today)
         expect(results).to_not include(expired_earlier_today)
       end
@@ -354,7 +260,7 @@ RSpec.describe Vacancy do
         expired.send :set_slug
         expired.save(validate: false)
 
-        expect(Vacancy.expired.count).to eq(1)
+        expect(PublishedVacancy.expired.count).to eq(1)
       end
     end
 
@@ -364,7 +270,8 @@ RSpec.describe Vacancy do
         create(:draft_vacancy, :expired_yesterday)
         create(:vacancy, :expires_tomorrow)
 
-        expect(Vacancy.expired_yesterday.count).to eq(2)
+        expect(PublishedVacancy.expired_yesterday.count).to eq(1)
+        expect(DraftVacancy.expired_yesterday.count).to eq(1)
       end
     end
 
@@ -372,8 +279,8 @@ RSpec.describe Vacancy do
       let(:expired_years_ago) { build(:vacancy, expires_at: 2.years.ago) }
 
       it "retrieves vacancies that expired not more than one year ago" do
-        expect(Vacancy.expires_within_data_access_period).to_not include(expired_years_ago)
-        expect(Vacancy.expires_within_data_access_period).to include(expired_earlier_today)
+        expect(PublishedVacancy.expires_within_data_access_period).to_not include(expired_years_ago)
+        expect(PublishedVacancy.expires_within_data_access_period).to include(expired_earlier_today)
       end
     end
 
@@ -382,14 +289,14 @@ RSpec.describe Vacancy do
         published = create_list(:vacancy, 5)
         create_list(:vacancy, 3, :future_publish)
 
-        expect(Vacancy.listed.count).to eq(published.count)
+        expect(PublishedVacancy.listed.count).to eq(published.count)
       end
     end
 
     describe "#live" do
       it "includes vacancies till expiry time" do
-        expect(Vacancy.live).to include(expires_later_today)
-        expect(Vacancy.live).to_not include(expired_earlier_today)
+        expect(PublishedVacancy.live).to include(expires_later_today)
+        expect(PublishedVacancy.live).to_not include(expired_earlier_today)
       end
     end
 
@@ -398,24 +305,7 @@ RSpec.describe Vacancy do
         create_list(:vacancy, 5)
         pending = create_list(:vacancy, 3, :future_publish)
 
-        expect(Vacancy.pending.count).to eq(pending.count)
-      end
-    end
-
-    describe "#published_on_count(date)" do
-      it "retrieves vacancies listed on the specified date" do
-        published_today = create_list(:vacancy, 3, :published_slugged)
-        published_yesterday = build_list(:vacancy, 2, :published_slugged, publish_on: 1.day.ago)
-        published_yesterday.each { |v| v.save(validate: false) }
-        published_the_other_day = build_list(:vacancy, 1, :published_slugged, publish_on: 2.days.ago)
-        published_the_other_day.each { |v| v.save(validate: false) }
-        published_some_other_day = build_list(:vacancy, 6, :published_slugged, publish_on: 1.month.ago)
-        published_some_other_day.each { |v| v.save(validate: false) }
-
-        expect(Vacancy.published_on_count(Date.current)).to eq(published_today.count)
-        expect(Vacancy.published_on_count(1.day.ago)).to eq(published_yesterday.count)
-        expect(Vacancy.published_on_count(2.days.ago)).to eq(published_the_other_day.count)
-        expect(Vacancy.published_on_count(1.month.ago)).to eq(published_some_other_day.count)
+        expect(PublishedVacancy.pending.count).to eq(pending.count)
       end
     end
 
@@ -425,7 +315,7 @@ RSpec.describe Vacancy do
         old_expired_and_awaiting_feedback = create(:vacancy, :expired, expires_at: 3.months.ago)
         recent_expired_and_not_awaiting_feedback = create(:vacancy, :expired, expires_at: 1.month.ago, listed_elsewhere: :listed_paid)
 
-        results = Vacancy.awaiting_feedback_recently_expired
+        results = PublishedVacancy.awaiting_feedback_recently_expired
 
         expect(results).to include(recent_expired_and_awaiting_feedback)
         expect(results).not_to include(old_expired_and_awaiting_feedback)
@@ -538,7 +428,7 @@ RSpec.describe Vacancy do
 
   context "stats updated at" do
     let(:expired_job) { create(:vacancy, :expired) }
-    let(:stats_updated_at) { Vacancy.find(expired_job.id).stats_updated_at }
+    let(:stats_updated_at) { PublishedVacancy.find(expired_job.id).stats_updated_at }
 
     it { expect(stats_updated_at).to be_nil }
 
@@ -547,14 +437,6 @@ RSpec.describe Vacancy do
         expired_job.update(listed_elsewhere: :listed_paid, hired_status: :hired_tvs)
 
         expect(stats_updated_at).to eq(Time.current)
-      end
-    end
-
-    it "does not update the stats when you are updating the job summary" do
-      travel_to(Time.zone.local(2019, 1, 1, 10, 4, 3)) do
-        expired_job.update(job_advert: "I am description")
-
-        expect(stats_updated_at).to be_nil
       end
     end
   end
@@ -579,7 +461,7 @@ RSpec.describe Vacancy do
 
   describe "#allow_key_stages?" do
     context "when one of the phases of the vacancy is among [primary middle secondary through]" do
-      subject { create(:vacancy, phases: %w[secondary]) }
+      subject { create(:vacancy, :secondary) }
 
       it "returns false" do
         expect(subject.allow_key_stages?).to be(true)
@@ -700,11 +582,11 @@ RSpec.describe Vacancy do
     end
 
     it "matches external scopes" do
-      expect(Vacancy.external).to contain_exactly(ats_api_client_vacancy, external_source_vacancy)
+      expect(PublishedVacancy.external).to contain_exactly(ats_api_client_vacancy, external_source_vacancy)
     end
 
     it "matches internal scopes" do
-      expect(Vacancy.internal.map(&:job_title)).to contain_exactly(internal_vacancy.job_title)
+      expect(PublishedVacancy.internal.map(&:job_title)).to contain_exactly(internal_vacancy.job_title)
     end
   end
 
@@ -791,28 +673,24 @@ RSpec.describe Vacancy do
     end
   end
 
-  describe "#draft!" do
+  describe "draft!" do
     subject { create(:vacancy, :future_publish) }
 
-    before { subject.draft! }
-
-    it "converts the job to a draft" do
-      expect(subject.status).to eq("draft")
-    end
+    before { subject.update!(type: "DraftVacancy") }
 
     it "resets the publish_on date" do
       expect(subject.publish_on).to eq(nil)
     end
   end
 
-  describe "#is_a_teaching_or_middle_leader_role?" do
+  describe "#teaching_or_middle_leader_role?" do
     let(:vacancy) { create(:vacancy, job_roles: job_roles) }
 
     context "when job_roles includes a teaching role" do
       let(:job_roles) { ["teacher"] }
 
       it "returns true" do
-        expect(vacancy.is_a_teaching_or_middle_leader_role?).to be true
+        expect(vacancy.teaching_or_middle_leader_role?).to be true
       end
     end
 
@@ -820,7 +698,7 @@ RSpec.describe Vacancy do
       let(:job_roles) { ["head_of_year_or_phase"] }
 
       it "returns true" do
-        expect(vacancy.is_a_teaching_or_middle_leader_role?).to be true
+        expect(vacancy.teaching_or_middle_leader_role?).to be true
       end
     end
 
@@ -828,7 +706,7 @@ RSpec.describe Vacancy do
       let(:job_roles) { ["teacher", "head_of_department_or_curriculum"] }
 
       it "returns true" do
-        expect(vacancy.is_a_teaching_or_middle_leader_role?).to be true
+        expect(vacancy.teaching_or_middle_leader_role?).to be true
       end
     end
 
@@ -836,7 +714,7 @@ RSpec.describe Vacancy do
       let(:job_roles) { ["administration_hr_data_and_finance"] }
 
       it "returns false" do
-        expect(vacancy.is_a_teaching_or_middle_leader_role?).to be false
+        expect(vacancy.teaching_or_middle_leader_role?).to be false
       end
     end
 
@@ -844,7 +722,7 @@ RSpec.describe Vacancy do
       let(:job_roles) { [] }
 
       it "returns false" do
-        expect(vacancy.is_a_teaching_or_middle_leader_role?).to be false
+        expect(vacancy.teaching_or_middle_leader_role?).to be false
       end
     end
   end

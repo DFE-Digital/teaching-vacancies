@@ -1,9 +1,10 @@
 class Jobseekers::VacancyMailer < Jobseekers::BaseMailer
   def draft_application_only(job_application)
     @job_application = job_application
+    @jobseeker = job_application.jobseeker
     @vacancy = job_application.vacancy
 
-    send_email(to: job_application.email_address,
+    send_email(to: @jobseeker.email,
                subject: I18n.t("jobseekers.vacancy_mailer.draft_application_only.subject", date: @vacancy.expires_at.to_date, job_title: job_application.vacancy.job_title))
   end
 

@@ -17,7 +17,9 @@ class Jobseekers::PeakTimesMailer < Jobseekers::BaseMailer
   attr_reader :jobseeker_id
 
   def jobseeker
-    @jobseeker ||= Jobseeker.includes(jobseeker_profile: :personal_details).find_by(id: jobseeker_id)
+    return @jobseeker if defined?(@jobseeker)
+
+    @jobseeker = Jobseeker.includes(jobseeker_profile: :personal_details).find_by(id: jobseeker_id)
   end
 
   def first_name

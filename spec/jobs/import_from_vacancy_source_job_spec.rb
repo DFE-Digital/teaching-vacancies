@@ -15,7 +15,6 @@ end
 RSpec.describe ImportFromVacancySourceJob do
   before do
     FakeVacancySource.vacancies = vacancies_from_source
-    allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false)
   end
 
   subject(:import_from_vacancy_source_job) { described_class.perform_now(FakeVacancySource) }
@@ -23,10 +22,19 @@ RSpec.describe ImportFromVacancySourceJob do
   let(:school) { create(:school) }
 
   describe "#perform" do
+    context "when the integrations are disabled", :disable_integrations do
+      let(:vacancies_from_source) { [] }
+
+      it "does not run the import for the vacancy source class" do
+        expect(FakeVacancySource).not_to receive(:new)
+        described_class.perform_now(FakeVacancySource)
+      end
+    end
+
     context "when a new valid vacancy comes through" do
       let(:vacancies_from_source) { [vacancy] }
       let(:vacancy) do
-        build(:vacancy, :published, :external, phases: %w[secondary], job_roles: ["teaching_assistant"], organisations: [school])
+        build(:vacancy, :external, :secondary, job_roles: ["teaching_assistant"], organisations: [school])
       end
 
       it "saves the vacancy" do
@@ -43,7 +51,7 @@ RSpec.describe ImportFromVacancySourceJob do
     context "when the vacancy has already been imported" do
       let(:vacancies_from_source) { [vacancy] }
       let(:vacancy) do
-        build(:vacancy, :published, :external, phases: %w[secondary], job_roles: ["teaching_assistant"], organisations: [school], external_source: "fake_source")
+        build(:vacancy, :external, :secondary, job_roles: ["teaching_assistant"], organisations: [school], external_source: "fake_source")
       end
 
       before { described_class.perform_now(FakeVacancySource) }
@@ -52,10 +60,6 @@ RSpec.describe ImportFromVacancySourceJob do
         expect(vacancy).not_to receive(:save)
         described_class.perform_now(FakeVacancySource)
       end
-
-      it "the originally imported vacancy keeps its original status" do
-        expect { described_class.perform_now(FakeVacancySource) }.not_to(change { vacancy.reload.status })
-      end
     end
 
     context "when a new vacancy comes through but isn't valid" do
@@ -63,7 +67,6 @@ RSpec.describe ImportFromVacancySourceJob do
       let(:contact_email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
       let(:vacancy) do
         build(:vacancy,
-              :published,
               :external,
               phases: [],
               enable_job_applications: true,
@@ -72,14 +75,12 @@ RSpec.describe ImportFromVacancySourceJob do
               about_school: "test",
               benefits_details: "ut sit dolores.",
               contact_email: contact_email,
-              personal_statement_guidance: "Maxime blanditiis quos. Cum officia facilis. Et et quod. Dolore id ut. Id aut quia.",
               school_offer: "School Offer",
               skills_and_experience: "Quasi dolores vero molestiae et velit aut nulla dolorem odit officiis sit ea sint earum et accusantium optio illo dolorem numquam in et est quia ab consequatur aperiam aut et alias rerum fuga est impedit enim et sunt ea tempora facilis eaque voluptate ex iure voluptates necessitatibus ipsa veniam nihil.",
               slug: "mallowpond-high-school",
               expires_at: "2023-06-06T09:00:00.000+01:00",
               working_patterns_details: nil,
               further_details: "details",
-              how_to_apply: "Click button",
               job_advert: "Aut repellat vel. Nesciunt exercitationem et. Numquam a corrupti. Et minus hic. Perspiciatis dolor neque. Sit est nemo. Ut ex officiis. Illum et mollitia. Quia qui qui. Debitis totam odio. Consequatur eum iste. Aut ex et. Quo explicabo quae. Aut id laborum. Occaecati quod sit. Laudantium ipsum placeat. Et sed nesciunt. Ut iste maxime. Ea repudiandae rem. Qui fugit adipisci. Vero fugiat dolor. Nesciunt eum et. Molestias nulla facere. Aliquid dolore assumenda. Aut repudiandae iusto. Quia aut maxime. Consequatur voluptates facere. Facere eius asperiores. Fugiat occaecati assumenda. Maiores consequatur architecto. Perferendis sint ut. Est odio dolorem. Aliquid fugiat iusto. Eaque fugiat voluptas. Eos velit assumenda. Nesciunt minus quia. Cupiditate vero dolor. Quos temporibus consequuntur. Vel cupiditate eos. Dolore dolores repellat. Ex ipsam consequuntur. Dolores harum voluptatem. Temporibus neque quis. Vero soluta sunt. Voluptas laboriosam modi. Quod ut nostrum. Veniam voluptatem et. Explicabo necessitatibus ex. Ut architecto placeat. Neque velit et.",
               visa_sponsorship_available: false,
               flexi_working: "Debitis id voluptate cumque iusto quod ut libero facere repellendus est perspiciatis rem labore voluptatibus",
@@ -108,7 +109,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "application_link" => nil,
           "benefits" => true,
           "benefits_details" => "ut sit dolores.",
-          "completed_steps" => %w[job_location job_role education_phases job_title key_stages subjects contract_type working_patterns pay_package important_dates start_date applying_for_the_job school_visits contact_details about_the_role include_additional_documents],
+          "completed_steps" => %w[job_location job_role education_phases job_title key_stages contract_type working_patterns pay_package important_dates start_date applying_for_the_job school_visits contact_details about_the_role include_additional_documents],
           "contact_email" => contact_email,
           "contact_number" => "01234 123456",
           "contact_number_provided" => true,
@@ -132,7 +133,6 @@ RSpec.describe ImportFromVacancySourceJob do
           "geolocation" => "POINT (2.0 1.0)",
           "google_index_removed" => false,
           "hired_status" => nil,
-          "how_to_apply" => "Click button",
           "id" => nil,
           "include_additional_documents" => false,
           "job_advert" => "Aut repellat vel. Nesciunt exercitationem et. Numquam a corrupti. Et minus hic. Perspiciatis dolor neque. Sit est nemo. Ut ex officiis. Illum et mollitia. Quia qui qui. Debitis totam odio. Consequatur eum iste. Aut ex et. Quo explicabo quae. Aut id laborum. Occaecati quod sit. Laudantium ipsum placeat. Et sed nesciunt. Ut iste maxime. Ea repudiandae rem. Qui fugit adipisci. Vero fugiat dolor. Nesciunt eum et. Molestias nulla facere. Aliquid dolore assumenda. Aut repudiandae iusto. Quia aut maxime. Consequatur voluptates facere. Facere eius asperiores. Fugiat occaecati assumenda. Maiores consequatur architecto. Perferendis sint ut. Est odio dolorem. Aliquid fugiat iusto. Eaque fugiat voluptas. Eos velit assumenda. Nesciunt minus quia. Cupiditate vero dolor. Quos temporibus consequuntur. Vel cupiditate eos. Dolore dolores repellat. Ex ipsam consequuntur. Dolores harum voluptatem. Temporibus neque quis. Vero soluta sunt. Voluptas laboriosam modi. Quod ut nostrum. Veniam voluptatem et. Explicabo necessitatibus ex. Ut architecto placeat. Neque velit et.",
@@ -147,7 +147,6 @@ RSpec.describe ImportFromVacancySourceJob do
           "parental_leave_cover_contract_duration" => nil,
           "part_time_details" => nil,
           "pay_scale" => "Main pay range 1 to Upper pay range 3, £23,719 to £39,406 per year (full time equivalent)",
-          "personal_statement_guidance" => "Maxime blanditiis quos. Cum officia facilis. Et et quod. Dolore id ut. Id aut quia.",
           "phases" => [],
           "publish_on" => Date.today.strftime("%Y-%m-%d"),
           "publisher_id" => nil,
@@ -162,7 +161,6 @@ RSpec.describe ImportFromVacancySourceJob do
           "salary" => "Main pay range 1 to Upper pay range 3, £23,719 to £39,406 per year (full time equivalent)",
           "school_offer" => "School Offer",
           "school_visits" => true,
-          "school_visits_details" => nil,
           "searchable_content" => nil,
           "skills_and_experience" => "Quasi dolores vero molestiae et velit aut nulla dolorem odit officiis sit ea sint earum et accusantium optio illo dolorem numquam in et est quia ab consequatur aperiam aut et alias rerum fuga est impedit enim et sunt ea tempora facilis eaque voluptate ex iure voluptates necessitatibus ipsa veniam nihil.",
           "slug" => "mallowpond-high-school",
@@ -170,7 +168,6 @@ RSpec.describe ImportFromVacancySourceJob do
           "starts_asap" => nil,
           "starts_on" => (Date.today + 1.year).strftime("%Y-%m-%d"),
           "stats_updated_at" => nil,
-          "status" => "published",
           "subjects" => [],
           "updated_at" => nil,
           "working_patterns" => ["full_time"],
@@ -196,8 +193,8 @@ RSpec.describe ImportFromVacancySourceJob do
 
     context "when there is already a duplicate vacancy in the FailedImportedVacancy table" do
       let(:vacancies_from_source) { [vacancy1, vacancy2] }
-      let(:vacancy1) { build(:vacancy, :published, :external, external_reference: "123", phases: [], organisations: [school], job_title: "") }
-      let(:vacancy2) { build(:vacancy, :published, :external, external_reference: "123", phases: [], organisations: [school], job_title: "") }
+      let(:vacancy1) { build(:vacancy, :external, external_reference: "123", phases: [], organisations: [school], job_title: "") }
+      let(:vacancy2) { build(:vacancy, :external, external_reference: "123", phases: [], organisations: [school], job_title: "") }
 
       it "does not save the second vacancy" do
         import_from_vacancy_source_job
@@ -207,7 +204,7 @@ RSpec.describe ImportFromVacancySourceJob do
     end
 
     context "when a live vacancy no longer comes through" do
-      before { create(:vacancy, :published, :external, phases: %w[secondary], organisations: [school], external_source: "fake_source", external_reference: "123", updated_at: 1.hour.ago) }
+      before { create(:vacancy, :external, :secondary, organisations: [school], external_source: "fake_source", external_reference: "123", updated_at: 1.hour.ago) }
 
       let(:vacancies_from_source) { [] }
 

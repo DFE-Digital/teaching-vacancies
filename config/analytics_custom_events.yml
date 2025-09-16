@@ -1,7 +1,6 @@
 shared:
   - api_queried
   - copied_to_clipboard
-  - equal_opportunities_report_published
   - failed_dsi_sign_in_attempt
   - form_validation_failed
   - google_geocoding_api_hit
@@ -14,10 +13,14 @@ shared:
   - jobseeker_application_unsuccessful
   - jobseeker_changed_govuk_one_login_email
   - jobseeker_changed_govuk_one_login_id
+  - jobseeker_disable_profile_due_to_new_fields
+  - jobseeker_disable_inactive_profile
   - jobseeker_failed_govuk_one_login_sign_in
   - jobseeker_inactive_account
+  - jobseeker_inactive_profile_warning
   - jobseeker_job_listing_ended_early
   - jobseeker_request_account_transfer
+  - jobseeker_self_disclosure
   - jobseeker_sign_in_attempt
   - jobseeker_subscription_alert
   - jobseeker_subscription_confirmation
@@ -27,9 +30,13 @@ shared:
   - jobseeker_unapplied_saved_vacancy
   - jobseeker_peak_times_reminder
   - publisher_applications_received
+  - publisher_collect_references
+  - publisher_inform_applicant_about_references
   - publisher_invite_to_apply
   - publisher_job_application_data_expiry
   - publisher_prompt_for_feedback
+  - publisher_reference_received
+  - publisher_self_disclosure_received
   - publisher_sign_in_fallback
   - publisher_vacancy_relisted
   - search_performed

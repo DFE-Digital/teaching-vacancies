@@ -3,6 +3,8 @@ class RemoveGoogleIndexQueueJob < ApplicationJob
   queue_as :default
 
   def perform(url)
+    return if DisableIntegrations.enabled?
+
     if (url_indexing = GoogleIndexing.new(url))
       url_indexing.remove
     else

@@ -2,59 +2,71 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   include Jobseekers::QualificationFormConcerns
   include DatesHelper
 
-  before_action :set_job_application, only: %i[show download_pdf]
+  FORMS = {
+    "TagForm" => Publishers::JobApplication::TagForm,
+    "OfferedForm" => Publishers::JobApplication::OfferedForm,
+    "DeclinedForm" => Publishers::JobApplication::DeclinedForm,
+    "FeedbackForm" => Publishers::JobApplication::FeedbackForm,
+  }.freeze
 
-  before_action :set_job_applications, only: %i[index tag_single tag]
+  before_action :set_job_application, only: %i[show download pre_interview_checks]
+  before_action :set_job_applications, only: %i[index tag]
 
   def index
     @form = Publishers::JobApplication::TagForm.new
+    @job_applications = vacancy.job_applications.not_draft.order(updated_at: :desc).group_by(&:status)
   end
 
   def show
-    redirect_to organisation_job_job_application_withdrawn_path(vacancy.id, @job_application) if @job_application.withdrawn?
+    redirect_to organisation_job_job_application_terminal_path(vacancy.id, @job_application) if @job_application.withdrawn?
 
     @notes_form = Publishers::JobApplication::NotesForm.new
 
     raise ActionController::RoutingError, "Cannot view a draft application" if @job_application.draft?
-
-    @job_application.reviewed! if @job_application.submitted?
   end
 
-  def download_pdf
-    pdf = JobApplicationPdfGenerator.new(@job_application).generate
-
-    send_data(
-      pdf.render,
-      filename: "job_application_#{@job_application.id}.pdf",
-      type: "application/pdf",
-      disposition: "inline",
-    )
-  end
-
-  def tag_single
-    prepare_to_tag([params.fetch(:id)], "all")
+  def download
+    document = @job_application.submitted_application_form
+    send_data(document.data, filename: document.filename, disposition: "inline")
   end
 
   def tag
-    tag_params = params.require(:publishers_job_application_tag_form).permit(:origin, job_applications: [])
-    if params["download_selected"] == "true"
-      download_selected(tag_params)
-    else
-      origin = tag_params[:origin]
-      prepare_to_tag(tag_params.fetch(:job_applications).compact_blank, origin)
+    with_valid_form do |form|
+      case params[:tag_action]
+      when "download" then download_selected(form.job_applications)
+      when "export"   then export_selected(form.job_applications)
+      when "declined" then render_declined_form(form.job_applications, form.origin)
+      else # when "update_status"
+        render "tag"
+      end
     end
   end
 
   def update_tag
-    update_tag_params = params.require(:publishers_job_application_status_form).permit(:origin, :status, job_applications: [])
-
-    JobApplication.find(update_tag_params.fetch(:job_applications)).each do |job_application|
-      job_application.update!(status: update_tag_params.fetch(:status))
+    with_valid_form(validate_status: true) do |form|
+      case form.status
+      when "interviewing" then redirect_to_references_and_self_disclosure(form.job_applications)
+      when "offered"      then render_offered_form(form.job_applications, form.origin)
+      when "unsuccessful_interview" then render_unsuccessful_interview_form(form.job_applications, form.origin)
+      else
+        form.job_applications.each { it.update!(form.attributes) }
+        redirect_to organisation_job_job_applications_path(vacancy.id, anchor: form.origin)
+      end
     end
-    redirect_to organisation_job_job_applications_path(vacancy.id, anchor: update_tag_params[:origin])
   end
 
-  def withdrawn; end
+  def offer
+    with_valid_form do |form|
+      form.job_applications.find_each { it.update!(form.attributes) }
+      redirect_to organisation_job_job_applications_path(vacancy.id, anchor: form.origin)
+    end
+  end
+
+  def terminal; end
+
+  def pre_interview_checks
+    @reference_requests = @job_application.referees.filter_map(&:reference_request)
+  end
 
   private
 
@@ -64,37 +76,68 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     @job_applications = vacancy.job_applications.not_draft
   end
 
-  def prepare_to_tag(job_applications, origin)
-    @form = Publishers::JobApplication::TagForm.new(job_applications: job_applications)
+  def with_valid_form(validate_status: false)
+    form_class = FORMS.fetch(params[:form_name], Publishers::JobApplication::TagForm)
+    form_params = params
+                    .fetch(ActiveModel::Naming.param_key(form_class), {})
+                    .permit(:origin, :status, :offered_at, :declined_at, :interview_feedback_received, :interview_feedback_received_at, { job_applications: [] })
+    form_params[:job_applications] = vacancy.job_applications.where(id: Array(form_params[:job_applications]).compact_blank)
+    form_params[:validate_status] = validate_status
+
+    @form = form_class.new(form_params)
     if @form.valid?
-      @job_applications = vacancy.job_applications.where(id: @form.job_applications)
-      @origin = origin
-      render "tag"
+      yield @form
     else
-      flash[origin.to_sym] = @form.errors.full_messages
-      redirect_to organisation_job_job_applications_path(vacancy.id, anchor: origin)
+      handle_tag_form_errors(@form)
     end
   end
 
-  require "zip"
-
-  def download_selected(tag_params)
-    @form = Publishers::JobApplication::DownloadForm.new(job_applications: tag_params.fetch(:job_applications).compact_blank)
-    if @form.valid?
-      downloads = JobApplication
-                    .includes([:qualifications, :employments, :training_and_cpds, :referees, { jobseeker: :jobseeker_profile }, { vacancy: %i[organisations publisher_organisation] }])
-                    .where(vacancy: vacancy.id, id: @form.job_applications)
-      stringio = Zip::OutputStream.write_buffer do |zio|
-        downloads.each do |job_application|
-          zio.put_next_entry "#{job_application.first_name}_#{job_application.last_name}.pdf"
-          zio.write JobApplicationPdfGenerator.new(job_application).generate.render
-        end
-      end
-      send_data(stringio.string,
-                filename: "applications_#{vacancy.job_title}.zip",
-                type: "application/zip")
+  def handle_tag_form_errors(form)
+    case form.errors.details
+    in { status: }      then render "tag"
+    in { offered_at: }  then render "offered_date"
+    in { declined_at: } then render "declined_date"
+    in { interview_feedback_received_at: } then render "feedback_date"
     else
-      render "index"
+      flash[form.origin] = form.errors.full_messages
+      redirect_to organisation_job_job_applications_path(vacancy.id, anchor: form.origin)
     end
+  end
+
+  def download_selected(job_applications)
+    zip_data = JobApplicationZipBuilder.new(vacancy:, job_applications:).generate
+
+    send_data(
+      zip_data.string,
+      filename: "applications_#{vacancy.job_title.parameterize}.zip",
+    )
+  end
+
+  def export_selected(selection)
+    zip_data = ExportCandidateDataService.call(selection)
+    send_data(zip_data.string, filename: "applications_offered_#{vacancy.job_title}.zip")
+  end
+
+  def redirect_to_references_and_self_disclosure(job_applications)
+    batch = JobApplicationBatch.create!(vacancy: vacancy)
+    job_applications.each do |ja|
+      batch.batchable_job_applications.create!(job_application: ja)
+    end
+    redirect_to organisation_job_job_application_batch_references_and_self_disclosure_path(vacancy.id, batch.id, Wicked::FIRST_STEP)
+  end
+
+  def render_declined_form(job_applications, origin)
+    @form = Publishers::JobApplication::DeclinedForm.new(job_applications:, origin:, status: "declined")
+    render "declined_date"
+  end
+
+  def render_offered_form(job_applications, origin)
+    @form = Publishers::JobApplication::OfferedForm.new(job_applications:, origin:, status: "offered")
+    render "offered_date"
+  end
+
+  def render_unsuccessful_interview_form(job_applications, origin)
+    @form = Publishers::JobApplication::FeedbackForm.new(job_applications:, origin:, status: "unsuccessful_interview")
+    render "feedback_date"
   end
 end

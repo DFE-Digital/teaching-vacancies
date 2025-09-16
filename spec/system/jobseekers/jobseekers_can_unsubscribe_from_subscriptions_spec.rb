@@ -13,11 +13,8 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
 
     let(:token) { subscription.token }
 
-    it "unsubscribes successfully" do
+    it "unsubscribes successfully and updates the subscription status" do
       expect(page).to have_content(I18n.t("jobseekers.unsubscribe_feedbacks.new.header"))
-    end
-
-    it "updates the subscription status" do
       expect(subscription.reload).to be_discarded
     end
 

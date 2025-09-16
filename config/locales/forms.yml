@@ -31,9 +31,11 @@ en:
     close_account: Close account
     complete_personal_details: Complete personal details
     complete_section: Complete section
+    confirm_and_submit: Confirm and submit
     confirm_deletion: Delete job listing
     confirm_destroy: Yes I am sure - delete this entry
     confirm_rejection: Confirm rejection
+    confirm_email_opt_out: Opt out
     confirm_unsubscribe: Unsubscribe
     continue: Continue
     continue_to_account: Continue to your account
@@ -51,8 +53,9 @@ en:
     delete_photo: Delete photo
     delete_subject: Delete subject
     dismiss: Dismiss
-    download_pdf_application: Download application
+    download_application: Download application
     download_application_form: Download an application form - %{size}
+    download_submitted_application_form: Download submitted application form - %{size}
     download_stats: Download statistics (csv, 0.2KB)
     edit: Edit
     end_listing: Close job listing
@@ -64,6 +67,7 @@ en:
     job_listing: Job listing
     make_changes: Make changes
     one_login_sign_in: Continue to GOV.UK One Login
+    offer_declined: Mark offer as declined
     preview_job_listing: Preview job listing
     profile_update:
       logo: Update organisation logo
@@ -224,8 +228,9 @@ en:
           We'll only use this to tell you about opportunities to take part in user research that is relevant to you.
       publishers_job_listing_how_to_receive_applications_form:
         receive_applications_options:
-          email: You’ll need to upload an application form
-          website: You’ll need to provide a link to the website
+          email: You’ll need to upload an application form.
+          website: You’ll need to provide a link to the website.
+          uploaded_form: You’ll need to upload an application form. You will receive an email when an applicant has uploaded and submitted their completed application form.
       publishers_job_listing_include_additional_documents_form:
         include_additional_documents: For example, a job description or person specification
       publishers_job_listing_pay_package_form:
@@ -502,6 +507,7 @@ en:
         application_email_options:
           other: Another email address
         other_application_email: Email address
+        banner_text: You will receive an email notification when an application is submitted.
       publishers_job_listing_contact_details_form:
         contact_email_options:
           other: Another email address
@@ -565,7 +571,8 @@ en:
       publishers_job_listing_how_to_receive_applications_form:
         receive_applications_options:
           email: By email
-          website: Through a website
+          website: By visiting a different website
+          uploaded_form: By uploading an application form
       publishers_job_listing_important_dates_form:
         publish_on_day_options:
           another_day: Another date
@@ -650,7 +657,6 @@ en:
         school_visits_options:
           false: "No"
           true: "Yes"
-        school_visits_details_html: School visits details (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_visa_sponsorship_form:
         visa_sponsorship_available_options:
           false: "No"
@@ -771,7 +777,7 @@ en:
         report_a_problem: Do you need to report a problem or request support with using Teaching Vacancies?
         user_participation_response: Would you like to participate in our research?
       publishers_job_listing_how_to_receive_applications_form:
-        receive_applications: How do you want to receive applications?
+        receive_applications: How do you want candidates to apply for the role?
       publishers_job_listing_important_dates_form:
         expires_at: Closing date
         expiry_time: Closing time

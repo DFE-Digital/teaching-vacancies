@@ -16,7 +16,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
     new_job_application
   end
 
-  PLAIN_STEPS = %w[personal_details personal_statement referees ask_for_support qualifications training_and_cpds professional_body_memberships following_religion religion_details].freeze
+  PLAIN_STEPS = %w[personal_details referees ask_for_support qualifications training_and_cpds professional_body_memberships following_religion religion_details].freeze
 
   private
 
@@ -42,17 +42,8 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
   end
 
   def attributes_to_copy
-    %i[personal_details
-       professional_status
-       ask_for_support
-       personal_statement
-       catholic_following_religion
-       non_catholic_following_religion
-       catholic_religion_details
-       school_ethos
-       non_catholic_religion_details]
-      .filter_map { |step| form_fields_from_step(step) if relevant_steps.include?(step) }
-      .flatten
+    (relevant_steps - %i[review declarations equal_opportunities])
+      .flat_map { |step| form_fields_from_step(step) }
   end
 
   def copy_associations(associations)
@@ -87,13 +78,10 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
   end
 
   def in_progress_steps
-    if previous_application_was_submitted_before_we_began_validating_gaps_in_work_history?
-      %w[employment_history]
-    elsif !previous_application_has_professional_status_details?
-      %w[professional_status]
-    else
-      []
-    end
+    steps = %w[personal_statement]
+    steps << "employment_history" if previous_application_was_submitted_before_we_began_validating_gaps_in_work_history?
+    steps << "professional_status" unless previous_application_has_professional_status_details?
+    steps
   end
 
   def form_fields_from_step(step)

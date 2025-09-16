@@ -1,7 +1,0 @@
-= tag.div(**html_attributes) do
-  = with_key text: label
-  - if @errors.present?
-    = with_value do
-      - render error_component
-  - else
-    = with_value text: build_text

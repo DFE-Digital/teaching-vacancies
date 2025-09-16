@@ -9,7 +9,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
   after { logout }
 
   scenario "school" do
-    vacancy = create(:vacancy, status: "published", organisations: [school])
+    vacancy = create(:vacancy, organisations: [school])
 
     visit organisation_jobs_with_type_path
 
@@ -20,7 +20,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
   end
 
   context "viewing the lists of jobs on the school page" do
-    let!(:published_vacancy) { create(:vacancy, :published, organisations: [school]) }
+    let!(:published_vacancy) { create(:vacancy, organisations: [school]) }
     let!(:draft_vacancy) { create(:draft_vacancy, organisations: [school]) }
     let!(:pending_vacancy) { create(:vacancy, :future_publish, organisations: [school]) }
     let!(:expired_vacancy) do
@@ -28,7 +28,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
     end
 
     scenario "jobs are split into sections" do
-      create_list(:vacancy, 5, :published, organisations: [school])
+      create_list(:vacancy, 5, organisations: [school])
 
       visit organisation_jobs_with_type_path
 

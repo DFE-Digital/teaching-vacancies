@@ -2,9 +2,9 @@ class SendJobApplicationDataExpiryNotifierJob < ApplicationJob
   queue_as :default
 
   def perform_now
-    return if DisableExpensiveJobs.enabled?
+    return if DisableEmailNotifications.enabled?
 
-    Vacancy.includes(organisations: :publishers).where("DATE(expires_at) = ?", 351.days.ago.to_date).each do |vacancy|
+    PublishedVacancy.includes(organisations: :publishers).where("DATE(expires_at) = ?", 351.days.ago.to_date).each do |vacancy|
       next unless vacancy.job_applications.any?
 
       vacancy.organisation.publishers.each do |publisher|

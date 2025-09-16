@@ -10,7 +10,7 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
   describe "#job_application" do
     context "when jobseeker has a recent job application" do
       let(:old_vacancy) { create(:vacancy) }
-      let!(:recent_job_application) { create(:job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker: jobseeker, vacancy: old_vacancy) }
+      let!(:recent_job_application) { create(:job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker: jobseeker, vacancy: old_vacancy, notify_before_contact_referers: true) }
       let!(:older_job_application) { create(:job_application, :status_submitted, submitted_at: 1.week.ago, jobseeker: jobseeker, vacancy: old_vacancy) }
       let!(:draft_job_application) { create(:job_application, jobseeker: jobseeker, vacancy: old_vacancy) }
 
@@ -23,7 +23,7 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
         let(:attributes_to_copy) do
           %i[first_name last_name previous_names street_address city country postcode phone_number
              national_insurance_number qualified_teacher_status qualified_teacher_status_year qualified_teacher_status_details
-             is_statutory_induction_complete is_support_needed support_needed_details]
+             is_statutory_induction_complete is_support_needed support_needed_details notify_before_contact_referers]
         end
 
         it "copies personal info from the recent job application" do
@@ -39,28 +39,28 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
 
           it "copies completed steps except for declarations and equal opportunities and employment_history and also adds them to imported steps" do
             expect(subject.completed_steps)
-              .to eq(%w[personal_details personal_statement referees ask_for_support qualifications training_and_cpds professional_body_memberships professional_status])
+              .to eq(%w[personal_details referees ask_for_support qualifications training_and_cpds professional_body_memberships professional_status])
             expect(subject.imported_steps)
-              .to eq(%w[personal_details personal_statement referees ask_for_support qualifications training_and_cpds professional_body_memberships professional_status])
+              .to eq(%w[personal_details referees ask_for_support qualifications training_and_cpds professional_body_memberships professional_status])
           end
 
           it "add employment_history to the in progress steps " do
             expect(subject.in_progress_steps)
-              .to eq(%w[employment_history])
+              .to eq(%w[personal_statement employment_history])
           end
         end
 
         context "when the application is from after we added gap validation for employment history section" do
           it "copies completed steps except for declarations and equal opportunities and also adds them to imported steps" do
             expect(subject.completed_steps)
-              .to eq(%w[personal_details personal_statement referees ask_for_support qualifications training_and_cpds professional_body_memberships employment_history professional_status])
+              .to eq(%w[personal_details referees ask_for_support qualifications training_and_cpds professional_body_memberships employment_history professional_status])
             expect(subject.imported_steps)
-              .to eq(%w[personal_details personal_statement referees ask_for_support qualifications training_and_cpds professional_body_memberships employment_history professional_status])
+              .to eq(%w[personal_details referees ask_for_support qualifications training_and_cpds professional_body_memberships employment_history professional_status])
           end
 
-          it "sets in progress steps as empty" do
+          it "does not add employment_history to the in progress steps" do
             expect(subject.in_progress_steps)
-              .to eq(%w[])
+              .to eq(%w[personal_statement])
           end
         end
 

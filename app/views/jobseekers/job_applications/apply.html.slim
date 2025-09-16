@@ -1,75 +1,86 @@
-- content_for :page_title_prefix, job_application_page_title_prefix(review_form, t(".title"))
+- content_for :page_title_prefix, job_application_page_title_prefix(@form, t(".title"))
 
 = job_application_review(@job_application, show_sidebar: false) do |r|
   - r.with_header do
     = render "banner"
 
   - r.with_above do
-    - unless vacancy.listed?
+    - unless vacancy.live?
       = govuk_notification_banner title_text: t("banners.important") do
         p.govuk-body = t(".deadline_passed")
 
     - unless @form.errors.any?
       = render "shared/error_messages", model: @job_application, presenter: ErrorSummaryPresenter.new(@job_application.errors)
 
+  - if vacancy.uploaded_form?
+    p.govuk-body = t(".download_application_form")
+
   h2.govuk-heading-m = t(".heading")
 
   = govuk_task_list do |task_list|
-    - task_list.with_item(title: t("jobseekers.job_applications.build.personal_details.heading"), href: jobseekers_job_application_build_path(job_application, :personal_details),
+    - if vacancy.uploaded_form?
+      - task_list.with_item(title: t("jobseekers.job_applications.build.personal_details.heading"), href: edit_jobseekers_uploaded_job_application_personal_details_path(job_application),
       html_attributes: { id: :personal_details },
-      status: review_section_tag(job_application, :personal_details))
+      status: review_section_tag(@job_application, :personal_details))
 
-    - task_list.with_item(title: t("jobseekers.job_applications.build.professional_status.heading"), href: jobseekers_job_application_build_path(job_application, :professional_status),
-      html_attributes: { id: :professional_status },
-      status: review_section_tag(job_application, :professional_status))
+      - task_list.with_item(title: t("jobseekers.job_applications.build.upload_application_form.heading"), href: edit_jobseekers_uploaded_job_application_upload_application_form_path(@job_application),
+      html_attributes: { id: :upload_application_form },
+      status: review_section_tag(@job_application, :upload_application_form))
+    - else
+      - task_list.with_item(title: t("jobseekers.job_applications.build.personal_details.heading"), href: jobseekers_job_application_build_path(@job_application, :personal_details),
+        html_attributes: { id: :personal_details },
+        status: review_section_tag(@job_application, :personal_details))
 
-    - task_list.with_item(title: t("jobseekers.job_applications.build.qualifications.heading"), href: jobseekers_job_application_build_path(job_application, :qualifications),
-      html_attributes: { id: :qualifications },
-      status: review_section_tag(job_application, :qualifications))
+      - task_list.with_item(title: t("jobseekers.job_applications.build.professional_status.heading"), href: jobseekers_job_application_build_path(@job_application, :professional_status),
+        html_attributes: { id: :professional_status },
+        status: review_section_tag(@job_application, :professional_status))
 
-    - task_list.with_item(title: t("jobseekers.job_applications.build.training_and_cpds.heading"), href: jobseekers_job_application_build_path(job_application, :training_and_cpds),
-      html_attributes: { id: :training_and_cpds },
-      status: review_section_tag(job_application, :training_and_cpds))
+      - task_list.with_item(title: t("jobseekers.job_applications.build.qualifications.heading"), href: jobseekers_job_application_build_path(@job_application, :qualifications),
+        html_attributes: { id: :qualifications },
+        status: review_section_tag(@job_application, :qualifications))
 
-    - task_list.with_item(title: t("jobseekers.job_applications.build.professional_body_memberships.list_heading"), href: jobseekers_job_application_build_path(job_application, :professional_body_memberships),
-      html_attributes: { id: :professional_body_memberships },
-      status: review_section_tag(job_application, :professional_body_memberships))
+      - task_list.with_item(title: t("jobseekers.job_applications.build.training_and_cpds.heading"), href: jobseekers_job_application_build_path(@job_application, :training_and_cpds),
+        html_attributes: { id: :training_and_cpds },
+        status: review_section_tag(@job_application, :training_and_cpds))
 
-    - task_list.with_item(title: t("jobseekers.job_applications.build.employment_history.heading"), href: jobseekers_job_application_build_path(job_application, :employment_history),
-      html_attributes: { id: :employment_history },
-      status: review_section_tag(job_application, :employment_history))
+      - task_list.with_item(title: t("jobseekers.job_applications.build.professional_body_memberships.list_heading"), href: jobseekers_job_application_build_path(@job_application, :professional_body_memberships),
+        html_attributes: { id: :professional_body_memberships },
+        status: review_section_tag(@job_application, :professional_body_memberships))
 
-    - task_list.with_item(title: t("jobseekers.job_applications.build.personal_statement.heading"), href: jobseekers_job_application_build_path(job_application, :personal_statement),
-      html_attributes: { id: :personal_statement },
-      status: review_section_tag(job_application, :personal_statement))
+      - task_list.with_item(title: t("jobseekers.job_applications.build.employment_history.heading"), href: jobseekers_job_application_build_path(@job_application, :employment_history),
+        html_attributes: { id: :employment_history },
+        status: review_section_tag(@job_application, :employment_history))
 
-    - case job_application.vacancy.religion_type
-      - when "catholic"
-        - task_list.with_item(title: t("jobseekers.job_applications.build.catholic.step_title"), href: jobseekers_job_application_build_path(job_application, :catholic),
+      - task_list.with_item(title: t("jobseekers.job_applications.build.personal_statement.heading"), href: jobseekers_job_application_build_path(@job_application, :personal_statement),
+        html_attributes: { id: :personal_statement },
+        status: review_section_tag(@job_application, :personal_statement))
+
+      - if @job_application.vacancy.catholic?
+        - task_list.with_item(title: t("jobseekers.job_applications.build.catholic.step_title"), href: jobseekers_job_application_build_path(@job_application, :catholic),
           html_attributes: { id: :religious_information },
-          status: review_section_tag(job_application, :catholic))
-      - when "other_religion"
-        - task_list.with_item(title: t("jobseekers.job_applications.build.catholic.step_title"), href: jobseekers_job_application_build_path(job_application, :non_catholic),
+          status: review_section_tag(@job_application, :catholic))
+      - elsif @job_application.vacancy.other_religion?
+        - task_list.with_item(title: t("jobseekers.job_applications.build.catholic.step_title"), href: jobseekers_job_application_build_path(@job_application, :non_catholic),
           html_attributes: { id: :religious_information },
-          status: review_section_tag(job_application, :non_catholic))
+          status: review_section_tag(@job_application, :non_catholic))
 
-    - task_list.with_item(title: t("jobseekers.job_applications.build.referees.heading"), href: jobseekers_job_application_build_path(job_application, :referees),
-      html_attributes: { id: :referees },
-      status: review_section_tag(job_application, :referees))
+      - task_list.with_item(title: t("jobseekers.job_applications.build.referees.heading"), href: jobseekers_job_application_build_path(@job_application, :referees),
+        html_attributes: { id: :referees },
+        status: review_section_tag(@job_application, :referees))
 
-    - if jobseeker_signed_in?
-      - task_list.with_item(title: t("jobseekers.job_applications.build.equal_opportunities.heading"), href: jobseekers_job_application_build_path(job_application, :equal_opportunities),
-        html_attributes: { id: :equal_opportunities },
-        status: review_section_tag(job_application, :equal_opportunities))
+      - if current_jobseeker.present?
+        - task_list.with_item(title: t("jobseekers.job_applications.build.equal_opportunities.heading"), href: jobseekers_job_application_build_path(@job_application, :equal_opportunities),
+          html_attributes: { id: :equal_opportunities },
+          status: review_section_tag(@job_application, :equal_opportunities))
 
-    - task_list.with_item(title: t("jobseekers.job_applications.build.ask_for_support.heading"), href: jobseekers_job_application_build_path(job_application, :ask_for_support),
-      classes: "ask_for_support",
-      html_attributes: { id: :ask_for_support },
-      status: review_section_tag(job_application, :ask_for_support))
+      - task_list.with_item(title: t("jobseekers.job_applications.build.ask_for_support.heading"), href: jobseekers_job_application_build_path(@job_application, :ask_for_support),
+        classes: "ask_for_support",
+        html_attributes: { id: :ask_for_support },
+        status: review_section_tag(@job_application, :ask_for_support))
 
-    - task_list.with_item(title: t("jobseekers.job_applications.build.declarations.heading"), href: jobseekers_job_application_build_path(job_application, :declarations),
-      html_attributes: { id: :declarations },
-      status: review_section_tag(job_application, :declarations))
+      - task_list.with_item(title: t("jobseekers.job_applications.build.declarations.heading"), href: jobseekers_job_application_build_path(@job_application, :declarations),
+        html_attributes: { id: :declarations },
+        status: review_section_tag(@job_application, :declarations))
 
   h2.govuk-heading-m = t(".review_and_submit")
 
@@ -77,8 +88,8 @@
 
   - r.with_below do
     - unless @job_application.deadline_passed?
-      = form_for @form, url: jobseekers_job_application_pre_submit_path(job_application), method: :post do |f|
+      = form_for @form, url: jobseekers_job_application_pre_submit_path(@job_application), method: :post do |f|
         = f.govuk_error_summary
 
-        - if vacancy.listed?
+        - if vacancy.live?
           = f.govuk_submit t(".review_application")

@@ -1,0 +1,76 @@
+name: Restore database from Azure storage
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment to restore
+        required: true
+        default: development
+        type: choice
+        options:
+          - qa
+          - staging
+          - production
+      confirm-production:
+        description: Must be set to true if restoring production
+        required: true
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+      backup-file:
+        description: Name of the backup file in Azure storage. e.g. tv_prod_2024-08-09.sql.gz. The default value is today's scheduled backup.
+        type: string
+        required: false
+
+env:
+  SERVICE_NAME: teaching-vacancies
+  SERVICE_SHORT: tv
+  TF_VARS_PATH: terraform/workspace-variables
+
+jobs:
+  restore:
+    name: Restore AKS Database
+    if: ${{ inputs.environment != 'production' || (inputs.environment == 'production' && inputs.confirm-production == 'true' )  }}
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    concurrency: deploy_${{ inputs.environment }}
+    permissions:
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v5
+        name: Checkout
+
+      - name: Set environment variables
+        run: |
+          source global_config/${{ inputs.environment }}.sh
+          tf_vars_file=${{ env.TF_VARS_PATH }}/${{ inputs.environment }}.tfvars.json
+          echo "CLUSTER=$(jq -r '.cluster' ${tf_vars_file})" >> $GITHUB_ENV
+          echo "NAMESPACE=$(jq -r '.namespace' ${tf_vars_file})" >> $GITHUB_ENV
+          echo "RESOURCE_GROUP_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg" >> $GITHUB_ENV
+          echo "STORAGE_ACCOUNT_NAME=${AZURE_RESOURCE_PREFIX}${SERVICE_SHORT}dbbkp${CONFIG_SHORT}sa" >> $GITHUB_ENV
+          echo "DB_SERVER=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-pg" >> $GITHUB_ENV
+          TODAY=$(date +"%F")
+          echo "BACKUP_FILE=${SERVICE_SHORT}_${CONFIG_SHORT}_${TODAY}.sql" >> $GITHUB_ENV
+          if [ "${{ inputs.backup-file }}" != "" ]; then
+            BACKUP_FILE=${{ inputs.backup-file }}
+          else
+            BACKUP_FILE=${SERVICE_SHORT}_${CONFIG_SHORT}_${TODAY}.sql.gz
+          fi
+          echo "BACKUP_FILE=$BACKUP_FILE" >> $GITHUB_ENV
+
+      - name: Restore ${{ inputs.environment }} postgres
+        uses: DFE-Digital/github-actions/restore-postgres-backup@master
+        with:
+          namespace: ${{ env.NAMESPACE }}
+          storage-account: ${{ env.STORAGE_ACCOUNT_NAME }}
+          resource-group: ${{ env.RESOURCE_GROUP_NAME }}
+          app-name: ${{ env.SERVICE_NAME }}-${{ inputs.environment }}
+          cluster: ${{ env.CLUSTER }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          backup-file: ${{ env.BACKUP_FILE }}

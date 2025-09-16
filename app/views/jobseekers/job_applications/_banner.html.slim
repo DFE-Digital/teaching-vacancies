@@ -15,9 +15,15 @@
 
   .govuk-button-group class="govuk-!-margin-bottom-3 govuk-!-margin-top-3 govuk-!-display-none-print"
     - if job_application.draft?
-      = govuk_button_link_to t("buttons.delete_application"), jobseekers_job_application_confirm_destroy_path(job_application), class: "govuk-button--warning govuk-!-margin-bottom-4"
-    - if job_application.status.in?(%w[reviewed shortlisted submitted])
-      = govuk_button_link_to t("buttons.withdraw_application"), jobseekers_job_application_confirm_withdraw_path(job_application), class: "govuk-button--warning govuk-!-margin-bottom-4"
+      = govuk_button_link_to t("buttons.delete_application"), jobseekers_job_application_confirm_destroy_path(job_application), class: "govuk-button--warning govuk-!-margin-bottom-4 delete-application"
+
+      - if vacancy.application_form.present?
+        = govuk_button_link_to t("buttons.download_application_form", size: number_to_human_size(vacancy.application_form.byte_size)), job_document_path(vacancy, vacancy.application_form.id), class: "vacancy-form"
+
+    - if job_application.active_status?
+      = govuk_button_link_to t("buttons.withdraw_application"), jobseekers_job_application_confirm_withdraw_path(job_application), class: "govuk-button--warning govuk-!-margin-bottom-4 withdraw-application"
+
     - unless job_application.draft?
-      = govuk_button_link_to t("buttons.download_pdf_application"), "#", class: "govuk-button--secondary js-action print-application", "data-controller": "utils", "data-action": "click->utils#print"
+      = govuk_button_link_to t("buttons.download_application"), jobseekers_job_application_download_path(job_application), class: "govuk-button--secondary print-application"
+
     = open_in_new_tab_link_to "View this listing", job_path(job_application.vacancy), class: "govuk-!-margin-bottom-0 view-listing-link"

@@ -116,7 +116,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
       end
 
       context "when the vacancy is published" do
-        let(:vacancy) { build_stubbed(:vacancy, :published, job_roles: ["teacher"]) }
+        let(:vacancy) { build_stubbed(:vacancy, job_roles: ["teacher"]) }
 
         context "when the vacancy allows job applications" do
           before { allow(vacancy).to receive(:enable_job_applications).and_return(true) }
@@ -150,14 +150,6 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
 
         it "has the expected steps" do
           expect(subject.steps).to include(:how_to_receive_applications)
-        end
-
-        context "when applications are received by email" do
-          before { allow(vacancy).to receive(:receive_applications).and_return("email") }
-
-          it "has the expected steps" do
-            expect(subject.steps).to include(:application_form)
-          end
         end
 
         context "when applications are received on a website" do

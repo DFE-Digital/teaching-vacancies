@@ -1,13 +1,7 @@
 Sentry.init do |config|
-  filter = ActiveSupport::ParameterFilter.new(Rails.application.config.filter_parameters - %i[id])
+  filter = ActiveSupport::ParameterFilter.new(Rails.application.config.filter_parameters - %i[id name])
   config.before_send = lambda do |event, _hint|
-    # Only filter user-provided data, not system metadata
-    if event.request
-      event.request.data = filter.filter(event.request.data)
-    end
-
-    # Don't filter server_name and other metadata
-    event
+    filter.filter(event.to_hash)
   end
 
   config.breadcrumbs_logger = %i[active_support_logger http_logger]

@@ -1,5 +1,6 @@
 class Publishers::Vacancies::CopyController < Publishers::Vacancies::BaseController
   include Publishers::VacancyCopy
+
   def create
     new_vacancy = copy_vacancy(vacancy)
 

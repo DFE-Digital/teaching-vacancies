@@ -80,3 +80,12 @@ guard :rubocop, cli: ["-A"] do
   watch(%r{.+\.rb$})
   watch(%r{(?:.+/)?\.rubocop(?:_todo)?\.yml$}) { |m| File.dirname(m[0]) }
 end
+
+# Guard-SlimLint supports a lot options with default values:
+# all_on_start: true        # Check all files at Guard startup. default: true
+# slim_dires: ['app/views'] # Check Directories. default: 'app/views' or '.'
+# cli: '--no-color' # Additional command line options to slim-lint.
+guard :slim_lint do
+  watch(%r{.+\.html.*\.slim$})
+  watch(%r{(?:.+/)?\.slim-lint\.yml$}) { |m| File.dirname(m[0]) }
+end

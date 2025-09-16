@@ -2,11 +2,10 @@ require "rails_helper"
 
 RSpec.describe "End job listing early" do
   let(:organisation) { create(:school) }
-  let(:vacancy) { create(:vacancy, :published, expires_at: 1.week.from_now, organisations: [organisation]) }
+  let(:vacancy) { create(:vacancy, expires_at: 1.week.from_now, organisations: [organisation]) }
   let(:publisher) { create(:publisher) }
 
   before do
-    allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false)
     allow_any_instance_of(Publishers::BaseController).to receive(:current_organisation).and_return(organisation)
     sign_in(publisher, scope: :publisher)
   end
@@ -15,7 +14,7 @@ RSpec.describe "End job listing early" do
 
   describe "GET #show" do
     context "when the vacancy does not belong to the current organisation" do
-      let(:vacancy) { create(:vacancy, :published, organisations: [build(:school)]) }
+      let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
 
       it "returns not_found" do
         get organisation_job_end_listing_path(vacancy.id)

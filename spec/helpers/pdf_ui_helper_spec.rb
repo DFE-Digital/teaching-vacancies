@@ -8,6 +8,7 @@ RSpec.describe PdfUiHelper do
     Class.new do
       include Prawn::View
       include PdfUiHelper
+
       def document
         @document ||= Prawn::Document.new(page_size: "A4", margin: 1.cm)
       end

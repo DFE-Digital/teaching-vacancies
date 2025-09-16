@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_06_150046) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_28_110645) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -58,6 +58,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_06_150046) do
     t.integer "status", default: 0
     t.index ["run_on"], name: "index_alert_runs_on_run_on"
     t.index ["subscription_id"], name: "index_alert_runs_on_subscription_id"
+  end
+
+  create_table "batchable_job_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "job_application_batch_id", null: false
+    t.uuid "job_application_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_application_batch_id"], name: "index_batchable_job_applications_on_job_application_batch_id"
+    t.index ["job_application_id"], name: "index_batchable_job_applications_on_job_application_id"
   end
 
   create_table "emergency_login_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -190,6 +199,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_06_150046) do
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
+  create_table "job_application_batches", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "vacancy_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["vacancy_id"], name: "index_job_application_batches_on_vacancy_id"
+  end
+
   create_table "job_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "status"
     t.datetime "created_at", null: false
@@ -259,6 +275,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_06_150046) do
     t.boolean "has_close_relationships"
     t.boolean "has_right_to_work_in_uk"
     t.boolean "has_safeguarding_issue"
+    t.boolean "notify_before_contact_referers"
+    t.string "type"
+    t.datetime "offered_at"
+    t.datetime "declined_at"
+    t.datetime "unsuccessful_interview_at"
+    t.datetime "interview_feedback_received_at"
+    t.boolean "interview_feedback_received"
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
@@ -287,6 +310,51 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_06_150046) do
     t.datetime "updated_at", null: false
     t.index ["area"], name: "index_job_preferences_locations_on_area", using: :gist
     t.index ["job_preferences_id"], name: "index_job_preferences_locations_on_job_preferences_id"
+  end
+
+  create_table "job_references", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.boolean "complete", default: false, null: false
+    t.boolean "can_give_reference"
+    t.boolean "is_reference_sharable"
+    t.text "how_do_you_know_the_candidate_ciphertext"
+    t.string "employment_start_date_ciphertext"
+    t.boolean "currently_employed"
+    t.text "reason_for_leaving_ciphertext"
+    t.boolean "would_reemploy_current"
+    t.text "would_reemploy_current_reason_ciphertext"
+    t.boolean "would_reemploy_any"
+    t.text "would_reemploy_any_reason_ciphertext"
+    t.string "punctuality_ciphertext"
+    t.string "working_relationships_ciphertext"
+    t.string "customer_care_ciphertext"
+    t.string "adapt_to_change_ciphertext"
+    t.string "deal_with_conflict_ciphertext"
+    t.string "prioritise_workload_ciphertext"
+    t.string "team_working_ciphertext"
+    t.string "communication_ciphertext"
+    t.string "problem_solving_ciphertext"
+    t.string "general_attitude_ciphertext"
+    t.string "technical_competence_ciphertext"
+    t.string "leadership_ciphertext"
+    t.string "name"
+    t.string "job_title"
+    t.string "phone_number"
+    t.string "email"
+    t.string "organisation"
+    t.string "under_investigation_ciphertext"
+    t.string "warnings_ciphertext"
+    t.string "allegations_ciphertext"
+    t.string "not_fit_to_practice_ciphertext"
+    t.string "able_to_undertake_role_ciphertext"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "under_investigation_details_ciphertext"
+    t.string "warning_details_ciphertext"
+    t.string "unable_to_undertake_reason_ciphertext"
+    t.string "employment_end_date_ciphertext"
+    t.string "not_provided_reason"
+    t.uuid "reference_request_id", null: false
+    t.index ["reference_request_id"], name: "index_job_references_on_reference_request_id", unique: true
   end
 
   create_table "jobseeker_profile_excluded_organisations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -524,6 +592,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_06_150046) do
     t.datetime "dismissed_new_features_page_at", precision: nil
     t.datetime "unsubscribed_from_expired_vacancy_prompt_at", precision: nil
     t.boolean "acknowledged_candidate_profiles_interstitial", default: false, null: false
+    t.boolean "email_opt_out", default: false, null: false
     t.index ["email"], name: "index_publishers_on_email"
     t.index ["oid"], name: "index_publishers_on_oid", unique: true
   end
@@ -557,6 +626,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_06_150046) do
     t.index ["jobseeker_profile_id"], name: "index_qualifications_on_jobseeker_profile_id"
   end
 
+  create_table "reference_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "reference_id", null: false
+    t.uuid "token", null: false
+    t.integer "status", null: false
+    t.boolean "marked_as_complete", default: false, null: false
+    t.string "email", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reference_id"], name: "index_reference_requests_on_reference_id", unique: true
+  end
+
   create_table "references", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "relationship", default: "", null: false
     t.uuid "job_application_id", null: false
@@ -588,6 +668,43 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_06_150046) do
     t.datetime "updated_at"
     t.index ["school_group_id", "school_id"], name: "index_school_group_memberships_on_school_group_id_and_school_id"
     t.index ["school_id", "school_group_id"], name: "index_school_group_memberships_on_school_id_and_school_group_id", unique: true
+  end
+
+  create_table "self_disclosure_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "job_application_id", null: false
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_application_id"], name: "index_self_disclosure_requests_on_job_application_id", unique: true
+  end
+
+  create_table "self_disclosures", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name_ciphertext"
+    t.string "previous_names_ciphertext"
+    t.string "address_line_1_ciphertext"
+    t.string "address_line_2_ciphertext"
+    t.string "city_ciphertext"
+    t.string "country_ciphertext"
+    t.string "postcode_ciphertext"
+    t.string "phone_number_ciphertext"
+    t.string "date_of_birth_ciphertext"
+    t.string "has_unspent_convictions_ciphertext"
+    t.string "has_spent_convictions_ciphertext"
+    t.string "is_barred_ciphertext"
+    t.string "has_been_referred_ciphertext"
+    t.string "is_known_to_children_services_ciphertext"
+    t.string "has_been_dismissed_ciphertext"
+    t.string "has_been_disciplined_ciphertext"
+    t.string "has_been_disciplined_by_regulatory_body_ciphertext"
+    t.string "agreed_for_processing_ciphertext"
+    t.string "agreed_for_criminal_record_ciphertext"
+    t.string "agreed_for_organisation_update_ciphertext"
+    t.string "agreed_for_information_sharing_ciphertext"
+    t.uuid "self_disclosure_request_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "true_and_complete_ciphertext"
+    t.index ["self_disclosure_request_id"], name: "index_self_disclosures_on_self_disclosure_request_id", unique: true
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -642,7 +759,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_06_150046) do
     t.text "benefits_details"
     t.date "starts_on"
     t.string "contact_email"
-    t.integer "status", null: false
     t.date "publish_on"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -716,7 +832,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_06_150046) do
     t.string "type", null: false
     t.index ["discarded_at"], name: "index_vacancies_on_discarded_at"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
-    t.index ["external_reference", "publisher_ats_api_client_id"], name: "index_vacancies_on_external_ref_and_publisher_ats_client_id", unique: true
+    t.index ["external_reference", "publisher_ats_api_client_id"], name: "index_kept_unique_vacancies_on_external_ref_and_client_id", unique: true, where: "(discarded_at IS NULL)"
     t.index ["external_source", "external_reference"], name: "index_vacancies_on_external_source_and_external_reference"
     t.index ["geolocation", "expires_at", "publish_on"], name: "index_vacancies_on_geolocation_and_expires_at_and_publish_on", using: :gist
     t.index ["publish_on"], name: "index_vacancies_on_publish_on"
@@ -725,7 +841,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_06_150046) do
     t.index ["publisher_organisation_id"], name: "index_vacancies_on_publisher_organisation_id"
     t.index ["searchable_content"], name: "index_vacancies_on_searchable_content", using: :gin
     t.index ["slug"], name: "index_vacancies_on_slug"
-    t.index ["status"], name: "index_vacancies_on_status"
   end
 
   create_table "vacancy_analytics", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -751,6 +866,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_06_150046) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "alert_runs", "subscriptions"
+  add_foreign_key "batchable_job_applications", "job_application_batches"
+  add_foreign_key "batchable_job_applications", "job_applications"
   add_foreign_key "employments", "job_applications"
   add_foreign_key "employments", "jobseeker_profiles"
   add_foreign_key "equal_opportunities_reports", "vacancies"
@@ -759,10 +876,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_06_150046) do
   add_foreign_key "feedbacks", "publishers"
   add_foreign_key "feedbacks", "subscriptions"
   add_foreign_key "feedbacks", "vacancies"
+  add_foreign_key "job_application_batches", "vacancies"
   add_foreign_key "job_applications", "jobseekers"
   add_foreign_key "job_applications", "vacancies"
   add_foreign_key "job_preferences", "jobseeker_profiles"
   add_foreign_key "job_preferences_locations", "job_preferences", column: "job_preferences_id"
+  add_foreign_key "job_references", "reference_requests"
   add_foreign_key "jobseeker_profile_excluded_organisations", "jobseeker_profiles"
   add_foreign_key "jobseeker_profile_excluded_organisations", "organisations"
   add_foreign_key "jobseeker_profiles", "jobseekers"
@@ -786,11 +905,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_06_150046) do
   add_foreign_key "qualification_results", "qualifications"
   add_foreign_key "qualifications", "job_applications"
   add_foreign_key "qualifications", "jobseeker_profiles"
+  add_foreign_key "reference_requests", "references"
   add_foreign_key "references", "job_applications"
   add_foreign_key "saved_jobs", "jobseekers"
   add_foreign_key "saved_jobs", "vacancies"
   add_foreign_key "school_group_memberships", "organisations", column: "school_group_id"
   add_foreign_key "school_group_memberships", "organisations", column: "school_id"
+  add_foreign_key "self_disclosure_requests", "job_applications"
+  add_foreign_key "self_disclosures", "self_disclosure_requests"
   add_foreign_key "training_and_cpds", "job_applications"
   add_foreign_key "training_and_cpds", "jobseeker_profiles"
   add_foreign_key "vacancies", "organisations", column: "publisher_organisation_id"

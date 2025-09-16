@@ -1,8 +1,8 @@
-= tabs do |tabs|
+= tabs(classes: %w[job-applications-nav]) do |tabs|
   - tabs.with_navigation_item text: t("buttons.job_listing"), link: organisation_job_path(vacancy.id), active: controller_name == "vacancies"
-  - if vacancy.can_receive_job_applications? && !current_organisation.local_authority?
+  - if vacancy.can_receive_job_applications? || vacancy.uploaded_form?
     - tabs.with_navigation_item text: t("tabs.applications.hide_count"), link: organisation_job_job_applications_path(vacancy.id), active: controller_name == "job_applications"
   - if vacancy.published?
     - tabs.with_navigation_item text: t("tabs.statistics"), link: organisation_job_statistics_path(vacancy.id), active: controller_name == "statistics"
-  - if vacancy.listed? || vacancy.expired?
+  - if vacancy.live? || vacancy.expired?
     = tabs.with_navigation_item text: t("tabs.activity_log"), link: organisation_job_activity_log_path(vacancy.id), active: controller_name == "activity_log"

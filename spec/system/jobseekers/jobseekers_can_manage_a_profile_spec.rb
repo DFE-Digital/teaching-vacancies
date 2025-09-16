@@ -2,9 +2,17 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can manage their profile" do
   let(:jobseeker) { create(:jobseeker) }
+  let(:geocoding_stub) { instance_double(Geocoding) }
+  let(:bexleyheath) { %w[0.14606549011864176 51.457814649098104] }
+  let(:organisation) do
+    create(:school,
+           publishers: [build(:publisher)],
+           geopoint: RGeo::Geographic.spherical_factory(srid: 4326).point(*bexleyheath))
+  end
+  let(:publisher) { organisation.publishers.first }
 
   before do
-    allow(Geocoding).to receive(:new).with(anything).and_call_original
+    allow(Geocoding).to receive(:new).with(anything).and_return(geocoding_stub)
     allow(Geocoding).to receive(:new).with("San Francisco").and_return(instance_double(Geocoding, uk_coordinates?: false))
   end
 
@@ -12,17 +20,6 @@ RSpec.describe "Jobseekers can manage their profile" do
     before { login_as(jobseeker, scope: :jobseeker) }
 
     after { logout }
-
-    it "allows the jobseeker to navigate to their profile" do
-      visit jobseeker_root_path
-
-      within "#navigation" do
-        expect(page).to have_content("Your profile")
-        click_on "Your profile"
-      end
-
-      expect(page).to have_current_path(jobseekers_profile_path)
-    end
 
     describe "changing personal details" do
       context "when filling in the profile for the first time" do
@@ -33,6 +30,13 @@ RSpec.describe "Jobseekers can manage their profile" do
         before { visit jobseekers_profile_path }
 
         it "allows the jobseeker to fill in their personal details" do
+          within "#navigation" do
+            expect(page).to have_content("Your profile")
+            click_on "Your profile"
+          end
+
+          expect(page).to have_current_path(jobseekers_profile_path)
+
           click_link("Add personal details")
           fill_in "personal_details_form[first_name]", with: first_name
           fill_in "personal_details_form[last_name]", with: last_name
@@ -99,6 +103,12 @@ RSpec.describe "Jobseekers can manage their profile" do
           expect(page).to have_content("Do you want to provide a phone number?No")
           expect(page).not_to have_content(old_phone_number)
           expect(page).to have_content("No, I already have the right to work in the UK")
+        end
+
+        it "can be previewed" do
+          within "#top_links" do
+            click_on "Preview profile"
+          end
         end
       end
     end
@@ -247,16 +257,6 @@ RSpec.describe "Jobseekers can manage their profile" do
                                     ["Enter the date you started at this school or organisation", "#jobseekers-profile-employment-form-started-on-field-error"])
             end
           end
-
-          it "makes reason mandatory when non current" do
-            click_on I18n.t("buttons.save_and_continue")
-
-            expect(page).to have_css("ul.govuk-list.govuk-error-summary__list")
-
-            within "ul.govuk-list.govuk-error-summary__list" do
-              expect(page).to have_link("Enter your reason for leaving this role", href: "#jobseekers-profile-employment-form-reason-for-leaving-field-error")
-            end
-          end
         end
 
         it "associates an 'employment' with their jobseeker profile", :js do
@@ -264,14 +264,11 @@ RSpec.describe "Jobseekers can manage their profile" do
         end
 
         context "when the form to add a new employment history entry is submitted" do
-          it "redirects to the review page" do
+          it "displays every employment history entry on the review page" do
             add_jobseeker_profile_employment
 
             expect(current_path).to eq(review_jobseekers_profile_work_history_index_path)
-          end
 
-          it "displays every employment history entry on the review page" do
-            add_jobseeker_profile_employment
             click_link "Return to profile"
 
             profile.employments.each do |employment|
@@ -342,12 +339,10 @@ RSpec.describe "Jobseekers can manage their profile" do
           visit edit_jobseekers_profile_work_history_path(employment)
         end
 
-        it "shows the old data" do
+        it "successfully changes the employment record" do
           expect(page).to have_content(employment.main_duties)
           expect(page).to have_content(employment.reason_for_leaving)
-        end
 
-        it "successfully changes the employment record" do
           fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.organisation"), with: new_employment.organisation
           fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.job_title"), with: new_employment.job_title
           fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.reason_for_leaving"), with: new_employment.reason_for_leaving
@@ -385,7 +380,7 @@ RSpec.describe "Jobseekers can manage their profile" do
 
         before { visit jobseekers_profile_path }
 
-        it "prefills the form with the jobseeker's work history" do
+        it "prefills the form with the jobseeker's work history and qualifications" do
           previous_application.employments.each do |employment|
             if employment.job?
               expect(page).to have_content(employment.organisation)
@@ -393,17 +388,7 @@ RSpec.describe "Jobseekers can manage their profile" do
               expect(page).to have_content("You have a gap in your work history")
             end
           end
-        end
-      end
-    end
 
-    describe "qualifications" do
-      context "if the jobseeker has a previous job application" do
-        let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, create_details: true) }
-
-        before { visit jobseekers_profile_path }
-
-        it "prefills the form with the jobseeker's qualifications" do
           previous_application.qualifications.each do |qualification|
             expect(page).to have_content(qualification.name)
           end
@@ -412,38 +397,25 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
   end
 
-  describe "toggling on and off" do
-    let(:publisher) { organisation.publishers.first }
-
-    let(:organisation) do
-      create(:school,
-             publishers: [build(:publisher)],
-             geopoint: RGeo::Geographic.spherical_factory(srid: 4326).point(*bexleyheath))
+  context "if the profile does not exist" do
+    it "does not appear in search results" do
+      run_with_publisher(publisher) do
+        visit publishers_jobseeker_profiles_path
+        expect(page).not_to have_css(".search-results__item")
+      end
     end
+  end
 
-    let(:bexleyheath) { %w[0.14606549011864176 51.457814649098104] }
-
+  describe "toggling on and off" do
     let!(:profile) { create(:jobseeker_profile, jobseeker:, job_preferences:, active: false) }
 
-    let(:job_preferences) do
-      build(:job_preferences,
-            jobseeker_profile: nil,
-            locations: build_list(:job_preferences_location, 1, radius: 200, job_preferences: nil))
-    end
+    let(:job_preferences) { build(:job_preferences) }
 
+    # beware - bexleyheath here is long/lat which is DB order, however Geocoder API
+    # returns lat/long so we have to reverse the order for the stub call
     before do
-      allow(Geocoding).to receive(:test_coordinates).and_return(bexleyheath)
-    end
-
-    context "if the profile does not exist" do
-      let!(:profile) { nil }
-
-      it "does not appear in search results" do
-        run_with_publisher(publisher) do
-          visit publishers_jobseeker_profiles_path
-          expect(page).not_to have_css(".search-results__item")
-        end
-      end
+      allow(geocoding_stub).to receive(:coordinates).and_return(bexleyheath.reverse)
+      create(:job_preferences_location, radius: 200, job_preferences: job_preferences)
     end
 
     context "if the profile is inactive" do
@@ -459,7 +431,9 @@ RSpec.describe "Jobseekers can manage their profile" do
 
     context "when profile contains minimum information required for publishing" do
       let!(:profile) do
-        create(:jobseeker_profile, :with_personal_details, :with_job_preferences,
+        create(:jobseeker_profile, :with_personal_details,
+               :with_qualifications,
+               employments: build_list(:employment, 1, :current_role, job_application: nil),
                job_preferences:,
                jobseeker:,
                active: false)
@@ -542,7 +516,10 @@ RSpec.describe "Jobseekers can manage their profile" do
   end
 
   describe "hiding profile from specific organisations" do
-    let(:bexleyheath) { ["0.14606549011864176", "51.457814649098104"] }
+    before do
+      allow(geocoding_stub).to receive(:coordinates).and_return(bexleyheath.reverse)
+      create(:job_preferences_location, radius: 200, job_preferences: job_preferences)
+    end
 
     let(:bexleyheath_geopoint) do
       RGeo::Geographic.spherical_factory(srid: 4326).point(*bexleyheath)
@@ -558,6 +535,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     let!(:forbidden_organisation) do
       create(:school,
              name: "Forbidden School",
+             postcode: "FB1 1FB",
              publishers: [forbidden_publisher],
              geopoint: bexleyheath_geopoint)
     end
@@ -567,16 +545,9 @@ RSpec.describe "Jobseekers can manage their profile" do
 
     let!(:profile) { create(:jobseeker_profile, :with_personal_details, jobseeker:, job_preferences:, active: true) }
 
-    let(:job_preferences) do
-      build(:job_preferences,
-            locations: build_list(:job_preferences_location, 1, radius: 200))
-    end
+    let(:job_preferences) { build(:job_preferences) }
 
-    before do
-      allow(Geocoding).to receive(:test_coordinates).and_return(bexleyheath)
-    end
-
-    it "allows the jobseeker to hide themselves from specific schools" do
+    it "allows the jobseeker to hide themselves from specific schools", :js do
       run_with_publisher(permitted_publisher) do
         visit publishers_jobseeker_profiles_path
         expect(page).to have_content(profile.full_name)
@@ -594,72 +565,12 @@ RSpec.describe "Jobseekers can manage their profile" do
         click_on I18n.t("buttons.save_and_continue")
 
         field = find_field("Name of school or trust")
+        field.fill_in(with: forbidden_organisation.name[..5])
+        # check that search dropdown works correctly
+        expect(page).to have_content "Forbidden School (FB1 1FB)"
         field.fill_in(with: forbidden_organisation.name)
         click_on I18n.t("buttons.save_and_continue")
-      end
 
-      run_with_publisher(forbidden_publisher) do
-        visit publishers_jobseeker_profiles_path
-        expect(page).not_to have_content(profile.full_name)
-      end
-
-      run_with_publisher(permitted_publisher) do
-        visit publishers_jobseeker_profiles_path
-        expect(page).to have_content(profile.full_name)
-      end
-
-      run_with_jobseeker(jobseeker) do
-        visit jobseekers_profile_path
-        click_on I18n.t("jobseekers.profiles.hide_profile.summary.add_a_school")
-
-        field = find_field("Name of school or trust")
-        field.fill_in(with: permitted_organisation.name)
-        click_on I18n.t("buttons.save_and_continue")
-      end
-
-      run_with_publisher(permitted_publisher) do
-        visit publishers_jobseeker_profiles_path
-        expect(page).not_to have_content(profile.full_name)
-      end
-
-      run_with_publisher(forbidden_publisher) do
-        visit publishers_jobseeker_profiles_path
-        expect(page).not_to have_content(profile.full_name)
-
-        visit publishers_jobseeker_profile_path(profile)
-        expect(page).to have_content("Page not found")
-      end
-
-      run_with_jobseeker(jobseeker) do
-        visit schools_jobseekers_profile_hide_profile_path
-        within page.find(".govuk-summary-list__key", text: permitted_organisation.name).find(:xpath, "..") do
-          click_on I18n.t("buttons.delete")
-        end
-        click_button I18n.t("jobseekers.profiles.hide_profile.delete.delete_school")
-      end
-
-      run_with_publisher(permitted_publisher) do
-        visit publishers_jobseeker_profiles_path
-        expect(page).to have_content(profile.full_name)
-      end
-
-      run_with_publisher(forbidden_publisher) do
-        visit publishers_jobseeker_profiles_path
-        expect(page).not_to have_content(profile.full_name)
-      end
-    end
-
-    context "if the jobseeker is already hidden from the school" do
-      before do
-        profile.excluded_organisations << forbidden_organisation
-        login_as(jobseeker, scope: :jobseeker)
-      end
-
-      after { logout }
-
-      it "does not allow the jobseeker to hide themselves from the school again" do
-        visit jobseekers_profile_path
-        click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
         choose "Yes", visible: false
         click_on I18n.t("buttons.save_and_continue")
 
@@ -668,6 +579,34 @@ RSpec.describe "Jobseekers can manage their profile" do
         click_on I18n.t("buttons.save_and_continue")
 
         expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.schools.already_hidden", name: forbidden_organisation.name))
+
+        # make sure review page loads ok
+        choose "No", visible: false
+        click_on I18n.t("buttons.save_and_continue")
+        expect(page).to have_content forbidden_organisation.name
+      end
+
+      run_with_publisher(forbidden_publisher) do
+        visit publishers_jobseeker_profiles_path
+        expect(page).not_to have_content(profile.full_name)
+      end
+
+      run_with_publisher(permitted_publisher) do
+        visit publishers_jobseeker_profiles_path
+        expect(page).to have_content(profile.full_name)
+      end
+
+      run_with_jobseeker(jobseeker) do
+        visit schools_jobseekers_profile_hide_profile_path
+        within page.find(".govuk-summary-list__key", text: forbidden_organisation.name).find(:xpath, "..") do
+          click_on I18n.t("buttons.delete")
+        end
+        click_button I18n.t("jobseekers.profiles.hide_profile.delete.delete_school")
+      end
+
+      run_with_publisher(forbidden_publisher) do
+        visit publishers_jobseeker_profiles_path
+        expect(page).to have_content(profile.full_name)
       end
     end
 
@@ -773,6 +712,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     before do
       login_as(jobseeker, scope: :jobseeker)
       visit jobseekers_profile_path
+      allow(geocoding_stub).to receive_messages(uk_coordinates?: true, coordinates: Geocoder::DEFAULT_STUB_COORDINATES)
     end
 
     after { logout }
@@ -788,7 +728,6 @@ RSpec.describe "Jobseekers can manage their profile" do
       expect(current_path).to eq(jobseekers_job_preferences_step_path(:roles))
       expect(page).to have_css("h2", text: "There is a problem")
 
-      first("label", text: "Teacher", exact_text: true).sibling("input").set(true)
       check "Head of year or phase"
       check "Assistant headteacher"
       click_on I18n.t("buttons.save_and_continue")
@@ -906,22 +845,24 @@ RSpec.describe "Jobseekers can manage their profile" do
       click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(jobseekers_job_preferences_step_path(:review))
       expect(page).to have_css("h1", text: "Job preferences")
-      expect(page).to have_css("dd", text: "TeacherHead of year or phaseAssistant headteacher")
+      expect(page).to have_css("dd", text: "Head of year or phase, Assistant headteacher")
       expect(page).to have_css("dd", text: "Secondary")
       expect(page).to have_css("dd", text: "Key stage 3 (ages 11 to 14), Key stage 4 (ages 14 to 16)")
       expect(page).to have_css("dd", text: "Mathematics")
       expect(page).to have_css("dd", text: "Full time")
-      expect(page).to have_css("dd", text: "London (1 mile)Manchester (10 miles)")
+      expect(page).to have_content("London (1 mile)")
+      expect(page).to have_content("Manchester (10 miles)")
 
       click_on I18n.t("buttons.return_to_profile")
       expect(current_path).to eq(jobseekers_profile_path)
       expect(page).to have_css("h1", text: "Your profile")
-      expect(page).to have_css("dd", text: "TeacherHead of year or phaseAssistant headteacher")
+      expect(page).to have_css("dd", text: "Head of year or phase, Assistant headteacher")
       expect(page).to have_css("dd", text: "Secondary")
       expect(page).to have_css("dd", text: "Key stage 3 (ages 11 to 14), Key stage 4 (ages 14 to 16)")
       expect(page).to have_css("dd", text: "Mathematics")
       expect(page).to have_css("dd", text: "Full time")
-      expect(page).to have_css("dd", text: "London (1 mile)Manchester (10 miles)")
+      expect(page).to have_content("London (1 mile)")
+      expect(page).to have_content("Manchester (10 miles)")
     end
 
     context "when a jobseeker enters non-teacher preferences" do

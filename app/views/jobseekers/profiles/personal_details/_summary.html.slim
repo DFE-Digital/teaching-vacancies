@@ -1,5 +1,5 @@
 ruby:
-  form = Jobseekers::Profile::PersonalDetailsForm.from_record(profile.personal_details)
+  form = Jobseekers::Profile::PersonalDetailsForm.from_record(@profile.personal_details)
 
   attributes = {
                  phone_number_provided: { map_values: ->(value) { value.nil? ? "" : t("helpers.label.personal_details_form.phone_number_provided_options.#{value}") } },

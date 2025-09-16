@@ -35,12 +35,7 @@
   - email_ciphertext
   - phone_number_ciphertext
   :publisher_ats_api_clients:
-  - id
-  - name
   - api_key
-  - last_rotated_at
-  - created_at
-  - updated_at
   :personal_details:
   - first_name_ciphertext
   - last_name_ciphertext
@@ -129,7 +124,6 @@
   - searchable_content
   - google_index_removed
   - expired_vacancy_feedback_email_sent_at
-  - publisher_ats_api_client_id
   :qualifications:
   - finished_studying_details_ciphertext
   :feedbacks:
@@ -166,4 +160,67 @@
   - referrer_counts
   - created_at
   - updated_at
-
+  job_references:
+    - token
+    - employment_start_date_ciphertext
+    - employment_end_date_ciphertext
+    - punctuality_ciphertext
+    - working_relationships_ciphertext
+    - customer_care_ciphertext
+    - adapt_to_change_ciphertext
+    - deal_with_conflict_ciphertext
+    - prioritise_workload_ciphertext
+    - team_working_ciphertext
+    - communication_ciphertext
+    - problem_solving_ciphertext
+    - general_attitude_ciphertext
+    - technical_competence_ciphertext
+    - leadership_ciphertext
+    - under_investigation_ciphertext
+    - warnings_ciphertext
+    - allegations_ciphertext
+    - not_fit_to_practice_ciphertext
+    - able_to_undertake_role_ciphertext
+    - how_do_you_know_the_candidate_ciphertext
+    - reason_for_leaving_ciphertext
+    - would_reemploy_current_reason_ciphertext
+    - would_reemploy_any_reason_ciphertext
+    - under_investigation_details_ciphertext
+    - warning_details_ciphertext
+    - unable_to_undertake_reason_ciphertext
+  reference_requests:
+    - token
+  :job_application_batches:
+  - id
+  - vacancy_id
+  - created_at
+  - updated_at
+  :batchable_job_applications:
+  - id
+  - job_application_id
+  - created_at
+  - updated_at
+  - job_application_batch_id
+  :self_disclosures:
+  - name_ciphertext
+  - previous_names_ciphertext
+  - address_line_1_ciphertext
+  - address_line_2_ciphertext
+  - city_ciphertext
+  - country_ciphertext
+  - postcode_ciphertext
+  - phone_number_ciphertext
+  - date_of_birth_ciphertext
+  - has_unspent_convictions_ciphertext
+  - has_spent_convictions_ciphertext
+  - is_barred_ciphertext
+  - has_been_referred_ciphertext
+  - is_known_to_children_services_ciphertext
+  - has_been_dismissed_ciphertext
+  - has_been_disciplined_ciphertext
+  - has_been_disciplined_by_regulatory_body_ciphertext
+  - agreed_for_processing_ciphertext
+  - agreed_for_criminal_record_ciphertext
+  - agreed_for_organisation_update_ciphertext
+  - agreed_for_information_sharing_ciphertext
+  - true_and_complete_ciphertext

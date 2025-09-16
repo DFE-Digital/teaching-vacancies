@@ -1,8 +1,9 @@
 ---
 order: 103
-title: Find classroom experience
-meta_description: Find out how to find classroom experience to help you return to teaching.
+title: Finding classroom experience for returning teachers
+meta_description: Gain teaching experience before returning. Find volunteering opportunities, learn what schools look for, and teach different subjects.
 date_posted: 17/02/2025
+date_updated: 28/08/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/find-classroom-experience.jpg"
 ---
@@ -20,9 +21,9 @@ To get more school experience, you should:
 
 ## Contact a school
 
-The [Get information About Schools site](https://get-information-schools.service.gov.uk/?) has a list of all the educational establishments in England and Wales. You can filter your search by education phase and location to find a suitable school.
+The [Get Information about Schools site](https://get-information-schools.service.gov.uk/?) has a list of all the educational establishments in England and Wales. You can find suitable schools to contact by filtering your search by education phase and location.
 
-You may need to contact several schools in your area to arrange school experience
+You may need to contact several schools in your area before finding one that can offer classroom experience.
 
 ## Find experience using a subject organisation
 

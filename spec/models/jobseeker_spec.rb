@@ -242,4 +242,26 @@ RSpec.describe Jobseeker do
       end
     end
   end
+
+  describe "#papertrail_display_name" do
+    subject { jobseeker.papertrail_display_name }
+
+    context("without profile") do
+      let(:jobseeker) { build_stubbed(:jobseeker) }
+
+      it { is_expected.to eq("Jobseeker") }
+    end
+
+    context("with details") do
+      let(:first) { "First" }
+      let(:last) { "Last" }
+      let(:jobseeker) do
+        build_stubbed(:jobseeker,
+                      jobseeker_profile: build_stubbed(:jobseeker_profile,
+                                                       personal_details: build_stubbed(:personal_details, first_name: first, last_name: last)))
+      end
+
+      it { is_expected.to eq("First Last") }
+    end
+  end
 end

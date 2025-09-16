@@ -71,7 +71,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   def update_vacancy
     vacancy.assign_attributes(form.params_to_save.merge(completed_steps: completed_steps))
     vacancy.refresh_slug
-    update_google_index(vacancy) if vacancy.listed?
+    update_google_index(vacancy) if vacancy.live?
 
     vacancy.save
   end

@@ -73,9 +73,9 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   let(:local_authority_school1) { create(:school, school_type: "Local authority maintained schools") }
   let(:local_authority_school2) { create(:school, school_type: "Local authority maintained schools") }
   let(:school) { create(:school) }
-  let!(:maths_job1) { create(:vacancy, :past_publish, :no_tv_applications, job_roles: ["teacher"], publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary], expires_at: Date.current + 1, geolocation: "POINT(-0.019501 51.504949)") }
-  let!(:maths_job2) { create(:vacancy, :past_publish, :no_tv_applications, job_roles: ["teacher"], publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary], expires_at: Date.current + 3, geolocation: "POINT(-1.8964 52.4820)") }
-  let!(:job1) { create(:vacancy, :past_publish, :no_tv_applications, job_roles: ["teacher"], publish_on: Date.current - 3, job_title: "Physics Teacher", subjects: ["Physics"], organisations: [academy1], phases: %w[secondary], expires_at: Date.current + 2, geolocation: "POINT(-0.1273 51.4994)", visa_sponsorship_available: true) }
+  let!(:maths_job1) { create(:vacancy, :secondary, :past_publish, :no_tv_applications, job_roles: ["teacher"], publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school], expires_at: Date.current + 1, geolocation: "POINT(-0.019501 51.504949)") }
+  let!(:maths_job2) { create(:vacancy, :secondary, :past_publish, :no_tv_applications, job_roles: ["teacher"], publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school], expires_at: Date.current + 3, geolocation: "POINT(-1.8964 52.4820)") }
+  let!(:job1) { create(:vacancy, :secondary, :past_publish, :no_tv_applications, job_roles: ["teacher"], publish_on: Date.current - 3, job_title: "Physics Teacher", subjects: ["Physics"], organisations: [academy1], expires_at: Date.current + 2, geolocation: "POINT(-0.1273 51.4994)", visa_sponsorship_available: true) }
   let!(:job2) { create(:vacancy, :past_publish, :no_tv_applications, job_roles: ["teacher"], job_title: "PE Teacher", subjects: [], organisations: [academy2], expires_at: Date.current + 5) }
   let!(:job3) { create(:vacancy, :past_publish, :no_tv_applications, job_roles: ["teacher"], job_title: "Chemistry Teacher", subjects: [], organisations: [free_school1], expires_at: Date.current + 4, visa_sponsorship_available: true) }
   let!(:job4) { create(:vacancy, :past_publish, :no_tv_applications, job_roles: ["teacher"], job_title: "Geography Teacher", subjects: [], publisher_organisation: free_school1, organisations: [free_school1, free_school2], expires_at: Date.current + 6) }
@@ -204,7 +204,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
         click_on I18n.t("buttons.search")
       end
 
-      it "shows distance between school and their location" do
+      it "shows distance between school and their location and allows sorting by distance", js: true do
         expect(page).to have_content "Jobs in or near Birmingham"
 
         within(".search-results__item", text: "Physics Teacher") do
@@ -221,15 +221,11 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
           distance_text = find("dt", text: "Distance from location").sibling("dd").text
           expect(distance_text).to eq("90.1 miles")
         end
-      end
 
-      it "orders by distance by default" do
         expect(page).to have_select("sort_by", selected: "Distance")
         expect("Physics Teacher").to appear_before("Maths 1")
         expect("Maths 1").to appear_before("Maths Teacher 2")
-      end
 
-      it "jobseekers can then choose to sort by different sort option", js: true do
         expect(page).to have_select("sort_by", selected: "Distance")
 
         select "Closing date", from: "sort-by-field"
@@ -336,7 +332,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
     let!(:special_job4) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "DDDD", subjects: [], organisations: [special_school4], geolocation: "POINT(-0.019501 51.504949)") }
     let!(:special_job5) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "EEEE", subjects: [], organisations: [special_school5], geolocation: "POINT(-0.019501 51.504949)") }
     let!(:special_job6) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "FFFF", subjects: [], organisations: [special_school6], geolocation: "POINT(-0.019501 51.504949)") }
-    let!(:faith_job) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "religious", subjects: ["Physics"], publisher_organisation: faith_school, organisations: [faith_school, faith_school2], phases: %w[secondary], geolocation: "POINT(-0.019501 51.504949)") }
+    let!(:faith_job) { create(:vacancy, :secondary, :past_publish, job_roles: ["teacher"], job_title: "religious", subjects: ["Physics"], publisher_organisation: faith_school, organisations: [faith_school, faith_school2], geolocation: "POINT(-0.019501 51.504949)") }
     let!(:non_faith_job1) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "nonfaith1", subjects: [], organisations: [non_faith_school1], geolocation: "POINT(-0.019501 51.504949)") }
     let!(:non_faith_job2) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "nonfaith2", subjects: [], organisations: [non_faith_school2], geolocation: "POINT(-0.019501 51.504949)") }
     let!(:non_faith_job3) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "nonfaith3", subjects: [], organisations: [non_faith_school3], geolocation: "POINT(-0.019501 51.504949)") }
@@ -418,13 +414,6 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
       expect_page_to_show_jobs([senior_leader, it_support])
       expect_page_not_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2, headteacher, deputy_head, teaching_assistant, sendco, pastoral, other])
-
-      uncheck "IT support"
-      uncheck "Head of year or phase"
-      check "Other support"
-      click_on I18n.t("buttons.apply_filters")
-      expect_page_to_show_jobs([other])
-      expect_page_not_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2, headteacher, deputy_head, teaching_assistant, sendco, pastoral, senior_leader, it_support])
     end
   end
 

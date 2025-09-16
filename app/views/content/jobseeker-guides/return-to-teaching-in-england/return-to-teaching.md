@@ -1,8 +1,9 @@
 ---
 order: 100
 title: Get support returning to teaching
-meta_description: Find out how you could get support returning to teaching, including how to get free, one-to-one guidance from a return to teaching adviser.
+meta_description: Get support from an adviser on returning to teaching, restarting your career, finding a job, and adjusting after a break.
 date_posted: 08/09/2023
+date_updated: 28/08/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/return-to-teaching.jpg"
 ---
@@ -14,11 +15,11 @@ If you’re thinking about returning to teaching and have previously taught or t
 If you trained to teach in the UK and are a UK citizen currently working abroad, find out about [returning to England to teach](https://teaching-vacancies.service.gov.uk/jobseeker-guides/return-to-teaching-in-england/return-to-england-after-teaching-overseas).
 
 ## Get back into teaching
-Returning to teaching might be easier than you think.
+Returning to teaching after a break might be easier than you think.
 
 Time away and different life experiences can help give you a fresh perspective on being a teacher.
 
-Schools are interested in recruiting former teachers like you so you can continue your teaching career with them.
+Schools are interested in recruiting former teachers like you, so that you can continue your teaching career with them.
 
 A return to teaching provides you with an opportunity to take greater control of your career to shape a role that suits your skills, ambition and situation.
 
@@ -32,8 +33,7 @@ The Department for Education (DfE) has been taking action to help schools suppor
 
 * [improving workload and wellbeing](https://www.gov.uk/guidance/improve-workload-and-wellbeing-for-school-staff)
 * [looking after their mental health](https://www.gov.uk/guidance/education-staff-wellbeing-charter)
-* enabling [flexible working opportunities](https://www.gov.uk/government/collections/flexible-working-resources-for-teachers-and-schools) 
-* putting in place [behaviour hubs](https://behaviourhubs.co.uk/)
+* enabling [flexible working opportunities](https://www.gov.uk/government/collections/flexible-working-resources-for-teachers-and-schools)
 
 ## Get a return to teaching adviser
 If you have previously taught or trained to teach in the UK, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers).
@@ -43,7 +43,7 @@ Advisers can give you free one-to-one support with:
   * the applications process, such as writing personal statements and preparing for interviews
   * accessing courses to enhance your subject knowledge or teaching practice, such as national professional qualifications (NPQs)
   * finding teaching vacancies
-  * accessing themed webinars and networking opportunities
+  * accessing themed webinars
 
 You can chat by phone, text or email, as little or as often as you need.
 
@@ -57,7 +57,7 @@ If you qualified as a teacher outside the UK, to get a return to teaching advise
 
 You can [find out more about teaching in England as a non-UK citizen](https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas).
 
-[Call us on 0800 389 2500 to check if you’re eligible for an adviser](tel:08003892500).
+Call us on [0800 389 2500](tel:08003892500) to check if you’re eligible for an adviser.
 
 [Get a return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers).
 

@@ -68,4 +68,46 @@ RSpec.describe "publishers/jobseeker_profiles/show" do
   scenario "A publisher can contact the jobseeker from their profile" do
     expect(rendered).to have_link(jobseeker_profile.email, href: "mailto:#{jobseeker_profile.email}")
   end
+
+  context "when jobseeker has a current role" do
+    let(:current_employment) { create(:employment, :jobseeker_profile_employment, job_title: "Mathematics Teacher", is_current_role: true, started_on: 1.year.ago, ended_on: nil) }
+    let(:previous_employment) { create(:employment, :jobseeker_profile_employment, job_title: "Science Teacher", is_current_role: false, started_on: 3.years.ago, ended_on: 2.years.ago) }
+    let(:jobseeker_profile) do
+      create(:jobseeker_profile, :with_personal_details,
+             employments: [current_employment, previous_employment],
+             job_preferences: create(:job_preferences))
+    end
+
+    scenario "displays the current job title even when previous roles exist" do
+      expect(rendered).to have_content("Mathematics Teacher")
+      expect(rendered).to have_no_content("Previously Mathematics Teacher")
+      expect(rendered).to have_no_content("Previously Science Teacher")
+    end
+  end
+
+  context "when jobseeker has a previous role but no current role" do
+    let(:previous_employment) { create(:employment, :jobseeker_profile_employment, job_title: "Science Teacher", is_current_role: false, started_on: 2.years.ago, ended_on: 1.year.ago) }
+    let(:jobseeker_profile) do
+      create(:jobseeker_profile, :with_personal_details,
+             employments: [previous_employment],
+             job_preferences: create(:job_preferences))
+    end
+
+    scenario "displays the previous job title with 'Previously' prefix" do
+      expect(rendered).to have_content("Previously Science Teacher")
+    end
+  end
+
+  context "when jobseeker has no employment history" do
+    let(:jobseeker_profile) do
+      create(:jobseeker_profile, :with_personal_details,
+             employments: [],
+             job_preferences: create(:job_preferences))
+    end
+
+    scenario "does not display any job title" do
+      expect(rendered).to have_no_content("Previously")
+      expect(rendered).to have_no_content("Current role")
+    end
+  end
 end

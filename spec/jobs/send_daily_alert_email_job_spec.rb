@@ -14,7 +14,7 @@ RSpec.describe SendDailyAlertEmailJob do
       let(:subscription) { create(:daily_subscription) }
 
       it "sends an email" do
-        expect(Jobseekers::AlertMailer).to receive(:alert).with(subscription.id, Vacancy.pluck(:id)) { mail }
+        expect(Jobseekers::AlertMailer).to receive(:alert).with(subscription.id, PublishedVacancy.pluck(:id)) { mail }
         expect(mail).to receive(:deliver_later) { ActionMailer::MailDeliveryJob.new }
         perform_enqueued_jobs { job }
       end
@@ -25,7 +25,7 @@ RSpec.describe SendDailyAlertEmailJob do
         end
 
         it "does not send an email" do
-          expect(Jobseekers::AlertMailer).to_not receive(:alert).with(subscription.id, Vacancy.pluck(:id)) { mail }
+          expect(Jobseekers::AlertMailer).to_not receive(:alert).with(subscription.id, PublishedVacancy.pluck(:id)) { mail }
           perform_enqueued_jobs { job }
         end
       end
@@ -38,6 +38,14 @@ RSpec.describe SendDailyAlertEmailJob do
         it "does not send another email" do
           expect(Jobseekers::AlertMailer).to_not receive(:alert)
           perform_enqueued_jobs { job }
+        end
+      end
+
+      context "when email notifications are disabled", :disable_email_notifications do
+        it "does not send an email or create a run" do
+          expect(Jobseekers::AlertMailer).to_not receive(:alert)
+          perform_enqueued_jobs { job }
+          expect(subscription.alert_runs.count).to eq(0)
         end
       end
     end

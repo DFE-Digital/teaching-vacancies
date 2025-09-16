@@ -14,7 +14,7 @@ class Vacancy < ApplicationRecord
 
   # TODO: Update with job listing updates
   ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG = %i[
-    about_school application_link contact_email contact_number contract_type expires_at how_to_apply job_advert
+    application_link contact_email contact_number contract_type expires_at
     job_roles job_title key_stages personal_statement_guidance salary school_visits subjects starts_on
     working_patterns
   ].freeze
@@ -63,14 +63,12 @@ class Vacancy < ApplicationRecord
   enum :hired_status, { hired_tvs: 0, hired_other_free: 1, hired_paid: 2, hired_no_listing: 3, not_filled_ongoing: 4, not_filled_not_looking: 5, hired_dont_know: 6 }
   enum :listed_elsewhere, { listed_paid: 0, listed_free: 1, listed_mix: 2, not_listed: 3, listed_dont_know: 4 }
   enum :start_date_type, { specific_date: 0, date_range: 1, other: 2, undefined: 3, asap: 4 }
-  # trashed: 2 and removed_from_external_system: 3 removed in discard_soft_deletes 29/4/25
-  enum :status, { published: 0, draft: 1 }
 
-  validates :status, presence: true
+  # These are set when enable_job_applications is false. email is a legacy value no longer settable from front-end 24/7/2025
+  # cannot be validated as this is asked as a separate question from enable_job_applications
+  enum :receive_applications, { email: 0, website: 1, uploaded_form: 2 }
 
-  enum :receive_applications, { email: 0, website: 1 }
   enum :extension_reason, { no_applications: 0, didnt_find_right_candidate: 1, other_extension_reason: 2 }
-
   enum :religion_type, { no_religion: 0, other_religion: 1, catholic: 2 }
 
   belongs_to :publisher, optional: true
@@ -112,16 +110,14 @@ class Vacancy < ApplicationRecord
 
   scope :applicable, -> { where("expires_at >= ?", Time.current) }
   scope :awaiting_feedback_recently_expired, -> { where(listed_elsewhere: nil, hired_status: nil).where("expires_at >= ?", 2.months.ago) }
-  scope :expired, -> { published.where("expires_at < ?", Time.current) }
+  scope :expired, -> { kept.where("expires_at < ?", Time.current) }
   scope :expired_yesterday, -> { where("DATE(expires_at) = ?", 1.day.ago.to_date) }
   scope :expires_within_data_access_period, -> { where("expires_at >= ?", Time.current - DATA_ACCESS_PERIOD_FOR_PUBLISHERS) }
   scope :in_organisation_ids, ->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).distinct }
-  scope :non_draft, -> { kept.published }
-  scope :listed, -> { non_draft.where("publish_on <= ?", Date.current) }
+  scope :listed, -> { kept.where.not(publish_on: nil).where("publish_on <= ?", Date.current) }
   scope :live, -> { listed.applicable }
-  scope :pending, -> { non_draft.where("publish_on > ?", Date.current) }
+  scope :pending, -> { kept.where.not(publish_on: nil).where("publish_on > ?", Date.current) }
   scope :quick_apply, -> { where(enable_job_applications: true) }
-  scope :published_on_count, ->(date) { non_draft.where(publish_on: date.all_day).count }
   scope :visa_sponsorship_available, -> { where(visa_sponsorship_available: true) }
 
   scope :internal, -> { where(external_source: nil, publisher_ats_api_client_id: nil) }
@@ -131,20 +127,14 @@ class Vacancy < ApplicationRecord
   # we need these 3 tiny modules to provide 'scoping glue' between the model and the queries
   # so that if we can use PublishedVacancy and DraftVacancy safely
   extend VacancyFilterQueryModule
+
   scope :search_by_filter, ->(filters) { vacancy_filter_query(filters) }
   extend VacancyLocationQueryModule
+
   scope :search_by_location, ->(location_query, radius_in_miles, polygon:, sort_by_distance:) { vacancy_location_query(location_query, radius_in_miles, polygon: polygon, sort_by_distance: sort_by_distance) }
   extend VacancyFulTextSearchQueryModule
-  scope :search_by_full_text, ->(query) { vacancy_full_text_search_query(query) }
 
-  # effectively we have two different types of vacancy - external ones and internal ones
-  # these require seperate validaqtion rules - internal ones are built up over time by a user,
-  # so it is much harder to validate them at the model level.
-  # External ones are complete so they can be validated at this level (and have extra properties)
-  # the ExternalVacancyValidator tries to do this (by checking presence of certain fields), but it's really a separate type.
-  validates :external_reference,
-            uniqueness: { scope: :publisher_ats_api_client_id },
-            if: -> { publisher_ats_api_client_id.present? && external_reference.present? }
+  scope :search_by_full_text, ->(query) { vacancy_full_text_search_query(query) }
 
   validates :slug, presence: true
   validates :organisations, presence: true
@@ -155,23 +145,14 @@ class Vacancy < ApplicationRecord
   has_noticed_notifications
   has_paper_trail on: [:update],
                   only: ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG,
-                  if: proc(&:listed?)
+                  if: proc(&:live?)
 
   # Publisher will need to set a new publish date if wanting to re-publish an scheduled vacancy turned back to a draft.
-  before_save -> { self.publish_on = nil if status_changed?(from: "published", to: "draft") }
+  before_save -> { self.publish_on = nil if type_changed?(from: "PublishedVacancy", to: "DraftVacancy") }
 
-  # temporary - keep 'type' column in sync with status, but only use Vacancy class in code
-  before_save do |vacancy|
-    if vacancy.status_changed?
-      vacancy.type = if vacancy.draft?
-                       "DraftVacancy"
-                     else
-                       "PublishedVacancy"
-                     end
-    end
-  end
+  self.ignored_columns += %i[personal_statement_guidance how_to_apply school_visits_details]
 
-  after_save :reset_markers, if: -> { saved_change_to_status? && (listed? || pending?) }
+  after_save :reset_markers, if: -> { saved_change_to_type? && (live? || pending?) }
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[8:00 9:00 12:00 15:00 23:59].freeze
@@ -213,25 +194,12 @@ class Vacancy < ApplicationRecord
     organisations.one? && organisations.first.trust?
   end
 
-  # TODO: This method matches conditions of :live scope, not :listed. We should rename it
-  def listed?
+  def live?
     published? && expires_at&.future? && (publish_on&.today? || publish_on&.past?)
-  end
-
-  def legacy?
-    [job_advert, about_school, personal_statement_guidance, school_visits_details, how_to_apply].filter_map(&:present?).any?
-  end
-
-  def legacy_draft?
-    legacy? && draft?
   end
 
   def pending?
     published? && publish_on&.future?
-  end
-
-  def expired?
-    published? && expires_at&.past?
   end
 
   def can_receive_job_applications?
@@ -303,10 +271,6 @@ class Vacancy < ApplicationRecord
     ]
   end
 
-  def other_contact_email(current_publisher)
-    contact_email? && contact_email != current_publisher.email
-  end
-
   def distance_in_miles_to(search_coordinates)
     if geolocation.is_a? RGeo::Geographic::SphericalMultiPointImpl
       # if there are multiple geolocations then return the distance to the nearest one to the given search location
@@ -316,8 +280,17 @@ class Vacancy < ApplicationRecord
     end
   end
 
-  def is_a_teaching_or_middle_leader_role?
-    job_roles.intersect?(%w[teacher head_of_year_or_phase head_of_department_or_curriculum sendco other_leadership])
+  def teaching_or_middle_leader_role?
+    job_roles.intersect?(TEACHING_JOB_ROLES)
+  end
+
+  def allow_job_applications?
+    enable_job_applications? || uploaded_form?
+  end
+
+  def create_job_application_for(jobseeker)
+    klass = uploaded_form? ? UploadedJobApplication : NativeJobApplication
+    jobseeker.job_applications.create!(vacancy: self, type: klass.name)
   end
 
   private
@@ -341,7 +314,7 @@ class Vacancy < ApplicationRecord
                          points = organisations.filter_map(&:geopoint)
                          points.presence && points.first.factory.multi_point(points)
                        end
-    reset_markers if persisted? && (listed? || pending?)
+    reset_markers if persisted? && (live? || pending?)
   end
 end
 # rubocop:enable Metrics/ClassLength

@@ -4,11 +4,6 @@ RSpec.describe "Jobseekers can manage their job applications" do
   let(:jobseeker) { create(:jobseeker) }
   let(:organisation) { create(:school) }
 
-  let(:vacancy1) { create(:vacancy, job_title: "Team Leader of Maths", organisations: [organisation]) }
-  let(:vacancy2) { create(:vacancy, :expired, job_title: "Teacher of History", organisations: [organisation]) }
-  let(:vacancy3) { create(:vacancy, job_title: "Teacher of Design & Technology", organisations: [organisation]) }
-  let(:vacancy4) { create(:vacancy, job_title: "Teacher of RE & PSHE", organisations: [organisation]) }
-
   context "when logged in" do
     before do
       travel_to Time.zone.local(2025, 3, 2, 12, 31, 23)
@@ -18,10 +13,40 @@ RSpec.describe "Jobseekers can manage their job applications" do
     after { logout }
 
     context "when there are job applications" do
-      let!(:draft_job_application) { create(:job_application, updated_at: 1.day.ago, jobseeker: jobseeker, vacancy: vacancy1) }
-      let!(:deadline_passed_job_application) { create(:job_application, updated_at: 2.days.ago, jobseeker: jobseeker, vacancy: vacancy2) }
-      let!(:submitted_job_application) { create(:job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker: jobseeker, vacancy: vacancy3) }
-      let!(:shortlisted_job_application) { create(:job_application, :status_shortlisted, submitted_at: 2.days.ago, jobseeker: jobseeker, vacancy: vacancy4) }
+      let!(:draft_job_application) do
+        create(:job_application, updated_at: 1.day.ago, jobseeker: jobseeker,
+                                 vacancy: build(:vacancy, job_title: "Team Leader of Maths", organisations: [organisation]))
+      end
+      let!(:deadline_passed_job_application) do
+        create(:job_application, updated_at: 2.days.ago, jobseeker: jobseeker,
+                                 vacancy: build(:vacancy, :expired, job_title: "Teacher of History", organisations: [organisation]))
+      end
+      let!(:submitted_job_application) do
+        create(:job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker: jobseeker,
+                                                    vacancy: build(:vacancy, job_title: "Teacher of Design & Technology", organisations: [organisation]))
+      end
+      let!(:shortlisted_job_application) do
+        create(:job_application, :status_shortlisted, submitted_at: 2.days.ago, jobseeker: jobseeker,
+                                                      vacancy: build(:vacancy, job_title: "Teacher of RE & PSHE", organisations: [organisation]))
+      end
+      let!(:interviewing_job_application) do
+        create(:job_application, :status_interviewing, jobseeker: jobseeker,
+                                                       vacancy: build(:vacancy, job_title: "Interviewing Job", organisations: [organisation]))
+      end
+      let!(:application_with_action) do
+        create(:job_application, :status_interviewing,
+               self_disclosure_request: build(:self_disclosure_request, :sent),
+               jobseeker: jobseeker,
+               vacancy: build(:vacancy, job_title: "Action Required Job", organisations: [organisation]))
+      end
+      let!(:withdrawn_job_application) do
+        create(:job_application, :status_withdrawn, jobseeker: jobseeker,
+                                                    vacancy: build(:vacancy, job_title: "Withdrawn Job", organisations: [organisation]))
+      end
+      let!(:unsuccessful_job_application) do
+        create(:job_application, :status_unsuccessful, jobseeker: jobseeker,
+                                                       vacancy: create(:vacancy, job_title: "Unsuccessful Job", organisations: [organisation]))
+      end
 
       before { visit jobseekers_job_applications_path }
 
@@ -35,6 +60,21 @@ RSpec.describe "Jobseekers can manage their job applications" do
           end
 
           within ".card-component:nth-child(2)" do
+            expect(page).to have_css(".card-component__header", text: application_with_action.vacancy.job_title)
+            expect(page).to have_css(".card-component__actions", text: "action required")
+          end
+
+          within ".card-component:nth-child(3)" do
+            expect(page).to have_css(".card-component__header", text: interviewing_job_application.vacancy.job_title)
+            expect(page).to have_css(".card-component__actions", text: "interviewing")
+          end
+
+          within ".card-component:nth-child(4)" do
+            expect(page).to have_css(".card-component__header", text: shortlisted_job_application.vacancy.job_title)
+            expect(page).to have_css(".card-component__actions", text: "shortlisted")
+          end
+
+          within ".card-component:nth-child(5)" do
             expect(page).to have_css(".card-component__header", text: submitted_job_application.vacancy.job_title)
             within ".card-component__body" do
               dt = find("dt", text: "Submitted")
@@ -43,39 +83,34 @@ RSpec.describe "Jobseekers can manage their job applications" do
             expect(page).to have_css(".card-component__actions", text: "submitted")
           end
 
-          within ".card-component:nth-child(3)" do
-            expect(page).to have_css(".card-component__header", text: shortlisted_job_application.vacancy.job_title)
-            expect(page).to have_css(".card-component__actions", text: "shortlisted")
+          within ".card-component:nth-child(6)" do
+            expect(page).to have_css(".card-component__header", text: unsuccessful_job_application.vacancy.job_title)
+            expect(page).to have_css(".card-component__actions", text: "unsuccessful")
           end
 
-          within ".card-component:nth-child(4)" do
+          within ".card-component:nth-child(7)" do
+            expect(page).to have_css(".card-component__header", text: withdrawn_job_application.vacancy.job_title)
+            expect(page).to have_css(".card-component__actions", text: "withdrawn")
+          end
+
+          within ".card-component:nth-child(8)" do
             expect(page).to have_css(".card-component__header", text: deadline_passed_job_application.vacancy.job_title)
             expect(page).to have_css(".card-component__actions", text: "deadline passed")
           end
         end
 
-        it "can continue a draft application" do
+        it "can only continue a draft application that has not passed the deadline" do
+          expect(page).to have_css(".card-component", text: deadline_passed_job_application.vacancy.job_title) do |card|
+            expect(card).to have_css(".card-component__actions") do |actions|
+              expect(actions).to have_no_link(I18n.t("jobseekers.job_applications.index.continue_application"))
+            end
+          end
+
           within ".card-component", text: draft_job_application.vacancy.job_title do
             click_on draft_job_application.vacancy.job_title
           end
 
-          expect(current_path).to eq(jobseekers_job_application_apply_path(draft_job_application))
-        end
-
-        it "can not continue a draft application that has passed the deadline" do
-          expect(page).to have_css(".card-component", text: deadline_passed_job_application.vacancy.job_title) do |card|
-            expect(card).to have_css(".card-component__actions") do |actions|
-              expect(actions).not_to have_link(I18n.t("jobseekers.job_applications.index.continue_application"))
-            end
-          end
-        end
-
-        it "can view a submitted application" do
-          within ".card-component", text: submitted_job_application.vacancy.job_title do
-            click_on submitted_job_application.vacancy.job_title
-          end
-
-          expect(current_path).to eq(jobseekers_job_application_path(submitted_job_application))
+          expect(page).to have_current_path(jobseekers_job_application_apply_path(draft_job_application), ignore_query: true)
         end
 
         it "can delete a draft application" do
@@ -84,7 +119,7 @@ RSpec.describe "Jobseekers can manage their job applications" do
           end
           click_on I18n.t("buttons.delete_application")
 
-          expect(current_path).to eq(jobseekers_job_application_confirm_destroy_path(draft_job_application))
+          expect(page).to have_current_path(jobseekers_job_application_confirm_destroy_path(draft_job_application), ignore_query: true)
         end
 
         it "can withdraw a submitted application" do
@@ -93,7 +128,7 @@ RSpec.describe "Jobseekers can manage their job applications" do
           end
           click_on I18n.t("buttons.withdraw_application")
 
-          expect(current_path).to eq(jobseekers_job_application_confirm_withdraw_path(submitted_job_application))
+          expect(page).to have_current_path(jobseekers_job_application_confirm_withdraw_path(submitted_job_application), ignore_query: true)
         end
       end
     end
@@ -111,7 +146,7 @@ RSpec.describe "Jobseekers can manage their job applications" do
     before { visit jobseekers_job_applications_path }
 
     it "redirects to the sign in page" do
-      expect(current_path).to eq(new_jobseeker_session_path)
+      expect(page).to have_current_path(new_jobseeker_session_path, ignore_query: true)
     end
   end
 end

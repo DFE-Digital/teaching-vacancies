@@ -10,11 +10,12 @@ module VacanciesHelper
   end
 
   def vacancy_form_type(vacancy)
+    return t("publishers.vacancies.application_form_type.uploaded_document") if vacancy.uploaded_form?
+
     if vacancy.enable_job_applications
-      case vacancy.religion_type
-      when "catholic"
+      if vacancy.catholic?
         t("publishers.vacancies.application_form_type.catholic")
-      when "other_religion"
+      elsif vacancy.other_religion?
         t("publishers.vacancies.application_form_type.other_religion")
       else
         t("publishers.vacancies.application_form_type.no_religion")
@@ -29,7 +30,13 @@ module VacanciesHelper
     create_or_edit = step_process.vacancy.published? ? "edit" : "create"
     section_number = step_process.current_step_group_number
 
-    "#{form_object.errors.present? ? 'Error: ' : ''}#{page_heading} - #{t("publishers.vacancies.build.page_title.#{create_or_edit}", section_number: section_number)}"
+    prefix = if form_object.errors.present?
+               "Error: "
+             else
+               ""
+             end
+
+    "#{prefix}#{page_heading} - #{t("publishers.vacancies.build.page_title.#{create_or_edit}", section_number: section_number)}"
   end
 
   def review_page_title_prefix(vacancy)
@@ -51,16 +58,6 @@ module VacanciesHelper
     safe_join(organisation_types(vacancy.organisations).map do |organisation_type|
       tag.div(organisation_type, class: "govuk-body-s govuk-!-margin-bottom-0")
     end)
-  end
-
-  def vacancy_or_organisation_description(vacancy)
-    vacancy.about_school.presence || vacancy.organisation.description.presence
-  end
-
-  def vacancy_about_school_value(vacancy)
-    return "" if vacancy.organisations.many?
-
-    vacancy_or_organisation_description(vacancy)
   end
 
   def vacancy_job_location_summary(vacancy)
@@ -144,8 +141,6 @@ module VacanciesHelper
     case attribute
     when "job_roles", "key_stages", "subjects", "working_patterns"
       t("publishers.activity_log.#{attribute}", new_value: new_value.to_sentence, count: new_value.count)
-    when "about_school", "job_advert"
-      t("publishers.activity_log.#{attribute}", organisation_type: organisation_type)
     when "expires_at", "starts_on", "earliest_start_date", "latest_start_date"
       new_value.nil? ? t("publishers.activity_log.#{attribute}.deleted") : t("publishers.activity_log.#{attribute}.changed", new_value: format_date(new_value.to_date))
     when "other_start_date_details"
@@ -197,7 +192,7 @@ module VacanciesHelper
     elsif vacancy.published?
       :live
     else
-      vacancy.status.to_sym
+      :draft
     end
   end
 

@@ -58,7 +58,7 @@ module Multistep
       completed_steps[step] = status
       return unless status == :completed
 
-      completed_steps.keys[completed_steps.keys.index(step) + 1..].each do |completed_step|
+      completed_steps.keys[(completed_steps.keys.index(step) + 1)..].each do |completed_step|
         completed_steps[completed_step] = :invalidated if steps[completed_step].invalidate?
         completed_steps[completed_step] = :skipped if steps[completed_step].skip?
       end

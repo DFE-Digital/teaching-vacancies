@@ -27,13 +27,12 @@ class Vacancies::Import::Sources::Ventrus
       next if schools.blank?
       next if vacancy_listed_at_excluded_school_type?(schools)
 
+      # An external vacancy is by definition always published
       v = PublishedVacancy.find_or_initialize_by(
         external_source: SOURCE_NAME,
         external_reference: item["VacancyID"],
       )
 
-      # An external vacancy is by definition always published
-      v.status = :published
       # Consider publish_on date to be the first time we saw this vacancy come through
       # (i.e. today, unless it already has a publish on date set)
       v.publish_on ||= Date.today
@@ -64,7 +63,7 @@ class Vacancies::Import::Sources::Ventrus
       contract_type: contract_type_for(item),
       is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phase_for(item),
-      visa_sponsorship_available: visa_sponsorship_available_for(item),
+      visa_sponsorship_available: visa_sponsorship_available_for?(item),
       is_job_share: job_share_for?(item),
     }.merge(organisation_fields(schools))
   end
@@ -157,7 +156,7 @@ class Vacancies::Import::Sources::Ventrus
     item["Contract_Type"] == "parental_leave_cover"
   end
 
-  def visa_sponsorship_available_for(item)
+  def visa_sponsorship_available_for?(item)
     item["Visa_Sponsorship_Available"] == "true"
   end
 

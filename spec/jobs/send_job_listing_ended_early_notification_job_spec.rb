@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe SendJobListingEndedEarlyNotificationJob do
   subject(:job) { described_class.perform_later(vacancy) }
   let(:mail) { double("Mail::Message", deliver_later: true) }
-  let(:vacancy) { create(:vacancy, :published) }
+  let(:vacancy) { create(:vacancy) }
 
   before do
     allow(Jobseekers::JobApplicationMailer).to receive(:job_listing_ended_early) { mail }

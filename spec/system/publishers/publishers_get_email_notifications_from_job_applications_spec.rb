@@ -6,7 +6,7 @@ RSpec.describe "Publishers get email notifications from job applications" do
   let(:organisation) { create(:school) }
   let(:publisher) { create(:publisher, organisations: [organisation]) }
   let(:job_title) { Faker::Adjective.positive }
-  let(:vacancy) { create(:vacancy, :published, publisher: publisher, organisations: [organisation], publish_on: 2.days.ago, job_title: job_title ) }
+  let(:vacancy) { create(:vacancy, publisher: publisher, organisations: [organisation], publish_on: 2.days.ago, job_title: job_title ) }
   let!(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy, submitted_at: 1.day.ago) }
 
   before do

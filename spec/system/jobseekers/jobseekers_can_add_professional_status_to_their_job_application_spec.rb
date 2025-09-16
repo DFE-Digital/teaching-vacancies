@@ -42,7 +42,7 @@ RSpec.describe "Jobseekers can add details about their qualified teacher status 
     click_on "Save and continue"
 
     expect(page).not_to have_css("h2", text: "There is a problem")
-
+    expect(page).to have_current_path jobseekers_job_application_apply_path(job_application), ignore_query: true
     expect(job_application.reload).to have_attributes(qts_age_range_and_subject: "Adding up for little ones", teacher_reference_number: "1234567")
   end
 end

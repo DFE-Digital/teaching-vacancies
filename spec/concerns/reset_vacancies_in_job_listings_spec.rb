@@ -53,7 +53,7 @@ RSpec.describe Resettable do
   context "when changing education phases" do
     subject(:update_education_phases) { vacancy.update(phases: updated_phases) }
 
-    let(:vacancy) { build(:vacancy, phases: %w[secondary], key_stages: %w[ks1]) }
+    let(:vacancy) { build(:vacancy, :secondary) }
     let(:previous_subjects) { vacancy.subjects }
     let(:previous_key_stages) { vacancy.key_stages }
 
@@ -92,22 +92,19 @@ RSpec.describe Resettable do
   end
 
   context "when changing enable job applications" do
-    subject(:update_job_applications) { vacancy.update(enable_job_applications: true) }
-
-    let(:vacancy) { build(:vacancy, receive_applications: "website", enable_job_applications: false) }
-    let(:previous_receive_applications) { vacancy.receive_applications }
-
-    before { vacancy.update(status: :draft) }
+    let(:vacancy) do
+      create(:draft_vacancy, :no_tv_applications)
+    end
 
     it "resets receive application" do
-      expect { update_job_applications }
-        .to change { vacancy.receive_applications }
-        .from(previous_receive_applications).to(nil)
+      expect { vacancy.update!(enable_job_applications: true) }
+        .to change { vacancy.reload.receive_applications }
+        .from("website").to(nil)
     end
   end
 
   context "when changing receive application" do
-    subject(:update_receive_application) { vacancy.update(receive_applications: new_receive_applications) }
+    subject(:update_receive_application) { vacancy.update!(receive_applications: new_receive_applications, application_link: Faker::Internet.url) }
 
     context "from email to website" do
       let(:vacancy) { build(:vacancy, enable_job_applications: false, receive_applications: "email", application_email: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)) }
@@ -146,32 +143,6 @@ RSpec.describe Resettable do
 
     it "removes all previous supporting documents" do
       expect(vacancy.supporting_documents).to all(have_received(:purge_later))
-    end
-  end
-
-  context "when changing enable job applications" do
-    subject(:update_enable_job_applications) { vacancy.update(enable_job_applications: false) }
-
-    let(:vacancy) { build(:draft_vacancy, personal_statement_guidance: "test") }
-    let(:previous_personal_statement_guidance) { vacancy.personal_statement_guidance }
-
-    it "resets the personal statement guidance" do
-      expect { update_enable_job_applications }
-        .to change { vacancy.personal_statement_guidance }
-        .from(previous_personal_statement_guidance).to(nil)
-    end
-  end
-
-  context "when changing school visits" do
-    subject(:update_school_visits) { vacancy.update(school_visits: false) }
-
-    let(:vacancy) { build(:vacancy, school_visits: true, school_visits_details: "test") }
-    let(:previous_school_visits_details) { vacancy.school_visits_details }
-
-    it "resets school visits details" do
-      expect { update_school_visits }
-        .to change { vacancy.school_visits_details }
-        .from(previous_school_visits_details).to(nil)
     end
   end
 

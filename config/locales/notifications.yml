@@ -39,6 +39,23 @@ en:
       message_html: You have received %{link} for %{job_title} at %{organisation}
     publishers/job_application_data_expiry_notification:
       message_html: You will have access to candidates' applications for %{link} until %{date}
+    publishers/self_disclosure_received_notification:
+      message_html: You have received a %{link}
+      disclosure_received: self-disclosure form
+    publishers/reference_received_notification:
+      message_html: You have received a %{link}
+      reference_received: reference for a candidate
+    jobseekers/self_disclosure_request_received_notification:
+      message_html: You have received a request to complete a %{link} for %{job_title} at %{school_name}
+      disclosure_received: self-disclosure form request
+    index:
+      heading: Notifications
+      no_notifications: You have no notifications.
+      skip_link: Skip to notifications
+      title:
+        zero: No unread notifications
+        one: 1 unread notification
+        other: "%{count} unread notifications"
 
   errors:
     jobs:

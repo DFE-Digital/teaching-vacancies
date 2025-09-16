@@ -34,9 +34,9 @@ RSpec.describe DashboardComponent, type: :component do
         let!(:inline_component) { render_inline(subject) }
 
         let(:vacancies) do
-          create_list(:vacancy, 1, :published, job_title: job_title,
-                                               job_applications: build_list(:job_application, 1, :status_submitted),
-                                               organisations: [organisation])
+          create_list(:vacancy, 1, job_title: job_title,
+                                   job_applications: create_list(:job_application, 1, :status_submitted),
+                                   organisations: [organisation])
           organisation.vacancies
         end
 
@@ -89,9 +89,9 @@ RSpec.describe DashboardComponent, type: :component do
         let(:open_school) { create(:school, name: "Open school") }
         let(:closed_school) { create(:school, :closed, name: "Closed school") }
         let(:vacancies) do
-          create_list(:vacancy, 1, :published, job_title: job_title,
-                                               job_applications: build_list(:job_application, 1, :status_submitted),
-                                               organisations: [organisation])
+          create_list(:vacancy, 1, job_title: job_title,
+                                   job_applications: create_list(:job_application, 1, :status_submitted),
+                                   organisations: [organisation])
           organisation.vacancies
         end
 
@@ -141,9 +141,9 @@ RSpec.describe DashboardComponent, type: :component do
         let(:closed_school) { create(:school, :closed, name: "Closed school") }
         let(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: organisation, schools: [open_school]) }
         let(:vacancies) do
-          create_list(:vacancy, 1, :published, job_title: job_title,
-                                               job_applications: build_list(:job_application, 1, :status_submitted),
-                                               organisations: [open_school])
+          create_list(:vacancy, 1, job_title: job_title,
+                                   job_applications: create_list(:job_application, 1, :status_submitted),
+                                   organisations: [open_school])
           open_school.vacancies
         end
 
@@ -198,7 +198,7 @@ RSpec.describe DashboardComponent, type: :component do
 
     context "when job applications have not been received" do
       let(:organisation) { create(:school, name: "A school with jobs") }
-      let(:vacancies) { create_list(:vacancy, 1, :published, organisations: [organisation]) }
+      let(:vacancies) { create_list(:vacancy, 1, organisations: [organisation]) }
 
       before { render_inline(subject) }
 
@@ -213,13 +213,13 @@ RSpec.describe DashboardComponent, type: :component do
     let(:organisation) { create(:trust, schools: [school_oxford, school_cambridge]) }
     let(:school_oxford) { create(:school, name: "Oxford") }
     let(:school_cambridge) { create(:school, name: "Cambridge") }
-    let(:vacancy_cambridge) { create(:vacancy, :published, organisations: [school_cambridge], job_title: "Scientist") }
+    let(:vacancy_cambridge) { create(:vacancy, organisations: [school_cambridge], job_title: "Scientist") }
 
     before { publisher_preference.update organisations: [school_oxford] }
 
     context "when a relevant job exists" do
       let(:vacancies) { school_oxford.vacancies }
-      let!(:vacancy_oxford) { create(:vacancy, :published, organisations: [school_oxford], job_title: "Mathematician") }
+      let!(:vacancy_oxford) { create(:vacancy, organisations: [school_oxford], job_title: "Mathematician") }
 
       let!(:inline_component) { render_inline(subject) }
 
@@ -238,6 +238,71 @@ RSpec.describe DashboardComponent, type: :component do
 
       it "uses the correct no jobs text ('with filters')" do
         expect(page).to have_content(I18n.t("jobs.manage.live.no_jobs.with_filters"))
+      end
+    end
+  end
+
+  describe "#view_applicants" do
+    let(:organisation) { create(:school) }
+    let(:vacancies) { [vacancy] }
+    let(:vacancy) do
+      create(:vacancy, organisations: [organisation])
+    end
+
+    before do
+      create(:job_application, :status_submitted, vacancy: vacancy)
+      allow(vacancy).to receive(:allow_job_applications?).and_return(uses_either_native_or_uploaded_job_application_form)
+    end
+
+    context "when vacancy uses either native or uploaded job application form" do
+      let(:uses_either_native_or_uploaded_job_application_form) { true }
+
+      context "when the selected type is live" do
+        let(:selected_type) { :live }
+
+        it "renders the link to view applicants" do
+          render_inline(subject)
+          expect(page).to have_link(
+            I18n.t("jobs.manage.view_applicants", count: 1),
+            href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id),
+          )
+        end
+      end
+
+      context "when the selected type is expired" do
+        let(:selected_type) { :expired }
+
+        it "renders the link to view applicants" do
+          render_inline(subject)
+          expect(page).to have_link(
+            I18n.t("jobs.manage.view_applicants", count: 1),
+            href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id),
+          )
+        end
+      end
+
+      context "when the selected type is draft" do
+        let(:selected_type) { :draft }
+
+        it "does not render the link to view applicants" do
+          render_inline(subject)
+          expect(page).not_to have_link(
+            I18n.t("jobs.manage.view_applicants", count: 1),
+            href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id),
+          )
+        end
+      end
+    end
+
+    context "when vacancy does not use either native or uploaded job application form" do
+      let(:uses_either_native_or_uploaded_job_application_form) { false }
+
+      it "does not renders the link to view applicants" do
+        render_inline(subject)
+        expect(page).not_to have_link(
+          I18n.t("jobs.manage.view_applicants", count: 1),
+          href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id),
+        )
       end
     end
   end

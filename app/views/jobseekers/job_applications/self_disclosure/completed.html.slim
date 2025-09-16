@@ -1,0 +1,7 @@
+- content_for :page_title_prefix, t(".page_title")
+
+.govuk-grid-row
+  div
+    = govuk_panel(title_text: t(".panel_text"))
+    h2.govuk-heading-m = t(".heading")
+    p = t(".description")

@@ -282,17 +282,12 @@ en:
     contact_number_provided: Do you want to give a contact phone number?
     enable_job_applications: Application form type
     further_details_provided: Do you want to add further details about the role?
-    how_to_receive_applications: How do you want to receive applications?
+    how_to_receive_applications: How do you want candidates to apply for the role?
     include_additional_documents: Do you want to upload any additional documents?
-    personal_statement_guidance: Personal statement instructions
     safeguarding_information_provided: Do you want to give information about your commitment to safeguarding?
     school_visits: Do you want to offer school visits?
-    school_visits_heading: Arranging a visit to %{school}
-    how_to_apply: Application instructions
     visa_sponsorship: Can you offer Skilled Worker visa sponsorship to non-UK citizens for this role?
-
-    job_advert: Job advert
-    about_school: About %{school}
+    document_name: Document name
 
     review: Review your entries for each section below, making any changes needed before you publish the job listing.
     review_future:
@@ -306,6 +301,9 @@ en:
     share_on_facebook: Share to Facebook
     share_on_twitter: Share to Twitter
     share_this_job: Share this job
+    view_advert:
+      school: View advert on school website
+      external: View advert on external website
 
     external:
       notice: This school accepts applications through their own website, where you may also find more information about this job.

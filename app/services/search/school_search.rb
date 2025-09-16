@@ -1,10 +1,11 @@
 class Search::SchoolSearch
   extend Forwardable
+
   def_delegators :location_search, :point_coordinates, :polygon
 
   attr_reader :search_criteria, :name, :location, :radius, :organisation_types, :school_types, :original_scope
 
-  def initialize(search_criteria, scope: Organisation.all)
+  def initialize(search_criteria, scope: Organisation.visible_to_jobseekers)
     @search_criteria = search_criteria
     @name = search_criteria[:name]
     @location = search_criteria[:location]
@@ -60,7 +61,9 @@ class Search::SchoolSearch
     scope = scope.where(phase: key_stage_phases) if key_stage_phases
     scope = apply_organisation_type_filter(scope)
     scope = apply_school_type_filter(scope)
-    apply_job_availability_filter(scope)
+    scope = scope.with_live_vacancies if @search_criteria.key?(:job_availability)
+
+    scope
   end
 
   def marker_for_map(vacancy_id, organisation_id, geopoint)
@@ -83,19 +86,6 @@ class Search::SchoolSearch
 
     School::PHASE_TO_KEY_STAGES_MAPPINGS.select { |_, v| @search_criteria[:key_stage].intersect?(v.map(&:to_s)) }
                                         .map { |m| m.first.to_s }
-  end
-
-  def apply_job_availability_filter(scope)
-    return scope unless @search_criteria.key?(:job_availability)
-
-    vacancy_ids = Vacancy.live.select(:id)
-    organisation_ids = OrganisationVacancy.where(vacancy_id: vacancy_ids).select(:organisation_id)
-
-    if @search_criteria[:job_availability].first == "true"
-      scope.where(id: organisation_ids)
-    else
-      scope.where.not(id: organisation_ids)
-    end
   end
 
   def apply_organisation_type_filter(scope)

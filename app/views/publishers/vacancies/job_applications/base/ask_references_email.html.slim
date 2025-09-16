@@ -1,0 +1,12 @@
+- content_for :page_title_prefix, t(".page_title")
+
+= form_with(model: @form, url: wizard_path, method: :patch) do |f|
+  = f.govuk_error_summary
+
+  = f.hidden_field :collect_references, value: f.object.collect_references
+
+  = f.govuk_radio_buttons_fieldset :contact_applicants, legend: { size: "l", tag: "h1" } do
+    = f.govuk_radio_button :contact_applicants, "true"
+    = f.govuk_radio_button :contact_applicants, "false"
+
+  = f.govuk_submit t("buttons.save_and_continue")

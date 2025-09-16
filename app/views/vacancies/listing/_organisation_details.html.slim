@@ -12,8 +12,8 @@ section#school-overview
   - else
     = render "vacancies/listing/school", organisation: vacancy.organisation, vacancy: vacancy, contact_details: true
 
-  - if vacancy_or_organisation_description(vacancy).present?
-    p.govuk-body = simple_format(vacancy_or_organisation_description(vacancy))
+  - if vacancy.organisation.description.present?
+    p.govuk-body = simple_format(vacancy.organisation.description)
 
   - if vacancy.organisations.many?
     h3.govuk-heading-m = t(".schools.school_details")
@@ -26,10 +26,6 @@ section#school-overview
     h3.govuk-heading-m
       = t("jobs.arranging_a_visit.heading", organisation: vacancy.organisation_name)
     p.govuk-body = t("jobs.arranging_a_visit.description_html", email: contact_email_link(vacancy, class: "link-wrap"))
-  - elsif vacancy.school_visits_details.present?
-    h3.govuk-heading-m
-      = t("jobs.arranging_a_visit.heading", organisation: vacancy.organisation_name)
-    p.govuk-body = vacancy.school_visits_details
 
   - if organisation_map_can_be_displayed?(vacancy)
     section#school-location

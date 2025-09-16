@@ -63,7 +63,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
         context "with a referee" do
           before do
-            find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-referee-field']").click
+            find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-religious-referee-field']").click
           end
 
           it "produces the correct error messages" do
@@ -87,7 +87,11 @@ RSpec.describe "Jobseekers can complete a religious job application" do
               complete_from_references_page
             end
 
-            it "has the correct content" do
+            it "has a correct change link" do
+              expect(page).to have_link(href: jobseekers_job_application_build_path(job_application, :catholic))
+            end
+
+            it "shows the referee details" do
               expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
 
               expect(page).to have_content(referee_name)
@@ -98,10 +102,10 @@ RSpec.describe "Jobseekers can complete a religious job application" do
             end
 
             it "contains the entered information" do
-              expect(job_application.reload).to have_attributes(religious_reference_type: "referee")
+              expect(job_application.reload).to have_attributes(religious_reference_type: "religious_referee")
             end
 
-            it "can be submitted as an application" do
+            it "can submit application" do
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
               click_on I18n.t("buttons.submit_application")
@@ -135,7 +139,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
               expect(page).to have_content("blank_baptism_cert.pdf")
             end
 
-            it "can be submitted as an application" do
+            it "can submit application" do
               complete_from_references_page
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
@@ -175,7 +179,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
         context "without a referee" do
           before do
-            find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-no-referee-field']").click
+            find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-no-religious-referee-field']").click
           end
 
           it "allows jobseeker to not specify a religious referee" do
@@ -220,12 +224,18 @@ RSpec.describe "Jobseekers can complete a religious job application" do
         context "when not following a religion" do
           let(:following_religion) { false }
 
-          it "completes the religious journey" do
+          before do
             click_on I18n.t("buttons.save_and_continue")
-            expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
             complete_from_references_page
+          end
+
+          it "completes the religious journey" do
             submit_application_from_review
             expect(page).to have_content(I18n.t("jobseekers.job_applications.post_submit.panel.title"))
+          end
+
+          it "has a correct change link" do
+            expect(page).to have_link(href: jobseekers_job_application_build_path(job_application, :non_catholic))
           end
         end
 
@@ -250,7 +260,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
             context "without a referee" do
               before do
-                find("label[for='jobseekers-job-application-non-catholic-form-religious-reference-type-no-referee-field']").click
+                find("label[for='jobseekers-job-application-non-catholic-form-religious-reference-type-no-religious-referee-field']").click
               end
 
               it "completes the journey" do
@@ -264,7 +274,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
             context "when entering a referee" do
               before do
-                find("label[for='jobseekers-job-application-non-catholic-form-religious-reference-type-referee-field']").click
+                find("label[for='jobseekers-job-application-non-catholic-form-religious-reference-type-religious-referee-field']").click
               end
 
               it "errors when not entered" do

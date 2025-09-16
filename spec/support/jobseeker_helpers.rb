@@ -1,7 +1,9 @@
 module JobseekerHelpers
   def validates_step_complete(button: I18n.t("buttons.save_and_continue"))
     click_on button
-    expect(page).to have_content("There is a problem")
+    within ".govuk-error-summary" do
+      expect(page).to have_content("There is a problem")
+    end
   end
 
   def select_qualification_category(category)

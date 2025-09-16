@@ -1,5 +1,6 @@
 class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksController
   include Jobseekers::GovukOneLogin::Errors
+
   # Devise redirects response from Govuk One Login to this method.
   # The request parameters contain the response from Govuk One Login from the user authentication through their portal.
   # rubocop:disable Metrics/MethodLength
@@ -92,7 +93,9 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
       stored_location.include?("/saved_job/") || # Signed-in from a vacancy page save/unsave action.
       stored_location.include?("/jobs/") || # Signed-in from a job page (in order to download)
       stored_location.include?("/jobseekers/subscriptions") || # Signed-in from a job alert email link.
-      stored_location.include?("/jobseekers/account/email_preferences/edit") # Signed-in from a peak times email.
+      stored_location.include?("/self_disclosure/#{Wicked::FIRST_STEP}") || # Signed-in from self-disclosure email link.
+      stored_location.include?("/jobseekers/account/email_preferences/edit") || # Signed-in from a peak times email.
+      stored_location.include?("/apply") # Signed-in from an apply link on vacancy with uploaded form.
   end
 
   # :nocov:

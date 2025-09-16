@@ -1,0 +1,44 @@
+name: Set maintenance mode
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Select the environment
+        required: true
+        type: choice
+        options:
+        - qa
+        - staging
+        - production
+      mode:
+        description: Select the mode
+        required: true
+        type: choice
+        options:
+        - enable
+        - disable
+
+jobs:
+  set-maintenance-mode:
+    name: Set maintenance mode
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    permissions:
+      id-token: write
+      packages: write
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v5
+
+    - name: Enable or disable maintenance mode
+      uses: DFE-Digital/github-actions/maintenance@master
+      with:
+        azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        environment: ${{ inputs.environment }}
+        mode: ${{ inputs.mode }}
+        docker-repository: ghcr.io/dfe-digital/teaching-vacancies-maintenance
+        github-token: ${{ secrets.GITHUB_TOKEN }}

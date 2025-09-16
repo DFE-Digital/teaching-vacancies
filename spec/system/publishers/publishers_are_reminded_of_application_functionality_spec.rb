@@ -3,14 +3,14 @@ require "rails_helper"
 RSpec.describe "Application feature reminder" do
   let(:organisation) { create(:school) }
   let(:publisher) { create(:publisher) }
-  let(:last_vacancy) { Vacancy.order("created_at").last }
+  let(:last_vacancy) { DraftVacancy.order(:created_at).last }
 
   before { login_publisher(publisher:, organisation:, allow_reminders: true) }
 
   after { logout }
 
   context "when at least one vacancy has been published that accepts applications through TV" do
-    let!(:vacancy) { create(:vacancy, :published, enable_job_applications: true, publisher:, organisations: [organisation]) }
+    let!(:vacancy) { create(:vacancy, enable_job_applications: true, publisher:, organisations: [organisation]) }
 
     it "does not show reminder page when creating a job" do
       visit organisation_jobs_with_type_path
@@ -24,7 +24,7 @@ RSpec.describe "Application feature reminder" do
   context "when no vacancy that accepts applications through TV has been published since the last update to the new features page" do
     before { stub_const("Publishers::NewFeaturesController::NEW_FEATURES_PAGE_UPDATED_AT", DateTime.new(2020, 1, 1).freeze) }
 
-    let!(:vacancy) { create(:vacancy, :published, enable_job_applications: false, publisher:, organisations: [organisation]) }
+    let!(:vacancy) { create(:vacancy, enable_job_applications: false, publisher:, organisations: [organisation]) }
 
     it "shows reminder page before first step of create job and does not show it twice in the same session" do
       visit organisation_jobs_with_type_path
@@ -45,16 +45,20 @@ RSpec.describe "Application feature reminder" do
       expect(current_path).to eq(organisation_jobs_start_path)
     end
 
-    it "does not show reminder page when editing a job" do
-      visit organisation_jobs_with_type_path
-      click_on I18n.t("buttons.create_job")
-      expect(current_path).to eq(organisation_jobs_start_path)
-      click_on I18n.t("buttons.create_job")
-      visit organisation_job_path(vacancy.id)
+    context "when editing a job" do
+      let(:last_vacancy) { PublishedVacancy.order(:created_at).last }
 
-      click_on "Change", match: :first
+      it "does not show reminder page" do
+        visit organisation_jobs_with_type_path
+        click_on I18n.t("buttons.create_job")
+        expect(current_path).to eq(organisation_jobs_start_path)
+        click_on I18n.t("buttons.create_job")
+        visit organisation_job_path(vacancy.id)
 
-      expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_title))
+        click_on "Change", match: :first
+
+        expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_title))
+      end
     end
   end
 end

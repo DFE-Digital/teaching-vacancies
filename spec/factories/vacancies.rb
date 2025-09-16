@@ -34,23 +34,22 @@ FactoryBot.define do
     benefits { true }
     benefits_details { Faker::Lorem.paragraph(sentence_count: factory_rand(1..3)) }
     completed_steps do
-      %w[job_location job_role education_phases job_title key_stages subjects contract_type working_patterns pay_package important_dates start_date
+      %w[job_location job_role education_phases job_title key_stages contract_type working_patterns pay_package important_dates start_date
          applying_for_the_job school_visits contact_details about_the_role include_additional_documents]
     end
     contact_email { Faker::Internet.email(domain: "contoso.com") }
     contact_number_provided { true }
     contact_number { "01234 123456" }
-    contract_type { factory_sample(Vacancy.contract_types.keys) }
-    fixed_term_contract_duration { "6 months" }
+    contract_type { :permanent }
     further_details_provided { true }
     further_details { Faker::Lorem.sentence(word_count: factory_rand(50..300)) }
     expires_at { 6.months.from_now.change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
     include_additional_documents { false }
-    job_title { Rails.env.production? ? factory_sample(job_titles) : generate(:job_title) }
+    job_title { generate(:job_title) }
     listed_elsewhere { nil }
     job_roles { %w[teacher] }
-    ect_status { factory_sample(Vacancy.ect_statuses.keys) if job_roles.include?("teacher") }
+    ect_status { :ect_suitable }
     pay_scale { factory_sample(salaries) }
     publish_on { Date.current }
     salary { factory_sample(salaries) }
@@ -60,9 +59,7 @@ FactoryBot.define do
     skills_and_experience { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
     start_date_type { "specific_date" }
     starts_on { 1.year.from_now.to_date }
-    status { :published }
-    # Subjects are ignored when phases are primary-only
-    subjects { factory_sample(SUBJECT_OPTIONS, 2).map(&:first).sort! }
+    subjects { [] }
     key_stages { %w[ks1] }
     working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
     working_patterns { %w[full_time] }
@@ -72,28 +69,41 @@ FactoryBot.define do
     flexi_working_details_provided { true }
     flexi_working { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
 
-    trait :legacy_vacancy do
-      about_school { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
-      further_details_provided { nil }
-      further_details { nil }
-      how_to_apply { Faker::Lorem.paragraph(sentence_count: 4) }
-      job_advert { Faker::Lorem.paragraph(sentence_count: factory_rand(50..300)) }
-      personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
-      receive_applications { nil }
-      safeguarding_information_provided { nil }
-      safeguarding_information { nil }
-      school_offer { nil }
-      school_visits_details { Faker::Lorem.paragraph(sentence_count: 4) }
-      skills_and_experience { nil }
+    trait :secondary do
+      phases { %w[secondary] }
+      key_stages { %w[ks3] }
+
+      # Subjects are ignored when phases are primary-only
+      subjects { factory_sample(SUBJECT_OPTIONS, 2).map(&:first).sort! }
+
+      completed_steps do
+        %w[job_location job_role education_phases job_title key_stages contract_type working_patterns pay_package important_dates start_date
+           applying_for_the_job school_visits contact_details about_the_role include_additional_documents subjects]
+      end
+    end
+
+    trait :fixed_term do
+      contract_type { :fixed_term }
+      fixed_term_contract_duration { "6 months" }
+      is_parental_leave_cover { true }
     end
 
     trait :for_seed_data do
       job_roles { [factory_sample(Vacancy.job_roles.keys)] }
+      ect_status { factory_sample(Vacancy.ect_statuses.keys) if job_roles.include?("teacher") }
       is_job_share { [true, false].sample }
       working_patterns { factory_rand_sample(%w[full_time part_time], 1..2) }
       working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
-      phases { factory_rand_sample(Vacancy.phases.keys, 1..3) }
-      key_stages { factory_rand_sample(%w[early_years ks1 ks2 ks3 ks4 ks5], 2..3) }
+      rand_phases = Vacancy.phases.keys.sample(Random.rand(1..3))
+      phases { rand_phases }
+      key_stages { factory_rand_sample(Vacancy.new(phases: rand_phases).key_stages_for_phases, 2..3) }
+      rand_contract_type = Vacancy.contract_types.keys.sample
+      contract_type { rand_contract_type }
+      # if contract type comes out as fixed term, then parental_leave_cover and fixed_term_contract_duration become mandatory
+      if rand_contract_type == :fixed_term
+        is_parental_leave_cover { true }
+        fixed_term_contract_duration { "6 months" }
+      end
     end
 
     trait :without_any_money do
@@ -109,6 +119,12 @@ FactoryBot.define do
       enable_job_applications { false }
     end
 
+    trait :legacy_email_application do
+      receive_applications { "email" }
+      application_email { Faker::Internet.email(domain: "contoso.com") }
+      enable_job_applications { false }
+    end
+
     trait :central_office do
       organisations { build_list(:trust, 1) }
     end
@@ -119,17 +135,6 @@ FactoryBot.define do
 
     trait :at_multiple_schools do
       organisations { build_list(:school, 3) }
-    end
-
-    trait :fail_minimum_validation do
-      job_advert { Faker::Lorem.paragraph[0..5] }
-      job_title { Faker::Job.title[0..2] }
-    end
-
-    trait :fail_maximum_validation do
-      job_advert { Faker::Lorem.characters(number: 50_001) }
-      job_title { Faker::Lorem.characters(number: 150) }
-      salary { Faker::Lorem.characters(number: 257) }
     end
 
     trait :trashed do
@@ -186,7 +191,7 @@ FactoryBot.define do
       supporting_documents do
         [
           Rack::Test::UploadedFile.new(
-            Rails.root.join("spec", "fixtures", "files", "blank_job_spec.pdf"),
+            Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"),
             "application/pdf",
           ),
         ]
@@ -198,7 +203,26 @@ FactoryBot.define do
       receive_applications { "email" }
       application_form do
         Rack::Test::UploadedFile.new(
-          Rails.root.join("spec", "fixtures", "files", "blank_job_spec.pdf"),
+          Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"),
+          "application/pdf",
+        )
+      end
+    end
+
+    trait :catholic do
+      religion_type { :catholic }
+    end
+
+    trait :other_religion do
+      religion_type { :other_religion }
+    end
+
+    trait :with_uploaded_application_form do
+      enable_job_applications { false }
+      receive_applications { "uploaded_form" }
+      application_form do
+        Rack::Test::UploadedFile.new(
+          Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"),
           "application/pdf",
         )
       end
@@ -207,9 +231,7 @@ FactoryBot.define do
     trait :external do
       enable_job_applications { false }
       about_school { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
-      how_to_apply { Faker::Lorem.paragraph(sentence_count: 4) }
       job_advert { Faker::Lorem.paragraph(sentence_count: factory_rand(50..300)) }
-      personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
       publisher_ats_api_client
       external_source { "may_the_feed_be_with_you" }
       external_reference { "J3D1" }
@@ -222,8 +244,6 @@ FactoryBot.define do
     end
 
     factory :draft_vacancy, class: "DraftVacancy" do
-      status { :draft }
-
       completed_steps do
         %w[job_location job_role education_phases job_title key_stages subjects contract_type working_patterns pay_package start_date
            applying_for_the_job school_visits contact_details about_the_role include_additional_documents]

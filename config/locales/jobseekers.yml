@@ -102,6 +102,9 @@ en:
         example2: Prevent duty training
         example3: first aid courses
         example4: Team Teach
+    uploaded_job_applications:
+      upload_application_form:
+        not_authorized_to_download: You are not authorized to download this file.
     job_applications:
       apply:
         apply: Apply for this job
@@ -110,9 +113,11 @@ en:
         review_and_submit: Review and submit your application
         you_will_have: You will have the opportunity to review your application in full before you submit it.
         title: Review your application — Application
+        download_application_form: To apply for this job, you'll need to download the application form. Complete the sections below to provide your personal details and upload your completed application form.
       applying_for_the_job_heading: Applying for the job
       applying_for_the_job_paragraph: Please complete the online application.
-      no_cvs: CVs are not accepted.
+      requires_application_form_download: This job requires you to download an application form, you will be able to upload the application once complete.
+      no_cvs: CVs will not be accepted for this application.
       banner_links:
         apply: Apply for this job
         draft: Started - continue application
@@ -199,6 +204,8 @@ en:
           preference_to_catholics: Schools, academies and colleges with a religious character can give preference to Catholic applicants when recruiting for teaching roles, and most senior leadership posts require the postholder to be a practising Catholic.
           preference_for_support_staff: Preference can also be given to Catholic applicants for support staff roles where there is a genuine occupational requirement. In requesting the information below it is not our intention to deter applicants.
           non_catholics_apply: Applicants from all faiths and none are welcome to apply.
+        religious_information:
+          heading: Religious information
         catholic_following_religion:
           heading: Religious information
         non_catholic_following_religion:
@@ -207,6 +214,8 @@ en:
         catholic_religion_details:
           heading: Religious information
           title: Religious information — Application
+        religious_information:
+          heading: Religious information
         non_catholic_religion_details:
           heading: Religious information
           title: Religious information — Application
@@ -221,6 +230,8 @@ en:
           heading: Personal details
           step_title: Personal details
           title: Personal details — Application
+        upload_application_form:
+          heading: Upload application form
         personal_statement:
           additional_instructions: Additional instructions
           banner_title: Job listing and supporting documents
@@ -257,7 +268,8 @@ en:
           step_title: Education and qualifications
           title: Education and qualifications — Application
         referees:
-          description: You must include your current or most recent employer as a referee. If you did not work with children in this role, you must also provide a referee from your last job where you worked with children.
+          description_html: You must include details for a referee from your current or most recent employer. If you did not work with children in this role, you must include at least one referee from the last job where you worked with children. Schools must contact your referees in compliance with %{link}.
+          kcsie: Keeping children safe in education statutory guidance
           heading: References
           no_references: No referees specified
           step_title: References
@@ -346,11 +358,15 @@ en:
       feedbacks:
         create:
           success: Thank you for your feedback
+      further_details:
+        heading: Further information about the job
+        dbs_check_info: The candidate will be required to undergo a full enhanced DBS check and must be eligible to work in the UK.
       heading: Application
       job_application:
         closing_date: Closing date
         last_edited: Last edited
         shortlisted: Shortlisted
+        interviewing: Interviewing
         submitted: Submitted
         withdrawn: Withdrawn
       index:
@@ -388,6 +404,11 @@ en:
             - two referees
           save_and_return: You can save your application at any point and return to it later.
         heading: Before you start
+        saving_your_details: Saving your application details
+        your_details_will_be_saved: >-
+          Your details will be saved every time you make an application so that you can re-use them for future applications.
+        you_should_review: >-
+          You should review this information before submitting.
         privacy_info: >-
           We will store your information so you can use it to quickly apply for other jobs that use the Teaching
           Vacancies application form. Once you have submitted your application, your details can also be imported
@@ -404,6 +425,11 @@ en:
             paragraph1: You've made a new Teaching Vacancies account.
             paragraph2: If you already have an account using a different email address, you can %{link}
             transfer_account_link_text: transfer your account information.
+        description1: >-
+          Your details have been imported from your last job application.
+        description1_profile: >-
+          Your details have been imported from your last job application or profile.
+        import_from_previous_application: Your details have been imported from your last job application. You should review each section to make sure the information is still accurate.
       about_your_application:
         title: About your application
         warning:
@@ -414,26 +440,6 @@ en:
             link: teaching in England as a non-UK citizen (opens in new tab).
           search_for_jobs: Search for other jobs
           continue: Continue application
-      new_quick_apply:
-        one_login_banner:
-          title: Account found
-          paragraph1: We have found a teaching vacancies account using this email address.
-          paragraph2: Your account information including past applications has been saved.
-        assistance:
-          content_html: You can find out more about our %{privacy_html} and our %{terms_html}.
-          heading: Terms & Conditions
-          privacy: privacy policy
-          terms: terms and conditions
-        import_from_previous_application: Your details have been imported from your last job application. You should review each section to make sure the information is still accurate.
-        description1: >-
-          Your details have been imported from your last job application.
-        description2: You should review this information before submitting.
-        description3: You should read the job description and application pack before beginning your application.
-        description1_profile: >-
-          Your details have been imported from your last job application or profile.
-        heading: Helping you apply quicker
-        save_and_return: You can save your application at any point and return to it later.
-        title: Application
       not_defined: Not entered (will not be seen on application)
       qualifications:
         destroy:
@@ -478,7 +484,9 @@ en:
           success: Your referee was deleted
         edit:
           caption: References
-          description: If you are shortlisted, your referees may be contacted before your interview.
+          description:
+            html: If you are shortlisted, your referees may be contacted before your interview. Schools must contact your referees in compliance with %{link}. You can ask to be told before a school contacts your referees, but we cannot guarantee the school will do so.
+          kcsie: Keeping children safe in education statutory guidance
           heading: Edit a referee
           title: Edit a referee — Application
           work_in_school_heading: If you work in a school
@@ -486,13 +494,16 @@ en:
           trainee_teacher_heading: If you are a trainee teacher
           trainee_teacher_guidance: You should provide a reference where you can show your experience working with children. You can include references from school placements or from your course provider.
           work_with_children_heading: If you used to work with children
-          work_with_children_guidance: If you do not currently work with children but have in the past, you should provide one referee from your current or most recent employer and one from the last time you worked with children.
+          work_with_children_guidance: If you do not currently work with children but have in the past, you should provide one reference from your current or most recent employer and one from the last time you worked with children.
+          consent_confirmation: By adding this referee, you are confirming that they have consented to providing their contact information for the purpose of providing a reference.
         email: Email address
         job_title: Job title
         name: Name
         new:
           caption: References
-          description: If you are shortlisted, your referees may be contacted before your interview.
+          description:
+            html: If you are shortlisted, your referees may be contacted before your interview. Schools must contact your referees in compliance with %{link}. You can ask to be told before a school contacts your referees, but we cannot guarantee the school will do so.
+          kcsie: Keeping children safe in education statutory guidance
           heading: Add a referee
           title: Add a referee — Application
           work_in_school_heading: If you work in a school
@@ -500,12 +511,16 @@ en:
           trainee_teacher_heading: If you are a trainee teacher
           trainee_teacher_guidance: You should provide a reference where you can show your experience working with children. You can include references from school placements or from your course provider.
           work_with_children_heading: If you used to work with children
-          work_with_children_guidance: If you do not currently work with children but have in the past, you should provide one referee from your current or most recent employer and one from the last time you worked with children.
+          work_with_children_guidance: If you do not currently work with children but have in the past, you should provide one reference from your current or most recent employer and one from the last time you worked with children.
+          consent_confirmation: By adding this referee, you are confirming that they have consented to providing their contact information for the purpose of providing a reference.
         organisation: Organisation
         phone_number: Phone number
         relationship: Relationship to applicant
         is_most_recent_employer: Current or most recent employer
       review:
+        contact_referer:
+          jobseeker: You have requested that the school contact you before collecting references.
+          publisher: This applicant wants to be contacted before you collect their references.
         view_your_profile: View your profile
         confirmation:
           heading: Confirmation
@@ -541,7 +556,7 @@ en:
           none: You have not added any training.
         religious_information:
           heading: This school has a religious character and has asked applicants to provide religious information as part of the application, where possible.
-          baptism_certificate: Baptism certficate
+          baptism_certificate: Baptism certificate
       show:
         application_sections: Application sections
         ask_for_support:
@@ -611,6 +626,7 @@ en:
         submitted: Application submitted
         unsuccessful: Unsuccessful
         withdrawn: Withdrawn
+        self_disclosure_completed: Self-disclosure completed
       post_submit:
         feedback:
           description: >-
@@ -811,6 +827,9 @@ en:
         hide_profile: Hide profile from schools or trusts
         imported: You have recently submitted a job application, so some of your details have been imported into your profile.
         page_description: Your profile allows schools to contact you, based on the details in your profile.
+        inactive_profile: >-
+          Your profile is inactive. You can reactivate it by selecting 'Turn on profile'.
+          When your profile is active, schools and trust hiring staff can view your details and contact you about jobs by email.
         page_title: Your profile
         preview_and_turn_off_profile: Preview and turn off profile
         preview_and_turn_on_profile: Preview and turn on profile
@@ -832,7 +851,8 @@ en:
         confirm_turn_off: Confirm that you want to turn off your profile
         confirm_turn_on: Confirm that you want to turn on your profile
       toggle:
-        not_ready: You must complete your personal details and job preferences before you turn on your profile
+        not_ready: >-
+          You must complete your personal details, job preferences, professional status, qualifications and work history before you turn on your profile
       about_you:
         edit:
           page_title: About You

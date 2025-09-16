@@ -5,12 +5,12 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
   let(:school) { create(:school, :secondary) }
   let(:vacancy) do
     create(:vacancy,
+           :secondary,
            :ect_suitable,
            job_roles: ["teacher"],
            job_title: "Teacher",
            subjects: ["English"],
            working_patterns: ["full_time"],
-           phases: %w[secondary],
            organisations: [school])
   end
 
@@ -23,7 +23,7 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
     expect(:vacancy_create_job_alert_clicked).to have_been_enqueued_as_analytics_event(with_data: { vacancy_id: vacancy.id }) # rubocop:disable RSpec/ExpectActual
 
     expect(page).to have_content(I18n.t("subscriptions.new.title"))
-    and_the_search_criteria_are_populated
+    expect_search_criteria_to_be_populated
     click_on I18n.t("buttons.subscribe")
     expect(page).to have_content("There is a problem")
 
@@ -39,10 +39,10 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
     click_on I18n.t("jobs.alert.similar.verbose.link_text")
 
     expect(:vacancy_create_job_alert_clicked).to have_been_enqueued_as_analytics_event(with_data: { vacancy_id: vacancy.id }) # rubocop:disable RSpec/ExpectActual
-    and_the_search_criteria_are_populated
+    expect_search_criteria_to_be_populated
   end
 
-  def and_the_search_criteria_are_populated
+  def expect_search_criteria_to_be_populated
     expect(page.find_field("jobseekers-subscription-form-location-field").value).to eq(school.postcode)
     expect(page.find_field("jobseekers-subscription-form-radius-field").value).to eq(Search::CriteriaInventor::DEFAULT_RADIUS_IN_MILES.to_s)
     expect(page.find_field("jobseekers-subscription-form-teaching-job-roles-teacher-field")).to be_checked

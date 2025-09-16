@@ -1,9 +1,9 @@
 ruby:
-  multistep = Jobseekers::JobPreferencesForm.from_record(profile.job_preferences)
+  multistep = Jobseekers::JobPreferencesForm.from_record(@profile.job_preferences)
   attributes = {
     roles: {
       map_values: ->(value, step) { step.options[value] },
-      join_with: "</br></br>",
+      join_with: ", ",
     },
     phases: {
       map_values: ->(value, step) { step.options[value] },

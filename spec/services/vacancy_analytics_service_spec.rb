@@ -92,5 +92,17 @@ RSpec.describe VacancyAnalyticsService do
 
       expect(existing.reload.referrer_counts["google.com"]).to eq(5)
     end
+
+    it "ignores the update if the vacancy trying no longer exists" do
+      deleted_vacancy_id = SecureRandom.uuid
+      original_count = VacancyAnalytics.count
+
+      expect {
+        described_class.update_stats_in_database({
+          deleted_vacancy_id => { "google.com" => 3 },
+        })
+      }.not_to raise_error
+      expect(VacancyAnalytics.count).to eq(original_count)
+    end
   end
 end

@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "3.4.3"
+ruby "3.4.5"
 
 RAILS_VERSION = "~> 7.2".freeze
 gem "actionmailer", RAILS_VERSION
@@ -23,10 +23,10 @@ gem "activerecord-session_store"
 gem "active_storage_validations"
 gem "addressable"
 gem "array_enum"
-gem "aws-sdk-s3", require: false
+gem "aws-sdk-s3"
 gem "breasal"
 gem "devise"
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.4"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.7"
 gem "discard", "~> 1.4"
 gem "factory_bot_rails"
 gem "faker"
@@ -36,8 +36,8 @@ gem "geocoder"
 gem "google-apis-drive_v3"
 gem "google-apis-indexing_v3"
 gem "google-cloud-bigquery"
-gem "govuk-components", "~> 5.10.0"
-gem "govuk_design_system_formbuilder", "~> 5.10.1"
+gem "govuk-components", "~> 5.11.1"
+gem "govuk_design_system_formbuilder", "~> 5.11.0"
 gem "high_voltage"
 gem "httparty"
 gem "ipaddr"
@@ -49,6 +49,7 @@ gem "lockbox"
 gem "mail-notify"
 gem "mimemagic"
 gem "mini_magick"
+gem "mutex_m"
 gem "net-pop", github: "ruby/net-pop"
 gem "net-sftp"
 gem "nokogiri"
@@ -85,6 +86,8 @@ gem "skylight"
 gem "slim-rails"
 gem "validate_url"
 gem "valid_email2"
+# this upgrade creates 848 test failures
+gem "view_component", "< 4"
 gem "wicked"
 gem "xml-sitemap"
 gem "zendesk_api"
@@ -105,12 +108,13 @@ end
 
 group :development, :test do
   gem "brakeman"
-  gem "byebug", platforms: %i[mri mingw x64_mingw]
+  gem "byebug", platforms: %i[mri windows]
   gem "database_consistency", require: false
   gem "debug", ">= 1.0.0", require: false
   gem "dotenv-rails"
   gem "guard-rspec", require: false
   gem "guard-rubocop", "~> 1.5", require: false
+  gem "guard-slim_lint"
   gem "launchy", "~> 3.1"
   gem "parallel_tests"
   gem "pdf-inspector", require: "pdf/inspector"
@@ -122,14 +126,13 @@ group :development, :test do
   gem "rspec-rails"
   gem "rswag-specs"
   gem "slim_lint", require: false
-  # https://github.com/grodowski/undercover/issues/220
-  # v 0.6 doesn't respect :nocov: tags properly
-  gem "undercover", "< 0.6", require: false
+  gem "undercover", require: false
 end
 
 group :test do
   gem "capybara"
   gem "climate_control"
+  gem "cuprite"
   gem "fastimage"
   gem "mock_redis"
   gem "rack_session_access"
@@ -137,7 +140,8 @@ group :test do
   gem "selenium-webdriver"
   gem "shoulda-matchers"
   gem "simplecov", require: false
-  gem "simplecov-lcov", require: false
+  # Lcov 0.9 breaks undercover's LCov parser
+  gem "simplecov-lcov", "< 0.9", require: false
   gem "site_prism"
   gem "uri-query_params"
   gem "vcr"
@@ -145,4 +149,4 @@ group :test do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
+gem "tzinfo-data", platforms: %i[windows jruby]

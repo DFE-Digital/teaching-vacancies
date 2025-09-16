@@ -1,15 +1,18 @@
 ---
 order: 102
-title: Update your subject and teaching knowledge
-meta_description: Find out how to update your subject and teaching knowledge to help return to teaching.
+title: Refresh your subject and teaching knowledge
+meta_description: Refresh your subject knowledge with enhancement and refresher advice. Stay updated on new curriculum changes for returning teachers.
 date_posted: 17/02/2025
+date_updated: 28/08/2025
 category_tags: apply
-card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/update-your-subject-and-teaching-knowledge.jpg"
+card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/update-your-subject-and-teaching-knowledge.png"
 ---
 
-![A student working at a computer while a teacher helps.](/content-assets/jobseeker-guides/return-to-teaching-in-england/update-your-subject-and-teaching-knowledge.jpg)
+![A student working at a computer while a teacher helps.](/content-assets/jobseeker-guides/return-to-teaching-in-england/update-your-subject-and-teaching-knowledge.png)
 
 If you’re returning to teaching, refreshing your subject and teaching knowledge will improve your confidence and prepare you for your return to the classroom.
+
+Consider what is important to update yourself on and how you can bring yourself up to date at a pace that suits you.
 
 You might find it helpful to:
 
@@ -39,4 +42,4 @@ If you have previously taught or trained to teach in the UK, you could be eligib
 
 Advisers can give you free one-to-one support with accessing courses to enhance your subject knowledge or teaching practice.
 
-You can chat by phone, text or email, as little or as often as you need.
+You can chat with your adviser by phone, text or email, as little or as often as you need.

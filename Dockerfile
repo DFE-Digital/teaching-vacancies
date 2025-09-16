@@ -1,10 +1,10 @@
  # Some packages are defined here with a hardcoded version to resolve vulnerabilities in the packages coming with
- # Alpine v3.21.
- # TODO: Regularly check in the alpine ruby "3.4.3-alpine3.21" images for its latest upgraded packages so we can remove
+ # Alpine v3.22.
+ # TODO: Regularly check in the alpine ruby "3.4.5-alpine3.22" images for its latest upgraded packages so we can remove
  # the hardcoded versions below when they have been updated in the alpine ruby image.
-ARG PROD_PACKAGES="imagemagick libpng libjpeg libxml2=2.13.4-r6 libxslt libpq tzdata shared-mime-info postgresql15 busybox yaml openssl=3.3.3-r0 musl=1.2.5-r9"
+ARG PROD_PACKAGES="imagemagick libpng libjpeg libxml2 libxslt libpq tzdata shared-mime-info postgresql15 libpq=17.6-r0"
 
-FROM ruby:3.4.3-alpine3.21 AS builder
+FROM ruby:3.4.5-alpine3.22 AS builder
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ ENV DEV_PACKAGES="gcc libc-dev make yaml-dev yarn postgresql15-dev build-base gi
 RUN apk add --no-cache $PROD_PACKAGES $DEV_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
-RUN gem install bundler:2.3.5 --no-document
+RUN gem install bundler:2.7.1 --no-document
 
 
 COPY Gemfile* ./
@@ -32,13 +32,11 @@ COPY . .
 # configuring it using the ENV variables we provide in storage.yml. However, at this point, these ENV vars have not been loaded,
 # causing the error. Below we define two throaway ENV vars to prevent the error from being thrown. These are then later overwritten,
 # when all of the ENV vars are loaded.
-ARG RAILS_MASTER_KEY
 
 ENV DOCUMENTS_S3_BUCKET=throwaway_value
 ENV SCHOOLS_IMAGES_LOGOS_S3_BUCKET=throwaway_value
-ENV RAILS_MASTER_KEY=$RAILS_MASTER_KEY
 
-RUN RAILS_ENV=production SECRET_KEY_BASE=required-to-run-but-not-used RAILS_SERVE_STATIC_FILES=1 bundle exec rake assets:precompile
+RUN --mount=type=secret,id=master_key,env=RAILS_MASTER_KEY RAILS_ENV=production SECRET_KEY_BASE=required-to-run-but-not-used RAILS_SERVE_STATIC_FILES=1 bundle exec rake assets:precompile
 
 RUN rm -rf node_modules log tmp yarn.lock && \
       rm -rf /usr/local/bundle/cache && \
@@ -50,7 +48,7 @@ RUN rm -rf node_modules log tmp yarn.lock && \
 
 
 # this stage reduces the image size.
-FROM ruby:3.4.3-alpine3.21 AS production
+FROM ruby:3.4.5-alpine3.22 AS production
 
 RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
 WORKDIR /app
@@ -59,7 +57,7 @@ ARG PROD_PACKAGES
 RUN apk -U upgrade && apk add --no-cache $PROD_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
-RUN gem install bundler:2.3.5 --no-document
+RUN gem install bundler:2.7.1 --no-document
 
 COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/

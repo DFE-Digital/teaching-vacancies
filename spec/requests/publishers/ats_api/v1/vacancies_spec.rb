@@ -57,9 +57,9 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           body = response.parsed_body
           expect(body.keys).to match_array(%w[vacancies meta])
           # Contain all the client vacancies
-          expect(body["vacancies"].map { |v| v["id"] }).to contain_exactly(vacancy_published.id,
-                                                                           vacancy_unpublished.id,
-                                                                           vacancy_expired.id)
+          expect(body["vacancies"].pluck("external_reference")).to contain_exactly(vacancy_published.external_reference,
+                                                                                   vacancy_unpublished.external_reference,
+                                                                                   vacancy_expired.external_reference)
           expect(body["meta"]["totalPages"]).to eq(1)
         end
       end
@@ -151,7 +151,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           created_vacancy = Vacancy.last
           expect(response.parsed_body).to eq("id" => created_vacancy.id)
           expect(created_vacancy).to have_attributes(
-            status: "published",
             external_advert_url: "https://www.example.com/ats-site/advertid",
             expires_at: Date.new(2026, 1, 1),
             job_title: "Teacher of Geography",
@@ -288,7 +287,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             created_vacancy = Vacancy.last
             expect(response.parsed_body).to eq("id" => created_vacancy.id)
             expect(created_vacancy).to have_attributes(
-              status: "published",
               publish_on: Time.zone.today,
               benefits_details: nil,
               starts_on: nil,
@@ -750,6 +748,12 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           )
         end
 
+        it "enqueues UpdateGoogleIndexQueueJob with the correct job URL", document: false do |example|
+          expect(UpdateGoogleIndexQueueJob).to receive(:perform_later)
+          submit_request(example.metadata)
+          assert_response_matches_metadata(example.metadata)
+        end
+
         context "when not providing the optional parameters", document: false do
           let(:vacancy_params) do
             super().except(:publish_on,
@@ -788,16 +792,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
               "publish_on" => publish_on,
               "public_url" => nil,
             )
-          end
-        end
-
-        context "when DisableExpensiveJobs is disabled", document: false do
-          before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false) }
-
-          it "enqueues UpdateGoogleIndexQueueJob with the correct job URL" do |example|
-            expect(UpdateGoogleIndexQueueJob).to receive(:perform_later)
-            submit_request(example.metadata)
-            assert_response_matches_metadata(example.metadata)
           end
         end
       end

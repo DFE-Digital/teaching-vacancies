@@ -160,10 +160,10 @@ RSpec.describe "Publisher authentication" do
 
     context "with valid credentials that match a Local Authority" do
       let(:organisation) { create(:local_authority, local_authority_code: "100") }
+      let!(:publisher) { Publisher.find_by(oid: user_oid) }
 
       before do
         allow(Rails.configuration).to receive(:enforce_local_authority_allowlist).and_return(true)
-        allow(PublisherPreference).to receive(:find_by).and_return(publisher_preference)
 
         stub_publisher_authentication_step(school_urn: nil, la_code: organisation.local_authority_code, email: dsi_email_address)
         stub_publisher_authorisation_step
@@ -171,7 +171,9 @@ RSpec.describe "Publisher authentication" do
       end
 
       context "when user preferences have been set" do
-        let(:publisher_preference) { instance_double(PublisherPreference) }
+        before do
+          create(:publisher_preference, publisher: publisher, organisation: organisation)
+        end
 
         it_behaves_like "a successful Publisher sign in"
 
@@ -185,8 +187,6 @@ RSpec.describe "Publisher authentication" do
       end
 
       context "when user preferences have not been set" do
-        let(:publisher_preference) { nil }
-
         it "redirects the sign in page to the publisher preference page" do
           visit new_publisher_session_path
           sign_in_publisher
@@ -215,7 +215,7 @@ RSpec.describe "Publisher authentication" do
       it "raises an error" do
         visit new_publisher_session_path
 
-        expect { sign_in_publisher }.to raise_error(Authorisation::ExternalServerError)
+        expect { sign_in_publisher }.to raise_error(Publishers::DfeSignIn::Authorisation::ExternalServerError)
       end
     end
 
@@ -239,9 +239,11 @@ RSpec.describe "Publisher authentication" do
     let(:publisher) { create(:publisher) }
     let(:school) { create(:school) }
 
-    scenario "as an authenticated user" do
-      login_publisher(publisher: publisher, organisation: school)
+    before { login_publisher(publisher: publisher, organisation: school) }
 
+    after { logout }
+
+    scenario "as an authenticated user" do
       visit root_path
 
       click_on(I18n.t("nav.sign_out"))

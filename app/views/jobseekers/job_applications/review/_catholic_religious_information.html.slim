@@ -23,38 +23,36 @@
         - else
           - row.with_value text: ""
 
-      - case job_application.religious_reference_type
-        - when "referee"
-          - summary_list.with_row do |row|
-            - row.with_key text: t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_name")
-            - row.with_value text: job_application.religious_referee_name
+      - if job_application.religious_referee?
+        - summary_list.with_row do |row|
+          - row.with_key text: t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_name")
+          - row.with_value text: job_application.religious_referee_name
 
-          - summary_list.with_row do |row|
-            - row.with_key text: t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_address")
-            - row.with_value text: job_application.religious_referee_address
+        - summary_list.with_row do |row|
+          - row.with_key text: t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_address")
+          - row.with_value text: job_application.religious_referee_address
 
-          - summary_list.with_row do |row|
-            - row.with_key text: t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_role")
-            - row.with_value text: job_application.religious_referee_role
+        - summary_list.with_row do |row|
+          - row.with_key text: t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_role")
+          - row.with_value text: job_application.religious_referee_role
 
-          - summary_list.with_row do |row|
-            - row.with_key text: t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_email")
-            - row.with_value text: job_application.religious_referee_email
+        - summary_list.with_row do |row|
+          - row.with_key text: t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_email")
+          - row.with_value text: job_application.religious_referee_email
 
-          - summary_list.with_row do |row|
-            - row.with_key text: t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_phone")
-            - row.with_value text: job_application.religious_referee_phone
+        - summary_list.with_row do |row|
+          - row.with_key text: t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_phone")
+          - row.with_value text: job_application.religious_referee_phone
+      - elsif job_application.baptism_certificate?
+        - summary_list.with_row do |row|
+          - row.with_key text: t("jobseekers.job_applications.review.religious_information.baptism_certificate")
+          - row.with_value text: govuk_link_to("#{job_application.baptism_certificate.filename}  (#{number_to_human_size(job_application.baptism_certificate.byte_size)})", job_application.baptism_certificate, download: "true")
 
-        - when "baptism_certificate"
-          - summary_list.with_row do |row|
-            - row.with_key text: t("jobseekers.job_applications.review.religious_information.baptism_certificate")
-            - row.with_value text: govuk_link_to("#{job_application.baptism_certificate.filename}  (#{number_to_human_size(job_application.baptism_certificate.byte_size)})", job_application.baptism_certificate, download: "true")
+      - elsif job_application.baptism_date?
+        - summary_list.with_row do |row|
+          - row.with_key text: t("helpers.label.jobseekers_job_application_catholic_form.baptism_address")
+          - row.with_value text: job_application.baptism_address
 
-        - when "baptism_date"
-          - summary_list.with_row do |row|
-            - row.with_key text: t("helpers.label.jobseekers_job_application_catholic_form.baptism_address")
-            - row.with_value text: job_application.baptism_address
-
-          - summary_list.with_row do |row|
-            - row.with_key text: t("helpers.legend.jobseekers_job_application_catholic_form.baptism_date")
-            - row.with_value text: job_application.baptism_date&.to_formatted_s(:day_month_year)
+        - summary_list.with_row do |row|
+          - row.with_key text: t("helpers.legend.jobseekers_job_application_catholic_form.baptism_date")
+          - row.with_value text: job_application.baptism_date&.to_formatted_s(:day_month_year)

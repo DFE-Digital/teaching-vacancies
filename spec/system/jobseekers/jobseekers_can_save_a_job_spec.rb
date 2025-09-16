@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can save a job" do
   let(:school) { create(:school) }
-  let(:vacancy) { create(:vacancy, :published, organisations: [school]) }
+  let(:vacancy) { create(:vacancy, organisations: [school]) }
   let(:created_jobseeker) { Jobseeker.first }
 
   context "when a jobseeker has an account" do
@@ -16,7 +16,7 @@ RSpec.describe "Jobseekers can save a job" do
       context "when the job is not already saved" do
         it "saves the job" do
           save_job
-          and_the_job_is_saved
+          expect_the_job_to_be_saved
         end
       end
 
@@ -25,7 +25,7 @@ RSpec.describe "Jobseekers can save a job" do
 
         it "unsaves the job" do
           unsave_job
-          and_the_job_is_unsaved
+          expect_the_job_to_no_longer_be_saved
         end
       end
     end
@@ -36,7 +36,7 @@ RSpec.describe "Jobseekers can save a job" do
           it "saves the job after signing in" do
             save_job
             sign_in_jobseeker_govuk_one_login(jobseeker)
-            and_the_job_is_saved
+            expect_the_job_to_be_saved
             expect(page).to have_no_content "New Teaching Vacancies account created"
           end
         end
@@ -77,7 +77,7 @@ RSpec.describe "Jobseekers can save a job" do
         it "does nothing after signing in" do
           save_job
           sign_in_jobseeker_govuk_one_login(jobseeker)
-          and_the_job_is_saved
+          expect_the_job_to_be_saved
         end
       end
     end
@@ -93,14 +93,14 @@ RSpec.describe "Jobseekers can save a job" do
     click_on I18n.t("jobseekers.saved_jobs.saved")
   end
 
-  def and_the_job_is_saved
+  def expect_the_job_to_be_saved
     expect(current_path).to eq(job_path(vacancy))
     expect(page).to have_content("You have saved this job. View all your saved jobs on your account")
     expect(page).to have_selector(:link_or_button, I18n.t("jobseekers.saved_jobs.saved"))
     expect(created_jobseeker.saved_jobs.pluck(:vacancy_id)).to include(vacancy.id)
   end
 
-  def and_the_job_is_unsaved
+  def expect_the_job_to_no_longer_be_saved
     expect(current_path).to eq(job_path(vacancy))
     expect(page).to have_selector(:link_or_button, I18n.t("jobseekers.saved_jobs.save"))
     expect(created_jobseeker.saved_jobs.pluck(:vacancy_id)).not_to include(vacancy.id)

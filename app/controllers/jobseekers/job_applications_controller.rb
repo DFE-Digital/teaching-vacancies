@@ -1,37 +1,76 @@
+# rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/ClassLength
 class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseController
   include Jobseekers::QualificationFormConcerns
 
-  before_action :set_job_application, only: %i[review apply pre_submit submit post_submit show confirm_destroy destroy confirm_withdraw withdraw]
-  before_action :raise_unless_vacancy_enable_job_applications,
-                :redirect_if_job_application_exists, only: %i[new create new_quick_apply quick_apply]
+  before_action :set_job_application, only: %i[review apply pre_submit submit post_submit show confirm_destroy destroy confirm_withdraw withdraw download]
+
+  before_action :raise_cannot_apply, unless: -> { vacancy.allow_job_applications? }, only: %i[new create]
+  before_action :redirect_if_job_application_exists, only: %i[new create]
   before_action :redirect_unless_draft_job_application, only: %i[review]
 
-  helper_method :employments, :job_application, :qualification_form_param_key, :review_form, :vacancy, :withdraw_form
+  helper_method :employments, :job_application, :qualification_form_param_key, :vacancy
+
+  def index
+    draft_job_applications = current_jobseeker.job_applications
+                                              .includes(:vacancy).draft
+                                              .order(updated_at: :desc)
+    active_drafts, expired_drafts = draft_job_applications.partition { |job_application| job_application.vacancy.expires_at.future? }
+
+    # This is the primary sort order for application statuses on the index page
+    status_keys = %i[offered interviewing shortlisted reviewed submitted unsuccessful unsuccessful_interview withdrawn declined].freeze
+
+    action_required = JobApplication.includes(:self_disclosure_request, :vacancy)
+                                    .where(jobseeker: current_jobseeker)
+                                    .joins(:self_disclosure_request)
+                                    .merge(SelfDisclosureRequest.sent)
+                                    .interviewing.order(submitted_at: :desc)
+
+    active_job_applications = current_jobseeker.job_applications
+                                                .includes(:vacancy)
+                                                .where.not(status: :draft)
+                                                .order(submitted_at: :desc)
+                                                .sort_by { |x| status_keys.index(x.status.to_sym) } - action_required
+    @job_applications = active_drafts + action_required + active_job_applications + expired_drafts
+  end
 
   def new
     send_dfe_analytics_event
-
     if session[:newly_created_user]
       @newly_created_user = true
       session.delete(:newly_created_user)
     end
 
+    @has_previous_application = nil
     if quick_apply?
-      redirect_to about_your_application_jobseekers_job_job_application_path(vacancy.id)
-    elsif session[:user_exists_first_log_in]
+      # If we don't know the user's status, or they have the right perform the role
+      # then we can send them straight to the 'quick apply' screen, otherwise we display the
+      # (badly named) about_your_application screen which suggests they might not be qualified for the role.
+      if !vacancy.visa_sponsorship_available? && profile.present? && profile.needs_visa_for_uk?
+        render "about_your_application"
+      else
+        @has_previous_application = previous_application?
+      end
+    end
+    if session[:user_exists_first_log_in]
       @user_exists_first_log_in = true
       session.delete(:user_exists_first_log_in)
     end
   end
 
   def create
-    new_job_application = current_jobseeker.job_applications.create(vacancy:)
-    redirect_to jobseekers_job_application_apply_path(new_job_application)
+    if quick_apply?
+      new_job_application = prefill_job_application_with_available_data
+
+      redirect_to jobseekers_job_application_apply_path(new_job_application), notice: t("jobseekers.job_applications.new.import_from_previous_application")
+    else
+      new_job_application = vacancy.create_job_application_for(current_jobseeker)
+      redirect_to jobseekers_job_application_apply_path(new_job_application.id)
+    end
   end
 
   def pre_submit
-    @form = Jobseekers::JobApplication::PreSubmitForm.new(completed_steps: job_application.completed_steps, all_steps: step_process.steps.excluding(:review).map(&:to_s))
+    @form = Jobseekers::JobApplication::PreSubmitForm.new(completed_steps: job_application.completed_steps, all_steps: step_process.validatable_steps)
     if @form.valid? && all_steps_valid?
       redirect_to jobseekers_job_application_review_path(@job_application)
     else
@@ -41,44 +80,23 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def review
     session[:back_to_review] = (session[:back_to_review] || []).push(job_application.id).uniq
-  end
-
-  # This redirect happens if we don't know the user's status, or they have the right perform the role
-  # (either they have a visa or the job doesn't require one)
-  def about_your_application
-    if profile&.personal_details.nil? || profile.personal_details.has_right_to_work_in_uk? || vacancy.visa_sponsorship_available?
-      redirect_to new_quick_apply_jobseekers_job_job_application_path(vacancy.id)
-    end
-  end
-
-  def new_quick_apply
-    if session[:user_exists_first_log_in]
-      @user_exists_first_log_in = true
-      session.delete(:user_exists_first_log_in)
-    end
-
-    @has_previous_application = previous_application?
-    raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
+    @review_form = Jobseekers::JobApplication::ReviewForm.new
   end
 
   def apply
-    @form = Jobseekers::JobApplication::PreSubmitForm.new(completed_steps: job_application.completed_steps, all_steps: step_process.steps.excluding(:review).map(&:to_s))
-  end
-
-  def quick_apply
-    raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
-
-    new_job_application = prefill_job_application_with_available_data
-
-    redirect_to jobseekers_job_application_apply_path(new_job_application), notice: t("jobseekers.job_applications.new_quick_apply.import_from_previous_application")
+    @form = Jobseekers::JobApplication::PreSubmitForm.new(
+      completed_steps: job_application.completed_steps,
+      all_steps: step_process.validatable_steps,
+    )
   end
 
   def submit
-    raise ActionController::RoutingError, "Cannot submit application for non-listed job" unless vacancy.listed?
+    raise ActionController::RoutingError, "Cannot submit application for non-listed job" unless vacancy.live?
     raise ActionController::RoutingError, "Cannot submit non-draft application" unless job_application.draft?
 
-    if review_form.valid? && all_steps_valid?
-      update_jobseeker_profile!(job_application) if review_form.update_profile
+    @review_form = Jobseekers::JobApplication::ReviewForm.new(review_form_params)
+    if @review_form.valid? && all_steps_valid?
+      update_jobseeker_profile!(job_application) if @review_form.update_profile
       job_application.submit!
       redirect_to jobseekers_job_application_post_submit_path job_application
     else
@@ -92,6 +110,11 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def show
     raise ActionController::RoutingError, "Cannot view draft application" if job_application.draft?
+  end
+
+  def download
+    document = job_application.submitted_application_form
+    send_data(document.data, filename: document.filename, disposition: "inline")
   end
 
   def confirm_destroy
@@ -109,13 +132,17 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def confirm_withdraw
     raise ActionController::RoutingError, "Cannot withdraw non-reviewed/shortlisted/submitted application" unless
       job_application.status.in?(%w[reviewed shortlisted submitted])
+
+    @withdraw_form = Jobseekers::JobApplication::WithdrawForm.new
   end
 
   def withdraw
     raise ActionController::RoutingError, "Cannot withdraw non-reviewed/shortlisted/submitted application" unless
       job_application.status.in?(%w[reviewed shortlisted submitted])
 
-    if withdraw_form.valid?
+    @withdraw_form = Jobseekers::JobApplication::WithdrawForm.new(withdraw_form_params)
+
+    if @withdraw_form.valid?
       job_application.withdrawn!
       redirect_to jobseekers_job_applications_path, success: t(".success", job_title: vacancy.job_title)
     else
@@ -144,19 +171,15 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def all_steps_valid?
     # Check that all steps are valid, in case we have changed the validations since the step was completed.
     # NB: Only validates top-level step forms. Does not validate individual qualifications, employments, or references.
-    step_process.steps.excluding(:review).all? { |step| step_valid?(step) }
+    step_process.validatable_steps.all? { |step| step_valid?(step) }
   end
 
   def step_valid?(step)
-    form_class = "jobseekers/job_application/#{step}_form".camelize.constantize
-
+    form_class = step_process.form_class_for(step)
     attributes = form_class.load_form(job_application)
-
     form = form_class.new(attributes)
 
-    form.valid?.tap do
-      job_application.errors.merge!(form.errors)
-    end
+    form.valid?.tap { job_application.errors.merge!(form.errors) }
   end
 
   def employments
@@ -190,32 +213,13 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     redirect_to jobseekers_job_application_path(job_application), warning: t(".warning") unless job_application.draft?
   end
 
-  def raise_unless_vacancy_enable_job_applications
-    raise ActionController::RoutingError, "Cannot apply for this vacancy" unless vacancy.enable_job_applications?
-  end
-
-  def review_form
-    @review_form ||= Jobseekers::JobApplication::ReviewForm.new(form_attributes)
-  end
-
-  def withdraw_form
-    @withdraw_form ||= Jobseekers::JobApplication::WithdrawForm.new(form_attributes)
-  end
-
-  def form_attributes
-    case action_name
-    when "review", "confirm_withdrawn"
-      {}
-    when "submit"
-      review_form_params
-    when "withdraw"
-      withdraw_form_params
-    end
+  def raise_cannot_apply
+    raise ActionController::RoutingError, "Cannot apply for this vacancy"
   end
 
   def review_form_params
     params.require(:jobseekers_job_application_review_form).permit(:confirm_data_accurate, :confirm_data_usage, update_profile: [])
-          .merge(completed_steps: job_application.completed_steps, all_steps: step_process.steps.excluding(:review).map(&:to_s))
+          .merge(completed_steps: job_application.completed_steps, all_steps: step_process.validatable_steps)
   end
 
   def withdraw_form_params
@@ -224,7 +228,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def vacancy
     @vacancy ||= if params[:job_id].present?
-                   Vacancy.live.find(params[:job_id])
+                   PublishedVacancy.live.find(params[:job_id])
                  else
                    job_application.vacancy
                  end
@@ -256,4 +260,5 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     previous_application? || profile.present?
   end
 end
+# rubocop:enable Metrics/AbcSize
 # rubocop:enable Metrics/ClassLength

@@ -35,12 +35,12 @@ h1.govuk-heading-l = t(".page_title")
                   = govuk_tag(text: "Deadline passed", colour: "red", classes: "govuk-!-margin-bottom-2")
               = tag.div(card.labelled_item(t(".application_deadline"), format_time_to_datetime_at(saved_job.vacancy.expires_at)))
 
-            - if saved_job.vacancy.enable_job_applications? && Vacancy.live.exists?(saved_job.vacancy.id) && current_jobseeker.job_applications.after_submission.find_by(vacancy_id: saved_job.vacancy.id).present?
+            - if saved_job.vacancy.enable_job_applications? && PublishedVacancy.live.exists?(saved_job.vacancy.id) && current_jobseeker.job_applications.after_submission.find_by(vacancy_id: saved_job.vacancy.id).present?
               - card.with_action_item link: govuk_link_to(safe_join([t(".view"), tag.span(" for #{saved_job.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_job_application_path(JobApplication.find_by(vacancy_id: saved_job.vacancy.id)))
-            - elsif saved_job.vacancy.enable_job_applications? && Vacancy.live.exists?(saved_job.vacancy.id) && current_jobseeker.job_applications.draft.find_by(vacancy_id: saved_job.vacancy.id).present?
+            - elsif saved_job.vacancy.enable_job_applications? && PublishedVacancy.live.exists?(saved_job.vacancy.id) && current_jobseeker.job_applications.draft.find_by(vacancy_id: saved_job.vacancy.id).present?
               - card.with_action_item link: govuk_link_to(safe_join([t(".continue"), tag.span(" for #{saved_job.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_job_application_review_path(JobApplication.find_by(vacancy_id: saved_job.vacancy.id)))
-            - elsif saved_job.vacancy.enable_job_applications? && Vacancy.live.exists?(saved_job.vacancy.id)
-              - card.with_action_item link: govuk_link_to(safe_join([t(".apply"), tag.span(" for #{saved_job.vacancy.job_title}", class: "govuk-visually-hidden")]), new_jobseekers_job_job_application_path(saved_job.vacancy.id))
+            - elsif saved_job.vacancy.enable_job_applications? && PublishedVacancy.live.exists?(saved_job.vacancy.id)
+              - card.with_action_item link: govuk_link_to(safe_join([t(".apply"), tag.span(" for #{saved_job.vacancy.job_title}", class: "govuk-visually-hidden")]), new_application_path(saved_job.vacancy))
             - card.with_action_item link: govuk_link_to(safe_join([t(".delete"), tag.span(" for #{saved_job.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_saved_job_path(saved_job.vacancy.id, saved_job, redirect_to_dashboard: true), method: :delete)
 
     - else

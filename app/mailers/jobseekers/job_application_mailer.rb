@@ -9,7 +9,16 @@ class Jobseekers::JobApplicationMailer < Jobseekers::BaseMailer
 
   def job_listing_ended_early(job_application, vacancy)
     @job_application = job_application
+    @jobseeker = job_application.jobseeker
     @vacancy = vacancy
+
+    send_email(to: @jobseeker.email, subject: t(".subject", job_title: @vacancy.job_title, organisation_name: @vacancy.organisation_name))
+  end
+
+  def self_disclosure(job_application)
+    @job_application = job_application
+    @vacancy = @job_application.vacancy
+    @organisation_name = @vacancy.organisation_name
 
     send_email(to: job_application.email_address, subject: t(".subject", job_title: @vacancy.job_title, organisation_name: @vacancy.organisation_name))
   end

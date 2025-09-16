@@ -73,6 +73,27 @@ RSpec.describe Organisation do
     end
   end
 
+  describe "#with_live_vacancies" do
+    subject { described_class.with_live_vacancies }
+
+    before do
+      create(:school, name: "Empty", school_groups: [empty_group])
+      sg = create(:trust, name: "Trust with vacancy")
+      active = create(:school, name: "Active", school_groups: [active_group])
+      create(:vacancy, organisations: [active])
+      create(:vacancy, organisations: [sg])
+    end
+
+    context "when the organisation is a trust" do
+      let(:empty_group) { create(:trust, name: "Empty Trust") }
+      let(:active_group) { create(:trust, name: "Trust") }
+
+      it "returns school, trust (due to school being part of the trust) and trust with vacancy" do
+        expect(subject.map(&:name)).to contain_exactly("Active", "Trust", "Trust with vacancy")
+      end
+    end
+  end
+
   describe "#name" do
     context "when the organisation is a local authority" do
       let(:trust) { create(:trust, name: "My Amazing Trust") }

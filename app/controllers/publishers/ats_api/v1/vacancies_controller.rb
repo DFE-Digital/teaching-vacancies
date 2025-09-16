@@ -31,7 +31,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
     result = Publishers::AtsApi::UpdateVacancyService.call(@vacancy, vacancy_params)
 
     if result[:status] == :ok
-      UpdateGoogleIndexQueueJob.perform_later(job_url(@vacancy)) if @vacancy.listed? && !DisableExpensiveJobs.enabled?
+      UpdateGoogleIndexQueueJob.perform_later(job_url(@vacancy)) if @vacancy.live?
       render :show
     else
       render result.slice(:json, :status)
@@ -47,7 +47,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   private
 
   def set_vacancy
-    @vacancy = Vacancy.non_draft.find_by!(publisher_ats_api_client: client, id: params[:id])
+    @vacancy = PublishedVacancy.kept.find_by!(publisher_ats_api_client: client, id: params[:id])
   end
 
   def required_vacancy_keys
@@ -99,15 +99,17 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   end
 
   def vacancies
-    Vacancy
+    PublishedVacancy
       .includes(:organisations)
-      .non_draft
+      .kept
       .order(publish_on: :desc)
       .where(publisher_ats_api_client: client)
   end
 
   def client
-    @client ||= PublisherAtsApiClient.find_by(api_key: request.headers["X-Api-Key"])
+    return @client if defined?(@client)
+
+    @client = PublisherAtsApiClient.find_by(api_key: request.headers["X-Api-Key"])
   end
 
   def authenticate_client!

@@ -21,8 +21,6 @@ class ApplicationController < ActionController::Base
   before_action { EventContext.dfe_analytics_request_event = dfe_analytics_request_event }
   before_action :set_paper_trail_whodunnit
 
-  skip_after_action :trigger_request_event, only: :check
-
   helper GOVUKDesignSystemFormBuilder::BuilderHelper
 
   include AbTestable
@@ -100,12 +98,16 @@ class ApplicationController < ActionController::Base
   end
 
   def current_organisation
-    @current_organisation ||= Organisation.find_by(id: session[:publisher_organisation_id])
+    return @current_organisation if defined?(@current_organisation)
+
+    @current_organisation = Organisation.find_by(id: session[:publisher_organisation_id])
   end
   helper_method :current_organisation
 
+  # This method needs to be different for paper_trial - possibly because PT
+  # doesn't expect the ID to be a UUID (aka string)
   def user_for_paper_trail
-    current_publisher || current_support_user
+    current_publisher || current_support_user || current_jobseeker
   end
 
   def set_sentry_user

@@ -23,27 +23,29 @@ Geocoder::DEFAULT_LOCATION = "TE5 T1NG".freeze
 # https://stackoverflow.com/questions/1368163/is-there-a-standard-domain-for-testing-throwaway-email
 TEST_EMAIL_DOMAIN = "contoso.com".freeze
 
-Capybara.register_driver :chrome_headless do |app|
-  options = Selenium::WebDriver::Chrome::Options.new(args: %w[no-sandbox headless disable-gpu window-size=1400,1400])
-
-  if ENV["SELENIUM_HUB_URL"]
-    Capybara::Selenium::Driver.new(app, browser: :remote, url: ENV.fetch("SELENIUM_HUB_URL", nil), options:)
-  else
-    Capybara::Selenium::Driver.new(app, browser: :chrome, options:)
-  end
-end
-
-Capybara.register_driver :chrome do |app|
-  options = Selenium::WebDriver::Chrome::Options.new(args: %w[no-sandbox disable-gpu window-size=1400,1800])
-
-  if ENV["SELENIUM_HUB_URL"]
-    Capybara::Selenium::Driver.new(app, browser: :remote, url: ENV.fetch("SELENIUM_HUB_URL", nil), options:)
-  else
-    Capybara::Selenium::Driver.new(app, browser: :chrome, options:)
-  end
-end
-Capybara.javascript_driver = :chrome_headless
 Capybara.server = :puma, { Silent: true, Threads: "0:1" }
+
+require "capybara/cuprite"
+Capybara.register_driver(:cuprite_headless) do |app|
+  # The extra browser_options are required to run Cuprite within a devcontainer
+  Capybara::Cuprite::Driver.new(app,
+                                headless: true,
+                                process_timeout: 30,
+                                window_size: [1400, 1400],
+                                browser_options: {
+                                  "no-sandbox": nil,
+                                  "disable-gpu": nil,
+                                  "window-size": "1400,1400",
+                                  headless: "new",
+                                  "ozone-platform": "none",
+                                })
+end
+Capybara.register_driver(:cuprite_full) do |app|
+  Capybara::Cuprite::Driver.new(app, headless: false, process_timeout: 30, window_size: [1400, 1800])
+end
+Capybara.javascript_driver = :cuprite_headless
+Capybara.server = :puma, { Silent: true, Threads: "0:1" }
+
 Capybara.configure do |config|
   # Allow us to use the `choose(label_text)` method in browser tests
   # even when the radio button element attached to the label is hidden
@@ -53,6 +55,7 @@ end
 
 Rails.root.glob("spec/support/**/*.rb").each { |f| require f }
 Rails.root.glob("spec/components/shared_examples/**/*.rb").each { |f| require f }
+Rails.root.glob("spec/page_objects/sections/**/*.rb").each { |f| require f }
 Rails.root.glob("spec/page_objects/**/*.rb").each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
@@ -65,8 +68,6 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
 
   config.before do
-    ActiveJob::Base.queue_adapter = :test
-
     allow(Google::Cloud::Bigquery).to receive(:new).and_return(
       double("BigQuery", dataset: double("BigQuery dataset", table: double.as_null_object)),
     )
@@ -74,15 +75,24 @@ RSpec.configure do |config|
     stub_request(:get, %r{maps.googleapis.com/maps/api/place/autocomplete}).to_return(status: 200, body: '{"predictions": []}', headers: {})
   end
 
-  config.before(:each, geocode: true) do
-    allow(Geocoder).to receive(:search).and_call_original
-    allow(Rails.application.config).to receive(:geocoder_lookup).and_return(:default)
+  config.before do |example|
+    unless example.metadata.fetch(:geocode, false)
+      allow(Geocoder).to receive(:search).and_raise
+      allow_any_instance_of(Geocoding).to receive(:coordinates).and_return(Geocoder::DEFAULT_STUB_COORDINATES)
+    end
   end
 
   config.around(:each, :dfe_analytics) do |example|
     ENV["ENABLE_DFE_ANALYTICS"] = "true"
     example.run
+  ensure
     ENV.delete "ENABLE_DFE_ANALYTICS"
+  end
+
+  config.around(:each, :perform_enqueued) do |example|
+    perform_enqueued_jobs do
+      example.run
+    end
   end
 
   config.before(:each, type: :system) do
@@ -97,28 +107,46 @@ RSpec.configure do |config|
   end
 
   config.before(:each, recaptcha: true) do
-    recaptcha_reply = double("recaptcha_reply")
-    allow(recaptcha_reply).to receive(:dig).with("score").and_return(0.9)
-    allow(recaptcha_reply).to receive(:[]).with("score").and_return(0.9)
+    recaptcha_reply = instance_double(Recaptcha::Reply, score: 0.9, success?: true)
     allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(true)
     allow_any_instance_of(ApplicationController).to receive(:recaptcha_reply).and_return(recaptcha_reply)
   end
 
   # allow developers to see JS backed tests by default
   config.before(:each, type: :system, js: true) do
-    if ENV.key? "CI"
-      driven_by :chrome_headless
+    # In CI or devcontainers (without X11), use headless mode
+    if ENV.key?("CI") || ENV["DEVCONTAINER"] == "true"
+      driven_by :cuprite_headless
     else
-      driven_by :chrome
+      driven_by :cuprite_full
+    end
+  end
+
+  # view specs idiom is allow(view).to receive_messages(x)
+  # for controller methods. This seems like a good way to ensure this
+  # as view specs should not use test doubles for any other purpose
+  config.around(:each, type: :view) do |example|
+    without_partial_double_verification do
+      example.run
     end
   end
 
   config.before do
+    allow(DisableEmailNotifications).to receive(:enabled?).and_return(false)
     allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false)
+    allow(DisableIntegrations).to receive(:enabled?).and_return(false)
+  end
+
+  config.before(:each, disable_email_notifications: true) do
+    allow(DisableEmailNotifications).to receive(:enabled?).and_return(true)
   end
 
   config.before(:each, disable_expensive_jobs: true) do
     allow(DisableExpensiveJobs).to receive(:enabled?).and_return(true)
+  end
+
+  config.before(:each, disable_integrations: true) do
+    allow(DisableIntegrations).to receive(:enabled?).and_return(true)
   end
 
   config.around(:each, :with_csrf_protection) do |example|

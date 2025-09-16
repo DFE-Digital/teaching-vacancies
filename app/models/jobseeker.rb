@@ -11,6 +11,7 @@ class Jobseeker < ApplicationRecord
   has_many :saved_jobs, dependent: :destroy
   has_many :emergency_login_keys, as: :owner
   has_one :jobseeker_profile
+  has_many :notifications, as: :recipient, dependent: :destroy, class_name: "Noticed::Notification"
 
   scope :active, -> { where(account_closed_on: nil) }
   scope :email_opt_in, -> { active.where(email_opt_out: false) }
@@ -47,6 +48,9 @@ class Jobseeker < ApplicationRecord
     save!
   end
 
+  def papertrail_display_name
+    jobseeker_profile&.full_name || "Jobseeker"
+  end
   #
   # GovUK OneLogin methods
   #

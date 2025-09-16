@@ -1,19 +1,29 @@
 en:
   publishers:
     accounts:
+      confirm_email_opt_out:
+        confirmation_button: Opt out
+        notification_banner:
+          body: Are you sure you want to opt out from service email communications?
+          heading: Opt out from service email communications
+        title: Opt out
       confirm_unsubscribe:
         confirmation_button: Unsubscribe
         notification_banner:
           body: Are you sure you want to unsubscribe?
           heading: Unsubscribe from feedback requests
         title: Unsubscribe
+      email_opt_out:
+        panel:
+          body: You will no longer receive service email communications
+          heading: You have now opted out
+        title: You have now opted out
       unsubscribe:
         panel:
           body: You will no longer receive feedback requests for your listing
           heading: You have now unsubscribed
         title: You are now unsubscribed
     activity_log:
-      about_school: There were changes to about %{organisation_type}
       application_link: Link to online application changed to %{new_value}
       contact_email: Contact email changed to %{new_value}
       contact_number: Contact number changed to %{new_value}
@@ -24,7 +34,6 @@ en:
       expires_at:
         changed: Application deadline changed to %{new_value}
       how_to_apply: How to apply changed to %{new_value}
-      job_advert: There were changes to the job advert
       job_role: Job role changed to %{new_value}
       job_roles:
         one: Job role changed to %{new_value}
@@ -40,9 +49,7 @@ en:
       other_start_date_details:
         changed: Start date details changed to %{new_value}
         deleted: Start date details were deleted
-      personal_statement_guidance: Personal statement guidance changed to %{new_value}
       salary: Salary changed to %{new_value}
-      school_visits: "%{organisation_type} visits changed to %{new_value}"
       starts_on:
         changed: Expected start date changed to %{new_value}
         deleted: Expected start date was deleted
@@ -91,6 +98,9 @@ en:
       preferred_subjects:
         one: Preferred subject
         other: Preferred subjects
+      current_role: "Current role"
+      latest_role: "Latest role"
+      previously_role: "Previously %{job_title}"
       search_result_heading: "Candidate profiles (%{count})"
       sort_result_text: "Ordered by most recently updated."
       filters:
@@ -111,6 +121,7 @@ en:
         preferred_key_stages: "Preferred key stage"
         preferred_roles: "Preferred roles"
         preferred_working_patterns: "Preferred working patterns"
+        subjects: "Subjects"
         qualified_teacher_status: "Qualified teaching status (QTS)"
         right_to_work_in_uk: "Visa sponsorship"
         qts_options:
@@ -148,15 +159,6 @@ en:
         how_applications_work_link: How applications work on Teaching Vacancies (opens in new tab).
         page_title: A reminder about applications
         link_text: GOV.UK Find a job service
-    notifications:
-      index:
-        heading: Notifications
-        no_notifications: You have no notifications.
-        skip_link: Skip to notifications
-        title:
-          zero: No unread notifications
-          one: 1 unread notification
-          other: "%{count} unread notifications"
     organisations:
       description:
         edit:
@@ -375,6 +377,7 @@ en:
         other_religion: Teaching Vacancies form with religion questions
         no_religion: Teaching Vacancies
         other: Other
+        uploaded_document: Uploaded document
       banner:
         deadline:
           after: Deadline passed
@@ -388,15 +391,16 @@ en:
               content_with_link_html: You can choose for candidates to apply for the job through Teaching Vacancies. %{link}
               content_with_no_link: You can choose for candidates to apply for the job through Teaching Vacancies.
               link: Preview the application form
-          using_application_form: Use Teaching Vacancies' application form for an online form compliant with keeping children safe in education (KCSIE) guidance.
+          kcsie_guidance: Keeping children safe in education (KCSIE) guidance
+          using_application_form_html: Use Teaching Vacancies' application form for an online form compliant with %{link}.
           kcsie_compliant: KCSIE compliant
           reason_for_our_form: Online application forms make it quicker and easier for candidates to apply and may lead to more applicants for your role.
           this_form_is_kept_up_to_date: This form is kept up to date with keeping children safe in education (KCSIE) guidance.
           ask_about_religion: You'll be able to ask candidates about their religion.
           step_title: Applying for the job
-          preview_online_application_form: Preview Teaching Vacancies' application form
-          preview_religious_application_form: Preview Teaching Vacancies' application form with questions about religion
-          preview_catholic_application_form: Preview application form for Catholic schools
+          preview_online_application_form: Download a preview of Teaching Vacancies' application form
+          preview_religious_application_form: Download a preview Teaching Vacancies' application form with questions about religion
+          preview_catholic_application_form: Download a preview application form for Catholic schools
         multiple_schools_advice_banner:
           heading: Sign-in as your trust or local authority to advertise a job across multiple schools or at a trust or local authority level
           link_text: Find out how to request organisational access
@@ -534,6 +538,7 @@ en:
           draft: Draft jobs - %{organisation_name}
           awaiting_feedback: Jobs awaiting feedbank - %{organisation_name}
       job_applications:
+        update_application_status: Update application status
         interviewing_status:
           pre_interview_checks: Pre-interview checks
         header:
@@ -547,11 +552,6 @@ en:
             after: Deadline passed
             before: Application deadline
           expired_more_than_year: In line with our data retention policy you are no longer able to view applications for this job.
-          no_applicants: Nobody has applied for this job yet
-          no_new: There are no pending applications
-          no_rejected: No applications have been marked for rejection
-          no_interviewing: No applications have been marked for interview yet
-          no_shortlisted: No applications have been shortlisted yet
           received: Received on
           rejected:
             one: Rejected application
@@ -565,18 +565,6 @@ en:
           submitted:
             one: Unread application
             other: Unread applications
-        candidates:
-          name: Name
-          contact_details: Contact details
-          application_status: Application status
-          update_application_status: Update application status
-          download_selected: Download selected
-        interviewing:
-          name: Name
-          contact_details: Contact details
-          application_status: Application status
-          update_application_status: Update application status
-          download_selected: Download selected
         notes:
           create:
             success: A note has been added
@@ -604,21 +592,78 @@ en:
             heading: Notes
         pre_interview_checks:
           page_title: Pre Interview Checks
+          pending_at: Request sent %{date}
+          completed_at: Completed %{date}
+          received_at: Received %{date}
+          declined_at: Declined %{date}
+          created_at: Created %{date}
+          form_requests: Form requests
+          reference: Reference
+          religious_reference: Religious Reference
+          action_needed: Action needed
+          request_type: Request type
+          last_action: Last action
+          self_disclosure: Self-disclosure
+          status: Status
+        reference_requests:
+          reference:
+            under_investigation_details: Under investigation details
+            unable_to_undertake_role_details: Unable to undertake role details
+            warning_details: Warning details
+          reference_received:
+            caption: Update reference status
+            heading: Is %{name}'s reference satisfactory?
+          edit:
+            caption: Update referee information
+            heading: What is the correct email address for %{name}?
+          show:
+            print: Print
+            how_would_you_rate: How would you rate %{name}?
+            page_title: Reference
+            mark_as_received: Mark as received
+            collect_reference: Would you like to collect this reference through Teaching Vacancies?
+            change_email_address_html: If the candidate has entered the referee's email address incorrectly, %{link}
+            change_email_link_text: you can amend it.
+            this_referee_will_not_provide_a_reference: >-
+              This referee will not provide a reference for this candidate.
+              You will need to request a new referee from this candidate.
+            once_the_reference_is_received: >-
+              Once the reference is received you will be able to view it on this page.
+              If you do not receive the reference within 1 week, you will be able to send a reminder.
+            more_urgent: >-
+              If the request is more urgent, you should reach out to the referee directly.
+              If you have sent and received your own reference form for this referee, you can manually mark it as received.
+            referee_details:
+              heading: Referee details
+              name: Name
+              job_title: Job title
+              organisation: Organisation
+              relationship: Relationship to applicant
+              email: Email address
+              phone_number: Phone number
+            reference_requested: Reference requested
+            reference_email_changed: Reference email changed to %{email}
+            reference_received: Reference received
+            reference_declined: Reference declined
+            reference_created: Marked as interviewing
+            marked_as_complete: Marked as complete
+            by: by %{name}
+            by_tvs: by Teaching Vacancies
+            communication_history: Communication history
+          update:
+            change_email_success: Email address updated and reference request sent
         tag:
           page_title: Update application status
-          what_application_status_single: What application status do you want to assign to %{name}?
-          what_application_status_multiple: What application status do you want to assign to these applicants?
+          what_application_status:
+            one: What application status do you want to assign to this applicant?
+            other: What application status do you want to assign to these applicants?
           applicants: Applicants
-        collect_references:
-          page_title: Collect references and declarations
-        ask_references_email:
-          page_title: Contact applicant for references
         update_status:
           unsuccessful: "%{name} has been sent an email telling them their application has not been successful"
           shortlisted: "%{name} has been sent an email telling them that they have been shortlisted"
-        withdrawn:
-          content: The candidate has withdrawn their application and you cannot view it any more.
-          heading: This application has been withdrawn
+        terminal:
+          content: The candidate is no longer available for consideration and you cannot view it any more.
+          heading: This application is no longer accessible
           page_title: Application withdrawn
           view_more_applications: View more applications
         visa_sponsorship:
@@ -630,6 +675,19 @@ en:
           hint_salary_text: Different salary rules apply for support roles in schools.
           learn_more_link_text: Learn more about Skilled Worker visa requirements for teaching jobs (opens in new tab).
           eligibility_link_text: Find out about eligible support roles and salary requirements (opens in new tab).
+        download_pdf:
+          no_file: "No file has been uploaded."
+        base:
+          collect_references:
+            page_title: Collect references
+            warning_text: You cannot collect religious references or documents using Teaching Vacancies. To get any additional information, contact the candidate directly.
+          ask_references_email:
+            page_title: Contact applicant for references
+            one_or_more_needs_contacting: >-
+              One of the candidates you have selected to interview needs to be notified when you are
+              collecting references. Do you want Teaching Vacancies to contact the candidate?
+          collect_self_disclosure:
+            page_title: Collect self disclosures
       live:
         notice: You can only view active jobs
       review:
@@ -730,7 +788,7 @@ en:
         start_date: Job start date
         application_process: Application process
         applying_for_the_job: Choose your application form
-        how_to_receive_applications: How do you want to receive applications?
+        how_to_receive_applications: How do you want candidates to apply for the role?
         application_link: Link to website
         application_form: Receiving applications
         religious_information: Applicants religious information

@@ -132,6 +132,70 @@ RSpec.describe VacanciesHelper do
     end
   end
 
+  describe "#vacancy_form_type" do
+    context "when vacancy uses uploaded form" do
+      let(:vacancy) { build_stubbed(:vacancy, :with_uploaded_application_form) }
+
+      it {
+        expect(helper.vacancy_form_type(vacancy)).to eq(
+          t("publishers.vacancies.application_form_type.uploaded_document"),
+        )
+      }
+    end
+
+    context "when job applications are enabled" do
+      context "when religion_type is catholic" do
+        let(:vacancy) { build_stubbed(:vacancy, religion_type: :catholic) }
+
+        it {
+          expect(helper.vacancy_form_type(vacancy)).to eq(
+            t("publishers.vacancies.application_form_type.catholic"),
+          )
+        }
+      end
+
+      context "when religion_type is other_religion" do
+        let(:vacancy) { build_stubbed(:vacancy, religion_type: :other_religion) }
+
+        it {
+          expect(helper.vacancy_form_type(vacancy)).to eq(
+            t("publishers.vacancies.application_form_type.other_religion"),
+          )
+        }
+      end
+
+      context "when religion_type is no_religion" do
+        let(:vacancy) { build_stubbed(:vacancy, religion_type: :no_religion) }
+
+        it {
+          expect(helper.vacancy_form_type(vacancy)).to eq(
+            t("publishers.vacancies.application_form_type.no_religion"),
+          )
+        }
+      end
+
+      context "when religion_type is nil" do
+        let(:vacancy) { build_stubbed(:vacancy, religion_type: nil) }
+
+        it {
+          expect(helper.vacancy_form_type(vacancy)).to eq(
+            t("publishers.vacancies.application_form_type.no_religion"),
+          )
+        }
+      end
+    end
+
+    context "when job applications are not enabled" do
+      let(:vacancy) { build_stubbed(:vacancy, :no_tv_applications) }
+
+      it {
+        expect(helper.vacancy_form_type(vacancy)).to eq(
+          t("publishers.vacancies.application_form_type.other"),
+        )
+      }
+    end
+  end
+
   describe "#vacancy_breadcrumbs" do
     subject(:breadcrumbs) { vacancy_breadcrumbs(vacancy).to_a }
 
@@ -252,15 +316,6 @@ RSpec.describe VacanciesHelper do
       end
     end
 
-    context "when the translation requires the organisation type" do
-      let(:attribute) { "about_school" }
-      let(:new_value) { "This is a school description" }
-
-      it "returns the correct translation" do
-        expect(subject).to eq(I18n.t("publishers.activity_log.#{attribute}", organisation_type: organisation_type))
-      end
-    end
-
     context "when the attribute is an array enum" do
       let(:attribute) { "working_patterns" }
       let(:new_value) { [0, 100] }
@@ -291,16 +346,6 @@ RSpec.describe VacanciesHelper do
       end
     end
 
-    context "when the attribute is 'school_visits'" do
-      let(:attribute) { "school_visits" }
-      let(:new_value) { "Information on visiting the school" }
-
-      it "returns the correct translation" do
-        expect(subject).to eq(I18n.t("publishers.activity_log.school_visits", organisation_type: organisation_type.capitalize,
-                                                                              new_value: new_value))
-      end
-    end
-
     context "when the attribute is 'other_start_date_details'" do
       let(:attribute) { "other_start_date_details" }
 
@@ -318,15 +363,6 @@ RSpec.describe VacanciesHelper do
         it "returns the correct translation" do
           expect(subject).to eq(I18n.t("publishers.activity_log.#{attribute}.changed", new_value: new_value))
         end
-      end
-    end
-
-    context "when none of the contexts above apply" do
-      let(:attribute) { "how_to_apply" }
-      let(:new_value) { "Show us if you can do the worm" }
-
-      it "returns the correct translation" do
-        expect(subject).to eq(I18n.t("publishers.activity_log.#{attribute}", new_value: new_value.humanize))
       end
     end
   end
@@ -374,7 +410,7 @@ RSpec.describe VacanciesHelper do
     subject { helper.vacancy_review_form_heading_inset_text(vacancy, status) }
 
     context "when the job has been published" do
-      let(:vacancy) { create(:vacancy, :published) }
+      let(:vacancy) { create(:vacancy) }
       let(:status) { "published" }
 
       it "returns the correct text" do
@@ -402,7 +438,7 @@ RSpec.describe VacanciesHelper do
       end
 
       context "when the draft is incomplete" do
-        let(:vacancy) { create(:vacancy, :published, job_advert: nil) }
+        let(:vacancy) { create(:vacancy) }
         let(:status) { "incomplete_draft" }
 
         it "returns the correct text" do

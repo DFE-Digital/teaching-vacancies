@@ -6,12 +6,17 @@ class JobApplicationPdf
   Table = Data.define(:rows) do
     include Enumerable
     extend Forwardable
+
     def_delegators :rows, :each, :==, :<<, :empty?
   end
 
   def initialize(job_application)
     @job_application = job_application
     @vacancy = job_application.vacancy
+  end
+
+  def religious_application?
+    vacancy.catholic? || vacancy.other_religion?
   end
 
   def header_text
@@ -32,10 +37,10 @@ class JobApplicationPdf
     scope = "helpers.label.jobseekers_job_application_personal_details_form"
     ni_review = job_application.national_insurance_number.presence || I18n.t("jobseekers.job_applications.not_defined")
 
-    @personal_details = Table[basic_personal_details].tap do
-      it << [I18n.t("national_insurance_number_review", scope:), ni_review] if job_application.national_insurance_number?
+    @personal_details = Table[basic_personal_details].tap do |table|
+      table << [I18n.t("national_insurance_number_review", scope:), ni_review] if job_application.national_insurance_number?
 
-      it << [I18n.t("working_pattern_details", scope:), job_application.working_pattern_details] if job_application.working_pattern_details.present?
+      table << [I18n.t("working_pattern_details", scope:), job_application.working_pattern_details] if job_application.working_pattern_details.present?
     end
   end
 
@@ -57,9 +62,9 @@ class JobApplicationPdf
       [I18n.t("is_statutory_induction_complete", scope:), yes_no(job_application.is_statutory_induction_complete?)],
     ]
 
-    @professional_status = Table[basic_professional_status].tap do
+    @professional_status = Table[basic_professional_status].tap do |table|
       if job_application.statutory_induction_complete_details.present?
-        it.rows << [I18n.t("statutory_induction_complete_details", scope:), job_application.statutory_induction_complete_details]
+        table.rows << [I18n.t("statutory_induction_complete_details", scope:), job_application.statutory_induction_complete_details]
       end
     end
   end
@@ -108,6 +113,16 @@ class JobApplicationPdf
     end
   end
 
+  def religious_information
+    religious_data = if vacancy.catholic?
+                       catholic_religious_information
+                     else
+                       non_catholic_religious_information
+                     end
+
+    Table[religious_data]
+  end
+
   def employment_history
     return no_data_available(I18n.t("jobseekers.job_applications.review.employment_history.none")) if job_application.employments.none?
 
@@ -121,11 +136,13 @@ class JobApplicationPdf
     end
   end
 
-  # :nocov:
   def referees
     return no_data_available(I18n.t("jobseekers.job_applications.show.employment_history.none")) if job_application.referees.none?
 
-    make_nested_section do
+    contact_referers = nil
+    contact_referers = I18n.t("jobseekers.job_applications.review.contact_referer.publisher") if job_application.notify_before_contact_referers
+
+    make_nested_section(contact_referers) do
       job_application.referees.sort_by(&:created_at).map do |referee|
         reference_data = [
           ["Name:", referee.name],
@@ -142,7 +159,6 @@ class JobApplicationPdf
       end
     end
   end
-  # :nocov:
 
   def ask_for_support
     @ask_for_support ||= Table[
@@ -182,6 +198,76 @@ class JobApplicationPdf
 
   private
 
+  def catholic_religious_information
+    religious_data = []
+
+    religious_data << [I18n.t("helpers.legend.jobseekers_job_application_catholic_form.following_religion"),
+                       I18n.t("helpers.label.jobseekers_job_application_catholic_form.following_religion_options.#{job_application.following_religion}")]
+
+    religious_data += religious_data_fields
+
+    religious_data
+  end
+
+  def non_catholic_religious_information
+    religious_data = []
+    religious_data << [I18n.t("helpers.label.jobseekers_job_application_non_catholic_form.ethos_and_aims"), job_application.ethos_and_aims]
+    religious_data << [I18n.t("helpers.legend.jobseekers_job_application_non_catholic_form.following_religion"),
+                       I18n.t("helpers.label.jobseekers_job_application_non_catholic_form.following_religion_options.#{job_application.following_religion}")]
+
+    religious_data += religious_data_fields
+
+    religious_data
+  end
+
+  def religious_data_fields
+    if job_application.following_religion
+      religious_data = []
+
+      religious_data << [I18n.t("helpers.label.jobseekers_job_application_catholic_form.faith"), job_application.faith]
+      religious_data << [I18n.t("helpers.label.jobseekers_job_application_catholic_form.place_of_worship"), job_application.place_of_worship]
+
+      religious_data << [I18n.t("helpers.legend.jobseekers_job_application_catholic_form.religious_reference_type"),
+                         if job_application.religious_reference_type.present?
+                           I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_reference_type_options.#{job_application.religious_reference_type}")
+                         else
+                           ""
+                         end]
+
+      religious_data += religious_reference_data(job_application.religious_reference_type)
+      religious_data
+    else
+      []
+    end
+  end
+
+  # rubocop:disable Metrics/MethodLength
+  def religious_reference_data(religious_reference_type)
+    case religious_reference_type
+    when "religious_referee"
+      [
+        [I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_name"), job_application.religious_referee_name],
+        [I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_address"), job_application.religious_referee_address],
+        [I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_role"), job_application.religious_referee_role],
+        [I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_email"), job_application.religious_referee_email],
+        [I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_phone"), job_application.religious_referee_phone],
+      ]
+    when "baptism_certificate"
+      [
+        [I18n.t("jobseekers.job_applications.review.religious_information.baptism_certificate"), job_application.baptism_certificate.filename.to_s],
+      ]
+
+    when "baptism_date"
+      [
+        [I18n.t("helpers.label.jobseekers_job_application_catholic_form.baptism_address"), job_application.baptism_address],
+        [I18n.t("helpers.legend.jobseekers_job_application_catholic_form.baptism_date"), job_application.baptism_date.to_fs(:day_month_year)],
+      ]
+    else
+      []
+    end
+  end
+  # rubocop:enable Metrics/MethodLength
+
   attr_reader :job_application, :vacancy
 
   def yes_no(bool)
@@ -201,9 +287,9 @@ class JobApplicationPdf
     [[text, nil]]
   end
 
-  def make_nested_section
+  def make_nested_section(sub_title = nil)
     # make a nested section data structure rendered by `JobApplicationPdfGenerator.render_nested_section`
-    [[nil, yield]]
+    [[sub_title, yield]]
   end
 
   def month_year(date)

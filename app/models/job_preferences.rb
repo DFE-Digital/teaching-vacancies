@@ -6,7 +6,7 @@ class JobPreferences < ApplicationRecord
 
   validates :jobseeker_profile, uniqueness: true
 
-  def vacancies(scope = Vacancy.live)
+  def vacancies(scope = PublishedVacancy.live)
     JobScope.new(scope, self).call
   end
 

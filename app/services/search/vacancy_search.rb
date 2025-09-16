@@ -1,11 +1,12 @@
 class Search::VacancySearch
   extend Forwardable
+
   def_delegators :location_search, :point_coordinates, :polygon
 
   attr_reader :search_criteria, :keyword, :location, :radius, :organisation_slug, :sort, :original_scope
 
-  def initialize(search_criteria, sort: nil, scope: Vacancy.live)
-    @search_criteria = search_criteria
+  def initialize(search_criteria, sort: nil, scope: PublishedVacancy.live)
+    @search_criteria = search_criteria.except(:keyword)
     @keyword = search_criteria[:keyword]
     @location = search_criteria[:location]
     @radius = search_criteria[:radius]
@@ -16,7 +17,7 @@ class Search::VacancySearch
   end
 
   def active_criteria
-    search_criteria
+    search_criteria.merge(keyword: @keyword)
       .reject { |k, v| v.blank? || (k == :radius && search_criteria[:location].blank?) }
   end
 

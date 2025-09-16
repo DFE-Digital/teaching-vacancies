@@ -20,13 +20,12 @@ class Vacancies::Import::Sources::Fusion
       next if vacancy_listed_at_excluded_trust_type?(schools, result["trustUID"])
       next if vacancy_listed_at_excluded_school_type?(schools)
 
+      # An external vacancy is by definition always published
       v = PublishedVacancy.find_or_initialize_by(
         external_source: SOURCE_NAME,
         external_reference: result["reference"],
       )
 
-      # An external vacancy is by definition always published
-      v.status = :published
       # Consider publish_on date to be the first time we saw this vacancy come through
       # (i.e. today, unless it already has a publish on date set)
       v.publish_on ||= Date.today
@@ -58,7 +57,7 @@ class Vacancies::Import::Sources::Fusion
       is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phases_for(item, schools.first),
       key_stages: item["keyStages"].presence&.split(","),
-      visa_sponsorship_available: visa_sponsorship_available_for(item),
+      visa_sponsorship_available: visa_sponsorship_available_for?(item),
       is_job_share: job_share_for?(item),
 
       # TODO: What about central office/multiple school vacancies?
@@ -158,7 +157,7 @@ class Vacancies::Import::Sources::Fusion
     end
   end
 
-  def visa_sponsorship_available_for(item)
+  def visa_sponsorship_available_for?(item)
     item["visaSponsorshipAvailable"] == true
   end
 

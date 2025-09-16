@@ -69,10 +69,10 @@ en:
           false: No, I'll come back to it later
           true: Yes, I've completed this section
         religious_reference_type_options:
-          referee: "Yes"
+          religious_referee: "Yes"
           baptism_certificate: No, but I can provide a baptism certificate
           baptism_date: No, but I can provide the date and address of my baptism
-          no_referee: "No"
+          no_religious_referee: "No"
         baptism_certificate: Upload a file
         baptism_address: Address of baptism location
         following_religion_options:
@@ -90,8 +90,8 @@ en:
           "true": "Yes"
           "false": "No"
         religious_reference_type_options:
-          "referee": "Yes"
-          "no_referee": "No"
+          "religious_referee": "Yes"
+          "no_religious_referee": "No"
         religious_referee_name: Religious referee name
         religious_referee_address: Religious referee address
         religious_referee_role: Religious referee role

@@ -66,6 +66,7 @@
       - else
         = govuk_summary_list do |summary_list|
           - vacancies.each do |vacancy|
+            - job_applications_count = vacancy.job_applications.active_for_selection.count
             - summary_list.with_row do |row|
               - row.with_key do
                 - if vacancy.external?
@@ -81,9 +82,9 @@
                 - case @selected_type
                 - when :live
                   div class="govuk-!-margin-bottom-1"
-                    - if vacancy.enable_job_applications
-                      - if vacancy.job_applications.where(status: %w[submitted reviewed shortlisted unsuccessful]).count.positive?
-                        = view_applicants(vacancy) unless vacancy_expired_over_a_year_ago?(vacancy)
+                    - if vacancy.allow_job_applications?
+                      - if job_applications_count.positive?
+                        = view_applicants(vacancy, job_applications_count)
                       - else
                         p.govuk-body-s = t("jobs.manage.view_applicants", count: 0)
                   dl
@@ -97,9 +98,9 @@
                     dt = "#{t('jobs.manage.closing_date')}:"
                     dd = format_time_to_datetime_at(vacancy.expires_at)
                 - when :expired
-                  - if vacancy.enable_job_applications
-                    - if !vacancy_expired_over_a_year_ago?(vacancy) && vacancy.job_applications.where.not(status: %w[draft withdrawn]).any?
-                      = view_applicants(vacancy)
+                  - if vacancy.allow_job_applications?
+                    - if vacancy.within_data_access_period? && job_applications_count.positive?
+                      = view_applicants(vacancy, job_applications_count)
                     - else
                       p.govuk-body-s = t("jobs.manage.view_applicants", count: 0)
                   dl

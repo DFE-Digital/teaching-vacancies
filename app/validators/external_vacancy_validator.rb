@@ -8,11 +8,28 @@ class ExternalVacancyValidator < ActiveModel::Validator
     )
 
     record.errors.add(:organisations, "No school(s) associated with vacancy") if record.organisations.empty?
+    validate_uniqueness_per_client(record)
+    validate_no_duplicate_vacancy(record)
     validate_job_title_length(record)
     validate_expiry_date(record) if record.expires_at.present?
   end
 
   private
+
+  def validate_uniqueness_per_client(record)
+    if record.find_external_reference_conflict_vacancy.present?
+      record.errors.add(
+        :external_reference,
+        I18n.t("activerecord.errors.models.vacancy.attributes.external_reference.taken"),
+      )
+    end
+  end
+
+  def validate_no_duplicate_vacancy(record)
+    if record.find_duplicate_external_vacancy.present?
+      record.errors.add(:base, "A vacancy with the same job title, expiry date, contract type, working_patterns, phases and salary already exists for this organisation.")
+    end
+  end
 
   def validate_presence(record, *fields)
     ActiveModel::Validations::PresenceValidator

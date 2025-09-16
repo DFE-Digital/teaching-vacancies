@@ -20,10 +20,9 @@ class Jobseekers::JobApplications::JobApplicationStepProcess
   def initialize(job_application:)
     @job_application = job_application
 
-    religious_steps = case job_application.vacancy.religion_type
-                      when "catholic"
+    religious_steps = if job_application.vacancy.catholic?
                         { catholic: [:catholic] }
-                      when "other_religion"
+                      elsif job_application.vacancy.other_religion?
                         { non_catholic: [:non_catholic] }
                       else
                         {}
@@ -37,6 +36,10 @@ class Jobseekers::JobApplications::JobApplicationStepProcess
     @step_groups.values.flatten
   end
 
+  def validatable_steps
+    steps.excluding(:review).map(&:to_s)
+  end
+
   def next_step(step)
     steps[steps.index(step) + 1]
   end
@@ -46,15 +49,7 @@ class Jobseekers::JobApplications::JobApplicationStepProcess
     step == group.last
   end
 
-  def all_possible_steps
-    steps = case job_application.vacancy.religion_type
-            when "catholic"
-              PRE_RELIGION_STEPS.merge(religious_information: [:religious_information]).merge(POST_RELIGION_STEPS)
-            when "other_religion"
-              PRE_RELIGION_STEPS.merge(non_catholic: [:non_catholic]).merge(POST_RELIGION_STEPS)
-            else
-              PRE_RELIGION_STEPS.merge(POST_RELIGION_STEPS)
-            end
-    steps.values.flatten
+  def form_class_for(step)
+    "jobseekers/job_application/#{step}_form".camelize.constantize
   end
 end

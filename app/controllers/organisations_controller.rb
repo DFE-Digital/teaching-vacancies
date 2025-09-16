@@ -4,22 +4,22 @@ class OrganisationsController < ApplicationController
   before_action :set_organisation, only: %i[show]
 
   def show
-    @vacancies = @organisation.vacancies.live
+    # rubocop false positive - the suggested code doesn't work (replace reduce(&:+) with sum) as this is a pair of arrays
+    # rubocop:disable Performance/Sum
+    # bring trust jobs to the front of the list
+    @vacancies = @organisation.all_vacancies.live.partition { |v| v.organisation.trust? }.reduce(&:+)
+    # rubocop:enable Performance/Sum
   end
 
   def index
-    @school_search = Search::SchoolSearch.new(search_form.to_h, scope: search_scope)
-    @pagy, @schools = pagy(@school_search.organisations)
+    @school_search = Search::SchoolSearch.new(search_form.to_h)
+    @pagy, @schools = pagy(@school_search.organisations.order(:name))
   end
 
   private
 
   def search_form
     @search_form ||= SchoolSearchForm.new(params)
-  end
-
-  def search_scope
-    Organisation.visible_to_jobseekers.order(:name)
   end
 
   def set_organisation

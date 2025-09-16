@@ -68,6 +68,10 @@ class JobseekerProfile < ApplicationRecord
     record.jobseeker
   end
 
+  def needs_visa_for_uk?
+    personal_details.present? && !personal_details.has_right_to_work_in_uk?
+  end
+
   def replace_qualifications!(new_qualifications)
     transaction do
       qualifications.destroy_all
@@ -120,7 +124,9 @@ class JobseekerProfile < ApplicationRecord
   end
 
   def activable?
-    !!personal_details&.complete? && !!job_preferences&.complete?
+    personal_details.present? && personal_details.complete? &&
+      job_preferences.present? && job_preferences.complete? &&
+      qualified_teacher_status.present? && unexplained_employment_gaps.none? && qualifications.any?
   end
 
   def hidden_from_any_organisations?
@@ -129,6 +135,10 @@ class JobseekerProfile < ApplicationRecord
 
   def unexplained_employment_gaps
     @unexplained_employment_gaps ||= Jobseekers::JobApplications::EmploymentGapFinder.new(self).significant_gaps
+  end
+
+  def current_or_most_recent_employment
+    employments.job.find_by(is_current_role: true) || employments.job.order(started_on: :desc).first
   end
 
   private

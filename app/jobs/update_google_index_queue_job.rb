@@ -3,6 +3,8 @@ class UpdateGoogleIndexQueueJob < ApplicationJob
   queue_as :default
 
   def perform(url)
+    return if DisableIntegrations.enabled?
+
     if (url_indexing = GoogleIndexing.new(url))
       url_indexing.update
     else

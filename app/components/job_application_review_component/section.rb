@@ -30,11 +30,21 @@ class JobApplicationReviewComponent::Section < ReviewComponent::Section
   end
 
   def constantize_form(form_class_name)
+    return "Jobseekers::UploadedJobApplication::#{form_class_name}".constantize if form_class_name == "UploadApplicationFormForm"
+
     "Jobseekers::JobApplication::#{form_class_name}".constantize
   end
 
   def error_path
-    jobseekers_job_application_build_path(@job_application, @name) if @job_application.persisted?
+    if @job_application.vacancy.uploaded_form?
+      return edit_jobseekers_uploaded_job_application_personal_details_path(@job_application) if @name == :personal_details
+      # :nocov:
+
+      edit_jobseekers_uploaded_job_application_upload_application_form_path(@job_application) if @name == :upload_application_form
+      # :nocov:
+    elsif @job_application.persisted?
+      jobseekers_job_application_build_path(@job_application, @name)
+    end
   end
 
   def url_helpers

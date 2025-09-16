@@ -5,8 +5,8 @@ class ErrorsController < ApplicationController
   def unauthorised
     respond_to do |format|
       format.html { render status: :unauthorized }
-      format.json { render json: { error: "Not authorised" }, status: :unauthorised }
-      format.all { render status: :unauthorised, body: nil }
+      format.json { render json: { error: "Not authorised" }, status: :unauthorized }
+      format.all { render status: :unauthorized, body: nil }
     end
   end
 
