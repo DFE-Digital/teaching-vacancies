@@ -15,8 +15,11 @@ h1.govuk-heading-xl class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
 
 - if job_application.interviewing?
   = govuk_inset_text do
-    p.govuk-body = t(".interviewing_at", datetime: job_application.interviewing_at.to_fs)
-    = govuk_link_to(t(".change_interview_datetime"), interview_datetime_organisation_job_job_application_path(vacancy.id, job_application.id))
+    - if job_application.interviewing_at
+      p.govuk-body = t(".interviewing_at", datetime: job_application.interviewing_at.to_fs)
+      = govuk_link_to(t(".change_interview_datetime"), interview_datetime_organisation_job_job_application_path(vacancy.id, job_application.id))
+    - else
+      = govuk_link_to(t(".add_interview_datetime"), interview_datetime_organisation_job_job_application_path(vacancy.id, job_application.id))
 
 = tabs do |tabs|
   - tabs.with_navigation_item text: t(".tabs.application"), link: organisation_job_job_application_path(vacancy.id, job_application)

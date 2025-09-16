@@ -553,6 +553,7 @@ en:
           status_heading: Applicant status
           interviewing_at: "Interview details: %{datetime}"
           change_interview_datetime: Change interview date and time
+          add_interview_datetime: Add interview date and time
           tabs:
             application: Application
             pre_interview_checks: Pre-interview checks

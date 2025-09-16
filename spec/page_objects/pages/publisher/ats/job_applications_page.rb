@@ -14,6 +14,7 @@ module PageObjects
           element :name_link, ".name a"
           element :email, ".email_address"
           element :status, ".status"
+          element :interview_date, ".interviewing_at"
 
           STATUS_MAPPING = {
             "unread" => "submitted",
