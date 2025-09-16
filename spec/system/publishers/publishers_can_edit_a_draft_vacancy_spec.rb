@@ -37,34 +37,34 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
 
         fill_in_key_stages_form_fields(vacancy.key_stages_for_phases)
-        progress_to_edit_page( :contract_information)
+        progress_to_edit_page(:contract_information)
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order", "aria-allowed-attr"
 
-        progress_to_edit_page( :start_date)
+        progress_to_edit_page(:start_date)
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
-        progress_to_edit_page( :pay_package)
+        progress_to_edit_page(:pay_package)
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
-        progress_to_edit_page( :about_the_role)
+        progress_to_edit_page(:about_the_role)
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
-        progress_to_edit_page( :include_additional_documents)
+        progress_to_edit_page(:include_additional_documents)
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
 
-        progress_to_edit_page( :school_visits)
+        progress_to_edit_page(:school_visits)
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
 
-        progress_to_edit_page( :visa_sponsorship)
+        progress_to_edit_page(:visa_sponsorship)
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
-        progress_to_edit_page( :important_dates)
+        progress_to_edit_page(:important_dates)
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
-        progress_to_edit_page( :applying_for_the_job)
+        progress_to_edit_page(:applying_for_the_job)
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
 
-        progress_to_edit_page( :contact_details)
+        progress_to_edit_page(:contact_details)
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
         click_on I18n.t("buttons.save_and_continue")
@@ -74,7 +74,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         expect(page).to have_content(DraftVacancy.find(vacancy.id).job_roles.first.humanize)
       end
 
-      def progress_to_edit_page page_name
+      def progress_to_edit_page(page_name)
         click_on I18n.t("buttons.save_and_continue")
         # page load wait
         find("form.new_publishers_job_listing_#{page_name}_form")
