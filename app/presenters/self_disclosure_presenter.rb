@@ -17,7 +17,6 @@ class SelfDisclosurePresenter
 
   attr_reader :model, :job_application, :request
 
-  # :nocov:
   def events
     request.versions.reverse_each.map do |version|
       next unless version.changeset.key?("status")
@@ -32,12 +31,11 @@ class SelfDisclosurePresenter
               in "sent"
                 t(".event.requested")
               end
-      actor = version.actor&.papertrail_display_name || "TVS"
+      actor = version.actor&.papertrail_display_name || "Teaching Vacancies"
       timestamp = version.created_at.to_fs
       [label, "#{actor} - #{timestamp}"]
     end
   end
-  # :nocov:
 
   def personal_details
     Enumerator.new do |y|
