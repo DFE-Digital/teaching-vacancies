@@ -37,54 +37,34 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
 
         fill_in_key_stages_form_fields(vacancy.key_stages_for_phases)
-        click_on I18n.t("buttons.save_and_continue")
-        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :contract_information))
+        progress_to_edit_page( :contract_information)
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order", "aria-allowed-attr"
 
-        click_on I18n.t("buttons.save_and_continue")
-        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :start_date))
+        progress_to_edit_page( :start_date)
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
-        click_on I18n.t("buttons.save_and_continue")
-        # page load wait
-        find("form.new_publishers_job_listing_pay_package_form")
-        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :pay_package))
+        progress_to_edit_page( :pay_package)
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
-        click_on I18n.t("buttons.save_and_continue")
-        # page load wait
-        find("form.new_publishers_job_listing_about_the_role_form")
-        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :about_the_role))
+        progress_to_edit_page( :about_the_role)
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
-        click_on I18n.t("buttons.save_and_continue")
-        # page load wait
-        find("form.new_publishers_job_listing_include_additional_documents_form")
-        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :include_additional_documents))
+        progress_to_edit_page( :include_additional_documents)
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
 
-        click_on I18n.t("buttons.save_and_continue")
-        # page load wait
-        find("form.new_publishers_job_listing_school_visits_form")
-        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :school_visits))
+        progress_to_edit_page( :school_visits)
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
 
-        click_on I18n.t("buttons.save_and_continue")
-        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :visa_sponsorship))
+        progress_to_edit_page( :visa_sponsorship)
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
-        click_on I18n.t("buttons.save_and_continue")
-        # page load wait
-        find("form.new_publishers_job_listing_important_dates_form")
-        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :important_dates))
+        progress_to_edit_page( :important_dates)
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
-        click_on I18n.t("buttons.save_and_continue")
-        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :applying_for_the_job))
+        progress_to_edit_page( :applying_for_the_job)
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
 
-        click_on I18n.t("buttons.save_and_continue")
-        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :contact_details))
+        progress_to_edit_page( :contact_details)
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
         click_on I18n.t("buttons.save_and_continue")
@@ -92,6 +72,13 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
 
         expect(page).to have_content(DraftVacancy.find(vacancy.id).job_roles.first.humanize)
+      end
+
+      def progress_to_edit_page page_name
+        click_on I18n.t("buttons.save_and_continue")
+        # page load wait
+        find("form.new_publishers_job_listing_#{page_name}_form")
+        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, page_name))
       end
     end
   end
