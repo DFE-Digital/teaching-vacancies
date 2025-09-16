@@ -25,3 +25,4 @@ Time::DATE_FORMATS[:time_only] = lambda do |time|
   end
 end
 Time::DATE_FORMATS[:time_on_date] = "%-l:%M on %d %B %Y"
+Time::DATE_FORMATS[:date_at_time] = "%d %B %Y at %I:%M %p"

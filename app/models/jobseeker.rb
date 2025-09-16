@@ -10,6 +10,7 @@ class Jobseeker < ApplicationRecord
   has_many :job_applications, dependent: :destroy
   has_many :saved_jobs, dependent: :destroy
   has_many :emergency_login_keys, as: :owner
+  has_many :jobseeker_messages, foreign_key: :sender_id, dependent: :destroy
   has_one :jobseeker_profile
   has_many :notifications, as: :recipient, dependent: :destroy, class_name: "Noticed::Notification"
 
