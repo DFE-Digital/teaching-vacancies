@@ -141,6 +141,9 @@ RSpec.describe "Publishers can select a job application for interview" do
         referee_referee_details_page.complete_and_accurate_checkbox.click
         # last click to go to the confirmation page
         click_on I18n.t("buttons.confirm_and_submit")
+
+        # wait for page load
+        find(".govuk-panel")
         expect(referee.job_reference.reload).to be_complete
         expect(page).to have_current_path(completed_reference_build_index_path(reference_request.id))
       end
