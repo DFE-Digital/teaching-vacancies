@@ -7,7 +7,7 @@ module Jobseekers
     deliver_by :email do |config|
       config.mailer = "Jobseekers::MessageMailer"
       config.method = :message_received
-      config.args = :message
+      config.args = :message_instance
     end
 
     # rubocop:disable Metrics/BlockLength
@@ -55,6 +55,10 @@ module Jobseekers
       def school_name
         job_application.vacancy.organisation.name
       end
+    end
+
+    def message_instance(*)
+      record
     end
   end
   # rubocop:enable Metrics/BlockLength
