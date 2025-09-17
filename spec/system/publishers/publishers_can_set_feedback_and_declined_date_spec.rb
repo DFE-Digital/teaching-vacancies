@@ -67,15 +67,16 @@ RSpec.describe "Publisher can set feedback and declined dates" do
         publisher_ats_applications_page.load(vacancy_id: vacancy.id)
         expect(publisher_ats_applications_page.job_title).to have_text(vacancy.job_title)
 
-        publisher_ats_applications_page.select_tab(:tab_offered)
+        publisher_ats_applications_page.select_tab(:tab_interviewing)
 
-        expect(publisher_ats_applications_page.tab_panel.job_applications.first.interview_feedback_received_at).to have_link("Add feedback date", href: tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: :interviewing, job_applications: [job_application.id] }, tag_action: "feedback" }))
+        expect(publisher_ats_applications_page.tab_panel.job_applications.first.interview_feedback_received_at).to have_link("Add feedback date", href: tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: :interviewing, job_applications: [job_application.id] }, tag_action: "unsuccessful_interview" }))
 
         publisher_ats_applications_page.tab_panel.job_applications.first.interview_feedback_received_at.click_on("Add feedback date")
 
         # Form page
         expect(publisher_ats_job_feedback_date_page).to be_displayed(vacancy_id: vacancy.id)
         feedback_date = 2.days.ago
+        publisher_ats_job_feedback_date_page.interview_feedback_received_yes.click
         publisher_ats_job_feedback_date_page.set_date(feedback_date)
         publisher_ats_job_feedback_date_page.btn_continue.click
 

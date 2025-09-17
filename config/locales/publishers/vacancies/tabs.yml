@@ -43,6 +43,7 @@ en:
       offered_inset: When you download this data, you will receive a ZIP file. This file contains all the selected candidate's personally identifiable information and application details.
       add_decline_date: Add decline date
       add_job_offer_date: Add job offer date
+      add_feedback_date: Add feedback date
     declined:
       heading: Offer declined
       none: No applications have been declined yet
