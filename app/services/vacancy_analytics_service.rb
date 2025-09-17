@@ -57,14 +57,21 @@ class VacancyAnalyticsService
       if params[:utm_medium] == "email"
         "jobalert"
       else
-        referrer_uri = URI.parse(referrer)
+        referrer_uri = Addressable::URI.parse(referrer)
         if referrer_uri.host.present?
-          referrer_uri.host == hostname ? "internal" : referrer_uri.host
+          if referrer_uri.host == hostname
+            "internal"
+          else
+            host_split = referrer_uri.host.split(".")
+            tld_split = referrer_uri.tld.split(".")
+
+            (host_split - tld_split).last
+          end
         else
           "internal"
         end
       end
-    rescue URI::InvalidURIError
+    rescue PublicSuffix::DomainNotAllowed, Addressable::URI::InvalidURIError
       "invalid"
     end
   end
