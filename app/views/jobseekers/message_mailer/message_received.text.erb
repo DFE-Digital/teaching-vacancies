@@ -1,6 +1,6 @@
 Dear <%= @job_application.first_name %>,
 
-<% if @job_application.status == "unsuccessful" %>
+<% if @job_application.unsuccessful? %>
 Your application for <%= @vacancy.job_title %> at <%= @organisation.name %> was unsuccessful.
 
 <%= t("jobseekers.message_mailer.message_received.unsuccessful.sign_in_prompt", sign_in_link: "[Teaching Vacancies account](#{new_jobseeker_session_url})", organisation_name: @organisation.name) %>

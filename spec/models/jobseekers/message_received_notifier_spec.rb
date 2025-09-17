@@ -8,7 +8,7 @@ RSpec.describe Jobseekers::MessageReceivedNotifier do
   let(:conversation) { create(:conversation, job_application: job_application) }
   let(:message) { create(:publisher_message, conversation: conversation) }
 
-  describe "#message_text" do
+  describe "#message" do
     context "when job application is unsuccessful" do
       let(:status) { "unsuccessful" }
 
@@ -17,7 +17,7 @@ RSpec.describe Jobseekers::MessageReceivedNotifier do
       end
 
       it "returns the unsuccessful message" do
-        expect(jobseeker.notifications.last.message_text).to include("Your application for Math Teacher at Test School was unsuccessful")
+        expect(jobseeker.notifications.last.message).to include("Your application for Math Teacher at Test School was unsuccessful")
       end
     end
 
@@ -29,7 +29,7 @@ RSpec.describe Jobseekers::MessageReceivedNotifier do
       end
 
       it "returns the default message" do
-        expect(jobseeker.notifications.last.message_text).to include("You have received a message about the Math Teacher role")
+        expect(jobseeker.notifications.last.message).to match(/You have received.*a message.*about the Math Teacher role/)
       end
     end
   end
@@ -48,12 +48,12 @@ RSpec.describe Jobseekers::MessageReceivedNotifier do
     end
   end
 
-  describe "#message" do
+  describe "#message_instance" do
     let(:status) { "submitted" }
 
     it "returns the record" do
       notifier = described_class.with(record: message)
-      expect(notifier.message).to eq(message)
+      expect(notifier.message_instance).to eq(message)
     end
   end
 end

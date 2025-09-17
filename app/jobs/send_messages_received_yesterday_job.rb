@@ -16,13 +16,13 @@ class SendMessagesReceivedYesterdayJob < ApplicationJob
     Publisher.distinct
              .joins(organisations: { vacancies: { job_applications: { conversations: :messages } } })
              .where(messages: { type: "JobseekerMessage", read: false })
-             .where("DATE(messages.created_at) = ?", Date.yesterday)
+             .where(messages: { created_at: Date.yesterday.all_day })
   end
 
   def count_messages_for_publisher(publisher)
     JobseekerMessage
       .joins(conversation: { job_application: { vacancy: { organisations: :publishers } } })
-      .where("DATE(messages.created_at) = ?", Date.yesterday)
+      .where(messages: { created_at: Date.yesterday.all_day })
       .where(messages: { read: false })
       .where(publishers: { id: publisher.id })
       .count

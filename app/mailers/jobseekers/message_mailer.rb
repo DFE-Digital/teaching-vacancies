@@ -6,7 +6,7 @@ class Jobseekers::MessageMailer < Jobseekers::BaseMailer
     @vacancy = @job_application.vacancy
     @organisation = @vacancy.organisation
 
-    @subject = if @job_application.status == "unsuccessful"
+    @subject = if @job_application.unsuccessful?
                  I18n.t("jobseekers.message_mailer.message_received.unsuccessful.subject",
                         job_title: @vacancy.job_title,
                         organisation_name: @organisation.name)
