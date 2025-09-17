@@ -45,7 +45,7 @@ RSpec.describe "Publisher can set feedback and declined dates" do
 
         expect(publisher_ats_applications_page.tab_panel.job_applications.first.offered_at).to have_link("Add job offer date", href: tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: :offered, job_applications: [job_application.id] }, tag_action: "offered" }))
 
-        publisher_ats_applications_page.tab_panel.job_applications.first.declined_at.click_on("Add job offer date")
+        publisher_ats_applications_page.tab_panel.job_applications.first.offered_at.click_on("Add job offer date")
 
         # Form page
         expect(publisher_ats_job_offer_date_page).to be_displayed(vacancy_id: vacancy.id)

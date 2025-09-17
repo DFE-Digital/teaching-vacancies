@@ -77,7 +77,7 @@ class TabPanelComponent < ApplicationComponent
     if application.offered_at
       application.offered_at.to_fs(:day_month_year)
     else
-      govuk_link_to(t("tabs.offered.add_job_offer_date"), tag_organisation_job_job_applications_path(application.vacancy.id, params: { publishers_job_application_tag_form: { origin: :offered, job_applications: [application.id] }, tag_action: "job_offer" }))
+      govuk_link_to(t("tabs.offered.add_job_offer_date"), tag_organisation_job_job_applications_path(application.vacancy.id, params: { publishers_job_application_tag_form: { origin: :offered, job_applications: [application.id] }, tag_action: "offered" }))
     end
   end
 

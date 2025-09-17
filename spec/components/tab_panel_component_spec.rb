@@ -87,7 +87,7 @@ RSpec.describe TabPanelComponent, type: :component do
     context "when date nil" do
       let(:candidates) { build_stubbed_list(:job_application, 1, :status_offered, vacancy:, offered_at: nil) }
 
-      it { expect(component.candidate_offered_at(candidates.first)).to be_nil }
+      it { expect(tab_panel.find(".offered_at")).to have_link("Add job offer date", href: Rails.application.routes.url_helpers.tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: :offered, job_applications: [candidates.first] }, tag_action: "offered" })) }
     end
   end
 
