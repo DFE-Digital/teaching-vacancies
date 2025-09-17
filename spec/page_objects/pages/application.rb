@@ -19,6 +19,7 @@ module PageObjects
         publisher_ats_reference_request: "Publisher::Ats::ReferenceRequestPage",
         publisher_ats_satisfactory_reference: "Publisher::Ats::SatisfactoryReferencePage",
         publisher_ats_tag: "Publisher::Ats::TagPage",
+        publisher_ats_job_decline_date: "Publisher::Ats::JobDeclineDatePage",
         publisher_include_additional_documents: "Publisher::IncludeAdditionalDocumentsPage",
         publisher_job_title: "Publisher::JobTitlePage",
         publisher_pay_package: "Publisher::PayPackagePage",
