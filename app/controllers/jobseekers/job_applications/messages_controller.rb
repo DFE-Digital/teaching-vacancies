@@ -1,13 +1,12 @@
 class Jobseekers::JobApplications::MessagesController < Jobseekers::JobApplications::BaseController
   before_action :set_job_application
-  before_action :ensure_conversation_exists, only: [:create]
   helper_method :vacancy
 
   def create
     message_form = Publishers::JobApplication::MessagesForm.new(message_form_params)
 
     if message_form.valid?
-      conversation = @job_application.conversations.first
+      conversation = find_or_create_conversation
       JobseekerMessage.create!(content: message_form.content, sender: current_jobseeker, conversation: conversation)
       redirect_to jobseekers_job_application_path(@job_application, tab: "messages"), success: t("publishers.vacancies.job_applications.messages.create.success")
     else
@@ -23,12 +22,6 @@ class Jobseekers::JobApplications::MessagesController < Jobseekers::JobApplicati
 
   private
 
-  def ensure_conversation_exists
-    unless @job_application.conversations.any?
-      redirect_to jobseekers_job_application_path(@job_application, tab: "messages"), warning: "No conversation exists to reply to"
-    end
-  end
-
   def message_form_params
     params[:publishers_job_application_messages_form].permit(:content)
   end
@@ -39,5 +32,10 @@ class Jobseekers::JobApplications::MessagesController < Jobseekers::JobApplicati
 
   def vacancy
     @job_application.vacancy
+  end
+
+  def find_or_create_conversation
+    @job_application.conversations.first ||
+      @job_application.conversations.create!(title: Conversation.default_title_for(@job_application))
   end
 end
