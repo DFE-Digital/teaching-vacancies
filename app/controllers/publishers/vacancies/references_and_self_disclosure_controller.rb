@@ -18,7 +18,7 @@ module Publishers
                   form_class.new collect_references: params[:collect_references],
                                  contact_applicants: params[:contact_applicants]
                 end
-        if (step == :ask_references_email) && (!@form.collect_references || job_applications.none?(&:notify_before_contact_referers?))
+        if (step == :ask_references_email) && (!@form.collect_references || @job_applications.none?(&:notify_before_contact_referers?))
           skip_step
         end
         render_wizard
