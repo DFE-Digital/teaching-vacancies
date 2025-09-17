@@ -3,49 +3,57 @@ require "rails_helper"
 RSpec.describe VacancyAnalyticsService do
   let(:vacancy) { create(:vacancy) }
   let(:referrer_url) { "https://example.com/some/path?utm=source" }
-  let(:normalized_referrer) { "example.com" }
-  let(:redis_key) { "vacancy_referrer_stats:#{vacancy.id}:#{normalized_referrer}" }
+  let(:hostname) { "example.com" }
 
   before do
     mock_redis = MockRedis.new
     allow(Redis).to receive(:current).and_return(mock_redis)
     # Manually stub scan_each to return all keys at once, mock_redis doesn't seem to be able to do this as standard
     allow(mock_redis).to receive(:scan_each) { mock_redis.keys.each }
-    Redis.current.del(redis_key)
   end
 
   describe ".track_visit" do
+    let(:redis_key) { "vacancy_referrer_stats:#{vacancy.id}:#{hostname}" }
+
     it "increments the Redis counter for a normalized referrer" do
       expect {
-        described_class.track_visit(vacancy.id, referrer_url)
+        described_class.track_visit(vacancy.id, referrer_url, "https://google.com/", {})
       }.to change { Redis.current.get(redis_key).to_i }.by(1)
     end
 
     it "does nothing if vacancy id is blank" do
       expect {
-        described_class.track_visit(nil, referrer_url)
+        described_class.track_visit(nil, referrer_url, hostname, {})
       }.not_to(change { Redis.current.keys("vacancy_referrer_stats:*").count })
     end
   end
 
   describe ".normalize_referrer" do
-    it "returns the host from a valid URL" do
-      expect(described_class.normalize_referrer("https://google.com/whatever")).to eq("google.com")
+    it "returns the hostname from a valid URL" do
+      expect(described_class.normalize_referrer("https://google.com/whatever", hostname, {})).to eq("google.com")
     end
 
-    it "returns 'direct' for a blank URL" do
-      expect(described_class.normalize_referrer(nil)).to eq("direct")
+    it "returns 'internal' for a URL with the same host as the request" do
+      expect(described_class.normalize_referrer(referrer_url, hostname, {})).to eq("internal")
+    end
+
+    it "returns 'internal' if the host is missing" do
+      expect(described_class.normalize_referrer("/whatever", hostname, {})).to eq("internal")
     end
 
     it "returns 'invalid' for malformed URLs" do
-      expect(described_class.normalize_referrer("%%%")).to eq("invalid")
+      expect(described_class.normalize_referrer("%%%", hostname, {})).to eq("invalid")
+    end
+
+    it "returns 'jobalert' if the utm_medium is set" do
+      expect(described_class.normalize_referrer(referrer_url, hostname, { utm_medium: "email" })).to eq("jobalert")
     end
   end
 
   describe ".aggregate_and_save_stats" do
-    let(:key) { "vacancy_referrer_stats:#{vacancy.id}:#{normalized_referrer}" }
+    let(:key) { "vacancy_referrer_stats:#{vacancy.id}:#{hostname}" }
     let(:second_key) { "vacancy_referrer_stats:#{vacancy.id}:another.com" }
-    let(:third_key) { "vacancy_referrer_stats:#{another_vacancy.id}:#{normalized_referrer}" }
+    let(:third_key) { "vacancy_referrer_stats:#{another_vacancy.id}:#{hostname}" }
     let(:another_vacancy) { create(:vacancy) }
 
     before do
@@ -56,8 +64,6 @@ RSpec.describe VacancyAnalyticsService do
       Redis.current.set(key, 5)
       Redis.current.set(second_key, 3)
       Redis.current.set(third_key, 1)
-
-      allow(Redis.current).to receive(:scan_each).and_return([key, second_key, third_key])
 
       # test that we create one new vacancy_analytics, we are updating the existing one.
       expect { described_class.aggregate_and_save_stats }.to change(VacancyAnalytics, :count).by(1)
@@ -74,11 +80,13 @@ RSpec.describe VacancyAnalyticsService do
     end
 
     it "skips keys with zero counts" do
-      Redis.current.set(redis_key, 0)
+      Redis.current.set(key, 0)
+      Redis.current.set(second_key, 3)
 
-      expect {
-        described_class.aggregate_and_save_stats
-      }.not_to change(VacancyAnalytics, :count)
+      described_class.aggregate_and_save_stats
+
+      vacancy_analytics_1 = VacancyAnalytics.find_by(vacancy_id: vacancy.id)
+      expect(vacancy_analytics_1.referrer_counts).to eq({ "another.com" => 3 })
     end
   end
 
