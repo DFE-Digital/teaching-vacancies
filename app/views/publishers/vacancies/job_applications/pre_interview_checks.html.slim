@@ -25,6 +25,17 @@
         - row.with_cell(text: t(".#{status}_at", date: reference_request.updated_at.to_fs(:time_on_date)))
         - row.with_cell(text: govuk_tag(text: t("reference_requests.#{status}.status"), colour: t("reference_requests.#{status}.colour")))
 
+    - if @job_application.religious_reference_request.present?
+      - status = religious_request_status(@job_application.religious_reference_request)
+
+      - body.with_row html_attributes: { id: "religious_reference" } do |row|
+        - row.with_cell(text: t(".religious_reference"))
+        - row.with_cell(text: govuk_link_to(@job_application.religious_referee_name, edit_organisation_job_job_application_religious_reference_path(vacancy.id, @job_application.id)))
+
+        / no dates for religious references as we don't collect them
+        - row.with_cell(text: nil)
+        - row.with_cell(text: govuk_tag(text: t("reference_requests.#{status}.status"), colour: t("reference_requests.#{status}.colour")))
+
     - if @job_application.self_disclosure_request
       - body.with_row do |row|
         - row.with_cell(text: t(".self_disclosure"))
