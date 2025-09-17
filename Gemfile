@@ -141,7 +141,7 @@ group :test do
   gem "shoulda-matchers"
   gem "simplecov", require: false
   # Lcov 0.9 breaks undercover's LCov parser
-  gem "simplecov-lcov", "< 0.9", require: false
+  gem "simplecov-lcov", "< 0.10", require: false
   gem "site_prism"
   gem "uri-query_params"
   gem "vcr"
