@@ -19,15 +19,16 @@ RSpec.describe "Publisher can set feedback and declined dates" do
 
         expect(publisher_ats_applications_page.tab_panel.job_applications.first.declined_at).to have_link("Add decline date", href: tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: :offered, job_applications: [job_application.id] }, tag_action: "declined" }))
 
-        publisher_ats_applications_page.tab_panel.job_applications.first.declined_at.click_on("Add declined date")
+        publisher_ats_applications_page.tab_panel.job_applications.first.declined_at.click_on("Add decline date")
 
         # Form page
         expect(publisher_ats_job_decline_date_page).to be_displayed(vacancy_id: vacancy.id)
         decline_date = 2.days.ago
         publisher_ats_job_decline_date_page.set_date(decline_date)
+        publisher_ats_job_decline_date_page.btn_continue.click
 
         expect(publisher_ats_applications_page).to be_displayed(vacancy_id: vacancy.id)
-        expect(publisher_ats_applications_page.tab_panel.job_applications.first.declined_at).to have_text(decline_date.to_fs)
+        expect(publisher_ats_applications_page.tab_panel.job_applications.first.declined_at).to have_text(decline_date.to_fs(:day_month_year))
       end
     end
   end
@@ -50,9 +51,10 @@ RSpec.describe "Publisher can set feedback and declined dates" do
         expect(publisher_ats_job_offer_date_page).to be_displayed(vacancy_id: vacancy.id)
         offer_date = 2.days.ago
         publisher_ats_job_offer_date_page.set_date(offer_date)
+        publisher_ats_job_offer_date_page.btn_continue.click
 
         expect(publisher_ats_applications_page).to be_displayed(vacancy_id: vacancy.id)
-        expect(publisher_ats_applications_page.tab_panel.job_applications.first.offered_at).to have_text(offer_date.to_fs)
+        expect(publisher_ats_applications_page.tab_panel.job_applications.first.offered_at).to have_text(offer_date.to_fs(:day_month_year))
       end
     end
   end
@@ -75,9 +77,10 @@ RSpec.describe "Publisher can set feedback and declined dates" do
         expect(publisher_ats_job_feedback_date_page).to be_displayed(vacancy_id: vacancy.id)
         feedback_date = 2.days.ago
         publisher_ats_job_feedback_date_page.set_date(feedback_date)
+        publisher_ats_job_feedback_date_page.btn_continue.click
 
         expect(publisher_ats_applications_page).to be_displayed(vacancy_id: vacancy.id)
-        expect(publisher_ats_applications_page.tab_panel.job_applications.first.interview_feedback_received_at).to have_text(feedback_date.to_fs)
+        expect(publisher_ats_applications_page.tab_panel.job_applications.first.interview_feedback_received_at).to have_text(feedback_date.to_fs(:day_month_year))
       end
     end
   end
