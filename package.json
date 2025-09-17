@@ -21,7 +21,7 @@
     "classlist-polyfill": "^1.2.0",
     "core-js": "^3.45.1",
     "dfe-frontend": "^2.0.1",
-    "dompurify": "^3.2.6",
+    "dompurify": "^3.2.7",
     "govuk-frontend": "^5.11.2",
     "jquery": "^3.6.0",
     "leaflet": "^1.9.4",
