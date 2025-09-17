@@ -16,4 +16,16 @@ module JobReferencesHelper
       "created"
     end
   end
+
+  def contact_referees_message(job_applications)
+    if job_applications.one?
+      "single"
+    elsif job_applications.one?(&:notify_before_contact_referers?)
+      "one"
+    elsif job_applications.all?(&:notify_before_contact_referers?)
+      "all"
+    else
+      "some"
+    end
+  end
 end

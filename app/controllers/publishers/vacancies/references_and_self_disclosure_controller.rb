@@ -18,7 +18,7 @@ module Publishers
                   form_class.new collect_references: params[:collect_references],
                                  contact_applicants: params[:contact_applicants]
                 end
-        if (step == :ask_references_email) && (!@form.collect_references || job_applications.none?(&:notify_before_contact_referers?))
+        if (step == :ask_references_email) && (!@form.collect_references || @job_applications.none?(&:notify_before_contact_referers?))
           skip_step
         end
         render_wizard
@@ -46,7 +46,7 @@ module Publishers
 
       def complete_process
         JobApplicationBatch.transaction do
-          job_applications.each do |job_application|
+          @job_applications.each do |job_application|
             if @form.collect_references
               ReferenceRequest.create_for_external!(job_application)
               Publishers::CollectReferencesMailer.inform_applicant_about_references(job_application).deliver_later if @form.contact_applicants
@@ -64,12 +64,9 @@ module Publishers
         end
       end
 
-      def job_applications
-        @batch.batchable_job_applications.map(&:job_application)
-      end
-
       def set_batch
         @batch = JobApplicationBatch.where(vacancy: vacancy).find params[:job_application_batch_id]
+        @job_applications = @batch.batchable_job_applications.map(&:job_application)
       end
 
       def finish_wizard_path
