@@ -4,6 +4,7 @@
 ## Uncomment and set this to only include directories you want to watch
 # directories %w(app lib config test spec features) \
 #  .select{|d| Dir.exist?(d) ? d : UI.warning("Directory #{d} does not exist")}
+# directories %w[app config lib spec .]
 
 ## Note: if you are using the `directories` clause above and you are not
 ## watching the project directory ('.'), then you will want to move
@@ -31,6 +32,7 @@ rspec_options = {
     cmd_additional_args: "'",
   },
 }
+
 guard :rspec, rspec_options do
   require "guard/rspec/dsl"
   dsl = Guard::RSpec::Dsl.new(self)
@@ -55,24 +57,31 @@ guard :rspec, rspec_options do
   watch(rails.controllers) do |m|
     [
       rspec.spec.call("routing/#{m[1]}_routing"),
-      rspec.spec.call("controllers/#{m[1]}_controller"),
-      rspec.spec.call("acceptance/#{m[1]}"),
+      rspec.spec.call("requests/#{m[1]}"),
     ]
   end
+
+  watch(rails.view_dirs)       { |m| rspec.spec.call("requests/#{m[1]}") }
 
   # Rails config changes
   watch(rails.spec_helper)     { rspec.spec_dir }
   watch(rails.routes)          { "#{rspec.spec_dir}/routing" }
-  watch(rails.app_controller)  { "#{rspec.spec_dir}/controllers" }
+  watch(rails.app_controller)  { "#{rspec.spec_dir}/requests" }
 
-  # Capybara features specs
-  watch(rails.view_dirs)     { |m| puts m; rspec.spec.call("system/#{m[1]}") }
-  watch(rails.layouts)       { |m| puts m; rspec.spec.call("system/#{m[1]}") }
+  # Capybara features specs - probably too heavy a trigger for now
+  # watch(rails.controllers) do |m|
+  #   system_spec_name = m[1].split("/")
+  #   # This would be ideal, but our system specs don't have names that match the controllers that they test
+  #   # system_spec = "#{system_spec_name.first}/#{system_spec_name.join('_')}"
+  #   # rspec.spec.call("system/#{system_spec}")
+  #   "#{rspec.spec_dir}/system/#{system_spec_name.first}"
+  # end
 
-  # Turnip features and steps
-  # watch(%r{^spec/acceptance/(.+)\.feature$})
-  # watch(%r{^spec/acceptance/steps/(.+)_steps\.rb$}) do |m|
-  #   Dir[File.join("**/#{m[1]}.feature")][0] || "spec/acceptance"
+  # watch(rails.view_dirs) do |m|
+  #   system_spec_name = m[1].split("/")
+  #   # system_spec = "#{system_spec_name.first}/#{system_spec_name.join('_')}"
+  #   # rspec.spec.call("system/#{system_spec}")
+  #   "#{rspec.spec_dir}/system/#{system_spec_name.first}"
   # end
 end
 
@@ -85,7 +94,7 @@ end
 # all_on_start: true        # Check all files at Guard startup. default: true
 # slim_dires: ['app/views'] # Check Directories. default: 'app/views' or '.'
 # cli: '--no-color' # Additional command line options to slim-lint.
-guard :slim_lint do
+guard :slim_lint, all_on_start: false do
   watch(%r{.+\.html.*\.slim$})
   watch(%r{(?:.+/)?\.slim-lint\.yml$}) { |m| File.dirname(m[0]) }
 end
