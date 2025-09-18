@@ -4,6 +4,7 @@ class JobseekerMessage < Message
   belongs_to :sender, class_name: "Jobseeker"
 
   validate :jobseeker_can_send_message
+  after_create :notify_publisher
 
   private
 
@@ -11,5 +12,10 @@ class JobseekerMessage < Message
     unless conversation.job_application.can_jobseeker_send_message?
       errors.add(:base, "Cannot send message for this job application status")
     end
+  end
+
+  def notify_publisher
+    job_application = conversation.job_application
+    Publishers::MessageReceivedNotifier.with(record: self).deliver(job_application.vacancy.publisher)
   end
 end
