@@ -1,16 +1,16 @@
-import { Application } from "@hotwired/stimulus";
-import MarketingTrackingController from "./marketingTracking";
+import { Application } from '@hotwired/stimulus';
+import MarketingTrackingController from './marketingTracking';
 
-describe("MarketingTrackingController", () => {
+describe('MarketingTrackingController', () => {
   let application;
 
   afterEach(() => {
     if (application) application.stop();
-    document.body.innerHTML = "";
+    document.body.innerHTML = '';
     jest.restoreAllMocks();
   });
 
-  describe("applyForJob", () => {
+  describe('applyForJob', () => {
     let element;
 
     beforeEach(() => {
@@ -22,23 +22,23 @@ describe("MarketingTrackingController", () => {
         >Apply for this job</button>
       `;
       application = Application.start();
-      application.register("marketing-tracking", MarketingTrackingController);
-      element = document.getElementById("apply-btn");
+      application.register('marketing-tracking', MarketingTrackingController);
+      element = document.getElementById('apply-btn');
     });
 
-    it("calls fbq, lintrk, and rdt if present", () => {
+    it('calls fbq, lintrk, and rdt if present', () => {
       window.fbq = jest.fn();
       window.lintrk = jest.fn();
       window.rdt = jest.fn();
 
       element.click();
 
-      expect(window.fbq).toHaveBeenCalledWith("trackCustom", "Apply for Job");
-      expect(window.lintrk).toHaveBeenCalledWith("track", { conversion_id: 23034978 });
-      expect(window.rdt).toHaveBeenCalledWith("track", "Lead");
+      expect(window.fbq).toHaveBeenCalledWith('trackCustom', 'Apply for Job');
+      expect(window.lintrk).toHaveBeenCalledWith('track', { conversion_id: 23034978 });
+      expect(window.rdt).toHaveBeenCalledWith('track', 'Lead');
     });
 
-    it("does not throw if fbq, lintrk, or rdt are missing", () => {
+    it('does not throw if fbq, lintrk, or rdt are missing', () => {
       delete window.fbq;
       delete window.lintrk;
       delete window.rdt;
@@ -46,7 +46,7 @@ describe("MarketingTrackingController", () => {
     });
   });
 
-  describe("siteSearch", () => {
+  describe('siteSearch', () => {
     let searchBtn;
 
     beforeEach(() => {
@@ -58,23 +58,23 @@ describe("MarketingTrackingController", () => {
         >Search</button>
       `;
       application = Application.start();
-      application.register("marketing-tracking", MarketingTrackingController);
-      searchBtn = document.getElementById("search-btn");
+      application.register('marketing-tracking', MarketingTrackingController);
+      searchBtn = document.getElementById('search-btn');
     });
 
-    it("calls fbq, lintrk, and rdt if present", () => {
+    it('calls fbq, lintrk, and rdt if present', () => {
       window.fbq = jest.fn();
       window.lintrk = jest.fn();
       window.rdt = jest.fn();
 
       searchBtn.click();
 
-      expect(window.fbq).toHaveBeenCalledWith("trackCustom", "Site Search");
-      expect(window.lintrk).toHaveBeenCalledWith("track", { conversion_id: 23034986 });
-      expect(window.rdt).toHaveBeenCalledWith("track", "Search");
+      expect(window.fbq).toHaveBeenCalledWith('trackCustom', 'Site Search');
+      expect(window.lintrk).toHaveBeenCalledWith('track', { conversion_id: 23034986 });
+      expect(window.rdt).toHaveBeenCalledWith('track', 'Search');
     });
 
-    it("does not throw if fbq, lintrk, or rdt are missing", () => {
+    it('does not throw if fbq, lintrk, or rdt are missing', () => {
       delete window.fbq;
       delete window.lintrk;
       delete window.rdt;
@@ -82,7 +82,7 @@ describe("MarketingTrackingController", () => {
     });
   });
 
-  describe("setUpAlerts", () => {
+  describe('setUpAlerts', () => {
     let alertsBtn;
 
     beforeEach(() => {
@@ -94,28 +94,28 @@ describe("MarketingTrackingController", () => {
         >Set up alerts</button>
       `;
       application = Application.start();
-      application.register("marketing-tracking", MarketingTrackingController);
-      alertsBtn = document.getElementById("alerts-btn");
+      application.register('marketing-tracking', MarketingTrackingController);
+      alertsBtn = document.getElementById('alerts-btn');
     });
 
-    it("logs to console and calls fbq and lintrk if present", () => {
+    it('logs to console and calls fbq and lintrk if present', () => {
       window.fbq = jest.fn();
       window.lintrk = jest.fn();
 
       alertsBtn.click();
 
-      expect(window.fbq).toHaveBeenCalledWith("trackCustom", "Set up Alerts");
-      expect(window.lintrk).toHaveBeenCalledWith("track", { conversion_id: 23035010 });
+      expect(window.fbq).toHaveBeenCalledWith('trackCustom', 'Set up Alerts');
+      expect(window.lintrk).toHaveBeenCalledWith('track', { conversion_id: 23035010 });
     });
 
-    it("does not throw if fbq or lintrk are missing", () => {
+    it('does not throw if fbq or lintrk are missing', () => {
       delete window.fbq;
       delete window.lintrk;
       expect(() => alertsBtn.click()).not.toThrow();
     });
   });
 
-  describe("alertSubscriptionConfirmation", () => {
+  describe('alertSubscriptionConfirmation', () => {
     let bannerDiv;
 
     beforeEach(() => {
@@ -127,20 +127,20 @@ describe("MarketingTrackingController", () => {
         </div>
       `;
       application = Application.start();
-      application.register("marketing-tracking", MarketingTrackingController);
-      bannerDiv = document.querySelector(".js-alert-subscription-confirmation");
+      application.register('marketing-tracking', MarketingTrackingController);
+      bannerDiv = document.querySelector('.js-alert-subscription-confirmation');
     });
 
-    it("calls rdt if present", () => {
-      expect(window.rdt).toHaveBeenCalledWith("track", "AddToWishlist");
+    it('calls rdt if present', () => {
+      expect(window.rdt).toHaveBeenCalledWith('track', 'AddToWishlist');
     });
 
-    it("does not throw if rdt is missing", () => {
+    it('does not throw if rdt is missing', () => {
       delete window.rdt;
       expect(() => {
         application.stop();
         application = Application.start();
-        application.register("marketing-tracking", MarketingTrackingController);
+        application.register('marketing-tracking', MarketingTrackingController);
       }).not.toThrow();
     });
   });
