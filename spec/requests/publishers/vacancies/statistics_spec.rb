@@ -19,7 +19,7 @@ RSpec.describe "Job listing statistics" do
       it "returns a csv" do
         get(organisation_job_statistics_path(vacancy.id, format: :csv))
         expect(response.content_type).to include("text/csv")
-        expect(response.body).to include("Organisation,Job title,Views by jobseekers")
+        expect(response.body).to include("Organisation,Job title")
       end
     end
 

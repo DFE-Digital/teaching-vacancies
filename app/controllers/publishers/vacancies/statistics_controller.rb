@@ -2,12 +2,13 @@ class Publishers::Vacancies::StatisticsController < Publishers::Vacancies::BaseC
   def show
     @number_of_unique_views = Publishers::VacancyStats.new(vacancy).number_of_unique_views
     @vacancy_analytics = vacancy.vacancy_analytics
+    @job_application_counts = vacancy.job_applications.not_draft.group_by(&:status).transform_values(&:count)
 
     @bar_chart = params[:view] != "table"
 
     respond_to do |format|
       format.html
-      format.csv { send_data Publishers::ExportVacancyToCsv.new(vacancy, @number_of_unique_views).call, filename: "#{vacancy.slug}-statistics.csv" }
+      format.csv { send_data Publishers::ExportVacancyToCsv.call(vacancy, @job_application_counts), filename: "#{vacancy.slug}-statistics.csv" }
     end
   end
 
