@@ -160,4 +160,62 @@ RSpec.describe "Publishers can view candidate messages", :js do
       end
     end
   end
+
+  describe "message ordering" do
+    let(:oldest_vacancy) { create(:vacancy, :live, organisations: [organisation]) }
+    let(:older_vacancy) { create(:vacancy, :live, organisations: [organisation]) }
+    let(:middle_vacancy) { create(:vacancy, :live, organisations: [organisation]) }
+    let(:newer_vacancy) { create(:vacancy, :live, organisations: [organisation]) }
+
+    let(:oldest_job_application) { create(:job_application, :submitted, vacancy: oldest_vacancy) }
+    let(:older_job_application) { create(:job_application, :submitted, vacancy: older_vacancy) }
+    let(:middle_job_application) { create(:job_application, :submitted, vacancy: middle_vacancy) }
+    let(:newer_job_application) { create(:job_application, :submitted, vacancy: newer_vacancy) }
+
+    let!(:older_unread_conversation) { create(:conversation, job_application: older_job_application) }
+    let!(:newer_unread_conversation) { create(:conversation, job_application: newer_job_application) }
+    let!(:older_read_conversation) { create(:conversation, job_application: oldest_job_application) }
+    let!(:newer_read_conversation) { create(:conversation, job_application: middle_job_application) }
+
+    before do
+      travel_to 4.days.ago do
+        create(:jobseeker_message, conversation: older_read_conversation, sender: oldest_job_application.jobseeker, read: true)
+      end
+
+      travel_to 3.days.ago do
+        create(:jobseeker_message, conversation: older_unread_conversation, sender: older_job_application.jobseeker, read: false)
+      end
+
+      travel_to 2.days.ago do
+        create(:jobseeker_message, conversation: newer_unread_conversation, sender: newer_job_application.jobseeker, read: false)
+      end
+
+      travel_to 1.day.ago do
+        create(:jobseeker_message, conversation: newer_read_conversation, sender: middle_job_application.jobseeker, read: true)
+      end
+    end
+
+    it "orders conversations with unread messages first (newest first), then read messages (newest first)" do
+      visit publishers_candidate_messages_path
+
+      conversation_rows = page.all("table tbody tr")
+      expect(conversation_rows.count).to eq(4)
+
+      within(conversation_rows[0]) do
+        expect(page).to have_content(newer_unread_conversation.job_application.name)
+      end
+
+      within(conversation_rows[1]) do
+        expect(page).to have_content(older_unread_conversation.job_application.name)
+      end
+
+      within(conversation_rows[2]) do
+        expect(page).to have_content(newer_read_conversation.job_application.name)
+      end
+
+      within(conversation_rows[3]) do
+        expect(page).to have_content(older_read_conversation.job_application.name)
+      end
+    end
+  end
 end
