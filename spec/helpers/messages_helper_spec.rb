@@ -9,9 +9,9 @@ RSpec.describe MessagesHelper do
   describe "#publisher_message_display_name" do
     let(:vacancy) { build_stubbed(:vacancy) }
 
-    it "returns publisher name and organisation when sender is a publisher" do
+    it "returns publisher name and organisation with timestamp when sender is a publisher" do
       message = build_stubbed(:publisher_message, sender: publisher)
-      expected = "John Smith, #{vacancy.organisation_name} <via Teaching Vacancies>"
+      expected = "John Smith, #{vacancy.organisation_name} <via Teaching Vacancies> #{message.created_at.to_fs(:date_at_time)}"
 
       result = helper.publisher_message_display_name(message, vacancy)
       expect(result).to eq(expected)
@@ -21,9 +21,9 @@ RSpec.describe MessagesHelper do
   describe "#jobseeker_message_display_name" do
     let(:job_application) { build_stubbed(:job_application, first_name: "Jane", last_name: "Doe") }
 
-    it "returns jobseeker name and email when sender is a jobseeker" do
+    it "returns jobseeker name and email with timestamp when sender is a jobseeker" do
       message = build_stubbed(:jobseeker_message, sender: jobseeker)
-      expected = "Jane Doe <#{email}>"
+      expected = "Jane Doe <#{email}> #{message.created_at.to_fs(:date_at_time)}"
 
       result = helper.jobseeker_message_display_name(message, job_application)
       expect(result).to eq(expected)
