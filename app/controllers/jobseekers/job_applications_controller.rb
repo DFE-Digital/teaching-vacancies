@@ -31,7 +31,10 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
                                                 .where.not(status: :draft)
                                                 .order(submitted_at: :desc)
                                                 .sort_by { |x| status_keys.index(x.status.to_sym) } - action_required
-    @job_applications = active_drafts + action_required + active_job_applications + expired_drafts
+    all_applications = active_drafts + action_required + active_job_applications + expired_drafts
+
+    @count = all_applications.size
+    @pagy, @job_applications = pagy_array(all_applications)
   end
 
   def new
