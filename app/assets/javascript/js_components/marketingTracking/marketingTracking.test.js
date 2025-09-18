@@ -98,7 +98,7 @@ describe('MarketingTrackingController', () => {
       alertsBtn = document.getElementById('alerts-btn');
     });
 
-    it('logs to console and calls fbq and lintrk if present', () => {
+    it('calls fbq and lintrk if present', () => {
       window.fbq = jest.fn();
       window.lintrk = jest.fn();
 
@@ -116,8 +116,6 @@ describe('MarketingTrackingController', () => {
   });
 
   describe('alertSubscriptionConfirmation', () => {
-    let bannerDiv;
-
     beforeEach(() => {
       // Set up the mock before Stimulus initializes the controller
       window.rdt = jest.fn();
@@ -128,7 +126,6 @@ describe('MarketingTrackingController', () => {
       `;
       application = Application.start();
       application.register('marketing-tracking', MarketingTrackingController);
-      bannerDiv = document.querySelector('.js-alert-subscription-confirmation');
     });
 
     it('calls rdt if present', () => {

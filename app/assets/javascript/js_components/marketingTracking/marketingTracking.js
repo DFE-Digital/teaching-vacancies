@@ -1,5 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 
+/* global fbq, rdt */
+
 // Stimulus controller for marketing pixel tracking
 //
 // Currently supports Facebook, LinkedIn, and Reddit pixels.
@@ -16,6 +18,7 @@ export default class extends Controller {
   }
 
   // Called from the "Apply for this job" button click
+  // eslint-disable-next-line class-methods-use-this
   applyForJob() {
     // Facebook
     if (typeof fbq === 'function') fbq('trackCustom', 'Apply for Job');
@@ -26,6 +29,7 @@ export default class extends Controller {
   }
 
   // Called when user clicks on the vacancies search button
+  // eslint-disable-next-line class-methods-use-this
   siteSearch() {
     // Facebook
     if (typeof fbq === 'function') fbq('trackCustom', 'Site Search');
@@ -36,6 +40,7 @@ export default class extends Controller {
   }
 
   // Called when user clicks on the "Set up alerts" button
+  // eslint-disable-next-line class-methods-use-this
   setUpAlerts() {
     // Facebook
     if (typeof fbq === 'function') fbq('trackCustom', 'Set up Alerts');
@@ -45,6 +50,7 @@ export default class extends Controller {
   }
 
   // Called when user lands on the alert subscription confirmation page
+  // eslint-disable-next-line class-methods-use-this
   alertSubscriptionConfirmation() {
     // Reddit
     if (typeof rdt === 'function') rdt('track', 'AddToWishlist');
