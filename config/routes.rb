@@ -386,7 +386,7 @@ Rails.application.routes.draw do
     end
     get "/jobs/start", to: "publishers/vacancies#start"
 
-    resources :jobs, only: %i[create destroy delete show], controller: "publishers/vacancies" do
+    resources :jobs, only: %i[create destroy show], controller: "publishers/vacancies" do
       resources :build, only: %i[show update], controller: "publishers/vacancies/build"
       resources :wizard, only: %i[show update], controller: "publishers/vacancies/wizard"
       resources :documents, only: %i[index new create destroy], controller: "publishers/vacancies/documents" do
