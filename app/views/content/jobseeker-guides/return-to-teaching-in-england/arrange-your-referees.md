@@ -3,6 +3,7 @@ order: 105
 title: Arranging your references
 meta_description: Arrange your teaching references for job applications. Get guidance on teaching standard references and updating your teaching portfolio.
 date_posted: 17/02/2025
+date_updated: 16/07/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/arrange-your-referees.png"
 ---
