@@ -36,6 +36,6 @@ class Jobseekers::JobApplications::MessagesController < Jobseekers::JobApplicati
 
   def find_or_create_conversation
     @job_application.conversations.first ||
-      @job_application.conversations.create!(title: Conversation.default_title_for(@job_application))
+      @job_application.conversations.create!
   end
 end
