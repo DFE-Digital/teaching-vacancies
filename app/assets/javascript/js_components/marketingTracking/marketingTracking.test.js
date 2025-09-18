@@ -114,4 +114,34 @@ describe("MarketingTrackingController", () => {
       expect(() => alertsBtn.click()).not.toThrow();
     });
   });
+
+  describe("alertSubscriptionConfirmation", () => {
+    let bannerDiv;
+
+    beforeEach(() => {
+      // Set up the mock before Stimulus initializes the controller
+      window.rdt = jest.fn();
+      document.body.innerHTML = `
+        <div class="js-alert-subscription-confirmation" data-controller="marketing-tracking">
+          <span class="govuk-notification-banner__heading">Your job alert has been created</span>
+        </div>
+      `;
+      application = Application.start();
+      application.register("marketing-tracking", MarketingTrackingController);
+      bannerDiv = document.querySelector(".js-alert-subscription-confirmation");
+    });
+
+    it("calls rdt if present", () => {
+      expect(window.rdt).toHaveBeenCalledWith("track", "AddToWishlist");
+    });
+
+    it("does not throw if rdt is missing", () => {
+      delete window.rdt;
+      expect(() => {
+        application.stop();
+        application = Application.start();
+        application.register("marketing-tracking", MarketingTrackingController);
+      }).not.toThrow();
+    });
+  });
 });

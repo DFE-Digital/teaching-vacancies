@@ -9,6 +9,12 @@ import { Controller } from "@hotwired/stimulus";
 // before attempting to call them to avoid errors if the pixels are not loaded
 export default class extends Controller {
 
+  connect() {
+    // If this JS controller has been loaded from the alert subscription confirmation banner, trigger the event.
+    if (this.element.classList.contains("js-alert-subscription-confirmation")) {
+      this.alertSubscriptionConfirmation();
+    }
+  }
   // Called from the "Apply for this job" button click
   applyForJob() {
     // Facebook
@@ -19,7 +25,7 @@ export default class extends Controller {
     if (typeof rdt === "function") rdt('track', 'Lead');
   }
 
-  // Fires when user clicks on the vacancies search button
+  // Called when user clicks on the vacancies search button
   siteSearch() {
     // Facebook
     if (typeof fbq === "function") fbq('trackCustom', 'Site Search');
@@ -29,12 +35,19 @@ export default class extends Controller {
     if (typeof rdt === "function") rdt('track', 'Search');
   }
 
-  // Fires when user clicks on the "Set up alerts" button
+  // Called when user clicks on the "Set up alerts" button
   setUpAlerts() {
     // Facebook
     if (typeof fbq === "function") fbq('trackCustom', 'Set up Alerts');
     // LinkedIn
     if (window.lintrk) window.lintrk('track', { conversion_id: 23035010 });
     // Reddit: No call needed here
+  }
+
+  // Called when user lands on the alert subscription confirmation page
+  alertSubscriptionConfirmation() {
+    // Reddit
+    if (typeof rdt === "function") rdt('track', 'AddToWishlist');
+    // Facebook/LinkedIn: No call needed here
   }
 }

@@ -1,4 +1,9 @@
 - flash.each do |variant, message|
   - next unless variant.in? t("banners").keys.map(&:to_s)
-  = govuk_notification_banner title_text: t("banners.#{variant}"), classes: "govuk-notification-banner--#{variant} govuk-!-margin-top-3 govuk-!-margin-bottom-0" do |notification_banner|
-    - notification_banner.with_heading(text: message)
+  - if variant.to_s == "success" && message.include?(t("subscriptions.create.success"))
+    .js-alert-subscription-confirmation data-controller="marketing-tracking"
+      = govuk_notification_banner title_text: t("banners.#{variant}"), classes: "govuk-notification-banner--#{variant} govuk-!-margin-top-3 govuk-!-margin-bottom-0" do |notification_banner|
+        - notification_banner.with_heading(text: message)
+  - else
+    = govuk_notification_banner title_text: t("banners.#{variant}"), classes: "govuk-notification-banner--#{variant} govuk-!-margin-top-3 govuk-!-margin-bottom-0" do |notification_banner|
+      - notification_banner.with_heading(text: message)
