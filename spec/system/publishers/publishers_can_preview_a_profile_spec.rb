@@ -18,6 +18,10 @@ RSpec.describe "Publishers can preview an organisation or school profile" do
       click_link I18n.t("publishers.organisations.show.preview_link_text", organisation_type: "school")
     end
 
+    it "passes a11y", :a11y do
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+    end
+
     it "displays a profile summary" do
       has_profile_summary?(page, organisation)
     end

@@ -23,6 +23,11 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
       click_on I18n.t("jobs.alert.similar.terse")
     end
 
+    it "passes a11y", :a11y do
+      # h3 without h2?
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
+    end
+
     scenario "can click on the first link to create a job alert using data from the vacancy", :dfe_analytics do
       expect(:vacancy_create_job_alert_clicked).to have_been_enqueued_as_analytics_event(with_data: { vacancy_id: vacancy.id }) # rubocop:disable RSpec/ExpectActual
 

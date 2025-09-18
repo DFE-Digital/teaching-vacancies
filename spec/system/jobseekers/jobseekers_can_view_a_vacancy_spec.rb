@@ -16,6 +16,10 @@ RSpec.describe "Viewing a single published vacancy" do
                                                                                         catering_cleaning_and_site_management it_support pastoral_health_and_welfare other_leadership other_support ])
     end
 
+    it "passes a11y", :a11y do
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+    end
+
     scenario "jobseekers can view the vacancy" do
       verify_vacancy_show_page_details(vacancy)
     end

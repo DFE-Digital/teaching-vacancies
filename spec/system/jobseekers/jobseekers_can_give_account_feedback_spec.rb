@@ -12,9 +12,17 @@ RSpec.describe "Jobseekers can give account feedback" do
 
   after { logout }
 
+  it "passes a11y", :a11y do
+    expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+  end
+
   describe "feedback" do
     before do
       click_on I18n.t("footer.provide_feedback")
+    end
+
+    it "passes a11y", :a11y do
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr", "heading-order"
     end
 
     it "submits account feedback" do
@@ -41,6 +49,10 @@ RSpec.describe "Jobseekers can give account feedback" do
   describe "email opt-out" do
     before do
       click_on I18n.t("jobseekers.accounts.show.email_preferences.link")
+    end
+
+    it "passes a11y", :a11y do
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr", "heading-order"
     end
 
     it "updates the opt out field and adds a feedback record", :js do

@@ -14,6 +14,10 @@ RSpec.describe "Jobseekers can review a job application" do
 
   after { logout }
 
+  it "passes a11y", :a11y do
+    expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+  end
+
   it "displays all the job application information" do
     within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.personal_details.heading") do
       expect(page).to have_content(job_application.first_name)

@@ -18,6 +18,10 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
     end
 
+    it "passes a11y", :a11y do
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+    end
+
     it "updates job application status", :js do
       publisher_application_page.update_status do |tag_page|
         tag_page.select_and_submit("shortlisted")

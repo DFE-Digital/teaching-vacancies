@@ -1,7 +1,7 @@
 - content_for :page_title_prefix, t(".page_title", name: @referee.job_application.name)
 
 - content_for :breadcrumbs do
-  = govuk_back_link text: t("app.back_link"), href: previous_wizard_path(token: @form.token), html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
+  = govuk_back_link text: t("app.back_link"), href: previous_wizard_path(token: @form.token), html_attributes: { "aria-label" => "Back navigation" }
 
 span.govuk-caption-m = t(".caption")
 h1.govuk-heading-l = t(".heading")
