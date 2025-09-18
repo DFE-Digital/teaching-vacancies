@@ -18,4 +18,14 @@ export default class extends Controller {
     // Reddit
     if (typeof rdt === "function") rdt('track', 'Lead');
   }
+
+  // Fires when user clicks on the vacancies search button
+  siteSearch() {
+    // Facebook
+    if (typeof fbq === "function") fbq('trackCustom', 'Site Search');
+    // LinkedIn
+    if (window.lintrk) window.lintrk('track', { conversion_id: 23034986 });
+    // Reddit
+    if (typeof rdt === "function") rdt('track', 'Search');
+  }
 }

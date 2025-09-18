@@ -9,4 +9,6 @@
   = f.hidden_field :sort_by, value: form.sort.by
 
   .search-results-controls__submit
-    = f.govuk_submit t("buttons.search"), class: "govuk-button"
+    = f.govuk_submit t("buttons.search"),
+      class: "govuk-button",
+      data: { controller: "marketing-tracking", action: "click->marketing-tracking#siteSearch" }
