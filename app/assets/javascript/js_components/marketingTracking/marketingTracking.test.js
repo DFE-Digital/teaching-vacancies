@@ -81,4 +81,37 @@ describe("MarketingTrackingController", () => {
       expect(() => searchBtn.click()).not.toThrow();
     });
   });
+
+  describe("setUpAlerts", () => {
+    let alertsBtn;
+
+    beforeEach(() => {
+      document.body.innerHTML = `
+        <button
+          data-controller="marketing-tracking"
+          data-action="click->marketing-tracking#setUpAlerts"
+          id="alerts-btn"
+        >Set up alerts</button>
+      `;
+      application = Application.start();
+      application.register("marketing-tracking", MarketingTrackingController);
+      alertsBtn = document.getElementById("alerts-btn");
+    });
+
+    it("logs to console and calls fbq and lintrk if present", () => {
+      window.fbq = jest.fn();
+      window.lintrk = jest.fn();
+
+      alertsBtn.click();
+
+      expect(window.fbq).toHaveBeenCalledWith("trackCustom", "Set up Alerts");
+      expect(window.lintrk).toHaveBeenCalledWith("track", { conversion_id: 23035010 });
+    });
+
+    it("does not throw if fbq or lintrk are missing", () => {
+      delete window.fbq;
+      delete window.lintrk;
+      expect(() => alertsBtn.click()).not.toThrow();
+    });
+  });
 });

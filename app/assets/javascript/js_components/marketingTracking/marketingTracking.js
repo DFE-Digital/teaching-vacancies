@@ -28,4 +28,13 @@ export default class extends Controller {
     // Reddit
     if (typeof rdt === "function") rdt('track', 'Search');
   }
+
+  // Fires when user clicks on the "Set up alerts" button
+  setUpAlerts() {
+    // Facebook
+    if (typeof fbq === "function") fbq('trackCustom', 'Set up Alerts');
+    // LinkedIn
+    if (window.lintrk) window.lintrk('track', { conversion_id: 23035010 });
+    // Reddit: No call needed here
+  }
 }
