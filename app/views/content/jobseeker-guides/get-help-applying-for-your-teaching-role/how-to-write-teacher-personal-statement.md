@@ -3,6 +3,7 @@ order: 100
 title: How to write a teacher personal statement
 meta_description: Expert advice on what to include in your personal statement when applying for a teaching job. Read some example teacher personal statements.
 date_posted: 15/03/2022
+date_updated: 03/03/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-write-your-teacher-training-personal-statement.jpg"
 ---
