@@ -1,8 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can add professional body memberships to their profile" do
-  let(:jobseeker) { create(:jobseeker) }
-  let!(:profile) { create(:jobseeker_profile, jobseeker:) }
+  let(:jobseeker) { create(:jobseeker, jobseeker_profile: build(:jobseeker_profile, professional_body_memberships: professional_body_memberships)) }
 
   before do
     login_as(jobseeker, scope: :jobseeker)
@@ -11,11 +10,14 @@ RSpec.describe "Jobseekers can add professional body memberships to their profil
   after { logout }
 
   describe "changing professional body memberships details" do
+    before { visit jobseekers_profile_path }
+
     context "when adding professional body memberships" do
-      before { visit jobseekers_profile_path }
+      let(:professional_body_memberships) { [] }
 
       it "allows jobseekers to add professional body memberships" do
         click_on "Add membership"
+
         click_on "Save and continue"
 
         expect(page).to have_css("h2.govuk-error-summary__title", text: "There is a problem")
@@ -36,10 +38,7 @@ RSpec.describe "Jobseekers can add professional body memberships to their profil
     end
 
     context "when editing professional body memberships" do
-      before do
-        create(:professional_body_membership, jobseeker_profile: profile)
-        visit jobseekers_profile_path
-      end
+      let(:professional_body_memberships) { build_list(:professional_body_membership, 1) }
 
       it "allows jobseeker to edit professional body memberships" do
         expect_page_to_have_values("Teachers Union", "Platinum", "100", "2020", "Yes")
@@ -63,10 +62,7 @@ RSpec.describe "Jobseekers can add professional body memberships to their profil
     end
 
     context "when deleting professional body memberships" do
-      before do
-        create(:professional_body_membership, jobseeker_profile: profile)
-        visit jobseekers_profile_path
-      end
+      let(:professional_body_memberships) { build_list(:professional_body_membership, 1) }
 
       it "allows users to delete professional body memberships" do
         expect_page_to_have_values("Teachers Union", "Platinum", "100", "2020", "Yes")

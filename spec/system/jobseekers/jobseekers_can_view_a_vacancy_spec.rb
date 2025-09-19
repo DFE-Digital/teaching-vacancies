@@ -5,6 +5,10 @@ RSpec.describe "Viewing a single published vacancy" do
 
   let(:school) { create(:school) }
 
+  before do
+    visit job_path(vacancy)
+  end
+
   context "when the vacancy status is published" do
     let(:vacancy) do
       create(:vacancy, start_date_type: "asap", organisations: [school], job_roles: %w[ teacher headteacher deputy_headteacher assistant_headteacher head_of_year_or_phase head_of_department_or_curriculum teaching_assistant
@@ -13,7 +17,6 @@ RSpec.describe "Viewing a single published vacancy" do
     end
 
     scenario "jobseekers can view the vacancy" do
-      visit job_path(vacancy)
       verify_vacancy_show_page_details(vacancy)
     end
 
@@ -35,7 +38,6 @@ RSpec.describe "Viewing a single published vacancy" do
       let(:vacancy) { create(:vacancy, :future_publish, organisations: [school]) }
 
       scenario "Job post with a future publish_on date are not accessible" do
-        visit job_path(vacancy)
         expect(page).to have_content("Page not found")
         expect(page).to_not have_content(vacancy.job_title)
       end
@@ -45,7 +47,6 @@ RSpec.describe "Viewing a single published vacancy" do
       let(:vacancy) { create(:vacancy, :expired, organisations: [school]) }
 
       scenario "it shows warnings that the post has expired" do
-        visit job_path(vacancy)
         expect(page).to have_content("EXPIRED")
         expect(page).to have_content("This job expired on #{format_date(vacancy.expires_at, :date_only)}")
       end
@@ -53,7 +54,6 @@ RSpec.describe "Viewing a single published vacancy" do
 
     context "when the vacancy has not expired" do
       scenario "it does not show warnings that the post has expired" do
-        visit job_path(vacancy)
         expect(page).not_to have_content("EXPIRED")
         expect(page).not_to have_content("This job expired on #{format_date(vacancy.expires_at, :date_only)}")
       end
@@ -63,7 +63,6 @@ RSpec.describe "Viewing a single published vacancy" do
       let(:vacancy) { create(:vacancy, :with_supporting_documents, organisations: [school]) }
 
       scenario "can see the supporting documents section" do
-        visit job_path(vacancy)
         expect(page).to have_content(I18n.t("publishers.vacancies.steps.documents"))
         expect(page).to have_content(vacancy.supporting_documents.first.filename)
       end
@@ -73,7 +72,6 @@ RSpec.describe "Viewing a single published vacancy" do
       let(:vacancy) { create(:vacancy, :no_tv_applications, organisations: [school]) }
 
       scenario "a jobseeker can click on the application link" do
-        visit job_path(vacancy)
         click_on I18n.t("jobs.view_advert.school")
 
         expect(page.current_url).to eq vacancy.application_link
@@ -84,8 +82,6 @@ RSpec.describe "Viewing a single published vacancy" do
       include ActionView::Helpers::SanitizeHelper
 
       scenario "the vacancy's meta data are rendered correctly" do
-        visit job_path(vacancy)
-
         expect(page.find('meta[name="description"]', visible: false)["content"])
           .to eq(I18n.t("vacancies.show.page_description", job_title: vacancy.job_title,
                                                            organisation: vacancy.organisation_name,
@@ -93,8 +89,6 @@ RSpec.describe "Viewing a single published vacancy" do
       end
 
       scenario "the vacancy's open graph meta data are rendered correctly" do
-        visit job_path(vacancy)
-
         expect(page.find('meta[property="og:description"]', visible: false)["content"])
           .to eq(I18n.t("vacancies.show.page_description", job_title: vacancy.job_title,
                                                            organisation: vacancy.organisation_name,
@@ -103,7 +97,6 @@ RSpec.describe "Viewing a single published vacancy" do
     end
 
     scenario "jobseeker sees a tag on jobs that allow to apply through Teaching Vacancies" do
-      visit job_path(vacancy)
       expect(page).to have_css("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
     end
 
@@ -123,10 +116,10 @@ RSpec.describe "Viewing a single published vacancy" do
 
       before do
         allow(Search::SimilarJobs).to receive(:new).with(vacancy).and_return(similar_jobs_stub)
+        visit current_path
       end
 
       scenario "jobseeker sees similar jobs to the vacancy listing" do
-        visit job_path(vacancy)
         within(".similar-jobs") do
           expect(page).to have_link(similar_job_tv_application.job_title, href: job_path(similar_job_tv_application))
           expect(page).to have_link(similar_job_no_tv_application.job_title, href: job_path(similar_job_no_tv_application))
@@ -134,7 +127,6 @@ RSpec.describe "Viewing a single published vacancy" do
       end
 
       scenario "jobseeker sees a tag on similar jobs that allow to apply through Teaching Vacancies" do
-        visit job_path(vacancy)
         within(".similar-jobs") do
           expect(page.find("p", text: similar_job_tv_application.job_title))
             .to have_sibling("p", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
@@ -149,7 +141,6 @@ RSpec.describe "Viewing a single published vacancy" do
     let(:vacancy) { create(:draft_vacancy, organisations: [school]) }
 
     scenario "jobseekers cannot view the vacancy" do
-      visit job_path(vacancy)
       expect(page).to have_content("Page not found")
       expect(page).to_not have_content(vacancy.job_title)
     end
