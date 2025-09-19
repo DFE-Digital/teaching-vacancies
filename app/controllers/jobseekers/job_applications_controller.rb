@@ -116,6 +116,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
     if params[:tab] == "messages"
       @tab = "messages"
+      @show_form = params[:show_form]
       conversation = job_application.conversations.first
       @messages = (conversation && conversation.messages.order(created_at: :desc)) || []
       @message_form = Publishers::JobApplication::MessagesForm.new
