@@ -66,8 +66,14 @@ guard :rspec, rspec_options do
   watch(rails.app_controller)  { "#{rspec.spec_dir}/controllers" }
 
   # Capybara features specs
-  watch(rails.view_dirs)     { |m| rspec.spec.call("system/#{m[1]}") }
-  watch(rails.layouts)       { |m| rspec.spec.call("system/#{m[1]}") }
+  watch(rails.view_dirs)     { |m| rspec.spec.call("features/#{m[1]}") }
+  watch(rails.layouts)       { |m| rspec.spec.call("features/#{m[1]}") }
+
+  # Turnip features and steps
+  watch(%r{^spec/acceptance/(.+)\.feature$})
+  watch(%r{^spec/acceptance/steps/(.+)_steps\.rb$}) do |m|
+    Dir[File.join("**/#{m[1]}.feature")][0] || "spec/acceptance"
+  end
 end
 
 guard :rubocop, cli: ["-A"] do
