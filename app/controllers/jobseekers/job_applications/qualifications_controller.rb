@@ -71,8 +71,17 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
   end
 
   def qualification_params
-    params.expect(qualification_form_param_key(@category) => [:category, :finished_studying, :finished_studying_details, :grade, :institution, :name,
-                                                              :subject, :year, :month, :awarding_body, { qualification_results_attributes: [%i[id subject grade awarding_body]] }])
+    params.expect(qualification_form_param_key(@category) => [:category,
+                                                              :finished_studying,
+                                                              :finished_studying_details,
+                                                              :grade,
+                                                              :institution,
+                                                              :name,
+                                                              :subject,
+                                                              :year,
+                                                              :month,
+                                                              :awarding_body,
+                                                              { qualification_results_attributes: [%i[id subject grade awarding_body]] }])
   end
 
   def category_param

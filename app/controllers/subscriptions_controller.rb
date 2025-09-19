@@ -166,8 +166,11 @@ class SubscriptionsController < ApplicationController
   end
 
   def search_criteria_params
-    params.expect(search_criteria: [:keyword, :location, :organisation_slug, :radius,
-                                    teaching_job_roles: [], support_job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [], visa_sponsorship_availability: []])
+    params.expect(search_criteria: [:keyword,
+                                    :location,
+                                    :organisation_slug,
+                                    :radius,
+                                    { teaching_job_roles: [], support_job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [], visa_sponsorship_availability: [] }])
   end
 
   def subscription_params
