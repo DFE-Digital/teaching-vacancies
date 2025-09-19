@@ -361,7 +361,7 @@ Rails.application.routes.draw do
     resources :unsubscribe_feedbacks, only: %i[new create], controller: "jobseekers/unsubscribe_feedbacks"
   end
 
-  get "sign-up-for-ECT-job-alerts", to: "subscriptions#new", as: "ect_job_alerts", defaults: { ect_job_alert: true, search_criteria: { job_roles: ["ect_suitable"] } }
+  get "sign-up-for-ECT-job-alerts", to: "subscriptions#new", as: "ect_job_alerts", defaults: { ect_job_alert: true, search_criteria: { teaching_job_roles: ["ect_suitable"] } }
 
   namespace :api do
     scope "v:api_version", api_version: /1/ do

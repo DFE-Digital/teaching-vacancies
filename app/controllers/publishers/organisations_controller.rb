@@ -28,10 +28,6 @@ class Publishers::OrganisationsController < Publishers::BaseController
   end
   # :nocov:
 
-  def organisation_params
-    params.require(:publishers_organisation_form).permit(:description, :email, :safeguarding_information, :url_override)
-  end
-
   def back_link_destination
     if params[:vacancy_id]
       organisation_job_build_path(params[:vacancy_id], :about_the_role)

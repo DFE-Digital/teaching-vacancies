@@ -22,7 +22,7 @@ module Jobseekers
       end
 
       def form_params
-        params.require(:jobseekers_profiles_qualified_teacher_status_form).permit(form_class.fields)
+        params.permit(jobseekers_profiles_qualified_teacher_status_form: form_class.fields).require(:jobseekers_profiles_qualified_teacher_status_form)
       end
     end
   end
