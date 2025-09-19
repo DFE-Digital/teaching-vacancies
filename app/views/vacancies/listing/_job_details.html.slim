@@ -98,12 +98,17 @@ section#job-details class="govuk-!-margin-bottom-5"
     - if vacancy.uploaded_form?
       p.govuk-body = t("jobseekers.job_applications.requires_application_form_download")
       p.govuk-body = t("jobseekers.job_applications.no_cvs")
-      = govuk_button_to t("jobseekers.job_applications.apply.apply"), new_application_path(vacancy)
+      = govuk_button_to t("jobseekers.job_applications.apply.apply"),
+                        new_application_path(vacancy),
+                        data: { controller: "marketing-tracking", action: "click->marketing-tracking#applyForJob" }
 
     - elsif vacancy.enable_job_applications?
       p.govuk-body = t("jobseekers.job_applications.applying_for_the_job_paragraph")
       p.govuk-body = t("jobseekers.job_applications.no_cvs")
-      = govuk_button_link_to t("jobseekers.job_applications.apply.apply"), new_application_path(vacancy)
+      = govuk_button_link_to t("jobseekers.job_applications.apply.apply"),
+                             new_application_path(vacancy),
+                             data: { controller: "marketing-tracking", action: "click->marketing-tracking#applyForJob" }
+
     - elsif vacancy.receive_applications == "website"
       p.govuk-body = t("jobs.apply_via_website")
       p.govuk-body = t("jobseekers.job_applications.no_cvs")

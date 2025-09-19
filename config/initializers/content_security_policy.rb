@@ -15,7 +15,14 @@ Rails.application.configure do
                        "https://*.analytics.google.com",
                        "https://www.google.com",
                        "https://*.visualwebsiteoptimizer.com",
-                       "https://*.clarity.ms"
+                       "https://*.clarity.ms",
+                       "https://www.facebook.com",
+                       "https://connect.facebook.net",
+                       "https://www.redditstatic.com",
+                       "https://pixel-config.reddit.com",
+                       "https://conversions-config.reddit.com",
+                       "https://snap.licdn.com",
+                       "https://px.ads.linkedin.com"
 
     policy.font_src    :self,
                        :data,
@@ -42,7 +49,11 @@ Rails.application.configure do
                        "https://www.googletagmanager.com",
                        "https://www.recaptcha.net",
                        "https://*.visualwebsiteoptimizer.com",
-                       "https://www.clarity.ms"
+                       "https://connect.facebook.net",
+                       "https://snap.licdn.com",
+                       "https://www.redditstatic.com",
+                       "https://www.clarity.ms",
+                       "https://scripts.clarity.ms"
 
     policy.style_src   :self,
                        :unsafe_inline,

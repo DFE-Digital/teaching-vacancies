@@ -6,7 +6,10 @@
   .govuk-grid-column-one-third
     h2.govuk-heading-m = t("nav.create_a_job_alert")
     p.govuk-body = t(".alerts_description")
-    = govuk_button_link_to(t("buttons.setup_alerts"), new_subscription_path, class: "govuk-!-margin-bottom-2 govuk-button--secondary")
+    = govuk_button_link_to t("buttons.setup_alerts"),
+                           new_subscription_path,
+                           class: "govuk-!-margin-bottom-2 govuk-button--secondary",
+                           data: { controller: "marketing-tracking", action: "click->marketing-tracking#setUpAlerts" }
   .govuk-grid-column-one-third
     h2.govuk-heading-m = t(".jobseeker_section.title")
     - if jobseeker_signed_in?
