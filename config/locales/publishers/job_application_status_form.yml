@@ -72,11 +72,11 @@ en:
           submitted: Applications that have not been reviewed
           unsuccessful: Applications that you are not taking forward to interview or that have been withdrawn.
           reviewed: Applications that have been reviewed. Reviewed applications will remain in the 'New' tab until shortlisted or not considering.
-          shortlisted: Applications that have been shortlisted
+          shortlisted: Applications that have been shortlisted.
           interviewing: >-
             Candidates you plan to interview.
-            You will also be able to trigger pre-interview checks through the Teaching Vacancies service.
-          offered: Candidates that have been offered a job. Should they decline the offer you will have the option to update the status later.
+            You will also be able to trigger pre-interview checks through Teaching Vacancies.
+          offered: Candidates that have been offered a job. If they decline an offer you can update the status later.
 
       publishers_job_application_collect_references_form:
         collect_references_options:
