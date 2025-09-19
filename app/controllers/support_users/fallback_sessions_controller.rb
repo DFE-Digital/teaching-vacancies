@@ -7,7 +7,7 @@ class SupportUsers::FallbackSessionsController < ApplicationController
   before_action :ensure_fallback_sign_in_enabled
 
   def create
-    email = params.require(:support_user).permit(:email)[:email]
+    email = params.expect(support_user: [:email])[:email]
     support_user = SupportUser.find_by(email: email)
     return unless support_user
 
