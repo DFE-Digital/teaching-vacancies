@@ -21,6 +21,6 @@ class Jobseekers::RequestAccountTransferEmailsController < Jobseekers::BaseContr
   end
 
   def request_account_transfer_email_form_params
-    params.require(:jobseekers_request_account_transfer_email_form).permit(:email, :email_resent)
+    params.expect(jobseekers_request_account_transfer_email_form: %i[email email_resent])
   end
 end

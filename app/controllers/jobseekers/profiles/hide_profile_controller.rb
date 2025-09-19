@@ -4,9 +4,7 @@ class Jobseekers::Profiles::HideProfileController < Jobseekers::ProfilesControll
   end
 
   def confirm_hide
-    form_params = params
-      .require(:jobseekers_profile_hide_profile_form)
-      .permit(:requested_hidden_profile)
+    form_params = params.expect(jobseekers_profile_hide_profile_form: [:requested_hidden_profile])
 
     if (@form = Jobseekers::Profile::HideProfileForm.new(form_params)).valid?
       @profile.update!(requested_hidden_profile: @form.requested_hidden_profile)
@@ -26,9 +24,7 @@ class Jobseekers::Profiles::HideProfileController < Jobseekers::ProfilesControll
   end
 
   def add_school
-    form_params = params
-      .require(:jobseekers_profile_select_organisation_form)
-      .permit(:organisation_name)
+    form_params = params.expect(jobseekers_profile_select_organisation_form: [:organisation_name])
 
     form = Jobseekers::Profile::SelectOrganisationForm.new(form_params)
 
@@ -45,9 +41,7 @@ class Jobseekers::Profiles::HideProfileController < Jobseekers::ProfilesControll
   end
 
   def add_school_or_trust
-    form_params = params
-      .require(:jobseekers_profile_choose_school_or_trust_form)
-      .permit(:organisation_id)
+    form_params = params.expect(jobseekers_profile_choose_school_or_trust_form: [:organisation_id])
 
     form = Jobseekers::Profile::SelectOrganisationForm.new(form_params)
 

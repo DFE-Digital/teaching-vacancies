@@ -42,8 +42,7 @@ module Referees
     end
 
     def update
-      @form = form_class.new(params.require(form_key)
-                                   .permit(*(form_class.fields + [:token])))
+      @form = form_class.new(params.expect(form_key => [*(form_class.fields + [:token])]))
       if @form.valid?
         @reference.update!(@form.params_to_save)
         # invalidate token after reference is complete
@@ -73,7 +72,7 @@ module Referees
     end
 
     def token
-      params[:token] || params.require(form_key).permit(:token).fetch(:token)
+      params[:token] || params.expect(form_key => [:token]).fetch(:token)
     end
 
     def set_reference

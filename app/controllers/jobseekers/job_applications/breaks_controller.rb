@@ -35,8 +35,7 @@ class Jobseekers::JobApplications::BreaksController < Jobseekers::BaseController
   end
 
   def employment_break_params
-    params.require(:jobseekers_break_form)
-          .permit(:reason_for_break, :started_on, :ended_on)
+    params.expect(jobseekers_break_form: %i[reason_for_break started_on ended_on])
           .merge("started_on(3i)" => "1", "ended_on(3i)" => "1")
   end
 

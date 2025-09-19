@@ -49,7 +49,6 @@ class Jobseekers::JobApplications::RefereesController < Jobseekers::BaseControll
   end
 
   def referee_params
-    params.require(:jobseekers_job_application_details_referee_form)
-          .permit(:name, :job_title, :organisation, :relationship, :email, :phone_number, :is_most_recent_employer)
+    params.expect(jobseekers_job_application_details_referee_form: %i[name job_title organisation relationship email phone_number is_most_recent_employer])
   end
 end

@@ -126,7 +126,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def statistics_params
-    params.require(:publishers_vacancy_statistics_form).permit(:listed_elsewhere, :hired_status)
+    params.expect(publishers_vacancy_statistics_form: %i[listed_elsewhere hired_status])
   end
 
   def signing_in?

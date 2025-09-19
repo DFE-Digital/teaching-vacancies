@@ -171,10 +171,21 @@ class SubscriptionsController < ApplicationController
   end
 
   def subscription_params
-    params.require(:jobseekers_subscription_form)
-          .permit(:email, :frequency, :keyword, :location, :organisation_slug, :radius, :campaign, :user_name,
-                  teaching_job_roles: [], support_job_roles: [],
-                  visa_sponsorship_availability: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [])
+    params.expect(jobseekers_subscription_form: [:email,
+                                                 :frequency,
+                                                 :keyword,
+                                                 :location,
+                                                 :organisation_slug,
+                                                 :radius,
+                                                 :campaign,
+                                                 :user_name,
+                                                 { teaching_job_roles: [],
+                                                   support_job_roles: [],
+                                                   visa_sponsorship_availability: [],
+                                                   ect_statuses: [],
+                                                   subjects: [],
+                                                   phases: [],
+                                                   working_patterns: [] }])
   end
 
   def token

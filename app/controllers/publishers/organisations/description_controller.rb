@@ -25,6 +25,6 @@ class Publishers::Organisations::DescriptionController < Publishers::Organisatio
   private
 
   def description_form_params
-    params.require(:publishers_organisation_description_form).permit(:description)
+    params.expect(publishers_organisation_description_form: [:description])
   end
 end

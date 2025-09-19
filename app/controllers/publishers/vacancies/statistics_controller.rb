@@ -33,6 +33,6 @@ class Publishers::Vacancies::StatisticsController < Publishers::Vacancies::BaseC
   private
 
   def statistics_params
-    params.require(:publishers_vacancy_statistics_form).permit(:listed_elsewhere, :hired_status)
+    params.expect(publishers_vacancy_statistics_form: %i[listed_elsewhere hired_status])
   end
 end
