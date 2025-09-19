@@ -413,6 +413,8 @@ Rails.application.routes.draw do
         post :offer, on: :collection
         member do
           get :pre_interview_checks
+          get :interview_datetime
+          patch :update_interview_datetime
         end
         resource :self_disclosure, only: %i[show update], controller: "publishers/vacancies/job_applications/self_disclosure"
         resources :collect_reference_flags, only: %i[show update], controller: "publishers/vacancies/collect_reference_flags"

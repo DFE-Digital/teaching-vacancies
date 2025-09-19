@@ -9,7 +9,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     "FeedbackForm" => Publishers::JobApplication::FeedbackForm,
   }.freeze
 
-  before_action :set_job_application, only: %i[show download pre_interview_checks]
+  before_action :set_job_application, only: %i[show download pre_interview_checks interview_datetime update_interview_datetime]
   before_action :set_job_applications, only: %i[index tag]
 
   def index
@@ -66,6 +66,30 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def pre_interview_checks
     @reference_requests = @job_application.referees.filter_map(&:reference_request)
+  end
+
+  def interview_datetime
+    @form = Publishers::JobApplication::InterviewDatetimeForm.new(
+      job_application: @job_application,
+      interview_date: @job_application.interviewing_at,
+      interview_time: @job_application.interviewing_at&.to_fs(:time_only),
+    )
+  end
+
+  def update_interview_datetime
+    form_key = ActiveModel::Naming.param_key(Publishers::JobApplication::InterviewDatetimeForm)
+    form_params = params
+                    .fetch(form_key, {})
+                    .permit(:interview_date, :interview_time)
+                    .merge(job_application: @job_application)
+
+    @form = Publishers::JobApplication::InterviewDatetimeForm.new(form_params)
+    if @form.valid?
+      @job_application.update!(interviewing_at: @form.interviewing_at)
+      redirect_to organisation_job_job_applications_path(vacancy.id, anchor: :interviewing)
+    else
+      render :interview_datetime
+    end
   end
 
   private
