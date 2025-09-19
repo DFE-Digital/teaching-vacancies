@@ -74,14 +74,26 @@ class TabPanelComponent < ApplicationComponent
   end
 
   def candidate_offered_at(application)
-    application.offered_at&.to_fs(:day_month_year)
+    if application.offered_at
+      application.offered_at.to_fs(:day_month_year)
+    else
+      govuk_link_to(t("tabs.offered.add_job_offer_date"), tag_organisation_job_job_applications_path(application.vacancy.id, params: { publishers_job_application_tag_form: { origin: :offered, job_applications: [application.id] }, tag_action: "offered" }))
+    end
   end
 
   def candidate_declined_at(application)
-    application.declined_at&.to_fs(:day_month_year)
+    if application.declined_at
+      application.declined_at.to_fs(:day_month_year)
+    else
+      govuk_link_to(t("tabs.offered.add_decline_date"), tag_organisation_job_job_applications_path(application.vacancy.id, params: { publishers_job_application_tag_form: { origin: :offered, job_applications: [application.id] }, tag_action: "declined" }))
+    end
   end
 
   def candidate_interview_feedback_received_at(application)
-    application.interview_feedback_received_at&.to_fs(:day_month_year)
+    if application.interview_feedback_received_at
+      application.interview_feedback_received_at.to_fs(:day_month_year)
+    else
+      govuk_link_to(t("tabs.offered.add_feedback_date"), tag_organisation_job_job_applications_path(application.vacancy.id, params: { publishers_job_application_tag_form: { origin: :interviewing, job_applications: [application.id] }, tag_action: "unsuccessful_interview" }))
+    end
   end
 end

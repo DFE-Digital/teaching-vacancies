@@ -32,6 +32,10 @@ module PageObjects
             btn_continue.click
           end
         end
+
+        class JobOfferDateTagPage < JobOfferDatePage
+          set_url "/organisation/jobs/{vacancy_id}/job_applications/tag{?query*}"
+        end
       end
     end
   end
