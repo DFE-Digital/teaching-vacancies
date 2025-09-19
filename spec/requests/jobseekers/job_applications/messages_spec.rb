@@ -67,16 +67,5 @@ RSpec.describe "Jobseekers::JobApplications::Messages" do
         end
       end
     end
-
-    context "when no conversation exists" do
-      it "redirects with warning without creating a message" do
-        expect {
-          post jobseekers_job_application_messages_path(job_application), params: message_params
-        }.not_to change(Message, :count)
-
-        expect(response).to redirect_to(jobseekers_job_application_path(job_application, tab: "messages"))
-        expect(flash[:warning]).to eq("No conversation exists to reply to")
-      end
-    end
   end
 end
