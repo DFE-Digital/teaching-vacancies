@@ -5,7 +5,11 @@
 
   = f.hidden_field :collect_references, value: f.object.collect_references
 
-  = f.govuk_radio_buttons_fieldset :contact_applicants, legend: { size: "l", tag: "h1" } do
+  - legend_text = t(contact_referees_message(@job_applications), scope: "helpers.legend.publishers_job_application_references_contact_applicant_form.contact_applicants")
+  - legend_main = t("message", scope: "helpers.legend.publishers_job_application_references_contact_applicant_form.contact_applicants")
+
+  = f.govuk_radio_buttons_fieldset :contact_applicants,
+    legend: { text: "#{legend_text} #{legend_main}", size: "l", tag: "h1" } do
     = f.govuk_radio_button :contact_applicants, "true"
     = f.govuk_radio_button :contact_applicants, "false"
 

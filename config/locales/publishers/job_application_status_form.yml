@@ -138,9 +138,15 @@ en:
           Do you want to collect the self-disclosure form through Teaching Vacancies?
 
       publishers_job_application_references_contact_applicant_form:
-        contact_applicants: >-
-          One of the candidates you have selected to interview needs to be notified when you are
-          collecting references. Do you want Teaching Vacancies to contact the candidate?
+        # non-standard keys for variable legend message
+        contact_applicants:
+          single: The candidate needs
+          one: One of the candidates you have selected to interview needs
+          all: These candidates need
+          some: Some of the candidates you have selected to interview need
+          message: >-
+            to be notified when you are
+            collecting references. Do you want Teaching Vacancies to contact the candidate?
 
       publishers_job_application_tag_form:
       publishers_job_application_offered_form:
