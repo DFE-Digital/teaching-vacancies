@@ -9,12 +9,7 @@
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
-
-<<<<<<< HEAD
-ActiveRecord::Schema[7.2].define(version: 2025_09_09_140615) do
-=======
-ActiveRecord::Schema[7.2].define(version: 2025_09_05_144201) do
->>>>>>> ac4090ad3 (Message archiving (#8020))
+ActiveRecord::Schema[7.2].define(version: 2025_09_19_143236) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -467,6 +462,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_05_144201) do
     t.boolean "read", default: false, null: false
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
     t.index ["sender_id"], name: "index_messages_on_sender_id"
+    t.index ["type", "created_at"], name: "index_messages_unread_on_type_created_at", where: "(read = false)"
   end
 
   create_table "notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

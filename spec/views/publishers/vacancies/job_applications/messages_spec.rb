@@ -38,6 +38,20 @@ RSpec.describe "publishers/vacancies/job_applications/messages.html.slim" do
       expect(rendered).to have_no_text("Messaging is not available for this application")
     end
 
+    context "when showing form and application is unsuccessful" do
+      before do
+        assign(:show_form, "true")
+        allow(job_application).to receive(:unsuccessful?).and_return(true)
+      end
+
+      it "shows messaging after rejection warning" do
+        render template: "publishers/vacancies/job_applications/messages"
+
+        expect(rendered).to have_css(".govuk-warning-text")
+        expect(rendered).to have_text(I18n.t("publishers.vacancies.job_applications.messages.messaging_after_rejection"))
+      end
+    end
+
     it "shows no messages text when no messages exist" do
       render template: "publishers/vacancies/job_applications/messages"
 
@@ -78,7 +92,6 @@ RSpec.describe "publishers/vacancies/job_applications/messages.html.slim" do
     it "shows existing messages, disabled messaging message and hides buttons" do
       render template: "publishers/vacancies/job_applications/messages"
 
-      expect(rendered).to have_text("Messaging is not available for this application")
       expect(rendered).to have_no_link("Send message to candidate")
       expect(rendered).to have_text("Previous message content")
     end

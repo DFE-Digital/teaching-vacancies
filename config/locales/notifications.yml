@@ -56,6 +56,11 @@ en:
         zero: No unread notifications
         one: 1 unread notification
         other: "%{count} unread notifications"
+    jobseekers/message_received_notification:
+      default:
+        message_html: You have received %{link} about the %{job_title} role
+      unsuccessful:
+        message_html: Your application for %{job_title} at %{school_name} was unsuccessful. You have received %{link}
 
   errors:
     jobs:
