@@ -4,7 +4,6 @@ en:
       %{home_page_link} is a free job-listing service from the Department for Education. It helps schools to save money
       on recruitment and you to take the next step in your career.
     jobseeker_footer: "%{home_page_link} is a free job-listing service from the Department for Education. It helps you find the right jobs in schools and take the next step in your career."
-
   admins:
   jobseekers:
     account_mailer:
@@ -219,6 +218,14 @@ en:
         unsubscribe_link_text: Unsubscribe here
         multiple_job_alerts: To track more jobs with different criteria, you can %{link}
         multiple_job_alerts_link_text: create multiple job alerts
+    message_mailer:
+      message_received:
+        unsuccessful:
+          subject: "Your application for %{job_title} at %{organisation_name} has been unsuccessful"
+          sign_in_prompt: "Sign in to your %{sign_in_link} to view the message from %{organisation_name}."
+        default:
+          subject: "Sign in to Teaching Vacancies to read your messages"
+          sign_in_prompt: "You'll need to %{sign_in_link} to view the message in full and reply to it."
 
   publishers:
     job_application_data_expiry_mailer:
@@ -240,6 +247,12 @@ en:
           one: View new application for %{job_title}
           other: View %{count} new applications for %{job_title}
         title: Your active job listings
+    message_notification_mailer:
+      messages_received:
+        subject:
+          one: You have a new message
+          other: You have %{count} new messages
+        sign_in_prompt: "You need to %{sign_in_link} to view messages in full and reply to them."
     expired_vacancy_feedback_prompt_mailer:
       feedback_link_text: Tell us how you filled your vacancy.
     collect_references_mailer:

@@ -1,0 +1,19 @@
+Dear <%= @job_application.first_name %>,
+
+<% if @job_application.unsuccessful? %>
+Your application for <%= @vacancy.job_title %> at <%= @organisation.name %> was unsuccessful.
+
+<%= t("jobseekers.message_mailer.message_received.unsuccessful.sign_in_prompt", sign_in_link: "[Teaching Vacancies account](#{new_jobseeker_session_url})", organisation_name: @organisation.name) %>
+<% else %>
+You have received a message in your Teaching Vacancies account about the <%= @vacancy.job_title %> role.
+
+<%= t("jobseekers.message_mailer.message_received.default.sign_in_prompt", sign_in_link: "[sign in to your Teaching Vacancies account](#{new_jobseeker_session_url})") %>
+
+You cannot reply to the message by responding to this email.
+<% end %>
+
+Kind regards,
+
+Teaching Vacancies team
+
+<%= t("shared.footer", home_page_link: home_page_link) %>
