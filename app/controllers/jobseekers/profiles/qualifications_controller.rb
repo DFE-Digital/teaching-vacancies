@@ -79,8 +79,9 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
     when "new", "confirm_destroy"
       (params[qualification_form_param_key(@category)] || params).permit(:category)
     when "create", "edit", "update"
-      params.require(qualification_form_param_key(@category))
-            .permit(:category, :finished_studying, :finished_studying_details, :grade, :institution, :name, :subject, :year, :awarding_body, qualification_results_attributes: %i[id subject grade awarding_body])
+      params.expect(qualification_form_param_key(@category) => [:category, :finished_studying, :finished_studying_details,
+                                                                :grade, :institution, :name, :subject, :year,
+                                                                :awarding_body, { qualification_results_attributes: [%i[id subject grade awarding_body]] }])
     end
   end
 
