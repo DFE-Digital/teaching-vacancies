@@ -23,17 +23,16 @@ class GeneralFeedbacksController < ApplicationController
   private
 
   def general_feedback_form_params
-    params.require(:general_feedback_form)
-          .permit(:comment,
-                  :email,
-                  :report_a_problem,
-                  :user_participation_response,
-                  :visit_purpose,
-                  :rating,
-                  :visit_purpose_comment,
-                  :occupation,
-                  :user_type,
-                  :origin_path)
+    params.expect(general_feedback_form: %i[comment
+                                            email
+                                            report_a_problem
+                                            user_participation_response
+                                            visit_purpose
+                                            rating
+                                            visit_purpose_comment
+                                            occupation
+                                            user_type
+                                            origin_path])
   end
 
   def feedback_attributes

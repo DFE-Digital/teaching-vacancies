@@ -25,7 +25,7 @@ class Jobseekers::AccountTransfersController < Jobseekers::BaseController
   private
 
   def request_account_transfer_email_form_params
-    params.require(:jobseekers_account_transfer_form).permit(:account_merge_confirmation_code, :email)
+    params.expect(jobseekers_account_transfer_form: %i[account_merge_confirmation_code email])
   end
 
   def successfully_transfer_account_data?

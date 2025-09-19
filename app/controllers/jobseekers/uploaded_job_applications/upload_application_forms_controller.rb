@@ -25,8 +25,7 @@ class Jobseekers::UploadedJobApplications::UploadApplicationFormsController < Jo
   end
 
   def form_params
-    params.require(:jobseekers_uploaded_job_application_upload_application_form_form)
-          .permit(:application_form, :upload_application_form_section_completed)
+    params.expect(jobseekers_uploaded_job_application_upload_application_form_form: %i[application_form upload_application_form_section_completed])
   end
 
   def update_params

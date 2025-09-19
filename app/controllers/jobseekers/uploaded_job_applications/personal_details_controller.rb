@@ -32,6 +32,6 @@ class Jobseekers::UploadedJobApplications::PersonalDetailsController < Jobseeker
   end
 
   def form_params
-    params.require(:jobseekers_uploaded_job_application_personal_details_form).permit(:first_name, :last_name, :phone_number, :email_address, :teacher_reference_number, :personal_details_section_completed, :has_right_to_work_in_uk)
+    params.expect(jobseekers_uploaded_job_application_personal_details_form: %i[first_name last_name phone_number email_address teacher_reference_number personal_details_section_completed has_right_to_work_in_uk])
   end
 end

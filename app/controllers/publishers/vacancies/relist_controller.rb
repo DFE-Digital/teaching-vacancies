@@ -25,8 +25,7 @@ class Publishers::Vacancies::RelistController < Publishers::Vacancies::BaseContr
   private
 
   def relist_params
-    params.require(:publishers_job_listing_relist_form)
-          .permit(:expires_at, :expiry_time, :publish_on, :publish_on_day, :extension_reason, :other_extension_reason_details)
+    params.expect(publishers_job_listing_relist_form: %i[expires_at expiry_time publish_on publish_on_day extension_reason other_extension_reason_details])
   end
 
   def trigger_publisher_vacancy_relisted_event

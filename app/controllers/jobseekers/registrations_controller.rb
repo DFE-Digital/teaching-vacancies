@@ -12,7 +12,6 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
   protected
 
   def close_account_feedback_form_params
-    params.require(:jobseekers_close_account_feedback_form)
-          .permit(:close_account_reason, :close_account_reason_comment)
+    params.expect(jobseekers_close_account_feedback_form: %i[close_account_reason close_account_reason_comment])
   end
 end
