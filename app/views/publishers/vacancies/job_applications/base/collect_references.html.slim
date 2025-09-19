@@ -7,6 +7,7 @@
     - if vacancy.other_religion? || vacancy.catholic?
       = govuk_warning_text(text: t(".warning_text"))
     = f.govuk_radio_button :collect_references, "true"
+    p = open_in_new_tab_link_to(t(".preview_online_job_reference"), organisation_job_form_preview_path(vacancy.id, :job_reference))
     = f.govuk_radio_button :collect_references, "false"
 
   = f.govuk_submit t("buttons.save_and_continue")
