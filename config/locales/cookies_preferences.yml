@@ -142,6 +142,38 @@ en:
             name: IDE, ANID, DSID, FLC, AID, TAID and exchange_uid
             purpose: Used to distinguish which adverts for Teaching Vacancies users have seen and selected
             expires: 13 months
+          third:
+            name: _fbp
+            purpose: Used by Facebook to store and track your visits across websites
+            expires: 3 months
+          fourth:
+            name: _fbc
+            purpose: Used by Facebook to record that you've accessed our website using a Facebook advert
+            expires: 3 months
+          fifth:
+            name: fr
+            purpose: Used by Facebook to deliver, measure and improve the relevancy of ads
+            expires: 3 months
+          sixth:
+            name: li_fat_id
+            purpose: Used by LinkedIn for tracking visitors and showing personalized ads
+            expires: 1 month
+          seventh:
+            name: li_sugr
+            purpose: Used by LinkedIn to make a probabilistic match of a user's identity outside the Designated Countries
+            expires: 3 months
+          eighth:
+            name: lidc
+            purpose: Used by LinkedIn for routing and tracking
+            expires: 1 day
+          ninth:
+            name: bcookie
+            purpose: Used by LinkedIn to identify the browser ID
+            expires: 2 years
+          tenth:
+            name: _rdt_uuid
+            purpose: Used by Reddit to track visitors for ad targeting and analytics
+            expires: 3 months
       essential:
         heading: Strictly necessary cookies
         intro: >-
