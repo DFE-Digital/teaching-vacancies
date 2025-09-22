@@ -16,6 +16,8 @@ RSpec.describe "Publishers can preview an organisation or school profile" do
     before do
       click_link I18n.t("nav.school_profile")
       click_link I18n.t("publishers.organisations.show.preview_link_text", organisation_type: "school")
+      # wait for page load
+      find(".map-component")
     end
 
     it "passes a11y", :a11y do
