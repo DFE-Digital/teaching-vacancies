@@ -9,7 +9,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     "FeedbackForm" => Publishers::JobApplication::FeedbackForm,
   }.freeze
 
-  before_action :set_job_application, only: %i[show download pre_interview_checks messages]
+  before_action :set_job_application, only: %i[show download pre_interview_checks messages download_messages]
   before_action :set_job_applications, only: %i[index tag]
 
   def index
@@ -75,6 +75,20 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     # Mark jobseeker messages as read when publisher views them
     jobseeker_messages = @messages.select { |msg| msg.is_a?(JobseekerMessage) && msg.unread? }
     jobseeker_messages.each(&:mark_as_read!)
+  end
+
+  def download_messages
+    messages = @job_application.conversations.includes(:messages).flat_map(&:messages).sort_by(&:created_at).reverse
+    
+    generator = MessagesPdfGenerator.new(@job_application, messages)
+    document = generator.generate
+    
+    filename = "messages_#{@job_application.first_name}_#{@job_application.last_name}_#{@job_application.vacancy.job_title.parameterize}.pdf"
+    
+    send_data(document.render, 
+              filename: filename, 
+              type: "application/pdf", 
+              disposition: "attachment")
   end
 
   private

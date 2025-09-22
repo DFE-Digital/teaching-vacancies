@@ -561,7 +561,7 @@ en:
           create:
             success: Message sent successfully
             failure: Message could not be sent
-          print_page: "Print this page"
+          download_messages: "Download messages"
           send_message_to_candidate: "Send message to candidate"
           how_will_message_be_sent: "How will this message be sent?"
           message_sent_description: "Candidates will receive a copy of this message to their email and can also view the message when signed in to their Teaching Vacancies account."
