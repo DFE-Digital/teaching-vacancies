@@ -1,6 +1,6 @@
 class Publishers::MessageReceivedNotifier < Noticed::Event
   recipients do
-    record.conversation.job_application.publisher
+    record.conversation.job_application.vacancy.publisher
   end
 
   # rubocop:disable Metrics/BlockLength

@@ -16,6 +16,6 @@ class JobseekerMessage < Message
 
   def notify_publisher
     job_application = conversation.job_application
-    Publishers::MessageReceivedNotifier.with(record: self).deliver(job_application.vacancy.publisher)
+    Publishers::MessageReceivedNotifier.with(record: self).deliver
   end
 end
