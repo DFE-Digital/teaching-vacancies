@@ -8,9 +8,22 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
   let(:trust_publisher) { create(:publisher, organisations: [trust]) }
   let(:trust) { create(:trust, schools: [school_oxford, school_cambridge], geopoint: "POINT (-0.108267 51.506438)") }
   let(:roles) do
-    %w[ teacher headteacher deputy_headteacher assistant_headteacher head_of_year_or_phase head_of_department_or_curriculum teaching_assistant
-        higher_level_teaching_assistant education_support sendco administration_hr_data_and_finance
-        catering_cleaning_and_site_management it_support pastoral_health_and_welfare other_leadership other_support ]
+    %w[ teacher
+        headteacher
+        deputy_headteacher
+        assistant_headteacher
+        head_of_year_or_phase
+        head_of_department_or_curriculum
+        teaching_assistant
+        higher_level_teaching_assistant
+        education_support
+        sendco
+        administration_hr_data_and_finance
+        catering_cleaning_and_site_management
+        it_support
+        pastoral_health_and_welfare
+        other_leadership
+        other_support ]
   end
 
   let!(:jobseeker_profile) { create(:jobseeker_profile, :with_personal_details, qualified_teacher_status: "yes", qualified_teacher_status_year: "2000", job_preferences: job_preferences, employments: [current_employment]) }
