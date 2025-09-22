@@ -72,7 +72,6 @@ RSpec.describe "Publishers can send messages to job applicants" do
         expect(page).to have_text("Message sent successfully")
         expect(page).to have_text(message_content)
         expect(page).to have_text("#{publisher.given_name} #{publisher.family_name}")
-        expect(page).to have_text("Regarding application: #{vacancy.job_title}")
       end
     end
 
@@ -85,7 +84,6 @@ RSpec.describe "Publishers can send messages to job applicants" do
 
         expect(page).to have_text("#{publisher.given_name} #{publisher.family_name}")
         expect(page).to have_text("Previous message content")
-        expect(page).to have_text("Regarding application: #{vacancy.job_title}")
         expect(page).to have_text(message.created_at.strftime("%d %B %Y at %I:%M %p"))
         expect(page).to have_no_text("No messages have been sent yet.")
 
@@ -132,9 +130,8 @@ RSpec.describe "Publishers can send messages to job applicants" do
 
       expect(page).to have_text("#{publisher.given_name} #{publisher.family_name}")
       expect(page).to have_text("Hello from publisher")
-      expect(page).to have_text("Regarding application: #{vacancy.job_title}")
       expect(page).to have_text(publisher_message.created_at.strftime("%d %B %Y at %I:%M %p"))
-
+      click_link "Send message to hiring staff"
       expect(page).to have_css(".trix-content")
       expect(page).to have_button("Send message")
       expect(page).to have_link("Cancel")

@@ -42,7 +42,7 @@ class MessagesPdfGenerator
         return
       end
 
-      messages.reverse.each_with_index do |message, index|
+      messages.each_with_index do |message, index|
         render_message(message)
         move_down 20 if index < messages.length - 1
       end
@@ -65,10 +65,6 @@ class MessagesPdfGenerator
 
     page_table(message_data)
     move_down 0.5.cm
-  end
-
-  def close_to_bottom?(threshold_pct: 0.2, page_max: 700)
-    cursor <= page_max * threshold_pct
   end
 
   def message_sender_name(message)
