@@ -36,15 +36,25 @@ RSpec.describe "Publishers can send messages to job applicants" do
     end
 
     context "when viewing a job application messages tab" do
+      it "shows download messages button on the page" do
+        visit messages_organisation_job_job_application_path(vacancy.id, job_application.id)
+
+        expect(page).to have_link("Download messages")
+        
+        # Check that the download link has the correct path
+        download_link = find_link("Download messages")
+        expect(download_link[:href]).to include(download_messages_organisation_job_job_application_path(vacancy.id, job_application.id))
+      end
+
       it "allows publisher to send a message to the job applicant", :js do
         visit messages_organisation_job_job_application_path(vacancy.id, job_application.id)
 
-        expect(page).to have_link("Print this page")
+        expect(page).to have_link("Download messages")
         expect(page).to have_link("Send message to candidate")
 
         click_link "Send message to candidate"
 
-        expect(page).to have_no_link("Print this page")
+        expect(page).to have_no_link("Download messages")
         expect(page).to have_no_link("Send message to candidate")
 
         click_button "Send message"
