@@ -83,8 +83,11 @@ RSpec.describe "Job applications" do
   describe "GET #download_messages" do
     context "when messages exist for the job application" do
       let!(:conversation) { create(:conversation, job_application: job_application) }
-      let!(:publisher_message) { create(:publisher_message, conversation: conversation, sender: publisher) }
-      let!(:jobseeker_message) { create(:jobseeker_message, conversation: conversation, sender: jobseeker) }
+
+      before do
+        create(:publisher_message, conversation: conversation, sender: publisher)
+        create(:jobseeker_message, conversation: conversation, sender: jobseeker)
+      end
 
       it "sends a PDF file with messages" do
         get download_messages_organisation_job_job_application_path(vacancy.id, job_application.id)

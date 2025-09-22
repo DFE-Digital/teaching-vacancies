@@ -591,7 +591,6 @@ shared:
   :conversations:
     - id
     - job_application_id
-    - title
     - created_at
     - updated_at
     - archived

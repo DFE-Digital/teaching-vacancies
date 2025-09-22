@@ -11,14 +11,13 @@
         - else
           = govuk_warning_text(text: t(".messaging_not_available.cannot_message_at_all"))
 
-    - if @show_form == "true"
-      - if @job_application.can_jobseeker_send_message?
-        = render "shared/message_form",
-                message_object: @message_form,
-                form_url: jobseekers_job_application_messages_path(@job_application),
-                form_help_text: t(".form_help_text"),
-                form_help_content: t(".form_help_content"),
-                cancel_link: jobseekers_job_application_path(@job_application, tab: "messages")
+    - if @show_form == "true" && @job_application.can_jobseeker_send_message?
+      = render "shared/message_form",
+              message_object: @message_form,
+              form_url: jobseekers_job_application_messages_path(@job_application),
+              form_help_text: t(".form_help_text"),
+              form_help_content: t(".form_help_content"),
+              cancel_link: jobseekers_job_application_path(@job_application, tab: "messages")
 
     - if messages.any?
       #messages-list

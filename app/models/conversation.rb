@@ -19,7 +19,6 @@ class Conversation < ApplicationRecord
       .distinct
   }
 
-
   def has_unread_messages_for_publishers?
     messages.any? { |msg| msg.is_a?(JobseekerMessage) && msg.unread? }
   end

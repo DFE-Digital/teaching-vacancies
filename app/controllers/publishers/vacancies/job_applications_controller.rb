@@ -79,15 +79,15 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def download_messages
     messages = @job_application.conversations.includes(:messages).flat_map(&:messages).sort_by(&:created_at).reverse
-    
+
     generator = MessagesPdfGenerator.new(@job_application, messages)
     document = generator.generate
-    
+
     filename = "messages_#{@job_application.first_name}_#{@job_application.last_name}_#{@job_application.vacancy.job_title.parameterize}.pdf"
-    
-    send_data(document.render, 
-              filename: filename, 
-              type: "application/pdf", 
+
+    send_data(document.render,
+              filename: filename,
+              type: "application/pdf",
               disposition: "attachment")
   end
 
