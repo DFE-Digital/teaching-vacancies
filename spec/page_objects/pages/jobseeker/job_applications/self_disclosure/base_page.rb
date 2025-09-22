@@ -22,7 +22,7 @@ module PageObjects
 
               # radio buttons
               self.class.mapped_items[:elements].each do |field|
-                value = model.public_send(field)&.to_s
+                value = model.public_send(field).to_s
                 case value
                 when "true"
                   public_send(field, visible: false).first.set(true)

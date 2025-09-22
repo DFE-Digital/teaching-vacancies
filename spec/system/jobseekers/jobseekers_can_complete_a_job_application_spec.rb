@@ -4,7 +4,14 @@ RSpec.describe "Jobseekers can complete a job application" do
   let(:jobseeker) { create(:jobseeker) }
   let(:organisation) { create(:school) }
 
-  before { login_as(jobseeker, scope: :jobseeker) }
+  before do
+    login_as(jobseeker, scope: :jobseeker)
+    visit job_path(vacancy)
+    # There are 2 apply buttons here with identical text - use the one at the top of the form
+    within ".banner-buttons" do
+      click_on("Apply for this job")
+    end
+  end
 
   after { logout }
 
@@ -12,8 +19,6 @@ RSpec.describe "Jobseekers can complete a job application" do
     let(:vacancy) { create(:vacancy, job_roles: ["teacher"], organisations: [organisation]) }
 
     it "allows jobseekers to complete an application and go to review page" do
-      visit job_path(vacancy)
-      all("button", text: "Apply for this job").last.click
       click_button "Start application"
       click_on(I18n.t("jobseekers.job_applications.build.personal_details.heading"))
       validates_step_complete
@@ -116,26 +121,21 @@ RSpec.describe "Jobseekers can complete a job application" do
       expect(page).to have_css("#declarations", text: I18n.t("shared.status_tags.complete"))
       click_on "Review application"
 
-      expect(current_path).to eq(jobseekers_job_application_review_path(JobApplication.last))
+      expect(page).to have_current_path(jobseekers_job_application_review_path(JobApplication.last), ignore_query: true)
     end
   end
 
   context "when job application has a custom uploaded job application" do
-    let(:vacancy) { create(:vacancy, :with_application_form, job_roles: ["teacher"], organisations: [organisation]) }
+    let(:vacancy) { create(:vacancy, :with_uploaded_application_form, job_roles: ["teacher"], organisations: [organisation]) }
 
-    before do
-      vacancy.receive_applications = "uploaded_form"
-      vacancy.save!
-    end
-
-    it "allows jobseekers to complete an application and go to review page" do
-      visit job_path(vacancy)
-      all("button", text: "Apply for this job").last.click
+    it "errors on the review button" do
       click_button "Review application"
       within(".govuk-error-summary__body") do
         expect(page).to have_link("Complete your personal details")
       end
+    end
 
+    it "allows jobseekers to complete an application and go to review page" do
       click_link(I18n.t("jobseekers.job_applications.build.personal_details.heading"))
       validates_step_complete
       choose I18n.t("helpers.label.jobseekers_job_application_personal_details_form.personal_details_section_completed_options.false")
@@ -181,7 +181,7 @@ RSpec.describe "Jobseekers can complete a job application" do
       click_on I18n.t("buttons.save_and_continue")
 
       click_button "Review application"
-      expect(current_path).to eq(jobseekers_job_application_review_path(vacancy.job_applications.first))
+      expect(page).to have_current_path(jobseekers_job_application_review_path(vacancy.job_applications.first), ignore_query: true)
     end
   end
 end

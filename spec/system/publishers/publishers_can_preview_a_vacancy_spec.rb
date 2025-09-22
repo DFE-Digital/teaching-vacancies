@@ -10,14 +10,15 @@ RSpec.describe "Publishers can preview a vacancy" do
   after { logout }
 
   context "when reviewing a draft vacancy" do
-    before { visit organisation_job_path(vacancy.id) }
+    before do
+      visit organisation_job_path(vacancy.id)
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.preview")
+    end
 
     context "when the job has been scheduled" do
       let(:vacancy) { create(:vacancy, :secondary, :future_publish, :ect_suitable, job_roles: %w[teacher other_support], organisations: [school]) }
 
       scenario "users can preview the listing" do
-        click_on I18n.t("publishers.vacancies.show.heading_component.action.preview")
-
         expect(page).to have_current_path(organisation_job_preview_path(vacancy.id))
         verify_vacancy_show_page_details(vacancy)
       end
@@ -27,8 +28,6 @@ RSpec.describe "Publishers can preview a vacancy" do
       let(:vacancy) { create(:vacancy, :secondary, :future_publish, :ect_suitable, job_roles: %w[teacher other_support], organisations: [school]) }
 
       scenario "users can preview the listing" do
-        click_on I18n.t("publishers.vacancies.show.heading_component.action.preview")
-
         expect(page).to have_current_path(organisation_job_preview_path(vacancy.id))
         verify_vacancy_show_page_details(vacancy)
       end

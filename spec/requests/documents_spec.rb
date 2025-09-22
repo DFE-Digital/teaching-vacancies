@@ -28,7 +28,7 @@ RSpec.describe "Documents" do
   end
 
   context "with application form" do
-    let(:vacancy) { create(:vacancy, :with_application_form, organisations: [build(:school)]) }
+    let(:vacancy) { create(:vacancy, :with_uploaded_application_form, organisations: [build(:school)]) }
     let(:document) { vacancy.application_form }
 
     describe "GET #show" do

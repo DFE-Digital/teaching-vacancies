@@ -79,7 +79,7 @@ RSpec.describe CopyVacancyAsaTemplate do
     end
 
     context "when an application form has been attached" do
-      let(:vacancy) { create(:vacancy, :with_application_form, organisations: [school]) }
+      let(:vacancy) { create(:vacancy, :with_uploaded_application_form, organisations: [school]) }
       let(:application_form) { vacancy.application_form.attachments }
 
       it "copies the application form" do

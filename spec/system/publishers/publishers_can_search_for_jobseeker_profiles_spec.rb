@@ -8,9 +8,22 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
   let(:trust_publisher) { create(:publisher, organisations: [trust]) }
   let(:trust) { create(:trust, schools: [school_oxford, school_cambridge], geopoint: "POINT (-0.108267 51.506438)") }
   let(:roles) do
-    %w[ teacher headteacher deputy_headteacher assistant_headteacher head_of_year_or_phase head_of_department_or_curriculum teaching_assistant
-        higher_level_teaching_assistant education_support sendco administration_hr_data_and_finance
-        catering_cleaning_and_site_management it_support pastoral_health_and_welfare other_leadership other_support ]
+    %w[ teacher
+        headteacher
+        deputy_headteacher
+        assistant_headteacher
+        head_of_year_or_phase
+        head_of_department_or_curriculum
+        teaching_assistant
+        higher_level_teaching_assistant
+        education_support
+        sendco
+        administration_hr_data_and_finance
+        catering_cleaning_and_site_management
+        it_support
+        pastoral_health_and_welfare
+        other_leadership
+        other_support ]
   end
 
   let!(:jobseeker_profile) { create(:jobseeker_profile, :with_personal_details, qualified_teacher_status: "yes", qualified_teacher_status_year: "2000", job_preferences: job_preferences, employments: [current_employment]) }
@@ -36,13 +49,14 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
   let(:teaching_assistant_preference_containing_school) { create(:job_preferences_location, name: "London", radius: 100) }
 
   describe "Visiting the publisher's jobseeker profiles start page" do
-    before { login_publisher(publisher:, organisation:) }
+    before do
+      login_publisher(publisher:, organisation:)
+      visit publishers_jobseeker_profiles_path
+    end
 
     after { logout }
 
     it "will display all jobseeker profiles with location preference areas containing the school" do
-      visit publishers_jobseeker_profiles_path
-
       [jobseeker_profile, part_time_jobseeker_profile].each do |jobseeker_profile|
         expect(page).to have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
         expect(page).to have_content(jobseeker_profile.full_name)
@@ -71,8 +85,6 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
     end
 
     it "will allow a publisher to filter the jobseeker profiles" do
-      visit publishers_jobseeker_profiles_path
-
       within ".filters-component" do
         check I18n.t("publishers.jobseeker_profiles.filters.working_pattern_options.part_time")
       end
@@ -87,8 +99,6 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
 
     context "when filters are selected" do
       before do
-        visit publishers_jobseeker_profiles_path
-
         within ".filters-component" do
           check I18n.t("publishers.jobseeker_profiles.filters.working_pattern_options.part_time")
           check I18n.t("publishers.jobseeker_profiles.filters.key_stage_options.ks5")
@@ -138,12 +148,6 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
     end
 
     context "when role filters are selected" do
-      before do
-        visit publishers_jobseeker_profiles_path
-      end
-
-      after { logout }
-
       it "will allow hiring staff to filter by jobseekers' preferred roles" do
         within ".filters-component" do
           find('span[title="Support"]').click

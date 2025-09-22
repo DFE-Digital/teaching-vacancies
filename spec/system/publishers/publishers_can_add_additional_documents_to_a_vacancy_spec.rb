@@ -9,15 +9,13 @@ RSpec.describe "Publishers can add additional documents to a vacancy" do
 
   before do
     login_publisher(publisher: publisher, organisation: organisation)
-    publisher_vacancy_page.load(vacancy_id: vacancy.id)
+    visit organisation_job_build_path(vacancy.id, :include_additional_documents)
   end
 
   after { logout }
 
   scenario "can add an additional documents to a vacancy" do
     allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
-
-    visit organisation_job_build_path(vacancy.id, :include_additional_documents)
 
     # Publisher can add a first additional document
     publisher_include_additional_documents_page.include_documents_yes.click
