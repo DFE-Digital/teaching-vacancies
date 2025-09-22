@@ -42,6 +42,10 @@ RSpec.describe VacancyAnalyticsService do
       expect(described_class.normalize_referrer("/whatever", hostname, {})).to eq("internal")
     end
 
+    it "returns 'direct' for a blank URL" do
+      expect(described_class.normalize_referrer(nil, hostname, {})).to eq("direct")
+    end
+
     it "returns 'invalid' for malformed URLs" do
       expect(described_class.normalize_referrer("rabbit://%%%", hostname, {})).to eq("invalid")
     end

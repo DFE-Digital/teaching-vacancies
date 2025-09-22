@@ -56,20 +56,28 @@ class VacancyAnalyticsService
     def normalize_referrer(referrer, hostname, params)
       if params[:utm_medium] == "email"
         "jobalert"
+      elsif referrer.nil?
+        "direct"
       else
-        referrer_uri = Addressable::URI.parse(referrer)
-        if referrer_uri.host.present?
-          if referrer_uri.host == hostname
-            "internal"
-          else
-            host_split = referrer_uri.host.split(".")
-            tld_split = referrer_uri.tld.split(".")
+        normalize_referrer_url referrer, hostname
+      end
+    end
 
-            (host_split - tld_split).last
-          end
-        else
+    private
+
+    def normalize_referrer_url(referrer, hostname)
+      referrer_uri = Addressable::URI.parse(referrer)
+      if referrer_uri.host.present?
+        if referrer_uri.host == hostname
           "internal"
+        else
+          host_split = referrer_uri.host.split(".")
+          tld_split = referrer_uri.tld.split(".")
+
+          (host_split - tld_split).last
         end
+      else
+        "internal"
       end
     rescue PublicSuffix::DomainNotAllowed, Addressable::URI::InvalidURIError
       "invalid"
