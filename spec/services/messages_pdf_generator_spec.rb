@@ -38,15 +38,15 @@ RSpec.describe MessagesPdfGenerator do
       it "includes message content, sender names and timestamps in table format" do
         expect(pdf).to include(publisher_message.content.to_plain_text)
         expect(pdf).to include(jobseeker_message.content.to_plain_text)
-        
+
         expect(pdf).to include("John Smith - #{vacancy.organisation_name} (Hiring staff)")
         expect(pdf).to include("#{job_application.first_name} #{job_application.last_name} (Candidate)")
-        
+
         publisher_timestamp = publisher_message.created_at.strftime("%d %B %Y at %I:%M %p")
         jobseeker_timestamp = jobseeker_message.created_at.strftime("%d %B %Y at %I:%M %p")
         expect(pdf).to include(publisher_timestamp)
         expect(pdf).to include(jobseeker_timestamp)
-        
+
         # Check table format labels
         expect(pdf).to include("From:")
         expect(pdf).to include("Date:")

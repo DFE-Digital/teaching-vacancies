@@ -3,6 +3,7 @@ class Publishers::MessageReceivedNotifier < Noticed::Event
     record.conversation.job_application.publisher
   end
 
+  # rubocop:disable Metrics/BlockLength
   notification_methods do
     include ActionView::Helpers::UrlHelper
     include GovukLinkHelper
@@ -24,9 +25,9 @@ class Publishers::MessageReceivedNotifier < Noticed::Event
 
     def message_link
       govuk_link_to "a message", organisation_job_job_application_path(
-        job_application.vacancy.id, 
+        job_application.vacancy.id,
         job_application.id,
-        tab: "messages"
+        tab: "messages",
       ), class: "govuk-link--no-visited-state"
     end
 
@@ -42,4 +43,5 @@ class Publishers::MessageReceivedNotifier < Noticed::Event
       job_application.name
     end
   end
+  # rubocop:enable Metrics/BlockLength
 end

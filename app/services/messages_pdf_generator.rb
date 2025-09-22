@@ -36,7 +36,7 @@ class MessagesPdfGenerator
   def render_messages
     page_section do
       page_title("Messages")
-      
+
       if messages.empty?
         text "No messages yet.", size: 12
         return
@@ -51,18 +51,18 @@ class MessagesPdfGenerator
 
   def render_message(message)
     start_new_page if close_to_bottom?
-    
+
     sender_name = message_sender_name(message)
     timestamp = message.created_at.strftime("%d %B %Y at %I:%M %p")
     content_text = strip_html_tags(message.content.to_s)
-    
+
     # Use page_table for consistent formatting with other PDFs
     message_data = [
       ["From:", sender_name],
       ["Date:", timestamp],
-      ["Message:", content_text]
+      ["Message:", content_text],
     ]
-    
+
     page_table(message_data)
     move_down 0.5.cm
   end

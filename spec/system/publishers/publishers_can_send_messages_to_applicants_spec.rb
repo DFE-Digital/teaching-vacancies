@@ -40,7 +40,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
         visit messages_organisation_job_job_application_path(vacancy.id, job_application.id)
 
         expect(page).to have_link("Download messages")
-        
+
         # Check that the download link has the correct path
         download_link = find_link("Download messages")
         expect(download_link[:href]).to include(download_messages_organisation_job_job_application_path(vacancy.id, job_application.id))
