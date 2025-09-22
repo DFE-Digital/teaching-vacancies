@@ -86,7 +86,7 @@ RSpec.describe "Job applications" do
 
       before do
         create(:publisher_message, conversation: conversation, sender: publisher)
-        create(:jobseeker_message, conversation: conversation, sender: jobseeker)
+        create(:jobseeker_message, conversation: conversation, sender: job_application.jobseeker)
       end
 
       it "sends a PDF file with messages" do
