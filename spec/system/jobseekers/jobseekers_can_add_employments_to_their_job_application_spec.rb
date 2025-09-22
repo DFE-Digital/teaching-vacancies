@@ -42,11 +42,10 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
   context "with an employmeent history" do
     let(:employments) do
-      b = build(:employment, job_title: "Old job", started_on: Date.new(2019, 7, 1), ended_on: Date.new(2020, 7, 1))
-      c = build(:employment, :current_role, job_title: "The Best Teacher", started_on: Date.new(2020, 7, 1))
-
-      # visit jobseekers_job_application_build_path(job_application, :employment_history)
-      [b, c]
+      [
+        build(:employment, job_title: "Old job", started_on: Date.new(2019, 7, 1), ended_on: Date.new(2020, 7, 1)),
+        build(:employment, :current_role, job_title: "The Best Teacher", started_on: Date.new(2020, 7, 1)),
+      ]
     end
 
     before do
@@ -76,14 +75,13 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
   context "managing employment history gaps" do
     let(:employments) do
-      a = build(:employment, :job, started_on: Date.parse("2021-01-01"), ended_on: Date.parse("2021-02-01"))
-      b = build(:employment, :job, :current_role, started_on: Date.parse("2021-06-01"))
-
-      [a, b]
+      [
+        build(:employment, :job, started_on: Date.parse("2021-01-01"), ended_on: Date.parse("2021-02-01")),
+        build(:employment, :job, :current_role, started_on: Date.parse("2021-06-01")),
+      ]
     end
 
     it "allows jobseekers to add, change and delete gaps in employment with prefilled start and end date" do
-      visit jobseekers_job_application_build_path(job_application, :employment_history)
       expect(page).to have_content "You have a gap in your work history from February 2021 to June 2021 (4 months)"
       click_on I18n.t("buttons.add_reason_for_break")
 
@@ -129,15 +127,13 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
   context "when there is at least one role" do
     let(:employments) do
-      a = build(:employment, organisation: "A school", started_on: Date.parse("2021-01-01"), ended_on: Date.parse("2021-02-01"))
-      b = build(:employment, :current_role, job_title: "current role", organisation: "Some other place", started_on: Date.parse("2022-02-01"))
-
-      [a, b]
+      [
+        build(:employment, organisation: "A school", started_on: Date.parse("2021-01-01"), ended_on: Date.parse("2021-02-01")),
+        build(:employment, :current_role, job_title: "current role", organisation: "Some other place", started_on: Date.parse("2022-02-01")),
+      ]
     end
 
     it "allows jobseekers to delete employment history" do
-      # visit jobseekers_job_application_build_path(job_application, :employment_history)
-
       click_on "Delete Teacher"
 
       expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :employment_history))
@@ -146,8 +142,6 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
     end
 
     it "allows jobseekers to edit employment history" do
-      # visit jobseekers_job_application_build_path(job_application, :employment_history)
-
       click_on "Change Teacher"
 
       fill_in "School or other organisation", with: ""
