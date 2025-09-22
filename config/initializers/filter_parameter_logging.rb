@@ -15,7 +15,6 @@ Rails.application.config.filter_parameters += %i[
   orientation
   religion
   id
-  job_title
   jobseeker_id
   jobseeker_profile_id
   support_needed_details
