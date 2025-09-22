@@ -121,7 +121,7 @@ RSpec.describe "Jobseekers can complete a job application" do
       expect(page).to have_css("#declarations", text: I18n.t("shared.status_tags.complete"))
       click_on "Review application"
 
-      expect(current_path).to eq(jobseekers_job_application_review_path(JobApplication.last))
+      expect(page).to have_current_path(jobseekers_job_application_review_path(JobApplication.last), ignore_query: true)
     end
   end
 
@@ -181,7 +181,7 @@ RSpec.describe "Jobseekers can complete a job application" do
       click_on I18n.t("buttons.save_and_continue")
 
       click_button "Review application"
-      expect(current_path).to eq(jobseekers_job_application_review_path(vacancy.job_applications.first))
+      expect(page).to have_current_path(jobseekers_job_application_review_path(vacancy.job_applications.first), ignore_query: true)
     end
   end
 end

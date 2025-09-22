@@ -69,7 +69,7 @@ RSpec.describe "Jobseekers can create a job alert from a mailing campaign", reca
 
       choose I18n.t("helpers.label.jobseekers_subscription_form.frequency_options.daily")
       click_button I18n.t("buttons.subscribe_campaign")
-      expect(current_path).to eq(subscriptions_path)
+      expect(page).to have_current_path(subscriptions_path, ignore_query: true)
       expect(page).to have_content(I18n.t("subscriptions.confirm.header.create"))
     end
   end

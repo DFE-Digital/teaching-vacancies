@@ -23,7 +23,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
       click_on I18n.t("buttons.save_employment")
 
-      expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :employment_history))
+      expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :employment_history), ignore_query: true)
       expect(page).to have_content("The Best Teacher")
       expect(page).to have_content("English KS1")
 
@@ -34,7 +34,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
       click_on I18n.t("buttons.save_employment")
 
-      expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :employment_history))
+      expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :employment_history), ignore_query: true)
       expect(page).to have_content("Another teaching job")
       expect(page).to have_content(Date.new(2020, 7, 1).to_formatted_s(:month_year))
     end
@@ -136,7 +136,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
     it "allows jobseekers to delete employment history" do
       click_on "Delete Teacher"
 
-      expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :employment_history))
+      expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :employment_history), ignore_query: true)
       expect(page).to have_content(I18n.t("jobseekers.job_applications.employments.destroy.success"))
       expect(page).not_to have_content("Teacher")
     end
@@ -150,7 +150,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
       fill_in "School or other organisation", with: "A different school"
       click_on I18n.t("buttons.save_employment")
 
-      expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :employment_history))
+      expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :employment_history), ignore_query: true)
       expect(page).not_to have_content("A school")
       expect(page).to have_content("A different school")
     end

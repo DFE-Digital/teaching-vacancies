@@ -23,7 +23,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
         validates_step_complete(button: I18n.t("buttons.save_qualification.one"))
         fill_in_undergraduate_degree
         click_on I18n.t("buttons.save_qualification.one")
-        expect(current_path).to eq(review_jobseekers_profile_qualifications_path)
+        expect(page).to have_current_path(review_jobseekers_profile_qualifications_path, ignore_query: true)
         expect(page).to have_content("Undergraduate degree")
         expect(page).to have_content("University of Life")
         expect(page).not_to have_content("Subjects and grades")
@@ -36,7 +36,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
         validates_step_complete(button: I18n.t("buttons.save_qualification.one"))
         fill_in_other_qualification
         click_on I18n.t("buttons.save_qualification.one")
-        expect(current_path).to eq(review_jobseekers_profile_qualifications_path)
+        expect(page).to have_current_path(review_jobseekers_profile_qualifications_path, ignore_query: true)
         expect(page).to have_content("Superteacher Certificate")
         expect(page).to have_content("Teachers Academy")
         expect(page).to have_content("I expect to finish next year")
@@ -54,7 +54,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
         validates_step_complete(button: I18n.t("buttons.save_qualification.other"))
         fill_in_gcses
         click_on I18n.t("buttons.save_qualification.other")
-        expect(current_path).to eq(review_jobseekers_profile_qualifications_path)
+        expect(page).to have_current_path(review_jobseekers_profile_qualifications_path, ignore_query: true)
         expect(page).to have_content("GCSEs")
         expect(page).to have_content("Churchill School for Gifted Macaques")
         expect(page).to have_content("Maths – 110%")

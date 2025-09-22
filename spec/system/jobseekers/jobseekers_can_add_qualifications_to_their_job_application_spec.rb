@@ -27,7 +27,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
       validates_step_complete(button: I18n.t("buttons.save_qualification.one"))
       fill_in_undergraduate_degree
       click_on I18n.t("buttons.save_qualification.one")
-      expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :qualifications))
+      expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :qualifications), ignore_query: true)
       expect(page).to have_content(I18n.t("buttons.add_another_qualification"))
       expect(page).to have_content("Undergraduate degree")
       expect(page).to have_content("University of Life")
@@ -41,7 +41,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
       validates_step_complete(button: I18n.t("buttons.save_qualification.one"))
       fill_in_other_qualification
       click_on I18n.t("buttons.save_qualification.one")
-      expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :qualifications))
+      expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :qualifications), ignore_query: true)
       expect(page).to have_content("Superteacher Certificate")
       expect(page).to have_content("Teachers Academy")
       expect(page).to have_content("Superteaching")
@@ -90,7 +90,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
         empty_second_qualification_result
         fill_in "School", with: "St Nicholas School"
         expect { click_on I18n.t("buttons.save_qualification.one") }.to change { qualification.qualification_results.count }.by(-1)
-        expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :qualifications))
+        expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :qualifications), ignore_query: true)
         expect(page).not_to have_content("John")
         expect(page).to have_content("Nicholas")
         expect(page).to have_content("Hard Knocks")

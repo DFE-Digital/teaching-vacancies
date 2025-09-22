@@ -275,7 +275,7 @@ RSpec.describe "Jobseekers can manage their profile" do
           it "displays every employment history entry on the review page" do
             add_jobseeker_profile_employment
 
-            expect(current_path).to eq(review_jobseekers_profile_work_history_index_path)
+            expect(page).to have_current_path(review_jobseekers_profile_work_history_index_path, ignore_query: true)
 
             click_link "Return to profile"
 
@@ -358,7 +358,7 @@ RSpec.describe "Jobseekers can manage their profile" do
           fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.subjects"), with: new_employment.subjects
 
           click_on I18n.t("buttons.save_and_continue")
-          expect(current_path).to eq(review_jobseekers_profile_work_history_index_path)
+          expect(page).to have_current_path(review_jobseekers_profile_work_history_index_path, ignore_query: true)
 
           expect(profile.employments.count).to eq(1)
           expect(profile.employments.first).to have_attributes(organisation: new_employment.organisation,
@@ -379,7 +379,7 @@ RSpec.describe "Jobseekers can manage their profile" do
           within(".govuk-summary-card", match: :first) { click_link I18n.t("buttons.delete") }
 
           expect(profile.employments.any?).to be false
-          expect(current_path).to eq(review_jobseekers_profile_work_history_index_path)
+          expect(page).to have_current_path(review_jobseekers_profile_work_history_index_path, ignore_query: true)
         end
       end
 
@@ -727,75 +727,75 @@ RSpec.describe "Jobseekers can manage their profile" do
 
     it "allows the jobseeker to fill in their job preferences" do
       click_link("Add job preferences")
-      expect(current_path).to eq(jobseekers_job_preferences_step_path(:roles))
+      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:roles), ignore_query: true)
       expect(page).to have_css("h1", text: "What roles are you interested in?")
       expect(page).to have_css("h2", text: "Teaching")
       expect(page).to have_css("h2", text: "Support")
 
       click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(jobseekers_job_preferences_step_path(:roles))
+      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:roles), ignore_query: true)
       expect(page).to have_css("h2", text: "There is a problem")
 
       check "Head of year or phase"
       check "Assistant headteacher"
       click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(jobseekers_job_preferences_step_path(:phases))
+      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:phases), ignore_query: true)
       expect(page).to have_css("h3", text: "Job preferencesEducation phase")
 
       click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(jobseekers_job_preferences_step_path(:phases))
+      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:phases), ignore_query: true)
       expect(page).to have_css("h2", text: "There is a problem")
 
       check "Secondary"
       click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(jobseekers_job_preferences_step_path(:key_stages))
+      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:key_stages), ignore_query: true)
       expect(page).to have_css("h3", text: "Job preferencesKey stages")
 
       click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(jobseekers_job_preferences_step_path(:key_stages))
+      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:key_stages), ignore_query: true)
       expect(page).to have_css("h2", text: "There is a problem")
 
       check "Key stage 3"
       check "Key stage 4"
       click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(jobseekers_job_preferences_step_path(:subjects))
+      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:subjects), ignore_query: true)
       expect(page).to have_css("h3", text: "Job preferencesSubjects (optional)")
 
       # Can move forward without selecting any subject
       click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(jobseekers_job_preferences_step_path(:working_patterns))
+      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:working_patterns), ignore_query: true)
       expect(page).to have_css("h3", text: "Job preferencesWorking patterns")
 
       # Fill in the Subjects
       click_link "Back"
-      expect(current_path).to eq(jobseekers_job_preferences_step_path(:subjects))
+      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:subjects), ignore_query: true)
       expect(page).to have_css("h3", text: "Job preferencesSubjects (optional)")
 
       check "Mathematics"
       click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(jobseekers_job_preferences_step_path(:working_patterns))
+      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:working_patterns), ignore_query: true)
       expect(page).to have_css("h3", text: "Job preferencesWorking patterns")
 
       click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(jobseekers_job_preferences_step_path(:working_patterns))
+      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:working_patterns), ignore_query: true)
 
       check "Full time"
       click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(jobseekers_job_preferences_step_path(:location))
+      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:location), ignore_query: true)
       expect(page).to have_css("h1", text: "Job preferencesLocation")
 
       click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(jobseekers_job_preferences_step_path(:location))
+      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:location), ignore_query: true)
       expect(page).to have_css("h2", text: "There is a problem")
 
       fill_in "Location", with: "London"
       click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(jobseekers_job_preferences_step_path(:location))
+      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:location), ignore_query: true)
       expect(page).to have_css("h2", text: "There is a problem")
 
       choose "1 mile"
       click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(jobseekers_job_preferences_step_path(:locations))
+      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:locations), ignore_query: true)
       expect(page).to have_css("h1", text: "Job preferencesLocations")
       expect(page).to have_content("London (1 mile)")
 
@@ -806,7 +806,7 @@ RSpec.describe "Jobseekers can manage their profile" do
 
       choose "5 miles"
       click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(jobseekers_job_preferences_step_path(:locations))
+      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:locations), ignore_query: true)
       expect(page).to have_css("h1", text: "Job preferencesLocations")
       expect(page).to have_content("London (5 miles)")
 
@@ -814,7 +814,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       expect(page).to have_css("h1", text: "Delete locationConfirm that you want to delete London (5 miles)")
       click_on "Delete this location"
 
-      expect(current_path).to eq(jobseekers_job_preferences_step_path(:location))
+      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:location), ignore_query: true)
       expect(page).to have_content("Location deleted")
       expect(page).to have_css("h1", text: "Job preferencesLocation")
 
@@ -827,7 +827,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       fill_in "Location", with: "London"
       choose "1 mile"
       click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(jobseekers_job_preferences_step_path(:locations))
+      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:locations), ignore_query: true)
       expect(page).to have_css("h1", text: "Job preferencesLocations")
       expect(page).to have_content("London (1 mile)")
       expect(page).to have_css("h2", text: "Do you want to add another location?")
@@ -837,13 +837,13 @@ RSpec.describe "Jobseekers can manage their profile" do
 
       choose "Yes"
       click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(jobseekers_job_preferences_step_path(:location))
+      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:location), ignore_query: true)
       expect(page).to have_css("h1", text: "Job preferencesLocation")
 
       fill_in "Location", with: "Manchester"
       choose "10 miles"
       click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(jobseekers_job_preferences_step_path(:locations))
+      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:locations), ignore_query: true)
       expect(page).to have_css("h1", text: "Job preferencesLocations")
       expect(page).to have_content("London (1 mile)")
       expect(page).to have_content("Manchester (10 miles)")
@@ -851,7 +851,7 @@ RSpec.describe "Jobseekers can manage their profile" do
 
       choose "No"
       click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(jobseekers_job_preferences_step_path(:review))
+      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:review), ignore_query: true)
       expect(page).to have_css("h1", text: "Job preferences")
       expect(page).to have_css("dd", text: "Head of year or phase, Assistant headteacher")
       expect(page).to have_css("dd", text: "Secondary")
@@ -862,7 +862,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       expect(page).to have_content("Manchester (10 miles)")
 
       click_on I18n.t("buttons.return_to_profile")
-      expect(current_path).to eq(jobseekers_profile_path)
+      expect(page).to have_current_path(jobseekers_profile_path, ignore_query: true)
       expect(page).to have_css("h1", text: "Your profile")
       expect(page).to have_css("dd", text: "Head of year or phase, Assistant headteacher")
       expect(page).to have_css("dd", text: "Secondary")
@@ -876,7 +876,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     context "when a jobseeker enters non-teacher preferences" do
       it "changes the journey" do
         click_link("Add job preferences")
-        expect(current_path).to eq(jobseekers_job_preferences_step_path(:roles))
+        expect(page).to have_current_path(jobseekers_job_preferences_step_path(:roles), ignore_query: true)
         expect(page).to have_css("h1", text: "What roles are you interested in?")
         expect(page).to have_css("h2", text: "Teaching")
         expect(page).to have_css("h2", text: "Support")
@@ -884,12 +884,12 @@ RSpec.describe "Jobseekers can manage their profile" do
         # TODO: change when we have non-teaching roles
         check "IT support"
         click_on I18n.t("buttons.save_and_continue")
-        expect(current_path).to eq(jobseekers_job_preferences_step_path(:phases))
+        expect(page).to have_current_path(jobseekers_job_preferences_step_path(:phases), ignore_query: true)
         expect(page).to have_css("h3", text: "Job preferencesEducation phase")
 
         check "Secondary"
         click_on I18n.t("buttons.save_and_continue")
-        expect(current_path).to eq(jobseekers_job_preferences_step_path(:key_stages))
+        expect(page).to have_current_path(jobseekers_job_preferences_step_path(:key_stages), ignore_query: true)
         expect(page).to have_css("h3", text: "Job preferencesKey stages")
 
         check "I'm not looking for a teaching job"
@@ -897,25 +897,25 @@ RSpec.describe "Jobseekers can manage their profile" do
 
         # Can move forward without selecting any subject
         click_on I18n.t("buttons.save_and_continue")
-        expect(current_path).to eq(jobseekers_job_preferences_step_path(:working_patterns))
+        expect(page).to have_current_path(jobseekers_job_preferences_step_path(:working_patterns), ignore_query: true)
         expect(page).to have_css("h3", text: "Job preferencesWorking patterns")
 
         check "Full time"
         click_on I18n.t("buttons.save_and_continue")
-        expect(current_path).to eq(jobseekers_job_preferences_step_path(:location))
+        expect(page).to have_current_path(jobseekers_job_preferences_step_path(:location), ignore_query: true)
         expect(page).to have_css("h1", text: "Job preferencesLocation")
 
         fill_in "Location", with: "Manchester"
         choose "10 miles"
         click_on I18n.t("buttons.save_and_continue")
-        expect(current_path).to eq(jobseekers_job_preferences_step_path(:locations))
+        expect(page).to have_current_path(jobseekers_job_preferences_step_path(:locations), ignore_query: true)
         expect(page).to have_css("h1", text: "Job preferencesLocations")
         expect(page).to have_content("Manchester (10 miles)")
         expect(page).to have_css("h2", text: "Do you want to add another location?")
 
         choose "No"
         click_on I18n.t("buttons.save_and_continue")
-        expect(current_path).to eq(jobseekers_job_preferences_step_path(:review))
+        expect(page).to have_current_path(jobseekers_job_preferences_step_path(:review), ignore_query: true)
         expect(page).to have_css("h1", text: "Job preferences")
         expect(page).to have_css("dd", text: "IT support")
         expect(page).to have_css("dd", text: "Secondary")
@@ -924,7 +924,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         expect(page).to have_css("dd", text: "Manchester (10 miles)")
 
         click_on I18n.t("buttons.return_to_profile")
-        expect(current_path).to eq(jobseekers_profile_path)
+        expect(page).to have_current_path(jobseekers_profile_path, ignore_query: true)
         expect(page).to have_css("h1", text: "Your profile")
         expect(page).to have_css("dd", text: "IT support")
         expect(page).to have_css("dd", text: "Secondary")

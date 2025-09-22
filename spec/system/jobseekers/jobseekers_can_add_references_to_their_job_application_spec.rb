@@ -32,7 +32,7 @@ RSpec.describe "Jobseekers can add references to their job application" do
 
         click_on I18n.t("buttons.save_reference")
 
-        expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :referees))
+        expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :referees), ignore_query: true)
         expect(page).to have_content("Jim Referee")
       end
     end
@@ -44,7 +44,7 @@ RSpec.describe "Jobseekers can add references to their job application" do
     it "allows jobseekers to delete references" do
       click_on I18n.t("buttons.delete")
 
-      expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :referees))
+      expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :referees), ignore_query: true)
       expect(page).to have_content(I18n.t("jobseekers.job_applications.referees.destroy.success"))
       expect(page).not_to have_content("John")
     end
@@ -60,7 +60,7 @@ RSpec.describe "Jobseekers can add references to their job application" do
       choose("No")
       click_on I18n.t("buttons.save_reference")
 
-      expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :referees))
+      expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :referees), ignore_query: true)
       within ".govuk-summary-card" do
         expect(page).not_to have_content("John")
         expect(page).not_to have_content("Yes")
