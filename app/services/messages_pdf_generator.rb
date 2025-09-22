@@ -50,8 +50,6 @@ class MessagesPdfGenerator
   end
 
   def render_message(message)
-    start_new_page if close_to_bottom?
-
     sender_name = message_sender_name(message)
     timestamp = message.created_at.strftime("%d %B %Y at %I:%M %p")
     content_text = strip_html_tags(message.content.to_s)

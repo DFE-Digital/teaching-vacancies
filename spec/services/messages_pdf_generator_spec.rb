@@ -65,5 +65,6 @@ RSpec.describe MessagesPdfGenerator do
         expect(pdf).not_to include("</strong>")
       end
     end
+
   end
 end
