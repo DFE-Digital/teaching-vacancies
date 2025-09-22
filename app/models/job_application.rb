@@ -1,5 +1,5 @@
 class JobApplication < ApplicationRecord
-  before_save :update_status_timestamp, if: %i[will_save_change_to_status? ignore_for_offered_and_declined?]
+  before_save :update_status_timestamp, if: -> { will_save_change_to_status? && %w[offered declined].exclude?(status) }
   before_save :reset_support_needed_details
   before_update :anonymise_report, if: -> { will_save_change_to_status? && status == "submitted" }
 
@@ -128,6 +128,10 @@ class JobApplication < ApplicationRecord
     INACTIVE_STATUSES.exclude?(status)
   end
 
+  def has_pre_interview_checks?
+    interviewing_at.present?
+  end
+
   Document = Data.define(:filename, :data)
 
   def submitted_application_form
@@ -183,11 +187,6 @@ class JobApplication < ApplicationRecord
     if self.class.next_statuses(from).exclude?(to)
       errors.add(:status, "Invalid status transition from: #{from} to: #{to}")
     end
-  end
-
-  # predicate method used to ignore the automatic update of `offered_at` and `declined_at` as the are manually entered by publishers
-  def ignore_for_offered_and_declined?
-    %w[offered declined].exclude?(status)
   end
 
   def update_status_timestamp
