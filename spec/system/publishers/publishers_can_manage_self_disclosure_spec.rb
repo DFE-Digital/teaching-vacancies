@@ -92,6 +92,8 @@ RSpec.describe "Publishers manage self disclosure", :perform_enqueued do
             jobseeker_self_disclosure_barred_list_page.fill_in_and_submit_form(dummy_self_disclosure)
             expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
             jobseeker_self_disclosure_conduct_page.fill_in_and_submit_form(dummy_self_disclosure)
+            # wait for page load
+            find("form[action='/jobseekers/job_applications/#{job_application.id}/self_disclosure/confirmation']")
             expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
           end
         end
