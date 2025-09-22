@@ -62,12 +62,12 @@ RSpec.describe "Publishers manage self disclosure", :perform_enqueued do
 
         before do
           login_as(jobseeker, scope: :jobseeker)
+          visit jobseekers_job_application_path job_application
         end
 
         after { logout }
 
         it "shows as a notification to the jobseeker", :js do
-          visit jobseekers_job_application_path job_application
           find(".count-badge").click
           within ".notification" do
             find("a").click
@@ -77,23 +77,27 @@ RSpec.describe "Publishers manage self disclosure", :perform_enqueued do
 
         context "when filling in the disclosure form" do
           before do
-            visit jobseekers_job_application_path job_application
             within ".govuk-notification-banner__heading" do
               find("a").click
             end
-            # wait for page load
-            find "label[for='jobseekers-job-applications-self-disclosure-personal-details-form-name-field']"
           end
 
           it "passes a11y", :a11y do
+            # wait for page load
+            find "label[for='jobseekers-job-applications-self-disclosure-personal-details-form-name-field']"
             expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
             jobseeker_self_disclosure_personal_details_page.fill_in_and_submit_form(dummy_self_disclosure)
+
+            # wait for page load
+            find("form[action='/jobseekers/job_applications/#{job_application.id}/self_disclosure/barred_list']")
             expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
             jobseeker_self_disclosure_barred_list_page.fill_in_and_submit_form(dummy_self_disclosure)
+
             # wait for page load
             find("form[action='/jobseekers/job_applications/#{job_application.id}/self_disclosure/conduct']")
             expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
             jobseeker_self_disclosure_conduct_page.fill_in_and_submit_form(dummy_self_disclosure)
+
             # wait for page load
             find("form[action='/jobseekers/job_applications/#{job_application.id}/self_disclosure/confirmation']")
             expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
