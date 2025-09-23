@@ -2,8 +2,9 @@ require "rails_helper"
 
 RSpec.describe VacancyAnalyticsService do
   let(:vacancy) { create(:vacancy) }
-  let(:referrer_url) { "https://example.com/some/path?utm=source" }
-  let(:hostname) { "example.com" }
+  let(:referrer_url) { "https://www.example.com/some/path?utm=source" }
+  let(:hostname) { "www.tvs.service.gov.uk" }
+  let(:test_redis_key) { "example" }
 
   before do
     mock_redis = MockRedis.new
@@ -13,11 +14,11 @@ RSpec.describe VacancyAnalyticsService do
   end
 
   describe ".track_visit" do
-    let(:redis_key) { "vacancy_referrer_stats:#{vacancy.id}:#{hostname}" }
+    let(:redis_key) { "vacancy_referrer_stats:#{vacancy.id}:#{test_redis_key}" }
 
     it "increments the Redis counter for a normalized referrer" do
       expect {
-        described_class.track_visit(vacancy.id, referrer_url, "https://google.com/", {})
+        described_class.track_visit(vacancy.id, referrer_url, hostname, {})
       }.to change { Redis.current.get(redis_key).to_i }.by(1)
     end
 
@@ -30,19 +31,23 @@ RSpec.describe VacancyAnalyticsService do
 
   describe ".normalize_referrer" do
     it "returns the hostname from a valid URL" do
-      expect(described_class.normalize_referrer("https://google.com/whatever", hostname, {})).to eq("google.com")
+      expect(described_class.normalize_referrer("https://google.com/whatever", hostname, {})).to eq("google")
     end
 
     it "returns 'internal' for a URL with the same host as the request" do
-      expect(described_class.normalize_referrer(referrer_url, hostname, {})).to eq("internal")
+      expect(described_class.normalize_referrer("https://www.tvs.service.gov.uk", hostname, {})).to eq("internal")
     end
 
     it "returns 'internal' if the host is missing" do
       expect(described_class.normalize_referrer("/whatever", hostname, {})).to eq("internal")
     end
 
+    it "returns 'direct' for a blank URL" do
+      expect(described_class.normalize_referrer(nil, hostname, {})).to eq("direct")
+    end
+
     it "returns 'invalid' for malformed URLs" do
-      expect(described_class.normalize_referrer("%%%", hostname, {})).to eq("invalid")
+      expect(described_class.normalize_referrer("rabbit://%%%", hostname, {})).to eq("invalid")
     end
 
     it "returns 'jobalert' if the utm_medium is set" do
@@ -51,13 +56,13 @@ RSpec.describe VacancyAnalyticsService do
   end
 
   describe ".aggregate_and_save_stats" do
-    let(:key) { "vacancy_referrer_stats:#{vacancy.id}:#{hostname}" }
-    let(:second_key) { "vacancy_referrer_stats:#{vacancy.id}:another.com" }
-    let(:third_key) { "vacancy_referrer_stats:#{another_vacancy.id}:#{hostname}" }
+    let(:key) { "vacancy_referrer_stats:#{vacancy.id}:#{test_redis_key}" }
+    let(:second_key) { "vacancy_referrer_stats:#{vacancy.id}:another" }
+    let(:third_key) { "vacancy_referrer_stats:#{another_vacancy.id}:#{test_redis_key}" }
     let(:another_vacancy) { create(:vacancy) }
 
     before do
-      create(:vacancy_analytics, vacancy: another_vacancy, referrer_counts: { "example.com" => 2 })
+      create(:vacancy_analytics, vacancy: another_vacancy, referrer_counts: { "example" => 2 })
     end
 
     it "upserts the correct stat into the database and deletes the Redis key" do
@@ -75,8 +80,8 @@ RSpec.describe VacancyAnalyticsService do
       vacancy_analytics_1 = VacancyAnalytics.find_by(vacancy_id: vacancy.id)
       vacancy_analytics_2 = VacancyAnalytics.find_by(vacancy_id: another_vacancy.id)
 
-      expect(vacancy_analytics_1.referrer_counts).to eq({ "example.com" => 5, "another.com" => 3 })
-      expect(vacancy_analytics_2.referrer_counts).to eq({ "example.com" => 3 })
+      expect(vacancy_analytics_1.referrer_counts).to eq({ "example" => 5, "another" => 3 })
+      expect(vacancy_analytics_2.referrer_counts).to eq({ "example" => 3 })
     end
 
     it "skips keys with zero counts" do
@@ -86,19 +91,19 @@ RSpec.describe VacancyAnalyticsService do
       described_class.aggregate_and_save_stats
 
       vacancy_analytics_1 = VacancyAnalytics.find_by(vacancy_id: vacancy.id)
-      expect(vacancy_analytics_1.referrer_counts).to eq({ "another.com" => 3 })
+      expect(vacancy_analytics_1.referrer_counts).to eq({ "another" => 3 })
     end
   end
 
   describe ".update_stats_in_database" do
     it "merges referrer counts correctly" do
-      existing = create(:vacancy_analytics, vacancy: vacancy, referrer_counts: { "google.com" => 2 })
+      existing = create(:vacancy_analytics, vacancy: vacancy, referrer_counts: { "google" => 2 })
 
       described_class.update_stats_in_database({
-        vacancy.id => { "google.com" => 3 },
+        vacancy.id => { "google" => 3 },
       })
 
-      expect(existing.reload.referrer_counts["google.com"]).to eq(5)
+      expect(existing.reload.referrer_counts["google"]).to eq(5)
     end
 
     it "ignores the update if the vacancy trying no longer exists" do
@@ -107,7 +112,7 @@ RSpec.describe VacancyAnalyticsService do
 
       expect {
         described_class.update_stats_in_database({
-          deleted_vacancy_id => { "google.com" => 3 },
+          deleted_vacancy_id => { "google" => 3 },
         })
       }.not_to raise_error
       expect(VacancyAnalytics.count).to eq(original_count)
