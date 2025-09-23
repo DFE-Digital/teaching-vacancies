@@ -3,7 +3,7 @@ return if Rails.env.test?
 # we sometimes exceed the Govuk Notify mail sending rate of 3000/minute
 # reduce the sidekiq threads to try and prevent this
 options = {
-  concurrency: Integer(ENV.fetch("RAILS_MAX_THREADS", 3)),
+  concurrency: Integer(ENV.fetch("RAILS_MAX_THREADS", 5)),
 }
 
 # Redis concurrency must be plus 5 https://github.com/mperham/sidekiq/wiki/Using-Redis#complete-control
