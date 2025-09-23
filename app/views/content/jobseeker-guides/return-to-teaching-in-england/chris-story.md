@@ -3,6 +3,7 @@ order: 202
 title: Chris's return to teaching story
 meta_description: Read Chris's story about what it's like to return to teaching
 date_posted: 09/06/2025
+date_updated: 08/07/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/chris-story.png"
 ---
