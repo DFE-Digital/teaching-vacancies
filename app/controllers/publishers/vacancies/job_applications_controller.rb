@@ -80,7 +80,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def download_messages
-    messages = @job_application.conversations.includes(:messages).flat_map(&:messages).sort_by(&:created_at).reverse
+    messages = Message.joins(:conversation).where(conversations: { job_application: @job_application }).order(created_at: :desc)
 
     generator = MessagesPdfGenerator.new(@job_application, messages)
     document = generator.generate

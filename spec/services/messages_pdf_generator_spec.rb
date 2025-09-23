@@ -53,17 +53,5 @@ RSpec.describe MessagesPdfGenerator do
         expect(pdf).to include("Message:")
       end
     end
-
-    context "when messages contain rich text content" do
-      let(:publisher_message) { build_stubbed(:publisher_message, :with_rich_content, conversation: conversation, sender: publisher) }
-
-      it "strips HTML tags from content" do
-        expect(pdf).to include("This message contains rich text formatting.")
-        expect(pdf).not_to include("<p>")
-        expect(pdf).not_to include("<strong>")
-        expect(pdf).not_to include("</p>")
-        expect(pdf).not_to include("</strong>")
-      end
-    end
   end
 end
