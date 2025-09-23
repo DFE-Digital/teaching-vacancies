@@ -20,6 +20,10 @@ RSpec.describe "Publishers can view a job application" do
 
   after { logout }
 
+  it "passes a11y", :a11y do
+    expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
+  end
+
   it "shows the statistics" do
     within("#vacancy_statistics") do
       expect(page).to have_content("#{I18n.t('publishers.vacancies.statistics.show.views_by_jobseeker')}42")

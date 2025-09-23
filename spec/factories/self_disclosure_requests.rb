@@ -5,8 +5,6 @@ FactoryBot.define do
 
   trait :sent do
     status { "sent" }
-
-    after(:create, &:sent!)
   end
 
   trait :received do
@@ -15,7 +13,5 @@ FactoryBot.define do
 
   trait :manual do
     status { "manual" }
-
-    after(:create, &:manual!)
   end
 end

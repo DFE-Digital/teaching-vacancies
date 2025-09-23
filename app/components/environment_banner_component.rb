@@ -8,6 +8,7 @@ class EnvironmentBannerComponent < ApplicationComponent
   def render?
     return false if Rails.configuration.app_role.unknown?
     return false if Rails.configuration.app_role.production?
+    return false if Rails.configuration.app_role.test?
 
     true
   end

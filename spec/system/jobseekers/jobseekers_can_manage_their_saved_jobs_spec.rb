@@ -22,6 +22,10 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
         visit jobseekers_saved_jobs_path
       end
 
+      it "passes a11y", :a11y do
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+      end
+
       context "when viewing saved jobs" do
         it "shows saved jobs" do
           expect(page).to have_content(I18n.t("jobseekers.saved_jobs.index.page_title"))

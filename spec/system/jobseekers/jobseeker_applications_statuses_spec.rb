@@ -16,15 +16,23 @@ RSpec.describe "Jobseekers applications statuses" do
       visit job_path(vacancy)
     end
 
-    context "when the jobseeker has completed details in their profile" do
+    context "when the jobseeker has completed details in their profile", :a11y do
       let(:jobseeker_profile) { build(:jobseeker_profile, :completed) }
+
+      it "passes accessibility checks" do
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+      end
 
       it "shows all sections with the status tag 'incomplete'", :js do
         within ".banner-buttons" do
           click_on I18n.t("jobseekers.job_applications.banner_links.apply")
         end
 
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+
         click_button "Start application"
+
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
 
         expect(page).to have_css("#personal_details", text: I18n.t("shared.status_tags.incomplete"))
         expect(page).to have_css("#professional_status", text: I18n.t("shared.status_tags.incomplete"))

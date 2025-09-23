@@ -11,8 +11,9 @@ RSpec.describe "Publishers manage self disclosure", :perform_enqueued do
   let(:disclosure_request) { SelfDisclosureRequest.order(:created_at).last }
 
   describe "using TV self-disclosure form", :versioning do
-    before do
-      run_with_publisher_and_organisation(publisher, organisation) do
+    describe "interviewing and asking for self-disclosure" do
+      before do
+        login_publisher(publisher: publisher, organisation: organisation)
         publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
         click_on "Update application status"
         choose "Interviewing"
@@ -22,41 +23,85 @@ RSpec.describe "Publishers manage self disclosure", :perform_enqueued do
         choose "Yes"
         click_on("Save and continue")
       end
-    end
 
-    it "sends the notification email and creates self disclosure models" do
-      expect(ActionMailer::Base.deliveries.map(&:to).flatten).to contain_exactly(job_application.email_address)
-      expect(SelfDisclosureRequest.count).to eq(1)
-      expect(SelfDisclosure.count).to eq(1)
+      after { logout }
+
+      it "sends the notification email and creates self disclosure models" do
+        expect(ActionMailer::Base.deliveries.map(&:to).flatten).to contain_exactly(job_application.email_address)
+        expect(SelfDisclosureRequest.count).to eq(1)
+        expect(SelfDisclosure.count).to eq(1)
+      end
+
+      it "can be manually marked as complete by publisher" do
+        publisher_ats_self_disclosure_page.load(
+          vacancy_id: vacancy.id,
+          job_application_id: job_application.id,
+        )
+
+        expect(publisher_ats_self_disclosure_page.status.text).to eq("pending")
+        expect(publisher_ats_self_disclosure_page.button.text).to eq("Manually mark as complete")
+        expect(publisher_ats_self_disclosure_page).not_to have_goto_references_and_self_disclosure_form
+
+        publisher_ats_self_disclosure_page.button.click
+
+        expect(publisher_ats_self_disclosure_page.banner_title.text).to eq("Success")
+        expect(publisher_ats_self_disclosure_page.status.text).to eq("completed")
+      end
     end
 
     describe "visit self disclosure form" do
-      it "can be manually marked as complete by publisher" do
-        run_with_publisher_and_organisation(publisher, organisation) do
-          publisher_ats_self_disclosure_page.load(
-            vacancy_id: vacancy.id,
-            job_application_id: job_application.id,
-          )
+      let(:request) { create(:self_disclosure_request, :sent, job_application: job_application, self_disclosure: build(:self_disclosure, :pending)) }
 
-          expect(publisher_ats_self_disclosure_page.status.text).to eq("pending")
-          expect(publisher_ats_self_disclosure_page.button.text).to eq("Manually mark as complete")
-          expect(publisher_ats_self_disclosure_page).not_to have_goto_references_and_self_disclosure_form
-
-          publisher_ats_self_disclosure_page.button.click
-
-          expect(publisher_ats_self_disclosure_page.banner_title.text).to eq("Success")
-          expect(publisher_ats_self_disclosure_page.status.text).to eq("completed")
-        end
+      before do
+        Jobseekers::SelfDisclosureRequestReceivedNotifier.with(record: request)
+                                                         .deliver
       end
 
-      it "shows as a notification to the jobseeker", :js do
-        run_with_jobseeker(jobseeker) do
+      describe "jobseeker filling in form" do
+        let(:dummy_self_disclosure) { build(:self_disclosure) }
+
+        before do
+          login_as(jobseeker, scope: :jobseeker)
           visit jobseekers_job_application_path job_application
+        end
+
+        after { logout }
+
+        it "shows as a notification to the jobseeker", :js do
           find(".count-badge").click
           within ".notification" do
             find("a").click
           end
           expect(page).to have_current_path jobseekers_job_application_self_disclosure_path(job_application, :personal_details)
+        end
+
+        context "when filling in the disclosure form" do
+          before do
+            within ".govuk-notification-banner__heading" do
+              find("a").click
+            end
+          end
+
+          it "passes a11y", :a11y do
+            # wait for page load
+            find "label[for='jobseekers-job-applications-self-disclosure-personal-details-form-name-field']"
+            expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+            jobseeker_self_disclosure_personal_details_page.fill_in_and_submit_form(dummy_self_disclosure)
+
+            # wait for page load
+            find("form[action='/jobseekers/job_applications/#{job_application.id}/self_disclosure/barred_list']")
+            expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+            jobseeker_self_disclosure_barred_list_page.fill_in_and_submit_form(dummy_self_disclosure)
+
+            # wait for page load
+            find("form[action='/jobseekers/job_applications/#{job_application.id}/self_disclosure/conduct']")
+            expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+            jobseeker_self_disclosure_conduct_page.fill_in_and_submit_form(dummy_self_disclosure)
+
+            # wait for page load
+            find("form[action='/jobseekers/job_applications/#{job_application.id}/self_disclosure/confirmation']")
+            expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+          end
         end
       end
 
@@ -92,7 +137,7 @@ RSpec.describe "Publishers manage self disclosure", :perform_enqueued do
 
             expect(all(".timeline-component__value").map { |x| x.text.split.first(6).join(" ") })
               .to eq(["#{jobseeker.jobseeker_profile.personal_details.first_name} #{jobseeker.jobseeker_profile.personal_details.last_name} - #{Date.current.to_fs.strip}",
-                      "#{publisher.given_name} #{publisher.family_name} - #{Date.current.to_fs.strip}"])
+                      "Teaching Vacancies - #{Date.current.to_fs.strip}"])
 
             expect(publisher_ats_self_disclosure_page.status.text).to eq("completed")
             expect(publisher_ats_self_disclosure_page.button.text).to eq("Print self-disclosure")

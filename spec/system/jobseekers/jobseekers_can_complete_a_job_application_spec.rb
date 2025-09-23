@@ -18,7 +18,11 @@ RSpec.describe "Jobseekers can complete a job application" do
   context "when job application is a using the native job application" do
     let(:vacancy) { create(:vacancy, job_roles: ["teacher"], organisations: [organisation]) }
 
-    it "allows jobseekers to complete an application and go to review page" do
+    it "passes a11y", :a11y do
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+    end
+
+    it "allows jobseekers to complete an application and go to review page", :a11y do
       click_button "Start application"
       click_on(I18n.t("jobseekers.job_applications.build.personal_details.heading"))
       validates_step_complete
@@ -82,6 +86,9 @@ RSpec.describe "Jobseekers can complete a job application" do
       expect(page).to have_css("#employment_history", text: I18n.t("shared.status_tags.complete"))
 
       click_on(I18n.t("jobseekers.job_applications.build.personal_statement.heading"))
+
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+
       validates_step_complete
       fill_in_personal_statement
       click_on I18n.t("buttons.save_and_continue")
@@ -103,24 +110,38 @@ RSpec.describe "Jobseekers can complete a job application" do
       expect(page).to have_css("#referees", text: I18n.t("shared.status_tags.complete"))
 
       click_on(I18n.t("jobseekers.job_applications.build.equal_opportunities.heading"))
+
+      # - ARIA attribute is not allowed: aria-expanded="false"
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+
       validates_step_complete
       fill_in_equal_opportunities
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_css("#equal_opportunities", text: I18n.t("shared.status_tags.complete"))
 
       click_on(I18n.t("jobseekers.job_applications.build.ask_for_support.heading"))
+
+      # - ARIA attribute is not allowed: aria-expanded="false"
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+
       validates_step_complete
       fill_in_ask_for_support
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_css("#ask_for_support", text: I18n.t("shared.status_tags.complete"))
 
       click_on(I18n.t("jobseekers.job_applications.build.declarations.heading"))
+
+      # - ARIA attribute is not allowed: aria-expanded="false"
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+
       validates_step_complete
       fill_in_declarations
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_css("#declarations", text: I18n.t("shared.status_tags.complete"))
       click_on "Review application"
 
+      # wait for page load
+      find(".govuk-list.review-component__sections")
       expect(page).to have_current_path(jobseekers_job_application_review_path(JobApplication.last), ignore_query: true)
     end
   end

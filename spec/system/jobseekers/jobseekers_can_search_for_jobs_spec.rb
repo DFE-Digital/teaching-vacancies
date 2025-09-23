@@ -102,6 +102,15 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
     end
 
     it_behaves_like "a successful search"
+
+    context "with keyword search" do
+      let(:keyword) { "Teacher" }
+
+      it "passes a11y", :a11y do
+        #  h4 without h3 (or even h2?)
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
+      end
+    end
   end
 
   context "jobseekers can use the quick apply type filter to search for jobs" do

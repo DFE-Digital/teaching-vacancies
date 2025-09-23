@@ -44,6 +44,10 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
       before { click_link I18n.t("nav.organisation_profile") }
 
+      it "passes a11y", :a11y do
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+      end
+
       it "allows the publisher to edit the trust's website" do
         within("div.govuk-summary-list__row#website") do
           click_link("Change")

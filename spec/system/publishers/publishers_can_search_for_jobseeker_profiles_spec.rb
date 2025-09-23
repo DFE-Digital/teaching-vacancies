@@ -56,6 +56,10 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
 
     after { logout }
 
+    it "passes a11y", :a11y do
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+    end
+
     it "will display all jobseeker profiles with location preference areas containing the school" do
       [jobseeker_profile, part_time_jobseeker_profile].each do |jobseeker_profile|
         expect(page).to have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))

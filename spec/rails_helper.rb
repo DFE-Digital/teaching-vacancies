@@ -13,6 +13,7 @@ require "rack_session_access/capybara"
 require "sidekiq/testing"
 require "view_component/test_helpers"
 require "webmock/rspec"
+require "axe-rspec"
 
 Sidekiq::Testing.fake!
 
@@ -40,6 +41,27 @@ Capybara.register_driver(:cuprite_headless) do |app|
                                   "ozone-platform": "none",
                                 })
 end
+
+Capybara.register_driver :chrome_headless do |app|
+  options = Selenium::WebDriver::Chrome::Options.new(args: %w[no-sandbox headless disable-gpu window-size=1400,1400])
+
+  if ENV["SELENIUM_HUB_URL"]
+    Capybara::Selenium::Driver.new(app, browser: :remote, url: ENV.fetch("SELENIUM_HUB_URL", nil), options:)
+  else
+    Capybara::Selenium::Driver.new(app, browser: :chrome, options:)
+  end
+end
+
+Capybara.register_driver :chrome do |app|
+  options = Selenium::WebDriver::Chrome::Options.new(args: %w[no-sandbox disable-gpu window-size=1400,1800])
+
+  if ENV["SELENIUM_HUB_URL"]
+    Capybara::Selenium::Driver.new(app, browser: :remote, url: ENV.fetch("SELENIUM_HUB_URL", nil), options:)
+  else
+    Capybara::Selenium::Driver.new(app, browser: :chrome, options:)
+  end
+end
+
 Capybara.register_driver(:cuprite_full) do |app|
   Capybara::Cuprite::Driver.new(app, headless: false, process_timeout: 30, window_size: [1400, 1800])
 end
@@ -119,6 +141,17 @@ RSpec.configure do |config|
       driven_by :cuprite_headless
     else
       driven_by :cuprite_full
+    end
+  end
+
+  #  Neither Cuprite nor playwright are supported by axe-rspec
+  # https://github.com/dequelabs/axe-core-gems/issues/418
+  config.before(:each, type: :system, a11y: true) do
+    # In CI or devcontainers (without X11), use headless mode
+    if ENV.key?("CI") || ENV["DEVCONTAINER"] == "true"
+      driven_by :chrome_headless
+    else
+      driven_by :chrome
     end
   end
 

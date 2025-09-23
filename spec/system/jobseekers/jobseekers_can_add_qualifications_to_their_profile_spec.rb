@@ -17,6 +17,11 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
 
       before { click_on "Add qualifications" }
 
+      it "passes a11y", :a11y do
+        # area-expanded on input
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "page-has-heading-one"
+      end
+
       it "allows jobseekers to add a graduate degree" do
         select_qualification_category("Undergraduate degree")
         expect(page).to have_content(I18n.t("jobseekers.profiles.qualifications.new.heading.undergraduate"))
