@@ -3,6 +3,7 @@ order: 203
 title: Dena's return to teaching story
 meta_description: Read Dena's story about what it's like to return to teaching
 date_posted: 09/06/2025
+date_updated: 08/07/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/denas-story.png"
 ---
