@@ -52,7 +52,7 @@ class MessagesPdfGenerator
   def render_message(message)
     sender_name = message_sender_name(message)
     timestamp = message.created_at.strftime("%d %B %Y at %I:%M %p")
-    content_text = strip_html_tags(message.content.to_s)
+    content_text = ActionController::Base.helpers.strip_tags(message.content.to_s)
 
     # Use page_table for consistent formatting with other PDFs
     message_data = [
@@ -73,10 +73,5 @@ class MessagesPdfGenerator
       publisher_name = "#{message.sender.given_name} #{message.sender.family_name}".strip
       "#{publisher_name} - #{job_application.vacancy.organisation_name} (Hiring staff)"
     end
-  end
-
-  def strip_html_tags(text)
-    # Remove HTML tags and decode HTML entities
-    text.gsub(/<[^>]*>/, "").gsub("&nbsp;", " ").gsub("&amp;", "&").gsub("&lt;", "<").gsub("&gt;", ">")
   end
 end
