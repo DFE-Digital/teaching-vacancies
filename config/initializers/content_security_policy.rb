@@ -22,7 +22,8 @@ Rails.application.configure do
                        "https://pixel-config.reddit.com",
                        "https://conversions-config.reddit.com",
                        "https://snap.licdn.com",
-                       "https://px.ads.linkedin.com"
+                       "https://px.ads.linkedin.com",
+                       "https://www.recaptcha.net"
 
     policy.font_src    :self,
                        :data,
