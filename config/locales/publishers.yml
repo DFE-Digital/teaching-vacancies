@@ -617,7 +617,7 @@ en:
             caption: Update referee information
             heading: What is the correct email address for %{name}?
           show:
-            print: Print
+            print: Download reference
             how_would_you_rate: How would you rate %{name}?
             page_title: Reference
             mark_as_received: Mark as received
