@@ -52,7 +52,7 @@ class MessagesPdfGenerator
   def render_message(message)
     sender_name = message_sender_name(message)
     timestamp = message.created_at.strftime("%d %B %Y at %I:%M %p")
-    content_text = ActionController::Base.helpers.strip_tags(message.content.to_s)
+    content_text = message.content.to_plain_text
 
     # Use page_table for consistent formatting with other PDFs
     message_data = [

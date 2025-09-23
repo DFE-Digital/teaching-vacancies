@@ -14,7 +14,9 @@ RSpec.describe MessagesPdfGenerator do
   describe "#generate" do
     subject(:document) { generator.generate }
 
-    let(:pdf) { PDF::Inspector::Text.analyze(document.render).strings }
+    let!(:pdf) do
+      PDF::Inspector::Text.analyze(document.render).strings
+    end
 
     it { is_expected.to be_a(Prawn::Document) }
 
@@ -47,7 +49,6 @@ RSpec.describe MessagesPdfGenerator do
         expect(pdf).to include(publisher_timestamp)
         expect(pdf).to include(jobseeker_timestamp)
 
-        # Check table format labels
         expect(pdf).to include("From:")
         expect(pdf).to include("Date:")
         expect(pdf).to include("Message:")
