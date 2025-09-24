@@ -15,13 +15,7 @@ class Conversation < ApplicationRecord
   }
 
   scope :ordered_by_unread_and_latest_message, lambda {
-    joins(:messages)
-      .select("conversations.*,
-               MAX(messages.created_at) as latest_message_at,
-               CASE WHEN COUNT(CASE WHEN messages.type = 'JobseekerMessage' AND messages.read = false THEN 1 END) > 0
-                    THEN 0 ELSE 1 END as unread_priority")
-      .group("conversations.id")
-      .order(:unread_priority, latest_message_at: :desc)
+    order(has_unread_messages: :desc, last_message_at: :desc)
   }
 
   def has_unread_messages_for_publishers?
