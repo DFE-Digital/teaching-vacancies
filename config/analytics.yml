@@ -594,3 +594,5 @@ shared:
     - created_at
     - updated_at
     - archived
+    - last_message_at
+    - has_unread_messages
