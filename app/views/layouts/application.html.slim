@@ -39,4 +39,6 @@ html.govuk-template.govuk-template--rebranded.app-html-class lang="en"
         = yield
       = content_for :after_main
     = render "layouts/footer"
+    / for chartkick gem to render using Google Charts
+    = javascript_include_tag "https://www.gstatic.com/charts/loader.js"
     = javascript_include_tag "application", defer: true
