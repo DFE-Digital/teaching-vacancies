@@ -42,7 +42,7 @@ schools = [bexleyheath_school,
            southampton_la.schools.detect { |s| s.phase != "not_applicable" && s.phase.exclude?("middle") },
            abraham_moss]
 
-user_emails = users.map { |u| u.fetch(:email) }
+# user_emails = users.map { |u| u.fetch(:email) }
 
 users.each do |user|
   Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la, abraham_moss], **user)
