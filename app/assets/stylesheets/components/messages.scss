@@ -4,6 +4,10 @@
 .message-header--sender {
   background-color: #1D70B8;
   color: #FFF;
+  
+  .govuk-summary-card__title {
+    color: #FFF !important;
+  }
 }
 
 .message-header--recipient {
