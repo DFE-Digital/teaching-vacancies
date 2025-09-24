@@ -18,22 +18,22 @@ RSpec.describe "Publisher all-time statistics" do
     before do
       create(:vacancy, publisher: publisher, organisations: [school], publish_on: 1.year.ago,
                        vacancy_analytics: build(:vacancy_analytics,
-                                                referrer_counts: { "Google" => 6, "Magic" => 8 }))
+                                                referrer_counts: { "google" => 6, "magic" => 8 }))
       create(:vacancy, publisher: publisher, organisations: [school],
                        vacancy_analytics: build(:vacancy_analytics,
-                                                referrer_counts: { "Google" => 6, "Magic" => 8 }))
+                                                referrer_counts: { "google" => 6, "magic" => 8 }))
       create(:vacancy, publisher: publisher, organisations: [school],
                        vacancy_analytics: build(:vacancy_analytics,
-                                                referrer_counts: { "Google" => 4, "Yahoo" => 12, "LinkedIn" => 13 }))
+                                                referrer_counts: { "google" => 4, "yahoo" => 12, "linkedin" => 13 }))
       create(:vacancy, publisher: publisher, organisations: [school],
                        vacancy_analytics: build(:vacancy_analytics,
-                                                referrer_counts: { "Google" => 14, "Indeed" => 5, "LinkedIn" => 15 }))
+                                                referrer_counts: { "google" => 14, "indeed" => 5, "linkedin" => 15 }))
     end
 
     it "includes old data in its calculations" do
       get(publishers_all_time_statistics_path(format: :csv))
 
-      expect(response.body.split("\n")).to eq(["Google,LinkedIn,Magic,Yahoo,Indeed", "30,28,16,12,5"])
+      expect(response.body.split("\n")).to eq(["Google,Linkedin,Magic,Yahoo,Indeed", "30,28,16,12,5"])
     end
   end
 
