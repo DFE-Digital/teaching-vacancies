@@ -3,7 +3,7 @@
   "type": "module",
   "private": true,
   "engine": {
-    "node": ">=18.0.0"
+    "node": ">=24.0.0"
   },
   "browserslist": [
     "last 2 major versions",
