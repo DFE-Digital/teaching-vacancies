@@ -10,7 +10,7 @@ p.govuk-body = t(".download_stats")
 / The labels are very long with Ethnicity and religion
 h3.govuk-heading-m = t(".applicant_age")
 #age_counts
-  = render "bar_chart", chart: @bar_chart, counts: sort_age_stats(@age_counts), graph_type: "age"
+  = render "bar_chart", chart: @bar_chart, counts: @age_counts, graph_type: "age"
 
 h3.govuk-heading-m = t(".applicant_disability")
 #disability_counts

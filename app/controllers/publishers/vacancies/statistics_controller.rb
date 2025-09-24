@@ -1,7 +1,8 @@
 class Publishers::Vacancies::StatisticsController < Publishers::Vacancies::BaseController
   def show
     @number_of_unique_views = Publishers::VacancyStats.new(vacancy).number_of_unique_views
-    @vacancy_analytics = vacancy.vacancy_analytics
+    presenter = VacancyStatisticsPresenter.new([vacancy])
+    @referrer_counts = presenter.referrer_counts
 
     @bar_chart = params[:view] != "table"
 

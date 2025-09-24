@@ -5,12 +5,14 @@ module Publishers
     before_action :set_bar_chart
 
     def index
-      @referrer_counts = listing_data
+      presenter = VacancyStatisticsPresenter.new(vacancies)
+      @referrer_counts = presenter.referrer_counts
       @vacancy_counts = vacancies.count
     end
 
     def equal_opportunities
-      equal_opportunities = equal_opportunities_data
+      data = VacancyStatisticsPresenter.new(vacancies)
+      equal_opportunities = data.equal_opportunities_data
       @age_counts = equal_opportunities.fetch(:age)
       @disability_counts = equal_opportunities.fetch(:disability)
       @ethnicity_counts = equal_opportunities.fetch(:ethnicity)

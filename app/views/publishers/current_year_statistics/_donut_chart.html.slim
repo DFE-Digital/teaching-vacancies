@@ -5,7 +5,7 @@
 - else
   = govuk_button_link_to t(".chart_view"), equal_opportunities_publishers_current_year_statistics_path, class: "chart-button govuk-button--secondary"
   = govuk_summary_list do |summary_list|
-    - sort_referrer_counts(actual_counts).each do |key, value|
+    - actual_counts.each do |key, value|
       - summary_list.with_row do |row|
         - row.with_key text: key
         - row.with_value text: value

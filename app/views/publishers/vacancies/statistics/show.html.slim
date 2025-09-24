@@ -17,8 +17,8 @@
 
       = govuk_button_link_to t("buttons.download_stats"), organisation_job_statistics_path(vacancy.id, format: :csv), class: "govuk-button--secondary"
 
-    - if @vacancy_analytics.present?
-      = render "vacancy_view_stats", chart: @bar_chart, referrer_counts: @vacancy_analytics.referrer_counts,
+    - if @referrer_counts.any?
+      = render "vacancy_view_stats", chart: @bar_chart, referrer_counts: @referrer_counts,
         link: organisation_job_statistics_path(vacancy.id), accessible_link: organisation_job_statistics_path(vacancy.id, view: "table")
 
     .govuk-grid-column-two-thirds

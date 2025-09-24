@@ -2,12 +2,11 @@
 
 module Publishers
   class AllTimeStatisticsController < StatisticsController
-    include StatisticsHelper
-
     def index
       respond_to do |format|
         format.csv do
-          data = sort_referrer_counts(listing_data)
+          presenter = VacancyStatisticsPresenter.new(vacancies)
+          data = presenter.referrer_counts
           csv_data = CSV.generate(headers: false) do |csv|
             csv << data.keys
             csv << data.values
@@ -22,12 +21,8 @@ module Publishers
       respond_to do |format|
         format.csv do
           csv_data = CSV.generate(headers: false) do |csv|
-            equal_opportunities_data.each do |key, value|
-              sorted_data = if key == :age
-                              sort_age_stats(value)
-                            else
-                              sort_referrer_counts(value)
-                            end
+            presenter = VacancyStatisticsPresenter.new(vacancies)
+            presenter.equal_opportunities_data.each_value do |sorted_data|
               csv << sorted_data.keys
               csv << sorted_data.values
             end
