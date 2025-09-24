@@ -33,14 +33,14 @@ class TabPanelComponent < ApplicationComponent
   end
 
   def candidate_checkbox(application, index, form_tag)
-    if application.terminal_status?
-      tag.span
-    else
+    if application.unsuccessful? || !application.terminal_status?
       tag.div(class: "govuk-checkboxes--small") do
         form_tag.govuk_check_box(:job_applications, application.id,
                                  link_errors: index.zero?,
                                  label: { hidden: true, text: "Select #{application.name}" })
       end
+    else
+      tag.span
     end
   end
 
