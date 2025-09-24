@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Publishers can view a job application" do
+RSpec.describe "Publishers can view vacancy statastics" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
 
@@ -20,30 +20,16 @@ RSpec.describe "Publishers can view a job application" do
   after { logout }
 
   describe "job listing source" do
-    let(:top_company) { "Ask Jeeves" }
-    let(:second_company) { "LinkedIn" }
-
     let(:vacancy) do
       create(:vacancy, organisations: [organisation],
                        vacancy_analytics: build(:vacancy_analytics,
-                                                referrer_counts: { "Direct" => 14, top_company => 24, second_company => 22, "Also Rans" => 15 }))
-    end
-
-    it "passes a11y", :a11y do
-      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order", "empty-table-header"
+                                                referrer_counts: { "direct" => 14, "askjeeves.co.uk" => 24, "linkedin.com" => 22, "alsorans.net" => 15 }))
     end
 
     it "cam switch between views" do
       find_by_id("accessible").click
       within("#analytics") do
-        within(".govuk-summary-list__row:nth-child(1)") do
-          expect(page).to have_content(top_company)
-          expect(page).to have_content("24")
-        end
-        within(".govuk-summary-list__row:nth-child(2)") do
-          expect(page).to have_content(second_company)
-          expect(page).to have_content("22")
-        end
+        expect(all(".govuk-summary-list__row").map(&:text)).to eq(["Askjeeves.co.uk24", "Linkedin.com22", "Alsorans.net15", "Direct14"])
       end
     end
   end

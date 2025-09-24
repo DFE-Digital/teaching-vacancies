@@ -143,6 +143,16 @@ FactoryBot.define do
 
   trait :for_seed_data do
     create_details { true }
+    disability { %w[no prefer_not_to_say yes].sample }
+    age { %w[under_twenty_five twenty_five_to_twenty_nine thirty_to_thirty_nine forty_to_forty_nine fifty_to_fifty_nine sixty_and_over prefer_not_to_say].sample }
+    gender { %w[man other prefer_not_to_say woman].sample }
+    gender_description { Faker::Gender.type }
+    orientation { %w[bisexual gay_or_lesbian heterosexual other prefer_not_to_say].sample }
+    orientation_description { Faker::Lorem.sentence }
+    ethnicity { %w[asian black mixed other prefer_not_to_say white].sample }
+    ethnicity_description { Faker::Lorem.sentence }
+    religion { %w[buddhist christian hindu jewish muslim none other prefer_not_to_say sikh].sample }
+    religion_description { Faker::Religion::Bible.character }
   end
 
   trait :status_draft do

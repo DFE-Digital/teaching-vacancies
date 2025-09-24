@@ -1,0 +1,33 @@
+= render("page_header")
+
+p.govuk-body = t(".application_counts", count: @age_counts.values.sum)
+
+p.govuk-body = t(".download_stats")
+
+= govuk_button_link_to t("buttons.download_stats"), equal_opportunities_publishers_all_time_statistics_path(format: :csv), class: "govuk-button--secondary"
+
+/ where there are large groups, render bar charts rather than donuts
+/ The labels are very long with Ethnicity and religion
+h3.govuk-heading-m = t(".applicant_age")
+#age_counts
+  = render "bar_chart", chart: @bar_chart, counts: @age_counts, graph_type: "age"
+
+h3.govuk-heading-m = t(".applicant_disability")
+#disability_counts
+  = render "donut_chart", chart: @bar_chart, counts: @disability_counts, graph_type: "disability"
+
+h3.govuk-heading-m = t(".applicant_ethnicity")
+#ethnicity_counts
+  = render "donut_chart", chart: @bar_chart, counts: @ethnicity_counts, graph_type: "ethnicity"
+
+h3.govuk-heading-m = t(".applicant_gender")
+#gender_counts
+  = render "donut_chart", chart: @bar_chart, counts: @gender_counts, graph_type: "gender"
+
+h3.govuk-heading-m = t(".applicant_orientation")
+#orientation_counts
+  = render "donut_chart", chart: @bar_chart, counts: @orientation_counts, graph_type: "orientation"
+
+h3.govuk-heading-m = t(".applicant_religion")
+#religion_counts
+  = render "donut_chart", chart: @bar_chart, counts: @religion_counts, graph_type: "religion"
