@@ -4,7 +4,8 @@ RSpec.describe "Publishers can select a job application for interview", :perform
   include ActiveJob::TestHelper
 
   let(:publisher) { create(:publisher, email: "publisher@contoso.com") }
-  let(:organisation) { create(:school) }
+  let(:organisation) { create(:local_authority, schools: [school]) }
+  let(:school) { create(:school) }
   let(:jobseeker) { create(:jobseeker, email: "jobseeker@contoso.com") }
   let!(:current_referee) { create(:referee, email: "employer@contoso.com", is_most_recent_employer: true, job_application: job_application) }
   let!(:old_referee) { create(:referee, email: "previous@contoso.com", is_most_recent_employer: false, job_application: job_application) }
@@ -17,7 +18,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
 
   # needs JS driver to prevent tests seeing multiple tabs at once
   context "when selecting multiple candidates", :js do
-    let(:vacancy) { create(:vacancy, :catholic, :expired, organisations: [organisation], publisher: publisher) }
+    let(:vacancy) { create(:vacancy, :catholic, :expired, organisations: [school], publisher: publisher) }
     let(:job_application) do
       create(:job_application, :status_submitted,
              notify_before_contact_referers: false,
@@ -79,7 +80,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
                notify_before_contact_referers: true,
                vacancy: vacancy, jobseeker: jobseeker)
       end
-      let(:vacancy) { create(:vacancy, :catholic, :expired, organisations: [organisation], publisher: publisher) }
+      let(:vacancy) { create(:vacancy, :catholic, :expired, organisations: [school], publisher: publisher) }
       let(:action_needed) { "Action needed" }
 
       it "shows religious warning text" do
@@ -157,7 +158,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
                email_address: jobseeker.email,
                vacancy: vacancy, jobseeker: jobseeker)
       end
-      let(:vacancy) { create(:vacancy, :expired, organisations: [organisation], publisher: publisher) }
+      let(:vacancy) { create(:vacancy, :expired, organisations: [school], publisher: publisher) }
 
       it "doesnt show religious warning text" do
         expect(page).to have_no_content(cannot_collect)
@@ -255,7 +256,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
               expect(page).to have_content("Reference email changed")
               expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
                 .to eq({
-                  new_email => ["Provide a reference for #{job_application.name} for #{vacancy.job_title} at #{organisation.name}"],
+                  new_email => ["Provide a reference for #{job_application.name} for #{vacancy.job_title} at #{school.name}"],
                 })
             end
 
