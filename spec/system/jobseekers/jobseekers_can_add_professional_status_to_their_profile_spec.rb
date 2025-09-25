@@ -26,7 +26,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
 
       # missing h1
       it "passes a11y", :a11y do
-        #  aria-expanded not allowed for input elements
+        #  https://github.com/alphagov/govuk-frontend/issues/979
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr", "page-has-heading-one"
       end
 

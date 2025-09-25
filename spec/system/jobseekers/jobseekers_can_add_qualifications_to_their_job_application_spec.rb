@@ -70,7 +70,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
       end
 
       it "passes a11y", :a11y do
-        # area-expanded on input
+        #  https://github.com/alphagov/govuk-frontend/issues/979
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
       end
 

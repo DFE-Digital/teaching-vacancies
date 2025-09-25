@@ -40,15 +40,19 @@ RSpec.describe "Publishers can edit a draft vacancy" do
 
         fill_in_key_stages_form_fields(vacancy.key_stages_for_phases)
         progress_to_edit_page(:contract_information)
+        #  https://github.com/alphagov/govuk-frontend/issues/979
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order", "aria-allowed-attr"
 
         progress_to_edit_page(:start_date)
+        #  https://github.com/alphagov/govuk-frontend/issues/979
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
         progress_to_edit_page(:pay_package)
+        #  https://github.com/alphagov/govuk-frontend/issues/979
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
         progress_to_edit_page(:about_the_role)
+        #  https://github.com/alphagov/govuk-frontend/issues/979
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
         progress_to_edit_page(:include_additional_documents)
@@ -58,15 +62,18 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
 
         progress_to_edit_page(:visa_sponsorship)
+        #  https://github.com/alphagov/govuk-frontend/issues/979
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
         progress_to_edit_page(:important_dates)
+        #  https://github.com/alphagov/govuk-frontend/issues/979
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
         progress_to_edit_page(:applying_for_the_job)
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
 
         progress_to_edit_page(:contact_details)
+        #  https://github.com/alphagov/govuk-frontend/issues/979
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
         click_on I18n.t("buttons.save_and_continue")

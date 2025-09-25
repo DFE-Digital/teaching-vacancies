@@ -111,7 +111,7 @@ RSpec.describe "Jobseekers can complete a job application" do
 
       click_on(I18n.t("jobseekers.job_applications.build.equal_opportunities.heading"))
 
-      # - ARIA attribute is not allowed: aria-expanded="false"
+      #  https://github.com/alphagov/govuk-frontend/issues/979
       expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
       validates_step_complete
@@ -121,7 +121,7 @@ RSpec.describe "Jobseekers can complete a job application" do
 
       click_on(I18n.t("jobseekers.job_applications.build.ask_for_support.heading"))
 
-      # - ARIA attribute is not allowed: aria-expanded="false"
+      #  https://github.com/alphagov/govuk-frontend/issues/979
       expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
       validates_step_complete
@@ -131,7 +131,7 @@ RSpec.describe "Jobseekers can complete a job application" do
 
       click_on(I18n.t("jobseekers.job_applications.build.declarations.heading"))
 
-      # - ARIA attribute is not allowed: aria-expanded="false"
+      #  https://github.com/alphagov/govuk-frontend/issues/979
       expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
       validates_step_complete

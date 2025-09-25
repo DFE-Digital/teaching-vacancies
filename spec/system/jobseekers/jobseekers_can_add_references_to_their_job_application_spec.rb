@@ -16,7 +16,7 @@ RSpec.describe "Jobseekers can add references to their job application" do
     let(:referees) { [] }
 
     it "passes a11y", :a11y do
-      # ARIA attribute is not allowed: aria-expanded="false"
+      #  https://github.com/alphagov/govuk-frontend/issues/979
       expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
     end
 
@@ -30,7 +30,7 @@ RSpec.describe "Jobseekers can add references to their job application" do
       end
 
       it "passes a11y", :a11y do
-        # ARIA attribute is not allowed: aria-expanded="false"
+        #  https://github.com/alphagov/govuk-frontend/issues/979
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
       end
 

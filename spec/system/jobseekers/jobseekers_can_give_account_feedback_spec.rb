@@ -22,6 +22,7 @@ RSpec.describe "Jobseekers can give account feedback" do
     end
 
     it "passes a11y", :a11y do
+      #  https://github.com/alphagov/govuk-frontend/issues/979
       expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr", "heading-order"
     end
 
@@ -52,6 +53,7 @@ RSpec.describe "Jobseekers can give account feedback" do
     end
 
     it "passes a11y", :a11y do
+      #  https://github.com/alphagov/govuk-frontend/issues/979
       expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr", "heading-order"
     end
 
