@@ -2,12 +2,11 @@ class Publishers::CandidateMessagesController < Publishers::BaseController
   def index
     @tab = params[:tab] || "inbox"
 
-    organisations_conversations = Conversation.for_organisation(current_organisation.id)
-                                              .with_latest_message_date
-                                              .includes(job_application: :vacancy, messages: :sender)
-                                              .order(latest_message_at: :desc)
+    base_conversations = Conversation.for_organisation(current_organisation.id)
+                                    .includes(job_application: :vacancy, messages: :sender)
+                                    .ordered_by_unread_and_latest_message
 
-    @conversations = @tab == "archive" ? organisations_conversations.archived : organisations_conversations.inbox
+    @conversations = @tab == "archive" ? base_conversations.archived : base_conversations.inbox
 
     @inbox_count = Conversation.for_organisation(current_organisation.id)
                                .inbox

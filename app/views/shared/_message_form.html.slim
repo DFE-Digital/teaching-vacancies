@@ -9,4 +9,4 @@ div class="govuk-!-margin-top-6"
       = f.rich_text_area :content
 
     = f.govuk_submit "Send message"
-    = govuk_link_to "Cancel", request.original_url, class: "govuk-!-margin-left-3"
+    = govuk_link_to "Cancel", cancel_link, class: "govuk-!-margin-left-3"

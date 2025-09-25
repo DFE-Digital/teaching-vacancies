@@ -23,6 +23,7 @@ RSpec.describe "jobseekers/job_applications/_messages.html.slim" do
 
   context "when messaging is allowed" do
     before do
+      assign(:show_form, "true")
       allow(job_application).to receive(:can_jobseeker_send_message?).and_return(true)
     end
 

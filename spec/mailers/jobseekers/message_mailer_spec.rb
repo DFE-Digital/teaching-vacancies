@@ -39,7 +39,7 @@ RSpec.describe Jobseekers::MessageMailer do
       let(:status) { "submitted" }
 
       it "has the correct subject" do
-        expect(mail.subject).to eq("Sign in to Teaching Vacancies to read your messages")
+        expect(mail.subject).to eq("You have a new message")
       end
 
       it "has the correct recipient" do

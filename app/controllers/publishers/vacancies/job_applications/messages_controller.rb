@@ -29,7 +29,7 @@ class Publishers::Vacancies::JobApplications::MessagesController < Publishers::V
 
   def find_or_create_conversation
     @job_application.conversations.first ||
-      @job_application.conversations.create!(title: Conversation.default_title_for(@job_application))
+      @job_application.conversations.create!
   end
 
   def message_form_params
