@@ -85,7 +85,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_24_133259) do
     t.datetime "updated_at", null: false
     t.boolean "archived", default: false, null: false
     t.datetime "last_message_at"
-    t.boolean "has_unread_messages", default: false, null: false
+    t.boolean "has_unread_jobseeker_messages", default: false, null: false
     t.index ["archived"], name: "index_conversations_on_archived"
     t.index ["job_application_id"], name: "index_conversations_on_job_application_id"
   end

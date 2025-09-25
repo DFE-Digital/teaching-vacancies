@@ -5,6 +5,7 @@ class JobseekerMessage < Message
 
   validate :jobseeker_can_send_message
   after_create :notify_publisher
+  after_save :update_conversation_unread_status
 
   private
 
@@ -16,5 +17,11 @@ class JobseekerMessage < Message
 
   def notify_publisher
     Publishers::MessageReceivedNotifier.with(record: self).deliver
+  end
+
+  def update_conversation_unread_status
+    conversation.with_lock do
+      conversation.update!(has_unread_jobseeker_messages: conversation.jobseeker_messages.exists?(read: false))
+    end
   end
 end
