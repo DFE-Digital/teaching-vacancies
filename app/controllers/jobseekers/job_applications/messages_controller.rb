@@ -11,6 +11,7 @@ class Jobseekers::JobApplications::MessagesController < Jobseekers::JobApplicati
       redirect_to jobseekers_job_application_path(@job_application, tab: "messages"), success: t("publishers.vacancies.job_applications.messages.create.success")
     else
       @tab = "messages"
+      @show_form = "true"
 
       conversation = @job_application.conversations.first
       @messages = conversation.messages.order(created_at: :desc)
@@ -36,6 +37,6 @@ class Jobseekers::JobApplications::MessagesController < Jobseekers::JobApplicati
 
   def find_or_create_conversation
     @job_application.conversations.first ||
-      @job_application.conversations.create!(title: Conversation.default_title_for(@job_application))
+      @job_application.conversations.create!
   end
 end

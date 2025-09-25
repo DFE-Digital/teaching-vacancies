@@ -2,9 +2,9 @@ require "rails_helper"
 
 RSpec.describe ApplicationHelper do
   describe "#sanitize" do
-    it "it sanitises the text" do
-      html = "<p> a paragraph <a href='link'>with a link</a></p><br>"
-      sanitized_html = "<p> a paragraph with a link</p><br>"
+    it "converts HTML entities back to normal characters" do
+      html = "<p>AT&amp;T is a company</p>"
+      sanitized_html = "<p>AT&T is a company</p>"
 
       expect(helper.sanitize(html)).to eq(sanitized_html)
     end

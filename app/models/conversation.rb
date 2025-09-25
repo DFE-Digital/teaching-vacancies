@@ -1,6 +1,8 @@
 class Conversation < ApplicationRecord
   belongs_to :job_application
   has_many :messages, dependent: :destroy
+  has_many :jobseeker_messages, dependent: :destroy
+  has_many :publisher_messages, dependent: :destroy
 
   scope :inbox, -> { where(archived: false) }
   scope :archived, -> { where(archived: true) }
@@ -8,20 +10,15 @@ class Conversation < ApplicationRecord
     joins(job_application: :vacancy)
       .merge(Vacancy.in_organisation_ids(org_id))
   }
-  scope :with_latest_message_date, lambda {
-    joins(:messages)
-      .select("conversations.*, MAX(messages.created_at) as latest_message_at")
-      .group("conversations.id")
-  }
   scope :with_unread_jobseeker_messages, lambda {
     joins(:messages)
       .where(messages: { type: "JobseekerMessage", read: false })
       .distinct
   }
 
-  def self.default_title_for(job_application)
-    "Regarding application: #{job_application.vacancy.job_title}"
-  end
+  scope :ordered_by_unread_and_latest_message, lambda {
+    order(has_unread_jobseeker_messages: :desc, last_message_at: :desc)
+  }
 
   def has_unread_messages_for_publishers?
     messages.any? { |msg| msg.is_a?(JobseekerMessage) && msg.unread? }

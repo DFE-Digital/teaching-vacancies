@@ -1,10 +1,10 @@
 module MessagesHelper
   def publisher_message_display_name(message, vacancy)
-    "#{message.sender.given_name} #{message.sender.family_name}, #{vacancy.organisation_name} <via Teaching Vacancies>"
+    "#{message.sender.given_name} #{message.sender.family_name}, #{vacancy.organisation_name} <via Teaching Vacancies> #{message.created_at.to_fs(:date_at_time)}"
   end
 
   def jobseeker_message_display_name(message, job_application)
-    "#{job_application.name} <#{message.sender.email}>"
+    "#{job_application.name} <#{message.sender.email}> #{message.created_at.to_fs(:date_at_time)}"
   end
 
   def jobseeker_message_card_title_class(message, current_user)
