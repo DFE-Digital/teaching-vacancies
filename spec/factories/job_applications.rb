@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :job_application do
+  factory :job_application, class: "NativeJobApplication" do
     transient do
       draft_at { 2.weeks.ago }
       status { :draft }

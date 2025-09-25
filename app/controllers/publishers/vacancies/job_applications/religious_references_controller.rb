@@ -18,7 +18,7 @@ module Publishers
         private
 
         def religious_reference_params
-          params.require(:job_application).permit(:status)
+          params.require(:native_job_application).permit(:status)
         end
       end
     end
