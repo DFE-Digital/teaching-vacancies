@@ -36,6 +36,8 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       when "download" then download_selected(form.job_applications)
       when "export"   then export_selected(form.job_applications)
       when "declined" then render_declined_form(form.job_applications, form.origin)
+      when "offered"  then render_offered_form(form.job_applications, form.origin)
+      when "unsuccessful_interview" then render_unsuccessful_interview_form(form.job_applications, form.origin)
       else # when "update_status"
         render "tag"
       end
