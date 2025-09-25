@@ -21,7 +21,10 @@ class JobseekerMessage < Message
 
   def update_conversation_unread_status
     conversation.with_lock do
-      conversation.update!(has_unread_jobseeker_messages: conversation.jobseeker_messages.exists?(read: false))
+      unread = conversation.jobseeker_messages.exists?(read: false)
+      if conversation.has_unread_jobseeker_messages != unread
+        conversation.update!(has_unread_jobseeker_messages: unread)
+      end
     end
   end
 end
