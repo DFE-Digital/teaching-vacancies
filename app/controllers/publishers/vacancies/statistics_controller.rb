@@ -2,7 +2,7 @@ class Publishers::Vacancies::StatisticsController < Publishers::Vacancies::BaseC
   def show
     presenter = VacancyStatisticsPresenter.new([vacancy])
     @referrer_counts = presenter.referrer_counts
-    @job_application_counts = vacancy.job_applications.not_draft.group_by(&:status).transform_values(&:count)
+    @job_application_counts = vacancy.job_applications.not_draft.partition { |ja| %w[withdrawn unsuccessful].exclude?(ja.status) }.map(&:count)
 
     @bar_chart = params[:view] != "table"
 

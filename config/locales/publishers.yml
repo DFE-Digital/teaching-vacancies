@@ -853,16 +853,8 @@ en:
             label: Application data
             data: Amount
           applications:
-            withdrawn: Withdrawn applications
-            shortlisted: Shortlisted applications
-            submitted: Unread applications
-            unsuccessful: Rejected applications
-            rejected: Rejected applications
-            reviewed: Reviewed applications
-            declined: Offer declined applications
-            interviewing: Interviewing applications
-            unsuccessful_interview: Unsuccessful interview applications
-            offered: Job offered applications
+            0: Shortlisted or sucessful applications
+            1: Rejected or Withdrawn applications
           accessible_view: Change to table and accessible view
           chart_view: Change to chart view
         update:

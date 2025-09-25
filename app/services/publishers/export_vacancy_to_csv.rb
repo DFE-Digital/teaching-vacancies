@@ -22,8 +22,8 @@ class Publishers::ExportVacancyToCsv
     end
 
     def job_application_columns(job_application_counts)
-      { I18n.t("publishers.vacancies.statistics.show.total_applications") => job_application_counts.values.sum }
-        .merge(job_application_counts.transform_keys { |key| I18n.t(".applications.#{key}", scope: "publishers.vacancies.statistics.show") })
+      { I18n.t("publishers.vacancies.statistics.show.total_applications") => job_application_counts.sum }
+        .merge(job_application_counts.map.with_index { |count, index| [I18n.t(".applications.#{index}", scope: "publishers.vacancies.statistics.show"), count] }.to_h)
     end
   end
 end

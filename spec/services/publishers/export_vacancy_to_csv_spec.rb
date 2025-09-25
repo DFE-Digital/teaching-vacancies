@@ -1,20 +1,22 @@
 require "rails_helper"
 
 RSpec.describe Publishers::ExportVacancyToCsv do
-  subject { described_class.call(vacancy, vacancy.job_applications.not_draft.group_by(&:status).transform_values(&:count)) }
+  subject { described_class.call(vacancy, vacancy.job_applications.partition { |ja| %w[withdrawn unsuccessful].exclude?(ja.status) }.map(&:count)) }
 
-  let(:school) { create(:school) }
-  let(:jobseeker) { create(:jobseeker) }
+  let(:school) { build_stubbed(:school) }
+  let(:jobseeker) { build_stubbed(:jobseeker) }
   let(:job_title) { "Example job title without commas so we can ignore whether to expect this to be wrapped in quotes" }
-  let(:vacancy) { create(:vacancy, job_title: job_title, organisations: [school], enable_job_applications: can_receive_job_applications?) }
-
-  before do
-    create(:job_application, :status_draft, vacancy: vacancy, jobseeker: jobseeker)
-    create(:job_application, :status_reviewed, vacancy: vacancy, jobseeker: jobseeker)
-    create(:job_application, :status_submitted, vacancy: vacancy, jobseeker: jobseeker)
-    create(:job_application, :status_shortlisted, vacancy: vacancy, jobseeker: jobseeker)
-    create(:job_application, :status_unsuccessful, vacancy: vacancy, jobseeker: jobseeker)
-    create(:job_application, :status_withdrawn, vacancy: vacancy, jobseeker: jobseeker)
+  let(:vacancy) do
+    build_stubbed(:vacancy, job_title: job_title,
+                            job_applications:
+                                  [
+                                    build_stubbed(:job_application, :status_reviewed, jobseeker: jobseeker),
+                                    build_stubbed(:job_application, :status_submitted, jobseeker: jobseeker),
+                                    build_stubbed(:job_application, :status_shortlisted, jobseeker: jobseeker),
+                                    build_stubbed(:job_application, :status_unsuccessful, jobseeker: jobseeker),
+                                    build_stubbed(:job_application, :status_withdrawn, jobseeker: jobseeker),
+                                  ],
+                            organisations: [school], enable_job_applications: can_receive_job_applications?)
   end
 
   describe "#call" do
@@ -31,8 +33,8 @@ RSpec.describe Publishers::ExportVacancyToCsv do
       let(:can_receive_job_applications?) { true }
 
       it "returns a CSV of the vacancy statistics, excluding draft applications" do
-        expect(subject).to eq(["Organisation,Job title,Total applications,Reviewed applications,Unread applications,Shortlisted applications,Rejected applications,Withdrawn applications",
-                               "#{school.name},#{job_title},5,1,1,1,1,1\n"].join("\n"))
+        expect(subject).to eq(["Organisation,Job title,Total applications,Shortlisted or sucessful applications,Rejected or Withdrawn applications",
+                               "#{school.name},#{job_title},5,3,2\n"].join("\n"))
       end
     end
   end

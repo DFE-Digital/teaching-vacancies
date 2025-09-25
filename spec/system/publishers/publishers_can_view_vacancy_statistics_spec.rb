@@ -45,20 +45,12 @@ RSpec.describe "Publishers can view vacancy statastics" do
           expect(page).to have_content("7")
         end
         within(".govuk-table__row:nth-child(2)") do
-          expect(page).to have_content(I18n.t("publishers.vacancies.statistics.show.applications.submitted").to_s)
-          expect(page).to have_content("1")
+          expect(page).to have_content("Shortlisted or sucessful applications")
+          expect(page).to have_content("5")
         end
         within(".govuk-table__row:nth-child(3)") do
-          expect(page).to have_content(I18n.t("publishers.vacancies.statistics.show.applications.shortlisted").to_s)
-          expect(page).to have_content("1")
-        end
-        within(".govuk-table__row:nth-child(4)") do
-          expect(page).to have_content(I18n.t("publishers.vacancies.statistics.show.applications.unsuccessful").to_s)
-          expect(page).to have_content("1")
-        end
-        within(".govuk-table__row:nth-child(5)") do
-          expect(page).to have_content(I18n.t("publishers.vacancies.statistics.show.applications.withdrawn").to_s)
-          expect(page).to have_content("1")
+          expect(page).to have_content("Rejected or Withdrawn applications")
+          expect(page).to have_content("2")
         end
       end
     end

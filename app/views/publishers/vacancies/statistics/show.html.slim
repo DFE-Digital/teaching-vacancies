@@ -32,9 +32,9 @@
           - table.with_body html_attributes: { id: "job_applications_statistics" } do |body|
             - body.with_row do |row|
               - row.with_cell text: t(".total_applications")
-              - row.with_cell text: @job_application_counts.values.sum, numeric: true
+              - row.with_cell text: @job_application_counts.sum, numeric: true
 
-            - @job_application_counts.each do |key, count|
+            - @job_application_counts.each.with_index do |count, index|
               - body.with_row do |row|
-                - row.with_cell text: t(".applications.#{key}")
+                - row.with_cell text: t(".applications.#{index}")
                 - row.with_cell text: count, numeric: true
