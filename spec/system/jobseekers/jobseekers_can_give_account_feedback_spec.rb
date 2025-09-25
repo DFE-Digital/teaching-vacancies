@@ -22,7 +22,8 @@ RSpec.describe "Jobseekers can give account feedback" do
     end
 
     it "passes a11y", :a11y do
-      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr", "heading-order"
+      #  https://github.com/alphagov/govuk-frontend/issues/979
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
     end
 
     it "submits account feedback" do
@@ -52,7 +53,8 @@ RSpec.describe "Jobseekers can give account feedback" do
     end
 
     it "passes a11y", :a11y do
-      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr", "heading-order"
+      #  https://github.com/alphagov/govuk-frontend/issues/979
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
     end
 
     it "updates the opt out field and adds a feedback record", :js do

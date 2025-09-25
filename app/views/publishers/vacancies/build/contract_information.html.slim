@@ -7,7 +7,7 @@
 
       = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
 
-      = f.govuk_radio_buttons_fieldset :contract_type, legend: { size: "m" } do
+      = f.govuk_radio_buttons_fieldset :contract_type, legend: { size: "m", tag: "h2" } do
         = f.govuk_radio_button :contract_type, :permanent, link_errors: true
 
         = f.govuk_radio_button :contract_type, :fixed_term do

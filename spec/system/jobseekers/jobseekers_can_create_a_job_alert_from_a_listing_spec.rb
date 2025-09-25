@@ -24,8 +24,7 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
     end
 
     it "passes a11y", :a11y do
-      # h3 without h2?
-      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
     end
 
     scenario "can click on the first link to create a job alert using data from the vacancy", :dfe_analytics do

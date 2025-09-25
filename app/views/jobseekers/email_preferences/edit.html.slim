@@ -7,7 +7,7 @@ p = t(".description")
 = form_with model: @jobseeker, scope: :jobseekers_email_preferences_form, url: jobseekers_account_email_preferences_path, method: :patch do |f|
   = f.govuk_error_summary
 
-  = f.govuk_radio_buttons_fieldset :email_opt_out do
+  = f.govuk_radio_buttons_fieldset :email_opt_out, legend: { tag: "h2" } do
     = f.govuk_radio_button :email_opt_out, "false", link_errors: true
     = f.govuk_radio_button :email_opt_out, "true" do
       = f.govuk_radio_buttons_fieldset :email_opt_out_reason, legend: { size: "m" } do

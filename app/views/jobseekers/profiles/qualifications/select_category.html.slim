@@ -6,7 +6,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    span.govuk-caption-l = t(".caption")
+    h1.govuk-caption-l = t(".caption")
 
     = form_for @form, url: submit_category_jobseekers_profile_qualifications_path, method: :post do |f|
       = f.govuk_error_summary
