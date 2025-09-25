@@ -2,12 +2,12 @@ require "rails_helper"
 require "pdf/inspector"
 
 RSpec.describe MessagesPdfGenerator do
-  let(:publisher) { build_stubbed(:publisher, given_name: "John", family_name: "Smith") }
-  let(:vacancy) { build_stubbed(:vacancy, :at_one_school, publisher: publisher) }
-  let(:job_application) { build_stubbed(:job_application, :status_submitted, vacancy: vacancy) }
-  let(:conversation) { build_stubbed(:conversation, job_application: job_application) }
-  let(:publisher_message) { build_stubbed(:publisher_message, conversation: conversation, sender: publisher) }
-  let(:jobseeker_message) { build_stubbed(:jobseeker_message, conversation: conversation) }
+  let(:publisher) { create(:publisher, given_name: "John", family_name: "Smith") }
+  let(:vacancy) { create(:vacancy, :at_one_school, publisher: publisher) }
+  let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
+  let(:conversation) { create(:conversation, job_application: job_application) }
+  let(:publisher_message) { create(:publisher_message, conversation: conversation, sender: publisher) }
+  let(:jobseeker_message) { create(:jobseeker_message, conversation: conversation) }
   let(:messages) { [publisher_message, jobseeker_message] }
   let(:generator) { described_class.new(job_application, messages) }
 
