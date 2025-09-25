@@ -601,4 +601,4 @@ shared:
     - updated_at
     - archived
     - last_message_at
-    - has_unread_messages
+    - has_unread_jobseeker_messages

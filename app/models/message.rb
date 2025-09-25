@@ -13,7 +13,6 @@ class Message < ApplicationRecord
 
   def mark_as_read!
     update!(read: true)
-    conversation.update!(has_unread_messages: false) if conversation.messages.unread.empty?
   end
 
   def unread?
@@ -23,6 +22,8 @@ class Message < ApplicationRecord
   private
 
   def update_conversation
-    conversation.update(last_message_at: created_at, has_unread_messages: true)
+    conversation.with_lock do
+      conversation.update(last_message_at: created_at)
+    end
   end
 end

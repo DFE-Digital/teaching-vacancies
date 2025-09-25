@@ -2,11 +2,11 @@
 
 // Message header styling for sender messages (blue) and recipient messages (grey)
 .message-header--sender {
-  background-color: #1D70B8;
-  color: #FFF;
+  background-color: govuk-colour('blue');
+  color: govuk-colour('white');
   
   .govuk-summary-card__title {
-    color: #FFF !important;
+    color: govuk-colour('white');
   }
 }
 

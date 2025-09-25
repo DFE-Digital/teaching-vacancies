@@ -7,6 +7,8 @@ RSpec.describe Conversation do
   describe "associations" do
     it { is_expected.to belong_to(:job_application) }
     it { is_expected.to have_many(:messages).dependent(:destroy) }
+    it { is_expected.to have_many(:jobseeker_messages).dependent(:destroy) }
+    it { is_expected.to have_many(:publisher_messages).dependent(:destroy) }
   end
 
   describe "#last_message_at" do
@@ -33,71 +35,89 @@ RSpec.describe Conversation do
     end
   end
 
-  describe "#has_unread_messages" do
+  describe "#has_unread_jobseeker_messages" do
     let!(:conversation) { create(:conversation, job_application: job_application) }
 
     context "when conversation has no messages" do
       it "returns false" do
-        expect(conversation.has_unread_messages).to be false
+        expect(conversation.has_unread_jobseeker_messages).to be false
       end
     end
 
-    context "when all messages are read" do
+    context "when all jobseeker messages are read" do
       let!(:jobseeker_message) { create(:jobseeker_message, conversation: conversation) }
       let!(:publisher_message) { create(:publisher_message, conversation: conversation) }
 
       it "returns false" do
         jobseeker_message.mark_as_read!
         publisher_message.mark_as_read!
-        expect(conversation.reload.has_unread_messages).to be false
+        expect(conversation.reload.has_unread_jobseeker_messages).to be false
       end
     end
 
-    context "when there are unread messages" do
-      let!(:publisher_message) { create(:publisher_message, conversation: conversation) }
+    context "when there are unread jobseeker messages" do
+      let!(:publisher_message) { create(:publisher_message, conversation: conversation, read: false) }
 
       before do
-        create(:jobseeker_message, conversation: conversation)
+        create(:jobseeker_message, conversation: conversation, read: false)
       end
 
       it "returns true" do
         publisher_message.mark_as_read!
-        expect(conversation.reload.has_unread_messages).to be true
+        expect(conversation.reload.has_unread_jobseeker_messages).to be true
       end
     end
 
-    context "when a message is marked as read" do
-      let!(:unread_message) { create(:jobseeker_message, conversation: conversation, read: false) }
+    context "when a jobseeker message is marked as read" do
+      let!(:unread_jobseeker_message) { create(:jobseeker_message, conversation: conversation, read: false) }
 
-      it "updates when all messages become read" do
-        expect { unread_message.mark_as_read! }
-          .to change { conversation.reload.has_unread_messages }
+      it "updates when all jobseeker messages become read" do
+        expect { unread_jobseeker_message.mark_as_read! }
+          .to change { conversation.reload.has_unread_jobseeker_messages }
           .from(true).to(false)
       end
 
-      context "when other messages remain unread" do
+      context "when other jobseeker messages remain unread" do
+        before do
+          create(:jobseeker_message, conversation: conversation, read: false)
+        end
+
+        it "remains true if other jobseeker messages are still unread" do
+          expect { unread_jobseeker_message.mark_as_read! }
+            .not_to change { conversation.reload.has_unread_jobseeker_messages }
+            .from(true)
+        end
+      end
+
+      context "when only publisher messages remain unread" do
         before do
           create(:publisher_message, conversation: conversation, read: false)
         end
 
-        it "remains true if other messages are still unread" do
-          expect { unread_message.mark_as_read! }
-            .not_to change { conversation.reload.has_unread_messages }
-            .from(true)
+        it "becomes false even if publisher messages are unread" do
+          expect { unread_jobseeker_message.mark_as_read! }
+            .to change { conversation.reload.has_unread_jobseeker_messages }
+            .from(true).to(false)
         end
       end
     end
 
-    context "when a new unread message is created" do
+    context "when a new unread jobseeker message is created" do
       before do
         message = create(:jobseeker_message, conversation: conversation, read: true)
         message.mark_as_read!
       end
 
-      it "updates to true when new unread message is added" do
-        expect { create(:publisher_message, conversation: conversation, read: false) }
-          .to change { conversation.reload.has_unread_messages }
+      it "updates to true when new unread jobseeker message is added" do
+        expect { create(:jobseeker_message, conversation: conversation, read: false) }
+          .to change { conversation.reload.has_unread_jobseeker_messages }
           .from(false).to(true)
+      end
+
+      it "remains false when unread publisher message is added" do
+        expect { create(:publisher_message, conversation: conversation, read: false) }
+          .not_to change { conversation.reload.has_unread_jobseeker_messages }
+          .from(false)
       end
     end
   end
