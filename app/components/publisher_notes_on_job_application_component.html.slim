@@ -5,7 +5,7 @@
   .govuk-summary-card__content
     - job_application.notes.each do |note|
       p.govuk-body-m = note.content
-      p.govuk-body-s By #{note.publisher.given_name} #{note.publisher.family_name}, #{note.created_at}
+      p.govuk-body-s By #{note.publisher.given_name} #{note.publisher.family_name}, #{note.created_at.to_fs}
       - delete_params = return_to_url ? { return_to: return_to_url } : {}
       = govuk_link_to(t("buttons.delete"), organisation_job_job_application_note_path(vacancy.id, job_application, note, delete_params), method: :delete)
       hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
