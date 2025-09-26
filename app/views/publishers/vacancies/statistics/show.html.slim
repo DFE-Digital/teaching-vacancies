@@ -22,21 +22,6 @@
         link: organisation_job_statistics_path(vacancy.id), accessible_link: organisation_job_statistics_path(vacancy.id, view: "table")
 
     .govuk-grid-column-two-thirds
-      = govuk_table do |table|
-        - table.with_head do |head|
-          - head.with_row do |row|
-            - row.with_cell text: t(".listing_header.label")
-            - row.with_cell text: t(".listing_header.data"), numeric: true
-
-        - table.with_body html_attributes: { id: "vacancy_statistics" } do |body|
-          - body.with_row do |row|
-            - row.with_cell text: t(".views_by_jobseeker")
-            - row.with_cell text: @number_of_unique_views, numeric: true
-
-          - body.with_row do |row|
-            - row.with_cell text: t(".saves_by_jobseeker")
-            - row.with_cell text: vacancy.saved_jobs.count, numeric: true
-
       - if vacancy.can_receive_job_applications?
         = govuk_table do |table|
           - table.with_head do |head|
@@ -47,20 +32,9 @@
           - table.with_body html_attributes: { id: "job_applications_statistics" } do |body|
             - body.with_row do |row|
               - row.with_cell text: t(".total_applications")
-              - row.with_cell text: vacancy.job_applications.not_draft.count, numeric: true
+              - row.with_cell text: @job_application_counts.sum, numeric: true
 
-            - body.with_row do |row|
-              - row.with_cell text: t(".unread_applications")
-              - row.with_cell text: vacancy.job_applications.submitted.count, numeric: true
-
-            - body.with_row do |row|
-              - row.with_cell text: t(".shortlisted_applications")
-              - row.with_cell text: vacancy.job_applications.shortlisted.count, numeric: true
-
-            - body.with_row do |row|
-              - row.with_cell text: t(".rejected_applications")
-              - row.with_cell text: vacancy.job_applications.unsuccessful.count, numeric: true
-
-            - body.with_row do |row|
-              - row.with_cell text: t(".withdrawn_applications")
-              - row.with_cell text: vacancy.job_applications.withdrawn.count, numeric: true
+            - @job_application_counts.each.with_index do |count, index|
+              - body.with_row do |row|
+                - row.with_cell text: t(".applications.#{index}")
+                - row.with_cell text: count, numeric: true
