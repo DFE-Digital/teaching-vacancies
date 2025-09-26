@@ -1,4 +1,13 @@
 class ApplicationComponent < GovukComponent::Base
+  # Include any helpers from GovukComponents helpers that you want to use in our components:
+  # List: https://github.com/x-govuk/govuk-components/tree/main/app/helpers
+  include GovukComponentsHelper
+  include GovukLinkHelper
+  include GovukVisuallyHiddenHelper
+
+  # Makes our own component helpers available to other componnents we build.
+  include ComponentsHelper
+
   attr_reader :classes
 
   def initialize(classes: [], html_attributes: {})
