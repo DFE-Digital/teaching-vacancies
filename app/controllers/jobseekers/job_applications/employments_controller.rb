@@ -56,8 +56,7 @@ class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseContr
   end
 
   def employment_params
-    params.require(:jobseekers_job_application_details_employment_form)
-          .permit(*employment_attrs)
+    params.expect(jobseekers_job_application_details_employment_form: [*employment_attrs])
           .merge("started_on(3i)" => "1", "ended_on(3i)" => "1")
   end
 

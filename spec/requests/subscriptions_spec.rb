@@ -7,7 +7,7 @@ RSpec.describe "Subscriptions" do
   describe "GET #new" do
     context "with search criteria pre-populated" do
       it "sets subscription_autopopulated in the session so we can track it with subscription events" do
-        get new_subscription_path(search_criteria: { key: "value" })
+        get new_subscription_path(search_criteria: { keyword: "value" })
 
         expect(session[:subscription_autopopulated]).to eq(true)
       end
@@ -42,7 +42,7 @@ RSpec.describe "Subscriptions" do
     end
 
     context "when hit via the ECT job alerts url" do
-      let(:params) { { "ect_job_alert" => true, "search_criteria" => { "job_roles" => ["ect_suitable"] } } }
+      let(:params) { { "ect_job_alert" => true, "search_criteria" => { "teaching_job_roles" => ["ect_suitable"] } } }
 
       before { get ect_job_alerts_path }
 

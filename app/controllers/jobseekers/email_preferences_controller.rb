@@ -19,7 +19,7 @@ module Jobseekers
     end
 
     def email_preferences_params
-      params.require(:jobseekers_email_preferences_form).permit(:email_opt_out, :email_opt_out_reason, :email_opt_out_comment)
+      params.expect(jobseekers_email_preferences_form: %i[email_opt_out email_opt_out_reason email_opt_out_comment])
     end
   end
 end

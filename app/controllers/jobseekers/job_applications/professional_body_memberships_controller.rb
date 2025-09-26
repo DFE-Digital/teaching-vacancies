@@ -37,8 +37,7 @@ class Jobseekers::JobApplications::ProfessionalBodyMembershipsController < Jobse
   end
 
   def professional_body_memberships_form_params
-    params.require(:jobseekers_professional_body_membership_form)
-          .permit(:name, :membership_type, :membership_number, :year_membership_obtained, :exam_taken)
+    params.expect(jobseekers_professional_body_membership_form: %i[name membership_type membership_number year_membership_obtained exam_taken])
   end
 
   def professional_body_membership

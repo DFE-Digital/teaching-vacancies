@@ -26,8 +26,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
   end
 
   def application_form_params
-    params.require(:publishers_job_listing_application_form_form)
-          .permit(:application_form, :application_form_staged_for_replacement)
+    params.expect(publishers_job_listing_application_form_form: %i[application_form application_form_staged_for_replacement])
           .merge(completed_steps: completed_steps, current_organisation: current_organisation)
   end
 

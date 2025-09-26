@@ -25,6 +25,6 @@ class Publishers::Organisations::SafeguardingInformationController < Publishers:
   private
 
   def safeguarding_information_form_params
-    params.require(:publishers_organisation_safeguarding_information_form).permit(:safeguarding_information)
+    params.expect(publishers_organisation_safeguarding_information_form: [:safeguarding_information])
   end
 end
