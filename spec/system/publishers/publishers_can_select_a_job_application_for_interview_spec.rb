@@ -4,7 +4,8 @@ RSpec.describe "Publishers can select a job application for interview", :perform
   include ActiveJob::TestHelper
 
   let(:publisher) { create(:publisher, email: "publisher@contoso.com") }
-  let(:organisation) { create(:school) }
+  let(:organisation) { create(:local_authority, schools: [school]) }
+  let(:school) { create(:school) }
   let(:jobseeker) { create(:jobseeker, email: "jobseeker@contoso.com") }
   let!(:current_referee) { create(:referee, email: "employer@contoso.com", is_most_recent_employer: true, job_application: job_application) }
   let!(:old_referee) { create(:referee, email: "previous@contoso.com", is_most_recent_employer: false, job_application: job_application) }
@@ -14,6 +15,52 @@ RSpec.describe "Publishers can select a job application for interview", :perform
   end
 
   after { logout }
+
+  # needs JS driver to prevent tests seeing multiple tabs at once
+  context "when selecting multiple candidates", :js do
+    let(:vacancy) { create(:vacancy, :catholic, :expired, organisations: [school], publisher: publisher) }
+    let(:job_application) do
+      create(:job_application, :status_submitted,
+             notify_before_contact_referers: false,
+             email_address: jobseeker.email,
+             vacancy: vacancy, jobseeker: jobseeker)
+    end
+
+    let!(:extra_job_application) do
+      create(:job_application, :status_submitted, notify_before_contact_referers: contact_referee,
+                                                  vacancy: vacancy)
+    end
+
+    before do
+      publisher_ats_applications_page.load(vacancy_id: vacancy.id)
+      publisher_ats_applications_page.select_candidate(job_application)
+      publisher_ats_applications_page.select_candidate(extra_job_application)
+      click_on "Update application status"
+      choose "Interviewing"
+    end
+
+    context "when someone needs contacting" do
+      let(:contact_referee) { true }
+
+      it "shows the contact references form" do
+        click_on "Save and continue"
+        choose "Yes"
+        click_on "Save and continue"
+        expect(page).to have_content "notified when you are collecting references"
+      end
+    end
+
+    context "when no-one needs contacting" do
+      let(:contact_referee) { false }
+
+      it "does not show the contact references form" do
+        click_on "Save and continue"
+        choose "Yes"
+        click_on "Save and continue"
+        expect(page).to have_no_content "notified when you are collecting references"
+      end
+    end
+  end
 
   context "when selecting a single candidate" do
     let(:cannot_collect) { "cannot collect religious references" }
@@ -28,28 +75,93 @@ RSpec.describe "Publishers can select a job application for interview", :perform
     context "with a religious vacancy" do
       let(:job_application) do
         create(:job_application, :status_submitted,
-               email_address: jobseeker.email,
+               :with_religious_referee,
+               notes: build_list(:note, 1),
                notify_before_contact_referers: true,
                vacancy: vacancy, jobseeker: jobseeker)
       end
-      let(:vacancy) { create(:vacancy, :catholic, :expired, organisations: [organisation], publisher: publisher) }
+      let(:vacancy) { create(:vacancy, :catholic, :expired, organisations: [school], publisher: publisher) }
+      let(:action_needed) { "Action needed" }
 
       it "shows religious warning text" do
-        expect(page).to have_content("cannot collect religious references ")
+        expect(page).to have_content(cannot_collect)
+      end
+
+      context "when editing a religious reference", :versioning do
+        before do
+          choose "Yes"
+          click_on "Save and continue"
+          choose "No"
+          click_on "Save and continue"
+          choose "No"
+          click_on "Save and continue"
+          click_on "Pre-interview checks"
+        end
+
+        it "displays action needed" do
+          within "#religious_reference" do
+            expect(page).to have_content action_needed
+          end
+        end
+
+        context "when editing a religious reference" do
+          before do
+            within "#religious_reference" do
+              find("a").click
+            end
+          end
+
+          it "allows the reference to be marked as requested" do
+            click_on "Mark as requested"
+            within "#religious_reference" do
+              expect(page).to have_content "pending"
+            end
+          end
+
+          describe "completing a religious reference" do
+            before do
+              click_on "Mark as requested"
+              within "#religious_reference" do
+                find("a").click
+              end
+            end
+
+            it "allows the reference to be marked as complete", :js do
+              click_on "Mark as complete"
+              within "#religious_reference" do
+                expect(page).to have_content "completed"
+              end
+            end
+          end
+
+          describe "adding a note" do
+            let(:note_content) { Faker::Ancient.hero }
+
+            it "allows notes to be added without disturbing the flow" do
+              notes = find_by_id("publishers-job-application-notes-form-content-field")
+              notes.fill_in with: note_content
+              click_on "Save note"
+              find ".govuk-notification-banner"
+              expect(page).to have_content "A note has been added"
+              expect(page).to have_content note_content
+              expect(page).to have_current_path edit_organisation_job_job_application_religious_reference_path(vacancy.id, job_application.id)
+            end
+          end
+        end
       end
     end
 
     context "with a non-religious vacancy" do
-      let(:vacancy) { create(:vacancy, :expired, organisations: [organisation], publisher: publisher) }
       let(:job_application) do
         create(:job_application, :status_submitted,
                notify_before_contact_referers: true,
                email_address: jobseeker.email,
                vacancy: vacancy, jobseeker: jobseeker)
       end
+      let(:vacancy) { create(:vacancy, :expired, organisations: [school], publisher: publisher) }
 
       it "doesnt show religious warning text" do
-        expect(page).to have_no_content("cannot collect religious references ")
+        expect(page).to have_no_content(cannot_collect)
       end
 
       scenario "without selecting" do
@@ -144,7 +256,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
               expect(page).to have_content("Reference email changed")
               expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
                 .to eq({
-                  new_email => ["Provide a reference for #{job_application.name} for #{vacancy.job_title} at #{organisation.name}"],
+                  new_email => ["Provide a reference for #{job_application.name} for #{vacancy.job_title} at #{school.name}"],
                 })
             end
 

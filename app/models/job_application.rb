@@ -102,6 +102,8 @@ class JobApplication < ApplicationRecord
   has_one :self_disclosure_request, dependent: :destroy
   has_one :self_disclosure, through: :self_disclosure_request
 
+  has_one :religious_reference_request
+
   has_noticed_notifications
 
   scope :submitted_yesterday, -> { submitted.where("DATE(submitted_at) = ?", Date.yesterday) }

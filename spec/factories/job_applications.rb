@@ -317,4 +317,13 @@ FactoryBot.define do
       )
     end
   end
+
+  trait :with_religious_referee do
+    religious_reference_type { :religious_referee }
+    religious_referee_name { Faker::Name.name }
+    religious_referee_address { Faker::Address.full_address }
+    religious_referee_role { "Priest" }
+    religious_referee_email { Faker::Internet.email(domain: "contoso.com") }
+    religious_referee_phone { Faker::PhoneNumber.phone_number }
+  end
 end
