@@ -29,20 +29,20 @@ h1.govuk-heading-l = t(".heading", name: @referee.job_application.name)
 
   = f.govuk_date_field :employment_start_date
 
-  = f.govuk_radio_buttons_fieldset :currently_employed, legend: { size: "s" } do
+  = f.govuk_radio_buttons_fieldset :currently_employed, legend: { size: "s", tag: "h2" } do
     = f.govuk_radio_button :currently_employed, "true"
     = f.govuk_radio_button :currently_employed, "false" do
       = f.govuk_date_field :employment_end_date
 
   = f.govuk_text_area :reason_for_leaving, legend: { size: "m", tag: "h2" }, rows: 5, max_chars: Referees::EmploymentReferenceForm::MAX_REFERENCE_FIELD_LENGTH
 
-  = f.govuk_radio_buttons_fieldset :would_reemploy_current, legend: { size: "s" } do
+  = f.govuk_radio_buttons_fieldset :would_reemploy_current, legend: { size: "s", tag: "h2" } do
     = f.govuk_radio_button :would_reemploy_current, "true"
     = f.govuk_radio_button :would_reemploy_current, "false"
 
   = f.govuk_text_area :would_reemploy_current_reason, rows: 5, max_chars: Referees::EmploymentReferenceForm::MAX_REFERENCE_FIELD_LENGTH
 
-  = f.govuk_radio_buttons_fieldset :would_reemploy_any, legend: { size: "s" } do
+  = f.govuk_radio_buttons_fieldset :would_reemploy_any, legend: { size: "s", tag: "h2" } do
     = f.govuk_radio_button :would_reemploy_any, "true"
     = f.govuk_radio_button :would_reemploy_any, "false"
 

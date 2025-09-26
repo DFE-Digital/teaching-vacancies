@@ -32,7 +32,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
         end
 
         it "passes a11y", :a11y do
-          expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
+          expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
         end
 
         it "edits the job alert and redirects to the dashboard" do

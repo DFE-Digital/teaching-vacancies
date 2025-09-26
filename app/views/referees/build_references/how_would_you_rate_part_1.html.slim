@@ -13,7 +13,7 @@ h1.govuk-heading-l = t(".heading", name: @referee.job_application.name)
   = f.hidden_field :token, value: @form.token
 
   - JobReference::RATINGS_FIELDS_1.each do |field_name|
-    = f.govuk_radio_buttons_fieldset field_name do
+    = f.govuk_radio_buttons_fieldset field_name, legend: { tag: "h2" } do
       - JobReference::RATING_OPTIONS.each do |option|
         = f.govuk_radio_button field_name, option
 

@@ -57,8 +57,7 @@ RSpec.describe "Jobseekers can add professional body memberships to their job ap
     it "allows jobseekers to edit the professional body membership", :a11y do
       click_on I18n.t("buttons.change")
 
-      # h3 without a corresponding h2?
-      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
 
       expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :professional_body_memberships))
       fill_in "Name of professional body", with: ""

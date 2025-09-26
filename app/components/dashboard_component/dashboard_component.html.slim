@@ -47,7 +47,8 @@
                                      selected_method: :name,
                                      remove_filter_link: { url_helper: :publishers_remove_organisation_filter_path })
 
-                        - filters_component.with_group key: "locations", component: f.govuk_collection_check_boxes(:organisation_ids, @organisation_options, :id, :label, small: true, legend: { text: "Locations" }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
+                        - filters_component.with_group key: "locations",
+                          component: f.govuk_collection_check_boxes(:organisation_ids, @organisation_options, :id, :label, small: true, legend: { text: "Locations", tag: "h2" }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
 
             = f.hidden_field :jobs_type, value: @selected_type
 

@@ -17,12 +17,14 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
 
     before do
       click_on I18n.t("buttons.add_qualification")
+    end
+
+    it "has a cancel link" do
       expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :qualifications))
     end
 
     it "passes a11y", :a11y do
-      # h3 with no h2
-      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
     end
 
     it "allows jobseekers to add a graduate degree" do
@@ -70,7 +72,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
       end
 
       it "passes a11y", :a11y do
-        # area-expanded on input
+        #  https://github.com/alphagov/govuk-frontend/issues/979
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
       end
 

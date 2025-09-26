@@ -63,7 +63,7 @@ RSpec.describe "Publishers can select a job application for interview" do
       end
 
       #  have to use JS driver for send_keys support
-      it "displays the fit_and_proper page followed by the employment_reference page", :a11y, :js do
+      it "displays the fit_and_proper page followed by the employment_reference page", :a11y do
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
 
         choose I18n.t("helpers.label.referees_can_share_reference_form.is_reference_sharable_options.false")
@@ -75,6 +75,7 @@ RSpec.describe "Publishers can select a job application for interview" do
         click_on I18n.t("buttons.continue")
 
         expect(referee_employment_reference_page).to be_displayed
+        #  https://github.com/alphagov/govuk-frontend/issues/979
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
         referee_employment_reference_page.currently_employed_no.click
         referee_employment_reference_page.reemploy_current_yes.click
@@ -102,7 +103,9 @@ RSpec.describe "Publishers can select a job application for interview" do
         click_on I18n.t("buttons.continue")
 
         expect(referee_reference_information_page).to be_displayed
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr", "heading-order"
+        #  https://github.com/alphagov/govuk-frontend/issues/979
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+
         referee_reference_information_page.under_investigation_yes.click
         referee_reference_information_page.warnings_yes.click
         referee_reference_information_page.allegations_yes.click
@@ -114,7 +117,6 @@ RSpec.describe "Publishers can select a job application for interview" do
         click_on I18n.t("buttons.continue")
 
         expect(referee_how_would_you_rate1_page).to be_displayed
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
         referee_how_would_you_rate1_page.outstanding_punctuality.click
         referee_how_would_you_rate1_page.outstanding_working_relationships.click
         referee_how_would_you_rate1_page.outstanding_customer_care.click
@@ -122,7 +124,6 @@ RSpec.describe "Publishers can select a job application for interview" do
         click_on I18n.t("buttons.continue")
 
         expect(referee_how_would_you_rate2_page).to be_displayed
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
         referee_how_would_you_rate2_page.outstanding_deal_with_conflict.click
         referee_how_would_you_rate2_page.outstanding_prioritise_workload.click
         referee_how_would_you_rate2_page.outstanding_team_working.click
@@ -130,7 +131,6 @@ RSpec.describe "Publishers can select a job application for interview" do
         click_on I18n.t("buttons.continue")
 
         expect(referee_how_would_you_rate3_page).to be_displayed
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
         referee_how_would_you_rate3_page.outstanding_problem_solving.click
         referee_how_would_you_rate3_page.outstanding_general_attitude.click
         referee_how_would_you_rate3_page.outstanding_technical_competence.click
