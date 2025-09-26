@@ -15,7 +15,7 @@ RSpec.describe "Jobseekers can add details about their qualified teacher status 
 
   it "passes a11y", :a11y do
     #  aria-expanded not allowed for input elements
-    expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+    expect(page).to be_axe_clean.skipping "region", "aria-allowed-attr"
   end
 
   it "allows jobseekers to add their professional status" do

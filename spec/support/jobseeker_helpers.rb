@@ -80,13 +80,13 @@ module JobseekerHelpers
   end
 
   def fill_in_personal_details
-    fill_in "First name", with: "John"
-    fill_in "Last name", with: "Frusciante"
-    fill_in "Building and street", with: "123 Fake Street"
-    fill_in "Town or city", with: "Fakeopolis"
-    fill_in "Postcode", with: "F1 4KE"
+    fill_in "First name", with: Faker::Name.first_name
+    fill_in "Last name", with: Faker::Name.last_name
+    fill_in "Building and street", with: Faker::Address.street_address
+    fill_in "Town or city", with: Faker::Address.city
+    fill_in "Postcode", with: Faker::Address.postcode
     fill_in "Country", with: "United Kingdom"
-    fill_in "Phone number", with: "01234 123456"
+    fill_in "Phone number", with: Faker::PhoneNumber.phone_number
     fill_in "Email address", with: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)
     check "Part time"
     fill_in "jobseekers_job_application_personal_details_form[working_pattern_details]", with: "I only work on days starting with T sorry."

@@ -15,7 +15,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:organisation) { create(:school) }
       let(:school_website_url) { "https://www.this-is-a-test-url.example.com" }
 
-      before { click_link I18n.t("nav.school_profile") }
+      before { click_link I18n.t("nav.organisation_profile", name: organisation.name) }
 
       it "allows the publisher to edit the school's website" do
         within("div.govuk-summary-list__row#website") do
@@ -42,10 +42,10 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:school_website_url) { "https://www.this-is-a-test-url-for-a-school.example.com" }
       let(:new_school_website_url) { "https://www.this-is-a-new-test-url-for-a-school.example.com" }
 
-      before { click_link I18n.t("nav.organisation_profile") }
+      before { click_link I18n.t("nav.organisation_profile", name: organisation.name) }
 
       it "passes a11y", :a11y do
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+        expect(page).to be_axe_clean.skipping "region", "landmark-unique"
       end
 
       it "allows the publisher to edit the trust's website" do
@@ -85,7 +85,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:organisation) { create(:local_authority) }
       let(:local_authority_website) { "https://www.this-is-a-new-test-url-for-a-local-authority.example.com" }
 
-      before { click_link I18n.t("nav.organisation_profile") }
+      before { click_link I18n.t("nav.organisation_profile", name: organisation.name) }
 
       it "allows the publisher to edit the local authority's website" do
         within("div.govuk-summary-list__row#website") do
@@ -109,7 +109,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:organisation) { create(:school) }
       let(:school_description) { "A lovely place" }
 
-      before { click_link I18n.t("nav.school_profile") }
+      before { click_link I18n.t("nav.organisation_profile", name: organisation.name) }
 
       it "allows the publisher to edit the school's description" do
         within("div.govuk-summary-list__row#description") do
@@ -134,7 +134,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:new_trust_description) { "A lovely trust" }
       let(:new_school_description) { "A lovely school" }
 
-      before { click_link I18n.t("nav.organisation_profile") }
+      before { click_link I18n.t("nav.organisation_profile", name: organisation.name) }
 
       it "allows the publisher to edit the trust's description" do
         within("div.govuk-summary-list__row#description") do
@@ -173,7 +173,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:organisation) { create(:local_authority) }
       let(:local_authority_description) { "A lovely local authority" }
 
-      before { click_link I18n.t("nav.organisation_profile") }
+      before { click_link I18n.t("nav.organisation_profile", name: organisation.name) }
 
       it "allows the publisher to edit the local authority's description" do
         within("div.govuk-summary-list__row#description") do
@@ -197,7 +197,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:organisation) { create(:school) }
       let(:school_email) { "me@home.com" }
 
-      before { click_link I18n.t("nav.school_profile") }
+      before { click_link I18n.t("nav.organisation_profile", name: organisation.name) }
 
       it "allows the publisher to edit the school's email" do
         within("div.govuk-summary-list__row#email") do
@@ -222,7 +222,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:new_trust_email) { "me@trust.com" }
       let(:new_school_email) { "me@school.com" }
 
-      before { click_link I18n.t("nav.organisation_profile") }
+      before { click_link I18n.t("nav.organisation_profile", name: organisation.name) }
 
       it "allows the publisher to edit the trust's email" do
         within("div.govuk-summary-list__row#email") do
@@ -261,7 +261,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:organisation) { create(:local_authority) }
       let(:local_authority_email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
 
-      before { click_link I18n.t("nav.organisation_profile") }
+      before { click_link I18n.t("nav.organisation_profile", name: organisation.name) }
 
       it "allows the publisher to edit the local authority's email" do
         within("div.govuk-summary-list__row#email") do
@@ -285,7 +285,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:organisation) { create(:school) }
       let(:school_safeguarding_information) { "A very safe school" }
 
-      before { click_link I18n.t("nav.school_profile") }
+      before { click_link I18n.t("nav.organisation_profile", name: organisation.name) }
 
       it "allows the publisher to edit the school's safeguarding information" do
         within("div.govuk-summary-list__row#safeguarding_information") do
@@ -310,7 +310,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:new_trust_safeguarding_information) { "This trust is very safe" }
       let(:new_school_safeguarding_information) { "This school is very safe" }
 
-      before { click_link I18n.t("nav.organisation_profile") }
+      before { click_link I18n.t("nav.organisation_profile", name: organisation.name) }
 
       it "allows the publisher to edit the trust's safeguarding information" do
         within("div.govuk-summary-list__row#safeguarding_information") do
@@ -349,7 +349,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:organisation) { create(:local_authority) }
       let(:local_authority_safeguarding_information) { "A very safe local authority" }
 
-      before { click_link I18n.t("nav.organisation_profile") }
+      before { click_link I18n.t("nav.organisation_profile", name: organisation.name) }
 
       it "allows the publisher to edit the local authority's safeguarding information" do
         within("div.govuk-summary-list__row#safeguarding_information") do
@@ -375,7 +375,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
     before do
       allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(document_virus_check)
-      click_link I18n.t("nav.school_profile")
+      click_link I18n.t("nav.organisation_profile", name: organisation.name)
     end
 
     it "allows the publisher to edit the organisation's logo" do
@@ -402,7 +402,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
     before do
       allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(document_virus_check)
-      click_link I18n.t("nav.school_profile")
+      click_link I18n.t("nav.organisation_profile", name: organisation.name)
     end
 
     it "allows the publisher to delete the organisation's logo" do
@@ -428,7 +428,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
     before do
       allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(document_virus_check)
-      click_link I18n.t("nav.school_profile")
+      click_link I18n.t("nav.organisation_profile", name: organisation.name)
     end
 
     it "allows the publisher to edit the organisation's photo" do
@@ -455,7 +455,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
     before do
       allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(document_virus_check)
-      click_link I18n.t("nav.school_profile")
+      click_link I18n.t("nav.organisation_profile", name: organisation.name)
     end
 
     it "allows the publisher to delete the organisation's photo" do

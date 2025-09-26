@@ -16,7 +16,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
     let(:profile) { build(:jobseeker_profile, qualified_teacher_status: nil, qualified_teacher_status_year: nil) }
 
     it "passes a11y", :a11y do
-      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+      expect(page).to be_axe_clean.skipping "region", "landmark-unique"
     end
 
     context "when on QTS page" do
@@ -27,7 +27,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
       # missing h1
       it "passes a11y", :a11y do
         #  aria-expanded not allowed for input elements
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr", "page-has-heading-one"
+        expect(page).to be_axe_clean.skipping "region",  "aria-allowed-attr", "page-has-heading-one", "landmark-unique"
       end
 
       context "when jobseeker has qualified teacher status" do

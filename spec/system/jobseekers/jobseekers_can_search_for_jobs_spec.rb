@@ -108,7 +108,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
       it "passes a11y", :a11y do
         #  h4 without h3 (or even h2?)
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
+        expect(page).to be_axe_clean.skipping "region", "heading-order"
       end
     end
   end
