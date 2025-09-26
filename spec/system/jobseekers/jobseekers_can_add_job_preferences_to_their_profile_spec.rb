@@ -67,8 +67,7 @@ RSpec.describe "Jobseekers can add job preferences to their profile" do
 
         click_on("Change Working pattern details")
 
-        # h1 missing?
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "page-has-heading-one"
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
 
         fill_in "job-preferences-working-pattern-details-field", with: "On second thoughts, I can only work Wednesdays"
         click_on "Save and continue"

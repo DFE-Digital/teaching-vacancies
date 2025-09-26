@@ -55,8 +55,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
     end
 
     it "passes a11y", :a11y do
-      # lists are not allowed to have direct 'a' children
-      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "list"
+      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
     end
 
     it "displays employment history from newest to oldest job, shows any errors and prevents saving until fixed" do
