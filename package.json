@@ -12,7 +12,7 @@
   ],
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "@ministryofjustice/frontend": "^3.7.2",
+    "@ministryofjustice/frontend": "^5.2.0",
     "@sentry/browser": "10.14.0",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^3.0.1",
