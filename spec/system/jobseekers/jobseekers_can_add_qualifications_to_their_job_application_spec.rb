@@ -22,7 +22,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
 
     it "passes a11y", :a11y do
       # h3 with no h2
-      expect(page).to be_axe_clean.skipping "region", "heading-order"
+      expect(page).to be_axe_clean.skipping "heading-order"
     end
 
     it "allows jobseekers to add a graduate degree" do
@@ -71,7 +71,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
 
       it "passes a11y", :a11y do
         # area-expanded on input
-        expect(page).to be_axe_clean.skipping "region", "aria-allowed-attr"
+        expect(page).to be_axe_clean.skipping "aria-allowed-attr"
       end
 
       it "allows jobseekers to edit the qualification" do

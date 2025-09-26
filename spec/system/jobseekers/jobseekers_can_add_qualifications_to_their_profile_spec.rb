@@ -19,7 +19,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
 
       it "passes a11y", :a11y do
         # area-expanded on input
-        expect(page).to be_axe_clean.skipping "region", "page-has-heading-one"
+        expect(page).to be_axe_clean.skipping "page-has-heading-one"
       end
 
       it "allows jobseekers to add a graduate degree" do

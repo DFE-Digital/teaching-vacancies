@@ -18,13 +18,13 @@ RSpec.describe "Jobseekers can add job preferences to their profile" do
       let(:job_preferences) { nil }
 
       it "passes a11y", :a11y do
-        expect(page).to be_axe_clean.skipping "region"
+        expect(page).to be_axe_clean
       end
 
       it "allows jobseekers to add job preferences", :a11y do
         click_on "Add job preferences"
 
-        expect(page).to be_axe_clean.skipping "region"
+        expect(page).to be_axe_clean
 
         check "Headteacher"
         click_on "Save and continue"
@@ -68,7 +68,7 @@ RSpec.describe "Jobseekers can add job preferences to their profile" do
         click_on("Change Working pattern details")
 
         # h1 missing?
-        expect(page).to be_axe_clean.skipping "region", "page-has-heading-one"
+        expect(page).to be_axe_clean.skipping "page-has-heading-one"
 
         fill_in "job-preferences-working-pattern-details-field", with: "On second thoughts, I can only work Wednesdays"
         click_on "Save and continue"

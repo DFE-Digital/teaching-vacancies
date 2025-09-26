@@ -14,7 +14,7 @@ RSpec.describe "Jobseekers can disclose close relationships or safeguarding issu
 
   it "passes a11y", :a11y do
     #  aria-expanded not allowed on input tag from design system?
-    expect(page).to be_axe_clean.skipping "region", "aria-allowed-attr"
+    expect(page).to be_axe_clean.skipping "aria-allowed-attr"
   end
 
   it "allows jobseekers to add their declarations" do

@@ -36,7 +36,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         end
 
         it "passes a11y", :a11y do
-          expect(page).to be_axe_clean.skipping "region"
+          expect(page).to be_axe_clean
         end
 
         context "when on the phone number screen" do
@@ -48,7 +48,7 @@ RSpec.describe "Jobseekers can manage their profile" do
 
           it "passes a11y", :a11y do
             # aria-expanded false on input field
-            expect(page).to be_axe_clean.skipping "region", "aria-allowed-attr"
+            expect(page).to be_axe_clean.skipping "aria-allowed-attr"
           end
 
           it "asks for a phone number" do
@@ -63,7 +63,7 @@ RSpec.describe "Jobseekers can manage their profile" do
             end
 
             it "passes a11y", :a11y do
-              expect(page).to be_axe_clean.skipping "region"
+              expect(page).to be_axe_clean
             end
 
             it "allows the jobseeker to fill in their personal details" do

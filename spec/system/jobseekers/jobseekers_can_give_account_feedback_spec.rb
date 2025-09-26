@@ -13,7 +13,7 @@ RSpec.describe "Jobseekers can give account feedback" do
   after { logout }
 
   it "passes a11y", :a11y do
-    expect(page).to be_axe_clean.skipping "region"
+    expect(page).to be_axe_clean
   end
 
   describe "feedback" do
@@ -22,7 +22,7 @@ RSpec.describe "Jobseekers can give account feedback" do
     end
 
     it "passes a11y", :a11y do
-      expect(page).to be_axe_clean.skipping "region", "aria-allowed-attr", "heading-order"
+      expect(page).to be_axe_clean.skipping "aria-allowed-attr", "heading-order"
     end
 
     it "submits account feedback" do
@@ -52,7 +52,7 @@ RSpec.describe "Jobseekers can give account feedback" do
     end
 
     it "passes a11y", :a11y do
-      expect(page).to be_axe_clean.skipping "region", "aria-allowed-attr", "heading-order"
+      expect(page).to be_axe_clean.skipping "aria-allowed-attr", "heading-order"
     end
 
     it "updates the opt out field and adds a feedback record", :js do

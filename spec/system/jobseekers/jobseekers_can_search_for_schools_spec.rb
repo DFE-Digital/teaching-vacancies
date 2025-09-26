@@ -104,7 +104,7 @@ RSpec.describe "Searching on the schools page" do
 
     it "passes a11y", :a11y do
       #  h4 without h3 (or even h2?)
-      expect(page).to be_axe_clean.skipping "region",  "heading-order"
+      expect(page).to be_axe_clean.skipping "heading-order"
     end
   end
 
