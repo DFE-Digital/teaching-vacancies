@@ -104,7 +104,7 @@ RSpec.describe "Publishers can select a job application for interview" do
 
         expect(referee_reference_information_page).to be_displayed
         #  https://github.com/alphagov/govuk-frontend/issues/979
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr", "heading-order"
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
 
         referee_reference_information_page.under_investigation_yes.click
         referee_reference_information_page.warnings_yes.click
@@ -117,7 +117,6 @@ RSpec.describe "Publishers can select a job application for interview" do
         click_on I18n.t("buttons.continue")
 
         expect(referee_how_would_you_rate1_page).to be_displayed
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
         referee_how_would_you_rate1_page.outstanding_punctuality.click
         referee_how_would_you_rate1_page.outstanding_working_relationships.click
         referee_how_would_you_rate1_page.outstanding_customer_care.click
@@ -125,7 +124,6 @@ RSpec.describe "Publishers can select a job application for interview" do
         click_on I18n.t("buttons.continue")
 
         expect(referee_how_would_you_rate2_page).to be_displayed
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
         referee_how_would_you_rate2_page.outstanding_deal_with_conflict.click
         referee_how_would_you_rate2_page.outstanding_prioritise_workload.click
         referee_how_would_you_rate2_page.outstanding_team_working.click
@@ -133,7 +131,6 @@ RSpec.describe "Publishers can select a job application for interview" do
         click_on I18n.t("buttons.continue")
 
         expect(referee_how_would_you_rate3_page).to be_displayed
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
         referee_how_would_you_rate3_page.outstanding_problem_solving.click
         referee_how_would_you_rate3_page.outstanding_general_attitude.click
         referee_how_would_you_rate3_page.outstanding_technical_competence.click

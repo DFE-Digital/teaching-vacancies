@@ -45,8 +45,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
 
         it "passes a11y", :a11y do
           # There are 2 banners on this page which is confusing
-          # h3 without h2?
-          expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "landmark-unique", "heading-order"
+          expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "landmark-unique"
         end
 
         scenario "redirects to job alerts dashboard" do

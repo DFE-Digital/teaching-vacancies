@@ -28,7 +28,7 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
         end
 
         it "passes a11y", :a11y do
-          expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
+          expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
         end
 
         scenario "it shows all published vacancies" do

@@ -103,7 +103,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
   - if vacancy.salary_types.any?
     - summary_list.with_row(html_attributes: { id: "salary" }) do |row|
       - row.with_key
-        h4.govuk-heading-s = t("jobs.salary_details")
+        h2.govuk-heading-s = t("jobs.salary_details")
       - row.with_value
         ul.govuk-list.govuk-list--spaced
           - if vacancy.salary?
@@ -129,7 +129,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
   - unless vacancy.benefits.nil?
     - summary_list.with_row(html_attributes: { id: "benefits" }) do |row|
       - row.with_key
-        h4.govuk-heading-s class="govuk-!-margin-bottom-0"
+        h2.govuk-heading-s class="govuk-!-margin-bottom-0"
           = t("jobs.benefits")
       - row.with_value
         = vacancy.benefits? ? "Yes" : "No"
@@ -140,7 +140,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
   - if vacancy.benefits == true
     - summary_list.with_row(html_attributes: { id: "benefits_details" }) do |row|
       - row.with_key
-        h4.govuk-heading-s class="govuk-!-margin-bottom-0"
+        h2.govuk-heading-s class="govuk-!-margin-bottom-0"
           = t("jobs.benefits_details")
       - row.with_value
         = vacancy.benefits_details
