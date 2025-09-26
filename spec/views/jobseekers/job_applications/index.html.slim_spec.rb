@@ -18,6 +18,7 @@ RSpec.describe "jobseekers/job_applications/index" do
     end
 
     assign(:job_applications, job_applications)
+    assign(:count, job_applications.size)
 
     render
   end
