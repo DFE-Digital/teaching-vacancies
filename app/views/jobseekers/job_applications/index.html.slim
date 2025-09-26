@@ -10,11 +10,12 @@
     = govuk_skip_link(href: "#applications-results", text: t(".skip_link"))
 - if Date.today <= Date.new(2024, 4, 2)
   = render "jobseekers/visa_sponsorship_banner"
-h1.govuk-heading-l = t(".page_title_with_count", count: @job_applications.count)
+h1.govuk-heading-l = t(".page_title_with_count", count: @count)
 
 .govuk-grid-row
   .govuk-grid-column-full
     - if @job_applications.any?
+      = govuk_pagination(pagy: @pagy)
       #applications-results
         - @job_applications.each do |job_application|
           = render "job_application", job_application: job_application
