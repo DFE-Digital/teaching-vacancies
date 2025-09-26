@@ -3,7 +3,8 @@ order: 100
 title: Find a teaching role at the right school
 meta_description: Find a school with the location, size and setting that is perfect for you to teach at.
 date_posted: 20/01/2023
-category_tags: apply
+date_updated: 27/02/2025
+/category_tags: apply
 card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/find-your-teaching-role-at-the-right-school.jpg"
 ---
 

@@ -3,6 +3,7 @@ order: 300
 title: How to approach a teaching job interview
 meta_description: Congratulations, you’ve been invited to an interview for a teaching job! What’s next? We’ve spoken to experienced teachers to get their top tips for success including how to prepare answers to interview questions.
 date_posted: 22/01/2024
+date_updated: 03/03/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-approach-your-teaching-job-interview.jpg"
 ---
