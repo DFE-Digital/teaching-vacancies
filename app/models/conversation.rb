@@ -1,4 +1,6 @@
 class Conversation < ApplicationRecord
+  after_create :update_searchable_content
+
   belongs_to :job_application
   has_many :messages, dependent: :destroy
   has_many :jobseeker_messages, dependent: :destroy
@@ -20,7 +22,36 @@ class Conversation < ApplicationRecord
     order(has_unread_jobseeker_messages: :desc, last_message_at: :desc)
   }
 
+  include PgSearch::Model
+
+  pg_search_scope :search_by_keyword,
+                  against: [:searchable_content],
+                  using: {
+                    tsearch: {
+                      prefix: true,
+                      any_word: true,
+                      dictionary: "english",
+                    },
+                  }
+
   def has_unread_messages_for_publishers?
     messages.any? { |msg| msg.is_a?(JobseekerMessage) && msg.unread? }
+  end
+
+  def update_searchable_content
+    update!(searchable_content: generate_searchable_content)
+  end
+
+  def generate_searchable_content
+    # Get message content (handles Action Text properly)
+    message_content = messages.filter_map do |message|
+      message.content.to_plain_text if message.content.present?
+    end
+
+    Search::Postgres::TsvectorGenerator.new(
+      a: [job_application.vacancy.job_title],       # Job title (highest weight)
+      b: [job_application.name],                    # Candidate name (high weight)
+      d: message_content, # Message content (lower weight)
+    ).tsvector
   end
 end

@@ -121,4 +121,98 @@ RSpec.describe Conversation do
       end
     end
   end
+
+  describe "searchable content updates" do
+    let(:vacancy) { create(:vacancy, :live, job_title: "Science Teacher") }
+    let(:job_application) { create(:job_application, vacancy: vacancy, first_name: "John", last_name: "Smith", status: "interviewing") }
+    let(:conversation) { create(:conversation, job_application: job_application) }
+
+    describe "on conversation creation" do
+      it "populates searchable_content" do
+        new_conversation = build(:conversation, job_application: job_application)
+
+        expect { new_conversation.save! }.to change { new_conversation.searchable_content }.from(nil)
+        expect(new_conversation.searchable_content).to include("science")
+        expect(new_conversation.searchable_content).to include("john")
+        expect(new_conversation.searchable_content).to include("smith")
+      end
+    end
+
+    describe "when job title changes" do
+      it "updates searchable_content when vacancy job_title changes" do
+        conversation
+        initial_content = conversation.reload.searchable_content
+
+        expect {
+          vacancy.update!(job_title: "Math Teacher")
+          conversation.reload
+        }.to change(conversation, :searchable_content).from(initial_content)
+
+        expect(conversation.searchable_content).to include("math")
+        expect(conversation.searchable_content).not_to include("science")
+      end
+
+      it "does not update when non-searchable vacancy fields change" do
+        conversation # Create the conversation
+        conversation.reload.searchable_content
+
+        expect {
+          vacancy.update!(salary: "£30,000")
+          conversation.reload
+        }.not_to(change(conversation, :searchable_content))
+      end
+    end
+
+    describe "when candidate name changes" do
+      it "updates searchable_content when job_application name changes" do
+        conversation
+        job_application.reload
+        conversation.reload.searchable_content
+        job_application.update!(first_name: "Jane", last_name: "Doe")
+        conversation.reload
+
+        expect(conversation.searchable_content).to include("jane")
+        expect(conversation.searchable_content).to include("doe")
+        expect(conversation.searchable_content).not_to include("john")
+        expect(conversation.searchable_content).not_to include("smith")
+      end
+
+      it "does not trigger callback when job_application has no conversations" do
+        job_application_without_conversation = create(:job_application, vacancy: vacancy)
+
+        expect {
+          job_application_without_conversation.update!(first_name: "New Name")
+        }.not_to raise_error
+      end
+    end
+
+    describe "when message content changes via Action Text" do
+      let!(:message) { create(:jobseeker_message, conversation: conversation, content: "Initial message content") }
+
+      it "updates searchable_content when message content is updated" do
+        initial_content = conversation.reload.searchable_content
+        expect(initial_content).to include("initial")
+
+        expect {
+          message.content = "Updated message content with keywords"
+          message.save!
+          conversation.reload
+        }.to change(conversation, :searchable_content).from(initial_content)
+
+        expect(conversation.searchable_content).to include("updated")
+        expect(conversation.searchable_content).to include("keywords")
+      end
+
+      it "updates searchable_content when new message is created" do
+        initial_content = conversation.reload.searchable_content
+
+        expect {
+          create(:publisher_message, conversation: conversation, content: "New message with unique words")
+          conversation.reload
+        }.to change(conversation, :searchable_content).from(initial_content)
+
+        expect(conversation.searchable_content).to include("unique")
+      end
+    end
+  end
 end

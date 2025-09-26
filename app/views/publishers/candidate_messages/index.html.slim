@@ -8,6 +8,29 @@
       - t.with_navigation_item text: "Inbox (#{@inbox_count})", link: publishers_candidate_messages_path
       - t.with_navigation_item text: "Archive", link: publishers_candidate_messages_path(tab: "archive")
 
+    .govuk-grid-row
+      .govuk-grid-column-full
+        = form_for @search_form, as: "", url: publishers_candidate_messages_path, method: :get, html: { role: "search", class: "search-form" } do |f|
+          = f.hidden_field :tab, value: @tab
+          .govuk-grid-row
+            .govuk-grid-column-two-thirds
+              = f.govuk_text_field :keyword, label: { text: t(".search.label") }, 
+                                   hint: { text: t(".search.hint") },
+                                   value: @search_form.keyword,
+                                   html_attributes: { placeholder: t(".search.placeholder") }
+            .govuk-grid-column-one-third
+              .search-actions
+                = f.govuk_submit t(".search.submit"), class: "govuk-button"
+                - if @search_form.active_criteria?
+                  = govuk_link_to t(".search.clear"), publishers_candidate_messages_path(@search.clear_filters_params), 
+                                  class: "govuk-link search-clear-link"
+
+        - if @search_form.active_criteria?
+          .search-results-summary
+            h2.govuk-heading-m = t(".search.results_heading", count: @search.total_count, keyword: @search_form.keyword)
+        - elsif @conversations.any?
+          h2.govuk-heading-m = t(".total_messages", count: @search.total_count)
+
     - if @conversations.any?
       = form_with url: toggle_archive_publishers_candidate_messages_path, method: :patch, local: true do |f|
         = f.hidden_field :archive_action, value: (@tab == "archive" ? "unarchive" : "archive")
