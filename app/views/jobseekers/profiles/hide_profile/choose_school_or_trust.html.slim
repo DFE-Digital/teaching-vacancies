@@ -1,7 +1,6 @@
 - content_for :page_title_prefix, t(".page_title", trust_name: @school.trust.name)
 
 - content_for :breadcrumbs do
-  nav.govuk-breadcrumbs aria-label="Breadcrumbs"
   = govuk_back_link text: t("buttons.back"), href: add_jobseekers_profile_hide_profile_path
 
 .govuk-grid-row

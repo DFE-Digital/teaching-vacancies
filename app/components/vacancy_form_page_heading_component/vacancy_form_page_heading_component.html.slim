@@ -1,5 +1,4 @@
 - content_for :breadcrumbs do
-  nav.govuk-breadcrumbs aria-label="Breadcrumbs"
   = govuk_back_link text: t("buttons.back"), href: back_path, html_attributes: { "aria-label" => "Back navigation" }
 
 - if @fieldset

@@ -4,8 +4,7 @@
 
 - unless params[:section] == "transcripts"
   - content_for :breadcrumbs do
-    nav aria-label="breadcrumb" role="navigation"
-      = govuk_breadcrumbs breadcrumbs: { t("breadcrumbs.home") => root_path,
+    = govuk_breadcrumbs breadcrumbs: { t("breadcrumbs.home") => root_path,
                                         params[:section].titleize.capitalize => posts_path(section: params[:section]),
                                         formatted_subcategory => subcategory_path(section: params[:section], subcategory: params[:subcategory]),
                                         @post.title => "" }

@@ -2,7 +2,6 @@
   = govuk_skip_link(href: "#search-results", text: t("jobs.skip_link_list"))
 
 - content_for :breadcrumbs do
-  nav aria-label="Breadcrumbs"
   = govuk_breadcrumbs breadcrumbs: organisation_landing_page_breadcrumbs(@vacancies_search.organisation_slug) if @vacancies_search.organisation_slug.present?
 
 = render "vacancies/search/page_title_and_description", landing_page: @landing_page
