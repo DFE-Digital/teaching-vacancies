@@ -44,3 +44,8 @@ trix-toolbar .trix-button--icon-increase-nesting-level {
   display: none !important;
 }
 
+/* Fix bullet point font size to match body text */
+.trix-content ul li {
+  font-size: inherit;
+}
+
