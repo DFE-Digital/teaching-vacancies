@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_28_110645) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_19_163525) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -813,8 +813,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_28_110645) do
     t.boolean "contact_number_provided"
     t.string "skills_and_experience"
     t.string "school_offer"
-    t.boolean "safeguarding_information_provided"
-    t.string "safeguarding_information"
     t.boolean "further_details_provided"
     t.string "further_details"
     t.boolean "include_additional_documents"
