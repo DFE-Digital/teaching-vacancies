@@ -15,20 +15,21 @@
 
       = f.govuk_radio_button :application_form_type, :no_religion,
         label: -> { t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.no_religion_html", tag: govuk_tag(text: t(".kcsie_compliant"), colour: "green")) },
-        link_errors: true
-
-      p = open_in_new_tab_link_to(t(".preview_online_application_form"), organisation_job_form_preview_path(vacancy.id, :plain))
+        link_errors: true,
+        hint: -> { open_in_new_tab_link_to(t(".preview_online_application_form"), organisation_job_form_preview_path(vacancy.id, :plain)) }
 
       - if vacancy.organisations.any?(&:faith_school?)
         = f.govuk_radio_button :application_form_type, :catholic,
-        label: -> { t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.catholic_html", tag: govuk_tag(text: t(".kcsie_compliant"), colour: "green")) }
-
-        p = open_in_new_tab_link_to(t(".preview_catholic_application_form"), organisation_job_form_preview_path(vacancy.id, :catholic))
+        label: -> { t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.catholic_html", tag: govuk_tag(text: t(".kcsie_compliant"), colour: "green")) },
+        hint: -> do
+          = t("helpers.hint.publishers_job_listing_applying_for_the_job_form.application_form_type_options.catholic")
+          p = open_in_new_tab_link_to(t(".preview_catholic_application_form"), organisation_job_form_preview_path(vacancy.id, :catholic))
 
         = f.govuk_radio_button :application_form_type, :other_religion,
-          label: -> { t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.other_religion_html", tag: govuk_tag(text: t(".kcsie_compliant"), colour: "green")) }
-
-        p = open_in_new_tab_link_to(t(".preview_religious_application_form"), organisation_job_form_preview_path(vacancy.id, :religious))
+          label: -> { t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.other_religion_html", tag: govuk_tag(text: t(".kcsie_compliant"), colour: "green")) },
+          hint: -> do
+            = t("helpers.hint.publishers_job_listing_applying_for_the_job_form.application_form_type_options.other_religion")
+            p = open_in_new_tab_link_to(t(".preview_religious_application_form"), organisation_job_form_preview_path(vacancy.id, :religious))
 
       = f.govuk_radio_divider
 
