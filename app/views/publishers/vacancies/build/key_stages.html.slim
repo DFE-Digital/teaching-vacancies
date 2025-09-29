@@ -1,12 +1,10 @@
 - content_for :page_title_prefix, page_title_prefix(step_process, form)
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_for form, url: wizard_path(current_step), method: :patch do |f|
+= form_for form, url: wizard_path(current_step), method: :patch do |f|
 
-      = f.govuk_error_summary
+  = f.govuk_error_summary
 
-      - if vacancy.allow_key_stages?
-        = f.govuk_collection_check_boxes :key_stages, vacancy.key_stages_for_phases, :to_s, :to_s, legend: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" }
+  - if vacancy.allow_key_stages?
+    = f.govuk_collection_check_boxes :key_stages, vacancy.key_stages_for_phases, :to_s, :to_s, legend: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" }
 
-      = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+  = render "publishers/vacancies/vacancy_form_partials/submit", f: f

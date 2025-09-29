@@ -1,30 +1,28 @@
 - content_for :page_title_prefix, page_title_prefix(step_process, form)
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_for form, url: wizard_path(current_step), method: :patch do |f|
-      = f.govuk_error_summary
+= form_for form, url: wizard_path(current_step), method: :patch do |f|
+  = f.govuk_error_summary
 
-      = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
+  = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
 
-      = f.govuk_check_boxes_fieldset :salary_types, legend: { size: "m", tag: nil } do
-        - if vacancy.contract_type != "casual"
-          = f.govuk_check_box :salary_types, "full_time", link_errors: true do
-            = f.govuk_text_field :salary, label: { size: "s" }
+  = f.govuk_check_boxes_fieldset :salary_types, legend: { size: "m", tag: nil } do
+    - if vacancy.contract_type != "casual"
+      = f.govuk_check_box :salary_types, "full_time", link_errors: true do
+        = f.govuk_text_field :salary, label: { size: "s" }
 
-          - if vacancy.working_patterns.include? "part_time"
-            = f.govuk_check_box :salary_types, "part_time" do
-              = f.govuk_text_field :actual_salary, label: { size: "s" }
+      - if vacancy.working_patterns.include? "part_time"
+        = f.govuk_check_box :salary_types, "part_time" do
+          = f.govuk_text_field :actual_salary, label: { size: "s" }
 
-          = f.govuk_check_box :salary_types, "pay_scale" do
-            = f.govuk_text_field :pay_scale, label: { size: "s" }
+      = f.govuk_check_box :salary_types, "pay_scale" do
+        = f.govuk_text_field :pay_scale, label: { size: "s" }
 
-        = f.govuk_check_box :salary_types, "hourly_rate" do
-          = f.govuk_text_field :hourly_rate, label: { size: "s" }
+    = f.govuk_check_box :salary_types, "hourly_rate" do
+      = f.govuk_text_field :hourly_rate, label: { size: "s" }
 
-      = f.govuk_radio_buttons_fieldset :benefits, legend: { size: "m", tag: nil } do
-        = f.govuk_radio_button :benefits, "true" do
-          = f.govuk_text_area :benefits_details, label: { size: "s" }
-        = f.govuk_radio_button :benefits, "false", link_errors: true
+  = f.govuk_radio_buttons_fieldset :benefits, legend: { size: "m", tag: nil } do
+    = f.govuk_radio_button :benefits, "true" do
+      = f.govuk_text_area :benefits_details, label: { size: "s" }
+    = f.govuk_radio_button :benefits, "false", link_errors: true
 
-      = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+  = render "publishers/vacancies/vacancy_form_partials/submit", f: f
