@@ -27,7 +27,6 @@ class CopyVacancyAsaTemplate
         new_vacancy.completed_steps -= %w[start_date important_dates]
       end
 
-      reset_legacy_fields(new_vacancy)
       new_vacancy.tap do |v|
         v.organisations = vacancy.organisations
         v.send(:set_slug)
@@ -42,11 +41,6 @@ class CopyVacancyAsaTemplate
     def reset_date_fields(new_vacancy)
       new_vacancy.assign_attributes(expires_at: nil, start_date_type: nil, starts_on: nil,
                                     earliest_start_date: nil, latest_start_date: nil, other_start_date_details: nil, publish_on: nil)
-    end
-
-    def reset_legacy_fields(new_vacancy)
-      new_vacancy.assign_attributes(safeguarding_information_provided: nil,
-                                    safeguarding_information: nil)
     end
 
     def completed_steps(vacancy)

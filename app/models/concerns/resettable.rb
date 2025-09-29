@@ -18,7 +18,6 @@ module Resettable
     reset_application_link
     reset_documents
     reset_contact_number
-    reset_safeguarding_information
     reset_further_details
     reset_benefits_details
   end
@@ -87,12 +86,6 @@ module Resettable
     return unless contact_number_provided_changed? && !contact_number_provided
 
     self.contact_number = nil
-  end
-
-  def reset_safeguarding_information
-    return unless safeguarding_information_provided_changed? && !safeguarding_information_provided
-
-    self.safeguarding_information = nil
   end
 
   def reset_further_details

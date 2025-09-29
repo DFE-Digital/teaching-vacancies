@@ -43,27 +43,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                   href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                   visually_hidden_text: t("jobs.flexi_working.publisher", organisation: vacancy.organisation.type.downcase)
 
-  - if vacancy.safeguarding_information.present?
-    - unless vacancy.safeguarding_information_provided.nil?
-      - summary_list.with_row(html_attributes: { id: "safeguarding_information_provided" }) do |row|
-        - row.with_key
-          = t("jobs.safeguarding_information_provided")
-        - row.with_value
-          = vacancy.safeguarding_information_provided ? "Yes" : "No"
-        - row.with_action text: t("buttons.change"),
-                    href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
-                    visually_hidden_text: t("jobs.safeguarding_information_provided")
-
-    - summary_list.with_row(html_attributes: { id: "safeguarding_information" }) do |row|
-      - row.with_key
-        = t("jobs.safeguarding_information.publisher")
-      - row.with_value
-        .editor-rendered-content == vacancy.safeguarding_information
-      - row.with_action text: t("buttons.change"),
-                  href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
-                  visually_hidden_text: t("jobs.safeguarding_information.publisher")
-
-  - elsif vacancy.organisation&.safeguarding_information.present?
+  - if vacancy.organisation&.safeguarding_information.present?
     - summary_list.with_row(html_attributes: { id: "safeguarding_information" }) do |row|
       - row.with_key
         = t("jobs.safeguarding_information.publisher")
