@@ -23,7 +23,7 @@ RSpec.describe "Jobseekers applications statuses" do
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
       end
 
-      it "shows all sections with the status tag 'incomplete'", :js do
+      it "shows all sections with the status tag 'incomplete'" do
         within ".banner-buttons" do
           click_on I18n.t("jobseekers.job_applications.banner_links.apply")
         end
@@ -31,6 +31,8 @@ RSpec.describe "Jobseekers applications statuses" do
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
 
         click_button "Start application"
+        # wait for page load
+        find(".govuk-notification-banner")
 
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
 
