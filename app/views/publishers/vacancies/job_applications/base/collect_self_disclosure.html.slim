@@ -8,8 +8,9 @@
   = f.hidden_field :contact_applicants, value: f.object.contact_applicants
 
   = f.govuk_radio_buttons_fieldset :collect_self_disclosure, legend: { size: "l", tag: "h1" } do
-    = f.govuk_radio_button :collect_self_disclosure, "true"
-    p = open_in_new_tab_link_to(t(".preview_online_self_disclosure"), organisation_job_form_preview_path(vacancy.id, :self_disclosure))
+    = f.govuk_radio_button :collect_self_disclosure, "true",
+    hint: -> { open_in_new_tab_link_to(t(".preview_online_self_disclosure"), organisation_job_form_preview_path(vacancy.id, :self_disclosure)) }
+
     = f.govuk_radio_button :collect_self_disclosure, "false"
 
   = f.govuk_submit t("buttons.save_and_continue")
