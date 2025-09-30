@@ -12,6 +12,7 @@ class Jobseekers::AlertMailer < Jobseekers::BaseMailer
 
   def alert(subscription_id, vacancy_ids)
     @subscription_id = subscription_id
+    return if subscription.email.blank?
 
     @vacancies = PublishedVacancy.where(id: vacancy_ids)
                    .order(:expires_at)

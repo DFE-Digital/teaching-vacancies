@@ -19,7 +19,7 @@ class AlertEmail::Base < ApplicationJob
     subscriptions.find_each.reject { |sub| already_run_ids.include?(sub.id) }.each do |subscription|
       vacancies = subscription.vacancies_matching(default_scope).first(MAXIMUM_RESULTS_PER_RUN)
       next unless vacancies.any?
-      next if subscription.reload.email.blank?
+      next if subscription.email.blank?
 
       emails_count += 1
       vacancies_count += vacancies.size
