@@ -35,8 +35,8 @@ class AlertEmail::Base < ApplicationJob
     formatted_duration = format_duration(duration)
     Sentry.with_scope do |scope|
       scope.set_context("Alert run Statistics", { duration: formatted_duration,
-                                                  emails_sent: emails_count,
-                                                  new_vacancies: vacancies_count })
+                                                  alerts_sent: emails_count,
+                                                  vacancies_in_alerts: vacancies_count })
       Sentry.capture_message(
         "#{self.class.name} run successfully (duration: #{formatted_duration})",
         level: :info,

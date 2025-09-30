@@ -23,9 +23,10 @@ RSpec.describe SendDailyAlertEmailJob do
         scope_mock = instance_double(Sentry::Scope).as_null_object
 
         allow(Time).to receive(:current).and_return(Time.current, Time.current + 65)
+        allow(Sentry).to receive(:capture_message)
         allow(Sentry).to receive(:with_scope).and_yield(scope_mock)
 
-        expect(scope_mock).to receive(:set_context).with("Alert run Statistics", { duration: "1m 5s", emails_sent: 1, new_vacancies: 1 })
+        expect(scope_mock).to receive(:set_context).with("Alert run Statistics", { duration: "1m 5s", alerts_sent: 1, vacancies_in_alerts: 1 })
         expect(Sentry).to receive(:capture_message).with(
           "SendDailyAlertEmailJob run successfully (duration: 1m 5s)",
           level: :info,
