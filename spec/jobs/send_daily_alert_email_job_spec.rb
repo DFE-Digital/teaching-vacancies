@@ -67,7 +67,7 @@ RSpec.describe SendDailyAlertEmailJob do
     end
 
     context "with no vacancies" do
-      let(:subscription) { create(:subscription, frequency: :daily) }
+      let!(:subscription) { create(:subscription, frequency: :daily) }
 
       it "does not send an email or create a run" do
         expect(Jobseekers::AlertMailer).to_not receive(:alert)
