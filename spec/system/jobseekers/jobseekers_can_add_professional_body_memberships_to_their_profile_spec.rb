@@ -18,8 +18,7 @@ RSpec.describe "Jobseekers can add professional body memberships to their profil
       it "allows jobseekers to add professional body memberships", :a11y do
         click_on "Add membership"
 
-        #  h3 without h2?
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "heading-order"
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
 
         click_on "Save and continue"
 

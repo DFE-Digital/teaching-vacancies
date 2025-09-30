@@ -47,7 +47,7 @@ RSpec.describe "Jobseekers can manage their profile" do
           end
 
           it "passes a11y", :a11y do
-            # aria-expanded false on input field
+            #  https://github.com/alphagov/govuk-frontend/issues/979
             expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
           end
 
@@ -777,7 +777,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       # Can move forward without selecting any subject
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_current_path(jobseekers_job_preferences_step_path(:working_patterns), ignore_query: true)
-      expect(page).to have_css("h3", text: "Job preferencesWorking patterns")
+      expect(page).to have_css("h1", text: "Job preferencesWorking patterns")
 
       # Fill in the Subjects
       click_link "Back"
@@ -787,7 +787,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       check "Mathematics"
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_current_path(jobseekers_job_preferences_step_path(:working_patterns), ignore_query: true)
-      expect(page).to have_css("h3", text: "Job preferencesWorking patterns")
+      expect(page).to have_css("h1", text: "Job preferencesWorking patterns")
 
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_current_path(jobseekers_job_preferences_step_path(:working_patterns), ignore_query: true)
@@ -911,7 +911,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         # Can move forward without selecting any subject
         click_on I18n.t("buttons.save_and_continue")
         expect(page).to have_current_path(jobseekers_job_preferences_step_path(:working_patterns), ignore_query: true)
-        expect(page).to have_css("h3", text: "Job preferencesWorking patterns")
+        expect(page).to have_css("h1", text: "Job preferencesWorking patterns")
 
         check "Full time"
         click_on I18n.t("buttons.save_and_continue")

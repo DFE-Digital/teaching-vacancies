@@ -1,22 +1,18 @@
 - content_for :page_title_prefix, page_title_prefix(step_process, form)
 - unless current_organisation.trust_or_la?
-  .govuk-grid-row
-      .govuk-grid-column-full
-        = govuk_notification_banner title_text: "Important", classes: "govuk-notification-banner govuk-!-margin-top-0 govuk-!-margin-bottom-5" do |banner|
-          - banner.with_heading(text: t("publishers.vacancies.build.multiple_schools_advice_banner.heading"))
-          p.govuk-body = govuk_link_to(t("publishers.vacancies.build.multiple_schools_advice_banner.link_text"), "/get-help-hiring/how-to-setup-your-account/how-to-request-organisation-access")
+  = govuk_notification_banner title_text: "Important", classes: "govuk-notification-banner govuk-!-margin-top-0 govuk-!-margin-bottom-5" do |banner|
+    - banner.with_heading(text: t("publishers.vacancies.build.multiple_schools_advice_banner.heading"))
+      p.govuk-body = govuk_link_to(t("publishers.vacancies.build.multiple_schools_advice_banner.link_text"), "/get-help-hiring/how-to-setup-your-account/how-to-request-organisation-access")
 end
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_for form, url: wizard_path(current_step), method: :patch do |f|
-      = f.govuk_error_summary
+= form_for form, url: wizard_path(current_step), method: :patch do |f|
+  = f.govuk_error_summary
 
-      = f.govuk_text_area :job_title,
-        label: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" },
-        hint: { text: vacancy_job_title_form_hint_text(vacancy) },
-        class: "govuk-input",
-        max_chars: 75,
-        required: true
+  = f.govuk_text_area :job_title,
+    label: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" },
+    hint: { text: vacancy_job_title_form_hint_text(vacancy) },
+    class: "govuk-input",
+    max_chars: 75,
+    required: true
 
-      = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+  = render "publishers/vacancies/vacancy_form_partials/submit", f: f

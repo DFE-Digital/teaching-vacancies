@@ -53,7 +53,7 @@ class FiltersComponent < ApplicationComponent
       if selected&.any?
         tag.div(key, class: "filters-component__remove-group") do
           safe_join([
-            tag.h4(legend, class: "govuk-heading-s"),
+            tag.h2(legend, class: "govuk-heading-s"),
             tag.ul(class: "filters-component__remove-tags") do
               options.each do |option|
                 link = filter_link(selected, key, option, value_method, selected_method, remove_filter_link)

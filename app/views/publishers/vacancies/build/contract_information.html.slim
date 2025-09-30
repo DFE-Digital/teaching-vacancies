@@ -1,35 +1,33 @@
 - content_for :page_title_prefix, page_title_prefix(step_process, form)
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_for form, url: wizard_path(current_step), method: :patch do |f|
-      = f.govuk_error_summary
+= form_for form, url: wizard_path(current_step), method: :patch do |f|
+  = f.govuk_error_summary
 
-      = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
+  = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
 
-      = f.govuk_radio_buttons_fieldset :contract_type, legend: { size: "m" } do
-        = f.govuk_radio_button :contract_type, :permanent, link_errors: true
+  = f.govuk_radio_buttons_fieldset :contract_type, legend: { size: "m", tag: "h2" } do
+    = f.govuk_radio_button :contract_type, :permanent, link_errors: true
 
-        = f.govuk_radio_button :contract_type, :fixed_term do
-          = f.govuk_radio_buttons_fieldset :is_parental_leave_cover, inline: true do
-            = f.govuk_radio_button :is_parental_leave_cover, "true", label: { text: "Yes" }
-            = f.govuk_radio_button :is_parental_leave_cover, "false", label: { text: "No" }
-          = f.govuk_text_field :fixed_term_contract_duration, label: { size: "s" }
+    = f.govuk_radio_button :contract_type, :fixed_term do
+      = f.govuk_radio_buttons_fieldset :is_parental_leave_cover, inline: true do
+        = f.govuk_radio_button :is_parental_leave_cover, "true", label: { text: "Yes" }
+        = f.govuk_radio_button :is_parental_leave_cover, "false", label: { text: "No" }
+      = f.govuk_text_field :fixed_term_contract_duration, label: { size: "s" }
 
-        = f.govuk_radio_button :contract_type, :casual
+    = f.govuk_radio_button :contract_type, :casual
 
-      = f.govuk_collection_check_boxes(:working_patterns,
-                                       Vacancy::WORKING_PATTERNS,
-                                       :to_s,
-                                       :to_s,
-                                       legend: { size: "m" })
+  = f.govuk_collection_check_boxes(:working_patterns,
+                                   Vacancy::WORKING_PATTERNS,
+                                   :to_s,
+                                   :to_s,
+                                   legend: { size: "m" })
 
-      = f.govuk_radio_buttons_fieldset :is_job_share, inline: true do
-        = f.govuk_radio_button :is_job_share, "true", label: { text: "Yes" }
-        = f.govuk_radio_button :is_job_share, "false", label: { text: "No" }
+  = f.govuk_radio_buttons_fieldset :is_job_share, inline: true do
+    = f.govuk_radio_button :is_job_share, "true", label: { text: "Yes" }
+    = f.govuk_radio_button :is_job_share, "false", label: { text: "No" }
 
-      = f.govuk_text_area(:working_patterns_details,
-                          label: { class: ["govuk-label", "govuk-!-font-weight-bold"] },
-                          max_words: form.class::WORKING_PATTERNS_DETAILS_MAX_WORDS)
+  = f.govuk_text_area(:working_patterns_details,
+                      label: { class: ["govuk-label", "govuk-!-font-weight-bold"] },
+                      max_words: form.class::WORKING_PATTERNS_DETAILS_MAX_WORDS)
 
-      = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+  = render "publishers/vacancies/vacancy_form_partials/submit", f: f
