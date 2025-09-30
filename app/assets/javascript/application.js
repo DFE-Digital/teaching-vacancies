@@ -79,3 +79,14 @@ ActiveStorage.start();
 govukFrontend.initAll();
 window.$ = $;
 initMojFrontEnd();
+
+// Make links in message content open in new tabs
+document.addEventListener('DOMContentLoaded', () => {
+  const messageLinks = document.querySelectorAll('.govuk-summary-card__content a');
+  messageLinks.forEach((link) => {
+    if (!link.hasAttribute('target')) {
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer');
+    }
+  });
+});
