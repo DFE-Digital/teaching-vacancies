@@ -4,9 +4,6 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   validates :ect_status, inclusion: { in: Vacancy.ect_statuses.keys }, if: -> { vacancy&.job_roles&.include?("teacher") }
   validate :skills_and_experience_presence
   validate :school_offer_presence
-  validates :safeguarding_information_provided, inclusion: { in: [true, false] }, if: -> { vacancy.safeguarding_information.present? }
-  validate :safeguarding_information_presence, if: -> { vacancy.safeguarding_information.present? && safeguarding_information_provided }
-  validate :safeguarding_information_does_not_exceed_maximum_words, if: -> { safeguarding_information_provided }
   validates :further_details_provided, inclusion: { in: [true, false] }
   validate :further_details_presence, if: -> { further_details_provided }
   validates :flexi_working_details_provided, inclusion: { in: [true, false] }
@@ -17,8 +14,6 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   attribute :skills_and_experience
   attribute :school_offer
   attribute :flexi_working
-  attribute :safeguarding_information_provided, :boolean
-  attribute :safeguarding_information
   attribute :further_details_provided, :boolean
   attribute :further_details
 
@@ -36,8 +31,6 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
       skills_and_experience:,
       school_offer:,
       flexi_working: normalize_flexi_working,
-      safeguarding_information_provided:,
-      safeguarding_information:,
       further_details_provided:,
       further_details:,
       flexi_working_details_provided:,
@@ -66,16 +59,6 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
     return if remove_html_tags(skills_and_experience).present?
 
     errors.add(:skills_and_experience, :blank)
-  end
-
-  def safeguarding_information_presence
-    return if remove_html_tags(safeguarding_information).present?
-
-    errors.add(:safeguarding_information, :blank)
-  end
-
-  def safeguarding_information_does_not_exceed_maximum_words
-    errors.add(:safeguarding_information, :length) if number_of_words_exceeds_permitted_length?(100, safeguarding_information)
   end
 
   def further_details_presence
