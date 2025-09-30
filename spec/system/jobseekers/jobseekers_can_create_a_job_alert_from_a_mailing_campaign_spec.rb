@@ -24,7 +24,7 @@ RSpec.describe "Jobseekers can create a job alert from a mailing campaign", reca
   end
 
   it "passes a11y", :a11y do
-    expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+    expect(page).to be_axe_clean
   end
 
   scenario "the landing form has default values when not set from the URL parameters" do

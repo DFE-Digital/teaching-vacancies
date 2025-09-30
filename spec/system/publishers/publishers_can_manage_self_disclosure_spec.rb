@@ -85,22 +85,22 @@ RSpec.describe "Publishers manage self disclosure", :perform_enqueued do
           it "passes a11y", :a11y do
             # wait for page load
             find "label[for='jobseekers-job-applications-self-disclosure-personal-details-form-name-field']"
-            expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+            expect(page).to be_axe_clean
             jobseeker_self_disclosure_personal_details_page.fill_in_and_submit_form(dummy_self_disclosure)
 
             # wait for page load
             find("form[action='/jobseekers/job_applications/#{job_application.id}/self_disclosure/barred_list']")
-            expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+            expect(page).to be_axe_clean
             jobseeker_self_disclosure_barred_list_page.fill_in_and_submit_form(dummy_self_disclosure)
 
             # wait for page load
             find("form[action='/jobseekers/job_applications/#{job_application.id}/self_disclosure/conduct']")
-            expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+            expect(page).to be_axe_clean
             jobseeker_self_disclosure_conduct_page.fill_in_and_submit_form(dummy_self_disclosure)
 
             # wait for page load
             find("form[action='/jobseekers/job_applications/#{job_application.id}/self_disclosure/confirmation']")
-            expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+            expect(page).to be_axe_clean
           end
         end
       end

@@ -115,9 +115,10 @@ en:
     create_a_job_alert: Create a job alert
     find_job: Find a job
     manage_jobs: Manage jobs
+    candidate_profiles: Candidate profiles
     manage_settings: Manage settings
     school_profile: School profile
-    organisation_profile: Organisation profile
+    organisation_profile: "%{name} profile"
     notifications_html:
       zero: Notifications
       one: Notifications <span class="count-badge">%{count}<span class="govuk-visually-hidden"> unread</span></span>

@@ -1,4 +1,4 @@
-header aria-label="Beta phase"
-  = govuk_phase_banner(tag: { text: "beta" }, classes: "govuk-!-display-none-print") do
-    span.govuk-phase-banner__text
-      = header_feedback_link_text
+= govuk_phase_banner(tag: { text: "beta" }, classes: "govuk-!-display-none-print", html_attributes: { role: "complementary", "aria-label": "Beta notification" }) do
+
+  span.govuk-phase-banner__text
+    = header_feedback_link_text

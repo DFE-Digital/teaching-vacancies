@@ -16,22 +16,19 @@ html.govuk-template.govuk-template--rebranded.app-html-class lang="en"
     = render "layouts/sentry_js_config"
 
   body class=body_class
+    = render "layouts/skip_links"
     = render "layouts/cookies_banner"
     - if consented_to_extra_cookies?
       = render "layouts/google_tag_manager_body"
       = render "layouts/facebook_pixel_body"
       = render "layouts/linkedin_pixel_body"
     = render "layouts/add_js_enabled_class_to_body"
-    = render "layouts/skip_links"
     = render EnvironmentBannerComponent.new
     / Uncomment the line below to display a banner announcing future period where the page will be in maintenance mode
     / = render ScheduledMaintenanceBannerComponent.new(date: "5th October 2023", start_time: "08:00", end_time: "09:30")
     = render "layouts/header"
     .govuk-width-container
       = render "layouts/phase_banner"
-    - if publisher_signed_in?
-      = render "layouts/publisher_secondary_nav"
-    = render "layouts/sub_navigation"
 
     .govuk-width-container
       - if content_for? :breadcrumbs

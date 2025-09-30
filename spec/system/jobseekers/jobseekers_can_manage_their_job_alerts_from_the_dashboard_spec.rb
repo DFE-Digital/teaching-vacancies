@@ -14,7 +14,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
       before { visit jobseekers_subscriptions_path }
 
       it "passes a11y", :a11y do
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+        expect(page).to be_axe_clean
       end
 
       it "shows job alerts" do
@@ -32,7 +32,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
         end
 
         it "passes a11y", :a11y do
-          expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+          expect(page).to be_axe_clean
         end
 
         it "edits the job alert and redirects to the dashboard" do
@@ -70,7 +70,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
         before { click_on I18n.t("jobseekers.subscriptions.index.link_unsubscribe") }
 
         it "passes a11y", :a11y do
-          expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+          expect(page).to be_axe_clean
         end
 
         it "unsubscribes from the job alert and redirects to the dashboard" do
