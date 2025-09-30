@@ -20,7 +20,7 @@ RSpec.describe "Jobseekers applications statuses" do
       let(:jobseeker_profile) { build(:jobseeker_profile, :completed) }
 
       it "passes accessibility checks" do
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+        expect(page).to be_axe_clean
       end
 
       it "shows all sections with the status tag 'incomplete'" do
@@ -28,13 +28,13 @@ RSpec.describe "Jobseekers applications statuses" do
           click_on I18n.t("jobseekers.job_applications.banner_links.apply")
         end
 
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+        expect(page).to be_axe_clean
 
         click_button "Start application"
         # wait for page load
         find(".govuk-notification-banner")
 
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+        expect(page).to be_axe_clean
 
         expect(page).to have_css("#personal_details", text: I18n.t("shared.status_tags.incomplete"))
         expect(page).to have_css("#professional_status", text: I18n.t("shared.status_tags.incomplete"))

@@ -25,7 +25,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
       end
 
       it "passes a11y", :a11y do
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+        expect(page).to be_axe_clean
       end
 
       it "can edit a draft", :a11y do
@@ -35,52 +35,51 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         # page load wait
         find("form.new_publishers_job_listing_key_stages_form")
         expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :key_stages))
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+        expect(page).to be_axe_clean
 
         fill_in_key_stages_form_fields(vacancy.key_stages_for_phases)
         progress_to_edit_page(:contract_information)
         #  https://github.com/alphagov/govuk-frontend/issues/979
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+        expect(page).to be_axe_clean.skipping "aria-allowed-attr"
 
         progress_to_edit_page(:start_date)
         #  https://github.com/alphagov/govuk-frontend/issues/979
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+        expect(page).to be_axe_clean.skipping "aria-allowed-attr"
 
         progress_to_edit_page(:pay_package)
         #  https://github.com/alphagov/govuk-frontend/issues/979
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+        expect(page).to be_axe_clean.skipping "aria-allowed-attr"
 
         progress_to_edit_page(:about_the_role)
         #  https://github.com/alphagov/govuk-frontend/issues/979
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+        expect(page).to be_axe_clean.skipping "aria-allowed-attr"
 
         progress_to_edit_page(:include_additional_documents)
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+        expect(page).to be_axe_clean
 
         progress_to_edit_page(:school_visits)
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+        expect(page).to be_axe_clean
 
         progress_to_edit_page(:visa_sponsorship)
         #  https://github.com/alphagov/govuk-frontend/issues/979
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+        expect(page).to be_axe_clean.skipping "aria-allowed-attr"
 
         progress_to_edit_page(:important_dates)
         #  https://github.com/alphagov/govuk-frontend/issues/979
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+        expect(page).to be_axe_clean.skipping "aria-allowed-attr"
 
         progress_to_edit_page(:applying_for_the_job)
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+        expect(page).to be_axe_clean
 
         progress_to_edit_page(:contact_details)
         #  https://github.com/alphagov/govuk-frontend/issues/979
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+        expect(page).to be_axe_clean.skipping "aria-allowed-attr"
 
         click_on I18n.t("buttons.save_and_continue")
         #  wait for page load
         find(".govuk-notification-banner")
         expect(current_path).to eq(organisation_job_review_path(vacancy.id))
-
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+        expect(page).to be_axe_clean
 
         expect(page).to have_content(DraftVacancy.find(vacancy.id).job_roles.first.humanize)
       end
@@ -110,7 +109,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
       end
 
       it "passes a11y", :a11y do
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+        expect(page).to be_axe_clean
       end
 
       scenario "successfully updating the job location" do

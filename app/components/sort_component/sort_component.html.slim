@@ -26,7 +26,7 @@
 
         = f.govuk_submit t("jobs.sort_by.submit")
     - when "links"
-      nav.govuk-body
+      nav.govuk-body aria-label="Sort Order"
         span class="govuk-!-font-weight-bold" = "#{t('jobs.sort_by.label')}:"
         ul.sort-component__list
           - sort.each do |option|

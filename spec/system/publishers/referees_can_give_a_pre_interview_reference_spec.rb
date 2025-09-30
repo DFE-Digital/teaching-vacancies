@@ -60,23 +60,25 @@ RSpec.describe "Publishers can select a job application for interview" do
       before do
         choose I18n.t("helpers.label.referees_can_give_reference_form.can_give_reference_options.true")
         click_on I18n.t("buttons.continue")
+        # wait for page load
+        find("form[action='/references/#{reference_request.id}/build/can_share']")
       end
 
       #  have to use JS driver for send_keys support
       it "displays the fit_and_proper page followed by the employment_reference page", :a11y do
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+        expect(page).to be_axe_clean
 
         choose I18n.t("helpers.label.referees_can_share_reference_form.is_reference_sharable_options.false")
         click_on I18n.t("buttons.continue")
         # click through fit-and-proper-person blurb
         # wait for page
         find("form[action='/references/#{reference_request.id}/build/fit_and_proper_persons']")
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+        expect(page).to be_axe_clean
         click_on I18n.t("buttons.continue")
 
         expect(referee_employment_reference_page).to be_displayed
         #  https://github.com/alphagov/govuk-frontend/issues/979
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+        expect(page).to be_axe_clean.skipping "aria-allowed-attr"
         referee_employment_reference_page.currently_employed_no.click
         referee_employment_reference_page.reemploy_current_yes.click
         referee_employment_reference_page.reemploy_any_yes.click
@@ -104,8 +106,7 @@ RSpec.describe "Publishers can select a job application for interview" do
 
         expect(referee_reference_information_page).to be_displayed
         #  https://github.com/alphagov/govuk-frontend/issues/979
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
-
+        expect(page).to be_axe_clean.skipping "aria-allowed-attr"
         referee_reference_information_page.under_investigation_yes.click
         referee_reference_information_page.warnings_yes.click
         referee_reference_information_page.allegations_yes.click
@@ -117,6 +118,7 @@ RSpec.describe "Publishers can select a job application for interview" do
         click_on I18n.t("buttons.continue")
 
         expect(referee_how_would_you_rate1_page).to be_displayed
+        expect(page).to be_axe_clean
         referee_how_would_you_rate1_page.outstanding_punctuality.click
         referee_how_would_you_rate1_page.outstanding_working_relationships.click
         referee_how_would_you_rate1_page.outstanding_customer_care.click
@@ -124,6 +126,7 @@ RSpec.describe "Publishers can select a job application for interview" do
         click_on I18n.t("buttons.continue")
 
         expect(referee_how_would_you_rate2_page).to be_displayed
+        expect(page).to be_axe_clean
         referee_how_would_you_rate2_page.outstanding_deal_with_conflict.click
         referee_how_would_you_rate2_page.outstanding_prioritise_workload.click
         referee_how_would_you_rate2_page.outstanding_team_working.click
@@ -131,6 +134,7 @@ RSpec.describe "Publishers can select a job application for interview" do
         click_on I18n.t("buttons.continue")
 
         expect(referee_how_would_you_rate3_page).to be_displayed
+        expect(page).to be_axe_clean
         referee_how_would_you_rate3_page.outstanding_problem_solving.click
         referee_how_would_you_rate3_page.outstanding_general_attitude.click
         referee_how_would_you_rate3_page.outstanding_technical_competence.click
@@ -138,7 +142,7 @@ RSpec.describe "Publishers can select a job application for interview" do
         click_on I18n.t("buttons.continue")
 
         expect(referee_referee_details_page).to be_displayed
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+        expect(page).to be_axe_clean
 
         referee_referee_details_page.complete_and_accurate_checkbox.click
         # last click to go to the confirmation page

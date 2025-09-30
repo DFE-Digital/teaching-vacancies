@@ -19,7 +19,7 @@ RSpec.describe "Jobseekers can complete a job application" do
     let(:vacancy) { create(:vacancy, job_roles: ["teacher"], organisations: [organisation]) }
 
     it "passes a11y", :a11y do
-      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+      expect(page).to be_axe_clean
     end
 
     it "allows jobseekers to complete an application and go to review page", :a11y do
@@ -87,7 +87,7 @@ RSpec.describe "Jobseekers can complete a job application" do
 
       click_on(I18n.t("jobseekers.job_applications.build.personal_statement.heading"))
 
-      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+      expect(page).to be_axe_clean
 
       validates_step_complete
       fill_in_personal_statement
@@ -112,7 +112,7 @@ RSpec.describe "Jobseekers can complete a job application" do
       click_on(I18n.t("jobseekers.job_applications.build.equal_opportunities.heading"))
 
       #  https://github.com/alphagov/govuk-frontend/issues/979
-      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+      expect(page).to be_axe_clean.skipping "aria-allowed-attr"
 
       validates_step_complete
       fill_in_equal_opportunities
@@ -122,7 +122,7 @@ RSpec.describe "Jobseekers can complete a job application" do
       click_on(I18n.t("jobseekers.job_applications.build.ask_for_support.heading"))
 
       #  https://github.com/alphagov/govuk-frontend/issues/979
-      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+      expect(page).to be_axe_clean.skipping "aria-allowed-attr"
 
       validates_step_complete
       fill_in_ask_for_support
@@ -132,7 +132,7 @@ RSpec.describe "Jobseekers can complete a job application" do
       click_on(I18n.t("jobseekers.job_applications.build.declarations.heading"))
 
       #  https://github.com/alphagov/govuk-frontend/issues/979
-      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+      expect(page).to be_axe_clean.skipping "aria-allowed-attr"
 
       validates_step_complete
       fill_in_declarations
