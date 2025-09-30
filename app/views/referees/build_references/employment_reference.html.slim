@@ -1,7 +1,6 @@
 - content_for :page_title_prefix, t(".page_title", name: @referee.job_application.name)
 
 - content_for :breadcrumbs do
-  nav.govuk-breadcrumbs aria-label="Breadcrumbs"
   = govuk_back_link text: t("buttons.back"), href: previous_wizard_path(token: @form.token)
 
 span.govuk-caption-m = t(".caption")

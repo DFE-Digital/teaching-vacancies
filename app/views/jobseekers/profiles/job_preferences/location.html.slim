@@ -1,6 +1,5 @@
 - content_for :page_title_prefix, "Job preferences: locations"
 - content_for :breadcrumbs do
-  nav.govuk-breadcrumbs aria-label="Breadcrumbs"
   = govuk_back_link text: t("buttons.back"), href: back_url
 
 = form_for(location_form, url: { action: :update_location, id: params[:id] }, as: :job_preferences_location) do |f|

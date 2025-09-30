@@ -2,7 +2,6 @@
 - content_for :page_description, t(".#{params[:section]}.meta_description")
 
 - content_for :breadcrumbs do
-  nav aria-label="Breadcrumbs"
   = govuk_breadcrumbs breadcrumbs: { t("breadcrumbs.home") => root_path,
                                      params[:section].titleize.capitalize => "" }
 

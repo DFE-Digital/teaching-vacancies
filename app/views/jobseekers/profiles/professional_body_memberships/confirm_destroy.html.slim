@@ -1,7 +1,6 @@
 - content_for :page_title_prefix, t(".caption")
 
 - content_for :breadcrumbs do
-  nav.govuk-breadcrumbs aria-label="Breadcrumbs"
   = govuk_back_link text: t("buttons.back"), href: jobseekers_profile_path
 
 .govuk-grid-row

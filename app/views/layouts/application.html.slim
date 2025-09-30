@@ -34,7 +34,9 @@ html.govuk-template.govuk-template--rebranded.app-html-class lang="en"
     = render "layouts/sub_navigation"
 
     .govuk-width-container
-      = content_for :breadcrumbs
+      - if content_for? :breadcrumbs
+        nav.govuk-breadcrumbs aria-label="Breadcrumbs"
+          = content_for :breadcrumbs
       = render "layouts/flash_messages"
       main#main-content.govuk-main-wrapper.govuk-main-wrapper--auto-spacing role="main"
         = yield

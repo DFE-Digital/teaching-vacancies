@@ -1,7 +1,6 @@
 - content_for :page_title_prefix, t(".page_title")
 
 - content_for :breadcrumbs do
-  nav.govuk-breadcrumbs aria-label="Breadcrumbs"
   = govuk_back_link text: t("buttons.back"), href: escape_path, html_attributes: { "aria-label" => "Back navigation" }
 
 .govuk-grid-row
