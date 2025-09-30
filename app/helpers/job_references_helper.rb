@@ -17,6 +17,16 @@ module JobReferencesHelper
     end
   end
 
+  def religious_request_status(religious_reference_request)
+    if religious_reference_request.action_needed?
+      "action"
+    elsif religious_reference_request.requested?
+      "pending"
+    else
+      "completed"
+    end
+  end
+
   def contact_referees_message(job_applications)
     if job_applications.one?
       "single"
