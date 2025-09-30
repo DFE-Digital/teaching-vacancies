@@ -3,20 +3,18 @@
 - content_for :breadcrumbs do
   = govuk_back_link text: t("buttons.back"), href: back_link_destination
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_for @description_form, url: publishers_organisation_description_path(@organisation), method: :patch do |f|
-      = f.govuk_error_summary
+= form_for @description_form, url: publishers_organisation_description_path(@organisation), method: :patch do |f|
+  = f.govuk_error_summary
 
-      span.govuk-caption-l = t("publishers.organisations.profile_caption", organisation_type: @organisation.school? ? "School" : "Organisation")
-      label.govuk-heading-l = t(".title", organisation_type: @organisation.school? ? "School" : "Organisation")
+  span.govuk-caption-l = t("publishers.organisations.profile_caption", organisation_type: @organisation.school? ? "School" : "Organisation")
+  label.govuk-heading-l = t(".title", organisation_type: @organisation.school? ? "School" : "Organisation")
 
-      - if params["vacancy_id"]
-        = f.hidden_field "vacancy_id", value: params["vacancy_id"]
+  - if params["vacancy_id"]
+    = f.hidden_field "vacancy_id", value: params["vacancy_id"]
 
-      = f.govuk_text_area :description,
-        label: { text: t("helpers.label.publishers_organisation_form.description", organisation_type: organisation_type_basic(@organisation)), size: "s" },
-        hint: { text: t("helpers.hint.publishers_organisation_form.description", organisation_type: organisation_type_basic(@organisation)) },
-        rows: 10
+  = f.govuk_text_area :description,
+    label: { text: t("helpers.label.publishers_organisation_form.description", organisation_type: organisation_type_basic(@organisation)), size: "s" },
+    hint: { text: t("helpers.hint.publishers_organisation_form.description", organisation_type: organisation_type_basic(@organisation)) },
+    rows: 10
 
-      = f.govuk_submit t("buttons.save_changes")
+  = f.govuk_submit t("buttons.save_changes")
