@@ -205,6 +205,21 @@ RSpec.describe Subscription do
               expect(vacancies.map(&:slug)).to contain_exactly(liverpool_vacancy.slug, st_albans_vacancy.slug, basildon_vacancy.slug)
             end
           end
+
+          context "when the vacancy does not match the non-location criteria" do
+            let(:subscription) do
+              create(:daily_subscription, location: "Basildon", teaching_job_roles: %w[pastoral_health_and_welfare], radius: 200)
+            end
+
+            it "does not find the vacancy" do
+              expect(vacancies).to be_empty
+            end
+
+            it "does not compute any expensive polygon calculations" do
+              expect(LocationPolygon).not_to receive(:buffered)
+              vacancies
+            end
+          end
         end
 
         context "without a polygon (basildon postcode)", :geocode, :vcr do
@@ -231,6 +246,21 @@ RSpec.describe Subscription do
 
             it "finds liverpool as well" do
               expect(vacancies).to contain_exactly(liverpool_vacancy, st_albans_vacancy, basildon_vacancy)
+            end
+          end
+
+          context "when the vacancy does not match the non-location criteria" do
+            let(:subscription) do
+              create(:daily_subscription, location: "Basildon SS14 3WB", teaching_job_roles: %w[pastoral_health_and_welfare], radius: 200)
+            end
+
+            it "does not find the vacancy" do
+              expect(vacancies).to be_empty
+            end
+
+            it "does not call the Geocoding class" do
+              expect(Geocoding).not_to receive(:new)
+              vacancies
             end
           end
         end

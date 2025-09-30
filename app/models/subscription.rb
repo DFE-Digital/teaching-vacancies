@@ -114,7 +114,14 @@ class Subscription < ApplicationRecord
     vacancies = scope.select do |vacancy|
       criteria.except(*JOB_ROLE_ALIASES, :location, :radius).all? { |criterion, value| FILTERS.fetch(criterion).call(vacancy, value) }
     end
-    self.class.handle_location(vacancies, criteria)
+    # Location handling is the most expensive operations, since they involve polygons or geocoding computations in DB.
+    # So do it last, and only if there are any vacancies left to filter after the other criteria have been applied over
+    # the in-memory vacancy set.
+    if vacancies.any?
+      self.class.handle_location(vacancies, criteria)
+    else
+      vacancies
+    end
   end
 
   extend DistanceHelper
@@ -154,16 +161,16 @@ class Subscription < ApplicationRecord
     end
     # rubocop:enable Metrics/AbcSize
 
-    def handle_location(scope, criteria)
+    def handle_location(vacancies, criteria)
       if criteria.key?(:location)
         location = criteria[:location].strip.downcase
         if location.blank? || LocationQuery::NATIONWIDE_LOCATIONS.include?(location)
-          scope
+          vacancies
         else
-          limit_by_location(scope, location, criteria[:radius] || 10)
+          limit_by_location(vacancies, location, criteria[:radius] || 10)
         end
       else
-        scope
+        vacancies
       end
     end
   end

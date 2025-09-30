@@ -95,6 +95,7 @@ RSpec.describe Jobseekers::AlertMailer do
     let(:frequency) { "daily" }
 
     it "sends a job alert email" do
+      expect_any_instance_of(described_class).to receive(:send_email).and_call_original
       expect(mail.subject).to eq(I18n.t("jobseekers.alert_mailer.alert.subject",
                                         count: vacancies.count,
                                         count_minus_one: vacancies.count - 1,
@@ -134,6 +135,17 @@ RSpec.describe Jobseekers::AlertMailer do
         expect(:jobseeker_subscription_alert).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
       end
     end
+
+    context "when the subscription has no email address" do
+      before do
+        subscription.update(email: "")
+      end
+
+      it "does not send an email" do
+        expect_any_instance_of(described_class).not_to receive(:send_email)
+        mail.deliver_now
+      end
+    end
   end
 
   context "when frequency is weekly" do
@@ -141,6 +153,7 @@ RSpec.describe Jobseekers::AlertMailer do
     let(:frequency) { "weekly" }
 
     it "sends a job alert email" do
+      expect_any_instance_of(described_class).to receive(:send_email).and_call_original
       expect(mail.subject).to eq(I18n.t("jobseekers.alert_mailer.alert.subject",
                                         count: vacancies.count,
                                         count_minus_one: vacancies.count - 1,
@@ -190,6 +203,17 @@ RSpec.describe Jobseekers::AlertMailer do
         expect(body).to_not include(jobseekers_profile_url(**utm_params))
         expect(body).to_not include(I18n.t("jobseekers.alert_mailer.alert.create_a_profile.heading"))
         expect(body).to_not include(I18n.t("jobseekers.alert_mailer.alert.create_a_profile.link_text"))
+      end
+    end
+
+    context "when the subscription has no email address" do
+      before do
+        subscription.update(email: "")
+      end
+
+      it "does not send an email" do
+        expect_any_instance_of(described_class).not_to receive(:send_email)
+        mail.deliver_now
       end
     end
   end
