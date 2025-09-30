@@ -11,11 +11,27 @@ RSpec.describe SendDailyAlertEmailJob do
         create(:vacancy, :published_slugged, publish_on: Date.yesterday)
       end
 
-      let(:subscription) { create(:daily_subscription) }
+      let!(:subscription) { create(:daily_subscription) }
 
       it "sends an email" do
         expect(Jobseekers::AlertMailer).to receive(:alert).with(subscription.id, PublishedVacancy.pluck(:id)) { mail }
         expect(mail).to receive(:deliver_later) { ActionMailer::MailDeliveryJob.new }
+        perform_enqueued_jobs { job }
+      end
+
+      it "logs the job run statistics to Sentry" do
+        scope_mock = instance_double(Sentry::Scope).as_null_object
+
+        allow(Time).to receive(:current).and_return(Time.current, Time.current + 65)
+        allow(Sentry).to receive(:capture_message)
+        allow(Sentry).to receive(:with_scope).and_yield(scope_mock)
+
+        expect(scope_mock).to receive(:set_context).with("Alert run Statistics", { duration: "1m 5s", alerts_sent: 1, vacancies_in_alerts: 1 })
+        expect(Sentry).to receive(:capture_message).with(
+          "SendDailyAlertEmailJob run successfully (duration: 1m 5s)",
+          level: :info,
+          fingerprint: ["{{ transaction }}"],
+        )
         perform_enqueued_jobs { job }
       end
 
@@ -51,7 +67,7 @@ RSpec.describe SendDailyAlertEmailJob do
     end
 
     context "with no vacancies" do
-      let(:subscription) { create(:subscription, frequency: :daily) }
+      let!(:subscription) { create(:subscription, frequency: :daily) }
 
       it "does not send an email or create a run" do
         expect(Jobseekers::AlertMailer).to_not receive(:alert)
