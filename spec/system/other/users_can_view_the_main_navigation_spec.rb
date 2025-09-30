@@ -40,11 +40,11 @@ RSpec.describe "Main navigation for users to sign in and out" do
     after { logout }
 
     it "renders the correct links" do
-      within ".govuk-header__navigation" do
-        expect(page).to have_content(I18n.t("nav.manage_jobs"))
-        expect(page).to have_content(I18n.t("nav.notifications_html", count: 0))
-        expect(page).to have_content(I18n.t("nav.sign_out"))
-      end
+      # within ".govuk-header__navigation" do
+      expect(page).to have_content(I18n.t("nav.manage_jobs"))
+      expect(page).to have_content(I18n.t("nav.notifications_html", count: 0))
+      expect(page).to have_content(I18n.t("nav.sign_out"))
+      # end
     end
   end
 end

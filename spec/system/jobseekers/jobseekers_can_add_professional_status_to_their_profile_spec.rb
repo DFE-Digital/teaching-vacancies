@@ -16,7 +16,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
     let(:profile) { build(:jobseeker_profile, qualified_teacher_status: nil, qualified_teacher_status_year: nil) }
 
     it "passes a11y", :a11y do
-      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+      expect(page).to be_axe_clean
     end
 
     context "when on QTS page" do
@@ -26,7 +26,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
 
       it "passes a11y", :a11y do
         #  https://github.com/alphagov/govuk-frontend/issues/979
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+        expect(page).to be_axe_clean.skipping "aria-allowed-attr"
       end
 
       context "when jobseeker has qualified teacher status" do

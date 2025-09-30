@@ -15,7 +15,7 @@ RSpec.describe "Jobseekers can review a job application" do
   after { logout }
 
   it "passes a11y", :a11y do
-    expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+    expect(page).to be_axe_clean
   end
 
   it "displays all the job application information" do
