@@ -14,7 +14,7 @@
           = f.hidden_field :tab, value: @tab
           .govuk-grid-row
             .govuk-grid-column-two-thirds
-              = f.govuk_text_field :keyword, label: { text: t(".search.label") }, 
+              = f.govuk_text_field :keyword, label: { text: t(".search.label") },
                                    hint: { text: t(".search.hint") },
                                    value: @search_form.keyword,
                                    html_attributes: { placeholder: t(".search.placeholder") }
@@ -22,7 +22,7 @@
               .search-actions
                 = f.govuk_submit t(".search.submit"), class: "govuk-button"
                 - if @search_form.active_criteria?
-                  = govuk_link_to t(".search.clear"), publishers_candidate_messages_path(@search.clear_filters_params), 
+                  = govuk_link_to t(".search.clear"), publishers_candidate_messages_path(@search.clear_filters_params),
                                   class: "govuk-link search-clear-link"
 
         - if @search_form.active_criteria?
