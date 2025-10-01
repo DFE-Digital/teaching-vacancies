@@ -9,7 +9,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     "FeedbackForm" => Publishers::JobApplication::FeedbackForm,
   }.freeze
 
-  before_action :set_job_application, only: %i[show download pre_interview_checks]
+  before_action :set_job_application, only: %i[show download pre_interview_checks messages download_messages]
   before_action :set_job_applications, only: %i[index tag]
 
   def index
@@ -19,7 +19,6 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def show
     redirect_to organisation_job_job_application_terminal_path(vacancy.id, @job_application) if @job_application.withdrawn?
-
     @notes_form = Publishers::JobApplication::NotesForm.new
 
     raise ActionController::RoutingError, "Cannot view a draft application" if @job_application.draft?
@@ -68,6 +67,30 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def pre_interview_checks
     @reference_requests = @job_application.referees.filter_map(&:reference_request)
+  end
+
+  def messages
+    @show_form = params["show_form"]
+    @message_form = Publishers::JobApplication::MessagesForm.new
+    @messages = @job_application.conversations.includes(:messages).flat_map(&:messages).sort_by(&:created_at).reverse
+
+    # Mark jobseeker messages as read when publisher views them
+    jobseeker_messages = @messages.select { |msg| msg.is_a?(JobseekerMessage) && msg.unread? }
+    jobseeker_messages.each(&:mark_as_read!)
+  end
+
+  def download_messages
+    messages = Message.joins(:conversation).where(conversations: { job_application: @job_application }).order(created_at: :desc)
+
+    generator = MessagesPdfGenerator.new(@job_application, messages)
+    document = generator.generate
+
+    filename = "messages_#{@job_application.first_name}_#{@job_application.last_name}_#{@job_application.vacancy.job_title.parameterize}.pdf"
+
+    send_data(document.render,
+              filename: filename,
+              type: "application/pdf",
+              disposition: "attachment")
   end
 
   private

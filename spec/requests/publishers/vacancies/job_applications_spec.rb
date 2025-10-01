@@ -80,6 +80,36 @@ RSpec.describe "Job applications" do
     end
   end
 
+  describe "GET #download_messages" do
+    context "when messages exist for the job application" do
+      let!(:conversation) { create(:conversation, job_application: job_application) }
+
+      before do
+        create(:publisher_message, conversation: conversation, sender: publisher)
+        create(:jobseeker_message, conversation: conversation, sender: job_application.jobseeker)
+      end
+
+      it "sends a PDF file with messages" do
+        get download_messages_organisation_job_job_application_path(vacancy.id, job_application.id)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.content_type).to eq("application/pdf")
+        expect(response.headers["Content-Disposition"]).to include("attachment")
+        expect(response.headers["Content-Disposition"]).to include("messages_#{job_application.first_name}_#{job_application.last_name}_#{vacancy.job_title.parameterize}.pdf")
+      end
+    end
+
+    context "when no messages exist for the job application" do
+      it "sends a PDF file with no messages text" do
+        get download_messages_organisation_job_job_application_path(vacancy.id, job_application.id)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.content_type).to eq("application/pdf")
+        expect(response.headers["Content-Disposition"]).to include("attachment")
+      end
+    end
+  end
+
   describe "GET #tag" do
     subject { response }
 

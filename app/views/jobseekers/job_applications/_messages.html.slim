@@ -1,0 +1,26 @@
+.govuk-grid-row
+  .govuk-grid-column-full
+    div class="govuk-!-margin-bottom-6"
+      - unless @show_form == "true"
+        - if @job_application.can_jobseeker_send_message?
+          = govuk_button_link_to t(".send_message"), url_for(params.to_unsafe_h.merge(show_form: "true")), class: "govuk-button--primary"
+        - elsif @job_application.withdrawn?
+          = govuk_warning_text(text: t(".messaging_not_available.withdrawn"))
+        - elsif @job_application.can_jobseeker_reply_to_message?
+          = govuk_warning_text(text: t(".messaging_not_available.cannot_initiate"))
+        - else
+          = govuk_warning_text(text: t(".messaging_not_available.cannot_message_at_all"))
+
+    - if @show_form == "true" && @job_application.can_jobseeker_send_message?
+      = render "shared/message_form",
+              message_object: @message_form,
+              form_url: jobseekers_job_application_messages_path(@job_application),
+              form_help_text: t(".form_help_text"),
+              form_help_content: t(".form_help_content"),
+              cancel_link: jobseekers_job_application_path(@job_application, tab: "messages")
+
+    - if messages.any?
+      #messages-list
+        = render partial: messages, locals: { current_user: current_user }
+    - else
+      p.govuk-body-m = t(".no_messages_yet")

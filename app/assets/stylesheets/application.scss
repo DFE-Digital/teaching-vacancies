@@ -54,6 +54,7 @@ $govuk-assets-path: "/";
 @import 'components/environment_banner';
 @import 'components/filters';
 @import 'components/map';
+@import 'components/messages';
 @import 'components/sidebar';
 @import 'components/navigation_list';
 @import 'components/notification';
@@ -75,3 +76,6 @@ $govuk-assets-path: "/";
 @import 'js_components/manageQualifications';
 @import 'js_components/panel';
 @import 'js_components/uploadDocuments';
+
+@import 'trix/dist/trix';
+@import './actiontext';

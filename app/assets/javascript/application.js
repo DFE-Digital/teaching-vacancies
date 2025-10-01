@@ -8,9 +8,13 @@ import $ from 'jquery';
 
 import { Application } from '@hotwired/stimulus';
 import Rails from 'rails-ujs';
+// required to support images in trix editor
+import * as ActiveStorage from '@rails/activestorage';
 import { initMojFrontEnd } from './init-moj-front-end';
 
 import 'chartkick';
+import 'trix';
+import '@rails/actiontext';
 
 // view components
 import CookiesBannerController from './components/cookiesBanner/enhance';
@@ -70,6 +74,19 @@ application.register('tracked-link', TrackedLinkController);
 application.register('utils', UtilsController);
 
 Rails.start();
+ActiveStorage.start();
+
 govukFrontend.initAll();
 window.$ = $;
 initMojFrontEnd();
+
+// Make links in message content open in new tabs
+document.addEventListener('DOMContentLoaded', () => {
+  const messageLinks = document.querySelectorAll('.govuk-summary-card__content a');
+  messageLinks.forEach((link) => {
+    if (!link.hasAttribute('target')) {
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer');
+    }
+  });
+});

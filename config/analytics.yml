@@ -586,3 +586,19 @@ shared:
     - agreed_for_organisation_update
     - agreed_for_information_sharing
     - true_and_complete
+  :messages:
+    - id
+    - sender_id
+    - conversation_id
+    - created_at
+    - updated_at
+    - type
+    - read
+  :conversations:
+    - id
+    - job_application_id
+    - created_at
+    - updated_at
+    - archived
+    - last_message_at
+    - has_unread_jobseeker_messages

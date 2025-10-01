@@ -7,6 +7,7 @@ require "active_job/railtie"
 require "active_record/railtie"
 require "action_controller/railtie"
 require "action_mailer/railtie"
+require "action_text/engine"
 require "action_view/railtie"
 require "active_storage/engine"
 # require "action_cable/engine"
@@ -41,7 +42,8 @@ module TeachingVacancies
       g.orm :active_record, primary_key_type: :uuid
     end
 
-    config.action_view.sanitized_allowed_tags = %w[p br strong em ul li h1 h2 h3 h4 h5]
+    config.action_view.sanitized_allowed_tags = %w[p br strong em ul li h1 h2 h3 h4 h5 a]
+    config.action_view.sanitized_allowed_attributes = %w[href]
     config.action_view.default_form_builder = GOVUKDesignSystemFormBuilder::FormBuilder
 
     # Given we are using Lockbox, this ensures that Rails does not include unnecessary support for SHA-1,
