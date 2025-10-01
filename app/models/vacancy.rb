@@ -2,6 +2,9 @@ require "geocoding"
 
 # rubocop:disable Metrics/ClassLength
 class Vacancy < ApplicationRecord
+  # needed to remove legacy columns
+  self.ignored_columns += %w[safeguarding_information_provided safeguarding_information]
+
   extend FriendlyId
   extend ArrayEnum
 
