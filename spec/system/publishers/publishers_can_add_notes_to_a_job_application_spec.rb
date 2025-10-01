@@ -114,7 +114,7 @@ RSpec.describe "Publishers can add notes to a job application" do
 
     describe "on self disclosure page" do
       before do
-        create(:self_disclosure_request, job_application: job_application)
+        create(:self_disclosure_request, :requested, job_application: job_application)
       end
 
       context "with a note" do
