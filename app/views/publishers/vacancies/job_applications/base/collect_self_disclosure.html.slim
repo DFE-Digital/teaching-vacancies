@@ -3,6 +3,7 @@
 = form_with(model: @form, url: wizard_path, method: :patch) do |f|
   = f.govuk_error_summary
 
+  / need to accumulate user answers to previous questions
   = f.hidden_field :collect_references, value: f.object.collect_references
   = f.hidden_field :contact_applicants, value: f.object.contact_applicants
 

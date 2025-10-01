@@ -3,6 +3,7 @@
 = form_with(model: @form, url: wizard_path, method: :patch) do |f|
   = f.govuk_error_summary
 
+  / need to accumulate user answers to previous questions
   = f.hidden_field :collect_references, value: f.object.collect_references
 
   - legend_text = t(contact_referees_message(@job_applications), scope: "helpers.legend.publishers_job_application_references_contact_applicant_form.contact_applicants")

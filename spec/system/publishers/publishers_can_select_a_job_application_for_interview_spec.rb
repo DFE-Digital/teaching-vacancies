@@ -154,10 +154,11 @@ RSpec.describe "Publishers can select a job application for interview", :perform
     context "with a non-religious vacancy" do
       let(:job_application) do
         create(:job_application, :status_submitted,
-               notify_before_contact_referers: true,
+               notify_before_contact_referers: notify_candidate,
                email_address: jobseeker.email,
                vacancy: vacancy, jobseeker: jobseeker)
       end
+      let(:notify_candidate) { true }
       let(:vacancy) { create(:vacancy, :expired, organisations: [school], publisher: publisher) }
 
       it "doesnt show religious warning text" do
@@ -182,31 +183,49 @@ RSpec.describe "Publishers can select a job application for interview", :perform
         before do
           choose "Yes"
           click_on "Save and continue"
-        end
-
-        scenario "contacting applicant sends emails to referees and applicant" do
-          choose "Yes"
-          click_on "Save and continue"
+          # 2nd question not asked when candidate doesn't need contacting
+          if notify_candidate
+            choose contact_applicant
+            click_on "Save and continue"
+          end
           choose self_disclosure_answer
           click_on "Save and continue"
-          expect(publisher_ats_applications_page).to be_displayed
+          # wait for page load
+          find_by_id("interviewing")
+        end
 
-          expect(emails_with_subjects)
-            .to eq({
-              current_referee.email => ["Provide a reference for"],
-              old_referee.email => ["Provide a reference for"],
-              job_application.email_address => ["References are being collected", "Complete your self-disclosure form"],
-            })
+        context "when applicant doesn't want to be contacted" do
+          let(:notify_candidate) { false }
+
+          it "sends emails to referees and applicant" do
+            expect(publisher_ats_applications_page).to be_displayed
+
+            expect(emails_with_subjects)
+              .to eq({
+                current_referee.email => ["Provide a reference for"],
+                old_referee.email => ["Provide a reference for"],
+                job_application.email_address => ["Complete your self-disclosure form"],
+              })
+          end
+        end
+
+        context "when contacting applicant" do
+          let(:contact_applicant) { "Yes" }
+
+          it "sends emails to referees and applicant" do
+            expect(publisher_ats_applications_page).to be_displayed
+
+            expect(emails_with_subjects)
+              .to eq({
+                current_referee.email => ["Provide a reference for"],
+                old_referee.email => ["Provide a reference for"],
+                job_application.email_address => ["References are being collected", "Complete your self-disclosure form"],
+              })
+          end
         end
 
         context "when not contacting applicant", :versioning do
-          before do
-            choose "No"
-            click_on "Save and continue"
-            choose self_disclosure_answer
-            click_on "Save and continue"
-            find_by_id("interviewing") # make sure controller has finished its jobs
-          end
+          let(:contact_applicant) { "No" }
 
           it "only sends referee emails" do
             expect(publisher_ats_interviewing_page).to be_displayed
