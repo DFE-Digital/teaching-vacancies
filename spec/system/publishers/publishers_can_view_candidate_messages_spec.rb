@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Publishers can view candidate messages", :js do
+RSpec.describe "Publishers can view candidate messages" do
   let(:organisation) { create(:school) }
   let(:publisher) { create(:publisher, organisations: [organisation]) }
   let(:jobseeker) { create(:jobseeker) }
@@ -31,6 +31,10 @@ RSpec.describe "Publishers can view candidate messages", :js do
       context "when on the inbox tab" do
         before do
           visit publishers_candidate_messages_path
+        end
+
+        it "passes accessibility checks", :a11y do
+          expect(page).to be_axe_clean
         end
 
         it "shows inbox tab with correct count, proper ordering, and allows publishers to archive messages" do
@@ -111,6 +115,10 @@ RSpec.describe "Publishers can view candidate messages", :js do
         visit publishers_candidate_messages_path(tab: "archive")
       end
 
+      it "passes accessibility checks", :a11y do
+        expect(page).to be_axe_clean
+      end
+
       context "with single conversation selected" do
         it "unarchives the selected conversation" do
           expect(page).to have_content("Inbox (0)")
@@ -179,6 +187,7 @@ RSpec.describe "Publishers can view candidate messages", :js do
         expect(page).to have_css("tr.conversation--unread")
       end
 
+      # going here marks the messages as read
       visit messages_organisation_job_job_application_path(vacancy.id, job_application.id)
 
       visit publishers_candidate_messages_path
