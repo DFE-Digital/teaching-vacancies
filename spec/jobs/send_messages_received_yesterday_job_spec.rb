@@ -5,7 +5,7 @@ RSpec.describe SendMessagesReceivedYesterdayJob do
     let(:organisation) { create(:school) }
     let(:publisher) { create(:publisher, organisations: [organisation]) }
     let(:vacancy) { create(:vacancy, organisations: [organisation], publisher: publisher) }
-    let(:job_application) { create(:job_application, vacancy: vacancy, status: "submitted") }
+    let(:job_application) { create(:job_application, vacancy: vacancy, status: "interviewing") }
     let(:conversation) { create(:conversation, job_application: job_application) }
     let(:jobseeker) { create(:jobseeker) }
 
@@ -48,7 +48,7 @@ RSpec.describe SendMessagesReceivedYesterdayJob do
         other_organisation = create(:school)
         other_publisher = create(:publisher, organisations: [other_organisation])
         other_vacancy = create(:vacancy, organisations: [other_organisation], publisher: other_publisher)
-        other_job_application = create(:job_application, vacancy: other_vacancy, status: "submitted")
+        other_job_application = create(:job_application, vacancy: other_vacancy, status: "interviewing")
         other_conversation = create(:conversation, job_application: other_job_application)
 
         travel_to(1.day.ago) do
@@ -114,7 +114,7 @@ RSpec.describe SendMessagesReceivedYesterdayJob do
     context "when publisher has no email" do
       let(:publisher_without_email) { create(:publisher, email: nil, organisations: [organisation]) }
       let(:vacancy_without_email) { create(:vacancy, organisations: [organisation], publisher: publisher_without_email) }
-      let(:job_application_without_email) { create(:job_application, vacancy: vacancy_without_email, status: "submitted") }
+      let(:job_application_without_email) { create(:job_application, vacancy: vacancy_without_email, status: "interviewing") }
       let(:conversation_without_email) { create(:conversation, job_application: job_application_without_email) }
 
       before do
