@@ -9,16 +9,6 @@ h1.govuk-heading-xl
     p.govuk-body = t(".one_login_banner.paragraph1")
     p.govuk-body = t(".one_login_banner.paragraph2", link: govuk_link_to(t(".one_login_banner.transfer_profile_link_text"), new_jobseekers_request_account_transfer_email_path)).html_safe
 
-div class="govuk-grid-rows govuk-heading-l govuk-!-margin-bottom-9"
-  .govuk-grid-column-one-third
-    = govuk_link_to t("sub_nav.jobseekers.saved_jobs"), jobseekers_saved_jobs_path
-
-  .govuk-grid-column-one-third
-    = govuk_link_to t("sub_nav.jobseekers.job_alerts"), jobseekers_subscriptions_path
-
-  .govuk-grid-column-one-third
-    = govuk_link_to t("nav.create_a_job_alert"), new_subscription_path
-
 p id="top_links"
   = govuk_link_to t(".turn_#{@off_on}_profile"), confirm_toggle_jobseekers_profile_path, class: "govuk-!-margin-right-2"
   = govuk_link_to t(".preview_profile"), jobseekers_profile_preview_path
