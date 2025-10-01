@@ -30,8 +30,7 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # enable_coverage_for_eval
     merge_timeout ENV["MERGE_TIMEOUT"].to_i if ENV.key? "MERGE_TIMEOUT"
 
-    add_filter %r{.rake$}
-    add_filetr "lib/tasks/data.rake" # was not ignored for some reason
+    add_filter "lib/tasks/"
 
     add_filter "app/services/custom_log_formatter.rb"
     add_filter "app/controllers/robots_controller.rb"
