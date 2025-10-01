@@ -156,8 +156,6 @@ RSpec.describe ImportFromVacancySourceJob do
           "readable_phases" => [],
           "receive_applications" => nil,
           "religion_type" => nil,
-          "safeguarding_information" => nil,
-          "safeguarding_information_provided" => nil,
           "salary" => "Main pay range 1 to Upper pay range 3, £23,719 to £39,406 per year (full time equivalent)",
           "school_offer" => "School Offer",
           "school_visits" => true,
