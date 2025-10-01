@@ -3,6 +3,7 @@ order: 100
 title: How to create the perfect teacher job advert
 meta_description: Expert advice on what information to include when creating a job advert, from the job title all the way through to how to apply.
 date_posted: 18/03/2022
+date_updated: 14/04/2025
 category_tags: how-to
 card-image: "/content-assets/get-help-hiring/how-to-create-job-listings-and-accept-applications/how-to-create-the-perfect-teacher-job-advert.jpg"
 ---

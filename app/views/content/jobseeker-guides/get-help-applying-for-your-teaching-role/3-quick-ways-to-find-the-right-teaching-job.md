@@ -3,6 +3,7 @@ order: 500
 title: 3 quick ways to find the right teaching job for you
 meta_description: Congratulations, you’ve been invited to an interview for a teaching job! What’s next? We’ve spoken to experienced teachers to get their top tips for success including how to prepare answers to interview questions.
 date_posted: 07/05/2024
+date_updated: 20/06/2024
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role.jpg"
 ---

@@ -3,6 +3,7 @@ order: 400
 title: Prepare for a teaching interview lesson
 meta_description: The interview lesson is an opportunity to demonstrate your teaching ability so it’s important to be prepared. We’ve spoken to experienced teachers to get their top tips for success.
 date_posted: 22/01/2024
+date_updated: 27/02/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/prepare-for-your-teaching-interview-lesson.jpg"
 ---
