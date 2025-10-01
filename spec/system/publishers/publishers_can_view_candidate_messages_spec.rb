@@ -195,4 +195,77 @@ RSpec.describe "Publishers can view candidate messages", :js do
     click_link "#{job_application.first_name} #{job_application.last_name}"
     visit publishers_candidate_messages_path
   end
+
+  context "when publisher is a MAT and is publishing vacancies for schools" do
+    let(:trust) { create(:trust) }
+    let(:primary_school) { create(:school, school_groups: [trust]) }
+    let(:secondary_school) { create(:school, school_groups: [trust]) }
+    let(:trust_publisher) { create(:publisher, organisations: [trust]) }
+    let(:school_publisher) { create(:publisher, organisations: [secondary_school]) }
+
+    let(:vacancy_published_by_trust) { create(:vacancy, :live, organisations: [primary_school], publisher: trust_publisher) }
+    let(:vacancy_published_by_school) { create(:vacancy, :live, organisations: [secondary_school], publisher: school_publisher) }
+
+    let(:trust_published_vacancy) { create(:job_application, :status_submitted, vacancy: vacancy_published_by_trust, jobseeker: jobseeker) }
+    let(:school_published_vacancy) { create(:job_application, :status_submitted, vacancy: vacancy_published_by_school, jobseeker: jobseeker) }
+
+    let!(:trust_published_conversation) { create(:conversation, job_application: trust_published_vacancy, archived: false) }
+    let!(:school_published_conversation) { create(:conversation, job_application: school_published_vacancy, archived: false) }
+
+    before do
+      create(:jobseeker_message, conversation: trust_published_conversation, sender: jobseeker)
+      create(:jobseeker_message, conversation: school_published_conversation, sender: jobseeker)
+      login_publisher(publisher: trust_publisher, organisation: trust)
+    end
+
+    after { logout }
+
+    it "shows messages from all applicants for schools jobs" do
+      visit publishers_candidate_messages_path
+
+      expect(page).to have_content("Inbox (2)")
+
+      within("tbody") do
+        expect(page).to have_content(trust_published_vacancy.name)
+        expect(page).to have_content(school_published_vacancy.name)
+        expect(page).to have_no_content("No messages yet")
+      end
+
+      conversation_rows = page.all("table tbody tr")
+      expect(conversation_rows.count).to eq(2)
+    end
+
+    it "allows archiving messages all applicants for schools jobs" do
+      visit publishers_candidate_messages_path
+
+      check("Select #{trust_published_vacancy.name}", match: :first)
+      click_button "Archive"
+
+      expect(page).to have_content("You have moved messages to archived")
+      expect(page).to have_content("Inbox (1)")
+      expect(trust_published_conversation.reload).to be_archived
+      expect(school_published_conversation.reload).not_to be_archived
+    end
+
+    context "when the school publisher logs in" do
+      before do
+        logout
+        login_publisher(publisher: school_publisher, organisation: secondary_school)
+      end
+
+      it "can see messages from their own school" do
+        visit publishers_candidate_messages_path
+
+        expect(page).to have_content("Inbox (1)")
+
+        within("tbody") do
+          expect(page).to have_content(school_published_vacancy.name)
+          expect(page).to have_no_content(trust_published_vacancy.name)
+        end
+
+        conversation_rows = page.all("table tbody tr")
+        expect(conversation_rows.count).to eq(1)
+      end
+    end
+  end
 end

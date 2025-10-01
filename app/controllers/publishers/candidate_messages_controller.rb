@@ -2,13 +2,13 @@ class Publishers::CandidateMessagesController < Publishers::BaseController
   def index
     @tab = params[:tab] || "inbox"
 
-    base_conversations = Conversation.for_organisation(current_organisation.id)
+    base_conversations = Conversation.for_organisation(current_publisher.accessible_organisations(current_organisation).map(&:id))
                                     .includes(job_application: :vacancy, messages: :sender)
                                     .ordered_by_unread_and_latest_message
 
     @conversations = @tab == "archive" ? base_conversations.archived : base_conversations.inbox
 
-    @inbox_count = Conversation.for_organisation(current_organisation.id)
+    @inbox_count = Conversation.for_organisation(current_publisher.accessible_organisations(current_organisation).map(&:id))
                                .inbox
                                .with_unread_jobseeker_messages
                                .count
@@ -17,7 +17,7 @@ class Publishers::CandidateMessagesController < Publishers::BaseController
   def toggle_archive
     conversation_ids = params[:conversations] || []
 
-    Conversation.for_organisation(current_organisation.id)
+    Conversation.for_organisation(current_publisher.accessible_organisations(current_organisation).map(&:id))
                 .where(id: conversation_ids)
                 .update_all(archived: params[:archive_action] == "archive")
 
