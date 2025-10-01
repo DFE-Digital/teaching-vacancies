@@ -30,8 +30,22 @@
   max-width: 100% !important;
 }
 
-/* Hide attachment button in Trix toolbar as we do not support uploads yet */
-trix-toolbar .trix-button--icon-attach {
+/* Hide unwanted toolbar buttons - keep only bold, italic, link, bullet points, undo/redo */
+trix-toolbar .trix-button--icon-attach,
+trix-toolbar .trix-button--icon-strike,
+trix-toolbar .trix-button--icon-heading-1,
+trix-toolbar .trix-button--icon-quote,
+trix-toolbar .trix-button--icon-code,
+trix-toolbar .trix-button--icon-number-list,
+trix-toolbar .trix-button--icon-outdent,
+trix-toolbar .trix-button--icon-indent,
+trix-toolbar .trix-button--icon-decrease-nesting-level,
+trix-toolbar .trix-button--icon-increase-nesting-level {
   display: none !important;
+}
+
+/* Fix bullet point font size to match body text */
+.trix-content ul li {
+  font-size: inherit;
 }
 

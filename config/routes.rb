@@ -434,6 +434,7 @@ Rails.application.routes.draw do
         resource :religious_reference, only: %i[edit update], controller: "publishers/vacancies/job_applications/religious_references"
         member do
           get :messages
+          get :download_messages
         end
         resource :self_disclosure, only: %i[show update], controller: "publishers/vacancies/job_applications/self_disclosure"
         resources :collect_reference_flags, only: %i[show update], controller: "publishers/vacancies/collect_reference_flags"

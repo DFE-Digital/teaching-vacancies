@@ -4,6 +4,10 @@
 .message-header--sender {
   background-color: govuk-colour('blue');
   color: govuk-colour('white');
+  
+  .govuk-summary-card__title {
+    color: govuk-colour('white');
+  }
 }
 
 .message-header--recipient {

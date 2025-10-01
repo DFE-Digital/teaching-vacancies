@@ -19,8 +19,12 @@ RSpec.describe "Publishers can view candidate messages", :js do
     let!(:music_conversation) { create(:conversation, job_application: music_job_application, archived: false) }
 
     before do
-      create(:jobseeker_message, conversation: health_conversation, sender: jobseeker)
-      create(:jobseeker_message, conversation: music_conversation, sender: jobseeker)
+      travel_to 2.days.ago do
+        create(:jobseeker_message, conversation: health_conversation, sender: jobseeker)
+      end
+      travel_to 1.day.ago do
+        create(:jobseeker_message, conversation: music_conversation, sender: jobseeker)
+      end
     end
 
     describe "viewing candidate messages" do
@@ -29,7 +33,7 @@ RSpec.describe "Publishers can view candidate messages", :js do
           visit publishers_candidate_messages_path
         end
 
-        it "shows inbox tab with correct count and allows publishers to archive messages" do
+        it "shows inbox tab with correct count, proper ordering, and allows publishers to archive messages" do
           expect(page).to have_content("Inbox (2)")
           expect(page).to have_content("Archive")
 
@@ -39,11 +43,37 @@ RSpec.describe "Publishers can view candidate messages", :js do
             expect(page).to have_no_content("No messages yet")
           end
 
+          conversation_rows = page.all("table tbody tr")
+          expect(conversation_rows.count).to eq(2)
+
+          within(conversation_rows[0]) do
+            expect(page).to have_content(music_job_application.name)
+          end
+
+          within(conversation_rows[1]) do
+            expect(page).to have_content(health_job_application.name)
+          end
+
+          read_job_applications_messages_and_return_to_candidate_messages_page(music_job_application)
+
+          expect(page).to have_content("Inbox (1)")
+
+          conversation_rows = page.all("table tbody tr")
+          expect(conversation_rows.count).to eq(2)
+
+          within(conversation_rows[0]) do
+            expect(page).to have_content(health_job_application.name)
+          end
+
+          within(conversation_rows[1]) do
+            expect(page).to have_content(music_job_application.name)
+          end
+
           check("Select #{health_job_application.name}", match: :first)
           click_button "Archive"
 
           expect(page).to have_content("You have moved messages to archived")
-          expect(page).to have_content("Inbox (1)")
+          expect(page).to have_content("Inbox (0)")
           expect(health_conversation.reload).to be_archived
           expect(music_conversation.reload).not_to be_archived
         end
@@ -159,5 +189,10 @@ RSpec.describe "Publishers can view candidate messages", :js do
         expect(page).to have_no_css("tr.conversation--unread")
       end
     end
+  end
+
+  def read_job_applications_messages_and_return_to_candidate_messages_page(job_application)
+    click_link "#{job_application.first_name} #{job_application.last_name}"
+    visit publishers_candidate_messages_path
   end
 end

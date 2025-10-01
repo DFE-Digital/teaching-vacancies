@@ -9,7 +9,8 @@
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
-ActiveRecord::Schema[7.2].define(version: 2025_09_19_143236) do
+
+ActiveRecord::Schema[7.2].define(version: 2025_09_24_133259) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -80,10 +81,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_19_143236) do
 
   create_table "conversations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "job_application_id", null: false
-    t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "archived", default: false, null: false
+    t.datetime "last_message_at"
+    t.boolean "has_unread_jobseeker_messages", default: false, null: false
     t.index ["archived"], name: "index_conversations_on_archived"
     t.index ["job_application_id"], name: "index_conversations_on_job_application_id"
   end
