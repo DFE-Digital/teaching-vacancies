@@ -4,42 +4,39 @@
 - content_for :breadcrumbs do
   = govuk_back_link text: t("buttons.back"), href: new_publisher_session_path
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
+h1.govuk-heading-l Request a Teaching Vacancies account
 
-    h1.govuk-heading-l Request a Teaching Vacancies account
+h2.govuk-heading-m If you do not have a DfE Sign-in account
 
-    h2.govuk-heading-m If you do not have a DfE Sign-in account
+p.govuk-body A DfE Sign-in account is required to list jobs for free on Teaching Vacancies.
 
-    p.govuk-body A DfE Sign-in account is required to list jobs for free on Teaching Vacancies.
+p.govuk-body You can request an account if you work at (one of the following):
 
-    p.govuk-body You can request an account if you work at (one of the following):
+ul.govuk-list.govuk-list--bullet class="govuk-!-margin-bottom-4"
+  li a state-funded school or trust in England
+  li a local authority and list job vacancies on behalf of schools
+p.govuk-body #{govuk_link_to("Check you're eligible to advertise roles on Teaching Vacancies", "/get-help-hiring/how-to-setup-your-account/check-your-eligibility-to-advertise-roles")}.
 
-    ul.govuk-list.govuk-list--bullet class="govuk-!-margin-bottom-4"
-      li a state-funded school or trust in England
-      li a local authority and list job vacancies on behalf of schools
-    p.govuk-body #{govuk_link_to("Check you're eligible to advertise roles on Teaching Vacancies", "/get-help-hiring/how-to-setup-your-account/check-your-eligibility-to-advertise-roles")}.
+= dsi_account_request_link
 
-    = dsi_account_request_link
+h3.govuk-heading-m If you already have a DfE Sign-in account
 
-    h3.govuk-heading-m If you already have a DfE Sign-in account
+p.govuk-body
+  | #{govuk_link_to("Sign in", auth_dfe_path, method: :post)} to your account, then click 'request access to a service'. Choose Teaching Vacancies from the
+  |  list.
 
-    p.govuk-body
-      | #{govuk_link_to("Sign in", auth_dfe_path, method: :post)} to your account, then click 'request access to a service'. Choose Teaching Vacancies from the
-      |  list.
+p.govuk-body
+  | Your request will be sent to your organisation's nominated approver. You will be informed by email
+  |  when approval has been given.
 
-    p.govuk-body
-      | Your request will be sent to your organisation's nominated approver. You will be informed by email
-      |  when approval has been given.
+p.govuk-body
+  | If you are not yet part of an organisation, you can search by name or unique reference number (URN)
+  |  and request to join.
 
-    p.govuk-body
-      | If you are not yet part of an organisation, you can search by name or unique reference number (URN)
-      |  and request to join.
+p.govuk-body
+  | Details of approvers within your organisation are available within DfE Sign-in if you need to contact
+  |  someone regarding your request.
 
-    p.govuk-body
-      | Details of approvers within your organisation are available within DfE Sign-in if you need to contact
-      |  someone regarding your request.
+h3.govuk-heading-s Need help logging in?
 
-    h3.govuk-heading-s Need help logging in?
-
-    p.govuk-body = govuk_link_to("Request support", new_support_request_path)
+p.govuk-body = govuk_link_to("Request support", new_support_request_path)

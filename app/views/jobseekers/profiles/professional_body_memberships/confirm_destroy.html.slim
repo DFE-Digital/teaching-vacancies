@@ -3,34 +3,32 @@
 - content_for :breadcrumbs do
   = govuk_back_link text: t("buttons.back"), href: jobseekers_profile_path
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    span.govuk-caption-l = t(".caption")
-    h1.govuk-heading-l = t(".heading")
+span.govuk-caption-l = t(".caption")
+h1.govuk-heading-l = t(".heading")
 
-    = form_for @form, url: jobseekers_profile_professional_body_membership_path(professional_body_membership), method: :delete do |f|
-      = govuk_summary_list classes: "govuk-!-margin-bottom-10" do |summary_list|
-        - summary_list.with_row do |row|
-          - row.with_key text: t("helpers.label.jobseekers_professional_body_membership_form.name")
-          - row.with_value text: professional_body_membership.name
+= form_for @form, url: jobseekers_profile_professional_body_membership_path(professional_body_membership), method: :delete do |f|
+  = govuk_summary_list classes: "govuk-!-margin-bottom-10" do |summary_list|
+    - summary_list.with_row do |row|
+      - row.with_key text: t("helpers.label.jobseekers_professional_body_membership_form.name")
+      - row.with_value text: professional_body_membership.name
 
-        - summary_list.with_row do |row|
-          - row.with_key text: t("helpers.label.jobseekers_professional_body_membership_form.membership_type")
-          - row.with_value text: professional_body_membership.membership_type
+    - summary_list.with_row do |row|
+      - row.with_key text: t("helpers.label.jobseekers_professional_body_membership_form.membership_type")
+      - row.with_value text: professional_body_membership.membership_type
 
-        - summary_list.with_row do |row|
-          - row.with_key text: t("helpers.label.jobseekers_professional_body_membership_form.membership_number")
-          - row.with_value text: professional_body_membership.membership_number
+    - summary_list.with_row do |row|
+      - row.with_key text: t("helpers.label.jobseekers_professional_body_membership_form.membership_number")
+      - row.with_value text: professional_body_membership.membership_number
 
-        - summary_list.with_row do |row|
-          - row.with_key text: t("helpers.label.jobseekers_professional_body_membership_form.year_membership_obtained")
-          - row.with_value text: professional_body_membership.year_membership_obtained
+    - summary_list.with_row do |row|
+      - row.with_key text: t("helpers.label.jobseekers_professional_body_membership_form.year_membership_obtained")
+      - row.with_value text: professional_body_membership.year_membership_obtained
 
-        - summary_list.with_row do |row|
-          - row.with_key text: t("helpers.label.jobseekers_professional_body_membership_form.exam_taken")
-          - row.with_value text: professional_body_membership.exam_taken
+    - summary_list.with_row do |row|
+      - row.with_key text: t("helpers.label.jobseekers_professional_body_membership_form.exam_taken")
+      - row.with_value text: professional_body_membership.exam_taken
 
-      = f.govuk_submit "Delete professional body membership"
+  = f.govuk_submit "Delete professional body membership"
 
-    .govuk-button-group
-      = govuk_link_to t("buttons.cancel"), jobseekers_profile_path
+.govuk-button-group
+  = govuk_link_to t("buttons.cancel"), jobseekers_profile_path

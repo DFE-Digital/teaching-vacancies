@@ -3,46 +3,43 @@
 - content_for :breadcrumbs do
   = govuk_back_link text: t("buttons.back"), href: jobseekers_profile_path
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
+- if qualification.secondary?
+  span.govuk-caption-l = t(".secondary.caption")
+  h1.govuk-heading-l = t(".secondary.page_title")
+- else
+  span.govuk-caption-l = t(".other.caption")
+  h1.govuk-heading-l = t(".other.page_title")
 
+= form_for @form, url: jobseekers_profile_qualification_path(params[:qualification_id]), method: :delete do |f|
+  = govuk_summary_list do |summary_list|
     - if qualification.secondary?
-      span.govuk-caption-l = t(".secondary.caption")
-      h1.govuk-heading-l = t(".secondary.page_title")
+      - summary_list.with_row do |row|
+        - row.with_key text: "Type"
+        - row.with_value text: t("helpers.label.jobseekers_qualifications_shared_labels.category_options.#{qualification.category}")
+      - summary_list.with_row do |row|
+        - row.with_key text: "Institution"
+        - row.with_value text: qualification.institution
+      - summary_list.with_row do |row|
+        - row.with_key text: "Date completed"
+        - row.with_value text: qualification.year
+      - summary_list.with_row do |row|
+        - row.with_key text: t("jobseekers.qualifications.subjects_and_grades")
+        - row.with_value text: safe_join(qualification.qualification_results.map { |res| tag.div(display_secondary_qualification(res), class: "govuk-body govuk-!-margin-bottom-1") })
     - else
-      span.govuk-caption-l = t(".other.caption")
-      h1.govuk-heading-l = t(".other.page_title")
+      - summary_list.with_row do |row|
+        - row.with_key text: "Type"
+        - row.with_value text: t("helpers.label.jobseekers_qualifications_shared_labels.category_options.#{qualification.category}")
+      - summary_list.with_row do |row|
+        - row.with_key text: "Subject"
+        - row.with_value text: qualification.subject
+      - summary_list.with_row do |row|
+        - row.with_key text: "Grade"
+        - row.with_value text: qualification.grade
 
-    = form_for @form, url: jobseekers_profile_qualification_path(params[:qualification_id]), method: :delete do |f|
-      = govuk_summary_list do |summary_list|
-        - if qualification.secondary?
-          - summary_list.with_row do |row|
-            - row.with_key text: "Type"
-            - row.with_value text: t("helpers.label.jobseekers_qualifications_shared_labels.category_options.#{qualification.category}")
-          - summary_list.with_row do |row|
-            - row.with_key text: "Institution"
-            - row.with_value text: qualification.institution
-          - summary_list.with_row do |row|
-            - row.with_key text: "Date completed"
-            - row.with_value text: qualification.year
-          - summary_list.with_row do |row|
-            - row.with_key text: t("jobseekers.qualifications.subjects_and_grades")
-            - row.with_value text: safe_join(qualification.qualification_results.map { |res| tag.div(display_secondary_qualification(res), class: "govuk-body govuk-!-margin-bottom-1") })
-        - else
-          - summary_list.with_row do |row|
-            - row.with_key text: "Type"
-            - row.with_value text: t("helpers.label.jobseekers_qualifications_shared_labels.category_options.#{qualification.category}")
-          - summary_list.with_row do |row|
-            - row.with_key text: "Subject"
-            - row.with_value text: qualification.subject
-          - summary_list.with_row do |row|
-            - row.with_key text: "Grade"
-            - row.with_value text: qualification.grade
+  - if qualification.secondary?
+    = f.govuk_submit t(".secondary.caption")
+  - else
+    = f.govuk_submit t(".other.caption")
 
-      - if qualification.secondary?
-        = f.govuk_submit t(".secondary.caption")
-      - else
-        = f.govuk_submit t(".other.caption")
-
-    .govuk-button-group
-      = govuk_link_to t("buttons.cancel"), jobseekers_profile_path
+.govuk-button-group
+  = govuk_link_to t("buttons.cancel"), jobseekers_profile_path
