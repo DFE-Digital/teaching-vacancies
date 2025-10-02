@@ -12,20 +12,6 @@ RSpec.describe "Jobseekers can view all the jobs" do
     expect(current_path).to eq(jobs_path)
   end
 
-  it "jobseekers can visit the home page and use secondary navigation to view jobs" do
-    visit root_path
-
-    click_on I18n.t("sub_nav.jobs")
-    expect(current_path).to eq(jobs_path)
-  end
-
-  it "jobseekers can visit the home page and use secondary navigation to view schools" do
-    visit root_path
-
-    click_on I18n.t("sub_nav.schools")
-    expect(current_path).to eq(organisations_path)
-  end
-
   it "jobseekers can distinguish between the listed jobs that allow to apply through Teaching Vacancies and the ones who don't" do
     job_without_apply = create(:vacancy, :no_tv_applications, :past_publish, expires_at: 2.years.from_now, organisations: [school])
     visit jobs_path
