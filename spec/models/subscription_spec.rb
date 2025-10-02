@@ -368,62 +368,34 @@ RSpec.describe Subscription do
 
       describe "phases filter" do
         before do
-          create(:vacancy, :published_slugged, contact_number: "6", job_roles: %w[headteacher], phases: %w[primary], working_patterns: %w[full_time])
-          create(:vacancy, :published_slugged, contact_number: "7", job_roles: %w[headteacher], phases: %w[sixth_form_or_college], working_patterns: %w[full_time])
-          create(:vacancy, :published_slugged, contact_number: "8", job_roles: %w[headteacher], phases: %w[through], working_patterns: %w[full_time])
-          create(:vacancy, :published_slugged, :secondary, contact_number: "9", job_roles: %w[headteacher], working_patterns: %w[full_time])
+          create(:vacancy, :published_slugged, contact_number: "6", job_roles: %w[headteacher], phases: %w[primary secondary], working_patterns: %w[full_time])
+          create(:vacancy, :published_slugged, contact_number: "7", job_roles: %w[headteacher], phases: %w[secondary], working_patterns: %w[full_time])
         end
 
-        let(:primary_job) { PublishedVacancy.find_by!(contact_number: "6") }
-        let(:sixth_form_job) { PublishedVacancy.find_by!(contact_number: "7") }
-        let(:through_job) { PublishedVacancy.find_by!(contact_number: "8") }
-        let(:secondary_job) { PublishedVacancy.find_by!(contact_number: "9") }
+        let(:primary_and_secondary_job) { PublishedVacancy.find_by!(contact_number: "6") }
+        let(:secondary_job) { PublishedVacancy.find_by!(contact_number: "7") }
 
         context "with primary phase" do
           let(:subscription) { create(:subscription, phases: %w[primary], frequency: :daily) }
 
-          it "only finds the primary school job" do
-            expect(vacancies).to eq([primary_job])
+          it "only finds the school job containing primary phase" do
+            expect(vacancies).to eq([primary_and_secondary_job])
           end
         end
 
-        context "with legacy 16-19 filter" do
-          let(:subscription) { create(:subscription, phases: %w[16-19], frequency: :daily) }
+        context "with secondary filter" do
+          let(:subscription) { create(:subscription, phases: %w[secondary], frequency: :daily) }
 
-          it "only finds the sixth_form_job" do
-            expect(vacancies).to eq([sixth_form_job])
+          it "finds both schools containing secondary phase" do
+            expect(vacancies).to contain_exactly(primary_and_secondary_job, secondary_job)
           end
         end
 
-        context "with legacy sixteenplus filter" do
-          let(:subscription) { create(:subscription, phases: %w[sixteen_plus], frequency: :daily) }
+        context "with a phase filter that matches no vacancies" do
+          let(:subscription) { create(:subscription, phases: %w[through], frequency: :daily) }
 
-          it "only finds the sixth_form_job job" do
-            expect(vacancies).to eq([sixth_form_job])
-          end
-        end
-
-        context "with legacy all_through filter" do
-          let(:subscription) { create(:subscription, phases: %w[all_through], frequency: :daily) }
-
-          it "only finds the through_job" do
-            expect(vacancies).to eq([through_job])
-          end
-        end
-
-        context "with legacy middle_deemed_secondary filter" do
-          let(:subscription) { create(:subscription, phases: %w[middle_deemed_secondary], frequency: :daily) }
-
-          it "finds the primary and secondary jobs" do
-            expect(vacancies.map(&:slug)).to contain_exactly(primary_job.slug, secondary_job.slug)
-          end
-        end
-
-        context "with legacy middle_deemed_primary filter" do
-          let(:subscription) { create(:subscription, phases: %w[middle_deemed_primary], frequency: :daily) }
-
-          it "finds the primary and secondary jobs" do
-            expect(vacancies).to contain_exactly(primary_job, secondary_job)
+          it "finds no jobs" do
+            expect(vacancies).to be_empty
           end
         end
       end

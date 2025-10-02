@@ -27,7 +27,7 @@ class Subscription < ApplicationRecord
     subjects: ->(vacancy, value) { (vacancy.subjects || []).intersect?(value) },
     # legacy 'subject' criteria appears to be 1 single value
     subject: ->(vacancy, value) { (vacancy.subjects || []).include?(value) },
-    phases: ->(vacancy, value) { phases_match?(vacancy, value) },
+    phases: ->(vacancy, value) { (vacancy.phases || []).intersect?(value) },
     working_patterns: ->(vacancy, value) { working_pattern_match?(vacancy, value) },
     organisation_slug: ->(vacancy, value) { vacancy.organisations.map(&:slug).include?(value) },
     keyword: ->(vacancy, value) { value.downcase.strip.split.all? { |k| vacancy.searchable_content.include? k } },
@@ -51,16 +51,6 @@ class Subscription < ApplicationRecord
   }.freeze
 
   class << self
-    def phases_match?(vacancy, filter)
-      phases = filter.map { |phase| phase.in?(%w[middle_deemed_secondary middle_deemed_primary]) ? "primary secondary" : phase }
-          .map { |phase| phase == "all_through" ? "through" : phase }
-          .map { |phase| phase.in?(%w[sixteen_plus 16-19]) ? "sixth_form_or_college" : phase }
-          .reject { |phase| phase.in? %w[not_applicable] }
-          .map(&:split)
-          .flatten
-      vacancy.phases.intersect?(phases)
-    end
-
     def working_pattern_match?(vacancy, working_patterns)
       if working_patterns == %w[job_share]
         vacancy.is_job_share
