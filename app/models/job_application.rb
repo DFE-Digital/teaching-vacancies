@@ -132,10 +132,6 @@ class JobApplication < ApplicationRecord
     INACTIVE_STATUSES.exclude?(status)
   end
 
-  def has_pre_interview_checks?
-    interviewing_at.present?
-  end
-
   Document = Data.define(:filename, :data)
 
   def submitted_application_form
