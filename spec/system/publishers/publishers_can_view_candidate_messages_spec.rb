@@ -232,7 +232,6 @@ RSpec.describe "Publishers can view candidate messages", :js do
           expect(page).to have_no_content("Mathematics Teacher")
         end
 
-        # Test clearing search
         click_link "Clear search"
 
         expect(page).to have_content("2 messages")

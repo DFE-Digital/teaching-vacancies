@@ -43,14 +43,13 @@ class Conversation < ApplicationRecord
   end
 
   def generate_searchable_content
-    # Get message content (handles Action Text properly)
     message_content = messages.filter_map do |message|
-      message.content.to_plain_text if message.content.present?
+      message.content.to_plain_text
     end
 
     Search::Postgres::TsvectorGenerator.new(
       a: [job_application.vacancy.job_title],       # Job title (highest weight)
-      b: [job_application.name],                    # Candidate name (high weight)
+      b: [job_application.name],                    # Candidate name (mid weight)
       d: message_content, # Message content (lower weight)
     ).tsvector
   end

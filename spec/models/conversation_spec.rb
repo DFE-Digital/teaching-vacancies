@@ -186,7 +186,7 @@ RSpec.describe Conversation do
       end
     end
 
-    describe "when message content changes via Action Text" do
+    describe "when message content changes" do
       let!(:message) { create(:jobseeker_message, conversation: conversation, content: "Initial message content") }
 
       it "updates searchable_content when message content is updated" do
@@ -217,8 +217,8 @@ RSpec.describe Conversation do
       it "handles messages with nil content when generating searchable content" do
         # Create a message without content
         message_without_content = build(:jobseeker_message, conversation: conversation)
-        message_without_content.save(validate: false) # Skip validation to allow nil content
-        
+        message_without_content.save!(validate: false) # Skip validation to allow nil content
+
         # This should not raise an error and should filter out the nil content
         expect { conversation.reload.generate_searchable_content }.not_to raise_error
       end
