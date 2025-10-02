@@ -137,9 +137,14 @@ class Subscription < ApplicationRecord
       criteria[:job_roles] = job_roles
     end
 
-    vacancies = scope.select do |vacancy|
-      criteria.except(*JOB_ROLE_ALIASES, :location, :radius).all? { |criterion, value| FILTERS.fetch(criterion).call(vacancy, value) }
+    filters = criteria.except(*JOB_ROLE_ALIASES, :location, :radius).map do |criterion, value|
+      ->(vacancy) { FILTERS.fetch(criterion).call(vacancy, value) }
     end
+
+    vacancies = scope.select do |vacancy|
+      filters.all? { |f| f.call(vacancy) }
+    end
+
     # Location handling is the most expensive operations, since they involve polygons or geocoding computations in DB.
     # So do it last, and only if there are any vacancies left to filter after the other criteria have been applied over
     # the in-memory vacancy set.
