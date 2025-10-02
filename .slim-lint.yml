@@ -8,6 +8,7 @@ linters:
     enabled: false
   RuboCop:
     ignored_cops:
+      - Style/Lambda   # using the lambda form as suggested raises the error `tried to create Proc object without a block`
       - Style/IdenticalConditionalBranches
       - Rails/Blank
       - Rails/Date
