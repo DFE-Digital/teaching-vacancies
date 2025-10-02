@@ -1,0 +1,17 @@
+en:
+  helpers:
+    hint:
+      publishers_job_listing_anonymise_applications_form:
+        anonymise_applications_options:
+          true: >-
+            You will not be able to view personal details for any applicants unless they are shortlisted.
+
+    label:
+      publishers_job_listing_anonymise_applications_form:
+        anonymise_applications_options:
+          true: Anonymously
+          false: View personal details
+
+    legend:
+      publishers_job_listing_anonymise_applications_form:
+        anonymise_applications: How would you like to view your applications?

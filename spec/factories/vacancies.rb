@@ -35,6 +35,7 @@ FactoryBot.define do
 
     actual_salary { factory_rand(20_000..100_000) }
     enable_job_applications { true }
+    anonymise_applications { false }
     benefits { true }
     benefits_details { Faker::Lorem.paragraph(sentence_count: factory_rand(1..3)) }
     completed_steps do
@@ -121,6 +122,7 @@ FactoryBot.define do
       receive_applications { "website" }
       application_link { Faker::Internet.url(host: "contoso.com") }
       enable_job_applications { false }
+      anonymise_applications { nil }
     end
 
     trait :legacy_email_application do
@@ -250,7 +252,7 @@ FactoryBot.define do
     factory :draft_vacancy, class: "DraftVacancy" do
       completed_steps do
         %w[job_location job_role education_phases job_title key_stages subjects contract_type working_patterns pay_package start_date
-           applying_for_the_job school_visits contact_details about_the_role include_additional_documents]
+           applying_for_the_job school_visits contact_details about_the_role include_additional_documents anonymise_applications]
       end
 
       trait :with_contract_details do

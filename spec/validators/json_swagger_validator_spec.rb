@@ -11,7 +11,7 @@ RSpec.describe "JsonSwaggerValidator" do
                                        :contact_number, :fixed_term_contract_duration, :further_details_provided,
                                        :hired_status, :include_additional_documents,
                                        :listed_elsewhere, :ect_status, :school_visits,
-                                       :start_date_type, :status,
+                                       :start_date_type, :status, :anonymise_applications,
                                        :working_patterns_details, :organisations,
                                        :further_details, :hourly_rate, :pay_scale,
                                        :flexi_working_details_provided, :flexi_working, :about_school, :how_to_apply,
