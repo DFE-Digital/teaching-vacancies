@@ -500,6 +500,24 @@ RSpec.describe Subscription do
       expect(sub.search_criteria["phases"]).to match_array(%w[nursery primary secondary])
     end
 
+    it "maps middle legacy phase to new values" do
+      sub = described_class.create!(search_criteria: search_criteria.merge({ "phases" => %w[nursery middle] }))
+      expect {
+        described_class.normalize_phases!
+        sub.reload
+      }.to(change { sub.search_criteria["phases"] })
+      expect(sub.search_criteria["phases"]).to match_array(%w[nursery primary secondary])
+    end
+
+    it "does not return repeated values if multiple legacy phases map into the same new phase" do
+      sub = described_class.create!(search_criteria: search_criteria.merge({ "phases" => %w[middle_deemed_primary middle_deemed_secondary middle] }))
+      expect {
+        described_class.normalize_phases!
+        sub.reload
+      }.to(change { sub.search_criteria["phases"] })
+      expect(sub.search_criteria["phases"]).to match_array(%w[primary secondary])
+    end
+
     it "maps all_through legacy phase to new value" do
       sub = described_class.create!(search_criteria: search_criteria.merge({ "phases" => %w[nursery all_through] }))
       expect {

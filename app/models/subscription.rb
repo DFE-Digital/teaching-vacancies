@@ -42,6 +42,7 @@ class Subscription < ApplicationRecord
 
   # One/off code. Remove after running the rake task to normalise all subscriptions
   LEGACY_PHASE_MAPPING = {
+    "middle" => %w[primary secondary].freeze,
     "middle_deemed_secondary" => %w[primary secondary].freeze,
     "middle_deemed_primary" => %w[primary secondary].freeze,
     "all_through" => %w[through].freeze,
