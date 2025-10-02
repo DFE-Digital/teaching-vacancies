@@ -19,6 +19,7 @@ module Publishers
                                  contact_applicants: params[:contact_applicants]
                 end
         if (step == :ask_references_email) && (!@form.collect_references || @job_applications.none?(&:notify_before_contact_referers?))
+          # this causes render_wizard to re-direct, so need to pass the field so that we don't lose it
           skip_step collect_references: params[:collect_references]
         end
         render_wizard

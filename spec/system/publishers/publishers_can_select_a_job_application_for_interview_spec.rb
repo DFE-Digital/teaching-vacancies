@@ -158,339 +158,349 @@ RSpec.describe "Publishers can select a job application for interview", :perform
                email_address: jobseeker.email,
                vacancy: vacancy, jobseeker: jobseeker)
       end
-      let(:notify_candidate) { true }
       let(:vacancy) { create(:vacancy, :expired, organisations: [school], publisher: publisher) }
-
-      it "doesnt show religious warning text" do
-        expect(page).to have_no_content(cannot_collect)
+      let(:emails_with_subjects) do
+        ActionMailer::Base.deliveries
+                          .group_by { |mail| mail.to.first }
+                          .transform_values { |m| m.map { |x| x.subject.split[..3].join(" ") } }
       end
 
-      scenario "without selecting" do
-        expect(publisher_ats_collect_references_page).to be_displayed
-        click_on "Save and continue"
-        expect(publisher_ats_collect_references_page.errors.map(&:text))
-          .to eq(["Select yes if you would like to collect references through the service"])
-      end
-
-      context "when choosing yes for references and self disclosure" do
-        let(:self_disclosure_answer) { "Yes" }
-        let(:emails_with_subjects) do
-          ActionMailer::Base.deliveries
-                            .group_by { |mail| mail.to.first }
-                            .transform_values { |m| m.map { |x| x.subject.split[..3].join(" ") } }
-        end
+      context "when applicant doesn't need to be notified" do
+        let(:notify_candidate) { false }
 
         before do
           choose "Yes"
           click_on "Save and continue"
           # 2nd question not asked when candidate doesn't need contacting
-          if notify_candidate
-            choose contact_applicant
-            click_on "Save and continue"
-          end
-          choose self_disclosure_answer
+          choose "Yes"
           click_on "Save and continue"
           # wait for page load
           find_by_id("interviewing")
         end
 
-        context "when applicant doesn't want to be contacted" do
-          let(:notify_candidate) { false }
+        it "sends emails to referees and applicant" do
+          expect(publisher_ats_applications_page).to be_displayed
 
-          it "sends emails to referees and applicant" do
-            expect(publisher_ats_applications_page).to be_displayed
+          expect(emails_with_subjects)
+            .to eq({
+              current_referee.email => ["Provide a reference for"],
+              old_referee.email => ["Provide a reference for"],
+              job_application.email_address => ["Complete your self-disclosure form"],
+            })
+        end
+      end
 
-            expect(emails_with_subjects)
-              .to eq({
-                current_referee.email => ["Provide a reference for"],
-                old_referee.email => ["Provide a reference for"],
-                job_application.email_address => ["Complete your self-disclosure form"],
-              })
-          end
+      context "when applicant needs to be notified" do
+        let(:notify_candidate) { true }
+
+        it "doesnt show religious warning text" do
+          expect(page).to have_no_content(cannot_collect)
         end
 
-        context "when contacting applicant" do
-          let(:contact_applicant) { "Yes" }
-
-          it "sends emails to referees and applicant" do
-            expect(publisher_ats_applications_page).to be_displayed
-
-            expect(emails_with_subjects)
-              .to eq({
-                current_referee.email => ["Provide a reference for"],
-                old_referee.email => ["Provide a reference for"],
-                job_application.email_address => ["References are being collected", "Complete your self-disclosure form"],
-              })
-          end
+        scenario "without selecting" do
+          expect(publisher_ats_collect_references_page).to be_displayed
+          click_on "Save and continue"
+          expect(publisher_ats_collect_references_page.errors.map(&:text))
+            .to eq(["Select yes if you would like to collect references through the service"])
         end
 
-        context "when not contacting applicant", :versioning do
-          let(:contact_applicant) { "No" }
+        context "when choosing yes for references and self disclosure" do
+          let(:self_disclosure_answer) { "Yes" }
 
-          it "only sends referee emails" do
-            expect(publisher_ats_interviewing_page).to be_displayed
-
-            expect(emails_with_subjects)
-              .to eq({
-                current_referee.email => ["Provide a reference for"],
-                old_referee.email => ["Provide a reference for"],
-                job_application.email_address => ["Complete your self-disclosure form"],
-              })
+          before do
+            choose "Yes"
+            click_on "Save and continue"
+            choose contact_applicant
+            click_on "Save and continue"
+            choose self_disclosure_answer
+            click_on "Save and continue"
+            # wait for page load
+            find_by_id("interviewing")
           end
 
-          context "when the reference is declined" do
-            before do
-              current_referee.reload.job_reference.update!(attributes_for(:job_reference, :reference_declined).merge(updated_at: Date.tomorrow))
-              current_referee.reload.reference_request.update!(status: :received)
-            end
+          context "when choosing to contact applicant via TVS" do
+            let(:contact_applicant) { "Yes" }
 
-            it "shows the reference as declined" do
-              publisher_ats_interviewing_page.pre_interview_check_links.first.click
-              expect(publisher_ats_pre_interview_checks_page).to be_displayed
+            it "sends emails to referees and notifies applicant that references are being collected" do
+              expect(publisher_ats_applications_page).to be_displayed
 
-              publisher_ats_pre_interview_checks_page.reference_links.first.click
-              expect(page).to have_content("You will need to request a new referee")
-              expect(publisher_ats_pre_interview_checks_page.timeline).to have_content("Reference declined")
-            end
-          end
-
-          context "when the referee email is incorrect" do
-            before do
-              ActionMailer::Base.deliveries.clear
-              publisher_ats_interviewing_page.pre_interview_check_links.first.click
-              publisher_ats_pre_interview_checks_page.reference_links.first.click
-              within ".govuk-main-wrapper" do
-                within ".govuk-grid-column-two-thirds" do
-                  find("a.govuk-link").click
-                end
-              end
-            end
-
-            let(:new_email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
-
-            scenario "with a valid email" do
-              fill_in "publishers-vacancies-job-applications-change-email-address-form-email-field", with: new_email
-              click_on I18n.t("buttons.save_and_continue")
-              expect(page).to have_content(new_email)
-              expect(page).to have_content("Reference email changed")
-              expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
+              expect(emails_with_subjects)
                 .to eq({
-                  new_email => ["Provide a reference for #{job_application.name} for #{vacancy.job_title} at #{school.name}"],
+                  current_referee.email => ["Provide a reference for"],
+                  old_referee.email => ["Provide a reference for"],
+                  job_application.email_address => ["References are being collected", "Complete your self-disclosure form"],
+                })
+            end
+          end
+
+          context "when choosing not to contact applicant through TVS", :versioning do
+            let(:contact_applicant) { "No" }
+
+            it "only sends referee emails, and doesn't send email about reference collection" do
+              expect(publisher_ats_interviewing_page).to be_displayed
+
+              expect(emails_with_subjects)
+                .to eq({
+                  current_referee.email => ["Provide a reference for"],
+                  old_referee.email => ["Provide a reference for"],
+                  job_application.email_address => ["Complete your self-disclosure form"],
                 })
             end
 
-            scenario "without an email" do
-              click_on I18n.t("buttons.save_and_continue")
-              expect(page).to have_content("Enter a valid email address")
-            end
-          end
+            context "when the reference is declined" do
+              before do
+                current_referee.reload.job_reference.update!(attributes_for(:job_reference, :reference_declined).merge(updated_at: Date.tomorrow))
+                current_referee.reload.reference_request.update!(status: :received)
+              end
 
-          context "with a received reference" do
-            before do
-              current_referee.reload
-              # simulate receipt of a reference
-              current_referee.job_reference.update!(reference_data.merge(updated_at: Date.tomorrow))
-              # remove previous emails so that current ones can be checked
-              ActionMailer::Base.deliveries.clear
-              current_referee.job_reference.mark_as_received
-              publisher_ats_interviewing_page.pre_interview_check_links.first.click
-            end
-
-            context "with a simple reference" do
-              let(:reference_data) { attributes_for(:job_reference, :reference_given) }
-
-              it "can progress to the page where the reference is shown" do
+              it "shows the reference as declined" do
+                publisher_ats_interviewing_page.pre_interview_check_links.first.click
                 expect(publisher_ats_pre_interview_checks_page).to be_displayed
 
                 publisher_ats_pre_interview_checks_page.reference_links.first.click
-                expect(publisher_ats_reference_request_page).to be_displayed
+                expect(page).to have_content("You will need to request a new referee")
+                expect(publisher_ats_pre_interview_checks_page.timeline).to have_content("Reference declined")
+              end
+            end
+
+            context "when the referee email is incorrect" do
+              before do
+                ActionMailer::Base.deliveries.clear
+                publisher_ats_interviewing_page.pre_interview_check_links.first.click
+                publisher_ats_pre_interview_checks_page.reference_links.first.click
+                within ".govuk-main-wrapper" do
+                  within ".govuk-grid-column-two-thirds" do
+                    find("a.govuk-link").click
+                  end
+                end
               end
 
-              it "send an email notification to the publisher that the reference had been received" do
-                expect(ActionMailer::Base.deliveries.map(&:to).flatten)
-                  .to contain_exactly("publisher@contoso.com")
+              let(:new_email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
+
+              scenario "with a valid email" do
+                fill_in "publishers-vacancies-job-applications-change-email-address-form-email-field", with: new_email
+                click_on I18n.t("buttons.save_and_continue")
+                expect(page).to have_content(new_email)
+                expect(page).to have_content("Reference email changed")
+                expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
+                  .to eq({
+                    new_email => ["Provide a reference for #{job_application.name} for #{vacancy.job_title} at #{school.name}"],
+                  })
               end
 
-              context "when marking reference as complete" do
-                before do
+              scenario "without an email" do
+                click_on I18n.t("buttons.save_and_continue")
+                expect(page).to have_content("Enter a valid email address")
+              end
+            end
+
+            context "with a received reference" do
+              before do
+                current_referee.reload
+                # simulate receipt of a reference
+                current_referee.job_reference.update!(reference_data.merge(updated_at: Date.tomorrow))
+                # remove previous emails so that current ones can be checked
+                ActionMailer::Base.deliveries.clear
+                current_referee.job_reference.mark_as_received
+                publisher_ats_interviewing_page.pre_interview_check_links.first.click
+              end
+
+              context "with a simple reference" do
+                let(:reference_data) { attributes_for(:job_reference, :reference_given) }
+
+                it "can progress to the page where the reference is shown" do
+                  expect(publisher_ats_pre_interview_checks_page).to be_displayed
+
                   publisher_ats_pre_interview_checks_page.reference_links.first.click
-                  click_on "Mark as received"
+                  expect(publisher_ats_reference_request_page).to be_displayed
                 end
 
-                it "displays the page correctly" do
-                  expect(page).to have_content "This reference will be marked as complete"
-                  expect(page).to have_content "This reference will remain as received"
-                  expect(page).to have_content "Yes"
+                it "send an email notification to the publisher that the reference had been received" do
+                  expect(ActionMailer::Base.deliveries.map(&:to).flatten)
+                    .to contain_exactly("publisher@contoso.com")
                 end
 
-                scenario "error bounce" do
-                  expect(publisher_ats_satisfactory_reference_page).to be_displayed
-                  publisher_ats_satisfactory_reference_page.submit_button.click
-                  expect(publisher_ats_satisfactory_reference_page.errors.map(&:text)).to eq(["Select yes if the reference received is satisfactory"])
+                context "when marking reference as complete" do
+                  before do
+                    publisher_ats_pre_interview_checks_page.reference_links.first.click
+                    click_on "Mark as received"
+                  end
+
+                  it "displays the page correctly" do
+                    expect(page).to have_content "This reference will be marked as complete"
+                    expect(page).to have_content "This reference will remain as received"
+                    expect(page).to have_content "Yes"
+                  end
+
+                  scenario "error bounce" do
+                    expect(publisher_ats_satisfactory_reference_page).to be_displayed
+                    publisher_ats_satisfactory_reference_page.submit_button.click
+                    expect(publisher_ats_satisfactory_reference_page.errors.map(&:text)).to eq(["Select yes if the reference received is satisfactory"])
+                  end
+
+                  scenario "accept reference", :versioning do
+                    publisher_ats_satisfactory_reference_page.yes.click
+                    publisher_ats_satisfactory_reference_page.submit_button.click
+                    expect(current_referee.reference_request.reload).to be_marked_as_complete
+                    expect(page).to have_content "completed"
+
+                    expect(publisher_ats_reference_request_page).to be_displayed
+                    expect(publisher_ats_reference_request_page.timeline_titles.map(&:text)).to eq(["Marked as complete", "Reference received", "Reference requested"])
+                  end
+
+                  scenario "decline reference" do
+                    publisher_ats_satisfactory_reference_page.no.click
+                    publisher_ats_satisfactory_reference_page.submit_button.click
+                    expect(current_referee.reference_request.reload.status).to eq("received")
+                  end
+                end
+              end
+
+              context "when reference contains issues" do
+                let(:investigation_details) { Faker::Adjective.negative }
+                let(:warning_details) { Faker::Adjective.negative }
+                let(:undertake_reason) { Faker::Adjective.negative }
+
+                let(:reference_data) do
+                  attributes_for(:job_reference, :reference_given, :with_issues,
+                                 under_investigation_details: investigation_details,
+                                 warning_details: warning_details,
+                                 unable_to_undertake_reason: undertake_reason)
                 end
 
-                scenario "accept reference", :versioning do
-                  publisher_ats_satisfactory_reference_page.yes.click
-                  publisher_ats_satisfactory_reference_page.submit_button.click
-                  expect(current_referee.reference_request.reload).to be_marked_as_complete
-                  expect(page).to have_content "completed"
+                it "can progress to the page where the reference is shown" do
+                  expect(publisher_ats_pre_interview_checks_page).to be_displayed
+
+                  publisher_ats_pre_interview_checks_page.reference_links.first.click
+                  expect(publisher_ats_reference_request_page).to be_displayed
+                  expect(page).to have_content investigation_details
+                  expect(page).to have_content warning_details
+                  expect(page).to have_content undertake_reason
+                end
+              end
+            end
+          end
+        end
+
+        context "when choosing no for references and self disclosures" do
+          before do
+            choose "No"
+            click_on "Save and continue"
+            choose "No"
+            click_on "Save and continue"
+          end
+
+          it "does not send any emails" do
+            expect(ActionMailer::Base.deliveries.count).to eq(0)
+            expect(publisher_ats_interviewing_page).to be_displayed
+          end
+
+          describe "reference display page", :versioning do
+            before do
+              publisher_ats_interviewing_page.pre_interview_check_links.first.click
+              publisher_ats_pre_interview_checks_page.reference_links.first.click
+            end
+
+            scenario "accepting an out of band reference" do
+              click_on "Mark as received"
+
+              expect(publisher_ats_satisfactory_reference_page).to be_displayed
+              publisher_ats_satisfactory_reference_page.yes.click
+              publisher_ats_satisfactory_reference_page.submit_button.click
+
+              expect(publisher_ats_reference_request_page).to be_displayed
+              expect(current_referee.reference_request.reload).to be_marked_as_complete
+              expect(publisher_ats_reference_request_page.timeline_titles.map(&:text)).to eq(["Marked as complete", "Marked as interviewing"])
+            end
+
+            context "when changing our mind and using TV after all" do
+              before do
+                publisher_ats_reference_request_page.use_tv_anyway_link.click
+              end
+
+              context "without collecting references" do
+                before do
+                  choose "No"
+                  click_on "Save and continue"
+                end
+
+                it "redirects straight away back to the pre interview page" do
+                  expect(publisher_ats_pre_interview_checks_page).to be_displayed
+                end
+              end
+
+              context "when collecting references" do
+                before do
+                  choose "Yes"
+                  click_on "Save and continue"
+                end
+
+                scenario "errors" do
+                  click_on "Save and continue"
+                  expect(publisher_ats_pre_interview_checks_page.errors.map(&:text))
+                    .to eq(["Select yes if you would like the service to email candidates that you are collecting references."])
+                end
+
+                scenario "not contacting applicant" do
+                  choose "No"
+                  click_on "Save and continue"
+                  expect(ActionMailer::Base.deliveries.map(&:to).flatten)
+                    .to contain_exactly("employer@contoso.com", "previous@contoso.com")
+
+                  expect(publisher_ats_pre_interview_checks_page).to be_displayed
+                  # This now includes the self disclosure
+                  expect(publisher_ats_pre_interview_checks_page.reference_links.count).to eq(3)
+                  publisher_ats_pre_interview_checks_page.reference_links.first.click
 
                   expect(publisher_ats_reference_request_page).to be_displayed
-                  expect(publisher_ats_reference_request_page.timeline_titles.map(&:text)).to eq(["Marked as complete", "Reference received", "Reference requested"])
+                  expect(publisher_ats_reference_request_page.timeline_titles.map(&:text))
+                    .to eq(["Reference requested", "Marked as interviewing"])
                 end
 
-                scenario "decline reference" do
-                  publisher_ats_satisfactory_reference_page.no.click
-                  publisher_ats_satisfactory_reference_page.submit_button.click
-                  expect(current_referee.reference_request.reload.status).to eq("received")
+                scenario "contacting applicant" do
+                  choose "Yes"
+                  click_on "Save and continue"
+                  expect(ActionMailer::Base.deliveries.map(&:to).flatten)
+                    .to contain_exactly("employer@contoso.com", "previous@contoso.com", "jobseeker@contoso.com")
+
+                  expect(publisher_ats_pre_interview_checks_page).to be_displayed
+                  publisher_ats_pre_interview_checks_page.reference_links.first.click
+
+                  expect(publisher_ats_reference_request_page).to be_displayed
+                  expect(publisher_ats_reference_request_page.timeline_titles.map(&:text))
+                    .to eq(["Reference requested", "Marked as interviewing"])
                 end
-              end
-            end
-
-            context "when reference contains issues" do
-              let(:investigation_details) { Faker::Adjective.negative }
-              let(:warning_details) { Faker::Adjective.negative }
-              let(:undertake_reason) { Faker::Adjective.negative }
-
-              let(:reference_data) do
-                attributes_for(:job_reference, :reference_given, :with_issues,
-                               under_investigation_details: investigation_details,
-                               warning_details: warning_details,
-                               unable_to_undertake_reason: undertake_reason)
-              end
-
-              it "can progress to the page where the reference is shown" do
-                expect(publisher_ats_pre_interview_checks_page).to be_displayed
-
-                publisher_ats_pre_interview_checks_page.reference_links.first.click
-                expect(publisher_ats_reference_request_page).to be_displayed
-                expect(page).to have_content investigation_details
-                expect(page).to have_content warning_details
-                expect(page).to have_content undertake_reason
               end
             end
           end
         end
-      end
 
-      context "when choosing no for references and self disclosures" do
-        before do
-          choose "No"
-          click_on "Save and continue"
-          choose "No"
-          click_on "Save and continue"
-        end
-
-        it "does not send any emails" do
-          expect(ActionMailer::Base.deliveries.count).to eq(0)
-          expect(publisher_ats_interviewing_page).to be_displayed
-        end
-
-        describe "reference display page", :versioning do
+        context "without self disclosures" do
           before do
-            publisher_ats_interviewing_page.pre_interview_check_links.first.click
-            publisher_ats_pre_interview_checks_page.reference_links.first.click
+            choose "Yes"
+            click_on "Save and continue"
+            choose "No"
+            click_on "Save and continue"
+            choose "No"
+            click_on "Save and continue"
           end
 
-          scenario "accepting an out of band reference" do
-            click_on "Mark as received"
-
-            expect(publisher_ats_satisfactory_reference_page).to be_displayed
-            publisher_ats_satisfactory_reference_page.yes.click
-            publisher_ats_satisfactory_reference_page.submit_button.click
-
-            expect(publisher_ats_reference_request_page).to be_displayed
-            expect(current_referee.reference_request.reload).to be_marked_as_complete
-            expect(publisher_ats_reference_request_page.timeline_titles.map(&:text)).to eq(["Marked as complete", "Marked as interviewing"])
-          end
-
-          context "when changing our mind and using TV after all" do
-            before do
-              publisher_ats_reference_request_page.use_tv_anyway_link.click
-            end
-
-            context "without collecting references" do
-              before do
-                choose "No"
-                click_on "Save and continue"
-              end
-
-              it "redirects straight away back to the pre interview page" do
-                expect(publisher_ats_pre_interview_checks_page).to be_displayed
-              end
-            end
-
-            context "when collecting references" do
-              before do
-                choose "Yes"
-                click_on "Save and continue"
-              end
-
-              scenario "errors" do
-                click_on "Save and continue"
-                expect(publisher_ats_pre_interview_checks_page.errors.map(&:text))
-                  .to eq(["Select yes if you would like the service to email candidates that you are collecting references."])
-              end
-
-              scenario "not contacting applicant" do
-                choose "No"
-                click_on "Save and continue"
-                expect(ActionMailer::Base.deliveries.map(&:to).flatten)
-                  .to contain_exactly("employer@contoso.com", "previous@contoso.com")
-
-                expect(publisher_ats_pre_interview_checks_page).to be_displayed
-                # This now includes the self disclosure
-                expect(publisher_ats_pre_interview_checks_page.reference_links.count).to eq(3)
-                publisher_ats_pre_interview_checks_page.reference_links.first.click
-
-                expect(publisher_ats_reference_request_page).to be_displayed
-                expect(publisher_ats_reference_request_page.timeline_titles.map(&:text))
-                  .to eq(["Reference requested", "Marked as interviewing"])
-              end
-
-              scenario "contacting applicant" do
-                choose "Yes"
-                click_on "Save and continue"
-                expect(ActionMailer::Base.deliveries.map(&:to).flatten)
-                  .to contain_exactly("employer@contoso.com", "previous@contoso.com", "jobseeker@contoso.com")
-
-                expect(publisher_ats_pre_interview_checks_page).to be_displayed
-                publisher_ats_pre_interview_checks_page.reference_links.first.click
-
-                expect(publisher_ats_reference_request_page).to be_displayed
-                expect(publisher_ats_reference_request_page.timeline_titles.map(&:text))
-                  .to eq(["Reference requested", "Marked as interviewing"])
-              end
-            end
+          it "loops back to job applications" do
+            expect(publisher_ats_applications_page).to be_displayed
           end
         end
-      end
 
-      context "without self disclosures" do
-        before do
-          choose "Yes"
-          click_on "Save and continue"
-          choose "No"
-          click_on "Save and continue"
-          choose "No"
-          click_on "Save and continue"
-        end
+        context "without references" do
+          before do
+            choose "No"
+            click_on "Save and continue"
+          end
 
-        it "loops back to job applications" do
-          expect(publisher_ats_applications_page).to be_displayed
-        end
-      end
-
-      context "without references" do
-        before do
-          choose "No"
-          click_on "Save and continue"
-        end
-
-        it "only asks the self-disclosure question" do
-          choose "Yes"
-          click_on "Save and continue"
-          expect(publisher_ats_applications_page).to be_displayed
+          it "only asks the self-disclosure question" do
+            choose "Yes"
+            click_on "Save and continue"
+            expect(publisher_ats_applications_page).to be_displayed
+          end
         end
       end
     end
