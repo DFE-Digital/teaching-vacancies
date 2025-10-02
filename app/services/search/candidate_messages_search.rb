@@ -26,10 +26,6 @@ class Search::CandidateMessagesSearch
     @total_count ||= conversations.count
   end
 
-  def clear_filters_params
-    { tab: current_tab }
-  end
-
   private
 
   def scope

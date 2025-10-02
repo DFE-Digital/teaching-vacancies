@@ -12,18 +12,12 @@
       .govuk-grid-column-full
         = form_for @search_form, as: "", url: publishers_candidate_messages_path, method: :get, html: { role: "search", class: "search-form" } do |f|
           = f.hidden_field :tab, value: @tab
-          .govuk-grid-row
-            .govuk-grid-column-two-thirds
-              = f.govuk_text_field :keyword, label: { text: t(".search.label") },
-                                   hint: { text: t(".search.hint") },
-                                   value: @search_form.keyword,
-                                   html_attributes: { placeholder: t(".search.placeholder") }
-            .govuk-grid-column-one-third
-              .search-actions
-                = f.govuk_submit t(".search.submit"), class: "govuk-button"
-                - if @search_form.active_criteria?
-                  = govuk_link_to t(".search.clear"), publishers_candidate_messages_path(@search.clear_filters_params),
-                                  class: "govuk-link search-clear-link"
+          .govuk-form-group
+            = f.label :keyword, t(".search.label"), class: "govuk-label govuk-!-font-weight-bold"
+            .govuk-hint = t(".search.hint")
+            .govuk-input__wrapper
+              = f.text_field :keyword, value: @search_form.keyword, placeholder: t(".search.placeholder"), class: "govuk-input"
+              = f.submit t(".search.submit"), class: "govuk-button"
 
         - if @search_form.active_criteria?
           .search-results-summary

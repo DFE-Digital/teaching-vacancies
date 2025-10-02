@@ -212,7 +212,7 @@ RSpec.describe "Publishers can view candidate messages", :js do
     end
 
     context "when searching by job title" do
-      it "filters conversations by job title and allows clearing search" do
+      it "filters conversations by job title" do
         visit publishers_candidate_messages_path
 
         expect(page).to have_content("2 messages")
@@ -232,14 +232,6 @@ RSpec.describe "Publishers can view candidate messages", :js do
           expect(page).to have_no_content("Mathematics Teacher")
         end
 
-        click_link "Clear search"
-
-        expect(page).to have_content("2 messages")
-
-        within("table tbody") do
-          expect(page).to have_content("Science Teacher")
-          expect(page).to have_content("Mathematics Teacher")
-        end
       end
     end
 

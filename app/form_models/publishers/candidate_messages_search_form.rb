@@ -16,8 +16,4 @@ class Publishers::CandidateMessagesSearchForm
   def active_criteria?
     to_hash.any?
   end
-
-  def clear_filters_params
-    {}
-  end
 end
