@@ -11,7 +11,7 @@ class Publishers::CandidateMessagesController < Publishers::BaseController
 
     @search = Search::CandidateMessagesSearch.new(
       @search_form.to_hash,
-      scope: filtered_conversations.ordered_by_unread_and_latest_message
+      scope: filtered_conversations.ordered_by_unread_and_latest_message,
     )
 
     @conversations = @search.conversations
