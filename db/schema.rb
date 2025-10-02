@@ -86,8 +86,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_03_121224) do
     t.boolean "archived", default: false, null: false
     t.datetime "last_message_at"
     t.boolean "has_unread_jobseeker_messages", default: false, null: false
+    t.tsvector "searchable_content"
     t.index ["archived"], name: "index_conversations_on_archived"
     t.index ["job_application_id"], name: "index_conversations_on_job_application_id"
+    t.index ["searchable_content"], name: "index_conversations_on_searchable_content", using: :gin
   end
 
   create_table "emergency_login_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

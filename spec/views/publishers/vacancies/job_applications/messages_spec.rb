@@ -4,7 +4,7 @@ RSpec.describe "publishers/vacancies/job_applications/messages.html.slim" do
   let(:organisation) { create(:school) }
   let(:publisher) { create(:publisher, organisations: [organisation]) }
   let(:vacancy) { create(:vacancy, :live, organisations: [organisation]) }
-  let(:job_application) { create(:job_application, :submitted, vacancy: vacancy) }
+  let(:job_application) { create(:job_application, :submitted, vacancy: vacancy, status: "interviewing") }
   let(:messages) { [] }
 
   let(:message_form) do

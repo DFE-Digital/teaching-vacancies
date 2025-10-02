@@ -166,6 +166,7 @@ class Vacancy < ApplicationRecord
   self.ignored_columns += %i[personal_statement_guidance how_to_apply school_visits_details]
 
   after_save :reset_markers, if: -> { saved_change_to_type? && (live? || pending?) }
+  after_save :update_conversation_searchable_content, if: -> { saved_change_to_job_title? }
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[8:00 9:00 12:00 15:00 23:59].freeze
@@ -307,6 +308,14 @@ class Vacancy < ApplicationRecord
   end
 
   private
+
+  def update_conversation_searchable_content
+    Conversation.joins(job_application: :vacancy)
+               .where(job_applications: { vacancy_id: id })
+               .find_each do |conversation|
+                 conversation.update_columns(searchable_content: conversation.generate_searchable_content)
+               end
+  end
 
   def calculate_distance(search_coordinates, geolocation)
     Geocoder::Calculations.distance_between(search_coordinates, [geolocation.latitude, geolocation.longitude])

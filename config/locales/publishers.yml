@@ -75,6 +75,18 @@ en:
         empty_state:
           no_messages: "No messages yet."
           no_archived_messages: "No archived messages yet."
+        search:
+          label: "Find a candidate"
+          hint: "Search by candidate name, job title, or find messages containing specific content"
+          placeholder: "Enter candidate name, job title, or message content"
+          submit: "Search"
+          clear: "Clear search"
+          results_heading:
+            one: "1 result found for '%{keyword}'"
+            other: "%{count} results found for '%{keyword}'"
+        total_messages:
+          one: "1 message"
+          other: "%{count} messages"
     incomplete_profile:
       complete_link_text: Complete your %{organisation_type} profile
       heading: Complete your %{organisation_type} profile
