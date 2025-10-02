@@ -1,7 +1,7 @@
 .search
   h1.govuk-heading-l = t(".title_h1")
 
-  = form_for @form, as: "", url: jobs_path, html: { method: "get" } do |f|
+  = form_for form, as: "", url: jobs_path, html: { method: "get" } do |f|
     .search__form
       = render "vacancies/search/keyword", f: f
       = render "vacancies/search/location", f: f, label_text: t(".location_label"), show_hint: false, desktop: true

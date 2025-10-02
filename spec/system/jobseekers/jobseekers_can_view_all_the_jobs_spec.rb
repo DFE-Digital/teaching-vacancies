@@ -15,19 +15,15 @@ RSpec.describe "Jobseekers can view all the jobs" do
   it "jobseekers can visit the home page and use secondary navigation to view jobs" do
     visit root_path
 
-    # within ".sub-navigation" do
     click_on I18n.t("sub_nav.jobs")
     expect(current_path).to eq(jobs_path)
-    # end
   end
 
   it "jobseekers can visit the home page and use secondary navigation to view schools" do
     visit root_path
 
-    # within ".sub-navigation" do
     click_on I18n.t("sub_nav.schools")
     expect(current_path).to eq(organisations_path)
-    # end
   end
 
   it "jobseekers can distinguish between the listed jobs that allow to apply through Teaching Vacancies and the ones who don't" do
