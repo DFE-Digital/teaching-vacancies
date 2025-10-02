@@ -11,8 +11,7 @@ class Publishers::CandidateMessagesController < Publishers::BaseController
 
     @search = Search::CandidateMessagesSearch.new(
       @search_form.to_hash,
-      scope: filtered_conversations.ordered_by_unread_and_latest_message,
-      current_tab: @tab,
+      scope: filtered_conversations.ordered_by_unread_and_latest_message
     )
 
     @conversations = @search.conversations
@@ -41,6 +40,6 @@ class Publishers::CandidateMessagesController < Publishers::BaseController
   private
 
   def search_params
-    params.permit(:keyword, :tab)
+    params.permit(:keyword)
   end
 end

@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 class Search::CandidateMessagesSearch
-  attr_reader :search_criteria, :keyword, :original_scope, :current_tab
+  attr_reader :search_criteria, :keyword, :original_scope
 
-  def initialize(search_criteria, scope:, current_tab: "inbox")
+  def initialize(search_criteria, scope:)
     @search_criteria = search_criteria
     @keyword = search_criteria[:keyword]
     @original_scope = scope
-    @current_tab = current_tab
   end
 
   def active_criteria
