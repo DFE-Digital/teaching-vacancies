@@ -213,6 +213,15 @@ RSpec.describe Conversation do
 
         expect(conversation.searchable_content).to include("unique")
       end
+
+      it "handles messages with nil content when generating searchable content" do
+        # Create a message without content
+        message_without_content = build(:jobseeker_message, conversation: conversation)
+        message_without_content.save(validate: false) # Skip validation to allow nil content
+        
+        # This should not raise an error and should filter out the nil content
+        expect { conversation.reload.generate_searchable_content }.not_to raise_error
+      end
     end
   end
 end
