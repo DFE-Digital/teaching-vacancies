@@ -133,7 +133,7 @@ class JobApplication < ApplicationRecord
   end
 
   def has_pre_interview_checks?
-    interviewing_at.present?
+    interviewing?
   end
 
   Document = Data.define(:filename, :data)
