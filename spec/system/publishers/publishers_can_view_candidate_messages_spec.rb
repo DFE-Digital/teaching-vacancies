@@ -220,7 +220,7 @@ RSpec.describe "Publishers can view candidate messages", :js do
 
     after { logout }
 
-    it "shows messages from all applicants for schools jobs" do
+    it "shows messages from applicants for all jobs at their schools, regardless of whether a school or the MAT published it" do
       visit publishers_candidate_messages_path
 
       expect(page).to have_content("Inbox (2)")
@@ -235,7 +235,7 @@ RSpec.describe "Publishers can view candidate messages", :js do
       expect(conversation_rows.count).to eq(2)
     end
 
-    it "allows archiving messages all applicants for schools jobs" do
+    it "allows archiving messages" do
       visit publishers_candidate_messages_path
 
       check("Select #{trust_published_vacancy.name}", match: :first)
@@ -253,7 +253,7 @@ RSpec.describe "Publishers can view candidate messages", :js do
         login_publisher(publisher: school_publisher, organisation: secondary_school)
       end
 
-      it "can see messages from their own school" do
+      it "can only see messages on jobs published by their own school" do
         visit publishers_candidate_messages_path
 
         expect(page).to have_content("Inbox (1)")
