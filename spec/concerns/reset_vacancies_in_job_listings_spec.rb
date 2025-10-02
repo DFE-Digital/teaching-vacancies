@@ -159,19 +159,6 @@ RSpec.describe Resettable do
     end
   end
 
-  context "when changing safeguarding information provided" do
-    subject(:update_safeguarding_information_provided) { vacancy.update(safeguarding_information_provided: false) }
-
-    let(:vacancy) { build(:vacancy, safeguarding_information_provided: true, safeguarding_information: "test") }
-    let(:previous_safeguarding_information) { vacancy.safeguarding_information }
-
-    it "resets safeguarding information" do
-      expect { update_safeguarding_information_provided }
-        .to change { vacancy.safeguarding_information }
-        .from(previous_safeguarding_information).to(nil)
-    end
-  end
-
   context "when changing further details provided" do
     subject(:update_further_details_provided) { vacancy.update(further_details_provided: false) }
 
