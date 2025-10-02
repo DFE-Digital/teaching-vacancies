@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Search::CandidateMessagesSearch do
-  subject(:search) { described_class.new(search_criteria, scope: base_scope, current_tab: current_tab) }
+  subject(:search) { described_class.new(search_criteria, scope: base_scope) }
 
   let(:organisation) { create(:school) }
   let(:publisher) { create(:publisher, organisations: [organisation]) }
