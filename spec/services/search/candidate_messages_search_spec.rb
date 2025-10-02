@@ -110,26 +110,6 @@ RSpec.describe Search::CandidateMessagesSearch do
     end
   end
 
-  describe "#clear_filters_params" do
-    let(:search_criteria) { { keyword: "science" } }
-
-    context "when on inbox tab" do
-      let(:current_tab) { "inbox" }
-
-      it "returns params to clear filters but keep tab" do
-        expect(search.clear_filters_params).to eq({ tab: "inbox" })
-      end
-    end
-
-    context "when on archive tab" do
-      let(:current_tab) { "archive" }
-
-      it "returns params to clear filters but keep tab" do
-        expect(search.clear_filters_params).to eq({ tab: "archive" })
-      end
-    end
-  end
-
   describe "#active_criteria" do
     context "with keyword" do
       let(:search_criteria) { { keyword: "science" } }

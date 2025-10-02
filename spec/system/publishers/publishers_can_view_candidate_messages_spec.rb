@@ -231,7 +231,6 @@ RSpec.describe "Publishers can view candidate messages", :js do
           expect(page).to have_content("Science Teacher")
           expect(page).to have_no_content("Mathematics Teacher")
         end
-
       end
     end
 
