@@ -34,8 +34,8 @@ RSpec.describe "home/index" do
     it "renders the correct links" do
       expect(rendered).to have_content(I18n.t("buttons.sign_in"))
       expect(rendered).to have_content(I18n.t("buttons.search"))
-      expect(rendered).to have_content(I18n.t("sub_nav.jobs"))
-      expect(rendered).to have_content(I18n.t("sub_nav.schools"))
+      expect(rendered).to have_link(I18n.t("sub_nav.jobs"), href: jobs_path)
+      expect(rendered).to have_link(I18n.t("sub_nav.schools"), href: organisations_path)
     end
   end
 
