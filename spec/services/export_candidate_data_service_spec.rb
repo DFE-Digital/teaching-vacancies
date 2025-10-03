@@ -68,7 +68,7 @@ RSpec.describe ExportCandidateDataService do
   describe "#application_form" do
     subject(:document) { described_class.application_form(job_application) }
 
-    let(:job_application) { build_stubbed(:job_application) }
+    let(:job_application) { build_stubbed(:job_application).decorate }
 
     it { expect(document.filename).to eq(job_application.submitted_application_form.filename) }
     it { expect(document.data).to eq(job_application.submitted_application_form.data) }

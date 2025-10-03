@@ -62,7 +62,8 @@ class TabPanelComponent < ApplicationComponent
   end
 
   def candidate_status(application)
-    if application.interviewing?
+    # need to show pre-interview checks iff candidate in interview state or later
+    if application.has_pre_interview_checks?
       tag.div do
         publisher_job_application_status_tag(application.status) \
         + tag.br \
