@@ -1,4 +1,4 @@
-class Publishers::Vacancies::ExtendDeadlineController < Publishers::Vacancies::BaseController
+class Publishers::Vacancies::ExtendDeadlineController < Publishers::Vacancies::WizardBaseController
   helper_method :vacancy
 
   def show

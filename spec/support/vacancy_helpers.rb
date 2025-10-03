@@ -230,58 +230,57 @@ module VacancyHelpers
     end
   end
 
-  def fill_in_forms_until_applying_for(vacancy)
-    click_on I18n.t("buttons.create_job")
+  def fill_in_forms_until_applying_for(vacancy, created_vacancy_id)
     expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 1, total: 4))
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :job_title), ignore_query: true)
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :job_title), ignore_query: true)
 
     fill_in_job_title_form_fields(vacancy.job_title)
     click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :job_role), ignore_query: true)
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :job_role), ignore_query: true)
 
     fill_in_job_role_form_fields(vacancy.job_roles.first)
     click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :key_stages), ignore_query: true)
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :key_stages), ignore_query: true)
 
     fill_in_key_stages_form_fields(vacancy.key_stages_for_phases)
     click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :subjects), ignore_query: true)
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :subjects), ignore_query: true)
 
     fill_in_subjects_form_fields(vacancy.subjects)
     click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :contract_information), ignore_query: true)
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :contract_information), ignore_query: true)
 
     publisher_contract_information_page.fill_in_and_submit_form(vacancy)
     click_on I18n.t("buttons.save_and_continue")
 
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :start_date), ignore_query: true)
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :start_date), ignore_query: true)
     fill_in_start_date_form_fields(vacancy.starts_on)
     click_on I18n.t("buttons.save_and_continue")
 
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :pay_package), ignore_query: true)
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :pay_package), ignore_query: true)
     fill_in_pay_package_form_fields(vacancy)
     click_on I18n.t("buttons.save_and_continue")
 
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :about_the_role), ignore_query: true)
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :about_the_role), ignore_query: true)
     fill_in_about_the_role_form_fields(vacancy)
     click_on I18n.t("buttons.save_and_continue")
 
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :include_additional_documents), ignore_query: true)
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :include_additional_documents), ignore_query: true)
     fill_in_include_additional_documents_form_fields(vacancy.include_additional_documents)
     click_on I18n.t("buttons.save_and_continue")
 
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :school_visits), ignore_query: true)
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :school_visits), ignore_query: true)
     fill_in_school_visits_form_fields(vacancy)
     click_on I18n.t("buttons.save_and_continue")
 
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :visa_sponsorship), ignore_query: true)
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :visa_sponsorship), ignore_query: true)
     fill_in_visa_sponsorship_form_fields(vacancy)
     click_on I18n.t("buttons.save_and_continue")
 
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :important_dates), ignore_query: true)
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :important_dates), ignore_query: true)
     fill_in_important_dates_form_fields(vacancy)
     click_on I18n.t("buttons.save_and_continue")
 
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :applying_for_the_job), ignore_query: true)
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :applying_for_the_job), ignore_query: true)
   end
 end

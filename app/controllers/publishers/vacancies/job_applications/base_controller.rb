@@ -1,7 +1,7 @@
 module Publishers
   module Vacancies
     module JobApplications
-      class BaseController < Publishers::Vacancies::BaseController
+      class BaseController < Publishers::BaseController
         before_action :set_vacancy
 
         private

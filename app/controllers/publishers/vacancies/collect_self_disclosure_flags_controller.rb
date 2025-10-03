@@ -31,11 +31,11 @@ module Publishers
       private
 
       def set_job_application
-        @job_application = vacancy.job_applications.find params[:job_application_id]
+        @job_application = @vacancy.job_applications.find params[:job_application_id]
       end
 
       def finish_wizard_path
-        pre_interview_checks_organisation_job_job_application_path(vacancy.id, @job_application)
+        pre_interview_checks_organisation_job_job_application_path(@vacancy.id, @job_application)
       end
     end
   end

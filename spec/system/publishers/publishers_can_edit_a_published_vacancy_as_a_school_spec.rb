@@ -32,7 +32,7 @@ RSpec.describe "Publishers can edit a vacancy" do
       it "notifies the Google index service" do
         expect(publisher_job_title_page).to be_displayed
 
-        expect_any_instance_of(Publishers::Vacancies::BaseController)
+        expect_any_instance_of(Publishers::Vacancies::WizardBaseController)
           .to receive(:update_google_index).with(vacancy)
 
         fill_in "publishers_job_listing_job_title_form[job_title]", with: "Assistant Head Teacher"
@@ -64,7 +64,7 @@ RSpec.describe "Publishers can edit a vacancy" do
       it "can be successfully edited and adds a job to update the Google index in the queue" do
         expect(publisher_pay_package_page).to be_displayed
 
-        expect_any_instance_of(Publishers::Vacancies::BaseController)
+        expect_any_instance_of(Publishers::Vacancies::WizardBaseController)
           .to receive(:update_google_index).with(vacancy)
 
         fill_in "publishers_job_listing_pay_package_form[salary]", with: "Lotsa monies"
@@ -217,7 +217,7 @@ RSpec.describe "Publishers can edit a vacancy" do
       it "can be successfully edited and adds a job to update the Google index in the queue" do
         expect(publisher_contact_details_page).to be_displayed
 
-        expect_any_instance_of(Publishers::Vacancies::BaseController)
+        expect_any_instance_of(Publishers::Vacancies::WizardBaseController)
           .to receive(:update_google_index).with(vacancy)
 
         choose I18n.t("helpers.label.publishers_job_listing_contact_details_form.contact_email_options.other")
@@ -245,7 +245,7 @@ RSpec.describe "Publishers can edit a vacancy" do
       it "can be successfully edited, and adds a job to update the Google index in the queue" do
         expect(publisher_about_the_role_page).to be_displayed
 
-        expect_any_instance_of(Publishers::Vacancies::BaseController)
+        expect_any_instance_of(Publishers::Vacancies::WizardBaseController)
           .to receive(:update_google_index).with(vacancy)
 
         fill_in "publishers_job_listing_about_the_role_form[skills_and_experience]", with: "A summary about the job."
