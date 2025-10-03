@@ -68,6 +68,7 @@ class Subscription < ApplicationRecord
         subs.each do |sub|
           criteria = sub.search_criteria
           phases = criteria["phases"]
+          next if phases.nil?
 
           normalized_phases = phases.flat_map { |phase|
             next if phase == "not_applicable"

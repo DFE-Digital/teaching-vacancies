@@ -549,5 +549,13 @@ RSpec.describe Subscription do
       }.to(change { sub.search_criteria["phases"] })
       expect(sub.search_criteria["phases"]).to match_array(%w[primary secondary])
     end
+
+    it "does not change the search criteria when phases key is missing" do
+      sub = described_class.create!(search_criteria: search_criteria)
+      expect {
+        described_class.normalize_phases!
+        sub.reload
+      }.not_to(change { sub.search_criteria }.from(search_criteria))
+    end
   end
 end
