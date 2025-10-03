@@ -69,20 +69,20 @@ guard :rspec, rspec_options do
   watch(rails.app_controller)  { "#{rspec.spec_dir}/requests" }
 
   # Capybara features specs - probably too heavy a trigger for now
-  # watch(rails.controllers) do |m|
-  #   system_spec_name = m[1].split("/")
-  #   # This would be ideal, but our system specs don't have names that match the controllers that they test
-  #   # system_spec = "#{system_spec_name.first}/#{system_spec_name.join('_')}"
-  #   # rspec.spec.call("system/#{system_spec}")
-  #   "#{rspec.spec_dir}/system/#{system_spec_name.first}"
-  # end
+  watch(rails.controllers) do |m|
+    system_spec_name = m[1].split("/")
+    # This would be ideal, but our system specs don't have names that match the controllers that they test
+    system_spec = "#{system_spec_name.first}/#{system_spec_name.join('_')}"
+    rspec.spec.call("system/#{system_spec}")
+    #   "#{rspec.spec_dir}/system/#{system_spec_name.first}"
+  end
 
-  # watch(rails.view_dirs) do |m|
-  #   system_spec_name = m[1].split("/")
-  #   # system_spec = "#{system_spec_name.first}/#{system_spec_name.join('_')}"
-  #   # rspec.spec.call("system/#{system_spec}")
-  #   "#{rspec.spec_dir}/system/#{system_spec_name.first}"
-  # end
+  watch(rails.view_dirs) do |m|
+    system_spec_name = m[1].split("/")
+    system_spec = "#{system_spec_name.first}/#{system_spec_name.join('_')}"
+    rspec.spec.call("system/#{system_spec}")
+    #   "#{rspec.spec_dir}/system/#{system_spec_name.first}"
+  end
 end
 
 guard :rubocop, cli: ["-A"] do
