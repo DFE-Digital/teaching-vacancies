@@ -71,6 +71,9 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         progress_to_edit_page(:applying_for_the_job)
         expect(page).to be_axe_clean
 
+        progress_to_edit_page(:anonymise_applications)
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+
         progress_to_edit_page(:contact_details)
         #  https://github.com/alphagov/govuk-frontend/issues/979
         expect(page).to be_axe_clean.skipping "aria-allowed-attr"

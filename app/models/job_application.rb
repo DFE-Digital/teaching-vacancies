@@ -213,6 +213,10 @@ class JobApplication < ApplicationRecord
     end
   end
 
+  def hide_personal_details?
+    vacancy.anonymise_applications? && status.in?(%w[submitted reviewed])
+  end
+
   private
 
   def update_conversation_searchable_content
