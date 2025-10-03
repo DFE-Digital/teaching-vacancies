@@ -3,8 +3,8 @@ require "pdf/inspector"
 
 RSpec.describe MessagesPdfGenerator do
   let(:publisher) { build_stubbed(:publisher, given_name: "John", family_name: "Smith") }
-  let!(:vacancy) { build_stubbed(:vacancy, :at_one_school, publisher: publisher, job_applications: [job_application]) }
-  let(:job_application) { build_stubbed(:job_application, :status_submitted, conversations: [conversation]) }
+  let(:vacancy) { build_stubbed(:vacancy, :at_one_school, publisher: publisher) }
+  let(:job_application) { build_stubbed(:job_application, :status_submitted, vacancy: vacancy, conversations: [conversation]) }
   let(:generator) { described_class.new(job_application, conversation.messages) }
 
   describe "#generate" do
