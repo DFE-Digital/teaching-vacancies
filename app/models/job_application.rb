@@ -58,6 +58,7 @@ class JobApplication < ApplicationRecord
     non_catholic: 11,
   }
 
+  INTERVIEWING_TARGETS = %w[unsuccessful_interview offered withdrawn].freeze
   # hash of valid state transitions - input state to output
   # rubocop:disable Layout/HashAlignment
   STATUS_TRANSITIONS = {
@@ -67,7 +68,7 @@ class JobApplication < ApplicationRecord
     # reviewed is being phased out and is here to support existing data
     "reviewed"     => %w[unsuccessful shortlisted interviewing offered withdrawn],
     "shortlisted"  => %w[unsuccessful interviewing offered withdrawn],
-    "interviewing" => %w[unsuccessful_interview offered withdrawn],
+    "interviewing" => INTERVIEWING_TARGETS,
     "offered"      => %w[declined withdrawn],
     "unsuccessful" => %w[rejected],
   }.freeze
@@ -90,6 +91,9 @@ class JobApplication < ApplicationRecord
   # end of the road statuses for job application we cannot further update status at the point
   TERMINAL_STATUSES = (statuses.keys.map(&:to_s) - STATUS_TRANSITIONS.keys).freeze
   INACTIVE_STATUSES = (%w[draft] + TERMINAL_STATUSES).freeze
+
+  PRE_SHORTLIST_STATUSES = %w[submitted reviewed].freeze
+  POST_INTERVIEW_STATUSES = (%w[interviewing] + INTERVIEWING_TARGETS + INTERVIEWING_TARGETS.flat_map { |st| STATUS_TRANSITIONS.fetch(st, []) }).uniq - %w[withdrawn]
 
   RELIGIOUS_REFERENCE_TYPES = { religious_referee: 1, baptism_certificate: 2, baptism_date: 3, no_religious_referee: 4 }.freeze
 
@@ -146,19 +150,8 @@ class JobApplication < ApplicationRecord
     INACTIVE_STATUSES.exclude?(status)
   end
 
-  Document = Data.define(:filename, :data)
-
-  def submitted_application_form
-    if vacancy.uploaded_form?
-      return Document["no_application_form.txt", "the candidate has no application for on record"] unless application_form.attached?
-
-      extension = File.extname(application_form.filename.to_s)
-      Document["application_form#{extension}", application_form.download]
-    else
-      presenter = JobApplicationPdf.new(self)
-      pdf = JobApplicationPdfGenerator.new(presenter).generate
-      Document["application_form.pdf", pdf.render]
-    end
+  def has_pre_interview_checks?
+    status.in?(POST_INTERVIEW_STATUSES)
   end
 
   def name
@@ -223,6 +216,10 @@ class JobApplication < ApplicationRecord
     else
       true
     end
+  end
+
+  def hide_personal_details?
+    vacancy.anonymise_applications? && status.in?(PRE_SHORTLIST_STATUSES)
   end
 
   private

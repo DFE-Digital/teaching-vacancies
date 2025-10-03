@@ -888,6 +888,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_16_154016) do
     t.boolean "flexi_working_details_provided"
     t.datetime "discarded_at"
     t.string "type", null: false
+    t.boolean "anonymise_applications", default: false
     t.index ["discarded_at"], name: "index_vacancies_on_discarded_at"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["external_reference", "publisher_ats_api_client_id"], name: "index_kept_unique_vacancies_on_external_ref_and_client_id", unique: true, where: "(discarded_at IS NULL)"

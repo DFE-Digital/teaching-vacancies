@@ -18,7 +18,7 @@ module Publishers
         private
 
         def religious_reference_params
-          params.expect(native_job_application: [:status])
+          params.expect(job_application: [:status])
         end
       end
     end

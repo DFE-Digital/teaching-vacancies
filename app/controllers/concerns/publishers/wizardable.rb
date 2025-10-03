@@ -135,6 +135,15 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
     end
   end
 
+  def anonymise_applications_params(params)
+    if params[:publishers_job_listing_anonymise_applications_form]
+      params.require(:publishers_job_listing_anonymise_applications_form)
+            .permit(:anonymise_applications)
+    else
+      {}
+    end
+  end
+
   def completed_steps
     (vacancy.completed_steps | [current_step.to_s]).compact
   end

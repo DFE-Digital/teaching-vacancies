@@ -17,6 +17,7 @@ RSpec.describe CopyVacancyAsaTemplate do
          pay_package
          about_the_role
          include_additional_documents
+         anonymise_applications
          school_visits
          visa_sponsorship
          contact_details]

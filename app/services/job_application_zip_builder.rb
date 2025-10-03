@@ -9,18 +9,18 @@ class JobApplicationZipBuilder
   def generate
     Zip::OutputStream.write_buffer { |zio|
       @job_applications.each do |job_application|
+        filename = job_application.name.tr(" ", "_")
         if @vacancy.uploaded_form?
           next unless job_application.application_form.attached?
 
           blob = job_application.application_form.blob
           extension = File.extname(blob.filename.to_s)
-          filename = "#{job_application.first_name}_#{job_application.last_name}#{extension}"
 
-          zio.put_next_entry(filename)
+          zio.put_next_entry("#{filename}#{extension}")
           zio.write blob.download
         else
           presenter = JobApplicationPdf.new(job_application)
-          zio.put_next_entry "#{job_application.first_name}_#{job_application.last_name}.pdf"
+          zio.put_next_entry "#{filename}.pdf"
           zio.write JobApplicationPdfGenerator.new(presenter).generate.render
         end
       end
