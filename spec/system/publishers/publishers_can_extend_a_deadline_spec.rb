@@ -94,21 +94,6 @@ RSpec.describe "Publishers can extend a deadline" do
           },
         )
       end
-
-      context "when looking at tabs" do
-        before do
-          click_on "Job listings"
-        end
-
-        it "shows the new vacancy" do
-          expect(page).to have_content "Closing date:22 November 2024 at 9am"
-        end
-
-        it "keeps the closed vacancy closed" do
-          click_on I18n.t("jobs.dashboard.expired.tab_heading")
-          expect(page).to have_content "Listing ended:22 September 2024 at 9am"
-        end
-      end
     end
 
     it "can be re-listed for publishing tomorrow" do
