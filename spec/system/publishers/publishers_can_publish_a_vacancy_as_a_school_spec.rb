@@ -183,6 +183,31 @@ RSpec.describe "Creating a vacancy" do
               publish_on: Date.current)
       end
 
+      context "when on the anonimise applications page" do
+        before do
+          publisher_job_title_page.fill_in_and_submit_form(vacancy.job_title)
+          publisher_job_role_page.fill_in_and_submit_form(vacancy.job_roles.first)
+          publisher_key_stage_page.fill_in_and_submit_form(vacancy.key_stages_for_phases)
+          publisher_subjects_page.fill_in_and_submit_form(vacancy.subjects)
+          publisher_contract_information_page.fill_in_and_submit_form(vacancy)
+          publisher_start_date_page.fill_in_and_submit_form(vacancy.starts_on)
+          publisher_pay_package_page.fill_in_and_submit_form(vacancy)
+          publisher_about_the_role_page.fill_in_and_submit_form(vacancy)
+          publisher_include_additional_documents_page.fill_in_and_submit_form(vacancy.include_additional_documents)
+          publisher_school_visits_page.fill_in_and_submit_form(vacancy.school_visits)
+          publisher_visa_sponsorship_page.fill_in_and_submit_form(vacancy.visa_sponsorship_available)
+          publisher_important_dates_page.fill_in_and_submit_form(publish_on: vacancy.publish_on, expires_at: vacancy.expires_at)
+          publisher_applying_for_the_job_page.standard_option.click
+          click_on I18n.t("buttons.save_and_continue")
+        end
+
+        it "handles errors when not given data" do
+          expect(publisher_anonymise_applications_page).to be_displayed
+          click_on I18n.t("buttons.save_and_continue")
+          expect(publisher_anonymise_applications_page.errors.map(&:text)).to eq(["Choose whether to view personal details or not"])
+        end
+      end
+
       it "follows the TVS flows", :js do
         publisher_job_title_page.fill_in_and_submit_form(vacancy.job_title)
 
