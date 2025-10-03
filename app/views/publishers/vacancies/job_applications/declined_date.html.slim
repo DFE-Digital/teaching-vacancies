@@ -1,8 +1,8 @@
 - content_for :breadcrumbs do
-  = govuk_back_link text: t("app.back_link"), href: organisation_job_job_applications_path(vacancy.id, anchor: @form.origin), html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
+  = govuk_back_link text: t("app.back_link"), href: organisation_job_job_applications_path(@vacancy.id, anchor: @form.origin), html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
 
 span.govuk-hint = t("publishers.vacancies.job_applications.update_application_status")
-= form_with(model: @form, url: update_tag_organisation_job_job_applications_path(vacancy.id), method: :post) do |f|
+= form_with(model: @form, url: update_tag_organisation_job_job_applications_path(@vacancy.id), method: :post) do |f|
   = hidden_field_tag :form_name, @form.name
   = f.govuk_error_summary
   = f.hidden_field :origin
@@ -14,4 +14,4 @@ span.govuk-hint = t("publishers.vacancies.job_applications.update_application_st
 
   .govuk-button-group
     = f.govuk_submit t("buttons.continue")
-    = govuk_button_link_to t("buttons.cancel"), organisation_job_job_applications_path(vacancy.id, anchor: @form.origin), secondary: true
+    = govuk_button_link_to t("buttons.cancel"), organisation_job_job_applications_path(@vacancy.id, anchor: @form.origin), secondary: true

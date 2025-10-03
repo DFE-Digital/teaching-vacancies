@@ -6,8 +6,8 @@ inherit_from: .rubocop_todo.yml
 
 inherit_gem:
   rubocop-govuk:
-#  Avoid the 'default' config as it disables lots of useful metrics
-#    - config/default.yml
+    #  Avoid the 'default' config as it disables lots of useful metrics
+    #    - config/default.yml
     - config/layout.yml
     - config/naming.yml
     - config/style.yml
@@ -166,6 +166,7 @@ Metrics/BlockLength:
   Exclude:
     - "config/**/*"
     - "spec/**/*"
+    - "Guardfile"
 
 Metrics/CyclomaticComplexity:
   Max: 18 # Default 7

@@ -2,7 +2,7 @@
 
 module Publishers
   module Vacancies
-    class FormPreviewsController < Publishers::Vacancies::BaseController
+    class FormPreviewsController < Publishers::Vacancies::WizardBaseController
       def show
         document = ::DocumentPreviewService.call(params[:id], vacancy)
         send_data(document.data, filename: document.filename, disposition: "inline")

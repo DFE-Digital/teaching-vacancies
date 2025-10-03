@@ -1,10 +1,10 @@
 - content_for :page_title_prefix, t(".page_title")
 
 span.govuk-caption-l
-  = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.organisation_name)
+  = t("jobseekers.job_applications.caption", job_title: @vacancy.job_title, organisation: @vacancy.organisation_name)
 
 h1.govuk-heading-xl class="govuk-!-margin-bottom-8 govuk-!-margin-top-3" = t(".heading")
 
 p.govuk-body = t(".content")
 
-= govuk_button_link_to t(".view_more_applications"), organisation_job_job_applications_path(vacancy.id), class: "govuk-!-margin-bottom-0 govuk-!-margin-top-5"
+= govuk_button_link_to t(".view_more_applications"), organisation_job_job_applications_path(@vacancy.id), class: "govuk-!-margin-bottom-0 govuk-!-margin-top-5"

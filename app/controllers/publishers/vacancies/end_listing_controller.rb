@@ -1,4 +1,4 @@
-class Publishers::Vacancies::EndListingController < Publishers::Vacancies::BaseController
+class Publishers::Vacancies::EndListingController < Publishers::Vacancies::WizardBaseController
   before_action :set_vacancy
 
   def show
