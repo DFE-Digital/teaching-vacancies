@@ -1,4 +1,4 @@
-class Publishers::Vacancies::CopyController < Publishers::Vacancies::BaseController
+class Publishers::Vacancies::CopyController < Publishers::Vacancies::WizardBaseController
   include Publishers::VacancyCopy
 
   def create
