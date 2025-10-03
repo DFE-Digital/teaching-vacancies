@@ -69,11 +69,22 @@ class JobApplication < ApplicationRecord
     "shortlisted"  => %w[unsuccessful interviewing offered withdrawn],
     "interviewing" => %w[unsuccessful_interview offered withdrawn],
     "offered"      => %w[declined withdrawn],
+    "unsuccessful" => %w[rejected],
   }.freeze
   # rubocop:enable Layout/HashAlignment
 
   # If you want to add a status, be sure to add a `status_at` column to the `job_applications` table
-  enum :status, { draft: 0, submitted: 1, reviewed: 2, shortlisted: 3, unsuccessful: 4, withdrawn: 5, interviewing: 6, offered: 7, declined: 8, unsuccessful_interview: 9 }, default: 0
+  enum :status, { draft: 0,
+                  submitted: 1,
+                  reviewed: 2,
+                  shortlisted: 3,
+                  unsuccessful: 4,
+                  withdrawn: 5,
+                  interviewing: 6,
+                  offered: 7,
+                  declined: 8,
+                  unsuccessful_interview: 9,
+                  rejected: 10 }, default: 0
   array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
 
   # end of the road statuses for job application we cannot further update status at the point

@@ -241,6 +241,17 @@ FactoryBot.define do
     rejection_reasons { Faker::Lorem.paragraph(sentence_count: 1) }
   end
 
+  trait :status_rejected do
+    transient do
+      submitted_at { 4.days.ago }
+      unsuccessful_at { 3.days.ago }
+      rejected_at { 2.days.ago }
+      status { :rejected }
+    end
+
+    rejection_reasons { Faker::Lorem.paragraph(sentence_count: 1) }
+  end
+
   trait :status_withdrawn do
     transient do
       submitted_at { 4.days.ago }
