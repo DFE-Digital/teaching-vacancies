@@ -19,7 +19,7 @@ RSpec.describe Search::CandidateMessagesSearch do
   let!(:math_conversation) { create(:conversation, job_application: math_application) }
   let!(:english_conversation) { create(:conversation, job_application: english_application) }
 
-  let(:base_scope) { Conversation.for_organisation(organisation.id).inbox }
+  let(:base_scope) { Conversation.for_organisations(organisation.id).inbox }
   let(:current_tab) { "inbox" }
 
   describe "with no search criteria" do
