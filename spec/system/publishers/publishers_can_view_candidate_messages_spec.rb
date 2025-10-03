@@ -215,11 +215,11 @@ RSpec.describe "Publishers can view candidate messages" do
     let(:vacancy_published_by_trust) { create(:vacancy, :live, organisations: [primary_school], publisher: trust_publisher) }
     let(:vacancy_published_by_school) { create(:vacancy, :live, organisations: [secondary_school], publisher: school_publisher) }
 
-    let(:trust_published_vacancy) { create(:job_application, :status_submitted, vacancy: vacancy_published_by_trust, jobseeker: jobseeker) }
-    let(:school_published_vacancy) { create(:job_application, :status_submitted, vacancy: vacancy_published_by_school, jobseeker: jobseeker) }
+    let(:trust_published_vacancy_application) { create(:job_application, :status_submitted, vacancy: vacancy_published_by_trust, jobseeker: jobseeker, status: "interviewing") }
+    let(:school_published_vacancy_application) { create(:job_application, :status_submitted, vacancy: vacancy_published_by_school, jobseeker: jobseeker, status: "interviewing") }
 
-    let!(:trust_published_conversation) { create(:conversation, job_application: trust_published_vacancy, archived: false) }
-    let!(:school_published_conversation) { create(:conversation, job_application: school_published_vacancy, archived: false) }
+    let!(:trust_published_conversation) { create(:conversation, job_application: trust_published_vacancy_application, archived: false) }
+    let!(:school_published_conversation) { create(:conversation, job_application: school_published_vacancy_application, archived: false) }
 
     before do
       create(:jobseeker_message, conversation: trust_published_conversation, sender: jobseeker)
@@ -235,8 +235,8 @@ RSpec.describe "Publishers can view candidate messages" do
       expect(page).to have_content("Inbox (2)")
 
       within("tbody") do
-        expect(page).to have_content(trust_published_vacancy.name)
-        expect(page).to have_content(school_published_vacancy.name)
+        expect(page).to have_content(trust_published_vacancy_application.name)
+        expect(page).to have_content(school_published_vacancy_application.name)
         expect(page).to have_no_content("No messages yet")
       end
 
@@ -247,7 +247,7 @@ RSpec.describe "Publishers can view candidate messages" do
     it "allows archiving messages" do
       visit publishers_candidate_messages_path
 
-      check("Select #{trust_published_vacancy.name}", match: :first)
+      check("Select #{trust_published_vacancy_application.name}", match: :first)
       click_button "Archive"
 
       expect(page).to have_content("You have moved messages to archived")
@@ -268,12 +268,16 @@ RSpec.describe "Publishers can view candidate messages" do
         expect(page).to have_content("Inbox (1)")
 
         within("tbody") do
-          expect(page).to have_content(school_published_vacancy.name)
-          expect(page).to have_no_content(trust_published_vacancy.name)
+          expect(page).to have_content(school_published_vacancy_application.name)
+          expect(page).to have_no_content(trust_published_vacancy_application.name)
         end
 
         conversation_rows = page.all("table tbody tr")
         expect(conversation_rows.count).to eq(1)
+      end
+    end
+  end
+
   describe "searching candidate messages" do
     let(:science_vacancy) { create(:vacancy, :live, job_title: "Science Teacher", organisations: [organisation]) }
     let(:math_vacancy) { create(:vacancy, :live, job_title: "Mathematics Teacher", organisations: [organisation]) }
