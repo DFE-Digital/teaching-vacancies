@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Search::CandidateMessagesSearch
   attr_reader :search_criteria, :keyword, :original_scope
 
@@ -29,8 +27,7 @@ class Search::CandidateMessagesSearch
 
   def scope
     if keyword.present?
-      # When searching, use pg_search which handles its own ordering
-      # Remove any existing distinct to avoid ORDER BY conflicts
+      # Remove any existing distinct to allow pg to sort by the computed ts_rank values and order by relevance
       base_scope = original_scope.except(:distinct)
       base_scope.search_by_keyword(keyword)
     else
