@@ -10,11 +10,10 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   }.freeze
 
   before_action :set_job_application, only: %i[show download pre_interview_checks messages download_messages]
-  before_action :set_job_applications, only: %i[index tag]
+  before_action :set_job_applications, only: %i[index tag update_tag offer]
 
   def index
     @form = Publishers::JobApplication::TagForm.new
-    @job_applications = vacancy.job_applications.not_draft.order(updated_at: :desc).group_by(&:status)
   end
 
   def show
@@ -30,7 +29,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def tag
-    with_valid_form do |form|
+    with_valid_form(@job_applications) do |form|
       case params[:tag_action]
       when "download" then download_selected(form.job_applications)
       when "export"   then export_selected(form.job_applications)
@@ -44,7 +43,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def update_tag
-    with_valid_form(validate_status: true) do |form|
+    with_valid_form(@job_applications, validate_status: true) do |form|
       case form.status
       when "interviewing" then redirect_to_references_and_self_disclosure(form.job_applications)
       when "offered"      then render_offered_form(form.job_applications, form.origin)
@@ -57,8 +56,8 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def offer
-    with_valid_form do |form|
-      form.job_applications.find_each { it.update!(form.attributes) }
+    with_valid_form(@job_applications) do |form|
+      form.job_applications.each { it.update!(form.attributes) }
       redirect_to organisation_job_job_applications_path(vacancy.id, anchor: form.origin)
     end
   end
@@ -98,15 +97,16 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   def set_job_applications
     @current_organisation = current_organisation
     @vacancy = vacancy
-    @job_applications = vacancy.job_applications.not_draft
+    @job_applications = vacancy.job_applications.not_draft.order(updated_at: :desc).decorate.group_by(&:status)
   end
 
-  def with_valid_form(validate_status: false)
+  def with_valid_form(job_applications_by_status, validate_status: false)
+    job_applications = job_applications_by_status.values.flatten
     form_class = FORMS.fetch(params[:form_name], Publishers::JobApplication::TagForm)
     form_params = params
                     .fetch(ActiveModel::Naming.param_key(form_class), {})
                     .permit(:origin, :status, :offered_at, :declined_at, :interview_feedback_received, :interview_feedback_received_at, { job_applications: [] })
-    form_params[:job_applications] = vacancy.job_applications.where(id: Array(form_params[:job_applications]).compact_blank)
+    form_params[:job_applications] = job_applications.select { |ja| Array(form_params[:job_applications]).include?(ja.id) }
     form_params[:validate_status] = validate_status
 
     @form = form_class.new(form_params)
