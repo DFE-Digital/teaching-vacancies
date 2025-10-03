@@ -1,0 +1,37 @@
+- content_for :page_title_prefix, t(".page_title")
+
+span.govuk-caption-l = t(".caption")
+h1.govuk-heading-xl = t(".heading")
+
+h2 = t(".edit_email")
+h3 = t(".to")
+
+= govuk_inset_text do
+  p.govuk-body
+    ul
+      - @job_applications.each do |ja|
+        li = ja.email_address
+
+= form_with(model: @form, url: send_rejection_emails_organisation_job_batch_email_path(vacancy.id, @batch_email.id)) do |f|
+  = f.govuk_error_summary
+
+  = f.govuk_text_field :subject
+
+  .govuk-form-group
+    = f.govuk_label :content
+    = f.rich_text_area :content
+
+  = f.govuk_text_field :contact_email
+
+  = f.hidden_field :from
+
+  = f.govuk_check_box :include_school_logo, "true", multiple: false if vacancy.organisation.logo.present?
+  = f.govuk_check_box :email_copy, "true", multiple: false, label: { text: t(".email_copy", email: f.object.contact_email) }
+
+  .govuk-button-group
+    = f.govuk_submit t("buttons.send_ats_emails"), class: "govuk-!-margin-top-6"
+
+  = govuk_details(summary_text: t(".email_preview")) do
+    = render "shared/rejection_email", content: f.object.content,
+      contact_email: f.object.contact_email,
+      name: t(".candidate_name"), logo_path: f.object.include_school_logo.present? ? image_tag(vacancy.organisation.logo) : nil

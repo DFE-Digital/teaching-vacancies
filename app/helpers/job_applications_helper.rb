@@ -4,6 +4,7 @@ module JobApplicationsHelper
     reviewed: "reviewed",
     shortlisted: "shortlisted",
     unsuccessful: "not progressing",
+    rejected: "not progressing",
     withdrawn: "withdrawn",
     interviewing: "interviewing",
     unsuccessful_interview: "not progressing",
@@ -18,6 +19,7 @@ module JobApplicationsHelper
     reviewed: "submitted",
     shortlisted: "shortlisted",
     unsuccessful: "unsuccessful",
+    rejected: "unsuccessful",
     withdrawn: "withdrawn",
     interviewing: "interviewing",
     unsuccessful_interview: "unsuccessful",
@@ -33,6 +35,7 @@ module JobApplicationsHelper
     reviewed: "purple",
     shortlisted: "yellow",
     unsuccessful: "red",
+    rejected: "red",
     withdrawn: "grey",
     action_required: "orange",
     interviewing: "green",
@@ -43,7 +46,7 @@ module JobApplicationsHelper
 
   TABS_DEFINITION = {
     submitted: %w[submitted reviewed],
-    unsuccessful: %w[unsuccessful withdrawn],
+    unsuccessful: %w[unsuccessful withdrawn rejected],
     shortlisted: %w[shortlisted],
     interviewing: %w[interviewing unsuccessful_interview],
     offered: %w[offered declined],
@@ -123,14 +126,14 @@ module JobApplicationsHelper
 
   def job_application_status_tag(status)
     govuk_tag text: JOBSEEKER_STATUS_MAPPINGS[status.to_sym],
-              colour: JOB_APPLICATION_STATUS_TAG_COLOURS[JOBSEEKER_STATUS_MAPPINGS[status.to_sym].parameterize.underscore.to_sym],
+              colour: JOB_APPLICATION_STATUS_TAG_COLOURS[JOBSEEKER_STATUS_MAPPINGS.fetch(status.to_sym).parameterize.underscore.to_sym],
               classes: "govuk-!-margin-bottom-2"
   end
 
   def publisher_job_application_status_tag(status, classes: [])
     default_classes = ["application-status", "govuk-!-margin-bottom-2"]
-    govuk_tag text: PUBLISHER_STATUS_MAPPINGS[status.to_sym],
-              colour: JOB_APPLICATION_STATUS_TAG_COLOURS[status.to_sym],
+    govuk_tag text: PUBLISHER_STATUS_MAPPINGS.fetch(status.to_sym),
+              colour: JOB_APPLICATION_STATUS_TAG_COLOURS.fetch(status.to_sym),
               classes: (default_classes + classes).join(" ")
   end
 

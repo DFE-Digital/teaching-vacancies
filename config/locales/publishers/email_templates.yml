@@ -1,0 +1,64 @@
+en:
+  activerecord:
+    errors:
+      models:
+        email_template:
+          attributes:
+            name:
+              blank: Enter a template name
+            from:
+              blank: Enter a from description
+            subject:
+              blank: Enter a subject for the email
+  publishers:
+    email_templates:
+      new:
+        page_title: New email template
+        heading: New email template
+        caption: Send rejection emails
+      edit:
+        page_title: New email template
+        heading: Edit email template
+        caption: Send rejection emails
+      create:
+        success: Email template created
+      update:
+        success: Email template updated
+    vacancies:
+      batch_emails:
+        do_not_reply: Do not reply to this email. Please respond to %{contact_email}
+        select_rejection_template:
+          page_title: Send rejection emails
+          caption: Send rejection emails
+          select_email_template: Select email template
+          edit_template: Edit template
+          delete_template: Delete template
+        prepare_rejection_emails:
+          page_title: Edit and send emails
+          caption: Reject candidates
+          heading: Edit and send emails
+          edit_email: Edit email
+          to: "To"
+          email_copy: "Email a copy to %{email}"
+          candidate_name: "<Candidate>"
+          email_preview: View email preview
+        send_rejection_emails:
+          rejections_sent: Rejection emails sent
+
+  helpers:
+    label:
+      email_template:
+        name: Template name
+        from: From
+        subject: Subject
+        content: Message
+      publishers_job_application_rejection_email_form:
+        contact_email: How should the applicant contact you? (Optional)
+        include_school_logo_options:
+          "true": Include school or trust logo in email
+    hint:
+      publishers_job_application_rejection_email_form:
+        contact_email: >-
+          Applicants will not be able to contact you through Teaching Vacancies.
+          Provide an email you would like the applicant to contact you through and this will be added to your email.
+

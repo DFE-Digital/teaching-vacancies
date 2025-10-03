@@ -13,6 +13,7 @@ en:
       update_status: Update application status
       declined: Mark offer as declined
       export: Download selected
+      reject: Send rejection emails
     submitted:
       label: "New (%{count})"
       heading: New applications

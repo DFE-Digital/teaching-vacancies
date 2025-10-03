@@ -34,6 +34,27 @@
     - record_id
     - created_at
     - updated_at
+  :email_templates:
+    - id
+    - publisher_id
+    - name
+    - from
+    - subject
+    - created_at
+    - updated_at
+    - template_type
+  :batch_email_job_applications:
+  - id
+  - batch_email_id
+  - job_application_id
+  - created_at
+  - updated_at
+  :batch_emails:
+  - id
+  - vacancy_id
+  - batch_type
+  - created_at
+  - updated_at
   :school_group_memberships:
   - do_not_delete
   :references:

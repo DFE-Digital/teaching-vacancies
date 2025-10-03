@@ -8,6 +8,7 @@ class Publisher < ApplicationRecord
   has_many :publisher_preferences, dependent: :destroy
   has_many :vacancies
   has_many :publisher_messages, foreign_key: :sender_id, dependent: :destroy
+  has_many :email_templates
 
   has_encrypted :family_name, :given_name
 

@@ -40,6 +40,7 @@ module Publishers
           when "offered"  then render_offered_form(form.job_applications, form.origin)
           when "interview_datetime" then render_interview_datetime_form(form.job_applications, form.origin)
           when "unsuccessful_interview" then render_unsuccessful_interview_form(form.job_applications, form.origin)
+          when "reject" then prepare_to_reject(form.job_applications)
           else # when "update_status"
             render "tag"
           end
@@ -108,7 +109,7 @@ module Publishers
         form_params = params
                         .fetch(ActiveModel::Naming.param_key(form_class), {})
                         .permit(:origin, :status, :offered_at, :declined_at, :interview_feedback_received, :interview_feedback_received_at, :interview_date, :interview_time, { job_applications: [] })
-        form_params[:job_applications] = job_applications.select { |ja| Array(form_params[:job_applications]).include?(ja.id) }
+        form_params[:job_applications] = job_applications.select { |ja| form_params[:job_applications].include?(ja.id) }
 
         form_params[:validate_all_attributes] = validate_all_attributes
 
@@ -134,6 +135,21 @@ module Publishers
           redirect_to organisation_job_job_applications_path(@vacancy.id, anchor: form.origin)
         end
       end
+
+      def prepare_to_reject(job_applications)
+        # batch = @vacancy.batch_emails.build(batch_type: :not_sent)
+        # job_applications.each do |job_application|
+        #   batch.job_applications << job_application
+        # end
+        # batch.save!
+        batch = JobApplicationBatch.create!(vacancy: @vacancy)
+        job_applications.each do |ja|
+          batch.batchable_job_applications.create!(job_application: ja)
+        end
+        redirect_to select_rejection_template_organisation_job_batch_email_path(@vacancy.id, batch)
+      end
+
+      require "zip"
 
       def download_selected(job_applications)
         zip_data = JobApplicationZipBuilder.new(vacancy: @vacancy, job_applications:).generate

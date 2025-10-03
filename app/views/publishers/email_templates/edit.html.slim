@@ -1,0 +1,17 @@
+- content_for :page_title_prefix, t(".page_title")
+
+span.govuk-caption-l = t(".caption")
+h1.govuk-heading-xl = t(".heading")
+
+= form_with(model: @email_template, url: organisation_email_template_path(@email_template.id), method: :patch) do |f|
+  = f.govuk_error_summary
+
+  = f.govuk_text_field :name
+  = f.govuk_text_field :from
+  = f.govuk_text_field :subject
+
+  = f.govuk_label :content
+  = f.rich_text_area :content
+
+  .govuk-button-group
+    = f.govuk_submit t("buttons.save_template"), class: "govuk-!-margin-top-6"
