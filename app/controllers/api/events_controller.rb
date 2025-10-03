@@ -20,7 +20,7 @@ class Api::EventsController < Api::ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:type, data: {})
+    params.expect(event: [:type, { data: {} }])
   end
 
   def bad_request

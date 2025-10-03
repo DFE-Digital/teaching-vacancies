@@ -27,7 +27,7 @@ require "rack-mini-profiler" if ENV.fetch("RACK_MINI_PROFILER", nil) == "true" &
 
 module TeachingVacancies
   class Application < Rails::Application
-    config.load_defaults 7.2
+    config.load_defaults 8.0
 
     config.add_autoload_paths_to_load_path = false
 
@@ -69,10 +69,6 @@ module TeachingVacancies
     config.exceptions_app = routes
 
     config.active_job.queue_adapter = :sidekiq
-
-    # Controls whether Active Job's `#perform_later` and similar methods automatically defer
-    # the job queuing to after the current Active Record transaction is committed.
-    config.active_job.enqueue_after_transaction_commit = :default
 
     # we have multiple mailers (Notify and Smtp) so can't configure here
     # config.action_mailer.delivery_method = :notify

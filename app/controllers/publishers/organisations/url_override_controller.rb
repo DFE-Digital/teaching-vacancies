@@ -21,6 +21,6 @@ class Publishers::Organisations::UrlOverrideController < Publishers::Organisatio
   private
 
   def url_override_form_params
-    params.require(:publishers_organisation_url_override_form).permit(:url_override)
+    params.expect(publishers_organisation_url_override_form: [:url_override])
   end
 end

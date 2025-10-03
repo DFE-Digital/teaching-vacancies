@@ -21,6 +21,6 @@ class Publishers::Organisations::EmailController < Publishers::OrganisationsCont
   private
 
   def email_form_params
-    params.require(:publishers_organisation_email_form).permit(:email)
+    params.expect(publishers_organisation_email_form: [:email])
   end
 end

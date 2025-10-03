@@ -50,7 +50,7 @@ class Publishers::PublisherPreferencesController < Publishers::BaseController
   private
 
   def publisher_preference_params
-    params.require(:publisher_preference).permit(:jobs_type, organisation_ids: [], school_ids: [])
+    params.expect(publisher_preference: [:jobs_type, { organisation_ids: [], school_ids: [] }])
   end
 
   def strip_empty_publisher_preference_checkboxes

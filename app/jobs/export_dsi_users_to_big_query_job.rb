@@ -1,3 +1,4 @@
+# This is loaded correctly by Zeitwerk due to a custom inflection in config/inflections.rb
 class ExportDSIUsersToBigQueryJob < ApplicationJob
   queue_as :low
 

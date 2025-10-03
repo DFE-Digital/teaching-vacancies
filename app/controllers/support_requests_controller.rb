@@ -29,13 +29,6 @@ class SupportRequestsController < ApplicationController
   private
 
   def form_params
-    params.require(:support_request_form).permit(*%I[
-      email_address
-      is_for_whole_site
-      issue
-      name
-      page
-      screenshot
-    ])
+    params.expect(support_request_form: %i[email_address is_for_whole_site issue name page screenshot])
   end
 end

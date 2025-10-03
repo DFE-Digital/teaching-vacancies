@@ -15,7 +15,7 @@ class Jobseekers::Profiles::AboutYouController < Jobseekers::ProfilesController
   helper_method :form
 
   def form
-    @form ||= Jobseekers::Profile::AboutYouForm.new(form_attributes)
+    @form ||= form_class.new(form_attributes)
   end
 
   def form_attributes
@@ -28,10 +28,13 @@ class Jobseekers::Profiles::AboutYouController < Jobseekers::ProfilesController
   end
 
   def form_class
-    "jobseekers/profile/about_you_form".camelize.constantize
+    Jobseekers::Profile::AboutYouForm
   end
 
+  # the new version doesn't allow empty submissions
+  # rubocop:disable Rails/StrongParametersExpect
   def form_params
-    params.require(:jobseekers_profile_about_you_form).permit(form_class.fields)
+    params.permit(jobseekers_profile_about_you_form: form_class.fields).require(:jobseekers_profile_about_you_form)
   end
+  # rubocop:enable Rails/StrongParametersExpect
 end
