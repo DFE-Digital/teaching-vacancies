@@ -14,9 +14,9 @@ An original pilot took the approach of pulling each integration vacancies from A
 
 Different integrations were built for the following ATS/job posting services:
 - Broadbean
-- Every
+- Every (moved to new API)
 - Fusion
-- My New Term
+- My New Term (moved to new API)
 - Vacancy Poster
 - Ventrus
 
