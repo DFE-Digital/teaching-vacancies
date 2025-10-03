@@ -6,9 +6,9 @@ class Conversation < ApplicationRecord
 
   scope :inbox, -> { where(archived: false) }
   scope :archived, -> { where(archived: true) }
-  scope :for_organisation, lambda { |org_id|
+  scope :for_organisations, lambda { |org_ids|
     joins(job_application: :vacancy)
-      .merge(Vacancy.in_organisation_ids(org_id))
+      .merge(Vacancy.in_organisation_ids(org_ids))
   }
   scope :with_unread_jobseeker_messages, lambda {
     joins(:messages)
