@@ -14,7 +14,7 @@ RSpec.describe MessagesPdfGenerator do
   describe "#generate" do
     subject(:document) { generator.generate }
 
-    let!(:pdf) do
+    let(:pdf) do
       PDF::Inspector::Text.analyze(document.render).strings
     end
 
