@@ -10,9 +10,7 @@ RSpec.describe "publishers/vacancies/job_applications/tag" do
 
   before do
     assign :form, form
-    without_partial_double_verification do
-      allow(view).to receive(:vacancy).and_return(vacancy)
-    end
+    assign :vacancy, vacancy
     render
   end
 

@@ -17,7 +17,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def show
-    redirect_to organisation_job_job_application_terminal_path(vacancy.id, @job_application) if @job_application.withdrawn?
+    redirect_to organisation_job_job_application_terminal_path(@vacancy.id, @job_application) if @job_application.withdrawn?
     @notes_form = Publishers::JobApplication::NotesForm.new
 
     raise ActionController::RoutingError, "Cannot view a draft application" if @job_application.draft?
@@ -50,7 +50,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       when "unsuccessful_interview" then render_unsuccessful_interview_form(form.job_applications, form.origin)
       else
         form.job_applications.each { it.update!(form.attributes) }
-        redirect_to organisation_job_job_applications_path(vacancy.id, anchor: form.origin)
+        redirect_to organisation_job_job_applications_path(@vacancy.id, anchor: form.origin)
       end
     end
   end
@@ -58,7 +58,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   def offer
     with_valid_form(@job_applications) do |form|
       form.job_applications.each { it.update!(form.attributes) }
-      redirect_to organisation_job_job_applications_path(vacancy.id, anchor: form.origin)
+      redirect_to organisation_job_job_applications_path(@vacancy.id, anchor: form.origin)
     end
   end
 
@@ -96,8 +96,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def set_job_applications
     @current_organisation = current_organisation
-    @vacancy = vacancy
-    @job_applications = vacancy.job_applications.not_draft.order(updated_at: :desc).decorate.group_by(&:status)
+    @job_applications = @vacancy.job_applications.not_draft.order(updated_at: :desc).decorate.group_by(&:status)
   end
 
   def with_valid_form(job_applications_by_status, validate_status: false)
@@ -125,30 +124,30 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     in { interview_feedback_received_at: } then render "feedback_date"
     else
       flash[form.origin] = form.errors.full_messages
-      redirect_to organisation_job_job_applications_path(vacancy.id, anchor: form.origin)
+      redirect_to organisation_job_job_applications_path(@vacancy.id, anchor: form.origin)
     end
   end
 
   def download_selected(job_applications)
-    zip_data = JobApplicationZipBuilder.new(vacancy:, job_applications:).generate
+    zip_data = JobApplicationZipBuilder.new(vacancy: @vacancy, job_applications:).generate
 
     send_data(
       zip_data.string,
-      filename: "applications_#{vacancy.job_title.parameterize}.zip",
+      filename: "applications_#{@vacancy.job_title.parameterize}.zip",
     )
   end
 
   def export_selected(selection)
     zip_data = ExportCandidateDataService.call(selection)
-    send_data(zip_data.string, filename: "applications_offered_#{vacancy.job_title}.zip")
+    send_data(zip_data.string, filename: "applications_offered_#{@vacancy.job_title}.zip")
   end
 
   def redirect_to_references_and_self_disclosure(job_applications)
-    batch = JobApplicationBatch.create!(vacancy: vacancy)
+    batch = JobApplicationBatch.create!(vacancy: @vacancy)
     job_applications.each do |ja|
       batch.batchable_job_applications.create!(job_application: ja)
     end
-    redirect_to organisation_job_job_application_batch_references_and_self_disclosure_path(vacancy.id, batch.id, Wicked::FIRST_STEP)
+    redirect_to organisation_job_job_application_batch_references_and_self_disclosure_path(@vacancy.id, batch.id, Wicked::FIRST_STEP)
   end
 
   def render_declined_form(job_applications, origin)
