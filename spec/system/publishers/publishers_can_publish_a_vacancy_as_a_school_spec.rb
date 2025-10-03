@@ -208,7 +208,7 @@ RSpec.describe "Creating a vacancy" do
         end
       end
 
-      it "follows the TVS flows", :js do
+      it "follows the TVS flows" do
         publisher_job_title_page.fill_in_and_submit_form(vacancy.job_title)
 
         expect(publisher_job_role_page).to be_displayed
