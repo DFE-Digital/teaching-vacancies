@@ -24,34 +24,59 @@ RSpec.describe MessagesPdfGenerator do
         expect(pdf_text).to include("No messages yet.")
       end
 
-      it "includes page header and footer information" do
-        expect(pdf_text).to include("Messages")
+      it "includes page header" do
         expect(pdf_text).to include("Messages for #{vacancy.job_title}")
-        expect(pdf_text).to include("#{job_application.first_name} #{job_application.last_name}")
-        expect(pdf_text).to include("1 of 1")
+      end
+
+      it "includes names" do
         expect(pdf_text).to include("#{job_application.first_name} #{job_application.last_name} | #{vacancy.organisation_name}")
+      end
+
+      it "includes pagination" do
+        expect(pdf_text).to include("1 of 1")
       end
     end
 
     context "when there are messages" do
       let(:conversation) { build_stubbed(:conversation, messages: [publisher_message, jobseeker_message]) }
-      let(:publisher_message) { build_stubbed(:publisher_message, sender: publisher) }
-      let(:jobseeker_message) { build_stubbed(:jobseeker_message) }
+      let(:publisher_message) { build_stubbed(:publisher_message, sender: publisher, content: "publisher message") }
+      let(:jobseeker_message) { build_stubbed(:jobseeker_message, content: "jobseeker message") }
 
-      it "includes message content, sender names and timestamps in table format" do
+      it "includes publisher message content" do
         expect(pdf_text).to include(publisher_message.content.to_plain_text)
+      end
+
+      it "includes jobseeeker message content" do
         expect(pdf_text).to include(jobseeker_message.content.to_plain_text)
+      end
 
+      it "includes hiring sender names" do
         expect(pdf_text).to include("John Smith - #{vacancy.organisation_name} (Hiring staff)")
+      end
+
+      it "includes jobseeker sender names" do
         expect(pdf_text).to include("#{job_application.first_name} #{job_application.last_name} (Candidate)")
+      end
 
+      it "includes publisher timestamps" do
         publisher_timestamp = publisher_message.created_at.strftime("%d %B %Y at %I:%M %p")
-        jobseeker_timestamp = jobseeker_message.created_at.strftime("%d %B %Y at %I:%M %p")
         expect(pdf_text).to include(publisher_timestamp)
-        expect(pdf_text).to include(jobseeker_timestamp)
+      end
 
+      it "includes jobseeker timestamps" do
+        jobseeker_timestamp = jobseeker_message.created_at.strftime("%d %B %Y at %I:%M %p")
+        expect(pdf_text).to include(jobseeker_timestamp)
+      end
+
+      it "includes from" do
         expect(pdf_text).to include("From:")
+      end
+
+      it "includes date" do
         expect(pdf_text).to include("Date:")
+      end
+
+      it "includes message preamble" do
         expect(pdf_text).to include("Message:")
       end
     end
