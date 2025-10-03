@@ -1,0 +1,42 @@
+doctype html
+html.govuk-template.govuk-template--rebranded.app-html-class lang="en"
+  head
+    - if consented_to_extra_cookies?
+      = render "layouts/vwo_head"
+      = render "layouts/clarity_head"
+      = render "layouts/google_tag_manager_head"
+      = render "layouts/facebook_pixel_head"
+      = render "layouts/linkedin_pixel_head"
+      = render "layouts/reddit_pixel_head"
+    = render "layouts/head_meta"
+    = render "layouts/head_links"
+    title #{content_for :page_title_prefix} - #{t("app.title")} - GOV.UK
+    = stylesheet_link_tag "application", media: "all"
+    = csrf_meta_tags
+    = render "layouts/sentry_js_config"
+
+  body class=body_class
+    = render "layouts/cookies_banner"
+    - if consented_to_extra_cookies?
+      = render "layouts/google_tag_manager_body"
+      = render "layouts/facebook_pixel_body"
+      = render "layouts/linkedin_pixel_body"
+    = render "layouts/add_js_enabled_class_to_body"
+    = render "layouts/skip_links"
+    = render EnvironmentBannerComponent.new
+    / Uncomment the line below to display a banner announcing future period where the page will be in maintenance mode
+    / = render ScheduledMaintenanceBannerComponent.new(date: "5th October 2023", start_time: "08:00", end_time: "09:30")
+    = render "layouts/header"
+    .govuk-width-container
+      = render "layouts/phase_banner"
+    .hero
+      .govuk-width-container
+        = content_for :hero
+    .govuk-width-container
+      main#main-content.govuk-main-wrapper.govuk-main-wrapper--auto-spacing role="main"
+        = yield
+      = content_for :after_main
+    = render "layouts/footer"
+    / for chartkick gem to render using Google Charts
+    = javascript_include_tag "https://www.gstatic.com/charts/loader.js"
+    = javascript_include_tag "application", defer: true
