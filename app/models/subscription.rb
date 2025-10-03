@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Subscription < ApplicationRecord
   enum :frequency, { daily: 0, weekly: 1 }
 
@@ -25,7 +27,7 @@ class Subscription < ApplicationRecord
     subjects: ->(vacancy, value) { (vacancy.subjects || []).intersect?(value) },
     # legacy 'subject' criteria appears to be 1 single value
     subject: ->(vacancy, value) { (vacancy.subjects || []).include?(value) },
-    phases: ->(vacancy, value) { phases_match?(vacancy, value) },
+    phases: ->(vacancy, value) { (vacancy.phases || []).intersect?(value) },
     working_patterns: ->(vacancy, value) { working_pattern_match?(vacancy, value) },
     organisation_slug: ->(vacancy, value) { vacancy.organisations.map(&:slug).include?(value) },
     keyword: ->(vacancy, value) { value.downcase.strip.split.all? { |k| vacancy.searchable_content.include? k } },
@@ -38,18 +40,17 @@ class Subscription < ApplicationRecord
   # during the deploy
   self.ignored_columns += %w[active]
 
-  class << self
-    # map legacy phase filters onto current ones
-    def phases_match?(vacancy, filter)
-      phases = filter.map { |phase| phase.in?(%w[middle_deemed_secondary middle_deemed_primary]) ? "primary secondary" : phase }
-          .map { |phase| phase == "all_through" ? "through" : phase }
-          .map { |phase| phase.in?(%w[sixteen_plus 16-19]) ? "sixth_form_or_college" : phase }
-          .reject { |phase| phase.in? %w[not_applicable] }
-          .map(&:split)
-          .flatten
-      vacancy.phases.intersect?(phases)
-    end
+  # One/off code. Remove after running the rake task to normalise all subscriptions
+  LEGACY_PHASE_MAPPING = {
+    "middle" => %w[primary secondary].freeze,
+    "middle_deemed_secondary" => %w[primary secondary].freeze,
+    "middle_deemed_primary" => %w[primary secondary].freeze,
+    "all_through" => %w[through].freeze,
+    "sixteen_plus" => %w[sixth_form_or_college].freeze,
+    "16-19" => %w[sixth_form_or_college].freeze,
+  }.freeze
 
+  class << self
     def working_pattern_match?(vacancy, working_patterns)
       if working_patterns == %w[job_share]
         vacancy.is_job_share
@@ -57,6 +58,31 @@ class Subscription < ApplicationRecord
         vacancy.is_job_share || vacancy.working_patterns.intersect?(working_patterns - %w[job_share])
       else
         vacancy.working_patterns.intersect?(working_patterns)
+      end
+    end
+
+    # Map legacy phase filter onto the current ones in all subscriptions
+    # Meant for one/off use in a rake task.
+    def normalize_phases!
+      find_in_batches(batch_size: 1000) do |subs|
+        subs.each do |sub|
+          criteria = sub.search_criteria
+          phases = criteria["phases"]
+
+          normalized_phases = phases.flat_map { |phase|
+            next if phase == "not_applicable"
+
+            LEGACY_PHASE_MAPPING[phase] || phase.to_s.split
+          }.compact.uniq
+          next if normalized_phases == phases
+
+          if normalized_phases.empty?
+            criteria.delete("phases")
+          else
+            criteria["phases"] = normalized_phases
+          end
+          sub.update_columns(search_criteria: criteria)
+        end
       end
     end
   end
@@ -111,9 +137,14 @@ class Subscription < ApplicationRecord
       criteria[:job_roles] = job_roles
     end
 
-    vacancies = scope.select do |vacancy|
-      criteria.except(*JOB_ROLE_ALIASES, :location, :radius).all? { |criterion, value| FILTERS.fetch(criterion).call(vacancy, value) }
+    filters = criteria.except(*JOB_ROLE_ALIASES, :location, :radius).map do |criterion, value|
+      ->(vacancy) { FILTERS.fetch(criterion).call(vacancy, value) }
     end
+
+    vacancies = scope.select do |vacancy|
+      filters.all? { |f| f.call(vacancy) }
+    end
+
     # Location handling is the most expensive operations, since they involve polygons or geocoding computations in DB.
     # So do it last, and only if there are any vacancies left to filter after the other criteria have been applied over
     # the in-memory vacancy set.
