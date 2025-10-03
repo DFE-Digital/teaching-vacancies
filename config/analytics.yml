@@ -492,6 +492,7 @@ shared:
     - flexi_working_details_provided
     - type
     - publisher_ats_api_client_id
+    - anonymise_applications
   failed_imported_vacancies:
     - id
     - import_errors

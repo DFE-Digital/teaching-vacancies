@@ -51,7 +51,9 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
   end
 
   def create
-    vacancy = DraftVacancy.create!(publisher: current_publisher, publisher_organisation: current_organisation, organisations: [current_organisation])
+    # anonymise_applications defaults to false for past applications, so we have to explicitly set nil here
+    vacancy = DraftVacancy.create!(publisher: current_publisher, anonymise_applications: nil,
+                                   publisher_organisation: current_organisation, organisations: [current_organisation])
 
     if current_organisation.school? && current_organisation.phase.in?(Vacancy::SCHOOL_PHASES_MATCHING_VACANCY_PHASES)
       vacancy.update!(phases: [current_organisation.phase])

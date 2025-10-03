@@ -128,7 +128,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def download
-    document = job_application.submitted_application_form
+    document = job_application.decorate.submitted_application_form
     send_data(document.data, filename: document.filename, disposition: "inline")
   end
 
