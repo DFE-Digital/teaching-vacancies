@@ -29,6 +29,6 @@ class Message < ApplicationRecord
   end
 
   def update_conversation_searchable_content
-    conversation.update_columns(searchable_content: conversation.generate_searchable_content)
+    conversation.update_searchable_content
   end
 end

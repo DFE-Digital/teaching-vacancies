@@ -220,9 +220,7 @@ class JobApplication < ApplicationRecord
   private
 
   def update_conversation_searchable_content
-    conversations.find_each do |conversation|
-      conversation.update_columns(searchable_content: conversation.generate_searchable_content)
-    end
+    conversations.find_each(&:update_searchable_content)
   end
 
   def status_transition

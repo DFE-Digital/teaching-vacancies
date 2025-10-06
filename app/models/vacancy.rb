@@ -311,10 +311,8 @@ class Vacancy < ApplicationRecord
 
   def update_conversation_searchable_content
     Conversation.joins(job_application: :vacancy)
-               .where(job_applications: { vacancy_id: id })
-               .find_each do |conversation|
-                 conversation.update_columns(searchable_content: conversation.generate_searchable_content)
-               end
+                .where(job_applications: { vacancy_id: id })
+                .find_each(&:update_searchable_content)
   end
 
   def calculate_distance(search_coordinates, geolocation)
