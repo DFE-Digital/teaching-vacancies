@@ -22,9 +22,7 @@ RSpec.describe MessagesPdfGenerator do
     it { is_expected.to be_a(Prawn::Document) }
 
     it "includes page header and footer information" do
-      expect(pdf_text).to include("Messages")
       expect(pdf_text).to include("Messages for #{vacancy.job_title}")
-      expect(pdf_text).to include("#{job_application.first_name} #{job_application.last_name}")
       expect(pdf_text).to include("1 of 1")
       expect(pdf_text).to include("#{job_application.first_name} #{job_application.last_name} | #{vacancy.organisation_name}")
     end
