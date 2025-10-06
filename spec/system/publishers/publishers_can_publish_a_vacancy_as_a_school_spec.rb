@@ -36,135 +36,129 @@ RSpec.describe "Creating a vacancy" do
               :no_tv_applications,
               publish_on: Date.current)
       end
-      let(:vacancy_attrs) do
-        attributes_for(:vacancy,
-                       :secondary,
-                       :no_tv_applications,
-                       publish_on: Date.current)
-      end
 
       it "follows the non-TVS flow" do
-        # submit_empty_form
-        # expect(publisher_job_title_page).to be_displayed
-        # expect(publisher_job_title_page.errors.map(&:text)).to contain_exactly(I18n.t("job_title_errors.job_title.blank"))
-        publisher_job_title_page.fill_in_and_submit_form(vacancy_attrs.fetch(:job_title))
+        submit_empty_form
+        expect(publisher_job_title_page).to be_displayed
+        expect(publisher_job_title_page.errors.map(&:text)).to contain_exactly(I18n.t("job_title_errors.job_title.blank"))
+        publisher_job_title_page.fill_in_and_submit_form(vacancy.job_title)
         expect(publisher_job_role_page).to be_displayed
 
-        # submit_empty_form
-        # expect(publisher_job_role_page).to be_displayed
-        # expect(publisher_job_role_page.errors.map(&:text)).to contain_exactly(I18n.t("job_roles_errors.job_roles.blank"))
-        publisher_job_role_page.fill_in_and_submit_form(vacancy_attrs.fetch(:job_roles).first)
+        submit_empty_form
+        expect(publisher_job_role_page).to be_displayed
+        expect(publisher_job_role_page.errors.map(&:text)).to contain_exactly(I18n.t("job_roles_errors.job_roles.blank"))
+        publisher_job_role_page.fill_in_and_submit_form(vacancy.job_roles.first)
         expect(publisher_education_phase_page).to be_displayed
 
-        # submit_empty_form
-        # expect(publisher_education_phase_page).to be_displayed
-        # expect(publisher_education_phase_page.errors.map(&:text)).to contain_exactly(I18n.t("education_phases_errors.phases.blank"))
-        publisher_education_phase_page.fill_in_and_submit_form(vacancy_attrs.fetch(:phases).first)
+        submit_empty_form
+        expect(publisher_education_phase_page).to be_displayed
+        expect(publisher_education_phase_page.errors.map(&:text)).to contain_exactly(I18n.t("education_phases_errors.phases.blank"))
+        publisher_education_phase_page.fill_in_and_submit_form(vacancy.phases.first)
         expect(publisher_key_stage_page).to be_displayed
 
-        # submit_empty_form
-        # expect(publisher_key_stage_page).to be_displayed
-        # expect(publisher_key_stage_page.errors.map(&:text)).to contain_exactly(I18n.t("key_stages_errors.key_stages.blank"))
+        submit_empty_form
+        expect(publisher_key_stage_page).to be_displayed
+        expect(publisher_key_stage_page.errors.map(&:text)).to contain_exactly(I18n.t("key_stages_errors.key_stages.blank"))
         # tick every key stage for the relevant phase
         publisher_key_stage_page.fill_in_and_submit_form(vacancy.key_stages_for_phases)
         expect(publisher_subjects_page).to be_displayed
         publisher_subjects_page.fill_in_and_submit_form(vacancy.subjects)
 
         expect(publisher_contract_information_page).to be_displayed
-        # submit_empty_form
-        # expect(publisher_contract_information_page).to be_displayed
-        # expect(publisher_contract_information_page.errors.map(&:text)).to contain_exactly(
-        #   I18n.t("contract_information_errors.contract_type.inclusion"),
-        #   I18n.t("contract_information_errors.working_patterns.inclusion"),
-        #   I18n.t("contract_information_errors.is_job_share.inclusion"),
-        # )
+        submit_empty_form
+        expect(publisher_contract_information_page).to be_displayed
+        expect(publisher_contract_information_page.errors.map(&:text)).to contain_exactly(
+          I18n.t("contract_information_errors.contract_type.inclusion"),
+          I18n.t("contract_information_errors.working_patterns.inclusion"),
+          I18n.t("contract_information_errors.is_job_share.inclusion"),
+        )
         publisher_contract_information_page.fill_in_and_submit_form(vacancy)
 
         expect(publisher_start_date_page).to be_displayed
-        # submit_empty_form
-        # expect(publisher_start_date_page).to be_displayed
-        # expect(publisher_start_date_page.errors.map(&:text)).to contain_exactly(I18n.t("start_date_errors.start_date_type.inclusion"))
+        submit_empty_form
+        expect(publisher_start_date_page).to be_displayed
+        expect(publisher_start_date_page.errors.map(&:text)).to contain_exactly(I18n.t("start_date_errors.start_date_type.inclusion"))
         publisher_start_date_page.fill_in_and_submit_form(vacancy.starts_on)
 
         expect(publisher_pay_package_page).to be_displayed
-        # submit_empty_form
-        # expect(publisher_pay_package_page).to be_displayed
-        # expect(publisher_pay_package_page.errors.map(&:text)).to contain_exactly(
-        #   I18n.t("pay_package_errors.salary_types.invalid"),
-        #   I18n.t("pay_package_errors.benefits.inclusion"),
-        # )
+        submit_empty_form
+        expect(publisher_pay_package_page).to be_displayed
+        expect(publisher_pay_package_page.errors.map(&:text)).to contain_exactly(
+          I18n.t("pay_package_errors.salary_types.invalid"),
+          I18n.t("pay_package_errors.benefits.inclusion"),
+        )
         expect_correct_pay_package_options(vacancy)
         publisher_pay_package_page.fill_in_and_submit_form(vacancy)
 
         expect(publisher_about_the_role_page).to be_displayed
-        # submit_empty_form
-        # expect(publisher_about_the_role_page).to be_displayed
-        # expect(publisher_about_the_role_page.errors.map(&:text)).to contain_exactly(
-        #   I18n.t("about_the_role_errors.ect_status.inclusion"),
-        #   I18n.t("about_the_role_errors.skills_and_experience.blank"),
-        #   I18n.t("about_the_role_errors.further_details_provided.inclusion"),
-        #   I18n.t("about_the_role_errors.school_offer.blank", organisation: "school"),
-        #   I18n.t("about_the_role_errors.flexi_working_details_provided.inclusion"),
-        # )
+        submit_empty_form
+        expect(publisher_about_the_role_page).to be_displayed
+        expect(publisher_about_the_role_page.errors.map(&:text)).to contain_exactly(
+          I18n.t("about_the_role_errors.ect_status.inclusion"),
+          I18n.t("about_the_role_errors.skills_and_experience.blank"),
+          I18n.t("about_the_role_errors.further_details_provided.inclusion"),
+          I18n.t("about_the_role_errors.school_offer.blank", organisation: "school"),
+          I18n.t("about_the_role_errors.flexi_working_details_provided.inclusion"),
+        )
         publisher_about_the_role_page.fill_in_and_submit_form(vacancy)
 
         expect(publisher_include_additional_documents_page).to be_displayed
-        # submit_empty_form
-        # expect(publisher_include_additional_documents_page.errors.map(&:text)).to contain_exactly(I18n.t("include_additional_documents_errors.include_additional_documents.inclusion"))
+        submit_empty_form
+        expect(publisher_include_additional_documents_page.errors.map(&:text)).to contain_exactly(I18n.t("include_additional_documents_errors.include_additional_documents.inclusion"))
         publisher_include_additional_documents_page.fill_in_and_submit_form(vacancy.include_additional_documents)
 
         expect(publisher_school_visits_page).to be_displayed
-        # submit_empty_form
-        # expect(publisher_school_visits_page).to be_displayed
-        # expect(publisher_school_visits_page.errors.map(&:text)).to contain_exactly(I18n.t("school_visits_errors.school_visits.inclusion"))
+        submit_empty_form
+        expect(publisher_school_visits_page).to be_displayed
+        expect(publisher_school_visits_page.errors.map(&:text)).to contain_exactly(I18n.t("school_visits_errors.school_visits.inclusion"))
         publisher_school_visits_page.fill_in_and_submit_form(vacancy.school_visits)
 
         expect(publisher_visa_sponsorship_page).to be_displayed
-        # submit_empty_form
-        # expect(publisher_visa_sponsorship_page.errors.map(&:text)).to contain_exactly(I18n.t("visa_sponsorship_available_errors.visa_sponsorship_available.inclusion"))
-        # expect(publisher_visa_sponsorship_page).to be_displayed
+        submit_empty_form
+        expect(publisher_visa_sponsorship_page.errors.map(&:text)).to contain_exactly(I18n.t("visa_sponsorship_available_errors.visa_sponsorship_available.inclusion"))
+        expect(publisher_visa_sponsorship_page).to be_displayed
         publisher_visa_sponsorship_page.fill_in_and_submit_form(vacancy.visa_sponsorship_available)
 
         expect(publisher_important_dates_page).to be_displayed
-        # submit_empty_form
-        # expect(publisher_important_dates_page).to be_displayed
-        # expect(publisher_important_dates_page.errors.map(&:text)).to contain_exactly(
-        #   I18n.t("important_dates_errors.publish_on_day.inclusion"),
-        #   I18n.t("important_dates_errors.expires_at.blank"),
-        #   I18n.t("important_dates_errors.expiry_time.inclusion"),
-        # )
-        # publisher_important_dates_page.fill_in_and_submit_form(publish_on: vacancy.publish_on, expires_at: Time.zone.yesterday)
-        # expect(publisher_important_dates_page.errors.map(&:text)).to contain_exactly(I18n.t("important_dates_errors.expires_at.after"))
+        submit_empty_form
+        expect(publisher_important_dates_page).to be_displayed
+        expect(publisher_important_dates_page.errors.map(&:text)).to contain_exactly(
+          I18n.t("important_dates_errors.publish_on_day.inclusion"),
+          I18n.t("important_dates_errors.expires_at.blank"),
+          I18n.t("important_dates_errors.expiry_time.inclusion"),
+        )
+        publisher_important_dates_page.fill_in_and_submit_form(publish_on: vacancy.publish_on, expires_at: Time.zone.yesterday)
+        expect(publisher_important_dates_page.errors.map(&:text)).to contain_exactly(I18n.t("important_dates_errors.expires_at.after"))
         publisher_important_dates_page.fill_in_and_submit_form(publish_on: vacancy.publish_on, expires_at: vacancy.expires_at)
 
         expect(publisher_applying_for_the_job_page).to be_displayed
-        # submit_empty_form
-        # expect(publisher_applying_for_the_job_page).to be_displayed
-        # expect(publisher_applying_for_the_job_page.errors.map(&:text)).to contain_exactly(I18n.t("applying_for_the_job_errors.application_form_type.blank"))
+        submit_empty_form
+        expect(publisher_applying_for_the_job_page).to be_displayed
+        expect(publisher_applying_for_the_job_page.errors.map(&:text)).to contain_exactly(I18n.t("applying_for_the_job_errors.application_form_type.blank"))
 
         # No religious options when not a faith school
         expect(all(".govuk-radios__item").count).to eq(2)
         publisher_applying_for_the_job_page.fill_in_and_submit_form
 
         expect(publisher_how_to_receive_applications_page).to be_displayed
-        # submit_empty_form
-        # expect(publisher_how_to_receive_applications_page).to be_displayed
-        # expect(publisher_how_to_receive_applications_page.errors.map(&:text)).to contain_exactly(I18n.t("how_to_receive_applications_errors.receive_applications.inclusion"))
+        submit_empty_form
+        expect(publisher_how_to_receive_applications_page).to be_displayed
+        expect(publisher_how_to_receive_applications_page.errors.map(&:text)).to contain_exactly(I18n.t("how_to_receive_applications_errors.receive_applications.inclusion"))
         publisher_how_to_receive_applications_page.fill_in_and_submit_form(vacancy)
 
         expect(publisher_application_link_page).to be_displayed
-        # submit_empty_form
-        # expect(publisher_application_link_page.errors.map(&:text)).to contain_exactly(I18n.t("application_link_errors.application_link.blank"))
-        # expect(publisher_application_link_page).to be_displayed
+        submit_empty_form
+        expect(publisher_application_link_page.errors.map(&:text)).to contain_exactly(I18n.t("application_link_errors.application_link.blank"))
+        expect(publisher_application_link_page).to be_displayed
         publisher_application_link_page.fill_in_and_submit_form(vacancy.application_link)
 
         expect(publisher_contact_details_page).to be_displayed
-        # submit_empty_form
-        # expect(publisher_contact_details_page.errors.map(&:text)).to contain_exactly(
-        #   I18n.t("contact_details_errors.contact_email.blank"),
-        #   I18n.t("contact_details_errors.contact_number_provided.inclusion"),
-        # )
-        # expect(publisher_contact_details_page).to be_displayed
+        submit_empty_form
+        expect(publisher_contact_details_page.errors.map(&:text)).to contain_exactly(
+          I18n.t("contact_details_errors.contact_email.blank"),
+          I18n.t("contact_details_errors.contact_number_provided.inclusion"),
+        )
+        expect(publisher_contact_details_page).to be_displayed
         publisher_contact_details_page.fill_in_and_submit_form(vacancy.contact_email, vacancy.contact_number)
 
         expect(page).to have_current_path(organisation_job_review_path(created_vacancy.id), ignore_query: true)
@@ -257,7 +251,7 @@ RSpec.describe "Creating a vacancy" do
         end
       end
 
-      scenario "can be published at a later date" do
+      it "can be published at a later date" do
         vacancy = create(:draft_vacancy, :ect_suitable, :secondary, job_roles: %w[teacher], organisations: [school], publish_on: Time.zone.tomorrow)
 
         visit organisation_job_path(vacancy.id)
@@ -302,7 +296,6 @@ RSpec.describe "Creating a vacancy" do
         let(:vacancy) { create(:draft_vacancy, :secondary, :ect_suitable, job_roles: %w[teacher], organisations: [school], publish_on: Date.current) }
 
         it "adds a job to update the Google index in the queue" do
-          # expect(UpdateGoogleIndexQueueJob).to receive(:perform_later).with(job_url(vacancy))
           expect(UpdateGoogleIndexQueueJob).to receive(:perform_later)
 
           visit organisation_job_path(vacancy.id)

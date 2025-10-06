@@ -98,11 +98,10 @@ module Publishers
 
       def set_job_applications
         @current_organisation = current_organisation
-        @job_applications = @vacancy.job_applications.not_draft.order(updated_at: :desc).group_by(&:status)
+        @job_applications = @vacancy.job_applications.not_draft.order(updated_at: :desc)
       end
 
-      def with_valid_form(job_applications_by_status, validate_status: false)
-        job_applications = job_applications_by_status.values.flatten
+      def with_valid_form(job_applications, validate_status: false)
         form_class = FORMS.fetch(params[:form_name], Publishers::JobApplication::TagForm)
         form_params = params
                         .fetch(ActiveModel::Naming.param_key(form_class), {})

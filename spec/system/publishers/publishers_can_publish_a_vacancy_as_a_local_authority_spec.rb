@@ -146,12 +146,12 @@ RSpec.describe "Creating a vacancy" do
     publisher_application_link_page.fill_in_and_submit_form(vacancy.application_link)
 
     expect(publisher_contact_details_page).to be_displayed
-    # submit_empty_form
-    # expect(publisher_contact_details_page.errors.map(&:text)).to contain_exactly(
-    #   I18n.t("contact_details_errors.contact_email.blank"),
-    #   I18n.t("contact_details_errors.contact_number_provided.inclusion"),
-    # )
-    # expect(publisher_contact_details_page).to be_displayed
+    submit_empty_form
+    expect(publisher_contact_details_page.errors.map(&:text)).to contain_exactly(
+      I18n.t("contact_details_errors.contact_email.blank"),
+      I18n.t("contact_details_errors.contact_number_provided.inclusion"),
+    )
+    expect(publisher_contact_details_page).to be_displayed
     publisher_contact_details_page.fill_in_and_submit_form(vacancy.contact_email, vacancy.contact_number)
 
     expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))

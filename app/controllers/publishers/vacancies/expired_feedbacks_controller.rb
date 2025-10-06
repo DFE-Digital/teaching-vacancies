@@ -1,4 +1,4 @@
-class Publishers::Vacancies::ExpiredFeedbacksController < Publishers::Vacancies::WizardBaseController
+class Publishers::Vacancies::ExpiredFeedbacksController < Publishers::Vacancies::BaseController
   skip_before_action :authenticate_scope!
   skip_before_action :check_terms_and_conditions
 
