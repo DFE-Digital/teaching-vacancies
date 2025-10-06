@@ -19,7 +19,6 @@ RSpec.describe MessagesPdfGenerator do
     end
     let(:pdf_text) { pdf.join(" ") }
 
-
     it { is_expected.to be_a(Prawn::Document) }
 
     it "includes page header and footer information" do
@@ -56,6 +55,5 @@ RSpec.describe MessagesPdfGenerator do
         expect(pdf_text).to include("Message:")
       end
     end
-    # rubocop:enable RSpec/InstanceVariable
   end
 end
