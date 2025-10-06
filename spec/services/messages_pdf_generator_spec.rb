@@ -14,46 +14,46 @@ RSpec.describe MessagesPdfGenerator do
   describe "#generate" do
     subject(:document) { generator.generate }
 
-    # rubocop:disable RSpec/InstanceVariable
-    before do
-      rendered_document = document.render
-      @pdf = PDF::Inspector::Text.analyze(rendered_document).strings
+    let(:pdf) do
+      PDF::Inspector::Text.analyze(document.render).strings
     end
+    let(:pdf_text) { pdf.join(" ") }
+
 
     it { is_expected.to be_a(Prawn::Document) }
 
     it "includes page header and footer information" do
-      expect(@pdf).to include("Messages")
-      expect(@pdf).to include("Messages for #{vacancy.job_title}")
-      expect(@pdf).to include("#{job_application.first_name} #{job_application.last_name}")
-      expect(@pdf).to include("1 of 1")
-      expect(@pdf).to include("#{job_application.first_name} #{job_application.last_name} | #{vacancy.organisation_name}")
+      expect(pdf_text).to include("Messages")
+      expect(pdf_text).to include("Messages for #{vacancy.job_title}")
+      expect(pdf_text).to include("#{job_application.first_name} #{job_application.last_name}")
+      expect(pdf_text).to include("1 of 1")
+      expect(pdf_text).to include("#{job_application.first_name} #{job_application.last_name} | #{vacancy.organisation_name}")
     end
 
     context "when there are no messages" do
       let(:messages) { [] }
 
       it "displays no messages text" do
-        expect(@pdf).to include("No messages yet.")
+        expect(pdf_text).to include("No messages yet.")
       end
     end
 
     context "when there are messages" do
       it "includes message content, sender names and timestamps in table format" do
-        expect(@pdf).to include(publisher_message.content.to_plain_text)
-        expect(@pdf).to include(jobseeker_message.content.to_plain_text)
+        expect(pdf_text).to include(publisher_message.content.to_plain_text)
+        expect(pdf_text).to include(jobseeker_message.content.to_plain_text)
 
-        expect(@pdf).to include("John Smith - #{vacancy.organisation_name} (Hiring staff)")
-        expect(@pdf).to include("#{job_application.first_name} #{job_application.last_name} (Candidate)")
+        expect(pdf_text).to include("John Smith - #{vacancy.organisation_name} (Hiring staff)")
+        expect(pdf_text).to include("#{job_application.first_name} #{job_application.last_name} (Candidate)")
 
         publisher_timestamp = publisher_message.created_at.strftime("%d %B %Y at %I:%M %p")
         jobseeker_timestamp = jobseeker_message.created_at.strftime("%d %B %Y at %I:%M %p")
-        expect(@pdf).to include(publisher_timestamp)
-        expect(@pdf).to include(jobseeker_timestamp)
+        expect(pdf_text).to include(publisher_timestamp)
+        expect(pdf_text).to include(jobseeker_timestamp)
 
-        expect(@pdf).to include("From:")
-        expect(@pdf).to include("Date:")
-        expect(@pdf).to include("Message:")
+        expect(pdf_text).to include("From:")
+        expect(pdf_text).to include("Date:")
+        expect(pdf_text).to include("Message:")
       end
     end
     # rubocop:enable RSpec/InstanceVariable
