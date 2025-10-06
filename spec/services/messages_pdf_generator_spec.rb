@@ -14,9 +14,8 @@ RSpec.describe MessagesPdfGenerator do
   describe "#generate" do
     subject(:document) { generator.generate }
 
-    let(:pdf) do
-      PDF::Inspector::Text.analyze(document.render).strings
-    end
+    let(:rendered_document) { document.render }
+    let!(:pdf) { PDF::Inspector::Text.analyze(rendered_document).strings }
 
     it { is_expected.to be_a(Prawn::Document) }
 
