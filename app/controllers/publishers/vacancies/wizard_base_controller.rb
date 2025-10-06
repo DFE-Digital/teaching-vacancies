@@ -54,9 +54,7 @@ module Publishers
       end
 
       def back_path
-        if params[:back_to_review] == "true"
-          organisation_job_review_path(vacancy.id)
-        elsif params[:back_to_show] == "true"
+        if params[:back_to_show] == "true"
           organisation_job_path(vacancy.id)
         elsif step_process.previous_step
           organisation_job_build_path(vacancy.id, step_process.previous_step)

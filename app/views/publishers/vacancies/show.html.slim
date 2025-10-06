@@ -12,7 +12,7 @@
     - status = vacancy_draft_status(@current_organisation, @vacancy, :job_details)
     - task_list.with_item(title: t(".task_list.sections.job_details.title"),
       hint: t(".task_list.sections.job_details.hint"),
-      href: organisation_job_wizard_path(@vacancy.id, @step_process.first_step_for_group(:job_details)),
+      href: organisation_job_wizard_path(@vacancy.id, @step_process.first_step_for_group(:job_details), back_to_show: true),
       html_attributes: { id: :job_details },
       status: section_status_to_tag(status))
 
@@ -22,13 +22,13 @@
       - if status.present?
         - task_list.with_item(title: t(".task_list.sections.#{section}.title"),
           hint: t(".task_list.sections.#{section}.hint"),
-          href: organisation_job_wizard_path(@vacancy.id, @step_process.first_step_for_group(section)),
+          href: organisation_job_wizard_path(@vacancy.id, @step_process.first_step_for_group(section), back_to_show: true),
           html_attributes: { id: section },
           status: section_status_to_tag(status))
       - elsif prev_status.present? && prev_status == :completed
         - task_list.with_item(title: t(".task_list.sections.#{section}.title"),
           hint: t(".task_list.sections.#{section}.hint"),
-          href: organisation_job_wizard_path(@vacancy.id, @step_process.first_step_for_group(section)),
+          href: organisation_job_wizard_path(@vacancy.id, @step_process.first_step_for_group(section), back_to_show: true),
           html_attributes: { id: section },
           status: section_status_to_tag(:not_started))
       - else
