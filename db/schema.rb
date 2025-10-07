@@ -854,8 +854,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_24_133259) do
     t.boolean "contact_number_provided"
     t.string "skills_and_experience"
     t.string "school_offer"
-    t.boolean "safeguarding_information_provided"
-    t.string "safeguarding_information"
     t.boolean "further_details_provided"
     t.string "further_details"
     t.boolean "include_additional_documents"
