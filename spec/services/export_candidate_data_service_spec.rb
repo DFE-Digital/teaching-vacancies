@@ -110,14 +110,12 @@ RSpec.describe ExportCandidateDataService do
 
     context "when request has not been sent to referee" do
       let(:job_application) do
-        build_stubbed(:job_application, :status_offered,
-                      first_name: "John", last_name: "Doe",
+        build_stubbed(:job_application,
                       referees: [
                         build_stubbed(:referee, name: "john e. smith"),
                         build_stubbed(:referee, name: "etha may"),
                         build_stubbed(:referee, name: "referee_no_request"),
-                      ],
-                      self_disclosure_request: build_stubbed(:self_disclosure_request, self_disclosure: build_stubbed(:self_disclosure)))
+                      ])
       end
 
       it { expect(documents.filename).to eq("no_references_found.txt") }
