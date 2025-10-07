@@ -465,6 +465,24 @@ RSpec.describe "Job applications" do
 
         it { is_expected.to render_template("interview_datetime") }
       end
+
+      context "when job_application is not interviewing" do
+        let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
+        let(:form_params) do
+          { origin:, job_applications: [job_application.id] }.merge(
+            "interview_date(1i)" => 2025,
+            "interview_date(2i)" => 9,
+            "interview_date(3i)" => 1,
+            "interview_time"     => "11:30am", # rubocop:disable Layout/HashAlignment
+          )
+        end
+
+        before do
+          post(offer_organisation_job_job_applications_path(vacancy.id), params:)
+        end
+
+        it { is_expected.to render_template("interview_datetime") }
+      end
     end
   end
 end

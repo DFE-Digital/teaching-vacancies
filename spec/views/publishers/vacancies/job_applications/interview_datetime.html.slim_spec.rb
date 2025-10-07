@@ -10,14 +10,14 @@ RSpec.describe "publishers/vacancies/job_applications/interview_datetime" do
   before do
     assign :form, form
     without_partial_double_verification do
-      allow(view).to receive(:vacancy).and_return(job_application.vacancy)
+      allow(view).to receive(:vacancy).and_return(job_applications.first.vacancy)
     end
     render
   end
 
   describe "heading" do
     it "contains candidate's name" do
-      expect(form_page.find("h1")).to have_text(job_application.name)
+      expect(form_page.find("h1")).to have_text(job_applications.first.name)
     end
   end
 
