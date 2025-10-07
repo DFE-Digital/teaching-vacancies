@@ -58,7 +58,7 @@ RSpec.describe "Documents" do
       context "when the vacancy is live" do
         before do
           allow(vacancy).to receive(:live?).and_return(true)
-          allow_any_instance_of(Publishers::Vacancies::WizardBaseController).to receive(:update_google_index)
+          allow_any_instance_of(Publishers::Vacancies::BaseController).to receive(:update_google_index)
         end
 
         it "updates the google index" do
