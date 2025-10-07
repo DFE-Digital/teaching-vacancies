@@ -57,6 +57,8 @@ class BackfillSubscriptionLocationJob < ApplicationJob
     nil
   end
 
+  # Buffering is best done in a projected coordinate system (like 3857) for accuracy, as it buffers in metres instead of degrees).
+  # After buffering, we transform to SRID: 4326 (lat/lon data) for storage and querying.
   def polygon_buffered_geom(polygon, radius_in_metres)
     LocationPolygon
       .where(id: polygon.id)

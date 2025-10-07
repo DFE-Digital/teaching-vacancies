@@ -766,8 +766,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_03_121224) do
     t.float "recaptcha_score"
     t.boolean "active", default: true
     t.datetime "unsubscribed_at", precision: nil
-    t.geometry "area", limit: {srid: 0, type: "geometry"}
-    t.geometry "geopoint", limit: {srid: 0, type: "geometry"}
+    t.geometry "area", limit: {srid: 4326, type: "geometry"}
+    t.geometry "geopoint", limit: {srid: 4326, type: "geometry"}
     t.integer "radius_in_metres"
     t.index ["area"], name: "index_subscriptions_on_area", using: :gist
     t.index ["email"], name: "index_subscriptions_on_email"
