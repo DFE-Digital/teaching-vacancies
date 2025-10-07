@@ -109,7 +109,7 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
         let(:candidate) { interviewing.last }
 
         it "show the interviewing_at date" do
-          expect(tab).to have_link("Add interview date and time", href: interview_datetime_organisation_job_job_application_path(candidate.vacancy.id, candidate.id))
+          expect(tab).to have_link("Add interview date and time", href: tag_organisation_job_job_applications_path(candidate.vacancy.id, params: { publishers_job_application_tag_form: { origin: :interviewing, job_applications: [candidate.id] }, tag_action: "interview_datetime" }))
         end
       end
     end
