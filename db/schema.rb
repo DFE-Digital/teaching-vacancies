@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_24_133259) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_03_121224) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -766,7 +766,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_24_133259) do
     t.float "recaptcha_score"
     t.boolean "active", default: true
     t.datetime "unsubscribed_at", precision: nil
+    t.geometry "area", limit: {srid: 0, type: "geometry"}
+    t.geometry "geopoint", limit: {srid: 0, type: "geometry"}
+    t.integer "radius_in_metres"
+    t.index ["area"], name: "index_subscriptions_on_area", using: :gist
     t.index ["email"], name: "index_subscriptions_on_email"
+    t.index ["geopoint"], name: "index_subscriptions_on_geopoint", using: :gist
   end
 
   create_table "support_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
