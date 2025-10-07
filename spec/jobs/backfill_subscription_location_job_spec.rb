@@ -204,6 +204,25 @@ RSpec.describe BackfillSubscriptionLocationJob do
     end
   end
 
+  context "with subscriptions that have location but no radius in their search criteria" do
+    let!(:sub_polygon_no_radius) { Subscription.create!(search_criteria: { "location" => "london" }) }
+    let!(:sub_coordinates_no_radius) { Subscription.create!(search_criteria: { "location" => "E12JP" }) }
+
+    it "defaults the radius to 10 miles and populates area or geopoint accordingly" do
+      described_class.perform_now
+
+      sub_polygon_no_radius.reload
+      expect(sub_polygon_no_radius.area.as_text).to eq(polygon_wkt)
+      expect(sub_polygon_no_radius.geopoint).to be_nil
+      expect(sub_polygon_no_radius.radius_in_metres).to eq(16_090) # 10 miles in metres)
+
+      sub_coordinates_no_radius.reload
+      expect(sub_coordinates_no_radius.area).to be_nil
+      expect(sub_coordinates_no_radius.geopoint.as_text).to eq point_wkt
+      expect(sub_coordinates_no_radius.radius_in_metres).to eq(16_090) # 10 miles in metres)
+    end
+  end
+
   context "with subscriptions matching a mix of polygon, coordinates invalid locations plus no location in the criteria" do
     let!(:sub_with_polygon) { Subscription.create!(search_criteria: { "location" => "london", "radius" => 10 }) }
     let!(:sub_with_coordinates) { Subscription.create!(search_criteria: { "location" => "E12JP", "radius" => 10 }) }

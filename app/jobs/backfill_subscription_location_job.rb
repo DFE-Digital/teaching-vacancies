@@ -37,7 +37,7 @@ class BackfillSubscriptionLocationJob < ApplicationJob
       .where("(search_criteria->>'location') IS NOT NULL AND TRIM(search_criteria->>'location') <> ''")
       .pluck(
         Arel.sql("DISTINCT LOWER(TRIM(search_criteria->>'location'))"),
-        Arel.sql("(search_criteria->>'radius')::integer"),
+        Arel.sql("COALESCE((search_criteria->>'radius')::integer, 10)"),
       )
   end
 
@@ -45,7 +45,7 @@ class BackfillSubscriptionLocationJob < ApplicationJob
   def subscriptions_scope(radius, location)
     Subscription.where(area: nil, geopoint: nil)
                 .where("LOWER(TRIM(search_criteria->>'location')) = ?", location)
-                .where("(search_criteria->>'radius')::integer = ?", radius)
+                .where("COALESCE((search_criteria->>'radius')::integer, 10) = ?", radius)
   end
 
   def valid_polygon_for_location(location)
