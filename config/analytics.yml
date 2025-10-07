@@ -422,6 +422,9 @@ shared:
     - updated_at
     - recaptcha_score
     - unsubscribed_at
+    - area
+    - geopoint
+    - radius_in_metres
   vacancies:
     - id
     - job_title

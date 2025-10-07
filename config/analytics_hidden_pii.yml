@@ -78,6 +78,7 @@ shared:
     - jobseeker_id
   subscriptions:
     - email
+    - geopoint
   vacancies:
     - application_email
     - contact_email
