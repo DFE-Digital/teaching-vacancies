@@ -28,7 +28,6 @@ RSpec.describe ExportCandidateDataService do
 
   describe "#export" do
     let(:zip_buffer) { double }
-    # let(:job_references) { [job_reference_one] }
 
     let(:job_application) do
       build_stubbed(:job_application,
