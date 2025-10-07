@@ -2,14 +2,14 @@ require "google_indexing"
 
 module Publishers
   module Vacancies
-    class WizardBaseController < Publishers::BaseController
+    class WizardBaseController < BaseController
       include Publishers::Wizardable
 
       delegate :all_steps_valid?, :next_invalid_step, to: :form_sequence
 
       private
 
-      helper_method :current_step, :step_process, :vacancy, :vacancies, :all_steps_valid?, :next_invalid_step, :back_path
+      helper_method :current_step, :step_process, :all_steps_valid?, :next_invalid_step, :back_path
 
       def step_process
         Publishers::Vacancies::VacancyStepProcess.new(
@@ -17,18 +17,6 @@ module Publishers
           vacancy: vacancy,
           organisation: current_organisation,
         )
-      end
-
-      def vacancies
-        @vacancies ||= current_organisation.all_vacancies
-      end
-
-      def vacancy
-        # Scope to internal vacancies to disallow editing of external ones
-
-        # As the vacancy is not associated with an organisation upon creation, calling the vacancies method will return an empty array as an organisation is not associated
-        # with it. To fix this, before the vacancy's status is set (and therefore before an organisation is associated), we find the job from the vacancies where status is nil.
-        @vacancy ||= vacancies.internal.find_by(id: params[:job_id].presence || params[:id]) || DraftVacancy.find(params[:job_id].presence || params[:id])
       end
 
       def form_sequence
@@ -61,11 +49,6 @@ module Publishers
         else
           organisation_jobs_with_type_path(:live)
         end
-      end
-
-      def update_google_index(job)
-        url = job_url(job)
-        UpdateGoogleIndexQueueJob.perform_later(url)
       end
 
       def save_and_finish_later?
