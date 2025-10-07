@@ -44,6 +44,8 @@ RSpec.describe "Jobseekers can manage their profile" do
             fill_in "personal_details_form[first_name]", with: first_name
             fill_in "personal_details_form[last_name]", with: last_name
             click_on I18n.t("buttons.save_and_continue")
+            # wait for page to load
+            find("label[for='personal-details-form-phone-number-provided-true-field']")
           end
 
           it "passes a11y", :a11y do
