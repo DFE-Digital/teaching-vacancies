@@ -128,22 +128,20 @@ RSpec.describe ExportCandidateDataService do
 
   describe "#self_disclosure" do
     let(:document) { service.self_disclosure(job_application) }
+    let(:job_application) do
+      create(:job_application,
+             self_disclosure_request: build(:self_disclosure_request, self_disclosure: self_disclosure))
+    end
 
     context "when job application has self disclosure" do
-      let(:job_application) do
-        create(:job_application,
-               self_disclosure_request: build(:self_disclosure_request, self_disclosure: build(:self_disclosure)))
-      end
+      let(:self_disclosure) { build(:self_disclosure) }
 
       it { expect(document.filename).to eq("self_disclosure.pdf") }
       it { expect(document.data).to include("%PDF-") }
     end
 
     context "when job application has no self disclosure" do
-      let(:job_application) do
-        create(:job_application,
-               self_disclosure_request: build(:self_disclosure_request))
-      end
+      let(:self_disclosure) { nil }
 
       it { expect(document.filename).to eq("no_declarations_found.txt") }
       it { expect(document.data).to eq("No self-disclosure form has been submitted through Teaching Vacancies.") }
