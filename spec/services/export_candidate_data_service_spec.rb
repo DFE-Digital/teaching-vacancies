@@ -96,7 +96,9 @@ RSpec.describe ExportCandidateDataService do
         build_stubbed(:job_application,
                       referees: [
                         build_stubbed(:referee, name: "john e. smith", reference_request: build_stubbed(:reference_request, job_reference: build_stubbed(:job_reference, :reference_given))),
-                        build_stubbed(:referee, name: "etha may", reference_request: build_stubbed(:reference_request, job_reference: build_stubbed(:job_reference, can_give_reference: false))),
+                        build_stubbed(:referee, name: "etha may", reference_request: build_stubbed(:reference_request, job_reference: build_stubbed(:job_reference, :reference_declined))),
+                        build_stubbed(:referee, name: "request_not_sent", reference_request: build_stubbed(:reference_request, :not_sent)),
+                        build_stubbed(:referee, name: "reference not returned yet", reference_request: build_stubbed(:reference_request, job_reference: build_stubbed(:job_reference))),
                         build_stubbed(:referee, name: "referee_no_request"),
                       ])
       end
@@ -112,8 +114,7 @@ RSpec.describe ExportCandidateDataService do
       let(:job_application) do
         build_stubbed(:job_application,
                       referees: [
-                        build_stubbed(:referee, name: "john e. smith"),
-                        build_stubbed(:referee, name: "etha may"),
+                        build_stubbed(:referee, name: "john e. smith", reference_request: build_stubbed(:reference_request, :not_sent)),
                         build_stubbed(:referee, name: "referee_no_request"),
                       ])
       end
@@ -130,6 +131,7 @@ RSpec.describe ExportCandidateDataService do
              self_disclosure_request: build(:self_disclosure_request, self_disclosure: self_disclosure))
     end
 
+    # self-disclosure requests have an attached self-disclosure iff they are sent.
     context "when job application has self disclosure" do
       let(:self_disclosure) { build(:self_disclosure) }
 

@@ -82,7 +82,7 @@ RSpec.describe "Job applications" do
 
   describe "GET #download_messages" do
     context "when messages exist for the job application" do
-      let!(:conversation) { create(:conversation, job_application: job_application) }
+      let(:conversation) { create(:conversation, job_application: job_application) }
 
       before do
         create(:publisher_message, conversation: conversation, sender: publisher)
