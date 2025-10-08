@@ -136,7 +136,6 @@ class Subscription < ApplicationRecord
                       "lancashire, blackburn and blackpool"].freeze
 
   class << self
-    # rubocop:disable Metrics/AbcSize
     def limit_by_location(vacancies, location, radius_in_miles)
       polygon = LocationPolygon.buffered(radius_in_miles).with_name(location)
       begin
@@ -155,7 +154,6 @@ class Subscription < ApplicationRecord
       search_point = RGeo::Geographic.spherical_factory(srid: 4326).point(coordinates.second, coordinates.first)
       vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| search_point.distance(point) < radius_in_metres } }
     end
-    # rubocop:enable Metrics/AbcSize
 
     def handle_location(vacancies, criteria)
       if criteria.key?(:location)
@@ -169,5 +167,31 @@ class Subscription < ApplicationRecord
         vacancies
       end
     end
+  end
+
+  # Reads the location and radius from the search criteria and precomputes the area or geopoint for faster matching later.
+  # Expensive operations (external API calls or database geometry operations).
+  # Avoid calling this method directly on the user request path.
+  def set_location_data!
+    location = search_criteria["location"]&.strip&.downcase
+    return if location.blank?
+
+    radius = search_criteria["radius"] || 10
+
+    if (polygon = LocationPolygon.find_valid_for_location(location))
+      # Cast polygon area from geography to geometry and buffer by radius before storing
+      self.area = polygon.buffered_geometry_area(self.class.convert_miles_to_metres(radius))
+    else
+      coordinates = Geocoding.new(location).coordinates
+      if coordinates.present? && coordinates != Geocoding::COORDINATES_NO_MATCH
+        self.geopoint = RGeo::Cartesian.factory(srid: 4326).point(coordinates.second, coordinates.first)
+      end
+    end
+
+    if area.present? || geopoint.present?
+      self.radius_in_metres = self.class.convert_miles_to_metres(radius)
+    end
+
+    save!
   end
 end

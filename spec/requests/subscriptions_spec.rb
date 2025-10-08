@@ -62,6 +62,7 @@ RSpec.describe "Subscriptions" do
           email: email_address,
           frequency: "daily",
           location: "London",
+          radius: "10",
           keyword: "english",
         }.symbolize_keys,
       }
@@ -69,6 +70,7 @@ RSpec.describe "Subscriptions" do
     let(:created_subscription) { Subscription.last }
 
     before do
+      allow(SetSubscriptionLocationDataJob).to receive(:perform_later)
       create(:location_polygon, name: "london")
 
       # Required to set the session
@@ -83,7 +85,16 @@ RSpec.describe "Subscriptions" do
     it "creates a subscription" do
       expect { subject }.to change { Subscription.count }.by(1)
       expect(created_subscription.email).to eq(email_address)
-      expect(created_subscription.search_criteria.symbolize_keys).to eq({ keyword: "english", location: "London", radius: "0" })
+      expect(created_subscription.search_criteria.symbolize_keys).to eq({ keyword: "english", location: "London", radius: "10" })
+    end
+
+    it "fills the location data for the subscription" do
+      expect(SetSubscriptionLocationDataJob).to receive(:perform_later).and_call_original
+      perform_enqueued_jobs do
+        subject
+      end
+      expect(created_subscription.reload.area).not_to be_nil
+      expect(created_subscription.radius_in_metres).to eq(16_090)
     end
 
     it "triggers a `job_alert_subscription_created` event", :dfe_analytics do

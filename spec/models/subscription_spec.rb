@@ -88,7 +88,7 @@ RSpec.describe Subscription do
     end
   end
 
-  describe "create_alert_run" do
+  describe "#create_alert_run" do
     let(:subscription) { create(:subscription, frequency: :daily) }
 
     it "creates a run" do
@@ -442,6 +442,71 @@ RSpec.describe Subscription do
 
       it "sends the vacancies in publish order descending" do
         expect(vacancies).to eq(expected_vacancies)
+      end
+    end
+  end
+
+  describe "#set_location_data!" do
+    context "with a search criteria location matching a polygon with valid area" do
+      let!(:subscription) { create(:subscription, search_criteria: { "location" => " London ", "radius" => 10 }) }
+
+      before do
+        create(:location_polygon, name: "london")
+      end
+
+      it "sets the area field and radius_in_metres" do
+        subscription.set_location_data!
+        subscription.reload
+        expect(subscription.area).to be_present
+        expect(subscription.geopoint).to be_nil
+        expect(subscription.radius_in_metres).to eq(16_090)
+      end
+    end
+
+    context "with a search criteria location not matching a polygon with valid area" do
+      let!(:subscription) { create(:subscription, search_criteria: { "location" => " London ", "radius" => 10 }) }
+      let(:geocoding) { instance_double(Geocoding, coordinates: [51.5074, -0.1278]) }
+
+      before do
+        allow(Geocoding).to receive(:new).and_return(geocoding)
+        allow(LocationPolygon).to receive(:find_valid_for_location).and_return(nil)
+      end
+
+      it "sets the geopoint field and radius_in_metres" do
+        subscription.set_location_data!
+        subscription.reload
+        expect(subscription.area).to be_nil
+        expect(subscription.geopoint).to be_present
+        expect(subscription.radius_in_metres).to eq(16_090)
+      end
+
+      context "when Geocoding returns no match" do
+        let(:geocoding) { instance_double(Geocoding, coordinates: Geocoding::COORDINATES_NO_MATCH) }
+
+        before do
+          allow(Geocoding).to receive(:new).and_return(geocoding)
+          allow(LocationPolygon).to receive(:find_valid_for_location).and_return(nil)
+        end
+
+        it "does not set the geopoint or radius_in_metres" do
+          subscription.set_location_data!
+          subscription.reload
+          expect(subscription.area).to be_nil
+          expect(subscription.geopoint).to be_nil
+          expect(subscription.radius_in_metres).to be_nil
+        end
+      end
+    end
+
+    context "with blank location" do
+      let!(:subscription) { create(:subscription, search_criteria: { "location" => "   ", "radius" => 10 }) }
+
+      it "does not set area, geopoint, or radius_in_metres" do
+        subscription.set_location_data!
+        subscription.reload
+        expect(subscription.area).to be_nil
+        expect(subscription.geopoint).to be_nil
+        expect(subscription.radius_in_metres).to be_nil
       end
     end
   end

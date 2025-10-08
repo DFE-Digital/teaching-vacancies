@@ -28,6 +28,7 @@ RSpec.describe "Sidekiq configuration" do
       TrackVacancyViewJob
       EqualOpportunitiesReportUpdateJob
       BackfillSubscriptionLocationJob
+      SetSubscriptionLocationDataJob
     ]
   end
 
