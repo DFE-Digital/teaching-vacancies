@@ -325,7 +325,6 @@ RSpec.describe "Creating a vacancy" do
         let(:vacancy) { create(:draft_vacancy, :secondary, :ect_suitable, job_roles: %w[teacher], organisations: [school], publish_on: Date.current) }
 
         it "adds a job to update the Google index in the queue" do
-          # expect(UpdateGoogleIndexQueueJob).to receive(:perform_later).with(job_url(vacancy))
           expect(UpdateGoogleIndexQueueJob).to receive(:perform_later)
 
           visit organisation_job_path(vacancy.id)
