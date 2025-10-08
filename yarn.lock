@@ -1741,14 +1741,14 @@
   resolved "https://registry.yarnpkg.com/@pkgr/core/-/core-0.2.7.tgz#eb5014dfd0b03e7f3ba2eeeff506eed89b028058"
   integrity sha512-YLT9Zo3oNPJoBjBc4q8G2mjU4tqIbf5CEOORbUUr48dCD9q3umJ3IPlVqOqDakPfd2HuwccBaqlGhN4Gmr5OWg==
 
-"@rails/actiontext@^7.2.201":
-  version "7.2.202"
-  resolved "https://registry.yarnpkg.com/@rails/actiontext/-/actiontext-7.2.202.tgz#5d7cc2135a85af3c951288b6184eb475dd7711a9"
-  integrity sha512-Fb851rKGVCB2zzdKnMZfCdatoUDkuDPzqgM+ILOegyM9Iel07GT93rHHkmh+XZuP6xFMoYaJgOZtkNe1nEyw5g==
+"@rails/actiontext@^8.0.300":
+  version "8.0.300"
+  resolved "https://registry.yarnpkg.com/@rails/actiontext/-/actiontext-8.0.300.tgz#a5c89ef825f5e1b199456abc86c8f2f746227450"
+  integrity sha512-3uIRBH7SsjlgbpZQTEsgZg9bdH2umdjCoXp02oRF1PzEi/TcOTQD/PXTthkRiXdo0sA6y3PMgJNiPs/JfW4JLQ==
   dependencies:
-    "@rails/activestorage" ">= 7.2.0-alpha"
+    "@rails/activestorage" ">= 8.0.0-alpha"
 
-"@rails/activestorage@>= 7.2.0-alpha", "@rails/activestorage@^8.0.300":
+"@rails/activestorage@>= 8.0.0-alpha", "@rails/activestorage@^8.0.300":
   version "8.0.300"
   resolved "https://registry.yarnpkg.com/@rails/activestorage/-/activestorage-8.0.300.tgz#4c31cf2ae59033a1fbb90ba545ff216b5ea161f8"
   integrity sha512-vgugHjdH0wLM1+ajWdoiNNFphDsZrd349iJvfyVPC21IkMdJOnaBpF4eaV847cDqP/7mxxDZ4nkhc7dgQjGa4A==
