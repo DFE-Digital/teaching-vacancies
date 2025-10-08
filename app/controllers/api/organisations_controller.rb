@@ -6,9 +6,16 @@ class Api::OrganisationsController < Api::ApplicationController
 
   def index
     suggestions = Search::SchoolSearch.new({ name: query })
-      .organisations.order(:name).limit(MAX_RESULTS).map { |s| "#{s.name} (#{s.postcode})" }
+      .organisations.order(:name).limit(MAX_RESULTS).mapyy { |s| "#{s.name} (#{s.postcode})" }
 
     render json: { query:, suggestions: }
+  end
+
+  def show
+    @organisation = Organisation.includes(:vacancies).friendly.find(params[:id])
+    @pagy, @vacancies = pagy(@organisation.vacancies.applicable, items: 50, overflow: :empty_page)
+
+    respond_to(&:json)
   end
 
   private

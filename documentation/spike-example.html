@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Example external site</title>
+    <style>
+      .my-school { border: 1px red solid; }
+    </style>
+  </head>
+  <body>
+    <h1>My school website</h1>
+
+    <h2>Default example</h2>
+    <div class="tv-jobs" data-tv-jobs data-tv-school="abraham-moss-community-school"></div>
+
+    <hr />
+    <h2>Example with own styling</h2>
+    <div class="my-school" data-tv-jobs data-tv-user-style data-tv-school="abraham-moss-community-school"></div>
+
+    <hr />
+    <h2>Example with own job template</h2>
+    <div data-tv-jobs data-tv-school="abraham-moss-community-school" data-tv-job-template-fn="jobToHtml"></div>
+
+    <hr />
+    <h2>When on job available</h2>
+    <div class="tv-jobs" data-tv-jobs data-tv-school="banister-primary-school" />
+
+    <script type="text/javascript">
+      function jobToHtml(job) {
+        return `
+      <div class="my-template">
+        <h3>${job.title}, published: ${job.datePosted}</h3>
+        <a href="${job.url}">View</a>
+        ${job.description}
+      </div>
+      `;
+      }
+    </script>
+    <script src="http://localhost:3000/tv-jobs.js"></script>
+  </body>
+</html>

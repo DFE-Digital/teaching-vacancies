@@ -13,7 +13,7 @@ const watch = process.argv[process.argv.length - 1] == '--watch';
 
 const config = {
   bundle: true,
-  entryPoints: ['app/assets/javascript/application.js'],
+  entryPoints: ['app/assets/javascript/application.js', 'app/assets/javascript/tv-jobs.js'],
   minify: true,
   outdir: 'app/assets/builds',
   plugins: [
