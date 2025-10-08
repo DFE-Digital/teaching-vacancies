@@ -11,7 +11,7 @@ class BackfillSubscriptionLocationJob < ApplicationJob
       radius_in_metres = Subscription.convert_miles_to_metres(radius)
       subs_scope = subscriptions_scope(radius, location)
 
-      if (polygon = valid_polygon_for_location(location))
+      if (polygon = LocationPolygon.find_valid_for_location(location))
         set_subscriptions_area(subs_scope, polygon, radius_in_metres)
         polygon_locations += 1
       elsif (coordinates = location_coordinates(location))
@@ -46,23 +46,6 @@ class BackfillSubscriptionLocationJob < ApplicationJob
                 .where("COALESCE((search_criteria->>'radius')::integer, 10) = ?", radius)
   end
 
-  def valid_polygon_for_location(location)
-    polygon = LocationPolygon.with_name(location)
-    if polygon.present? && polygon.area.invalid_reason.nil?
-      polygon
-    end
-  rescue RGeo::Error::InvalidGeometry
-    nil
-  end
-
-  # Buffering is best done in a projected coordinate system (like 3857) for accuracy, as it buffers in metres instead of degrees).
-  # After buffering, we transform to SRID: 4326 (lat/lon data) for storage and querying.
-  def polygon_buffered_geom(polygon, radius_in_metres)
-    LocationPolygon
-      .where(id: polygon.id)
-      .pick(Arel.sql("ST_Transform(ST_Buffer(ST_Transform(area::geometry, 3857), #{radius_in_metres}), 4326)"))
-  end
-
   def location_coordinates(location)
     coordinates = Geocoding.new(location).coordinates
     coordinates if coordinates.present? && coordinates != Geocoding::COORDINATES_NO_MATCH
@@ -71,7 +54,7 @@ class BackfillSubscriptionLocationJob < ApplicationJob
   def set_subscriptions_area(subs_scope, polygon, radius_in_metres)
     subs_scope.update_all(
       radius_in_metres: radius_in_metres,
-      area: polygon_buffered_geom(polygon, radius_in_metres),
+      area: polygon.buffered_geometry_area(radius_in_metres),
       geopoint: nil,
     )
   end

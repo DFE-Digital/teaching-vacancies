@@ -1,6 +1,5 @@
 require "rails_helper"
 
-# rubocop:disable RSpec/MessageChain
 # rubocop:disable RSpec/AnyInstance
 RSpec.describe BackfillSubscriptionLocationJob do
   # Factories for generating geographic and cartesian areas/points
@@ -11,7 +10,9 @@ RSpec.describe BackfillSubscriptionLocationJob do
   let(:geographic_area) { geographic_factory.parse_wkt(polygon_wkt) }
   let(:polygon_wkt) { "POLYGON ((0.0 0.0, 0.0 1.0, 1.0 1.0, 1.0 0.0, 0.0 0.0))" }
   let(:cartesian_area) { cartesian_factory.parse_wkt(polygon_wkt) }
-  let(:polygon) { instance_double(LocationPolygon, id: 1, name: "london", area: geographic_area) }
+  let(:polygon) do
+    instance_double(LocationPolygon, id: 1, name: "london", area: geographic_area, buffered_geometry_area: cartesian_area)
+  end
 
   # Geopoint stubs
   let(:coordinates) { [51.5074, -0.1278] }
@@ -20,9 +21,8 @@ RSpec.describe BackfillSubscriptionLocationJob do
 
   before do
     # Stub Polygon lookups
-    allow(LocationPolygon).to receive(:with_name).and_return(nil)
-    allow(LocationPolygon).to receive(:with_name).with("london").and_return(polygon)
-    allow(LocationPolygon).to receive_message_chain(:where, :pick).and_return(cartesian_area)
+    allow(LocationPolygon).to receive(:find_valid_for_location).and_return(nil)
+    allow(LocationPolygon).to receive(:find_valid_for_location).with("london").and_return(polygon)
 
     # Stub Geocoding lookups
     allow(Geocoding).to receive(:new).and_return(instance_double(Geocoding, coordinates: Geocoding::COORDINATES_NO_MATCH))
@@ -73,7 +73,7 @@ RSpec.describe BackfillSubscriptionLocationJob do
     end
   end
 
-  context "with subscriptions with a location not matching any polygon but with coordinates" do
+  context "with subscriptions with a location not matching any valid polygon but with coordinates" do
     let!(:subs_matching_coordinates) do
       [
         Subscription.create!(search_criteria: { "location" => "E12JP", "radius" => 10 }),
@@ -123,7 +123,7 @@ RSpec.describe BackfillSubscriptionLocationJob do
     end
 
     before do
-      allow(LocationPolygon).to receive(:with_name).and_return(nil)
+      allow(LocationPolygon).to receive(:find_valid_for_location).and_return(nil)
       allow(Geocoding).to receive(:new).and_return(instance_double(Geocoding, coordinates: Geocoding::COORDINATES_NO_MATCH))
     end
 
@@ -147,29 +147,6 @@ RSpec.describe BackfillSubscriptionLocationJob do
         "BackfillSubscriptionLocationJob completed. Total unique locations: 3. Polygons: 0, Coordinates: 0, Invalid: 3.",
       )
       described_class.perform_now
-    end
-  end
-
-  context "with a subscription matching a polygon with invalid geometry" do
-    let!(:sub_invalid_polygon) do
-      Subscription.create!(search_criteria: { "location" => "invalid_polygon", "radius" => 10 })
-    end
-
-    before do
-      allow(LocationPolygon).to receive(:with_name).with("invalid_polygon").and_return(polygon)
-      allow(geographic_area).to receive(:invalid_reason).and_raise(RGeo::Error::InvalidGeometry)
-      allow(Geocoding).to receive(:new).with("invalid_polygon").and_return(geocoding_result)
-    end
-
-    it "does not populate area, and retrieves the geopoint instead" do
-      described_class.perform_now
-
-      expect(geographic_area).to have_received(:invalid_reason)
-
-      sub_invalid_polygon.reload
-      expect(sub_invalid_polygon.area).to be_nil
-      expect(sub_invalid_polygon.geopoint.as_text).to eq point_wkt
-      expect(sub_invalid_polygon.radius_in_metres).to eq(Subscription.convert_miles_to_metres(sub_invalid_polygon.search_criteria["radius"]))
     end
   end
 
@@ -269,4 +246,3 @@ RSpec.describe BackfillSubscriptionLocationJob do
   end
 end
 # rubocop:enable RSpec/AnyInstance
-# rubocop:enable RSpec/MessageChain
