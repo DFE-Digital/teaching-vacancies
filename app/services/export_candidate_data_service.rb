@@ -51,7 +51,7 @@ class ExportCandidateDataService
   end
 
   def references(job_application)
-    requests = job_application.referees.filter_map(&:reference_request)
+    requests = job_application.referees.filter_map(&:reference_request).select { |req| req.job_reference&.complete? }
     return Document["no_references_found.txt", "No references have been requested through Teaching Vacancies."] if requests.blank?
 
     requests.map do |request|
