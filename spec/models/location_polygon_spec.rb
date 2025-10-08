@@ -99,5 +99,15 @@ RSpec.describe LocationPolygon do
         expect(polygon.buffered_geometry_area(1000)).to be_nil
       end
     end
+
+    context "when the area transformation raises an invalid geometry error" do
+      before do
+        allow(described_class).to receive_message_chain(:where, :pick).and_raise(RGeo::Error::InvalidGeometry) # rubocop:disable RSpec/MessageChain
+      end
+
+      it "returns nil" do
+        expect(polygon.buffered_geometry_area(1000)).to be_nil
+      end
+    end
   end
 end
