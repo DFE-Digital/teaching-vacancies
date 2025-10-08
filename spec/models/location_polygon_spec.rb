@@ -79,14 +79,25 @@ RSpec.describe LocationPolygon do
   end
 
   describe "#buffered_geometry_area" do
+    let!(:polygon) { create(:location_polygon) }
+
     it "returns a buffered geometry for the polygon with the expected SRID (4326)" do
-      polygon = create(:location_polygon)
       buffered = polygon.buffered_geometry_area(1000)
 
       expect(buffered).to be_present
       expect(buffered).to be_a(RGeo::Cartesian::PolygonImpl)
       expect(buffered).not_to eq(polygon.area)
       expect(buffered.srid).to eq(4326)
+    end
+
+    context "when the area transformation returns no value" do
+      before do
+        allow(described_class).to receive_message_chain(:where, :pick).and_return(nil) # rubocop:disable RSpec/MessageChain
+      end
+
+      it "returns nil" do
+        expect(polygon.buffered_geometry_area(1000)).to be_nil
+      end
     end
   end
 end
