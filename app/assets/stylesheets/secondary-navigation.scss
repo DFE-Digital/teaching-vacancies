@@ -1,3 +1,6 @@
+// copied from "@x-govuk/govuk-prototype-components/src/x-govuk/components/secondary-navigation";
+// as their distribution references node_modules which doesn't work in ruby-land.
+//
 $_current-link-border-width: govuk-spacing(1);
 
 .x-govuk-secondary-navigation {
