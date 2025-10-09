@@ -16,4 +16,12 @@ RSpec.describe "Pages" do
       end
     end
   end
+
+  context "with intermediary landing pages" do
+    %w[leadership-roles].each do |id|
+      before { get page_path(id) }
+
+      it { is_expected.to render_template(layout: "application_intermediary") }
+    end
+  end
 end
