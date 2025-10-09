@@ -136,6 +136,7 @@ class Subscription < ApplicationRecord
                       "lancashire, blackburn and blackpool"].freeze
 
   class << self
+    # rubocop:disable Metrics/AbcSize
     def limit_by_location(vacancies, location, radius_in_miles)
       polygon = LocationPolygon.buffered(radius_in_miles).with_name(location)
       begin
@@ -154,6 +155,7 @@ class Subscription < ApplicationRecord
       search_point = RGeo::Geographic.spherical_factory(srid: 4326).point(coordinates.second, coordinates.first)
       vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| search_point.distance(point) < radius_in_metres } }
     end
+    # rubocop:enable Metrics/AbcSize
 
     def handle_location(vacancies, criteria)
       if criteria.key?(:location)
