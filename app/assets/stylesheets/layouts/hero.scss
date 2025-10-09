@@ -1,0 +1,15 @@
+.hero {
+    background-color: govuk-colour('light-grey');
+    padding-top: govuk-spacing(3);
+    padding-bottom: govuk-spacing(3);
+
+    h1 {
+        margin-top: govuk-spacing(6);
+        margin-bottom: govuk-spacing(4);
+    }
+
+    a {
+        margin-top: govuk-spacing(6);
+        @include govuk-font($size: 19, $weight: bold);
+    }
+}

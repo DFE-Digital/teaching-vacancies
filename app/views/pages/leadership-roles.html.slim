@@ -1,0 +1,33 @@
+- content_for :page_title_prefix do
+  | Leadership roles
+
+- content_for :hero do
+  .govuk-grid-row
+    .govuk-grid-column-one-half
+      h1.govuk-heading-xl Find your next leadership role with Teaching Vacancies
+
+      - query_params = { teaching_job_roles: %w[head_of_year_or_phase head_of_department_or_curriculum assistant_headteacher deputy_headteacher headteacher other_leadership], radius: 0, sort_by: "publish_on" }
+      = tracked_button_link_to("Search roles", jobs_path(query_params))
+
+    .govuk-grid-column-one-half
+      img src=image_path("pages/leadership_staff_banner.jpg") alt="Leadership staff Banner Image"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h2.govuk-heading-m Support to help you succeed
+    p.govuk-body-m
+      | Get help at every stage of your application. Access guidance on writing strong personal statements, preparing for interviews, and understanding what schools are looking for in a leader.
+    p.govuk-body-m
+      | Whether you're applying for your first leadership role or your next challenge, support is available to help you feel confident and ready.
+
+    h2.govuk-heading-m = t("nav.create_a_job_alert")
+    p.govuk-body = t("home.index.alerts_description")
+    = govuk_button_link_to(t("buttons.setup_alerts"), new_subscription_path, class: "govuk-!-margin-bottom-2 govuk-button--secondary")
+
+  .govuk-grid-column-one-third
+    h2.govuk-heading-m Related links
+    ul.govuk-list
+      li(class="govuk-!-margin-bottom-4") = govuk_link_to("Write a great teaching job application in 5 steps", post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "write-a-great-teaching-job-application-in-five-steps"))
+      li(class="govuk-!-margin-bottom-4") = govuk_link_to("How to approach a teaching job interview ", post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "how-to-approach-a-teaching-job-interview"))
+      li(class="govuk-!-margin-bottom-4") = govuk_link_to("3 quick ways to find the right teaching job for you", post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "3-quick-ways-to-find-the-right-teaching-job"))
+      li = govuk_link_to("See more job guides", posts_path("jobseeker-guides"))
