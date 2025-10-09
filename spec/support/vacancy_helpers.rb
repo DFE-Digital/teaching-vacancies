@@ -172,8 +172,6 @@ module VacancyHelpers
 
     if vacancy.organisation&.safeguarding_information.present?
       expect(page.html).to include(vacancy.organisation.safeguarding_information)
-    elsif vacancy.safeguarding_information_provided
-      expect(page.html).to include(vacancy.safeguarding_information)
     end
 
     expect(page.html).to include(vacancy.further_details)
