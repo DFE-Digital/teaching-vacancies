@@ -3,7 +3,7 @@
                                      "#{vacancy.job_title}": organisation_job_job_applications_path(vacancy.id),
                                      "#{job_application.name}": "" }
 
-  = govuk_back_link text: t("app.back_link"), href: organisation_job_job_applications_path(vacancy.id, anchor: tab_name(job_application.status))
+  = govuk_back_link text: t("app.back_link"), href: back_link
 
 span.govuk-caption-l
   = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.organisation_name)
