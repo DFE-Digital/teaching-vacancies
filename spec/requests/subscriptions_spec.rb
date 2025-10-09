@@ -126,25 +126,33 @@ RSpec.describe "Subscriptions" do
   describe "PATCH #update" do
     subject { put subscription_path(subscription.token), params: { jobseekers_subscription_form: params } }
 
-    before { create(:location_polygon, name: "london") }
+    before do
+      create(:location_polygon, name: "london")
+      allow(SetSubscriptionLocationDataJob).to receive(:perform_later)
+    end
 
     let(:old_email_address) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
-    let!(:subscription) { create(:subscription, email: old_email_address, frequency: :daily) }
+    let!(:subscription) do
+      create(:subscription, :with_some_criteria, :with_area_location, email: old_email_address, frequency: :daily)
+    end
 
     let(:email_address) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
     let(:params) do
       {
         email: email_address,
         frequency: "weekly",
-        location: "London",
-        keyword: "english",
+        location: subscription.search_criteria["location"],
+        keyword: "maths",
+        radius: subscription.search_criteria["radius"],
       }
     end
 
     it "updates the subscription" do
+      original_search_criteria = subscription.search_criteria
       expect { subject }.not_to(change { Subscription.count })
       expect(subscription.reload.email).to eq(email_address)
-      expect(subscription.reload.search_criteria.symbolize_keys).to eq({ keyword: "english", location: "London", radius: "0" })
+      expect(subscription.reload.search_criteria.symbolize_keys)
+        .to eq({ keyword: "maths", location: original_search_criteria["location"], radius: original_search_criteria["radius"] })
     end
 
     it "triggers a `job_alert_subscription_updated` event", :dfe_analytics do
@@ -165,7 +173,89 @@ RSpec.describe "Subscriptions" do
       end
 
       it "does not update a subscription" do
+        subject
         expect(subscription.reload.email).to eq(old_email_address)
+      end
+    end
+
+    context "when only updating the frequency" do
+      subject { put subscription_path(subscription.token), params: { subscription: { frequency: "weekly" } } }
+
+      it "updates the frequency" do
+        expect {
+          subject
+          subscription.reload
+        }.to change { subscription.frequency }.from("daily").to("weekly")
+      end
+
+      it "does not update the search criteria" do
+        expect {
+          subject
+          subscription.reload
+        }.not_to(change { subscription.search_criteria })
+      end
+    end
+
+    context "when the subscription non location search criteria is changed" do
+      let(:params) { super().merge(keyword: "maths") }
+
+      it "changes the subscription search criteria without filling location data" do
+        expect(SetSubscriptionLocationDataJob).not_to receive(:perform_later)
+        expect {
+          subject
+          subscription.reload
+        }.to change { subscription.search_criteria["keyword"] }.to("maths")
+         .and(not_change { subscription.search_criteria["location"] })
+         .and(not_change { subscription.search_criteria["radius"] })
+         .and(not_change { subscription.area })
+         .and(not_change { subscription.geopoint })
+         .and(not_change { subscription.radius_in_metres })
+      end
+    end
+
+    context "when the subscription radius is changed" do
+      let(:params) { super().merge(radius: "15") }
+
+      it "changes the subscription search criteria and fills location data", :perform_enqueued do
+        expect(SetSubscriptionLocationDataJob).to receive(:perform_later).and_call_original
+        expect {
+          subject
+          subscription.reload
+        }.to change { subscription.search_criteria.symbolize_keys }.to({ keyword: "maths", location: "London", radius: "15" })
+          .and change { subscription.radius_in_metres }.to(24_135)
+          .and change { subscription.area }
+          .and(not_change { subscription.geopoint })
+      end
+    end
+
+    context "when the location is changed to a location without a polygon" do
+      let(:params) { super().merge(location: "EC12JP") }
+
+      it "changes the subscription search criteria and fills location data with a geopoint", :perform_enqueued do
+        expect(SetSubscriptionLocationDataJob).to receive(:perform_later).and_call_original
+        expect {
+          subject
+          subscription.reload
+        }.to change { subscription.search_criteria.symbolize_keys }.to({ keyword: "maths", location: "EC12JP", radius: "10" })
+        .and change { subscription.geopoint&.as_text }.from(nil).to("POINT (-1.8262 51.1789)") # Default stub coordinates for tests.
+        .and change { subscription.area }.to(nil)
+      end
+    end
+
+    context "when the location is changed from a location with geopoint to a location with a polygon" do
+      let!(:subscription) do
+        create(:subscription, :with_some_criteria, :with_geopoint_location, frequency: :daily)
+      end
+      let(:params) { super().merge(location: "London") }
+
+      it "changes the subscription search criteria and fills location data with a geopoint", :perform_enqueued do
+        expect(SetSubscriptionLocationDataJob).to receive(:perform_later).and_call_original
+        expect {
+          subject
+          subscription.reload
+        }.to change { subscription.search_criteria.symbolize_keys }.to({ keyword: "maths", location: "London", radius: "10" })
+        .and change { subscription.geopoint }.to(nil)
+        .and change { subscription.area }.from(nil).to(kind_of(RGeo::Cartesian::PolygonImpl))
       end
     end
   end

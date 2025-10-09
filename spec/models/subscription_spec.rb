@@ -448,23 +448,39 @@ RSpec.describe Subscription do
 
   describe "#set_location_data!" do
     context "with a search criteria location matching a polygon with valid area" do
-      let!(:subscription) { create(:subscription, search_criteria: { "location" => " London ", "radius" => 10 }) }
+      let(:subscription) { create(:subscription, search_criteria: { "location" => " London ", "radius" => 10 }) }
 
       before do
         create(:location_polygon, name: "london")
       end
 
       it "sets the area field and radius_in_metres" do
-        subscription.set_location_data!
-        subscription.reload
-        expect(subscription.area).to be_present
-        expect(subscription.geopoint).to be_nil
-        expect(subscription.radius_in_metres).to eq(16_090)
+        expect {
+          subscription.set_location_data!
+          subscription.reload
+        }.to change(subscription, :area).from(nil).to(kind_of(RGeo::Cartesian::PolygonImpl))
+         .and change(subscription, :radius_in_metres).from(nil).to(16_090)
+         .and not_change(subscription, :geopoint).from(nil)
+      end
+
+      context "when the polygon previously had location data from coordinates" do
+        let(:subscription) do
+          create(:subscription, :with_geopoint_location, search_criteria: { "location" => " London ", "radius" => 15 })
+        end
+
+        it "sets the area field and radius_in_metres while deleting the geopoint" do
+          expect {
+            subscription.set_location_data!
+            subscription.reload
+          }.to change(subscription, :area).from(nil).to(kind_of(RGeo::Cartesian::PolygonImpl))
+           .and change { subscription.geopoint.class }.from(RGeo::Cartesian::PointImpl).to(NilClass)
+           .and change(subscription, :radius_in_metres).from(16_090).to(24_135)
+        end
       end
     end
 
     context "with a search criteria location not matching a polygon with valid area" do
-      let!(:subscription) { create(:subscription, search_criteria: { "location" => " London ", "radius" => 10 }) }
+      let(:subscription) { create(:subscription, search_criteria: { "location" => " London ", "radius" => 10 }) }
       let(:geocoding) { instance_double(Geocoding, coordinates: [51.5074, -0.1278]) }
 
       before do
@@ -473,11 +489,12 @@ RSpec.describe Subscription do
       end
 
       it "sets the geopoint field and radius_in_metres" do
-        subscription.set_location_data!
-        subscription.reload
-        expect(subscription.area).to be_nil
-        expect(subscription.geopoint).to be_present
-        expect(subscription.radius_in_metres).to eq(16_090)
+        expect {
+          subscription.set_location_data!
+          subscription.reload
+        }.to change(subscription, :geopoint).from(nil).to(kind_of(RGeo::Cartesian::PointImpl))
+         .and change(subscription, :radius_in_metres).from(nil).to(16_090)
+         .and not_change(subscription, :area).from(nil)
       end
 
       context "when Geocoding returns no match" do
@@ -489,24 +506,41 @@ RSpec.describe Subscription do
         end
 
         it "does not set the geopoint or radius_in_metres" do
-          subscription.set_location_data!
-          subscription.reload
-          expect(subscription.area).to be_nil
-          expect(subscription.geopoint).to be_nil
-          expect(subscription.radius_in_metres).to be_nil
+          expect {
+            subscription.set_location_data!
+            subscription.reload
+          }.to not_change(subscription, :geopoint).from(nil)
+           .and not_change(subscription, :radius_in_metres).from(nil)
+           .and not_change(subscription, :area).from(nil)
+        end
+      end
+
+      context "when the polygon previously had location data from area" do
+        let(:subscription) do
+          create(:subscription, :with_area_location, search_criteria: { "location" => "EC12JP", "radius" => 15 })
+        end
+
+        it "sets the geopoint field and radius_in_metres while deleting the area" do
+          expect {
+            subscription.set_location_data!
+            subscription.reload
+          }.to change(subscription, :geopoint).from(nil).to(kind_of(RGeo::Cartesian::PointImpl))
+           .and change(subscription, :radius_in_metres).from(16_090).to(24_135)
+           .and change { subscription.area.class }.from(RGeo::Cartesian::PolygonImpl).to(NilClass)
         end
       end
     end
 
     context "with blank location" do
-      let!(:subscription) { create(:subscription, search_criteria: { "location" => "   ", "radius" => 10 }) }
+      let(:subscription) { create(:subscription, search_criteria: { "location" => "   ", "radius" => 10 }) }
 
       it "does not set area, geopoint, or radius_in_metres" do
-        subscription.set_location_data!
-        subscription.reload
-        expect(subscription.area).to be_nil
-        expect(subscription.geopoint).to be_nil
-        expect(subscription.radius_in_metres).to be_nil
+        expect {
+          subscription.set_location_data!
+          subscription.reload
+        }.to not_change(subscription, :geopoint).from(nil)
+         .and not_change(subscription, :radius_in_metres).from(nil)
+         .and not_change(subscription, :area).from(nil)
       end
     end
   end
