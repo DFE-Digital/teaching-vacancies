@@ -25,7 +25,10 @@ const config = {
     })
   ],
   publicPath: 'assets',
-  target: ['ie11']
+  target: ['ie11'],
+  define: {
+    'process.env.DOMAIN': `"${process.env.DOMAIN || 'localhost:3000'}"`
+  },
 };
 
 if (watch) {
