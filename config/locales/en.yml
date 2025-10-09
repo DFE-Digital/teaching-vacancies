@@ -364,6 +364,7 @@ en:
       applications: Applications
       job_alerts: Job alerts
       saved_jobs: Saved jobs
+      create_a_job_alert: Create a job alert
     schools: Schools
 
   support_requests:

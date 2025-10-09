@@ -1,0 +1,12 @@
+nav.x-gov-secondary-navigation aria-label="Side navigation"
+  ul.x-gov-secondary-navigation__list
+    - { applications: jobseekers_job_applications_path,
+      saved_jobs: jobseekers_saved_jobs_path,
+      job_alerts: jobseekers_subscriptions_path,
+      create_a_job_alert: new_subscription_path }.each do |name, link|
+      - if current_page?(link)
+        li.x-gov-secondary-navigation__list-item.x-gov-secondary-navigation__list-item--current
+          = govuk_link_to t("sub_nav.jobseekers.#{name}"), link, class: "x-gov-secondary-navigation__link"
+      - else
+        li.x-gov-secondary-navigation__list-item
+          = govuk_link_to t("sub_nav.jobseekers.#{name}"), link, class: "x-gov-secondary-navigation__link"
