@@ -14,7 +14,7 @@ RSpec.describe "Jobseekers can disclose close relationships or safeguarding issu
 
   it "passes a11y", :a11y do
     #  https://github.com/alphagov/govuk-frontend/issues/979
-    expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+    expect(page).to be_axe_clean.skipping "aria-allowed-attr"
   end
 
   it "allows jobseekers to add their declarations" do

@@ -14,14 +14,14 @@ RSpec.describe "Publishers can preview an organisation or school profile" do
     let(:organisation) { create(:school) }
 
     before do
-      click_link I18n.t("nav.school_profile")
+      click_link I18n.t("nav.organisation_profile", name: organisation.name)
       click_link I18n.t("publishers.organisations.show.preview_link_text", organisation_type: "school")
       # wait for page load
       find(".map-component")
     end
 
     it "passes a11y", :a11y do
-      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+      expect(page).to be_axe_clean
     end
 
     it "displays a profile summary" do

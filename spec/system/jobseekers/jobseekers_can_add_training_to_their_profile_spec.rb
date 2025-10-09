@@ -19,7 +19,7 @@ RSpec.describe "Jobseekers can add training to their profile" do
       end
 
       it "passes a11y", :a11y do
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+        expect(page).to be_axe_clean
       end
 
       it "allows jobseekers to add training" do

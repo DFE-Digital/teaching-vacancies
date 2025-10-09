@@ -16,7 +16,7 @@ RSpec.describe "Publishers can preview a vacancy" do
     end
 
     it "passes a11y", :a11y do
-      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+      expect(page).to be_axe_clean
     end
 
     context "when the job has been scheduled" do

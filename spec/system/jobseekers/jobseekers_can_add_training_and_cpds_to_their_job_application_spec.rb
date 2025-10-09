@@ -16,13 +16,13 @@ RSpec.describe "Jobseeker can add training and cpds to their job application" do
     let(:training_and_cpds) { [] }
 
     it "passes a11y", :a11y do
-      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+      expect(page).to be_axe_clean
     end
 
     it "allows jobseeker to add training", :a11y do
       click_on "Add training"
 
-      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+      expect(page).to be_axe_clean
 
       click_on "Save and continue"
 
