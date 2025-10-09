@@ -123,7 +123,7 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
   def about_the_role_params(params)
     params.require(:publishers_job_listing_about_the_role_form)
           .permit(:ect_status, :skills_and_experience, :school_offer, :flexi_working, :flexi_working_details_provided,
-                  :safeguarding_information_provided, :safeguarding_information, :further_details_provided, :further_details)
+                  :further_details_provided, :further_details)
   end
 
   def include_additional_documents_params(params)

@@ -88,9 +88,6 @@ section#job-details class="govuk-!-margin-bottom-5"
   - if vacancy.organisation&.safeguarding_information.present?
     h2.govuk-heading-m = t("jobs.safeguarding_information.jobseeker")
     .govuk-body == simple_format(vacancy.organisation.safeguarding_information)
-  - elsif vacancy.safeguarding_information_provided?
-    h2.govuk-heading-m = t("jobs.safeguarding_information.jobseeker")
-    .govuk-body == vacancy.safeguarding_information
 
   - if vacancy.expires_at.future?
     h3.govuk-heading-m = t("jobseekers.job_applications.applying_for_the_job_heading")
