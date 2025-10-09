@@ -13,9 +13,26 @@ const watch = process.argv[process.argv.length - 1] == '--watch';
 
 const config = {
   bundle: true,
-  entryPoints: ['app/assets/javascript/application.js', 'app/assets/javascript/tv-jobs.js'],
+  entryPoints: ['app/assets/javascript/application.js'],
   minify: true,
   outdir: 'app/assets/builds',
+  plugins: [
+    babel({
+      config: {
+        presets: ['@babel/preset-env'],
+        targets: '> 0.25%, not dead, IE 11'
+      }
+    })
+  ],
+  publicPath: 'assets',
+  target: ['ie11'],
+};
+
+const tvJobsConfig = {
+  bundle: true,
+  entryPoints: ['app/assets/javascript/tv-jobs.js'],
+  minify: true,
+  outdir: 'public/external/',
   plugins: [
     babel({
       config: {
@@ -33,7 +50,10 @@ const config = {
 
 if (watch) {
   let ctx = await esbuild.context(config);
+  let tvJobsCtx = await esbuild.context(tvJobsConfig);
   await ctx.watch();
+  await tvJobsCtx.watch();
 } else {
   await esbuild.build(config);
+  await esbuild.build(tvJobsConfig);
 }

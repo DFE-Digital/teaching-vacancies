@@ -105,3 +105,4 @@ bin/konduit.sh
 
 # RVM gemset support
 /.ruby-gemset
+/public/external/tv-jobs.js
