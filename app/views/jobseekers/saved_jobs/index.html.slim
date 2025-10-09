@@ -17,9 +17,9 @@ h1.govuk-heading-l = t(".page_title")
       = render SortComponent.new path: method(:jobseekers_saved_jobs_path), sort: sort
 
 .govuk-grid-row
-  .govuk-grid-column-full
-    - if Date.today <= Date.new(2024, 4, 2)
-      = render "jobseekers/visa_sponsorship_banner"
+  .govuk-grid-column-one-quarter
+    = render "jobseekers/shared/side_navigation"
+  .govuk-grid-column-three-quarters
     - if saved_jobs.any?
       #vacancy-results
         - saved_jobs.each do |saved_job|

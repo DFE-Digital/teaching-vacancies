@@ -8,22 +8,11 @@
 - if @job_applications.any?
   - content_for :skip_links do
     = govuk_skip_link(href: "#applications-results", text: t(".skip_link"))
-- if Date.today <= Date.new(2024, 4, 2)
-  = render "jobseekers/visa_sponsorship_banner"
 h1.govuk-heading-l = t(".page_title_with_count", count: @count)
 
 .govuk-grid-row
   .govuk-grid-column-one-quarter
-    nav.moj-side-navigation aria-label="Side navigation"
-      ul.moj-side-navigation__list
-        li.moj-side-navigation__item
-          = govuk_link_to t("sub_nav.jobseekers.applications"), jobseekers_job_applications_path
-        li.moj-side-navigation__item
-          = govuk_link_to t("sub_nav.jobseekers.saved_jobs"), jobseekers_saved_jobs_path
-        li.moj-side-navigation__item
-          = govuk_link_to t("sub_nav.jobseekers.job_alerts"), jobseekers_subscriptions_path
-        li.moj-side-navigation__item
-          = govuk_link_to t("nav.create_a_job_alert"), new_subscription_path
+    = render "jobseekers/shared/side_navigation"
   .govuk-grid-column-three-quarters
     - if @job_applications.any?
       = govuk_pagination(pagy: @pagy)
