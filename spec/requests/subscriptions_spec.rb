@@ -121,6 +121,77 @@ RSpec.describe "Subscriptions" do
         expect { subject }.to change { Subscription.count }.by(0)
       end
     end
+
+    # rubocop:disable RSpec/AnyInstance
+    describe "recaptcha verification", recaptcha: true do
+      let(:recaptcha_score) { 0.9 }
+      let(:recaptcha_reply) { instance_double(Recaptcha::Reply, score: recaptcha_score) }
+
+      before do
+        allow_any_instance_of(SubscriptionsController).to receive_messages(recaptcha_reply:, verify_recaptcha:)
+      end
+
+      context "when verify_recaptcha V3 is true" do
+        let(:verify_recaptcha) { true }
+
+        it "verifies the recaptcha once with v3" do
+          expect_any_instance_of(SubscriptionsController)
+            .to receive(:verify_recaptcha)
+            .with(hash_including(secret_key: ENV.fetch("RECAPTCHA_V3_SECRET_KEY", ""))) # V3
+            .once
+          expect_any_instance_of(SubscriptionsController).not_to receive(:verify_recaptcha).with(no_args) # V2
+          subject
+        end
+
+        it "records the recaptcha score on the subscription" do
+          subject
+          expect(created_subscription.recaptcha_score).to eq(recaptcha_score)
+        end
+
+        context "when the recaptcha reply as yet not been fetched" do
+          let(:recaptcha_reply) { nil }
+
+          it "records a nil recaptcha score" do
+            subject
+            expect(created_subscription.recaptcha_score).to be_nil
+          end
+        end
+
+        it "renders the subscription confirmation page" do
+          subject
+          expect(response).to render_template("subscriptions/confirm")
+        end
+
+        context "when the subscriber is a signed in jobseeker" do
+          before do
+            sign_in create(:jobseeker)
+          end
+
+          it "redirects to the subscriptions page for the jobseeker" do
+            subject
+            expect(response).to redirect_to(jobseekers_subscriptions_path)
+          end
+        end
+      end
+
+      context "when verify_recaptcha V3 is false" do
+        let(:verify_recaptcha) { false }
+
+        it "verifies the recaptcha once with v3 and once with v2" do
+          expect_any_instance_of(SubscriptionsController)
+            .to receive(:verify_recaptcha)
+            .with(hash_including(secret_key: ENV.fetch("RECAPTCHA_V3_SECRET_KEY", ""))).once # V3
+          expect_any_instance_of(SubscriptionsController)
+            .to receive(:verify_recaptcha).with(no_args).once # V2
+          subject
+        end
+
+        it "renders the 'new' page" do
+          expect(response).to render_template("subscriptions/new")
+        end
+      end
+    end
+    # rubocop:enable RSpec/AnyInstance
   end
 
   describe "PATCH #update" do
