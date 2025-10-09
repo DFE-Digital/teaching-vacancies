@@ -1,6 +1,6 @@
 ---
 APP_ROLE: production
-AUTHENTICATION_FALLBACK: false
+AUTHENTICATION_FALLBACK: true
 AUTHENTICATION_FALLBACK_FOR_JOBSEEKERS: false
 BIGQUERY_DATASET: production_dataset
 DFE_SIGN_IN_ISSUER: https://oidc.signin.education.gov.uk
