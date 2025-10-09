@@ -447,6 +447,17 @@ RSpec.describe Subscription do
   end
 
   describe "#set_location_data!" do
+    RSpec.shared_examples "not_setting_location_data" do
+      it "does not set area, geopoint, or radius_in_metres" do
+        expect {
+          subscription.set_location_data!
+          subscription.reload
+        }.to not_change(subscription, :geopoint).from(nil)
+         .and not_change(subscription, :radius_in_metres).from(nil)
+         .and not_change(subscription, :area).from(nil)
+      end
+    end
+
     context "with a search criteria location matching a polygon with valid area" do
       let(:subscription) { create(:subscription, search_criteria: { "location" => " London ", "radius" => 10 }) }
 
@@ -481,7 +492,8 @@ RSpec.describe Subscription do
 
     context "with a search criteria location not matching a polygon with valid area" do
       let(:subscription) { create(:subscription, search_criteria: { "location" => " London ", "radius" => 10 }) }
-      let(:geocoding) { instance_double(Geocoding, coordinates: [51.5074, -0.1278]) }
+      let(:geocoding_response) { [51.5074, -0.1278] }
+      let(:geocoding) { instance_double(Geocoding, coordinates: geocoding_response) }
 
       before do
         allow(Geocoding).to receive(:new).and_return(geocoding)
@@ -497,13 +509,21 @@ RSpec.describe Subscription do
          .and not_change(subscription, :area).from(nil)
       end
 
-      context "when Geocoding returns no match" do
-        let(:geocoding) { instance_double(Geocoding, coordinates: Geocoding::COORDINATES_NO_MATCH) }
+      context "when Geocoding returns no match coordinates" do
+        let(:geocoding_response) { Geocoding::COORDINATES_NO_MATCH }
 
-        before do
-          allow(Geocoding).to receive(:new).and_return(geocoding)
-          allow(LocationPolygon).to receive(:find_valid_for_location).and_return(nil)
+        it "does not set the geopoint or radius_in_metres" do
+          expect {
+            subscription.set_location_data!
+            subscription.reload
+          }.to not_change(subscription, :geopoint).from(nil)
+           .and not_change(subscription, :radius_in_metres).from(nil)
+           .and not_change(subscription, :area).from(nil)
         end
+      end
+
+      context "when Geocoding doesn't return coordinates" do
+        let(:geocoding_response) { nil }
 
         it "does not set the geopoint or radius_in_metres" do
           expect {
@@ -534,14 +554,19 @@ RSpec.describe Subscription do
     context "with blank location" do
       let(:subscription) { create(:subscription, search_criteria: { "location" => "   ", "radius" => 10 }) }
 
-      it "does not set area, geopoint, or radius_in_metres" do
-        expect {
-          subscription.set_location_data!
-          subscription.reload
-        }.to not_change(subscription, :geopoint).from(nil)
-         .and not_change(subscription, :radius_in_metres).from(nil)
-         .and not_change(subscription, :area).from(nil)
-      end
+      it_behaves_like "not_setting_location_data"
+    end
+
+    context "with empty location" do
+      let(:subscription) { create(:subscription, search_criteria: { "location" => "", "radius" => 10 }) }
+
+      it_behaves_like "not_setting_location_data"
+    end
+
+    context "with no location" do
+      let(:subscription) { create(:subscription, search_criteria: { "radius" => 10 }) }
+
+      it_behaves_like "not_setting_location_data"
     end
   end
 end
