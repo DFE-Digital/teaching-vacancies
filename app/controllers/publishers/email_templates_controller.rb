@@ -39,7 +39,7 @@ module Publishers
     end
 
     def email_template_params
-      params.require(:email_template).permit(:name, :from, :subject, :content)
+      params.expect(email_template: %i[name from subject content])
     end
   end
 end

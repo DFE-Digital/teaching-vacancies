@@ -41,7 +41,7 @@ module Publishers
     end
 
     def send_rejection_emails_params
-      params.require(:publishers_job_application_rejection_email_form).permit(:subject, :contact_email, :from, :content, :include_school_logo, :email_copy)
+      params.expect(publishers_job_application_rejection_email_form: %i[subject contact_email from content include_school_logo email_copy])
     end
   end
 end
