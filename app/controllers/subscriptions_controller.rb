@@ -55,7 +55,7 @@ class SubscriptionsController < ApplicationController
       @subscription = SubscriptionPresenter.new(subscription)
 
       if @form.valid?
-        update_subscription(subscription, @form.job_alert_params)
+        subscription.update_with_search_criteria(@form.job_alert_params)
         notify_and_redirect subscription
       else
         render :edit
@@ -182,15 +182,6 @@ class SubscriptionsController < ApplicationController
 
   def updating_frequency?
     params[:subscription].present?
-  end
-
-  def update_subscription(subscription, new_params)
-    previous = subscription.search_criteria.slice("location", "radius")
-    subscription.update(new_params)
-    current = subscription.search_criteria.slice("location", "radius")
-    if previous != current
-      SetSubscriptionLocationDataJob.perform_later(subscription.id)
-    end
   end
 
   def notify_and_redirect(subscription)

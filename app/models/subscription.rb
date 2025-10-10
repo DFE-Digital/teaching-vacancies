@@ -120,6 +120,15 @@ class Subscription < ApplicationRecord
     end
   end
 
+  def update_with_search_criteria(new_attributes)
+    previous_location_criteria = search_criteria.slice("location", "radius")
+    successful_update = update(new_attributes)
+    new_location_criteria = search_criteria.slice("location", "radius")
+    if successful_update && previous_location_criteria != new_location_criteria
+      SetSubscriptionLocationDataJob.perform_later(id)
+    end
+  end
+
   extend DistanceHelper
 
   # These polygons seem to be extremely invalid - they respond to the 'invalid_reason' call by throwing an exception,

@@ -569,4 +569,79 @@ RSpec.describe Subscription do
       it_behaves_like "not_setting_location_data"
     end
   end
+
+  describe "#update_with_search_criteria" do
+    subject(:update_with_search_criteria) { subscription.update_with_search_criteria(new_attributes) }
+
+    let(:subscription) do
+      create(:subscription,
+             search_criteria: { "location" => "london", "radius" => 10 },
+             frequency: :daily)
+    end
+
+    before do
+      allow(SetSubscriptionLocationDataJob).to receive(:perform_later)
+    end
+
+    context "when the location changes" do
+      let(:new_attributes) { { search_criteria: { "location" => "manchester", "radius" => 10 } } }
+
+      it "updathes the subscription search criteria with the new location info" do
+        expect {
+          update_with_search_criteria
+          subscription.reload
+        }.to change { subscription.search_criteria["location"] }.from("london").to("manchester")
+      end
+
+      it "enqueues SetSubscriptionLocationDataJob for the subscription" do
+        update_with_search_criteria
+        expect(SetSubscriptionLocationDataJob).to have_received(:perform_later).with(subscription.id)
+      end
+    end
+
+    context "when the radius changes" do
+      let(:new_attributes) { { search_criteria: { "location" => "london", "radius" => 20 } } }
+
+      it "updathes the subscription search criteria with the new radius info" do
+        expect {
+          update_with_search_criteria
+          subscription.reload
+        }.to change { subscription.search_criteria["radius"] }.from(10).to(20)
+      end
+
+      it "enqueues SetSubscriptionLocationDataJob for the subscription" do
+        update_with_search_criteria
+        expect(SetSubscriptionLocationDataJob).to have_received(:perform_later).with(subscription.id)
+      end
+    end
+
+    context "when the location criteria does not change" do
+      let(:new_attributes) { { search_criteria: { "location" => "london", "radius" => 10, phases: %w[primary] } } }
+
+      it "updathes the subscription search criteria" do
+        expect {
+          update_with_search_criteria
+          subscription.reload
+        }.to change { subscription.search_criteria["phases"] }.from(nil).to(%w[primary])
+      end
+
+      it "does not enqueue SetSubscriptionLocationDataJob for the subscription" do
+        update_with_search_criteria
+        expect(SetSubscriptionLocationDataJob).not_to have_received(:perform_later)
+      end
+    end
+
+    context "when update is unsuccessful" do
+      let(:new_attributes) { { search_criteria: { "location" => "manchester", "radius" => 20 } } }
+
+      before do
+        allow(subscription).to receive(:update).with(new_attributes).and_return(false)
+      end
+
+      it "does not enqueue SetSubscriptionLocationDataJob even if location criteria changes" do
+        update_with_search_criteria
+        expect(SetSubscriptionLocationDataJob).not_to have_received(:perform_later)
+      end
+    end
+  end
 end
