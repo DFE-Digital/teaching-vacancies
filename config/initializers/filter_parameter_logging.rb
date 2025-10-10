@@ -101,7 +101,6 @@ Rails.application.config.filter_parameters += %i[
   under_investigation_details
   warning_details
   unable_to_undertake_reason
-  geopoint
 ] + [
   /^age$/i,
 ]
