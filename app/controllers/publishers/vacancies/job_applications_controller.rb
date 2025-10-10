@@ -37,6 +37,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       when "declined" then render_declined_form(form.job_applications, form.origin)
       when "offered"  then render_offered_form(form.job_applications, form.origin)
       when "unsuccessful_interview" then render_unsuccessful_interview_form(form.job_applications, form.origin)
+      when "reject" then prepare_to_reject(form.job_applications)
       else # when "update_status"
         render "tag"
       end
@@ -128,6 +129,17 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       redirect_to organisation_job_job_applications_path(vacancy.id, anchor: form.origin)
     end
   end
+
+  def prepare_to_reject(job_applications)
+    batch = vacancy.batch_emails.build(batch_type: :not_sent)
+    job_applications.each do |job_application|
+      batch.job_applications << job_application
+    end
+    batch.save!
+    redirect_to select_rejection_template_organisation_job_batch_email_path(vacancy.id, batch)
+  end
+
+  require "zip"
 
   def download_selected(job_applications)
     zip_data = JobApplicationZipBuilder.new(vacancy:, job_applications:).generate
