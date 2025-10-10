@@ -3,6 +3,9 @@ class JobApplication < ApplicationRecord
   before_save :update_status_timestamp, if: -> { will_save_change_to_status? && %w[offered declined].exclude?(status) }
   before_save :reset_support_needed_details
   after_save :anonymise_equal_opportunities_fields, if: -> { saved_change_to_status? && status == "submitted" }
+  after_save :update_conversation_searchable_content, if: lambda {
+    conversations.present? && (saved_change_to_first_name? || saved_change_to_last_name?)
+  }
 
   extend ArrayEnum
 
@@ -215,6 +218,10 @@ class JobApplication < ApplicationRecord
   end
 
   private
+
+  def update_conversation_searchable_content
+    conversations.find_each(&:update_searchable_content)
+  end
 
   def status_transition
     from, to = changes[:status]
