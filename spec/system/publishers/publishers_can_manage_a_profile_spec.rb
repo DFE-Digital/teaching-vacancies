@@ -42,16 +42,22 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:school_website_url) { "https://www.this-is-a-test-url-for-a-school.example.com" }
       let(:new_school_website_url) { "https://www.this-is-a-new-test-url-for-a-school.example.com" }
 
-      before { click_link I18n.t("nav.organisation_profile") }
+      before do
+        click_link I18n.t("nav.organisation_profile")
+        # wait for page load
+        find ".govuk-notification-banner"
+      end
 
       it "passes a11y", :a11y do
         expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
       end
 
-      it "allows the publisher to edit the trust's website" do
+      it "allows the publisher to edit the trust's website", :a11y do
         within("div.govuk-summary-list__row#website") do
           click_link("Change")
         end
+
+        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "page-has-heading-one"
 
         expect(find_field("publishers_organisation_url_override_form[url_override]").value).to eq(trust_website_url)
 
