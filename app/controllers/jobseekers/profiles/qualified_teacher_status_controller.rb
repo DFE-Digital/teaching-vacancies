@@ -21,9 +21,12 @@ module Jobseekers
         QualifiedTeacherStatusForm
       end
 
+      # the new version doesn't allow empty submissions
+      # rubocop:disable Rails/StrongParametersExpect
       def form_params
-        params.require(:jobseekers_profiles_qualified_teacher_status_form).permit(form_class.fields)
+        params.permit(jobseekers_profiles_qualified_teacher_status_form: form_class.fields).require(:jobseekers_profiles_qualified_teacher_status_form)
       end
+      # rubocop:enable Rails/StrongParametersExpect
     end
   end
 end

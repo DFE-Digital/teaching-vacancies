@@ -35,7 +35,6 @@ class Jobseekers::UnsubscribeFeedbacksController < ApplicationController
   end
 
   def unsubscribe_feedback_form_params
-    params.require(:jobseekers_unsubscribe_feedback_form)
-          .permit(:comment, :email, :other_unsubscribe_reason_comment, :job_found_unsubscribe_reason_comment, :unsubscribe_reason, :user_participation_response, :occupation)
+    params.expect(jobseekers_unsubscribe_feedback_form: %i[comment email other_unsubscribe_reason_comment job_found_unsubscribe_reason_comment unsubscribe_reason user_participation_response occupation])
   end
 end

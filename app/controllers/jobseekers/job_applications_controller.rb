@@ -233,7 +233,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def review_form_params
-    params.require(:jobseekers_job_application_review_form).permit(:confirm_data_accurate, :confirm_data_usage, update_profile: [])
+    params.expect(jobseekers_job_application_review_form: [:confirm_data_accurate, :confirm_data_usage, { update_profile: [] }])
           .merge(completed_steps: job_application.completed_steps, all_steps: step_process.validatable_steps)
   end
 

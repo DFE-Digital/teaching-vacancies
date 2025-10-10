@@ -1,34 +1,28 @@
-require "active_support/core_ext/integer/time"
+# The test environment is used exclusively to run your application's
+# test suite. You never need to work with it otherwise. Remember that
+# your test database is "scratch space" for the test suite and is wiped
+# and recreated between test runs. Don't rely on the data there!
 
 Rails.application.configure do
-  # Settings specified here will take precedence over those in
-  # config/application.rb.
+  # Settings specified here will take precedence over those in config/application.rb.
 
-  # The application uses multiple services for storing files. This sets up a default value which gets overridden
-  # in every specific use case.
-  config.active_storage.service = :amazon_s3_documents
+  # While tests run files are not watched, reloading is not necessary.
+  config.enable_reloading = false
 
   # Configure the domains permitted to access coordinates API
   config.allowed_cors_origin = proc { "https://allowed.test.website" }
 
-  config.enable_reloading = true
-
-  config.action_view.cache_template_loading = true
-
-  # Eager loading loads your whole application. When running a single test locally,
-  # this probably isn't necessary. It's a good idea to do in a continuous integration
-  # system, or in some way before deploying your code.
+  # Eager loading loads your entire application. When running a single test locally,
+  # this is usually not necessary, and can slow down your test suite. However, it's
+  # recommended that you enable it in continuous integration systems to ensure eager
+  # loading is working properly before deploying your code.
   config.eager_load = ENV["CI"].present?
 
-  # Configure public file server for tests with Cache-Control for performance.
-  config.public_file_server.enabled = true
-  config.public_file_server.headers = {
-    "Cache-Control" => "public, max-age=#{1.hour.to_i}",
-  }
+  # Configure public file server for tests with cache-control for performance.
+  config.public_file_server.headers = { "cache-control" => "public, max-age=3600" }
 
-  # Show full error reports and disable caching.
+  # Show full error reports.
   config.consider_all_requests_local = true
-  config.action_controller.perform_caching = false
   config.cache_store = :null_store
 
   # Raise exceptions instead of rendering exception templates.
@@ -36,6 +30,9 @@ Rails.application.configure do
 
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
+
+  # Store uploaded files on the local file system in a temporary directory.
+  config.active_storage.service = :test
 
   config.active_job.queue_adapter = :test
 
@@ -48,34 +45,24 @@ Rails.application.configure do
     from: "mail@example.com",
   }
 
-  # Raise an error when encountering deprecated behaviour or missing translations
+  # Raise an error when encountering deprecated behaviour
   config.active_support.deprecation = :raise
+
+  # Raises error for missing translations.
   config.i18n.raise_on_missing_translations = true
 
-  # Raise exceptions for disallowed deprecations.
-  config.active_support.disallowed_deprecation = :raise
-
-  # Specify if an `ArgumentError` should be raised if `Rails.cache` `fetch` or
-  # `write` are given an invalid `expires_at` or `expires_in` time.
-  config.active_support.raise_on_invalid_cache_expiration_time = true
-
-  # Tell Active Support which deprecation messages to disallow.
-  config.active_support.disallowed_deprecation_warnings = []
+  # Annotate rendered view with file names.
+  # config.action_view.annotate_rendered_view_with_filenames = true
 
   config.middleware.use RackSessionAccess::Middleware
 
   config.bigquery_dataset = "test_dataset"
 
-  # Use test geocoder lookup, unless otherwise specified
-  config.geocoder_lookup = :test
-
   require "dfe_sign_in/fake_sign_out_endpoint"
   ENV["DFE_SIGN_IN_ISSUER"] = "http://fake.dsi.example.com"
   config.middleware.insert_before 0, DfeSignIn::FakeSignOutEndpoint
 
-  config.log_file_size = 100.megabytes
-
-  # Raise error when a before_action's only/except options reference missing actions
+  # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
 end
 

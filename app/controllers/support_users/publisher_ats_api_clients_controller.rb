@@ -31,6 +31,6 @@ class SupportUsers::PublisherAtsApiClientsController < SupportUsers::BaseControl
   private
 
   def api_client_params
-    params.require(:publisher_ats_api_client).permit(:name)
+    params.expect(publisher_ats_api_client: [:name])
   end
 end

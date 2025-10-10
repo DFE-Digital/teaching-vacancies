@@ -46,8 +46,7 @@ class Jobseekers::JobApplications::TrainingAndCpdsController < Jobseekers::Profi
   end
 
   def training_and_cpd_form_params
-    params.require(:jobseekers_training_and_cpd_form)
-          .permit(:name, :provider, :grade, :year_awarded, :course_length)
+    params.expect(jobseekers_training_and_cpd_form: %i[name provider grade year_awarded course_length])
   end
 
   def training_and_cpd

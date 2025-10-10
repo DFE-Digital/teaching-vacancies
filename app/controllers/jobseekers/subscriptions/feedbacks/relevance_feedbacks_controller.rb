@@ -8,8 +8,7 @@ class Jobseekers::Subscriptions::Feedbacks::RelevanceFeedbacksController < Appli
   private
 
   def relevance_feedback_params
-    params.require(:job_alert_relevance_feedback)
-          .permit(:relevant_to_user, search_criteria: {}, job_alert_vacancy_ids: [])
+    params.expect(job_alert_relevance_feedback: [:relevant_to_user, { search_criteria: {}, job_alert_vacancy_ids: [] }])
           .merge(feedback_type: "job_alert", subscription_id: subscription.id, jobseeker_id: current_jobseeker&.id || jobseeker_from_subscription_email&.id)
   end
 
