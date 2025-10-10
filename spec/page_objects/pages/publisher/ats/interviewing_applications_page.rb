@@ -7,7 +7,7 @@ module PageObjects
         class InterviewingApplicationsPage < CommonPage
           set_url "/organisation/jobs/{vacancy_id}/job_applications#interviewing"
 
-          elements :pre_interview_check_links, ".application-interviewing td:nth-child(4) a"
+          elements :pre_interview_check_links, ".application-interviewing td:nth-child(5) a"
         end
       end
     end
