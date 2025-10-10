@@ -3,6 +3,29 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
+      "fingerprint": "0ccf6bb0b0d6e78ab689319669e459d3cba162a841e3e178baa1fd32fc30c45c",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/location_polygon.rb",
+      "line": 53,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "Arel.sql(\"ST_AsBinary(\\n             ST_Transform(\\n               ST_Buffer(\\n                 ST_Transform(area::geometry, 3857),\\n                 #{radius_in_metres}\\n               ),\\n             4326)\\n           )\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "LocationPolygon",
+        "method": "buffered_geometry_area"
+      },
+      "user_input": "radius_in_metres",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": "No user input. So no risk"
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
       "fingerprint": "11470d12efb4e5d5b0f114eab8b39b18f1c89aba310d7ccf0a0a401058ad8403",
       "check_name": "SQL",
       "message": "Possible SQL injection",
@@ -168,7 +191,7 @@
       "check_name": "CrossSiteScripting",
       "message": "Unescaped parameter value",
       "file": "app/views/posts/show.html.slim",
-      "line": 17,
+      "line": 16,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "MarkdownDocument.new(:section => params[:section], :subcategory => params[:subcategory], :post_name => params[:post_name]).content",
       "render_path": [
@@ -265,5 +288,5 @@
       "note": ""
     }
   ],
-  "brakeman_version": "7.0.2"
+  "brakeman_version": "7.1.0"
 }

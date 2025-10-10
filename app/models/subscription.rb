@@ -120,6 +120,15 @@ class Subscription < ApplicationRecord
     end
   end
 
+  def update_with_search_criteria(new_attributes)
+    previous_location_criteria = search_criteria.slice("location", "radius")
+    successful_update = update(new_attributes)
+    new_location_criteria = search_criteria.slice("location", "radius")
+    if successful_update && previous_location_criteria != new_location_criteria
+      SetSubscriptionLocationDataJob.perform_later(id)
+    end
+  end
+
   extend DistanceHelper
 
   # These polygons seem to be extremely invalid - they respond to the 'invalid_reason' call by throwing an exception,
@@ -169,5 +178,39 @@ class Subscription < ApplicationRecord
         vacancies
       end
     end
+  end
+
+  # Reads the location and radius from the search criteria and precomputes the area or geopoint for faster matching later.
+  # Expensive operations (external API calls or database geometry operations).
+  # Avoid calling this method directly on the user request path.
+  def set_location_data!
+    location = search_criteria["location"]&.strip&.downcase
+    return if location.blank?
+
+    radius = search_criteria["radius"] || 10
+
+    if (polygon = LocationPolygon.find_valid_for_location(location))
+      set_location_from_polygon(polygon, radius)
+    elsif (coordinates = Geocoding.new(location).coordinates)
+      set_location_from_coordinates(coordinates, radius) if coordinates != Geocoding::COORDINATES_NO_MATCH
+    end
+    save!
+  end
+
+  private
+
+  # A subscription with location area has a polygon area seat buffered by radius, no geopoint.
+  def set_location_from_polygon(polygon, radius)
+    # Cast polygon area from geography to geometry and buffer by radius before storing
+    self.area = polygon.buffered_geometry_area(self.class.convert_miles_to_metres(radius))
+    self.geopoint = nil
+    self.radius_in_metres = self.class.convert_miles_to_metres(radius)
+  end
+
+  # A subscription with location coordinates has a geopoint, no area.
+  def set_location_from_coordinates(coordinates, radius)
+    self.geopoint = RGeo::Cartesian.factory(srid: 4326).point(coordinates.second, coordinates.first)
+    self.area = nil
+    self.radius_in_metres = self.class.convert_miles_to_metres(radius)
   end
 end
