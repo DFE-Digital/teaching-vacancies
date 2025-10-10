@@ -45,8 +45,8 @@ Rails.application.configure do
     from: "mail@example.com",
   }
 
-  # Print deprecation notices to the stderr.
-  config.active_support.deprecation = :stderr
+  # Raise an error when encountering deprecated behaviour
+  config.active_support.deprecation = :raise
 
   # Raises error for missing translations.
   config.i18n.raise_on_missing_translations = true

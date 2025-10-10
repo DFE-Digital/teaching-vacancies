@@ -56,11 +56,11 @@ Rails.application.configure do
   # Set localhost to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
 
-  # Print deprecation notices to the Rails logger.
-  config.active_support.deprecation = :log
+  # Raise an error when encountering deprecated behaviour
+  config.active_support.deprecation = :raise
 
-  # Raise an error on page load if there are pending migrations.
-  config.active_record.migration_error = :page_load
+  # (dont) Raise an error on page load if there are pending migrations.
+  config.active_record.migration_error = false
 
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
