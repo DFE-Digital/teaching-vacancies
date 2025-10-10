@@ -10,6 +10,10 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors, debug: Rails.en
     resource "/api/v1/jobs/*",
              headers: :any,
              methods: :get
+
+    resource "/api/v1/organisations/*",
+             headers: :any,
+             methods: :get
   end
 
   allow do
