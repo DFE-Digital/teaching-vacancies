@@ -67,12 +67,12 @@ module Publishers
       end
 
       def set_batch
-        @batch = JobApplicationBatch.where(vacancy: vacancy).find params[:job_application_batch_id]
+        @batch = JobApplicationBatch.where(vacancy: @vacancy).find params[:job_application_batch_id]
         @job_applications = @batch.batchable_job_applications.map(&:job_application)
       end
 
       def finish_wizard_path
-        organisation_job_job_applications_path(vacancy.id, anchor: :interviewing)
+        organisation_job_job_applications_path(@vacancy.id, anchor: :interviewing)
       end
     end
   end

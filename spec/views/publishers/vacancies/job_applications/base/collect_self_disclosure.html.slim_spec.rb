@@ -7,9 +7,8 @@ RSpec.describe "publishers/vacancies/job_applications/base/collect_self_disclosu
 
   before do
     assign :form, form
-    without_partial_double_verification do
-      allow(view).to receive_messages(vacancy:, wizard_path: "")
-    end
+    assign :vacancy, vacancy
+    allow(view).to receive_messages(wizard_path: "")
     render
   end
 

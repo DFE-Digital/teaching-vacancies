@@ -1,6 +1,4 @@
 class Publishers::Vacancies::ExtendDeadlineController < Publishers::Vacancies::BaseController
-  helper_method :vacancy
-
   def show
     @form = Publishers::JobListing::ExtendDeadlineForm.new(
       start_date_type: vacancy.start_date_type,

@@ -26,7 +26,7 @@ module Publishers
           if @form.valid?
             @reference_request.change_referee_email!(@form.email)
             flash[:success] = t(".change_email_success")
-            redirect_to organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, @reference_request.id)
+            redirect_to organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id)
           else
             render :edit
           end
@@ -41,7 +41,7 @@ module Publishers
           @form = reference_received_class.new(mark_params)
           if @form.valid?
             @reference_request.update!(marked_as_complete: true) if @form.reference_satisfactory
-            redirect_to organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, @reference_request.id)
+            redirect_to organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id)
           else
             render :reference_received
           end

@@ -1,4 +1,4 @@
-class Publishers::Vacancies::StatisticsController < Publishers::Vacancies::BaseController
+class Publishers::Vacancies::StatisticsController < Publishers::Vacancies::WizardBaseController
   def show
     presenter = VacancyStatisticsPresenter.new([vacancy])
     @referrer_counts = presenter.referrer_counts

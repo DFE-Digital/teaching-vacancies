@@ -166,6 +166,7 @@ Metrics/BlockLength:
   Exclude:
     - "config/**/*"
     - "spec/**/*"
+    - "Guardfile"
 
 Metrics/CyclomaticComplexity:
   Max: 18 # Default 7
