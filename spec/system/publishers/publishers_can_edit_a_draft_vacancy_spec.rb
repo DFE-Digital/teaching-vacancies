@@ -106,6 +106,8 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         within "#job_details" do
           find("a").click
         end
+        # wait for page load
+        find(".searchable-collection-component")
       end
 
       it "passes a11y", :a11y do
