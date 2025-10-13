@@ -1,4 +1,4 @@
-class Publishers::Vacancies::FeedbacksController < Publishers::Vacancies::BaseController
+class Publishers::Vacancies::FeedbacksController < Publishers::Vacancies::WizardBaseController
   def create
     @vacancy = VacancyPresenter.new(PublishedVacancy.kept.find(params[:job_id]))
     @feedback_form = Publishers::JobListing::FeedbackForm.new(feedback_form_params)

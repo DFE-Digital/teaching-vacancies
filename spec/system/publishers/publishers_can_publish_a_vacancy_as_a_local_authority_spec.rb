@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Creating a vacancy" do
   let(:publisher) { create(:publisher) }
   let!(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: school_group, schools: [school1, school2]) }
-  let(:school_group) { create(:local_authority, schools: [school1, school2], safeguarding_information: nil) }
+  let(:school_group) { create(:local_authority, schools: [school1, school2]) }
   let(:school1) { create(:school, phase: :not_applicable, name: "First school") }
   let(:school2) { create(:school, phase: :not_applicable, name: "Second school") }
   let(:vacancy) do
@@ -31,7 +31,7 @@ RSpec.describe "Creating a vacancy" do
     expect(publisher_job_location_page).to be_displayed
     click_on I18n.t("buttons.continue")
     expect(publisher_job_location_page).to be_displayed
-    expect(publisher_job_location_page.errors.map(&:text)).to contain_exactly(I18n.t("job_location_errors.organisation_ids.blank"))
+    expect(publisher_job_location_page.errors.map(&:text)).to eq([I18n.t("job_location_errors.organisation_ids.blank")])
     publisher_job_location_page.fill_in_and_submit_form(vacancy)
 
     expect(publisher_job_title_page).to be_displayed
@@ -50,7 +50,7 @@ RSpec.describe "Creating a vacancy" do
     submit_empty_form
     expect(publisher_education_phase_page).to be_displayed
     expect(publisher_education_phase_page.errors.map(&:text)).to contain_exactly(I18n.t("education_phases_errors.phases.blank"))
-    publisher_education_phase_page.fill_in_and_submit_form(vacancy)
+    publisher_education_phase_page.fill_in_and_submit_form(vacancy.phases.first)
 
     expect(publisher_key_stage_page).to be_displayed
     submit_empty_form
@@ -109,13 +109,13 @@ RSpec.describe "Creating a vacancy" do
     submit_empty_form
     expect(publisher_school_visits_page).to be_displayed
     expect(publisher_school_visits_page.errors.map(&:text)).to contain_exactly(I18n.t("school_visits_errors.school_visits.inclusion"))
-    publisher_school_visits_page.fill_in_and_submit_form(vacancy)
+    publisher_school_visits_page.fill_in_and_submit_form(vacancy.school_visits)
 
     expect(publisher_visa_sponsorship_page).to be_displayed
     submit_empty_form
     expect(publisher_visa_sponsorship_page.errors.map(&:text)).to contain_exactly(I18n.t("visa_sponsorship_available_errors.visa_sponsorship_available.inclusion"))
     expect(publisher_visa_sponsorship_page).to be_displayed
-    publisher_visa_sponsorship_page.fill_in_and_submit_form(vacancy)
+    publisher_visa_sponsorship_page.fill_in_and_submit_form(vacancy.visa_sponsorship_available)
 
     expect(publisher_important_dates_page).to be_displayed
     submit_empty_form
@@ -143,7 +143,7 @@ RSpec.describe "Creating a vacancy" do
     submit_empty_form
     expect(publisher_application_link_page.errors.map(&:text)).to contain_exactly(I18n.t("application_link_errors.application_link.blank"))
     expect(publisher_application_link_page).to be_displayed
-    publisher_application_link_page.fill_in_and_submit_form(vacancy)
+    publisher_application_link_page.fill_in_and_submit_form(vacancy.application_link)
 
     expect(publisher_contact_details_page).to be_displayed
     submit_empty_form
@@ -152,7 +152,7 @@ RSpec.describe "Creating a vacancy" do
       I18n.t("contact_details_errors.contact_number_provided.inclusion"),
     )
     expect(publisher_contact_details_page).to be_displayed
-    publisher_contact_details_page.fill_in_and_submit_form(vacancy)
+    publisher_contact_details_page.fill_in_and_submit_form(vacancy.contact_email, vacancy.contact_number)
 
     expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
 

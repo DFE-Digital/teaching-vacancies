@@ -1,7 +1,7 @@
 - content_for :page_title_prefix, t(".page_title")
 
 - content_for :breadcrumbs do
-  = govuk_back_link text: t("app.back_link"), href: pre_interview_checks_organisation_job_job_application_path(vacancy.id, @job_application), html_attributes: { "aria-label" => "Back navigation" }
+  = govuk_back_link text: t("app.back_link"), href: pre_interview_checks_organisation_job_job_application_path(@vacancy.id, @job_application), html_attributes: { "aria-label" => "Back navigation" }
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
@@ -20,4 +20,5 @@
       - @self_disclosure.events.each do |key, value|
         - timeline.with_item(key:, value:)
 
-    = render PublisherNotesOnJobApplicationComponent.new(job_application: @job_application, vacancy: vacancy, notes_form: @notes_form, return_to_url: organisation_job_job_application_self_disclosure_path(vacancy.id, @job_application.id))
+    = render PublisherNotesOnJobApplicationComponent.new(job_application: @job_application, vacancy: @vacancy, notes_form: @notes_form,
+      return_to_url: organisation_job_job_application_self_disclosure_path(@vacancy.id, @job_application.id))

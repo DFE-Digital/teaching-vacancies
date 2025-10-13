@@ -19,7 +19,7 @@
     - @reference_requests.each do |reference_request|
       - body.with_row do |row|
         - row.with_cell(text: t(".reference"))
-        - row.with_cell(text: govuk_link_to(reference_request.referee.name, organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, reference_request)))
+        - row.with_cell(text: govuk_link_to(reference_request.referee.name, organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, reference_request)))
         - status = reference_request_status(reference_request, reference_request.referee.job_reference)
 
         - row.with_cell(text: t(".#{status}_at", date: reference_request.updated_at.to_fs(:time_on_date)))
@@ -30,7 +30,7 @@
 
       - body.with_row html_attributes: { id: "religious_reference" } do |row|
         - row.with_cell(text: t(".religious_reference"))
-        - row.with_cell(text: govuk_link_to(@job_application.religious_referee_name, edit_organisation_job_job_application_religious_reference_path(vacancy.id, @job_application.id)))
+        - row.with_cell(text: govuk_link_to(@job_application.religious_referee_name, edit_organisation_job_job_application_religious_reference_path(@vacancy.id, @job_application.id)))
 
         / no dates for religious references as we don't collect them
         - row.with_cell(text: nil)
@@ -40,7 +40,7 @@
       - body.with_row do |row|
         - row.with_cell(text: t(".self_disclosure"))
         - row.with_cell do
-          = govuk_link_to("Self-disclosure form", organisation_job_job_application_self_disclosure_path(vacancy.id, @job_application.id))
+          = govuk_link_to("Self-disclosure form", organisation_job_job_application_self_disclosure_path(@vacancy.id, @job_application.id))
         - if @job_application.self_disclosure_request.completed?
           - row.with_cell(text: t(".completed_at", date: @job_application.self_disclosure_request.updated_at.to_fs(:time_on_date)))
           - row.with_cell do

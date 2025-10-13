@@ -1,6 +1,6 @@
 require "google/apis/drive_v3"
 
-class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies::BaseController
+class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies::WizardBaseController
   helper_method :form
 
   def create

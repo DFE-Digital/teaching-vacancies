@@ -1,7 +1,7 @@
 - content_for :page_title_prefix, t(".page_title")
 
 - content_for :breadcrumbs do
-  = govuk_back_link text: t("app.back_link"), href: pre_interview_checks_organisation_job_job_application_path(vacancy.id, @job_application), html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
+  = govuk_back_link text: t("app.back_link"), href: pre_interview_checks_organisation_job_job_application_path(@vacancy.id, @job_application), html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
@@ -18,9 +18,9 @@
 
     .govuk-button-group
       - if @reference_request.sent? && @referee.job_reference.complete? && @referee.job_reference.can_give_reference?
-        = govuk_button_link_to t(".print"), organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, @reference_request.id, format: :pdf), class: "govuk-button--secondary"
+        = govuk_button_link_to t(".print"), organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id, format: :pdf), class: "govuk-button--secondary"
       - unless @referee.job_reference&.complete? && !@referee.job_reference.can_give_reference?
-        = govuk_button_link_to t(".mark_as_received"), reference_received_organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, @reference_request.id), class: "govuk-button--secondary"
+        = govuk_button_link_to t(".mark_as_received"), reference_received_organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id), class: "govuk-button--secondary"
 
     .h2.govuk-heading-m = t(".referee_details.heading")
 
@@ -49,11 +49,11 @@
         .govuk-body
           = t(".change_email_address_html",
             link: govuk_link_to(t(".change_email_link_text"),
-                    edit_organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, @reference_request.id)))
+                    edit_organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id)))
     - else
       .govuk-body
         = govuk_link_to t(".collect_reference"),
-          organisation_job_job_application_collect_reference_flag_path(vacancy.id, @job_application.id, Wicked::FIRST_STEP)
+          organisation_job_job_application_collect_reference_flag_path(@vacancy.id, @job_application.id, Wicked::FIRST_STEP)
 
   .govuk-grid-column-one-third
     = render TimelineComponent.new do |timeline|
@@ -78,4 +78,5 @@
         - elsif version.changeset.key? "marked_as_complete"
           - timeline.with_item(key: t(".marked_as_complete"), value: value)
 
-    = render PublisherNotesOnJobApplicationComponent.new(job_application: @job_application, vacancy: vacancy, notes_form: @notes_form, return_to_url: organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, params[:id]))
+    = render PublisherNotesOnJobApplicationComponent.new(job_application: @job_application, vacancy: @vacancy, notes_form: @notes_form,
+      return_to_url: organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, params[:id]))

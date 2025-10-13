@@ -1,4 +1,4 @@
-class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseController
+class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBaseController
   include Wicked::Wizard
   include OrganisationsHelper
 

@@ -46,13 +46,13 @@ module Publishers
       end
 
       def set_job_application
-        @job_application = vacancy.job_applications.find params[:job_application_id]
+        @job_application = @vacancy.job_applications.find params[:job_application_id]
         # This has to be set as it is used in the ask_references_email partial
         @job_applications = [@job_application]
       end
 
       def finish_wizard_path
-        pre_interview_checks_organisation_job_job_application_path(vacancy.id, @job_application)
+        pre_interview_checks_organisation_job_job_application_path(@vacancy.id, @job_application)
       end
     end
   end
