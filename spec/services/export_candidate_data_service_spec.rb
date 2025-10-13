@@ -46,7 +46,7 @@ RSpec.describe ExportCandidateDataService do
       expect(zip_buffer).to receive(:write).with("ref_data")
       expect(zip_buffer).to receive(:write).with("disclosure_data")
 
-      described_class.export(job_applications)
+      described_class.call(job_applications)
     end
   end
 

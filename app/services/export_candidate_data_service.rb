@@ -7,7 +7,7 @@ class ExportCandidateDataService
   PII_HEADERS = %w[first_name last_name street_address city postcode phone_number email_address national_insurance_number teacher_reference_number].freeze
 
   class << self
-    def export(job_applications)
+    def call(job_applications)
       Zip::OutputStream.write_buffer { |zio|
         job_applications.each do |job_application|
           [
