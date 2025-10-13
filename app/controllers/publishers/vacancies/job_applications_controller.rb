@@ -106,7 +106,7 @@ module Publishers
         form_params = params
                         .fetch(ActiveModel::Naming.param_key(form_class), {})
                         .permit(:origin, :status, :offered_at, :declined_at, :interview_feedback_received, :interview_feedback_received_at, { job_applications: [] })
-        form_params[:job_applications] = job_applications.select { |ja| Array(form_params[:job_applications]).include?(ja.id) }
+        form_params[:job_applications] = job_applications.select { |ja| form_params[:job_applications].include?(ja.id) }
         form_params[:validate_status] = validate_status
 
         @form = form_class.new(form_params)
