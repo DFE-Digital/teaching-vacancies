@@ -3,26 +3,12 @@ require "zip"
 
 RSpec.describe ExportCandidateDataService do
   let(:job_applications) { [job_application] }
-  let(:service) { described_class.new(job_applications) }
-
-  describe ".call" do
-    let(:job_application) { build_stubbed(:job_application) }
-
-    it "creates new instance and calls export" do
-      service_instance = instance_double(described_class)
-      allow(described_class).to receive(:new).with(job_applications).and_return(service_instance)
-      expect(service_instance).to receive(:export)
-      described_class.call(job_applications)
-    end
-  end
 
   describe "#sanitize" do
-    let(:job_application) { build_stubbed(:job_application) }
-
     it "downcases and replaces spaces with underscores" do
-      expect(service.sanitize("John Doe")).to eq("john_doe")
-      expect(service.sanitize("JANE e. SMITH")).to eq("jane_e__smith")
-      expect(service.sanitize("Multi Word Name")).to eq("multi_word_name")
+      expect(described_class.sanitize("John Doe")).to eq("john_doe")
+      expect(described_class.sanitize("JANE e. SMITH")).to eq("jane_e__smith")
+      expect(described_class.sanitize("Multi Word Name")).to eq("multi_word_name")
     end
   end
 
@@ -41,12 +27,12 @@ RSpec.describe ExportCandidateDataService do
     before do
       allow(zip_buffer).to receive(:rewind)
       allow(Zip::OutputStream).to receive(:write_buffer).and_yield(zip_buffer)
-      allow(service).to receive_messages(pii_csv: described_class::Document["pii.csv", "csv_content"],
-                                         application_form: described_class::Document["application_form.pdf", "form_data"],
-                                         references: [
-                                           described_class::Document["references/john_smith.pdf", "ref_data"],
-                                         ],
-                                         self_disclosure: described_class::Document["self_disclosure.pdf", "disclosure_data"])
+      allow(described_class).to receive_messages(pii_csv: described_class::Document["pii.csv", "csv_content"],
+                                                 application_form: described_class::Document["application_form.pdf", "form_data"],
+                                                 references: [
+                                                   described_class::Document["references/john_smith.pdf", "ref_data"],
+                                                 ],
+                                                 self_disclosure: described_class::Document["self_disclosure.pdf", "disclosure_data"])
     end
 
     it "creates zip with correct structure" do
@@ -60,12 +46,12 @@ RSpec.describe ExportCandidateDataService do
       expect(zip_buffer).to receive(:write).with("ref_data")
       expect(zip_buffer).to receive(:write).with("disclosure_data")
 
-      service.export
+      described_class.export(job_applications)
     end
   end
 
   describe "#pii_csv" do
-    subject(:document) { service.pii_csv(job_application) }
+    subject(:document) { described_class.pii_csv(job_application) }
 
     let(:job_application) { build_stubbed(:job_application) }
     let(:expected_headers) do
@@ -80,7 +66,7 @@ RSpec.describe ExportCandidateDataService do
   end
 
   describe "#application_form" do
-    subject(:document) { service.application_form(job_application) }
+    subject(:document) { described_class.application_form(job_application) }
 
     let(:job_application) { build_stubbed(:job_application) }
 
@@ -89,7 +75,7 @@ RSpec.describe ExportCandidateDataService do
   end
 
   describe "#references" do
-    subject(:documents) { service.references(job_application) }
+    subject(:documents) { described_class.references(job_application) }
 
     context "when request has been sent to referee" do
       let(:job_application) do
@@ -125,7 +111,7 @@ RSpec.describe ExportCandidateDataService do
   end
 
   describe "#self_disclosure" do
-    let(:document) { service.self_disclosure(job_application) }
+    let(:document) { described_class.self_disclosure(job_application) }
     let(:job_application) do
       create(:job_application,
              self_disclosure_request: build(:self_disclosure_request, self_disclosure: self_disclosure))
