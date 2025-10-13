@@ -114,7 +114,7 @@ GEM
       public_suffix (>= 2.0.2, < 7.0)
     aes_key_wrap (1.1.0)
     afm (0.2.2)
-    amazing_print (1.8.1)
+    amazing_print (2.0.0)
     array_enum (1.6.0)
       activemodel
     ast (2.4.3)
