@@ -18,14 +18,14 @@ class SubscriptionsController < ApplicationController
 
   def create
     @form = Jobseekers::SubscriptionForm.new(subscription_params)
-    subscription = Subscription.new(@form.job_alert_params)
-    @subscription = SubscriptionPresenter.new(subscription)
 
     if @form.invalid?
       @form.campaign.present? ? render("subscriptions/campaign/new", layout: "subscription_campaign") : render(:new)
     else
       recaptcha_protected(form: @form) do
-        notify_new_subscription(subscription)
+        subscription = Jobseekers::CreateSubscription.new(@form, recaptcha_reply&.score).call
+        trigger_subscription_event(:job_alert_subscription_created, subscription)
+        @subscription = SubscriptionPresenter.new(subscription)
         if jobseeker_signed_in?
           redirect_to jobseekers_subscriptions_path, success: t(".success")
         else
@@ -48,13 +48,14 @@ class SubscriptionsController < ApplicationController
 
     if updating_frequency?
       subscription.update(frequency: params.dig(:subscription, :frequency))
+      @subscription = SubscriptionPresenter.new(subscription)
       notify_and_redirect subscription
     else
       @form = Jobseekers::SubscriptionForm.new(subscription_params)
       @subscription = SubscriptionPresenter.new(subscription)
 
       if @form.valid?
-        subscription.update(@form.job_alert_params)
+        subscription.update_with_search_criteria(@form.job_alert_params)
         notify_and_redirect subscription
       else
         render :edit
@@ -113,12 +114,6 @@ class SubscriptionsController < ApplicationController
     else
       email
     end
-  end
-
-  def notify_new_subscription(subscription)
-    subscription.update(recaptcha_score: recaptcha_reply&.score)
-    Jobseekers::SubscriptionMailer.confirmation(subscription.id).deliver_later
-    trigger_subscription_event(:job_alert_subscription_created, subscription)
   end
 
   def trigger_create_job_alert_clicked_event

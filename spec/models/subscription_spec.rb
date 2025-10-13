@@ -88,7 +88,7 @@ RSpec.describe Subscription do
     end
   end
 
-  describe "create_alert_run" do
+  describe "#create_alert_run" do
     let(:subscription) { create(:subscription, frequency: :daily) }
 
     it "creates a run" do
@@ -442,6 +442,205 @@ RSpec.describe Subscription do
 
       it "sends the vacancies in publish order descending" do
         expect(vacancies).to eq(expected_vacancies)
+      end
+    end
+  end
+
+  describe "#set_location_data!" do
+    RSpec.shared_examples "not_setting_location_data" do
+      it "does not set area, geopoint, or radius_in_metres" do
+        expect {
+          subscription.set_location_data!
+          subscription.reload
+        }.to not_change(subscription, :geopoint).from(nil)
+         .and not_change(subscription, :radius_in_metres).from(nil)
+         .and not_change(subscription, :area).from(nil)
+      end
+    end
+
+    context "with a search criteria location matching a polygon with valid area" do
+      let(:subscription) { create(:subscription, search_criteria: { "location" => " London ", "radius" => 10 }) }
+
+      before do
+        create(:location_polygon, name: "london")
+      end
+
+      it "sets the area field and radius_in_metres" do
+        expect {
+          subscription.set_location_data!
+          subscription.reload
+        }.to change(subscription, :area).from(nil).to(kind_of(RGeo::Cartesian::PolygonImpl))
+         .and change(subscription, :radius_in_metres).from(nil).to(16_090)
+         .and not_change(subscription, :geopoint).from(nil)
+      end
+
+      context "when the polygon previously had location data from coordinates" do
+        let(:subscription) do
+          create(:subscription, :with_geopoint_location, search_criteria: { "location" => " London ", "radius" => 15 })
+        end
+
+        it "sets the area field and radius_in_metres while deleting the geopoint" do
+          expect {
+            subscription.set_location_data!
+            subscription.reload
+          }.to change(subscription, :area).from(nil).to(kind_of(RGeo::Cartesian::PolygonImpl))
+           .and change { subscription.geopoint.class }.from(RGeo::Cartesian::PointImpl).to(NilClass)
+           .and change(subscription, :radius_in_metres).from(16_090).to(24_135)
+        end
+      end
+    end
+
+    context "with a search criteria location not matching a polygon with valid area" do
+      let(:subscription) { create(:subscription, search_criteria: { "location" => " London ", "radius" => 10 }) }
+      let(:geocoding_response) { [51.5074, -0.1278] }
+      let(:geocoding) { instance_double(Geocoding, coordinates: geocoding_response) }
+
+      before do
+        allow(Geocoding).to receive(:new).and_return(geocoding)
+        allow(LocationPolygon).to receive(:find_valid_for_location).and_return(nil)
+      end
+
+      it "sets the geopoint field and radius_in_metres" do
+        expect {
+          subscription.set_location_data!
+          subscription.reload
+        }.to change(subscription, :geopoint).from(nil).to(kind_of(RGeo::Cartesian::PointImpl))
+         .and change(subscription, :radius_in_metres).from(nil).to(16_090)
+         .and not_change(subscription, :area).from(nil)
+      end
+
+      context "when Geocoding returns no match coordinates" do
+        let(:geocoding_response) { Geocoding::COORDINATES_NO_MATCH }
+
+        it "does not set the geopoint or radius_in_metres" do
+          expect {
+            subscription.set_location_data!
+            subscription.reload
+          }.to not_change(subscription, :geopoint).from(nil)
+           .and not_change(subscription, :radius_in_metres).from(nil)
+           .and not_change(subscription, :area).from(nil)
+        end
+      end
+
+      context "when Geocoding doesn't return coordinates" do
+        let(:geocoding_response) { nil }
+
+        it "does not set the geopoint or radius_in_metres" do
+          expect {
+            subscription.set_location_data!
+            subscription.reload
+          }.to not_change(subscription, :geopoint).from(nil)
+           .and not_change(subscription, :radius_in_metres).from(nil)
+           .and not_change(subscription, :area).from(nil)
+        end
+      end
+
+      context "when the polygon previously had location data from area" do
+        let(:subscription) do
+          create(:subscription, :with_area_location, search_criteria: { "location" => "EC12JP", "radius" => 15 })
+        end
+
+        it "sets the geopoint field and radius_in_metres while deleting the area" do
+          expect {
+            subscription.set_location_data!
+            subscription.reload
+          }.to change(subscription, :geopoint).from(nil).to(kind_of(RGeo::Cartesian::PointImpl))
+           .and change(subscription, :radius_in_metres).from(16_090).to(24_135)
+           .and change { subscription.area.class }.from(RGeo::Cartesian::PolygonImpl).to(NilClass)
+        end
+      end
+    end
+
+    context "with blank location" do
+      let(:subscription) { create(:subscription, search_criteria: { "location" => "   ", "radius" => 10 }) }
+
+      it_behaves_like "not_setting_location_data"
+    end
+
+    context "with empty location" do
+      let(:subscription) { create(:subscription, search_criteria: { "location" => "", "radius" => 10 }) }
+
+      it_behaves_like "not_setting_location_data"
+    end
+
+    context "with no location" do
+      let(:subscription) { create(:subscription, search_criteria: { "radius" => 10 }) }
+
+      it_behaves_like "not_setting_location_data"
+    end
+  end
+
+  describe "#update_with_search_criteria" do
+    subject(:update_with_search_criteria) { subscription.update_with_search_criteria(new_attributes) }
+
+    let(:subscription) do
+      create(:subscription,
+             search_criteria: { "location" => "london", "radius" => 10 },
+             frequency: :daily)
+    end
+
+    before do
+      allow(SetSubscriptionLocationDataJob).to receive(:perform_later)
+    end
+
+    context "when the location changes" do
+      let(:new_attributes) { { search_criteria: { "location" => "manchester", "radius" => 10 } } }
+
+      it "updathes the subscription search criteria with the new location info" do
+        expect {
+          update_with_search_criteria
+          subscription.reload
+        }.to change { subscription.search_criteria["location"] }.from("london").to("manchester")
+      end
+
+      it "enqueues SetSubscriptionLocationDataJob for the subscription" do
+        update_with_search_criteria
+        expect(SetSubscriptionLocationDataJob).to have_received(:perform_later).with(subscription.id)
+      end
+    end
+
+    context "when the radius changes" do
+      let(:new_attributes) { { search_criteria: { "location" => "london", "radius" => 20 } } }
+
+      it "updathes the subscription search criteria with the new radius info" do
+        expect {
+          update_with_search_criteria
+          subscription.reload
+        }.to change { subscription.search_criteria["radius"] }.from(10).to(20)
+      end
+
+      it "enqueues SetSubscriptionLocationDataJob for the subscription" do
+        update_with_search_criteria
+        expect(SetSubscriptionLocationDataJob).to have_received(:perform_later).with(subscription.id)
+      end
+    end
+
+    context "when the location criteria does not change" do
+      let(:new_attributes) { { search_criteria: { "location" => "london", "radius" => 10, phases: %w[primary] } } }
+
+      it "updathes the subscription search criteria" do
+        expect {
+          update_with_search_criteria
+          subscription.reload
+        }.to change { subscription.search_criteria["phases"] }.from(nil).to(%w[primary])
+      end
+
+      it "does not enqueue SetSubscriptionLocationDataJob for the subscription" do
+        update_with_search_criteria
+        expect(SetSubscriptionLocationDataJob).not_to have_received(:perform_later)
+      end
+    end
+
+    context "when update is unsuccessful" do
+      let(:new_attributes) { { search_criteria: { "location" => "manchester", "radius" => 20 } } }
+
+      before do
+        allow(subscription).to receive(:update).with(new_attributes).and_return(false)
+      end
+
+      it "does not enqueue SetSubscriptionLocationDataJob even if location criteria changes" do
+        update_with_search_criteria
+        expect(SetSubscriptionLocationDataJob).not_to have_received(:perform_later)
       end
     end
   end
