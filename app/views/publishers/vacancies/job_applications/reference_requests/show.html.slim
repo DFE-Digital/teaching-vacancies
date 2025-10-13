@@ -78,4 +78,4 @@
         - elsif version.changeset.key? "marked_as_complete"
           - timeline.with_item(key: t(".marked_as_complete"), value: value)
 
-    = render PublisherNotesOnJobApplicationComponent.new(job_application: @job_application, vacancy: vacancy, notes_form: @notes_form, return_to_url: organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, params[:id]))
+    = publisher_notes_on_job_application(job_application: @job_application, vacancy: vacancy, notes_form: @notes_form, return_to_url: organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, params[:id]))
