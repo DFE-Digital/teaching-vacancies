@@ -3,7 +3,7 @@ order: 200
 title: How to accept job applications
 meta_description: Schools can receive and manage job applications through Teaching Vacancies. Find out about our application form and how to manage candidates.
 date_posted: 17/03/2022
-date_updated: 01/05/2025
+date_updated: 13/10/2025
 category_tags: how-to
 card-image: "/content-assets/get-help-hiring/how-to-create-job-listings-and-accept-applications/how-to-accept-job-applications.png"
 ---
@@ -114,25 +114,60 @@ Before submitting their application, we ask candidates to confirm that the infor
 
 Each day you will receive a summary email of any applications that have been made for your active jobs over the previous 24 hours. This will link to your Teaching Vacancies dashboard.
 
-## Managing candidate applications 
+## Managing applications 
 
-When you view your list of [active](https://teaching-vacancies.service.gov.uk/organisation/jobs) or [closed](https://qa.teaching-vacancies.service.gov.uk/organisation/jobs/expired) jobs on Teaching Vacancies, you will see the number of applicants next to each role where you’ve chosen to use our application form. Click these links to see details of job candidates.
+When you use the Teaching Vacancies application form to list your school's jobs, there are a few different ways to access and manage job applications.
 
-Click on a candidate’s name to see details of their application. Each applicant is given one of the following labels:
+### Accessing applications through your notifications
 
-* **unread** - new applications you have not yet clicked on
-* **reviewed** - applications you have clicked on, but not yet rejected or shortlisted
-* **withdrawn** - applications that have been withdrawn by the jobseeker
-* **rejected** - applications which you have declined
-* **shortlisted** - applications which you have taken on to the next stage
+When you receive a new application for an (active job listing)[https://teaching-vacancies.service.gov.uk/publishers/sign-in], you will get a notification. If you are signed in to Teaching Vacancies, you can view your notifications by selecting 'Notifications' on the service navigation bar in the top right-hand corner of your screen.
 
-You can shortlist or reject applications either from the main list (once they have been reviewed) or from within the application details page. When you choose to shortlist or reject a candidate, you’re given the option to provide more information to be included within the notification email.
+When you get a notification about a new application, you can select the link within the notification to open the new application. You should receive an email summary of all the new notifications you receive from Teaching Vacancies once a day.
 
-If they have been successful you may wish to include details on the next steps in the application process, such as when they will be invited to an interview. If they have been unsuccessful you can help them understand why.
+### Accessing applications through job listings
 
-You can reject a candidate after they have been shortlisted, however you are unable to reinstate candidates once they have been rejected.
+When you review your active job listings, you can either select the job title and then 'Applications' or select 'View applicants' to directly access the applicant dashboard. There are 5 sections on the dashboard:
 
-To comply with data protection regulations, you will have access to applications for one year. 
+* new
+* not progressing
+* shortlisted
+* interviewing
+* job offered
+
+If you have not opened or updated an application yet, it will have the following label applied:
+
+* unread - these applications are in the 'New' section of the dashboard, and are applications you have not yet viewed
+
+Select an applicant's name to view their application in full, download their application, or update their application status.
+
+### Updating an application status
+
+To update the status of one application, select the checkbox next to the applicant's name and then select the 'Update application status' button.
+
+To update multiple applications at the same time, select the checkbox beside each applicant's name and select the 'Update application status' button. You can only perform this action for multiple applications if you are moving all the selected applicants to the same stage.
+
+When you select 'Update application status', you will have the option to move applicants to one of these sections of the dashboard:
+
+* not progressing - applications that you are not going to move forward to inerview or applications that have been withdrawn by the jobseeker
+* shortlisted - applications that you want to shortlist
+* interviewing - applications that you are taking to interview stage
+* job offered - the application of the person you have offered the job to
+
+You can move a candidate to the 'Not progressing' section of the dashboard after they have been shortlisted, but you cannot reinstate candidates once they have been moved to the 'Not progressing' stage.
+
+When you move a candidate to the 'Interviewing' stage,  you will be asked if you want to collect their references and self-disclosure form using Teaching Vacancies. From this point, you will have access to the pre-interview checklist, which will appear under the 'Application status' heading in the table. When you select that link, you will be taken to a section of the dashboard where you can track the candidate's references and self-disclosure form.
+
+Religious references cannot be collected through Teaching Vacancies, but you can manually record them to track their progress.
+
+### Anonymised applications
+
+If you have chosen applications to remain anonymous, there will be a reference number instead of a name. If the application is shortlisted, you will then be able to view the candidate's personally identifiable information (PII).
+
+### Downloading data and data protection
+
+To comply with data protection regulations, you will have access to all applications for 6 months. 
+
+To download data, you can either select the checkbox next to an application and select the 'Download application' button underneath the table or select 'Download application' from within the application. If an application is anonymous (and has not been shortlisted), you will received a redacted version of the application to download.
 
 ## Get help setting up applications
 
