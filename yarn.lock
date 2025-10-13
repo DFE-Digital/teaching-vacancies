@@ -2052,15 +2052,7 @@
   resolved "https://registry.yarnpkg.com/@unrs/resolver-binding-win32-x64-msvc/-/resolver-binding-win32-x64-msvc-1.7.13.tgz#6d2643f810c30c9561bbd8348a2fb4aa0edde4f9"
   integrity sha512-tI0+FTntE3BD0UxhTP12F/iTtkeMK+qh72/2aSxPZnTlOcMR9CTJid8CdppbSjj9wenq7PNcqScLtpPENH3Lvg==
 
-"@x-govuk/govuk-prototype-components@^4.0.0-1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@x-govuk/govuk-prototype-components/-/govuk-prototype-components-4.0.1.tgz#0fce2756e31c4470f11055ebeeeddf0c185c7e3a"
-  integrity sha512-2FaiIGGhOPYOzsDVXiqWUFLgrzRjB4CMKbXiZuFDDKYpD/S2bBNK4XoTm6WsfTFd0+WD4t7DQ1DQQsG+P7clUA==
-  dependencies:
-    accessible-autocomplete "^3.0.0"
-    eventslibjs "^1.2.0"
-
-accessible-autocomplete@^3.0.0, accessible-autocomplete@^3.0.1:
+accessible-autocomplete@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/accessible-autocomplete/-/accessible-autocomplete-3.0.1.tgz#8ddf4934d0b4ba6acb28de486dd505e062cdc86e"
   integrity sha512-xMshgc2LT5addvvfCTGzIkRrvhbOFeylFSnSMfS/PdjvvvElZkakCwxO3/yJYBWyi1hi3tZloqOJQ5kqqJtH4g==
@@ -3548,11 +3540,6 @@ eventlistener-polyfill@^1.0.5:
   version "1.0.5"
   resolved "https://registry.npmjs.org/eventlistener-polyfill/-/eventlistener-polyfill-1.0.5.tgz"
   integrity sha512-xqqTj0eyJWqAMg1U+Sr20Upi86bOlbLfk/cbVnHuTEKh2S59PszLNwsc4miaUwLR7YRnCnxwSkdCZpxdo3MPwA==
-
-eventslibjs@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/eventslibjs/-/eventslibjs-1.2.0.tgz#5d242b1d71d7376b999611448e91b7947d8cb9d0"
-  integrity sha512-nui7FHXHeeZjWkQ1dZ4R3RchkT+164+y1/puiOY1Zc3CPU9W8XzAzdhqvuVQ4EJt7F/W94O5U26/oVFpBOPY3w==
 
 execa@^5.1.1:
   version "5.1.1"
