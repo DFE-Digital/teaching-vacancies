@@ -18,6 +18,13 @@ RSpec.describe "Jobseekers can complete a job application" do
   context "when job application is a using the native job application" do
     let(:vacancy) { create(:vacancy, job_roles: ["teacher"], organisations: [organisation]) }
 
+    before do
+      #  wait for page load - this only works for a quick apply job, not an uploaded one
+      within "main" do
+        find("form.button_to")
+      end
+    end
+
     it "passes a11y", :a11y do
       expect(page).to be_axe_clean
     end
