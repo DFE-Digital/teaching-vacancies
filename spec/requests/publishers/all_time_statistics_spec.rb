@@ -76,23 +76,29 @@ RSpec.describe "Publisher all-time statistics" do
     end
 
     it "includes old data in its calculations" do
+      allow(CSV).to receive(:generate).and_call_original
+
       get(equal_opportunities_publishers_all_time_statistics_path(format: :csv))
+
+      expect(CSV).to have_received(:generate).with(headers: false)
 
       expect(response.body.split("\n"))
         .to eq(
-          ["under_twenty_five,twenty_five_to_twenty_nine,thirty_to_thirty_nine,forty_to_forty_nine,fifty_to_fifty_nine,sixty_and_over,prefer_not_to_say",
-           "3,5,12,11,6,8,10",
-           "no,prefer_not_to_say,yes",
-           "34,21,18",
-           "white,prefer_not_to_say,other,mixed,black,asian",
-           "36,25,16,9,4,1",
-           "man,woman,other,prefer_not_to_say",
-           "11,7,6,3",
-           "prefer_not_to_say,gay_or_lesbian,heterosexual,other,bisexual",
-           "64,25,16,14,8",
-           "muslim,buddhist,none,other,hindu,christian,prefer_not_to_say,sikh,jewish",
-           "144,87,77,71,46,37,14,12,5"],
+          ["age_group,under_twenty_five,twenty_five_to_twenty_nine,thirty_to_thirty_nine,forty_to_forty_nine,fifty_to_fifty_nine,sixty_and_over,prefer_not_to_say",
+           "age_group_count,3,5,12,11,6,8,10",
+           "disability_status,no,prefer_not_to_say,yes",
+           "disability_status_count,34,21,18",
+           "ethnicity,white,prefer_not_to_say,other,mixed,black,asian",
+           "ethnicity_count,36,25,16,9,4,1",
+           "gender_identity,man,woman,other,prefer_not_to_say",
+           "gender_identity_count,11,7,6,3",
+           "sexual_orientation,prefer_not_to_say,gay_or_lesbian,heterosexual,other,bisexual",
+           "sexual_orientation_count,64,25,16,14,8",
+           "faith_group,muslim,buddhist,none,other,hindu,christian,prefer_not_to_say,sikh,jewish",
+           "faith_group_count,144,87,77,71,46,37,14,12,5"],
         )
+      expect(response.media_type).to eq("text/csv")
+      expect(response.headers["Content-Disposition"]).to include("equal_opportunities.csv")
     end
   end
 end

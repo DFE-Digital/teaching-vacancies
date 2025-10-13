@@ -20,15 +20,11 @@ module Publishers
     def equal_opportunities
       respond_to do |format|
         format.csv do
-          csv_data = CSV.generate(headers: false) do |csv|
-            presenter = VacancyStatisticsPresenter.new(vacancies)
-            presenter.equal_opportunities_data.each_value do |sorted_data|
-              csv << sorted_data.keys
-              csv << sorted_data.values
-            end
-          end
+          rows = VacancyStatisticsPresenter.new(vacancies).equal_opportunities_csv
 
-          send_data csv_data, filename: "equal_oppuntunities.csv"
+          csv_data = CSV.generate(headers: false) { |csv| rows.each { |r| csv << r } }
+
+          send_data csv_data, filename: "equal_opportunities.csv"
         end
       end
     end
