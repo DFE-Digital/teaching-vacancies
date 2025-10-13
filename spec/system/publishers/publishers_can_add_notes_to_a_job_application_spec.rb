@@ -22,7 +22,7 @@ RSpec.describe "Publishers can add notes to a job application" do
       end
 
       it "passes a11y", :a11y do
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+        expect(page).to be_axe_clean
       end
 
       it "shows the current notes" do

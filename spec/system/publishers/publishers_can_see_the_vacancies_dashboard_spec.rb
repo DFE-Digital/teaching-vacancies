@@ -23,7 +23,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
   end
 
   it "passes a11y", :a11y do
-    expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+    expect(page).to be_axe_clean
   end
 
   context "viewing the lists of jobs on the school page" do

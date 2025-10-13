@@ -107,7 +107,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
       let(:keyword) { "Teacher" }
 
       it "passes a11y", :a11y do
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+        expect(page).to be_axe_clean
       end
     end
   end

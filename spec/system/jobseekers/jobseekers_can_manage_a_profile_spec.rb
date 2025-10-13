@@ -29,14 +29,12 @@ RSpec.describe "Jobseekers can manage their profile" do
 
         before do
           visit jobseekers_profile_path
-          within "#navigation" do
-            click_on "Your profile"
-          end
+          click_on "Your profile"
           click_link("Add personal details")
         end
 
         it "passes a11y", :a11y do
-          expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+          expect(page).to be_axe_clean
         end
 
         context "when on the phone number screen" do
@@ -50,7 +48,7 @@ RSpec.describe "Jobseekers can manage their profile" do
 
           it "passes a11y", :a11y do
             #  https://github.com/alphagov/govuk-frontend/issues/979
-            expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+            expect(page).to be_axe_clean.skipping "aria-allowed-attr"
           end
 
           it "asks for a phone number" do
@@ -65,7 +63,7 @@ RSpec.describe "Jobseekers can manage their profile" do
             end
 
             it "passes a11y", :a11y do
-              expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+              expect(page).to be_axe_clean
             end
 
             it "allows the jobseeker to fill in their personal details" do

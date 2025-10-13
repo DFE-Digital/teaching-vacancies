@@ -24,7 +24,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
     end
 
     it "passes a11y", :a11y do
-      expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+      expect(page).to be_axe_clean
     end
 
     it "allows jobseekers to add a graduate degree" do
@@ -73,7 +73,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
 
       it "passes a11y", :a11y do
         #  https://github.com/alphagov/govuk-frontend/issues/979
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "aria-allowed-attr"
+        expect(page).to be_axe_clean.skipping "aria-allowed-attr"
       end
 
       it "allows jobseekers to edit the qualification" do

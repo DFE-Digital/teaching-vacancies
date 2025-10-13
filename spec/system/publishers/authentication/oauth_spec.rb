@@ -10,8 +10,8 @@ RSpec.shared_examples "a successful Publisher sign in" do
     sign_in_publisher
     expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_event(with_data: { sign_in_type: "dsi" }) # rubocop:disable RSpec/ExpectActual
 
-    within(".govuk-header__navigation") { expect(page).to have_selector(:link_or_button, I18n.t("nav.sign_out")) }
-    within(".govuk-header__navigation") { expect(page).to have_selector(:link_or_button, I18n.t("nav.manage_jobs")) }
+    expect(page).to have_selector(:link_or_button, I18n.t("nav.sign_out"))
+    expect(page).to have_selector(:link_or_button, I18n.t("nav.manage_jobs"))
   end
 end
 

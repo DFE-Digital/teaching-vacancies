@@ -8,12 +8,12 @@
 - if @job_applications.any?
   - content_for :skip_links do
     = govuk_skip_link(href: "#applications-results", text: t(".skip_link"))
-- if Date.today <= Date.new(2024, 4, 2)
-  = render "jobseekers/visa_sponsorship_banner"
 h1.govuk-heading-l = t(".page_title_with_count", count: @count)
 
 .govuk-grid-row
-  .govuk-grid-column-full
+  .govuk-grid-column-one-quarter
+    = render "jobseekers/shared/side_navigation"
+  .govuk-grid-column-three-quarters
     - if @job_applications.any?
       = govuk_pagination(pagy: @pagy)
       #applications-results

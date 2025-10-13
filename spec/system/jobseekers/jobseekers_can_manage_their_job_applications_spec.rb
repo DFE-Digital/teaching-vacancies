@@ -6,7 +6,6 @@ RSpec.describe "Jobseekers can manage their job applications" do
 
   context "when logged in" do
     before do
-      travel_to Time.zone.local(2025, 3, 2, 12, 31, 23)
       login_as(jobseeker, scope: :jobseeker)
     end
 
@@ -22,7 +21,7 @@ RSpec.describe "Jobseekers can manage their job applications" do
                                  vacancy: build(:vacancy, :expired, job_title: "Teacher of History", organisations: [organisation]))
       end
       let!(:submitted_job_application) do
-        create(:job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker: jobseeker,
+        create(:job_application, :status_submitted, submitted_at: Time.zone.local(2025, 3, 1, 12, 31, 23), jobseeker: jobseeker,
                                                     vacancy: build(:vacancy, job_title: "Teacher of Design & Technology", organisations: [organisation]))
       end
       let!(:shortlisted_job_application) do
@@ -51,7 +50,7 @@ RSpec.describe "Jobseekers can manage their job applications" do
       before { visit jobseekers_job_applications_path }
 
       it "passes a11y", :a11y do
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner"
+        expect(page).to be_axe_clean
       end
 
       context "when the jobseeker views job applications" do

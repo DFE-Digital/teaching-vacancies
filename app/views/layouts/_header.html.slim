@@ -1,17 +1,10 @@
-= govuk_header do |header|
-  - header.with_product_name(name: t("app.title"))
+= govuk_header(navigation_label: "Top Menu", full_width_border: true) do |header|
   - if publisher_signed_in?
-    = header.with_navigation_item text: t("nav.manage_jobs"), href: organisation_jobs_with_type_path, active: manage_jobs_active?
-    = header.with_navigation_item text: (current_organisation.school_group? ? t("nav.organisation_profile") : t("nav.school_profile")),
+    = header.with_navigation_item text: t("nav.organisation_profile", name: current_organisation.name),
                              href: publishers_organisation_path(current_organisation),
                              active: schools_in_your_trust_active?
-    = header.with_navigation_item text: t("nav.notifications_html", count: current_publisher.notifications.unread.count), href: publishers_notifications_path
-    = header.with_navigation_item text: t("nav.hiring_guides"), href: posts_path(section: "get-help-hiring")
     = header.with_navigation_item text: t("nav.sign_out"), href: destroy_publisher_session_path, options: { method: :delete }
   - elsif jobseeker_signed_in?
-    = header.with_navigation_item text: t("nav.create_a_job_alert"), href: new_subscription_path
-    = header.with_navigation_item text: t("nav.your_profile"), href: jobseekers_profile_path
-    = header.with_navigation_item text: t("nav.notifications_html", count: current_jobseeker.notifications.unread.count), href: jobseekers_notifications_path
     = header.with_navigation_item text: t("nav.your_account"), href: jobseekers_account_path, active: your_account_active?
     = header.with_navigation_item text: t("nav.sign_out"), href: jobseeker_logout_uri.to_s
   - elsif support_user_signed_in?
@@ -19,3 +12,18 @@
     = header.with_navigation_item text: t("nav.sign_out"), href: destroy_support_user_session_path, options: { method: :delete }
   - else
     = header.with_navigation_item text: t("nav.sign_in"), href: page_path("sign-in")
+
+.govuk-width-container
+  = govuk_service_navigation(service_name: t("app.title")) do |navigation|
+    - if publisher_signed_in?
+      - navigation.with_navigation_item text: t("nav.manage_jobs"), href: organisation_jobs_with_type_path, active: manage_jobs_active?
+      - navigation.with_navigation_item text: t("nav.candidate_profiles"), href: publishers_jobseeker_profiles_path
+      - navigation.with_navigation_item text: "Statistics", href: publishers_current_year_statistics_path
+      - navigation.with_navigation_item text: t("nav.notifications_html", count: current_publisher.notifications.unread.count), href: publishers_notifications_path
+    - else
+      - navigation.with_navigation_item text: t("sub_nav.jobs"), href: jobs_path
+      - navigation.with_navigation_item text: t("sub_nav.schools"), href: organisations_path
+      - if jobseeker_signed_in?
+        - navigation.with_navigation_item text: t("sub_nav.jobseekers.applications"), href: jobseekers_job_applications_path
+        - navigation.with_navigation_item text: t("nav.notifications_html", count: current_jobseeker.notifications.unread.count), href: jobseekers_notifications_path
+        - navigation.with_navigation_item text: t("nav.your_profile"), href: jobseekers_profile_path

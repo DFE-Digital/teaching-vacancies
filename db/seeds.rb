@@ -83,15 +83,22 @@ FactoryBot.create(:vacancy, :for_seed_data, **attrs)
 FactoryBot.create(:jobseeker, email: "jobseeker@contoso.com")
 50.times { |i| FactoryBot.create(:jobseeker, email: "jobseeker#{i}@contoso.com") }
 
-emails_without_applications = ["jobseeker@contoso.com"] + user_emails
+emails_with_fewer_applications = ["jobseeker@contoso.com"] + user_emails
 # Job Applications
+statuses = JobApplication.statuses.keys
 PublishedVacancy.listed.each do |vacancy|
-  statuses = JobApplication.statuses.keys
-  # only add fake job applications to non-DFE jobseekers
-  Jobseeker.where.not(email: emails_without_applications).each do |jobseeker|
-    # Ensures each one of the statuses gets used. When no unused statuses are left, takes random ones from the list for further new applications.
-    application_status = statuses.delete(statuses.sample) || JobApplication.statuses.keys.sample
+  Jobseeker.where.not(email: emails_with_fewer_applications).each do |jobseeker|
+    application_status = JobApplication.statuses.keys.sample
     FactoryBot.create(:job_application, :for_seed_data, :"status_#{application_status}", jobseeker: jobseeker, vacancy: vacancy)
+  end
+
+  # only add 1 fake job application per-status to DFE jobseekers
+  random_status = statuses.delete(statuses.sample)
+  next unless random_status
+
+  Jobseeker.where(email: emails_with_fewer_applications).each do |jobseeker|
+    # Ensures each one of the statuses gets used. When no unused statuses are left, takes random ones from the list for further new applications.
+    FactoryBot.create(:job_application, :for_seed_data, :"status_#{random_status}", jobseeker: jobseeker, vacancy: vacancy)
   end
 end
 

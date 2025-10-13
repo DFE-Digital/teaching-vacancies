@@ -1,10 +1,9 @@
-- unless publisher_signed_in?
-  .sub-navigation
-    .govuk-width-container
-      = tabs html_attributes: { "aria-label": "main menu" } do |tabs|
-        - tabs.with_navigation_item text: t("sub_nav.jobs"), link: jobs_path
-        - tabs.with_navigation_item text: t("sub_nav.schools"), link: organisations_path
-        - if jobseeker_signed_in?
-          - tabs.with_navigation_item text: t("sub_nav.jobseekers.applications"), link: jobseekers_job_applications_path
-          - tabs.with_navigation_item text: t("sub_nav.jobseekers.saved_jobs"), link: jobseekers_saved_jobs_path
-          - tabs.with_navigation_item text: t("sub_nav.jobseekers.job_alerts"), link: jobseekers_subscriptions_path
+.sub-navigation
+  .govuk-width-container
+    = tabs html_attributes: { "aria-label": "main menu" } do |tabs|
+      - tabs.with_navigation_item text: t("sub_nav.jobs"), link: jobs_path
+      - tabs.with_navigation_item text: t("sub_nav.schools"), link: organisations_path
+      - if jobseeker_signed_in?
+        - tabs.with_navigation_item text: t("sub_nav.jobseekers.applications"), link: jobseekers_job_applications_path
+        - tabs.with_navigation_item text: t("sub_nav.jobseekers.saved_jobs"), link: jobseekers_saved_jobs_path
+        - tabs.with_navigation_item text: t("sub_nav.jobseekers.job_alerts"), link: jobseekers_subscriptions_path
