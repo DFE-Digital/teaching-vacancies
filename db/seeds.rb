@@ -17,19 +17,17 @@ abraham_moss = School.find_by!(urn: "150009")
 
 # Team users
 users = [
-  { email: "alan.arnfeld@education.gov.uk", family_name: "Arnfeld", given_name: "Alan" },
   { email: "alice.fitzgibbon@education.gov.uk", family_name: "Fitzgibbon", given_name: "Alice" },
   { email: "alisa.ali@education.gov.uk", family_name: "Ali", given_name: "Alisa" },
-  { email: "brandon1.chan@education.gov.uk", family_name: "Chan", given_name: "Brandon" },
   { email: "chloe.ewens@education.gov.uk", family_name: "Ewens", given_name: "Chloe" },
   { email: "david.thacker@education.gov.uk", family_name: "Thacker", given_name: "David" },
-  { email: "erin.riches@education.gov.uk", family_name: "Riches", given_name: "Erin" },
   { email: "fisal.yusuf@education.gov.uk", family_name: "Yusuf", given_name: "Fisal" },
   { email: "hannah.vesey-byrne@education.gov.uk", family_name: "Vesey-Byrne", given_name: "Hannah" },
   { email: "james.over@education.gov.uk", family_name: "Over", given_name: "James" },
   { email: "jerome.riga@education.gov.uk", family_name: "Riga", given_name: "Jerome" },
   { email: "kyle.macpherson@education.gov.uk", family_name: "MacPherson", given_name: "Kyle" },
   { email: "marc.sardon@education.gov.uk", family_name: "Sardon", given_name: "Marc" },
+  { email: "richard.pattinson@education.gov.uk", family_name: "Pattinson", given_name: "Richard" },
   { email: "sophie.mcmillan@education.gov.uk", family_name: "McMillan", given_name: "Sophie" },
   { email: "stephen.dicks@education.gov.uk", family_name: "Dicks", given_name: "Stephen" },
   { email: "yvonne.ridley@education.gov.uk", family_name: "Ridley", given_name: "Yvonne" },
