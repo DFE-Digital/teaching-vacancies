@@ -53,7 +53,7 @@ class ExportCandidateDataService
     end
 
     def self_disclosure(job_application)
-      return Document["no_declarations_found.txt", "No self-disclosure form has been submitted through Teaching Vacancies."] unless job_application.self_disclosure
+      return Document["no_declarations_found.txt", "No self-disclosure form has been submitted through Teaching Vacancies."] unless job_application.self_disclosure_request&.received?
 
       self_disclosure = SelfDisclosurePresenter.new(job_application)
       pdf = SelfDisclosurePdfGenerator.new(self_disclosure).generate
