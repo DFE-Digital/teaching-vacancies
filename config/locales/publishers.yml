@@ -635,7 +635,7 @@ en:
             one: Unread application
             other: Unread applications
         tab_unsuccessful:
-          reject: Send rejection emails
+          reject: Send rejection messages
           have_been_sent: Have been sent a rejection email
           table:
             name: Name

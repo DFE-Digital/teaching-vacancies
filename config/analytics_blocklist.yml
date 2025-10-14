@@ -34,12 +34,10 @@
     - record_id
     - created_at
     - updated_at
-  :email_templates:
+  :message_templates:
     - id
     - publisher_id
     - name
-    - from
-    - subject
     - created_at
     - updated_at
     - template_type

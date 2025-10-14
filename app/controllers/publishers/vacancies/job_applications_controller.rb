@@ -137,19 +137,12 @@ module Publishers
       end
 
       def prepare_to_reject(job_applications)
-        # batch = @vacancy.batch_emails.build(batch_type: :not_sent)
-        # job_applications.each do |job_application|
-        #   batch.job_applications << job_application
-        # end
-        # batch.save!
         batch = JobApplicationBatch.create!(vacancy: @vacancy)
         job_applications.each do |ja|
           batch.batchable_job_applications.create!(job_application: ja)
         end
         redirect_to select_rejection_template_organisation_job_batch_email_path(@vacancy.id, batch)
       end
-
-      require "zip"
 
       def download_selected(job_applications)
         zip_data = JobApplicationZipBuilder.new(vacancy: @vacancy, job_applications:).generate
