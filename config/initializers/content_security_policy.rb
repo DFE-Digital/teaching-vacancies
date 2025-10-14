@@ -13,7 +13,11 @@ Rails.application.configure do
                        "https://*.sentry.io",
                        "https://*.google-analytics.com",
                        "https://*.analytics.google.com",
-                       "https://www.google.com",
+                       "https://ad.doubleclick.net", # Floodlight
+                       "https://www.google.com", # Floodlight
+                       "https://www.googleadservices.com", # Floodlight
+                       "https://www.googletagmanager.com",
+                       "https://pagead2.googlesyndication.com", # Floodlight
                        "https://*.visualwebsiteoptimizer.com",
                        "https://*.clarity.ms",
                        "https://www.facebook.com",
@@ -27,19 +31,26 @@ Rails.application.configure do
 
     policy.font_src    :self,
                        :data,
-                       "https://fonts.gstatic.com/*"
+                       "https://fonts.gstatic.com"
 
     policy.frame_src   :self,
                        "https://2673654.fls.doubleclick.net", # Floodlight
                        "https://td.doubleclick.net",
                        "https://www.recaptcha.net",
-                       "https://www.googletagmanager.com",
+                       "https://www.googletagmanager.com", # Floodlight
                        "https://www.youtube.com"
 
     policy.img_src     :self,
                        :https,
                        :data,
-                       "https://2673654.fls.doubleclick.net" # Floodlight
+                       "https://2673654.fls.doubleclick.net", # Floodlight
+                       "https://ad.doubleclick.ne", # Floodlight
+                       "https://ade.googlesyndication.com", # Floodlight
+                       "https://adservice.google.com", # Floodlight
+                       "https://www.googletagmanager.com", # Floodlight
+                       "https://googletagmanager.com", # Tag Manager preview mode
+                       "https://ssl.gstatic.com", # Tag Manager preview mode
+                       "https://www.gstatic.com" # Tag Manager preview mode
 
     policy.object_src  :none
 
@@ -48,6 +59,8 @@ Rails.application.configure do
                        "https://cdn.rollbar.com",
                        "https://www.google-analytics.com",
                        "https://www.googletagmanager.com",
+                       "https://googletagmanager.com", # Tag Manager preview mode
+                       "https://tagmanager.google.com", # Tag Manager preview mode
                        "https://www.recaptcha.net",
                        "https://*.visualwebsiteoptimizer.com",
                        "https://connect.facebook.net",
@@ -60,7 +73,10 @@ Rails.application.configure do
     policy.style_src   :self,
                        :unsafe_inline,
                        "https://fonts.gstatic.com/*",
-                       "https://www.gstatic.com"
+                       "https://www.gstatic.com",
+                       "https://googletagmanager.com", # Tag Manager preview mode
+                       "https://tagmanager.google.com", # Tag Manager preview mode
+                       "https://fonts.googleapis.com" # Tag Manager preview mode
 
     policy.worker_src  :self,
                        :blob,
