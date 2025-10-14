@@ -171,7 +171,7 @@ To download data, you can either select the checkbox next to an application and 
 
 When an application is at the ‘Job offered’ stage, selecting the 'Download application' button will download the following data about the candidate:  
 
-* the completed application form 
+* their completed application form 
 * PII 
 * references  
 * self-disclosure form
