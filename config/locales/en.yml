@@ -116,6 +116,7 @@ en:
     find_job: Find a job
     manage_jobs: Manage jobs
     candidate_profiles: Candidate profiles
+    messages: Messages
     manage_settings: Manage settings
     school_profile: School profile
     organisation_profile: "%{name} profile"
