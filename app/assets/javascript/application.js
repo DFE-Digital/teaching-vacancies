@@ -14,6 +14,7 @@ import { initMojFrontEnd } from './init-moj-front-end';
 
 import 'chartkick';
 import 'trix';
+import { initTrixURLNormalizer } from './trix-url-normalizer';
 import '@rails/actiontext';
 
 // view components
@@ -79,6 +80,7 @@ ActiveStorage.start();
 govukFrontend.initAll();
 window.$ = $;
 initMojFrontEnd();
+initTrixURLNormalizer();
 
 // Make links in message content open in new tabs
 document.addEventListener('DOMContentLoaded', () => {
