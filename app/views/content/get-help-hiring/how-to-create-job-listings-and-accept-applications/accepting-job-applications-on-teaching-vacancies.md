@@ -120,7 +120,7 @@ When you use the Teaching Vacancies application form to list your school's jobs,
 
 ### Accessing applications through your notifications
 
-When you receive a new application for an [active job listing](https://teaching-vacancies.service.gov.uk/publishers/sign-in), you will get a notification. If you are signed in to Teaching Vacancies, you can view your notifications by selecting 'Notifications' on the service navigation bar in the top right-hand corner of your screen.
+When you receive a new application for an [active job listing](https://teaching-vacancies.service.gov.uk/publishers/sign-in), you will get a notification. If you are signed in to Teaching Vacancies, you can view your notifications by selecting 'Notifications' on the service navigation bar.
 
 When you get a notification about a new application, you can select the link within the notification to open the new application. You should receive an email summary of all the new notifications you receive from Teaching Vacancies once a day.
 
@@ -168,6 +168,13 @@ If you have chosen applications to remain anonymous, there will be a reference n
 To comply with data protection regulations, you will have access to all applications for 6 months. 
 
 To download data, you can either select the checkbox next to an application and select the 'Download application' button underneath the table or select 'Download application' from within the application. If an application is anonymous (and has not been shortlisted), you will received a redacted version of the application to download.
+
+When an application is at the ‘Job offered’ stage, selecting the 'Download application' button will download the following data about the candidate:  
+
+* the completed application form 
+* PII 
+* references  
+* self-disclosure form
 
 ## Get help setting up applications
 
