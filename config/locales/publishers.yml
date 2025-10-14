@@ -87,6 +87,10 @@ en:
         total_messages:
           one: "1 message"
           other: "%{count} messages"
+        sort_by:
+          unread_on_top: "Unread on top"
+          newest_on_top: "Newest on top"
+          oldest_on_top: "Oldest on top"
     incomplete_profile:
       complete_link_text: Complete your %{organisation_type} profile
       heading: Complete your %{organisation_type} profile
