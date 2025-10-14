@@ -13,7 +13,7 @@ RSpec.describe "Publishers can send reminder for pending self-disclosure request
   end
 
   context "when view 47h after request creation" do
-    let(:updated_at) { 47.hours.ago }
+    let(:updated_at) { 1.business_day.ago }
 
     scenario "page has no reminder button" do
       run_with_publisher(publisher) do
@@ -24,13 +24,13 @@ RSpec.describe "Publishers can send reminder for pending self-disclosure request
   end
 
   describe "48h after request creation" do
-    let(:updated_at) { 48.hours.ago }
+    let(:updated_at) { 2.business_days.ago }
 
     before do
       ActionMailer::Base.deliveries.clear
     end
 
-    scenario "send reminder", :js do
+    scenario "send reminder" do
       run_with_publisher(publisher) do
         publisher_ats_self_disclosure_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
         expect(publisher_ats_self_disclosure_page).to have_reminder_btn
