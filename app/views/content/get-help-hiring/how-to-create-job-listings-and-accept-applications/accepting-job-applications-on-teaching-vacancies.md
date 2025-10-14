@@ -120,7 +120,7 @@ When you use the Teaching Vacancies application form to list your school's jobs,
 
 ### Accessing applications through your notifications
 
-When you receive a new application for an (active job listing)[https://teaching-vacancies.service.gov.uk/publishers/sign-in], you will get a notification. If you are signed in to Teaching Vacancies, you can view your notifications by selecting 'Notifications' on the service navigation bar in the top right-hand corner of your screen.
+When you receive a new application for an [active job listing](https://teaching-vacancies.service.gov.uk/publishers/sign-in), you will get a notification. If you are signed in to Teaching Vacancies, you can view your notifications by selecting 'Notifications' on the service navigation bar in the top right-hand corner of your screen.
 
 When you get a notification about a new application, you can select the link within the notification to open the new application. You should receive an email summary of all the new notifications you receive from Teaching Vacancies once a day.
 
