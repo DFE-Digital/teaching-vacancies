@@ -12,9 +12,15 @@ class Publishers::Vacancies::JobApplications::SelfDisclosureController < Publish
   end
 
   def update
-    @job_application.self_disclosure_request.manually_completed!
+    if params.key?(:reminder)
+      Jobseekers::SelfDisclosureRequestReceivedNotifier.with(record: @job_application.self_disclosure_request).deliver
+      @job_application.self_disclosure_request.touch
+      flash[:success] = t("publishers.vacancies.job_applications.self_disclosure.reminder_sent")
+    else
+      @job_application.self_disclosure_request.manually_completed!
+      flash[:success] = t("jobseekers.job_applications.self_disclosure.review.completed.manually_completed")
+    end
 
-    flash[:success] = t("jobseekers.job_applications.self_disclosure.review.completed.manually_completed")
     redirect_to organisation_job_job_application_self_disclosure_path(@vacancy.id, @job_application.id)
   end
 

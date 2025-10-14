@@ -3,6 +3,7 @@ en:
     vacancies:
       job_applications:
         self_disclosure:
+          reminder_sent: Reminder email has been sent to the candidate. Contact the candidate directly if you do not receive a response.
           show:
             communication_history: Communication history
             page_title: Self-disclosure form
