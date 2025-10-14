@@ -81,6 +81,9 @@ RSpec.describe "Publishers can send messages to job applicants" do
 
       before do
         visit messages_organisation_job_job_application_path(vacancy.id, job_application.id)
+
+        # wait for page load
+        find("a.tabs-component-navigation__link[aria-current='page']")
       end
 
       it "passes accessibility checks", :a11y do
