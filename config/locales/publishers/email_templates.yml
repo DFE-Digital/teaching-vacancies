@@ -2,63 +2,50 @@ en:
   activerecord:
     errors:
       models:
-        email_template:
+        message_template:
           attributes:
             name:
               blank: Enter a template name
-            from:
-              blank: Enter a from description
-            subject:
-              blank: Enter a subject for the email
+            content:
+              blank: Enter some content
   publishers:
     email_templates:
       new:
-        page_title: New email template
-        heading: New email template
-        caption: Send rejection emails
+        page_title: New message template
+        heading: New message template
+        caption: Send rejection messages
       edit:
-        page_title: New email template
-        heading: Edit email template
-        caption: Send rejection emails
+        page_title: New message template
+        heading: Edit message template
+        caption: Send rejection messages
       create:
-        success: Email template created
+        success: Message template created
       update:
-        success: Email template updated
+        success: Message template updated
     vacancies:
       batch_emails:
-        do_not_reply: Do not reply to this email. Please respond to %{contact_email}
         select_rejection_template:
-          page_title: Send rejection emails
-          caption: Send rejection emails
-          select_email_template: Select email template
+          page_title: Send rejection messages
+          caption: Send rejection messages
+          select_email_template: Select message template
           edit_template: Edit template
           delete_template: Delete template
         prepare_rejection_emails:
-          page_title: Edit and send emails
+          page_title: Edit and send messages
           caption: Reject candidates
-          heading: Edit and send emails
-          edit_email: Edit email
+          how_will_message_be_sent: "How will this message be sent?"
+          message_sent_description: "Candidates will receive a copy of this message to their email and can also view the message when signed in to their Teaching Vacancies account."
+          heading: Edit and send messages
+          edit_email: Edit message
           to: "To"
-          email_copy: "Email a copy to %{email}"
           candidate_name: "<Candidate>"
-          email_preview: View email preview
         send_rejection_emails:
-          rejections_sent: Rejection emails sent
+          rejections_sent: Rejection messages sent
 
   helpers:
     label:
-      email_template:
+      message_template:
         name: Template name
         from: From
         subject: Subject
         content: Message
-      publishers_job_application_rejection_email_form:
-        contact_email: How should the applicant contact you? (Optional)
-        include_school_logo_options:
-          "true": Include school or trust logo in email
-    hint:
-      publishers_job_application_rejection_email_form:
-        contact_email: >-
-          Applicants will not be able to contact you through Teaching Vacancies.
-          Provide an email you would like the applicant to contact you through and this will be added to your email.
-

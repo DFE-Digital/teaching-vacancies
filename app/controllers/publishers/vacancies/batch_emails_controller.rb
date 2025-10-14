@@ -9,21 +9,18 @@ module Publishers
 
     def prepare_rejection_emails
       email_template = email_templates.find_by(id: params[:email_template])
-      @form = JobApplication::RejectionEmailForm.new(subject: email_template.subject,
-                                                     content: email_template.content,
-                                                     contact_email: current_publisher.email)
+      @message = if email_template.present?
+                   PublisherMessage.new content: email_template.content
+                 else
+                   PublisherMessage.new
+                 end
     end
 
     def send_rejection_emails
-      form = JobApplication::RejectionEmailForm.new(send_rejection_emails_params)
-
-      bcc = [form.contact_email] if form.email_copy
-      logo_org = vacancy.organisation if form.include_school_logo
-
       @job_applications.each do |job_application|
-        BatchRejectionMailer.send_rejection(from: form.from, logo_org: logo_org, bcc: bcc, subject: form.subject,
-                                            contact_email: form.contact_email,
-                                            content: form.content, job_application: job_application).deliver_later
+        conversation = job_application.conversations.build
+        conversation.publisher_messages.build(send_rejection_emails_params.merge(sender: current_publisher))
+        conversation.save!
         job_application.update!(status: :rejected)
       end
 
@@ -38,11 +35,11 @@ module Publishers
     end
 
     def email_templates
-      current_publisher.email_templates.rejection
+      current_publisher.message_templates.rejection
     end
 
     def send_rejection_emails_params
-      params.expect(publishers_job_application_rejection_email_form: %i[subject contact_email from content include_school_logo email_copy])
+      params.expect(publisher_message: %i[content])
     end
   end
 end

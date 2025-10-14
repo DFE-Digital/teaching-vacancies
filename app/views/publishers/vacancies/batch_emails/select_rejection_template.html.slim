@@ -6,7 +6,7 @@ span.govuk-caption-l = t(".caption")
 h1.govuk-heading-l class="govuk-!-display-inline"
   = t(".select_email_template")
 
-p
+p.govuk-body
   - @email_templates.each do |template|
     .govuk-button-group
       = govuk_link_to template.name, prepare_rejection_emails_organisation_job_batch_email_path(vacancy.id, @batch_email.id,
@@ -22,6 +22,9 @@ p
     hr
 
   = form_with(url: new_organisation_email_template_path, method: :get) do |f|
-    = f.govuk_submit t("buttons.create_new_template"), secondary: true
+    .govuk-button-group
+      = f.govuk_submit t("buttons.create_new_template")
+      = govuk_button_link_to t("buttons.send_without_template"),
+        prepare_rejection_emails_organisation_job_batch_email_path(vacancy.id, @batch_email.id, job_applications: @job_applications.map(&:id)), secondary: true
 
-  p = govuk_link_to t("buttons.cancel"), organisation_job_job_applications_path(vacancy.id, anchor: :not_considering)
+  p.govuk-body = govuk_link_to t("buttons.cancel"), organisation_job_job_applications_path(vacancy.id, anchor: :not_considering)

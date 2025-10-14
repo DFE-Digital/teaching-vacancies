@@ -1,7 +1,0 @@
-p.govuk-body
-  - if logo_path.present?
-    p = logo_path
-  = "Dear #{name}"
-== content
-- if contact_email.present?
-  = t("publishers.vacancies.batch_emails.do_not_reply", contact_email: contact_email)

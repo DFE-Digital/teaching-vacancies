@@ -35,11 +35,11 @@ module Publishers
     private
 
     def email_templates
-      current_publisher.email_templates.rejection
+      current_publisher.message_templates.rejection
     end
 
     def email_template_params
-      params.expect(email_template: %i[name from subject content])
+      params.expect(message_template: %i[name content])
     end
   end
 end

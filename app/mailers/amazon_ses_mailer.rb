@@ -15,15 +15,16 @@ class AmazonSesMailer < ActionMailer::Base
 
   default from: "ats.teachingvacancies@service.education.gov.uk"
 
-  def send_email(to:, subject:, bcc: [])
+  def send_email(to:, subject:)
     @to = to
-    mail(to: to, subject: subject, bcc: bcc, delivery_method_options: {
+    mail(to: to, subject: subject, delivery_method_options: {
       user_name: ENV.fetch("SMTP_USERNAME", nil),
       password: ENV.fetch("SMTP_PASSWORD", nil),
       address: "email-smtp.eu-west-2.amazonaws.com",
       port: 587,
     }) do |format|
-      format.html
+      format.text
+      # format.html
     end
   end
 
