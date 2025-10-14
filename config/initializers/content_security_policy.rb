@@ -44,7 +44,7 @@ Rails.application.configure do
                        :https,
                        :data,
                        "https://2673654.fls.doubleclick.net", # Floodlight
-                       "https://ad.doubleclick.ne", # Floodlight
+                       "https://ad.doubleclick.net", # Floodlight
                        "https://ade.googlesyndication.com", # Floodlight
                        "https://adservice.google.com", # Floodlight
                        "https://www.googletagmanager.com", # Floodlight
