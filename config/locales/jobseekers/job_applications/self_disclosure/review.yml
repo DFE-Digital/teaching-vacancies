@@ -7,6 +7,8 @@ en:
             line_1: Once the self-disclosure form is received you will be able to view it on this page. You will be able to send a reminder one week after the request.
             line_2: If the request is more urgent, you should reach out to the applicant directly. If you do not receive the self-disclosure form within one week, you will be able to send a reminder.
             manually_complete: Manually mark as complete
+            inset: Once the self-disclosure form is received you will be able to view it on this page. If you do not receive the self-disclosure form within 48 hours, you will be able to send a reminder.
+            reminder: Send a reminder
             collect_through_tv: Would you like to collect this self-disclosure form through Teaching Vacancies?
 
           completed:
