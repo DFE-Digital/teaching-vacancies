@@ -9,9 +9,7 @@ RSpec.describe "publishers/vacancies/job_applications/interview_datetime" do
 
   before do
     assign :form, form
-    without_partial_double_verification do
-      allow(view).to receive(:vacancy).and_return(job_applications.first.vacancy)
-    end
+    assign :vacancy, job_applications.first.vacancy
     render
   end
 

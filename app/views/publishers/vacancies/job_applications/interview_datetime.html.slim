@@ -6,7 +6,7 @@ h1.govuk-heading-l class="govuk-!-display-inline"
 
 p.govuk-body = t(".inset")
 
-= form_with(model: @form, url: offer_organisation_job_job_applications_path(vacancy.id), method: :post) do |f|
+= form_with(model: @form, url: offer_organisation_job_job_applications_path(@vacancy.id), method: :post) do |f|
   = f.govuk_error_summary
   = hidden_field_tag :form_name, @form.name
   = f.hidden_field :origin
@@ -18,4 +18,4 @@ p.govuk-body = t(".inset")
 
   .govuk-button-group
     = f.govuk_submit t("buttons.save_and_continue"), class: "update-status"
-    = govuk_button_link_to t("buttons.cancel"), organisation_job_job_applications_path(vacancy.id, anchor: :interviewing), secondary: true
+    = govuk_button_link_to t("buttons.cancel"), organisation_job_job_applications_path(@vacancy.id, anchor: :interviewing), secondary: true

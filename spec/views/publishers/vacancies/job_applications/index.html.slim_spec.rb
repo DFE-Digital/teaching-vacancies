@@ -33,7 +33,7 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
     assign :vacancy, vacancy
     assign :form, Publishers::JobApplication::TagForm.new
 
-    assign :job_applications, submitted + unsuccessful + shortlisted + list_offered + list_declined + list_interviewing + list_unsuccessful_interview
+    assign :job_applications, submitted + unsuccessful + shortlisted + list_offered + list_declined + interviewing + list_unsuccessful_interview
 
     render
   end
