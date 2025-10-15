@@ -116,11 +116,11 @@ module Publishers
         if @form.valid?
           yield @form
         else
-          handle_tag_form_errors(@form)
+          handle_form_errors(@form)
         end
       end
 
-      def handle_tag_form_errors(form)
+      def handle_form_errors(form)
         case form.errors.details
         in { status: }      then render "tag"
         in { offered_at: }  then render "offered_date"
