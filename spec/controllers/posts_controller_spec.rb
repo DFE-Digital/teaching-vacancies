@@ -13,7 +13,7 @@ RSpec.describe PostsController do
     end
 
     context "hiring staff guides" do
-      let(:post_names) { %w[how-to-create-job-listings-and-accept-applications how-to-setup-your-account] }
+      let(:post_names) { %w[communicating-with-jobseekers how-to-create-job-listings-and-accept-applications how-to-setup-your-account] }
 
       it "finds the subcategories for jobseeker guides" do
         get :index, params: { section: "get-help-hiring" }
