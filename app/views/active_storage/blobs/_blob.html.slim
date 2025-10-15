@@ -6,7 +6,5 @@ figure class="attachment attachment--#{blob.representable? ? "preview" : "file"}
     - if caption = blob.try(:caption)
       = caption
     - else
-      span class="attachment__name"
-        = "Filename: #{blob.filename}"
-      span class="attachment__size"
-        = "Sizeable: #{number_to_human_size blob.byte_size}"
+      = tag.div do
+        = open_in_new_tab_link_to "#{blob.filename} - #{number_to_human_size blob.byte_size}", rails_blob_path(blob), class: "supporting-document-component__link"
