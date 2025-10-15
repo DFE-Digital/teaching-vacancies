@@ -1,4 +1,8 @@
 class Publishers::JobApplication::InterviewDatetimeForm
+  # `InterviewDatetimeForm` operates on individual JobApplication instances only.
+  # The form signature (job_applications) is consistent with other tag action form classes
+  # in order for this class to participate in the same protocol.
+
   include ActiveModel::Model
   include ActiveModel::Validations
   include ActiveModel::Attributes
