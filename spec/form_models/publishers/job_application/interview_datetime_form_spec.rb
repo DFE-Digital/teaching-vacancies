@@ -35,7 +35,7 @@ module Publishers
       describe "validations" do
         context "when validating all" do
           before do
-            form.validate_status = true
+            form.validate_all_attributes = true
             form.valid?
           end
 
@@ -72,7 +72,7 @@ module Publishers
 
         context "when validating only job_application" do
           before do
-            form.validate_status = nil
+            form.validate_all_attributes = nil
             form.valid?
           end
 

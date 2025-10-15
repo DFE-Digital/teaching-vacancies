@@ -5,10 +5,10 @@ class Publishers::JobApplication::TagForm
   include ActiveRecord::AttributeAssignment
 
   attribute :status, :string
-  attr_accessor :job_applications, :origin, :validate_status
+  attr_accessor :job_applications, :origin, :validate_all_attributes
 
   validates_length_of :job_applications, minimum: 1
-  validates_presence_of :status, if: -> { validate_status }
+  validates_presence_of :status, if: -> { validate_all_attributes }
   validates_inclusion_of :status, in: JobApplication.statuses.except("draft").keys, if: -> { status.present? }
 
   def name

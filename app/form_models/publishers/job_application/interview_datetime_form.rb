@@ -11,10 +11,10 @@ class Publishers::JobApplication::InterviewDatetimeForm
   attribute :interview_date, :date_or_hash
   attribute :interview_time, :time_or_string
 
-  attr_accessor :job_applications, :origin, :validate_status
+  attr_accessor :job_applications, :origin, :validate_all_attributes
 
-  validates :interview_date, date: {}, if: -> { validate_status }
-  validates :interview_time, time: {}, if: -> { validate_status }
+  validates :interview_date, date: {}, if: -> { validate_all_attributes }
+  validates :interview_time, time: {}, if: -> { validate_all_attributes }
   validate :job_application_status
 
   def interviewing_at
@@ -30,7 +30,7 @@ class Publishers::JobApplication::InterviewDatetimeForm
   end
 
   def attributes
-    if validate_status.nil? || !errors.empty?
+    if validate_all_attributes || !errors.empty?
       {}
     else
       { interviewing_at: }

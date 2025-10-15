@@ -47,7 +47,7 @@ module Publishers
       end
 
       def update_tag
-        with_valid_form(@job_applications, validate_status: true) do |form|
+        with_valid_form(@job_applications, validate_all_attributes: true) do |form|
           case form.status
           when "interviewing" then redirect_to_references_and_self_disclosure(form.job_applications)
           when "offered"      then render_offered_form(form.job_applications, form.origin)
@@ -60,7 +60,7 @@ module Publishers
       end
 
       def offer
-        with_valid_form(@job_applications, validate_status: true) do |form|
+        with_valid_form(@job_applications, validate_all_attributes: true) do |form|
           form.job_applications.each { it.update!(form.attributes) }
           redirect_to organisation_job_job_applications_path(@vacancy.id, anchor: form.origin)
         end
@@ -103,14 +103,14 @@ module Publishers
         @job_applications = @vacancy.job_applications.not_draft.order(updated_at: :desc)
       end
 
-      def with_valid_form(job_applications, validate_status: false)
+      def with_valid_form(job_applications, validate_all_attributes: false)
         form_class = FORMS.fetch(params[:form_name], Publishers::JobApplication::TagForm)
         form_params = params
                         .fetch(ActiveModel::Naming.param_key(form_class), {})
                         .permit(:origin, :status, :offered_at, :declined_at, :interview_feedback_received, :interview_feedback_received_at, :interview_date, :interview_time, { job_applications: [] })
         form_params[:job_applications] = job_applications.select { |ja| Array(form_params[:job_applications]).include?(ja.id) }
 
-        form_params[:validate_status] = validate_status
+        form_params[:validate_all_attributes] = validate_all_attributes
 
         @form = form_class.new(form_params)
         if @form.valid?
