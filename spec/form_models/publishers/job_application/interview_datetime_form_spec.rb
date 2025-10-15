@@ -9,6 +9,20 @@ module Publishers
       let(:interview_date) { { 1 => 2025, 2 => 9, 3 => 1 } }
       let(:interview_time) { "10:45am" }
 
+      describe ".attributes" do
+        subject { form.attributes }
+
+        context "when validate_all_attributes is truthy" do
+          before { form.validate_all_attributes = true }
+
+          it { is_expected.to include(interviewing_at: Time.zone.local(2025, 9, 1, 10, 45)) }
+        end
+
+        context "when validate_all_attributes is falsey" do
+          it { is_expected.to be_empty }
+        end
+      end
+
       describe ".interview_date" do
         it { expect(form.interview_date).to eq(Date.new(2025, 9, 1)) }
       end

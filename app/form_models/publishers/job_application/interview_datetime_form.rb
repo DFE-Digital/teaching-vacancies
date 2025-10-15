@@ -30,10 +30,10 @@ class Publishers::JobApplication::InterviewDatetimeForm
   end
 
   def attributes
-    if validate_all_attributes || !errors.empty?
-      {}
-    else
+    if validate_all_attributes && errors.empty?
       { interviewing_at: }
+    else
+      {}
     end
   end
 
