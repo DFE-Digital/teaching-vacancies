@@ -368,5 +368,56 @@ RSpec.describe "Publishers can view candidate messages" do
         end
       end
     end
+
+    context "when publisher is a MAT searching for messages" do
+      let(:trust) { create(:trust) }
+      let(:st_peters_school) { create(:school, school_groups: [trust]) }
+      let(:st_johns_school) { create(:school, school_groups: [trust]) }
+      let(:mat_publisher) { create(:publisher, organisations: [trust]) }
+
+      # Create vacancies that are associated with BOTH the trust AND a member school
+      # This reproduces the real-world scenario where a MAT publishes vacancies
+      # that are also associated with individual schools
+      let(:head_teacher_vacancy) { create(:vacancy, :live, job_title: "Head Teacher", organisations: [trust, st_peters_school]) }
+      let(:deputy_head_vacancy) { create(:vacancy, :live, job_title: "Deputy Head", organisations: [trust, st_johns_school]) }
+
+      let(:head_application) { create(:job_application, vacancy: head_teacher_vacancy, jobseeker: jobseeker, status: "interviewing") }
+      let(:deputy_application) { create(:job_application, vacancy: deputy_head_vacancy, jobseeker: jobseeker, status: "interviewing") }
+
+      let!(:head_conversation) { create(:conversation, job_application: head_application) }
+      let!(:deputy_conversation) { create(:conversation, job_application: deputy_application) }
+
+      before do
+        # Create messages with common content that will be searched
+        create(:jobseeker_message, conversation: head_conversation, sender: jobseeker, content: "Hi, looking forward to the interview")
+        create(:jobseeker_message, conversation: deputy_conversation, sender: jobseeker, content: "Hi, thank you for the opportunity")
+
+        login_publisher(publisher: mat_publisher, organisation: trust)
+      end
+
+      after { logout }
+
+      it "does not show duplicate conversations when searching for common message content" do
+        visit publishers_candidate_messages_path
+
+        expect(page).to have_content("2 messages")
+        conversation_rows = page.all("table tbody tr")
+        expect(conversation_rows.count).to eq(2)
+
+        # Search for common content that appears in both messages
+        fill_in "keyword", with: "Hi"
+        click_button "Search"
+
+        expect(page).to have_content("2 results found for 'Hi'")
+
+        conversation_rows = page.all("table tbody tr")
+        expect(conversation_rows.count).to eq(2)
+
+        within("table tbody") do
+          expect(page).to have_content("Head Teacher")
+          expect(page).to have_content("Deputy Head")
+        end
+      end
+    end
   end
 end

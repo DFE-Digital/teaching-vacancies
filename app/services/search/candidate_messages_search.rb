@@ -16,7 +16,14 @@ class Search::CandidateMessagesSearch
   end
 
   def conversations
-    @conversations ||= scope
+    @conversations ||= if keyword.present?
+                         # Deduplicate conversations that appear multiple times due to MAT/school relationships.
+                         # We can't use DISTINCT at the SQL level because pg_search adds rank columns that
+                         # conflict with PostgreSQL's DISTINCT/ORDER BY requirements, so we dedupe in Ruby.
+                         scope.to_a.uniq(&:id)
+                       else
+                         scope
+                       end
   end
 
   def total_count
