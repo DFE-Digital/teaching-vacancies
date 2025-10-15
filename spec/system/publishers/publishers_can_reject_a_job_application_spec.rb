@@ -67,15 +67,16 @@ RSpec.describe "Publishers can reject a job application" do
         expect(email_template.reload.content.body.to_s).to include(content)
       end
 
-      scenario "creating a new template" do
+      scenario "creating a new template", :js do
         click_on "Create new template"
         click_on "Save template"
         expect(page).to have_content "Enter a template name"
 
-        fill_in "Template name", with: Faker::Adjective.positive
-        fill_in_trix_editor "message_template_content", with: content
-        click_on "Save template"
-        expect(MessageTemplate.count).to eq(1)
+        expect {
+          fill_in "Template name", with: Faker::Adjective.positive
+          fill_in_trix_editor "message_template_content", with: content
+          click_on "Save template"
+        }.to change(MessageTemplate, :count).by(1)
       end
 
       scenario "deleting a template" do
