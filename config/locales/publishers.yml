@@ -76,7 +76,7 @@ en:
           no_messages: "No messages yet."
           no_archived_messages: "No archived messages yet."
         search:
-          label: "Find a candidate"
+          label: "Find a messge"
           hint: "Search by candidate name, job title, or find messages containing specific content"
           placeholder: "Enter candidate name, job title, or message content"
           submit: "Search"
