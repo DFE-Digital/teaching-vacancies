@@ -50,12 +50,12 @@ en:
         publishers/job_application/interview_datetime_form:
           attributes:
             job_application:
-              invalid: Candidate must be interviewing state
+              invalid: Candidate must be in the interviewing state
             interview_date:
               blank: You must enter an interview date
               invalid: Enter a valid date, for example, 27 3 2007
             interview_time:
-              blank: You must an interview time
+              blank: You must enter an interview time
               invalid: Enter a valid time, for example, 9am or 2:30pm
 
         publishers/vacancies/job_applications/mark_reference_as_received_form:
