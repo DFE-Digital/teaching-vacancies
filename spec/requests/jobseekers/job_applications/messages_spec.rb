@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Jobseekers::JobApplications::Messages" do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, :live) }
-  let(:job_application) { create(:job_application, :submitted, jobseeker: jobseeker, vacancy: vacancy) }
+  let(:job_application) { create(:job_application, :submitted, jobseeker: jobseeker, vacancy: vacancy, status: "interviewing") }
 
   before do
     sign_in(jobseeker, scope: :jobseeker)

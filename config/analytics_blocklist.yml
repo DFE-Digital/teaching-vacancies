@@ -236,3 +236,5 @@
   - area
   - geopoint
   - radius_in_metres
+  :conversations:
+    - searchable_content

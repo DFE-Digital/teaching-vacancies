@@ -2,12 +2,19 @@ class Publishers::CandidateMessagesController < Publishers::BaseController
   def index
     @tab = params[:tab] || "inbox"
     organisation_ids = current_publisher.accessible_organisations(current_organisation).map(&:id)
+    @search_form = Publishers::CandidateMessagesSearchForm.new(search_params)
 
     base_conversations = Conversation.for_organisations(organisation_ids)
                                     .includes(job_application: :vacancy, messages: :sender)
-                                    .ordered_by_unread_and_latest_message
 
-    @conversations = @tab == "archive" ? base_conversations.archived : base_conversations.inbox
+    filtered_conversations = @tab == "archive" ? base_conversations.archived : base_conversations.inbox
+
+    @search = Search::CandidateMessagesSearch.new(
+      @search_form.to_hash,
+      scope: filtered_conversations.ordered_by_unread_and_latest_message,
+    )
+
+    @conversations = @search.conversations
 
     @inbox_count = Conversation.for_organisations(organisation_ids)
                                .inbox
@@ -28,5 +35,11 @@ class Publishers::CandidateMessagesController < Publishers::BaseController
     else
       redirect_to publishers_candidate_messages_path, notice: t(".unarchived")
     end
+  end
+
+  private
+
+  def search_params
+    params.permit(:keyword)
   end
 end
