@@ -7,6 +7,7 @@ en:
       offered_at: Offer date
       declined_at: Decline date
       interview_feedback_received_at: Feedback date
+      interviewing_at: Interview date
     buttons:
       download: Download selected
       update_status: Update application status
@@ -31,10 +32,12 @@ en:
       hint: ""
     interviewing:
       label: "Interviewing (%{count})"
-      heading: Interviewing applications
+      heading: Candidates invited to interview
       none: No applications have been marked for interview yet
       pre_interview_checks: Pre-interview checks
-      hint: ""
+      add_interview_datetime: Add interview date and time
+      hint: >-
+        Adding or changing the interview date and time on this page is for internal reference only. It will not be shared with the candidate.
     offered:
       label: "Job offered (%{count})"
       heading: Candidate offered a job

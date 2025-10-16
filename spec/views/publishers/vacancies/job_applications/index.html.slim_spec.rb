@@ -17,19 +17,23 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
     ]
   end
   let(:shortlisted) { build_stubbed_list(:job_application, 1, :status_shortlisted, vacancy:) }
+  let(:interviewing) do
+    [
+      build_stubbed(:job_application, :status_interviewing, vacancy:),
+      build_stubbed(:job_application, :status_interviewing, vacancy:, interviewing_at: nil),
+    ]
+  end
 
   before do
     list_offered = build_stubbed_list(:job_application, 1, :status_offered, vacancy:)
     list_declined = build_stubbed_list(:job_application, 1, :status_declined, vacancy:)
-
-    list_interviewing = build_stubbed_list(:job_application, 1, :status_interviewing, vacancy:)
     list_unsuccessful_interview = build_stubbed_list(:job_application, 1, :status_unsuccessful_interview, vacancy:)
 
     assign :current_organisation, organisation
     assign :vacancy, vacancy
     assign :form, Publishers::JobApplication::TagForm.new
 
-    assign :job_applications, submitted + unsuccessful + shortlisted + list_offered + list_declined + list_interviewing + list_unsuccessful_interview
+    assign :job_applications, submitted + unsuccessful + shortlisted + list_offered + list_declined + interviewing + list_unsuccessful_interview
 
     render
   end
@@ -80,6 +84,32 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
       it "shows blue submitted tag" do
         within(".application-#{status}") do
           expect(rendered).to have_css(".govuk-tag--blue", text: "unread")
+        end
+      end
+    end
+
+    describe "interviwing tab" do
+      subject(:tab) { Capybara.string(rendered).find(".tab-interviewing") }
+
+      it "renders corretly" do
+        expect(tab).to have_text("Candidates invited to interview")
+        expect(tab).to have_text("Adding or changing the interview date and time on this page is for internal reference only. It will not be shared with the candidate.")
+        expect(tab).to have_text("Interview date")
+      end
+
+      context "when candadite interviewing_at is sent" do
+        let(:candidate) { interviewing.first }
+
+        it "show the interviewing_at date" do
+          expect(tab).to have_text(candidate.interviewing_at.to_fs)
+        end
+      end
+
+      context "when candidate interviewing_at is missing" do
+        let(:candidate) { interviewing.last }
+
+        it "show the interviewing_at date" do
+          expect(tab).to have_link("Add interview date and time", href: tag_organisation_job_job_applications_path(candidate.vacancy.id, params: { publishers_job_application_tag_form: { origin: :interviewing, job_applications: [candidate.id] }, tag_action: "interview_datetime" }))
         end
       end
     end
