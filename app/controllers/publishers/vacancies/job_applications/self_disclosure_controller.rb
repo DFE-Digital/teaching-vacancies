@@ -13,8 +13,7 @@ class Publishers::Vacancies::JobApplications::SelfDisclosureController < Publish
 
   def update
     if params.key?(:reminder)
-      Jobseekers::SelfDisclosureRequestReceivedNotifier.with(record: @job_application.self_disclosure_request).deliver
-      @job_application.self_disclosure_request.touch
+      @job_application.self_disclosure_request.send_reminder!
       flash[:success] = t("publishers.vacancies.job_applications.self_disclosure.reminder_sent")
     else
       @job_application.self_disclosure_request.manually_completed!

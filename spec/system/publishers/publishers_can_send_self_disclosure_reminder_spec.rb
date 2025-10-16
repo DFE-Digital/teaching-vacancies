@@ -12,7 +12,7 @@ RSpec.describe "Publishers can send reminder for pending self-disclosure request
     create(:self_disclosure, self_disclosure_request:)
   end
 
-  context "when view 47h after request creation" do
+  context "when viewed 1 business days after request sent" do
     let(:updated_at) { 1.business_day.ago }
 
     scenario "page has no reminder button" do
@@ -23,12 +23,8 @@ RSpec.describe "Publishers can send reminder for pending self-disclosure request
     end
   end
 
-  describe "48h after request creation" do
+  context "when viewed 2 business days after request sent" do
     let(:updated_at) { 2.business_days.ago }
-
-    before do
-      ActionMailer::Base.deliveries.clear
-    end
 
     scenario "send reminder" do
       run_with_publisher(publisher) do
