@@ -84,7 +84,7 @@ RSpec.describe "jobseekers/job_applications/index" do
   end
 
   describe "self disclosure request tag" do
-    let(:tag_text) { "action required" }
+    let(:tag_text) { "needs action" }
     let(:job_applications) { [job_application] }
 
     context "when self_disclosure_request sent" do

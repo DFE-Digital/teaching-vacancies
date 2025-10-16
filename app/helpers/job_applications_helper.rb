@@ -21,7 +21,7 @@ module JobApplicationsHelper
     withdrawn: "withdrawn",
     interviewing: "interviewing",
     unsuccessful_interview: "unsuccessful",
-    action_required: "action required",
+    action_required: "needs action",
     offered: "offered",
     declined: "declined",
   }.freeze
