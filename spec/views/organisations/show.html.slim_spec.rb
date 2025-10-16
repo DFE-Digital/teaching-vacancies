@@ -3,9 +3,12 @@ require "rails_helper"
 RSpec.describe "organisations/show", type: :view do
   subject(:show_view) { Capybara.string(rendered) }
 
+  let(:live_group_vacancies_count) { 0 }
+
   before do
     assign :organisation, organisation
     assign :vacancies, vacancies
+    assign :live_group_vacancies_count, live_group_vacancies_count
     render
   end
 
@@ -106,6 +109,22 @@ RSpec.describe "organisations/show", type: :view do
         .to have_sibling("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
       expect(show_view.find("h3 span", text: vacancy_without_apply.job_title))
         .to have_no_sibling("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
+    end
+
+    context "when the trust has no extra live vacancies" do
+      let(:live_group_vacancies_count) { vacancies.size }
+
+      it "doesn't show the trust hyperlink to vacancies outside the school" do 
+        expect(show_view).to have_no_link("View #{vacancies.size} jobs across #{school_group.name}", href: organisation_path(school_group))
+      end
+    end
+
+    context "when the trust has extra live vacancies" do
+      let(:live_group_vacancies_count) { vacancies.size + 1 }
+
+      it "shows the trust hyperlink to vacancies outside the school" do
+        expect(show_view).to have_link("View 3 jobs across #{school_group.name}", href: organisation_path(school_group))
+      end
     end
   end
 end

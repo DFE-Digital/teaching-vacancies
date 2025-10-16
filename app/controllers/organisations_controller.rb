@@ -8,6 +8,9 @@ class OrganisationsController < ApplicationController
     # rubocop:disable Performance/Sum
     # bring trust jobs to the front of the list
     @vacancies = @organisation.all_vacancies.live.partition { |v| v.organisation.trust? }.reduce(&:+)
+    if @organisation.school?
+      @live_group_vacancies_count = @organisation.trust.all_active_vacancies.live.count
+    end
     # rubocop:enable Performance/Sum
   end
 
