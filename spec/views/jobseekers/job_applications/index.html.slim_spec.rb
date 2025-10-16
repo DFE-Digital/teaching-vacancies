@@ -77,7 +77,7 @@ RSpec.describe "jobseekers/job_applications/index" do
         it "renders expired applications group last" do
           expect(groups.last).to have_css(selectors[:job_application_header], text: vacancy_expired.job_title)
           expect(groups.last.find(selectors[:job_application_header])["href"]).to eq(jobseekers_job_application_apply_path(expired_draft))
-          expect(groups.last).to have_css(selectors[:job_application_tag], text: "deadline passed")
+          expect(groups.last).to have_css(selectors[:job_application_tag], text: "job closed")
         end
       end
     end

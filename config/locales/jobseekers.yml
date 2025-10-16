@@ -677,7 +677,7 @@ en:
         application_deadline: Application deadline
         apply: Apply for this job
         continue: Continue application
-        deadline_passed: Deadline passed
+        deadline_passed: job closed
         delete: Delete
         link_find: Find a job
         page_title: Saved jobs

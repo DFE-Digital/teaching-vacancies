@@ -45,7 +45,7 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
           end
         end
 
-        it "shows deadline passed label for expired jobs" do
+        it "shows job closed label for expired jobs" do
           within ".card-component:nth-child(1)" do
             expect(page).to have_css(".card-component__body", text: I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
           end
