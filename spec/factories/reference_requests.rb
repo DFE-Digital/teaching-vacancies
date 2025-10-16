@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :reference_request do
     referee
     token { SecureRandom.uuid }
-    status { :created }
+    status { :requested }
     email { Faker::Internet.email(domain: "contoso.com") }
     marked_as_complete { false }
 
@@ -15,8 +15,8 @@ FactoryBot.define do
     end
   end
 
-  trait :reference_requested do
-    status { :requested }
+  trait :not_sent do
+    status { :created }
   end
 
   trait :reference_received do

@@ -87,6 +87,6 @@ class SelfDisclosurePresenter
   end
 
   def row(field)
-    [t(field), format(model[field])]
+    [t(field), format(model.public_send(field))]
   end
 end

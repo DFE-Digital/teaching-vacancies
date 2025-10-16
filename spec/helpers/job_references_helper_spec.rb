@@ -12,7 +12,7 @@ RSpec.describe JobReferencesHelper do
     end
 
     context "when not sent" do
-      let(:reference_request) { build_stubbed(:reference_request) }
+      let(:reference_request) { build_stubbed(:reference_request, :not_sent) }
       let(:job_reference) { build_stubbed(:job_reference) }
 
       it "shows as created" do
