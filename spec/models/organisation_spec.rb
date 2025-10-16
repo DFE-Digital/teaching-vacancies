@@ -220,4 +220,10 @@ RSpec.describe Organisation do
       expect(Organisation.visible_to_jobseekers).not_to include(out_of_scope_school1, out_of_scope_school2, out_of_scope_school3, out_of_scope_school4, out_of_scope_school5, out_of_scope_school6, out_of_scope_school7)
     end
   end
+
+  describe "#live_group_vacancies" do
+    it "returns a blank relation" do
+      expect(described_class.new.live_group_vacancies).to be_empty
+    end
+  end
 end

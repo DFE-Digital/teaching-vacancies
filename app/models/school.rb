@@ -49,6 +49,16 @@ class School < Organisation
     gias_data["ReligiousCharacter (name)"]
   end
 
+  def live_group_vacancies
+    return Vacancy.none unless trust
+
+    org_ids = [trust.id] + trust.schools.pluck(:id)
+    Vacancy.joins(:organisation_vacancies)
+          .where(organisation_vacancies: { organisation_id: org_ids })
+          .merge(Vacancy.live)
+          .distinct
+  end
+
   def faith_school?
     religious_character.present?
   end

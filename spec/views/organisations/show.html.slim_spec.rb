@@ -107,5 +107,24 @@ RSpec.describe "organisations/show", type: :view do
       expect(show_view.find("h3 span", text: vacancy_without_apply.job_title))
         .to have_no_sibling("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
     end
+
+    context "when the trust has no extra live vacancies" do
+      it "doesn't show the trust hyperlink to vacancies outside the school" do
+        expect(show_view).to have_no_link("View #{vacancies.size} jobs across #{school_group.name}", href: organisation_path(school_group))
+      end
+    end
+
+    context "when the trust has extra live vacancies" do
+      before do
+        create(:vacancy, organisations: [school_group])
+        assign :organisation, organisation
+        assign :vacancies, vacancies
+        render
+      end
+
+      it "shows the trust hyperlink to vacancies outside the school" do
+        expect(show_view).to have_link("View 3 jobs across #{school_group.name}", href: organisation_path(school_group))
+      end
+    end
   end
 end

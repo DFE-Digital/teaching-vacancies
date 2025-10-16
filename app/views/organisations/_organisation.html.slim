@@ -119,8 +119,9 @@ h2.govuk-heading-m = t("organisations.show.vacancies.heading")
 - else
   p = t(".no_active_jobs")
 
-- if organisation.school? && organisation.part_of_a_trust? && organisation.trust.all_vacancies.count != vacancies.count
-  p = govuk_link_to t(".see_trust_jobs", name: organisation.trust.name, count: organisation.trust.all_vacancies.count), organisation_path(organisation.trust)
+- live_group_vacancies_count = organisation.live_group_vacancies.count
+- if live_group_vacancies_count.positive? && live_group_vacancies_count != vacancies.count
+  p = govuk_link_to t(".see_trust_jobs", name: organisation.trust.name, count: live_group_vacancies_count), organisation_path(organisation.trust)
 
 h2.govuk-heading-m = t("organisations.show.job_alert.heading")
 
