@@ -27,7 +27,8 @@ Rails.application.configure do
                        "https://conversions-config.reddit.com",
                        "https://snap.licdn.com",
                        "https://px.ads.linkedin.com",
-                       "https://www.recaptcha.net"
+                       "https://www.recaptcha.net",
+                       "https://*.s3.eu-west-2.amazonaws.com"
 
     policy.font_src    :self,
                        :data,
