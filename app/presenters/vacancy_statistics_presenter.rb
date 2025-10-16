@@ -1,6 +1,21 @@
 # frozen_string_literal: true
 
 class VacancyStatisticsPresenter
+  EQUAL_OPPORTUNITIES_LABELS = %w[
+    age_group
+    age_group_count
+    disability_status
+    disability_status_count
+    ethnicity
+    ethnicity_count
+    gender_identity
+    gender_identity_count
+    sexual_orientation
+    sexual_orientation_count
+    faith_group
+    faith_group_count
+  ].freeze
+
   def initialize(vacancies)
     @vacancies = vacancies
   end
@@ -16,6 +31,11 @@ class VacancyStatisticsPresenter
         sort_referrer_counts(value)
       end
     end
+  end
+
+  def equal_opportunities_csv
+    rows = equal_opportunities_data.flat_map { |_, stats| [stats.keys, stats.values] }
+    rows.each_with_index.map { |row, i| [EQUAL_OPPORTUNITIES_LABELS[i], *row] }
   end
 
   def referrer_counts

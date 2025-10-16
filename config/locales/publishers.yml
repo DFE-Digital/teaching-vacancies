@@ -351,7 +351,7 @@ en:
         applicant_gender: Gender
         applicant_orientation: Sexual orientation
         applicant_religion: Religion
-        application_counts: You have received %{count} applications this acedemic year.
+        application_counts: You have received %{count} applications this academic year.
         download_stats: >-
           Select 'Download statistics' to download all historical equal opportunities data.
       index:
