@@ -28,6 +28,11 @@ class SelfDisclosureRequest < ApplicationRecord
     end
   end
 
+  def send_reminder!
+    Jobseekers::SelfDisclosureRequestReceivedNotifier.with(record: itself).deliver
+    touch
+  end
+
   def completed?
     manually_completed? || received?
   end
