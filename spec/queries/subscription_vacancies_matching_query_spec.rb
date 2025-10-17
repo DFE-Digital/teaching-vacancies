@@ -562,6 +562,14 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
           expect(query_results).to contain_exactly(liverpool_vacancy.id, basildon_vacancy.id, st_albans_vacancy.id)
         end
       end
+
+      context "with a subscription containing blanks search criteria" do
+        let(:subscription) { create(:daily_subscription, location: "", radius: 10) }
+
+        it "filters out all the vacancies" do
+          expect(query_results).to be_empty
+        end
+      end
     end
 
     describe "combined criteria matching" do
