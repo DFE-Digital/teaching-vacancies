@@ -1,6 +1,14 @@
 class LocationPolygon < ApplicationRecord
   extend DistanceHelper
 
+  # British National Grid SRID (EPSG:27700) is a projected coordinate system used for mapping in Great Britain.
+  # It provides coordinates in meters, which is useful for distance calculations, which we need
+  # for radius-based searches.
+  # It is significantly more accurate for distance calculations in Great Britain that EPSG:3857 (Web Mercator).
+  # EPSG:3857 distort distances and areas, especially as you move away from the equator. What would cause a multiplier
+  # between 1.5x and 1.7x for radius/buffer distances in our case to get the matches we would expect.
+  BRITISH_NATIONAL_GRID_SRID = 27700 # rubocop:disable Style/NumericLiterals
+
   validates :name, presence: true
 
   # Scope that expands any polygons returned by subsequent scopes by the provided radius
@@ -38,27 +46,26 @@ class LocationPolygon < ApplicationRecord
   #
   # The "where & pick" approach is more efficient to retrieve a single computed value from the DB than loading the whole object.
   #
-  # Why buffering in SRID 3857 to then store it as SRID 4326?
-  # Buffering is best done in a projected coordinate system (like 3857) for accuracy, as it buffers in metres instead of degrees).
+  # Why buffering in British National Grid SRID (27700) to then store it as SRID 4326?
+  # Buffering is best done in a projected coordinate system as it buffers in metres instead of degrees).
   # After buffering, we transform to SRID: 4326 (lat/lon data). As we're doing spatial queries on this data, 4326 is more appropriate.
   def buffered_geometry_area(radius_in_metres)
-    wkb = self.class
-      .where(id: id)
-      .pick(
-        Arel.sql(
-          "ST_AsBinary(
-             ST_Transform(
-               ST_Buffer(
-                 ST_Transform(area::geometry, 3857),
-                 #{radius_in_metres}
-               ),
-             4326)
-           )",
-        ),
-      )
+    wkb = self.class.where(id: id).pick(
+      Arel.sql(
+        "ST_AsBinary(
+            ST_Transform(
+              ST_Buffer(
+                ST_Transform(area::geometry, #{BRITISH_NATIONAL_GRID_SRID}),
+                #{radius_in_metres}
+              ),
+            4326)
+          )",
+      ),
+    )
     return nil unless wkb
 
-    self.class.cartesian_factory_4326.parse_wkb(wkb) # Has to use this or the returned geometry gets a SRID: 0 even when set in the DB as 4326
+    # Has to use this or the returned geometry gets a SRID: 0 even when set in the DB as 4326
+    self.class.cartesian_factory_4326.parse_wkb(wkb)
   rescue RGeo::Error::InvalidGeometry
     nil
   end

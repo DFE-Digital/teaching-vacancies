@@ -3,29 +3,6 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "0ccf6bb0b0d6e78ab689319669e459d3cba162a841e3e178baa1fd32fc30c45c",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/models/location_polygon.rb",
-      "line": 53,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "Arel.sql(\"ST_AsBinary(\\n             ST_Transform(\\n               ST_Buffer(\\n                 ST_Transform(area::geometry, 3857),\\n                 #{radius_in_metres}\\n               ),\\n             4326)\\n           )\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "LocationPolygon",
-        "method": "buffered_geometry_area"
-      },
-      "user_input": "radius_in_metres",
-      "confidence": "Medium",
-      "cwe_id": [
-        89
-      ],
-      "note": "No user input. So no risk"
-    },
-    {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
       "fingerprint": "11470d12efb4e5d5b0f114eab8b39b18f1c89aba310d7ccf0a0a401058ad8403",
       "check_name": "SQL",
       "message": "Possible SQL injection",
@@ -139,6 +116,29 @@
       "note": ""
     },
     {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "58e03f427588782c955b58d0395db2ddd46bfc30885c13e8ec2b4b4767ce2b26",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/location_polygon.rb",
+      "line": 59,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "Arel.sql(\"ST_AsBinary(\\n            ST_Transform(\\n              ST_Buffer(\\n                ST_Transform(area::geometry, #{27700}),\\n                #{radius_in_metres}\\n              ),\\n            4326)\\n          )\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "LocationPolygon",
+        "method": "buffered_geometry_area"
+      },
+      "user_input": "radius_in_metres",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "Unscoped Find",
       "warning_code": 82,
       "fingerprint": "58f3df7253d0dfa30ca15dd14b17c6e3c5f8f5760b5363c3df49a692a1c74195",
@@ -225,7 +225,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/location_polygon.rb",
-      "line": 8,
+      "line": 16,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "select(\"*, ST_Buffer(area, #{convert_miles_to_metres((radius_in_miles or 0))}) AS area\")",
       "render_path": null,
