@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_15_125032) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_03_121224) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
-  enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
+  enable_extension "plpgsql"
   enable_extension "postgis"
   enable_extension "uuid-ossp"
 
@@ -305,7 +305,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_15_125032) do
     t.datetime "unsuccessful_interview_at"
     t.datetime "interview_feedback_received_at"
     t.boolean "interview_feedback_received"
-    t.datetime "rejected_at"
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
@@ -456,15 +455,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_15_125032) do
     t.index ["geopoint"], name: "index_markers_on_geopoint", using: :gist
     t.index ["organisation_id"], name: "index_markers_on_organisation_id"
     t.index ["vacancy_id"], name: "index_markers_on_vacancy_id"
-  end
-
-  create_table "message_templates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "publisher_id", null: false
-    t.integer "template_type", null: false
-    t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["publisher_id"], name: "index_message_templates_on_publisher_id"
   end
 
   create_table "messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -946,7 +936,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_15_125032) do
   add_foreign_key "local_authority_publisher_schools", "publisher_preferences"
   add_foreign_key "markers", "organisations"
   add_foreign_key "markers", "vacancies"
-  add_foreign_key "message_templates", "publishers"
   add_foreign_key "messages", "conversations"
   add_foreign_key "notes", "job_applications"
   add_foreign_key "notes", "publishers"
