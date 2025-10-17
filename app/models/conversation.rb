@@ -36,7 +36,7 @@ class Conversation < ApplicationRecord
 
   scope :search_ids_by_keyword, lambda { |q|
     search_by_keyword(q)
-      .unscope(:order) # remove ORDER BY pg_search_rank; otherwise it would reference a column we're about to drop
+      .unscope(:order) # remove ORDER BY pg_search_rank otherwise it would reference a column we're about to drop
       .reselect(:id)   # replace SELECT list so pg_search_rank/ts_rank aren’t selected
       .distinct        # can now use distinct to de-dupe because we don't have computed columns in select or order to conflict
   }

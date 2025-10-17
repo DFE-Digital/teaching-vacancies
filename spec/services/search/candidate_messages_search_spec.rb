@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Search::CandidateMessagesSearch do
-  subject(:search) { described_class.new(search_criteria, scope: base_scope) }
+  subject(:search) { described_class.new(search_criteria, sort: sort, scope: base_scope) }
 
   let(:organisation) { create(:school) }
   let(:publisher) { create(:publisher, organisations: [organisation]) }
@@ -21,6 +21,7 @@ RSpec.describe Search::CandidateMessagesSearch do
 
   let(:base_scope) { Conversation.for_organisations(organisation.id).inbox }
   let(:current_tab) { "inbox" }
+  let(:sort) { Publishers::CandidateMessagesSort.new.update(sort_by: "unread_on_top") }
 
   describe "with no search criteria" do
     let(:search_criteria) { {} }
