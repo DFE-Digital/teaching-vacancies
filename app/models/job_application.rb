@@ -135,18 +135,8 @@ class JobApplication < ApplicationRecord
     INACTIVE_STATUSES.exclude?(status)
   end
 
-  Document = Data.define(:filename, :data)
-
-  def submitted_application_form
-    if vacancy.uploaded_form?
-      return Document["no_application_form.txt", "the candidate has no application for on record"] unless application_form.attached?
-
-      extension = File.extname(application_form.filename.to_s)
-      Document["application_form#{extension}", application_form.download]
-    else
-      pdf = JobApplicationPdfGenerator.new(self).generate
-      Document["application_form.pdf", pdf.render]
-    end
+  def has_pre_interview_checks?
+    interviewing_at.present?
   end
 
   def name
