@@ -33,6 +33,9 @@ Rails.application.routes.draw do
   get "/get-help-hiring/accepting-job-applications-on-teaching-vacancies", to: redirect { |_params, _request|
     Rails.application.routes.url_helpers.post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "accepting-job-applications-on-teaching-vacancies")
   }
+  get "/get-help-hiring/communicating-with-jobskeers", to: redirect { |_params, _request|
+    Rails.application.routes.url_helpers.post_path(section: "get-help-hiring", subcategory: "communicating-with-jobseekers", post_name: "communicating-with-jobseekers")
+  }
   get "/jobseeker-guides/write-a-great-teaching-job-application-in-five-steps", to: redirect { |_params, _request|
     Rails.application.routes.url_helpers.post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "write-a-great-teaching-job-application-in-five-steps")
   }
@@ -325,11 +328,11 @@ Rails.application.routes.draw do
       as: :posts
 
   get "/:section/:subcategory" => "posts#subcategory",
-      constraints: { section: /(jobseeker-guides|get-help-hiring|transcripts)/, subcategory: /get-help-applying-for-your-teaching-role|return-to-teaching-in-england|how-to-create-job-listings-and-accept-applications|how-to-setup-your-account|jobseekers/ },
+      constraints: { section: /(jobseeker-guides|get-help-hiring|transcripts)/, subcategory: /get-help-applying-for-your-teaching-role|return-to-teaching-in-england|how-to-create-job-listings-and-accept-applications|how-to-setup-your-account|jobseekers|communicating-with-jobseekers/ },
       as: :subcategory
 
   get "/:section/:subcategory/:post_name" => "posts#show",
-      constraints: { section: /(jobseeker-guides|get-help-hiring|transcripts)/, subcategory: /get-help-applying-for-your-teaching-role|return-to-teaching-in-england|how-to-create-job-listings-and-accept-applications|how-to-setup-your-account|jobseekers/, post_name: /[\w-]+/ },
+      constraints: { section: /(jobseeker-guides|get-help-hiring|transcripts)/, subcategory: /get-help-applying-for-your-teaching-role|return-to-teaching-in-england|how-to-create-job-listings-and-accept-applications|how-to-setup-your-account|jobseekers|communicating-with-jobseekers/, post_name: /[\w-]+/ },
       as: :post
 
   get "/list-school-job" => "pages#show", defaults: { id: "list-school-job" }
