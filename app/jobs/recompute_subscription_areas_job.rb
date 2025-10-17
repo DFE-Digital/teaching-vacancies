@@ -7,7 +7,6 @@ class RecomputeSubscriptionAreasJob < ApplicationJob
 
     # For each unique location, update all the subscriptions with that location with a single query
     unique_area_locations_pairs.each do |location, radius|
-      radius ||= 10
       radius_in_metres = Subscription.convert_miles_to_metres(radius)
       subs_scope = subscriptions_scope(radius, location)
 
