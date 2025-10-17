@@ -675,7 +675,7 @@ en:
             heading: Religious reference
             action_needed: Action needed
             cannot_be_collected: The religious reference required for this role cannot be collected using Teaching Vacancies.
-            can_manually_mark: You can manually mark the reference as received here for record keeping purposes.
+            can_manually_mark: For record keeping purposes, you can track the reference progress on this page.
             mark_as_requested: Mark as requested
             mark_as_complete: Mark as complete
             communication_history: Communication history
