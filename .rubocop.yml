@@ -6,8 +6,8 @@ inherit_from: .rubocop_todo.yml
 
 inherit_gem:
   rubocop-govuk:
-#  Avoid the 'default' config as it disables lots of useful metrics
-#    - config/default.yml
+    #  Avoid the 'default' config as it disables lots of useful metrics
+    #    - config/default.yml
     - config/layout.yml
     - config/naming.yml
     - config/style.yml
@@ -88,13 +88,12 @@ Lint/UselessMethodDefinition:
     - "app/controllers/**/*_controller.rb"
 
 # List as per https://docs.rubocop.org/rubocop/cops_naming.html#namingmethodparametername
-# plus 'as' and 'cc'.
+# plus `as`.
 Naming/MethodParameterName:
   AllowedNames:
     - as
     - at
     - by
-    - cc
     - db
     - id
     - in
