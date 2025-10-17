@@ -12,6 +12,8 @@ module JobReferencesHelper
       else
         "pending"
       end
+    elsif reference_request.received_off_service?
+      "received"
     else
       "created"
     end
@@ -36,6 +38,18 @@ module JobReferencesHelper
       "all"
     else
       "some"
+    end
+  end
+
+  def self_disclosure_status(self_disclosure_request)
+    if self_disclosure_request.marked_as_complete?
+      "completed"
+    elsif self_disclosure_request.status.in? %w[received_off_service received]
+      "received"
+    elsif self_disclosure_request.sent?
+      "pending"
+    else
+      "created"
     end
   end
 end

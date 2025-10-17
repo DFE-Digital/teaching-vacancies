@@ -8,8 +8,8 @@
     span.govuk-caption-l = @referee.name
     h1.govuk-heading-l = @referee.job_application.name
 
+    - status = reference_request_status(@reference_request, @job_reference)
     .govuk-body
-      - status = reference_request_status(@reference_request, @referee.job_reference)
       = govuk_tag(text: t("reference_requests.#{status}.status"), colour: t("reference_requests.#{status}.colour"))
 
     .govuk-body = t(".once_the_reference_is_received")
@@ -17,10 +17,25 @@
     .govuk-body = t(".more_urgent")
 
     .govuk-button-group
-      - if @reference_request.sent? && @referee.job_reference.complete? && @referee.job_reference.can_give_reference?
+      - if @reference_request.requested? && @reference_request.updated_at <= 7.days.ago
+        = form_with model: @reference_request,
+          url: send_reminder_email_organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id),
+          method: :patch do |f|
+          = f.govuk_submit t(".send_reminder")
+
+      - if @job_reference&.complete? && @job_reference.can_give_reference?
         = govuk_button_link_to t(".print"), organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id, format: :pdf), class: "govuk-button--secondary"
-      - unless @referee.job_reference&.complete? && !@referee.job_reference.can_give_reference?
-        = govuk_button_link_to t(".mark_as_received"), reference_received_organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id), class: "govuk-button--secondary"
+
+      - if status.in?(%w[created pending])
+        = form_with model: @reference_request,
+          url: mark_as_received_organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id),
+          method: :patch do |f|
+          = f.govuk_submit t(".mark_as_received"), secondary: true
+      - elsif status == "received"
+        = form_with model: @reference_request,
+          url: mark_as_complete_organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id),
+          method: :patch do |f|
+          = f.govuk_submit t(".mark_as_completed"), secondary: true
 
     .h2.govuk-heading-m = t(".referee_details.heading")
 
@@ -31,8 +46,8 @@
           - row.with_value(text: value)
 
     - if @reference_request.sent?
-      - if @referee.job_reference.complete?
-        - if @referee.job_reference.can_give_reference?
+      - if @job_reference.complete?
+        - if @job_reference.can_give_reference?
           - @referee.reference_information.each do |key, value|
             .govuk-heading-m = key
             .govuk-body = value
@@ -66,8 +81,10 @@
           - case version.changeset["status"].last
           - when "created"
             - timeline.with_item(key: t(".reference_created"), value: value)
+          - when "received_off_service"
+            - timeline.with_item(key: t(".marked_received"), value: value)
           - when "received"
-            - if @referee.job_reference.can_give_reference?
+            - if @job_reference.can_give_reference?
               - timeline.with_item(key: t(".reference_received"), value: value)
             - else
               - timeline.with_item(key: t(".reference_declined"), value: value)
@@ -77,6 +94,8 @@
           - timeline.with_item(key: t(".reference_email_changed", email: version.changeset["email"].last), value: value)
         - elsif version.changeset.key? "marked_as_complete"
           - timeline.with_item(key: t(".marked_as_complete"), value: value)
+        - elsif version.changeset.key? "reminder_sent"
+          - timeline.with_item(key: t(".reminder_sent"), value: value)
 
     = render PublisherNotesOnJobApplicationComponent.new(job_application: @job_application, vacancy: @vacancy, notes_form: @notes_form,
       return_to_url: organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, params[:id]))

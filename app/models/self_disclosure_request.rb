@@ -2,7 +2,7 @@ class SelfDisclosureRequest < ApplicationRecord
   belongs_to :job_application
   has_one :self_disclosure, dependent: :destroy
 
-  enum :status, { manual: 0, manually_completed: 1, sent: 2, received: 3 }
+  enum :status, { manual: 0, received_off_service: 1, sent: 2, received: 3 }
 
   has_paper_trail
 
@@ -34,7 +34,7 @@ class SelfDisclosureRequest < ApplicationRecord
   end
 
   def completed?
-    manually_completed? || received?
+    marked_as_complete? || received?
   end
 
   def pending?

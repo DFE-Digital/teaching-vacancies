@@ -1,6 +1,3 @@
-.govuk-body
-  = govuk_tag(text: t("reference_requests.pending.status"), colour: t("reference_requests.pending.colour"))
-
 .govuk-body = t(".line_1")
 .govuk-body = t(".line_2")
 
@@ -8,7 +5,10 @@
   .govuk-button-group
     - if can_send_reminder?(@self_disclosure.request)
       = f.govuk_submit t(".reminder"), name: "reminder"
-    = f.govuk_submit t(".manually_complete"), class: "govuk-button--secondary"
+    - if @self_disclosure.request.status.in? %w[received received_off_service]
+      = f.govuk_submit t(".mark_as_completed"), name: "completed", class: "govuk-button--secondary"
+    - else
+      = f.govuk_submit t(".mark_as_received"), name: "received", class: "govuk-button--secondary"
 
 - if @self_disclosure.request.manual?
-  = govuk_link_to(t(".collect_through_tv"), organisation_job_job_application_collect_self_disclosure_flag_path(@vacancy.id, @job_application.id, Wicked::FIRST_STEP))
+  p.govuk-body = govuk_link_to(t(".collect_through_tv"), organisation_job_job_application_collect_self_disclosure_flag_path(@vacancy.id, @job_application.id, Wicked::FIRST_STEP))

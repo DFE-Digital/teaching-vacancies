@@ -15,8 +15,10 @@ class Publishers::Vacancies::JobApplications::SelfDisclosureController < Publish
     if params.key?(:reminder)
       @job_application.self_disclosure_request.send_reminder!
       flash[:success] = t("publishers.vacancies.job_applications.self_disclosure.reminder_sent")
+    elsif params.key?(:completed)
+      @job_application.self_disclosure_request.update!(marked_as_complete: true)
     else
-      @job_application.self_disclosure_request.manually_completed!
+      @job_application.self_disclosure_request.received_off_service!
       flash[:success] = t("jobseekers.job_applications.self_disclosure.review.completed.manually_completed")
     end
 

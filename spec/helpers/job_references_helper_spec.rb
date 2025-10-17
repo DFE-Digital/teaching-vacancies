@@ -20,6 +20,15 @@ RSpec.describe JobReferencesHelper do
       end
     end
 
+    context "when received off service" do
+      let(:reference_request) { build_stubbed(:reference_request, status: :received_off_service) }
+      let(:job_reference) { build_stubbed(:job_reference) }
+
+      it "shows as created" do
+        expect(reference_request_status(reference_request, job_reference)).to eq("received")
+      end
+    end
+
     context "when sent" do
       let(:reference_request) { build_stubbed(:reference_request, status: :requested) }
 
