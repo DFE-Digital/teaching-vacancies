@@ -75,7 +75,11 @@ module Publishers
       def messages
         @show_form = params["show_form"]
         @message_form = Publishers::JobApplication::MessagesForm.new
-        @messages = @job_application.conversations.includes(:messages).flat_map(&:messages).sort_by(&:created_at).reverse
+        @messages = Message.joins(:conversation)
+                           .includes(conversation: :job_application)
+                           .with_rich_text_content_and_embeds
+                           .merge(Conversation.where(job_application: @job_application))
+                           .order(created_at: :desc)
 
         # Mark jobseeker messages as read when publisher views them
         jobseeker_messages = @messages.select { |msg| msg.is_a?(JobseekerMessage) && msg.unread? }
