@@ -9,7 +9,7 @@ en:
             content:
               blank: Enter some content
   publishers:
-    email_templates:
+    message_templates:
       new:
         page_title: New message template
         heading: New message template
@@ -27,7 +27,7 @@ en:
         select_rejection_template:
           page_title: Send rejection messages
           caption: Send rejection messages
-          select_email_template: Select message template
+          select_message_template: Select message template
           edit_template: Edit template
           delete_template: Delete template
         prepare_rejection_emails:

@@ -14,7 +14,7 @@ RSpec.describe "Publishers can reject a job application" do
   after { logout }
 
   describe "rejecting applications" do
-    let!(:email_template) { create(:message_template, publisher: publisher) }
+    let!(:message_template) { create(:message_template, publisher: publisher) }
 
     before do
       create_list(:job_application, 3, :status_unsuccessful, vacancy: vacancy)
@@ -64,7 +64,7 @@ RSpec.describe "Publishers can reject a job application" do
         click_on "Save template"
         # wait for page to load
         find ".trix-content"
-        expect(email_template.reload.content.body.to_s).to include(content)
+        expect(message_template.reload.content.body.to_s).to include(content)
       end
 
       scenario "creating a new template", :js do
@@ -94,7 +94,7 @@ RSpec.describe "Publishers can reject a job application" do
 
       describe "rejecting applications", :js do
         before do
-          click_on email_template.name
+          click_on message_template.name
         end
 
         it "handles the rejection email process", :perform_enqueued do

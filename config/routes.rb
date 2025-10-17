@@ -452,12 +452,7 @@ Rails.application.routes.draw do
       end
     end
 
-    # scope constraints: { type: /(rejection)/ } do
-    #   resources :email_templates, only: %i[new create edit update destroy], controller: "publishers/email_templates"
-    #   # get "jobs(/:type)", to: "publishers/vacancies#index", defaults: { type: :published }, as: :jobs_with_type
-    # end
-
-    resources :email_templates, only: %i[new create edit update destroy], controller: "publishers/email_templates"
+    resources :message_templates, only: %i[new create edit update destroy], controller: "publishers/message_templates"
   end
 
   resources :references, only: %i[] do
@@ -474,13 +469,6 @@ Rails.application.routes.draw do
         end
       end
     end
-
-    # scope constraints: { type: /(rejection)/ } do
-    #   resources :email_templates, only: %i[new create edit update destroy], controller: "publishers/email_templates"
-    #   # get "jobs(/:type)", to: "publishers/vacancies#index", defaults: { type: :published }, as: :jobs_with_type
-    # end
-
-    resources :email_templates, only: %i[new create edit update destroy], controller: "publishers/email_templates"
   end
 
   # Well known URLs

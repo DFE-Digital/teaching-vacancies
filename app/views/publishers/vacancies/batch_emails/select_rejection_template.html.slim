@@ -4,24 +4,24 @@
 
 span.govuk-caption-l = t(".caption")
 h1.govuk-heading-l class="govuk-!-display-inline"
-  = t(".select_email_template")
+  = t(".select_message_template")
 
 p.govuk-body
-  - @email_templates.each do |template|
+  - @message_templates.each do |template|
     .govuk-button-group
       = govuk_link_to template.name, prepare_rejection_emails_organisation_job_batch_email_path(vacancy.id, @batch_email.id,
-        email_template: template.id,
+              message_template: template.id,
         job_applications: @job_applications.map(&:id))
 
     = template.content
 
     .govuk-button-group
-      = govuk_link_to t(".edit_template"), edit_organisation_email_template_path(template)
-      = govuk_link_to t(".delete_template"), organisation_email_template_path(template), method: :delete
+      = govuk_link_to t(".edit_template"), edit_organisation_message_template_path(template)
+      = govuk_link_to t(".delete_template"), organisation_message_template_path(template), method: :delete
 
     hr
 
-  = form_with(url: new_organisation_email_template_path, method: :get) do |f|
+  = form_with(url: new_organisation_message_template_path, method: :get) do |f|
     .govuk-button-group
       = f.govuk_submit t("buttons.create_new_template")
       = govuk_button_link_to t("buttons.send_without_template"),
