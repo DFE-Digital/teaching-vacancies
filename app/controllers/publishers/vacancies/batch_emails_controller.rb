@@ -4,11 +4,11 @@ module Publishers
 
     def select_rejection_template
       session[:template_return_path] = request.original_fullpath
-      @email_templates = email_templates.with_rich_text_content_and_embeds
+      @message_templates = message_templates.with_rich_text_content_and_embeds
     end
 
     def prepare_rejection_emails
-      email_template = email_templates.find_by(id: params[:email_template])
+      email_template = message_templates.find_by(id: params[:message_template])
       @message = if email_template.present?
                    PublisherMessage.new content: email_template.content
                  else
@@ -34,7 +34,7 @@ module Publishers
       @job_applications = @batch_email.job_applications
     end
 
-    def email_templates
+    def message_templates
       current_publisher.message_templates.rejection
     end
 

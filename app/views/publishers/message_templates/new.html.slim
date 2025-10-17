@@ -3,7 +3,7 @@
 span.govuk-caption-l = t(".caption")
 h1.govuk-heading-xl = t(".heading")
 
-= form_with(model: @email_template, url: organisation_email_templates_path) do |f|
+= form_with(model: @message_template, url: organisation_message_templates_path) do |f|
   = f.govuk_error_summary
 
   = f.govuk_text_field :name
