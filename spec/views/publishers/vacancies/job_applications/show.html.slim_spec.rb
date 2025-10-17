@@ -1,31 +1,28 @@
 require "rails_helper"
 
 RSpec.describe "publishers/vacancies/job_applications/show" do
-  let(:vacancy) { build_stubbed(:vacancy, :expired, organisations:, job_applications:) }
+  let(:vacancy) { build_stubbed(:vacancy, :expired, organisations:, job_applications: [job_application]) }
   let(:organisations) { build_stubbed_list(:school, 1) }
-  let(:job_applications) do
-    build_stubbed_list(:job_application, 1,
-                       :"status_#{status}",
-                       training_and_cpds: build_stubbed_list(:training_and_cpd, 1),
-                       working_patterns: %w[full_time part_time])
-  end
   let(:job_application) do
-    vacancy.job_applications.first
+    build_stubbed(:job_application,
+                  :"status_#{status}",
+                  training_and_cpds: build_stubbed_list(:training_and_cpd, 1),
+                  working_patterns: %w[full_time part_time])
   end
   let(:status) { "submitted" }
 
   before do
     assign :vacancy, vacancy
-    assign :job_application, job_application
+    assign :job_application, job_application.decorate
     assign :notes_form, Publishers::JobApplication::NotesForm.new
     render
   end
 
   describe "navigation quick links" do
     context "when non religious vacancy" do
-      let(:vacancy) { build_stubbed(:vacancy, :expired, organisations:, job_applications:) }
+      let(:vacancy) { build_stubbed(:vacancy, :expired, organisations:, job_applications: [job_application]) }
 
-      it "renders no religious informaiton quick link" do
+      it "renders no religious information quick link" do
         expect(rendered).to have_no_css(".navigation-list-component__anchors .govuk-link[href=\"#following_religion\"]", text: "Religious information")
       end
 
@@ -35,7 +32,7 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
     end
 
     context "when religious vacancy" do
-      let(:vacancy) { build_stubbed(:vacancy, :catholic, :expired, organisations:, job_applications:) }
+      let(:vacancy) { build_stubbed(:vacancy, :catholic, :expired, organisations:, job_applications: [job_application]) }
 
       it "renders religious informaiton quick link" do
         expect(rendered).to have_css(".navigation-list-component__anchors .govuk-link[href=\"#following_religion\"]", text: "Religious information")
@@ -81,6 +78,46 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
 
     expect(rendered).to have_css(".govuk-summary-list__key", text: "Working pattern preference details")
     expect(rendered).to have_css(".govuk-summary-list__value", text: job_application.working_pattern_details)
+  end
+
+  context "with anonymised applications" do
+    let(:vacancy) { build_stubbed(:vacancy, :expired, anonymise_applications: true, organisations:, job_applications: [job_application]) }
+
+    it "doesn't show all personal details" do
+      expect(rendered).to have_content "Personal details"
+      expect(rendered).to have_css(".govuk-summary-list__key", text: "First name")
+      expect(rendered).to have_no_content(job_application.first_name)
+
+      expect(rendered).to have_css(".govuk-summary-list__key", text: "Last name")
+      expect(rendered).to have_no_css(".govuk-summary-list__value", text: job_application.last_name)
+
+      expect(rendered).to have_css(".govuk-summary-list__key", text: "Previous names")
+      expect(rendered).to have_no_css(".govuk-summary-list__value", text: job_application.previous_names)
+
+      expect(rendered).to have_css(".govuk-summary-list__key", text: "Your address")
+      expect(rendered).to have_no_css(".govuk-summary-list__value", text: job_application.street_address)
+
+      expect(rendered).to have_css(".govuk-summary-list__key", text: "Phone number")
+      expect(rendered).to have_no_css(".govuk-summary-list__value", text: job_application.phone_number)
+
+      expect(rendered).to have_css(".govuk-summary-list__key", text: "Email address")
+      expect(rendered).to have_no_css(".govuk-summary-list__value", text: job_application.email_address)
+
+      expect(rendered).to have_css(".govuk-summary-list__key", text: "Do you need Skilled Worker visa sponsorship?")
+      expect(rendered).to have_css(".govuk-summary-list__value", text: I18n.t("jobseekers.profiles.personal_details.work.options.true"))
+
+      expect(rendered).to have_css(".govuk-summary-list__key", text: "Do you have a national insurance number?")
+      expect(rendered).to have_css(".govuk-summary-list__value", text: I18n.t("helpers.label.jobseekers_job_application_personal_details_form.has_ni_number_options.yes"))
+
+      expect(rendered).to have_css(".govuk-summary-list__key", text: "National Insurance number")
+      expect(rendered).to have_no_css(".govuk-summary-list__value", text: job_application.national_insurance_number)
+
+      expect(rendered).to have_css(".govuk-summary-list__key", text: "Full, part time or job share")
+      expect(rendered).to have_css(".govuk-summary-list__value", text: "Full time, part time")
+
+      expect(rendered).to have_css(".govuk-summary-list__key", text: "Working pattern preference details")
+      expect(rendered).to have_css(".govuk-summary-list__value", text: job_application.working_pattern_details)
+    end
   end
 
   it "has the application status of 'unread'" do
@@ -145,13 +182,13 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
       it { expect(rendered).to have_link("Update application status") }
     end
 
-    context "when status terminal" do
+    context "when status is terminal" do
       let(:status) { "withdrawn" }
 
       it { expect(rendered).to have_no_link("Update application status") }
     end
 
-    context "when status offered" do
+    context "when status is offered" do
       let(:status) { "offered" }
 
       it { expect(rendered).to have_link("Mark offer as declined") }

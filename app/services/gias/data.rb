@@ -28,6 +28,7 @@ class Gias::Data
 
   def csv_url
     timestring = Time.current.strftime("%Y%m%d")
+    # timestring = Date.yesterday.strftime("%Y%m%d")
 
     "#{GIAS_BASE_URL}#{type}#{timestring}.csv"
   end
