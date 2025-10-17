@@ -9,16 +9,7 @@ class Publishers::CandidateMessagesController < Publishers::BaseController
 
     filtered_conversations = @tab == "archive" ? base_conversations.archived : base_conversations.inbox
 
-    sorted_conversations = case @sort.by
-                           when "newest_on_top"
-                             filtered_conversations.order(last_message_at: :desc)
-                           when "oldest_on_top"
-                             filtered_conversations.order(last_message_at: :asc)
-                           else # "unread_on_top"
-                             filtered_conversations.ordered_by_unread_and_latest_message
-                           end
-
-    @search = Search::CandidateMessagesSearch.new(@search_form.to_hash, scope: sorted_conversations)
+    @search = Search::CandidateMessagesSearch.new(@search_form.to_hash, sort: @sort, scope: filtered_conversations)
 
     @conversations = @search.conversations
 
