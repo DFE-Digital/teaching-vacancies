@@ -12,9 +12,7 @@ class AlertEmail::Base < ApplicationJob
     vacancies_in_alerts_count = 0
     subscriptions_count = subscriptions.count
 
-    # The intent here is that if we don't have keyword or location searches, then this operation can all be done in memory
-    # really fast (1 week's worth of vacancies is around 2000, so not worth leaving on disk for each of 100k daily subscriptions
-    default_scope = PublishedVacancy.includes(:organisations).live.order(publish_on: :desc).search_by_filter(from_date: from_date, to_date: Date.yesterday).to_a
+    default_scope = PublishedVacancy.live.search_by_filter(from_date: from_date, to_date: Date.yesterday)
 
     # for stats tracking on each run
     new_vacancies_count = default_scope.size
@@ -22,13 +20,13 @@ class AlertEmail::Base < ApplicationJob
     already_run_ids = Set.new AlertRun.for_today.pluck(:subscription_id)
 
     subscriptions.find_each.reject { |sub| already_run_ids.include?(sub.id) }.each do |subscription|
-      vacancies = subscription.vacancies_matching(default_scope).first(MAXIMUM_RESULTS_PER_RUN)
-      next unless vacancies.any?
+      matching_vacancy_ids = subscription.vacancies_matching(default_scope, limit: MAXIMUM_RESULTS_PER_RUN)
+      next unless matching_vacancy_ids.any?
       next if subscription.email.blank?
 
       sent_alerts_count += 1
-      vacancies_in_alerts_count += vacancies.size
-      Jobseekers::AlertMailer.alert(subscription.id, vacancies.pluck(:id)).deliver_later
+      vacancies_in_alerts_count += matching_vacancy_ids.size
+      Jobseekers::AlertMailer.alert(subscription.id, matching_vacancy_ids).deliver_later
     end
     log_to_sentry(duration: Time.current - start_time,
                   new_vacancies_count:,
