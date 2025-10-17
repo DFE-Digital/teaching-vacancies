@@ -17,40 +17,12 @@ class Subscription < ApplicationRecord
 
   validates :email, email_address: true, if: -> { email_changed? } # Allows data created prior to validation to still be valid
 
-  FILTERS = {
-    job_roles: ->(vacancy, value) { value.any? { |v| vacancy.job_roles.intersect?(v) } },
-
-    visa_sponsorship_availability: ->(vacancy, value) { value.include? vacancy.visa_sponsorship_available.to_s },
-    ect_statuses: ->(vacancy, value) { value.include?(vacancy.ect_status) },
-    #  legacy criteria ->  value always 'true'
-    newly_qualified_teacher: ->(vacancy, value) { value == "true" && vacancy.ect_status.to_s == "ect_suitable" },
-    subjects: ->(vacancy, value) { (vacancy.subjects || []).intersect?(value) },
-    # legacy 'subject' criteria appears to be 1 single value
-    subject: ->(vacancy, value) { (vacancy.subjects || []).include?(value) },
-    phases: ->(vacancy, value) { (vacancy.phases || []).intersect?(value) },
-    working_patterns: ->(vacancy, value) { working_pattern_match?(vacancy, value) },
-    organisation_slug: ->(vacancy, value) { vacancy.organisations.map(&:slug).include?(value) },
-    keyword: ->(vacancy, value) { value.downcase.strip.split.all? { |k| vacancy.searchable_content.include? k } },
-  }.freeze
-
   # support_job_roles used to be called teaching_support_job_roles and non_teaching_support_job_roles in the past, and there are still active subscriptions with this name
   JOB_ROLE_ALIASES = %i[teaching_job_roles support_job_roles teaching_support_job_roles non_teaching_support_job_roles].freeze
 
   # temp - can't delete a column until this change has been deployed as it would break running versions
   # during the deploy
   self.ignored_columns += %w[active]
-
-  class << self
-    def working_pattern_match?(vacancy, working_patterns)
-      if working_patterns == %w[job_share]
-        vacancy.is_job_share
-      elsif working_patterns.include?("job_share")
-        vacancy.is_job_share || vacancy.working_patterns.intersect?(working_patterns - %w[job_share])
-      else
-        vacancy.working_patterns.intersect?(working_patterns)
-      end
-    end
-  end
 
   def self.encryptor(serializer: :json_allow_marshal)
     key_generator_secret = SUBSCRIPTION_KEY_GENERATOR_SECRET
@@ -91,33 +63,9 @@ class Subscription < ApplicationRecord
     Organisation.find_by(slug: search_criteria["organisation_slug"]) if search_criteria["organisation_slug"]
   end
 
-  def vacancies_matching(scope)
-    # ignore legacy sorting criteria - legacy job_title is too specific and will typically filter everything
-    criteria = search_criteria.symbolize_keys.except(:jobs_sort, :job_title, :minimum_salary)
-
-    # as there is just 1 'job_roles' field in TV but multiple search criteria, treat them all as aliases of each other
-    # and convert them into an array matcher using any?
-    if JOB_ROLE_ALIASES.any? { |job_role_alias| criteria.key?(job_role_alias) }
-      job_roles = criteria.slice(*JOB_ROLE_ALIASES).values
-      criteria[:job_roles] = job_roles
-    end
-
-    filters = criteria.except(*JOB_ROLE_ALIASES, :location, :radius).map do |criterion, value|
-      ->(vacancy) { FILTERS.fetch(criterion).call(vacancy, value) }
-    end
-
-    vacancies = scope.select do |vacancy|
-      filters.all? { |f| f.call(vacancy) }
-    end
-
-    # Location handling is the most expensive operations, since they involve polygons or geocoding computations in DB.
-    # So do it last, and only if there are any vacancies left to filter after the other criteria have been applied over
-    # the in-memory vacancy set.
-    if vacancies.any?
-      self.class.handle_location(vacancies, criteria)
-    else
-      vacancies
-    end
+  # Returns the ids of the vacancies matching this subscription's criteria, using DB filtering.
+  def vacancies_matching(scope, limit: nil)
+    SubscriptionVacanciesMatchingQuery.new(scope: scope, subscription: self, limit: limit).call
   end
 
   def update_with_search_criteria(new_attributes)
