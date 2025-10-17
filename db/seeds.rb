@@ -17,6 +17,7 @@ abraham_moss = School.find_by!(urn: "150009")
 
 # Team users
 users = [
+  { email: "alex.lee@education.gov.uk", family_name: "Lee", given_name: "Alex" },
   { email: "alice.fitzgibbon@education.gov.uk", family_name: "Fitzgibbon", given_name: "Alice" },
   { email: "alisa.ali@education.gov.uk", family_name: "Ali", given_name: "Alisa" },
   { email: "chloe.ewens@education.gov.uk", family_name: "Ewens", given_name: "Chloe" },
