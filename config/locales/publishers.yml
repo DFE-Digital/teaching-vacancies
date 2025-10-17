@@ -636,7 +636,7 @@ en:
             other: Unread applications
         tab_unsuccessful:
           reject: Send rejection messages
-          have_been_sent: Have been sent a rejection email
+          have_been_sent: Have been sent a rejection message
           table:
             name: Name
             contact_details: Contact details

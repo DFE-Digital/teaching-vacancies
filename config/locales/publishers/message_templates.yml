@@ -46,6 +46,4 @@ en:
     label:
       message_template:
         name: Template name
-        from: From
-        subject: Subject
         content: Message

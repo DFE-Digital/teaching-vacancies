@@ -464,13 +464,6 @@ Rails.application.routes.draw do
         get :completed
         get :no_reference
       end
-      resources :batch_emails, only: %i[], controller: "publishers/vacancies/batch_emails" do
-        member do
-          get :select_rejection_template
-          get :prepare_rejection_emails
-          post :send_rejection_emails
-        end
-      end
     end
   end
 
