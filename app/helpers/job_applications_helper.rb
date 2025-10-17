@@ -12,7 +12,7 @@ module JobApplicationsHelper
   }.freeze
 
   JOBSEEKER_STATUS_MAPPINGS = {
-    deadline_passed: "deadline passed",
+    deadline_passed: "job closed",
     draft: "draft",
     submitted: "submitted",
     reviewed: "submitted",
@@ -21,7 +21,7 @@ module JobApplicationsHelper
     withdrawn: "withdrawn",
     interviewing: "interviewing",
     unsuccessful_interview: "unsuccessful",
-    action_required: "action required",
+    action_required: "needs action",
     offered: "offered",
     declined: "declined",
   }.freeze

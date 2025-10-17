@@ -420,7 +420,7 @@ en:
         uploaded_document: Uploaded document
       banner:
         deadline:
-          after: Deadline passed
+          after: job closed
           before: Application deadline
       build:
         applying_for_the_job:
@@ -614,7 +614,7 @@ en:
             notes: Notes
         index:
           deadline:
-            after: Deadline passed
+            after: job closed
             before: Application deadline
           expired_more_than_year: In line with our data retention policy you are no longer able to view applications for this job.
           received: Received on
