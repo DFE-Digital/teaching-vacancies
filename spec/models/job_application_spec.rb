@@ -214,7 +214,7 @@ RSpec.describe JobApplication do
       it { is_expected.to match_array(%w[declined withdrawn]) }
     end
 
-    context "when from status is any other status" do
+    context "when from status is unsuccessful" do
       let(:from_status) { "unsuccessful" }
 
       it { is_expected.to match_array(%w[rejected]) }
