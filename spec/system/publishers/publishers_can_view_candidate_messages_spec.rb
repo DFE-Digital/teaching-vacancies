@@ -19,11 +19,11 @@ RSpec.describe "Publishers can view candidate messages" do
     let!(:music_conversation) { create(:conversation, job_application: music_job_application, archived: false) }
 
     before do
-      travel_to 2.days.ago do
-        create(:jobseeker_message, conversation: health_conversation, sender: jobseeker)
-      end
       travel_to 1.day.ago do
-        create(:jobseeker_message, conversation: music_conversation, sender: jobseeker)
+        create(:jobseeker_message, conversation: health_conversation, sender: jobseeker, read: true)
+      end
+      travel_to 2.days.ago do
+        create(:jobseeker_message, conversation: music_conversation, sender: jobseeker, read: false)
       end
     end
 
@@ -38,7 +38,7 @@ RSpec.describe "Publishers can view candidate messages" do
         end
 
         it "shows inbox tab with correct count, proper ordering, and allows publishers to archive messages" do
-          expect(page).to have_content("Inbox (2)")
+          expect(page).to have_content("Inbox (1)")
           expect(page).to have_content("Archive")
 
           within("tbody") do
@@ -60,7 +60,7 @@ RSpec.describe "Publishers can view candidate messages" do
 
           read_job_applications_messages_and_return_to_candidate_messages_page(music_job_application)
 
-          expect(page).to have_content("Inbox (1)")
+          expect(page).to have_content("Inbox (0)")
 
           conversation_rows = page.all("table tbody tr")
           expect(conversation_rows.count).to eq(2)
@@ -105,6 +105,63 @@ RSpec.describe "Publishers can view candidate messages" do
             expect(music_conversation.reload).not_to be_archived
           end
         end
+
+        it "allows sorting conversations by different criteria", :js do
+          third_vacancy = create(:vacancy, :live, organisations: [organisation])
+          third_job_application = create(:job_application, vacancy: third_vacancy, jobseeker: jobseeker, status: "interviewing")
+          third_conversation = create(:conversation, job_application: third_job_application, archived: false)
+
+          travel_to 3.days.ago do
+            create(:jobseeker_message, conversation: third_conversation, sender: jobseeker, read: true)
+          end
+
+          visit publishers_candidate_messages_path
+
+          expect(page).to have_select("sort_by", selected: "Unread on top")
+
+          conversation_rows = page.all("table tbody tr")
+
+          # music_conversation should be first because it has unread messages then ordered by last_message_at desc
+          within(conversation_rows[0]) do
+            expect(page).to have_content(music_job_application.name)
+          end
+          within(conversation_rows[1]) do
+            expect(page).to have_content(health_job_application.name)
+          end
+          within(conversation_rows[2]) do
+            expect(page).to have_content(third_job_application.name)
+          end
+
+          select "Newest on top", from: "sort_by"
+
+          expect(page).to have_select("sort_by", selected: "Newest on top")
+
+          conversation_rows = page.all("table tbody tr")
+          within(conversation_rows[0]) do
+            expect(page).to have_content(health_job_application.name)
+          end
+          within(conversation_rows[1]) do
+            expect(page).to have_content(music_job_application.name)
+          end
+          within(conversation_rows[2]) do
+            expect(page).to have_content(third_job_application.name)
+          end
+
+          select "Oldest on top", from: "sort_by"
+
+          expect(page).to have_select("sort_by", selected: "Oldest on top")
+
+          conversation_rows = page.all("table tbody tr")
+          within(conversation_rows[0]) do
+            expect(page).to have_content(third_job_application.name)
+          end
+          within(conversation_rows[1]) do
+            expect(page).to have_content(music_job_application.name)
+          end
+          within(conversation_rows[2]) do
+            expect(page).to have_content(health_job_application.name)
+          end
+        end
       end
     end
 
@@ -143,7 +200,8 @@ RSpec.describe "Publishers can view candidate messages" do
           expect(health_conversation.reload).not_to be_archived
           expect(music_conversation.reload).not_to be_archived
 
-          expect(page).to have_content("Inbox (2)")
+          # health_conversation is marked as read so won't show up in the inbox count, so inbox total is still 1 based on the single unread message.
+          expect(page).to have_content("Inbox (1)")
         end
       end
 

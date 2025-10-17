@@ -19,11 +19,27 @@
               = f.text_field :keyword, value: @search_form.keyword, placeholder: t(".search.placeholder"), class: "govuk-input"
               = f.submit t(".search.submit"), class: "govuk-button"
 
-        - if @search_form.active_criteria?
-          .search-results-summary
-            h2.govuk-heading-m = t(".search.results_heading", count: @search.total_count, keyword: @search_form.keyword)
-        - elsif @conversations.any?
-          h2.govuk-heading-m = t(".total_messages", count: @search.total_count)
+        div class="sort-container"
+          div class="left"
+            - if @search_form.active_criteria?
+              h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-1" = t(".search.results_heading", count: @search.total_count, keyword: @search_form.keyword)
+            - else
+              h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-1" = t(".total_messages", count: @search.total_count)
+          div class="right"
+            = form_with url: publishers_candidate_messages_path, method: :get, local: true, data: { controller: "form", "hide-submit": true } do |f|
+              = f.hidden_field :tab, value: @tab
+              = f.hidden_field :keyword, value: @search_form.keyword if @search_form.keyword.present?
+              = f.govuk_collection_select :sort_by,
+                @sort,
+                :by,
+                :display_name,
+                label: { text: "Sort by", class: "govuk-!-padding-right-1" },
+                form_group: { classes: "govuk-!-margin-bottom-4 sort-form-container" },
+                data: { action: "change->form#submitListener" },
+                options: { selected: @sort.by }
+
+              noscript
+                = f.govuk_submit "Sort", class: "govuk-!-margin-left-0 govuk-!-padding-top-0", secondary: true
 
     - if @conversations.any?
       = form_with url: toggle_archive_publishers_candidate_messages_path, method: :patch, local: true do |f|
