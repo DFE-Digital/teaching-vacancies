@@ -363,8 +363,8 @@ en:
     jobs: Jobs
     jobseekers:
       applications: Applications
-      job_alerts: Job alerts
-      saved_jobs: Saved jobs
+      job_alerts: Your job alerts
+      saved_jobs: Your saved jobs
       create_a_job_alert: Create a job alert
     schools: Schools
 
