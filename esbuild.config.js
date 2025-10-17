@@ -25,12 +25,35 @@ const config = {
     })
   ],
   publicPath: 'assets',
-  target: ['ie11']
+  target: ['ie11'],
+};
+
+const tvJobsConfig = {
+  bundle: true,
+  entryPoints: ['app/assets/javascript/tv-jobs.js'],
+  minify: true,
+  outdir: 'public/external/',
+  plugins: [
+    babel({
+      config: {
+        presets: ['@babel/preset-env'],
+        targets: '> 0.25%, not dead, IE 11'
+      }
+    })
+  ],
+  publicPath: 'assets',
+  target: ['ie11'],
+  define: {
+    'process.env.DOMAIN': `"${process.env.DOMAIN || 'localhost:3000'}"`
+  },
 };
 
 if (watch) {
   let ctx = await esbuild.context(config);
+  let tvJobsCtx = await esbuild.context(tvJobsConfig);
   await ctx.watch();
+  await tvJobsCtx.watch();
 } else {
   await esbuild.build(config);
+  await esbuild.build(tvJobsConfig);
 }

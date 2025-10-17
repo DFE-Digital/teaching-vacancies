@@ -11,6 +11,13 @@ class Api::OrganisationsController < Api::ApplicationController
     render json: { query:, suggestions: }
   end
 
+  def show
+    @organisation = Organisation.includes(:vacancies).friendly.find(params[:id])
+    @pagy, @vacancies = pagy(@organisation.vacancies.applicable, items: 50, overflow: :empty_page)
+
+    respond_to(&:json)
+  end
+
   private
 
   def query
