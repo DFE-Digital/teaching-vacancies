@@ -9,8 +9,8 @@ RSpec.describe "check job application after status transition" do
   let(:status) { "" }
 
   before do
-    JobApplication.statuses.each_key do |status|
-      create(:job_application, :"status_#{status}", jobseeker:, create_references: false, create_self_disclosure: false)
+    JobApplication.statuses.transform_keys(&:to_sym).except(:reviewed).each_key do |status|
+      create(:job_application, :"status_#{status}", jobseeker:)
     end
 
     if job_application.present?
@@ -377,7 +377,7 @@ RSpec.describe "check job application after status transition" do
     end
   end
 
-  describe "transition: offered to declined", :js do
+  describe "transition: offered to declined", :js, :versioning do
     let(:status) { "offered" }
 
     it "jobseeker and publisher can view job application" do
@@ -388,9 +388,7 @@ RSpec.describe "check job application after status transition" do
         jobseeker_applications_page.load
         job_applications_count = jobseeker.reload.job_applications.count
         expect(jobseeker_applications_page.header).to have_text("Applications (#{job_applications_count})")
-        #
-        # view submitted application
-        #
+
         jobseeker_applications_page.click_on_job_application(job_application.id)
         expect(jobseeker_application_page).to be_displayed(id: job_application.id)
         expect(jobseeker_application_page.tag).to have_text("offered")
@@ -399,9 +397,6 @@ RSpec.describe "check job application after status transition" do
       run_with_publisher(publisher) do
         publisher_ats_applications_page.load(vacancy_id: vacancy.id)
 
-        #
-        # check tab new
-        #
         publisher_ats_applications_page.select_tab(:tab_offered)
         expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
 

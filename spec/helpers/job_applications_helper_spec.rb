@@ -78,8 +78,8 @@ RSpec.describe JobApplicationsHelper do
     end
 
     it "contains all job application for tab unsuccessful" do
-      expect(tabs_data["unsuccessful"].values.sum(&:count)).to eq(4)
-      expect(tabs_data["unsuccessful"].values.flatten.map(&:status).uniq).to match_array(%w[unsuccessful withdrawn])
+      expect(tabs_data["unsuccessful"].values.sum(&:count)).to eq(6)
+      expect(tabs_data["unsuccessful"].values.flatten.map(&:status).uniq).to match_array(%w[unsuccessful withdrawn rejected])
     end
 
     it "contains all job application for tab shortlisted" do
@@ -110,7 +110,7 @@ RSpec.describe JobApplicationsHelper do
     context "when tab_origin unsuccessful" do
       let(:tab_origin) { "unsuccessful" }
 
-      it { is_expected.to match_array([]) }
+      it { is_expected.to match_array(%w[rejected]) }
     end
 
     context "when tab_origin shortlisted" do
