@@ -23,7 +23,7 @@ en:
       update:
         success: Message template updated
     vacancies:
-      batch_emails:
+      bulk_rejection_messages:
         select_rejection_template:
           page_title: Send rejection messages
           caption: Send rejection messages

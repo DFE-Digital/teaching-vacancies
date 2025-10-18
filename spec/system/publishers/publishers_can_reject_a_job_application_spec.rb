@@ -39,7 +39,7 @@ RSpec.describe "Publishers can reject a job application" do
         #  wait for page to load
         find("span", text: "Send rejection messages")
 
-        expect(page).to have_current_path(select_rejection_template_organisation_job_batch_email_path(vacancy.id, batch_email.id))
+        expect(page).to have_current_path(select_rejection_template_organisation_job_bulk_rejection_message_path(vacancy.id, batch_email.id))
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe "Publishers can reject a job application" do
       let(:content) { Faker::Ancient.hero }
 
       before do
-        visit select_rejection_template_organisation_job_batch_email_path(vacancy.id, batch_email.id)
+        visit select_rejection_template_organisation_job_bulk_rejection_message_path(vacancy.id, batch_email.id)
       end
 
       scenario "updating template", :js do

@@ -141,7 +141,7 @@ module Publishers
         job_applications.each do |ja|
           batch.batchable_job_applications.create!(job_application: ja)
         end
-        redirect_to select_rejection_template_organisation_job_batch_email_path(@vacancy.id, batch)
+        redirect_to select_rejection_template_organisation_job_bulk_rejection_message_path(@vacancy.id, batch)
       end
 
       def download_selected(job_applications)

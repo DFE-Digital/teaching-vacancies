@@ -9,7 +9,7 @@ h1.govuk-heading-l class="govuk-!-display-inline"
 p.govuk-body
   - @message_templates.each do |template|
     .govuk-button-group
-      = govuk_link_to template.name, prepare_rejection_emails_organisation_job_batch_email_path(vacancy.id, @batch_email.id,
+      = govuk_link_to template.name, prepare_rejection_emails_organisation_job_bulk_rejection_message_path(vacancy.id, @batch_email.id,
               message_template: template.id,
         job_applications: @job_applications.map(&:id))
 
@@ -25,6 +25,6 @@ p.govuk-body
     .govuk-button-group
       = f.govuk_submit t("buttons.create_new_template")
       = govuk_button_link_to t("buttons.send_without_template"),
-        prepare_rejection_emails_organisation_job_batch_email_path(vacancy.id, @batch_email.id, job_applications: @job_applications.map(&:id)), secondary: true
+        prepare_rejection_emails_organisation_job_bulk_rejection_message_path(vacancy.id, @batch_email.id, job_applications: @job_applications.map(&:id)), secondary: true
 
   p.govuk-body = govuk_link_to t("buttons.cancel"), organisation_job_job_applications_path(vacancy.id, anchor: :not_considering)
