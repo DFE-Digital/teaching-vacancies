@@ -1,6 +1,6 @@
 module Publishers
   module Vacancies
-    class BatchEmailsController < BaseController
+    class BulkRejectionMessagesController < BaseController
       before_action :set_job_applications
 
       def select_rejection_template
