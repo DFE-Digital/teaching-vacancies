@@ -1,5 +1,6 @@
 /! Google Tag Manager
-= javascript_tag(nonce: true, id: "googleTagManagerCode") do
+/ We set data-nonce as Chrome and GTM strip the value from the 'nonce' attribute and cannot be set as GTM variable.
+= javascript_tag(nonce: true, id: "googleTagManagerCode", data: { nonce: content_security_policy_nonce }) do
   | (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   | new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   | j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
