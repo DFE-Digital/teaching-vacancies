@@ -40,6 +40,45 @@ RSpec.describe SelfDisclosurePresenter do
     end
   end
 
+  describe ".events", :versioning do
+    before do
+      job_application.self_disclosure_request = request
+    end
+
+    context "with a status change" do
+      let(:request) { create(:self_disclosure_request) }
+
+      it { expect(presenter.events.size).to eq(1) }
+
+      it "returns event timeline" do
+        label, msg = presenter.events.first
+        expect(label).to eq("Requested")
+        expect(msg).to include("Teaching Vacancies - ")
+      end
+    end
+
+    context "when a reminder is sent" do
+      let(:request) { create(:self_disclosure_request) }
+
+      it "contains the reminder sent event" do
+        request.send_reminder!
+        expect(presenter.events.size).to eq(2)
+      end
+
+      it "returns event timeline" do
+        request.send_reminder!
+
+        label, msg = presenter.events.first
+        expect(label).to eq("Reminder sent")
+        expect(msg).to include("Teaching Vacancies - ")
+
+        label, msg = presenter.events.last
+        expect(label).to eq("Requested")
+        expect(msg).to include("Teaching Vacancies - ")
+      end
+    end
+  end
+
   describe ".sections" do
     let(:sections) { presenter.sections.to_a }
 

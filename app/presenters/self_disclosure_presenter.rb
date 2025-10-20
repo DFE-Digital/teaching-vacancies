@@ -9,6 +9,14 @@ class SelfDisclosurePresenter
 
   Section = Data.define(:title, :fields)
 
+  EVENT_LABELS = {
+    manually_completed: I18n.t(".event.manually_completed", scope: "jobseekers.job_applications.self_disclosure.review.completed"),
+    manual: I18n.t(".event.managed_outside_tv", scope: "jobseekers.job_applications.self_disclosure.review.completed"),
+    received: I18n.t(".event.completed", scope: "jobseekers.job_applications.self_disclosure.review.completed"),
+    sent: I18n.t(".event.requested", scope: "jobseekers.job_applications.self_disclosure.review.completed"),
+    reminder_sent: I18n.t(".event.reminder_sent", scope: "jobseekers.job_applications.self_disclosure.review.completed"),
+  }.with_indifferent_access
+
   def initialize(job_application)
     @job_application = job_application
     @request = job_application.self_disclosure_request
@@ -18,19 +26,13 @@ class SelfDisclosurePresenter
   attr_reader :model, :job_application, :request
 
   def events
-    request.versions.reverse_each.map do |version|
-      next unless version.changeset.key?("status")
+    request.versions.reverse_each.filter_map do |version|
+      # when a reminder is sent an empty changeset is created by `request.touch`
+      next unless version.changeset.key?("status") || version.changeset.empty?
 
-      label = case version.changeset["status"].last
-              in "manually_completed"
-                t(".event.manually_completed")
-              in "manual"
-                t(".event.managed_outside_tv")
-              in "received"
-                t(".event.completed")
-              in "sent"
-                t(".event.requested")
-              end
+      _, label_key = version.changeset["status"]
+
+      label = EVENT_LABELS.fetch(label_key || :reminder_sent)
       actor = version.actor&.papertrail_display_name || "Teaching Vacancies"
       timestamp = version.created_at.to_fs
       [label, "#{actor} - #{timestamp}"]

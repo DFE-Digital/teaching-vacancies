@@ -16,6 +16,7 @@ en:
               requested: Requested
               manually_completed: Manually completed
               managed_outside_tv: Managed outside Teaching Vacancies
+              reminder_sent: Reminder sent
             self_disclosure_form: Self-disclosure form
             manually_completed: This self-disclosure form has been marked as completed.
             print: Download self-disclosure
