@@ -11,7 +11,9 @@ FactoryBot.define do
       phases { nil }
       visa_sponsorship_availability { nil }
       subjects { nil }
+      subject { nil } # Legacy criteria
       organisation_slug { nil }
+      newly_qualified_teacher { nil } # Legacy criteria
     end
 
     email { Faker::Internet.email(domain: "contoso.com") }
@@ -28,7 +30,9 @@ FactoryBot.define do
         phases: phases,
         visa_sponsorship_availability: visa_sponsorship_availability,
         subjects: subjects,
+        subject: subject, # Legacy criteria
         organisation_slug: organisation_slug,
+        newly_qualified_teacher: newly_qualified_teacher, # Legacy criteria
       }.delete_if { |_k, v| v.nil? }
     end
 
