@@ -32,7 +32,7 @@ h1.govuk-heading-l = t(".page_title")
               = tag.div(card.labelled_item(t(".added"), format_date(saved_job.created_at, :date_only)))
               - if saved_job.vacancy.expired?
                 .status-tag
-                  = govuk_tag(text: "Deadline passed", colour: "red", classes: "govuk-!-margin-bottom-2")
+                  = job_application_status_tag(:deadline_passed)
               = tag.div(card.labelled_item(t(".application_deadline"), format_time_to_datetime_at(saved_job.vacancy.expires_at)))
 
             - if saved_job.vacancy.enable_job_applications? && PublishedVacancy.live.exists?(saved_job.vacancy.id) && current_jobseeker.job_applications.after_submission.find_by(vacancy_id: saved_job.vacancy.id).present?

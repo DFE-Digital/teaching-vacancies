@@ -64,7 +64,7 @@ RSpec.describe "Jobseekers can manage their job applications" do
 
           within ".card-component:nth-child(2)" do
             expect(page).to have_css(".card-component__header", text: application_with_action.vacancy.job_title)
-            expect(page).to have_css(".card-component__actions", text: "action required")
+            expect(page).to have_css(".card-component__actions", text: "needs action")
           end
 
           within ".card-component:nth-child(3)" do
@@ -98,7 +98,7 @@ RSpec.describe "Jobseekers can manage their job applications" do
 
           within ".card-component:nth-child(8)" do
             expect(page).to have_css(".card-component__header", text: deadline_passed_job_application.vacancy.job_title)
-            expect(page).to have_css(".card-component__actions", text: "deadline passed")
+            expect(page).to have_css(".card-component__actions", text: "job closed")
           end
         end
 
