@@ -261,13 +261,14 @@ en:
         title: Dear %{name}
         submit_reference: reference request form
         body: |
-          You have been provided as a referee by %{candidate_name} for the %{job_title} at %{organisation_name}.
+          You have been provided as a referee by %{candidate_name} for the %{job_title} role at %{organisation_name}.
 
-          Complete this %{link} to provide a reference. You can decline to provide a reference.
+          Do not reply to this email to provide your reference. You must complete the %{link} to provide a reference. You can decline to provide a reference.
 
-          If you cannot complete the above reference form using the link provided, contact %{school_email}.
+          If you cannot complete the above reference request form using the link provided, contact %{school_email}.
 
           Kind regards,
+
           Teaching Vacancies team
       inform_applicant_about_references:
         subject: References are being collected for role %{job_title} at %{organisation_name}
