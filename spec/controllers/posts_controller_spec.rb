@@ -85,6 +85,7 @@ RSpec.describe PostsController do
       context "how-to-create-job-listings-and-accept-applications" do
         let(:post_names) do
           %w[
+            communicating-with-jobseekers
             creating-the-perfect-teacher-job-advert
             accepting-job-applications-on-teaching-vacancies
             how-to-list-non-teaching-roles

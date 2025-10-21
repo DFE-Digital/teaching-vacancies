@@ -31,5 +31,11 @@ RSpec.describe "Users can view help guides" do
       click_on("How to accept job applications")
       expect(current_path).to eq(post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "accepting-job-applications-on-teaching-vacancies"))
     end
+
+    it "shows link to communicating with jobseekers page" do
+      click_on("How to create job listings and accept applications")
+      click_on("Communicating with jobseekers")
+      expect(current_path).to eq(post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "communicating-with-jobseekers"))
+    end
   end
 end
