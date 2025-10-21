@@ -8,7 +8,7 @@ FactoryBot.define do
     email { Faker::Internet.email(domain: "contoso.com") }
     phone_number { "01234 567890" }
     created_at { Faker::Date.in_date_period(year: 2016) }
-    is_most_recent_employer { [true, false].sample }
+    is_most_recent_employer { true }
 
     job_application
   end
