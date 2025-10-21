@@ -10,6 +10,8 @@ RSpec.describe "Publishers can add additional documents to a vacancy" do
   before do
     login_publisher(publisher: publisher, organisation: organisation)
     visit organisation_job_build_path(vacancy.id, :include_additional_documents)
+    # wait for page load
+    find_by_id("publishers-job-listing-include-additional-documents-form-include-additional-documents-hint")
   end
 
   after { logout }
