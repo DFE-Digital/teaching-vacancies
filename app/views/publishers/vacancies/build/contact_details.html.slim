@@ -5,7 +5,7 @@
 
   = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
 
-  = f.govuk_radio_buttons_fieldset :contact_email, legend: { size: "m", tag: nil } do
+  = f.govuk_radio_buttons_fieldset :contact_email, legend: { size: "m", tag: nil }, hint: { text: "The email address that you enter on this page will be shown on the job listing, and will receive all communications about this role." } do
     = f.govuk_radio_button :contact_email, current_publisher.email, label: { text: current_publisher.email }, link_errors: true
     = f.govuk_radio_button :contact_email, "other" do
       = f.govuk_text_field :other_contact_email, label: { class: "govuk-label govuk-label--s" }
