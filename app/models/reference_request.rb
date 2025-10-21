@@ -6,11 +6,11 @@ class ReferenceRequest < ApplicationRecord
 
   validates :reference_id, uniqueness: true
 
-  # marked_as_complete is a seperate field as it can be done
+  # marked_as_complete is a separate field as it can be done
   # even when the request is in the 'created' state as the hiring
   # staff can process references outside the service, but still mark
   # the request as complete when they receive it.
-  enum :status, { created: 0, requested: 1, received: 2 }
+  enum :status, { created: 0, requested: 1, received: 2, received_off_service: 3 }
 
   validates :status, :email, presence: true
 
@@ -18,7 +18,11 @@ class ReferenceRequest < ApplicationRecord
   scope :active_token, ->(token) { where(token: token, created_at: 12.weeks.ago..) }
 
   def sent?
-    !created?
+    !created? && !received_off_service?
+  end
+
+  def has_been_received?
+    received? || received_off_service?
   end
 
   has_paper_trail skip: [:token]
@@ -27,6 +31,11 @@ class ReferenceRequest < ApplicationRecord
   def change_referee_email!(email)
     update!(email: email, token: SecureRandom.uuid)
     referee.update!(email: email)
+    Publishers::CollectReferencesMailer.collect_references(self).deliver_later
+  end
+
+  def resend_email
+    update!(reminder_sent: true)
     Publishers::CollectReferencesMailer.collect_references(self).deliver_later
   end
 
