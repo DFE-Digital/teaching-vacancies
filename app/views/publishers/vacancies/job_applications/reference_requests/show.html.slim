@@ -8,8 +8,8 @@
     span.govuk-caption-l = @referee.name
     h1.govuk-heading-l = @referee.job_application.name
 
+    - status = reference_request_status(@reference_request, @referee.job_reference)
     .govuk-body
-      - status = reference_request_status(@reference_request, @referee.job_reference)
       = govuk_tag(text: t("reference_requests.#{status}.status"), colour: t("reference_requests.#{status}.colour"))
 
     .govuk-body = t(".once_the_reference_is_received")
@@ -23,15 +23,15 @@
           method: :patch do |f|
           = f.govuk_submit t(".send_reminder")
 
-      - if @reference_request.sent? && @referee.job_reference.complete? && @referee.job_reference.can_give_reference?
+      - if @referee.job_reference&.complete? && @referee.job_reference.can_give_reference?
         = govuk_button_link_to t(".print"), organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id, format: :pdf), class: "govuk-button--secondary"
 
-      - if !@referee.job_reference&.complete? || !@referee.job_reference.can_give_reference?
+      - if status.in?(%w[created pending])
         = form_with model: @reference_request,
           url: mark_as_received_organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id),
           method: :patch do |f|
           = f.govuk_submit t(".mark_as_received"), secondary: true
-      - elsif @reference_request.has_been_received?
+      - elsif status == "received"
         = form_with model: @reference_request,
           url: mark_as_complete_organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id),
           method: :patch do |f|

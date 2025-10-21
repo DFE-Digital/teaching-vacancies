@@ -203,7 +203,7 @@ RSpec.describe "Publishers manage self disclosure", :perform_enqueued do
       end
 
       scenario "publisher changing their mind and choosing TV for self-disclosure" do
-        expect(publisher_ats_self_disclosure_page.status.text).to eq("pending")
+        expect(publisher_ats_self_disclosure_page.status.text).to eq("created")
         expect(publisher_ats_self_disclosure_page.button.text).to eq("Manually mark as complete")
         expect(
           publisher_ats_self_disclosure_page.goto_references_and_self_disclosure_form.text,
