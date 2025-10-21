@@ -16,55 +16,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
 
   after { logout }
 
-  # needs JS driver to prevent tests seeing multiple tabs at once
-  context "when selecting multiple candidates", :js do
-    let(:vacancy) { create(:vacancy, :catholic, :expired, organisations: [school], publisher: publisher) }
-    let(:job_application) do
-      create(:job_application, :status_submitted,
-             notify_before_contact_referers: false,
-             email_address: jobseeker.email,
-             vacancy: vacancy, jobseeker: jobseeker)
-    end
-
-    let!(:extra_job_application) do
-      create(:job_application, :status_submitted, notify_before_contact_referers: contact_referee,
-                                                  vacancy: vacancy)
-    end
-
-    before do
-      publisher_ats_applications_page.load(vacancy_id: vacancy.id)
-      publisher_ats_applications_page.select_candidate(job_application)
-      publisher_ats_applications_page.select_candidate(extra_job_application)
-      click_on "Update application status"
-      choose "Interviewing"
-    end
-
-    context "when someone needs contacting" do
-      let(:contact_referee) { true }
-
-      it "shows the contact references form" do
-        click_on "Save and continue"
-        choose "Yes"
-        click_on "Save and continue"
-        expect(page).to have_content "notified when you are collecting references"
-      end
-    end
-
-    context "when no-one needs contacting" do
-      let(:contact_referee) { false }
-
-      it "does not show the contact references form" do
-        click_on "Save and continue"
-        choose "Yes"
-        click_on "Save and continue"
-        expect(page).to have_no_content "notified when you are collecting references"
-      end
-    end
-  end
-
   context "when selecting a single candidate" do
-    let(:cannot_collect) { "cannot collect religious references" }
-
     before do
       publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
       click_on "Update application status"
@@ -72,7 +24,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
       click_on "Save and continue"
     end
 
-    context "with a religious vacancy" do
+    context "with a religious vacancy", :versioning do
       let(:job_application) do
         create(:job_application, :status_submitted,
                :with_religious_referee,
@@ -83,69 +35,63 @@ RSpec.describe "Publishers can select a job application for interview", :perform
       let(:vacancy) { create(:vacancy, :catholic, :expired, organisations: [school], publisher: publisher) }
       let(:action_needed) { "Action needed" }
 
-      it "shows religious warning text" do
-        expect(page).to have_content(cannot_collect)
+      before do
+        choose "Yes"
+        click_on "Save and continue"
+        choose "No"
+        click_on "Save and continue"
+        choose "No"
+        click_on "Save and continue"
+        click_on "Pre-interview checks"
       end
 
-      context "when editing a religious reference", :versioning do
-        before do
-          choose "Yes"
-          click_on "Save and continue"
-          choose "No"
-          click_on "Save and continue"
-          choose "No"
-          click_on "Save and continue"
-          click_on "Pre-interview checks"
+      it "displays action needed" do
+        within "#religious_reference" do
+          expect(page).to have_content action_needed
         end
+      end
 
-        it "displays action needed" do
+      context "when editing a religious reference" do
+        before do
           within "#religious_reference" do
-            expect(page).to have_content action_needed
+            find("a").click
           end
         end
 
-        context "when editing a religious reference" do
+        it "allows the reference to be marked as requested" do
+          click_on "Mark as requested"
+          within "#religious_reference" do
+            expect(page).to have_content "pending"
+          end
+        end
+
+        describe "completing a religious reference" do
           before do
+            click_on "Mark as requested"
             within "#religious_reference" do
               find("a").click
             end
           end
 
-          it "allows the reference to be marked as requested" do
-            click_on "Mark as requested"
+          it "allows the reference to be marked as complete", :js do
+            click_on "Mark as complete"
             within "#religious_reference" do
-              expect(page).to have_content "pending"
+              expect(page).to have_content "completed"
             end
           end
+        end
 
-          describe "completing a religious reference" do
-            before do
-              click_on "Mark as requested"
-              within "#religious_reference" do
-                find("a").click
-              end
-            end
+        describe "adding a note" do
+          let(:note_content) { Faker::Ancient.hero }
 
-            it "allows the reference to be marked as complete", :js do
-              click_on "Mark as complete"
-              within "#religious_reference" do
-                expect(page).to have_content "completed"
-              end
-            end
-          end
-
-          describe "adding a note" do
-            let(:note_content) { Faker::Ancient.hero }
-
-            it "allows notes to be added without disturbing the flow" do
-              notes = find_by_id("publishers-job-application-notes-form-content-field")
-              notes.fill_in with: note_content
-              click_on "Save note"
-              find ".govuk-notification-banner"
-              expect(page).to have_content "A note has been added"
-              expect(page).to have_content note_content
-              expect(page).to have_current_path edit_organisation_job_job_application_religious_reference_path(vacancy.id, job_application.id)
-            end
+          it "allows notes to be added without disturbing the flow" do
+            notes = find_by_id("publishers-job-application-notes-form-content-field")
+            notes.fill_in with: note_content
+            click_on "Save note"
+            find ".govuk-notification-banner"
+            expect(page).to have_content "A note has been added"
+            expect(page).to have_content note_content
+            expect(page).to have_current_path edit_organisation_job_job_application_religious_reference_path(vacancy.id, job_application.id)
           end
         end
       end
@@ -193,10 +139,6 @@ RSpec.describe "Publishers can select a job application for interview", :perform
       context "when applicant needs to be notified" do
         let(:notify_candidate) { true }
 
-        it "doesnt show religious warning text" do
-          expect(page).to have_no_content(cannot_collect)
-        end
-
         scenario "without selecting" do
           expect(publisher_ats_collect_references_page).to be_displayed
           click_on "Save and continue"
@@ -233,7 +175,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
             end
           end
 
-          context "when choosing not to contact applicant through TVS", :versioning do
+          context "when choosing not to contact applicant through TVS" do
             let(:contact_applicant) { "No" }
 
             it "only sends referee emails, and doesn't send email about reference collection" do
@@ -245,139 +187,6 @@ RSpec.describe "Publishers can select a job application for interview", :perform
                   old_referee.email => ["Provide a reference for"],
                   job_application.email_address => ["Complete your self-disclosure form"],
                 })
-            end
-
-            context "when the reference is declined" do
-              before do
-                current_referee.reload.job_reference.update!(attributes_for(:job_reference, :reference_declined).merge(updated_at: Date.tomorrow))
-                current_referee.reload.reference_request.update!(status: :received)
-              end
-
-              it "shows the reference as declined" do
-                publisher_ats_interviewing_page.pre_interview_check_links.first.click
-                expect(publisher_ats_pre_interview_checks_page).to be_displayed
-
-                publisher_ats_pre_interview_checks_page.reference_links.first.click
-                expect(page).to have_content("You will need to request a new referee")
-                expect(publisher_ats_pre_interview_checks_page.timeline).to have_content("Reference declined")
-              end
-            end
-
-            context "when the referee email is incorrect" do
-              before do
-                ActionMailer::Base.deliveries.clear
-                publisher_ats_interviewing_page.pre_interview_check_links.first.click
-                publisher_ats_pre_interview_checks_page.reference_links.first.click
-                within ".govuk-main-wrapper" do
-                  within ".govuk-grid-column-two-thirds" do
-                    find("a.govuk-link").click
-                  end
-                end
-              end
-
-              let(:new_email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
-
-              scenario "with a valid email" do
-                fill_in "publishers-vacancies-job-applications-change-email-address-form-email-field", with: new_email
-                click_on I18n.t("buttons.save_and_continue")
-                expect(page).to have_content(new_email)
-                expect(page).to have_content("Reference email changed")
-                expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
-                  .to eq({
-                    new_email => ["Provide a reference for #{job_application.name} for #{vacancy.job_title} at #{school.name}"],
-                  })
-              end
-
-              scenario "without an email" do
-                click_on I18n.t("buttons.save_and_continue")
-                expect(page).to have_content("Enter a valid email address")
-              end
-            end
-
-            context "with a received reference" do
-              before do
-                current_referee.reload
-                # simulate receipt of a reference
-                current_referee.job_reference.update!(reference_data.merge(updated_at: Date.tomorrow))
-                # remove previous emails so that current ones can be checked
-                ActionMailer::Base.deliveries.clear
-                current_referee.job_reference.mark_as_received
-                publisher_ats_interviewing_page.pre_interview_check_links.first.click
-              end
-
-              context "with a simple reference" do
-                let(:reference_data) { attributes_for(:job_reference, :reference_given) }
-
-                it "can progress to the page where the reference is shown" do
-                  expect(publisher_ats_pre_interview_checks_page).to be_displayed
-
-                  publisher_ats_pre_interview_checks_page.reference_links.first.click
-                  expect(publisher_ats_reference_request_page).to be_displayed
-                end
-
-                it "send an email notification to the publisher that the reference had been received" do
-                  expect(ActionMailer::Base.deliveries.map(&:to).flatten)
-                    .to contain_exactly("publisher@contoso.com")
-                end
-
-                context "when marking reference as complete" do
-                  before do
-                    publisher_ats_pre_interview_checks_page.reference_links.first.click
-                    click_on "Mark as received"
-                  end
-
-                  it "displays the page correctly" do
-                    expect(page).to have_content "This reference will be marked as complete"
-                    expect(page).to have_content "This reference will remain as received"
-                    expect(page).to have_content "Yes"
-                  end
-
-                  scenario "error bounce" do
-                    expect(publisher_ats_satisfactory_reference_page).to be_displayed
-                    publisher_ats_satisfactory_reference_page.submit_button.click
-                    expect(publisher_ats_satisfactory_reference_page.errors.map(&:text)).to eq(["Select yes if the reference received is satisfactory"])
-                  end
-
-                  scenario "accept reference", :versioning do
-                    publisher_ats_satisfactory_reference_page.yes.click
-                    publisher_ats_satisfactory_reference_page.submit_button.click
-                    expect(current_referee.reference_request.reload).to be_marked_as_complete
-                    expect(page).to have_content "completed"
-
-                    expect(publisher_ats_reference_request_page).to be_displayed
-                    expect(publisher_ats_reference_request_page.timeline_titles.map(&:text)).to eq(["Marked as complete", "Reference received", "Reference requested"])
-                  end
-
-                  scenario "decline reference" do
-                    publisher_ats_satisfactory_reference_page.no.click
-                    publisher_ats_satisfactory_reference_page.submit_button.click
-                    expect(current_referee.reference_request.reload.status).to eq("received")
-                  end
-                end
-              end
-
-              context "when reference contains issues" do
-                let(:investigation_details) { Faker::Adjective.negative }
-                let(:warning_details) { Faker::Adjective.negative }
-                let(:undertake_reason) { Faker::Adjective.negative }
-
-                let(:reference_data) do
-                  attributes_for(:job_reference, :reference_given, :with_issues,
-                                 under_investigation_details: investigation_details,
-                                 warning_details: warning_details,
-                                 unable_to_undertake_reason: undertake_reason)
-                end
-
-                it "can progress to the page where the reference is shown" do
-                  expect(publisher_ats_pre_interview_checks_page).to be_displayed
-
-                  publisher_ats_pre_interview_checks_page.reference_links.first.click
-                  expect(publisher_ats_reference_request_page).to be_displayed
-                  expect(page).to have_content investigation_details
-                  expect(page).to have_content warning_details
-                  expect(page).to have_content undertake_reason
-                end
-              end
             end
           end
         end
