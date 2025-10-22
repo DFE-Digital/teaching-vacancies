@@ -29,6 +29,58 @@ RSpec.describe "jobseekers/job_applications/show" do
     end
   end
 
+  describe "download buttons" do
+    let(:withdrawn_inset_text) do
+      "If you accidentally withdrew from this job, you can download a blank copy of the application form, fill it in and submit it directly to the school."
+    end
+
+    context "when jobseekers have withdrawn" do
+      let(:job_application) { build_stubbed(:job_application, :status_withdrawn, jobseeker:, vacancy:) }
+
+      it "shows download completed button" do
+        expect(show_view).to have_link(
+          "Download your completed application",
+          href: jobseekers_job_application_download_path(job_application),
+          class: "govuk-button--primary",
+        )
+      end
+
+      it "shows download blank application form button" do
+        expect(show_view).to have_link(
+          "Download a blank application form",
+          href: jobseekers_job_application_form_preview_path(job_application, :blank),
+          class: "govuk-button--secondary",
+        )
+      end
+
+      it "shows withdrawn inset text" do
+        expect(show_view).to have_text(withdrawn_inset_text)
+      end
+    end
+
+    context "when jobseekers have not withdrawn" do
+      it "show download application" do
+        expect(show_view).to have_link(
+          "Download your completed application",
+          href: jobseekers_job_application_download_path(job_application),
+          class: "govuk-button--primary",
+        )
+      end
+
+      it "does not show blank application button" do
+        expect(show_view).to have_no_link(
+          "Download a blank application form",
+          href: "",
+          class: "govuk-button--secondary",
+        )
+      end
+
+      it "does not show withdrawn inset" do
+        expect(show_view).to have_no_text(withdrawn_inset_text)
+      end
+    end
+  end
+
   describe "banner" do
     subject(:banner) { show_view.find(".review-banner") }
 
@@ -59,7 +111,7 @@ RSpec.describe "jobseekers/job_applications/show" do
         expect(banner).to have_css(selectors[:withdraw_btn])
         expect(banner).to have_link("Withdraw", href: jobseekers_job_application_confirm_withdraw_path(job_application))
         expect(banner).to have_css(selectors[:download_btn])
-        expect(banner).to have_link("Download application", href: jobseekers_job_application_download_path(job_application))
+        expect(banner).to have_link("Download your completed application", href: jobseekers_job_application_download_path(job_application))
 
         expect(banner).to have_no_css(selectors[:delete_btn])
         expect(banner).to have_no_css(selectors[:vacancy_form_btn])
@@ -74,7 +126,7 @@ RSpec.describe "jobseekers/job_applications/show" do
         expect(banner).to have_css(selectors[:tag], text: "unsuccessful")
 
         expect(banner).to have_css(selectors[:download_btn])
-        expect(banner).to have_link("Download application", href: jobseekers_job_application_download_path(job_application))
+        expect(banner).to have_link("Download your completed application", href: jobseekers_job_application_download_path(job_application))
 
         expect(banner).to have_no_css(selectors[:delete_btn])
         expect(banner).to have_no_css(selectors[:withdraw_btn])

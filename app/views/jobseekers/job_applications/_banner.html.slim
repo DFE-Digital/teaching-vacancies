@@ -12,6 +12,9 @@
   .status-tag
     = job_application_status_tag(job_application.deadline_passed? ? :deadline_passed : job_application.status)
 
+  - if job_application.withdrawn?
+    = govuk_inset_text(text: t(".withdrawn_inset"))
+
   .govuk-button-group class="govuk-!-margin-bottom-3 govuk-!-margin-top-3 govuk-!-display-none-print"
     - if job_application.draft?
       = govuk_button_link_to t("buttons.delete_application"), jobseekers_job_application_confirm_destroy_path(job_application), class: "govuk-button--warning govuk-!-margin-bottom-4 delete-application"
@@ -23,6 +26,9 @@
       = govuk_button_link_to t("buttons.withdraw_application"), jobseekers_job_application_confirm_withdraw_path(job_application), class: "govuk-button--warning govuk-!-margin-bottom-4 withdraw-application"
 
     - unless job_application.draft?
-      = govuk_button_link_to t("buttons.download_application"), jobseekers_job_application_download_path(job_application), class: "govuk-button--secondary print-application"
+      = govuk_button_link_to t("buttons.download_your_application"), jobseekers_job_application_download_path(job_application), class: "govuk-button--primary print-application"
+
+    - if job_application.withdrawn?
+      = govuk_button_link_to t("buttons.download_blank_application"), jobseekers_job_application_form_preview_path(job_application, :blank), class: "govuk-button--secondary blank-application"
 
     = open_in_new_tab_link_to "View this listing", job_path(job_application.vacancy), class: "govuk-!-margin-bottom-0 view-listing-link"
