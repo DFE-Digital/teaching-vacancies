@@ -33,12 +33,24 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
   end
 
   def application_process_steps
-    core_steps = %i[contact_details]
+    # ok this is where we change the logic
+    # is there a better way to do this?
+    core_steps = if contact_email_belongs_to_existing_publisher?
+                   %i[contact_details]
+                 else
+                   %i[contact_details confirm_contact_details]
+                 end
+
     early_steps = if vacancy.published?
                     []
                   else
                     %i[applying_for_the_job]
                   end
+    
+    if vacancy.contact_email
+      existing_publisher = Publisher.find_by(email: vacancy.contact_email)
+    end
+
     if vacancy.enable_job_applications
       early_steps + %i[anonymise_applications] + core_steps
     else
@@ -60,5 +72,13 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
     else
       first_steps + last_steps
     end
+  end
+
+  private
+
+  def contact_email_belongs_to_existing_publisher?
+    return false if vacancy.contact_email.blank?
+    
+    Publisher.find_by(email: vacancy.contact_email).present?
   end
 end

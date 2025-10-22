@@ -248,7 +248,15 @@ RSpec.describe "Creating a vacancy" do
         click_on "Save and continue"
 
         expect(publisher_contact_details_page).to be_displayed
-        publisher_contact_details_page.fill_in_and_submit_form(vacancy.contact_email, vacancy.contact_number)
+        non_publisher_email = "new.contact@example.com"
+        publisher_contact_details_page.fill_in_and_submit_form(non_publisher_email, vacancy.contact_number)
+
+        # Should now see the confirm_contact_details page
+        expect(publisher_confirm_contact_details_page).to be_displayed
+        expect(page).to have_content("Do you want to use this email address?")
+        
+        # Test selecting "Yes" to confirm the email
+        publisher_confirm_contact_details_page.fill_in_and_submit_form(confirm: true)
 
         expect(page).to have_current_path(organisation_job_review_path(created_vacancy.id), ignore_query: true)
 

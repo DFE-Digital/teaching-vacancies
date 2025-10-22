@@ -120,6 +120,11 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
           .merge(current_organisation: current_organisation)
   end
 
+  def confirm_contact_details_params(params)
+     params.require(:publishers_job_listing_confirm_contact_details_form)
+          .permit(:confirm_contact_email)
+  end
+
   def about_the_role_params(params)
     params.require(:publishers_job_listing_about_the_role_form)
           .permit(:ect_status, :skills_and_experience, :school_offer, :flexi_working, :flexi_working_details_provided,
