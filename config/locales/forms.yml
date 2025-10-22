@@ -218,6 +218,10 @@ en:
         application_link: For example, https://www.example.com
       publishers_job_listing_application_form_form:
         application_form: You can only upload a PDF or DOCX file under 20MB
+      publishers_job_listing_contact_details_form:
+        contact_email: The email address that you enter on this page will be shown on the job listing, and will receive all communications about this role.
+      publishers_job_listing_confirm_contact_details_form:
+        confirm_contact_email: The email address selected is not linked to a Teaching Vacancies account so the person receiving the email will be unable to sign in. We will send them an email with guidance on how to set up their account. By selecting 'Yes' below you agree to share your email address with them.
       publishers_job_listing_documents_form:
         documents: You can only upload PDF or DOCX files under 20MB, You can upload multiple files at the same time.
       publishers_job_listing_feedback_form:
@@ -502,6 +506,10 @@ en:
           false: "No"
           true: "Yes"
         other_contact_email: Email address
+      publishers_job_listing_confirm_contact_details_form:
+        confirm_contact_email_options:
+          "true": "Yes"
+          "false": "No - add another email address"
       publishers_job_listing_copy_vacancy_form:
         job_title: Job title
         publish_on_day_options:
@@ -731,6 +739,8 @@ en:
       publishers_job_listing_contact_details_form:
         contact_email: Email address
         contact_number_provided: Do you want to give a contact phone number?
+      publishers_job_listing_confirm_contact_details_form:
+        confirm_contact_email: Do you want to use this email address?
       publishers_job_listing_copy_vacancy_form:
         expires_at: Closing date
         expiry_time: Time application is due

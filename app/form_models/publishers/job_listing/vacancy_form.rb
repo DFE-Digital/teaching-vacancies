@@ -18,7 +18,13 @@ class Publishers::JobListing::VacancyForm < BaseForm
 
   class << self
     def load_form(model)
-      model.slice(*fields)
+      # causing issues because vacancy doesn't have confirm contact email field
+      # is there a better way to do this?
+      if fields == [:confirm_contact_email]
+        {}
+      else
+        model.slice(*fields)
+      end
     end
   end
 
