@@ -3,4 +3,5 @@
     h2.govuk-summary-card__title
       = jobseeker_message_display_name(message, job_application)
   .govuk-summary-card__content
-    p.govuk-body class="message-content" = simple_format(message.content)
+    .trix-content
+      p.govuk-body.message-content = simple_format(message.content)
