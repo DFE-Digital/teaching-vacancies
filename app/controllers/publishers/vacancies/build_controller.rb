@@ -24,8 +24,12 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   def update
     @form = form_class.new(form_params, vacancy, current_publisher)
     if @form.valid?
-      update_vacancy
-      redirect_to_next_step
+      if step.name == "confirm_contact_details" && @form.confirm_contact_email == "false"
+        redirect_to organisation_job_build_path(vacancy.id, step_process.previous_step)
+      else
+        update_vacancy
+        redirect_to_next_step
+      end
     else
       render_wizard
     end
@@ -34,6 +38,15 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   private
 
   attr_reader :form
+
+  def handle_confirm_contact_email
+    if @form.confirm_contact_email == "false"
+      redirect_to organisation_job_build_path(vacancy.id, step_process.previous_step)
+    else
+      vacancy.update(completed_steps: completed_steps)
+      redirect_to_next_step
+    end
+  end
 
   def form_class
     "publishers/job_listing/#{step}_form".camelize.constantize
@@ -69,7 +82,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   end
 
   def update_vacancy
-    vacancy.assign_attributes(form.params_to_save.merge(completed_steps: completed_steps))
+    vacancy.assign_attributes(form.params_to_save.merge(completed_steps: x))
     vacancy.refresh_slug
     update_google_index(vacancy) if vacancy.live?
 

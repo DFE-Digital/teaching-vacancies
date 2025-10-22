@@ -29,6 +29,7 @@ module PageObjects
         publisher_application_form: "Publisher::ApplicationFormPage",
         publisher_important_dates: "Publisher::ImportantDatesPage",
         publisher_contact_details: "Publisher::ContactDetailsPage",
+        publisher_confirm_contact_details: "Publisher::ConfirmContactDetailsPage",
         publisher_about_the_role: "Publisher::AboutTheRolePage",
         publisher_add_document: "Publisher::AddDocumentPage",
         publisher_vacancy_documents: "Publisher::VacancyDocumentsPage",
