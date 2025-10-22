@@ -19,11 +19,14 @@
               = f.text_field :keyword, value: @search_form.keyword, placeholder: t(".search.placeholder"), class: "govuk-input"
               = f.submit t(".search.submit"), class: "govuk-button"
 
-        - if @search_form.active_criteria?
-          .search-results-summary
-            h2.govuk-heading-m = t(".search.results_heading", count: @search.total_count, keyword: @search_form.keyword)
-        - elsif @conversations.any?
-          h2.govuk-heading-m = t(".total_messages", count: @search.total_count)
+        div class="sort-container"
+          div class="left"
+            - if @search_form.active_criteria?
+              h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-1" = t(".search.results_heading", count: @search.total_count, keyword: @search_form.keyword)
+            - else
+              h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-1" = t(".total_messages", count: @search.total_count)
+          div class="right"
+            = render SortComponent.new(path: method(:publishers_candidate_messages_path), sort: @sort, url_params: { tab: @tab, keyword: @search_form.keyword }.compact, display_type: "inline-select")
 
     - if @conversations.any?
       = form_with url: toggle_archive_publishers_candidate_messages_path, method: :patch, local: true do |f|

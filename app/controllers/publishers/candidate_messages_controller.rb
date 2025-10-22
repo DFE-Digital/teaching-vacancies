@@ -3,23 +3,17 @@ class Publishers::CandidateMessagesController < Publishers::BaseController
     @tab = params[:tab] || "inbox"
     organisation_ids = current_publisher.accessible_organisations(current_organisation).map(&:id)
     @search_form = Publishers::CandidateMessagesSearchForm.new(search_params)
+    @sort = Publishers::CandidateMessagesSort.new.update(sort_by: params[:sort_by] || "unread_on_top")
 
-    base_conversations = Conversation.for_organisations(organisation_ids)
-                                    .includes(job_application: :vacancy, messages: :sender)
+    base_conversations = Conversation.for_organisations(organisation_ids).includes(job_application: :vacancy, messages: :sender)
 
     filtered_conversations = @tab == "archive" ? base_conversations.archived : base_conversations.inbox
 
-    @search = Search::CandidateMessagesSearch.new(
-      @search_form.to_hash,
-      scope: filtered_conversations.ordered_by_unread_and_latest_message,
-    )
+    @search = Search::CandidateMessagesSearch.new(@search_form.to_hash, sort: @sort, scope: filtered_conversations)
 
     @conversations = @search.conversations
 
-    @inbox_count = Conversation.for_organisations(organisation_ids)
-                               .inbox
-                               .with_unread_jobseeker_messages
-                               .count
+    @inbox_count = Conversation.for_organisations(organisation_ids).inbox.with_unread_jobseeker_messages.count
   end
 
   def toggle_archive
@@ -40,6 +34,6 @@ class Publishers::CandidateMessagesController < Publishers::BaseController
   private
 
   def search_params
-    params.permit(:keyword)
+    params.permit(:keyword, :sort_by)
   end
 end
