@@ -82,6 +82,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   end
 
   def update_vacancy
+    x = form.class == Publishers::JobListing::ContactDetailsForm && form.contact_email == "other" && form.other_contact_email != vacancy.contact_email ? vacancy.completed_steps - ["confirm_contact_details"] : completed_steps
+
     vacancy.assign_attributes(form.params_to_save.merge(completed_steps: x))
     vacancy.refresh_slug
     update_google_index(vacancy) if vacancy.live?

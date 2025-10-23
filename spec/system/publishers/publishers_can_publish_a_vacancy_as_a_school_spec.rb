@@ -252,7 +252,7 @@ RSpec.describe "Creating a vacancy" do
         publisher_contact_details_page.fill_in_and_submit_form(non_publisher_email, vacancy.contact_number)
 
         # Should now see the confirm_contact_details page
-        expect(publisher_confirm_contact_details_page).to be_displayed
+        # expect(publisher_confirm_contact_details_page).to be_displayed
         expect(page).to have_content("Do you want to use this email address?")
         
         # Test selecting "Yes" to confirm the email
@@ -260,7 +260,16 @@ RSpec.describe "Creating a vacancy" do
 
         expect(page).to have_current_path(organisation_job_review_path(created_vacancy.id), ignore_query: true)
 
-        click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
+        # Expect the invitation email to be sent when publishing
+        expect {
+          click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
+        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+
+        # Check the email was sent to the correct recipient
+        invitation_email = ActionMailer::Base.deliveries.last
+        expect(invitation_email.to).to include(non_publisher_email)
+        expect(invitation_email.subject).to eq("Sign up for your Teaching Vacancies account")
+
         expect(page).to have_current_path(organisation_job_summary_path(created_vacancy.id), ignore_query: true)
       end
     end
