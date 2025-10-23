@@ -7,7 +7,7 @@ module PageObjects
         def fill_in_and_submit_form(confirm: true)
           option = confirm ? "true" : "false"
           choose I18n.t("helpers.label.publishers_job_listing_confirm_contact_details_form.confirm_contact_email_options.#{option}")
-          
+
           click_on I18n.t("buttons.save_and_continue")
         end
       end
