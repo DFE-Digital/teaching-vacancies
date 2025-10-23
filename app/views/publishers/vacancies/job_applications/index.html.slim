@@ -1,6 +1,6 @@
 - content_for :page_title_prefix, @current_organisation.name
 
-= render "publishers/vacancies/review_banner", vacancy: @vacancy, current_organisation: @current_organisation
+= render "publishers/vacancies/review_banner", vacancy: @vacancy, current_organisation: @current_organisation, tag_name: tag_name(@vacancy)
 
 .govuk-grid-row
   .govuk-grid-column-full

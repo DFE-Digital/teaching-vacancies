@@ -1,0 +1,20 @@
+- if next_invalid_step
+  / incomplete draft
+  = govuk_inset_text do
+    = vacancy_review_form_heading_inset_text(vacancy, "incomplete_draft")
+  .govuk-button-group class="govuk-!-margin-top-4"
+    = vacancy_complete_action_link(vacancy, next_invalid_step)
+    = vacancy_copy_action_link(vacancy)
+    = vacancy_delete_action_link(vacancy)
+- else
+  / complete draft
+  = govuk_inset_text do
+    = vacancy_review_form_heading_inset_text(vacancy, "complete_draft")
+    .govuk-button-group class="govuk-!-margin-top-4"
+      - if vacancy.publish_on.future?
+        = vacancy_schedule_complete_draft_action_link(vacancy)
+      - else
+        = vacancy_publish_action_link(vacancy)
+      = vacancy_preview_action_link(vacancy)
+      = vacancy_copy_action_link(vacancy)
+      = vacancy_delete_action_link(vacancy)
