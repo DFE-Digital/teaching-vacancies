@@ -248,7 +248,7 @@ RSpec.describe "Creating a vacancy" do
         click_on "Save and continue"
 
         expect(publisher_contact_details_page).to be_displayed
-        non_publisher_email = "new.contact@example.com"
+        non_publisher_email = Faker::Internet.email(domain: "contoso.com")
         publisher_contact_details_page.fill_in_and_submit_form(non_publisher_email, vacancy.contact_number)
 
         # Should now see the confirm_contact_details page

@@ -23,6 +23,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
 
   def update
     @form = form_class.new(form_params, vacancy, current_publisher)
+
     if @form.valid?
       if step.name == "confirm_contact_details" && @form.confirm_contact_email == "false"
         redirect_to organisation_job_build_path(vacancy.id, step_process.previous_step)
@@ -82,9 +83,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   end
 
   def update_vacancy
-    x = form.class == Publishers::JobListing::ContactDetailsForm && form.contact_email == "other" && form.other_contact_email != vacancy.contact_email ? vacancy.completed_steps - ["confirm_contact_details"] : completed_steps
-
-    vacancy.assign_attributes(form.params_to_save.merge(completed_steps: x))
+    vacancy.assign_attributes(form.params_to_save.merge(completed_steps: completed_steps))
     vacancy.refresh_slug
     update_google_index(vacancy) if vacancy.live?
 
