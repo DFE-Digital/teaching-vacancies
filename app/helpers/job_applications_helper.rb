@@ -29,15 +29,15 @@ module JobApplicationsHelper
   JOB_APPLICATION_STATUS_TAG_COLOURS = {
     deadline_passed: "grey",
     draft: "pink",
-    submitted: "blue",
+    submitted: "light-blue",
     reviewed: "purple",
-    shortlisted: "yellow",
+    shortlisted: "orange",
     unsuccessful: "red",
     withdrawn: "grey",
     action_required: "orange",
-    interviewing: "green",
+    interviewing: "turquoise",
     unsuccessful_interview: "red",
-    offered: "pink",
+    offered: "purple",
     declined: "grey",
   }.freeze
 
