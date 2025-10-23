@@ -7,6 +7,7 @@ class DocumentPreviewService # rubocop: disable Metrics/ClassLength
 
   PREVIEWS = {
     # rubocop:disable Layout/HashAlignment
+    blank:           ["job_application", :blank_job_application_sample],
     plain:           ["job_application", :job_application_sample],
     religious:       ["job_application", :religious_job_application_sample],
     catholic:        ["job_application", :catholic_job_application_sample],
@@ -36,6 +37,11 @@ class DocumentPreviewService # rubocop: disable Metrics/ClassLength
 
   def filename
     "#{@sample_name}_#{pdf.object_id}.pdf"
+  end
+
+  def blank_job_application_sample(vacancy)
+    job_application = JobApplication.new(vacancy:)
+    JobApplicationPdfGenerator.new(job_application).generate
   end
 
   def job_application_sample(vacancy)
