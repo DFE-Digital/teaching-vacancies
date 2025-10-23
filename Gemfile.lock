@@ -174,6 +174,9 @@ GEM
       racc
     breasal (0.0.1)
     builder (3.3.0)
+    business_time (0.13.0)
+      activesupport (>= 3.2.0)
+      tzinfo
     byebug (12.0.0)
     capybara (3.40.0)
       addressable
@@ -954,6 +957,7 @@ DEPENDENCIES
   binding_of_caller
   brakeman
   breasal
+  business_time
   byebug
   capybara
   chartkick

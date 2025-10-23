@@ -7,6 +7,7 @@ module PageObjects
 
           element :status, "#main-content .govuk-tag"
           element :button, ".govuk-grid-column-two-thirds .govuk-button"
+          element :reminder_btn, '[name="reminder"]'
           element :goto_references_and_self_disclosure_form, "a.govuk-link:nth-child(7)"
           element :banner_title, "#govuk-notification-banner-title"
 
