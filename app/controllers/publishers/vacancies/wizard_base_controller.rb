@@ -30,7 +30,17 @@ module Publishers
       def redirect_to_next_step
         if save_and_finish_later?
           redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success")
-        elsif all_steps_valid?
+          return
+        end
+
+        if step.name == "contact_details"
+          if form.contact_email == "other" && !vacancy.contact_email_belongs_to_a_publisher?
+            redirect_to organisation_job_build_path(vacancy.id, :confirm_contact_details)
+            return
+          end
+        end
+
+        if all_steps_valid?
           if vacancy.published?
             redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success")
           else
