@@ -51,14 +51,13 @@ class DocumentPreviewService # rubocop: disable Metrics/ClassLength
   end
 
   def blank_job_application_sample(vacancy)
-    job_application = case vacancy.religion_type
-                      when :other_religtion then religious_job_application_sample(vacancy)
-                      when :catholic then catholic_job_application_sample(vacancy)
-                      else
-                        job_application_sample(vacancy)
-                      end
-    job_application.blank_attributes!
-    JobApplicationPdf.new(job_application)
+    presenter = case vacancy.religion_type
+                when :other_religtion then religious_job_application_sample(vacancy)
+                when :catholic then catholic_job_application_sample(vacancy)
+                else
+                  job_application_sample(vacancy)
+                end
+    BlankJobApplicationPdf.new(presenter.model)
   end
 
   def job_application_sample(vacancy)
