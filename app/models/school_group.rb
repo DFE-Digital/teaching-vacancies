@@ -6,6 +6,10 @@ class SchoolGroup < Organisation
     schools.map(&:key_stages).flatten.uniq.compact
   end
 
+  def live_group_vacancies
+    Vacancy.none
+  end
+
   def profile_complete?
     return true unless trust?
 

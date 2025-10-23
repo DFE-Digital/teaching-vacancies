@@ -79,6 +79,10 @@ class Organisation < ApplicationRecord
     through: 7,
   }
 
+  def live_group_vacancies
+    Vacancy.none
+  end
+
   def all_vacancies
     Vacancy.in_organisation_ids(all_organisation_ids)
   end
