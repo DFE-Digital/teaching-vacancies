@@ -34,6 +34,13 @@
     - record_id
     - created_at
     - updated_at
+  :message_templates:
+    - id
+    - publisher_id
+    - name
+    - created_at
+    - updated_at
+    - template_type
   :school_group_memberships:
   - do_not_delete
   :references:

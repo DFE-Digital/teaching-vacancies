@@ -15,6 +15,21 @@ RSpec.describe "Publishers can edit a draft vacancy" do
     context "with an incomplete draft" do
       let(:vacancy) { create(:draft_vacancy, :with_contract_details, :ect_suitable, job_roles: [], organisations: [primary_school], phases: %w[primary]) }
 
+      let(:pages_with_skips) do
+        {
+          contract_information: ["aria-allowed-attr"],
+          start_date: ["aria-allowed-attr"],
+          pay_package: ["aria-allowed-attr"],
+          about_the_role: ["aria-allowed-attr"],
+          include_additional_documents: [],
+          school_visits: [],
+          visa_sponsorship: ["aria-allowed-attr"],
+          important_dates: ["aria-allowed-attr"],
+          applying_for_the_job: [],
+          contact_details: ["aria-allowed-attr"],
+        }
+      end
+
       before do
         within "#job_details" do
           find("a").click
@@ -38,42 +53,16 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         expect(page).to be_axe_clean
 
         fill_in_key_stages_form_fields(vacancy.key_stages_for_phases)
-        progress_to_edit_page(:contract_information)
-        #  https://github.com/alphagov/govuk-frontend/issues/979
-        expect(page).to be_axe_clean.skipping "aria-allowed-attr"
 
-        progress_to_edit_page(:start_date)
-        #  https://github.com/alphagov/govuk-frontend/issues/979
-        expect(page).to be_axe_clean.skipping "aria-allowed-attr"
-
-        progress_to_edit_page(:pay_package)
-        #  https://github.com/alphagov/govuk-frontend/issues/979
-        expect(page).to be_axe_clean.skipping "aria-allowed-attr"
-
-        progress_to_edit_page(:about_the_role)
-        #  https://github.com/alphagov/govuk-frontend/issues/979
-        expect(page).to be_axe_clean.skipping "aria-allowed-attr"
-
-        progress_to_edit_page(:include_additional_documents)
-        expect(page).to be_axe_clean
-
-        progress_to_edit_page(:school_visits)
-        expect(page).to be_axe_clean
-
-        progress_to_edit_page(:visa_sponsorship)
-        #  https://github.com/alphagov/govuk-frontend/issues/979
-        expect(page).to be_axe_clean.skipping "aria-allowed-attr"
-
-        progress_to_edit_page(:important_dates)
-        #  https://github.com/alphagov/govuk-frontend/issues/979
-        expect(page).to be_axe_clean.skipping "aria-allowed-attr"
-
-        progress_to_edit_page(:applying_for_the_job)
-        expect(page).to be_axe_clean
-
-        progress_to_edit_page(:contact_details)
-        #  https://github.com/alphagov/govuk-frontend/issues/979
-        expect(page).to be_axe_clean.skipping "aria-allowed-attr"
+        pages_with_skips.each do |page_name, allowed_skips|
+          progress_to_edit_page(page_name)
+          #  https://github.com/alphagov/govuk-frontend/issues/979
+          if allowed_skips.any?
+            expect(page).to be_axe_clean.skipping(*allowed_skips)
+          else
+            expect(page).to be_axe_clean
+          end
+        end
 
         click_on I18n.t("buttons.save_and_continue")
         #  wait for page load

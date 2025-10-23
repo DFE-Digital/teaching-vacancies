@@ -446,7 +446,16 @@ Rails.application.routes.draw do
       resources :job_application_batches, only: %i[] do
         resources :references_and_self_disclosure, only: %i[show update], controller: "publishers/vacancies/references_and_self_disclosure"
       end
+      resources :bulk_rejection_messages, only: %i[], controller: "publishers/vacancies/bulk_rejection_messages" do
+        member do
+          get :select_rejection_template
+          get :prepare_rejection_emails
+          post :send_rejection_emails
+        end
+      end
     end
+
+    resources :message_templates, only: %i[new create edit update destroy], controller: "publishers/message_templates"
   end
 
   resources :references, only: %i[] do

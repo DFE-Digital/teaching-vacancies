@@ -67,7 +67,7 @@ en:
       index:
         table_headers:
           name: "Name"
-          application: "Application" 
+          application: "Application"
           date_and_time: "Date and time"
         buttons:
           archive: "Archive message"
@@ -634,6 +634,14 @@ en:
           submitted:
             one: Unread application
             other: Unread applications
+        tab_unsuccessful:
+          reject: Send rejection messages
+          have_been_sent: Have been sent a rejection message
+          table:
+            name: Name
+            contact_details: Contact details
+            status: Application status
+            date: Date sent
         notes:
           create:
             success: A note has been added
