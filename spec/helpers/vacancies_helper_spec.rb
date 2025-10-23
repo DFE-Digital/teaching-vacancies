@@ -29,6 +29,34 @@ RSpec.describe VacanciesHelper do
     end
   end
 
+  describe "#tag_name" do
+    subject { helper.tag_name(vacancy) }
+
+    context "when vacancy is live" do
+      let(:vacancy) { build_stubbed(:vacancy, :live) }
+
+      it { is_expected.to eq(:published) }
+    end
+
+    context "when vacancy is draft" do
+      let(:vacancy) { build_stubbed(:draft_vacancy) }
+
+      it { is_expected.to eq(:draft) }
+    end
+
+    context "when vacancy is expired" do
+      let(:vacancy) { build_stubbed(:vacancy, :expired) }
+
+      it { is_expected.to eq(:closed) }
+    end
+
+    context "when vacancy is pending" do
+      let(:vacancy) { build_stubbed(:vacancy, :future_publish) }
+
+      it { is_expected.to eq(:scheduled) }
+    end
+  end
+
   describe "#page_title_prefix" do
     subject { helper.page_title_prefix(step_process, form_object) }
 
