@@ -137,6 +137,7 @@ FactoryBot.define do
         offered_at: options.offered_at,
         declined_at: options.declined_at,
         withdrawn_at: options.withdrawn_at,
+        rejected_at: options.rejected_at,
       )
     end
   end
@@ -266,18 +267,20 @@ FactoryBot.define do
       shortlisted_at { 3.days.ago }
       interviewing_at { 2.days.ago }
       status { :interviewing }
-    end
-  end
-
-  trait :status_interviewing_with_pre_checks do
-    transient do
-      submitted_at { 4.days.ago }
-      interviewing_at { 2.days.ago }
-      status { :interviewing }
       create_self_disclosure { true }
       create_references { true }
     end
   end
+
+  # trait :status_interviewing_with_pre_checks do
+  #   transient do
+  #     submitted_at { 4.days.ago }
+  #     interviewing_at { 2.days.ago }
+  #     status { :interviewing }
+  #     create_self_disclosure { true }
+  #     create_references { true }
+  #   end
+  # end
 
   trait :status_unsuccessful_interview do
     transient do

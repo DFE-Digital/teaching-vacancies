@@ -88,7 +88,9 @@ statuses = JobApplication.statuses.keys
 PublishedVacancy.listed.each do |vacancy|
   Jobseeker.where.not(email: emails_with_fewer_applications).each do |jobseeker|
     application_status = JobApplication.statuses.keys.sample
-    FactoryBot.create(:job_application, :for_seed_data, :"status_#{application_status}", jobseeker: jobseeker, vacancy: vacancy)
+    FactoryBot.create(:job_application, :for_seed_data, :"status_#{application_status}",
+                      referees: FactoryBot.build_list(:referee, 2, email: emails_with_fewer_applications.sample),
+                      jobseeker: jobseeker, vacancy: vacancy)
   end
 
   # only add 1 fake job application per-status to DFE jobseekers
