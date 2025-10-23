@@ -49,3 +49,39 @@ trix-toolbar .trix-button--icon-increase-nesting-level {
   font-size: inherit;
 }
 
+/* Ensure all elements in trix-content have consistent font size */
+.trix-content,
+.trix-content p,
+.trix-content div,
+.trix-content ul,
+.trix-content ol,
+.trix-content li {
+  font-size: 16px !important;
+  line-height: 1.33333 !important;
+}
+
+@media(min-width: 40.0625em) {
+  .trix-content,
+  .trix-content p,
+  .trix-content div,
+  .trix-content ul,
+  .trix-content ol,
+  .trix-content li {
+    font-size: 19px !important;
+    line-height: 1.33333 !important;
+  }
+}
+
+/* Ensure that bullet point font size matches body text inside the editor */
+trix-editor {
+  font-size: 16px !important;
+  line-height: 1.33333 !important;
+}
+
+@media(min-width: 40.0625em) {
+  trix-editor {
+    font-size: 19px !important;
+    line-height: 1.33333 !important;
+  }
+}
+
