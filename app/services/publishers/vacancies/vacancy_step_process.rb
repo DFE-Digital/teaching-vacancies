@@ -40,17 +40,13 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
                  else
                    %i[contact_details confirm_contact_details]
                  end
-
+    
     early_steps = if vacancy.published?
                     []
                   else
                     %i[applying_for_the_job]
                   end
-    
-    if vacancy.contact_email
-      existing_publisher = Publisher.find_by(email: vacancy.contact_email)
-    end
-
+                  
     if vacancy.enable_job_applications
       early_steps + %i[anonymise_applications] + core_steps
     else

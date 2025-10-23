@@ -298,6 +298,12 @@ class Vacancy < ApplicationRecord
     jobseeker.job_applications.create!(vacancy: self, type: klass.name)
   end
 
+  def contact_email_belongs_to_a_publisher?
+    return false unless contact_email
+
+    Publisher.find_by(email: contact_email).present?
+  end
+
   private
 
   def update_conversation_searchable_content
