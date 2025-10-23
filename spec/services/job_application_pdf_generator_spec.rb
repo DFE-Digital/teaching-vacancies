@@ -10,7 +10,8 @@ RSpec.describe JobApplicationPdfGenerator do
                   qualifications: build_stubbed_list(:qualification, 3),
                   training_and_cpds: build_stubbed_list(:training_and_cpd, 2))
   end
-  let(:generator) { described_class.new(job_application) }
+  let(:presenter) { JobApplicationPdf.new(job_application) }
+  let(:generator) { described_class.new(presenter) }
 
   describe "#generate" do
     subject(:document) { generator.generate }
