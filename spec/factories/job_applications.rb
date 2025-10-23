@@ -153,6 +153,7 @@ FactoryBot.define do
     ethnicity_description { Faker::Lorem.sentence }
     religion { %w[buddhist christian hindu jewish muslim none other prefer_not_to_say sikh].sample }
     religion_description { Faker::Religion::Bible.character }
+    national_insurance_number { ["QQ 12 34 56 C", nil].sample }
   end
 
   trait :status_draft do
