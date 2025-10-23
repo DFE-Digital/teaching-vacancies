@@ -13,6 +13,13 @@ class JobApplicationPdf
   def initialize(job_application)
     @job_application = job_application
     @vacancy = job_application.vacancy
+    @table_class = Table
+  end
+
+  attr_reader :table_class
+
+  def model
+    @job_application
   end
 
   def religious_application?
@@ -37,7 +44,7 @@ class JobApplicationPdf
     scope = "helpers.label.jobseekers_job_application_personal_details_form"
     ni_review = job_application.national_insurance_number.presence || I18n.t("jobseekers.job_applications.not_defined")
 
-    @personal_details = Table[basic_personal_details].tap do |table|
+    @personal_details = table_class[basic_personal_details].tap do |table|
       table << [I18n.t("national_insurance_number_review", scope:), ni_review] if job_application.national_insurance_number?
 
       table << [I18n.t("working_pattern_details", scope:), job_application.working_pattern_details] if job_application.working_pattern_details.present?
@@ -62,7 +69,7 @@ class JobApplicationPdf
       [I18n.t("is_statutory_induction_complete", scope:), yes_no(job_application.is_statutory_induction_complete?)],
     ]
 
-    @professional_status = Table[basic_professional_status].tap do |table|
+    @professional_status = table_class[basic_professional_status].tap do |table|
       if job_application.statutory_induction_complete_details.present?
         table.rows << [I18n.t("statutory_induction_complete_details", scope:), job_application.statutory_induction_complete_details]
       end
@@ -82,7 +89,7 @@ class JobApplicationPdf
 
     make_nested_section do
       job_application.training_and_cpds.map do |training|
-        Table[
+        table_class[
           [
             ["Name", training.name],
             (["Grade", training.grade] if training.grade),
@@ -100,7 +107,7 @@ class JobApplicationPdf
     scope = "helpers.label.jobseekers_professional_body_membership_form.exam_taken_options"
     make_nested_section do
       job_application.professional_body_memberships.map do |membership|
-        Table[
+        table_class[
           [
             ["Name of professional body:", membership.name],
             ["Membership type or level:", membership.membership_type],
@@ -120,7 +127,7 @@ class JobApplicationPdf
                        non_catholic_religious_information
                      end
 
-    Table[religious_data]
+    table_class[religious_data]
   end
 
   def employment_history
@@ -155,13 +162,13 @@ class JobApplicationPdf
         reference_data << ["Phone Number:", referee.phone_number] if referee.phone_number.present?
         reference_data << ["Current or most recent employer:", I18n.t("helpers.label.jobseekers_job_application_details_referee_form.is_most_recent_employer_options.#{referee.is_most_recent_employer}")] unless referee.is_most_recent_employer.nil?
 
-        Table[reference_data]
+        table_class[reference_data]
       end
     end
   end
 
   def ask_for_support
-    @ask_for_support ||= Table[
+    @ask_for_support ||= table_class[
       [
         [
           I18n.t("helpers.legend.jobseekers_job_application_ask_for_support_form.is_support_needed"),
@@ -188,7 +195,7 @@ class JobApplicationPdf
     )
     scope = "helpers.legend.jobseekers_job_application_declarations_form"
 
-    @declarations = Table[
+    @declarations = table_class[
       [
         [I18n.t("has_safeguarding_issue", scope:), safeguarding_issues_info],
         [I18n.t("has_close_relationships", scope:, organisation: vacancy.organisation_name), close_relationships_info],
@@ -343,7 +350,7 @@ class JobApplicationPdf
 
   def secondary_qualification_data(qualification)
     qualification.qualification_results.map do |result|
-      Table[
+      table_class[
         [
           ["Secondary Qualification"],
           ["Subject:", result.subject],
@@ -356,7 +363,7 @@ class JobApplicationPdf
   end
 
   def general_qualification_data(qualification)
-    Table[
+    table_class[
       [
         ["Qualification Name:", qualification.name],
         ["Institution:", qualification.institution],
@@ -392,11 +399,11 @@ class JobApplicationPdf
     employment_data << ["End date:", employment.is_current_role? ? "present" : end_date(employment.ended_on)]
     employment_data << ["Start date:", month_year(employment.started_on)]
 
-    Table[employment_data]
+    table_class[employment_data]
   end
 
   def employment_break(employment, latest_employment_record)
-    Table[
+    table_class[
       [
         ["Employment Break"],
         ["Reason:", employment.reason_for_break],
@@ -407,7 +414,7 @@ class JobApplicationPdf
   end
 
   def employment_unexplained_gap(gap, latest_employment_record)
-    Table[
+    table_class[
       [
         ["Unexplained Employment Gap"],
         ["End date:", end_date(gap[:ended_on], latest_employment_record:)],
