@@ -34,6 +34,7 @@ shared:
   - publisher_collect_references
   - publisher_inform_applicant_about_references
   - publisher_invite_to_apply
+  - publisher_invite_user
   - publisher_job_application_data_expiry
   - publisher_messages_received
   - publisher_prompt_for_feedback

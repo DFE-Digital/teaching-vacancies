@@ -1,0 +1,23 @@
+# <%= @subject %>
+
+<%= t(".intro") %>
+
+<%= t(".instructions") %>
+
+1. <%= t(".step_1", dfe_signin_link: notify_link("https://login.signin.education.gov.uk/fdfa591f-cf5d-4182-be8f-b316a5b0c1e4/oauth2/v2.0/authorize?client_id=9a729134-53bf-4f72-8d49-0883c259e4a6&scope=openid%20profile%20offline_access&redirect_uri=https%3A%2F%2Fprofile.signin.education.gov.uk%3A443%2Fentra%2Fregister-account-callback&response_mode=form_post&response_type=code", t(".dfe_signin_text")), create_account_link: notify_link("https://login.signin.education.gov.uk/fdfa591f-cf5d-4182-be8f-b316a5b0c1e4/oauth2/v2.0/authorize?client_id=9a729134-53bf-4f72-8d49-0883c259e4a6&scope=openid%20profile%20offline_access&redirect_uri=https%3A%2F%2Fprofile.signin.education.gov.uk%3A443%2Fentra%2Fregister-account-callback&response_mode=form_post&response_type=code&prompt=create", t(".create_account_text"))) %>
+
+2. <%= t(".step_2") %>
+
+3. <%= t(".step_3") %>
+
+<%= t(".completion", sign_in_link: notify_link(new_publisher_session_url, t(".sign_in_text"))) %>
+
+## <%= t(".error_section_heading") %>
+
+<%= t(".error_message", publisher_email: notify_mail_to(@publisher_email)) %>
+
+<%= t(".signature") %>
+
+<%= t(".team_name") %>
+
+<%= t("shared.footer", home_page_link: home_page_link) %>
