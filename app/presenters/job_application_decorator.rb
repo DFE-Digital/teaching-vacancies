@@ -40,10 +40,11 @@ class JobApplicationDecorator < Draper::Decorator
      email_address
      teacher_reference_number].each do |attribute|
     define_method attribute do
-      if hide_personal_details?
+      value = super()
+      if value.present? && hide_personal_details?
         I18n.t("app.anonymous_applications.not_shown")
       else
-        super()
+        value
       end
     end
   end
