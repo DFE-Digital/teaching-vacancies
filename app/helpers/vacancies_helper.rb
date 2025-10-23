@@ -5,6 +5,44 @@ module VacanciesHelper
 
   WORD_EXCEPTIONS = %w[and the of upon].freeze
 
+  TAG_COLOURS = {
+    published: "green",
+    draft: "grey",
+    closed: "red",
+    scheduled: "yellow",
+  }.with_indifferent_access
+
+  INSET_PARTIAL_FOR = {
+    published: "publishers/vacancies/review_banners/published",
+    draft: "publishers/vacancies/review_banners/incomplete_draft",
+    closed: "publishers/vacancies/review_banners/closed",
+    scheduled: "publishers/vacancies/review_banners/scheduled",
+  }.with_indifferent_access
+
+  def tag_name(vacancy)
+    if vacancy.live?
+      :published
+    elsif vacancy.draft?
+      :draft
+    elsif vacancy.expired?
+      :closed
+    elsif vacancy.pending?
+      :scheduled
+    end
+  end
+
+  def vacancy_tag(state)
+    govuk_tag(text: t("publishers.vacancies.show.heading_component.status_tag.#{state}"), html_attributes: { class: "vertical-align-middle govuk-!-margin-left-1" }, colour: TAG_COLOURS.fetch(state))
+  end
+
+  def inset_partial_for(tag_name)
+    inset_partial = INSET_PARTIAL_FOR.fetch(tag_name)
+    if tag_name == :draft && all_steps_valid
+      inset_partial = "publishers/vacancies/review_banners/complete_draft"
+    end
+    inset_partial
+  end
+
   def humanize_array(items)
     items.reject(&:blank?).map(&:humanize).join(", ")
   end

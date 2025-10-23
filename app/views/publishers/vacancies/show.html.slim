@@ -2,6 +2,7 @@
 
 - if @vacancy.draft?
   = render "publishers/vacancies/review_breadcrumbs", vacancy: @vacancy
+  = render "publishers/vacancies/heading", vacancy: @vacancy
 
   - if @next_invalid_step.nil?
     = render "publishers/vacancies/review_banners/complete_draft", vacancy: @vacancy
