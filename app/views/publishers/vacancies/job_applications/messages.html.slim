@@ -1,6 +1,6 @@
 - content_for :page_title_prefix, t(".page_title")
 
-= render "publishers/vacancies/job_applications/header", vacancy: @vacancy, job_application: @job_application, back_link: publishers_candidate_messages_path
+= render "publishers/vacancies/job_applications/header", vacancy: @vacancy, job_application: @job_application, back_link: @back_link
 
 .govuk-grid-row
   .govuk-grid-column-full
