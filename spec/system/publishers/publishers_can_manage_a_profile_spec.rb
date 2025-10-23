@@ -52,21 +52,27 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
         expect(page).to be_axe_clean
       end
 
-      it "allows the publisher to edit the trust's website", :a11y do
-        within("div.govuk-summary-list__row#website") do
-          click_link("Change")
+      context "when editing the website address" do
+        before do
+          within("div.govuk-summary-list__row#website") do
+            click_link("Change")
+          end
         end
 
-        expect(page).to be_axe_clean.skipping "region", "landmark-no-duplicate-banner", "page-has-heading-one"
+        it "passes a11y", :a11y do
+          expect(page).to be_axe_clean.skipping "page-has-heading-one"
+        end
 
-        expect(find_field("publishers_organisation_url_override_form[url_override]").value).to eq(trust_website_url)
+        it "allows the publisher to edit the trust's website" do
+          expect(find_field("publishers_organisation_url_override_form[url_override]").value).to eq(trust_website_url)
 
-        fill_in "publishers_organisation_url_override_form[url_override]", with: new_trust_website_url
-        click_on I18n.t("buttons.save_changes")
+          fill_in "publishers_organisation_url_override_form[url_override]", with: new_trust_website_url
+          click_on I18n.t("buttons.save_changes")
 
-        expect(page).to have_content(new_trust_website_url)
-        expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "Organisation"))
-        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+          expect(page).to have_content(new_trust_website_url)
+          expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "Organisation"))
+          expect(page.current_path).to eq(publishers_organisation_path(organisation))
+        end
       end
 
       it "allows the publisher to navigate and edit a school's website" do
