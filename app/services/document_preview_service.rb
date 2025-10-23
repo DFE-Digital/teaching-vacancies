@@ -16,38 +16,55 @@ class DocumentPreviewService # rubocop: disable Metrics/ClassLength
     # rubocop:enable Layout/HashAlignment
   }.freeze
 
+  PDF_GENERATORS = {
+    job_application: ->(data) { JobApplicationPdfGenerator.new(data).generate.render },
+    self_disclosure: ->(data) { SelfDisclosurePdfGenerator.new(data).generate.render },
+    job_reference: ->(data) { ReferencePdfGenerator.new(data).generate.render },
+  }.with_indifferent_access
+
   def self.call(...)
     new(...).document
   end
 
   def initialize(id, vacancy)
+    @id = id
     @vacancy = vacancy
-    @sample_name, @sample_method = PREVIEWS.fetch(id.to_sym)
+    @sample_name, @sample_method = PREVIEWS.fetch(@id.to_sym)
   end
 
   def document
-    Document[filename, pdf.render]
+    Document[filename, pdf_data]
   end
 
   private
 
-  def pdf
-    @pdf ||= send(@sample_method, @vacancy)
+  def data
+    send(@sample_method, @vacancy)
+  end
+
+  def pdf_data
+    @pdf_data ||= PDF_GENERATORS.fetch(@sample_name).call(data)
   end
 
   def filename
-    "#{@sample_name}_#{pdf.object_id}.pdf"
+    "#{@sample_name}_#{pdf_data.object_id}.pdf"
   end
 
   def blank_job_application_sample(vacancy)
-    job_application = JobApplication.new(vacancy:)
-    JobApplicationPdfGenerator.new(job_application).generate
+    job_application = case vacancy.religion_type
+                      when :other_religtion then religious_job_application_sample(vacancy)
+                      when :catholic then catholic_job_application_sample(vacancy)
+                      else
+                        job_application_sample(vacancy)
+                      end
+    job_application.blank_attributes!
+    JobApplicationPdf.new(job_application)
   end
 
   def job_application_sample(vacancy)
     job_application = build_job_application
     job_application.assign_attributes(vacancy: vacancy)
-    JobApplicationPdfGenerator.new(job_application).generate
+    JobApplicationPdf.new(job_application)
   end
 
   def religious_job_application_sample(vacancy)
@@ -64,8 +81,7 @@ class DocumentPreviewService # rubocop: disable Metrics/ClassLength
       religious_referee_phone: Faker::PhoneNumber.phone_number,
       vacancy: vacancy.dup.tap { |v| v.assign_attributes(religion_type: "other_religion") },
     )
-
-    JobApplicationPdfGenerator.new(job_application).generate
+    JobApplicationPdf.new(job_application)
   end
 
   def catholic_job_application_sample(vacancy)
@@ -78,7 +94,7 @@ class DocumentPreviewService # rubocop: disable Metrics/ClassLength
       baptism_date: Faker::Date.between(from: Date.new(1990, 1, 1), to: Date.new(2004, 1, 1)),
       vacancy: vacancy.dup.tap { |v| v.assign_attributes(religion_type: "catholic") },
     )
-    JobApplicationPdfGenerator.new(job_application).generate
+    JobApplicationPdf.new(job_application)
   end
 
   def job_reference_sample(_vacancy)
@@ -87,8 +103,7 @@ class DocumentPreviewService # rubocop: disable Metrics/ClassLength
     referee.assign_attributes(
       reference_request: ReferenceRequest.new(job_reference: build_job_reference),
     )
-    referee_presenter = RefereePresenter.new(referee)
-    ReferencePdfGenerator.new(referee_presenter).generate
+    RefereePresenter.new(referee)
   end
 
   def self_disclosure_sample(_vacancy)
@@ -96,8 +111,7 @@ class DocumentPreviewService # rubocop: disable Metrics/ClassLength
     job_application.assign_attributes(
       self_disclosure_request: SelfDisclosureRequest.new(self_disclosure: build_self_disclosure),
     )
-    self_disclosure = SelfDisclosurePresenter.new(job_application)
-    SelfDisclosurePdfGenerator.new(self_disclosure).generate
+    SelfDisclosurePresenter.new(job_application)
   end
 
   def build_job_application # rubocop: disable Metrics/MethodLength, Metrics/AbcSize
