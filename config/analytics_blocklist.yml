@@ -55,6 +55,7 @@
   - job_application_id
   - created_at
   - updated_at
+  - discarded_at
   :markers:
   - id
   - vacancy_id

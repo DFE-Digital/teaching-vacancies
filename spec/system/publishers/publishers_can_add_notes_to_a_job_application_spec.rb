@@ -31,7 +31,7 @@ RSpec.describe "Publishers can add notes to a job application" do
         expect(page).to have_content(note.content)
       end
 
-      it "allows notes to be deleted" do
+      it "allows notes to be deleted and show discarded at" do
         expect(publisher_application_page).to be_displayed
 
         click_on I18n.t("buttons.delete")
@@ -39,6 +39,7 @@ RSpec.describe "Publishers can add notes to a job application" do
         expect(publisher_application_page.notification_banner.text).to eq("Success\nNote deleted")
 
         expect(page).to have_no_content(note.content)
+        expect(page).to have_content("Note discarded at #{note.discarded_at}")
       end
     end
 
