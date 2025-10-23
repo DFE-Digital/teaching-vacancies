@@ -7,7 +7,7 @@ class FormSequence
   end
 
   def validate_all_steps
-    validatable_steps.each.with_object({}) { |s, h| h[s] = validate_step(s) }
+    validatable_steps.each.with_object({}) { |step_name, hash| hash[step_name] = validate_step(step_name) }
   end
 
   def all_steps_valid?
@@ -25,6 +25,8 @@ class FormSequence
   end
 
   def validate_step(step_name)
+    # can we just treat confirm_contact_details differently here? maybe don't validate if vacancy.contact_email_belongs_to_a_publisher?. I guess that wouldn't work because it won't get to true until they sign up, hmmm.
+    # maybe we need to manually show the step every time they enter a non publisher email? like in the update bit?
     step_form_class = File.join(@form_prefix, "#{step_name}_form").camelize.constantize
 
     params = step_form_class.load_form(@model)

@@ -14,6 +14,7 @@ class Publishers::VacancyFormSequence < FormSequence
   def next_invalid_step
     # Due to subjects being an optional step (no validations) it needs to be handled differently
     return :subjects if next_incomplete_step_subjects?
+    return :confirm_contact_details if next_incomplete_step_confirm_contact_details?
 
     validate_all_steps.filter_map { |step, form| step if form.invalid? }.first
   end
@@ -62,6 +63,12 @@ class Publishers::VacancyFormSequence < FormSequence
                                      else
                                        "job_role"
                                      end
+  end
+
+  def next_incomplete_step_confirm_contact_details?
+    return false if @vacancy.contact_email_belongs_to_a_publisher?
+
+    @vacancy.completed_steps.last == "contact_details"
   end
 
   def not_validatable_steps
