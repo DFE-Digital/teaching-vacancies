@@ -155,7 +155,8 @@ class JobApplication < ApplicationRecord
       extension = File.extname(application_form.filename.to_s)
       Document["application_form#{extension}", application_form.download]
     else
-      pdf = JobApplicationPdfGenerator.new(self).generate
+      presenter = JobApplicationPdf.new(self)
+      pdf = JobApplicationPdfGenerator.new(presenter).generate
       Document["application_form.pdf", pdf.render]
     end
   end
