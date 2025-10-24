@@ -41,9 +41,9 @@ class JobApplicationPdf
     ni_review = job_application.national_insurance_number.presence || I18n.t("jobseekers.job_applications.not_defined")
 
     @personal_details = table_class[basic_personal_details].tap do |table|
-      table << [I18n.t("national_insurance_number_review", scope:), ni_review] if job_application.national_insurance_number?
+      table.rows << [I18n.t("national_insurance_number_review", scope:), ni_review] if job_application.national_insurance_number?
 
-      table << [I18n.t("working_pattern_details", scope:), job_application.working_pattern_details] if job_application.working_pattern_details.present?
+      table.rows << [I18n.t("working_pattern_details", scope:), job_application.working_pattern_details] if job_application.working_pattern_details.present?
     end
   end
 
