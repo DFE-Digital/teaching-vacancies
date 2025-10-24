@@ -9,7 +9,9 @@ RSpec.describe "Creating a vacancy" do
   let(:vacancy) do
     build(:vacancy, :no_tv_applications, :secondary, :fixed_term, :ect_suitable, job_roles: ["teacher"],
                                                                                  working_patterns: %w[full_time part_time], hourly_rate: nil,
-                                                                                 organisations: [school1, school2])
+                                                                                 organisations: [school1, school2],
+                                                                                 contact_email: publisher.email,
+                                                                                 publisher: publisher)
   end
   let(:created_vacancy) { DraftVacancy.last }
 
@@ -152,7 +154,16 @@ RSpec.describe "Creating a vacancy" do
       I18n.t("contact_details_errors.contact_number_provided.inclusion"),
     )
     expect(publisher_contact_details_page).to be_displayed
-    publisher_contact_details_page.fill_in_and_submit_form(vacancy.contact_email, vacancy.contact_number)
+    non_publisher_email = Faker::Internet.email(domain: "contoso.com")
+    publisher_contact_details_page.fill_in_and_submit_form(non_publisher_email, vacancy.contact_number)
+
+    expect(publisher_confirm_contact_details_page).to be_displayed
+
+    publisher_confirm_contact_details_page.fill_in_and_submit_form(confirm: false)
+
+    expect(publisher_contact_details_page).to be_displayed
+
+    publisher_contact_details_page.fill_in_and_submit_form(publisher.email, vacancy.contact_number, other: false)
 
     expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
 
