@@ -22,6 +22,7 @@ RSpec.describe "publishers/vacancies/job_applications/messages.html.slim" do
     assign(:vacancy, vacancy)
     assign(:job_application, job_application)
     assign(:messages, messages)
+    assign(:back_link, publishers_candidate_messages_path)
     # supplying dummy URL so that it doesn't crash during rendering. No need for a real URL as we aren't actually clicking the button.
     allow(view).to receive_messages(current_user: publisher, params: ActionController::Parameters.new({ show_form: "false" }), url_for: "/test-url")
   end

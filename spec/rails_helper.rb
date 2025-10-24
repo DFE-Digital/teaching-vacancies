@@ -63,7 +63,7 @@ Capybara.register_driver :chrome do |app|
 end
 
 Capybara.register_driver(:cuprite_full) do |app|
-  Capybara::Cuprite::Driver.new(app, headless: false, process_timeout: 40, window_size: [1400, 1800])
+  Capybara::Cuprite::Driver.new(app, headless: false, process_timeout: 45, window_size: [1400, 1800])
 end
 Capybara.javascript_driver = :cuprite_headless
 Capybara.server = :puma, { Silent: true, Threads: "0:1" }
