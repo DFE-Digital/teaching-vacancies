@@ -3,6 +3,18 @@ resource "aws_s3_bucket" "documents_s3_bucket" {
   force_destroy = var.documents_s3_bucket_force_destroy
 }
 
+resource "aws_s3_bucket_cors_configuration" "documents_s3_bucket" {
+  bucket = aws_s3_bucket.documents_s3_bucket.id
+
+  cors_rule {
+    allowed_headers = ["Content-Type", "Content-MD5", "Content-Disposition"]
+    allowed_methods = ["PUT"]
+    allowed_origins = ["https://${local.web_app_domain}"]
+    expose_headers  = []
+    max_age_seconds = 3600
+  }
+}
+
 resource "aws_s3_bucket" "schools_images_logos_s3_bucket" {
   bucket        = local.schools_images_logos_s3_bucket_name
   force_destroy = var.schools_images_logos_s3_bucket_force_destroy
