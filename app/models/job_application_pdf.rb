@@ -18,10 +18,6 @@ class JobApplicationPdf
 
   attr_reader :table_class
 
-  def model
-    @job_application
-  end
-
   def religious_application?
     vacancy.catholic? || vacancy.other_religion?
   end
