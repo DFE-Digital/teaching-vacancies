@@ -18,6 +18,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
       # wait for page load
       find(".new_publishers_job_application_notes_form")
+      find(".govuk-footer")
     end
 
     it "passes a11y", :a11y do

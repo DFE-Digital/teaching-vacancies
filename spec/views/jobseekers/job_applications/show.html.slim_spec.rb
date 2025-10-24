@@ -193,8 +193,8 @@ RSpec.describe "jobseekers/job_applications/show" do
     end
 
     context "when self_disclosure_request sent" do
-      let(:job_application) { create(:job_application, :status_interviewing) }
-      let(:self_disclosure_request) { create(:self_disclosure_request, :sent, job_application:) }
+      let(:job_application) { build_stubbed(:job_application, :status_interviewing) }
+      let(:self_disclosure_request) { build_stubbed(:self_disclosure_request, :sent, job_application:) }
 
       it { expect(rendered).to have_content(call_to_action) }
       it { expect(rendered).to have_link(I18n.t(".form", scope:), href: form_path) }

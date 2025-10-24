@@ -267,6 +267,7 @@ en:
         delete: Delete
 
     additional_documents: Additional documents
+    anonymise_applications: Anonymise applications
     apply: How to apply
     application_link: Link to website
     application_email: Email address to receive applications
