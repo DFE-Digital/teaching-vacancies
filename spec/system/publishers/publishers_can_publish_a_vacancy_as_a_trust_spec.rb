@@ -142,7 +142,7 @@ RSpec.describe "Creating a vacancy" do
       I18n.t("contact_details_errors.contact_number_provided.inclusion"),
     )
     expect(publisher_contact_details_page).to be_displayed
-    
+
     # First try with a non-publisher email
     non_publisher_email = "new.contact@example.com"
     publisher_contact_details_page.fill_in_and_submit_form(non_publisher_email, vacancy.contact_number)
@@ -150,13 +150,13 @@ RSpec.describe "Creating a vacancy" do
     # Should see the confirm_contact_details page
     expect(publisher_confirm_contact_details_page).to be_displayed
     expect(page).to have_content("Do you want to use this email address?")
-    
+
     # Select "No" to go back to contact_details page
     publisher_confirm_contact_details_page.fill_in_and_submit_form(confirm: false)
-    
+
     # Should be back on contact_details page
     expect(publisher_contact_details_page).to be_displayed
-    
+
     # Now fill in with publisher's actual email (should skip confirm step)
     publisher_contact_details_page.fill_in_and_submit_form(publisher.email, vacancy.contact_number)
 
