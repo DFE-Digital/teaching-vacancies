@@ -13,7 +13,7 @@ Rails.application.configure do
                        "https://*.sentry.io",
                        "https://*.google-analytics.com",
                        "https://*.analytics.google.com",
-                       "https://ad.doubleclick.net", # Floodlight
+                       "https://*.doubleclick.net", # Floodlight
                        "https://www.google.com", # Floodlight
                        "https://www.googleadservices.com", # Floodlight
                        "https://www.googletagmanager.com",
@@ -34,8 +34,7 @@ Rails.application.configure do
                        "https://fonts.gstatic.com"
 
     policy.frame_src   :self,
-                       "https://2673654.fls.doubleclick.net", # Floodlight
-                       "https://td.doubleclick.net",
+                       "https://*.doubleclick.net", # Floodlight
                        "https://www.recaptcha.net",
                        "https://www.googletagmanager.com", # Floodlight
                        "https://www.youtube.com"
@@ -43,8 +42,7 @@ Rails.application.configure do
     policy.img_src     :self,
                        :https,
                        :data,
-                       "https://2673654.fls.doubleclick.net", # Floodlight
-                       "https://ad.doubleclick.net", # Floodlight
+                       "https://*.doubleclick.net", # Floodlight
                        "https://ade.googlesyndication.com", # Floodlight
                        "https://adservice.google.com", # Floodlight
                        "https://www.googletagmanager.com", # Floodlight
