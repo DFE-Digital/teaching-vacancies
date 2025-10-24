@@ -23,7 +23,7 @@ RSpec.describe MessagesHelper do
 
     it "returns jobseeker name and email with timestamp when sender is a jobseeker" do
       message = build_stubbed(:jobseeker_message, sender: jobseeker)
-      expected = "Jane Doe <#{email}> #{message.created_at.to_fs(:date_at_time)}"
+      expected = "Jane Doe <#{job_application.email_address}> #{message.created_at.to_fs(:date_at_time)}"
 
       result = helper.jobseeker_message_display_name(message, job_application)
       expect(result).to eq(expected)
