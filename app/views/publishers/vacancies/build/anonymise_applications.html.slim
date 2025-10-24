@@ -7,7 +7,7 @@
 
   p.govuk-body = t(".you_can_choose")
 
-  = f.govuk_radio_buttons_fieldset :anonymise_applications, legend: { tag: "h2", size: "l" } do
+  = f.govuk_radio_buttons_fieldset :anonymise_applications, legend: { tag: "h2", size: "m" } do
     = f.govuk_radio_button :anonymise_applications, "true", link_errors: true
     = f.govuk_radio_button :anonymise_applications, "false"
 
