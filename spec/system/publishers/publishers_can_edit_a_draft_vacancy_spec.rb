@@ -13,7 +13,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
     before { visit organisation_job_path(vacancy.id) }
 
     context "with an incomplete draft" do
-      let(:vacancy) { create(:draft_vacancy, :with_contract_details, :ect_suitable, job_roles: [], organisations: [primary_school], phases: %w[primary]) }
+      let(:vacancy) { create(:draft_vacancy, :with_contract_details, :ect_suitable, job_roles: [], organisations: [primary_school], phases: %w[primary], publisher: publisher, contact_email: publisher.email) }
 
       let(:pages_with_skips) do
         {

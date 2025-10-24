@@ -144,7 +144,7 @@ RSpec.describe "Publishers can edit a vacancy" do
     end
 
     describe "#application_form" do
-      let(:vacancy) { create(:vacancy, :secondary, :with_application_form, organisations: [school]) }
+      let(:vacancy) { create(:vacancy, :secondary, :with_application_form, organisations: [school], publisher: publisher, contact_email: publisher.email) }
 
       before do
         publisher_vacancy_page.change_application_form_link.click
@@ -199,7 +199,7 @@ RSpec.describe "Publishers can edit a vacancy" do
     end
 
     describe "#contact_details" do
-      let(:contact_email) { Faker::Internet.email(domain: "contoso.com") }
+      let(:contact_email) { publisher.email }
 
       before do
         click_review_page_change_link(section: "application_process", row: "contact_email")
