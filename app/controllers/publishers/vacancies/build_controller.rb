@@ -23,9 +23,14 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
 
   def update
     @form = form_class.new(form_params, vacancy, current_publisher)
+
     if @form.valid?
-      update_vacancy
-      redirect_to_next_step
+      if step.name == "confirm_contact_details" && @form.confirm_contact_email == "false"
+        redirect_to organisation_job_build_path(vacancy.id, step_process.previous_step)
+      else
+        update_vacancy
+        redirect_to_next_step
+      end
     else
       render_wizard
     end
@@ -34,6 +39,15 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   private
 
   attr_reader :form
+
+  def handle_confirm_contact_email
+    if @form.confirm_contact_email == "false"
+      redirect_to organisation_job_build_path(vacancy.id, step_process.previous_step)
+    else
+      vacancy.update(completed_steps: completed_steps)
+      redirect_to_next_step
+    end
+  end
 
   def form_class
     "publishers/job_listing/#{step}_form".camelize.constantize
@@ -79,4 +93,28 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   def set_steps
     self.steps = step_process.steps - [:review]
   end
+
+  # rubocop:disable Metrics/AbcSize
+  def redirect_to_next_step
+    if save_and_finish_later?
+      redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success") and return
+    end
+
+    if step.name == "contact_details" && !vacancy.contact_email_belongs_to_a_publisher?
+      # we don't validate confirm_contact_details step in all_steps_valid? which means all_steps_valid is true at this point, so we need to manually redirect here
+      # to ensure the user sees the confirm contact_details page
+      redirect_to organisation_job_build_path(vacancy.id, :confirm_contact_details) and return
+    end
+
+    if all_steps_valid?
+      if vacancy.published?
+        redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success")
+      else
+        redirect_to organisation_job_review_path(vacancy.id)
+      end
+    else
+      redirect_to organisation_job_build_path(vacancy.id, next_invalid_step)
+    end
+  end
+  # rubocop:enable Metrics/AbcSize
 end

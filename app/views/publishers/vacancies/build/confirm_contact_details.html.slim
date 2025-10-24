@@ -1,0 +1,12 @@
+- content_for :page_title_prefix, page_title_prefix(step_process, form)
+
+= form_for form, url: wizard_path(current_step), method: :patch do |f|
+  = f.govuk_error_summary
+
+  = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
+
+  = f.govuk_radio_buttons_fieldset :confirm_contact_email, legend: { size: "m", tag: nil } do
+    = f.govuk_radio_button :confirm_contact_email, "true", link_errors: true
+    = f.govuk_radio_button :confirm_contact_email, "false"
+
+  = render "publishers/vacancies/vacancy_form_partials/submit", f: f

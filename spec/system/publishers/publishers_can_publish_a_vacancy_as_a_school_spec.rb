@@ -158,8 +158,12 @@ RSpec.describe "Creating a vacancy" do
           I18n.t("contact_details_errors.contact_email.blank"),
           I18n.t("contact_details_errors.contact_number_provided.inclusion"),
         )
-        expect(publisher_contact_details_page).to be_displayed
+
         publisher_contact_details_page.fill_in_and_submit_form(vacancy.contact_email, vacancy.contact_number)
+
+        expect(publisher_confirm_contact_details_page).to be_displayed
+
+        publisher_confirm_contact_details_page.fill_in_and_submit_form(confirm: true)
 
         expect(page).to have_current_path(organisation_job_review_path(created_vacancy.id), ignore_query: true)
 
@@ -219,11 +223,28 @@ RSpec.describe "Creating a vacancy" do
         click_on I18n.t("buttons.save_and_continue")
 
         expect(publisher_contact_details_page).to be_displayed
-        publisher_contact_details_page.fill_in_and_submit_form(vacancy.contact_email, vacancy.contact_number)
+        non_publisher_email = Faker::Internet.email(domain: "contoso.com")
+        publisher_contact_details_page.fill_in_and_submit_form(non_publisher_email, vacancy.contact_number)
+
+        # Should now see the confirm_contact_details page
+        expect(publisher_confirm_contact_details_page).to be_displayed
+        expect(page).to have_content("Do you want to use this email address?")
+
+        # Test selecting "Yes" to confirm the email
+        publisher_confirm_contact_details_page.fill_in_and_submit_form(confirm: true)
 
         expect(page).to have_current_path(organisation_job_review_path(created_vacancy.id), ignore_query: true)
 
-        click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
+        # Expect the invitation email to be sent when publishing
+        expect {
+          click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
+        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+
+        # Check the email was sent to the correct recipient
+        invitation_email = ActionMailer::Base.deliveries.last
+        expect(invitation_email.to).to include(non_publisher_email)
+        expect(invitation_email.subject).to eq("Sign up for your Teaching Vacancies account")
+
         expect(page).to have_current_path(organisation_job_summary_path(created_vacancy.id), ignore_query: true)
       end
     end
@@ -365,8 +386,9 @@ RSpec.describe "Creating a vacancy" do
   end
 
   def fill_from_contact_details_to_review(vacancy)
-    fill_in_contact_details_form_fields(vacancy)
-    click_on I18n.t("buttons.save_and_continue")
+    publisher_contact_details_page.fill_in_and_submit_form(vacancy.contact_email, vacancy.contact_number)
+
+    publisher_confirm_contact_details_page.fill_in_and_submit_form(confirm: true)
   end
 
   def submit_empty_form
