@@ -103,11 +103,12 @@ en:
           Teaching Vacancies team
       disable_profile_due_to_new_fields:
         subject: Your Teaching Vacancies profile has been deactivated due to missing information
-        link: sign in to your Teaching Vacancies account.
+        link: sign in to your Teaching Vacancies account
         footer: |
           If you have followed the above advice and cannot reactivate your profile, contact %{link} for assistance.
 
           Kind regards,
+
           Teaching Vacancies team
     job_application_mailer:
       shared: &job_application_mailer_shared
