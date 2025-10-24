@@ -252,7 +252,7 @@ RSpec.describe "Creating a vacancy" do
         publisher_contact_details_page.fill_in_and_submit_form(non_publisher_email, vacancy.contact_number)
 
         # Should now see the confirm_contact_details page
-        # expect(publisher_confirm_contact_details_page).to be_displayed
+        expect(publisher_confirm_contact_details_page).to be_displayed
         expect(page).to have_content("Do you want to use this email address?")
         
         # Test selecting "Yes" to confirm the email
