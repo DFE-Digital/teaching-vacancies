@@ -152,7 +152,7 @@ RSpec.describe "Job applications build" do
 
       context "when there are invalid steps" do
         let(:vacancy) { create(:draft_vacancy, further_details_provided: nil, further_details: nil, organisations: [school_one]) }
-        let(:params) { { publishers_job_listing_contact_details_form: { contact_email: Faker::Internet.email(domain: "contoso.com"), contact_number_provided: "true", contact_number: "07789123123" } } }
+        let(:params) { { publishers_job_listing_contact_details_form: { contact_email: publisher.email, contact_number_provided: "true", contact_number: "07789123123" } } }
 
         before { patch(organisation_job_build_path(vacancy.id, :contact_details, params: params)) }
 
