@@ -29,10 +29,8 @@ module Publishers
 
       def redirect_to_next_step
         if save_and_finish_later?
-          redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success") and return
-        end
-
-        if all_steps_valid?
+          redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success")
+        elsif all_steps_valid?
           if vacancy.published?
             redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success")
           else
