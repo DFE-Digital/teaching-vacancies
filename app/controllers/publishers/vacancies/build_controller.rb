@@ -25,7 +25,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
     @form = form_class.new(form_params, vacancy, current_publisher)
 
     if @form.valid?
-      if step.name == "confirm_contact_details" && @form.confirm_contact_email == "false"
+      if user_did_not_confirm_contact_email
         redirect_to organisation_job_build_path(vacancy.id, step_process.previous_step)
       else
         update_vacancy
@@ -40,13 +40,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
 
   attr_reader :form
 
-  def handle_confirm_contact_email
-    if @form.confirm_contact_email == "false"
-      redirect_to organisation_job_build_path(vacancy.id, step_process.previous_step)
-    else
-      vacancy.update(completed_steps: completed_steps)
-      redirect_to_next_step
-    end
+  def user_did_not_confirm_contact_email
+    step.name == "confirm_contact_details" && @form.confirm_contact_email == "false"
   end
 
   def form_class

@@ -861,4 +861,35 @@ RSpec.describe Vacancy do
       end
     end
   end
+
+  describe "#contact_email_belongs_to_a_publisher?" do
+    subject { vacancy.contact_email_belongs_to_a_publisher? }
+
+    context "when contact_email is blank" do
+      let(:vacancy) { create(:vacancy, contact_email: nil) }
+
+      it "returns false" do
+        expect(subject).to be false
+      end
+    end
+
+    context "when contact_email is present" do
+      let(:email) { "publisher@example.com" }
+      let(:vacancy) { create(:vacancy, contact_email: email) }
+
+      context "when a publisher exists with that email" do
+        before { create(:publisher, email: email) }
+
+        it "returns true" do
+          expect(subject).to be true
+        end
+      end
+
+      context "when no publisher exists with that email" do
+        it "returns false" do
+          expect(subject).to be false
+        end
+      end
+    end
+  end
 end

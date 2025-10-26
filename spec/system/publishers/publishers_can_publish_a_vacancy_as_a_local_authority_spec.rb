@@ -166,8 +166,11 @@ RSpec.describe "Creating a vacancy" do
     publisher_contact_details_page.fill_in_and_submit_form(publisher.email, vacancy.contact_number, other: false)
 
     expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
+    # invitation email should not be sent as publisher is already registered on our service
+    expect {
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
+    }.not_to change { ActionMailer::Base.deliveries.count }
 
-    click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
     expect(current_path).to eq(organisation_job_summary_path(created_vacancy.id))
 
     expect(PublishedVacancy.find(created_vacancy.id).attributes.symbolize_keys.except(*ignored_fields))
