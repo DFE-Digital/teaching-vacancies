@@ -33,7 +33,7 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
   end
 
   def application_process_steps
-    # is there a better way to do this? do we need to or is the redirect_to_next_step logic enough?
+    # if the user enters a contact email that doesn't belong to a publisher in our service we want to make them confirm it.
     core_steps = contact_email_belongs_to_existing_publisher? ? %i[contact_details] : %i[contact_details confirm_contact_details]
 
     early_steps = if vacancy.published?

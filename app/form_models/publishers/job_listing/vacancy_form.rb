@@ -18,8 +18,7 @@ class Publishers::JobListing::VacancyForm < BaseForm
 
   class << self
     def load_form(model)
-      # causing issues because vacancy doesn't have confirm contact email field
-      # is there a better way to do this?
+      # confirm_contact_email is not a value that we store, only used for confirmation of contact_email, and navigation purposes.
       if fields == [:confirm_contact_email]
         {}
       else

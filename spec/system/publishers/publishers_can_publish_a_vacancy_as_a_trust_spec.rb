@@ -143,26 +143,26 @@ RSpec.describe "Creating a vacancy" do
     )
     expect(publisher_contact_details_page).to be_displayed
 
-    # First try with a non-publisher email
     non_publisher_email = "new.contact@example.com"
     publisher_contact_details_page.fill_in_and_submit_form(non_publisher_email, vacancy.contact_number)
 
-    # Should see the confirm_contact_details page
     expect(publisher_confirm_contact_details_page).to be_displayed
     expect(page).to have_content("Do you want to use this email address?")
 
     # Select "No" to go back to contact_details page
     publisher_confirm_contact_details_page.fill_in_and_submit_form(confirm: false)
 
-    # Should be back on contact_details page
     expect(publisher_contact_details_page).to be_displayed
 
-    # Now fill in with publisher's actual email (should skip confirm step)
     publisher_contact_details_page.fill_in_and_submit_form(publisher.email, vacancy.contact_number)
 
     expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
 
-    click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
+    # invitation email should not be sent as publisher is already registered on our service
+    expect {
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
+    }.not_to change { ActionMailer::Base.deliveries.count }
+
     expect(current_path).to eq(organisation_job_summary_path(created_vacancy.id))
   end
 
