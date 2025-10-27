@@ -113,6 +113,7 @@ en:
         national_insurance_number_review: National Insurance number
         national_insurance_number: What is your National Insurance number?
         phone_number: Phone number
+        previous_names_optional: Previous names (optional)
         previous_names_review: Previous names
         previous_names_html: Previous names (optional<span class='govuk-visually-hidden'> field</span>)</span>
         street_address: Building and street

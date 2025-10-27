@@ -1,5 +1,8 @@
 en:
   jobseekers:
+    job_application:
+      not_provided: not provided
+      age_range_and_subject: Age range and subject
     login_keys:
       new:
         notice: >-
