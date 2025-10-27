@@ -262,7 +262,7 @@ RSpec.describe "Creating a vacancy" do
 
         expect(page).to have_current_path(organisation_job_review_path(created_vacancy.id), ignore_query: true)
 
-        # Expect the invitation email to be sent when publishing as no publisher exists on our service with this email 
+        # Expect the invitation email to be sent when publishing as no publisher exists on our service with this email
         expect {
           click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
         }.to change { ActionMailer::Base.deliveries.count }.by(1)
