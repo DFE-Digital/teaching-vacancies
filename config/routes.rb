@@ -450,9 +450,16 @@ Rails.application.routes.draw do
       end
       resources :bulk_rejection_messages, only: %i[], controller: "publishers/vacancies/bulk_rejection_messages" do
         member do
-          get :select_rejection_template
-          get :prepare_rejection_emails
+          get :select_template
+          get :prepare_message
           post :send_rejection_emails
+        end
+      end
+      resources :bulk_messages, only: %i[], controller: "publishers/vacancies/bulk_messages" do
+        member do
+          get :select_template
+          get :prepare_message
+          post :send_messages
         end
       end
     end

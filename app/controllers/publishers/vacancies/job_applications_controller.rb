@@ -42,6 +42,7 @@ module Publishers
           when "interview_datetime" then render_interview_datetime_form(form.job_applications, form.origin)
           when "unsuccessful_interview" then render_unsuccessful_interview_form(form.job_applications, form.origin)
           when "reject" then prepare_to_reject(form.job_applications)
+          when "message" then prepare_to_bulk_send(form.job_applications)
           else # when "update_status"
             render "tag"
           end
@@ -147,7 +148,15 @@ module Publishers
         job_applications.each do |ja|
           batch.batchable_job_applications.create!(job_application: ja)
         end
-        redirect_to select_rejection_template_organisation_job_bulk_rejection_message_path(@vacancy.id, batch)
+        redirect_to select_template_organisation_job_bulk_rejection_message_path(@vacancy.id, batch)
+      end
+
+      def prepare_to_bulk_send(job_applications)
+        batch = JobApplicationBatch.create!(vacancy: @vacancy)
+        job_applications.each do |ja|
+          batch.batchable_job_applications.create!(job_application: ja)
+        end
+        redirect_to select_template_organisation_job_bulk_message_path(@vacancy.id, batch)
       end
 
       def download_selected(job_applications)
