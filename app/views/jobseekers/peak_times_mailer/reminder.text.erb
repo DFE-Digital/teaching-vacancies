@@ -1,9 +1,9 @@
-<%= first_name.present? ? t(".hello", first_name:) : t(".nameless_hello") %>
+<%= first_name.present? ? t("jobseekers.peak_times_mailer.#{campaign_key}.hello", first_name:) : t("jobseekers.peak_times_mailer.#{campaign_key}.nameless_hello") %>
 
-<%= t(".line_1") %>
+<%= t("jobseekers.peak_times_mailer.#{campaign_key}.line_1") %>
 
-<%= t(".line_2", campaign_url:) %>
+<%= t("jobseekers.peak_times_mailer.#{campaign_key}.line_2", campaign_url:) %>
 
-<%= t(".line_3") %>
+<%= t("jobseekers.peak_times_mailer.#{campaign_key}.line_3") %>
 
-<%= t(".unsubscribe", link: edit_jobseekers_account_email_preferences_url) %>
+<%= t("jobseekers.peak_times_mailer.#{campaign_key}.unsubscribe", link: edit_jobseekers_account_email_preferences_url) %>

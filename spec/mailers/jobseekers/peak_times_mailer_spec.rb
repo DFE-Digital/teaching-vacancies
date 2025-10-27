@@ -17,50 +17,113 @@ RSpec.describe Jobseekers::PeakTimesMailer do
                              .edit_jobseekers_account_email_preferences_url
         expect(mail.body).to include(unsubscribe_link)
       end
+    end
 
-      %w[march may].each do |month|
-        context "when it's month #{month}" do
-          subject(:body) { mail.body }
+    context "when it's May" do
+      before { travel_to Time.zone.local(2025, 5, 14, 3, 0, 0) }
 
-          before { travel_to Time.zone.local(2025, month_num, 13, 9, 0, 0) }
+      let(:expected_url) { "https://teaching-vacancies.service.gov.uk/?utm_source=Notify&utm_medium=email&utm_campaign=may_peak_notify&utm_id=may_peak_notify" }
 
-          let(:month_num) { month == "march" ? 3 : 5 }
-          let(:url) { "https://teaching-vacancies.service.gov.uk/?utm_source=Notify&utm_medium=email&utm_campaign=#{month}_peak_notify&utm_id=#{month}_peak_notify" }
+      context "when jobseeker has personal details" do
+        let(:jobseeker) { create(:jobseeker, :with_personal_details) }
+        let(:first_name) { jobseeker.jobseeker_profile.personal_details.first_name }
 
-          it { is_expected.to include(url) }
+        it_behaves_like "common email behaviors"
+
+        it "has May subject with jobseeker firstname" do
+          expected_subject = I18n.t("jobseekers.peak_times_mailer.may_reminder.subject", first_name: first_name)
+          expect(mail.subject).to eq(expected_subject)
+        end
+
+        it "includes personalized greeting in the body" do
+          expect(mail.body).to include(first_name)
+        end
+
+        it "includes May campaign URL" do
+          expect(mail.body).to include(expected_url)
+        end
+      end
+
+      context "when jobseeker has no personal details" do
+        let(:jobseeker) { create(:jobseeker) }
+
+        it_behaves_like "common email behaviors"
+
+        it "has May generic subject without firstname" do
+          expected_subject = I18n.t("jobseekers.peak_times_mailer.may_reminder.nameless_subject")
+          expect(mail.subject).to eq(expected_subject)
+        end
+
+        it "includes generic greeting in the body" do
+          nameless_greeting = I18n.t("jobseekers.peak_times_mailer.may_reminder.nameless_hello")
+          expect(mail.body).to include(nameless_greeting)
+        end
+
+        it "includes May campaign URL" do
+          expect(mail.body).to include(expected_url)
         end
       end
     end
 
-    context "when jobseeker has personal details" do
-      let(:jobseeker) { create(:jobseeker, :with_personal_details) }
-      let(:first_name) { jobseeker.jobseeker_profile.personal_details.first_name }
+    context "when it's November" do
+      before { travel_to Time.zone.local(2025, 11, 4, 12, 0, 0) }
 
-      it_behaves_like "common email behaviors"
+      let(:expected_url) { "/jobs?utm_source=notify&utm_medium=email&utm_campaign=notify_november_2025&utm_content=tuesday_2025" }
 
-      it "has subject with jobseeker firstname" do
-        expected_subject = I18n.t("jobseekers.peak_times_mailer.reminder.subject", first_name: first_name)
-        expect(mail.subject).to eq(expected_subject)
+      context "when jobseeker has personal details" do
+        let(:jobseeker) { create(:jobseeker, :with_personal_details) }
+        let(:first_name) { jobseeker.jobseeker_profile.personal_details.first_name }
+
+        it_behaves_like "common email behaviors"
+
+        it "has November subject with jobseeker firstname" do
+          expected_subject = I18n.t("jobseekers.peak_times_mailer.november_reminder.subject", first_name: first_name)
+          expect(mail.subject).to eq(expected_subject)
+        end
+
+        it "includes personalized greeting in the body" do
+          expect(mail.body).to include(first_name)
+        end
+
+        it "includes November campaign URL" do
+          expect(mail.body).to include(expected_url)
+        end
       end
 
-      it "includes personalized greeting in the body" do
-        expect(mail.body).to include(first_name)
+      context "when jobseeker has no personal details" do
+        let(:jobseeker) { create(:jobseeker) }
+
+        it_behaves_like "common email behaviors"
+
+        it "has November generic subject without firstname" do
+          expected_subject = I18n.t("jobseekers.peak_times_mailer.november_reminder.nameless_subject")
+          expect(mail.subject).to eq(expected_subject)
+        end
+
+        it "includes generic greeting in the body" do
+          nameless_greeting = I18n.t("jobseekers.peak_times_mailer.november_reminder.nameless_hello")
+          expect(mail.body).to include(nameless_greeting)
+        end
+
+        it "includes November campaign URL" do
+          expect(mail.body).to include(expected_url)
+        end
       end
     end
 
-    context "when jobseeker has no personal details" do
-      let(:jobseeker) { create(:jobseeker) }
+    context "when it's a different month (fallback behavior)" do
+      before { travel_to Time.zone.local(2025, 3, 15, 9, 0, 0) }
 
-      it_behaves_like "common email behaviors"
+      let(:jobseeker) { create(:jobseeker, :with_personal_details) }
+      let(:first_name) { jobseeker.jobseeker_profile.personal_details.first_name }
 
-      it "has generic subject without firstname" do
-        expected_subject = I18n.t("jobseekers.peak_times_mailer.reminder.nameless_subject")
+      it "falls back to May campaign content" do
+        expected_subject = I18n.t("jobseekers.peak_times_mailer.may_reminder.subject", first_name: first_name)
         expect(mail.subject).to eq(expected_subject)
       end
 
-      it "includes generic greeting in the body" do
-        nameless_greeting = I18n.t("jobseekers.peak_times_mailer.reminder.nameless_hello")
-        expect(mail.body).to include(nameless_greeting)
+      it "uses generic fallback URL" do
+        expect(mail.body).to include("https://teaching-vacancies.service.gov.uk/")
       end
     end
   end
