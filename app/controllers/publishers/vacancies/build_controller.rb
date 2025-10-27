@@ -26,10 +26,10 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
 
     if @form.valid?
       if user_chose_not_to_confirm_contact_email?
+        redirect_to organisation_job_build_path(vacancy.id, step_process.previous_step)
+      else
         update_vacancy
         redirect_to_next_step
-      else
-        redirect_to organisation_job_build_path(vacancy.id, step_process.previous_step)
       end
     else
       render_wizard
