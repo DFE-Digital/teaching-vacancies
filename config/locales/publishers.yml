@@ -76,17 +76,13 @@ en:
           no_messages: "No messages yet."
           no_archived_messages: "No archived messages yet."
         search:
-          label: "Find a messge"
-          hint: "Search by candidate name, job title, or find messages containing specific content"
+          label: "Find a candidate"
+          hint: "Search by candidate name or job listing"
           placeholder: "Enter candidate name, job title, or message content"
           submit: "Search"
           clear: "Clear search"
-          results_heading:
-            one: "1 result found for '%{keyword}'"
-            other: "%{count} results found for '%{keyword}'"
-        total_messages:
-          one: "1 message"
-          other: "%{count} messages"
+          results_heading: "Showing %{from} to %{to} of %{count} conversations for '%{keyword}'"
+        total_messages: "Showing %{from} to %{to} of %{count} conversations"
         sort_by:
           unread_on_top: "Unread on top"
           newest_on_top: "Newest on top"
