@@ -1,0 +1,30 @@
+- content_for :page_title_prefix, t(".page_title")
+
+= govuk_back_link text: t("buttons.back"), href: organisation_job_job_applications_path(vacancy.id, anchor: :not_considering)
+
+span.govuk-caption-l = t(".caption")
+h1.govuk-heading-l class="govuk-!-display-inline"
+  = t(".select_message_template")
+
+p.govuk-body
+  - @message_templates.each do |template|
+    .govuk-button-group
+      = govuk_link_to template.name, prepare_message_organisation_job_bulk_rejection_message_path(vacancy.id, @batch_email.id,
+              message_template: template.id,
+        job_applications: @job_applications.map(&:id))
+
+    = template.content
+
+    .govuk-button-group
+      = govuk_link_to t(".edit_template"), edit_organisation_message_template_path(template)
+      = govuk_link_to t(".delete_template"), organisation_message_template_path(template), method: :delete
+
+    hr
+
+  = form_with(url: new_organisation_message_template_path, method: :get) do |f|
+    .govuk-button-group
+      = f.govuk_submit t("buttons.create_new_template")
+      = govuk_button_link_to t("buttons.send_without_template"),
+        prepare_message_organisation_job_bulk_rejection_message_path(vacancy.id, @batch_email.id, job_applications: @job_applications.map(&:id)), secondary: true
+
+  p.govuk-body = govuk_link_to t("buttons.cancel"), organisation_job_job_applications_path(vacancy.id, anchor: :not_considering)
