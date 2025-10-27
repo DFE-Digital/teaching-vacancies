@@ -44,15 +44,15 @@ en:
         completing: >-
           When completing this reference organisations have a responsibility to ensure that the reference is accurate and does not contain any misstatement and
           nothing significant is omitted.
-        gdpr_heading: UK General Data Protection Regulation (UK GDPR) and Data Protection Act 2018 (DPA)
+        gdpr_heading: UK General Data Protection Regulation (UK GDPR) and Data Protection Act 2018 (DPA 2018)
         gdpr_1: >-
-          This form contains personal data as defined by UKGDPR/DPA 2018. It may include special category data (Article 9) and/ criminal offence data (Article 10)
+          This form contains personal data as defined by UK GDPR and DPA 2018. It may include special category data (Article 9) and/ criminal offence data (Article 10)
           which has been requested for the purposes of recruitment and safeguarding adults at risk and/or children. As we are the organisation requesting this data,
           we will protect any information disclosed within the form in line with data protection requirements and ensure it is not passed to anyone who is not authorised to see the information.
         gdpr_2: >-
           The content of the reference may be discussed with the candidate; in addition, the candidate may request and be granted access to the reference.
         gdpr_3: >-
-          However, if this reference is marked as confidential, the UKGDPR/DPA 2018 creates an exemption from:
+          However, if this reference is marked as confidential, the UK GDPR and DPA 2018 creates an exemption from:
         gdpr_bullets:
           - the right to be informed (privacy information)
           - the right to make a subject access request
