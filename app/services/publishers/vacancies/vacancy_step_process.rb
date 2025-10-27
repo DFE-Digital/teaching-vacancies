@@ -34,7 +34,7 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
 
   def application_process_steps
     # if the user enters a contact email that doesn't belong to a publisher in our service we want to make them confirm it.
-    core_steps = contact_email_belongs_to_existing_publisher? ? %i[contact_details] : %i[contact_details confirm_contact_details]
+    core_steps = vacancy.contact_email_belongs_to_a_publisher? ? %i[contact_details] : %i[contact_details confirm_contact_details]
 
     early_steps = if vacancy.published?
                     []
@@ -63,11 +63,5 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
     else
       first_steps + last_steps
     end
-  end
-
-  def contact_email_belongs_to_existing_publisher?
-    return false if vacancy.contact_email.blank?
-
-    Publisher.find_by(email: vacancy.contact_email).present?
   end
 end
