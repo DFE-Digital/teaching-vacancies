@@ -169,7 +169,7 @@ RSpec.describe "Creating a vacancy" do
     # invitation email should not be sent as publisher is already registered on our service
     expect {
       click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
-    }.not_to change { ActionMailer::Base.deliveries.count }
+    }.not_to(change { ActionMailer::Base.deliveries.count })
 
     expect(current_path).to eq(organisation_job_summary_path(created_vacancy.id))
 
