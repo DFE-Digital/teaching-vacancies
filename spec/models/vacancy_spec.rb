@@ -874,7 +874,7 @@ RSpec.describe Vacancy do
     end
 
     context "when contact_email is present" do
-      let(:email) { "publisher@example.com" }
+      let(:email) { Faker::Internet.email(domain: "contoso.com") }
       let(:vacancy) { create(:vacancy, contact_email: email) }
 
       context "when a publisher exists with that email" do
