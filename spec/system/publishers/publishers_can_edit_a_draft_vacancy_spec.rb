@@ -65,6 +65,13 @@ RSpec.describe "Publishers can edit a draft vacancy" do
           end
         end
 
+        non_publisher_email = Faker::Internet.email(domain: "contoso.com")
+        choose I18n.t("helpers.label.publishers_job_listing_contact_details_form.contact_email_options.other")
+        fill_in "publishers_job_listing_contact_details_form[other_contact_email]", with: non_publisher_email
+
+        click_on I18n.t("buttons.save_and_continue")
+        expect(page).to be_axe_clean
+        choose "Yes"
         click_on I18n.t("buttons.save_and_continue")
         #  wait for page load
         find(".govuk-notification-banner")
