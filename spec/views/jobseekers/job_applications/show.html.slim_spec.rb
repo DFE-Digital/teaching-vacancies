@@ -6,13 +6,9 @@ RSpec.describe "jobseekers/job_applications/show" do
   let(:vacancy) { build_stubbed(:vacancy) }
   let(:job_application) { build_stubbed(:job_application, :status_shortlisted, jobseeker:, vacancy:) }
   let(:current_jobseeker) { jobseeker }
-  let(:self_disclosure_request) { nil }
 
   before do
-    job_application.self_disclosure_request = self_disclosure_request if self_disclosure_request
-    without_partial_double_verification do
-      allow(view).to receive_messages(current_jobseeker:, job_application:, vacancy:)
-    end
+    allow(view).to receive_messages(current_jobseeker:, job_application:, vacancy:)
 
     render
   end
@@ -54,9 +50,9 @@ RSpec.describe "jobseekers/job_applications/show" do
       end
     end
 
-    context "with inactive application" do
-      let(:job_application) { build_stubbed(:job_application, :status_unsuccessful_interview, jobseeker:, vacancy:) }
-      let(:self_disclosure_request) { build_stubbed(:self_disclosure_request, :sent, job_application:) }
+    context "with inactive application", :versioning do
+      let(:job_application) { create(:job_application, :status_unsuccessful_interview, self_disclosure_request: self_disclosure_request) }
+      let(:self_disclosure_request) { create(:self_disclosure_request, :sent) }
 
       it "renders section" do
         expect(banner).to have_css(selectors[:tag], text: "unsuccessful")
@@ -193,16 +189,16 @@ RSpec.describe "jobseekers/job_applications/show" do
     end
 
     context "when self_disclosure_request sent" do
-      let(:job_application) { create(:job_application, :status_interviewing) }
-      let(:self_disclosure_request) { create(:self_disclosure_request, :sent, job_application:) }
+      let(:job_application) { build_stubbed(:job_application, :status_interviewing, self_disclosure_request: self_disclosure_request) }
+      let(:self_disclosure_request) { build_stubbed(:self_disclosure_request, :sent) }
 
       it { expect(rendered).to have_content(call_to_action) }
       it { expect(rendered).to have_link(I18n.t(".form", scope:), href: form_path) }
     end
 
     context "when self_disclosure_request manual" do
-      let(:job_application) { create(:job_application, :status_interviewing) }
-      let(:self_disclosure_request) { create(:self_disclosure_request, :manual) }
+      let(:job_application) { build_stubbed(:job_application, :status_interviewing) }
+      let(:self_disclosure_request) { build_stubbed(:self_disclosure_request, :manual, job_application:) }
 
       it { expect(rendered).to have_no_content(call_to_action) }
       it { expect(rendered).to have_no_link(I18n.t(".form", scope:), href: form_path) }

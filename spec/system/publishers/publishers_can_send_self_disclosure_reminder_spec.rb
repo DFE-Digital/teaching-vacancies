@@ -24,7 +24,8 @@ RSpec.describe "Publishers can send reminder for pending self-disclosure request
   end
 
   context "when viewed 2 business days after request sent" do
-    let(:updated_at) { 2.business_days.ago }
+    # This needs to be larger, otherwise test fails on a Saturday
+    let(:updated_at) { 3.business_days.ago }
 
     scenario "send reminder" do
       run_with_publisher(publisher) do
