@@ -15,9 +15,12 @@ on:
         required: true
 
 # Wait until the Build And Deploy for the same PR is finished before starting this workflow.
-# If triggered by a manual workflow dispatch with a PR number, builds the corresponding 'ref' to match the Build and Deploy concurrency group for that PR.
+# If triggered by a manual workflow dispatch with a PR number, builds the corresponding 'ref' to match the Build and Deploy
+# concurrency group for that PR.
 # For a closed or unlabeled PR, the 'ref' is available and matches the Build and deploy one.
-concurrency: workflow-Build-and-deploy-${{ (github.event_name == 'workflow_dispatch' && format('refs/pull/{0}/merge', github.event.inputs.pr_number)) || github.ref }}
+# When the ref resolves to 'refs/heads/main' (somehow it happens sometimes), we want to allow concurrent runs, so we append
+# the run ID to make it unique.
+concurrency: workflow-Build-and-deploy-${{ (github.event_name == 'workflow_dispatch' && format('refs/pull/{0}/merge', github.event.inputs.pr_number)) || (github.event.pull_request && format('refs/pull/{0}/merge', github.event.pull_request.number)) || (github.ref != 'refs/heads/main' && github.ref) || format('skip-main-{0}', github.run_id) }}
 
 permissions:
   id-token: write
