@@ -7,17 +7,19 @@ RSpec.describe "Publishers can manage candidate messages" do
 
   describe "reading messages" do
     let(:vacancy) { create(:vacancy, :live, organisations: [organisation]) }
-    let(:job_application) { create(:job_application, :submitted, vacancy: vacancy, status: "interviewing") }
-    let(:jobseeker) { job_application.jobseeker }
+    let(:job_application) { create(:job_application, :submitted, jobseeker: jobseeker, vacancy: vacancy, status: "interviewing") }
     let!(:conversation) { create(:conversation, job_application: job_application) }
 
-    before { login_publisher(publisher: publisher, organisation: organisation) }
+    before do
+      create(:jobseeker_message, conversation: conversation, sender: jobseeker)
+
+      login_publisher(publisher: publisher, organisation: organisation)
+      visit publishers_candidate_messages_path
+    end
+
     after { logout }
 
     it "updates inbox total and marks message as read" do
-      create(:jobseeker_message, conversation: conversation, sender: jobseeker)
-
-      visit publishers_candidate_messages_path
       expect(page).to have_content("Inbox (1)")
 
       within("table tbody") do
