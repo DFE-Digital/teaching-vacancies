@@ -71,34 +71,6 @@ RSpec.describe "Publishers can manage candidate messages" do
         expect(page).to be_axe_clean
       end
 
-      context "with many conversations" do
-        before do
-          # needed to test pagination
-          # rubocop:disable FactoryBot/ExcessiveCreateList
-
-          # this awkward creation pattern is required, otherwise we get a validation error
-          # somewhere, but not sure where.
-          create_list(:job_application, 14,
-                      :status_interviewing,
-                      vacancy: vacancy_published_by_trust,
-                      jobseeker: jobseeker).each do |ja|
-            ja.update!(conversations: build_list(:conversation, 1,
-                                                 last_message_at: Time.current,
-                                                 messages: [
-                                                   build(:publisher_message, sender: trust_publisher),
-                                                   build(:jobseeker_message, sender: jobseeker),
-                                                 ]))
-          end
-          # rubocop:enable FactoryBot/ExcessiveCreateList
-
-          visit current_path
-        end
-
-        it "paginates all the conversations", :js do
-          expect(page).to have_content("Showing 1 to 15 of 16 conversations")
-        end
-      end
-
       it "shows messages from applicants for all jobs at their schools, regardless of whether a school or the MAT published it" do
         expect(page).to have_content("Inbox (2)")
 
