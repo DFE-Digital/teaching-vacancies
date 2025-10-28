@@ -71,6 +71,34 @@ RSpec.describe "Publishers can manage candidate messages" do
         expect(page).to be_axe_clean
       end
 
+      context "with many conversations" do
+        before do
+          # needed to test pagination
+          # rubocop:disable FactoryBot/ExcessiveCreateList
+
+          # this awkward creation pattern is required, otherwise we get a validation error
+          # somewhere, but not sure where.
+          create_list(:job_application, 14,
+                      :status_interviewing,
+                      vacancy: vacancy_published_by_trust,
+                      jobseeker: jobseeker).each do |ja|
+            ja.update!(conversations: build_list(:conversation, 1,
+                                                 last_message_at: Time.current,
+                                                 messages: [
+                                                   build(:publisher_message, sender: trust_publisher),
+                                                   build(:jobseeker_message, sender: jobseeker),
+                                                 ]))
+          end
+          # rubocop:enable FactoryBot/ExcessiveCreateList
+
+          visit current_path
+        end
+
+        it "paginates all the conversations", :js do
+          expect(page).to have_content("Showing 1 to 15 of 16 conversations")
+        end
+      end
+
       it "shows messages from applicants for all jobs at their schools, regardless of whether a school or the MAT published it" do
         expect(page).to have_content("Inbox (2)")
 
@@ -138,7 +166,7 @@ RSpec.describe "Publishers can manage candidate messages" do
     after { logout }
 
     scenario "when searching by job title" do
-      expect(page).to have_content("2 messages")
+      expect(page).to have_content("2 conversations")
 
       within("table tbody") do
         expect(page).to have_content("Science Teacher")
@@ -148,7 +176,7 @@ RSpec.describe "Publishers can manage candidate messages" do
       fill_in "keyword", with: "Science"
       click_button "Search"
 
-      expect(page).to have_content("1 result found for 'Science'")
+      expect(page).to have_content("Showing 1 to 1 of 1 conversations for 'Science'")
 
       within("table tbody") do
         expect(page).to have_content("Science Teacher")
@@ -160,7 +188,7 @@ RSpec.describe "Publishers can manage candidate messages" do
       fill_in "keyword", with: "interview"
       click_button "Search"
 
-      expect(page).to have_content("1 result found for 'interview'")
+      expect(page).to have_content("Showing 1 to 1 of 1 conversations for 'interview'")
 
       within("table tbody") do
         expect(page).to have_content("Science Teacher")
@@ -172,7 +200,7 @@ RSpec.describe "Publishers can manage candidate messages" do
       fill_in "keyword", with: "nonexistent"
       click_button "Search"
 
-      expect(page).to have_content("0 results found for 'nonexistent'")
+      expect(page).to have_content("Showing 0 to 0 of 0 conversations for 'nonexistent'")
       expect(page).to have_content("No messages yet.")
     end
 
@@ -191,7 +219,7 @@ RSpec.describe "Publishers can manage candidate messages" do
         fill_in "keyword", with: "Science"
         click_button "Search"
 
-        expect(page).to have_content("1 result found for 'Science'")
+        expect(page).to have_content("Showing 1 to 1 of 1 conversations for 'Science'")
 
         within("table tbody") do
           expect(page).to have_content("Physics and Science") # Archived conversation
@@ -231,14 +259,14 @@ RSpec.describe "Publishers can manage candidate messages" do
       after { logout }
 
       it "does not show duplicate conversations when searching for common message content" do
-        expect(page).to have_content("2 messages")
+        expect(page).to have_content("2 conversations")
         expect(candidate_names.count).to eq(2)
 
         # Search for common content that appears in both messages
         fill_in "keyword", with: "Hi"
         click_button "Search"
 
-        expect(page).to have_content("2 results found for 'Hi'")
+        expect(page).to have_content("Showing 1 to 2 of 2 conversations for 'Hi'")
         expect(candidate_names.count).to eq(2)
 
         within("table tbody") do
