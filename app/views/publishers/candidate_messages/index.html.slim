@@ -1,63 +1,65 @@
 - content_for :page_title_prefix, current_organisation.name
 
+h1.govuk-heading-l Candidate messages
+
+= tabs do |t|
+  - t.with_navigation_item text: "Inbox (#{@inbox_count})", link: publishers_candidate_messages_path
+  - t.with_navigation_item text: "Archive", link: publishers_candidate_messages_path(tab: "archive")
+
 .govuk-grid-row
-  .govuk-grid-column-full
-    h1.govuk-heading-xl Candidate messages
+  .govuk-grid-column-two-thirds
+    = form_for @search_form, as: "", url: publishers_candidate_messages_path, method: :get, html: { role: "search", class: "search-form" } do |f|
+      = f.hidden_field :tab, value: @tab
+      / reduce the default margins on a form group to create extra vertical space on the page
+      .govuk-form-group class="govuk-!-margin-bottom-0 govuk-!-margin-top-0"
+        = f.label :keyword, t(".search.label"), class: "govuk-label govuk-!-font-weight-bold"
+        .govuk-hint = t(".search.hint")
+        .govuk-input__wrapper
+          = f.text_field :keyword, value: @search_form.keyword, placeholder: t(".search.placeholder"), class: "govuk-input"
+          = f.submit t(".search.submit"), class: "govuk-button"
 
-    = tabs do |t|
-      - t.with_navigation_item text: "Inbox (#{@inbox_count})", link: publishers_candidate_messages_path
-      - t.with_navigation_item text: "Archive", link: publishers_candidate_messages_path(tab: "archive")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    / This top margin makes this field appear to line up with the sort component drop-down
+    h2 class="govuk-heading-m govuk-!-margin-top-6"
+      - if @search_form.active_criteria?
+        = t(".search.results_heading", from: @pagy.from, to: @pagy.to, count: @total_count, keyword: @search_form.keyword)
+      - else
+        = t(".total_messages", from: @pagy.from, to: @pagy.to, count: @total_count)
+  .govuk-grid-column-one-third
+    = render SortComponent.new(path: method(:publishers_candidate_messages_path), sort: @sort, url_params: { tab: @tab, keyword: @search_form.keyword }.compact, display_type: "inline-select")
 
-    .govuk-grid-row
-      .govuk-grid-column-full
-        = form_for @search_form, as: "", url: publishers_candidate_messages_path, method: :get, html: { role: "search", class: "search-form" } do |f|
-          = f.hidden_field :tab, value: @tab
-          .govuk-form-group
-            = f.label :keyword, t(".search.label"), class: "govuk-label govuk-!-font-weight-bold"
-            .govuk-hint = t(".search.hint")
-            .govuk-input__wrapper
-              = f.text_field :keyword, value: @search_form.keyword, placeholder: t(".search.placeholder"), class: "govuk-input"
-              = f.submit t(".search.submit"), class: "govuk-button"
-
-        div class="sort-container"
-          div class="left"
-            - if @search_form.active_criteria?
-              h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-1" = t(".search.results_heading", count: @total_count, keyword: @search_form.keyword)
-            - else
-              h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-1" = t(".total_messages", count: @total_count)
-          div class="right"
-            = render SortComponent.new(path: method(:publishers_candidate_messages_path), sort: @sort, url_params: { tab: @tab, keyword: @search_form.keyword }.compact, display_type: "inline-select")
-
-    - if @conversations.any?
-      = form_with url: toggle_archive_publishers_candidate_messages_path, method: :patch, local: true do |f|
-        = f.hidden_field :archive_action, value: (@tab == "archive" ? "unarchive" : "archive")
-        .govuk-button-group style="margin-bottom: 20px;"
-          - if @tab == "archive"
-            = f.govuk_submit t(".buttons.unarchive"), class: "govuk-button--secondary"
-          - else
-            = f.govuk_submit t(".buttons.archive"), class: "govuk-button--secondary"
-        = govuk_table html_attributes: { data: { module: "moj-multi-select", multi_select_checkbox: "#multi_select_conversations", multi_select_idprefix: "id_all_conversations" } } do |table|
-          - table.with_head do |head|
-            - head.with_row do |row|
-              - row.with_cell html_attributes: { id: "multi_select_conversations" }
-              - row.with_cell text: t(".table_headers.name")
-              - row.with_cell text: t(".table_headers.application")
-              - row.with_cell text: t(".table_headers.date_and_time")
-          - table.with_body do |body|
-            - @conversations.each do |conversation|
-              - job_application = conversation.job_application
-              - body.with_row html_attributes: { class: ("conversation--unread" if conversation.has_unread_messages_for_publishers?) } do |row|
-                - row.with_cell do
-                  .govuk-checkboxes--small
-                    = f.govuk_check_box :conversations, conversation.id, multiple: true, label: { hidden: true, text: "Select #{job_application.name}" }
-                - row.with_cell do
-                  = govuk_link_to job_application.name, messages_organisation_job_job_application_path(job_application.vacancy.id, job_application.id)
-                - row.with_cell text: job_application.vacancy.job_title
-                - row.with_cell text: conversation.last_message_at.to_fs(:default)
-    - else
-      = govuk_inset_text do
-        p
-          - if @tab == "archive"
-            = t(".empty_state.no_archived_messages")
-          - else
-            = t(".empty_state.no_messages")
+- if @conversations.any?
+  = form_with url: toggle_archive_publishers_candidate_messages_path, method: :patch, local: true do |f|
+    = f.hidden_field :archive_action, value: (@tab == "archive" ? "unarchive" : "archive")
+    .govuk-button-group style="margin-bottom: 20px;"
+      - if @tab == "archive"
+        = f.govuk_submit t(".buttons.unarchive"), class: "govuk-button--secondary"
+      - else
+        = f.govuk_submit t(".buttons.archive"), class: "govuk-button--secondary"
+    = govuk_table html_attributes: { data: { module: "moj-multi-select", multi_select_checkbox: "#multi_select_conversations", multi_select_idprefix: "id_all_conversations" } } do |table|
+      - table.with_head do |head|
+        - head.with_row do |row|
+          - row.with_cell html_attributes: { id: "multi_select_conversations" }
+          - row.with_cell text: t(".table_headers.name")
+          - row.with_cell text: t(".table_headers.application")
+          - row.with_cell text: t(".table_headers.date_and_time")
+      - table.with_body do |body|
+        - @conversations.each do |conversation|
+          - job_application = conversation.job_application
+          - body.with_row html_attributes: { class: ("conversation--unread" if conversation.has_unread_messages_for_publishers?) } do |row|
+            - row.with_cell do
+              .govuk-checkboxes--small
+                = f.govuk_check_box :conversations, conversation.id, multiple: true, label: { hidden: true, text: "Select #{job_application.name}" }
+            - row.with_cell do
+              = govuk_link_to job_application.name, messages_organisation_job_job_application_path(job_application.vacancy.id, job_application.id)
+            - row.with_cell text: job_application.vacancy.job_title
+            - row.with_cell text: conversation.last_message_at.to_fs(:default)
+  = govuk_pagination(pagy: @pagy)
+- else
+  = govuk_inset_text do
+    p
+      - if @tab == "archive"
+        = t(".empty_state.no_archived_messages")
+      - else
+        = t(".empty_state.no_messages")

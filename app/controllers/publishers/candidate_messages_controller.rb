@@ -9,8 +9,9 @@ class Publishers::CandidateMessagesController < Publishers::BaseController
 
     filtered_conversations = @tab == "archive" ? base_conversations.archived : base_conversations.inbox
 
-    @conversations = Search::CandidateMessagesSearch.new(@search_form.to_hash, sort: @sort, scope: filtered_conversations).conversations
-    @total_count = @conversations.count
+    conversations = Search::CandidateMessagesSearch.new(@search_form.to_hash, sort: @sort, scope: filtered_conversations).conversations
+    @total_count = conversations.count
+    @pagy, @conversations = pagy(conversations, items: 15)
 
     @inbox_count = Conversation.for_organisations(organisation_ids).inbox.with_unread_jobseeker_messages.count
   end
