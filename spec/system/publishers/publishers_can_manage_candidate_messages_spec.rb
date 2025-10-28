@@ -138,7 +138,7 @@ RSpec.describe "Publishers can manage candidate messages" do
     after { logout }
 
     scenario "when searching by job title" do
-      expect(page).to have_content("2 messages")
+      expect(page).to have_content("2 conversations")
 
       within("table tbody") do
         expect(page).to have_content("Science Teacher")
@@ -148,7 +148,7 @@ RSpec.describe "Publishers can manage candidate messages" do
       fill_in "keyword", with: "Science"
       click_button "Search"
 
-      expect(page).to have_content("1 result found for 'Science'")
+      expect(page).to have_content("Showing 1 to 1 of 1 conversations for 'Science'")
 
       within("table tbody") do
         expect(page).to have_content("Science Teacher")
@@ -160,7 +160,7 @@ RSpec.describe "Publishers can manage candidate messages" do
       fill_in "keyword", with: "interview"
       click_button "Search"
 
-      expect(page).to have_content("1 result found for 'interview'")
+      expect(page).to have_content("Showing 1 to 1 of 1 conversations for 'interview'")
 
       within("table tbody") do
         expect(page).to have_content("Science Teacher")
@@ -172,7 +172,7 @@ RSpec.describe "Publishers can manage candidate messages" do
       fill_in "keyword", with: "nonexistent"
       click_button "Search"
 
-      expect(page).to have_content("0 results found for 'nonexistent'")
+      expect(page).to have_content("Showing 0 to 0 of 0 conversations for 'nonexistent'")
       expect(page).to have_content("No messages yet.")
     end
 
@@ -191,7 +191,7 @@ RSpec.describe "Publishers can manage candidate messages" do
         fill_in "keyword", with: "Science"
         click_button "Search"
 
-        expect(page).to have_content("1 result found for 'Science'")
+        expect(page).to have_content("Showing 1 to 1 of 1 conversations for 'Science'")
 
         within("table tbody") do
           expect(page).to have_content("Physics and Science") # Archived conversation
@@ -231,14 +231,14 @@ RSpec.describe "Publishers can manage candidate messages" do
       after { logout }
 
       it "does not show duplicate conversations when searching for common message content" do
-        expect(page).to have_content("2 messages")
+        expect(page).to have_content("2 conversations")
         expect(candidate_names.count).to eq(2)
 
         # Search for common content that appears in both messages
         fill_in "keyword", with: "Hi"
         click_button "Search"
 
-        expect(page).to have_content("2 results found for 'Hi'")
+        expect(page).to have_content("Showing 1 to 2 of 2 conversations for 'Hi'")
         expect(candidate_names.count).to eq(2)
 
         within("table tbody") do
