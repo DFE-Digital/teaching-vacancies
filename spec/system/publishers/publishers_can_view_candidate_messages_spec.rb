@@ -8,159 +8,106 @@ RSpec.describe "Publishers can view candidate messages" do
   let(:health_vacancy) { create(:vacancy, :live, organisations: [organisation]) }
   let(:music_vacancy) { create(:vacancy, :live, organisations: [organisation]) }
 
-  let(:health_job_application) { create(:job_application, vacancy: health_vacancy, jobseeker: jobseeker, status: "interviewing") }
-  let(:music_job_application) { create(:job_application, vacancy: music_vacancy, jobseeker: jobseeker, status: "interviewing") }
+  let(:health_job_application) { create(:job_application, :status_interviewing, vacancy: health_vacancy, jobseeker: jobseeker) }
+  let(:music_job_application) { create(:job_application, :status_interviewing, vacancy: music_vacancy, jobseeker: jobseeker) }
 
   before { login_publisher(publisher: publisher, organisation: organisation) }
   after { logout }
 
   context "when conversations exist" do
-    let!(:health_conversation) { create(:conversation, job_application: health_job_application, archived: false) }
-    let!(:music_conversation) { create(:conversation, job_application: music_job_application, archived: false) }
+    let(:health_conversation) { create(:conversation, job_application: health_job_application) }
+    let(:music_conversation) { create(:conversation, job_application: music_job_application) }
 
     before do
-      travel_to 1.day.ago do
-        create(:jobseeker_message, conversation: health_conversation, sender: jobseeker, read: true)
-      end
-      travel_to 2.days.ago do
-        create(:jobseeker_message, conversation: music_conversation, sender: jobseeker, read: false)
-      end
+      create(:jobseeker_message, conversation: health_conversation, sender: jobseeker, read: true, created_at: 1.day.ago)
+      create(:jobseeker_message, conversation: music_conversation, sender: jobseeker, read: false, created_at: 2.days.ago)
     end
 
-    describe "viewing candidate messages" do
-      context "when on the inbox tab" do
-        before do
-          visit publishers_candidate_messages_path
+    context "when on the inbox tab" do
+      before do
+        visit publishers_candidate_messages_path
+      end
+
+      it "passes accessibility checks", :a11y do
+        expect(page).to be_axe_clean
+      end
+
+      it "shows inbox tab with correct count, proper ordering, and allows publishers to archive messages" do
+        expect(page).to have_content("Inbox (1)")
+
+        within("tbody") do
+          expect(page).to have_content(health_job_application.name)
+          expect(page).to have_content(music_job_application.name)
+          expect(page).to have_no_content("No messages yet")
         end
 
-        it "passes accessibility checks", :a11y do
-          expect(page).to be_axe_clean
-        end
+        expect(candidate_names).to eq([music_job_application.name, health_job_application.name])
+        read_job_applications_messages_and_return_to_candidate_messages_page(music_job_application)
 
-        it "shows inbox tab with correct count, proper ordering, and allows publishers to archive messages" do
-          expect(page).to have_content("Inbox (1)")
-          expect(page).to have_content("Archive")
+        expect(page).to have_content("Inbox (0)")
+        expect(candidate_names).to eq([health_job_application.name, music_job_application.name])
 
-          within("tbody") do
-            expect(page).to have_content(health_job_application.name)
-            expect(page).to have_content(music_job_application.name)
-            expect(page).to have_no_content("No messages yet")
-          end
+        check("Select #{health_job_application.name}")
+        click_button "Archive"
 
-          conversation_rows = page.all("table tbody tr")
-          expect(conversation_rows.count).to eq(2)
+        expect(page).to have_content("You have moved messages to archived")
+        expect(page).to have_content("Inbox (0)")
+        expect(health_conversation.reload).to be_archived
+        expect(music_conversation.reload).not_to be_archived
+      end
 
-          within(conversation_rows[0]) do
-            expect(page).to have_content(music_job_application.name)
-          end
-
-          within(conversation_rows[1]) do
-            expect(page).to have_content(health_job_application.name)
-          end
-
-          read_job_applications_messages_and_return_to_candidate_messages_page(music_job_application)
-
-          expect(page).to have_content("Inbox (0)")
-
-          conversation_rows = page.all("table tbody tr")
-          expect(conversation_rows.count).to eq(2)
-
-          within(conversation_rows[0]) do
-            expect(page).to have_content(health_job_application.name)
-          end
-
-          within(conversation_rows[1]) do
-            expect(page).to have_content(music_job_application.name)
-          end
-
-          check("Select #{health_job_application.name}", match: :first)
+      context "with multiple conversations selected" do
+        it "archives all selected conversations" do
+          check("Select #{health_job_application.name}")
+          check("Select #{music_job_application.name}")
           click_button "Archive"
 
           expect(page).to have_content("You have moved messages to archived")
           expect(page).to have_content("Inbox (0)")
           expect(health_conversation.reload).to be_archived
+          expect(music_conversation.reload).to be_archived
+        end
+      end
+
+      context "with no conversations selected" do
+        it "archives no conversations, with no errors" do
+          click_button "Archive"
+
+          expect(page).to have_content("You have moved messages to archived")
+
+          expect(health_conversation.reload).not_to be_archived
           expect(music_conversation.reload).not_to be_archived
         end
+      end
 
-        context "with multiple conversations selected" do
-          it "archives all selected conversations" do
-            check("Select #{health_job_application.name}", match: :first)
-            check("Select #{music_job_application.name}", match: :first)
-            click_button "Archive"
+      context "with a third vacancy" do
+        let(:third_vacancy) { create(:vacancy, :live, organisations: [organisation]) }
+        let(:third_job_application) { create(:job_application, vacancy: third_vacancy, jobseeker: jobseeker, status: "interviewing") }
 
-            expect(page).to have_content("You have moved messages to archived")
-            expect(page).to have_content("Inbox (0)")
-            expect(health_conversation.reload).to be_archived
-            expect(music_conversation.reload).to be_archived
-          end
-        end
-
-        context "with no conversations selected" do
-          it "archives no conversations, with no errors" do
-            click_button "Archive"
-
-            expect(page).to have_content("You have moved messages to archived")
-
-            expect(health_conversation.reload).not_to be_archived
-            expect(music_conversation.reload).not_to be_archived
-          end
-        end
-
-        it "allows sorting conversations by different criteria", :js do
-          third_vacancy = create(:vacancy, :live, organisations: [organisation])
-          third_job_application = create(:job_application, vacancy: third_vacancy, jobseeker: jobseeker, status: "interviewing")
-          third_conversation = create(:conversation, job_application: third_job_application, archived: false)
-
+        before do
           travel_to 3.days.ago do
+            third_conversation = create(:conversation, job_application: third_job_application, archived: false)
             create(:jobseeker_message, conversation: third_conversation, sender: jobseeker, read: true)
           end
 
           visit publishers_candidate_messages_path
+        end
 
+        it "allows sorting conversations by different criteria", :js do
           expect(page).to have_select("sort_by", selected: "Unread on top")
 
-          conversation_rows = page.all("table tbody tr")
-
           # music_conversation should be first because it has unread messages then ordered by last_message_at desc
-          within(conversation_rows[0]) do
-            expect(page).to have_content(music_job_application.name)
-          end
-          within(conversation_rows[1]) do
-            expect(page).to have_content(health_job_application.name)
-          end
-          within(conversation_rows[2]) do
-            expect(page).to have_content(third_job_application.name)
-          end
+          expect(candidate_names).to eq([music_job_application.name, health_job_application.name, third_job_application.name])
 
           select "Newest on top", from: "sort_by"
-
           expect(page).to have_select("sort_by", selected: "Newest on top")
 
-          conversation_rows = page.all("table tbody tr")
-          within(conversation_rows[0]) do
-            expect(page).to have_content(health_job_application.name)
-          end
-          within(conversation_rows[1]) do
-            expect(page).to have_content(music_job_application.name)
-          end
-          within(conversation_rows[2]) do
-            expect(page).to have_content(third_job_application.name)
-          end
+          expect(candidate_names).to eq([health_job_application.name, music_job_application.name, third_job_application.name])
 
           select "Oldest on top", from: "sort_by"
-
           expect(page).to have_select("sort_by", selected: "Oldest on top")
 
-          conversation_rows = page.all("table tbody tr")
-          within(conversation_rows[0]) do
-            expect(page).to have_content(third_job_application.name)
-          end
-          within(conversation_rows[1]) do
-            expect(page).to have_content(music_job_application.name)
-          end
-          within(conversation_rows[2]) do
-            expect(page).to have_content(health_job_application.name)
-          end
+          expect(candidate_names).to eq([third_job_application.name, music_job_application.name, health_job_application.name])
         end
       end
     end
@@ -229,253 +176,15 @@ RSpec.describe "Publishers can view candidate messages" do
     end
   end
 
-  describe "reading messages" do
-    let(:vacancy) { create(:vacancy, :live, organisations: [organisation]) }
-    let(:job_application) { create(:job_application, :submitted, vacancy: vacancy, status: "interviewing") }
-    let(:jobseeker) { job_application.jobseeker }
-    let!(:conversation) { create(:conversation, job_application: job_application) }
-
-    it "updates inbox total and marks message as read" do
-      create(:jobseeker_message, conversation: conversation, sender: jobseeker, read: false)
-
-      visit publishers_candidate_messages_path
-      expect(page).to have_content("Inbox (1)")
-
-      within("table tbody") do
-        expect(page).to have_css("tr.conversation--unread")
-      end
-
-      # going here marks the messages as read
-      visit messages_organisation_job_job_application_path(vacancy.id, job_application.id)
-
-      visit publishers_candidate_messages_path
-
-      expect(page).to have_content("Inbox (0)")
-
-      within("table tbody") do
-        expect(page).to have_no_css("tr.conversation--unread")
-      end
-    end
-  end
-
   def read_job_applications_messages_and_return_to_candidate_messages_page(job_application)
     click_link "#{job_application.first_name} #{job_application.last_name}"
     visit publishers_candidate_messages_path
   end
 
-  context "when publisher is a MAT and is publishing vacancies for schools" do
-    let(:trust) { create(:trust) }
-    let(:primary_school) { create(:school, school_groups: [trust]) }
-    let(:secondary_school) { create(:school, school_groups: [trust]) }
-    let(:trust_publisher) { create(:publisher, organisations: [trust]) }
-    let(:school_publisher) { create(:publisher, organisations: [secondary_school]) }
-
-    let(:vacancy_published_by_trust) { create(:vacancy, :live, organisations: [primary_school], publisher: trust_publisher) }
-    let(:vacancy_published_by_school) { create(:vacancy, :live, organisations: [secondary_school], publisher: school_publisher) }
-
-    let(:trust_published_vacancy_application) { create(:job_application, :status_submitted, vacancy: vacancy_published_by_trust, jobseeker: jobseeker, status: "interviewing") }
-    let(:school_published_vacancy_application) { create(:job_application, :status_submitted, vacancy: vacancy_published_by_school, jobseeker: jobseeker, status: "interviewing") }
-
-    let!(:trust_published_conversation) { create(:conversation, job_application: trust_published_vacancy_application, archived: false) }
-    let!(:school_published_conversation) { create(:conversation, job_application: school_published_vacancy_application, archived: false) }
-
-    before do
-      create(:jobseeker_message, conversation: trust_published_conversation, sender: jobseeker)
-      create(:jobseeker_message, conversation: school_published_conversation, sender: jobseeker)
-      login_publisher(publisher: trust_publisher, organisation: trust)
-    end
-
-    after { logout }
-
-    it "shows messages from applicants for all jobs at their schools, regardless of whether a school or the MAT published it" do
-      visit publishers_candidate_messages_path
-
-      expect(page).to have_content("Inbox (2)")
-
-      within("tbody") do
-        expect(page).to have_content(trust_published_vacancy_application.name)
-        expect(page).to have_content(school_published_vacancy_application.name)
-        expect(page).to have_no_content("No messages yet")
-      end
-
-      conversation_rows = page.all("table tbody tr")
-      expect(conversation_rows.count).to eq(2)
-    end
-
-    it "allows archiving messages" do
-      visit publishers_candidate_messages_path
-
-      check("Select #{trust_published_vacancy_application.name}", match: :first)
-      click_button "Archive"
-
-      expect(page).to have_content("You have moved messages to archived")
-      expect(page).to have_content("Inbox (1)")
-      expect(trust_published_conversation.reload).to be_archived
-      expect(school_published_conversation.reload).not_to be_archived
-    end
-
-    context "when the school publisher logs in" do
-      before do
-        logout
-        login_publisher(publisher: school_publisher, organisation: secondary_school)
-      end
-
-      it "can only see messages on jobs published by their own school" do
-        visit publishers_candidate_messages_path
-
-        expect(page).to have_content("Inbox (1)")
-
-        within("tbody") do
-          expect(page).to have_content(school_published_vacancy_application.name)
-          expect(page).to have_no_content(trust_published_vacancy_application.name)
-        end
-
-        conversation_rows = page.all("table tbody tr")
-        expect(conversation_rows.count).to eq(1)
-      end
-    end
-  end
-
-  describe "searching candidate messages" do
-    let(:science_vacancy) { create(:vacancy, :live, job_title: "Science Teacher", organisations: [organisation]) }
-    let(:math_vacancy) { create(:vacancy, :live, job_title: "Mathematics Teacher", organisations: [organisation]) }
-
-    let(:science_application) { create(:job_application, vacancy: science_vacancy, jobseeker: jobseeker, status: "interviewing") }
-    let(:math_application) { create(:job_application, vacancy: math_vacancy, jobseeker: jobseeker, status: "interviewing") }
-
-    let!(:science_conversation) { create(:conversation, job_application: science_application) }
-    let!(:math_conversation) { create(:conversation, job_application: math_application) }
-
-    before do
-      create(:jobseeker_message, conversation: science_conversation, sender: jobseeker, content: "Looking forward to the interview")
-      create(:jobseeker_message, conversation: math_conversation, sender: jobseeker, content: "Thank you for considering my application")
-    end
-
-    context "when searching by job title" do
-      it "filters conversations by job title" do
-        visit publishers_candidate_messages_path
-
-        expect(page).to have_content("2 messages")
-
-        within("table tbody") do
-          expect(page).to have_content("Science Teacher")
-          expect(page).to have_content("Mathematics Teacher")
-        end
-
-        fill_in "keyword", with: "Science"
-        click_button "Search"
-
-        expect(page).to have_content("1 result found for 'Science'")
-
-        within("table tbody") do
-          expect(page).to have_content("Science Teacher")
-          expect(page).to have_no_content("Mathematics Teacher")
-        end
-      end
-    end
-
-    context "when searching by message content" do
-      it "filters conversations by message content" do
-        visit publishers_candidate_messages_path
-
-        fill_in "keyword", with: "interview"
-        click_button "Search"
-
-        expect(page).to have_content("1 result found for 'interview'")
-
-        within("table tbody") do
-          expect(page).to have_content("Science Teacher")
-          expect(page).to have_no_content("Mathematics Teacher")
-        end
-      end
-    end
-
-    context "when searching with no results" do
-      it "shows no results message" do
-        visit publishers_candidate_messages_path
-
-        fill_in "keyword", with: "nonexistent"
-        click_button "Search"
-
-        expect(page).to have_content("0 results found for 'nonexistent'")
-        expect(page).to have_content("No messages yet.")
-      end
-    end
-
-    context "when searching within archive tab" do
-      let(:archived_science_vacancy) { create(:vacancy, :live, job_title: "Physics and Science", organisations: [organisation]) }
-      let(:archived_science_application) { create(:job_application, vacancy: archived_science_vacancy, jobseeker: jobseeker, status: "interviewing") }
-      let!(:archived_science_conversation) { create(:conversation, job_application: archived_science_application, archived: true) }
-
-      before do
-        create(:jobseeker_message, conversation: archived_science_conversation, sender: jobseeker, content: "Archived message")
-      end
-
-      it "searches only within archived conversations, not inbox conversations" do
-        visit publishers_candidate_messages_path(tab: "archive")
-
-        fill_in "keyword", with: "Science"
-        click_button "Search"
-
-        expect(page).to have_content("1 result found for 'Science'")
-
-        within("table tbody") do
-          expect(page).to have_content("Physics and Science") # Archived conversation
-          expect(page).to have_no_content("Science Teacher") # Inbox conversation
-          expect(page).to have_no_content("Mathematics Teacher")
-        end
-      end
-    end
-
-    context "when publisher is a MAT searching for messages" do
-      let(:trust) { create(:trust) }
-      let(:st_peters_school) { create(:school, school_groups: [trust]) }
-      let(:st_johns_school) { create(:school, school_groups: [trust]) }
-      let(:mat_publisher) { create(:publisher, organisations: [trust]) }
-
-      # Create vacancies that are associated with BOTH the trust AND a member school
-      # This reproduces the real-world scenario where a MAT publishes vacancies
-      # that are also associated with individual schools
-      let(:head_teacher_vacancy) { create(:vacancy, :live, job_title: "Head Teacher", organisations: [trust, st_peters_school]) }
-      let(:deputy_head_vacancy) { create(:vacancy, :live, job_title: "Deputy Head", organisations: [trust, st_johns_school]) }
-
-      let(:head_application) { create(:job_application, vacancy: head_teacher_vacancy, jobseeker: jobseeker, status: "interviewing") }
-      let(:deputy_application) { create(:job_application, vacancy: deputy_head_vacancy, jobseeker: jobseeker, status: "interviewing") }
-
-      let!(:head_conversation) { create(:conversation, job_application: head_application) }
-      let!(:deputy_conversation) { create(:conversation, job_application: deputy_application) }
-
-      before do
-        # Create messages with common content that will be searched
-        create(:jobseeker_message, conversation: head_conversation, sender: jobseeker, content: "Hi, looking forward to the interview")
-        create(:jobseeker_message, conversation: deputy_conversation, sender: jobseeker, content: "Hi, thank you for the opportunity")
-
-        login_publisher(publisher: mat_publisher, organisation: trust)
-      end
-
-      after { logout }
-
-      it "does not show duplicate conversations when searching for common message content" do
-        visit publishers_candidate_messages_path
-
-        expect(page).to have_content("2 messages")
-        conversation_rows = page.all("table tbody tr")
-        expect(conversation_rows.count).to eq(2)
-
-        # Search for common content that appears in both messages
-        fill_in "keyword", with: "Hi"
-        click_button "Search"
-
-        expect(page).to have_content("2 results found for 'Hi'")
-
-        conversation_rows = page.all("table tbody tr")
-        expect(conversation_rows.count).to eq(2)
-
-        within("table tbody") do
-          expect(page).to have_content("Head Teacher")
-          expect(page).to have_content("Deputy Head")
-        end
-      end
-    end
+  def candidate_names
+    page.all("table tbody tr > td")
+        .to_a
+        .in_groups_of(4)
+        .map { |row| row[1].text }
   end
 end

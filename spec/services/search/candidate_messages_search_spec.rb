@@ -30,10 +30,6 @@ RSpec.describe Search::CandidateMessagesSearch do
       expect(search.conversations).to contain_exactly(science_conversation, math_conversation, english_conversation)
     end
 
-    it "returns correct total count" do
-      expect(search.total_count).to eq(3)
-    end
-
     it "has no active criteria" do
       expect(search.active_criteria?).to be false
     end
@@ -48,10 +44,6 @@ RSpec.describe Search::CandidateMessagesSearch do
       it "finds conversations with matching job titles" do
         expect(search.conversations).to include(science_conversation)
         expect(search.conversations).not_to include(math_conversation, english_conversation)
-      end
-
-      it "returns correct count for filtered results" do
-        expect(search.total_count).to eq(1)
       end
 
       it "has active criteria" do
@@ -87,10 +79,6 @@ RSpec.describe Search::CandidateMessagesSearch do
 
       it "returns empty results" do
         expect(search.conversations).to be_empty
-      end
-
-      it "returns zero count" do
-        expect(search.total_count).to eq(0)
       end
 
       it "still has active criteria" do

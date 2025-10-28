@@ -22,9 +22,9 @@
         div class="sort-container"
           div class="left"
             - if @search_form.active_criteria?
-              h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-1" = t(".search.results_heading", count: @search.total_count, keyword: @search_form.keyword)
+              h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-1" = t(".search.results_heading", count: @total_count, keyword: @search_form.keyword)
             - else
-              h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-1" = t(".total_messages", count: @search.total_count)
+              h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-1" = t(".total_messages", count: @total_count)
           div class="right"
             = render SortComponent.new(path: method(:publishers_candidate_messages_path), sort: @sort, url_params: { tab: @tab, keyword: @search_form.keyword }.compact, display_type: "inline-select")
 
