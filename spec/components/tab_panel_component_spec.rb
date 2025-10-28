@@ -135,4 +135,49 @@ RSpec.describe TabPanelComponent, type: :component do
       it { expect(tab_panel.find(".interviewing_at")).to have_link("Add interview date and time", href: Rails.application.routes.url_helpers.tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: :interviewing, job_applications: [candidates.first] }, tag_action: "interview_datetime" })) }
     end
   end
+
+  describe "#sort_candidates" do
+    let(:component) { described_class.new(tab_name: "submitted", vacancy:, candidates: [], form:) }
+    let(:vacancy) { build_stubbed(:vacancy) }
+    let(:form) { nil }
+
+    context "when tab_name is 'interviewing'" do
+      it "sorts candidates with nil interviewing_at first, then by date" do
+        candidate1 = build_stubbed(:job_application, interviewing_at: Date.new(2025, 1, 3))
+        candidate2 = build_stubbed(:job_application, interviewing_at: nil)
+        candidate3 = build_stubbed(:job_application, interviewing_at: Date.new(2025, 1, 1))
+        candidates = [candidate1, candidate2, candidate3]
+
+        result = component.sort_candidates(candidates, "interviewing")
+
+        expect(result).to eq([candidate2, candidate3, candidate1])
+      end
+    end
+
+    context "when tab_name is 'offered'" do
+      it "sorts candidates with nil offered_at first, then by date" do
+        candidate1 = build_stubbed(:job_application, offered_at: Date.new(2025, 1, 3))
+        candidate2 = build_stubbed(:job_application, offered_at: nil)
+        candidate3 = build_stubbed(:job_application, offered_at: Date.new(2025, 1, 1))
+        candidates = [candidate1, candidate2, candidate3]
+
+        result = component.sort_candidates(candidates, "offered")
+
+        expect(result).to eq([candidate2, candidate3, candidate1])
+      end
+    end
+
+    context "when tab_name is something else" do
+      it "returns candidates in original order" do
+        candidate1 = build_stubbed(:job_application, interviewing_at: Date.new(2025, 1, 3))
+        candidate2 = build_stubbed(:job_application, interviewing_at: nil)
+        candidate3 = build_stubbed(:job_application, interviewing_at: Date.new(2025, 1, 1))
+        candidates = [candidate1, candidate2, candidate3]
+
+        result = component.sort_candidates(candidates, "submitted")
+
+        expect(result).to eq([candidate1, candidate2, candidate3])
+      end
+    end
+  end
 end
