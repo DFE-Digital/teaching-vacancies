@@ -13,12 +13,12 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@ministryofjustice/frontend": "^3.7.2",
-    "@sentry/browser": "10.21.0",
-    "@rails/actiontext": "^8.1.0",
-    "@rails/activestorage": "^8.0.300",
+    "@sentry/browser": "10.22.0",
+    "@rails/actiontext": "^8.1.100",
+    "@rails/activestorage": "^8.1.100",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^3.0.1",
-    "axios": "^1.12.2",
+    "axios": "^1.13.1",
     "chartkick": "^5.0.1",
     "classlist-polyfill": "^1.2.0",
     "core-js": "^3.46.0",
@@ -36,8 +36,8 @@
     "trix": "^2.1.13"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.4",
-    "@babel/preset-env": "^7.28.3",
+    "@babel/core": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
     "concurrently": "^9.2.1",
     "dotenv": "^17.2.3",
     "esbuild": "^0.25.11",
