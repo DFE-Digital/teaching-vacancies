@@ -381,7 +381,7 @@ en:
         one_login_banner:
           header: Can't see your applications?
           paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, your existing profile will not automatically be saved.
-          paragraph2: You can request to %{link}
+          paragraph2_html: You can request to %{link}
           transfer_profile_link_text: transfer your existing profile.
 
       new:
@@ -688,7 +688,7 @@ en:
         one_login_banner:
           header: Can't see your saved jobs?
           paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, your existing profile will not automatically be saved.
-          paragraph2: You can request to %{link}
+          paragraph2_html: You can request to %{link}
           transfer_profile_link_text: transfer your existing profile.
 
       save: Save this job for later
@@ -855,7 +855,7 @@ en:
         one_login_banner:
           header: Can't see your profile details?
           paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, your existing profile will not automatically be saved.
-          paragraph2: You can request to %{link}
+          paragraph2_html: You can request to %{link}
           transfer_profile_link_text: transfer your existing profile.
       confirm_toggle:
         confirm_turn_off: Confirm that you want to turn off your profile
@@ -1027,7 +1027,7 @@ en:
         one_login_banner:
           header: Can't see your job alerts?
           paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, your existing profile will not automatically be saved.
-          paragraph2: You can request to %{link}
+          paragraph2_html: You can request to %{link}
           transfer_profile_link_text: transfer your existing profile.
       feedbacks:
         relevance_feedbacks:
