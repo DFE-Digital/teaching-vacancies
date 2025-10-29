@@ -3,7 +3,7 @@
     - if @form.present?
       = f.govuk_error_summary
       - if flash[@tab_name]
-        = govuk_notification_banner title_text: "Error", success: false, classes: ["govuk-error-colour"] do |notification_banner|
+        = govuk_notification_banner title_text: "Error", success: false, classes: %w[govuk-error-colour] do |notification_banner|
           - notification_banner.with_heading(text: flash[@tab_name])
 
     = f.govuk_check_boxes_fieldset :job_applications, legend: { text: t("tabs.#{@tab_name}.heading"), size: "m" }, hint: { text: t("tabs.#{@tab_name}.hint") } do

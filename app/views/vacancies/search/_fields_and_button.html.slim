@@ -2,7 +2,7 @@
 
   - if local_assigns.fetch(:show_keyword, true)
     = render "vacancies/search/keyword", f: f
-  - unless @vacancies_search.organisation_slug.present?
+  - if @vacancies_search.organisation_slug.blank?
     = render "vacancies/search/location", show_hint: false, f: f
     = render "vacancies/search/current_location", target: "location-field"
     = render "vacancies/search/radius", f: f, wide: true

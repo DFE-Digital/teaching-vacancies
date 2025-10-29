@@ -36,7 +36,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
       expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :employment_history), ignore_query: true)
       expect(page).to have_content("Another teaching job")
-      expect(page).to have_content(Date.new(2020, 7, 1).to_formatted_s(:month_year))
+      expect(page).to have_content(Date.new(2020, 7, 1).to_fs(:month_year))
     end
   end
 

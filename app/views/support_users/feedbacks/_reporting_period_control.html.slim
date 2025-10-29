@@ -5,7 +5,7 @@
         label class="govuk-label" for="reporting-period-from" From
         = date_field(:reporting_period,
                      :from,
-                     max: Date.today,
+                     max: Time.zone.today,
                      class: "govuk-input govuk-input--width-10",
                      id: "reporting-period-from",
                      value: @reporting_period.from)
@@ -13,7 +13,7 @@
         label class="govuk-label" for="reporting-period-to" To
         = date_field(:reporting_period,
                      :to,
-                     max: Date.today,
+                     max: Time.zone.today,
                      class: "govuk-input govuk-input--width-10",
                      id: "reporting-period-to",
                      value: @reporting_period.to)
