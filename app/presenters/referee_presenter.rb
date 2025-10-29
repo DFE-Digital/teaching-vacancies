@@ -37,7 +37,7 @@ class RefereePresenter < BasePresenter
         ]
 
         reference_rows.each { |row| y << row }
-        warning_rows(y)
+        warning_rows.each { |row| y << row }
       end
     end
   end
@@ -109,11 +109,14 @@ class RefereePresenter < BasePresenter
     end
   end
 
-  def warning_rows(yielder)
-    JobReference::REFERENCE_INFO_FIELDS.each do |field|
-      yielder << reference_information_row(field)
+  def warning_rows
+    JobReference::REFERENCE_INFO_FIELDS.flat_map do |field|
       data_row = WARNING_FIELDS.fetch(field).call(reference)
-      yielder << data_row if data_row.present?
+      if data_row.present?
+        [reference_information_row(field)] + [data_row]
+      else
+        [reference_information_row(field)]
+      end
     end
   end
 
