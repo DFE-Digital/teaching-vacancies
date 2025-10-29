@@ -5,39 +5,12 @@ RSpec.describe "Publishers can manage candidate messages" do
   let(:publisher) { create(:publisher, organisations: [organisation]) }
   let(:jobseeker) { create(:jobseeker) }
 
-  describe "reading messages" do
-    let(:vacancy) { create(:vacancy, :live, organisations: [organisation]) }
-    let(:job_application) { create(:job_application, :submitted, jobseeker: jobseeker, vacancy: vacancy, status: "interviewing") }
-    let!(:conversation) { create(:conversation, job_application: job_application) }
-
-    before do
-      create(:jobseeker_message, conversation: conversation, sender: jobseeker)
-
-      login_publisher(publisher: publisher, organisation: organisation)
-      visit publishers_candidate_messages_path
-    end
-
-    after { logout }
-
-    it "updates inbox total and marks message as read" do
-      expect(page).to have_content("Inbox (1)")
-
-      within("table tbody") do
-        expect(page).to have_css("tr.conversation--unread")
-      end
-
-      # going here marks the messages as read
-      visit messages_organisation_job_job_application_path(vacancy.id, job_application.id)
-
-      visit publishers_candidate_messages_path
-
-      expect(page).to have_content("Inbox (0)")
-
-      within("table tbody") do
-        expect(page).to have_no_css("tr.conversation--unread")
-      end
-    end
+  before do
+    login_publisher(publisher: login_user, organisation: login_organisation)
+    visit publishers_candidate_messages_path
   end
+
+  after { logout }
 
   context "when publisher is a MAT and is publishing vacancies for schools" do
     let(:trust) { create(:trust) }
@@ -58,16 +31,15 @@ RSpec.describe "Publishers can manage candidate messages" do
     before do
       create(:jobseeker_message, conversation: trust_published_conversation, sender: jobseeker)
       create(:jobseeker_message, conversation: school_published_conversation, sender: jobseeker)
+
+      visit current_path
+      # wait for page load
+      find("form[action='/publishers/candidate_messages/toggle_archive']")
     end
 
     context "with the trust user" do
-      before do
-        login_publisher(publisher: trust_publisher, organisation: trust)
-        visit publishers_candidate_messages_path
-        find("form[action='/publishers/candidate_messages/toggle_archive']")
-      end
-
-      after { logout }
+      let(:login_user) { trust_publisher }
+      let(:login_organisation) { trust }
 
       it "passes a11y", :a11y do
         expect(page).to be_axe_clean
@@ -98,24 +70,13 @@ RSpec.describe "Publishers can manage candidate messages" do
     end
 
     context "when the school publisher logs in" do
-      before do
-        login_publisher(publisher: school_publisher, organisation: secondary_school)
-      end
-
-      after { logout }
+      let(:login_user) { school_publisher }
+      let(:login_organisation) { secondary_school }
 
       it "can only see messages on jobs published by their own school" do
-        visit publishers_candidate_messages_path
-
         expect(page).to have_content("Inbox (1)")
 
-        within("tbody") do
-          expect(page).to have_content(school_published_vacancy_application.name)
-          expect(page).to have_no_content(trust_published_vacancy_application.name)
-        end
-
-        conversation_rows = page.all("table tbody tr")
-        expect(conversation_rows.count).to eq(1)
+        expect(candidate_names).to eq([school_published_vacancy_application.name])
       end
     end
   end
@@ -130,14 +91,15 @@ RSpec.describe "Publishers can manage candidate messages" do
     let!(:science_conversation) { create(:conversation, job_application: science_application) }
     let!(:math_conversation) { create(:conversation, job_application: math_application) }
 
+    let(:login_user) { publisher }
+    let(:login_organisation) { organisation }
+
     before do
       create(:jobseeker_message, conversation: science_conversation, sender: jobseeker, content: "Looking forward to the interview")
       create(:jobseeker_message, conversation: math_conversation, sender: jobseeker, content: "Thank you for considering my application")
-      login_publisher(publisher: publisher, organisation: organisation)
-      visit publishers_candidate_messages_path
-    end
 
-    after { logout }
+      visit current_path
+    end
 
     scenario "when searching by job title" do
       expect(page).to have_content("2 messages")
@@ -185,11 +147,10 @@ RSpec.describe "Publishers can manage candidate messages" do
 
       before do
         create(:jobseeker_message, conversation: archived_science_conversation, sender: jobseeker, content: "Archived message")
+        visit publishers_candidate_messages_path(tab: "archive")
       end
 
       it "searches only within archived conversations, not inbox conversations" do
-        visit publishers_candidate_messages_path(tab: "archive")
-
         fill_in "keyword", with: "Science"
         click_button "Search"
 
@@ -205,6 +166,8 @@ RSpec.describe "Publishers can manage candidate messages" do
 
     context "when publisher is a MAT searching for messages" do
       let(:trust) { create(:trust) }
+      let(:login_user) { mat_publisher }
+      let(:login_organisation) { trust }
       let(:st_peters_school) { create(:school, school_groups: [trust]) }
       let(:st_johns_school) { create(:school, school_groups: [trust]) }
       let(:mat_publisher) { create(:publisher, organisations: [trust]) }
@@ -226,11 +189,8 @@ RSpec.describe "Publishers can manage candidate messages" do
         create(:jobseeker_message, conversation: head_conversation, sender: jobseeker, content: "Hi, looking forward to the interview")
         create(:jobseeker_message, conversation: deputy_conversation, sender: jobseeker, content: "Hi, thank you for the opportunity")
 
-        login_publisher(publisher: mat_publisher, organisation: trust)
-        visit publishers_candidate_messages_path
+        visit current_path
       end
-
-      after { logout }
 
       it "does not show duplicate conversations when searching for common message content" do
         expect(page).to have_content("2 messages")

@@ -46,7 +46,6 @@
           - table.with_body do |body|
             - @conversations.each do |conversation|
               - job_application = conversation.job_application
-              - latest_message = conversation.messages.order(created_at: :desc).first
               - body.with_row html_attributes: { class: ("conversation--unread" if conversation.has_unread_messages_for_publishers?) } do |row|
                 - row.with_cell do
                   .govuk-checkboxes--small
@@ -54,7 +53,7 @@
                 - row.with_cell do
                   = govuk_link_to job_application.name, messages_organisation_job_job_application_path(job_application.vacancy.id, job_application.id)
                 - row.with_cell text: job_application.vacancy.job_title
-                - row.with_cell text: latest_message.created_at.to_fs(:default)
+                - row.with_cell text: conversation.last_message_at.to_fs(:default)
     - else
       = govuk_inset_text do
         p

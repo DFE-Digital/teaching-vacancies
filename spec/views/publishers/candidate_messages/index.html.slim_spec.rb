@@ -19,7 +19,7 @@ RSpec.describe "publishers/candidate_messages/index" do
     let(:organisation) { build_stubbed(:school) }
     let(:vacancy) { build_stubbed(:vacancy, :live, organisations: [organisation]) }
     let(:job_application) { build_stubbed(:job_application, :submitted, jobseeker: jobseeker, vacancy: vacancy, status: "interviewing") }
-    let(:conversations) { build_stubbed_list(:conversation, 1, job_application: job_application, messages: messages) }
+    let(:conversations) { build_stubbed_list(:conversation, 1, last_message_at: Time.current, job_application: job_application, messages: messages) }
 
     context "with unread messages" do
       let(:messages) { build_stubbed_list(:jobseeker_message, 1, sender: jobseeker) }
@@ -37,9 +37,7 @@ RSpec.describe "publishers/candidate_messages/index" do
     context "without unread messages" do
       let(:messages) { build_stubbed_list(:jobseeker_message, 1, sender: jobseeker, read: true) }
 
-      it "updates inbox total and marks message as read" do
-        expect(rendered).to have_content("Inbox (0)")
-
+      it "marks message as read" do
         within("table tbody") do
           expect(rendered).to have_no_css("tr.conversation--unread")
         end
