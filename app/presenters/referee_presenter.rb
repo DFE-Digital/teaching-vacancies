@@ -36,8 +36,7 @@ class RefereePresenter < BasePresenter
           reference.how_do_you_know_the_candidate,
         ]
 
-        reference_rows.each { |row| y << row }
-        warning_rows.each { |row| y << row }
+        (reference_rows + warning_rows).each { |row| y << row }
       end
     end
   end
