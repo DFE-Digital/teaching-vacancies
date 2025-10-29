@@ -75,11 +75,6 @@ RSpec.describe RefereePresenter do
       end
 
       context "without any details fields" do
-        let(:job_reference) do
-          build_stubbed(:job_reference, :reference_given,
-                        employment_start_date: Date.new(2012, 4, 12),
-                        employment_end_date: Date.new(2019, 7, 28))
-        end
         let(:warning_fields) do
           [
             [I18n.t("helpers.legend.referees_reference_information_form.under_investigation"), "No"],
@@ -90,7 +85,46 @@ RSpec.describe RefereePresenter do
           ]
         end
 
-        it { expect(presenter.reference_information).to match_array(non_warning_fields + warning_fields) }
+        context "when still employed" do
+          let(:non_warning_fields) do
+            [
+              [I18n.t("helpers.legend.referees_can_give_reference_form.can_give_reference", name: presenter.candidate_name), "Yes, I can provide a reference"],
+              [I18n.t("helpers.legend.referees_can_share_reference_form.is_reference_sharable", name: presenter.candidate_name), "No, it should be treated as confidential"],
+              [I18n.t("helpers.label.referees_employment_reference_form.how_do_you_know_the_candidate"), job_reference.how_do_you_know_the_candidate],
+              [I18n.t("helpers.legend.referees_employment_reference_form.employment_start_date"), "12 April 2012"],
+              [I18n.t("helpers.legend.referees_employment_reference_form.currently_employed"), "Yes"],
+              [I18n.t("helpers.legend.referees_employment_reference_form.would_reemploy_current"), "Yes, wonderful"],
+              [I18n.t("helpers.legend.referees_employment_reference_form.would_reemploy_any"), "Yes, fantastic"],
+            ]
+          end
+
+          let(:job_reference) do
+            build_stubbed(:job_reference, :reference_given,
+                          employment_start_date: Date.new(2012, 4, 12),
+                          currently_employed: true)
+          end
+
+          it { expect(presenter.reference_information).to match_array(non_warning_fields + warning_fields) }
+        end
+
+        context "when not employed" do
+          let(:job_reference) do
+            build_stubbed(:job_reference, :reference_given,
+                          employment_start_date: Date.new(2012, 4, 12),
+                          employment_end_date: Date.new(2019, 7, 28))
+          end
+          let(:warning_fields) do
+            [
+              [I18n.t("helpers.legend.referees_reference_information_form.under_investigation"), "No"],
+              [I18n.t("helpers.legend.referees_reference_information_form.warnings"), "No"],
+              [I18n.t("helpers.legend.referees_reference_information_form.allegations"), "No"],
+              [I18n.t("helpers.legend.referees_reference_information_form.not_fit_to_practice"), "No"],
+              [I18n.t("helpers.legend.referees_reference_information_form.able_to_undertake_role"), "Yes"],
+            ]
+          end
+
+          it { expect(presenter.reference_information).to match_array(non_warning_fields + warning_fields) }
+        end
       end
 
       context "when under_investigation" do
@@ -115,7 +149,7 @@ RSpec.describe RefereePresenter do
         it { expect(presenter.reference_information.to_a - non_warning_fields).to match_array(expected) }
       end
 
-      context "with warnings and allegations and not fit to praqctice" do
+      context "with warnings and allegations and not fit to practice" do
         let(:job_reference) do
           build_stubbed(:job_reference, :reference_given,
                         employment_start_date: Date.new(2012, 4, 12),
