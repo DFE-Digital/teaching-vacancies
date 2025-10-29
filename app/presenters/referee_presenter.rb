@@ -37,6 +37,7 @@ class RefereePresenter < BasePresenter
         ]
 
         reference_rows(y)
+        warning_rows(y)
       end
     end
   end
@@ -106,7 +107,9 @@ class RefereePresenter < BasePresenter
         value.call(reference),
       ]
     end
+  end
 
+  def warning_rows(yielder)
     JobReference::REFERENCE_INFO_FIELDS.each do |field|
       yielder << reference_information_row(field)
       data_row = WARNING_FIELDS.fetch(field).call(reference)
