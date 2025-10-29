@@ -8,7 +8,7 @@ RSpec.describe "Publisher can set feedback and declined dates" do
   before { job_application }
 
   context "when candidate declines offer", :js do
-    let(:job_application) { create(:job_application, :status_declined, vacancy:, declined_at: nil) }
+    let(:job_application) { create(:job_application, :status_declined, vacancy:, offered_at: 3.days.ago, declined_at: nil) }
 
     scenario "add declined date from tab offered" do
       run_with_publisher(publisher) do
