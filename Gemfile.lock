@@ -369,6 +369,9 @@ GEM
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
+    image_processing (1.14.0)
+      mini_magick (>= 4.9.5, < 6)
+      ruby-vips (>= 2.0.17, < 3)
     imagen (0.2.0)
       parser (>= 2.5, != 2.5.1.1)
     inflection (1.0.0)
@@ -750,6 +753,9 @@ GEM
       rubocop-rspec (~> 3.5)
     ruby-progressbar (1.13.0)
     ruby-rc4 (0.1.5)
+    ruby-vips (2.2.5)
+      ffi (~> 1.12)
+      logger
     rubyzip (3.2.1)
     rugged (1.9.0)
     sanitize (7.0.0)
@@ -987,6 +993,7 @@ DEPENDENCIES
   guard-slim_lint
   high_voltage
   httparty
+  image_processing
   ipaddr
   jbuilder
   jsbundling-rails
