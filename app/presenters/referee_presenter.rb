@@ -36,7 +36,7 @@ class RefereePresenter < BasePresenter
           reference.how_do_you_know_the_candidate,
         ]
 
-        reference_rows(y)
+        reference_rows.each { |row| y << row }
         warning_rows(y)
       end
     end
@@ -94,15 +94,15 @@ class RefereePresenter < BasePresenter
 
   private
 
-  def reference_rows(yielder)
+  def reference_rows
     reference_fields = if reference.currently_employed?
                          REFERENCE_INFORMATION_FIELDS.except(:employment_end_date)
                        else
                          REFERENCE_INFORMATION_FIELDS
                        end
 
-    reference_fields.each do |key, value|
-      yielder << [
+    reference_fields.map do |key, value|
+      [
         I18n.t(key, scope: "helpers.legend.referees_employment_reference_form"),
         value.call(reference),
       ]
