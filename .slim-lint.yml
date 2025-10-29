@@ -9,7 +9,6 @@ linters:
   RuboCop:
     ignored_cops:
       - Style/Lambda   # using the lambda form as suggested raises the error `tried to create Proc object without a block`
-      - Rails/Presence
       - # defaults from slim-lint config (updated 29/10/25)
       - Layout/ArgumentAlignment
       - Layout/ArrayAlignment
