@@ -31,7 +31,6 @@
 }
 
 /* Hide unwanted toolbar buttons - keep only bold, italic, link, bullet points, undo/redo */
-trix-toolbar .trix-button--icon-attach,
 trix-toolbar .trix-button--icon-strike,
 trix-toolbar .trix-button--icon-heading-1,
 trix-toolbar .trix-button--icon-quote,

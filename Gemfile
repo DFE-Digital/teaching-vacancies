@@ -42,6 +42,8 @@ gem "govuk-components", "~> 5.11.1"
 gem "govuk_design_system_formbuilder", "~> 5.11.0"
 gem "high_voltage"
 gem "httparty"
+# needed for processing of message attachments
+gem "image_processing"
 gem "ipaddr"
 gem "jbuilder"
 gem "json-schema"
