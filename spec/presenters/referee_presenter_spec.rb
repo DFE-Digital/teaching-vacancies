@@ -47,7 +47,7 @@ RSpec.describe RefereePresenter do
       phone_number
     ].each_with_index do |field, idx|
       it "returns personal details #{field}" do
-        expect(presenter.referee_details.to_a[idx]).to match_array(expected_row[field])
+        expect(presenter.referee_details.to_a[idx]).to match_array(expected_row.fetch(field))
       end
     end
   end
@@ -61,20 +61,7 @@ RSpec.describe RefereePresenter do
     end
 
     context "when can give reference" do
-      let(:non_warning_fields) do
-        [
-          [I18n.t("helpers.legend.referees_can_give_reference_form.can_give_reference", name: presenter.candidate_name), "Yes, I can provide a reference"],
-          [I18n.t("helpers.legend.referees_can_share_reference_form.is_reference_sharable", name: presenter.candidate_name), "No, it should be treated as confidential"],
-          [I18n.t("helpers.label.referees_employment_reference_form.how_do_you_know_the_candidate"), job_reference.how_do_you_know_the_candidate],
-          [I18n.t("helpers.legend.referees_employment_reference_form.employment_start_date"), "12 April 2012"],
-          [I18n.t("helpers.legend.referees_employment_reference_form.currently_employed"), "No"],
-          [I18n.t("helpers.legend.referees_employment_reference_form.employment_end_date"), "28 July 2019"],
-          [I18n.t("helpers.legend.referees_employment_reference_form.would_reemploy_current"), "Yes, wonderful"],
-          [I18n.t("helpers.legend.referees_employment_reference_form.would_reemploy_any"), "Yes, fantastic"],
-        ]
-      end
-
-      context "without any details fields" do
+      context "without any warnings" do
         let(:warning_fields) do
           [
             [I18n.t("helpers.legend.referees_reference_information_form.under_investigation"), "No"],
@@ -108,85 +95,57 @@ RSpec.describe RefereePresenter do
         end
 
         context "when not employed" do
+          let(:non_warning_fields) do
+            [
+              [I18n.t("helpers.legend.referees_can_give_reference_form.can_give_reference", name: presenter.candidate_name), "Yes, I can provide a reference"],
+              [I18n.t("helpers.legend.referees_can_share_reference_form.is_reference_sharable", name: presenter.candidate_name), "No, it should be treated as confidential"],
+              [I18n.t("helpers.label.referees_employment_reference_form.how_do_you_know_the_candidate"), job_reference.how_do_you_know_the_candidate],
+              [I18n.t("helpers.legend.referees_employment_reference_form.employment_start_date"), "12 April 2012"],
+              [I18n.t("helpers.legend.referees_employment_reference_form.currently_employed"), "No"],
+              [I18n.t("helpers.legend.referees_employment_reference_form.employment_end_date"), "28 July 2019"],
+              [I18n.t("helpers.legend.referees_employment_reference_form.would_reemploy_current"), "Yes, wonderful"],
+              [I18n.t("helpers.legend.referees_employment_reference_form.would_reemploy_any"), "Yes, fantastic"],
+            ]
+          end
+
           let(:job_reference) do
             build_stubbed(:job_reference, :reference_given,
                           employment_start_date: Date.new(2012, 4, 12),
                           employment_end_date: Date.new(2019, 7, 28))
-          end
-          let(:warning_fields) do
-            [
-              [I18n.t("helpers.legend.referees_reference_information_form.under_investigation"), "No"],
-              [I18n.t("helpers.legend.referees_reference_information_form.warnings"), "No"],
-              [I18n.t("helpers.legend.referees_reference_information_form.allegations"), "No"],
-              [I18n.t("helpers.legend.referees_reference_information_form.not_fit_to_practice"), "No"],
-              [I18n.t("helpers.legend.referees_reference_information_form.able_to_undertake_role"), "Yes"],
-            ]
           end
 
           it { expect(presenter.reference_information).to match_array(non_warning_fields + warning_fields) }
         end
       end
 
-      context "when under_investigation" do
+      context "with issues of concern" do
         let(:job_reference) do
-          build_stubbed(:job_reference, :reference_given,
+          build_stubbed(:job_reference, :reference_given, :with_issues,
                         employment_start_date: Date.new(2012, 4, 12),
-                        employment_end_date: Date.new(2019, 7, 28),
-                        under_investigation: true,
-                        under_investigation_details: Faker::Lorem.sentence)
+                        employment_end_date: Date.new(2019, 7, 28))
         end
+
+        let(:non_warning_fields) do
+          [
+            [I18n.t("helpers.legend.referees_can_give_reference_form.can_give_reference", name: presenter.candidate_name), "Yes, I can provide a reference"],
+            [I18n.t("helpers.legend.referees_can_share_reference_form.is_reference_sharable", name: presenter.candidate_name), "No, it should be treated as confidential"],
+            [I18n.t("helpers.label.referees_employment_reference_form.how_do_you_know_the_candidate"), job_reference.how_do_you_know_the_candidate],
+            [I18n.t("helpers.legend.referees_employment_reference_form.employment_start_date"), "12 April 2012"],
+            [I18n.t("helpers.legend.referees_employment_reference_form.currently_employed"), "No"],
+            [I18n.t("helpers.legend.referees_employment_reference_form.employment_end_date"), "28 July 2019"],
+            [I18n.t("helpers.legend.referees_employment_reference_form.would_reemploy_current"), "Yes, wonderful"],
+            [I18n.t("helpers.legend.referees_employment_reference_form.would_reemploy_any"), "Yes, fantastic"],
+          ]
+        end
+
         let(:expected) do
           [
             [I18n.t("helpers.legend.referees_reference_information_form.under_investigation"), "Yes"],
             ["Under investigation details", job_reference.under_investigation_details],
-            [I18n.t("helpers.legend.referees_reference_information_form.warnings"), "No"],
-            [I18n.t("helpers.legend.referees_reference_information_form.allegations"), "No"],
-            [I18n.t("helpers.legend.referees_reference_information_form.not_fit_to_practice"), "No"],
-            [I18n.t("helpers.legend.referees_reference_information_form.able_to_undertake_role"), "Yes"],
-          ]
-        end
-
-        it { expect(presenter.reference_information.to_a - non_warning_fields).to match_array(expected) }
-      end
-
-      context "with warnings and allegations and not fit to practice" do
-        let(:job_reference) do
-          build_stubbed(:job_reference, :reference_given,
-                        employment_start_date: Date.new(2012, 4, 12),
-                        employment_end_date: Date.new(2019, 7, 28),
-                        warnings: true,
-                        not_fit_to_practice: true,
-                        warning_details: Faker::Lorem.sentence,
-                        allegations: true)
-        end
-        let(:expected) do
-          [
-            [I18n.t("helpers.legend.referees_reference_information_form.under_investigation"), "No"],
             [I18n.t("helpers.legend.referees_reference_information_form.warnings"), "Yes"],
             ["Warning details", job_reference.warning_details],
             [I18n.t("helpers.legend.referees_reference_information_form.allegations"), "Yes"],
             [I18n.t("helpers.legend.referees_reference_information_form.not_fit_to_practice"), "Yes"],
-            [I18n.t("helpers.legend.referees_reference_information_form.able_to_undertake_role"), "Yes"],
-          ]
-        end
-
-        it { expect(presenter.reference_information.to_a - non_warning_fields).to match_array(expected) }
-      end
-
-      context "with unable to undertake role" do
-        let(:job_reference) do
-          build_stubbed(:job_reference, :reference_given,
-                        employment_start_date: Date.new(2012, 4, 12),
-                        employment_end_date: Date.new(2019, 7, 28),
-                        able_to_undertake_role: false,
-                        unable_to_undertake_reason: Faker::Lorem.sentence)
-        end
-        let(:expected) do
-          [
-            [I18n.t("helpers.legend.referees_reference_information_form.under_investigation"), "No"],
-            [I18n.t("helpers.legend.referees_reference_information_form.warnings"), "No"],
-            [I18n.t("helpers.legend.referees_reference_information_form.allegations"), "No"],
-            [I18n.t("helpers.legend.referees_reference_information_form.not_fit_to_practice"), "No"],
             [I18n.t("helpers.legend.referees_reference_information_form.able_to_undertake_role"), "No"],
             ["Unable to undertake role details", job_reference.unable_to_undertake_reason],
           ]

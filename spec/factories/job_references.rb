@@ -50,10 +50,12 @@ FactoryBot.define do
       under_investigation { true }
       warnings { true }
       able_to_undertake_role { false }
+      not_fit_to_practice { true }
+      allegations { true }
 
-      under_investigation_details { Faker::Lorem.paragraph }
-      warning_details { Faker::Lorem.paragraph }
-      unable_to_undertake_reason { Faker::Lorem.paragraph }
+      under_investigation_details { "under investigation details" }
+      warning_details { "warning details" }
+      unable_to_undertake_reason { "unable to undertake reason" }
     end
 
     trait :reference_declined do

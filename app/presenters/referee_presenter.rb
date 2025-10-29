@@ -63,7 +63,7 @@ class RefereePresenter < BasePresenter
 
   # allegations and not fit to practice don't have reason fields to go with them.
   # as these need to be reported outside the service to the TRA.
-  FIELD_DETAILS = {
+  WARNING_FIELDS = {
     under_investigation: ->(reference) { under_investigation_row(reference) if reference.under_investigation? },
     warnings: ->(reference) { warning_details_row(reference) if reference.warnings? },
     allegations: ->(_reference) {},
@@ -109,7 +109,7 @@ class RefereePresenter < BasePresenter
 
     JobReference::REFERENCE_INFO_FIELDS.each do |field|
       yielder << reference_information_row(field)
-      data_row = FIELD_DETAILS.fetch(field).call(reference)
+      data_row = WARNING_FIELDS.fetch(field).call(reference)
       yielder << data_row if data_row.present?
     end
   end
