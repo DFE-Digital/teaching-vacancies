@@ -12,6 +12,7 @@
       p.govuk-body = t(".using_application_form_html", link: govuk_link_to(t(".kcsie_guidance"), kcsie_link))
 
       p.govuk-body = t(".reason_for_our_form")
+      p.govuk-body = t(".no_information_required")
 
       = f.govuk_radio_button :application_form_type, :no_religion,
         label: -> { t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.no_religion_html", tag: govuk_tag(text: t(".kcsie_compliant"), colour: "green")) },
