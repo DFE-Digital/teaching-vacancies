@@ -25,7 +25,19 @@ class RefereePresenter < BasePresenter
         I18n.t("helpers.label.referees_can_give_reference_form.can_give_reference_options.#{reference.can_give_reference?}"),
       ]
 
-      reference_rows(y) if can_give_reference?
+      if can_give_reference?
+        y << [
+          I18n.t("helpers.legend.referees_can_share_reference_form.is_reference_sharable", name: candidate_name),
+          I18n.t("helpers.label.referees_can_share_reference_form.is_reference_sharable_options.#{reference.is_reference_sharable?}"),
+        ]
+
+        y << [
+          I18n.t("helpers.label.referees_employment_reference_form.how_do_you_know_the_candidate"),
+          reference.how_do_you_know_the_candidate,
+        ]
+
+        reference_rows(y)
+      end
     end
   end
 
@@ -50,7 +62,7 @@ class RefereePresenter < BasePresenter
   end
 
   # allegations and not fit to practice don't have reason fields to go with them.
-  # as these need to be reported outside of the service to the TRA.
+  # as these need to be reported outside the service to the TRA.
   FIELD_DETAILS = {
     under_investigation: ->(reference) { under_investigation_row(reference) if reference.under_investigation? },
     warnings: ->(reference) { warning_details_row(reference) if reference.warnings? },
@@ -64,6 +76,7 @@ class RefereePresenter < BasePresenter
     currently_employed: lambda { |reference|
       I18n.t("helpers.label.referees_employment_reference_form.currently_employed_options.#{reference.currently_employed}")
     },
+    employment_end_date: ->(reference) { reference.employment_end_date.to_fs },
     would_reemploy_current: lambda { |reference|
       [
         I18n.t("helpers.label.referees_employment_reference_form.would_reemploy_current_options.#{reference.would_reemploy_current}"),
@@ -81,17 +94,13 @@ class RefereePresenter < BasePresenter
   private
 
   def reference_rows(yielder)
-    yielder << [
-      I18n.t("helpers.legend.referees_can_share_reference_form.is_reference_sharable", name: candidate_name),
-      I18n.t("helpers.label.referees_can_share_reference_form.is_reference_sharable_options.#{reference.is_reference_sharable?}"),
-    ]
+    reference_fields = if reference.currently_employed?
+                         REFERENCE_INFORMATION_FIELDS.except(:employment_end_date)
+                       else
+                         REFERENCE_INFORMATION_FIELDS
+                       end
 
-    yielder << [
-      I18n.t("helpers.label.referees_employment_reference_form.how_do_you_know_the_candidate"),
-      reference.how_do_you_know_the_candidate,
-    ]
-
-    REFERENCE_INFORMATION_FIELDS.each do |key, value|
+    reference_fields.each do |key, value|
       yielder << [
         I18n.t(key, scope: "helpers.legend.referees_employment_reference_form"),
         value.call(reference),

@@ -68,6 +68,7 @@ RSpec.describe RefereePresenter do
           [I18n.t("helpers.label.referees_employment_reference_form.how_do_you_know_the_candidate"), job_reference.how_do_you_know_the_candidate],
           [I18n.t("helpers.legend.referees_employment_reference_form.employment_start_date"), "12 April 2012"],
           [I18n.t("helpers.legend.referees_employment_reference_form.currently_employed"), "No"],
+          [I18n.t("helpers.legend.referees_employment_reference_form.employment_end_date"), "28 July 2019"],
           [I18n.t("helpers.legend.referees_employment_reference_form.would_reemploy_current"), "Yes, wonderful"],
           [I18n.t("helpers.legend.referees_employment_reference_form.would_reemploy_any"), "Yes, fantastic"],
         ]
@@ -76,7 +77,8 @@ RSpec.describe RefereePresenter do
       context "without any details fields" do
         let(:job_reference) do
           build_stubbed(:job_reference, :reference_given,
-                        employment_start_date: Date.new(2012, 4, 12))
+                        employment_start_date: Date.new(2012, 4, 12),
+                        employment_end_date: Date.new(2019, 7, 28))
         end
         let(:warning_fields) do
           [
@@ -95,6 +97,7 @@ RSpec.describe RefereePresenter do
         let(:job_reference) do
           build_stubbed(:job_reference, :reference_given,
                         employment_start_date: Date.new(2012, 4, 12),
+                        employment_end_date: Date.new(2019, 7, 28),
                         under_investigation: true,
                         under_investigation_details: Faker::Lorem.sentence)
         end
@@ -116,6 +119,7 @@ RSpec.describe RefereePresenter do
         let(:job_reference) do
           build_stubbed(:job_reference, :reference_given,
                         employment_start_date: Date.new(2012, 4, 12),
+                        employment_end_date: Date.new(2019, 7, 28),
                         warnings: true,
                         not_fit_to_practice: true,
                         warning_details: Faker::Lorem.sentence,
@@ -139,6 +143,7 @@ RSpec.describe RefereePresenter do
         let(:job_reference) do
           build_stubbed(:job_reference, :reference_given,
                         employment_start_date: Date.new(2012, 4, 12),
+                        employment_end_date: Date.new(2019, 7, 28),
                         able_to_undertake_role: false,
                         unable_to_undertake_reason: Faker::Lorem.sentence)
         end
