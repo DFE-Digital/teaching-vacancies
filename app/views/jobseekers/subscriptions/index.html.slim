@@ -26,7 +26,8 @@ h1.govuk-heading-l = t(".page_title")
             - card.with_body do
               section data-controller="form"
                 = form_for subscription, url: subscription_path(subscription.token), html: { method: "patch", data: { "hide-submit": true } } do |f|
-                  = f.govuk_collection_radio_buttons :frequency, Subscription.frequencies.keys, :to_s, form_group: { data: { action: "change->form#submitListener" } }, inline: true
+                  = f.govuk_collection_radio_buttons :frequency, Subscription.frequencies.keys, :to_s,
+                    legend: { tag: "h2" }, form_group: { data: { action: "change->form#submitListener" } }, inline: true
                   = f.govuk_submit t("buttons.save"), secondary: true
     - else
       = render EmptySectionComponent.new title: t(".zero_subscriptions_title") do
