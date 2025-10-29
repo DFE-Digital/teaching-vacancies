@@ -31,7 +31,7 @@ class Jobseekers::PeakTimesMailer < Jobseekers::BaseMailer
     when "may"
       "https://teaching-vacancies.service.gov.uk/?utm_source=Notify&utm_medium=email&utm_campaign=#{current_month}_peak_notify&utm_id=#{current_month}_peak_notify"
     when "november"
-      "/jobs?utm_source=notify&utm_medium=email&utm_campaign=notify_november_2025&utm_content=tuesday_2025"
+      "https://teaching-vacancies.service.gov.uk/jobs?utm_source=notify&utm_medium=email&utm_campaign=notify_november_2025&utm_content=tuesday_2025"
     else
       "https://teaching-vacancies.service.gov.uk/"
     end
