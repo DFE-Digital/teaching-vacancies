@@ -9,7 +9,8 @@ class Publishers::JobApplication::OfferedForm < Publishers::JobApplication::TagF
   def offered_date_after_interview_dates
     return if offered_at.blank?
 
-    if job_applications.any? { |ja| offered_at.to_date < ja.interviewing_at.to_date }
+    # Check respond_to?(:to_date) because interviewing_at can be a Hash when date is invalid
+    if job_applications.any? { |ja| ja.interviewing_at.respond_to?(:to_date) && offered_at.to_date < ja.interviewing_at.to_date }
       errors.add(:offered_at, :must_be_after_interview_date)
     end
   end
