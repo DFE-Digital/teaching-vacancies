@@ -47,7 +47,7 @@ class Jobseekers::PeakTimesMailer < Jobseekers::BaseMailer
   end
 
   def current_month
-    @current_month ||= Date.current.strftime("%B").downcase
+    "november"
   end
 
   def email_event_prefix
