@@ -19,6 +19,8 @@ RSpec.describe "Publishers can select a job application for interview", :perform
   context "when selecting a single candidate" do
     before do
       publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
+      # wait for page load
+      find_by_id("declarations")
       click_on "Update application status"
       choose "Interviewing"
       click_on "Save and continue"
