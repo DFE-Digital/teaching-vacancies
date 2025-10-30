@@ -17,16 +17,6 @@ class Search::CandidateMessagesSearch
   end
 
   def conversations
-    @conversations ||= build_conversations
-  end
-
-  def total_count
-    @total_count ||= conversations.count
-  end
-
-  private
-
-  def build_conversations
     filtered_scope = if keyword.present?
                        scope_ids = Conversation.search_ids_by_keyword(keyword)
                        scope.where(id: scope_ids)
@@ -36,6 +26,8 @@ class Search::CandidateMessagesSearch
 
     apply_sorting(filtered_scope)
   end
+
+  private
 
   def apply_sorting(filtered_scope)
     case sort.by
