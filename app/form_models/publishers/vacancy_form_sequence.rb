@@ -39,7 +39,7 @@ class Publishers::VacancyFormSequence < FormSequence
     when :key_stages
       %i[about_the_role]
     when :applying_for_the_job
-      %i[how_to_receive_applications] unless @vacancy.enable_job_applications
+      @vacancy.enable_job_applications ? [] : %i[how_to_receive_applications]
     when :how_to_receive_applications
       if @vacancy.uploaded_form?
         %i[application_form]
@@ -48,6 +48,8 @@ class Publishers::VacancyFormSequence < FormSequence
       end
     when :include_additional_documents
       %i[documents]
+    when :contact_details
+      @vacancy.contact_email_belongs_to_a_publisher? ? [] : %i[confirm_contact_details]
     else
       []
     end
@@ -65,6 +67,6 @@ class Publishers::VacancyFormSequence < FormSequence
   end
 
   def not_validatable_steps
-    %i[subjects review confirm_contact_details].freeze
+    %i[subjects review].freeze
   end
 end

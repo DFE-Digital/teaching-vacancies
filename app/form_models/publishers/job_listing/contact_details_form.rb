@@ -45,6 +45,16 @@ class Publishers::JobListing::ContactDetailsForm < Publishers::JobListing::Vacan
     }
   end
 
+  # If we update the existing contact email to one that doesn't belong to a registered publisher, we want to make the user confirm it.
+  # This will cause the confirm contact details to be removed from the vacancy completed steps so that the user has to go through it again.
+  def steps_to_reset
+    if params[:contact_email] == "other" && params[:other_contact_email] != @vacancy.contact_email && !Publisher.find_by(email: params[:other_contact_email])
+      [:confirm_contact_details]
+    else
+      []
+    end
+  end
+
   private
 
   def other_contact_email_presence

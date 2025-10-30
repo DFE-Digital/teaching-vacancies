@@ -1,7 +1,7 @@
 class Publishers::JobListing::ConfirmContactDetailsForm < Publishers::JobListing::VacancyForm
   include ActiveModel::Attributes
 
-  validates :confirm_contact_email, presence: true
+  validates :confirm_contact_email, presence: true, if: -> { unconfirmed_non_publisher_email? }
   attr_accessor(:confirm_contact_email)
 
   class << self
@@ -17,5 +17,11 @@ class Publishers::JobListing::ConfirmContactDetailsForm < Publishers::JobListing
 
   def params_to_save
     {}
+  end
+
+  private
+
+  def unconfirmed_non_publisher_email?
+    !@vacancy.contact_email_belongs_to_a_publisher? && @vacancy.completed_steps.exclude?("confirm_contact_details")
   end
 end

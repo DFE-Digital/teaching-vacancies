@@ -30,6 +30,7 @@ RSpec.describe Publishers::VacancyFormSequence do
       application_link
       school_visits
       contact_details
+      confirm_contact_details
       about_the_role
       include_additional_documents
       documents
