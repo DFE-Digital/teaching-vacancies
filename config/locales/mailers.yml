@@ -35,8 +35,6 @@ en:
       may_reminder:
         subject: "%{first_name}, now is the best time to find school jobs"
         nameless_subject: Now is the best time to find school jobs
-        hello: "Hi %{first_name},"
-        nameless_hello: "Hi,"
         line_1: Schools advertise more jobs than usual around this time of year.
         line_2: "If you are looking for a school role, now is a great time to search for jobs on [Teaching Vacancies](%{campaign_url})."
         line_3: To find the right role, remember to always check Teaching Vacancies.
@@ -44,8 +42,6 @@ en:
       november_reminder:
         subject: "%{first_name}, looking for a school role? Now's the best time to search!"
         nameless_subject: Looking for a school role? Now's the best time to search!
-        hello: "Hi %{first_name},"
-        nameless_hello: "Hi,"
         line_1: Schools advertise more jobs than usual around this time of year.
         line_2: "If you are looking for a school role, now is a great time to search for jobs on [Teaching Vacancies](%{campaign_url})."
         line_3: To find the right role, remember to always check Teaching Vacancies.
