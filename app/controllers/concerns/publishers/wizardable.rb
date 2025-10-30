@@ -144,8 +144,9 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
     end
   end
 
-  def completed_steps
-    (vacancy.completed_steps | [current_step.to_s]).compact
+  # Returns an array of completed steps, adding the current step and removing any steps that need to be reset
+  def completed_steps(steps_to_reset: [])
+    (vacancy.completed_steps | [current_step.to_s]).compact - steps_to_reset.map(&:to_s)
   end
 
   def current_step

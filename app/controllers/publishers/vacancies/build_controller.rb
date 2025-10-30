@@ -78,7 +78,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   end
 
   def update_vacancy
-    vacancy.assign_attributes(form.params_to_save.merge(completed_steps: completed_steps))
+    updated_completed_steps = completed_steps(steps_to_reset: form.steps_to_reset)
+    vacancy.assign_attributes(form.params_to_save.merge(completed_steps: updated_completed_steps))
     vacancy.refresh_slug
     update_google_index(vacancy) if vacancy.live?
 
