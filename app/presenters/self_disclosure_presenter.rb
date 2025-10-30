@@ -10,7 +10,7 @@ class SelfDisclosurePresenter
   Section = Data.define(:title, :fields)
 
   EVENT_LABELS = {
-    received_off_service: I18n.t(".event.manually_completed", scope: "jobseekers.job_applications.self_disclosure.review.completed"),
+    received_off_service: I18n.t(".event.marked_as_received", scope: "jobseekers.job_applications.self_disclosure.review.completed"),
     manual: I18n.t(".event.managed_outside_tv", scope: "jobseekers.job_applications.self_disclosure.review.completed"),
     received: I18n.t(".event.completed", scope: "jobseekers.job_applications.self_disclosure.review.completed"),
     sent: I18n.t(".event.requested", scope: "jobseekers.job_applications.self_disclosure.review.completed"),

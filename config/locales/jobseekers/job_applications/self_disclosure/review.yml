@@ -14,7 +14,7 @@ en:
             event:
               completed: Completed
               requested: Requested
-              manually_completed: Manually completed
+              marked_as_received: Marked as received
               managed_outside_tv: Managed outside Teaching Vacancies
               reminder_sent: Reminder sent
             self_disclosure_form: Self-disclosure form
