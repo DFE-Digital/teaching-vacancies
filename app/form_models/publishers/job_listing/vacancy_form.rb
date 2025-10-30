@@ -25,12 +25,7 @@ class Publishers::JobListing::VacancyForm < BaseForm
 
   class << self
     def load_form(model)
-      # confirm_contact_email is not a value that we store, only used for confirmation of contact_email, and navigation purposes.
-      if fields == [:confirm_contact_email]
-        {}
-      else
-        model.slice(*fields)
-      end
+      model.slice(*fields)
     end
   end
 
