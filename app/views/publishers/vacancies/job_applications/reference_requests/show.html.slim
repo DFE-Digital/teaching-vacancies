@@ -8,7 +8,7 @@
     span.govuk-caption-l = @referee.name
     h1.govuk-heading-l = @referee.job_application.name
 
-    - status = reference_request_status(@reference_request, @reference_request.job_reference)
+    - status = reference_request_status(@reference_request, @job_reference)
     .govuk-body
       = govuk_tag(text: t("reference_requests.#{status}.status"), colour: t("reference_requests.#{status}.colour"))
 
@@ -23,7 +23,7 @@
           method: :patch do |f|
           = f.govuk_submit t(".send_reminder")
 
-      - if @reference_request.job_reference&.complete? && @reference_request.job_reference.can_give_reference?
+      - if @job_reference&.complete? && @job_reference.can_give_reference?
         = govuk_button_link_to t(".print"), organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id, format: :pdf), class: "govuk-button--secondary"
 
       - if status.in?(%w[created pending])
@@ -46,8 +46,8 @@
           - row.with_value(text: value)
 
     - if @reference_request.sent?
-      - if @reference_request.job_reference.complete?
-        - if @reference_request.job_reference.can_give_reference?
+      - if @job_reference.complete?
+        - if @job_reference.can_give_reference?
           - @referee.reference_information.each do |key, value|
             .govuk-heading-m = key
             .govuk-body = value
@@ -84,7 +84,7 @@
           - when "received_off_service"
             - timeline.with_item(key: t(".marked_received"), value: value)
           - when "received"
-            - if @reference_request.job_reference.can_give_reference?
+            - if @job_reference.can_give_reference?
               - timeline.with_item(key: t(".reference_received"), value: value)
             - else
               - timeline.with_item(key: t(".reference_declined"), value: value)

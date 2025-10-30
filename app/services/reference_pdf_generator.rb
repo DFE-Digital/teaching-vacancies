@@ -27,7 +27,6 @@ class ReferencePdfGenerator
 
   attr_reader :datasource, :document
 
-  # :nocov:
   def document_page_header
     page_header do
       text datasource.header_text, size: 12, style: :italic
