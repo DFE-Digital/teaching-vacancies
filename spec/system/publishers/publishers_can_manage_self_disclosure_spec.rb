@@ -46,6 +46,9 @@ RSpec.describe "Publishers manage self disclosure", :perform_enqueued do
 
         expect(publisher_ats_self_disclosure_page.banner_title.text).to eq("Success")
         expect(publisher_ats_self_disclosure_page.status.text).to eq("received")
+
+        click_on "Mark as completed"
+        expect(page).to have_content "Marked as complete"
       end
     end
 

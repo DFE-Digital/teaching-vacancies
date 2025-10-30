@@ -15,6 +15,8 @@ class Publishers::Vacancies::JobApplications::SelfDisclosureController < Publish
     if params.key?(:reminder)
       @job_application.self_disclosure_request.send_reminder!
       flash[:success] = t("publishers.vacancies.job_applications.self_disclosure.reminder_sent")
+    elsif params.key?(:completed)
+      @job_application.self_disclosure_request.update!(marked_as_complete: true)
     else
       @job_application.self_disclosure_request.received_off_service!
       flash[:success] = t("jobseekers.job_applications.self_disclosure.review.completed.manually_completed")
@@ -22,23 +24,6 @@ class Publishers::Vacancies::JobApplications::SelfDisclosureController < Publish
 
     redirect_to organisation_job_job_application_self_disclosure_path(@vacancy.id, @job_application.id)
   end
-
-  # def mark_as_received
-  #   @job_application.self_disclosure_request.received_off_service!
-  #   flash[:success] = t("jobseekers.job_applications.self_disclosure.review.completed.manually_completed")
-  #   redirect_to organisation_job_job_application_self_disclosure_path(@vacancy.id, @job_application.id)
-  # end
-  #
-  # def send_reminder_email
-  #   @job_application.self_disclosure_request.send_reminder!
-  #   flash[:success] = t("publishers.vacancies.job_applications.self_disclosure.reminder_sent")
-  #   redirect_to organisation_job_job_application_self_disclosure_path(@vacancy.id, @job_application.id)
-  # end
-  #
-  # def mark_as_complete
-  #   @job_application.self_disclosure_request.update!(marked_as_complete: true)
-  #   redirect_to organisation_job_job_application_self_disclosure_path(@vacancy.id, @job_application.id)
-  # end
 
   private
 
