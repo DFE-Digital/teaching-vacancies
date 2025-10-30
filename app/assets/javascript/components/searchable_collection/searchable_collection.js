@@ -20,7 +20,7 @@ const SearchableCollectionComponent = class extends Controller {
 
     this.filterCollection();
 
-    const visibleItems = this.collection.filter((item) => item.parentElement.style.display === 'block');
+    const visibleItems = this.collection.filter((item) => item.parentElement.style.display === 'flex');
 
     visibleItems.forEach((item, i) => {
       item.setAttribute('aria-posinset', i + 1);
