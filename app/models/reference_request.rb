@@ -21,10 +21,6 @@ class ReferenceRequest < ApplicationRecord
     !created? && !received_off_service?
   end
 
-  def has_been_received?
-    received? || received_off_service?
-  end
-
   has_paper_trail skip: [:token]
 
   # change the referee email address - so re-regenerate the token

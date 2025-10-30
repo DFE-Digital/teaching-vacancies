@@ -5,7 +5,7 @@
   .govuk-button-group
     - if can_send_reminder?(@self_disclosure.request)
       = f.govuk_submit t(".reminder"), name: "reminder"
-    - if @self_disclosure.request.status.in? %w[received received_off_service]
+    - if @self_disclosure.request.has_been_received?
       = f.govuk_submit t(".mark_as_completed"), name: "completed", class: "govuk-button--secondary"
     - else
       = f.govuk_submit t(".mark_as_received"), name: "received", class: "govuk-button--secondary"
