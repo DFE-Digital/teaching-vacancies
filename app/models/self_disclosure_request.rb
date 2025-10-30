@@ -40,4 +40,8 @@ class SelfDisclosureRequest < ApplicationRecord
   def pending?
     manual? || sent?
   end
+
+  def has_been_received?
+    received? || received_off_service?
+  end
 end
