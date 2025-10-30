@@ -9,7 +9,7 @@
     h1.govuk-heading-xl class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
       = @self_disclosure.applicant_name
 
-    - disclosure_status = self_disclosure_status(@job_application.self_disclosure_request)
+    - disclosure_status = self_disclosure_status(@self_disclosure.request)
 
     .govuk-body
       = govuk_tag(text: t("reference_requests.#{disclosure_status}.status"), colour: t("reference_requests.#{disclosure_status}.colour"))

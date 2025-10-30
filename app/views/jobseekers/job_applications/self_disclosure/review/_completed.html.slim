@@ -1,4 +1,4 @@
-- if @self_disclosure.request.manually_completed?
+- if @self_disclosure.request.received_off_service?
   .govuk-body = t(".manually_completed")
 
 - else

@@ -42,8 +42,10 @@ module JobReferencesHelper
   end
 
   def self_disclosure_status(self_disclosure_request)
-    if self_disclosure_request.completed?
+    if self_disclosure_request.marked_as_complete?
       "completed"
+    elsif self_disclosure_request.status.in? %w[received_off_service received]
+      "received"
     elsif self_disclosure_request.sent?
       "pending"
     else
