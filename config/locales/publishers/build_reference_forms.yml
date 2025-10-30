@@ -50,6 +50,7 @@ en:
               blank: Enter the candidate's employment end date
               before: Employment end date cannot be in the future
               invalid: Enter a date in the correct format
+              after: The employment end date entered here must be after the start date entered in the answer above
             currently_employed:
               inclusion: Select yes if the candidate is currently employed in your organisation
             would_reemploy_current:
@@ -203,7 +204,7 @@ en:
 
       referees_employment_reference_form:
         employment_start_date: When did the candidate start working at your organisation?
-        employment_end_date: Candidates employment end date
+        employment_end_date: Candidate's employment end date
         currently_employed: Is the candidate currently employed at this organisation?
         would_reemploy_current: Would you re-employ the candidate in the same job as they currently hold or held?
         would_reemploy_any: Would you re-employ the candidate in any role within your organisation?

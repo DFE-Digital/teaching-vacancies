@@ -29,7 +29,7 @@ RSpec.describe Referees::EmploymentReferenceForm do
     let(:form) do
       described_class.new(attributes_for(:job_reference, :reference_given)
                             .slice(*described_class.storable_fields)
-                            .merge(employment_start_date: Date.new(3000, 4, 1)))
+                            .merge(employment_start_date: Date.new(2030, 4, 1)))
     end
 
     it "has errors about dates" do
@@ -38,6 +38,7 @@ RSpec.describe Referees::EmploymentReferenceForm do
         .to eq(
           {
             employment_start_date: ["Employment start date cannot be in the future"],
+            employment_end_date: ["The employment end date entered here must be after the start date entered in the answer above"],
           },
         )
     end
