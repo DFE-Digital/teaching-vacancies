@@ -39,10 +39,8 @@ const SearchableCollectionComponent = class extends Controller {
   }
 
   itemDisplay(item) {
-    item.parentElement.setAttribute('role', 'option');
-
     if (SearchableCollectionComponent.substringExistsInString(SearchableCollectionComponent.getStringForMatch(item), this.inputTarget.value)) {
-      item.parentElement.style.display = 'block';
+      item.parentElement.style.display = 'flex';
     } else {
       item.parentElement.style.display = 'none';
     }
