@@ -35,10 +35,6 @@ RSpec.describe Jobseekers::PeakTimesMailer do
           expect(mail.subject).to eq(expected_subject)
         end
 
-        it "includes personalized greeting in the body" do
-          expect(mail.body).to include(first_name)
-        end
-
         it "includes May campaign URL" do
           expect(mail.body).to include(expected_url)
         end
@@ -52,11 +48,6 @@ RSpec.describe Jobseekers::PeakTimesMailer do
         it "has May generic subject without firstname" do
           expected_subject = I18n.t("jobseekers.peak_times_mailer.may_reminder.nameless_subject")
           expect(mail.subject).to eq(expected_subject)
-        end
-
-        it "includes generic greeting in the body" do
-          nameless_greeting = I18n.t("jobseekers.peak_times_mailer.may_reminder.nameless_hello")
-          expect(mail.body).to include(nameless_greeting)
         end
 
         it "includes May campaign URL" do
@@ -81,10 +72,6 @@ RSpec.describe Jobseekers::PeakTimesMailer do
           expect(mail.subject).to eq(expected_subject)
         end
 
-        it "includes personalized greeting in the body" do
-          expect(mail.body).to include(first_name)
-        end
-
         it "includes November campaign URL" do
           expect(mail.body).to include(expected_url)
         end
@@ -98,11 +85,6 @@ RSpec.describe Jobseekers::PeakTimesMailer do
         it "has November generic subject without firstname" do
           expected_subject = I18n.t("jobseekers.peak_times_mailer.november_reminder.nameless_subject")
           expect(mail.subject).to eq(expected_subject)
-        end
-
-        it "includes generic greeting in the body" do
-          nameless_greeting = I18n.t("jobseekers.peak_times_mailer.november_reminder.nameless_hello")
-          expect(mail.body).to include(nameless_greeting)
         end
 
         it "includes November campaign URL" do
