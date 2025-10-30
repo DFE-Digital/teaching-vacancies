@@ -7,7 +7,8 @@ RSpec.describe "Job applications self disclosure" do
     create(:job_application, :status_submitted, vacancy:,
                                                 self_disclosure_request: build(:self_disclosure_request, :sent, self_disclosure: build(:self_disclosure)))
   end
-  let!(:self_disclosure) { job_application.self_disclosure_request.self_disclosure }
+  let!(:self_disclosure_request) { job_application.self_disclosure_request }
+  let!(:self_disclosure) { self_disclosure_request.self_disclosure }
   let(:publisher) { create(:publisher, accepted_terms_at: 1.day.ago) }
 
   before do
@@ -38,6 +39,22 @@ RSpec.describe "Job applications self disclosure" do
         expect(response).to have_http_status(:ok)
         expect(response).to render_template(:show)
       end
+    end
+  end
+
+  describe "PATCH #update" do
+    let(:request) do
+      patch(organisation_job_job_application_self_disclosure_path(vacancy.id, job_application.id))
+    end
+
+    it "redirects to job application" do
+      expect(request)
+        .to redirect_to(organisation_job_job_application_self_disclosure_path(vacancy.id, job_application.id))
+    end
+
+    it "updates request status" do
+      expect { request }
+        .to change { self_disclosure_request.reload.status }.from("sent").to("received_off_service")
     end
   end
 end
