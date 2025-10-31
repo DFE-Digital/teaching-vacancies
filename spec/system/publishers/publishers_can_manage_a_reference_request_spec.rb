@@ -37,6 +37,24 @@ RSpec.describe "Publishers can manage a reference request", :perform_enqueued do
   context "with a pending reference" do
     let(:reference_request) { build(:reference_request, updated_at: updated_at, job_reference: build(:job_reference)) }
 
+    context "when recently updated" do
+      let(:updated_at) { 2.days.ago }
+
+      it "has no reminder" do
+        expect(page).to have_no_content("Send a reminder")
+      end
+    end
+
+    context "when updated a week ago" do
+      let(:updated_at) { 8.days.ago }
+
+      scenario "sending a reminder email", :versioning do
+        click_on "Send a reminder"
+        expect(publisher_ats_reference_request_page.timeline_titles.map(&:text)).to eq(["Reminder sent", "Reference requested"])
+        expect(ActionMailer::Base.deliveries.map { |d| d.to.first }).to eq(%w[referee@contoso.com])
+      end
+    end
+
     context "when the referee email is incorrect" do
       let(:reference_request) { build(:reference_request, job_reference: build(:job_reference)) }
       let(:new_email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
@@ -69,48 +87,23 @@ RSpec.describe "Publishers can manage a reference request", :perform_enqueued do
 
   context "with a reference" do
     let(:reference_request) { build(:reference_request, :reference_received, job_reference: job_reference) }
-    # let(:reference_request) { build(:reference_request) }
 
     context "with a simple reference" do
       let(:job_reference) { build(:job_reference, :reference_given) }
 
       context "when marking reference as complete" do
         it "displays the page correctly" do
-          expect(page).to have_content "Mark as received"
+          expect(page).to have_content "Mark as completed"
+          expect(page).to have_no_content "Mark as received"
         end
 
-        context "when marking reference as complete" do
-          before do
-            click_on "Mark as received"
-          end
+        scenario "accept reference", :versioning do
+          click_on "Mark as completed"
+          expect(reference_request.reload).to be_marked_as_complete
+          expect(page).to have_content "completed"
 
-          it "displays the page correctly" do
-            expect(page).to have_content "This reference will be marked as complete"
-            expect(page).to have_content "This reference will remain as received"
-            expect(page).to have_content "Yes"
-          end
-
-          scenario "error bounce" do
-            expect(publisher_ats_satisfactory_reference_page).to be_displayed
-            publisher_ats_satisfactory_reference_page.submit_button.click
-            expect(publisher_ats_satisfactory_reference_page.errors.map(&:text)).to eq(["Select yes if the reference received is satisfactory"])
-          end
-
-          scenario "accept reference", :versioning do
-            publisher_ats_satisfactory_reference_page.yes.click
-            publisher_ats_satisfactory_reference_page.submit_button.click
-            expect(current_referee.reference_request.reload).to be_marked_as_complete
-            expect(page).to have_content "completed"
-
-            expect(publisher_ats_reference_request_page).to be_displayed
-            expect(publisher_ats_reference_request_page.timeline_titles.map(&:text)).to eq(["Marked as complete", "Reference received"])
-          end
-
-          scenario "decline reference" do
-            publisher_ats_satisfactory_reference_page.no.click
-            publisher_ats_satisfactory_reference_page.submit_button.click
-            expect(current_referee.reference_request.reload.status).to eq("received")
-          end
+          expect(publisher_ats_reference_request_page).to be_displayed
+          expect(publisher_ats_reference_request_page.timeline_titles.map(&:text)).to eq(["Marked as complete", "Reference received"])
         end
       end
     end

@@ -39,26 +39,6 @@ RSpec.describe SelfDisclosureRequest do
     end
   end
 
-  describe "#completed?" do
-    subject { described_class.new(status:).completed? }
-
-    %i[manual sent].each do |status|
-      context "when #{status}" do
-        let(:status) { status }
-
-        it { is_expected.to be false }
-      end
-    end
-
-    %i[manually_completed received].each do |status|
-      context "when #{status}" do
-        let(:status) { status }
-
-        it { is_expected.to be true }
-      end
-    end
-  end
-
   describe ".pending?" do
     subject { described_class.new(status:).pending? }
 
@@ -70,7 +50,7 @@ RSpec.describe SelfDisclosureRequest do
       end
     end
 
-    %i[manually_completed received].each do |status|
+    %i[received_off_service received].each do |status|
       context "when #{status}" do
         let(:status) { status }
 

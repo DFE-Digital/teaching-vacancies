@@ -8,6 +8,7 @@ module Publishers
 
         def show
           @referee = RefereePresenter.new(@reference_request.referee)
+          @job_reference = @reference_request.job_reference
           @notes_form = Publishers::JobApplication::NotesForm.new
           respond_to do |format|
             format.html
@@ -32,19 +33,20 @@ module Publishers
           end
         end
 
-        def reference_received
-          @form = reference_received_class.new
+        def mark_as_received
+          # don't use 'received' state as it confuses us into thinking that this is a job reference waiting to be looked at
+          @reference_request.received_off_service!
+          redirect_to organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id)
         end
 
-        def mark_as_received
-          mark_params = params.fetch(param_key(reference_received_class), {}).permit(:reference_satisfactory)
-          @form = reference_received_class.new(mark_params)
-          if @form.valid?
-            @reference_request.update!(marked_as_complete: true) if @form.reference_satisfactory
-            redirect_to organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id)
-          else
-            render :reference_received
-          end
+        def send_reminder_email
+          @reference_request.resend_email
+          redirect_to organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id)
+        end
+
+        def mark_as_complete
+          @reference_request.update!(marked_as_complete: true)
+          redirect_to organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id)
         end
 
         private

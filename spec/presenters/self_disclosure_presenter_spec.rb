@@ -3,11 +3,10 @@ require "rails_helper"
 RSpec.describe SelfDisclosurePresenter do
   subject(:presenter) { described_class.new(job_application) }
 
-  let(:self_disclosure) { create(:self_disclosure) }
-  let(:job_application) { self_disclosure.self_disclosure_request.job_application }
   let(:scope) { "jobseekers.job_applications.self_disclosure.review.completed" }
 
   describe ".personal_details" do
+    let(:job_application) { self_disclosure.self_disclosure_request.job_application }
     let(:self_disclosure) { create(:self_disclosure, previous_names: nil) }
     let(:expected_row) do
       {
@@ -41,12 +40,10 @@ RSpec.describe SelfDisclosurePresenter do
   end
 
   describe ".events", :versioning do
-    before do
-      job_application.self_disclosure_request = request
-    end
+    let(:job_application) { create(:job_application) }
 
     context "with a status change" do
-      let(:request) { create(:self_disclosure_request) }
+      before { create(:self_disclosure_request, job_application: job_application) }
 
       it { expect(presenter.events.size).to eq(1) }
 
@@ -58,7 +55,7 @@ RSpec.describe SelfDisclosurePresenter do
     end
 
     context "when a reminder is sent" do
-      let(:request) { create(:self_disclosure_request) }
+      let(:request) { create(:self_disclosure_request, job_application: job_application) }
 
       it "contains the reminder sent event" do
         request.send_reminder!
@@ -79,32 +76,37 @@ RSpec.describe SelfDisclosurePresenter do
     end
   end
 
-  describe ".sections" do
-    let(:sections) { presenter.sections.to_a }
+  context "with a self disclosure" do
+    let(:self_disclosure) { create(:self_disclosure) }
+    let(:job_application) { self_disclosure.self_disclosure_request.job_application }
 
-    it "returns criminal section" do
-      expect(sections[0].title).to eq(I18n.t(".criminal", scope:))
-      expect(sections[1].title).to eq(I18n.t(".conduct", scope:))
-      expect(sections[2].title).to eq(I18n.t(".confirmation", scope:))
-    end
-  end
+    describe ".sections" do
+      let(:sections) { presenter.sections.to_a }
 
-  describe ".applicant_name" do
-    it { expect(presenter.applicant_name).to eq(job_application.name) }
-  end
-
-  describe ".header_text" do
-    it { expect(presenter.header_text).to eq(I18n.t("jobseekers.job_applications.self_disclosure.review.completed.self_disclosure_form")) }
-  end
-
-  describe ".footer_text" do
-    let(:expected) do
-      [
-        I18n.t("jobseekers.job_applications.self_disclosure.review.completed.self_disclosure_form"),
-        job_application.name,
-      ].join(" - ")
+      it "returns criminal section" do
+        expect(sections[0].title).to eq(I18n.t(".criminal", scope:))
+        expect(sections[1].title).to eq(I18n.t(".conduct", scope:))
+        expect(sections[2].title).to eq(I18n.t(".confirmation", scope:))
+      end
     end
 
-    it { expect(presenter.footer_text).to eq(expected) }
+    describe ".applicant_name" do
+      it { expect(presenter.applicant_name).to eq(job_application.name) }
+    end
+
+    describe ".header_text" do
+      it { expect(presenter.header_text).to eq(I18n.t("jobseekers.job_applications.self_disclosure.review.completed.self_disclosure_form")) }
+    end
+
+    describe ".footer_text" do
+      let(:expected) do
+        [
+          I18n.t("jobseekers.job_applications.self_disclosure.review.completed.self_disclosure_form"),
+          job_application.name,
+        ].join(" - ")
+      end
+
+      it { expect(presenter.footer_text).to eq(expected) }
+    end
   end
 end

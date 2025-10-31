@@ -3,16 +3,18 @@ require "rails_helper"
 RSpec.describe "Job applications self disclosure" do
   let(:vacancy) { create(:vacancy) }
   let(:organisation) { vacancy.organisations.first }
-  let(:job_application) { create(:job_application, :status_submitted, vacancy:) }
-  let(:self_disclosure_request) { create(:self_disclosure_request, :sent, job_application:) }
-  let(:self_disclosure) { create(:self_disclosure, self_disclosure_request:) }
+  let(:job_application) do
+    create(:job_application, :status_submitted, vacancy:,
+                                                self_disclosure_request: build(:self_disclosure_request, :sent, self_disclosure: build(:self_disclosure)))
+  end
+  let!(:self_disclosure_request) { job_application.self_disclosure_request }
+  let!(:self_disclosure) { self_disclosure_request.self_disclosure }
   let(:publisher) { create(:publisher, accepted_terms_at: 1.day.ago) }
 
   before do
     # rubocop:disable RSpec/AnyInstance
     allow_any_instance_of(ApplicationController).to receive(:current_organisation).and_return(organisation)
     # rubocop:enable RSpec/AnyInstance
-    self_disclosure
     sign_in(publisher, scope: :publisher)
   end
 
@@ -52,7 +54,7 @@ RSpec.describe "Job applications self disclosure" do
 
     it "updates request status" do
       expect { request }
-        .to change { self_disclosure_request.reload.status }.from("sent").to("manually_completed")
+        .to change { self_disclosure_request.reload.status }.from("sent").to("received_off_service")
     end
   end
 end

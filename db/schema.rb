@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_15_125032) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_30_122701) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -679,6 +679,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_15_125032) do
     t.string "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "reminder_sent", default: false, null: false
     t.index ["reference_id"], name: "index_reference_requests_on_reference_id", unique: true
   end
 
@@ -728,6 +729,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_15_125032) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "marked_as_complete", default: false, null: false
     t.index ["job_application_id"], name: "index_self_disclosure_requests_on_job_application_id", unique: true
   end
 

@@ -395,6 +395,7 @@ shared:
     - created_at
     - updated_at
     - marked_as_complete
+    - reminder_sent
     - email
   religious_reference_requests:
     - id
@@ -558,6 +559,7 @@ shared:
     - status
     - created_at
     - updated_at
+    - marked_as_complete
   :self_disclosures:
     - id
     - self_disclosure_request_id

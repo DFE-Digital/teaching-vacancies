@@ -3,7 +3,6 @@ class Referee < ApplicationRecord
 
   belongs_to :job_application
   has_one :reference_request, foreign_key: :reference_id, inverse_of: :referee, dependent: :destroy
-  has_one :job_reference, through: :reference_request
 
   has_encrypted :name, :job_title, :organisation, :email, :phone_number
 

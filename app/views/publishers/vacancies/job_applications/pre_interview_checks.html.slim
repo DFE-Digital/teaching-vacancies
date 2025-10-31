@@ -21,7 +21,7 @@
       - body.with_row do |row|
         - row.with_cell(text: t(".reference"))
         - row.with_cell(text: govuk_link_to(reference_request.referee.name, organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, reference_request)))
-        - status = reference_request_status(reference_request, reference_request.referee.job_reference)
+        - status = reference_request_status(reference_request, reference_request.job_reference)
 
         - row.with_cell(text: t(".#{status}_at", date: reference_request.updated_at.to_fs(:time_on_date)))
         - row.with_cell(text: govuk_tag(text: t("reference_requests.#{status}.status"), colour: t("reference_requests.#{status}.colour")))
@@ -42,15 +42,12 @@
         - row.with_cell(text: t(".self_disclosure"))
         - row.with_cell do
           = govuk_link_to("Self-disclosure form", organisation_job_job_application_self_disclosure_path(@vacancy.id, @job_application.id))
-        - if @job_application.self_disclosure_request.completed?
+        - disclosure_status = self_disclosure_status(@job_application.self_disclosure_request)
+        - if disclosure_status == "completed"
           - row.with_cell(text: t(".completed_at", date: @job_application.self_disclosure_request.updated_at.to_fs(:time_on_date)))
-          - row.with_cell do
-            = govuk_tag(text: t("reference_requests.completed.status"), colour: t("reference_requests.completed.colour"))
-        - elsif @job_application.self_disclosure_request.sent?
+        - elsif disclosure_status == "pending"
           - row.with_cell(text: t(".pending_at", date: @job_application.self_disclosure_request.updated_at.to_fs(:time_on_date)))
-          - row.with_cell do
-            = govuk_tag(text: t("reference_requests.pending.status"), colour: t("reference_requests.pending.colour"))
         - else
           - row.with_cell(text: t(".created_at", date: @job_application.self_disclosure_request.updated_at.to_fs(:time_on_date)))
-          - row.with_cell do
-            = govuk_tag(text: t("reference_requests.created.status"), colour: t("reference_requests.created.colour"))
+        - row.with_cell do
+          = govuk_tag(text: t("reference_requests.#{disclosure_status}.status"), colour: t("reference_requests.#{disclosure_status}.colour"))
