@@ -32,11 +32,16 @@ en:
         not_requested: If you did not request this, you can ignore this email.
         need_help: If you need help using the verification code, you can %{mail_to}.
     peak_times_mailer:
-      reminder:
+      may_reminder:
         subject: "%{first_name}, now is the best time to find school jobs"
         nameless_subject: Now is the best time to find school jobs
-        hello: "Hi %{first_name},"
-        nameless_hello: "Hi,"
+        line_1: Schools advertise more jobs than usual around this time of year.
+        line_2: "If you are looking for a school role, now is a great time to search for jobs on [Teaching Vacancies](%{campaign_url})."
+        line_3: To find the right role, remember to always check Teaching Vacancies.
+        unsubscribe: "If you no longer wish to be on this mailing list, you can [opt out of these emails](%{link})."
+      november_reminder:
+        subject: "%{first_name}, looking for a school role? Now's the best time to search!"
+        nameless_subject: Looking for a school role? Now's the best time to search!
         line_1: Schools advertise more jobs than usual around this time of year.
         line_2: "If you are looking for a school role, now is a great time to search for jobs on [Teaching Vacancies](%{campaign_url})."
         line_3: To find the right role, remember to always check Teaching Vacancies.
