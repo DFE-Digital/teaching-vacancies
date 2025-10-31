@@ -4,25 +4,20 @@ h1.govuk-heading-xl
   = t(".page_title")
   = govuk_tag(text: t(".active"), colour: "green", classes: "vertical-align-middle govuk-!-margin-left-1") if @profile.active?
 
-= govuk_notification_banner title_text: "Important", classes: "govuk-notification-banner govuk-!-margin-top-0 govuk-!-margin-bottom-5" do |banner|
-    - banner.with_heading(text: t(".one_login_banner.header"))
-    p.govuk-body = t(".one_login_banner.paragraph1")
-    p.govuk-body = t(".one_login_banner.paragraph2", link: govuk_link_to(t(".one_login_banner.transfer_profile_link_text"), new_jobseekers_request_account_transfer_email_path)).html_safe
-
 div class="govuk-grid-row govuk-heading-l govuk-!-margin-bottom-4"
   .govuk-grid-column-one-third
     .dfe-card.dfe-card-container
-      h3.govuk-heading-m
+      h2.govuk-heading-m
         = govuk_link_to t("sub_nav.jobseekers.saved_jobs"), jobseekers_saved_jobs_path
 
   .govuk-grid-column-one-third
     .dfe-card.dfe-card-container
-      h3.govuk-heading-m
+      h2.govuk-heading-m
         = govuk_link_to t("sub_nav.jobseekers.job_alerts"), jobseekers_subscriptions_path
 
   .govuk-grid-column-one-third
     .dfe-card.dfe-card-container
-      h3.govuk-heading-m
+      h2.govuk-heading-m
         = govuk_link_to t("nav.create_a_job_alert"), new_subscription_path
 
 p id="top_links"
@@ -51,3 +46,7 @@ p = t(".page_description")
   - else
     p = t("jobseekers.profiles.show.turn_on_profile_text", link_text: govuk_link_to(t("jobseekers.profiles.show.turn_on_profile_link_text"), jobseekers_profile_hide_profile_path)).html_safe
   p = govuk_button_link_to(t(".turn_#{@off_on}_profile"), confirm_toggle_jobseekers_profile_path)
+
+= govuk_details summary_text: t(".one_login_banner.header") do
+  p.govuk-body = t(".one_login_banner.paragraph1")
+  p.govuk-body = t(".one_login_banner.paragraph2_html", link: govuk_link_to(t(".one_login_banner.transfer_profile_link_text"), new_jobseekers_request_account_transfer_email_path))

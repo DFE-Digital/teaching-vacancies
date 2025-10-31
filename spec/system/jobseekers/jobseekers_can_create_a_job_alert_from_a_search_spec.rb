@@ -44,8 +44,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
         let(:jobseeker_signed_in?) { true }
 
         it "passes a11y", :a11y do
-          # 2 banners on display here - no sure how to deal with this one?
-          expect(page).to be_axe_clean.skipping "landmark-unique"
+          expect(page).to be_axe_clean
         end
 
         scenario "redirects to job alerts dashboard" do
