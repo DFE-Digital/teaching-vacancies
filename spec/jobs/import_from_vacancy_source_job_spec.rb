@@ -105,6 +105,7 @@ RSpec.describe ImportFromVacancySourceJob do
         expect(FailedImportedVacancy.first.vacancy).to eq(
           "about_school" => "test",
           "actual_salary" => "",
+          "anonymise_applications" => false,
           "application_email" => nil,
           "application_link" => nil,
           "benefits" => true,

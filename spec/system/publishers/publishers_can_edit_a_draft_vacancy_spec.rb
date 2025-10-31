@@ -26,6 +26,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
           visa_sponsorship: ["aria-allowed-attr"],
           important_dates: ["aria-allowed-attr"],
           applying_for_the_job: [],
+          anonymise_applications: [],
           contact_details: ["aria-allowed-attr"],
         }
       end

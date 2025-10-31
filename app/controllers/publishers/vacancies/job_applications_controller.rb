@@ -3,6 +3,7 @@ module Publishers
     class JobApplicationsController < Publishers::Vacancies::JobApplications::BaseController
       include Jobseekers::QualificationFormConcerns
       include DatesHelper
+      include JobApplicationsPdfHelper
 
       FORMS = {
         "TagForm" => Publishers::JobApplication::TagForm,
@@ -27,7 +28,7 @@ module Publishers
       end
 
       def download
-        document = @job_application.submitted_application_form
+        document = submitted_application_form(@job_application)
         send_data(document.data, filename: document.filename, disposition: "inline")
       end
 
@@ -106,7 +107,7 @@ module Publishers
 
       def set_job_applications
         @current_organisation = current_organisation
-        @job_applications = @vacancy.job_applications.not_draft.order(updated_at: :desc)
+        @job_applications = @vacancy.job_applications.not_draft.order(updated_at: :desc).decorate
       end
 
       def with_valid_form(job_applications, validate_all_attributes: false)

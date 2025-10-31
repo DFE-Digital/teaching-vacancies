@@ -1,0 +1,14 @@
+- content_for :page_title_prefix, page_title_prefix(step_process, form)
+
+= form_for form, url: wizard_path(current_step), method: :patch do |f|
+  = f.govuk_error_summary
+
+  = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
+
+  p.govuk-body = t(".you_can_choose")
+
+  = f.govuk_radio_buttons_fieldset :anonymise_applications, legend: { tag: "h2", size: "m" } do
+    = f.govuk_radio_button :anonymise_applications, "true", link_errors: true
+    = f.govuk_radio_button :anonymise_applications, "false"
+
+  = render "publishers/vacancies/vacancy_form_partials/submit", f: f

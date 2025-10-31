@@ -2,6 +2,8 @@ require "zip"
 require "csv"
 
 class ExportCandidateDataService
+  extend JobApplicationsPdfHelper
+
   Document = Data.define(:filename, :data)
 
   PII_HEADERS = %w[first_name last_name street_address city postcode phone_number email_address national_insurance_number teacher_reference_number].freeze
@@ -12,7 +14,7 @@ class ExportCandidateDataService
         job_applications.each do |job_application|
           [
             pii_csv(job_application),
-            application_form(job_application),
+            submitted_application_form(job_application),
             references(job_application),
             self_disclosure(job_application),
           ].flatten.each do |document|
@@ -35,10 +37,6 @@ class ExportCandidateDataService
         csv << job_application.attributes.slice(*PII_HEADERS).values
       end
       Document["pii.csv", data]
-    end
-
-    def application_form(job_application)
-      job_application.submitted_application_form
     end
 
     def references(job_application)
