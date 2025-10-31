@@ -1,21 +1,9 @@
 = render "publishers/vacancies/review_breadcrumbs", vacancy: vacancy
+= render "publishers/vacancies/heading", vacancy: vacancy, tag_name: tag_name
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    - if vacancy.live?
-      = render "publishers/vacancies/review_banners/published", vacancy: vacancy
-
-    - elsif vacancy.draft? && all_steps_valid
-      = render "publishers/vacancies/review_banners/complete_draft", vacancy: vacancy
-
-    - elsif vacancy.draft?
-      = render "publishers/vacancies/review_banners/incomplete_draft"
-
-    - elsif vacancy.expired?
-      = render "publishers/vacancies/review_banners/closed", vacancy: vacancy
-
-    - elsif vacancy.pending?
-      = render "publishers/vacancies/review_banners/scheduled", vacancy: vacancy
+    = render "publishers/vacancies/review_banners/#{tag_name}", vacancy: vacancy
 
 - if vacancy.published?
   .govuk-grid-row

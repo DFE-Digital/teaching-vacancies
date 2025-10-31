@@ -1,12 +1,9 @@
-class DocumentPreviewService # rubocop: disable Metrics/ClassLength
+class DocumentPreviewService
   Document = Data.define(:filename, :data)
-
-  # These are only used to generate example data
-  POSSIBLE_DEGREE_GRADES = %w[2.1 2.2 Honours].freeze
-  POSSIBLE_OTHER_GRADES = %w[Pass Merit Distinction].freeze
 
   PREVIEWS = {
     # rubocop:disable Layout/HashAlignment
+    blank:           ["job_application", :blank_job_application_sample],
     plain:           ["job_application", :job_application_sample],
     religious:       ["job_application", :religious_job_application_sample],
     catholic:        ["job_application", :catholic_job_application_sample],
@@ -14,6 +11,12 @@ class DocumentPreviewService # rubocop: disable Metrics/ClassLength
     job_reference:   ["job_reference", :job_reference_sample],
     # rubocop:enable Layout/HashAlignment
   }.freeze
+
+  PDF_GENERATORS = {
+    job_application: ->(data) { JobApplicationPdfGenerator.new(data).generate.render },
+    self_disclosure: ->(data) { SelfDisclosurePdfGenerator.new(data).generate.render },
+    job_reference: ->(data) { ReferencePdfGenerator.new(data).generate.render },
+  }.with_indifferent_access
 
   def self.call(...)
     new(...).document
@@ -25,186 +28,68 @@ class DocumentPreviewService # rubocop: disable Metrics/ClassLength
   end
 
   def document
-    Document[filename, pdf.render]
+    Document[filename, pdf_data]
   end
 
   private
 
-  def pdf
-    @pdf ||= send(@sample_method, @vacancy)
+  def data
+    send(@sample_method, @vacancy)
+  end
+
+  def pdf_data
+    @pdf_data ||= PDF_GENERATORS.fetch(@sample_name).call(data)
   end
 
   def filename
-    "#{@sample_name}_#{pdf.object_id}.pdf"
+    "#{@sample_name}_#{pdf_data.object_id}.pdf"
+  end
+
+  def blank_job_application_sample(vacancy)
+    job_application = JobApplicationSample.build(
+      vacancy,
+      referees: 2,
+      employments: Array.new(5, :job),
+      training_and_cpds: 3,
+      qualifications: { gcse: 5, a_level: 5, undergraduate: 2, postgraduate: 2, other: 0 },
+      professional_body_memberships: 2,
+    )
+
+    BlankJobApplicationPdf.new(job_application)
   end
 
   def job_application_sample(vacancy)
-    job_application = build_job_application
-    job_application.assign_attributes(vacancy: vacancy)
-    JobApplicationPdfGenerator.new(job_application).generate
+    job_application = JobApplicationSample.build(vacancy)
+    JobApplicationPdf.new(job_application)
   end
 
   def religious_job_application_sample(vacancy)
-    job_application = build_job_application
-    job_application.assign_attributes(
-      following_religion: true,
-      faith: "Anglican",
-      religious_reference_type: "religious_referee",
-      religious_referee_name: Faker::Name.name,
-      religious_referee_address: Faker::Address.full_address,
-      ethos_and_aims: "I am person of deep faith and wish to inspire the children I teach though God's teachings",
-      religious_referee_role: "Priest",
-      religious_referee_email: Faker::Internet.email,
-      religious_referee_phone: Faker::PhoneNumber.phone_number,
-      vacancy: vacancy.dup.tap { |v| v.assign_attributes(religion_type: "other_religion") },
-    )
-
-    JobApplicationPdfGenerator.new(job_application).generate
+    vacancy.religion_type = "other_religion"
+    job_application = JobApplicationSample.build(vacancy)
+    JobApplicationPdf.new(job_application)
   end
 
   def catholic_job_application_sample(vacancy)
-    job_application = build_job_application
-    job_application.assign_attributes(
-      following_religion: true,
-      faith: "Roman Catholic",
-      religious_reference_type: "baptism_date",
-      baptism_address: Faker::Address.full_address,
-      baptism_date: Faker::Date.between(from: Date.new(1990, 1, 1), to: Date.new(2004, 1, 1)),
-      vacancy: vacancy.dup.tap { |v| v.assign_attributes(religion_type: "catholic") },
-    )
-    JobApplicationPdfGenerator.new(job_application).generate
+    vacancy.religion_type = "catholic"
+    job_application = JobApplicationSample.build(vacancy)
+    JobApplicationPdf.new(job_application)
   end
 
-  def job_reference_sample(_vacancy)
-    job_application = build_job_application
+  def job_reference_sample(vacancy)
+    job_application = JobApplicationSample.build(vacancy)
     referee = job_application.referees.first
     referee.assign_attributes(
       reference_request: ReferenceRequest.new(job_reference: build_job_reference),
     )
-    referee_presenter = RefereePresenter.new(referee)
-    ReferencePdfGenerator.new(referee_presenter).generate
+    RefereePresenter.new(referee)
   end
 
-  def self_disclosure_sample(_vacancy)
-    job_application = build_job_application
+  def self_disclosure_sample(vacancy)
+    job_application = JobApplicationSample.build(vacancy)
     job_application.assign_attributes(
       self_disclosure_request: SelfDisclosureRequest.new(self_disclosure: build_self_disclosure),
     )
-    self_disclosure = SelfDisclosurePresenter.new(job_application)
-    SelfDisclosurePdfGenerator.new(self_disclosure).generate
-  end
-
-  def build_job_application # rubocop: disable Metrics/MethodLength, Metrics/AbcSize
-    job_switch_date = Faker::Date.in_date_period(year: 2018)
-    JobApplication.new(
-      first_name: "Jane",
-      last_name: "Smith",
-      national_insurance_number: "QQ 12 34 56 C",
-      working_patterns: %w[part_time job_share],
-      previous_names: "Churchill",
-      street_address: "1 House Street",
-      city: "Townington",
-      postcode: "AB1 2CD",
-      country: "England",
-      phone_number: "07123456789",
-      teacher_reference_number: "1234567",
-      qualified_teacher_status: "yes",
-      is_statutory_induction_complete: true,
-      qts_age_range_and_subject: "Ages 11-16, English and Maths",
-      has_right_to_work_in_uk: true,
-      has_safeguarding_issue: false,
-      safeguarding_issue_details: "",
-      qualified_teacher_status_year: "2021",
-      email_address: "jane.smith@gmail.com",
-      is_support_needed: true,
-      support_needed_details: "I require a wheelchair accessible room for an interview",
-      has_close_relationships: true,
-      close_relationships_details: "Brother-in-law works at the trust",
-      personal_statement:
-      "As an English teacher, I am extremely passionate about instilling a love of reading and the written word into young people. I have been interested in a position at your school for a number of years and was thrilled to see this opportunity. I received my QTS in 2019, and have since worked as an English teacher in a secondary school in Sheffield.<br />
-        In the classroom, I always strive to modify my approach to suit a range of abilities and motivation. By planning lessons around my students’ interests, I have been able to inspire even the most unmotivated readers into a love of books. For example, teaching descriptive writing by looking at their favourite sports and persuasive writing via marketing materials for their favourite shops. Furthermore, I have worked with dozens of students for whom English is their second language and nothing motivates me more than seeing that lightbulb moment happen when they can see their own progress. Last year, 95% of my GCSE students passed with grade 5 or above, and I have a proven track record for ensuring all of my KS3 students improve by at least two grades over years 7 to 9.<br />
-        Moreover, I believe that good teaching doesn’t just happen in the classroom. I am a strong advocate for student wellbeing and pastoral support and have greatly enjoyed leading a morning form class for the last three years. Also, in my current school I have contributed to the English department by running a weekly book club, and organising several school trips to literary locations such as Haworth and Stratford Upon Avon, as well as visits to see plays on the curriculum.<br />
-        I really resonate with your school’s ethos around inclusion and leaving no student behind, and I hope to be an asset to your English department, while continuing to grow as a teacher.",
-      employments:
-      [
-        Employment.new(
-          organisation: "Townington Secondary School",
-          employment_type: :job,
-          job_title: "KS3 Teaching Assistant",
-          main_duties: "Pastoral support for students. Managing student behaviour. Monitored students’ progress and gave feedback to teachers.",
-          reason_for_leaving: "Moving out of the area",
-          subjects: Faker::Educator.subject,
-          started_on: Faker::Date.in_date_period(year: 2016),
-          is_current_role: false,
-          ended_on: job_switch_date,
-        ),
-        Employment.new(
-          employment_type: :break,
-          reason_for_break: "Time off to care for elderly parent",
-          started_on: job_switch_date,
-          ended_on: job_switch_date + 2.months,
-          is_current_role: false,
-        ),
-        Employment.new(
-          organisation: "Sheffield Secondary School",
-          employment_type: :job,
-          job_title: "English Teacher",
-          main_duties: "Planning and delivering English Literature and Language lessons ro a range of abilities across KS3 and GCSE to prepare them for exams. Contributing to the English department via extra curricular activities, organising trips, and running a reading club.",
-          reason_for_leaving: "No opportunities for career advancement",
-          subjects: Faker::Educator.subject,
-          started_on: job_switch_date + 2.months,
-          is_current_role: true,
-        ),
-      ],
-      referees:
-      [
-        Referee.new(name: "Laura Davison",
-                    organisation: "Townington Secondary School",
-                    relationship: "Line manager",
-                    email: "l.davison@english.townington.ac.uk",
-                    job_title: %w[Headteacher Teacher].sample,
-                    phone_number: Faker::PhoneNumber.phone_number),
-        Referee.new(name: "John Thompson",
-                    organisation: "Sheffield Secondary School",
-                    relationship: "Line manager",
-                    email: "john.thompson@english.sheffield.ac.uk",
-                    job_title: %w[Headteacher Teacher].sample,
-                    phone_number: Faker::PhoneNumber.phone_number),
-      ],
-      training_and_cpds: [
-        TrainingAndCpd.new(name: "HQA", provider: "TeachTrainLtd", grade: "Honours", year_awarded: "2020", course_length: "1 year"),
-      ],
-      qualifications:
-      [
-        Qualification.new(category: :undergraduate,
-                          institution: Faker::Educator.university,
-                          year: 2016,
-                          subject: "BA English Literature"),
-        Qualification.new(category: :other, institution: Faker::Educator.university, year: 2019, subject: "PGCE English with QTS"),
-        Qualification.new(category: :a_level, institution: Faker::Educator.secondary_school, year: 2012, qualification_results: [
-          QualificationResult.new(subject: "English Literature", grade: "A"),
-          QualificationResult.new(subject: "History", grade: "B"),
-          QualificationResult.new(subject: "French", grade: "A"),
-        ]),
-        Qualification.new(category: :gcse, institution: Faker::Educator.secondary_school, year: 2010, qualification_results: [
-          QualificationResult.new(subject: "Maths", grade: "A"),
-          QualificationResult.new(subject: "English Literature", grade: "A"),
-          QualificationResult.new(subject: "English Language", grade: "B"),
-          QualificationResult.new(subject: "History", grade: "C"),
-          QualificationResult.new(subject: "French", grade: "A"),
-          QualificationResult.new(subject: "Music", grade: "B"),
-          QualificationResult.new(subject: "Geography", grade: "C"),
-        ]),
-      ].map do |qual|
-        qual.tap do |q|
-          q.finished_studying = (q.undergraduate? || q.postgraduate? || q.other? ? Faker::Boolean.boolean : nil)
-          q.finished_studying_details = (q.finished_studying == false ? "Stopped due to illness" : "")
-          if q.finished_studying?
-            q.grade = q.undergraduate? || q.postgraduate? ? POSSIBLE_DEGREE_GRADES.sample : POSSIBLE_OTHER_GRADES.sample
-          end
-        end
-      end,
-    )
+    SelfDisclosurePresenter.new(job_application)
   end
 
   def build_job_reference # rubocop: disable Metrics/MethodLength

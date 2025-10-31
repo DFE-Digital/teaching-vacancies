@@ -17,7 +17,7 @@ RSpec.describe "Publishers::Vacancies::FormPreviewController" do
 
   describe "GET #show" do
     context "when job_application" do
-      %i[plain catholic religious].each do |sample|
+      %i[plain catholic religious blank].each do |sample|
         it "sends a #{sample} PDF file" do
           get organisation_job_form_preview_path(vacancy.id, sample)
 

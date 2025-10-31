@@ -17,6 +17,10 @@ RSpec.describe "publishers/vacancies/show" do
       let(:vacancy) { create(:vacancy, :secondary, :with_supporting_documents, organisations: [school]) }
       let(:next_invalid_step) { nil }
 
+      it "has blank application download button" do
+        expect(rendered).to have_link("Download a blank application form", href: organisation_job_form_preview_path(vacancy.id, :blank))
+      end
+
       it "doesn't have publish buttons" do
         expect(rendered).to have_no_content("Publish job listing")
       end
@@ -93,6 +97,10 @@ RSpec.describe "publishers/vacancies/show" do
       context "with a minimal vacancy" do
         let(:vacancy) { create(:draft_vacancy, :without_contract_details) }
         let(:next_invalid_step) { :job_role }
+
+        it "has blank application download button" do
+          expect(rendered).to have_link("Download a blank application form", href: organisation_job_form_preview_path(vacancy.id, :blank))
+        end
 
         it "show first section as in-progress, and the rest as not startable" do
           expect(job_details).to have_content "In progress"

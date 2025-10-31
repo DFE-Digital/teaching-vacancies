@@ -5,6 +5,30 @@ module VacanciesHelper
 
   WORD_EXCEPTIONS = %w[and the of upon].freeze
 
+  TAG_COLOURS = {
+    published: "green",
+    draft: "grey",
+    closed: "red",
+    scheduled: "yellow",
+  }.with_indifferent_access
+
+  def tag_name(vacancy)
+    if vacancy.draft?
+      :draft
+    elsif vacancy.pending?
+      :scheduled
+    elsif vacancy.expired?
+      :closed
+    else
+      # vacancy.live?
+      :published
+    end
+  end
+
+  def vacancy_tag(state)
+    govuk_tag(text: t("publishers.vacancies.show.heading_component.status_tag.#{state}"), html_attributes: { class: "vertical-align-middle govuk-!-margin-left-1" }, colour: TAG_COLOURS.fetch(state))
+  end
+
   def humanize_array(items)
     items.reject(&:blank?).map(&:humanize).join(", ")
   end
