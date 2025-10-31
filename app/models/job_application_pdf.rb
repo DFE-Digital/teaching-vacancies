@@ -86,9 +86,9 @@ class JobApplicationPdf
         Table[
           [
             ["Name", training.name],
-            (["Grade", training.grade] if training.grade),
-            (["Provider", training.provider] if training.provider),
-            (["Course length", training.course_length] if training.course_length),
+            (["Grade", training.grade] if training.grade.present?),
+            (["Provider", training.provider] if training.provider.present?),
+            (["Course length", training.course_length] if training.course_length.present?),
             ["Awarded Year", training.year_awarded],
           ].compact,
         ]

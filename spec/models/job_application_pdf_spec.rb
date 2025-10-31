@@ -266,7 +266,7 @@ RSpec.describe JobApplicationPdf do
       end
 
       context "when training with provider present" do
-        let(:trainings) { build_stubbed_list(:training_and_cpd, 1, name: "First Aid", year_awarded: "2020", provider: "Red cross", grade: nil, course_length: nil) }
+        let(:trainings) { build_stubbed_list(:training_and_cpd, 1, name: "First Aid", year_awarded: "2020", provider: "Red cross", grade: nil, course_length: "") }
 
         it "includes grade information" do
           expected_table = [
@@ -279,7 +279,7 @@ RSpec.describe JobApplicationPdf do
       end
 
       context "when training with course length present" do
-        let(:trainings) { build_stubbed_list(:training_and_cpd, 1, name: "Advanced Course", year_awarded: "2020", provider: nil, grade: nil, course_length: "6 months") }
+        let(:trainings) { build_stubbed_list(:training_and_cpd, 1, name: "Advanced Course", year_awarded: "2020", provider: nil, grade: " ", course_length: "6 months") }
 
         it "includes grade information" do
           expected_table = [
