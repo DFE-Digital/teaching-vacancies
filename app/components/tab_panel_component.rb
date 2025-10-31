@@ -56,6 +56,11 @@ class TabPanelComponent < ApplicationComponent
   def candidate_name(application)
     if application.withdrawn?
       tag.span application.name
+    elsif application.vacancy.anonymise_applications? && !application.hide_personal_details?
+      tag.span do
+        govuk_link_to(application.name, organisation_job_job_application_path(@vacancy.id, application)) +
+          tag.p(application.anonymised_name, class: "govuk-hint")
+      end
     else
       govuk_link_to(application.name, organisation_job_job_application_path(@vacancy.id, application))
     end

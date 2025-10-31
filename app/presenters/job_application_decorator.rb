@@ -5,13 +5,17 @@ class JobApplicationDecorator < Draper::Decorator
 
   def name
     if hide_personal_details?
-      # create an anoymous ID from the start of the vacancy id and the start of the application id
-      vacancy_numbers = vacancy.id.split("-").first.each_char.select { |c| c.ord.between?(48, 57) }.join
-      id_numbers = id.split("-").first.each_char.select { |c| c.ord.between?(48, 57) }.join
-      "TVS-#{vacancy_numbers}-#{id_numbers}"
+      anonymised_name
     else
       super
     end
+  end
+
+  def anonymised_name
+    # create an anoymous ID from the start of the vacancy id and the start of the application id
+    vacancy_numbers = vacancy.id.split("-").first.each_char.select { |c| c.ord.between?(48, 57) }.join
+    id_numbers = id.split("-").first.each_char.select { |c| c.ord.between?(48, 57) }.join
+    "TVS-#{vacancy_numbers}-#{id_numbers}"
   end
 
   %i[first_name
