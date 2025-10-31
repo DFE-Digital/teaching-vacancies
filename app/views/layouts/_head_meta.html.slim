@@ -9,3 +9,8 @@ meta property="og:type" content="article"
 meta property="og:title" content=content_for(:page_title_prefix)&.strip
 meta property="og:description" content=meta_description
 meta property="og:image" content=image_path("og_image.png")
+
+meta name="twitter:card" content="summary"
+meta name="twitter:title" content=content_for(:page_title_prefix)&.strip
+meta name="twitter:description" content=meta_description
+meta name="twitter:image" content=(content_for?(:social_image) ? content_for(:social_image).strip : image_url("TVS-logo.png"))

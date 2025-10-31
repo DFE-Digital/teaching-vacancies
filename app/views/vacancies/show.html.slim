@@ -1,3 +1,6 @@
+- if @vacancy.organisation.logo.attached?
+  - content_for :social_image, polymorphic_url(@vacancy.organisation.logo)
+
 = render "vacancies/show"
 
 script.jobref type="application/ld+json"
