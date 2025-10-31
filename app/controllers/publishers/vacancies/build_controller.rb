@@ -14,8 +14,11 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
 
   def show
     @form = form_class.new(form_class.load_form(vacancy), vacancy, current_publisher)
-    if current_step == :documents
-      return redirect_to(new_organisation_job_document_path(vacancy.id, back_to_review: params[:back_to_review], back_to_show: params[:back_to_show]))
+    case current_step
+    when :documents
+      return redirect_to(new_organisation_job_document_path(vacancy.id,
+                                                            back_to_review: params[:back_to_review],
+                                                            back_to_show: params[:back_to_show]))
     end
 
     render_wizard
@@ -23,9 +26,14 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
 
   def update
     @form = form_class.new(form_params, vacancy, current_publisher)
+
     if @form.valid?
-      update_vacancy
-      redirect_to_next_step
+      if user_chose_not_to_confirm_contact_email?
+        redirect_to organisation_job_build_path(vacancy.id, step_process.previous_step)
+      else
+        update_vacancy
+        redirect_to_next_step
+      end
     else
       render_wizard
     end
@@ -34,6 +42,10 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   private
 
   attr_reader :form
+
+  def user_chose_not_to_confirm_contact_email?
+    step.name == "confirm_contact_details" && @form.confirm_contact_email == "false"
+  end
 
   def form_class
     "publishers/job_listing/#{step}_form".camelize.constantize
@@ -69,7 +81,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   end
 
   def update_vacancy
-    vacancy.assign_attributes(form.params_to_save.merge(completed_steps: completed_steps))
+    updated_completed_steps = completed_steps(steps_to_reset: form.steps_to_reset)
+    vacancy.assign_attributes(form.params_to_save.merge(completed_steps: updated_completed_steps))
     vacancy.refresh_slug
     update_google_index(vacancy) if vacancy.live?
 
