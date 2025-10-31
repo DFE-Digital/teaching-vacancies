@@ -16,6 +16,11 @@
         - row.with_key text: t("helpers.label.jobseekers_job_application_catholic_form.place_of_worship")
         - row.with_value text: job_application.place_of_worship
 
+      - if job_application.place_of_worship_start_date
+        - summary_list.with_row do |row|
+          - row.with_key text: t("helpers.label.jobseekers_job_application_catholic_form.place_of_worship_start_date")
+          - row.with_value text: job_application.place_of_worship_start_date.to_formatted_s(:day_month_year)
+
       - summary_list.with_row do |row|
         - row.with_key text: t("helpers.legend.jobseekers_job_application_catholic_form.religious_reference_type")
         - if job_application.religious_reference_type.present?
