@@ -69,6 +69,7 @@ RSpec.describe JobApplicationPdf do
         [
           [I18n.t("first_name", scope:), job_application.first_name],
           [I18n.t("last_name", scope:), job_application.last_name],
+          [I18n.t("previous_names_optional", scope:), job_application.previous_names],
           [I18n.t("helpers.legend.jobseekers_job_application_personal_details_form.your_address"), address],
           [I18n.t("phone_number", scope:), job_application.phone_number],
           [I18n.t("email_address", scope:), job_application.email_address],
@@ -124,7 +125,8 @@ RSpec.describe JobApplicationPdf do
       let(:label_scope) { "helpers.label.jobseekers_job_application_personal_details_form" }
       let(:basic_professional_status_data) do
         [
-          [I18n.t("qualified_teacher_status", scope:), "Yes, awarded in #{job_application.qualified_teacher_status_year} #{job_application.qts_age_range_and_subject}"],
+          [I18n.t("qualified_teacher_status", scope:), "Yes, awarded in #{job_application.qualified_teacher_status_year}"],
+          [I18n.t("jobseekers.job_application.age_range_and_subject"), "not provided"],
           [I18n.t("teacher_reference_number_review", scope: label_scope), job_application.teacher_reference_number],
           [I18n.t("is_statutory_induction_complete", scope:), "Yes"],
         ]
@@ -152,8 +154,13 @@ RSpec.describe JobApplicationPdf do
         end
 
         it "includes the proper status info" do
-          expected_row = [I18n.t("qualified_teacher_status", scope:), "Yes, awarded in 2020 "]
-          expect(professional_status).to include(expected_row)
+          expected_row = [
+            [I18n.t("qualified_teacher_status", scope:), "Yes, awarded in 2020"],
+            [I18n.t("jobseekers.job_application.age_range_and_subject"), "not provided"],
+            [I18n.t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number_review"), job_application.teacher_reference_number],
+            [I18n.t("is_statutory_induction_complete", scope:), "Yes"],
+          ]
+          expect(professional_status).to match_array(expected_row)
         end
       end
 
@@ -234,19 +241,53 @@ RSpec.describe JobApplicationPdf do
       end
 
       context "when training and CPDs present" do
-        let(:trainings) { build_stubbed_list(:training_and_cpd, 1, name: "First Aid", provider: "Red Cross") }
+        let(:trainings) { build_stubbed_list(:training_and_cpd, 1, name: "First Aid", year_awarded: "2020", provider: nil, grade: nil, course_length: nil) }
 
         it "returns training data" do
-          expect(training_and_cpds.first.last.first).to include(["Name", "First Aid"])
-          expect(training_and_cpds.first.last.first).to include(["Provider", "Red Cross"])
+          expected_table = [
+            ["Name", "First Aid"],
+            ["Awarded Year", "2020"],
+          ]
+          expect(training_and_cpds.first.last.first).to match_array(expected_table)
         end
       end
 
       context "when training with grade present" do
-        let(:trainings) { build_stubbed_list(:training_and_cpd, 1, name: "Advanced Course", grade: "Distinction") }
+        let(:trainings) { build_stubbed_list(:training_and_cpd, 1, name: "Advanced Course", year_awarded: "2020", provider: nil, grade: "Distinction", course_length: nil) }
 
         it "includes grade information" do
-          expect(training_and_cpds.first.last.first).to include(%w[Grade Distinction])
+          expected_table = [
+            ["Name", "Advanced Course"],
+            ["Grade", "Distinction"],
+            ["Awarded Year", "2020"],
+          ]
+          expect(training_and_cpds.first.last.first).to match_array(expected_table)
+        end
+      end
+
+      context "when training with provider present" do
+        let(:trainings) { build_stubbed_list(:training_and_cpd, 1, name: "First Aid", year_awarded: "2020", provider: "Red cross", grade: nil, course_length: "") }
+
+        it "includes grade information" do
+          expected_table = [
+            ["Name", "First Aid"],
+            ["Provider", "Red cross"],
+            ["Awarded Year", "2020"],
+          ]
+          expect(training_and_cpds.first.last.first).to match_array(expected_table)
+        end
+      end
+
+      context "when training with course length present" do
+        let(:trainings) { build_stubbed_list(:training_and_cpd, 1, name: "Advanced Course", year_awarded: "2020", provider: nil, grade: " ", course_length: "6 months") }
+
+        it "includes grade information" do
+          expected_table = [
+            ["Name", "Advanced Course"],
+            ["Course length", "6 months"],
+            ["Awarded Year", "2020"],
+          ]
+          expect(training_and_cpds.first.last.first).to match_array(expected_table)
         end
       end
     end
@@ -256,7 +297,7 @@ RSpec.describe JobApplicationPdf do
 
       context "when no professional body memberships present" do
         it "returns no data available message" do
-          expect(professional_body_memberships).to eq([[I18n.t("jobseekers.job_applications.show.professional_body_memberships.none"), nil]])
+          expect(professional_body_memberships).to eq([[I18n.t("jobseekers.job_applications.review.professional_body_memberships.none"), nil]])
         end
       end
 
@@ -276,7 +317,7 @@ RSpec.describe JobApplicationPdf do
 
       context "when no employments present" do
         it "returns no data available message" do
-          expect(employment_history).to eq([[I18n.t("jobseekers.job_applications.review.employment_history.none"), nil]])
+          expect(employment_history).to eq([[I18n.t("jobseekers.job_applications.show.employment_history.none"), nil]])
         end
       end
 

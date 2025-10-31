@@ -1,5 +1,8 @@
 en:
   jobseekers:
+    job_application:
+      not_provided: not provided
+      age_range_and_subject: Age range and subject
     login_keys:
       new:
         notice: >-
@@ -440,7 +443,7 @@ en:
             link: teaching in England as a non-UK citizen (opens in new tab).
           search_for_jobs: Search for other jobs
           continue: Continue application
-      not_defined: Not entered (will not be seen on application)
+      not_defined: Not entered
       qualifications:
         destroy:
           success: Your qualification was deleted

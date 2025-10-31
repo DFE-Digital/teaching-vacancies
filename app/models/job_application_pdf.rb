@@ -58,6 +58,7 @@ class JobApplicationPdf
 
     basic_professional_status = [
       [I18n.t("qualified_teacher_status", scope:), qualified_teacher_status_info(job_application)],
+      [I18n.t("jobseekers.job_application.age_range_and_subject"), optional_value(job_application.qts_age_range_and_subject)],
       [I18n.t("teacher_reference_number_review", scope: label_scope), job_application_trn(job_application)],
       [I18n.t("is_statutory_induction_complete", scope:), yes_no(job_application.is_statutory_induction_complete?)],
     ]
@@ -85,8 +86,9 @@ class JobApplicationPdf
         Table[
           [
             ["Name", training.name],
-            (["Grade", training.grade] if training.grade),
-            ["Provider", training.provider],
+            (["Grade", training.grade] if training.grade.present?),
+            (["Provider", training.provider] if training.provider.present?),
+            (["Course length", training.course_length] if training.course_length.present?),
             ["Awarded Year", training.year_awarded],
           ].compact,
         ]
@@ -95,7 +97,7 @@ class JobApplicationPdf
   end
 
   def professional_body_memberships
-    return no_data_available(I18n.t("jobseekers.job_applications.show.professional_body_memberships.none")) if job_application.professional_body_memberships.none?
+    return no_data_available(I18n.t("jobseekers.job_applications.review.professional_body_memberships.none")) if job_application.professional_body_memberships.none?
 
     scope = "helpers.label.jobseekers_professional_body_membership_form.exam_taken_options"
     make_nested_section do
@@ -124,7 +126,7 @@ class JobApplicationPdf
   end
 
   def employment_history
-    return no_data_available(I18n.t("jobseekers.job_applications.review.employment_history.none")) if job_application.employments.none?
+    return no_data_available(I18n.t("jobseekers.job_applications.show.employment_history.none")) if job_application.employments.none?
 
     make_nested_section do
       job_application
@@ -302,22 +304,29 @@ class JobApplicationPdf
     month_year(date)
   end
 
-  def basic_personal_details
-    scope = "helpers.label.jobseekers_job_application_personal_details_form"
-    declaration_scope = "helpers.legend.jobseekers_job_application_declarations_form"
-    address_scope = "helpers.legend.jobseekers_job_application_personal_details_form"
+  def optional_value(value)
+    value.presence || I18n.t("jobseekers.job_application.not_provided")
+  end
 
-    your_address = [
+  def job_application_address
+    [
       job_application.street_address,
       job_application.city,
       job_application.postcode,
       job_application.country,
     ].compact.join(", ")
+  end
+
+  def basic_personal_details
+    scope = "helpers.label.jobseekers_job_application_personal_details_form"
+    declaration_scope = "helpers.legend.jobseekers_job_application_declarations_form"
+    address_scope = "helpers.legend.jobseekers_job_application_personal_details_form"
 
     [
       [I18n.t("first_name", scope:), job_application.first_name],
       [I18n.t("last_name", scope:), job_application.last_name],
-      [I18n.t("your_address", scope: address_scope), your_address],
+      [I18n.t("previous_names_optional", scope:), optional_value(job_application.previous_names)],
+      [I18n.t("your_address", scope: address_scope), job_application_address],
       [I18n.t("phone_number", scope:), job_application.phone_number],
       [I18n.t("email_address", scope:), job_application.email_address],
       [I18n.t("has_right_to_work_in_uk", scope: declaration_scope), visa_sponsorship_needed_answer(job_application)],
@@ -419,7 +428,7 @@ class JobApplicationPdf
   def qualified_teacher_status_info(job_application)
     case job_application.qualified_teacher_status
     when "yes"
-      "Yes, awarded in #{job_application.qualified_teacher_status_year} #{job_application.qts_age_range_and_subject}"
+      "Yes, awarded in #{job_application.qualified_teacher_status_year}"
     when "no"
       "No. #{job_application.qualified_teacher_status_details}"
     when "on_track"
