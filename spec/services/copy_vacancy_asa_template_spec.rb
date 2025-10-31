@@ -20,7 +20,8 @@ RSpec.describe CopyVacancyAsaTemplate do
          anonymise_applications
          school_visits
          visa_sponsorship
-         contact_details]
+         contact_details
+         confirm_contact_details]
     end
 
     it "creates a new vacancy as draft" do

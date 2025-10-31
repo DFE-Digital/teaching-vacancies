@@ -30,6 +30,7 @@ RSpec.describe Publishers::VacancyFormSequence do
       application_link
       school_visits
       contact_details
+      confirm_contact_details
       about_the_role
       include_additional_documents
       documents
@@ -131,6 +132,55 @@ RSpec.describe Publishers::VacancyFormSequence do
 
         it "returns true" do
           expect(sequence.all_steps_valid?).to be true
+        end
+      end
+
+      describe "steps with conditional dependencies" do
+        describe "applying_for_the_job" do
+          let(:current_step) { :applying_for_the_job }
+          let(:enable_job_applications) { nil }
+          let(:vacancy) { build_stubbed(:vacancy, enable_job_applications:, organisations: [organisation]) }
+
+          context "when enable_job_applications is false" do
+            let(:enable_job_applications) { false }
+
+            it "validates how_to_receive_applications" do
+              expect(sequence.all_steps_valid?).to be false
+            end
+          end
+
+          context "when enable_job_applications is true" do
+            let(:enable_job_applications) { true }
+
+            it "does not validate how_to_receive_applications" do
+              expect(sequence.all_steps_valid?).to be true
+            end
+          end
+        end
+
+        describe "contact_details" do
+          let(:current_step) { :contact_details }
+          let(:vacancy) { build_stubbed(:vacancy, organisations: [organisation]) }
+
+          before do
+            allow(vacancy).to receive(:contact_email_belongs_to_a_publisher?).and_return(belongs_to_publisher)
+          end
+
+          context "when contact_email belongs to a registered publisher" do
+            let(:belongs_to_publisher) { true }
+
+            it "does not validate confirm_contact_details" do
+              expect(sequence.all_steps_valid?).to be true
+            end
+          end
+
+          context "when contact_email does not belong to a registered publisher" do
+            let(:belongs_to_publisher) { false }
+
+            it "validates confirm_contact_details" do
+              expect(sequence.all_steps_valid?).to be false
+            end
+          end
         end
       end
     end
