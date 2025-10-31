@@ -19,8 +19,6 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
       return redirect_to(new_organisation_job_document_path(vacancy.id,
                                                             back_to_review: params[:back_to_review],
                                                             back_to_show: params[:back_to_show]))
-    when :confirm_contact_details
-      skip_step if vacancy.contact_email_belongs_to_a_publisher?
     end
 
     render_wizard
