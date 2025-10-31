@@ -20,7 +20,7 @@ const SearchableCollectionComponent = class extends Controller {
 
     this.filterCollection();
 
-    const visibleItems = this.collection.filter((item) => item.parentElement.style.display === 'block');
+    const visibleItems = this.collection.filter((item) => item.parentElement.style.display === 'flex');
 
     visibleItems.forEach((item, i) => {
       item.setAttribute('aria-posinset', i + 1);
@@ -39,10 +39,8 @@ const SearchableCollectionComponent = class extends Controller {
   }
 
   itemDisplay(item) {
-    item.parentElement.setAttribute('role', 'option');
-
     if (SearchableCollectionComponent.substringExistsInString(SearchableCollectionComponent.getStringForMatch(item), this.inputTarget.value)) {
-      item.parentElement.style.display = 'block';
+      item.parentElement.style.display = 'flex';
     } else {
       item.parentElement.style.display = 'none';
     }
