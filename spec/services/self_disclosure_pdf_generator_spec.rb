@@ -36,7 +36,7 @@ RSpec.describe SelfDisclosurePdfGenerator do
     end
 
     it "includes page number" do
-      expect(pdf).to include("1 of 2")
+      expect(pdf).to include("1 of 3")
     end
   end
 end
