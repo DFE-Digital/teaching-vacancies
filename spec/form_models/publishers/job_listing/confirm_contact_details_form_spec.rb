@@ -44,6 +44,12 @@ RSpec.describe Publishers::JobListing::ConfirmContactDetailsForm, type: :model d
     end
   end
 
+  describe ".fields" do
+    it "returns the confirm_contact_email" do
+      expect(described_class.fields).to eq(%i[confirm_contact_email])
+    end
+  end
+
   describe ".load_form" do
     context "when the step is recorded as completed" do
       before do
