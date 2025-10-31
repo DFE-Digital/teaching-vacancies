@@ -33,7 +33,7 @@
       - timeline.with_heading(title: t(".communication_history"))
       - @job_application.religious_reference_request.versions.reverse_each do |version|
         - actor = version.actor.present? ? t(".by", name: version.actor.papertrail_display_name) : t(".by_tvs")
-        - value = "#{actor} - #{version.created_at.to_formatted_s}"
+        - value = "#{actor} - #{version.created_at.to_fs}"
 
         - if version.changeset.key? "status"
           - case version.changeset["status"].last

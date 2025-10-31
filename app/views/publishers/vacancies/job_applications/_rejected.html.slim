@@ -19,4 +19,4 @@
             - row.with_cell(text: job_application.name)
             - row.with_cell(text: job_application.email_address)
             - row.with_cell(text: govuk_tag(text: "Rejection sent", colour: "red"))
-            - row.with_cell(text: email_batch.created_at.to_date.to_formatted_s(:day_month_year))
+            - row.with_cell(text: email_batch.created_at.to_date.to_fs(:day_month_year))

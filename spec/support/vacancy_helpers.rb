@@ -159,10 +159,10 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.salary)
     expect(page.html).to include(vacancy.benefits_details) if vacancy.benefits?
 
-    expect(page).to have_content(vacancy.publish_on.to_formatted_s.strip)
-    expect(page).to have_content(vacancy.expires_at.to_date.to_formatted_s.strip)
+    expect(page).to have_content(vacancy.publish_on.to_fs.strip)
+    expect(page).to have_content(vacancy.expires_at.to_date.to_fs.strip)
     if vacancy.start_date_type == "specific_date"
-      expect(page).to have_content(vacancy.starts_on.to_formatted_s.strip)
+      expect(page).to have_content(vacancy.starts_on.to_fs.strip)
     elsif vacancy.start_date_type == "asap"
       expect(page).to have_content("As soon as possible")
     end

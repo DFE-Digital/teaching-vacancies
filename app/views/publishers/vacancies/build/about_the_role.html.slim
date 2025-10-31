@@ -25,7 +25,7 @@
     = f.govuk_collection_radio_buttons :ect_status,
       Vacancy.ect_statuses.keys,
       :to_s,
-      class: ["ect-status-radios"],
+      class: %w[ect-status-radios],
       legend: { size: "m", tag: nil }
 
   = editor(form_input: f.govuk_text_area(:skills_and_experience, label: { size: "s", id: "skills-and-experience-label" }, rows: 5, required: true, aria: { hidden: false }), value: form.skills_and_experience, field_name: "publishers_job_listing_about_the_role_form[skills_and_experience]", label: { text: t("helpers.label.publishers_job_listing_about_the_role_form.skills_and_experience"), size: "s", id: "skills-and-experience-label" })
@@ -35,7 +35,7 @@
     field_name: "publishers_job_listing_about_the_role_form[school_offer]", hint: t("jobs.school_offer.hint"),
     label: { text: t("jobs.school_offer.publisher"), size: "s", id: "school-offer-label" })
 
-  = f.govuk_radio_buttons_fieldset :flexi_working_details_provided, legend: { size: "m", tag: nil }, class: ["flexi_working_details_provided"] do
+  = f.govuk_radio_buttons_fieldset :flexi_working_details_provided, legend: { size: "m", tag: nil }, class: %w[flexi_working_details_provided] do
     = f.govuk_radio_button :flexi_working_details_provided, "true", link_errors: true do
       = editor(form_input: f.govuk_text_area(:flexi_working,
         rows: 5, required: true, aria: { hidden: false }),
@@ -43,7 +43,7 @@
         label: { text: t("jobs.flexi_working.publisher"), size: "s" })
     = f.govuk_radio_button :flexi_working_details_provided, "false"
 
-  = f.govuk_radio_buttons_fieldset :further_details_provided, legend: { size: "m", tag: nil }, class: ["further-details-provided-radios"] do
+  = f.govuk_radio_buttons_fieldset :further_details_provided, legend: { size: "m", tag: nil }, class: %w[further-details-provided-radios] do
     = f.govuk_radio_button :further_details_provided, "true", link_errors: true do
       = editor(form_input: f.govuk_text_area(:further_details),
                  value: form.further_details,

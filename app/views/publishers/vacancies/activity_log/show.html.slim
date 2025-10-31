@@ -4,7 +4,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    - unless @versions.present?
+    - if @versions.none?
       p.govuk-body-m = t("publishers.activity_log.no_changes")
     - @versions.each do |version|
       - version.changeset.each_pair do |attribute, diff|

@@ -1,6 +1,5 @@
 = tag.div(**html_attributes) do
-  - if heading.present?
-    = heading
+  = heading.presence
   - if items.present?
     ul.timeline-component__items
       - items.each do |item|

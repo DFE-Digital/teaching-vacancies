@@ -6,7 +6,7 @@
       = govuk_panel title_text: t(".heading.published"), text: ""
     - else
       = govuk_panel title_text: t(".heading.scheduled"), text: ""
-      p.govuk-body = t(".date_posted", date: @vacancy.publish_on.to_formatted_s)
+      p.govuk-body = t(".date_posted", date: @vacancy.publish_on.to_fs)
 
     h2.govuk-heading-m = t(".next_steps")
 
