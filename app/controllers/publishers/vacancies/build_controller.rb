@@ -14,8 +14,13 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
 
   def show
     @form = form_class.new(form_class.load_form(vacancy), vacancy, current_publisher)
-    if current_step == :documents
-      return redirect_to(new_organisation_job_document_path(vacancy.id, back_to_review: params[:back_to_review], back_to_show: params[:back_to_show]))
+    case current_step
+    when :documents
+      return redirect_to(new_organisation_job_document_path(vacancy.id,
+                                                            back_to_review: params[:back_to_review],
+                                                            back_to_show: params[:back_to_show]))
+    when :confirm_contact_details
+      skip_step if vacancy.contact_email_belongs_to_a_publisher?
     end
 
     render_wizard
@@ -78,7 +83,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   end
 
   def update_vacancy
-    vacancy.assign_attributes(form.params_to_save.merge(completed_steps: completed_steps))
+    updated_completed_steps = completed_steps(steps_to_reset: form.steps_to_reset)
+    vacancy.assign_attributes(form.params_to_save.merge(completed_steps: updated_completed_steps))
     vacancy.refresh_slug
     update_google_index(vacancy) if vacancy.live?
 
@@ -88,28 +94,4 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   def set_steps
     self.steps = step_process.steps - [:review]
   end
-
-  # rubocop:disable Metrics/AbcSize
-  def redirect_to_next_step
-    if save_and_finish_later?
-      redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success") and return
-    end
-
-    if step.name == "contact_details" && !vacancy.contact_email_belongs_to_a_publisher?
-      # we don't validate confirm_contact_details step in all_steps_valid? which means all_steps_valid is true at this point, so we need to manually redirect here
-      # to ensure the user sees the confirm contact_details page
-      redirect_to organisation_job_build_path(vacancy.id, :confirm_contact_details) and return
-    end
-
-    if all_steps_valid?
-      if vacancy.published?
-        redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success")
-      else
-        redirect_to organisation_job_review_path(vacancy.id)
-      end
-    else
-      redirect_to organisation_job_build_path(vacancy.id, next_invalid_step)
-    end
-  end
-  # rubocop:enable Metrics/AbcSize
 end
