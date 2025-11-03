@@ -7,7 +7,7 @@ class Publishers::JobApplication::DeclinedForm < Publishers::JobApplication::Tag
   private
 
   def declined_date_after_offered_dates
-    if job_applications.any? { |ja| declined_at.to_date < ja.offered_at.to_date }
+    if job_applications.any? { |ja| ja.offered_at.present? && declined_at.to_date < ja.offered_at.to_date }
       errors.add(:declined_at, :must_be_after_offered_date)
     end
   end

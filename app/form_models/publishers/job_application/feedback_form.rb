@@ -8,7 +8,7 @@ class Publishers::JobApplication::FeedbackForm < Publishers::JobApplication::Tag
   private
 
   def feedback_date_after_interview_dates
-    if job_applications.any? { |ja| interview_feedback_received_at.to_date < ja.interviewing_at.to_date }
+    if job_applications.any? { |ja| ja.interviewing_at.present? && interview_feedback_received_at.to_date < ja.interviewing_at.to_date }
       errors.add(:interview_feedback_received_at, :must_be_after_interview_date)
     end
   end
