@@ -10,7 +10,7 @@ class Publishers::Vacancies::PublishController < Publishers::Vacancies::WizardBa
         Publishers::AccountInvitationMailer.invite_user(
           contact_email: vacancy.contact_email,
           publisher_email: current_publisher.email,
-        ).deliver_now
+        ).deliver_later
       end
 
       redirect_to organisation_job_summary_path(vacancy.id)
