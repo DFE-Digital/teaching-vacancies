@@ -27,9 +27,15 @@ RSpec.describe "Jobseekers can disclose close relationships or safeguarding issu
     within "ul.govuk-list.govuk-error-summary__list" do
       expect(page).to have_link("Select yes if you have a close relationship with people within the organisation", href: "#jobseekers-job-application-declarations-form-has-close-relationships-field-error")
       expect(page).to have_link("Select yes if you have a safeguarding issue to declare", href: "#jobseekers-job-application-declarations-form-has-safeguarding-issue-field-error")
+      expect(page).to have_link("Select yes if you have lived or work outside the UK", href: "#jobseekers-job-application-declarations-form-has-lived-abroad-field-error")
     end
 
-    choose("Yes")
+    within ".close-relationships" do
+      choose("Yes")
+    end
+    within ".life-abroad" do
+      choose("Yes")
+    end
     choose("Yes, I want to share something")
 
     click_on "Save and continue"
@@ -39,10 +45,12 @@ RSpec.describe "Jobseekers can disclose close relationships or safeguarding issu
     within "ul.govuk-list.govuk-error-summary__list" do
       expect(page).to have_link("Give details about any close relationships with people within the organisation", href: "#jobseekers-job-application-declarations-form-close-relationships-details-field-error")
       expect(page).to have_link("Provide details about your safeguarding issue", href: "#jobseekers-job-application-declarations-form-safeguarding-issue-details-field-error")
+      expect(page).to have_link("Give details about your life outside the UK", href: "#jobseekers-job-application-declarations-form-life-abroad-details-field-error")
     end
 
     fill_in "jobseekers_job_application_declarations_form[close_relationships_details]", with: "My dad is the head teacher"
     fill_in "jobseekers_job_application_declarations_form[safeguarding_issue_details]", with: "I have a criminal record"
+    fill_in "jobseekers_job_application_declarations_form[life_abroad_details]", with: "I lived panatagonia for 4 years."
 
     click_on "Save and continue"
 

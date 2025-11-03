@@ -14,17 +14,28 @@ en:
               blank: Provide details about your safeguarding issue
             declarations_section_completed:
               inclusion: Select yes if you have completed this section
+            has_lived_abroad:
+              inclusion: Select yes if you have lived or work outside the UK
+            life_abroad_details:
+              blank: Give details about your life outside the UK
   helpers:
     legend:
       jobseekers_job_application_declarations_form:
-        has_close_relationships: Do you have any family or close relationship with people within %{organisation}?
+        has_close_relationships:
+          other: Do you have any family or close relationship(s) with people within the school, governor or trustee boards at %{organisation}?
+          trust: Do you have any family or close relationship(s) with people within the school, MAT, governor or trustee boards at %{organisation}?’
         has_right_to_work_in_uk: Do you need Skilled Worker visa sponsorship?
         has_safeguarding_issue: Do you want to declare any substantiated safeguarding issues, such as a criminal record or professional misconduct?
         declarations_section_completed: Have you completed this section?
+        has_lived_abroad: Have you lived or worked outside of the UK?
     label:
       jobseekers_job_application_declarations_form:
         close_relationships_details: Please give details
+        life_abroad_details: Please give details
         has_close_relationships_options:
+          "false": "No"
+          "true": "Yes"
+        has_lived_abroad_options:
           "false": "No"
           "true": "Yes"
         declarations_section_completed_options:

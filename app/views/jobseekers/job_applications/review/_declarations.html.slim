@@ -4,5 +4,10 @@
     - row.with_value text: job_application_safeguarding_issues_info(job_application)
 
   - s.with_row do |row|
-    - row.with_key text: t("helpers.legend.jobseekers_job_application_declarations_form.has_close_relationships", organisation: job_application.vacancy.organisation_name)
+    - group_type = organisation_label_type(job_application.vacancy.organisation)
+    - row.with_key text: t("helpers.legend.jobseekers_job_application_declarations_form.has_close_relationships.#{group_type}", organisation: job_application.vacancy.organisation_name)
     - row.with_value text: job_application_close_relationships_info(job_application)
+
+  - s.with_row do |row|
+    - row.with_key text: t("helpers.legend.jobseekers_job_application_declarations_form.has_lived_abroad")
+    - row.with_value text: job_application_life_abroad_info(job_application)
