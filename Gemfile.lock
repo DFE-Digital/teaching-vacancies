@@ -324,7 +324,7 @@ GEM
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (>= 6, < 10)
       view_component (>= 3.18, < 3.24)
-    govuk_design_system_formbuilder (5.11.0)
+    govuk_design_system_formbuilder (5.13.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -872,7 +872,7 @@ GEM
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.1.0)
-    uri (1.0.4)
+    uri (1.1.0)
     uri-query_params (0.8.2)
     useragent (0.16.11)
     valid_email2 (7.0.13)
@@ -986,7 +986,7 @@ DEPENDENCIES
   google-apis-indexing_v3
   google-cloud-bigquery
   govuk-components (~> 5.11.1)
-  govuk_design_system_formbuilder (~> 5.11.0)
+  govuk_design_system_formbuilder (~> 5.13.0)
   guard-bundler (~> 3.0)
   guard-rspec
   guard-rubocop (~> 1.5)
