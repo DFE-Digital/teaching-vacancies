@@ -56,4 +56,4 @@
 - else
   = f.govuk_email_field :email, label: { size: "s" }, required: true
 
-= f.govuk_collection_radio_buttons :frequency, Subscription.frequencies.keys, :to_s
+= f.govuk_collection_radio_buttons :frequency, Subscription.frequencies.keys, :to_s, legend: { tag: "h2" }

@@ -46,6 +46,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
         click_link I18n.t("nav.organisation_profile", name: organisation.name)
         # wait for page load
         find ".govuk-notification-banner"
+        find ".govuk-footer"
       end
 
       it "passes a11y", :a11y do
