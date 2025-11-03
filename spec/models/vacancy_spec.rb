@@ -866,7 +866,7 @@ RSpec.describe Vacancy do
     subject { vacancy.contact_email_belongs_to_a_publisher? }
 
     context "when contact_email is blank" do
-      let(:vacancy) { create(:vacancy, contact_email: nil) }
+      let(:vacancy) { build_stubbed(:vacancy, contact_email: nil) }
 
       it "returns false" do
         expect(subject).to be false
@@ -875,7 +875,7 @@ RSpec.describe Vacancy do
 
     context "when contact_email is present" do
       let(:email) { Faker::Internet.email(domain: "contoso.com") }
-      let(:vacancy) { create(:vacancy, contact_email: email) }
+      let(:vacancy) { build_stubbed(:vacancy, contact_email: email) }
 
       context "when a publisher exists with that email" do
         before { create(:publisher, email: email) }
