@@ -7,10 +7,9 @@
     - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.last_name")
     - row.with_value text: job_application.last_name
 
-  - if job_application.previous_names? || jobseeker?
-    - s.with_row do |row|
-      - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.previous_names_review")
-      - row.with_value text: job_application.previous_names.presence || t("jobseekers.job_applications.not_defined")
+  - s.with_row do |row|
+    - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.previous_names_review")
+    - row.with_value text: job_application.previous_names.presence || t("jobseekers.job_applications.not_defined")
 
   - s.with_row do |row|
     - row.with_key text: t("helpers.legend.jobseekers_job_application_personal_details_form.your_address")

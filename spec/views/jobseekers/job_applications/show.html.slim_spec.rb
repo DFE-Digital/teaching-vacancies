@@ -13,6 +13,22 @@ RSpec.describe "jobseekers/job_applications/show" do
     render
   end
 
+  describe "personal details section" do
+    subject(:personal_details) { show_view.find_by_id("personal_details") }
+
+    context "when the previous names field is filled in" do
+      let(:job_application) { build_stubbed(:job_application, :status_shortlisted, jobseeker:, vacancy:, previous_names: "Georges Gilbert") }
+
+      it { is_expected.to have_text("Previous namesGeorges Gilbert") }
+    end
+
+    context "when the previous names field is absent" do
+      let(:job_application) { build_stubbed(:job_application, :status_shortlisted, jobseeker:, vacancy:, previous_names: "") }
+
+      it { is_expected.to have_text("Previous namesNot entered") }
+    end
+  end
+
   describe "banner" do
     subject(:banner) { show_view.find(".review-banner") }
 
