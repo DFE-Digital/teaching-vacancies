@@ -316,18 +316,18 @@ RSpec.describe Vacancy do
     end
 
     describe "#expired_yesterday" do
-      it "retrieves published and unpublished vacancies that have an expires_at of yesterday" do
-        create(:vacancy, :expired_yesterday)
-        create(:draft_vacancy, :expired_yesterday)
+      before do
         create(:vacancy, :expires_tomorrow)
+      end
 
-        expect(PublishedVacancy.expired_yesterday.count).to eq(1)
-        # expect(DraftVacancy.expired_yesterday.count).to eq(1)
+      let!(:yesterday) { create(:vacancy, :expired_yesterday) }
+      it "retrieves published and unpublished vacancies that have an expires_at of yesterday" do
+        expect(PublishedVacancy.expired_yesterday).to eq([yesterday])
       end
     end
 
     describe "#expires_within_data_access_period" do
-      let(:expired_years_ago) { build(:vacancy, expires_at: 2.years.ago) }
+      let!(:expired_years_ago) { create(:vacancy, expires_at: 2.years.ago) }
 
       it "retrieves vacancies that expired not more than one year ago" do
         expect(PublishedVacancy.expires_within_data_access_period).to_not include(expired_years_ago)
