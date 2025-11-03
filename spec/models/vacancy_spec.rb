@@ -239,8 +239,8 @@ RSpec.describe Vacancy do
   end
 
   context "scopes" do
-    let(:expired_earlier_today) { create(:vacancy, expires_at: 5.hour.ago) }
-    let(:expires_later_today) { create(:vacancy, expires_at: 1.hour.from_now) }
+    let!(:expired_earlier_today) { create(:vacancy, expires_at: 5.hour.ago) }
+    let!(:expires_later_today) { create(:vacancy, expires_at: 1.hour.from_now) }
 
     # rubocop:disable RSpec/IndexedLet
     describe ".active_in_current_academic_year" do
