@@ -295,8 +295,8 @@ RSpec.describe "Jobseekers can manage their profile" do
             profile.employments.each do |employment|
               expect(page).to have_content(employment.organisation)
               expect(page).to have_content(employment.job_title)
-              expect(page).to have_content(employment.started_on.to_formatted_s(:month_year))
-              expect(page).to have_content(employment.ended_on.to_formatted_s(:month_year)) unless employment.is_current_role?
+              expect(page).to have_content(employment.started_on.to_fs(:month_year))
+              expect(page).to have_content(employment.ended_on.to_fs(:month_year)) unless employment.is_current_role?
               expect(page).to have_content(employment.main_duties)
               expect(page).to have_content(employment.reason_for_leaving)
             end

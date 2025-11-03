@@ -55,4 +55,4 @@
 
         - summary_list.with_row do |row|
           - row.with_key text: t("helpers.legend.jobseekers_job_application_catholic_form.baptism_date")
-          - row.with_value text: job_application.baptism_date&.to_formatted_s(:day_month_year)
+          - row.with_value text: job_application.baptism_date&.to_fs(:day_month_year)
