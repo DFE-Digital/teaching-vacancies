@@ -38,6 +38,7 @@ Rails.application.config.filter_parameters += %i[
   teacher_reference_number
   finished_studying_details
   close_relationships_details
+  life_abroad_details
   gaps_in_employment_details
   personal_statement
   unconfirmed_email
