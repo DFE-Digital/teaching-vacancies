@@ -358,8 +358,8 @@ RSpec.describe Vacancy do
         create_list(:vacancy, 5)
         create_list(:vacancy, 3, :future_publish)
       end
-      it "retrieves vacancies that have a status of :published, a future publish_on date & a future expires_at date" do
 
+      it "retrieves vacancies that have a status of :published, a future publish_on date & a future expires_at date" do
         expect(PublishedVacancy.pending.count).to eq(3)
       end
     end
