@@ -1,7 +1,7 @@
 class Publishers::Vacancies::WizardController < Publishers::Vacancies::BuildController
   def redirect_to_next_step
     if save_and_finish_later?
-      redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success") and return
+      redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success")
     elsif next_step.to_sym == :wicked_finish
       redirect_to_next nil, success: t("publishers.vacancies.show.success")
     else
