@@ -149,8 +149,7 @@ RSpec.describe "Creating a vacancy" do
     expect(publisher_confirm_contact_details_page).to be_displayed
     expect(page).to have_content("Do you want to use this email address?")
 
-    # Select "No" to go back to contact_details page
-    publisher_confirm_contact_details_page.fill_in_and_submit_form(confirm: false)
+    publisher_confirm_contact_details_page.click_change_email_button
 
     expect(publisher_contact_details_page).to be_displayed
 

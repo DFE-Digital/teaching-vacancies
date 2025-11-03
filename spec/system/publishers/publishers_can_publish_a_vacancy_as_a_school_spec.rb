@@ -171,7 +171,7 @@ RSpec.describe "Creating a vacancy" do
           expect(page).to have_link("Confirm if you want to use this email address")
         end
 
-        publisher_confirm_contact_details_page.fill_in_and_submit_form(confirm: true)
+        publisher_confirm_contact_details_page.fill_in_and_submit_form
 
         expect(page).to have_current_path(organisation_job_review_path(created_vacancy.id), ignore_query: true)
 
@@ -266,7 +266,7 @@ RSpec.describe "Creating a vacancy" do
         expect(publisher_confirm_contact_details_page).to be_displayed
         expect(page).to have_content("Do you want to use this email address?")
 
-        publisher_confirm_contact_details_page.fill_in_and_submit_form(confirm: true)
+        publisher_confirm_contact_details_page.fill_in_and_submit_form
 
         expect(page).to have_current_path(organisation_job_review_path(created_vacancy.id), ignore_query: true)
 
@@ -431,7 +431,7 @@ RSpec.describe "Creating a vacancy" do
   def fill_from_contact_details_to_review(vacancy)
     publisher_contact_details_page.fill_in_and_submit_form(vacancy.contact_email, vacancy.contact_number)
 
-    publisher_confirm_contact_details_page.fill_in_and_submit_form(confirm: true)
+    publisher_confirm_contact_details_page.fill_in_and_submit_form
   end
 
   def submit_empty_form
