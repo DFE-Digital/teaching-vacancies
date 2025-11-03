@@ -167,6 +167,19 @@ RSpec.describe TabPanelComponent, type: :component do
       end
     end
 
+    context "when tab_name is 'declined'" do
+      it "sorts candidates with nil declined_at first, then by date" do
+        candidate1 = build_stubbed(:job_application, declined_at: Date.new(2025, 1, 3))
+        candidate2 = build_stubbed(:job_application, declined_at: nil)
+        candidate3 = build_stubbed(:job_application, declined_at: Date.new(2025, 1, 1))
+        candidates = [candidate1, candidate2, candidate3]
+
+        result = component.sort_candidates(candidates, "declined")
+
+        expect(result).to eq([candidate2, candidate3, candidate1])
+      end
+    end
+
     context "when tab_name is something else" do
       it "returns candidates in original order" do
         candidate1 = build_stubbed(:job_application, interviewing_at: Date.new(2025, 1, 3))

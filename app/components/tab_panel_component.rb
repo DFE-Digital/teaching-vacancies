@@ -113,6 +113,8 @@ class TabPanelComponent < ApplicationComponent
       candidates.sort_by { |candidate| [candidate.interviewing_at.nil? ? 0 : 1, candidate.interviewing_at] }
     when "offered"
       candidates.sort_by { |candidate| [candidate.offered_at.nil? ? 0 : 1, candidate.offered_at] }
+    when "declined"
+      candidates.sort_by { |candidate| [candidate.declined_at.nil? ? 0 : 1, candidate.declined_at] }
     else
       candidates
     end
