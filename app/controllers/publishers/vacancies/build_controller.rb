@@ -28,12 +28,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
     @form = form_class.new(form_params, vacancy, current_publisher)
 
     if @form.valid?
-      if user_chose_not_to_confirm_contact_email?
-        redirect_to organisation_job_build_path(vacancy.id, step_process.previous_step)
-      else
-        update_vacancy
-        redirect_to_next_step
-      end
+      update_vacancy
+      redirect_to_next_step
     else
       render_wizard
     end
@@ -42,10 +38,6 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   private
 
   attr_reader :form
-
-  def user_chose_not_to_confirm_contact_email?
-    step.name == "confirm_contact_details" && @form.confirm_contact_email == "false"
-  end
 
   def form_class
     "publishers/job_listing/#{step}_form".camelize.constantize
