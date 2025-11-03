@@ -11,7 +11,7 @@ module PageObjects
         end
 
         def click_change_email_button
-          click_on "Go back to change the email"
+          click_on I18n.t("buttons.go_back_to_change_email")
         end
       end
     end
