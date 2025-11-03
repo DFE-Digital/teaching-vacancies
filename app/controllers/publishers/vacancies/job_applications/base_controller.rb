@@ -11,8 +11,7 @@ module Publishers
         end
 
         def set_vacancy
-          @vacancy = current_organisation.all_vacancies
-                                           .listed
+          @vacancy = current_organisation.all_listed_vacancies
                                            .find(params[:job_id])
         end
       end

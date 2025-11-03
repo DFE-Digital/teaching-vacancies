@@ -50,13 +50,15 @@ class School < Organisation
   end
 
   def live_group_vacancies
-    return Vacancy.none unless trust
-
-    org_ids = [trust.id] + trust.schools.pluck(:id)
-    Vacancy.joins(:organisation_vacancies)
-          .where(organisation_vacancies: { organisation_id: org_ids })
-          .merge(Vacancy.live)
-          .distinct
+    if part_of_a_trust?
+      org_ids = [trust.id] + trust.schools.pluck(:id)
+      PublishedVacancy.joins(:organisation_vacancies)
+            .where(organisation_vacancies: { organisation_id: org_ids })
+            .merge(PublishedVacancy.live)
+            .distinct
+    else
+      PublishedVacancy.none
+    end
   end
 
   def faith_school?
