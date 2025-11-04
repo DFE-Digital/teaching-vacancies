@@ -11,7 +11,7 @@ class TabPanelComponent < ApplicationComponent
     @tab_name = tab_name
     @vacancy = vacancy
     @form = form
-    @candidates = candidates
+    @candidates = sort_candidates(candidates, tab_name)
     @displayed_fields = displayed_fields
     @button_group = button_group
   end
@@ -104,6 +104,19 @@ class TabPanelComponent < ApplicationComponent
       tag.span do
         govuk_link_to(t("tabs.interviewing.add_interview_datetime"), tag_organisation_job_job_applications_path(application.vacancy.id, params: { publishers_job_application_tag_form: { origin: :interviewing, job_applications: [application.id] }, tag_action: "interview_datetime" }))
       end
+    end
+  end
+
+  def sort_candidates(candidates, tab_name)
+    case tab_name
+    when "interviewing"
+      candidates.sort_by { |candidate| [candidate.interviewing_at.nil? ? 0 : 1, candidate.interviewing_at] }
+    when "offered"
+      candidates.sort_by { |candidate| [candidate.offered_at.nil? ? 0 : 1, candidate.offered_at] }
+    when "declined"
+      candidates.sort_by { |candidate| [candidate.declined_at.nil? ? 0 : 1, candidate.declined_at] }
+    else
+      candidates
     end
   end
 end

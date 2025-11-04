@@ -269,6 +269,51 @@ RSpec.describe "Job applications" do
       it { is_expected.to render_template(:declined_date) }
     end
 
+    context "when declined date is before offered date" do
+      let(:job_application) { create(:job_application, :status_offered, vacancy: vacancy, offered_at: Date.new(2025, 12, 15)) }
+      let(:status) { "declined" }
+      let(:params) do
+        {
+          form_name: "DeclinedForm",
+          publishers_job_application_declined_form: form_params,
+        }
+      end
+      let(:form_params) do
+        { origin:, status:, job_applications: [job_application.id] }.merge(
+          "declined_at(1i)" => 2025,
+          "declined_at(2i)" => 12,
+          "declined_at(3i)" => 10,
+        )
+      end
+
+      before { request }
+
+      it { is_expected.to render_template(:declined_date) }
+    end
+
+    context "when declining without an offered date" do
+      let(:job_application) { create(:job_application, :status_offered, vacancy: vacancy, offered_at: nil) }
+      let(:status) { "declined" }
+      let(:params) do
+        {
+          form_name: "DeclinedForm",
+          publishers_job_application_declined_form: form_params,
+        }
+      end
+      let(:form_params) do
+        { origin:, status:, job_applications: [job_application.id] }.merge(
+          "declined_at(1i)" => 2025,
+          "declined_at(2i)" => 12,
+          "declined_at(3i)" => 15,
+        )
+      end
+
+      it "updates status successfully" do
+        expect { request }.to change { job_application.reload.status }.from("offered").to("declined")
+        expect(response).to redirect_to organisation_job_job_applications_path(vacancy.id, anchor: origin)
+      end
+    end
+
     context "when progressing to unsuccessful_interview" do
       let(:status) { "unsuccessful_interview" }
 
@@ -354,6 +399,41 @@ RSpec.describe "Job applications" do
             .to change { job_application.reload.offered_at }.from(nil).to(Date.new(2025, 12, 11))
         end
       end
+
+      context "when offered date is before interview date" do
+        let(:job_application) { create(:job_application, :status_interviewing, vacancy: vacancy, interviewing_at: Date.new(2025, 12, 15)) }
+        let(:form_params) do
+          { origin:, status:, job_applications: [job_application.id] }.merge(
+            "offered_at(1i)" => 2025,
+            "offered_at(2i)" => 12,
+            "offered_at(3i)" => 10,
+          )
+        end
+
+        before do
+          post(offer_organisation_job_job_applications_path(vacancy.id), params:)
+        end
+
+        it { is_expected.to render_template("offered_date") }
+      end
+
+      context "when offering without an interview date" do
+        let(:job_application) { create(:job_application, :status_interviewing, vacancy: vacancy, interviewing_at: nil) }
+        let(:form_params) do
+          { origin:, status:, job_applications: [job_application.id] }.merge(
+            "offered_at(1i)" => 2025,
+            "offered_at(2i)" => 12,
+            "offered_at(3i)" => 15,
+          )
+        end
+
+        it "updates status and date successfully" do
+          expect { post(offer_organisation_job_job_applications_path(vacancy.id), params:) }
+            .to change { job_application.reload.status }.from("interviewing").to("offered")
+            .and change { job_application.reload.offered_at }.from(nil).to(Date.new(2025, 12, 15))
+          expect(response).to redirect_to organisation_job_job_applications_path(vacancy.id, anchor: origin)
+        end
+      end
     end
 
     describe "feedback form" do
@@ -401,6 +481,43 @@ RSpec.describe "Job applications" do
         end
 
         it { is_expected.to render_template("feedback_date") }
+      end
+
+      context "when feedback date is before interview date" do
+        let(:job_application) { create(:job_application, :status_interviewing, vacancy: vacancy, interviewing_at: Date.new(2025, 12, 15)) }
+        let(:form_params) do
+          { origin:, status:, job_applications: [job_application.id] }.merge(
+            "interview_feedback_received_at(1i)" => 2025,
+            "interview_feedback_received_at(2i)" => 12,
+            "interview_feedback_received_at(3i)" => 10,
+            "interview_feedback_received" => "true",
+          )
+        end
+
+        before do
+          post(offer_organisation_job_job_applications_path(vacancy.id), params:)
+        end
+
+        it { is_expected.to render_template("feedback_date") }
+      end
+
+      context "when providing feedback without an interview date" do
+        let(:job_application) { create(:job_application, :status_interviewing, vacancy: vacancy, interviewing_at: nil) }
+        let(:form_params) do
+          { origin:, status:, job_applications: [job_application.id] }.merge(
+            "interview_feedback_received_at(1i)" => 2025,
+            "interview_feedback_received_at(2i)" => 12,
+            "interview_feedback_received_at(3i)" => 20,
+            "interview_feedback_received" => "true",
+          )
+        end
+
+        it "updates status and date successfully" do
+          expect { post(offer_organisation_job_job_applications_path(vacancy.id), params:) }
+            .to change { job_application.reload.status }.from("interviewing").to("unsuccessful_interview")
+            .and change { job_application.reload.interview_feedback_received_at }.from(nil).to(Date.new(2025, 12, 20))
+          expect(response).to redirect_to organisation_job_job_applications_path(vacancy.id, anchor: origin)
+        end
       end
     end
 

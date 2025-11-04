@@ -627,6 +627,21 @@ en:
             job_applications:
               too_short: You must select an application to download
 
+        publishers/job_application/feedback_form:
+          attributes:
+            interview_feedback_received_at:
+              must_be_after_interview_date: The date entered must be after the candidate's interview date
+
+        publishers/job_application/offered_form:
+          attributes:
+            offered_at:
+              must_be_after_interview_date: The date entered must be after the candidate's interview date
+
+        publishers/job_application/declined_form:
+          attributes:
+            declined_at:
+              must_be_after_offered_date: The date entered must be after the candidate's job offer date
+
         support_request_form:
           attributes:
             email_address:
