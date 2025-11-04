@@ -12,6 +12,8 @@ class JobApplicationPdfGenerator
     job_application_page_header
     page_footer(datasource.footer_text)
 
+    text I18n.t("jobseekers.job_applications.show.consent_text"), size: 10, style: :italic
+
     render_table_section(:personal_details)
     render_table_section(:professional_status)
     render_nested_section(:qualifications)

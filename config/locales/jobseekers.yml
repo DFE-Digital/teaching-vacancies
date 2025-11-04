@@ -560,6 +560,7 @@ en:
           baptism_certificate: Baptism certificate
       show:
         application_sections: Application sections
+        consent_text: In submitting this application, the candidate has consented to their data being shared and processed for recruitment purposes.
         ask_for_support:
           heading: Ask for support if you have a disability or other needs
           support_needed: Do you want to ask for support so that you can attend an interview?
