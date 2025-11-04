@@ -80,7 +80,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       School.find_by!(urn: auth_hash.dig("extra", "raw_info", "organisation", "urn"))
     when "002" # local authority
       SchoolGroup.find_by!(local_authority_code: auth_hash.dig("extra", "raw_info", "organisation", "establishmentNumber"))
-    when "010" # multi-academy trust
+    when "006", "010" # multi-academy trust possibilities as of November 2025 (?)
       SchoolGroup.find_by!(uid: auth_hash.dig("extra", "raw_info", "organisation", "uid"))
     when "013" # single-academy trust
       # If the user is trying to sign in as a single-academy trust, try and find the school
