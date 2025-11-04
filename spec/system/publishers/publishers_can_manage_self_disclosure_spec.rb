@@ -147,7 +147,7 @@ RSpec.describe "Publishers manage self disclosure", :perform_enqueued do
               ])
 
             expect(publisher_ats_self_disclosure_page.status.text).to eq("completed")
-            expect(publisher_ats_self_disclosure_page.button.text).to eq("Download self-disclosure")
+            expect(page).to have_content("Download self-disclosure")
             expect(publisher_ats_self_disclosure_page.personal_details.heading.text).to eq("Personal details")
             expect(publisher_ats_self_disclosure_page.criminal_details.heading.text).to eq("Criminal record self-disclosure")
             expect(publisher_ats_self_disclosure_page.conduct_details.heading.text).to eq("Conduct self-disclosure")

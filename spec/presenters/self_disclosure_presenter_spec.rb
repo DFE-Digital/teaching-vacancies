@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe SelfDisclosurePresenter do
   subject(:presenter) { described_class.new(job_application) }
 
-  let(:scope) { "publishers.vacancies.job_applications.self_disclosure.completed" }
+  let(:scope) { "publishers.vacancies.job_applications.self_disclosure.show" }
 
   describe ".personal_details" do
     let(:job_application) { self_disclosure.self_disclosure_request.job_application }

@@ -9,7 +9,7 @@ class SelfDisclosurePresenter
 
   Section = Data.define(:title, :fields)
 
-  SCOPE = "publishers.vacancies.job_applications.self_disclosure.completed".freeze
+  SCOPE = "publishers.vacancies.job_applications.self_disclosure.show".freeze
 
   EVENT_LABELS = {
     received_off_service: I18n.t(".event.marked_as_received", scope: SCOPE),

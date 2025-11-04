@@ -7,15 +7,6 @@ en:
           show:
             communication_history: Communication history
             page_title: Self-disclosure form
-          pending:
-            line_1: Once the self-disclosure form is received you will be able to view it on this page. If you do not receive the self-disclosure form within 2 working days, you will be able to send a reminder.
-            line_2: If the request is more urgent, you should reach out to the candidate directly. If you have sent and received your own self-disclosure form for this candidate, you can manually mark it as received.
-            mark_as_received: Mark as received
-            mark_as_completed: Mark as completed
-            reminder: Send a reminder
-            collect_through_tv: Would you like to collect this self-disclosure form through Teaching Vacancies?
-
-          completed:
             event:
               received: Received
               requested: Requested
@@ -24,7 +15,7 @@ en:
               reminder_sent: Reminder sent
               marked_as_complete: Marked as complete
             self_disclosure_form: Self-disclosure form
-            manually_completed: This self-disclosure form has been marked as completed.
+            marked_as_received: This self-disclosure form has been marked as received.
             print: Download self-disclosure
             "true": "Yes"
             "false": "No"
@@ -54,3 +45,9 @@ en:
             agreed_for_criminal_record: In accordance with the organisation's procedures if required I agree to provide a valid criminal record certificate and consent to the organisation clarifying any information provided on the disclosure with the agencies providing it.
             agreed_for_organisation_update: I agree to inform the organisation within 24 hours if I am subsequently investigated by any agency or organisation in relation to concerns about my behaviour towards children or young people.
             agreed_for_information_sharing: I understand that the information contained on this form, the results of the criminal record check and information supplied by third parties may be supplied by the organisation to other persons or organisations in circumstances where this is considered necessary to safeguard children.
+            line_1: Once the self-disclosure form is received you will be able to view it on this page. If you do not receive the self-disclosure form within 2 working days, you will be able to send a reminder.
+            line_2: If the request is more urgent, you should reach out to the candidate directly. If you have sent and received your own self-disclosure form for this candidate, you can manually mark it as received.
+            mark_as_received: Mark as received
+            mark_as_completed: Mark as completed
+            reminder: Send a reminder
+            collect_through_tv: Would you like to collect this self-disclosure form through Teaching Vacancies?

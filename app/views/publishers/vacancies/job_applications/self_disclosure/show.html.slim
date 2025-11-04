@@ -14,10 +14,45 @@
     .govuk-body
       = govuk_tag(text: t("reference_requests.#{disclosure_status}.status"), colour: t("reference_requests.#{disclosure_status}.colour"))
 
-    - if @self_disclosure.request.marked_as_complete?
-      = render "completed"
-    - else
-      = render "pending"
+    - unless @self_disclosure.request.has_been_received?
+      .govuk-body = t(".line_1")
+      .govuk-body = t(".line_2")
+
+    = form_with(url: organisation_job_job_application_self_disclosure_path(@vacancy.id, @job_application.id), method: :patch) do |f|
+      .govuk-button-group
+        - if @self_disclosure.request.received?
+          = govuk_button_link_to t(".print"), organisation_job_job_application_self_disclosure_path(@vacancy.id, @job_application.id, format: :pdf), class: "govuk-button--secondary"
+
+        - if can_send_reminder?(@self_disclosure.request)
+          = f.govuk_submit t(".reminder"), name: "reminder"
+        - if @self_disclosure.request.has_been_received?
+          = f.govuk_submit t(".mark_as_completed"), name: "completed", secondary: true
+        - else
+          = f.govuk_submit t(".mark_as_received"), name: "received", secondary: true
+
+    - if @self_disclosure.request.received_off_service?
+      .govuk-body = t(".marked_as_received")
+
+    - elsif @self_disclosure.request.received?
+      .personal-details
+        h2.govuk-heading-m = t(".personal_details")
+        = govuk_summary_list do |summary_list|
+          - @self_disclosure.personal_details.each do |field, value|
+            = summary_list.with_row do |row|
+              - row.with_key(text: field)
+              - row.with_value(text: value)
+
+      - @self_disclosure.sections.each do |section|
+        div{ class = section.title.downcase.tr(" ", "-") }
+          h2.govuk-heading-m = section.title
+          - section.fields.each do |question, answer|
+            div
+              - if question.present?
+                .govuk-body{class="govuk-!-font-weight-bold"} = question
+              .govuk-body = answer
+
+    - elsif @self_disclosure.request.manual?
+      p.govuk-body = govuk_link_to(t(".collect_through_tv"), organisation_job_job_application_collect_self_disclosure_flag_path(@vacancy.id, @job_application.id, Wicked::FIRST_STEP))
 
   .govuk-grid-column-one-third
     = render TimelineComponent.new do |timeline|
