@@ -111,6 +111,23 @@ module PdfUiHelper
   end
   # rubocop:enable Metrics/AbcSize
 
+  def page_checkbox(label)
+    move_down 0.3.cm
+    line_width 3
+    stroke_color COLOR_PALETTE[:dark_grey]
+    stroke_rectangle [bounds.left + 0.5.cm, cursor], 0.7.cm, 0.7.cm
+    bounding_box([bounds.left + 1.5.cm, cursor - 0.1.cm], width: 17.5.cm) { text(label) }
+  end
+
+  def page_list(*entries)
+    entries.each do |entry|
+      move_down 0.5.cm
+      fill_ellipse [bounds.left + 0.7.cm, cursor], 0.15.cm # dot
+      bounding_box([bounds.left + 1.5.cm, cursor + 0.2.cm], width: 17.5.cm) { text(entry) }
+    end
+    move_down 0.5.cm
+  end
+
   private
 
   def tvs_logo_path

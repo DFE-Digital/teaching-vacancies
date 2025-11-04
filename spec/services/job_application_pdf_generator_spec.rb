@@ -45,6 +45,18 @@ RSpec.describe JobApplicationPdfGenerator do
       expect(pdf).to include("1 of 4")
     end
 
+    describe "render_confirmation" do
+      context "when job application presenter" do
+        it { expect(pdf).not_to include("I confirm that the above information is accurate and complete") }
+      end
+
+      context "when blank job application presenter" do
+        let(:presenter) { BlankJobApplicationPdf.new(job_application) }
+
+        it { expect(pdf).to include("I confirm that the above information is accurate and complete") }
+      end
+    end
+
     context "when vacancy religion type is no_religion" do
       let(:vacancy) { build_stubbed(:vacancy, :at_one_school, religion_type: "no_religion") }
 
