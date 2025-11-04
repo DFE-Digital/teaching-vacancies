@@ -1,7 +1,34 @@
 Sentry.init do |config|
   filter = ActiveSupport::ParameterFilter.new(Rails.application.config.filter_parameters - %i[id name])
+
+  # Sanitize sensitive data before sending
   config.before_send = lambda do |event, _hint|
-    filter.filter(event.to_h)
+    if event.extra
+      event.extra = filter.filter(event.extra)
+    end
+
+    if event.tags
+      event.tags = filter.filter(event.tags)
+    end
+
+    if event.request&.data
+      event.request.data = filter.filter(event.request.data)
+    end
+
+    if event.fingerprint
+      event.fingerprint = filter.filter(event.fingerprint)
+    end
+
+    if event.user
+      event.user = filter.filter(event.user)
+    end
+
+    if event.contexts
+      event.contexts = filter.filter(event.contexts)
+    end
+
+    # Return the sanitized event object
+    event
   end
 
   config.breadcrumbs_logger = %i[active_support_logger http_logger]
