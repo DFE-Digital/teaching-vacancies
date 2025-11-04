@@ -16,25 +16,28 @@
 
     .govuk-body = t(".more_urgent")
 
-    - if @reference_request.requested? && @reference_request.updated_at <= 7.days.ago
-      = form_with model: @reference_request,
-        url: send_reminder_email_organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id),
-        method: :patch do |f|
-        = f.govuk_submit t(".send_reminder")
+    .govuk-button-group
+      - if @reference_request.requested? && @reference_request.updated_at <= 7.days.ago
+        = form_with model: @reference_request,
+          url: send_reminder_email_organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id),
+          method: :patch do |f|
+          = f.govuk_submit t(".send_reminder")
 
-    - if @job_reference&.complete? && @job_reference.can_give_reference?
-      = govuk_button_link_to t(".print"), organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id, format: :pdf), class: "govuk-button--secondary"
+      - if @job_reference&.complete? && @job_reference.can_give_reference?
+        = form_with url: organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id, format: :pdf),
+          method: :get do |f|
+          = f.govuk_submit t(".print"), secondary: true
 
-    - if status.in?(%w[created pending])
-      = form_with model: @reference_request,
-        url: mark_as_received_organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id),
-        method: :patch do |f|
-        = f.govuk_submit t(".mark_as_received"), secondary: true
-    - elsif status == "received"
-      = form_with model: @reference_request,
-        url: mark_as_complete_organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id),
-        method: :patch do |f|
-        = f.govuk_submit t(".mark_as_completed"), secondary: true
+      - if status.in?(%w[created pending])
+        = form_with model: @reference_request,
+          url: mark_as_received_organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id),
+          method: :patch do |f|
+          = f.govuk_submit t(".mark_as_received"), secondary: true
+      - elsif status == "received"
+        = form_with model: @reference_request,
+          url: mark_as_complete_organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id),
+          method: :patch do |f|
+          = f.govuk_submit t(".mark_as_completed"), secondary: true
 
     .h2.govuk-heading-m = t(".referee_details.heading")
 
