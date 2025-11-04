@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Creating a vacancy" do
+  include ActiveJob::TestHelper
   let(:publisher) { create(:publisher) }
   let(:created_vacancy) { Vacancy.order(:created_at).last }
 
@@ -272,7 +273,9 @@ RSpec.describe "Creating a vacancy" do
 
         # Expect the invitation email to be sent when publishing as no publisher exists on our service with this email
         expect {
-          click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
+          perform_enqueued_jobs do
+            click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
+          end
         }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
         invitation_email = ActionMailer::Base.deliveries.last
