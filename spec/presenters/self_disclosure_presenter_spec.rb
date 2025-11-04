@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe SelfDisclosurePresenter do
   subject(:presenter) { described_class.new(job_application) }
 
-  let(:scope) { "jobseekers.job_applications.self_disclosure.review.completed" }
+  let(:scope) { "publishers.vacancies.job_applications.self_disclosure.completed" }
 
   describe ".personal_details" do
     let(:job_application) { self_disclosure.self_disclosure_request.job_application }
@@ -95,13 +95,13 @@ RSpec.describe SelfDisclosurePresenter do
     end
 
     describe ".header_text" do
-      it { expect(presenter.header_text).to eq(I18n.t("jobseekers.job_applications.self_disclosure.review.completed.self_disclosure_form")) }
+      it { expect(presenter.header_text).to eq(I18n.t("#{scope}.self_disclosure_form")) }
     end
 
     describe ".footer_text" do
       let(:expected) do
         [
-          I18n.t("jobseekers.job_applications.self_disclosure.review.completed.self_disclosure_form"),
+          I18n.t("#{scope}.self_disclosure_form"),
           job_application.name,
         ].join(" - ")
       end

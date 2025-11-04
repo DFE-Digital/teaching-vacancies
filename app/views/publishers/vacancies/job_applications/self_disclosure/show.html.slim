@@ -15,9 +15,9 @@
       = govuk_tag(text: t("reference_requests.#{disclosure_status}.status"), colour: t("reference_requests.#{disclosure_status}.colour"))
 
     - if @self_disclosure.request.marked_as_complete?
-      = render "jobseekers/job_applications/self_disclosure/review/completed"
+      = render "completed"
     - else
-      = render "jobseekers/job_applications/self_disclosure/review/pending"
+      = render "pending"
 
   .govuk-grid-column-one-third
     = render TimelineComponent.new do |timeline|

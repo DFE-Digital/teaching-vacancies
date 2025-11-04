@@ -9,7 +9,7 @@ class SelfDisclosurePresenter
 
   Section = Data.define(:title, :fields)
 
-  SCOPE = "jobseekers.job_applications.self_disclosure.review.completed".freeze
+  SCOPE = "publishers.vacancies.job_applications.self_disclosure.completed".freeze
 
   EVENT_LABELS = {
     received_off_service: I18n.t(".event.marked_as_received", scope: SCOPE),
@@ -78,7 +78,7 @@ class SelfDisclosurePresenter
   private
 
   def t(key)
-    I18n.t(key, scope: "jobseekers.job_applications.self_disclosure.review.completed")
+    I18n.t(key, scope: SCOPE)
   end
 
   def format(value)

@@ -7,3 +7,50 @@ en:
           show:
             communication_history: Communication history
             page_title: Self-disclosure form
+          pending:
+            line_1: Once the self-disclosure form is received you will be able to view it on this page. If you do not receive the self-disclosure form within 2 working days, you will be able to send a reminder.
+            line_2: If the request is more urgent, you should reach out to the candidate directly. If you have sent and received your own self-disclosure form for this candidate, you can manually mark it as received.
+            mark_as_received: Mark as received
+            mark_as_completed: Mark as completed
+            reminder: Send a reminder
+            collect_through_tv: Would you like to collect this self-disclosure form through Teaching Vacancies?
+
+          completed:
+            event:
+              received: Received
+              requested: Requested
+              marked_as_received: Marked as received
+              managed_outside_tv: Managed outside Teaching Vacancies
+              reminder_sent: Reminder sent
+              marked_as_complete: Marked as complete
+            self_disclosure_form: Self-disclosure form
+            manually_completed: This self-disclosure form has been marked as completed.
+            print: Download self-disclosure
+            "true": "Yes"
+            "false": "No"
+            n_a: N/A
+            personal_details: Personal details
+            name: Name
+            previous_names: Previous name(s)
+            address_line_1: Address line (1)
+            address_line_2: Address line (2)
+            city: Town or city
+            country: Country
+            postcode: Postcode
+            phone_number: Telephone/mobile number
+            date_of_birth: Date of birth
+            criminal: Criminal record self-disclosure
+            conduct: Conduct self-disclosure
+            confirmation: Confirmation self-disclosure
+            has_unspent_convictions:  Do you have any unspent conditional cautions or convictions in the UK or overseas?
+            has_spent_convictions: Do you have any spent adult cautions (simple or conditional) or convictions in the UK or overseas that are not protected (i.e. eligible to be filtered) as defined by the Rehabilitation of Offenders Act 1974 in England, Scotland and Wales or the Rehabilitation of Offenders (Northern Ireland) Order 1978?
+            is_barred: Are you included on the list of people barred from/listed as unsuitable to engage in regulated activity/work with children?
+            has_been_referred: If you are not currently barred from working with children, have you been referred to the Disclosure and Baring Service (DBS) or Disclosure Scotland for consideration to be added to one of the lists?
+            is_known_to_children_services: Have you ever been known to any children’s services department or police as being a risk or potential risk to children?
+            has_been_dismissed: Have you ever been dismissed for misconduct from any paid or voluntary position previously held by you?
+            has_been_disciplined: Have you ever been under investigation for or subject to any disciplinary sanctions in relation to your conduct at the time of your employment?
+            has_been_disciplined_by_regulatory_body: Have you ever been subject to any sanctions being placed on your professional registration, by a regulatory or licencing body in any country? (as applicable)
+            agreed_for_processing: I agree that the information provided here may be processed in connection with recruitment purposes and I understand that an offer of employment may be withdrawn or disciplinary action may be taken if information is not disclosed by me and subsequently come to the organisation's attention.
+            agreed_for_criminal_record: In accordance with the organisation's procedures if required I agree to provide a valid criminal record certificate and consent to the organisation clarifying any information provided on the disclosure with the agencies providing it.
+            agreed_for_organisation_update: I agree to inform the organisation within 24 hours if I am subsequently investigated by any agency or organisation in relation to concerns about my behaviour towards children or young people.
+            agreed_for_information_sharing: I understand that the information contained on this form, the results of the criminal record check and information supplied by third parties may be supplied by the organisation to other persons or organisations in circumstances where this is considered necessary to safeguard children.

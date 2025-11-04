@@ -19,7 +19,7 @@ class Publishers::Vacancies::JobApplications::SelfDisclosureController < Publish
       @job_application.self_disclosure_request.update!(marked_as_complete: true)
     else
       @job_application.self_disclosure_request.received_off_service!
-      flash[:success] = t("jobseekers.job_applications.self_disclosure.review.completed.manually_completed")
+      flash[:success] = t("publishers.vacancies.job_applications.self_disclosure.completed.manually_completed")
     end
 
     redirect_to organisation_job_job_application_self_disclosure_path(@vacancy.id, @job_application.id)

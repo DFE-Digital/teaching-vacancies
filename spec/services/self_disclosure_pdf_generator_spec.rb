@@ -14,7 +14,7 @@ RSpec.describe SelfDisclosurePdfGenerator do
   describe "#generate" do
     subject(:document) { generator.generate }
 
-    let(:scope) { "jobseekers.job_applications.self_disclosure.review.completed" }
+    let(:scope) { "publishers.vacancies.job_applications.self_disclosure.completed" }
 
     let(:pdf) { PDF::Inspector::Text.analyze(document.render).strings }
 
