@@ -98,9 +98,13 @@ FactoryBot.define do
       is_job_share { [true, false].sample }
       working_patterns { factory_rand_sample(%w[full_time part_time], 1..2) }
       working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
-      rand_phases = Vacancy.phases.keys.sample(Random.rand(1..3))
-      phases { rand_phases }
-      key_stages { factory_rand_sample(Vacancy.new(phases: rand_phases).key_stages_for_phases, 2..3) }
+      # rand_phases = factory_rand_sample(Vacancy.phases.keys, 1..3)
+      phases { factory_rand_sample(Vacancy.phases.keys, 1..3) }
+
+      # Subjects are ignored when phases don't include secondary
+      subjects { factory_sample(SUBJECT_OPTIONS, 2).map(&:first).sort! }
+
+      key_stages { factory_rand_sample(key_stages_for_phases, 2..3) }
       rand_contract_type = Vacancy.contract_types.keys.sample
       contract_type { rand_contract_type }
       # if contract type comes out as fixed term, then parental_leave_cover and fixed_term_contract_duration become mandatory

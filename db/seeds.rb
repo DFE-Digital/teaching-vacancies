@@ -72,7 +72,8 @@ FactoryBot.create(:vacancy, :for_seed_data, **attrs)
 
 # Vacancies at multiple schools in Weydon trust
 attrs = { organisations: weydon_trust.schools, phases: %w[secondary], publisher_organisation: weydon_trust, publisher: Publisher.all.sample }
-FactoryBot.create(:vacancy, :for_seed_data, **attrs)
+# need some secondary jobs with subjects sometimes
+300.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
 
 # Vacancies at multiple schools in Southampton local authority
 attrs = { organisations: southampton_la.schools.first(5), phases: %w[primary], publisher_organisation: southampton_la, publisher: Publisher.all.sample }
@@ -85,7 +86,7 @@ FactoryBot.create(:jobseeker, email: "jobseeker@contoso.com")
 emails_with_fewer_applications = ["jobseeker@contoso.com"] + user_emails
 # Job Applications
 statuses = JobApplication.statuses.keys
-PublishedVacancy.listed.each do |vacancy|
+PublishedVacancy.listed.first(50).each do |vacancy|
   Jobseeker.where.not(email: emails_with_fewer_applications).each do |jobseeker|
     application_status = JobApplication.statuses.keys.sample
     FactoryBot.create(:job_application, :for_seed_data, :"status_#{application_status}",
@@ -95,10 +96,10 @@ PublishedVacancy.listed.each do |vacancy|
 
   # only add 1 fake job application per-status to DFE jobseekers
   random_status = statuses.delete(statuses.sample)
+  # Ensures each one of the statuses gets used.
   next unless random_status
 
   Jobseeker.where(email: emails_with_fewer_applications).each do |jobseeker|
-    # Ensures each one of the statuses gets used. When no unused statuses are left, takes random ones from the list for further new applications.
     FactoryBot.create(:job_application, :for_seed_data, :"status_#{random_status}", jobseeker: jobseeker, vacancy: vacancy)
   end
 end
