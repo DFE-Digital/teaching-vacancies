@@ -2,9 +2,9 @@ require "rails_helper"
 
 RSpec.describe BlankJobApplicationPdf do
   let(:vacancy) do
-    build_stubbed(:vacancy, organisations: build_stubbed_list(:school, 1, :catholic),
-                            religion_type: :catholic)
+    build_stubbed(:vacancy, organisations: build_stubbed_list(:school, 1, :catholic), religion_type:)
   end
+  let(:religion_type) { "catholic" }
   let(:datasource) { described_class.new(job_application) }
   let(:employments) { [] }
   let(:memberships) { [] }
@@ -38,5 +38,56 @@ RSpec.describe BlankJobApplicationPdf do
     end
 
     it { expect(personal_details).to match_array(basic_table_data) }
+  end
+
+  describe "#religious_information" do
+    subject(:religious_information) { datasource.religious_information }
+
+    context "when catholic" do
+      let(:religion_type) { "catholic" }
+      let(:religious_data) do
+        [
+          ["Are you currently following a religion or faith?", "Yes / No"],
+          ["What is your religious denomination or faith?", nil],
+          ["Address of place of worship (optional)", nil],
+          ["Can you provide a religious referee?", "Yes / No"],
+          ["If yes, please provide the below information for your religious referee", nil],
+          ["Name", nil],
+          ["Address", nil],
+          ["Role", nil],
+          ["Email", nil],
+          ["Phone number (optional)", nil],
+          ["if you cannot provide a religious referee, can you provide a baptism certificate?", "If yes, please enclose a copy of your certificate."],
+          ["If you cannot provide a religious referee or a baptism certificate, con you provide the date and address of your baptism?", "Yes / No / Not applicable"],
+          ["if yes, please provide the below information", nil],
+          ["Address of baptism location", nil],
+          ["Date of your baptism", nil],
+          ["Please tick here if you cannot provide a religious referee, a baptism certificate or the date and address of your baptism.", nil],
+        ]
+      end
+
+      it { expect(religious_information).to match_array(religious_data) }
+    end
+
+    context "when other religion" do
+      let(:religion_type) { "other_religion" }
+      let(:religious_data) do
+        [
+          ["How will you support the school's ethos and aims", nil],
+          ["Are you currently following a religion or faith?", "Yes / No"],
+          ["What is your religious denomination or faith?", nil],
+          ["Address of place of worship (optional)", nil],
+          ["Can you provide religious referee?", "Yes / No"],
+          ["If yes, please provide the below information for your religious referee", nil],
+          ["Name", nil],
+          ["Address", nil],
+          ["Roles", nil],
+          ["Email", nil],
+          ["Phone number (optional)", nil],
+        ]
+      end
+
+      it { expect(religious_information).to match_array(religious_data) }
+    end
   end
 end
