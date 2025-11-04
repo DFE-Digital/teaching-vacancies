@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Creating a vacancy" do
   include ActiveJob::TestHelper
+
   let(:publisher) { create(:publisher) }
   let(:created_vacancy) { Vacancy.order(:created_at).last }
 
