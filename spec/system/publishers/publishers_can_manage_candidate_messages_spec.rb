@@ -74,6 +74,8 @@ RSpec.describe "Publishers can manage candidate messages" do
       let(:login_organisation) { secondary_school }
 
       it "can only see messages on jobs published by their own school" do
+        visit publishers_candidate_messages_path
+
         expect(page).to have_content("Inbox (1)")
 
         expect(candidate_names).to eq([school_published_vacancy_application.name])
@@ -102,7 +104,7 @@ RSpec.describe "Publishers can manage candidate messages" do
     end
 
     scenario "when searching by job title" do
-      expect(page).to have_content("2 messages")
+      expect(page).to have_content("2 conversations")
 
       within("table tbody") do
         expect(page).to have_content("Science Teacher")
@@ -112,7 +114,7 @@ RSpec.describe "Publishers can manage candidate messages" do
       fill_in "keyword", with: "Science"
       click_button "Search"
 
-      expect(page).to have_content("1 result found for 'Science'")
+      expect(page).to have_content("Showing 1 to 1 of 1 conversations for 'Science'")
 
       within("table tbody") do
         expect(page).to have_content("Science Teacher")
@@ -124,7 +126,7 @@ RSpec.describe "Publishers can manage candidate messages" do
       fill_in "keyword", with: "interview"
       click_button "Search"
 
-      expect(page).to have_content("1 result found for 'interview'")
+      expect(page).to have_content("Showing 1 to 1 of 1 conversations for 'interview'")
 
       within("table tbody") do
         expect(page).to have_content("Science Teacher")
@@ -136,7 +138,7 @@ RSpec.describe "Publishers can manage candidate messages" do
       fill_in "keyword", with: "nonexistent"
       click_button "Search"
 
-      expect(page).to have_content("0 results found for 'nonexistent'")
+      expect(page).to have_content("Showing 0 to 0 of 0 conversations for 'nonexistent'")
       expect(page).to have_content("No messages yet.")
     end
 
@@ -147,14 +149,15 @@ RSpec.describe "Publishers can manage candidate messages" do
 
       before do
         create(:jobseeker_message, conversation: archived_science_conversation, sender: jobseeker, content: "Archived message")
-        visit publishers_candidate_messages_path(tab: "archive")
       end
 
       it "searches only within archived conversations, not inbox conversations" do
+        visit publishers_candidate_messages_path(tab: "archive")
+
         fill_in "keyword", with: "Science"
         click_button "Search"
 
-        expect(page).to have_content("1 result found for 'Science'")
+        expect(page).to have_content("Showing 1 to 1 of 1 conversations for 'Science'")
 
         within("table tbody") do
           expect(page).to have_content("Physics and Science") # Archived conversation
@@ -193,14 +196,14 @@ RSpec.describe "Publishers can manage candidate messages" do
       end
 
       it "does not show duplicate conversations when searching for common message content" do
-        expect(page).to have_content("2 messages")
+        expect(page).to have_content("2 conversations")
         expect(candidate_names.count).to eq(2)
 
         # Search for common content that appears in both messages
         fill_in "keyword", with: "Hi"
         click_button "Search"
 
-        expect(page).to have_content("2 results found for 'Hi'")
+        expect(page).to have_content("Showing 1 to 2 of 2 conversations for 'Hi'")
         expect(candidate_names.count).to eq(2)
 
         within("table tbody") do
