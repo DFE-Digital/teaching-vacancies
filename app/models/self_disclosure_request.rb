@@ -33,10 +33,6 @@ class SelfDisclosureRequest < ApplicationRecord
     touch
   end
 
-  def completed?
-    marked_as_complete? || received?
-  end
-
   def pending?
     manual? || sent?
   end

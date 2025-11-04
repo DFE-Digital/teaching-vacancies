@@ -14,7 +14,7 @@
     .govuk-body
       = govuk_tag(text: t("reference_requests.#{disclosure_status}.status"), colour: t("reference_requests.#{disclosure_status}.colour"))
 
-    - if @self_disclosure.request.completed?
+    - if @self_disclosure.request.marked_as_complete?
       = render "jobseekers/job_applications/self_disclosure/review/completed"
     - else
       = render "jobseekers/job_applications/self_disclosure/review/pending"

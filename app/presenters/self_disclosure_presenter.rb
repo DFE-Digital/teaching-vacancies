@@ -14,7 +14,7 @@ class SelfDisclosurePresenter
   EVENT_LABELS = {
     received_off_service: I18n.t(".event.marked_as_received", scope: SCOPE),
     manual: I18n.t(".event.managed_outside_tv", scope: SCOPE),
-    received: I18n.t(".event.completed", scope: SCOPE),
+    received: I18n.t(".event.received", scope: SCOPE),
     sent: I18n.t(".event.requested", scope: SCOPE),
   }.with_indifferent_access
 

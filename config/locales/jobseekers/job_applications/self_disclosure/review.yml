@@ -13,7 +13,7 @@ en:
 
           completed:
             event:
-              completed: Completed
+              received: Received
               requested: Requested
               marked_as_received: Marked as received
               managed_outside_tv: Managed outside Teaching Vacancies
