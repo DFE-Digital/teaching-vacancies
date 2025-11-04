@@ -179,9 +179,9 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
           it "allows jobseekers to specify a baptism address and date" do
             fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.baptism_address"), with: baptism_address
-            fill_in "Day", with: 7
-            fill_in "Month", with: 3
-            fill_in "Year", with: 2007
+            fill_in "jobseekers_job_application_catholic_form[baptism_date(3i)]", with: 7
+            fill_in "jobseekers_job_application_catholic_form[baptism_date(2i)]", with: 3
+            fill_in "jobseekers_job_application_catholic_form[baptism_date(1i)]", with: 2007
             click_on I18n.t("buttons.save_and_continue")
             expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
             complete_from_references_page
