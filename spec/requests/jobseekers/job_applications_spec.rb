@@ -16,47 +16,6 @@ RSpec.describe "Job applications" do
         expect(response.location).to match(a_string_matching(new_jobseeker_session_path))
       end
     end
-
-    context "when the jobseeker is signed in" do
-      before { sign_in(jobseeker, scope: :jobseeker) }
-
-      after { sign_out(jobseeker) }
-
-      context "when the job is not live" do
-        let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
-
-        it "returns not found" do
-          get new_jobseekers_job_job_application_path(vacancy.id)
-
-          expect(response).to have_http_status(:not_found)
-        end
-      end
-
-      context "when the job is live" do
-        it "triggers a `vacancy_apply_clicked` event", :dfe_analytics do
-          get new_jobseekers_job_job_application_path(vacancy.id)
-
-          expect(:vacancy_apply_clicked).to have_been_enqueued_as_analytics_event(with_data: { vacancy_id: vacancy.id }) # rubocop:disable RSpec/ExpectActual
-        end
-
-        context "when a job application for the job already exists" do
-          let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
-
-          it "redirects to `jobseekers_job_applications_path`" do
-            expect(get(new_jobseekers_job_job_application_path(vacancy.id))).to redirect_to(jobseekers_job_applications_path)
-          end
-        end
-
-        context "when the vacancy does not enable job applications" do
-          let(:vacancy) { create(:vacancy, enable_job_applications: false, organisations: [build(:school)]) }
-
-          it "raises an error" do
-            expect { get new_jobseekers_job_job_application_path(vacancy.id) }
-              .to raise_error(ActionController::RoutingError, /Cannot apply for this vacancy/)
-          end
-        end
-      end
-    end
   end
 
   context "when signed in" do
@@ -101,9 +60,40 @@ RSpec.describe "Job applications" do
         expect(response)
           .to redirect_to(jobseekers_job_application_apply_path(jobseeker.job_applications.first))
       end
+
+      context "when there are non-draft applications" do
+        let(:old_vacancy) { create(:vacancy, organisations: [build(:school)]) }
+        let!(:recent_job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: old_vacancy) }
+
+        context "when the job is not listed" do
+          let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
+
+          it "returns not found" do
+            post jobseekers_job_job_application_path(vacancy.id)
+
+            expect(response).to have_http_status(:not_found)
+          end
+        end
+
+        it "creates a job application and redirects to the review path" do
+          expect { post(jobseekers_job_job_application_path(vacancy.id)) }
+            .to change { jobseeker.job_applications.count }.by(1)
+
+          expect(response)
+            .to redirect_to(jobseekers_job_application_apply_path(jobseeker.job_applications.draft.first.id))
+        end
+      end
     end
 
-    describe "GET #new_quick_apply" do
+    describe "GET #new" do
+      context "when the job is live" do
+        it "triggers a `vacancy_apply_clicked` event", :dfe_analytics do
+          get new_jobseekers_job_job_application_path(vacancy.id)
+
+          expect(:vacancy_apply_clicked).to have_been_enqueued_as_analytics_event(with_data: { vacancy_id: vacancy.id }) # rubocop:disable RSpec/ExpectActual
+        end
+      end
+
       context "when a job application for the job already exists" do
         let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
@@ -136,53 +126,10 @@ RSpec.describe "Job applications" do
           end
         end
 
-        it "renders the new_quick_apply template" do
+        it "renders the 'new' template" do
           get new_jobseekers_job_job_application_path(vacancy.id)
 
           expect(response).to render_template(:new)
-        end
-      end
-    end
-
-    describe "POST #quick_apply" do
-      context "when a job application for the job already exists" do
-        let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
-
-        it "redirects to `jobseekers_job_applications_path`" do
-          expect(post(jobseekers_job_job_application_path(vacancy.id)))
-            .to redirect_to(jobseekers_job_applications_path)
-        end
-      end
-
-      context "when the vacancy does not enable job applications" do
-        let(:vacancy) { create(:vacancy, enable_job_applications: false, organisations: [build(:school)]) }
-
-        it "raises an error" do
-          expect { post jobseekers_job_job_application_path(vacancy.id) }
-            .to raise_error(ActionController::RoutingError, /Cannot apply for this vacancy/)
-        end
-      end
-
-      context "when there are non-draft applications" do
-        let(:old_vacancy) { create(:vacancy, organisations: [build(:school)]) }
-        let!(:recent_job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: old_vacancy) }
-
-        context "when the job is not listed" do
-          let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
-
-          it "returns not found" do
-            post jobseekers_job_job_application_path(vacancy.id)
-
-            expect(response).to have_http_status(:not_found)
-          end
-        end
-
-        it "creates a job application and redirects to the review path" do
-          expect { post(jobseekers_job_job_application_path(vacancy.id)) }
-            .to change { jobseeker.job_applications.count }.by(1)
-
-          expect(response)
-            .to redirect_to(jobseekers_job_application_apply_path(jobseeker.job_applications.draft.first.id))
         end
       end
     end
@@ -372,7 +319,7 @@ RSpec.describe "Job applications" do
       end
 
       context "without a profile" do
-        it "renders quick apply" do
+        it "renders 'new'" do
           expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
             .to  render_template(:new)
         end
@@ -383,7 +330,7 @@ RSpec.describe "Job applications" do
           create(:jobseeker_profile, jobseeker: jobseeker)
         end
 
-        it "renders new quick apply" do
+        it "renders 'new'" do
           expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
             .to  render_template(:new)
         end
@@ -394,7 +341,7 @@ RSpec.describe "Job applications" do
           create(:jobseeker_profile, jobseeker: jobseeker, personal_details: build(:personal_details, has_right_to_work_in_uk: true))
         end
 
-        it "renders new quick apply" do
+        it "renders 'new'" do
           expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
             .to  render_template(:new)
         end
@@ -407,7 +354,7 @@ RSpec.describe "Job applications" do
 
         let(:visa_sponsorship) { true }
 
-        it "renders new quick apply" do
+        it "renders 'new'" do
           expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
             .to  render_template(:new)
         end
