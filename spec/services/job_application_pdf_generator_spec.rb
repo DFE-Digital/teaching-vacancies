@@ -41,7 +41,7 @@ RSpec.describe JobApplicationPdfGenerator do
     end
 
     it "includes page number" do
-      expect(pdf).to include("1 of 4")
+      expect(pdf).to include("1 of 5")
     end
 
     context "when vacancy religion type is no_religion" do
