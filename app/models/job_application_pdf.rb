@@ -179,36 +179,25 @@ class JobApplicationPdf
     ]
   end
 
-  # rubocop:disable Metrics/MethodLength
   def declarations
-    return @declarations if @declarations.present?
+    @declarations ||= begin
+      safeguarding_issues_info = yes_details_no(job_application.has_safeguarding_issue?, job_application.safeguarding_issue_details)
 
-    safeguarding_issues_info = yes_details_no(
-      job_application.has_safeguarding_issue?,
-      job_application.safeguarding_issue_details,
-    )
+      group_type = organisation_label_type(job_application.vacancy.organisation)
+      close_relationships_info = yes_details_no(job_application.has_close_relationships?, job_application.close_relationships_details)
 
-    group_type = organisation_label_type(job_application.vacancy.organisation)
-    close_relationships_info = yes_details_no(
-      job_application.has_close_relationships?,
-      job_application.close_relationships_details,
-    )
+      life_abroad_info = yes_details_no(job_application.has_lived_abroad?, job_application.life_abroad_details)
+      scope = "helpers.legend.jobseekers_job_application_declarations_form"
 
-    life_abroad_info = yes_details_no(
-      job_application.has_lived_abroad?,
-      job_application.life_abroad_details,
-    )
-    scope = "helpers.legend.jobseekers_job_application_declarations_form"
-
-    @declarations = table_class[
-      [
-        [I18n.t("has_safeguarding_issue", scope:), safeguarding_issues_info],
-        [I18n.t("has_close_relationships.#{group_type}", scope:, organisation: vacancy.organisation_name), close_relationships_info],
-        [I18n.t("has_lived_abroad", scope:), life_abroad_info],
-      ],
-    ]
+      table_class[
+        [
+          [I18n.t("has_safeguarding_issue", scope:), safeguarding_issues_info],
+          [I18n.t("has_close_relationships.#{group_type}", scope:, organisation: vacancy.organisation_name), close_relationships_info],
+          [I18n.t("has_lived_abroad", scope:), life_abroad_info],
+        ],
+      ]
+    end
   end
-  # rubocop:enable Metrics/MethodLength
 
   private
 

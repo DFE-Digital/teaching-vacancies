@@ -26,7 +26,7 @@
           = f.govuk_text_field :close_relationships_details
         = f.govuk_radio_button :has_close_relationships, "false"
 
-      = f.govuk_radio_buttons_fieldset :has_lived_abroad, legend: { text: t("helpers.legend.jobseekers_job_application_declarations_form.has_lived_abroad", organisation: vacancy.organisation_name) }, class: "life-abroad" do
+      = f.govuk_radio_buttons_fieldset :has_lived_abroad, class: "life-abroad" do
         = f.govuk_radio_button :has_lived_abroad, "true", link_errors: true do
           = f.govuk_text_field :life_abroad_details
         = f.govuk_radio_button :has_lived_abroad, "false"

@@ -2,7 +2,7 @@
 
 = job_application_review(@job_application, show_sidebar: false) do |r|
   - r.with_header do
-    = render "banner"
+    = render "banner", job_application: @job_application
 
   - r.with_above do
     - unless vacancy.live?
@@ -14,11 +14,11 @@
 
     h2.govuk-heading-l = t(".heading")
 
-  - render "job_application_review_sections", r: r
+  - render "job_application_review_sections", r: r, job_application: @job_application
 
   - r.with_below do
     - unless @job_application.deadline_passed?
-      = form_for @review_form, url: jobseekers_job_application_submit_path(job_application), method: :post do |f|
+      = form_for @review_form, url: jobseekers_job_application_submit_path(@job_application), method: :post do |f|
         = f.govuk_error_summary
 
         - if current_jobseeker.jobseeker_profile.present? && !vacancy.uploaded_form?
