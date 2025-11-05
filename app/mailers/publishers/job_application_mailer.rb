@@ -1,14 +1,16 @@
 class Publishers::JobApplicationMailer < Publishers::BaseMailer
   helper VacanciesHelper
 
-  def applications_received(publisher:)
+  def applications_received(contact_email:)
     @publisher = publisher
-    @vacancies = publisher.vacancies_with_job_applications_submitted_yesterday
+    @vacancies = Vacancy.distinct
+                        .joins(:job_applications)
+                        .where("DATE(job_applications.submitted_at) = ? AND job_applications.status = ? AND contact_email = ?", Date.yesterday, 1, contact_email)
 
     @job_applications_count = @vacancies.sum { |vacancy| vacancy.job_applications.submitted_yesterday.count }
     @subject = I18n.t("publishers.job_application_mailer.applications_received.subject", count: @job_applications_count)
 
-    send_email(to: publisher.email, subject: @subject)
+    send_email(to: contact_email, subject: @subject)
   end
 
   private
