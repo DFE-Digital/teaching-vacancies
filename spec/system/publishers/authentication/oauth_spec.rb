@@ -206,6 +206,22 @@ RSpec.describe "Publisher authentication" do
       it_behaves_like "a failed Publisher sign in", email: "another_email@example.com"
     end
 
+    context "with valid credentials but unknown organisation category" do
+      before do
+        stub_publisher_authentication_step(email: dsi_email_address, category: "009") # Training provider. Not supported by Teaching Vacancies
+        stub_publisher_authorisation_step
+      end
+
+      it "records an error in sentry and redirects the user to the unknown organisation category page" do
+        expect(Sentry).to receive(:capture_exception).with(an_instance_of(OmniauthCallbacksController::OrganisationCategoryNotFound))
+
+        visit new_publisher_session_path
+        sign_in_publisher
+        expect(page.status_code).to eq(403) # Forbidden
+        expect(page).to have_content("You are trying to sign in to Teaching Vacancies on behalf of FooBar organisation, which is an organisation of type \"Trainning providers\".")
+      end
+    end
+
     context "when there is was an error with DfE Sign-in" do
       before do
         stub_publisher_authentication_step
