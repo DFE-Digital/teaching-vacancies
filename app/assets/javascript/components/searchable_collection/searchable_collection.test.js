@@ -40,9 +40,9 @@ describe('searching group of checkboxes', () => {
     controller.inputTarget.value = 'abc';
     controller.inputTarget.dispatchEvent(new Event('input'));
 
-    expect(document.getElementsByClassName('govuk-checkboxes__input')[0].parentElement.style.display).toBe('block');
+    expect(document.getElementsByClassName('govuk-checkboxes__input')[0].parentElement.style.display).toBe('flex');
     expect(document.getElementsByClassName('govuk-radios__input')[0].parentElement.style.display).toBe('none');
-    expect(document.getElementsByClassName('govuk-checkboxes__input')[1].parentElement.style.display).toBe('block');
+    expect(document.getElementsByClassName('govuk-checkboxes__input')[1].parentElement.style.display).toBe('flex');
 
     expect(document.querySelector('.collection-match').innerHTML).toBe('2 subjects match abc');
   });
