@@ -27,10 +27,29 @@ module AuthHelpers
 
   def stub_publisher_authentication_step(organisation_id: "939eac36-0777-48c2-9c2c-b87c948a9ee0",
                                          school_urn: "110627", trust_uid: nil, la_code: nil,
+                                         category: nil,
                                          email: "an-email@example.com")
-    category = "001" if school_urn.present?
-    category = "010" if trust_uid.present?
-    category = "002" if la_code.present?
+    if category.blank?
+      category = "001" if school_urn.present?
+      category = "010" if trust_uid.present?
+      category = "002" if la_code.present?
+    end
+
+    category_name = case category
+                    when "001"
+                      "Single establishment"
+                    when "002"
+                      "Local authority"
+                    when "010"
+                      "Multi-academy trust"
+                    when "013"
+                      "Single-academy trust"
+                    when "009"
+                      "Trainning providers" # NOTE: Not accepted by our service
+                    else
+                      "Unknown"
+                    end
+
     OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
       provider: "dfe",
       uid: "161d1f6a-44f1-4a1a-940d-d1088c439da7",
@@ -43,7 +62,8 @@ module AuthHelpers
             id: organisation_id,
             urn: school_urn,
             uid: trust_uid,
-            category: { id: category },
+            name: "FooBar organisation",
+            category: { id: category, name: category_name },
             establishmentNumber: la_code,
           },
         },

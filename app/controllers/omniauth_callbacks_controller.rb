@@ -25,9 +25,20 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     redirect_to new_publisher_session_path, warning: t(".message")
   end
 
-  def unknown_organisation_category
+  def unknown_organisation_category(exception)
     @org_name = auth_hash.dig("extra", "raw_info", "organisation", "name")
     @org_type = auth_hash.dig("extra", "raw_info", "organisation", "category", "name")
+
+    Sentry.with_scope do |scope|
+      scope.set_context(
+        "Authentication Organisation Context",
+        {
+          user_id: user_id,
+          auth_organisation: auth_hash.dig("extra", "raw_info", "organisation"),
+        },
+      )
+      Sentry.capture_exception(exception)
+    end
 
     render "unknown_organisation_category", status: :forbidden
   end
