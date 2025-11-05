@@ -1,6 +1,6 @@
 - content_for :page_title_prefix, t(".page_title")
 
-= render "publishers/vacancies/review_banner"
+= render "publishers/vacancies/review_banner", tag_name: tag_name(vacancy)
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds

@@ -10,7 +10,8 @@ RSpec.describe JobApplicationPdfGenerator do
                   qualifications: build_stubbed_list(:qualification, 3),
                   training_and_cpds: build_stubbed_list(:training_and_cpd, 2))
   end
-  let(:generator) { described_class.new(job_application) }
+  let(:presenter) { JobApplicationPdf.new(job_application) }
+  let(:generator) { described_class.new(presenter) }
 
   describe "#generate" do
     subject(:document) { generator.generate }
@@ -42,6 +43,18 @@ RSpec.describe JobApplicationPdfGenerator do
 
     it "includes page number" do
       expect(pdf).to include("1 of 5")
+    end
+
+    describe "render_confirmation" do
+      context "when job application presenter" do
+        it { expect(pdf).not_to include("I confirm that the above information is accurate and complete") }
+      end
+
+      context "when blank job application presenter" do
+        let(:presenter) { BlankJobApplicationPdf.new(job_application) }
+
+        it { expect(pdf).to include("I confirm that the above information is accurate and complete") }
+      end
     end
 
     context "when vacancy religion type is no_religion" do

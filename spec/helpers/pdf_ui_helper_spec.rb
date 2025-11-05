@@ -71,4 +71,22 @@ RSpec.describe PdfUiHelper do
     it { is_expected.to include(*row_one) }
     it { is_expected.to include(*row_two.map(&:to_s)) }
   end
+
+  describe ".checkbox" do
+    let(:text) { "checkbox label" }
+
+    before { instance.page_checkbox(text) }
+
+    it { is_expected.to include(text) }
+  end
+
+  describe ".list" do
+    let(:entries) do
+      ["row one", "row two"]
+    end
+
+    before { instance.page_list(*entries) }
+
+    it { is_expected.to include(*entries) }
+  end
 end

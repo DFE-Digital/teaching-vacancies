@@ -19,8 +19,9 @@ class JobApplicationZipBuilder
           zio.put_next_entry(filename)
           zio.write blob.download
         else
+          presenter = JobApplicationPdf.new(job_application)
           zio.put_next_entry "#{job_application.first_name}_#{job_application.last_name}.pdf"
-          zio.write JobApplicationPdfGenerator.new(job_application).generate.render
+          zio.write JobApplicationPdfGenerator.new(presenter).generate.render
         end
       end
     }.tap(&:rewind)

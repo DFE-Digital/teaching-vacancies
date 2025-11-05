@@ -109,6 +109,8 @@ en:
       upload_application_form:
         not_authorized_to_download: You are not authorized to download this file.
     job_applications:
+      banner:
+        withdrawn_inset: If you accidentally withdrew from this job, you can download a blank copy of the application form, fill it in and submit it directly to the school.
       apply:
         apply: Apply for this job
         heading: Your application

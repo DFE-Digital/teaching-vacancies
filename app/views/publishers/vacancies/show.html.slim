@@ -1,12 +1,12 @@
 - content_for :page_title_prefix, publishers_show_page_title_prefix(@vacancy)
 
+- tag_name = tag_name(@vacancy)
+
 - if @vacancy.draft?
   = render "publishers/vacancies/review_breadcrumbs", vacancy: @vacancy
+  = render "publishers/vacancies/heading", vacancy: @vacancy, tag_name: tag_name
 
-  - if @next_invalid_step.nil?
-    = render "publishers/vacancies/review_banners/complete_draft", vacancy: @vacancy
-  - else
-    = render "publishers/vacancies/review_banners/incomplete_draft", vacancy: @vacancy, next_invalid_step: @next_invalid_step
+  = render "publishers/vacancies/review_banners/draft", vacancy: @vacancy, next_invalid_step: @next_invalid_step
 
   = govuk_task_list do |task_list|
     - status = vacancy_draft_status(@current_organisation, @vacancy, :job_details)
@@ -37,6 +37,6 @@
           html_attributes: { id: section },
           status: t(".task_list.status_tags.cannot_start_yet"))
 - else
-  = render "review_banner", vacancy: @vacancy, current_organisation: @current_organisation
+  = render "review_banner", vacancy: @vacancy, current_organisation: @current_organisation, tag_name: tag_name
 
   = render "sections", vacancy: @vacancy, current_organisation: @current_organisation, step_process: @step_process
