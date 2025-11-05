@@ -7,6 +7,8 @@ class JobApplicationPdfGenerator
     @document = Prawn::Document.new(page_size: "A4", margin: 1.cm)
   end
 
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
   def generate
     page_style
     job_application_page_header
@@ -34,6 +36,8 @@ class JobApplicationPdfGenerator
 
     document
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   private
 
