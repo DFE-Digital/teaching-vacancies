@@ -1,6 +1,8 @@
 class Publishers::ReferenceReceivedNotifier < ApplicationNotifier
   recipients do
-    record.reference_request.referee.job_application.vacancy.publisher
+    # find publisher user that has been selected to be the contact for the vacancy
+    vacancy = record.reference_request.referee.job_application.vacancy
+    vacancy.organisation.publishers.find_by(email: vacancy.contact_email)
   end
 
   deliver_by :email do |config|

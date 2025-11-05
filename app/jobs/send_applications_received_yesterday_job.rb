@@ -2,8 +2,8 @@ class SendApplicationsReceivedYesterdayJob < ApplicationJob
   queue_as :low
 
   def perform
-    publishers_with_vacancies_with_applications_submitted_yesterday.each do |publisher|
-      next unless publisher.email?
+    contact_emails_with_applications_submitted_yesterday.each do |contact_email|
+      next if contact_email.blank?
 
       Publishers::JobApplicationMailer.applications_received(publisher, publisher.vacancies_with_job_applications_submitted_yesterday).deliver_later
       Rails.logger.info("Sidekiq: Sending job applications received yesterday for publisher id: #{publisher.id}")

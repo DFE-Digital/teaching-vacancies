@@ -30,8 +30,17 @@ class SelfDisclosure < ApplicationRecord
   end
 
   def mark_as_received
+    vacancy = self_disclosure_request.job_application.vacancy
+    registered_publisher_user = vacancy.organisation.publishers.find_by(email: vacancy.contact_email)
+
     self_disclosure_request.received!
-    Publishers::SelfDisclosureReceivedNotifier.with(record: self)
-                                               .deliver
+
+    # cannot send a notification to a user that has not yet registered on our service so just send an email in that case.
+    if registered_publisher_user
+      Publishers::SelfDisclosureReceivedNotifier.with(record: self)
+                                                .deliver
+    else
+      Publishers::CollectReferencesMailer.self_disclosure_received(vacancy.job_application).deliver_later
+    end
   end
 end

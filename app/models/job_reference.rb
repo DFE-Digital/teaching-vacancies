@@ -38,8 +38,16 @@ class JobReference < ApplicationRecord
   has_encrypted :would_reemploy_any_reason
 
   def mark_as_received
+    vacancy = reference_request.referee.job_application.vacancy
+    registered_publisher_user = vacancy.organisation.publishers.find_by(email: contact_email)
     # invalidate token after reference is complete
     reference_request.update!(status: :received, token: SecureRandom.uuid)
-    Publishers::ReferenceReceivedNotifier.with(record: self).deliver
+
+    # cannot send a notification to a user that has not yet registered on our service so just send an email in that case.
+    if registered_publisher_user
+      Publishers::ReferenceReceivedNotifier.with(record: self).deliver
+    else
+      Publishers::CollectReferencesMailer.reference_received(reference_request).deliver_later
+    end
   end
 end
