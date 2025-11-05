@@ -11,7 +11,7 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
     def vacancies
       vacancies_published_after_date
         .or(vacancies_updated_after_date)
-        .or(vacancies_to_repost_today)
+        .or(vacancies_to_repost_today).order(publish_on: :desc)
     end
 
     private
