@@ -3,7 +3,7 @@
       .govuk-grid-column-one-half
         .govuk-grid-row
           .govuk-grid-column-full
-            span.govuk-footer__heading.govuk-heading-m
+            h2.govuk-footer__heading.govuk-heading-m
               = t("footer.headings.for_job_seekers")
             ul.govuk-footer__list
               li.govuk-footer__list-item
@@ -22,7 +22,7 @@
       .govuk-grid-column-one-half
         .govuk-grid-row
           .govuk-grid-column-full
-            span.govuk-footer__heading.govuk-heading-m
+            h2.govuk-footer__heading.govuk-heading-m
               = t("footer.headings.for_schools")
             ul.govuk-footer__list
               - if publisher_signed_in?
@@ -37,7 +37,7 @@
                 = link_to t("footer.hiring_guides"), posts_path(section: "get-help-hiring"), class: "govuk-footer__link"
         .govuk-grid-row
           .govuk-grid-column-full
-            span.govuk-footer__heading.govuk-heading-m
+            h2.govuk-footer__heading.govuk-heading-m
               = t("footer.headings.support_and_feedback")
             ul.govuk-footer__list
               li.govuk-footer__list-item
