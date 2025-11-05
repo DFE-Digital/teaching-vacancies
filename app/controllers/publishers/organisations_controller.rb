@@ -5,7 +5,7 @@ class Publishers::OrganisationsController < Publishers::BaseController
 
   def preview
     @organisation = Organisation.friendly.find(params[:organisation_id])
-    @vacancies = @organisation.vacancies.live
+    @vacancies = @organisation.all_live_vacancies
   end
 
   def profile_incomplete
@@ -14,7 +14,6 @@ class Publishers::OrganisationsController < Publishers::BaseController
 
   private
 
-  # :nocov:
   def organisation
     id = params[:id] || params[:organisation_id]
     @organisation ||= if id&.in?([current_organisation.friendly_id, current_organisation.id])
@@ -26,7 +25,6 @@ class Publishers::OrganisationsController < Publishers::BaseController
 
     @organisation
   end
-  # :nocov:
 
   def back_link_destination
     if params[:vacancy_id]
