@@ -15,7 +15,7 @@ class SendApplicationsReceivedYesterdayJob < ApplicationJob
   def contact_emails_with_applications_submitted_yesterday
     Vacancy.distinct
            .joins(:job_applications)
-           .where("DATE(job_applications.submitted_at) = ? AND job_applications.status = ?", Date.yesterday, 1)
+           .merge(JobApplication.submitted_yesterday)
            .pluck(:contact_email)
            .compact
   end
