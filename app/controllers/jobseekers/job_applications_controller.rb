@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/ClassLength
 class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseController
   include Jobseekers::QualificationFormConcerns
@@ -11,24 +10,23 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   helper_method :employments, :job_application, :qualification_form_param_key, :vacancy
 
+  # rubocop:disable Metrics/AbcSize
   def index
-    draft_job_applications = current_jobseeker.job_applications
-                                              .includes(:vacancy).draft
-                                              .order(updated_at: :desc)
+    # only show applications from the last 12 months to avoidf cluttering up the display
+    default_scope = JobApplication.includes(:self_disclosure_request, :vacancy)
+                                  .where(jobseeker: current_jobseeker, updated_at: 12.months.ago..)
+    draft_job_applications = default_scope.draft.order(updated_at: :desc)
     active_drafts, expired_drafts = draft_job_applications.partition { |job_application| job_application.vacancy.expires_at.future? }
 
     # This is the primary sort order for application statuses on the index page
     status_keys = %i[offered interviewing shortlisted reviewed submitted unsuccessful rejected unsuccessful_interview withdrawn declined].freeze
 
-    action_required = JobApplication.includes(:self_disclosure_request, :vacancy)
-                                    .where(jobseeker: current_jobseeker)
-                                    .joins(:self_disclosure_request)
-                                    .merge(SelfDisclosureRequest.sent)
-                                    .interviewing.order(submitted_at: :desc)
+    action_required = default_scope
+                        .joins(:self_disclosure_request)
+                        .merge(SelfDisclosureRequest.sent)
+                        .interviewing.order(submitted_at: :desc)
 
-    active_job_applications = current_jobseeker.job_applications
-                                                .includes(:vacancy)
-                                                .where.not(status: :draft)
+    active_job_applications = default_scope.where.not(status: :draft)
                                                 .order(submitted_at: :desc)
                                                 .sort_by { |x| status_keys.index(x.status.to_sym) } - action_required
     all_applications = active_drafts + action_required + active_job_applications + expired_drafts
@@ -36,6 +34,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     @count = all_applications.size
     @pagy, @job_applications = pagy_array(all_applications)
   end
+  # rubocop:enable Metrics/AbcSize
 
   def new
     send_dfe_analytics_event
@@ -275,5 +274,4 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     previous_application? || profile.present?
   end
 end
-# rubocop:enable Metrics/AbcSize
 # rubocop:enable Metrics/ClassLength
