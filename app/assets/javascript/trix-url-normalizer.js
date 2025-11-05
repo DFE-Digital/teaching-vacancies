@@ -1,6 +1,13 @@
 export function initTrixURLNormalizer() {
   document.addEventListener('trix-initialize', () => {
     const trixToolbar = document.querySelector('trix-toolbar');
+    
+    // Make toolbar buttons keyboard accessible by removing tabindex="-1"
+    const toolbarButtons = trixToolbar.querySelectorAll('button[tabindex="-1"]');
+    toolbarButtons.forEach(button => {
+      button.removeAttribute('tabindex');
+    });
+    
     const normalizeWebEmbedURL = () => {
       const url = urlInput.value.trim();
       // return when no value
