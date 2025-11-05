@@ -12,6 +12,11 @@ RSpec.describe "Jobseekers can view all the jobs" do
     expect(current_path).to eq(jobs_path)
   end
 
+  it "can see the jobs on the school page" do
+    visit organisation_path school
+    expect(page.all("a.view-vacancy-link").count).to eq(5)
+  end
+
   it "jobseekers can distinguish between the listed jobs that allow to apply through Teaching Vacancies and the ones who don't" do
     job_without_apply = create(:vacancy, :no_tv_applications, :past_publish, expires_at: 2.years.from_now, organisations: [school])
     visit jobs_path
