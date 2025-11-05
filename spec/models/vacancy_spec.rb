@@ -239,9 +239,6 @@ RSpec.describe Vacancy do
   end
 
   context "scopes" do
-    let(:expired_earlier_today) { create(:vacancy, expires_at: 5.hour.ago) }
-    let(:expires_later_today) { create(:vacancy, expires_at: 1.hour.from_now) }
-
     # rubocop:disable RSpec/IndexedLet
     describe ".active_in_current_academic_year" do
       let(:jun_1_2025) { Date.current.beginning_of_year.months_since(5) }
@@ -293,17 +290,6 @@ RSpec.describe Vacancy do
     end
     # rubocop:enable RSpec/IndexedLet
 
-    describe "#applicable" do
-      it "finds current vacancies" do
-        expired_earlier_today.send :set_slug
-        expired_earlier_today.save(validate: false)
-
-        results = PublishedVacancy.applicable
-        expect(results).to include(expires_later_today)
-        expect(results).to_not include(expired_earlier_today)
-      end
-    end
-
     describe "#expired" do
       it "retrieves published vacancies that have a past expires_at" do
         create_list(:vacancy, 5)
@@ -316,22 +302,45 @@ RSpec.describe Vacancy do
     end
 
     describe "#expired_yesterday" do
-      it "retrieves published and unpublished vacancies that have an expires_at of yesterday" do
-        create(:vacancy, :expired_yesterday)
-        create(:draft_vacancy, :expired_yesterday)
+      before do
         create(:vacancy, :expires_tomorrow)
+      end
 
-        expect(PublishedVacancy.expired_yesterday.count).to eq(1)
-        expect(DraftVacancy.expired_yesterday.count).to eq(1)
+      let!(:yesterday) { create(:vacancy, :expired_yesterday) }
+      it "retrieves published and unpublished vacancies that have an expires_at of yesterday" do
+        expect(PublishedVacancy.expired_yesterday).to eq([yesterday])
       end
     end
 
-    describe "#expires_within_data_access_period" do
-      let(:expired_years_ago) { build(:vacancy, expires_at: 2.years.ago) }
+    context "with expiring vacancies" do
+      let!(:expired_earlier_today) { create(:vacancy, expires_at: 5.hour.ago) }
+      let!(:expires_later_today) { create(:vacancy, expires_at: 1.hour.from_now) }
 
-      it "retrieves vacancies that expired not more than one year ago" do
-        expect(PublishedVacancy.expires_within_data_access_period).to_not include(expired_years_ago)
-        expect(PublishedVacancy.expires_within_data_access_period).to include(expired_earlier_today)
+      describe "#applicable" do
+        it "finds current vacancies" do
+          expired_earlier_today.send :set_slug
+          expired_earlier_today.save(validate: false)
+
+          results = PublishedVacancy.applicable
+          expect(results).to include(expires_later_today)
+          expect(results).to_not include(expired_earlier_today)
+        end
+      end
+
+      describe "#expires_within_data_access_period" do
+        let!(:expired_years_ago) { create(:vacancy, expires_at: 2.years.ago) }
+
+        it "retrieves vacancies that expired not more than one year ago" do
+          expect(PublishedVacancy.expires_within_data_access_period).to_not include(expired_years_ago)
+          expect(PublishedVacancy.expires_within_data_access_period).to include(expired_earlier_today)
+        end
+      end
+
+      describe "#live" do
+        it "includes vacancies till expiry time" do
+          expect(PublishedVacancy.live).to include(expires_later_today)
+          expect(PublishedVacancy.live).to_not include(expired_earlier_today)
+        end
       end
     end
 
@@ -344,19 +353,14 @@ RSpec.describe Vacancy do
       end
     end
 
-    describe "#live" do
-      it "includes vacancies till expiry time" do
-        expect(PublishedVacancy.live).to include(expires_later_today)
-        expect(PublishedVacancy.live).to_not include(expired_earlier_today)
-      end
-    end
-
     describe "#pending" do
-      it "retrieves vacancies that have a status of :published, a future publish_on date & a future expires_at date" do
+      before do
         create_list(:vacancy, 5)
-        pending = create_list(:vacancy, 3, :future_publish)
+        create_list(:vacancy, 3, :future_publish)
+      end
 
-        expect(PublishedVacancy.pending.count).to eq(pending.count)
+      it "retrieves vacancies that have a status of :published, a future publish_on date & a future expires_at date" do
+        expect(PublishedVacancy.pending.count).to eq(3)
       end
     end
 

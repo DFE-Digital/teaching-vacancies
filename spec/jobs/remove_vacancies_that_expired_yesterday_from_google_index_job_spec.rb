@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe RemoveVacanciesThatExpiredYesterdayFromGoogleIndexJob do
-  let(:urls_expired_yesterday) { Vacancy.expired_yesterday.map { |vacancy| Rails.application.routes.url_helpers.job_url(vacancy) } }
+  let(:urls_expired_yesterday) { PublishedVacancy.expired_yesterday.map { |vacancy| Rails.application.routes.url_helpers.job_url(vacancy) } }
   let(:urls_for_other_vacancies) do
     Vacancy.where.not("DATE(expires_at) = ?", 1.day.ago.to_date).map { |vacancy| Rails.application.routes.url_helpers.job_url(vacancy) }
   end

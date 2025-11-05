@@ -110,15 +110,7 @@ class Vacancy < ApplicationRecord
 
   delegate :name, to: :organisation, prefix: true, allow_nil: true
 
-  scope :applicable, -> { where("expires_at >= ?", Time.current) }
-  scope :awaiting_feedback_recently_expired, -> { where(listed_elsewhere: nil, hired_status: nil).where("expires_at >= ?", 2.months.ago) }
-  scope :expired, -> { kept.where("expires_at < ?", Time.current) }
-  scope :expired_yesterday, -> { where("DATE(expires_at) = ?", 1.day.ago.to_date) }
-  scope :expires_within_data_access_period, -> { where("expires_at >= ?", Time.current - DATA_ACCESS_PERIOD_FOR_PUBLISHERS) }
   scope :in_organisation_ids, ->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).distinct }
-  scope :listed, -> { kept.where.not(publish_on: nil).where("publish_on <= ?", Date.current) }
-  scope :live, -> { listed.applicable }
-  scope :pending, -> { kept.where.not(publish_on: nil).where("publish_on > ?", Date.current) }
   scope :quick_apply, -> { where(enable_job_applications: true) }
   scope :visa_sponsorship_available, -> { where(visa_sponsorship_available: true) }
 

@@ -16,6 +16,15 @@ class PublishedVacancy < Vacancy
 
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at, if: -> { listed_elsewhere_changed? && hired_status_changed? }
 
+  scope :applicable, -> { where(expires_at: Time.current..) }
+  scope :awaiting_feedback_recently_expired, -> { where(listed_elsewhere: nil, hired_status: nil).where(expires_at: 2.months.ago..) }
+  scope :expired, -> { kept.where(expires_at: ...Time.current) }
+  scope :expired_yesterday, -> { where("DATE(expires_at) = ?", 1.day.ago.to_date) }
+  scope :expires_within_data_access_period, -> { where(expires_at: (Time.current - DATA_ACCESS_PERIOD_FOR_PUBLISHERS)..) }
+  scope :listed, -> { kept.where(publish_on: ..Date.current) }
+  scope :live, -> { listed.applicable }
+  scope :pending, -> { kept.where("publish_on > ?", Date.current) }
+
   def find_conflicting_vacancy
     find_external_reference_conflict_vacancy || find_duplicate_external_vacancy
   end
