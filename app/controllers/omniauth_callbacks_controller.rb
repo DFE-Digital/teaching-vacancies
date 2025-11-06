@@ -4,6 +4,16 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   class OrganisationCategoryNotFound < StandardError; end
   rescue_from OrganisationCategoryNotFound, with: :unknown_organisation_category
 
+  # Organisation Category IDs
+  # Source: https://github.com/DFE-Digital/login.dfe.public-api#how-do-ids-map-to-categories-and-types
+  # DO NOT confuse these with the GIAS Download Organisation "Group Type (code)". They are not meant to match.
+  ORGANISATION_CATEGORIES = {
+    single_establishment: "001",
+    local_authority: "002",
+    multi_academy_trust: "010",
+    single_academy_trust: "013",
+  }.freeze
+
   def dfe
     authorisation = Publishers::DfeSignIn::Authorisation.new(organisation_id: organisation_id, user_id: user_id)
 
@@ -87,13 +97,13 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def organisation_from_request
     # https://github.com/DFE-Digital/login.dfe.public-api#how-do-ids-map-to-categories-and-types
     case (cat_id = auth_hash.dig("extra", "raw_info", "organisation", "category", "id"))
-    when "001" # single establishment
+    when ORGANISATION_CATEGORIES[:single_establishment]
       School.find_by!(urn: auth_hash.dig("extra", "raw_info", "organisation", "urn"))
-    when "002" # local authority
+    when ORGANISATION_CATEGORIES[:local_authority]
       SchoolGroup.find_by!(local_authority_code: auth_hash.dig("extra", "raw_info", "organisation", "establishmentNumber"))
-    when "010" # multi-academy trust
+    when ORGANISATION_CATEGORIES[:multi_academy_trust]
       SchoolGroup.find_by!(uid: auth_hash.dig("extra", "raw_info", "organisation", "uid"))
-    when "013" # single-academy trust
+    when ORGANISATION_CATEGORIES[:single_academy_trust]
       # If the user is trying to sign in as a single-academy trust, try and find the school
       # contained within the trust and use that instead
       uid = auth_hash.dig("extra", "raw_info", "organisation", "uid")
