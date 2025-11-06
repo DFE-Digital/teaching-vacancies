@@ -4,6 +4,7 @@ require "geocoding"
 class Gias::ImportTrusts
   TRUSTS_CSV = "allgroupsdata".freeze
   TRUST_MEMBERSHIPS_CSV = "alllinksdata".freeze
+  MAT_GROUP_TYPE = 6
 
   include LogBenchmark
 
@@ -112,7 +113,7 @@ class Gias::ImportTrusts
   def multi_academy_trust_data?(row)
     # The CSVs contain data for multiple types of school, but we are only interested in
     # Multi Academy trusts, so we filter by their GIAS Group Type
-    row["Group Type (code)"].to_i == 6
+    row["Group Type (code)"].to_i == MAT_GROUP_TYPE
   end
 
   def trust_data(row)
