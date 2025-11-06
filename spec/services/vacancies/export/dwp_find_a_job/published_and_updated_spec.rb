@@ -63,7 +63,7 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated do
              skills_and_experience: "We need a maths teacher",
              school_offer: "We offer a great school for a maths teacher",
              further_details: "More details",
-             expires_at: Time.zone.local(2024, 5, 17, 9, 0, 0),
+             expires_at: Time.zone.local(2024, 5, 18, 9, 0, 0),
              working_patterns: ["full_time"],
              job_roles: ["teacher"],
              contract_type: "permanent",
@@ -139,7 +139,7 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated do
               <State>School County</State>
               <PostalCode>AB12 3CD</PostalCode>
             </Location>
-            <VacancyExpiry>2024-05-17</VacancyExpiry>
+            <VacancyExpiry>2024-05-18</VacancyExpiry>
             <VacancyType id="1"/>
             <VacancyStatus id="1"/>
             <VacancyCategory id="27"/>
