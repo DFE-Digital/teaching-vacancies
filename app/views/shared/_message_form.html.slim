@@ -6,7 +6,7 @@ div class="govuk-!-margin-top-6"
     = f.govuk_error_summary
 
     .govuk-form-group
-      = f.rich_text_area :content
+      = f.rich_text_area :content, aria: { label: "Message" }
 
     = f.govuk_submit "Send message"
     = govuk_link_to "Cancel", cancel_link, class: "govuk-!-margin-left-3"
