@@ -31,7 +31,7 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     merge_timeout ENV["MERGE_TIMEOUT"].to_i if ENV.key? "MERGE_TIMEOUT"
 
     add_filter %r{.rake$}
-    add_filter "app/services/customrefer_log_formatter.rb"
+    add_filter "app/services/custom_log_formatter.rb"
     add_filter "app/controllers/robots_controller.rb"
     add_filter "app/controllers/previews_controller.rb"
     add_filter "app/controllers/sha_controller.rb"
