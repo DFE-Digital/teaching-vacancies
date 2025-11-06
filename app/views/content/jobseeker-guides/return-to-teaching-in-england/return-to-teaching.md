@@ -1,6 +1,7 @@
 ---
 order: 100
 title: Get support returning to teaching
+page_title: Returning to teaching advisers and support
 meta_description: Get support from an adviser on returning to teaching, restarting your career, finding a job, and adjusting after a break.
 date_posted: 08/09/2023
 date_updated: 28/08/2025
