@@ -1,6 +1,7 @@
 ---
 order: 105
 title: Arranging your references
+page_title: Arranging your references and portfolio as a returning teacher
 meta_description: Arrange your teaching references for job applications. Get guidance on teaching standard references and updating your teaching portfolio.
 date_posted: 17/02/2025
 date_updated: 16/07/2025
