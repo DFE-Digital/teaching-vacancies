@@ -201,7 +201,38 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated do
 
     it "generates an XML file with the vacancies published/edited after the given date" do
       subject.call
-      expect(tempfile).to have_received(:write).with(expected_xml_content)
+
+      written_content = nil
+      expect(tempfile).to have_received(:write) do |content|
+        written_content = content
+      end
+
+      doc = Nokogiri::XML(written_content)
+      vacancies = doc.xpath("//Vacancy")
+
+      expect(vacancies.count).to eq(3)
+
+      ref_codes = vacancies.pluck("vacancyRefCode")
+      expect(ref_codes).to contain_exactly(
+        vacancy_published.id,
+        "#{vacancy_to_be_reposted.id}-2",
+        vacancy_updated.id,
+      )
+
+      great_teacher = vacancies.find { |v| v.xpath("Title").text == "Great teacher" }
+      expect(great_teacher["vacancyRefCode"]).to eq(vacancy_published.id)
+      expect(great_teacher.xpath("VacancyExpiry").text).to eq("2024-05-17")
+      expect(great_teacher.xpath("VacancyType").first["id"]).to eq("1")
+      expect(great_teacher.xpath("ApplyUrl").text).to eq("http://localhost:3000/jobs/great-teacher")
+
+      maths_teacher = vacancies.find { |v| v.xpath("Title").text == "Maths teacher" }
+      expect(maths_teacher["vacancyRefCode"]).to eq("#{vacancy_to_be_reposted.id}-2")
+      expect(maths_teacher.xpath("VacancyExpiry").text).to eq("2024-05-17")
+
+      it_technician = vacancies.find { |v| v.xpath("Title").text == "IT technician" }
+      expect(it_technician["vacancyRefCode"]).to eq(vacancy_updated.id)
+      expect(it_technician.xpath("VacancyExpiry").text).to eq("2024-05-20")
+      expect(it_technician.xpath("VacancyType").first["id"]).to eq("2")
     end
 
     it "uploads the XML file to the SFTP server" do
