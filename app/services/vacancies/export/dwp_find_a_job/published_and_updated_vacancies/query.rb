@@ -8,10 +8,11 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
       @from_date = from_date
     end
 
+    # ordering purely for test consistency
     def vacancies
       vacancies_published_after_date
         .or(vacancies_updated_after_date)
-        .or(vacancies_to_repost_today)
+        .or(vacancies_to_repost_today).order(:expires_at)
     end
 
     private
