@@ -22,6 +22,7 @@ RSpec.describe "Sidekiq configuration" do
       Noticed::DeliveryMethods::Database
       Noticed::DeliveryMethods::Email
       Sentry::SendEventJob
+      SendJobAlertsJob
       SetOrganisationSlugsJob
       SetOrganisationSlugsOfBatchJob
       ImportFromVacancySourceJob
