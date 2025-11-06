@@ -18,6 +18,14 @@ class JobApplicationDecorator < Draper::Decorator
     "TVS-#{vacancy_numbers}-#{id_numbers}"
   end
 
+  def address
+    if hide_personal_details?
+      [I18n.t("app.anonymous_applications.not_shown")]
+    else
+      super
+    end
+  end
+
   %i[first_name
      last_name
      previous_names

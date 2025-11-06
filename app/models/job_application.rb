@@ -222,6 +222,10 @@ class JobApplication < ApplicationRecord
     vacancy.anonymise_applications? && status.in?(PRE_SHORTLIST_STATUSES)
   end
 
+  def address
+    [street_address, city, postcode, country].compact_blank
+  end
+
   private
 
   def update_conversation_searchable_content

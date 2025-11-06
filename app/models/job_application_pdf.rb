@@ -312,12 +312,7 @@ class JobApplicationPdf
   end
 
   def job_application_address
-    [
-      job_application.street_address,
-      job_application.city,
-      job_application.postcode,
-      job_application.country,
-    ].compact.join(", ")
+    job_application.address.join(", ")
   end
 
   def basic_personal_details
