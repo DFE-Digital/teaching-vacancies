@@ -1052,7 +1052,7 @@ DEPENDENCIES
   sentry-ruby
   sentry-sidekiq
   shoulda-matchers
-  sidekiq (< 7)
+  sidekiq (< 8)
   sidekiq-cron
   simplecov
   simplecov-lcov (< 0.10)

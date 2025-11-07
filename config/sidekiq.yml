@@ -1,6 +1,7 @@
 :max_retries: 5
 
 :queues:
-  - [high, 4]
-  - [default, 2]
-  - [low, 1]
+  - [high, 8]
+  - [default, 4]
+  - [low, 2]
+  - [verylow, 1]

@@ -1,4 +1,6 @@
 class SendJobAlertsJob < ApplicationJob
+  queue_as :verylow
+
   MAXIMUM_RESULTS_PER_RUN = 500
 
   # rubocop:disable Metrics/MethodLength
