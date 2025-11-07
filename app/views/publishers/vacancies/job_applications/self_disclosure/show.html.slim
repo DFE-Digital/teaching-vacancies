@@ -15,8 +15,8 @@
       = govuk_tag(text: t("reference_requests.#{disclosure_status}.status"), colour: t("reference_requests.#{disclosure_status}.colour"))
 
     - unless @self_disclosure.request.has_been_received?
-      .govuk-body = t(".line_1")
-      .govuk-body = t(".line_2")
+      .govuk-body = t(".pending_line_1")
+      .govuk-body = t(".pending_line_1")
 
     = form_with(url: organisation_job_job_application_self_disclosure_path(@vacancy.id, @job_application.id), method: :patch) do |f|
       .govuk-button-group
