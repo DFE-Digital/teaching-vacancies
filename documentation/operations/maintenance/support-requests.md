@@ -24,7 +24,7 @@ If a jobseeker reset their GovUK One Login account, they will direct them to our
 
 Jobseekers in our DB are associated to a GovUK One Login account through the `govuk_one_login_id` field.
 
-After they got their GovUK One Login account resetted, the jobseeker coming from One Login will match our DB user by email, but their One Login ID will be different.
+After they have got their GovUK One Login account reset, the jobseeker coming from One Login will match our DB user by email, but their One Login ID will be different.
 
 In that situation they would not be able to sign-in in to their existing account in our service due to the One Login ID missmatch.
 
