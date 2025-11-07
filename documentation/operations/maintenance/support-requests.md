@@ -62,4 +62,4 @@ The most common cause for this is the Organisation having multiple entities with
 
 The allowed org categories are listed in the `OmniauthCallbacksController::ORGANISATION_CATEGORIES`.
 
-We usually confirm this by visiting the [Get Information About Schools (GIAS)](https://get-information-schools.service.gov.uk/) Service to retrieve the valid organisation UKPRN and request the Support Tearm to confirm with them they're signing-in with an Org with that UKPRN.
+We usually confirm this by visiting the [Get Information About Schools (GIAS)](https://get-information-schools.service.gov.uk/) Service to retrieve the valid organisation UKPRN and request the Support Team to confirm with them they're signing-in with an Org with that UKPRN.
