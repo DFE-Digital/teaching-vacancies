@@ -40,7 +40,7 @@ This re-linking process happens automatically as long as there is no existing `g
 
 ### Delete Jobseeker data
 
-Sometimes we get requests for deleing the user data completely from our system.
+Sometimes we get requests for deleting the user data completely from our system.
 
 We have to obtain a production access console and check if the user has any Job Application associated to their account.
 
