@@ -23,4 +23,20 @@ RSpec.describe "publishers/vacancies/job_applications/self_disclosure/show" do
       expect(rendered).to have_content "created"
     end
   end
+
+  context "when disclosure has not been completed" do
+    let(:self_disclosure_request) { build_stubbed(:self_disclosure_request, :received, self_disclosure: build_stubbed(:self_disclosure)) }
+
+    it "shows the mark as complete button" do
+      expect(rendered).to have_content "Mark as completed"
+    end
+  end
+
+  context "when disclosure has been completed" do
+    let(:self_disclosure_request) { build_stubbed(:self_disclosure_request, :received, marked_as_complete: true, self_disclosure: build_stubbed(:self_disclosure)) }
+
+    it "does not show the mark as complete button" do
+      expect(rendered).to have_no_content "Mark as completed"
+    end
+  end
 end

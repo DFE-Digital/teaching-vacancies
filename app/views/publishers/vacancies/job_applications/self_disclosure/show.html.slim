@@ -23,12 +23,13 @@
         - if @self_disclosure.request.received?
           = govuk_button_link_to t(".print"), organisation_job_job_application_self_disclosure_path(@vacancy.id, @job_application.id, format: :pdf), class: "govuk-button--secondary"
 
-        - if can_send_reminder?(@self_disclosure.request)
-          = f.govuk_submit t(".reminder"), name: "reminder"
-        - if @self_disclosure.request.has_been_received?
-          = f.govuk_submit t(".mark_as_completed"), name: "completed", secondary: true
-        - else
-          = f.govuk_submit t(".mark_as_received"), name: "received", secondary: true
+        - unless @self_disclosure.request.marked_as_complete?
+          - if can_send_reminder?(@self_disclosure.request)
+            = f.govuk_submit t(".reminder"), name: "reminder"
+          - if @self_disclosure.request.has_been_received?
+            = f.govuk_submit t(".mark_as_completed"), name: "completed", secondary: true
+          - else
+            = f.govuk_submit t(".mark_as_received"), name: "received", secondary: true
 
     - if @self_disclosure.request.received_off_service?
       .govuk-body = t(".marked_as_received")
