@@ -44,6 +44,7 @@ services:
       - "5432:5432"
 
   redis:
+    # Azure currenty runs redis 6.0
     image: redis:6.0-alpine
     restart: unless-stopped
     ports:
