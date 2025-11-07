@@ -39,7 +39,7 @@ class JobReference < ApplicationRecord
 
   def mark_as_received
     vacancy = reference_request.referee.job_application.vacancy
-    registered_publisher_user = vacancy.organisation.publishers.find_by(email: contact_email)
+    registered_publisher_user = vacancy.organisation.publishers.find_by(email: vacancy.contact_email)
     # invalidate token after reference is complete
     reference_request.update!(status: :received, token: SecureRandom.uuid)
 
