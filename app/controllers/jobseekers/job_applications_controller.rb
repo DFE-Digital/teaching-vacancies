@@ -12,7 +12,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   # rubocop:disable Metrics/AbcSize
   def index
-    # only show applications from the last 12 months to avoidf cluttering up the display
+    # only show applications from the last 12 months to avoid cluttering up the display
     default_scope = JobApplication.includes(:self_disclosure_request, :vacancy)
                                   .where(jobseeker: current_jobseeker, updated_at: 12.months.ago..)
     draft_job_applications = default_scope.draft.order(updated_at: :desc)
