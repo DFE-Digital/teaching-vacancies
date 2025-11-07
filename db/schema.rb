@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_16_154016) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_07_084623) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -778,7 +778,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_16_154016) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.float "recaptcha_score"
-    t.boolean "active", default: true
     t.datetime "unsubscribed_at", precision: nil
     t.geometry "area", limit: {srid: 4326, type: "geometry"}
     t.geometry "geopoint", limit: {srid: 4326, type: "geometry"}
@@ -832,8 +831,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_16_154016) do
     t.string "salary"
     t.text "about_school"
     t.string "subjects", array: true
-    t.text "school_visits_details"
-    t.text "how_to_apply"
     t.integer "job_location"
     t.string "readable_job_location"
     t.integer "job_roles", array: true
@@ -842,7 +839,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_16_154016) do
     t.boolean "starts_asap"
     t.integer "contract_type"
     t.string "fixed_term_contract_duration"
-    t.text "personal_statement_guidance"
     t.boolean "enable_job_applications"
     t.string "completed_steps", default: [], null: false, array: true
     t.string "actual_salary"
