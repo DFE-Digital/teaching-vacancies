@@ -50,7 +50,7 @@ The developer can safely `destroy` the user (ensure to do a `destroy` call so tr
 
 #### If the Jobseeker has Job Applications
 
-We shouldn't delete y these users information, as we may have legal requirements due to Job Applications or communications between them and the Publishers.
+We shouldn't delete these users information, as we may have legal requirements due to Job Applications or communications between them and the Publishers.
 
 Run this by our BA/team to decide how to proceed and for them to respond to the request.
 
