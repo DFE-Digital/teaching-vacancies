@@ -11,7 +11,7 @@ class SendJobAlertsJob < ApplicationJob
     vacancies_in_alerts_count = 0
     subscriptions_count = subscriptions.count
 
-    default_scope = PublishedVacancy.live.search_by_filter(from_date: from_date, to_date: Date.yesterday)
+    default_scope = PublishedVacancy.live.search_by_filter(from_date: from_date, to_date: Date.current)
 
     # for stats tracking on each run
     new_vacancies_count = default_scope.size
