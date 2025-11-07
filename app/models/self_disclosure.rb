@@ -30,6 +30,7 @@ class SelfDisclosure < ApplicationRecord
   end
 
   def mark_as_received
+    job_application = self_disclosure_request.job_application
     vacancy = self_disclosure_request.job_application.vacancy
     registered_publisher_user = vacancy.organisation.publishers.find_by(email: vacancy.contact_email)
 
@@ -40,7 +41,7 @@ class SelfDisclosure < ApplicationRecord
       Publishers::SelfDisclosureReceivedNotifier.with(record: self)
                                                 .deliver
     else
-      Publishers::CollectReferencesMailer.self_disclosure_received(vacancy.job_application).deliver_later
+      Publishers::CollectReferencesMailer.self_disclosure_received(job_application).deliver_later
     end
   end
 end
