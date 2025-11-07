@@ -18,7 +18,7 @@ This process is described in the [hosting docs](/documentation/operations/infras
 ## Regular Support User Requests
 
 ### Unlink Jobseekers from their GovUK One Login account
-If a jobseeker resetted their GovUK One Login account, they will direct them to our service support with a request to unlinkg their GovUK One Login from our service.
+If a jobseeker reset their GovUK One Login account, they will direct them to our service support with a request to unlink their GovUK One Login from our service.
 
 #### What does this mean
 
