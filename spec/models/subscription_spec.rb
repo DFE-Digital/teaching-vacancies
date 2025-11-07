@@ -290,7 +290,7 @@ RSpec.describe Subscription do
   describe "#update_with_search_criteria" do
     subject(:update_with_search_criteria) { subscription.update_with_search_criteria(new_attributes) }
 
-    let(:subscription) do
+    let!(:subscription) do
       create(:subscription,
              search_criteria: { "location" => "london", "radius" => 10 },
              frequency: :daily)

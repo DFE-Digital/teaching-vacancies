@@ -20,6 +20,10 @@ class Subscription < ApplicationRecord
   # support_job_roles used to be called teaching_support_job_roles and non_teaching_support_job_roles in the past, and there are still active subscriptions with this name
   JOB_ROLE_ALIASES = %i[teaching_job_roles support_job_roles teaching_support_job_roles non_teaching_support_job_roles].freeze
 
+  after_create do |subscription|
+    SetSubscriptionLocationDataJob.perform_later(subscription)
+  end
+
   def self.encryptor(serializer: :json_allow_marshal)
     key_generator_secret = SUBSCRIPTION_KEY_GENERATOR_SECRET
     key_generator_salt = SUBSCRIPTION_KEY_GENERATOR_SALT
