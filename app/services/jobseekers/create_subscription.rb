@@ -7,11 +7,9 @@ class Jobseekers::CreateSubscription
   end
 
   def call
-    subscription = Subscription.new(form.job_alert_params)
-    subscription.recaptcha_score = recaptcha_score
-    subscription.save!
-    SetSubscriptionLocationDataJob.perform_later(subscription.id)
-    Jobseekers::SubscriptionMailer.confirmation(subscription.id).deliver_later
-    subscription
+    Subscription.create!(form.job_alert_params.merge(recaptcha_score: recaptcha_score)).tap do |subscription|
+      SetSubscriptionLocationDataJob.perform_later(subscription)
+      Jobseekers::SubscriptionMailer.confirmation(subscription.id).deliver_later
+    end
   end
 end

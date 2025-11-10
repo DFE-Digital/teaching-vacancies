@@ -73,7 +73,7 @@ class Subscription < ApplicationRecord
     successful_update = update(new_attributes)
     new_location_criteria = search_criteria.slice("location", "radius")
     if successful_update && previous_location_criteria != new_location_criteria
-      SetSubscriptionLocationDataJob.perform_later(id)
+      SetSubscriptionLocationDataJob.perform_later(self)
     end
   end
 
