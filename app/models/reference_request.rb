@@ -35,6 +35,10 @@ class ReferenceRequest < ApplicationRecord
     Publishers::CollectReferencesMailer.collect_references(self).deliver_later
   end
 
+  def can_send_reminder?
+    requested? && updated_at <= 7.days.ago
+  end
+
   class << self
     def create_for_manual!(job_application)
       job_application.referees.reject { |r| r.reference_request.present? }.each do |referee|

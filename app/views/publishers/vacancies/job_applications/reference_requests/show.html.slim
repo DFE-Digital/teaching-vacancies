@@ -17,7 +17,7 @@
     .govuk-body = t(".more_urgent")
 
     .govuk-button-group
-      - if @reference_request.requested? && @reference_request.updated_at <= 7.days.ago
+      - if @reference_request.can_send_reminder?
         = form_with model: @reference_request,
           url: send_reminder_email_organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id),
           method: :patch do |f|

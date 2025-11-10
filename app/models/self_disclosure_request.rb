@@ -40,4 +40,8 @@ class SelfDisclosureRequest < ApplicationRecord
   def has_been_received?
     received? || received_off_service?
   end
+
+  def can_send_reminder?
+    updated_at < 2.business_days.ago && pending?
+  end
 end
