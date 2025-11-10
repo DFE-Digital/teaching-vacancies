@@ -41,8 +41,11 @@ module Publishers
           when "offered"  then render_offered_form(form.job_applications, form.origin)
           when "interview_datetime" then render_interview_datetime_form(form.job_applications, form.origin)
           when "unsuccessful_interview" then render_unsuccessful_interview_form(form.job_applications, form.origin)
-          when "reject" then prepare_to_reject(form.job_applications)
-          when "message" then prepare_to_bulk_send(form.job_applications)
+          when "reject" then prepare_to_bulk_send(form.job_applications, :organisation_job_job_application_batch_bulk_rejection_message_path)
+          when "message_shortlisted" then prepare_to_bulk_send(form.job_applications,
+                                                               :organisation_job_job_application_batch_bulk_shortlisting_message_path)
+          when "message_interviewing" then prepare_to_bulk_send(form.job_applications,
+                                                                :organisation_job_job_application_batch_bulk_interviewing_message_path)
           else # when "update_status"
             render "tag"
           end
@@ -143,20 +146,12 @@ module Publishers
         end
       end
 
-      def prepare_to_reject(job_applications)
+      def prepare_to_bulk_send(job_applications, redirect_path)
         batch = JobApplicationBatch.create!(vacancy: @vacancy)
         job_applications.each do |ja|
           batch.batchable_job_applications.create!(job_application: ja)
         end
-        redirect_to select_template_organisation_job_bulk_rejection_message_path(@vacancy.id, batch)
-      end
-
-      def prepare_to_bulk_send(job_applications)
-        batch = JobApplicationBatch.create!(vacancy: @vacancy)
-        job_applications.each do |ja|
-          batch.batchable_job_applications.create!(job_application: ja)
-        end
-        redirect_to select_template_organisation_job_bulk_message_path(@vacancy.id, batch)
+        redirect_to method(redirect_path).call(@vacancy.id, batch.id, Wicked::FIRST_STEP)
       end
 
       def download_selected(job_applications)

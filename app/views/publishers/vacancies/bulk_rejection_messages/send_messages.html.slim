@@ -14,7 +14,8 @@ h3 = t(".to")
 
 = render "shared/message_form",
     message_object: @message,
-    form_url: send_messages_organisation_job_bulk_message_path(vacancy.id, @batch_email.id),
+    form_url: wizard_path,
+    form_method: :patch,
     form_help_text: t(".how_will_message_be_sent"),
     form_help_content: t(".message_sent_description"),
     cancel_link: "#"

@@ -10,7 +10,8 @@ en:
       interviewing_at: Interview date
     buttons:
       download: Download selected
-      message: Send a message
+      message_shortlisted: Send a message
+      message_interviewing: Send a message
       update_status: Update application status
       declined: Mark offer as declined
       export: Download selected

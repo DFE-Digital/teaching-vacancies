@@ -1,14 +1,19 @@
 module Publishers
   module Vacancies
     class BulkRejectionMessagesController < BulkMessagesController
-      def send_rejection_emails
-        send_messages_for(@job_applications)
+      def update
+        if step == :send_messages
+          super
 
-        @job_applications.each do |job_application|
-          job_application.update!(status: :rejected)
+          @job_applications.each do |job_application|
+            job_application.update!(status: :rejected)
+          end
+
         end
+      end
 
-        redirect_to organisation_job_job_applications_path(vacancy.id, anchor: :unsuccessful), success: t(".rejections_sent")
+      def finish_wizard_path
+        organisation_job_job_applications_path(vacancy.id, anchor: :unsuccessful)
       end
     end
   end

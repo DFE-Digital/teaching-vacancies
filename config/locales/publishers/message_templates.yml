@@ -30,7 +30,7 @@ en:
           select_message_template: Select message template
           edit_template: Edit template
           delete_template: Delete template
-        prepare_message:
+        send_messages:
           page_title: Edit and send messages
           caption: Reject candidates
           how_will_message_be_sent: "How will this message be sent?"
@@ -39,7 +39,6 @@ en:
           edit_email: Edit message
           to: "To"
           candidate_name: "<Candidate>"
-        send_rejection_emails:
           rejections_sent: Rejection messages sent
       bulk_messages:
         select_template:
@@ -48,7 +47,7 @@ en:
           select_message_template: Select message template
           edit_template: Edit template
           delete_template: Delete template
-        prepare_message:
+        send_messages:
           page_title: Edit and send messages
           caption: Send messages
           how_will_message_be_sent: "How will this message be sent?"
@@ -57,7 +56,6 @@ en:
           edit_email: Edit message
           to: "To"
           candidate_name: "<Candidate>"
-        send_messages:
           messages_sent: Messages sent
 
   helpers:
