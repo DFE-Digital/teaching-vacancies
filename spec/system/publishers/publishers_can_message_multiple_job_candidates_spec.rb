@@ -39,7 +39,7 @@ RSpec.describe "Publishers can message multiple job candidates" do
         fill_in_trix_editor "publisher_message_content", with: Faker::ChuckNorris.fact
         click_on "Send message"
 
-        # sleep 10
+        # have to use url matching to include the anchor in the path
         expect(page).to have_current_path(Regexp.new("#{expected_path}$"), url: true)
       end
     end
