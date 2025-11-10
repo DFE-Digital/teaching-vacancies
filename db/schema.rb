@@ -681,6 +681,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_07_084623) do
     t.string "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "reminder_sent", default: false, null: false
     t.index ["reference_id"], name: "index_reference_requests_on_reference_id", unique: true
   end
 
