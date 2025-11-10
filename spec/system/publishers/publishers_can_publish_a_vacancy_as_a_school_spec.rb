@@ -432,7 +432,7 @@ RSpec.describe "Creating a vacancy" do
     click_on I18n.t("buttons.save_and_continue")
     publisher_confirm_contact_details_page.fill_in_and_submit_form
   end
-  
+
   def fill_from_contact_details_to_review(vacancy)
     publisher_contact_details_page.fill_in_and_submit_form(vacancy.contact_email, vacancy.contact_number)
 
