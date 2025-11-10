@@ -12,6 +12,8 @@
 
     p.govuk-body = t(".preference_for_support_staff")
 
+    = govuk_inset_text text: t(".processing")
+
     p.govuk-body = t(".non_catholics_apply")
 
     = form_for @form, url: jobseekers_job_application_build_path(job_application, :catholic), method: :patch, multipart: true do |f|
