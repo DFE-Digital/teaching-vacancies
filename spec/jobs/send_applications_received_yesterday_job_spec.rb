@@ -10,9 +10,9 @@ RSpec.describe SendApplicationsReceivedYesterdayJob do
 
   context "when there are applications which were submitted yesterday" do
     before do
-      create(:job_application, :status_submitted, vacancy: vacancy, submitted_at: Time.current - 1.day)
-      create(:job_application, :status_submitted, vacancy: vacancy, submitted_at: Time.current - 1.day)
-      create(:job_application, :status_submitted, vacancy: other_vacancy, submitted_at: Time.current - 1.day)
+      create(:job_application, :status_submitted, vacancy: vacancy, submitted_at: 1.day.ago)
+      create(:job_application, :status_submitted, vacancy: vacancy, submitted_at: 1.day.ago)
+      create(:job_application, :status_submitted, vacancy: other_vacancy, submitted_at: 1.day.ago)
     end
 
     it "sends one email per contact_email regardless of number of applications" do
@@ -21,7 +21,7 @@ RSpec.describe SendApplicationsReceivedYesterdayJob do
         .to receive(:applications_received)
         .with(contact_email: "test@contoso.com")
         .and_return(message_delivery)
-        
+
       expect(Publishers::JobApplicationMailer)
         .to receive(:applications_received)
         .with(contact_email: "admin@contoso.com")
@@ -52,7 +52,7 @@ RSpec.describe SendApplicationsReceivedYesterdayJob do
 
     it "does not send emails for draft applications from yesterday" do
       expect(Publishers::JobApplicationMailer).not_to receive(:applications_received)
-  
+
       perform_enqueued_jobs { job }
     end
   end
@@ -61,12 +61,12 @@ RSpec.describe SendApplicationsReceivedYesterdayJob do
     let(:vacancy_without_contact_email) { create(:vacancy, organisations: [school], contact_email: nil) }
 
     before do
-      create(:job_application, :status_submitted, vacancy: vacancy_without_contact_email, submitted_at: Time.current - 1.day)
+      create(:job_application, :status_submitted, vacancy: vacancy_without_contact_email, submitted_at: 1.day.ago)
     end
 
     it "does not attempt to send email" do
       expect(Publishers::JobApplicationMailer).not_to receive(:applications_received)
-  
+
       perform_enqueued_jobs { job }
     end
   end

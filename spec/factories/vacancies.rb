@@ -74,6 +74,14 @@ FactoryBot.define do
     flexi_working_details_provided { true }
     flexi_working { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
 
+    after(:create) do |vacancy, _evaluator|
+      if vacancy.publisher.present?
+        vacancy.organisations.each do |organisation|
+          vacancy.publisher.organisations << organisation unless vacancy.publisher.organisations.include?(organisation)
+        end
+      end
+    end
+
     trait :secondary do
       phases { %w[secondary] }
       key_stages { %w[ks3] }
