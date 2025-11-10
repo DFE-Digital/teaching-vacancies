@@ -20,6 +20,7 @@ RSpec.describe "Publishers can message multiple job candidates" do
       create_list(:job_application, 3, :status_shortlisted, vacancy: vacancy)
     end
 
+    # need JS driver for 'select_tab' method
     describe "message flow", :js do
       before do
         visit organisation_job_job_applications_path(vacancy.id)
