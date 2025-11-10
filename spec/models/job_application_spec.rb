@@ -419,11 +419,38 @@ RSpec.describe JobApplication do
       expect { subject }.to change { job_application.reload.status }.from("draft").to("submitted")
     end
 
-    it "delivers `Publishers::JobApplicationReceivedNotifier` notification" do
-      expect { subject }
-        .to have_delivered_notification("Publishers::JobApplicationReceivedNotifier")
-        .with_recipient(job_application.vacancy.publisher)
-        .and_params(vacancy: job_application.vacancy, job_application: job_application)
+    context "when vacancy.contact_email belongs to a registered publisher" do
+      context "when the publisher is part of the organisation that the vacancy is associated with" do
+        it "delivers `Publishers::JobApplicationReceivedNotifier` notification" do
+          expect { subject }
+            .to have_delivered_notification("Publishers::JobApplicationReceivedNotifier")
+            .with_recipient(job_application.vacancy.publisher)
+            .and_params(vacancy: job_application.vacancy, job_application: job_application)
+        end
+      end
+
+      context "when the publisher is not part of the organisation that the vacancy is associated with" do
+        before do
+          job_application.vacancy.publisher.organisations = []
+          job_application.vacancy.publisher.save
+        end
+
+        it "does not deliver `Publishers::JobApplicationReceivedNotifier` notification" do
+          expect { subject }
+            .not_to have_delivered_notification("Publishers::JobApplicationReceivedNotifier")
+        end
+      end
+    end
+
+    context "when vacancy.contact_email does not belong to a registered publisher" do
+      before do
+        job_application.vacancy.update(contact_email: "notapublisher@contoso.com")
+      end
+
+      it "does not deliver `Publishers::JobApplicationReceivedNotifier` notification" do
+        expect { subject }
+          .not_to have_delivered_notification("Publishers::JobApplicationReceivedNotifier")
+      end
     end
 
     it "delivers `application_submitted` email" do
