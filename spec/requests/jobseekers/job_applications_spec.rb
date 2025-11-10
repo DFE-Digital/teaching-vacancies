@@ -272,7 +272,9 @@ RSpec.describe "Job applications" do
     end
 
     describe "GET #download" do
-      let(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+      let(:vacancy) { create(:vacancy, anonymise_applications: true) }
+      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+      let(:pdf_text) { PDF::Inspector::Text.analyze(response.body).strings }
 
       context "when the job application status is not draft or withdrawn" do
         it "sends a PDF file" do
@@ -282,6 +284,8 @@ RSpec.describe "Job applications" do
           expect(response.content_type).to eq("application/pdf")
           expect(response.headers["Content-Disposition"]).to include("inline")
           expect(response.headers["Content-Disposition"]).to include("application_form.pdf")
+
+          expect(pdf_text).to include(job_application.first_name)
         end
       end
     end

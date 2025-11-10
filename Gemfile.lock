@@ -69,6 +69,10 @@ GEM
       globalid (>= 0.3.6)
     activemodel (8.0.4)
       activesupport (= 8.0.4)
+    activemodel-serializers-xml (1.0.3)
+      activemodel (>= 5.0.0.a)
+      activesupport (>= 5.0.0.a)
+      builder (~> 3.1)
     activerecord (8.0.4)
       activemodel (= 8.0.4)
       activesupport (= 8.0.4)
@@ -227,6 +231,13 @@ GEM
     dotenv-rails (3.1.8)
       dotenv (= 3.1.8)
       railties (>= 6.1)
+    draper (4.0.4)
+      actionpack (>= 5.0)
+      activemodel (>= 5.0)
+      activemodel-serializers-xml (>= 1.0)
+      activesupport (>= 5.0)
+      request_store (>= 1.0)
+      ruby2_keywords
     drb (2.2.3)
     dumb_delegator (1.1.0)
     email_validator (2.2.4)
@@ -752,6 +763,7 @@ GEM
     ruby-vips (2.2.5)
       ffi (~> 1.12)
       logger
+    ruby2_keywords (0.0.5)
     rubyzip (3.2.2)
     rugged (1.9.0)
     sanitize (7.0.0)
@@ -973,6 +985,7 @@ DEPENDENCIES
   dfe-analytics!
   discard (~> 1.4)
   dotenv-rails
+  draper
   factory_bot_rails
   faker
   fastimage

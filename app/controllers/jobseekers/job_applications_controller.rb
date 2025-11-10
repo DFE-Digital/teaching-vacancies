@@ -2,6 +2,7 @@
 # rubocop:disable Metrics/ClassLength
 class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseController
   include Jobseekers::QualificationFormConcerns
+  include JobApplicationsPdfHelper
 
   before_action :set_job_application, only: %i[review apply pre_submit submit post_submit show confirm_destroy destroy confirm_withdraw withdraw download]
 
@@ -128,7 +129,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def download
-    document = job_application.submitted_application_form
+    document = submitted_application_form(job_application)
     send_data(document.data, filename: document.filename, disposition: "inline")
   end
 

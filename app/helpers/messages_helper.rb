@@ -4,7 +4,7 @@ module MessagesHelper
   end
 
   def jobseeker_message_display_name(message, job_application)
-    "#{job_application.name} <#{message.sender.email}> #{message.created_at.to_fs(:date_at_time)}"
+    "#{job_application.name} <#{job_application.email_address}> #{message.created_at.to_fs(:date_at_time)}"
   end
 
   def jobseeker_message_card_title_class(message, current_user)

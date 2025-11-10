@@ -7,7 +7,7 @@ module Publishers
         private
 
         def set_job_application
-          @job_application = @vacancy.job_applications.find(params[:job_application_id] || params[:id])
+          @job_application = @vacancy.job_applications.find(params[:job_application_id] || params[:id]).decorate
         end
 
         def set_vacancy

@@ -28,7 +28,7 @@ RSpec.describe ExportCandidateDataService do
       allow(zip_buffer).to receive(:rewind)
       allow(Zip::OutputStream).to receive(:write_buffer).and_yield(zip_buffer)
       allow(described_class).to receive_messages(pii_csv: described_class::Document["pii.csv", "csv_content"],
-                                                 application_form: described_class::Document["application_form.pdf", "form_data"],
+                                                 submitted_application_form: described_class::Document["application_form.pdf", "form_data"],
                                                  references: [
                                                    described_class::Document["references/john_smith.pdf", "ref_data"],
                                                  ],
@@ -63,15 +63,6 @@ RSpec.describe ExportCandidateDataService do
     it { expect(document.filename).to eq("pii.csv") }
     it { expect(headers_line).to eq(expected_headers.join(",")) }
     it { expect(data_line).to eq(job_application.attributes.slice(*expected_headers).values.join(",")) }
-  end
-
-  describe "#application_form" do
-    subject(:document) { described_class.application_form(job_application) }
-
-    let(:job_application) { build_stubbed(:job_application) }
-
-    it { expect(document.filename).to eq(job_application.submitted_application_form.filename) }
-    it { expect(document.data).to eq(job_application.submitted_application_form.data) }
   end
 
   describe "#references" do

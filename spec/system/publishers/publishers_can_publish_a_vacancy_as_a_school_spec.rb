@@ -177,6 +177,31 @@ RSpec.describe "Creating a vacancy" do
               publish_on: Date.current)
       end
 
+      context "when on the anonymise applications page" do
+        before do
+          publisher_job_title_page.fill_in_and_submit_form(vacancy.job_title)
+          publisher_job_role_page.fill_in_and_submit_form(vacancy.job_roles.first)
+          publisher_key_stage_page.fill_in_and_submit_form(vacancy.key_stages_for_phases)
+          publisher_subjects_page.fill_in_and_submit_form(vacancy.subjects)
+          publisher_contract_information_page.fill_in_and_submit_form(vacancy)
+          publisher_start_date_page.fill_in_and_submit_form(vacancy.starts_on)
+          publisher_pay_package_page.fill_in_and_submit_form(vacancy)
+          publisher_about_the_role_page.fill_in_and_submit_form(vacancy)
+          publisher_include_additional_documents_page.fill_in_and_submit_form(vacancy.include_additional_documents)
+          publisher_school_visits_page.fill_in_and_submit_form(vacancy.school_visits)
+          publisher_visa_sponsorship_page.fill_in_and_submit_form(vacancy.visa_sponsorship_available)
+          publisher_important_dates_page.fill_in_and_submit_form(publish_on: vacancy.publish_on, expires_at: vacancy.expires_at)
+          publisher_applying_for_the_job_page.standard_option.click
+          click_on I18n.t("buttons.save_and_continue")
+        end
+
+        it "handles errors when not given data" do
+          expect(publisher_anonymise_applications_page).to be_displayed
+          click_on I18n.t("buttons.save_and_continue")
+          expect(publisher_anonymise_applications_page.errors.map(&:text)).to eq(["Choose whether to view personal details or not"])
+        end
+      end
+
       it "follows the TVS flows" do
         publisher_job_title_page.fill_in_and_submit_form(vacancy.job_title)
 
@@ -217,6 +242,10 @@ RSpec.describe "Creating a vacancy" do
         expect(publisher_applying_for_the_job_page).to be_displayed
         publisher_applying_for_the_job_page.standard_option.click
         click_on I18n.t("buttons.save_and_continue")
+
+        expect(publisher_anonymise_applications_page).to be_displayed
+        publisher_anonymise_applications_page.anonymous_option.click
+        click_on "Save and continue"
 
         expect(publisher_contact_details_page).to be_displayed
         publisher_contact_details_page.fill_in_and_submit_form(vacancy.contact_email, vacancy.contact_number)
@@ -327,7 +356,7 @@ RSpec.describe "Creating a vacancy" do
         publisher_applying_for_the_job_page.catholic_option.click
         click_on I18n.t("buttons.save_and_continue")
 
-        fill_from_contact_details_to_review(vacancy)
+        fill_from_anonymise_to_review(vacancy)
         expect(page).to have_current_path(organisation_job_review_path(created_vacancy.id), ignore_query: true)
         expect(DraftVacancy.find(created_vacancy.id)).to be_catholic
       end
@@ -336,7 +365,7 @@ RSpec.describe "Creating a vacancy" do
         find('label[for="publishers-job-listing-applying-for-the-job-form-application-form-type-other-religion-field"]').click
         click_on I18n.t("buttons.save_and_continue")
 
-        fill_from_contact_details_to_review(vacancy)
+        fill_from_anonymise_to_review(vacancy)
         expect(page).to have_current_path(organisation_job_review_path(created_vacancy.id), ignore_query: true)
         expect(DraftVacancy.find(created_vacancy.id)).to be_other_religion
       end
@@ -345,7 +374,7 @@ RSpec.describe "Creating a vacancy" do
         publisher_applying_for_the_job_page.standard_option.click
         click_on I18n.t("buttons.save_and_continue")
 
-        fill_from_contact_details_to_review(vacancy)
+        fill_from_anonymise_to_review(vacancy)
         expect(page).to have_current_path(organisation_job_review_path(created_vacancy.id), ignore_query: true)
         expect(DraftVacancy.find(created_vacancy.id)).to be_no_religion
       end
@@ -364,7 +393,11 @@ RSpec.describe "Creating a vacancy" do
     end
   end
 
-  def fill_from_contact_details_to_review(vacancy)
+  def fill_from_anonymise_to_review(vacancy)
+    expect(publisher_anonymise_applications_page).to be_displayed
+    publisher_anonymise_applications_page.standard_option.click
+    click_on "Save and continue"
+
     fill_in_contact_details_form_fields(vacancy)
     click_on I18n.t("buttons.save_and_continue")
   end

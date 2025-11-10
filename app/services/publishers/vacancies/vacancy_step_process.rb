@@ -40,7 +40,7 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
                     %i[applying_for_the_job]
                   end
     if vacancy.enable_job_applications
-      early_steps + core_steps
+      early_steps + %i[anonymise_applications] + core_steps
     else
       first_steps = early_steps + %i[how_to_receive_applications]
       # receive_applications may not be present (yet) as it is asked in how_to_receive_applications
