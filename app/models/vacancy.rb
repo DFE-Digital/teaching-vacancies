@@ -156,8 +156,6 @@ class Vacancy < ApplicationRecord
   # Publisher will need to set a new publish date if wanting to re-publish an scheduled vacancy turned back to a draft.
   before_save -> { self.publish_on = nil if type_changed?(from: "PublishedVacancy", to: "DraftVacancy") }
 
-  self.ignored_columns += %i[personal_statement_guidance how_to_apply school_visits_details]
-
   after_save :reset_markers, if: -> { saved_change_to_type? && (live? || pending?) }
   after_save :update_conversation_searchable_content, if: -> { saved_change_to_job_title? }
 
