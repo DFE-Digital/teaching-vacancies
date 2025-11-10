@@ -730,6 +730,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_07_084623) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "marked_as_complete", default: false, null: false
     t.index ["job_application_id"], name: "index_self_disclosure_requests_on_job_application_id", unique: true
   end
 
