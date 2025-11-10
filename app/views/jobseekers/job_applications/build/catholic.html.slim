@@ -27,11 +27,11 @@
 
           = f.govuk_radio_buttons_fieldset :religious_reference_type do
             = f.govuk_radio_button :religious_reference_type, :religious_referee, link_errors: true do
-              = f.govuk_text_field :religious_referee_name
-              = f.govuk_text_area :religious_referee_address, rows: 6
-              = f.govuk_text_field :religious_referee_role
-              = f.govuk_text_field :religious_referee_email
-              = f.govuk_text_field :religious_referee_phone
+              = f.govuk_text_field :religious_referee_name, label: { size: "s" }
+              = f.govuk_text_area :religious_referee_address, rows: 6, label: { size: "s" }
+              = f.govuk_text_field :religious_referee_role, label: { size: "s" }
+              = f.govuk_text_field :religious_referee_email, label: { size: "s" }
+              = f.govuk_text_field :religious_referee_phone, label: { size: "s" }
             = f.govuk_radio_button :religious_reference_type, :baptism_certificate do
               - if f.object.baptism_certificate.respond_to?(:attached?) && f.object.baptism_certificate.attached? # If form validations fail, the file is a tempfile that doesn't respond to ActiveStorage methods.
                 p.govuk-body
