@@ -45,9 +45,9 @@ RSpec.describe "Publishers can select a job application for interview" do
         fill_in "referees-can-give-reference-form-not-provided-reason-field", with: reason
         click_on I18n.t("buttons.continue")
         expect(page).to have_current_path(no_reference_reference_build_index_path(reference_request.id))
-        expect(referee.job_reference.reload).to be_complete
-        expect(referee.job_reference.can_give_reference).to be(false)
-        expect(referee.job_reference.not_provided_reason).to eq(reason)
+        expect(reference_request.job_reference.reload).to be_complete
+        expect(reference_request.job_reference.can_give_reference).to be(false)
+        expect(reference_request.job_reference.not_provided_reason).to eq(reason)
 
         run_with_publisher_and_organisation(publisher, organisation) do
           publisher_ats_pre_interview_checks_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
@@ -150,7 +150,7 @@ RSpec.describe "Publishers can select a job application for interview" do
 
         # wait for page load
         find(".govuk-panel")
-        expect(referee.job_reference.reload).to be_complete
+        expect(reference_request.job_reference.reload).to be_complete
         expect(page).to have_current_path(completed_reference_build_index_path(reference_request.id))
       end
     end

@@ -32,20 +32,23 @@ RSpec.describe "Publishers manage self disclosure", :perform_enqueued do
         expect(SelfDisclosure.count).to eq(1)
       end
 
-      it "can be manually marked as complete by publisher" do
+      it "can be manually marked as received by the publisher" do
         publisher_ats_self_disclosure_page.load(
           vacancy_id: vacancy.id,
           job_application_id: job_application.id,
         )
 
         expect(publisher_ats_self_disclosure_page.status.text).to eq("pending")
-        expect(publisher_ats_self_disclosure_page.button.text).to eq("Manually mark as complete")
+        expect(publisher_ats_self_disclosure_page.button.text).to eq("Mark as received")
         expect(publisher_ats_self_disclosure_page).not_to have_goto_references_and_self_disclosure_form
 
         publisher_ats_self_disclosure_page.button.click
 
         expect(publisher_ats_self_disclosure_page.banner_title.text).to eq("Success")
-        expect(publisher_ats_self_disclosure_page.status.text).to eq("completed")
+        expect(publisher_ats_self_disclosure_page.status.text).to eq("received")
+
+        click_on "Mark as completed"
+        expect(page).to have_content "Marked as complete"
       end
     end
 
@@ -121,6 +124,7 @@ RSpec.describe "Publishers manage self disclosure", :perform_enqueued do
             jobseeker_self_disclosure_conduct_page.fill_in_and_submit_form(dummy_self_disclosure)
             jobseeker_self_disclosure_confirmation_page.fill_in_and_submit_form(dummy_self_disclosure)
           end
+          job_application.self_disclosure_request.update!(marked_as_complete: true)
         end
 
         it "send an email notification to the publisher that the disclosure had been received" do
@@ -136,11 +140,14 @@ RSpec.describe "Publishers manage self disclosure", :perform_enqueued do
             )
 
             expect(all(".timeline-component__value").map { |x| x.text.split.first(6).join(" ") })
-              .to eq(["#{jobseeker.jobseeker_profile.personal_details.first_name} #{jobseeker.jobseeker_profile.personal_details.last_name} - #{Date.current.to_fs.strip}",
-                      "Teaching Vacancies - #{Date.current.to_fs.strip}"])
+              .to eq([
+                "Teaching Vacancies - #{Date.current.to_fs.strip}",
+                "#{jobseeker.jobseeker_profile.personal_details.first_name} #{jobseeker.jobseeker_profile.personal_details.last_name} - #{Date.current.to_fs.strip}",
+                "Teaching Vacancies - #{Date.current.to_fs.strip}",
+              ])
 
             expect(publisher_ats_self_disclosure_page.status.text).to eq("completed")
-            expect(publisher_ats_self_disclosure_page.button.text).to eq("Download self-disclosure")
+            expect(page).to have_content("Download self-disclosure")
             expect(publisher_ats_self_disclosure_page.personal_details.heading.text).to eq("Personal details")
             expect(publisher_ats_self_disclosure_page.criminal_details.heading.text).to eq("Criminal record self-disclosure")
             expect(publisher_ats_self_disclosure_page.conduct_details.heading.text).to eq("Conduct self-disclosure")
@@ -203,8 +210,8 @@ RSpec.describe "Publishers manage self disclosure", :perform_enqueued do
       end
 
       scenario "publisher changing their mind and choosing TV for self-disclosure" do
-        expect(publisher_ats_self_disclosure_page.status.text).to eq("pending")
-        expect(publisher_ats_self_disclosure_page.button.text).to eq("Manually mark as complete")
+        expect(publisher_ats_self_disclosure_page.status.text).to eq("created")
+        expect(publisher_ats_self_disclosure_page.button.text).to eq("Mark as received")
         expect(
           publisher_ats_self_disclosure_page.goto_references_and_self_disclosure_form.text,
         ).to eq("Would you like to collect this self-disclosure form through Teaching Vacancies?")

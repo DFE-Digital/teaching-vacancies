@@ -53,6 +53,8 @@ RSpec.describe "Publishers can reject a job application" do
 
       before do
         visit select_rejection_template_organisation_job_bulk_rejection_message_path(vacancy.id, batch_email.id)
+        # wait for page load
+        find("form[action='/organisation/message_templates/new']")
       end
 
       scenario "updating template", :js do

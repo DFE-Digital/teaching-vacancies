@@ -19,6 +19,8 @@ RSpec.describe "Publishers can select a job application for interview", :perform
   context "when selecting a single candidate" do
     before do
       publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
+      # wait for page load
+      find_by_id("declarations")
       click_on "Update application status"
       choose "Interviewing"
       click_on "Save and continue"
@@ -210,16 +212,13 @@ RSpec.describe "Publishers can select a job application for interview", :perform
               publisher_ats_pre_interview_checks_page.reference_links.first.click
             end
 
-            scenario "accepting an out of band reference" do
+            scenario "accepting an out of band reference", :js do
+              expect(publisher_ats_reference_request_page).to be_displayed
               click_on "Mark as received"
 
-              expect(publisher_ats_satisfactory_reference_page).to be_displayed
-              publisher_ats_satisfactory_reference_page.yes.click
-              publisher_ats_satisfactory_reference_page.submit_button.click
-
               expect(publisher_ats_reference_request_page).to be_displayed
-              expect(current_referee.reference_request.reload).to be_marked_as_complete
-              expect(publisher_ats_reference_request_page.timeline_titles.map(&:text)).to eq(["Marked as complete", "Marked as interviewing"])
+              expect(current_referee.reference_request.reload).to be_received_off_service
+              expect(publisher_ats_reference_request_page.timeline_titles.map(&:text)).to eq(["Marked as received", "Marked as interviewing"])
             end
 
             context "when changing our mind and using TV after all" do

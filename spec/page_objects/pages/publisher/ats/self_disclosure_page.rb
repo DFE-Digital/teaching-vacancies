@@ -8,7 +8,8 @@ module PageObjects
           element :status, "#main-content .govuk-tag"
           element :button, ".govuk-grid-column-two-thirds .govuk-button"
           element :reminder_btn, '[name="reminder"]'
-          element :goto_references_and_self_disclosure_form, "a.govuk-link:nth-child(7)"
+          # element :goto_references_and_self_disclosure_form, "a.govuk-link:nth-child(7)"
+          element :goto_references_and_self_disclosure_form, "p.govuk-body > a.govuk-link"
           element :banner_title, "#govuk-notification-banner-title"
 
           section :personal_details, Sections::SelfDisclosure::PersonalDetailsSection, ".personal-details"
