@@ -1,9 +1,9 @@
 ---
 order: 200
 title: How to accept job applications
-meta_description: Schools can receive and manage job applications through Teaching Vacancies. Find out about our application form and how to manage candidates.
+meta_description: Schools can receive and manage job applications through Teaching Vacancies. Find out about our application form, how to use our application tracking system (ATS) and how to manage candidates.
 date_posted: 17/03/2022
-date_updated: 13/10/2025
+date_updated: 10/11/2025
 category_tags: how-to
 card-image: "/content-assets/get-help-hiring/how-to-create-job-listings-and-accept-applications/how-to-accept-job-applications.png"
 ---
@@ -20,17 +20,17 @@ When posting a new job on our service you’re given the option to use the Teach
 
 ## The Teaching Vacancies application form 
 
-If you choose to accept applications through Teaching Vacancies, candidates will be asked to complete an online application form.
+If you choose to accept applications through Teaching Vacancies, jobseekers will be asked to complete an online application form.
 
 We've designed the form to help you easily identify high quality candidates, and to ensure your recruitment processes always follow the latest legal requirements related to safeguarding and discrimination.
 
-The form also makes applying easier for candidates. We save information such as their qualifications and work history from their previous applications so they can use it in future ones. 
+The form also makes applying easier for jobseekers. We save information such as their qualifications and work history from their previous applications so they can use it in future ones. 
 
 This allows them to spend more time personalising sections such as their personal statement. 
 
 ### Personal details 
 
-As well as basic details such as their name, address and contact information, we give candidates the option to provide their teacher reference number (TRN) and National Insurance number to make it easier for you to verify their eligibility.
+As well as basic details such as their name, address and contact information, we give applicants the option to provide their teacher reference number (TRN) and National Insurance number to make it easier for you to verify their eligibility.
 
 ### Professional status
 
@@ -66,13 +66,13 @@ Applicants can add as many roles as they want, each with a summary of their main
 
 We ask applicants to explain why they’re suitable for the role and to include any relevant personal qualities and experiences related to your job description.
 
-If you have included any specific instructions for candidates when setting up your job posting, these will be displayed at this step to help ensure jobseekers submit the necessary information.
+If you have included any specific instructions for applicants when setting up your job posting, these will be displayed at this step to help ensure they submit the necessary information.
 
 ### Religious information
 
-This section of the application is shown to candidates who are applying for a role at a faith school.
+This section of the application is shown to applicants who are applying for a role at a faith school.
 
-We let applicants know that schools, academies and colleges of a religious character can give preference to religious applicants when recruiting for teaching roles, but candidates who do not follow a faith or religion are still encouraged to apply.
+We let applicants know that schools, academies and colleges of a religious character can give preference to religious applicants when recruiting for teaching roles, but people who do not follow a faith or religion are still encouraged to apply.
 
 Applicants are asked how they will meet your school's ethos and aims, and if they are currently following a religion or faith.
 
@@ -84,7 +84,7 @@ If the applicant does not currently work with children, but has done so in the p
 
 ### Equal opportunities and recruitment monitoring 
 
-Candidates are asked to provide information on whether they have a disability as well as their age, gender, sexual orientation and ethnic group.
+Applicants are asked to provide information on whether they have a disability as well as their age, gender, sexual orientation and ethnic group.
 
 This information is not to be used as part of candidate selection, however it does allow you to anonymously monitor the inclusivity of your recruitment process.
 
@@ -92,7 +92,7 @@ For each question, applicants are given the opportunity to answer ‘Prefer not 
 
 ### Ask for support if you have a disability or other needs 
 
-Regardless of how they have answered the question regarding disabilities on the previous step, we provide candidates with an opportunity to explain any support they may require if they’re invited to attend an interview. 
+Regardless of how they have answered the question regarding disabilities in the previous section, we provide applicants with an opportunity to explain any support they may require if they’re invited to attend an interview. 
 
 This may include adjustments related to a disability, a mental health condition, or educational needs.
 
@@ -106,7 +106,7 @@ Applicants are not asked if they are barred from working with children. Departme
 
 ## What happens when an application is submitted? 
 
-Before submitting their application, we ask candidates to confirm that the information they have provided is accurate and that they are happy for their data to be shared with:
+Before submitting their application, we ask applicants to confirm that the information they have provided is accurate and that they are happy for their data to be shared with:
 
 * the Department for Education
 * the school, trust or local authority which posted the job listing
@@ -122,7 +122,7 @@ When you use the Teaching Vacancies application form to list your school's jobs,
 
 When you receive a new application for an [active job listing](https://teaching-vacancies.service.gov.uk/publishers/sign-in), you will get a notification. If you are signed in to Teaching Vacancies, you can view your notifications by selecting 'Notifications' on the service navigation bar.
 
-When you get a notification about a new application, you can select the link within the notification to open the new application. You should receive an email summary of all the new notifications you receive from Teaching Vacancies once a day.
+When you get a notification about a new application, you can select the link within the notification to open the new application. 
 
 ### Accessing applications through job listings
 
@@ -136,7 +136,7 @@ When you review your active job listings, you can either select the job title an
 
 If you have not opened or updated an application yet, it will have the following label applied:
 
-* unread - these applications are in the 'New' section of the dashboard, and are applications you have not yet viewed
+* unread – these applications are in the 'New' section of the dashboard
 
 Select an applicant's name to view their application in full, download their application, or update their application status.
 
@@ -148,20 +148,22 @@ To update multiple applications at the same time, select the checkbox beside eac
 
 When you select 'Update application status', you will have the option to move applicants to one of these sections of the dashboard:
 
-* not progressing - applications that you are not going to move forward to inerview or applications that have been withdrawn by the jobseeker
-* shortlisted - applications that you want to shortlist
-* interviewing - applications that you are taking to interview stage
-* job offered - the application of the person you have offered the job to
+* not progressing – applications that you are not going to move forward to interview or applications that have been withdrawn by the jobseeker
+* shortlisted – applications that you want to shortlist
+* interviewing – applications that you are taking to interview stage
+* job offered – the application of the person you have offered the job to
 
-You can move a candidate to the 'Not progressing' section of the dashboard after they have been shortlisted, but you cannot reinstate candidates once they have been moved to the 'Not progressing' stage.
+You can move a candidate to the 'Not progressing' stage after they have been shortlisted, but you cannot reinstate candidates once they have been moved to the 'Not progressing' stage.
 
-When you move a candidate to the 'Interviewing' stage,  you will be asked if you want to collect their references and self-disclosure form using Teaching Vacancies. From this point, you will have access to the pre-interview checklist, which will appear under the 'Application status' heading in the table. When you select that link, you will be taken to a section of the dashboard where you can track the candidate's references and self-disclosure form.
+When you move a candidate to the 'Interviewing' stage, you will be asked if you want to collect their references and self-disclosure form using Teaching Vacancies. 
+
+From this point, you will have access to the pre-interview checklist, which will appear under the 'Application status' heading in the table. When you select that link, you will be taken to a section of the dashboard where you can track the candidate's references and self-disclosure form.
 
 Religious references cannot be collected through Teaching Vacancies, but you can manually record them to track their progress.
 
 ### Anonymised applications
 
-If you have chosen applications to remain anonymous, there will be a reference number instead of a name. If the application is shortlisted, you will then be able to view the candidate's personally identifiable information (PII).
+If you have chosen to make applications for your job listing anonymous, a reference number will be shown instead of the applicant's name. If an application is shortlisted, you will then be able to view the candidate's personally identifiable information (PII).
 
 ### Downloading data and data protection
 
