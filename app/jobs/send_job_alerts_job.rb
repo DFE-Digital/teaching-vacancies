@@ -5,8 +5,6 @@ class SendJobAlertsJob < ApplicationJob
 
   # rubocop:disable Metrics/MethodLength
   def perform(name, subscriptions, from_date)
-    return if DisableEmailNotifications.enabled?
-
     # For stats tracking on each run
     start_time = Time.current
     sent_alerts_count = 0
