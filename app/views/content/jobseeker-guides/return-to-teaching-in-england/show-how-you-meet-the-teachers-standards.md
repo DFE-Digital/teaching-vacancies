@@ -1,6 +1,7 @@
 ---
 order: 106
 title: Show how you meet the teachers' standards as a returning teacher
+page_title: Meeting the teachers' standards as a returning teacher
 meta_description: Learn how to meet national teaching standards. Get practical ways to evidence and meet new professional standards for teachers.
 date_posted: 17/02/2025
 date_updated: 16/07/2025

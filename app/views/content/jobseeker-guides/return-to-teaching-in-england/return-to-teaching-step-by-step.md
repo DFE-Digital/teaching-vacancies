@@ -1,6 +1,7 @@
 ---
 order: 101
 title: "Return to teaching: step by step"
+page_title: "Returning to teaching: step by step guide"
 meta_description: Returning to teaching? Follow our guide to restart your career, catch up on curriculum changes, and ease back into the classroom.
 date_posted: 17/02/2025
 date_updated: 28/08/2025
