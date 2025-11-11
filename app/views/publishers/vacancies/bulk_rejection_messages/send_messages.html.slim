@@ -1,0 +1,21 @@
+- content_for :page_title_prefix, t(".page_title")
+
+span.govuk-caption-l = t(".caption")
+h1.govuk-heading-xl = t(".heading")
+
+h2 = t(".edit_email")
+h3 = t(".to")
+
+= govuk_inset_text do
+  p.govuk-body
+    ul
+      - @job_applications.each do |ja|
+        li = ja.email_address
+
+= render "shared/message_form",
+    message_object: @message,
+    form_url: wizard_path,
+    form_method: :patch,
+    form_help_text: t(".how_will_message_be_sent"),
+    form_help_content: t(".message_sent_description"),
+    cancel_link: "#"
