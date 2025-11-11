@@ -42,6 +42,13 @@
     }
   }
 
+  // Increase height for personal statement page
+  &--personal-statement {
+    .editor-component__content {
+      height: 600px;
+    }
+  }
+
   &__toolbar {
     display: none;
     margin-bottom: govuk-spacing(2);
