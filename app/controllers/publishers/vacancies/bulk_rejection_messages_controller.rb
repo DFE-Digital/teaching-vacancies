@@ -2,14 +2,12 @@ module Publishers
   module Vacancies
     class BulkRejectionMessagesController < BulkMessagesController
       def update
-        if step == :send_messages
-          super
+        send_messages_for(@job_applications)
 
-          @job_applications.each do |job_application|
-            job_application.update!(status: :rejected)
-          end
-
+        @job_applications.each do |job_application|
+          job_application.update!(status: :rejected)
         end
+        redirect_to_next next_step
       end
 
       def finish_wizard_path

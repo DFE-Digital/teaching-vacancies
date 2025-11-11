@@ -23,10 +23,9 @@ module Publishers
         render_wizard
       end
 
+      # we never call update apart from in the send_messages state
       def update
-        if step == :send_messages
-          send_messages_for(@job_applications)
-        end
+        send_messages_for(@job_applications)
         redirect_to_next next_step
       end
 
