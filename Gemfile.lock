@@ -799,6 +799,8 @@ GEM
       fugit (~> 1.8, >= 1.11.1)
       globalid (>= 1.0.1)
       sidekiq (>= 6.5.0)
+    sidekiq-limit_fetch (4.4.1)
+      sidekiq (>= 6)
     signet (0.21.0)
       addressable (~> 2.8)
       faraday (>= 0.17.5, < 3.a)
@@ -1067,6 +1069,7 @@ DEPENDENCIES
   shoulda-matchers
   sidekiq (< 7)
   sidekiq-cron
+  sidekiq-limit_fetch
   simplecov
   simplecov-lcov (< 0.10)
   site_prism

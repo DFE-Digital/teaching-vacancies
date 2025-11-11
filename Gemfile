@@ -86,6 +86,7 @@ gem "sentry-sidekiq"
 # TODO: Pinned to <7 until compatible with sidekiq-cron
 gem "sidekiq", "<7"
 gem "sidekiq-cron"
+gem "sidekiq-limit_fetch"
 gem "skylight"
 gem "slim-rails"
 gem "validate_url"
