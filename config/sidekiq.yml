@@ -1,10 +1,16 @@
 :max_retries: 5
 
+# limit notify queue to 1 worker so it can be throttled to Govuk Notify maximum limit
+
 :limits:
   verylow: 2
+  notify: 1
+
+# notify queue needs to be above default so that emails don't get blocked behind other operations
+# and create an operational backlog
 
 :queues:
-  - [high, 8]
+  - [notify, 6]
   - [default, 4]
   - [low, 2]
   - [verylow, 1]

@@ -9,6 +9,8 @@ class GovukNotifyMailer < Mail::Notify::Mailer
   # :nocov:
   self.delivery_method = :notify unless Rails.env.test?
 
+  self.delivery_job = GovukNotifyMailerJob
+
   def send_email(to:, subject:)
     @to = to
     view_mail(template, to: to, subject: subject)
