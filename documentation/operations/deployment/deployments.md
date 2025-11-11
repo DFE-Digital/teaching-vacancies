@@ -6,14 +6,14 @@
 
 The deployments to all environments share the same and simplified workflow. The deployment to review app (via Pull Request), qa, staging and production go through the CI/CD pipeline.
 
-Once the PR has been merged to main or a `deploy` tag applied to Review app, the GitHub actions workflow [build_and_deploy.yml](../.github/workflows/build_and_deploy.yml) performs these steps:
+Once the PR has been merged to main or a `deploy` tag applied to Review app, the GitHub actions workflow [build_and_deploy.yml](/.github/workflows/build_and_deploy.yml) performs these steps:
 
 - Builds and tags a Docker image from code in the `main` (staging, prod and qa) or `review app` branch
 - Tags the Docker image with the commit SHA as the tag
 - Logs in to Github's container registry as the service account `twd-tv-ci`
 - Pushes the image to GitHub packages, after it has been scanned by `Snyk` for vulnerabilities.
     - See [this guide](/documentation/operations/infrastructure/docker.md#docker-image-scan) on how to fix vulnerability errors that may arise at this stage.
-- Calls the [deploy_app.yml](../.github/workflows/deploy_app.yml) workflow to use Terraform to update the `web` and `worker` apps to use the new Docker image, and apply any changes to the appropriate environment.
+- Calls the [deploy_app.yml](/.github/actions/deploy/action.yml) action to use Terraform to update the `web` and `worker` apps to use the new Docker image, and apply any changes to the appropriate environment.
 - Runs a smoke test against the deployed environment
 - If deployment (push) is to the main branch, performs `Post Deployment`
 - Sends a Slack notification to the `#twd_tv_dev` channel - success or failure.
@@ -27,8 +27,14 @@ Perform the following to trigger a deployment a review app
 - attach a `deploy` label
 - Docker image and tag used to deploy the `review app` is based on the review app's `branch` and `sha` e.g teva-1234:commit_sha
 
-#### Review app databases
-By default, review apps use a simple postgis container deployed to AKS, as opposed to real Azure database flexible servers as it's cheaper and much faster to deploy.
+#### Review app databases and cache/queues
+By default, review apps differ from the rest on environments on:
+- PostgreSQL DB: uses a postgis docker container deployed to AKS, instead of real Azure database flexible servers
+- Redis Cache and Queue: uses a redis docker container deployed to AKS, instead of real Azure Redis Cache servers.
+
+These AKS containers are cheaper and much faster to deploy, what is convenient for our ephemereal Review Apps.
+
+The Docker images used for the containers are set in the [Teacher Services Cloud repository](https://github.com.mcas.ms/DFE-Digital/teacher-services-cloud/blob/main/.ghcr_cache_images.yml).
 
 To use the Azure database temporarily in a review app, you can change the following parameters to `true` in `terraform/workspace-variables/review.tfvars.json` on the branch (do not commit this hange to main, remove it before merging):
 
