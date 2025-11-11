@@ -30,6 +30,15 @@
   max-width: 100% !important;
 }
 
+/* Add focus states as outlined here https://design-system.service.gov.uk/get-started/focus-states/ */
+trix-toolbar .trix-button:focus {
+  outline: $govuk-focus-width solid $govuk-focus-colour;
+  outline-offset: 0;
+  background-color: $govuk-focus-colour;
+  color: $govuk-focus-text-colour;
+  box-shadow: 0 -2px $govuk-focus-colour, 0 4px $govuk-focus-text-colour;
+}
+
 /* Hide unwanted toolbar buttons - keep only bold, italic, link, bullet points, undo/redo */
 trix-toolbar .trix-button--icon-strike,
 trix-toolbar .trix-button--icon-heading-1,
