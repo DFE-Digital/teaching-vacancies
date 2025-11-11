@@ -3,6 +3,7 @@ module Publishers
     class JobApplicationsController < Publishers::Vacancies::JobApplications::BaseController
       include Jobseekers::QualificationFormConcerns
       include DatesHelper
+      include JobApplicationsPdfHelper
 
       FORMS = {
         "TagForm" => Publishers::JobApplication::TagForm,
@@ -27,7 +28,7 @@ module Publishers
       end
 
       def download
-        document = @job_application.submitted_application_form
+        document = submitted_application_form(@job_application)
         send_data(document.data, filename: document.filename, disposition: "inline")
       end
 
@@ -40,7 +41,11 @@ module Publishers
           when "offered"  then render_offered_form(form.job_applications, form.origin)
           when "interview_datetime" then render_interview_datetime_form(form.job_applications, form.origin)
           when "unsuccessful_interview" then render_unsuccessful_interview_form(form.job_applications, form.origin)
-          when "reject" then prepare_to_reject(form.job_applications)
+          when "reject" then prepare_to_bulk_send(form.job_applications, :organisation_job_job_application_batch_bulk_rejection_message_path)
+          when "message_shortlisted" then prepare_to_bulk_send(form.job_applications,
+                                                               :organisation_job_job_application_batch_bulk_shortlisting_message_path)
+          when "message_interviewing" then prepare_to_bulk_send(form.job_applications,
+                                                                :organisation_job_job_application_batch_bulk_interviewing_message_path)
           else # when "update_status"
             render "tag"
           end
@@ -106,7 +111,7 @@ module Publishers
 
       def set_job_applications
         @current_organisation = current_organisation
-        @job_applications = @vacancy.job_applications.not_draft.order(updated_at: :desc)
+        @job_applications = @vacancy.job_applications.not_draft.order(updated_at: :desc).decorate
       end
 
       def with_valid_form(job_applications, validate_all_attributes: false)
@@ -141,12 +146,12 @@ module Publishers
         end
       end
 
-      def prepare_to_reject(job_applications)
+      def prepare_to_bulk_send(job_applications, redirect_path)
         batch = JobApplicationBatch.create!(vacancy: @vacancy)
         job_applications.each do |ja|
           batch.batchable_job_applications.create!(job_application: ja)
         end
-        redirect_to select_rejection_template_organisation_job_bulk_rejection_message_path(@vacancy.id, batch)
+        redirect_to method(redirect_path).call(@vacancy.id, batch.id, Wicked::FIRST_STEP)
       end
 
       def download_selected(job_applications)

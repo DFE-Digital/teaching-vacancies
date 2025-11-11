@@ -155,6 +155,7 @@ shared:
     - religious_reference_type
     - faith
     - place_of_worship
+    - place_of_worship_start_date
     - religious_referee_name
     - religious_referee_address
     - religious_referee_role
@@ -395,6 +396,7 @@ shared:
     - created_at
     - updated_at
     - marked_as_complete
+    - reminder_sent
     - email
   religious_reference_requests:
     - id
@@ -492,6 +494,7 @@ shared:
     - flexi_working_details_provided
     - type
     - publisher_ats_api_client_id
+    - anonymise_applications
   failed_imported_vacancies:
     - id
     - import_errors
@@ -558,6 +561,7 @@ shared:
     - status
     - created_at
     - updated_at
+    - marked_as_complete
   :self_disclosures:
     - id
     - self_disclosure_request_id

@@ -9,12 +9,13 @@ class SelfDisclosurePresenter
 
   Section = Data.define(:title, :fields)
 
+  SCOPE = "publishers.vacancies.job_applications.self_disclosure.show".freeze
+
   EVENT_LABELS = {
-    manually_completed: I18n.t(".event.manually_completed", scope: "jobseekers.job_applications.self_disclosure.review.completed"),
-    manual: I18n.t(".event.managed_outside_tv", scope: "jobseekers.job_applications.self_disclosure.review.completed"),
-    received: I18n.t(".event.completed", scope: "jobseekers.job_applications.self_disclosure.review.completed"),
-    sent: I18n.t(".event.requested", scope: "jobseekers.job_applications.self_disclosure.review.completed"),
-    reminder_sent: I18n.t(".event.reminder_sent", scope: "jobseekers.job_applications.self_disclosure.review.completed"),
+    received_off_service: I18n.t(".event.marked_as_received", scope: SCOPE),
+    manual: I18n.t(".event.managed_outside_tv", scope: SCOPE),
+    received: I18n.t(".event.received", scope: SCOPE),
+    sent: I18n.t(".event.requested", scope: SCOPE),
   }.with_indifferent_access
 
   def initialize(job_application)
@@ -26,15 +27,20 @@ class SelfDisclosurePresenter
   attr_reader :model, :job_application, :request
 
   def events
-    request.versions.reverse_each.filter_map do |version|
-      # when a reminder is sent an empty changeset is created by `request.touch`
-      next unless version.changeset.key?("status") || version.changeset.empty?
-
-      _, label_key = version.changeset["status"]
-
-      label = EVENT_LABELS.fetch(label_key || :reminder_sent)
+    request.versions.reverse_each.map do |version|
       actor = version.actor&.papertrail_display_name || "Teaching Vacancies"
       timestamp = version.created_at.to_fs
+
+      label = if version.changeset.key? "status"
+                label_key = version.changeset.fetch("status").last
+                EVENT_LABELS.fetch(label_key)
+              elsif version.changeset.key? "marked_as_complete"
+                I18n.t(".event.marked_as_complete", scope: SCOPE)
+              else
+                # when a reminder is sent an empty changeset is created by `request.touch`
+                I18n.t(".event.reminder_sent", scope: SCOPE)
+              end
+
       [label, "#{actor} - #{timestamp}"]
     end
   end
@@ -72,7 +78,7 @@ class SelfDisclosurePresenter
   private
 
   def t(key)
-    I18n.t(key, scope: "jobseekers.job_applications.self_disclosure.review.completed")
+    I18n.t(key, scope: SCOPE)
   end
 
   def format(value)

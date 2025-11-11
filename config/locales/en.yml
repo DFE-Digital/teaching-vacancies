@@ -21,7 +21,12 @@ en:
       main: Skip to main content
     title: Teaching Vacancies
     support_title: Support for Teaching Vacancies
-
+    anonymous_applications:
+      not_shown: Information not shown
+      keep_hidden: >-
+        You have chosen to keep applications anonymous.
+        This means that you cannot view personal details at this stage.
+        If you shortlist this applicant, you will be able to view their personal details.
   banners:
     alert: Warning
     error: Error

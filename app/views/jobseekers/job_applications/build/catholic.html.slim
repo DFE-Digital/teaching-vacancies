@@ -12,6 +12,8 @@
 
     p.govuk-body = t(".preference_for_support_staff")
 
+    = govuk_inset_text text: t(".processing")
+
     p.govuk-body = t(".non_catholics_apply")
 
     = form_for @form, url: jobseekers_job_application_build_path(job_application, :catholic), method: :patch, multipart: true do |f|
@@ -23,13 +25,16 @@
 
           = f.govuk_text_area :place_of_worship, label: { size: "s" }, rows: 6
 
+          = f.govuk_date_field :place_of_worship_start_date,
+                                hint: -> { t("helpers.hint.date", date: 18.months.ago.strftime("%-d %-m %Y")) }
+
           = f.govuk_radio_buttons_fieldset :religious_reference_type do
             = f.govuk_radio_button :religious_reference_type, :religious_referee, link_errors: true do
-              = f.govuk_text_field :religious_referee_name
-              = f.govuk_text_area :religious_referee_address, rows: 6
-              = f.govuk_text_field :religious_referee_role
-              = f.govuk_text_field :religious_referee_email
-              = f.govuk_text_field :religious_referee_phone
+              = f.govuk_text_field :religious_referee_name, label: { size: "s" }
+              = f.govuk_text_area :religious_referee_address, rows: 6, label: { size: "s" }
+              = f.govuk_text_field :religious_referee_role, label: { size: "s" }
+              = f.govuk_text_field :religious_referee_email, label: { size: "s" }
+              = f.govuk_text_field :religious_referee_phone, label: { size: "s" }
             = f.govuk_radio_button :religious_reference_type, :baptism_certificate do
               - if f.object.baptism_certificate.respond_to?(:attached?) && f.object.baptism_certificate.attached? # If form validations fail, the file is a tempfile that doesn't respond to ActiveStorage methods.
                 p.govuk-body

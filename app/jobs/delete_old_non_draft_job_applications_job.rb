@@ -1,7 +1,7 @@
 class DeleteOldNonDraftJobApplicationsJob < ApplicationJob
   queue_as :low
 
-  OLD_THRESHOLD = 5.years.ago.freeze
+  OLD_THRESHOLD = 6.years.ago.freeze
 
   def perform
     JobApplication.after_submission

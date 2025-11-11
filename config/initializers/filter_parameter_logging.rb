@@ -88,7 +88,7 @@ Rails.application.config.filter_parameters += %i[
   has_unspent_convictions
   has_spent_convictions
   is_barred
-  has_been_refered
+  has_been_referred
   is_known_to_children_services
   has_been_dismissed
   has_been_disciplined

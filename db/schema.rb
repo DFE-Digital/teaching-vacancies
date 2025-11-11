@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_16_154016) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_07_084623) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -306,6 +306,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_16_154016) do
     t.datetime "interview_feedback_received_at"
     t.boolean "interview_feedback_received"
     t.datetime "rejected_at"
+    t.date "place_of_worship_start_date"
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
@@ -681,6 +682,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_16_154016) do
     t.string "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "reminder_sent", default: false, null: false
     t.index ["reference_id"], name: "index_reference_requests_on_reference_id", unique: true
   end
 
@@ -730,6 +732,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_16_154016) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "marked_as_complete", default: false, null: false
     t.index ["job_application_id"], name: "index_self_disclosure_requests_on_job_application_id", unique: true
   end
 
@@ -778,7 +781,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_16_154016) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.float "recaptcha_score"
-    t.boolean "active", default: true
     t.datetime "unsubscribed_at", precision: nil
     t.geometry "area", limit: {srid: 4326, type: "geometry"}
     t.geometry "geopoint", limit: {srid: 4326, type: "geometry"}
@@ -832,8 +834,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_16_154016) do
     t.string "salary"
     t.text "about_school"
     t.string "subjects", array: true
-    t.text "school_visits_details"
-    t.text "how_to_apply"
     t.integer "job_location"
     t.string "readable_job_location"
     t.integer "job_roles", array: true
@@ -842,7 +842,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_16_154016) do
     t.boolean "starts_asap"
     t.integer "contract_type"
     t.string "fixed_term_contract_duration"
-    t.text "personal_statement_guidance"
     t.boolean "enable_job_applications"
     t.string "completed_steps", default: [], null: false, array: true
     t.string "actual_salary"
@@ -888,6 +887,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_16_154016) do
     t.boolean "flexi_working_details_provided"
     t.datetime "discarded_at"
     t.string "type", null: false
+    t.boolean "anonymise_applications", default: false
     t.index ["discarded_at"], name: "index_vacancies_on_discarded_at"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["external_reference", "publisher_ats_api_client_id"], name: "index_kept_unique_vacancies_on_external_ref_and_client_id", unique: true, where: "(discarded_at IS NULL)"

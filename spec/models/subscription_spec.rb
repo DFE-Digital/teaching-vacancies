@@ -312,7 +312,7 @@ RSpec.describe Subscription do
 
       it "enqueues SetSubscriptionLocationDataJob for the subscription" do
         update_with_search_criteria
-        expect(SetSubscriptionLocationDataJob).to have_received(:perform_later).with(subscription.id)
+        expect(SetSubscriptionLocationDataJob).to have_received(:perform_later).with(subscription)
       end
     end
 
@@ -328,7 +328,7 @@ RSpec.describe Subscription do
 
       it "enqueues SetSubscriptionLocationDataJob for the subscription" do
         update_with_search_criteria
-        expect(SetSubscriptionLocationDataJob).to have_received(:perform_later).with(subscription.id)
+        expect(SetSubscriptionLocationDataJob).to have_received(:perform_later).with(subscription)
       end
     end
 

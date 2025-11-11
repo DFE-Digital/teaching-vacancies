@@ -1,64 +1,13 @@
-class AlertEmail::Base < ApplicationJob
-  MAXIMUM_RESULTS_PER_RUN = 500
+# frozen_string_literal: true
 
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/MethodLength
+class AlertEmail::Base < ApplicationJob
+  BATCH_SIZE = 5000
+
   def perform
     return if DisableEmailNotifications.enabled?
 
-    # For stats tracking on each run
-    start_time = Time.current
-    sent_alerts_count = 0
-    vacancies_in_alerts_count = 0
-    subscriptions_count = subscriptions.count
-
-    default_scope = PublishedVacancy.live.search_by_filter(from_date: from_date, to_date: Date.yesterday)
-
-    # for stats tracking on each run
-    new_vacancies_count = default_scope.size
-
-    already_run_ids = Set.new AlertRun.for_today.pluck(:subscription_id)
-
-    subscriptions.find_each.reject { |sub| already_run_ids.include?(sub.id) }.each do |subscription|
-      matching_vacancy_ids = subscription.vacancies_matching(default_scope, limit: MAXIMUM_RESULTS_PER_RUN)
-      next unless matching_vacancy_ids.any?
-      next if subscription.email.blank?
-
-      sent_alerts_count += 1
-      vacancies_in_alerts_count += matching_vacancy_ids.size
-      Jobseekers::AlertMailer.alert(subscription.id, matching_vacancy_ids).deliver_later
+    subscriptions.find_in_batches(batch_size: BATCH_SIZE).each do |batch|
+      SendJobAlertsJob.perform_later self.class.name, batch, from_date
     end
-    log_to_sentry(duration: Time.current - start_time,
-                  new_vacancies_count:,
-                  subscriptions_count:,
-                  vacancies_in_alerts_count:,
-                  sent_alerts_count:)
-  end
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/MethodLength
-
-  private
-
-  def log_to_sentry(duration:, new_vacancies_count:, subscriptions_count:, vacancies_in_alerts_count:, sent_alerts_count:)
-    formatted_duration = format_duration(duration)
-    Sentry.with_scope do |scope|
-      scope.set_context("Alert run Statistics", { duration: formatted_duration,
-                                                  new_vacancies_count:,
-                                                  subscriptions_count:,
-                                                  sent_alerts_count:,
-                                                  vacancies_in_alerts_count: })
-      Sentry.capture_message(
-        "#{self.class.name} run successfully (duration: #{formatted_duration})",
-        level: :info,
-        fingerprint: ["{{ transaction }}"], # Groups Sentry messages by transaction. EG: Sidekiq/SendDailyAlertEmailJob
-      )
-    end
-  end
-
-  def format_duration(seconds)
-    total_seconds = seconds.to_i
-    minutes = total_seconds / 60
-    secs = total_seconds % 60
-    "#{minutes}m #{secs}s"
   end
 end

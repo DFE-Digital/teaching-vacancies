@@ -33,7 +33,7 @@ RSpec.describe Jobseekers::CreateSubscription do
 
   it "enqueues SetSubscriptionLocationDataJob with the subscription id" do
     subscription = described_class.new(form, recaptcha_score).call
-    expect(SetSubscriptionLocationDataJob).to have_received(:perform_later).with(subscription.id).once
+    expect(SetSubscriptionLocationDataJob).to have_received(:perform_later).with(subscription).once
   end
 
   it "sends a confirmation email" do

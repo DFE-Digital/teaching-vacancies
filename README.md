@@ -62,6 +62,7 @@ tech lead to do that and also [complete the other onboarding steps](documentatio
 * [Maintenance Mode](/documentation/operations/maintenance/maintenance-mode.md)
 * [Offline Site](/documentation/operations/maintenance/offline-site.md)
 * [Application secrets](/documentation/operations/maintenance/application-secrets.md)
+* [User Support Requests](/documentation/operations/maintenance/support-requests.md)
 
 ### Service
 

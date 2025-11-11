@@ -158,12 +158,6 @@ en:
       jobseekers_job_application_details_qualifications_degree_form:
         institution: Awarding body
         year: Year qualification was awarded
-      jobseekers_job_application_details_referee_form:
-        phone_number: Please only give a phone number that your referee is happy to be contacted on.
-        is_most_recent_employer_hints:
-          hint1: One of your referees should be your current or most recent employer.
-          hint2: If you do not have an employer referee, you can provide a personal referee.
-          hint3: Your employer reference does not have to be paid employment and can include voluntary work.
       jobseekers_job_application_feedback_form:
         email: >-
           We'll only use this to tell you about opportunities to take part in user research that helps us improve
@@ -371,16 +365,6 @@ en:
         subject: Subject
         year: Year awarded
         month: Month awarded
-      jobseekers_job_application_details_referee_form:
-        email: Email address
-        job_title: Job title
-        name: Name
-        organisation: Organisation
-        relationship: Relationship to applicant
-        phone_number: Phone number (optional)
-        is_most_recent_employer_options:
-          "true": "Yes"
-          "false": "No"
       jobseekers_job_application_feedback_form:
         email: What is your email address?
         comment_html: Do you have any suggestions on how we should improve the service? (optional<span class='govuk-visually-hidden'> field</span>)</span>
@@ -698,9 +682,6 @@ en:
 
       jobseekers_close_account_feedback_form:
         reason: Tell us why you are closing your account
-      jobseekers_job_application_details_referee_form:
-        phone_number: Phone number
-        is_most_recent_employer: Is this your current or most recent employer?
       jobseekers_job_application_employment_history_form:
         employment_history_section_completed: Have you completed this section?
       jobseekers_job_application_equal_opportunities_form:

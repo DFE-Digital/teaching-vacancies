@@ -2,7 +2,7 @@ div class="govuk-!-margin-top-6"
   = govuk_details summary_text: form_help_text do
     = form_help_content
 
-  = form_for message_object, url: form_url, method: :post do |f|
+  = form_for message_object, url: form_url, method: form_method do |f|
     = f.govuk_error_summary
 
     .govuk-form-group

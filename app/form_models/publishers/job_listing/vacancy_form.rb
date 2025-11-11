@@ -2,6 +2,8 @@ class Publishers::JobListing::VacancyForm < BaseForm
   # so that these can be passed through the 'params' hash
   attr_writer :completed_steps, :current_organisation
 
+  include ActiveModel::Attributes
+
   def initialize(params = {}, vacancy = nil, current_publisher = nil)
     @params = params
     @vacancy = vacancy

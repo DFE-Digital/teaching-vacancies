@@ -423,6 +423,10 @@ en:
           after: job closed
           before: Application deadline
       build:
+        anonymise_applications:
+          you_can_choose: >-
+            You can choose to view candidates personal details, or to anonymise their applications.
+            Shortlisted applications cannot be anonymised.
         applying_for_the_job:
           accepting_job_applications_link_text: why you should use Teaching Vacancies for applications
           banner:
@@ -709,7 +713,9 @@ en:
             print: Download reference
             how_would_you_rate: How would you rate %{name}?
             page_title: Reference
+            send_reminder: Send a reminder
             mark_as_received: Mark as received
+            mark_as_completed: Mark as completed
             collect_reference: Would you like to collect this reference through Teaching Vacancies?
             change_email_address_html: If the candidate has entered the referee's email address incorrectly, %{link}
             change_email_link_text: you can amend it.
@@ -718,7 +724,7 @@ en:
               You will need to request a new referee from this candidate.
             once_the_reference_is_received: >-
               Once the reference is received you will be able to view it on this page.
-              If you do not receive the reference within 1 week, you will be able to send a reminder.
+              If you do not receive the reference within one week, you will be able to send a reminder.
             more_urgent: >-
               If the request is more urgent, you should reach out to the referee directly.
               If you have sent and received your own reference form for this referee, you can manually mark it as received.
@@ -733,9 +739,11 @@ en:
             reference_requested: Reference requested
             reference_email_changed: Reference email changed to %{email}
             reference_received: Reference received
+            marked_received: Marked as received
             reference_declined: Reference declined
             reference_created: Marked as interviewing
             marked_as_complete: Marked as complete
+            reminder_sent: Reminder sent
             by: by %{name}
             by_tvs: by Teaching Vacancies
             communication_history: Communication history
@@ -881,6 +889,7 @@ en:
         applying_for_the_job: Choose your application form
         how_to_receive_applications: How do you want candidates to apply for the role?
         application_link: Link to website
+        anonymise_applications: Anonymise applications
         application_form: Receiving applications
         religious_information: Applicants religious information
         school_visits: Do you want to offer school visits?

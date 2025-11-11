@@ -20,10 +20,6 @@ class Subscription < ApplicationRecord
   # support_job_roles used to be called teaching_support_job_roles and non_teaching_support_job_roles in the past, and there are still active subscriptions with this name
   JOB_ROLE_ALIASES = %i[teaching_job_roles support_job_roles teaching_support_job_roles non_teaching_support_job_roles].freeze
 
-  # temp - can't delete a column until this change has been deployed as it would break running versions
-  # during the deploy
-  self.ignored_columns += %w[active]
-
   def self.encryptor(serializer: :json_allow_marshal)
     key_generator_secret = SUBSCRIPTION_KEY_GENERATOR_SECRET
     key_generator_salt = SUBSCRIPTION_KEY_GENERATOR_SALT
@@ -73,7 +69,7 @@ class Subscription < ApplicationRecord
     successful_update = update(new_attributes)
     new_location_criteria = search_criteria.slice("location", "radius")
     if successful_update && previous_location_criteria != new_location_criteria
-      SetSubscriptionLocationDataJob.perform_later(id)
+      SetSubscriptionLocationDataJob.perform_later(self)
     end
   end
 

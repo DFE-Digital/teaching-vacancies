@@ -564,5 +564,17 @@ RSpec.describe JobApplicationPdf do
         expect(datasource.religious_information).not_to be_empty
       end
     end
+
+    context "with a place_of_worship_start_date" do
+      let(:job_application) do
+        build_stubbed(:job_application, :status_submitted, following_religion: true, vacancy: vacancy,
+                                                           employments: employments, professional_body_memberships: memberships,
+                                                           training_and_cpds: trainings, qualifications: quals, referees: refs, place_of_worship_start_date: Date.new(2020, 1, 1))
+      end
+
+      it "shows place of worship start date" do
+        expect(datasource.religious_information.rows.flatten).to include("01 January 2020")
+      end
+    end
   end
 end

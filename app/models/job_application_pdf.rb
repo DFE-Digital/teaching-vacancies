@@ -231,7 +231,7 @@ class JobApplicationPdf
 
       religious_data << [I18n.t("helpers.label.jobseekers_job_application_catholic_form.faith"), job_application.faith]
       religious_data << [I18n.t("helpers.label.jobseekers_job_application_catholic_form.place_of_worship"), job_application.place_of_worship]
-
+      religious_data << [I18n.t("helpers.label.jobseekers_job_application_catholic_form.place_of_worship_start_date"), job_application.place_of_worship_start_date&.to_fs(:day_month_year)]
       religious_data << [I18n.t("helpers.legend.jobseekers_job_application_catholic_form.religious_reference_type"),
                          if job_application.religious_reference_type.present?
                            I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_reference_type_options.#{job_application.religious_reference_type}")
@@ -312,12 +312,7 @@ class JobApplicationPdf
   end
 
   def job_application_address
-    [
-      job_application.street_address,
-      job_application.city,
-      job_application.postcode,
-      job_application.country,
-    ].compact.join(", ")
+    job_application.address.join(", ")
   end
 
   def basic_personal_details

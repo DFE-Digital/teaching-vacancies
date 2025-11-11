@@ -33,18 +33,32 @@ RSpec.describe TabPanelComponent, type: :component do
     end
 
     describe "#candidate_name" do
-      let(:candidate) { build_stubbed(:job_application, :status_submitted, vacancy:) }
+      let(:vacancy) { build_stubbed(:vacancy, anonymise_applications: true) }
       let(:candidates) { [candidate] }
+      let(:first_name) { Faker::Name.first_name }
+      let(:last_name) { Faker::Name.last_name }
 
-      it "has a link to the candidate" do
-        expect(tab_panel.all("a").map(&:text)).to include(candidate.name)
+      context "with a submitted candidate" do
+        let(:candidate) { build_stubbed(:job_application, :status_submitted, first_name: first_name, last_name: last_name, vacancy:).decorate }
+
+        it "has a link to the candidate in code" do
+          expect(tab_panel.find("a").text).to include("TVS-")
+        end
       end
 
       context "with a withdrawn candidate" do
-        let(:candidate) { build_stubbed(:job_application, :status_withdrawn, vacancy:) }
+        let(:candidate) { build_stubbed(:job_application, :status_withdrawn, first_name: first_name, last_name: last_name, vacancy:) }
 
         it "does not link to the candidate" do
-          expect(tab_panel.all("a").map(&:text)).not_to include(candidate.name)
+          expect(tab_panel.all("a").map(&:text)).to be_empty
+        end
+      end
+
+      context "with a shortlisted candidate" do
+        let(:candidate) { build_stubbed(:job_application, :status_shortlisted, first_name: first_name, last_name: last_name, vacancy:).decorate }
+
+        it "has a link to the candidate" do
+          expect(tab_panel.find("a").text).to include(first_name)
         end
       end
     end
