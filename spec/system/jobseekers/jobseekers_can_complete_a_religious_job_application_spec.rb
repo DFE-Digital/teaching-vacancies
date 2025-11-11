@@ -12,7 +12,6 @@ RSpec.describe "Jobseekers can complete a religious job application" do
   let(:referee_role) { "Pastor at #{Faker::Religion::Bible.location}" }
   let(:referee_email) { Faker::Internet.email(domain: "contoso.com") }
   let(:referee_phone) { Faker::PhoneNumber.phone_number }
-  let(:place_of_worship_start_date) { Date.new(2021, 1, 1) }
 
   before { login_as(jobseeker, scope: :jobseeker) }
   after { logout }
@@ -65,9 +64,6 @@ RSpec.describe "Jobseekers can complete a religious job application" do
         before do
           fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.faith"), with: "follower of #{Faker::Religion::Bible.character}"
           fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.place_of_worship"), with: "#{Faker::Address.city} Church"
-          fill_in "jobseekers_job_application_catholic_form[place_of_worship_start_date(3i)]", with: place_of_worship_start_date.day
-          fill_in "jobseekers_job_application_catholic_form[place_of_worship_start_date(2i)]", with: place_of_worship_start_date.month
-          fill_in "jobseekers_job_application_catholic_form[place_of_worship_start_date(1i)]", with: place_of_worship_start_date.year
         end
 
         context "with a referee" do
@@ -116,7 +112,6 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
             it "contains the entered information" do
               expect(job_application.reload).to have_attributes(religious_reference_type: "religious_referee")
-              expect(page).to have_content(place_of_worship_start_date.to_fs(:day_month_year))
             end
 
             it "can submit application" do
@@ -179,9 +174,9 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
           it "allows jobseekers to specify a baptism address and date" do
             fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.baptism_address"), with: baptism_address
-            fill_in "jobseekers_job_application_catholic_form[baptism_date(3i)]", with: 7
-            fill_in "jobseekers_job_application_catholic_form[baptism_date(2i)]", with: 3
-            fill_in "jobseekers_job_application_catholic_form[baptism_date(1i)]", with: 2007
+            fill_in "Day", with: 7
+            fill_in "Month", with: 3
+            fill_in "Year", with: 2007
             click_on I18n.t("buttons.save_and_continue")
             expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
             complete_from_references_page
