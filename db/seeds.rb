@@ -73,7 +73,7 @@ FactoryBot.create(:vacancy, :for_seed_data, **attrs)
 # Vacancies at multiple schools in Weydon trust
 attrs = { organisations: weydon_trust.schools, phases: %w[secondary], publisher_organisation: weydon_trust, publisher: Publisher.all.sample }
 # need some secondary jobs with subjects sometimes
-300.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+3000.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
 
 # Vacancies at multiple schools in Southampton local authority
 attrs = { organisations: southampton_la.schools.first(5), phases: %w[primary], publisher_organisation: southampton_la, publisher: Publisher.all.sample }
@@ -128,3 +128,8 @@ Vacancy.includes(:organisations).find_each.reject { |v| v.organisation.present? 
 if ENV["ATS_API_CLIENT_TESTING_API_KEY"].present?
   PublisherAtsApiClient.create(name: "Testing ATS Client", api_key: ENV["ATS_API_CLIENT_TESTING_API_KEY"], last_rotated_at: Time.current)
 end
+
+stephen = Jobseeker.find_by!(email: "stephen.dicks@education.gov.uk")
+postcodes = Vacancy.includes(:organisations).all.map { |x| x.organisation.postcode }.uniq
+
+200.times { |i| FactoryBot.create(:weekly_subscription, :with_some_criteria, keyword: nil, email: stephen.email, radius: i, location: postcodes.sample) }

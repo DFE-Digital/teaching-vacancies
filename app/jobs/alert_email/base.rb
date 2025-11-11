@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AlertEmail::Base < ApplicationJob
-  BATCH_SIZE = 5000
+  BATCH_SIZE = 1000
 
   def perform
     return if DisableEmailNotifications.enabled?

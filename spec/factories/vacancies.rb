@@ -1,19 +1,19 @@
 FactoryBot.define do
-  job_titles = [
-    "Tutor of Science",
-    "PROGRESS LEADER (HEAD OF DEPARTMENT)",
-    "Tutor of Music (Part time, permanent)",
-    "Tutor of Maths MPS",
-    "Tutor of PE (male)",
-    "Games Design Tutor",
-    "Team Leader of Maths",
-    "KEY STAGE 2 Tutor",
-    "Lead in Health and Social Care",
-    "Director of Learning - Science",
-  ].freeze
+  # job_titles = [
+  #   "Tutor of Science",
+  #   "PROGRESS LEADER (HEAD OF DEPARTMENT)",
+  #   "Tutor of Music (Part time, permanent)",
+  #   "Tutor of Maths MPS",
+  #   "Tutor of PE (male)",
+  #   "Games Design Tutor",
+  #   "Team Leader of Maths",
+  #   "KEY STAGE 2 Tutor",
+  #   "Lead in Health and Social Care",
+  #   "Director of Learning - Science",
+  # ].freeze
 
   sequence :job_title do |n|
-    "#{job_titles.sample} #{n}"
+    "#{Faker::Adjective.positive} #{Faker::Lorem.sentence} #{n}"
   end
 
   factory :vacancy, class: "PublishedVacancy" do

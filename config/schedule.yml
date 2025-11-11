@@ -23,7 +23,7 @@ clear_emergency_login_keys:
 # WEEKLY CRON JOBS
 #
 queue_weekly_alerts:
-  cron: '0 18 * * 5' # "At 18:00 on Friday."
+  cron: '25 12 * * *' # "At 12.25pm"
   class: 'SendWeeklyAlertEmailJob'
   queue: default
 
@@ -151,7 +151,7 @@ withdraw_stale_drafts:
   queue: low
 
 queue_daily_alerts:
-  cron: '0 15 * * *' # "At 15:00."
+  cron: '45 09 * * *' # "At 9:45am."
   class: 'SendDailyAlertEmailJob'
   queue: default
 
