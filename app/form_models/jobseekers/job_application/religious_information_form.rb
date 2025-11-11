@@ -7,6 +7,7 @@ module Jobseekers
 
       FIELDS = %i[faith
                   place_of_worship
+                  place_of_worship_start_date
                   religious_reference_type
                   religious_referee_name
                   religious_referee_address

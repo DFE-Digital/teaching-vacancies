@@ -59,6 +59,7 @@ en:
         baptism_date: What was the date of your baptism?
         religious_reference_type: Can you provide a religious referee?
         following_religion: Are you currently following a religion or faith?
+        place_of_worship_start_date: When did you start going to your place of worship? (optional)
       jobseekers_job_application_non_catholic_form:
         non_catholic_section_completed: Have you completed this section?
         following_religion: Are you currently following a religion or faith?
@@ -80,6 +81,7 @@ en:
           "false": "No"
         faith: What is your religious denomination or faith?
         place_of_worship: Address of place of worship (optional)
+        place_of_worship_start_date: When did you start going to your place of worship? (optional)
         religious_referee_name: Religious referee name
         religious_referee_address: Religious referee address
         religious_referee_role: Religious referee role

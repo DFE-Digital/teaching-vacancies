@@ -25,6 +25,9 @@
 
           = f.govuk_text_area :place_of_worship, label: { size: "s" }, rows: 6
 
+          = f.govuk_date_field :place_of_worship_start_date,
+                                hint: -> { t("helpers.hint.date", date: 18.months.ago.strftime("%-d %-m %Y")) }
+
           = f.govuk_radio_buttons_fieldset :religious_reference_type do
             = f.govuk_radio_button :religious_reference_type, :religious_referee, link_errors: true do
               = f.govuk_text_field :religious_referee_name, label: { size: "s" }
