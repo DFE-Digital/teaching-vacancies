@@ -9,7 +9,11 @@ class GovukNotifyMailer < Mail::Notify::Mailer
   # :nocov:
   self.delivery_method = :notify unless Rails.env.test?
 
-  self.delivery_job = GovukNotifyMailerJob
+  # inspired by https://mattbrictson.com/blog/applying-a-rate-limit-in-sidekiq
+  extend Limiter::Mixin
+
+  # limit sending emails to 3000 per minute - but send in a burst, don't balance across the minute
+  limit_method :send_email, rate: 3000, balanced: false
 
   def send_email(to:, subject:)
     @to = to
