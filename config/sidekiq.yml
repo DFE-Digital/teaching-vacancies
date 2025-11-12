@@ -2,9 +2,11 @@
 
 :limits:
   verylow: 2
+  migration_low_priority: 2
 
 :queues:
   - [high, 8]
   - [default, 4]
   - [low, 2]
   - [verylow, 1]
+  - [migration_low_priority, 1]
