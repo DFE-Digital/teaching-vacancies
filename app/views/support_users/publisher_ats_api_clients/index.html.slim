@@ -6,9 +6,9 @@
 h1.govuk-heading-l = t(".title")
 = supportal_table(entries: @api_clients) do |t|
   - t.column "API client" do |api_client|
-    - capture do
-      = govuk_link_to(api_client.name, support_users_publisher_ats_api_client_path(api_client))
-  - t.string "API key", :api_key
+    = govuk_link_to(api_client.name, support_users_publisher_ats_api_client_path(api_client))
+  - t.datetime "First Vacancy Published" do |c|
+    = c.vacancies.order(:created_at).first&.created_at
   - t.datetime "Created", :created_at
   - t.datetime "Last rotated", :last_rotated_at
 = govuk_pagination(pagy: @pagy)

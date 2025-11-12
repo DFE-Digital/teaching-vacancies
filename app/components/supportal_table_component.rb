@@ -61,6 +61,8 @@ class SupportalTableComponent < ApplicationComponent
         end
       when :tags
         @component.govuk_tags(@value_block.call(entry))
+      when :datetime
+        @value_block.call(entry).to_fs
       else
         @value_block.call(entry)
       end
