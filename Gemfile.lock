@@ -333,6 +333,8 @@ GEM
       activemodel (>= 6.1)
       activesupport (>= 6.1)
       html-attributes-utils (~> 1)
+    groupdate (6.7.0)
+      activesupport (>= 7.1)
     guard (2.19.1)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -1000,6 +1002,7 @@ DEPENDENCIES
   google-cloud-bigquery
   govuk-components (~> 5.11.1)
   govuk_design_system_formbuilder (~> 5.13.0)
+  groupdate
   guard-bundler (~> 3.0)
   guard-rspec
   guard-rubocop (~> 1.5)

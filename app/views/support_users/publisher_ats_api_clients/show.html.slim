@@ -8,10 +8,24 @@ h1.govuk-heading-l = title
 
 = link_to "Rotate ATS API key", rotate_key_support_users_publisher_ats_api_client_path(@api_client), method: :post, class: "govuk-button govuk-button--secondary"
 
-= render DetailComponent.new do |detail|
-  - detail.with_body do
-    = govuk_summary_list do |summary_list|
-      - @api_client.class.column_names.each do |column_name|
-        - summary_list.with_row do |row|
-          - row.with_key text: column_name.humanize
-          - row.with_value text: @api_client.send(column_name)&.to_s
+= govuk_summary_card(title: title) do |card|
+  - card.with_summary_list do |summary_list|
+    - summary_list.with_row do |row|
+      - row.with_key text: "Name"
+      - row.with_value text: @api_client.name
+    - summary_list.with_row do |row|
+      - row.with_key text: "Api Key"
+      - row.with_value text: @api_client.api_key
+    - summary_list.with_row do |row|
+      - row.with_key text: "Created at"
+      - row.with_value text: @api_client.created_at.to_fs
+    - summary_list.with_row do |row|
+      - row.with_key text: "Last Rotated at"
+      - row.with_value text: @api_client.last_rotated_at.to_fs
+
+= govuk_summary_card(title: "Vacancies by Month") do |card|
+  - card.with_summary_list do |summary_list|
+    - @api_client.vacancies.group_by_month(:created_at).count.reverse_each do |date, count|
+      - summary_list.with_row do |row|
+        - row.with_key text: date.to_fs(:month_year)
+        - row.with_value text: count
