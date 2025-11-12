@@ -5,5 +5,6 @@ class GovukNotifyMailerJob < ActionMailer::MailDeliveryJob
 
   extend Limiter::Mixin
 
-  limit_method :perform, rate: 3000, interval: 60, balanced: true
+  # limit sending emails to 3000 per minute
+  limit_method :perform, rate: 3000
 end
