@@ -98,7 +98,7 @@ module JobseekerHelpers
   end
 
   def fill_in_personal_statement
-    fill_in "Your personal statement", with: "A brilliant, glowing statement about your person"
+    find("trix-editor[aria-label='Personal statement']").click.set("A brilliant, glowing statement about your person")
     choose I18n.t("helpers.label.jobseekers_job_application_personal_statement_form.personal_statement_section_completed_options.true")
   end
 

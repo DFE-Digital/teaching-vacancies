@@ -33,6 +33,7 @@ FactoryBot.define do
 
     # Personal statement
     personal_statement { Faker::Lorem.paragraph(sentence_count: 8) }
+    content {Faker::Lorem.paragraph(sentence_count: 8) }
 
     # Ask for support
     is_support_needed { true }
@@ -183,6 +184,7 @@ FactoryBot.define do
 
     # Personal statement
     personal_statement { "" }
+    content { "" }
 
     # Equal opportunities
     disability { "" }

@@ -30,7 +30,7 @@ RSpec.describe "Jobseekers can prefill applications" do
                                                     professional_body_memberships: [professional_body_membership])
       end
 
-      it "prefills the new application with the previous application details, not the profile details and marks steps as imported`" do
+      it "prefills the new application with the previous application details, not the profile details and marks steps as imported`", js: true do
         visit job_path(vacancy.id)
 
         within ".banner-buttons" do
@@ -52,7 +52,7 @@ RSpec.describe "Jobseekers can prefill applications" do
 
         # saving converts 'imported' sections to 'completed'
         click_on "Personal statement"
-        expect(page).to have_content(previous_application.personal_statement)
+        expect(page).to have_content(previous_application.content.to_plain_text)
         click_on "Save and continue"
         within("#personal_statement") do
           expect(page).to have_css(".govuk-task-list__status", text: I18n.t("shared.status_tags.incomplete"))
@@ -75,6 +75,7 @@ RSpec.describe "Jobseekers can prefill applications" do
         click_on "Back"
         # work history
         click_on "Work history"
+        all("summary", text: "Additional information").each(&:click)
         expect(page).to have_content(employment1.main_duties)
         expect(page).to have_content(employment1.organisation)
         expect(page).to have_content(employment2.main_duties)
@@ -122,7 +123,7 @@ RSpec.describe "Jobseekers can prefill applications" do
 
         click_on I18n.t("jobseekers.job_applications.build.ask_for_support.heading")
         expect(page).to have_content(previous_application.is_support_needed? ? "Yes" : "No")
-        expect(page).to have_content(previous_application.support_needed_details)
+        expect(find("#jobseekers-job-application-ask-for-support-form-support-needed-details-field").value).to eq(previous_application.support_needed_details)
         click_on "Back"
         within("#ask_for_support") do
           expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: I18n.t("shared.status_tags.imported"))
