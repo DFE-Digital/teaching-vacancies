@@ -27,7 +27,7 @@ RSpec.describe "Jobseekers can disclose close relationships or safeguarding issu
     within "ul.govuk-list.govuk-error-summary__list" do
       expect(page).to have_link("Select yes if you have a close relationship with people within the organisation", href: "#jobseekers-job-application-declarations-form-has-close-relationships-field-error")
       expect(page).to have_link("Select yes if you have a safeguarding issue to declare", href: "#jobseekers-job-application-declarations-form-has-safeguarding-issue-field-error")
-      expect(page).to have_link("Select yes if you have lived or work outside the UK", href: "#jobseekers-job-application-declarations-form-has-lived-abroad-field-error")
+      expect(page).to have_link("Select yes if you have lived or worked outside the UK", href: "#jobseekers-job-application-declarations-form-has-lived-abroad-field-error")
     end
 
     within ".close-relationships" do
