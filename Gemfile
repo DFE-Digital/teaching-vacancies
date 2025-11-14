@@ -41,6 +41,7 @@ gem "google-apis-indexing_v3"
 gem "google-cloud-bigquery"
 gem "govuk-components", "~> 5.11.1"
 gem "govuk_design_system_formbuilder", "~> 5.13.0"
+gem "groupdate"
 gem "high_voltage"
 gem "httparty"
 # needed for processing of message attachments
