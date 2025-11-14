@@ -1,5 +1,5 @@
 ---
-order: 600
+order: 300
 title: How to list non-teaching roles
 meta_description: Find out how to list non-teaching roles for your school or trust on Teaching Vacancies. Recruit finance directors, business managers and more.
 date_posted: 19/03/2024
