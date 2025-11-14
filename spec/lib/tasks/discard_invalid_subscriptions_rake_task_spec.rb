@@ -8,8 +8,6 @@ RSpec.describe "discard_invalid_subscriptions" do
     build(:subscription, email: "invalid").save!(validate: false)
   end
 
-  # its(:prerequisites) { is_expected.to include("environment") }
-
   # rubocop:disable RSpec/NamedSubject
   it "marks the invalid subscription as discarded" do
     expect {
