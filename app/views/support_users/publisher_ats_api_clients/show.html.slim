@@ -26,7 +26,7 @@ h1.govuk-heading-l = title
 
 = govuk_summary_card(title: "Vacancies by Month") do |card|
   - card.with_summary_list do |summary_list|
-    - @api_client.vacancies.group_by_month(:created_at).count.each do |date, count|
+    - @api_client.vacancies.group_by_month(:created_at).count.reverse_each do |date, count|
       - summary_list.with_row do |row|
         - row.with_key text: date.to_fs(:month_year)
         - row.with_value text: count
