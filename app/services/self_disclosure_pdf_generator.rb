@@ -17,6 +17,8 @@ class SelfDisclosurePdfGenerator
       render_nested_section(section.title, section.fields)
     end
 
+    render_signature_section
+
     number_pages "<page> of <total>",
                  at: [bounds.right - 50, bounds.bottom - 10],
                  size: 8
@@ -28,6 +30,7 @@ class SelfDisclosurePdfGenerator
 
   attr_reader :datasource, :document
 
+  # :nocov:
   def self_disclosure_page_header
     page_header do
       text datasource.header_text, size: 12, style: :italic
@@ -58,4 +61,55 @@ class SelfDisclosurePdfGenerator
       end
     end
   end
+  # :nocov:
+
+  def render_signature_section
+    start_new_page unless cursor > 6.cm
+    move_down 2.cm
+
+    text "Declaration and Signature", size: 12, style: :bold
+
+    move_down 1.cm
+
+    draw_signature_row("Signature")
+    draw_signature_row("Name")
+    draw_signature_row("Date")
+
+    move_down 1.cm
+  end
+
+  # rubocop:disable Metrics/MethodLength
+  def draw_signature_row(label)
+    label_width = 3.cm
+    gap         = 0.5.cm
+    fill_ratio = 0.5
+    row_height  = 1.cm
+    y_top       = cursor
+
+    text_box(
+      "#{label}:",
+      at: [0, y_top],
+      width: label_width,
+      height: row_height,
+      size: 10,
+      valign: :center,
+    )
+
+    underline_x      = label_width + gap
+    underline_width  = (bounds.width - underline_x) * fill_ratio
+
+    text_box(
+      "_" * 38,
+      at: [underline_x, y_top],
+      width: underline_width,
+      height: row_height,
+      size: 10,
+      align: :right,
+      valign: :center,
+      kerning: false,
+    )
+
+    move_down row_height + 4
+  end
+  # rubocop:enable Metrics/MethodLength
 end
