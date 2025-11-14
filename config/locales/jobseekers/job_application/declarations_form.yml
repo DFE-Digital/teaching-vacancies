@@ -15,7 +15,7 @@ en:
             declarations_section_completed:
               inclusion: Select yes if you have completed this section
             has_lived_abroad:
-              inclusion: Select yes if you have lived or work outside the UK
+              inclusion: Select yes if you have lived or worked outside the UK
             life_abroad_details:
               blank: Give details about your life outside the UK
   helpers:
