@@ -104,7 +104,8 @@ class JobApplication < ApplicationRecord
                 :personal_statement, :support_needed_details, :close_relationships_details,
                 :further_instructions, :rejection_reasons, :gaps_in_employment_details,
                 :faith, :place_of_worship, :baptism_address, :ethos_and_aims,
-                :religious_referee_name, :religious_referee_address, :religious_referee_role, :religious_referee_email, :religious_referee_phone
+                :religious_referee_name, :religious_referee_address, :religious_referee_role,
+                :religious_referee_email, :religious_referee_phone, :life_abroad_details
   has_encrypted :baptism_date, type: :date
 
   belongs_to :jobseeker

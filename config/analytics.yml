@@ -139,6 +139,8 @@ shared:
     - support_needed_details
     - has_close_relationships
     - close_relationships_details
+    - has_lived_abroad
+    - life_abroad_details
     - has_right_to_work_in_uk
     - further_instructions
     - rejection_reasons
