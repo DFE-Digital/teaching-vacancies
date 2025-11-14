@@ -14,11 +14,11 @@ h1.govuk-heading-l = t(".heading", name: @referee.job_application.name)
   / reference wil be complete once this form has been completed
   = f.hidden_field :complete, value: "true"
 
-  = f.govuk_text_field :name, label: { size: "s" }, width: 20
+  = f.govuk_text_field :name, label: { size: "s" }, width: 20, autocomplete: "name"
   = f.govuk_text_field :job_title, label: { size: "s" }, width: 20
-  = f.govuk_phone_field :phone_number, label: { size: "s" }, width: 20
-  = f.govuk_email_field :email, label: { size: "s" }, width: 20
-  = f.govuk_text_field :organisation, label: { size: "s" }, width: 20
+  = f.govuk_phone_field :phone_number, label: { size: "s" }, width: 20, autocomplete: "tel"
+  = f.govuk_email_field :email, label: { size: "s" }, width: 20, autocomplete: "email"
+  = f.govuk_text_field :organisation, label: { size: "s" }, width: 20, autocomplete: "organization"
 
   = f.govuk_check_boxes_fieldset :complete_and_accurate, small: true, multiple: false, legend: nil do
     = f.govuk_check_box :complete_and_accurate, "1", "0", multiple: false, link_errors: true

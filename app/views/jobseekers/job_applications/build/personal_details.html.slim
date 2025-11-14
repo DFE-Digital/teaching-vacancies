@@ -10,16 +10,16 @@
     = form_for @form, url: jobseekers_job_application_build_path(job_application, :personal_details), method: :patch do |f|
       = f.govuk_error_summary
 
-      = f.govuk_text_field :first_name, label: { size: "s" }, width: "one-half", aria: { required: true }
-      = f.govuk_text_field :last_name, label: { size: "s" }, width: "one-half", aria: { required: true }
+      = f.govuk_text_field :first_name, label: { size: "s" }, width: "one-half", aria: { required: true }, autocomplete: "given-name"
+      = f.govuk_text_field :last_name, label: { size: "s" }, width: "one-half", aria: { required: true }, autocomplete: "family-name"
       = f.govuk_text_field :previous_names, label: { size: "s" }, width: "one-half"
       = f.govuk_fieldset legend: { text: t("helpers.legend.jobseekers_job_application_personal_details_form.your_address") } do
-        = f.govuk_text_field :street_address, width: "two-thirds"
-        = f.govuk_text_field :city, width: "two-thirds"
-        = f.govuk_text_field :postcode, width: "one-third"
-        = f.govuk_text_field :country, width: "one-third"
-      = f.govuk_phone_field :phone_number, label: { size: "s" }, width: "one-half", aria: { required: true }
-      = f.govuk_email_field :email_address, value: @form.email_address.presence || job_application.email_address, label: { size: "s" }, width: "one-half", aria: { required: true }
+        = f.govuk_text_field :street_address, width: "two-thirds", autocomplete: "street-address"
+        = f.govuk_text_field :city, width: "two-thirds", autocomplete: "address-level2"
+        = f.govuk_text_field :postcode, width: "one-third", autocomplete: "postal-code"
+        = f.govuk_text_field :country, width: "one-third", autocomplete: "country"
+      = f.govuk_phone_field :phone_number, label: { size: "s" }, width: "one-half", aria: { required: true }, autocomplete: "tel"
+      = f.govuk_email_field :email_address, value: @form.email_address.presence || job_application.email_address, label: { size: "s" }, width: "one-half", aria: { required: true }, autocomplete: "email"
       = f.govuk_radio_buttons_fieldset :has_right_to_work_in_uk,
         legend: { text: t("jobseekers.profiles.personal_details.work.page_title"), size: "s" },
         hint: { text: t(radio_button_legend_hint(vacancy)[:text], link: govuk_link_to(t(radio_button_legend_hint(vacancy)[:link]), "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas#apply-for-your-visa", target: "_blank")).html_safe } do
