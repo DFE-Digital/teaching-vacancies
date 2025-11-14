@@ -80,6 +80,12 @@ class PublishedVacancy < Vacancy
   end
   # rubocop:enable Metrics/AbcSize
 
+  def find_publisher_by_contact_email
+    Publisher.joins(:organisations)
+             .where(organisations: { id: organisation_ids })
+             .find_by(email: contact_email)
+  end
+
   private
 
   def remove_google_index

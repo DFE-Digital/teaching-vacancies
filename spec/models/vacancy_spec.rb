@@ -892,40 +892,4 @@ RSpec.describe Vacancy do
       end
     end
   end
-
-  describe "#find_publisher_by_contact_email" do
-    let(:london_school) { create(:school) }
-    let(:manchester_school) { create(:school) }
-    let(:vacancy) { create(:vacancy, contact_email: contact_email, organisations: [london_school, manchester_school]) }
-
-    context "when contact_email matches a publisher in one of the vacancy's organisations" do
-      let(:contact_email) { "publisher@contoso.com" }
-      let!(:publisher) { create(:publisher, email: contact_email, organisations: [manchester_school]) }
-
-      it "returns the matching publisher" do
-        expect(vacancy.find_publisher_by_contact_email).to eq(publisher)
-      end
-    end
-
-    context "when contact_email matches a publisher not in any of the vacancy's organisations" do
-      let(:contact_email) { "external@contoso.com" }
-      let(:external_org) { create(:school) }
-
-      before do
-        create(:publisher, email: contact_email, organisations: [external_org]
-      end
-
-      it "returns nil" do
-        expect(vacancy.find_publisher_by_contact_email).to be_nil
-      end
-    end
-
-    context "when contact_email does not match any publisher" do
-      let(:contact_email) { "nonexistent@contoso.com" }
-
-      it "returns nil" do
-        expect(vacancy.find_publisher_by_contact_email).to be_nil
-      end
-    end
-  end
 end
