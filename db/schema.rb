@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_12_121438) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_14_102948) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -898,6 +898,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_12_121438) do
     t.index ["publisher_organisation_id"], name: "index_vacancies_on_publisher_organisation_id"
     t.index ["searchable_content"], name: "index_vacancies_on_searchable_content", using: :gin
     t.index ["slug"], name: "index_vacancies_on_slug"
+    t.index ["type"], name: "index_vacancies_on_type"
   end
 
   create_table "vacancy_analytics", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
