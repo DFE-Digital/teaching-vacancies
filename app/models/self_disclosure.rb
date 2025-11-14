@@ -32,7 +32,7 @@ class SelfDisclosure < ApplicationRecord
   def mark_as_received
     job_application = self_disclosure_request.job_application
     vacancy = self_disclosure_request.job_application.vacancy
-    registered_publisher_user = vacancy.organisation.publishers.find_by(email: vacancy.contact_email)
+    registered_publisher_user = vacancy.find_publisher_by_contact_email
 
     self_disclosure_request.received!
 

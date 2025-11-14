@@ -413,7 +413,10 @@ RSpec.describe JobApplication do
   describe "#submit!" do
     subject { job_application.submit! }
 
-    let(:job_application) { create(:job_application) }
+    let(:organisation) { create(:trust) }
+    let(:publisher) { create(:publisher) }
+    let(:vacancy) { create(:vacancy, publisher: publisher, organisations: [organisation]) }
+    let(:job_application) { create(:job_application, vacancy: vacancy) }
 
     it "updates status" do
       expect { subject }.to change { job_application.reload.status }.from("draft").to("submitted")
@@ -438,6 +441,24 @@ RSpec.describe JobApplication do
         it "does not deliver `Publishers::JobApplicationReceivedNotifier` notification" do
           expect { subject }
             .not_to have_delivered_notification("Publishers::JobApplicationReceivedNotifier")
+        end
+      end
+
+      context "when a publisher with matching contact_email is in a another of the vacancy's organisations" do
+        let(:other_org) { create(:school) }
+        let!(:other_publisher) { create(:publisher, organisations: [other_org]) }
+
+        before do
+          job_application.vacancy.update!(contact_email: other_publisher.email)
+
+          job_application.vacancy.organisations << other_org
+        end
+
+        it "delivers `Publishers::JobApplicationReceivedNotifier` notification to theother publisher" do
+          expect { subject }
+            .to have_delivered_notification("Publishers::JobApplicationReceivedNotifier")
+            .with_recipient(other_publisher)
+            .and_params(vacancy: job_application.vacancy, job_application: job_application)
         end
       end
     end
