@@ -18,8 +18,8 @@ h1.govuk-heading-l = title
         - row.with_key text: "Api Key"
         - row.with_value text: @api_client.api_key
       - summary_list.with_row do |row|
-        - row.with_key text: "Last Rotated at"
-        - row.with_value text: @api_client.last_rotated_at.to_fs
-      - summary_list.with_row do |row|
         - row.with_key text: "Created at"
         - row.with_value text: @api_client.created_at.to_fs
+      - summary_list.with_row do |row|
+        - row.with_key text: "Last Rotated at"
+        - row.with_value text: @api_client.last_rotated_at.to_fs
