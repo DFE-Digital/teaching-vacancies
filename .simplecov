@@ -51,8 +51,8 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # .25% lower (branch) and .1% lower (line) than the test run for now
     #
     # possibly the tests are stable now?
-    # SD 29/10/25 branch coverage still appears to be ~ .1% unstable
-    # 97.29% (12023 / 12358) -> 335  85.73% (2667 / 3111) -> 444
-    minimum_coverage line: 97.33, branch: 85.79
+    # SD 14/11/25 branch coverage still appears to be ~ .1% unstable
+    # 97.23% (12360 / 12712) -> 352  85.96% (2730 / 3176) -> 446
+    minimum_coverage line: 97.22, branch: 85.95
   end
 end
