@@ -1,7 +1,8 @@
 # taken from https://thoughtbot.com/blog/test-rake-tasks-like-a-boss
 require "rake"
 
-RSpec.shared_context "with rake" do
+# rubocop:disable RSpec/ContextWording
+RSpec.shared_context "rake" do
   subject         { rake[task_name] }
 
   let(:rake)      { Rake::Application.new }
@@ -19,3 +20,4 @@ RSpec.shared_context "with rake" do
     Rake::Task.define_task(:environment)
   end
 end
+# rubocop:enable RSpec/ContextWording

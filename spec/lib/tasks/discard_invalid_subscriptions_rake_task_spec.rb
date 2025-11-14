@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "discard_invalid_subscriptions" do
-  include_context "with rake"
+  include_context "rake"
 
   before do
     create(:subscription)
