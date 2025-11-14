@@ -4,7 +4,6 @@ class SendApplicationsReceivedYesterdayJob < ApplicationJob
   def perform
     contact_emails_with_applications_submitted_yesterday.each do |contact_email|
       Publishers::JobApplicationMailer.applications_received(contact_email: contact_email).deliver_later
-      Rails.logger.info("Sidekiq: Sending job applications received yesterday for contact email: #{contact_email}")
     end
   end
 
