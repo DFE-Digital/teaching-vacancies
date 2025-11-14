@@ -18,4 +18,12 @@ class SendApplicationsReceivedYesterdayJob < ApplicationJob
              .merge(JobApplication.submitted)
              .merge(JobApplication.submitted_yesterday)
   end
+  
+  def contact_emails_with_applications_submitted_yesterday
+    PublishedVacancy.distinct
+                    .joins(:job_applications)
+                    .merge(JobApplication.submitted_yesterday)
+                    .pluck(:contact_email)
+                    .compact
+  end
 end
