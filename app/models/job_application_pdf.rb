@@ -50,8 +50,6 @@ class JobApplicationPdf
   def personal_statement
     if job_application.content.present?
       job_application.content.to_plain_text
-    elsif job_application.personal_statement.present?
-      job_application.personal_statement
     else
       I18n.t("jobseekers.job_applications.review.personal_statement.blank")
     end
