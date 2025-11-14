@@ -304,6 +304,12 @@ class Vacancy < ApplicationRecord
     Publisher.find_by(email: contact_email).present?
   end
 
+  def find_publisher_by_contact_email
+    Publisher.joins(:organisations)
+             .where(organisations: { id: organisation_ids })
+             .find_by(email: contact_email)
+  end
+
   private
 
   def update_conversation_searchable_content

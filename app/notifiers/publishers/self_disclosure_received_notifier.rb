@@ -2,7 +2,7 @@ class Publishers::SelfDisclosureReceivedNotifier < ApplicationNotifier
   recipients do
     # find publisher user that has been selected to be the contact for the vacancy
     vacancy = record.self_disclosure_request.job_application.vacancy
-    vacancy.organisation.publishers.find_by(email: vacancy.contact_email)
+    vacancy.find_publisher_by_contact_email
   end
 
   deliver_by :email do |config|
