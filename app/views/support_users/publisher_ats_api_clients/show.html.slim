@@ -11,7 +11,15 @@ h1.govuk-heading-l = title
 = render DetailComponent.new do |detail|
   - detail.with_body do
     = govuk_summary_list do |summary_list|
-      - @api_client.class.column_names.each do |column_name|
-        - summary_list.with_row do |row|
-          - row.with_key text: column_name.humanize
-          - row.with_value text: @api_client.send(column_name)&.to_s
+      - summary_list.with_row do |row|
+        - row.with_key text: "Name"
+        - row.with_value text: @api_client.name
+      - summary_list.with_row do |row|
+        - row.with_key text: "Api Key"
+        - row.with_value text: @api_client.api_key
+      - summary_list.with_row do |row|
+        - row.with_key text: "Last Rotated at"
+        - row.with_value text: @api_client.last_rotated_at.to_fs
+      - summary_list.with_row do |row|
+        - row.with_key text: "Created at"
+        - row.with_value text: @api_client.created_at.to_fs
