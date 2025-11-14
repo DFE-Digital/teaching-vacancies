@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Users can view help guides" do
   describe "content page" do
     context "when the post exists" do
-      before { visit post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "accepting-job-applications-on-teaching-vacancies") }
+      before { visit post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "using-the-teaching-vacancies-application-form") }
 
       it "renders the post with the correct title" do
         expect(page).to have_content("Using the Teaching Vacancies application form")
@@ -29,7 +29,7 @@ RSpec.describe "Users can view help guides" do
     it "shows all links to content pages" do
       click_on("How to create job listings and accept applications")
       click_on("Using the Teaching Vacancies application form")
-      expect(current_path).to eq(post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "accepting-job-applications-on-teaching-vacancies"))
+      expect(current_path).to eq(post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "using-the-teaching-vacancies-application-form"))
     end
 
     it "shows link to communicating with jobseekers page" do
