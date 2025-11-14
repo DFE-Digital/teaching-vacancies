@@ -8,9 +8,7 @@ h1.govuk-heading-l = t(".title")
   - t.column "API client" do |api_client|
     - capture do
       = govuk_link_to(api_client.name, support_users_publisher_ats_api_client_path(api_client))
-  - t.column "First Vacancy" do |c|
-    - capture do
-      = c.vacancies.order(:created_at).first&.created_at&.to_fs
+  - t.datetime("First Vacancy") { |c| c.vacancies.order(:created_at).first&.created_at }
   - t.column "Count" do |c|
     - capture do
       = c.vacancies.count

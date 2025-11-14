@@ -60,7 +60,7 @@ class SupportalTableComponent < ApplicationComponent
           "No"
         end
       when :datetime
-        @value_block.call(entry).to_fs
+        @value_block.call(entry)&.to_fs
       when :tags
         @component.govuk_tags(@value_block.call(entry))
       else
