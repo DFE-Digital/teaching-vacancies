@@ -25,11 +25,10 @@ RSpec.describe "Fallback sign in for support users" do
       allow(AuthenticationFallback).to receive(:enabled?).and_return(true)
     end
 
-    it "allows requesting a fallback sign in link" do
-      expect {
-        post support_users_fallback_sessions_path,
-             params: { support_user: { email: "test@example.com" } }
-      }.to have_enqueued_job(ActionMailer::MailDeliveryJob)
+    it "allows requesting a fallback sign in link", :perform_enqueued do
+      post support_users_fallback_sessions_path,
+           params: { support_user: { email: "test@example.com" } }
+      expect(ActionMailer::Base.deliveries.map(&:to)).to eq([["test@example.com"]])
     end
 
     it "shows a not found error with an invalid signed ID" do
