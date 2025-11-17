@@ -6,7 +6,7 @@ RSpec.describe "Users can view help guides" do
       before { visit post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "accepting-job-applications-on-teaching-vacancies") }
 
       it "renders the post with the correct title" do
-        expect(page).to have_content("How to accept job applications")
+        expect(page).to have_content("Using the Teaching Vacancies application form")
       end
 
       it "passes a11y", :a11y do
@@ -28,7 +28,7 @@ RSpec.describe "Users can view help guides" do
 
     it "shows all links to content pages" do
       click_on("How to create job listings and accept applications")
-      click_on("How to accept job applications")
+      click_on("Using the Teaching Vacancies application form")
       expect(current_path).to eq(post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "accepting-job-applications-on-teaching-vacancies"))
     end
 

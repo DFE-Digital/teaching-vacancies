@@ -1,16 +1,18 @@
 ---
 order: 200
-title: How to accept job applications
-meta_description: Schools can receive and manage job applications through Teaching Vacancies. Find out about our application form and how to manage candidates.
+title: Using the Teaching Vacancies application form
+meta_description: Schools can receive and manage job applications through Teaching Vacancies. Find out about our application form.
 date_posted: 17/03/2022
-date_updated: 01/05/2025
+date_updated: 10/11/2025
 category_tags: how-to
 card-image: "/content-assets/get-help-hiring/how-to-create-job-listings-and-accept-applications/how-to-accept-job-applications.png"
 ---
 
 ## Why you should use Teaching Vacancies for applications
 
-When posting a new job on our service you’re given the option to use the Teaching Vacancies application form or an alternative application process. We recommend you choose to receive applications through Teaching Vacancies so you can:
+When posting a new job on our service you’re given the option to use the Teaching Vacancies application form or an alternative application process. 
+
+We recommend you choose to receive applications through Teaching Vacancies so you can:
  
 * set up an application process for your job listing with one click, saving time and money
 * receive applicant information in a structured way, making it easier to shortlist candidates
@@ -20,17 +22,17 @@ When posting a new job on our service you’re given the option to use the Teach
 
 ## The Teaching Vacancies application form 
 
-If you choose to accept applications through Teaching Vacancies, candidates will be asked to complete an online application form.
+If you choose to accept applications through Teaching Vacancies, jobseekers will be asked to complete an online application form.
 
 We've designed the form to help you easily identify high quality candidates, and to ensure your recruitment processes always follow the latest legal requirements related to safeguarding and discrimination.
 
-The form also makes applying easier for candidates. We save information such as their qualifications and work history from their previous applications so they can use it in future ones. 
+The form also makes applying easier for jobseekers. We save information such as their qualifications and work history from their previous applications so they can use it in future ones. 
 
 This allows them to spend more time personalising sections such as their personal statement. 
 
 ### Personal details 
 
-As well as basic details such as their name, address and contact information, we give candidates the option to provide their teacher reference number (TRN) and National Insurance number to make it easier for you to verify their eligibility.
+As well as basic details such as their name, address and contact information, we give applicants the option to provide their teacher reference number (TRN) and National Insurance number to make it easier for you to verify their eligibility.
 
 ### Professional status
 
@@ -66,25 +68,25 @@ Applicants can add as many roles as they want, each with a summary of their main
 
 We ask applicants to explain why they’re suitable for the role and to include any relevant personal qualities and experiences related to your job description.
 
-If you have included any specific instructions for candidates when setting up your job posting, these will be displayed at this step to help ensure jobseekers submit the necessary information.
+If you have included any specific instructions for applicants when setting up your job posting, these will be displayed at this step to help ensure they submit the necessary information.
 
 ### Religious information
 
-This section of the application is shown to candidates who are applying for a role at a faith school.
+This section of the application is shown to applicants who are applying for a role at a faith school.
 
-We let applicants know that schools, academies and colleges of a religious character can give preference to religious applicants when recruiting for teaching roles, but candidates who do not follow a faith or religion are still encouraged to apply.
+We let applicants know that schools, academies and colleges of a religious character can give preference to religious applicants when recruiting for teaching roles, but people who do not follow a faith or religion are still encouraged to apply.
 
 Applicants are asked how they will meet your school's ethos and aims, and if they are currently following a religion or faith.
 
 ### References
 
-We ask applicants to provide the name, job title, organisation and contact details of at least two referees. One of these must be their current or most recent employer. 
+We ask applicants to provide the name, job title, organisation and contact details of their referees. One of their referees must be their current or most recent employer. 
 
 If the applicant does not currently work with children, but has done so in the past, they're asked to include a referee from the last time they did so.
 
 ### Equal opportunities and recruitment monitoring 
 
-Candidates are asked to provide information on whether they have a disability as well as their age, gender, sexual orientation and ethnic group.
+Applicants are asked to provide information on whether they have a disability as well as their age, gender, sexual orientation and ethnic group.
 
 This information is not to be used as part of candidate selection, however it does allow you to anonymously monitor the inclusivity of your recruitment process.
 
@@ -92,7 +94,7 @@ For each question, applicants are given the opportunity to answer ‘Prefer not 
 
 ### Ask for support if you have a disability or other needs 
 
-Regardless of how they have answered the question regarding disabilities on the previous step, we provide candidates with an opportunity to explain any support they may require if they’re invited to attend an interview. 
+Regardless of how they have answered the question regarding disabilities in the previous section, we provide applicants with an opportunity to explain any support they may require if they’re invited to attend an interview. 
 
 This may include adjustments related to a disability, a mental health condition, or educational needs.
 
@@ -106,33 +108,13 @@ Applicants are not asked if they are barred from working with children. Departme
 
 ## What happens when an application is submitted? 
 
-Before submitting their application, we ask candidates to confirm that the information they have provided is accurate and that they are happy for their data to be shared with:
+Before submitting their application, we ask applicants to confirm that the information they have provided is accurate and that they are happy for their data to be shared with:
 
 * the Department for Education
 * the school, trust or local authority which posted the job listing
 * the school (or schools) the job is at
 
 Each day you will receive a summary email of any applications that have been made for your active jobs over the previous 24 hours. This will link to your Teaching Vacancies dashboard.
-
-## Managing candidate applications 
-
-When you view your list of [active](https://teaching-vacancies.service.gov.uk/organisation/jobs) or [closed](https://qa.teaching-vacancies.service.gov.uk/organisation/jobs/expired) jobs on Teaching Vacancies, you will see the number of applicants next to each role where you’ve chosen to use our application form. Click these links to see details of job candidates.
-
-Click on a candidate’s name to see details of their application. Each applicant is given one of the following labels:
-
-* **unread** - new applications you have not yet clicked on
-* **reviewed** - applications you have clicked on, but not yet rejected or shortlisted
-* **withdrawn** - applications that have been withdrawn by the jobseeker
-* **rejected** - applications which you have declined
-* **shortlisted** - applications which you have taken on to the next stage
-
-You can shortlist or reject applications either from the main list (once they have been reviewed) or from within the application details page. When you choose to shortlist or reject a candidate, you’re given the option to provide more information to be included within the notification email.
-
-If they have been successful you may wish to include details on the next steps in the application process, such as when they will be invited to an interview. If they have been unsuccessful you can help them understand why.
-
-You can reject a candidate after they have been shortlisted, however you are unable to reinstate candidates once they have been rejected.
-
-To comply with data protection regulations, you will have access to applications for one year. 
 
 ## Get help setting up applications
 
