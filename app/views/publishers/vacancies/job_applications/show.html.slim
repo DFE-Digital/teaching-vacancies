@@ -37,4 +37,5 @@
       p.govuk-hint = t("app.anonymous_applications.keep_hidden")
 
   - r.with_sidebar do
-    = render PublisherNotesOnJobApplicationComponent.new(job_application: @job_application, vacancy: @vacancy, notes_form: @notes_form)
+    = render PublisherNotesOnJobApplicationComponent.new(job_application: @job_application, vacancy: @vacancy, notes_form: @note,
+      notes_url: create_note_organisation_job_job_application_path(@vacancy.id, @job_application))
