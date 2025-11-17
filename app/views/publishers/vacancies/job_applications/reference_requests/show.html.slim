@@ -99,5 +99,6 @@
         - elsif version.changeset.key? "reminder_sent"
           - timeline.with_item(key: t(".reminder_sent"), value: value)
 
-    = render PublisherNotesOnJobApplicationComponent.new(job_application: @job_application, vacancy: @vacancy, notes_form: @notes_form,
+    = render PublisherNotesOnJobApplicationComponent.new(job_application: @job_application, vacancy: @vacancy, notes_form: @note,
+      notes_url: create_note_organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id),
       return_to_url: organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, params[:id]))

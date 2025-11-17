@@ -668,6 +668,12 @@ en:
       vacancy/expires_at: Application deadline (time)
     errors:
       models:
+        note:
+          attributes:
+            content:
+              blank: Enter a note
+              too_long: A note must not be more than 150 characters
+
         jobseeker:
           attributes:
             email:

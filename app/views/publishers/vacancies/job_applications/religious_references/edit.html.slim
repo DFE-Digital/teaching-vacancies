@@ -44,5 +44,6 @@
             - when "completed"
               - timeline.with_item(key: t(".reference_completed"), value: value)
 
-    = render PublisherNotesOnJobApplicationComponent.new(job_application: @job_application, vacancy: @vacancy, notes_form: @notes_form,
+    = render PublisherNotesOnJobApplicationComponent.new(job_application: @job_application, vacancy: @vacancy, notes_form: @note,
+            notes_url: create_note_organisation_job_job_application_religious_reference_path(@vacancy.id, @job_application.id),
             return_to_url: edit_organisation_job_job_application_religious_reference_path(@vacancy.id, @job_application.id))

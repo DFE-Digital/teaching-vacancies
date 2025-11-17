@@ -419,13 +419,15 @@ Rails.application.routes.draw do
       resource :extend_deadline, only: %i[show update], controller: "publishers/vacancies/extend_deadline"
 
       resources :job_applications, only: %i[index show], controller: "publishers/vacancies/job_applications" do
-        resources :notes, only: %i[create destroy], controller: "publishers/vacancies/job_applications/notes"
+        resources :notes, only: %i[destroy], controller: "publishers/vacancies/job_applications/notes"
         resources :messages, only: %i[create], controller: "publishers/vacancies/job_applications/messages"
         resources :reference_requests, only: %i[show update edit], controller: "publishers/vacancies/job_applications/reference_requests" do
           member do
             patch :mark_as_received
             patch :mark_as_complete
             patch :send_reminder_email
+
+            post :create_note
           end
         end
         get :download
@@ -435,13 +437,20 @@ Rails.application.routes.draw do
         post :offer, on: :collection
         member do
           get :pre_interview_checks
+          post :create_note
         end
-        resource :religious_reference, only: %i[edit update], controller: "publishers/vacancies/job_applications/religious_references"
+        resource :religious_reference, only: %i[edit update], controller: "publishers/vacancies/job_applications/religious_references" do
+          post :create_note
+        end
         member do
           get :messages
           get :download_messages
         end
-        resource :self_disclosure, only: %i[show update], controller: "publishers/vacancies/job_applications/self_disclosure"
+        resource :self_disclosure, only: %i[show update], controller: "publishers/vacancies/job_applications/self_disclosure" do
+          member do
+            post :create_note
+          end
+        end
         resources :collect_reference_flags, only: %i[show update], controller: "publishers/vacancies/collect_reference_flags"
         resources :collect_self_disclosure_flags, only: %i[show update], controller: "publishers/vacancies/collect_self_disclosure_flags"
       end
