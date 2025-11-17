@@ -7,7 +7,11 @@ module Publishers
         before_action :set_job_application
 
         def edit
-          @notes_form = Publishers::JobApplication::NotesForm.new
+          @note = Note.new
+        end
+
+        def create_note
+          create_note_from_params edit_organisation_job_job_application_religious_reference_path(@vacancy.id, @job_application.id), "edit"
         end
 
         def update

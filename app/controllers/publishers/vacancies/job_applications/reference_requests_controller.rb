@@ -9,11 +9,18 @@ module Publishers
         def show
           @referee = RefereePresenter.new(@reference_request.referee)
           @job_reference = @reference_request.job_reference
-          @notes_form = Publishers::JobApplication::NotesForm.new
+          @note = Note.new
           respond_to do |format|
             format.html
             format.pdf { send_reference_pdf }
           end
+        end
+
+        def create_note
+          @referee = RefereePresenter.new(@reference_request.referee)
+          @job_reference = @reference_request.job_reference
+
+          create_note_from_params organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id), "show"
         end
 
         # changing the email address of the referee

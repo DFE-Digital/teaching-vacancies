@@ -93,7 +93,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
             let(:note_content) { Faker::Lorem.characters(number: 151) }
 
             it "has errors" do
-              expect(page).to have_content("Notes must not be blank or more than 150 words")
+              expect(page).to have_content("A note must not be more than 150 characters")
             end
           end
 
