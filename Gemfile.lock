@@ -758,6 +758,7 @@ GEM
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
       rubocop-rspec (~> 3.5)
+    ruby-limiter (2.3.0)
     ruby-progressbar (1.13.0)
     ruby-rc4 (0.1.5)
     ruby-vips (2.2.5)
@@ -1060,6 +1061,7 @@ DEPENDENCIES
   rubocop-govuk
   rubocop-performance
   rubocop-rspec_rails
+  ruby-limiter
   rubyzip
   sanitize
   selenium-webdriver
