@@ -65,6 +65,7 @@ tech lead to do that and also [complete the other onboarding steps](documentatio
 * [User Support Requests](/documentation/operations/maintenance/support-requests.md)
 
 ### Service
+* [System overview](/documentation/service/overview.md)
 
 #### Users management
 * [Publishers - DSI Integration](/documentation/service/users/dsi-integration.md)
