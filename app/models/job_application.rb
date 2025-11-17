@@ -106,6 +106,7 @@ class JobApplication < ApplicationRecord
                 :faith, :place_of_worship, :baptism_address, :ethos_and_aims,
                 :religious_referee_name, :religious_referee_address, :religious_referee_role, :religious_referee_email, :religious_referee_phone
   has_encrypted :baptism_date, type: :date
+  has_rich_text :content, encrypted: true
 
   belongs_to :jobseeker
   belongs_to :vacancy
