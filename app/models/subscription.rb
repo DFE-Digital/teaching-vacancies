@@ -15,7 +15,7 @@ class Subscription < ApplicationRecord
 
   self.discard_column = :unsubscribed_at
 
-  validates :email, email_address: true, if: -> { email_changed? } # Allows data created prior to validation to still be valid
+  validates :email, email_address: true
 
   # support_job_roles used to be called teaching_support_job_roles and non_teaching_support_job_roles in the past, and there are still active subscriptions with this name
   JOB_ROLE_ALIASES = %i[teaching_job_roles support_job_roles teaching_support_job_roles non_teaching_support_job_roles].freeze
