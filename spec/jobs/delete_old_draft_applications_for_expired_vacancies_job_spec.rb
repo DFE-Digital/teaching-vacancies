@@ -4,7 +4,9 @@ RSpec.describe DeleteOldDraftApplicationsForExpiredVacanciesJob do
   context "with an expired vacancy" do
     before do
       vacancy = create(:vacancy, :expired)
-      create(:job_application, :status_draft, vacancy:, updated_at: 6.years.ago)
+      travel_to(6.years.ago) do
+        create(:job_application, :status_draft, vacancy:)
+      end
       create(:job_application, :status_draft, vacancy:)
       create(:job_application, :status_submitted, vacancy:)
       described_class.perform_now
