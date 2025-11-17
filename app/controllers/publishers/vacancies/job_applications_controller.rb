@@ -111,7 +111,7 @@ module Publishers
 
       def set_job_applications
         @current_organisation = current_organisation
-        @job_applications = @vacancy.job_applications.not_draft.order(updated_at: :desc).decorate
+        @job_applications = @vacancy.job_applications.not_draft.within_hiring_staff_retention_period.order(updated_at: :desc).decorate
       end
 
       def with_valid_form(job_applications, validate_all_attributes: false)
