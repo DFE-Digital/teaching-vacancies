@@ -147,13 +147,18 @@ RSpec.describe "Publishers can add notes to a job application" do
         end
 
         it "allows notes to be added and redirects back to self disclosure page" do
-          expect(publisher_ats_self_disclosure_page).to be_displayed
-
           fill_in "Add a note", with: "New self disclosure note"
           click_on I18n.t("buttons.save_note")
 
           expect(publisher_ats_self_disclosure_page).to be_displayed
           expect(page).to have_content("New self disclosure note")
+        end
+
+        it "copes with errors" do
+          fill_in "Add a note", with: Faker::Lorem.characters(number: 151)
+          click_on I18n.t("buttons.save_note")
+
+          expect(publisher_ats_self_disclosure_page.errors.map(&:text)).to eq(["A note must not be more than 150 characters"])
         end
       end
     end

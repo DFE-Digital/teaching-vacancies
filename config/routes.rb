@@ -441,7 +441,11 @@ Rails.application.routes.draw do
           get :messages
           get :download_messages
         end
-        resource :self_disclosure, only: %i[show update], controller: "publishers/vacancies/job_applications/self_disclosure"
+        resource :self_disclosure, only: %i[show update], controller: "publishers/vacancies/job_applications/self_disclosure" do
+          member do
+            post :create_note
+          end
+        end
         resources :collect_reference_flags, only: %i[show update], controller: "publishers/vacancies/collect_reference_flags"
         resources :collect_self_disclosure_flags, only: %i[show update], controller: "publishers/vacancies/collect_self_disclosure_flags"
       end

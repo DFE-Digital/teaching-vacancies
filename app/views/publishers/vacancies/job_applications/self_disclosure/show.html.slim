@@ -62,4 +62,5 @@
         - timeline.with_item(key:, value:)
 
     = render PublisherNotesOnJobApplicationComponent.new(job_application: @job_application, vacancy: @vacancy, notes_form: @notes_form,
+      notes_url: create_note_organisation_job_job_application_self_disclosure_path(@vacancy.id, @job_application.id),
       return_to_url: organisation_job_job_application_self_disclosure_path(@vacancy.id, @job_application.id))
