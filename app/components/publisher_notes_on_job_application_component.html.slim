@@ -3,7 +3,7 @@
     h2.govuk-summary-card__title = t("publishers.vacancies.job_applications.show.notes.heading")
 
   .govuk-summary-card__content
-    - job_application.notes.select {|n| n.created_at.present? }.each do |note|
+    - job_application.notes.select { |n| n.created_at.present? }.each do |note|
       - if note.discarded?
         p.govuk-body-m Note discarded at #{note.discarded_at.to_fs}
       - else
