@@ -17,13 +17,7 @@ module Publishers
         def create_note
           @self_disclosure = SelfDisclosurePresenter.new(@job_application)
 
-          @note = @job_application.notes.create(notes_form_params)
-
-          if @note.persisted?
-            redirect_to organisation_job_job_application_self_disclosure_path(@vacancy.id, @job_application.id)
-          else
-            render "show"
-          end
+          create_note_from_params organisation_job_job_application_self_disclosure_path(@vacancy.id, @job_application.id), "show"
         end
 
         def update

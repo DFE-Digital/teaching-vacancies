@@ -18,6 +18,17 @@ module Publishers
         def notes_form_params
           params[:note].permit(:content).merge(publisher: current_publisher)
         end
+
+        def create_note_from_params(success_url, failure_template)
+          @note = @job_application.notes.create(notes_form_params)
+
+          if @note.persisted?
+            redirect_to success_url,
+                        success: t("publishers.vacancies.job_applications.notes.create.success")
+          else
+            render failure_template
+          end
+        end
       end
     end
   end

@@ -11,14 +11,7 @@ module Publishers
         end
 
         def create_note
-          @note = @job_application.notes.create(notes_form_params)
-
-          if @note.persisted?
-            redirect_to edit_organisation_job_job_application_religious_reference_path(@vacancy.id, @job_application.id),
-                        success: t("publishers.vacancies.job_applications.notes.create.success")
-          else
-            render "edit"
-          end
+          create_note_from_params edit_organisation_job_job_application_religious_reference_path(@vacancy.id, @job_application.id), "edit"
         end
 
         def update

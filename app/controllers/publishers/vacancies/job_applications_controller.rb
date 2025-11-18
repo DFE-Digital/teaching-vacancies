@@ -28,13 +28,7 @@ module Publishers
       end
 
       def create_note
-        @note = @job_application.notes.create(notes_form_params)
-
-        if @note.persisted?
-          redirect_to organisation_job_job_application_path(@vacancy.id, @job_application.id), success: t("publishers.vacancies.job_applications.notes.create.success")
-        else
-          render "show"
-        end
+        create_note_from_params organisation_job_job_application_path(@vacancy.id, @job_application.id), "show"
       end
 
       def download

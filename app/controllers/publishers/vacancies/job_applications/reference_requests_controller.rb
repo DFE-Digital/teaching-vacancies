@@ -20,13 +20,7 @@ module Publishers
           @referee = RefereePresenter.new(@reference_request.referee)
           @job_reference = @reference_request.job_reference
 
-          @note = @job_application.notes.create(notes_form_params)
-
-          if @note.persisted?
-            redirect_to organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id)
-          else
-            render "show"
-          end
+          create_note_from_params organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id), "show"
         end
 
         # changing the email address of the referee
