@@ -7,7 +7,7 @@ const cookies = document.cookie.split(';').map(Cookie.parse);
 cookies.forEach((cookie) => {
   if (cookie && cookie.name === 'consented-to-additional-cookies-v3' && cookie.value === 'yes') {
     cookie.value = 'clarity';
-    window.clarity('consent');
+    window.clarity('consentv2', { ad_Storage: 'granted', analytics_Storage: 'granted' });
     document.cookie = cookie.toString();
   }
 });
