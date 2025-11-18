@@ -419,7 +419,7 @@ Rails.application.routes.draw do
       resource :extend_deadline, only: %i[show update], controller: "publishers/vacancies/extend_deadline"
 
       resources :job_applications, only: %i[index show], controller: "publishers/vacancies/job_applications" do
-        resources :notes, only: %i[create destroy], controller: "publishers/vacancies/job_applications/notes"
+        resources :notes, only: %i[destroy], controller: "publishers/vacancies/job_applications/notes"
         resources :messages, only: %i[create], controller: "publishers/vacancies/job_applications/messages"
         resources :reference_requests, only: %i[show update edit], controller: "publishers/vacancies/job_applications/reference_requests" do
           member do
