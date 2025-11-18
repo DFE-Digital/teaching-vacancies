@@ -22,10 +22,12 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
 
   attr_reader :jobseeker, :new_job_application
 
+  # rubocop:disable Metrics/AbcSize
   def copy_personal_info
     attributes = attributes_to_copy
     if attributes.include? :baptism_certificate
       new_job_application.assign_attributes(recent_job_application.slice(*(attributes - [:baptism_certificate])))
+      new_job_application.update(content: recent_job_application.content.to_s)
 
       if recent_job_application.baptism_certificate.present?
         recent_job_application.baptism_certificate.blob.open do |tempfile|
@@ -38,11 +40,13 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
       end
     else
       new_job_application.assign_attributes(recent_job_application.slice(*attributes))
+      new_job_application.update(content: recent_job_application.content.to_s)
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def attributes_to_copy
-    (relevant_steps - %i[review declarations equal_opportunities])
+    (relevant_steps - %i[review declarations equal_opportunities personal_statement])
       .flat_map { |step| form_fields_from_step(step) }
   end
 
