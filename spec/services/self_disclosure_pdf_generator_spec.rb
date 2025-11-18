@@ -36,7 +36,21 @@ RSpec.describe SelfDisclosurePdfGenerator do
     end
 
     it "includes page number" do
-      expect(pdf).to include("1 of 2")
+      expect(pdf).to include("1 of 3")
+    end
+  end
+
+  describe "#render_signature_section" do
+    it "does not start a new page when there is enough space" do
+      allow(generator).to receive(:cursor).and_return(200) # > 6.cm (~170)
+      expect(generator).not_to receive(:start_new_page)
+      generator.send(:render_signature_section)
+    end
+
+    it "starts a new page when there is not enough space" do
+      allow(generator).to receive(:cursor).and_return(10) # <= 6.cm
+      expect(generator).to receive(:start_new_page).and_call_original
+      generator.send(:render_signature_section)
     end
   end
 end
