@@ -14,6 +14,10 @@ module Publishers
           @vacancy = current_organisation.all_listed_vacancies
                                            .find(params[:job_id])
         end
+
+        def notes_form_params
+          params[:note].permit(:content).merge(publisher: current_publisher)
+        end
       end
     end
   end

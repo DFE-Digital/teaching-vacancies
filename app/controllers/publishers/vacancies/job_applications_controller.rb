@@ -119,10 +119,6 @@ module Publishers
 
       private
 
-      def notes_form_params
-        params[:note].permit(:content).merge(publisher: current_publisher)
-      end
-
       def set_job_applications
         @current_organisation = current_organisation
         @job_applications = @vacancy.job_applications.not_draft.order(updated_at: :desc).decorate

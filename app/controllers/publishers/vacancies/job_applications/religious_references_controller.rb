@@ -28,10 +28,6 @@ module Publishers
 
         private
 
-        def notes_form_params
-          params[:note].permit(:content).merge(publisher: current_publisher)
-        end
-
         def religious_reference_params
           params.expect(job_application: [:status])
         end

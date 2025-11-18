@@ -64,10 +64,6 @@ module Publishers
 
         private
 
-        def notes_form_params
-          params[:note].permit(:content).merge(publisher: current_publisher)
-        end
-
         def email_form_class
           ChangeEmailAddressForm
         end
