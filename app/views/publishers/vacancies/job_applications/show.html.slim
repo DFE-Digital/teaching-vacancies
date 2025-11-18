@@ -12,4 +12,29 @@
       - elsif !@job_application.terminal_status?
         = govuk_button_link_to t("buttons.update_application_status"), tag_organisation_job_job_applications_path(@vacancy.id, params: { publishers_job_application_tag_form: { origin: tab_name(@job_application.status), job_applications: [@job_application.id] } }), class: "govuk-button--secondary"
 
-= render "application_details_and_notes", allow_edit: false, job_application: @job_application, vacancy: @vacancy
+= job_application_review(@job_application, allow_edit: false) do |r|
+  - render "jobseekers/job_applications/job_application_review_sections", r: r, job_application: @job_application, vacancy: @vacancy
+  - r.with_above do
+
+    .with_anchor-link-list class="govuk-!-display-none-print"
+      - title = @vacancy.uploaded_form? ? nil : t("jobseekers.job_applications.show.application_sections")
+      = navigation_list(title: title) do |navigation|
+        - unless @vacancy.uploaded_form?
+          - navigation.with_anchor text: t("jobseekers.job_applications.build.personal_details.heading"), href: "#personal_details"
+          - navigation.with_anchor text: t("jobseekers.job_applications.build.professional_status.heading"), href: "#professional_status"
+          - navigation.with_anchor text: t("jobseekers.job_applications.build.qualifications.heading"), href: "#qualifications"
+          - navigation.with_anchor text: t("jobseekers.job_applications.build.training_and_cpds.heading"), href: "#training_and_cpds"
+          - navigation.with_anchor text: t("jobseekers.job_applications.build.professional_body_memberships.heading"), href: "#professional_body_memberships"
+          - navigation.with_anchor text: t("jobseekers.job_applications.build.employment_history.heading"), href: "#employment_history"
+          - navigation.with_anchor text: t("jobseekers.job_applications.build.personal_statement.heading"), href: "#personal_statement"
+          - if @vacancy.catholic? || @vacancy.other_religion?
+            - navigation.with_anchor text: t("jobseekers.job_applications.build.religious_information.heading"), href: "#following_religion"
+          - navigation.with_anchor text: t("jobseekers.job_applications.build.referees.heading"), href: "#referees"
+          - navigation.with_anchor text: t("jobseekers.job_applications.build.ask_for_support.heading"), href: "#ask_for_support"
+          - navigation.with_anchor text: t("jobseekers.job_applications.build.declarations.heading"), href: "#declarations"
+
+    - if @job_application.hide_personal_details?
+      p.govuk-hint = t("app.anonymous_applications.keep_hidden")
+
+  - r.with_sidebar do
+    = render PublisherNotesOnJobApplicationComponent.new(job_application: @job_application, vacancy: @vacancy, notes_form: @notes_form)

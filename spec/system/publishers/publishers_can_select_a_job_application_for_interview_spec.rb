@@ -84,16 +84,28 @@ RSpec.describe "Publishers can select a job application for interview", :perform
         end
 
         describe "adding a note" do
-          let(:note_content) { Faker::Ancient.hero }
-
-          it "allows notes to be added without disturbing the flow" do
-            notes = find_by_id("publishers-job-application-notes-form-content-field")
-            notes.fill_in with: note_content
+          before do
+            fill_in "Add a note", with: note_content
             click_on "Save note"
-            find ".govuk-notification-banner"
-            expect(page).to have_content "A note has been added"
-            expect(page).to have_content note_content
-            expect(page).to have_current_path edit_organisation_job_job_application_religious_reference_path(vacancy.id, job_application.id)
+          end
+
+          context "with too much content" do
+            let(:note_content) { Faker::Lorem.characters(number: 151) }
+
+            it "has errors" do
+              expect(page).to have_content("Notes must not be blank or more than 150 words")
+            end
+          end
+
+          context "with ok content" do
+            let(:note_content) { Faker::Ancient.hero }
+
+            it "allows notes to be added without disturbing the flow" do
+              find ".govuk-notification-banner"
+              expect(page).to have_content "A note has been added"
+              expect(page).to have_content note_content
+              expect(page).to have_current_path edit_organisation_job_job_application_religious_reference_path(vacancy.id, job_application.id)
+            end
           end
         end
       end

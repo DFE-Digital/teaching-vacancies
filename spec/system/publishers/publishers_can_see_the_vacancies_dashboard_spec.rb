@@ -7,6 +7,8 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
   before do
     login_publisher(publisher: publisher, organisation: school)
     visit organisation_jobs_with_type_path
+    #  wait for page load
+    find("nav.tabs-component")
   end
 
   after { logout }
