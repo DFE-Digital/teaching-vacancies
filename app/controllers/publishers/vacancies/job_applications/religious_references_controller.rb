@@ -7,7 +7,18 @@ module Publishers
         before_action :set_job_application
 
         def edit
-          @notes_form = Publishers::JobApplication::NotesForm.new
+          @note = Note.new
+        end
+
+        def create_note
+          @note = @job_application.notes.create(notes_form_params)
+
+          if @note.persisted?
+            redirect_to edit_organisation_job_job_application_religious_reference_path(@vacancy.id, @job_application.id),
+                        success: t("publishers.vacancies.job_applications.notes.create.success")
+          else
+            render "edit"
+          end
         end
 
         def update
@@ -16,6 +27,10 @@ module Publishers
         end
 
         private
+
+        def notes_form_params
+          params[:note].permit(:content).merge(publisher: current_publisher)
+        end
 
         def religious_reference_params
           params.expect(job_application: [:status])

@@ -14,7 +14,7 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
   before do
     assign :vacancy, vacancy
     assign :job_application, job_application.decorate
-    assign :notes_form, Publishers::JobApplication::NotesForm.new
+    assign :note, build_stubbed(:note)
     render
   end
 

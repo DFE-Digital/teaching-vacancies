@@ -426,6 +426,8 @@ Rails.application.routes.draw do
             patch :mark_as_received
             patch :mark_as_complete
             patch :send_reminder_email
+
+            post :create_note
           end
         end
         get :download
@@ -435,8 +437,11 @@ Rails.application.routes.draw do
         post :offer, on: :collection
         member do
           get :pre_interview_checks
+          post :create_note
         end
-        resource :religious_reference, only: %i[edit update], controller: "publishers/vacancies/job_applications/religious_references"
+        resource :religious_reference, only: %i[edit update], controller: "publishers/vacancies/job_applications/religious_references" do
+          post :create_note
+        end
         member do
           get :messages
           get :download_messages

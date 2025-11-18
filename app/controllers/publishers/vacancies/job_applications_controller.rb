@@ -13,7 +13,7 @@ module Publishers
         "InterviewDatetimeForm" => Publishers::JobApplication::InterviewDatetimeForm,
       }.freeze
 
-      before_action :set_job_application, only: %i[show download pre_interview_checks messages download_messages]
+      before_action :set_job_application, only: %i[show download pre_interview_checks messages download_messages create_note]
       before_action :set_job_applications, only: %i[index tag update_tag offer]
 
       def index
@@ -22,9 +22,20 @@ module Publishers
 
       def show
         redirect_to organisation_job_job_application_terminal_path(@vacancy.id, @job_application) if @job_application.withdrawn?
-        @notes_form = Publishers::JobApplication::NotesForm.new
+        # @notes_form = Publishers::JobApplication::NotesForm.new
+        @note = Note.new
 
         raise ActionController::RoutingError, "Cannot view a draft application" if @job_application.draft?
+      end
+
+      def create_note
+        @note = @job_application.notes.create(notes_form_params)
+
+        if @note.persisted?
+          redirect_to organisation_job_job_application_path(@vacancy.id, @job_application.id), success: t("publishers.vacancies.job_applications.notes.create.success")
+        else
+          render "show"
+        end
       end
 
       def download
@@ -108,6 +119,10 @@ module Publishers
       end
 
       private
+
+      def notes_form_params
+        params[:note].permit(:content).merge(publisher: current_publisher)
+      end
 
       def set_job_applications
         @current_organisation = current_organisation

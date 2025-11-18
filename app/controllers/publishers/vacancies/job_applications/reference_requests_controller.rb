@@ -9,10 +9,23 @@ module Publishers
         def show
           @referee = RefereePresenter.new(@reference_request.referee)
           @job_reference = @reference_request.job_reference
-          @notes_form = Publishers::JobApplication::NotesForm.new
+          @note = Note.new
           respond_to do |format|
             format.html
             format.pdf { send_reference_pdf }
+          end
+        end
+
+        def create_note
+          @referee = RefereePresenter.new(@reference_request.referee)
+          @job_reference = @reference_request.job_reference
+
+          @note = @job_application.notes.create(notes_form_params)
+
+          if @note.persisted?
+            redirect_to organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id)
+          else
+            render "show"
           end
         end
 
@@ -50,6 +63,10 @@ module Publishers
         end
 
         private
+
+        def notes_form_params
+          params[:note].permit(:content).merge(publisher: current_publisher)
+        end
 
         def email_form_class
           ChangeEmailAddressForm
