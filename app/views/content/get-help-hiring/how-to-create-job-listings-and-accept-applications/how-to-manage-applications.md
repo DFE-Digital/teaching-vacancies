@@ -20,7 +20,9 @@ When you get a notification about a new application, you can select the link wit
 
 ## Accessing applications through job listings
 
-When you review your active job listings, you can either select the job title and then ‘Applications’ or select ‘View applicants’ to directly access the applicant dashboard. There are 5 sections on the dashboard:
+When you review your active job listings, you can either select the job title and then ‘Applications’ or select ‘View applicants’ to directly access the applicant dashboard. 
+
+There are 5 sections on the dashboard:
 
 * new
 * not progressing
@@ -63,7 +65,7 @@ If you have chosen to make applications for your job listing anonymous, a refere
 
 To comply with data protection regulations, you will have access to all applications for 6 months.
 
-To download data, you can either select the checkbox next to an application and select the ‘Download application’ button underneath the table or select ‘Download application’ from within the application. If an application is anonymous (and has not been shortlisted), you will received a redacted version of the application to download.
+To download data, you can either select the checkbox next to an application and select the ‘Download application’ button underneath the table or select ‘Download application’ from within the application. If an application is anonymous (and has not been shortlisted), you will receive a redacted version of the application to download.
 
 When an application is at the ‘Job offered’ stage, selecting the ‘Download application’ button will download the following data about the candidate:
 
