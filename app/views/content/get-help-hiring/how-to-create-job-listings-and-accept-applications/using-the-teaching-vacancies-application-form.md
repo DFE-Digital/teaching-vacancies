@@ -104,7 +104,9 @@ We ask applicants to give details of any connections to the school through their
 
 We also ask them to confirm whether they have the right to work in the UK.
 
-Applicants are not asked if they are barred from working with children. Department for Education guidance states that applicants should be asked this at the shortlisting stage. This ensures that only school staff who are allowed to have access to this information can see it.
+Applicants are not asked if they are barred from working with children. Department for Education guidance states that applicants should be asked this at the shortlisting stage.
+
+This ensures that only school staff who are allowed to have access to this information can see it.
 
 ## What happens when an application is submitted? 
 
