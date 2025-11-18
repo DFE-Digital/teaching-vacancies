@@ -56,6 +56,8 @@ FactoryBot.define do
     has_safeguarding_issue { true }
     safeguarding_issue_details { Faker::Lorem.paragraph(sentence_count: 1) }
     has_right_to_work_in_uk { true }
+    has_lived_abroad { true }
+    life_abroad_details { Faker::Lorem.paragraph(sentence_count: 1) }
 
     # This field should really be called notify_before_contact_referees
     notify_before_contact_referers { false }
@@ -205,6 +207,8 @@ FactoryBot.define do
     has_safeguarding_issue { nil }
     safeguarding_issue_details { "" }
     has_right_to_work_in_uk { nil }
+    has_lived_abroad { nil }
+    life_abroad_details { "" }
 
     completed_steps { [] }
   end

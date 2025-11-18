@@ -33,11 +33,17 @@ module JobseekerHelpers
   end
 
   def fill_in_declarations
-    choose "Yes", name: "jobseekers_job_application_declarations_form[has_close_relationships]"
-    fill_in "Please give details", with: "Some details of the relationship"
+    within ".close-relationships" do
+      choose "Yes", name: "jobseekers_job_application_declarations_form[has_close_relationships]"
+      fill_in "Please give details", with: "Some details of the relationship"
+    end
     choose "Yes, I want to share something"
     fill_in "Give any relevant information", with: "Criminal record"
     choose I18n.t("helpers.label.jobseekers_job_application_declarations_form.declarations_section_completed_options.true")
+    within ".life-abroad" do
+      choose "Yes"
+      fill_in "Please give details", with: "lived in patagonia"
+    end
   end
 
   def fill_in_employment_history(job_title: "The Best Teacher", start_month: "09", start_year: "2019", end_month: "07", end_year: "2020")
