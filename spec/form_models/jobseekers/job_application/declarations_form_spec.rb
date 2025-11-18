@@ -18,6 +18,12 @@ module Jobseekers
 
         it { is_expected.to validate_presence_of(:safeguarding_issue_details) }
       end
+
+      context "when have lived abroad" do
+        let(:params) { { has_lived_abroad: "true" } }
+
+        it { is_expected.to validate_presence_of(:life_abroad_details) }
+      end
     end
   end
 end

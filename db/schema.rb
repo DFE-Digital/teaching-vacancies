@@ -305,6 +305,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_20_090246) do
     t.datetime "interview_feedback_received_at"
     t.boolean "interview_feedback_received"
     t.datetime "rejected_at"
+    t.boolean "has_lived_abroad"
+    t.text "life_abroad_details_ciphertext"
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end

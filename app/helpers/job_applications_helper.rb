@@ -109,6 +109,15 @@ module JobApplicationsHelper
     end
   end
 
+  def job_application_life_abroad_info(job_application)
+    if job_application.has_lived_abroad?
+      safe_join([tag.div("Yes", class: "govuk-body", id: "life_abroad"),
+                 tag.p(job_application.life_abroad_details, class: "govuk-body", id: "life_abroad_details")])
+    else
+      tag.div("No", class: "govuk-body", id: "life_abroad")
+    end
+  end
+
   def job_application_close_relationships_info(job_application)
     case job_application.has_close_relationships
     when true

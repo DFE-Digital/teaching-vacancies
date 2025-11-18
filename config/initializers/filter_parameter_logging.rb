@@ -38,6 +38,7 @@ Rails.application.config.filter_parameters += %i[
   teacher_reference_number
   finished_studying_details
   close_relationships_details
+  life_abroad_details
   gaps_in_employment_details
   personal_statement
   unconfirmed_email
@@ -93,6 +94,7 @@ Rails.application.config.filter_parameters += %i[
   has_been_dismissed
   has_been_disciplined
   has_been_disciplined_by_regulatory_body
+  has_lived_abroad
   agreed_for_processing
   agreed_for_criminal_record
   agreed_for_organisation_update

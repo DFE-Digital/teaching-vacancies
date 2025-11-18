@@ -511,6 +511,7 @@ RSpec.describe JobApplicationPdf do
         before do
           job_application.has_safeguarding_issue = false
           job_application.has_close_relationships = false
+          job_application.has_lived_abroad = false
         end
 
         it "shows 'No' for both declarations" do
@@ -518,6 +519,7 @@ RSpec.describe JobApplicationPdf do
           expected_data = [
             [I18n.t("has_safeguarding_issue", scope:), "No"],
             [I18n.t("has_close_relationships.other", scope:, organisation: vacancy.organisation_name), "No"],
+            [I18n.t("has_lived_abroad", scope:), "No"],
           ]
           expect(declarations).to eq(expected_data)
         end
@@ -549,6 +551,21 @@ RSpec.describe JobApplicationPdf do
         it "shows 'Yes' with details for close relationships" do
           scope = "helpers.legend.jobseekers_job_application_declarations_form"
           expected_row = [I18n.t("has_close_relationships.other", scope:, organisation: vacancy.organisation_name), "Yes\nDetails: #{details}"]
+          expect(declarations).to include(expected_row)
+        end
+      end
+
+      context "when has lived abroad" do
+        let(:details) { "Details about life abroad" }
+
+        before do
+          job_application.has_lived_abroad = true
+          job_application.life_abroad_details = details
+        end
+
+        it "shows 'Yes' with details for life abroad" do
+          scope = "helpers.legend.jobseekers_job_application_declarations_form"
+          expected_row = [I18n.t("has_lived_abroad", scope:), "Yes\nDetails: #{details}"]
           expect(declarations).to include(expected_row)
         end
       end
