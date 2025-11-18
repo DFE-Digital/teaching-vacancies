@@ -186,6 +186,8 @@ class JobApplicationPdf
       group_type = organisation_label_type(job_application.vacancy.organisation)
       close_relationships_info = yes_details_no(job_application.has_close_relationships?, job_application.close_relationships_details)
 
+      scope = "helpers.legend.jobseekers_job_application_declarations_form"
+
       table_class[
         [
           [I18n.t("has_safeguarding_issue", scope:), safeguarding_issues_info],
