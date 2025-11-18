@@ -8,7 +8,6 @@ class JobApplicationPdfGenerator
   end
 
   # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/AbcSize
   def generate
     page_style
     job_application_page_header
@@ -16,17 +15,20 @@ class JobApplicationPdfGenerator
 
     text I18n.t("jobseekers.job_applications.show.consent_text"), size: 10, style: :italic
 
-    render_table_section(:personal_details)
-    render_table_section(:professional_status)
-    render_nested_section(:qualifications)
-    render_nested_section(:training_and_cpds)
-    render_nested_section(:professional_body_memberships)
-    render_nested_section(:employment_history)
+    %i[personal_details professional_status].each do |section|
+      render_table_section(section)
+    end
+    %i[qualifications training_and_cpds professional_body_memberships employment_history].each do |section|
+      render_nested_section(section)
+    end
+
     render_page(:personal_statement)
     render_table_section(:religious_information) if datasource.religious_application?
     render_nested_section(:referees)
-    render_table_section(:ask_for_support)
-    render_table_section(:declarations)
+
+    %i[ask_for_support declarations].each do |section|
+      render_table_section(section)
+    end
 
     render_confirmation if datasource.is_a?(BlankJobApplicationPdf)
 
@@ -36,7 +38,6 @@ class JobApplicationPdfGenerator
 
     document
   end
-  # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
 
   private

@@ -459,7 +459,7 @@ RSpec.describe JobApplicationPdf do
           scope = "helpers.legend.jobseekers_job_application_declarations_form"
           expected_data = [
             [I18n.t("has_safeguarding_issue", scope:), "No"],
-            [I18n.t("has_close_relationships", scope:, organisation: vacancy.organisation_name), "No"],
+            [I18n.t("has_close_relationships.other", scope:, organisation: vacancy.organisation_name), "No"],
           ]
           expect(declarations).to eq(expected_data)
         end
@@ -490,7 +490,7 @@ RSpec.describe JobApplicationPdf do
 
         it "shows 'Yes' with details for close relationships" do
           scope = "helpers.legend.jobseekers_job_application_declarations_form"
-          expected_row = [I18n.t("has_close_relationships", scope:, organisation: vacancy.organisation_name), "Yes\nDetails: #{details}"]
+          expected_row = [I18n.t("has_close_relationships.other", scope:, organisation: vacancy.organisation_name), "Yes\nDetails: #{details}"]
           expect(declarations).to include(expected_row)
         end
       end
