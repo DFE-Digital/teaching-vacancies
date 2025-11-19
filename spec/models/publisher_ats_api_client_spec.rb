@@ -35,4 +35,24 @@ RSpec.describe PublisherAtsApiClient do
       expect(api_client.api_key).to match(/\A[a-f0-9]{40}\z/)
     end
   end
+
+  describe "#unique_organisations_count" do
+    subject(:unique_organisations_count) { api_client.unique_organisations_count }
+
+    let(:api_client) { create(:publisher_ats_api_client) }
+    let(:first_organisation) { create(:school) }
+    let(:second_organisation) { create(:trust) }
+    let(:third_organisation) { create(:school) }
+
+    before do
+      create(:vacancy, :external, publisher_ats_api_client: api_client, organisations: [first_organisation])
+      create(:vacancy, :external, publisher_ats_api_client: api_client, organisations: [first_organisation])
+      create(:vacancy, :external, publisher_ats_api_client: api_client, organisations: [first_organisation, third_organisation])
+      create(:vacancy, :external, publisher_ats_api_client: api_client, organisations: [second_organisation])
+    end
+
+    it "returns the count of unique organisations associated with the vacancies" do
+      expect(unique_organisations_count).to eq(3)
+    end
+  end
 end
