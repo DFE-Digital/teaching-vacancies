@@ -606,3 +606,4 @@ shared:
     - has_unread_jobseeker_messages
   :action_text_rich_texts:
     - body_ciphertext
+    - migrated_body
