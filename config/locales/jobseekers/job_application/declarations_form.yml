@@ -17,7 +17,9 @@ en:
   helpers:
     legend:
       jobseekers_job_application_declarations_form:
-        has_close_relationships: Do you have any family or close relationship with people within %{organisation}?
+        has_close_relationships:
+          other: Do you have any family or close relationship(s) with people within the school or any governors or trustees at %{organisation}?
+          trust: Do you have any family or close relationship(s) with people within the school, MAT or any governors or trustees at %{organisation}?
         has_right_to_work_in_uk: Do you need Skilled Worker visa sponsorship?
         has_safeguarding_issue: Do you want to declare any substantiated safeguarding issues, such as a criminal record or professional misconduct?
         declarations_section_completed: Have you completed this section?

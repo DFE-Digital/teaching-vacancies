@@ -85,6 +85,10 @@ module JobApplicationsHelper
     end
   end
 
+  def organisation_label_type(organisation)
+    organisation.trust? ? :trust : :other
+  end
+
   def end_date(date, index)
     return "present" if index.zero?
 

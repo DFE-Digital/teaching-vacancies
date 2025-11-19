@@ -5,11 +5,16 @@ module Jobseekers
       include ActiveModel::Attributes
       include CompletedFormAttribute
 
-      FIELDS = %i[close_relationships_details safeguarding_issue_details].freeze
+      FIELDS = %i[
+        close_relationships_details
+        safeguarding_issue_details
+      ].freeze
+
+      BOOLEAN_FIELDS = %i[has_right_to_work_in_uk has_close_relationships has_safeguarding_issue].freeze
 
       class << self
         def storable_fields
-          FIELDS + %i[has_right_to_work_in_uk has_close_relationships has_safeguarding_issue]
+          FIELDS + BOOLEAN_FIELDS
         end
 
         def unstorable_fields
@@ -22,9 +27,7 @@ module Jobseekers
       end
       attr_accessor(*FIELDS)
 
-      attribute :has_right_to_work_in_uk, :boolean
-      attribute :has_close_relationships, :boolean
-      attribute :has_safeguarding_issue, :boolean
+      BOOLEAN_FIELDS.each { |field| attribute field, :boolean }
 
       validates :has_close_relationships, inclusion: { in: [true, false] }, if: -> { declarations_section_completed }
       validates :close_relationships_details, presence: true, if: -> { has_close_relationships && declarations_section_completed }
