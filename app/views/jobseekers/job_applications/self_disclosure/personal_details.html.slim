@@ -12,14 +12,14 @@
   = form_with(model: @form, url: wizard_path(step), method: :patch) do |f|
     = f.govuk_error_summary
 
-    = f.govuk_text_field :name, label: { size: "s" }, width: "one-half"
+    = f.govuk_text_field :name, label: { size: "s" }, width: "one-half", autocomplete: "name"
     = f.govuk_text_field :previous_names, label: { size: "s" }, width: "one-half"
-    = f.govuk_text_field :address_line_1, label: { size: "s" }, width: "two-thirds"
-    = f.govuk_text_field :address_line_2, label: { size: "s" }, width: "two-thirds"
-    = f.govuk_text_field :city, label: { size: "s" }, width: "one-half"
-    = f.govuk_text_field :country, label: { size: "s" }, width: "one-half"
-    = f.govuk_text_field :postcode, label: { size: "s" }, width: "one-third"
-    = f.govuk_phone_field :phone_number, label: { size: "s" }, width: "one-half"
+    = f.govuk_text_field :address_line_1, label: { size: "s" }, width: "two-thirds", autocomplete: "address-line1"
+    = f.govuk_text_field :address_line_2, label: { size: "s" }, width: "two-thirds", autocomplete: "address-line2"
+    = f.govuk_text_field :city, label: { size: "s" }, width: "one-half", autocomplete: "address-level2"
+    = f.govuk_text_field :country, label: { size: "s" }, width: "one-half", autocomplete: "country"
+    = f.govuk_text_field :postcode, label: { size: "s" }, width: "one-third", autocomplete: "postal-code"
+    = f.govuk_phone_field :phone_number, label: { size: "s" }, width: "one-half", autocomplete: "tel"
 
     = f.govuk_date_field :date_of_birth, label: { size: "s" } do
       p.govuk-hint = t(".date_of_birth_hint")
