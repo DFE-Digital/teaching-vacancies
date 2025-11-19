@@ -604,3 +604,5 @@ shared:
     - archived
     - last_message_at
     - has_unread_jobseeker_messages
+  :action_text_rich_texts:
+    - body_ciphertext
