@@ -4,20 +4,24 @@
   = govuk_back_link text: t("app.back_link"), href: previous_wizard_path, html_attributes: { "aria-label" => "Back navigation" }
 
 .govuk-grid-row
-  div
+  .govuk-grid-column-two-thirds
     span.govuk-caption-m = "Part 4 of 4"
     h1.govuk-heading-l = t(".heading", job_title: @job_application.vacancy.job_title)
-    h2.govuk-heading-m = t(".confirmation_declaration")
-    - t(".description").each do |text|
-      p.govuk-hint = text
+    = form_with(model: @form, url: wizard_path(step), method: :patch) do |f|
+      = f.govuk_error_summary
 
-  = form_with(model: @form, url: wizard_path(step), method: :patch) do |f|
-    = f.govuk_error_summary
+      - fieldset_attribute = Jobseekers::JobApplications::SelfDisclosure::ConfirmationForm::FIELDS.first
 
-    - Jobseekers::JobApplications::SelfDisclosure::ConfirmationForm::FIELDS.each do |field|
-      = f.govuk_check_box field,
-        true,
-        multiple: false,
-        link_errors: true
+      = f.govuk_check_boxes_fieldset fieldset_attribute,
+        legend: { text: t(".confirmation_declaration"), tag: "h2", size: "m" } do
 
-    = f.govuk_submit t("buttons.save_and_continue")
+        - t(".description").each do |text|
+          p.govuk-hint = text
+
+        - Jobseekers::JobApplications::SelfDisclosure::ConfirmationForm::FIELDS.each do |field|
+          = f.govuk_check_box field,
+            true,
+            multiple: false,
+            link_errors: true
+
+      = f.govuk_submit t("buttons.save_and_continue")
