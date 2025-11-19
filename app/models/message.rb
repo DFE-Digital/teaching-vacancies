@@ -13,7 +13,7 @@ class Message < ApplicationRecord
   after_save :update_conversation_searchable_content
 
   def mark_as_read!
-    update!(read: true)
+    update_column(:read, true)
   end
 
   def unread?
