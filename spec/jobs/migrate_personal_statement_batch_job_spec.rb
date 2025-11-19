@@ -3,7 +3,9 @@ require "rails_helper"
 RSpec.describe MigratePersonalStatementBatchJob do
   describe "#perform" do
     let(:job_application_with_statement) do
-      create(:job_application, personal_statement: "This is my personal statement")
+      create(:job_application, personal_statement: "This is my personal statement").tap do |ja|
+        ja.content.destroy!
+      end
     end
     let(:job_application_with_content) do
       create(:job_application, personal_statement: "Some statement").tap do |ja|
@@ -20,17 +22,22 @@ RSpec.describe MigratePersonalStatementBatchJob do
       ]
     end
 
-    it "migrates personal_statement to content for applications without content" do
+    it "migrates personal_statement to content for applications with personal statement" do
       expect { described_class.new.perform(job_application_ids) }
         .to change { job_application_with_statement.reload.content.to_plain_text.strip }
         .from("")
         .to("This is my personal statement")
     end
 
-    it "skips applications that already have content" do
-      described_class.new.perform(job_application_ids)
+    it "overwrites existing content for applications that already have content" do
+      expect { described_class.new.perform(job_application_ids) }
+        .to change { job_application_with_content.reload.content.to_plain_text.strip }
+        .from("Already has content")
+        .to("Some statement")
+    end
 
-      expect(job_application_with_content.reload.content.to_plain_text.strip).to eq("Already has content")
+    it "processes applications with no personal statement without error" do
+      expect { described_class.new.perform(job_application_ids) }.not_to(change { job_application_no_statement.reload.content.to_plain_text.strip })
     end
 
     it "handles errors gracefully and logs them" do
