@@ -1,14 +1,15 @@
 # Use Mermaid for diagrams
 
-**Date: 2025-11-17**
+**Date: 2025-11-20**
 
 ## Status
 
-**Discussing**
+**Decided**
 
 ## Parties Involved
 
  * Marc Sardón
+ * Kyle MacPherson
 
 ## Context and Problem Statement
 
@@ -36,7 +37,7 @@ Should we stablish it as "the way to go" forward?
 
 ## Decision Outcome
 
--
+- We will use Mermaid snippets within our docs for diagrams.
 
 ### Positive Consequences
 
