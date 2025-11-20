@@ -5,6 +5,10 @@
 > Teachers can search and apply for jobs at schools or trusts in England, save jobs and set up job alerts.
 
 ## C4 System Context Diagram
+How does Teaching Vacancies fall within GovUK and Department for Education scopes?
+
+How does integrate with People and other software systems?
+
 ```mermaid
     C4Context
       title System Context diagram for Teaching Vacancies Service
@@ -43,13 +47,15 @@
       Rel(GIAS, TV, "Provides orgs information", "CSV pulls")
       Rel(TV, FindAJob, "Exports vacancies", "CSV through SFTP")
 
-      Rel(ATS, TV, "Posts/Manages<br>vacancies", "REST API")
+      Rel(ATS, TV, "NEW:<br>Posts/Manages vacancies", "REST API")
+      Rel(TV, ATS, "LEGACY:<br>Pulls vacancies", "XML/APIs")
       Rel(TV, Notify, "Sends emails<br>to users", "API" )
 
     UpdateLayoutConfig($c4ShapeInRow="2", $c4BoundaryInRow="1")
     UpdateRelStyle(publisher, TV, $offsetX="-170", $offsetY="-220")
     UpdateRelStyle(publisher, DfESignIn, $offsetX="-110", $offsetY="-150")
-    UpdateRelStyle(ATS, TV, $offsetX="-220", $offsetY="-40")
+    UpdateRelStyle(ATS, TV, $offsetX="-250", $offsetY="-40")
+    UpdateRelStyle(TV, ATS, $offsetY="-40")
     UpdateRelStyle(jobseeker, OneLogin, $offsetX="-40", $offsetY="-30")
     UpdateRelStyle(jobseeker, TV, $offsetX="-150", $offsetY="-220")
     UpdateRelStyle(OneLogin, TV, $offsetX="30", $offsetY="-70")
