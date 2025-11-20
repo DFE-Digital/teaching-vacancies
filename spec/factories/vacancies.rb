@@ -245,13 +245,13 @@ FactoryBot.define do
       job_advert { Faker::Lorem.paragraph(sentence_count: factory_rand(50..300)) }
       publisher_ats_api_client
       external_source { "may_the_feed_be_with_you" }
-      external_reference { "J3D1" }
       external_advert_url { "https://example.com/jobs/123" }
       phases { %w[secondary] }
       skills_and_experience { nil }
       actual_salary { nil }
       school_offer { nil }
       flexi_working { nil }
+      sequence(:external_reference) { |n| "J3D1-#{n}" }
     end
 
     factory :draft_vacancy, class: "DraftVacancy" do
