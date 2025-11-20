@@ -28,11 +28,15 @@ module Publishers
     end
 
     def self_disclosure_received(job_application)
-      @job_application = job_application
-
-      send_email(to: job_application.vacancy.publisher.email,
-                 subject: t(".subject", organisation_name: job_application.vacancy.organisation.name,
-                                        job_title: job_application.vacancy.job_title))
+      template_mail("c08269dd-c2d1-4007-a119-f45105e329c9",
+                    to: job_application.vacancy.publisher.email,
+                    personalisation: {
+                      name: job_application.vacancy.publisher.papertrail_display_name,
+                      candidate_name: job_application.name,
+                      job_title: job_application.vacancy.job_title,
+                      organisation_name: job_application.vacancy.organisation_name,
+                      link: Rails.application.routes.url_helpers.organisation_job_job_application_self_disclosure_url(job_application.vacancy.id, job_application),
+                    })
     end
 
     def reference_received(reference_request)
