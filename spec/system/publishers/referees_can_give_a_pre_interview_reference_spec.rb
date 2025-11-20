@@ -5,7 +5,7 @@ RSpec.describe "Publishers can select a job application for interview" do
 
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
-  let(:vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
+  let(:vacancy) { create(:vacancy, :expired, organisations: [organisation], publisher: publisher) }
   let(:jobseeker) { create(:jobseeker) }
   let(:job_application) do
     create(:job_application, :status_submitted,
