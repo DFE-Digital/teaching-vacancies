@@ -131,7 +131,7 @@ module JobApplicationsHelper
   def job_application_status_tag(status)
     govuk_tag text: JOBSEEKER_STATUS_MAPPINGS[status.to_sym],
               colour: JOB_APPLICATION_STATUS_TAG_COLOURS[JOBSEEKER_STATUS_MAPPINGS.fetch(status.to_sym).parameterize.underscore.to_sym],
-              classes: "govuk-!-margin-bottom-2"
+              classes: "govuk-!-margin-bottom-2 app-status-tag"
   end
 
   def publisher_job_application_status_tag(status, classes: [])
