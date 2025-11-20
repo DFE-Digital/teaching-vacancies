@@ -237,20 +237,6 @@ en:
     expired_vacancy_feedback_prompt_mailer:
       feedback_link_text: Tell us how you filled your vacancy.
     collect_references_mailer:
-      collect_references:
-        subject: Provide a reference for %{name} for %{job_title} at %{organisation_name}
-        title: Dear %{name}
-        submit_reference: reference request form
-        body: |
-          You have been provided as a referee by %{candidate_name} for the %{job_title} role at %{organisation_name}.
-
-          Do not reply to this email to provide your reference. You must complete the %{link} to provide a reference. You can decline to provide a reference.
-
-          If you cannot complete the above reference request form using the link provided, contact %{school_email}.
-
-          Kind regards,
-
-          Teaching Vacancies team
       inform_applicant_about_references:
         subject: References are being collected for role %{job_title} at %{organisation_name}
         sign_in: sign in to your Teaching vacancies account
@@ -270,17 +256,6 @@ en:
           You have received a self-disclosure form from %{candidate_name} for %{job_title} at %{organisation_name}.
 
           You can review the self-disclosure form by signing in to your %{link}.
-
-          Kind regards,
-          Teaching Vacancies team
-      reference_received:
-        subject: You have received a reference for %{candidate_name} for %{job_title} at %{organisation_name}
-        title: Dear %{name}
-        sign_in: Teaching Vacancies account
-        body: |
-          You have received a reference for %{candidate_name} for %{job_title} at %{organisation_name}.
-
-          Sign in to your %{link} to view the reference provided.
 
           Kind regards,
           Teaching Vacancies team
