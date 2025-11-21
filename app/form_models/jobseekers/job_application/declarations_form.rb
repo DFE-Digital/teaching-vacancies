@@ -8,9 +8,10 @@ module Jobseekers
       FIELDS = %i[
         close_relationships_details
         safeguarding_issue_details
+        life_abroad_details
       ].freeze
 
-      BOOLEAN_FIELDS = %i[has_right_to_work_in_uk has_close_relationships has_safeguarding_issue].freeze
+      BOOLEAN_FIELDS = %i[has_right_to_work_in_uk has_close_relationships has_safeguarding_issue has_lived_abroad].freeze
 
       class << self
         def storable_fields
@@ -33,6 +34,8 @@ module Jobseekers
       validates :close_relationships_details, presence: true, if: -> { has_close_relationships && declarations_section_completed }
       validates :has_safeguarding_issue, inclusion: { in: [true, false] }, if: -> { declarations_section_completed }
       validates :safeguarding_issue_details, presence: true, if: -> { has_safeguarding_issue && declarations_section_completed }
+      validates :has_lived_abroad, inclusion: { in: [true, false] }, if: -> { declarations_section_completed }
+      validates :life_abroad_details, presence: true, if: -> { has_lived_abroad && declarations_section_completed }
 
       completed_attribute(:declarations)
     end

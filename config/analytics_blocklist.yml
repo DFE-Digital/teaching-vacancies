@@ -99,6 +99,7 @@
   - personal_statement_ciphertext
   - support_needed_details_ciphertext
   - close_relationships_details_ciphertext
+  - life_abroad_details_ciphertext
   - further_instructions_ciphertext
   - rejection_reasons_ciphertext
   - gaps_in_employment_details_ciphertext
