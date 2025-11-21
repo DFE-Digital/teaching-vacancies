@@ -42,7 +42,10 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
 
         scenario "it shows filtered published vacancies" do
           check "Happy Rainbows School (1)"
-          click_on I18n.t("buttons.apply_filters")
+          # Apply filters
+          within ".filters-component" do
+            first("button").click
+          end
 
           expect(page).to have_css(".filters-component__remove-tags__tag", count: 1)
 
