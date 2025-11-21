@@ -1,17 +1,24 @@
-class Jobseekers::ProfilesMailer < Jobseekers::BaseMailer
-  def disable_inactive_profile(profile)
-    @profile = profile
-    send_email(to: profile.email, subject: I18n.t("jobseekers.profiles_mailer.disable_inactive_profile.subject"))
-  end
+module Jobseekers
+  class ProfilesMailer < BaseMailer
+    def disable_inactive_profile(profile)
+      template_mail("8988abf4-e530-4ff0-ac2b-b692929fe4c6",
+                    to: profile.email,
+                    personalisation: {
+                      first_name: profile.personal_details&.first_name || "Jobseeker",
+                      sign_in_link: new_jobseeker_session_url,
+                      link: t("help.email"),
+                    })
+    end
 
-  def inactive_profile_warning(profile, expiry_date)
-    @profile = profile
-    @expiry_date = expiry_date
-    send_email(to: profile.email, subject: I18n.t("jobseekers.profiles_mailer.inactive_profile_warning.subject"))
-  end
+    def inactive_profile_warning(profile, expiry_date)
+      @profile = profile
+      @expiry_date = expiry_date
+      send_email(to: profile.email, subject: I18n.t("jobseekers.profiles_mailer.inactive_profile_warning.subject"))
+    end
 
-  def disable_profile_due_to_new_fields(profile)
-    @profile = profile
-    send_email(to: profile.email, subject: I18n.t("jobseekers.profiles_mailer.disable_profile_due_to_new_fields.subject"))
+    def disable_profile_due_to_new_fields(profile)
+      @profile = profile
+      send_email(to: profile.email, subject: I18n.t("jobseekers.profiles_mailer.disable_profile_due_to_new_fields.subject"))
+    end
   end
 end
