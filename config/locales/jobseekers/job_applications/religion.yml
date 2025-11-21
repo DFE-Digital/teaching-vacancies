@@ -111,8 +111,8 @@ en:
           <p class="govuk-hint">If you are not a practising Catholic, you can provide a copy of your baptism certificate, or the date and address of your baptism.</p>
           <p class="govuk-hint">Make sure your referee has consented to providing a reference.</p>
       jobseekers_job_application_non_catholic_form:
-        religious_referee_phone: You can enter the school's telephone number here if you would prefer not to provide a personal telephone number.
+        religious_referee_phone: Provide a phone number that your referee is happy to be contacted on.
         ethos_and_aims: For example, through running after school clubs or supporting the school's local community.
       jobseekers_job_application_catholic_form:
         baptism_date: For example 27 3 2007
-        religious_referee_phone: You can enter the school's telephone number here if you would prefer not to provide a personal telephone number.
+        religious_referee_phone: Provide a phone number that your referee is happy to be contacted on.
