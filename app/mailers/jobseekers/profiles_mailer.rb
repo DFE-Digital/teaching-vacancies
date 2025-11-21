@@ -21,8 +21,13 @@ module Jobseekers
     end
 
     def disable_profile_due_to_new_fields(profile)
-      @profile = profile
-      send_email(to: profile.email, subject: I18n.t("jobseekers.profiles_mailer.disable_profile_due_to_new_fields.subject"))
+      template_mail("326b67bb-f51e-4967-88b9-c7f1a403aa46",
+                    to: profile.email,
+                    personalisation: {
+                      first_name: profile.personal_details&.first_name || "Jobseeker",
+                      sign_in_link: new_jobseeker_session_url,
+                      link: t("help.email"),
+                    })
     end
   end
 end
