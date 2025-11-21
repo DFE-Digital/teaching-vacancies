@@ -1,7 +1,12 @@
-.govuk-grid-row
-  .govuk-grid-column-one-half
-    h1.govuk-heading-l class="govuk-!-display-inline"
-      = vacancy.job_title
-      = vacancy_tag(tag_name)
-  .govuk-grip-column-one-half
-    = govuk_button_link_to t("buttons.download_blank_application"), organisation_job_form_preview_path(vacancy.id, :blank), class: "govuk-button--secondary blank-application"
+- if vacancy.enable_job_applications?
+  .govuk-grid-row
+    .govuk-grid-column-one-half
+      h1.govuk-heading-l class="govuk-!-display-inline"
+        = vacancy.job_title
+        = vacancy_tag(tag_name)
+    .govuk-grip-column-one-half
+      = govuk_button_link_to t("buttons.download_blank_application"), organisation_job_form_preview_path(vacancy.id, :blank), class: "govuk-button--secondary blank-application"
+- else
+  h1.govuk-heading-l class="govuk-!-display-inline"
+    = vacancy.job_title
+    = vacancy_tag(tag_name)
