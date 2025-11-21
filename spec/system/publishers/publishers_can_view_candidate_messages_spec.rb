@@ -26,6 +26,8 @@ RSpec.describe "Publishers can view candidate messages" do
     context "when on the inbox tab" do
       before do
         visit publishers_candidate_messages_path
+        # wait for page load
+        find("nav.tabs-component")
       end
 
       it "passes accessibility checks", :a11y do

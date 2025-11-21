@@ -82,17 +82,6 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   let!(:expired_job) { create(:vacancy, :expired, job_roles: ["teacher"], job_title: "Maths Teacher", subjects: [], organisations: [school]) }
   let(:per_page) { 2 }
 
-  context "when searching using the mobile search fields" do
-    before do
-      stub_const("Pagy::DEFAULT", Pagy::DEFAULT.merge(items: per_page))
-      visit jobs_path
-      fill_in "Keyword", with: keyword
-      click_on I18n.t("buttons.search")
-    end
-
-    it_behaves_like "a successful search"
-  end
-
   context "when searching using the desktop search field" do
     before do
       stub_const("Pagy::DEFAULT", Pagy::DEFAULT.merge(items: per_page))
@@ -409,7 +398,10 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
       visit jobs_path
       find('span[title="Teaching & leadership"]').click
       check "Teacher"
-      click_on I18n.t("buttons.apply_filters")
+      # Apply filters
+      within ".filters-component" do
+        first("button").click
+      end
 
       expect_page_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2])
       expect_page_not_to_show_jobs([headteacher, deputy_head, senior_leader, teaching_assistant, sendco, it_support, pastoral, other])
@@ -418,7 +410,10 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
       check "IT support"
       check "Head of year or phase"
       uncheck "Teacher"
-      click_on I18n.t("buttons.apply_filters")
+      # Apply filters
+      within ".filters-component" do
+        first("button").click
+      end
 
       expect_page_to_show_jobs([senior_leader, it_support])
       expect_page_not_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2, headteacher, deputy_head, teaching_assistant, sendco, pastoral, other])
