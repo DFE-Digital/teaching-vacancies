@@ -178,7 +178,8 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         within ".filters-component" do
           find('span[title="Teaching & leadership"]').click
           check "Teacher"
-          click_on I18n.t("buttons.apply_filters")
+          # Apply filters
+          first("button").click
         end
 
         expect(page).to have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
