@@ -13,6 +13,8 @@ RSpec.describe "Publishers can preview a vacancy" do
     before do
       visit organisation_job_path(vacancy.id)
       click_on I18n.t("publishers.vacancies.show.heading_component.action.preview")
+      # wait for page load
+      find(".header-with-logo")
     end
 
     it "passes a11y", :a11y do
