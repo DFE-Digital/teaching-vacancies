@@ -6,31 +6,6 @@ en:
     jobseeker_footer: "%{home_page_link} is a free job-listing service from the Department for Education. It helps you find the right jobs in schools and take the next step in your career."
   admins:
   jobseekers:
-    account_mailer:
-      account_closed:
-        heading: You have closed your Teaching Vacancies account
-        intro: >-
-          You will no longer receive any job alerts that you have subscribed to,
-          and any job applications you have made will be withdrawn.
-        reactivate: >-
-          If you want to reactivate your account at any point
-          you can just sign back in with this email address.
-        delete: If you want us to delete your data, please email %{mail_to}
-        subject: Your Teaching Vacancies account has been closed
-      inactive_account:
-        intro: We will delete your Teaching Vacancies account and data unless you sign into your account in the next 2 weeks.
-        explanation: This is because you have not used your account for 5 years.
-        link: Sign into Teaching Vacancies
-        reactivate: If you want to keep your account and your data, please sign into your account before %{date}.
-        subject: Your Teaching Vacancies account and data
-      request_account_transfer:
-        subject: Transfer your account data
-        heading: Your verification code
-        intro: Use this verification code to confirm the transfer of your Teaching Vacancies account details.
-        verification_code: "Your verification code: %{code}"
-        valid_for: The code is only valid for one hour.
-        not_requested: If you did not request this, you can ignore this email.
-        need_help: If you need help using the verification code, you can %{mail_to}.
     peak_times_mailer:
       may_reminder:
         subject: "%{first_name}, now is the best time to find school jobs"

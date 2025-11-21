@@ -43,8 +43,7 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
 
       fill_in "jobseekers_request_account_transfer_email_form[email]", with: old_jobseeker_account.email
       click_on "Save and continue"
-      expect(delivered_emails.last.subject).to eq "Transfer your account data"
-      expect(delivered_emails.last.body.raw_source).to include "Your verification code: #{old_jobseeker_account.reload.account_merge_confirmation_code}"
+      expect(delivered_emails.last.personalisation.fetch(:token)).to eq(old_jobseeker_account.reload.account_merge_confirmation_code)
       expect(page).not_to have_css("div.govuk-notification-banner__content p.govuk-notification-banner__heading", text: "Email resent")
 
       fill_in "jobseekers_account_transfer_form[account_merge_confirmation_code]", with: "somethingincorrect"
