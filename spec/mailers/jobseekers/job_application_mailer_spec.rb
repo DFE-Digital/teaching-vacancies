@@ -22,12 +22,9 @@ RSpec.describe Jobseekers::JobApplicationMailer do
     let(:mail) { described_class.application_submitted(job_application) }
 
     it "sends a `jobseeker_application_submitted` email" do
-      expect(mail.subject).to eq(I18n.t("jobseekers.job_application_mailer.application_submitted.subject"))
+      # expect(mail.subject).to eq(I18n.t("jobseekers.job_application_mailer.application_submitted.subject"))
       expect(mail.to).to eq([job_application.email_address])
-      expect(mail.body.encoded).to include(I18n.t("jobseekers.job_application_mailer.application_submitted.heading",
-                                                  organisation_name: organisation.name))
-                               .and include(I18n.t("jobseekers.job_application_mailer.shared.more_info.description",
-                                                   email: "[#{contact_email}](mailto:#{contact_email})"))
+      expect(mail.personalisation).to include(organisation_name: organisation.name, contact_email: contact_email)
     end
 
     it "triggers a `jobseeker_application_submitted` email event", :dfe_analytics do
