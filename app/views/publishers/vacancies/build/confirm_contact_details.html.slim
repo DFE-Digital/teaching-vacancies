@@ -1,0 +1,17 @@
+- content_for :page_title_prefix, page_title_prefix(step_process, form)
+
+= form_for form, url: wizard_path(current_step), method: :patch do |f|
+  = f.govuk_error_summary
+
+  = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
+
+  = f.govuk_radio_buttons_fieldset :confirm_contact_email, legend: { size: "m", tag: nil } do
+    = f.govuk_radio_button :confirm_contact_email, "true", link_errors: true
+
+  .govuk-button-group
+    = f.govuk_submit t("buttons.save_and_continue"), class: "govuk-!-margin-bottom-5", "data-upload-documents-target": "saveListingButton"
+    - if vacancy.draft?
+      = f.govuk_submit t("buttons.save_and_finish_later"), name: "save_and_finish_later", value: "true", secondary: true, class: "govuk-!-margin-bottom-5", "data-upload-documents-target": "saveListingButton"
+    = govuk_button_link_to t("buttons.go_back_to_change_email"), organisation_job_build_path(vacancy.id, :contact_details), class: "govuk-button govuk-button--secondary"
+
+= govuk_link_to(t("buttons.cancel"), organisation_jobs_with_type_path(:draft), class: "govuk-link--no-visited-state govuk-body-m")

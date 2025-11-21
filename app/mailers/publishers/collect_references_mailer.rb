@@ -23,7 +23,7 @@ module Publishers
     def self_disclosure_received(job_application)
       @job_application = job_application
 
-      send_email(to: job_application.vacancy.publisher.email,
+      send_email(to: job_application.vacancy.contact_email,
                  subject: t(".subject", organisation_name: job_application.vacancy.organisation.name,
                                         job_title: job_application.vacancy.job_title))
     end
@@ -32,7 +32,7 @@ module Publishers
       @reference_request = reference_request
       @job_application = reference_request.referee.job_application
 
-      send_email(to: @job_application.vacancy.publisher.email,
+      send_email(to: @job_application.vacancy.contact_email,
                  subject: t(".subject",
                             organisation_name: @job_application.vacancy.organisation.name,
                             candidate_name: @job_application.name,
