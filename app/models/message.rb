@@ -19,6 +19,7 @@ class Message < ApplicationRecord
   def unread?
     !read?
   end
+  
 
   private
 
