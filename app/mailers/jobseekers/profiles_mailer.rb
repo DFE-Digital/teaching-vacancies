@@ -11,9 +11,13 @@ module Jobseekers
     end
 
     def inactive_profile_warning(profile, expiry_date)
-      @profile = profile
-      @expiry_date = expiry_date
-      send_email(to: profile.email, subject: I18n.t("jobseekers.profiles_mailer.inactive_profile_warning.subject"))
+      template_mail("dcea907b-8a69-482a-98fb-9ada310c96d7",
+                    to: profile.email,
+                    personalisation: {
+                      first_name: profile.personal_details&.first_name || "Jobseeker",
+                      expiry_date: expiry_date.to_fs,
+                      sign_in_link: new_jobseeker_session_url,
+                    })
     end
 
     def disable_profile_due_to_new_fields(profile)
