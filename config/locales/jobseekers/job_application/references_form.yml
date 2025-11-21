@@ -45,8 +45,7 @@ en:
           text: We will ask the school to tell you before contacting your referees.
       jobseekers_job_application_details_referee_form:
         phone_number: >-
-          Please only give a phone number that your referee is happy to be contacted on.
-          You can enter the school's telephone number here if you would prefer not to provide a personal telephone number.
+          Provide a phone number that your referee is happy to be contacted on.
         is_most_recent_employer_hints:
           hint1: One of your referees should be your current or most recent employer.
           hint2: If you do not have an employer referee, you can provide a personal referee.

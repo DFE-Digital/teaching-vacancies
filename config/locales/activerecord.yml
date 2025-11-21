@@ -563,7 +563,7 @@ en:
             organisation:
               blank: Enter the organisation where your referee works
             phone_number:
-              blank: Enter your referee's phone number
+              blank: Enter a phone number that your referee is happy to be contacted on
               invalid:  Enter a phone number in the correct format
             relationship:
               blank: Enter the referee's relationship to you, for example line manager
