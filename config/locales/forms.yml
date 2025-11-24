@@ -222,7 +222,9 @@ en:
       publishers_job_listing_contact_details_form:
         contact_email: The email address that you enter on this page will be shown on the job listing, and will receive all communications about this role.
       publishers_job_listing_confirm_contact_details_form:
-        confirm_contact_email: The email address selected is not linked to a Teaching Vacancies account so the person receiving the email will be unable to sign in. We will send them an email with guidance on how to set up their account. By selecting 'Yes' below you agree to share your email address with them.
+        banner_heading: The email address selected is not linked to a Teaching Vacancies account.
+        warning_text_html: By selecting 'Save and continue' below you agree to share your email address with them when we send an email with <a href="https://teaching-vacancies.service.gov.uk/get-help-hiring/how-to-setup-your-account/how-to-request-organisation-access" class="govuk-link">guidance on how to set up their account</a>.
+        contact_details: Contact details
       publishers_job_listing_documents_form:
         documents: You can only upload PDF or DOCX files under 20MB, You can upload multiple files at the same time.
       publishers_job_listing_feedback_form:

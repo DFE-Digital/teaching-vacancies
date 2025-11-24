@@ -71,7 +71,6 @@ RSpec.describe "Publishers can edit a draft vacancy" do
 
         click_on I18n.t("buttons.save_and_continue")
         expect(page).to be_axe_clean
-        choose "Yes"
         click_on I18n.t("buttons.save_and_continue")
         #  wait for page load
         find(".govuk-notification-banner")
