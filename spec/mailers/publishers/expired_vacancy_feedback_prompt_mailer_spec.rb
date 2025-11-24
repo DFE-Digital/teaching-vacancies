@@ -4,20 +4,11 @@ require "dfe/analytics/rspec/matchers"
 RSpec.describe Publishers::ExpiredVacancyFeedbackPromptMailer do
   include DatesHelper
 
-  let(:body) { mail.body.raw_source }
-
   describe "prompt_for_feedback" do
-    let(:content_extract1) do
-      "You recently recruited for #{vacancy.job_title}"
-    end
-    let(:content_extract2) do
-      "Tell us how you filled your vacancy"
-    end
     let(:email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
-    let(:publisher) { create(:publisher, email: email) }
+    let(:publisher) { build_stubbed(:publisher, email: email) }
     let(:mail) { described_class.prompt_for_feedback(publisher, vacancy) }
-    let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
-    let(:vacancy) { create(:vacancy, :expired) }
+    let(:vacancy) { build_stubbed(:vacancy, :expired) }
     let(:expected_data) do
       {
         notify_template: notify_template,
@@ -28,12 +19,9 @@ RSpec.describe Publishers::ExpiredVacancyFeedbackPromptMailer do
     end
 
     it "lists all vacancies" do
-      expect(mail.subject).to eq("Did you fill your vacancy?")
       expect(mail.to).to eq([email])
 
-      expect(body).to include(content_extract1)
-                  .and include(content_extract2)
-                  .and include(vacancy.job_title)
+      expect(mail.personalisation).to include({ job_title: vacancy.job_title })
     end
 
     it "triggers a `publisher_prompt_for_feedback` email event", :dfe_analytics do

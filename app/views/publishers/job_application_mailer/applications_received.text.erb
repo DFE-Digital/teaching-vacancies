@@ -1,13 +1,9 @@
-# <%= t(".title") %>
-
-<%- @vacancies.each do |vacancy| %>
+<% @vacancies.each do |vacancy, location| %>
   <%= vacancy.job_title %>
-  <%= vacancy_job_location(vacancy) %>
+  <%= location.fetch(:location) %>
   
-  <%= publisher_job_applications_link(vacancy) %>
+  <%= location.fetch(:link) %>
 
   ---
 
 <% end %>
-
-<%= t("shared.footer", home_page_link: home_page_link) %>
