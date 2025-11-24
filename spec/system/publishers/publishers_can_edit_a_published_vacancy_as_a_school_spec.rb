@@ -223,7 +223,7 @@ RSpec.describe "Publishers can edit a vacancy" do
 
         expect(publisher_confirm_contact_details_page).to be_displayed
 
-        publisher_confirm_contact_details_page.click_change_email_button
+        publisher_confirm_contact_details_page.click_change_email_link
 
         expect(publisher_contact_details_page).to be_displayed
 

@@ -165,14 +165,6 @@ RSpec.describe "Creating a vacancy" do
 
         expect(publisher_confirm_contact_details_page).to be_displayed
 
-        submit_empty_form
-
-        expect(page).to have_css("h2", text: "There is a problem")
-
-        within "ul.govuk-list.govuk-error-summary__list" do
-          expect(page).to have_link("Confirm if you want to use this email address")
-        end
-
         publisher_confirm_contact_details_page.fill_in_and_submit_form
 
         expect(page).to have_current_path(organisation_job_review_path(created_vacancy.id), ignore_query: true)
@@ -266,7 +258,6 @@ RSpec.describe "Creating a vacancy" do
         publisher_contact_details_page.fill_in_and_submit_form(non_publisher_email, vacancy.contact_number)
 
         expect(publisher_confirm_contact_details_page).to be_displayed
-        expect(page).to have_content("Do you want to use this email address?")
 
         publisher_confirm_contact_details_page.fill_in_and_submit_form
 

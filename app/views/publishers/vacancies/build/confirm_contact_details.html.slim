@@ -1,3 +1,6 @@
+= govuk_notification_banner title_text: t("banners.important") do |banner|
+  - banner.with_heading(text: t("helpers.hint.publishers_job_listing_confirm_contact_details_form.banner_heading"))
+
 - content_for :page_title_prefix, page_title_prefix(step_process, form)
 
 = form_for form, url: wizard_path(current_step), method: :patch do |f|
@@ -5,13 +8,19 @@
 
   = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
 
-  = f.govuk_radio_buttons_fieldset :confirm_contact_email, legend: { size: "m", tag: nil } do
-    = f.govuk_radio_button :confirm_contact_email, "true", link_errors: true
+  = govuk_summary_list do |summary_list|
+    - summary_list.with_row do |row|
+      - row.with_key text: t("helpers.hint.publishers_job_listing_confirm_contact_details_form.contact_details")
+      - row.with_value text: vacancy.contact_email
+      - row.with_action(text: t("buttons.change"), href: organisation_job_build_path(vacancy.id, :contact_details), visually_hidden_text: " contact details")
+
+  = govuk_warning_text(text: t("helpers.hint.publishers_job_listing_confirm_contact_details_form.warning_text_html").html_safe)
+
+  = f.hidden_field :confirm_contact_email, value: "true"
 
   .govuk-button-group
     = f.govuk_submit t("buttons.save_and_continue"), class: "govuk-!-margin-bottom-5", "data-upload-documents-target": "saveListingButton"
     - if vacancy.draft?
       = f.govuk_submit t("buttons.save_and_finish_later"), name: "save_and_finish_later", value: "true", secondary: true, class: "govuk-!-margin-bottom-5", "data-upload-documents-target": "saveListingButton"
-    = govuk_button_link_to t("buttons.go_back_to_change_email"), organisation_job_build_path(vacancy.id, :contact_details), class: "govuk-button govuk-button--secondary"
 
 = govuk_link_to(t("buttons.cancel"), organisation_jobs_with_type_path(:draft), class: "govuk-link--no-visited-state govuk-body-m")

@@ -121,12 +121,8 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
   end
 
   def confirm_contact_details_params(params)
-    if params[:publishers_job_listing_confirm_contact_details_form]
-      params.require(:publishers_job_listing_confirm_contact_details_form)
-            .permit(:confirm_contact_email)
-    else
-      {}
-    end
+    params.require(:publishers_job_listing_confirm_contact_details_form)
+          .permit(:confirm_contact_email)
   end
 
   def about_the_role_params(params)
