@@ -13,9 +13,6 @@ class GovukNotifyMailer < Mail::Notify::Mailer
   # :nocov:
   self.delivery_method = :notify unless Rails.env.test?
 
-  # use custom delivery job by default o that email jobs are not run until transaction commit
-  self.delivery_job = ApplicationMailDeliveryJob
-
   # inspired by https://mattbrictson.com/blog/applying-a-rate-limit-in-sidekiq
   extend Limiter::Mixin
 
