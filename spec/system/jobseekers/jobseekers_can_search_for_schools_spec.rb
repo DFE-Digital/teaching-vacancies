@@ -69,8 +69,9 @@ RSpec.describe "Searching on the schools page" do
     it "allows filtering by schools with vacancies" do
       expect(page).to have_link no_vacancies.name
       check I18n.t("organisations.filters.job_availability.options.true")
+
       # Apply filters
-      within ".filters-component" do
+      within ".govuk-grid-column-one-third-at-desktop" do
         first("button").click
       end
       expect(page).not_to have_link no_vacancies.name
