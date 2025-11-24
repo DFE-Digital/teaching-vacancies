@@ -54,13 +54,6 @@ module NotifyViewsHelper
     notify_link(url, text)
   end
 
-  def invitation_to_apply_vacancy_link(vacancy)
-    url = job_url(vacancy)
-    url_with_utm_params = job_url(vacancy, **utm_params)
-
-    safe_join([tag.p("#{vacancy.job_title}:"), notify_link(url_with_utm_params, url)])
-  end
-
   def job_alert_relevance_feedback_link(relevant, subscription, vacancies)
     params = { job_alert_relevance_feedback: { relevant_to_user: relevant,
                                                job_alert_vacancy_ids: vacancies.pluck(:id),

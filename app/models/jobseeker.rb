@@ -17,6 +17,9 @@ class Jobseeker < ApplicationRecord
   scope :active, -> { where(account_closed_on: nil) }
   scope :email_opt_in, -> { active.where(email_opt_out: false) }
 
+  scope :very_inactive_will_be_deleted, -> { where(last_sign_in_at: ..6.years.ago) }
+  scope :send_inactive_warning_message, -> { where("DATE(last_sign_in_at) = ?", (6.years.ago + 2.weeks).to_date) }
+
   validates :email, presence: true, uniqueness: true
   validates :email, email_address: true, if: -> { email_changed? } # Allows data created prior to validation to still be valid
   validates :govuk_one_login_id, uniqueness: true, allow_nil: true
