@@ -1,7 +1,7 @@
 class DestroyInactiveAccountsJob < ApplicationJob
   queue_as :default
 
-  def perform_now
+  def perform
     return if DisableExpensiveJobs.enabled?
 
     Jobseeker.where(last_sign_in_at: ..6.years.ago).each do |jobseeker|
