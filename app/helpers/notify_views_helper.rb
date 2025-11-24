@@ -44,16 +44,6 @@ module NotifyViewsHelper
     notify_link(url, text)
   end
 
-  def teaching_job_interview_link(text)
-    url = jobseeker_guides_how_to_approach_a_teaching_job_interview_url
-    notify_link(url, text)
-  end
-
-  def teaching_job_interview_lesson_link(text)
-    url = jobseeker_guides_prepare_for_a_teaching_job_interview_lesson_url
-    notify_link(url, text)
-  end
-
   def job_alert_relevance_feedback_link(relevant, subscription, vacancies)
     params = { job_alert_relevance_feedback: { relevant_to_user: relevant,
                                                job_alert_vacancy_ids: vacancies.pluck(:id),
@@ -64,19 +54,9 @@ module NotifyViewsHelper
     notify_link(url, I18n.t("jobseekers.alert_mailer.alert.relevance_feedback.feedback_link.#{relevant}"))
   end
 
-  def jobseeker_job_applications_link
-    url = jobseekers_job_applications_url(**utm_params)
-    notify_link(url, t(".next_steps.link_text"))
-  end
-
   def jobseeker_job_application_link(job_application)
     url = jobseekers_job_application_url(job_application, **utm_params)
     notify_link(url, t(".job_application.link_text"))
-  end
-
-  def jobseeker_profile_link
-    url = jobseekers_profile_url(**utm_params)
-    notify_link(url, t(".create_a_profile.link_text"))
   end
 
   def publisher_job_applications_link(vacancy)

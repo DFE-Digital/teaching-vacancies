@@ -198,26 +198,20 @@ class JobApplication < ApplicationRecord
     save!
   end
 
+  def application_failed?
+    status.in? %w[unsuccessful_interview unsuccessful rejected]
+  end
+
   def can_jobseeker_send_message?
     conversations.any? ? can_jobseeker_reply_to_message? : can_jobseeker_initiate_message?
   end
 
   def can_jobseeker_initiate_message?
-    case status
-    when "interviewing", "unsuccessful_interview", "offered", "declined"
-      true
-    else
-      false
-    end
+    status.in? %w[interviewing unsuccessful_interview offered declined]
   end
 
   def can_jobseeker_reply_to_message?
-    case status
-    when "submitted", "shortlisted", "interviewing", "unsuccessful_interview", "offered", "declined"
-      true
-    else
-      false
-    end
+    status.in? %w[submitted shortlisted interviewing unsuccessful_interview offered declined]
   end
 
   def can_publisher_send_message?

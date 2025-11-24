@@ -66,30 +66,6 @@ en:
         show_job_link: "View %{job_title} job"
         show_job_link_with_organisation: "View %{job_title} at %{organisation_name} job"
         edit_link_text: Change your job alert search on Teaching Vacancies
-    profiles_mailer:
-      disable_inactive_profile:
-        subject: Your Teaching Vacancies profile has been deactivated due to inactivity
-        link: sign in to your Teaching Vacancies account.
-        footer: |
-          If you have followed the above advice and cannot reactivate your profile, contact %{link} for assistance.
-
-          Kind regards,
-          Teaching Vacancies team
-      inactive_profile_warning:
-        subject: Your Teaching Vacancies profile will be deactivated soon
-        link: sign in to your Teaching Vacancies account.
-        footer: |
-          Kind regards,
-          Teaching Vacancies team
-      disable_profile_due_to_new_fields:
-        subject: Your Teaching Vacancies profile has been deactivated due to missing information
-        link: sign in to your Teaching Vacancies account
-        footer: |
-          If you have followed the above advice and cannot reactivate your profile, contact %{link} for assistance.
-
-          Kind regards,
-
-          Teaching Vacancies team
     job_application_mailer:
       shared: &job_application_mailer_shared
         intro: Your application for %{job_title} at %{organisation_name}
@@ -116,35 +92,6 @@ en:
         teaching_job_interview: "teaching job interview"
         teaching_interview_lesson: "teaching interview lesson"
         guidance: "- %{link}"
-      self_disclosure:
-        subject: Complete your self-disclosure form for %{job_title} at %{organisation_name}
-        dear: Dear %{name}
-        self_disclosure_form: Complete and submit your self-disclosure form for this application
-        body: |
-          %{school_name} has requested that you complete your self-disclosure form as part of your application for %{job_title} at %{school_name}.
-
-          %{link}.
-
-          If you are having issues completing the form, email [teaching.vacancies@education.gov.uk](mailto:teaching.vacancies@education.gov.uk).
-
-          Kind regards,
-
-          Teaching Vacancies team
-      job_listing_ended_early:
-        body: |
-          Unfortunately, %{organisation_name} has ended the job listing early and you can no longer apply for the role.
-
-          We appreciate the time you have invested in your draft application and understand that this might be disappointing news.
-
-          You can %{link}.
-
-          Thank you for using Teaching Vacancies.
-        heading: "%{job_title} at %{organisation_name}"
-        home_page:
-          link_text: Find another job
-        job_application:
-          link_text: view your draft application
-        subject: Update on %{job_title} at %{organisation_name}
 
     vacancy_mailer:
       draft_application_only:
@@ -230,17 +177,6 @@ en:
     expired_vacancy_feedback_prompt_mailer:
       feedback_link_text: Tell us how you filled your vacancy.
     collect_references_mailer:
-      inform_applicant_about_references:
-        subject: References are being collected for role %{job_title} at %{organisation_name}
-        sign_in: sign in to your Teaching vacancies account
-        title: Dear %{name}
-        body: |
-          %{organisation_name} will be collecting your references for %{job_title} at %{organisation_name}.
-
-          If you need to review what referees you provided for this application, %{link}.
-
-          Kind regards,
-          Teaching Vacancies team
       self_disclosure_received:
         subject: You have received a self-disclosure form for %{job_title} at %{organisation_name}
         title: Dear %{name}
