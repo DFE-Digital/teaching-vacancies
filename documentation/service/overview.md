@@ -69,11 +69,6 @@ C4Context
 ## Architecture Diagram
 This diagram provides an overview of the Teaching Vacancies service, illustrating its core components, data flows, and integrations. It highlights the relationships between the web application, background workers, databases, external APIs, and third-party services involved in publishing, searching, and managing job vacancies.
 ```mermaid
----
-icons:
-    - name: logos
-      url: https://unpkg.com/@iconify-json/logos@1/icons.json
----
 architecture-beta
   %% Documentation reference: https://mermaid.js.org/syntax/architecture.html
   %% The layout for the Architecture diagram is achieved through junctions and edges.
@@ -83,22 +78,22 @@ architecture-beta
   %% -------------------------------------------------------------------------
 
   %% The different groups and subgroups
-  group azure(logos:microsoft-azure)[Azure Platform Identity]
-  group azurerg(logos:microsoft-azure)[Azure Resource Group] in azure
-  group azureredis(logos:redis)[Azure Cache for Redis] in azurerg
-  group azuredb(logos:postgresql)[Azure DB for PostgreSQL flexible server] in azurerg
+  group azure(cloud)[Azure Platform Identity]
+  group azurerg(cloud)[Azure Resource Group] in azure
+  group azureredis(database)[Azure Cache for Redis] in azurerg
+  group azuredb(database)[Azure DB for PostgreSQL flexible server] in azurerg
 
   %% Services are the 'leafs' living in eah group
-  service db(logos:postgresql)[Backend DB] in azuredb
-  service rediscache(logos:redis)[Cache] in azureredis
-  service redisqueue(logos:redis)[Background Jobs Queue] in azureredis
+  service db(database)[Backend DB] in azuredb
+  service rediscache(database)[Cache] in azureredis
+  service redisqueue(database)[Background Jobs Queue] in azureredis
 
-  group azureks(logos:kubernetes)[Azure Kubernetes] in azure
-  group web(logos:docker-icon)[Web] in azureks
-  group worker(logos:docker-icon)[Worker] in azureks
+  group azureks(cloud)[Azure Kubernetes] in azure
+  group web(server)[Web] in azureks
+  group worker(server)[Worker] in azureks
 
-  service rails(logos:rails)[Ruby on Rails pods] in web
-  service workerpod(logos:sidekiq)[Sidekiq pods] in worker
+  service rails(server)[Ruby on Rails pods] in web
+  service workerpod(server)[Sidekiq pods] in worker
 
   %% Azure services layout
   junction junctionAzure in azure
@@ -118,10 +113,10 @@ architecture-beta
   %% -------------------------------------------------------------------------
   %% AWS
   %% -------------------------------------------------------------------------
-  group aws(logos:aws)[AWS]
-  service route53(logos:aws-route53)[Route 53] in aws
-  service parameterstore(logos:aws-secrets-manager)[Parameter Store] in aws
-  service s3(logos:aws-s3)[s3] in aws
+  group aws(cloud)[AWS]
+  service route53(cloud)[Route 53] in aws
+  service parameterstore(cloud)[Parameter Store] in aws
+  service s3(disk)[s3] in aws
 
   %% AWS services layout
   junction junctionAws in aws
@@ -132,12 +127,12 @@ architecture-beta
   %% -------------------------------------------------------------------------
   %% Google
   %% -------------------------------------------------------------------------
-  group googlecloud(logos:google-cloud)[Google Cloud]
-  service googledrive(logos:google-drive)[Drive] in googlecloud
-  service bigquery(logos:google-analytics)[BigQuery] in googlecloud
-  service geocoding(logos:google-maps)[Geocoding] in googlecloud
-  service places(logos:google-maps)[Places] in googlecloud
-  service recaptcha(logos:recaptcha)[Recaptcha] in googlecloud
+  group googlecloud(cloud)[Google Cloud]
+  service googledrive(disk)[Drive] in googlecloud
+  service bigquery(database)[BigQuery] in googlecloud
+  service geocoding(database)[Geocoding] in googlecloud
+  service places(database)[Places] in googlecloud
+  service recaptcha(cloud)[Recaptcha] in googlecloud
 
   %% Google services Layout
   junction junctionGoogleBottom in googlecloud
@@ -153,12 +148,12 @@ architecture-beta
   %% -------------------------------------------------------------------------
   %% Monitoring services
   %% -------------------------------------------------------------------------
-  group monitoring(cloud)[Monitoring Services]
-  service sentry(logos:sentry)[Sentry error tracking] in monitoring
-  service logit(logos:kibana)[Logit Kibana] in monitoring
-  service zendesk(logos:zendesk)[Zendesk support] in monitoring
-  service grafana(logos:grafana)[Grafana service namespace and pods dashboards] in monitoring
-  service skylight(logos:skylight)[Skylight performance monitoring] in monitoring
+  group monitoring(internet)[Monitoring Services]
+  service sentry(internet)[Sentry error tracking] in monitoring
+  service logit(internet)[Logit Kibana] in monitoring
+  service zendesk(internet)[Zendesk support] in monitoring
+  service grafana(internet)[Grafana service namespace and pods dashboards] in monitoring
+  service skylight(internet)[Skylight performance monitoring] in monitoring
 
   %% Monitoring services Layout
   junction junctionMonitoringTop in monitoring
@@ -178,11 +173,11 @@ architecture-beta
   group govuk(cloud)[Gov UK]
   group dfe(cloud)[DfE] in govuk
   service dfesignin(server)[DfE Sign in] in dfe
-  service gias(server)[DfE Gias] in dfe
+  service gias(database)[DfE Gias] in dfe
   service govukonelogin(server)[GovUK One Login] in govuk
   service govuknotify(server)[GovUK Notify] in govuk
   service dwpfindajob(server)[DWP Find a Job] in govuk
-  service onspolygonsapi(server)[ONS Polygons Apis] in govuk
+  service onspolygonsapi(database)[ONS Polygons Apis] in govuk
 
   %% GovUK services layout
   junction junctionGovukTop in govuk
