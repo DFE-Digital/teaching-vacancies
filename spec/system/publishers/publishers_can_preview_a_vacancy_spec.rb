@@ -11,8 +11,9 @@ RSpec.describe "Publishers can preview a vacancy" do
 
   context "when reviewing a draft vacancy" do
     before do
-      visit organisation_job_path(vacancy.id)
-      click_on I18n.t("publishers.vacancies.show.heading_component.action.preview")
+      visit organisation_job_preview_path(vacancy.id)
+      # wait for page load
+      find("span.govuk-caption-l")
     end
 
     it "passes a11y", :a11y do
