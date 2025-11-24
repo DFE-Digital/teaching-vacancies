@@ -184,7 +184,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
                 .to eq({
                   current_referee.email => ["Provide a reference for"],
                   old_referee.email => ["Provide a reference for"],
-                  job_application.email_address => ["Complete your self-disclosure form", "References are being collected"],
+                  job_application.email_address => ["References are being collected", "Complete your self-disclosure form"],
                 })
             end
           end
