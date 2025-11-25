@@ -99,6 +99,30 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
       end
     end
 
+    context "when pubisher has no organisations" do
+      let(:organisations) { [] }
+
+      it "errors nicely" do
+        freeze_time do
+          visit root_path
+          within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
+          click_on I18n.t("buttons.sign_in_publisher")
+
+          # Expect to send an email
+          expect(message_delivery).to receive(:deliver_later)
+
+          fill_in "publisher[email]", with: publisher.email
+          click_on I18n.t("buttons.submit")
+          expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
+
+          visit publishers_login_key_path(login_key)
+
+          expect(page).to have_content("Sign in unsuccessful")
+        end
+      end
+    end
+
+
     context "when a publisher has only one organisation" do
       context "and organisation is a School" do
         let(:organisations) { [school] }
