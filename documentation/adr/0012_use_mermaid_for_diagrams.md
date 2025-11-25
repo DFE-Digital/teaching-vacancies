@@ -20,7 +20,7 @@ While visual tools like LucidChart allow us to individually quickly create a dia
 
 We have successfully integrated some Mermaid diagrams as part of our technical documentation.
 
-Should we stablish it as "the way to go" forward?
+Should we establish it as "the way to go" forward?
 
 ## Decision Drivers
 
