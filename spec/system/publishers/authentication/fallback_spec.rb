@@ -122,7 +122,6 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
       end
     end
 
-
     context "when a publisher has only one organisation" do
       context "and organisation is a School" do
         let(:organisations) { [school] }

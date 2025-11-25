@@ -14,7 +14,7 @@ RSpec.describe "Fallback Support User sign in" do
     fill_in "support_user[email]", with: support_user.email
 
     expect { click_on "Submit" }
-      .to change { delivered_emails.count }
+      .to change(delivered_emails, :count)
       .by(1)
 
     # make email link work even when :js is enabled for debugging
@@ -23,6 +23,6 @@ RSpec.describe "Fallback Support User sign in" do
     else
       visit first_link_from_last_mail
     end
-    expect(current_path).to eq(support_user_root_path)
+    expect(page).to have_current_path(support_user_root_path, ignore_query: true)
   end
 end
