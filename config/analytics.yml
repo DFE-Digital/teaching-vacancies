@@ -294,7 +294,7 @@ shared:
     - id
     - oid
     - accepted_terms_at
-    - acknowledged_candidate_profiles_interstitial
+    - acknowledged_ats_and_religious_form_interstitial
     - email
     - email_opt_out
     - last_activity_at
