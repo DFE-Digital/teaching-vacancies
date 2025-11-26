@@ -1,0 +1,29 @@
+- scope = "ats_interstitials.#{@religious_character}"
+- content_for :page_title_prefix, t("#{scope}.page_title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl = t("#{scope}.page_title")
+
+    p.govuk-body = t("#{scope}.intro")
+
+    p.govuk-body
+      | Using our ATS, you can:
+
+    ul.govuk-list.govuk-list--bullet
+      - t("#{scope}.ats_points").each do |item|
+        li = item
+
+    - if t("#{scope}.faith_paragraph", default: "").present?
+      p.govuk-body = t("#{scope}.faith_paragraph")
+
+    - if I18n.exists?("#{scope}.faith_intro")
+      p.govuk-body = t("#{scope}.faith_intro")
+
+    - if I18n.exists?("#{scope}.faith_points")
+      ul.govuk-list.govuk-list--bullet
+        - t("#{scope}.faith_points").each do |item|
+          li = item
+
+    p.govuk-body
+      = govuk_link_to t("#{scope}.guidance_link_text"), how_to_accept_job_applications_path
