@@ -9,7 +9,9 @@ RSpec.describe "Creating a vacancy" do
   let(:vacancy) do
     build(:vacancy, :no_tv_applications, :secondary, :fixed_term, :ect_suitable, job_roles: ["teacher"],
                                                                                  working_patterns: %w[full_time part_time], hourly_rate: nil,
-                                                                                 organisations: [school1, school2])
+                                                                                 organisations: [school1, school2],
+                                                                                 contact_email: publisher.email,
+                                                                                 publisher: publisher)
   end
   let(:created_vacancy) { DraftVacancy.last }
 
@@ -152,11 +154,23 @@ RSpec.describe "Creating a vacancy" do
       I18n.t("contact_details_errors.contact_number_provided.inclusion"),
     )
     expect(publisher_contact_details_page).to be_displayed
-    publisher_contact_details_page.fill_in_and_submit_form(vacancy.contact_email, vacancy.contact_number)
+    non_publisher_email = Faker::Internet.email(domain: "contoso.com")
+    publisher_contact_details_page.fill_in_and_submit_form(non_publisher_email, vacancy.contact_number)
+
+    expect(publisher_confirm_contact_details_page).to be_displayed
+
+    publisher_confirm_contact_details_page.click_change_email_link
+
+    expect(publisher_contact_details_page).to be_displayed
+
+    publisher_contact_details_page.fill_in_and_submit_form(publisher.email, vacancy.contact_number, other: false)
 
     expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
+    # invitation email should not be sent as publisher is already registered on our service
+    expect {
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
+    }.not_to(change { ActionMailer::Base.deliveries.count })
 
-    click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
     expect(current_path).to eq(organisation_job_summary_path(created_vacancy.id))
 
     expect(PublishedVacancy.find(created_vacancy.id).attributes.symbolize_keys.except(*ignored_fields))

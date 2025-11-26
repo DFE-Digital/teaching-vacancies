@@ -21,7 +21,7 @@ RSpec.describe Publishers::JobApplicationMailer do
     let!(:job_application1) { create(:job_application, :status_submitted, vacancy: vacancy, submitted_at: 1.day.ago) }
     let!(:job_application2) { create(:job_application, :status_submitted, vacancy: vacancy, submitted_at: 1.day.ago) }
     let!(:job_application3) { create(:job_application, :status_submitted, vacancy: vacancy, submitted_at: 2.day.ago) }
-    let(:mail) { described_class.applications_received(publisher: publisher) }
+    let(:mail) { described_class.applications_received(contact_email: contact_email) }
     let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
 
     it "sends a `publisher_applications_received` email" do

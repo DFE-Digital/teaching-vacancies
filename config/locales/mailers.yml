@@ -234,6 +234,22 @@ en:
           sign_in_prompt: "You'll need to %{sign_in_link} to view the message in full and reply to it."
 
   publishers:
+    account_invitation_mailer:
+      invite_user:
+        subject: Sign up for your Teaching Vacancies account
+        intro: A colleague has given us your email address to help set you up with a Teaching Vacancies account, so you can manage job listings for your school.
+        instructions: "To get a Teaching Vacancies account, you need to:"
+        step_1: "Sign in to your %{dfe_signin_link}. You will need to %{create_account_link} if you do not already have one."
+        step_2: "Select 'Request access to a service'."
+        step_3: "Choose Teaching Vacancies."
+        completion: "Once you have completed the above steps, you can %{sign_in_link}."
+        error_section_heading: "If you do not need to set up a Teaching Vacancies account"
+        error_message: "If you think this email has been sent to you in error, contact %{publisher_email}."
+        signature: "Kind regards,"
+        team_name: "Teaching Vacancies team"
+        dfe_signin_text: "DfE Sign-in account"
+        create_account_text: "create a DfE Sign-in account"
+        sign_in_text: "sign in to Teaching Vacancies"
     job_application_data_expiry_mailer:
       job_application_data_expiry:
         expiry: From %{expiration_date}, you will no longer be able to access applications for %{job_title} listed in %{published_month}
