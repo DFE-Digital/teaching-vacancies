@@ -19,9 +19,9 @@ In order to manage the DfE Sign-In service configuration, you must be granted ac
 
 ### Service configuration URLs
 
-- [Test](https://test-manage.signin.education.gov.uk/services/E348F7D4-93D9-4B43-9B78-C84D80C2F34C/service-configuration)
-- [Pre-production](https://pp-manage.signin.education.gov.uk/services/EF3E84E7-950A-4CB2-B1B0-66417F3CD5CA/service-configuration)
-- [Production](https://manage.signin.education.gov.uk/services/E348F7D4-93D9-4B43-9B78-C84D80C2F34C/service-configuration)
+- [Test](https://test-manage.signin.education.gov.uk/services/E348F7D4-93D9-4B43-9B78-C84D80C2F34C/service-configuration) (Used by our QA env)
+- [Pre-production](https://pp-manage.signin.education.gov.uk/services/EF3E84E7-950A-4CB2-B1B0-66417F3CD5CA/service-configuration) (Used by our Staging env)
+- [Production](https://manage.signin.education.gov.uk/services/E348F7D4-93D9-4B43-9B78-C84D80C2F34C/service-configuration) (Used by our Production env)
 
 ### Service configuration
 
