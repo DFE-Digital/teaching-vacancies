@@ -1,1 +1,1 @@
-Lockbox.encrypts_action_text_body(migrating: true)
+Lockbox.encrypts_action_text_body
