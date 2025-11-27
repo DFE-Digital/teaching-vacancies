@@ -15,4 +15,8 @@ class PublisherAtsApiClient < ApplicationRecord
   def rotate_api_key!
     update!(api_key: SecureRandom.hex(20), last_rotated_at: Time.current)
   end
+
+  def unique_organisations_count
+    vacancies.joins(:organisations).distinct.count("organisations.id")
+  end
 end

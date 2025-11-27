@@ -23,7 +23,6 @@
         = f.govuk_radio_button :application_form_type, :catholic,
         label: -> { t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.catholic_html", tag: govuk_tag(text: t(".kcsie_compliant"), colour: "green")) },
         hint: -> do
-          = t("helpers.hint.publishers_job_listing_applying_for_the_job_form.application_form_type_options.catholic")
           p = open_in_new_tab_link_to(t(".preview_catholic_application_form"), organisation_job_form_preview_path(vacancy.id, :catholic))
 
         = f.govuk_radio_button :application_form_type, :other_religion,

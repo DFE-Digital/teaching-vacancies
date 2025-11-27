@@ -72,6 +72,7 @@ RSpec.describe ImportFromVacancySourceJob do
               enable_job_applications: true,
               organisations: [school],
               job_title: "",
+              external_reference: "invalid_vac_ref",
               about_school: "test",
               benefits_details: "ut sit dolores.",
               contact_email: contact_email,
@@ -99,7 +100,7 @@ RSpec.describe ImportFromVacancySourceJob do
         import_from_vacancy_source_job
 
         expect(FailedImportedVacancy.first.source).to eq("fake_source")
-        expect(FailedImportedVacancy.first.external_reference).to eq("J3D1")
+        expect(FailedImportedVacancy.first.external_reference).to eq("invalid_vac_ref")
         expect(FailedImportedVacancy.first.import_errors).to include("job_title:[can't be blank]")
         expect(FailedImportedVacancy.first.import_errors).to include("phases:[can't be blank]")
         expect(FailedImportedVacancy.first.vacancy).to eq(
@@ -124,7 +125,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "expired_vacancy_feedback_email_sent_at" => nil,
           "expires_at" => "2023-06-06T09:00:00.000+01:00",
           "external_advert_url" => "https://example.com/jobs/123",
-          "external_reference" => "J3D1",
+          "external_reference" => "invalid_vac_ref",
           "external_source" => "may_the_feed_be_with_you",
           "fixed_term_contract_duration" => "",
           "flexi_working" => "Debitis id voluptate cumque iusto quod ut libero facere repellendus est perspiciatis rem labore voluptatibus",

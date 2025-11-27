@@ -8,7 +8,9 @@ h1.govuk-heading-l = t(".title")
   - t.column "API client" do |api_client|
     - capture do
       = govuk_link_to(api_client.name, support_users_publisher_ats_api_client_path(api_client))
-  - t.string "API key", :api_key
+  - t.datetime("First Vacancy") { |c| c.vacancies.minimum(:created_at) }
+  - t.column("Count") { |c| c.vacancies.count }
+  - t.column("Unique Schools", &:unique_organisations_count)
   - t.datetime "Created", :created_at
   - t.datetime "Last rotated", :last_rotated_at
 = govuk_pagination(pagy: @pagy)

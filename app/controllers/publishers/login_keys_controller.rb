@@ -18,7 +18,7 @@ class Publishers::LoginKeysController < ApplicationController
     @publisher = @login_key.owner
 
     if @publisher.organisations.none?
-      render(partial: "error", locals: { failure: "no_orgs" })
+      render(:error, locals: { failure: "no_orgs" })
     else
       @form = Publishers::LoginKeys::ChooseOrganisationForm.new
       render(:show)
