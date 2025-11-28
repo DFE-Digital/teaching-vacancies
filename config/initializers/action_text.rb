@@ -2,5 +2,4 @@
 # and attrs - specifically no divs and no class attributes.
 Rails.application.config.after_initialize do
   ActionText::ContentHelper.sanitizer = Rails::HTML4::Sanitizer.safe_list_sanitizer.new
-  ActionText::RichText.ignored_columns += %w[body]
 end
