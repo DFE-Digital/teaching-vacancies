@@ -35,7 +35,6 @@
     - updated_at
     - body # attribute added by Lockbox.encrypts_action_text_body, it is not a db column
     - body_ciphertext
-    - migrated_body
   :message_templates:
     - id
     - publisher_id
