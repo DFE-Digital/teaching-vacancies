@@ -33,7 +33,7 @@
     - record_id
     - created_at
     - updated_at
-    - body # Virtual attribute created by Lockbox.encrypts_action_text_body, it is not a db column
+    - body # attribute added by Lockbox.encrypts_action_text_body, it is not a db column
     - body_ciphertext
     - migrated_body
   :message_templates:
