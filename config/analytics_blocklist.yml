@@ -34,6 +34,8 @@
     - record_id
     - created_at
     - updated_at
+    - body_ciphertext
+    - migrated_body
   :message_templates:
     - id
     - publisher_id
@@ -246,13 +248,3 @@
   - radius_in_metres
   :conversations:
     - searchable_content
-  :action_text_rich_texts:
-    - id
-    - name
-    - body
-    - record_type
-    - record_id
-    - created_at
-    - updated_at
-    - body_ciphertext
-    - migrated_body
