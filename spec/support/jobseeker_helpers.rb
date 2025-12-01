@@ -98,7 +98,16 @@ module JobseekerHelpers
   end
 
   def fill_in_personal_statement
-    find("trix-editor[aria-label='Personal statement']").click.set("A brilliant, glowing statement about your person")
+    statement_text = "Blah blah I am so great"
+
+    # usually JS disabled so use text area
+    if page.has_css?("textarea[name*='content']", wait: 1)
+      fill_in "Personal statement", with: statement_text
+    # fallback to using trix editor when JS enabled (like for a11y tests)
+    else
+      fill_in_trix_editor("jobseekers_job_application_personal_statement_form_content", with: statement_text)
+    end
+
     choose I18n.t("helpers.label.jobseekers_job_application_personal_statement_form.personal_statement_section_completed_options.true")
   end
 
