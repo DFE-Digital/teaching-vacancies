@@ -27,7 +27,47 @@ updates:
       - dependency-name: "view-components"
         update-types: ["version-update:semver-major"]
 
+      # We don't want Dependabot to update Rails major or minor versions automatically.
+      # We will update Rails manually, besides patch updates which are handled by the 'rails' group below.
+      - dependency-name: "actionmailer"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "actionpack"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "actiontext"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "activejob"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "activemodel"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "activerecord"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "activestorage"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "activesupport"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "rails"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "railties"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+
     groups:
+      # Rails patch updates are grouped together into a single PR.
+      rails:
+        patterns:
+          - "actionmailer"
+          - "actionpack"
+          - "actiontext"
+          - "activejob"
+          - "activemodel"
+          - "activerecord"
+          - "activestorage"
+          - "activesupport"
+          - "rails"
+          - "railties"
+        update-types:
+          - "patch"
+
+      # By default, all other gem updates (excluding govuk* gems) are grouped into a single PR.
       gem-dependencies:
         update-types:
           - "minor"

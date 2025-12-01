@@ -1049,6 +1049,7 @@ DEPENDENCIES
   rack-cors
   rack-mini-profiler
   rack_session_access
+  rails (< 8.1)
   rails-controller-testing
   rails_semantic_logger
   railties (< 8.1)
