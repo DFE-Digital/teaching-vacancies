@@ -73,6 +73,7 @@ gem "prawn-table"
 gem "puma"
 gem "rack-attack"
 gem "rack-cors"
+gem "rails", RAILS_VERSION # Explicitly declare rails so we can do a "bundle update rails" when needed.
 gem "rails_semantic_logger"
 gem "recaptcha"
 gem "redis"
