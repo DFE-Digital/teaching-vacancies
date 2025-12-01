@@ -72,9 +72,9 @@ RSpec.describe "Publishers can manage a reference request", :perform_enqueued do
         click_on I18n.t("buttons.save_and_continue")
         expect(page).to have_content(new_email)
         expect(page).to have_content("Reference email changed")
-        expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map(&:subject) })
+        expect(ActionMailer::Base.deliveries.group_by { |mail| mail.to.first }.transform_values { |m| m.map { |x| x.personalisation.slice(:candidate_name, :job_title, :organisation_name) } })
           .to eq({
-            new_email => ["Provide a reference for #{job_application.name} for #{vacancy.job_title} at #{school.name}"],
+            new_email => [{ candidate_name: job_application.name, job_title: vacancy.job_title, organisation_name: school.name }],
           })
       end
 

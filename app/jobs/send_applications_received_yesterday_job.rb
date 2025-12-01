@@ -5,7 +5,7 @@ class SendApplicationsReceivedYesterdayJob < ApplicationJob
     publishers_with_vacancies_with_applications_submitted_yesterday.each do |publisher|
       next unless publisher.email?
 
-      Publishers::JobApplicationMailer.applications_received(publisher: publisher).deliver_later
+      Publishers::JobApplicationMailer.applications_received(publisher, publisher.vacancies_with_job_applications_submitted_yesterday).deliver_later
       Rails.logger.info("Sidekiq: Sending job applications received yesterday for publisher id: #{publisher.id}")
     end
   end
@@ -15,6 +15,7 @@ class SendApplicationsReceivedYesterdayJob < ApplicationJob
   def publishers_with_vacancies_with_applications_submitted_yesterday
     Publisher.distinct
              .joins(vacancies: :job_applications)
-             .where("DATE(job_applications.submitted_at) = ? AND job_applications.status = ?", Date.yesterday, 1)
+             .merge(JobApplication.submitted)
+             .merge(JobApplication.submitted_yesterday)
   end
 end

@@ -26,7 +26,7 @@ RSpec.describe "Publishers can provide feedback on expired vacancies via the pro
 
     before do
       perform_enqueued_jobs do
-        SendExpiredVacancyFeedbackPromptJob.new.perform
+        SendExpiredVacancyFeedbackPromptJob.perform_later
       end
     end
 
@@ -35,7 +35,7 @@ RSpec.describe "Publishers can provide feedback on expired vacancies via the pro
     end
 
     scenario "they can provide feedback" do
-      visit first_link_from_last_mail
+      visit ActionMailer::Base.deliveries.last.personalisation.fetch(:expired_vacancy_feedback_link)
 
       choose I18n.t("helpers.label.publishers_job_listing_expired_feedback_form.hired_status_options.hired_tvs")
       click_on I18n.t("buttons.submit_feedback")
@@ -49,7 +49,7 @@ RSpec.describe "Publishers can provide feedback on expired vacancies via the pro
         click_button I18n.t("buttons.submit_feedback")
         first_vacancy_in_email.reload
       }.to change { first_vacancy_in_email.hired_status }.from(nil).to("hired_tvs")
-       .and change { first_vacancy_in_email.listed_elsewhere }.from(nil).to("listed_free")
+                                                         .and change { first_vacancy_in_email.listed_elsewhere }.from(nil).to("listed_free")
 
       expect(current_path).to eq(submitted_organisation_job_expired_feedback_path(first_vacancy_in_email.signed_id))
     end

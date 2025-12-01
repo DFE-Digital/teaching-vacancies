@@ -1,25 +1,35 @@
-class Publishers::JobApplicationMailer < Publishers::BaseMailer
-  helper VacanciesHelper
+module Publishers
+  class JobApplicationMailer < BaseMailer
+    include VacanciesHelper
 
-  def applications_received(publisher:)
-    @publisher = publisher
-    @vacancies = publisher.vacancies_with_job_applications_submitted_yesterday
+    def applications_received(publisher, publisher_vacancies)
+      @publisher_vacancies = publisher_vacancies
 
-    @job_applications_count = @vacancies.sum { |vacancy| vacancy.job_applications.submitted_yesterday.count }
-    @subject = I18n.t("publishers.job_application_mailer.applications_received.subject", count: @job_applications_count)
+      job_applications_count = @publisher_vacancies.sum { |vacancy| vacancy.job_applications.submitted_yesterday.count }
 
-    send_email(to: publisher.email, subject: @subject)
-  end
+      template = ERB.new(Rails.root.join("app/views/publishers/job_application_mailer/applications_received.text.erb").read)
 
-  private
+      @vacancies = @publisher_vacancies.index_with { |v| { location: vacancy_job_location(v), link: organisation_job_job_applications_url(v.id) } }
 
-  def dfe_analytics_custom_data
-    { vacancies_job_applications: vacancies_job_applications }
-  end
+      template_mail("ea1ec36c-a1d4-4d75-b6ba-b4cbbdfb5c83",
+                    to: publisher.email,
+                    personalisation: {
+                      job_applications_count: job_applications_count,
+                      vacancies_list: template.result(binding),
+                      home_page_link: root_url,
+                    })
+    end
 
-  def vacancies_job_applications
-    @vacancies.each_with_object({}) do |vacancy, hash|
-      hash[vacancy.id] = vacancy.job_applications.submitted_yesterday.pluck(:id)
+    private
+
+    def dfe_analytics_custom_data
+      { vacancies_job_applications: vacancies_job_applications }
+    end
+
+    def vacancies_job_applications
+      @publisher_vacancies.each_with_object({}) do |vacancy, hash|
+        hash[vacancy.id] = vacancy.job_applications.submitted_yesterday.pluck(:id)
+      end
     end
   end
 end

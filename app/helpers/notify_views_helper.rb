@@ -79,11 +79,6 @@ module NotifyViewsHelper
     notify_link(url, t(".create_a_profile.link_text"))
   end
 
-  def privacy_policy_link
-    url = "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers"
-    notify_link(url, t(".privacy_policy_link"))
-  end
-
   def publisher_job_applications_link(vacancy)
     url = organisation_job_job_applications_url(vacancy.id, **utm_params)
     notify_link(url, t(".view_applications", count: vacancy.job_applications.submitted_yesterday.count, job_title: vacancy.job_title))
@@ -146,11 +141,6 @@ module NotifyViewsHelper
   def edit_job_alert_link(subscription)
     url = edit_subscription_url(subscription.token)
     notify_link(url, t(".edit_link_text"))
-  end
-
-  def view_applications_for_link(vacancy)
-    url = organisation_job_job_applications_url(vacancy.id, **utm_params)
-    notify_link(url, t(".view_applications_for", job_title: vacancy.job_title))
   end
 
   private

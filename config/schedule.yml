@@ -116,7 +116,7 @@ queue_messages_received:
   queue: default
 
 send_inactive_account_email:
-  cron: '55 13 * * *' # "At 1:55pm."
+  cron: '0 8 * * *' # "At 8:00."
   class: 'SendInactiveAccountEmailJob'
   queue: low
 
