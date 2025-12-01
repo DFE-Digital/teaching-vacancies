@@ -1,7 +1,0 @@
-Dear <%= @profile.personal_details&.first_name || "Jobseeker" %>,
-
-We have deactivated your profile on Teaching Vacancies due to missing information. When your profile is active, school and trust hiring staff can view your details and contact you about jobs by email.
-
-To reactivate your profile, <%= sign_in_link %>, go to ‘Your profile’, complete the information required and select ‘Turn on profile’.
-
-<%= t(".footer", link: notify_mail_to("teaching.vacancies@education.gov.uk")) %>
