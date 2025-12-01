@@ -30,7 +30,7 @@ RSpec.describe "Jobseekers can prefill applications" do
                                                     professional_body_memberships: [professional_body_membership])
       end
 
-      it "prefills the new application with the previous application details, not the profile details and marks steps as imported`", js: true do
+      it "prefills the new application with the previous application details, not the profile details and marks steps as imported`", :js do
         visit job_path(vacancy.id)
 
         within ".banner-buttons" do

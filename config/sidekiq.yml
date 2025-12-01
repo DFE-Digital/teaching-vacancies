@@ -2,7 +2,6 @@
 
 :limits:
   verylow: 2
-  migration_low_priority: 2
 
 # notify queue needs to be above default so that emails don't get blocked behind other operations
 # and create an operational backlog
@@ -12,4 +11,3 @@
   - [default, 4]
   - [low, 2]
   - [verylow, 1]
-  - [migration_low_priority, 1]
