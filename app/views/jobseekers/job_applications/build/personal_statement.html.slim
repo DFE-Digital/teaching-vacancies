@@ -33,7 +33,10 @@ p.govuk-body
   div class="personal-statement-form"
     = f.rich_text_area :content, aria: { label: "Personal statement", required: true , size: "s"}, class: "personal-statement-editor govuk-!-margin-bottom-6"
 
-  = f.govuk_collection_radio_buttons :personal_statement_section_completed, %w[true false], :to_s
+      noscript
+        = f.govuk_text_area :content, label: { text: "Personal statement" }, rows: 10, class: "govuk-!-margin-bottom-6"
+
+    = f.govuk_collection_radio_buttons :personal_statement_section_completed, %w[true false], :to_s
 
   = f.govuk_submit job_application_build_submit_button_text do
     = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
