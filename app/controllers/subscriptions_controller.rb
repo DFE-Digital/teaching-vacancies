@@ -199,7 +199,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def notify_and_redirect(subscription)
-    Jobseekers::SubscriptionMailer.update(subscription.id).deliver_later
+    Jobseekers::SubscriptionMailer.update(subscription).deliver_later
     trigger_subscription_event(:job_alert_subscription_updated, subscription)
 
     if jobseeker_signed_in?
