@@ -157,7 +157,7 @@ RSpec.describe "Feedback supportal section" do
             csat = find("td:nth-child(8)").text
             comment = find("td:nth-child(9)").text
 
-            expect(timestamp).to eq(other_feedback.created_at.to_fs)
+            expect(timestamp).to eq(other_feedback.created_at.to_fs.strip)
             expect(source).to eq("Identified")
             expect(who).to eq("Jobseeker")
             expect(occupation).to eq(other_feedback.occupation)
