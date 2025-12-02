@@ -3,7 +3,7 @@ order: 200
 title: Using the Teaching Vacancies application form
 meta_description: Schools can receive and manage job applications through Teaching Vacancies. Find out about our application form.
 date_posted: 17/03/2022
-date_updated: 10/11/2025
+date_updated: 02/12/2025
 category_tags: how-to
 card-image: "/content-assets/get-help-hiring/how-to-create-job-listings-and-accept-applications/how-to-accept-job-applications.jpg"
 ---
@@ -38,7 +38,7 @@ As well as basic details such as their name, address and contact information, we
 
 Applicants are asked to confirm whether they have qualified teacher status (QTS) and whether they have completed their statutory induction year.
 
-If they are qualified, we ask for the year QTS was awarded. If they’re not, we ask for further details on their current status.
+If they are qualified, we ask for the year they gained QTS. If they’re not, we ask for further details on their current status.
 
 ### Qualifications 
 
