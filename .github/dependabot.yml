@@ -24,7 +24,7 @@ updates:
 
       # TODO: Remove this ignore config when we can upgrade to view components 4.x
       # which is brought in by govuk-components 5.11.2
-      - dependency-name: "view-components"
+      - dependency-name: "view_component"
         update-types: ["version-update:semver-major"]
 
       # We don't want Dependabot to update Rails major or minor versions automatically.
