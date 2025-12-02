@@ -1,4 +1,4 @@
-class Jobseekers::JobApplications::ProfessionalBodyMembershipsController < Jobseekers::ProfilesController
+class Jobseekers::JobApplications::ProfessionalBodyMembershipsController < Jobseekers::BaseController
   helper_method :back_path, :job_application, :professional_body_membership
 
   def new

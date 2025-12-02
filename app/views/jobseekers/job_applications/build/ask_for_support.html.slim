@@ -2,28 +2,26 @@
 
 = render "banner", vacancy: vacancy, back_path: back_path
 
-.govuk-grid-row
-  div
-    h2.govuk-heading-l = t(".heading")
+h2.govuk-heading-l = t(".heading")
 
-    p.govuk-body = t(".opening")
-    p.govuk-body = t(".adjustments")
-    ul.govuk-list.govuk-list--bullet
-      - t(".adjustment_examples").each do |example|
-        li = example
-    p.govuk-body = t(".closing")
+p.govuk-body = t(".opening")
+p.govuk-body = t(".adjustments")
+ul.govuk-list.govuk-list--bullet
+  - t(".adjustment_examples").each do |example|
+    li = example
+p.govuk-body = t(".closing")
 
-    = form_for @form, url: jobseekers_job_application_build_path(job_application, :ask_for_support), method: :patch do |f|
-      = f.govuk_error_summary
+= form_for @form, url: jobseekers_job_application_build_path(job_application, :ask_for_support), method: :patch do |f|
+  = f.govuk_error_summary
 
-      = f.govuk_radio_buttons_fieldset :is_support_needed do
-        = f.govuk_radio_button :is_support_needed, "true", link_errors: true do
-          = f.govuk_text_area :support_needed_details, rows: 10
-        = f.govuk_radio_button :is_support_needed, "false"
+  = f.govuk_radio_buttons_fieldset :is_support_needed do
+    = f.govuk_radio_button :is_support_needed, "true", link_errors: true do
+      = f.govuk_text_area :support_needed_details, rows: 10
+    = f.govuk_radio_button :is_support_needed, "false"
 
-      = f.govuk_collection_radio_buttons :ask_for_support_section_completed, %w[true false], :to_s
+  = f.govuk_collection_radio_buttons :ask_for_support_section_completed, %w[true false], :to_s
 
-      = f.govuk_submit job_application_build_submit_button_text do
-        = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
-        span.govuk-caption-m
-          = t("jobseekers.job_applications.cancel_caption")
+  = f.govuk_submit job_application_build_submit_button_text do
+    = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
+    span.govuk-caption-m
+      = t("jobseekers.job_applications.cancel_caption")

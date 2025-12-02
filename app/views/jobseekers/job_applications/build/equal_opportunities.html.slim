@@ -2,76 +2,74 @@
 
 = render "banner", vacancy: vacancy, back_path: back_path
 
-.govuk-grid-row
-  div
-    h2.govuk-heading-l = t(".heading")
+h2.govuk-heading-l = t(".heading")
 
-    p.govuk-body = t(".explanation")
-    p.govuk-body = t(".anonymity")
-    p.govuk-body = t(".optional")
+p.govuk-body = t(".explanation")
+p.govuk-body = t(".anonymity")
+p.govuk-body = t(".optional")
 
-    = form_for @form, url: jobseekers_job_application_build_path(job_application, :equal_opportunities), method: :patch do |f|
-      = f.govuk_error_summary
+= form_for @form, url: jobseekers_job_application_build_path(job_application, :equal_opportunities), method: :patch do |f|
+  = f.govuk_error_summary
 
-      = f.govuk_radio_buttons_fieldset :disability do
-        = f.govuk_radio_button :disability, :yes, link_errors: true
-        = f.govuk_radio_button :disability, :no
-        = f.govuk_radio_divider
-        = f.govuk_radio_button :disability, :prefer_not_to_say
+  = f.govuk_radio_buttons_fieldset :disability do
+    = f.govuk_radio_button :disability, :yes, link_errors: true
+    = f.govuk_radio_button :disability, :no
+    = f.govuk_radio_divider
+    = f.govuk_radio_button :disability, :prefer_not_to_say
 
-      = f.govuk_radio_buttons_fieldset :age do
-        = f.govuk_radio_button :age, :under_twenty_five, link_errors: true
-        = f.govuk_radio_button :age, :twenty_five_to_twenty_nine
-        = f.govuk_radio_button :age, :thirty_to_thirty_nine
-        = f.govuk_radio_button :age, :forty_to_forty_nine
-        = f.govuk_radio_button :age, :fifty_to_fifty_nine
-        = f.govuk_radio_button :age, :sixty_and_over
-        = f.govuk_radio_divider
-        = f.govuk_radio_button :age, :prefer_not_to_say
+  = f.govuk_radio_buttons_fieldset :age do
+    = f.govuk_radio_button :age, :under_twenty_five, link_errors: true
+    = f.govuk_radio_button :age, :twenty_five_to_twenty_nine
+    = f.govuk_radio_button :age, :thirty_to_thirty_nine
+    = f.govuk_radio_button :age, :forty_to_forty_nine
+    = f.govuk_radio_button :age, :fifty_to_fifty_nine
+    = f.govuk_radio_button :age, :sixty_and_over
+    = f.govuk_radio_divider
+    = f.govuk_radio_button :age, :prefer_not_to_say
 
-      = f.govuk_radio_buttons_fieldset :gender do
-        = f.govuk_radio_button :gender, :man, link_errors: true
-        = f.govuk_radio_button :gender, :woman
-        = f.govuk_radio_button :gender, :other do
-          = f.govuk_text_field :gender_description
-        = f.govuk_radio_divider
-        = f.govuk_radio_button :gender, :prefer_not_to_say
+  = f.govuk_radio_buttons_fieldset :gender do
+    = f.govuk_radio_button :gender, :man, link_errors: true
+    = f.govuk_radio_button :gender, :woman
+    = f.govuk_radio_button :gender, :other do
+      = f.govuk_text_field :gender_description
+    = f.govuk_radio_divider
+    = f.govuk_radio_button :gender, :prefer_not_to_say
 
-      = f.govuk_radio_buttons_fieldset :orientation do
-        = f.govuk_radio_button :orientation, :bisexual, link_errors: true
-        = f.govuk_radio_button :orientation, :gay_or_lesbian
-        = f.govuk_radio_button :orientation, :heterosexual
-        = f.govuk_radio_button :orientation, :other do
-          = f.govuk_text_field :orientation_description
-        = f.govuk_radio_divider
-        = f.govuk_radio_button :orientation, :prefer_not_to_say
+  = f.govuk_radio_buttons_fieldset :orientation do
+    = f.govuk_radio_button :orientation, :bisexual, link_errors: true
+    = f.govuk_radio_button :orientation, :gay_or_lesbian
+    = f.govuk_radio_button :orientation, :heterosexual
+    = f.govuk_radio_button :orientation, :other do
+      = f.govuk_text_field :orientation_description
+    = f.govuk_radio_divider
+    = f.govuk_radio_button :orientation, :prefer_not_to_say
 
-      = f.govuk_radio_buttons_fieldset :ethnicity do
-        = f.govuk_radio_button :ethnicity, :asian, link_errors: true
-        = f.govuk_radio_button :ethnicity, :black
-        = f.govuk_radio_button :ethnicity, :mixed
-        = f.govuk_radio_button :ethnicity, :white
-        = f.govuk_radio_button :ethnicity, :other do
-          = f.govuk_text_field :ethnicity_description
-        = f.govuk_radio_divider
-        = f.govuk_radio_button :ethnicity, :prefer_not_to_say
+  = f.govuk_radio_buttons_fieldset :ethnicity do
+    = f.govuk_radio_button :ethnicity, :asian, link_errors: true
+    = f.govuk_radio_button :ethnicity, :black
+    = f.govuk_radio_button :ethnicity, :mixed
+    = f.govuk_radio_button :ethnicity, :white
+    = f.govuk_radio_button :ethnicity, :other do
+      = f.govuk_text_field :ethnicity_description
+    = f.govuk_radio_divider
+    = f.govuk_radio_button :ethnicity, :prefer_not_to_say
 
-      = f.govuk_radio_buttons_fieldset :religion do
-        = f.govuk_radio_button :religion, :buddhist, link_errors: true
-        = f.govuk_radio_button :religion, :christian
-        = f.govuk_radio_button :religion, :hindu
-        = f.govuk_radio_button :religion, :jewish
-        = f.govuk_radio_button :religion, :muslim
-        = f.govuk_radio_button :religion, :sikh
-        = f.govuk_radio_button :religion, :none
-        = f.govuk_radio_button :religion, :other do
-          = f.govuk_text_field :religion_description
-        = f.govuk_radio_divider
-        = f.govuk_radio_button :religion, :prefer_not_to_say
+  = f.govuk_radio_buttons_fieldset :religion do
+    = f.govuk_radio_button :religion, :buddhist, link_errors: true
+    = f.govuk_radio_button :religion, :christian
+    = f.govuk_radio_button :religion, :hindu
+    = f.govuk_radio_button :religion, :jewish
+    = f.govuk_radio_button :religion, :muslim
+    = f.govuk_radio_button :religion, :sikh
+    = f.govuk_radio_button :religion, :none
+    = f.govuk_radio_button :religion, :other do
+      = f.govuk_text_field :religion_description
+    = f.govuk_radio_divider
+    = f.govuk_radio_button :religion, :prefer_not_to_say
 
-      = f.govuk_collection_radio_buttons :equal_opportunities_section_completed, %w[true false], :to_s
+  = f.govuk_collection_radio_buttons :equal_opportunities_section_completed, %w[true false], :to_s
 
-      = f.govuk_submit job_application_build_submit_button_text do
-        = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
-        span.govuk-caption-m
-          = t("jobseekers.job_applications.cancel_caption")
+  = f.govuk_submit job_application_build_submit_button_text do
+    = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
+    span.govuk-caption-m
+      = t("jobseekers.job_applications.cancel_caption")

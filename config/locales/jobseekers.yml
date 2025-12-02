@@ -318,15 +318,15 @@ en:
         heading: Training and continuing professional development (CPD)
         step_title: Training and continuing professional development (CPD)
         title: Add training and continuing professional development (CPD)
+        fields:
+          hint: For example, 2024.
         new:
           <<: *training_shared
-          hint: For example, 2024.
           caption: Training and continuing professional development (CPD)
           heading: Add training and continuing professional development (CPD)
           description: Include any training you've completed within the last 3 years relevant to the role you're applying for.
         edit:
           <<: *training_shared
-          hint: For example, 2024.
           caption: Training and continuing professional development (CPD)
           heading: Edit training and continuing professional development (CPD)
           description: Include any training you've completed within the last 3 years relevant to the role you're applying for.

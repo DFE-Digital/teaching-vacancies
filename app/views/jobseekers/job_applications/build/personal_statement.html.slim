@@ -2,41 +2,39 @@
 
 = render "banner", vacancy: vacancy, back_path: back_path
 
-.govuk-grid-row
-  div
-    h2.govuk-heading-l = t(".heading")
-    p.govuk-body = t(".description")
+h2.govuk-heading-l = t(".heading")
+p.govuk-body = t(".description")
 
-    p.govuk-body
-      - if job_application.vacancy.supporting_documents.any?
-        = t(".banner_documents_html", job_link: open_in_new_tab_link_to("‘#{job_application.vacancy.job_title}’", job_path(job_application.vacancy)))
-        div class="govuk-!-margin-top-3"
-          = render SupportingDocumentComponent.with_collection(job_application.vacancy.supporting_documents)
-      - else
-        = t(".banner_no_documents_html", job_link: open_in_new_tab_link_to("‘#{job_application.vacancy.job_title}’ #{t('.job_description')}", job_path(job_application.vacancy)))
+p.govuk-body
+  - if job_application.vacancy.supporting_documents.any?
+    = t(".banner_documents_html", job_link: open_in_new_tab_link_to("‘#{job_application.vacancy.job_title}’", job_path(job_application.vacancy)))
+    div class="govuk-!-margin-top-3"
+      = render SupportingDocumentComponent.with_collection(job_application.vacancy.supporting_documents)
+  - else
+    = t(".banner_no_documents_html", job_link: open_in_new_tab_link_to("‘#{job_application.vacancy.job_title}’ #{t('.job_description')}", job_path(job_application.vacancy)))
 
-    h2.govuk-heading-l = t(".applying_for_a_teaching_role")
+h2.govuk-heading-l = t(".applying_for_a_teaching_role")
 
-    p.govuk-body = t(".you_could_provide")
+p.govuk-body = t(".you_could_provide")
 
-    ul
-      - t(".bullets").each do |b|
-        li = b
+ul
+  - t(".bullets").each do |b|
+    li = b
 
-    p.govuk-body
-      = t(".personal_statement_preamble")
-      = open_in_new_tab_link_to(t(".personal_statement_link_text"),
-        post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "how-to-write-teacher-personal-statement"),
-        class: "govuk-link--no-visited-state")
+p.govuk-body
+  = t(".personal_statement_preamble")
+  = open_in_new_tab_link_to(t(".personal_statement_link_text"),
+    post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "how-to-write-teacher-personal-statement"),
+    class: "govuk-link--no-visited-state")
 
-    = form_for @form, url: jobseekers_job_application_build_path(job_application, :personal_statement), method: :patch do |f|
-      = f.govuk_error_summary
+= form_for @form, url: jobseekers_job_application_build_path(job_application, :personal_statement), method: :patch do |f|
+  = f.govuk_error_summary
 
-      = f.govuk_text_area :personal_statement, label: { size: "s" }, rows: 15, required: true, aria: { required: true }
+  = f.govuk_text_area :personal_statement, label: { size: "s" }, rows: 15, required: true, aria: { required: true }
 
-      = f.govuk_collection_radio_buttons :personal_statement_section_completed, %w[true false], :to_s
+  = f.govuk_collection_radio_buttons :personal_statement_section_completed, %w[true false], :to_s
 
-      = f.govuk_submit job_application_build_submit_button_text do
-        = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
-        span.govuk-caption-m
-          = t("jobseekers.job_applications.cancel_caption")
+  = f.govuk_submit job_application_build_submit_button_text do
+    = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
+    span.govuk-caption-m
+      = t("jobseekers.job_applications.cancel_caption")

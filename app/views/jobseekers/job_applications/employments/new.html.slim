@@ -1,14 +1,12 @@
 - content_for :page_title_prefix, job_application_page_title_prefix(@employment, t(".title"))
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    span.govuk-caption-l = t(".caption")
-    h1.govuk-heading-xl = t(".heading")
+span.govuk-caption-l = t(".caption")
+h1.govuk-heading-xl = t(".heading")
 
-    = form_with model: @employment, scope: :jobseekers_job_application_details_employment_form, url: jobseekers_job_application_employments_path(job_application), method: :post do |f|
-      = f.govuk_error_summary
+= form_with model: @employment, scope: :jobseekers_job_application_details_employment_form, url: jobseekers_job_application_employments_path(job_application), method: :post do |f|
+  = f.govuk_error_summary
 
-      = render "employment_fields", f: f
+  = render "employment_fields", f: f
 
-      = f.govuk_submit t("buttons.save_employment")
-      = govuk_button_link_to t("buttons.cancel"), jobseekers_job_application_build_path(job_application, :employment_history), class: "govuk-button--secondary govuk-!-margin-left-3"
+  = f.govuk_submit t("buttons.save_employment")
+  = govuk_button_link_to t("buttons.cancel"), jobseekers_job_application_build_path(job_application, :employment_history), class: "govuk-button--secondary govuk-!-margin-left-3"
