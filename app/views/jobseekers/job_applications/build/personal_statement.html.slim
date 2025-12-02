@@ -31,10 +31,10 @@ p.govuk-body
   = f.govuk_error_summary
 
   div class="personal-statement-form"
-    = f.rich_text_area :content, aria: { label: "Personal statement", required: true , size: "s"}, class: "personal-statement-editor govuk-!-margin-bottom-6"
+    = f.rich_text_area :content, aria: { label: "Personal statement", required: true }, class: "personal-statement-editor govuk-!-margin-bottom-6"
 
-      noscript
-        = f.govuk_text_area :content, label: { text: "Personal statement" }, rows: 10, class: "govuk-!-margin-bottom-6"
+    noscript
+      = f.govuk_text_area :content, label: { text: "Personal statement" }, rows: 10, class: "govuk-!-margin-bottom-6"
 
     = f.govuk_collection_radio_buttons :personal_statement_section_completed, %w[true false], :to_s
 
