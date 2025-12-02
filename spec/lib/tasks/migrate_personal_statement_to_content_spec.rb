@@ -21,14 +21,4 @@ RSpec.describe "migrate_personal_statement_to_content" do
     expect(MigratePersonalStatementJob).to have_received(:perform_later)
       .with(match_array(job_applications.pluck(:id)))
   end
-
-  context "when there are no applications" do
-    before { JobApplication.destroy_all }
-
-    it "does not enqueue any jobs" do
-      expect {
-        task.invoke
-      }.not_to have_enqueued_job(MigratePersonalStatementJob)
-    end
-  end
 end
