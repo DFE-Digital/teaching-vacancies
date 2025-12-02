@@ -112,7 +112,7 @@ RSpec.describe JobApplicationPdf do
       end
 
       context "when blank" do
-        before do 
+        before do
           job_application.content = nil
           job_application.personal_statement = nil
         end
