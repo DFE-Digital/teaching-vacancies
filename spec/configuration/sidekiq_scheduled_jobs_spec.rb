@@ -7,7 +7,7 @@ RSpec.describe "Sidekiq configuration" do
 
     ApplicationJob.descendants.map(&:name)
   end
-  let(:gem_jobs) { %w[DfE::Analytics::EntityTableCheckJob] }
+  let(:gem_jobs) { %w[DfE::Analytics::Jobs::EntityTableCheckJob] }
   let(:scheduled_jobs) { YAML.load_file("./config/schedule.yml").map { |_, v| v["class"] }.uniq }
   let(:unscheduled_jobs) do
     %w[

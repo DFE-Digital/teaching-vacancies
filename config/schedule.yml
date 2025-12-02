@@ -52,7 +52,7 @@ export_users:
 
 send_entity_table_checks_to_bigquery:
   cron: "30 1 * * *" # "At 01:30."
-  class: "DfE::Analytics::EntityTableCheckJob"
+  class: "DfE::Analytics::Jobs::EntityTableCheckJob"
   queue: low
 
 reset_sessions:
