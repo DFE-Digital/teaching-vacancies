@@ -39,6 +39,8 @@ shared:
     - baptism_address
     - baptism_date
     - ethos_and_aims
+    - has_lived_abroad
+    - life_abroad_details
   jobseeker_profiles:
     - id
     - jobseeker_id
