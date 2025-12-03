@@ -1,2 +1,2 @@
 -c origin/main
---skip-file lib/tasks/migrate_personal_statement_to_content.rake
+--exclude-files lib/tasks/migrate_personal_statement_to_content.rake

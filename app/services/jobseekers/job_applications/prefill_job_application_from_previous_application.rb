@@ -27,7 +27,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
     attributes = attributes_to_copy
     if attributes.include? :baptism_certificate
       new_job_application.assign_attributes(recent_job_application.slice(*(attributes - [:baptism_certificate])))
-      new_job_application.update(content: recent_job_application.content.to_plain_text)
+      new_job_application.update(content: recent_job_application.content.body)
 
       if recent_job_application.baptism_certificate.present?
         recent_job_application.baptism_certificate.blob.open do |tempfile|
@@ -40,7 +40,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
       end
     else
       new_job_application.assign_attributes(recent_job_application.slice(*attributes))
-      new_job_application.update(content: recent_job_application.content.to_plain_text)
+      new_job_application.update(content: recent_job_application.content.body)
     end
   end
   # rubocop:enable Metrics/AbcSize
