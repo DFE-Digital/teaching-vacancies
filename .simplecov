@@ -38,7 +38,6 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
 
     add_filter "lib/dfe_sign_in/fake_sign_out_endpoint.rb"
     add_filter "lib/modules/aws_ip_ranges.rb"
-    add_filter "lib/tasks/migrate_personal_statement_to_content.rake"
 
     add_group "Components", "app/components"
     add_group "Queries", "app/queries"
