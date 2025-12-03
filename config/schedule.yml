@@ -126,18 +126,13 @@ destroy_inactive_accounts:
   queue: low
 
 inactive_profile_warnings:
-  cron: '10 14 * * *' # "At 08:40."
+  cron: '40 08 * * *' # "At 08:40."
   class: 'InactiveProfileWarningsJob'
   queue: low
 
 disable_inactive_profiles:
-  cron: '20 14 * * *' # "At 08:20."
+  cron: '20 08 * * *' # "At 08:20."
   class: 'DisableInactiveProfilesJob'
-  queue: low
-
-disable_active_profiles_without_new_fields:
-  cron: '30 14 * * *' # "At 08:30."
-  class: 'DisableActiveProfilesWithoutNewFieldsJob'
   queue: low
 
 email_feedback_prompt:
