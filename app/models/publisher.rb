@@ -20,7 +20,8 @@ class Publisher < ApplicationRecord
   def vacancies_with_job_applications_submitted_yesterday
     vacancies.distinct
              .joins(:job_applications)
-             .where("DATE(job_applications.submitted_at) = ? AND job_applications.status = ?", Date.yesterday, 1)
+             .merge(JobApplication.submitted)
+             .where("DATE(job_applications.submitted_at) = ?", Date.yesterday)
   end
 
   def papertrail_display_name
