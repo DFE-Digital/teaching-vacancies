@@ -1,2 +1,1 @@
 -c origin/main
---exclude-files lib/tasks/migrate_personal_statement_to_content.rake
