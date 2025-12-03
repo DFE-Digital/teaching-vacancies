@@ -73,6 +73,17 @@ RSpec.describe "Publishers can send messages to job applicants" do
         expect(page).to have_text(message_content)
         expect(page).to have_text("#{publisher.given_name} #{publisher.family_name}")
       end
+
+      it "allows messages to be sent while javascript is disabled", js: false do
+        click_link "Send message to candidate"
+        hiring_staff_message = "This still work?"
+        fill_in "Message", with: hiring_staff_message
+
+        click_button "Send message"
+        expect(page).to have_text("Message sent successfully")
+        message_cards = all(".govuk-summary-card")
+        expect(message_cards.first).to have_text(hiring_staff_message)
+      end
     end
 
     context "when messages already exist" do
@@ -167,6 +178,17 @@ RSpec.describe "Publishers can send messages to job applicants" do
         message_cards = all(".govuk-summary-card")
         expect(message_cards.first).to have_text(jobseeker_reply)
         expect(message_cards.last).to have_text("Hello from publisher")
+      end
+
+      it "allows messages to be sent while javascript is disabled", js: false do
+        click_link "Send message to hiring staff"
+        jobseeker_message = "This still work?"
+        fill_in "Message", with: jobseeker_message
+
+        click_button "Send message"
+        expect(page).to have_text("Message sent successfully")
+        message_cards = all(".govuk-summary-card")
+        expect(message_cards.first).to have_text(jobseeker_message)
       end
     end
 
