@@ -65,6 +65,85 @@ C4Context
 ```
 
 
+## C4 Teaching Vacancies Container Diagram
+Major components forming Teaching Vacancies service, and how they interact with each other and external actors.
+```mermaid
+C4Container
+title Container diagram for Teaching Vacancies
+
+%% -------------------------------------------------------------------------
+%% External actors
+%% -------------------------------------------------------------------------
+Container_Boundary(external_actors, "External Actors") {
+  Person(referee, Referee, "Member of the public.<br>Designed by Jobseekers<br>during their job applications")
+  Person(jobseeker, Jobseeker, "A member of the public.<br>Job candidate that applies<br>for listed vacancies.")
+  Person(publisher, "<br>Publisher<br>Hiring staff", "A member of the public.<br>Employee for a school/group/LA<br>that lists and manages vacancies.")
+}
+%% -------------------------------------------------------------------------
+%% External services
+%% -------------------------------------------------------------------------
+Container_Boundary(auth_notify, "User authentication and notification services") {
+  Container_Ext(one_login, "Gov UK<br>One Login",, "User authentication<br>system for the public")
+  Container_Ext(dsi, "DfE Sign In",,"User authentication system<br>for education organisation<br>publishers/hiring staff")
+  Container_Ext(notify, "Gov UK<br>Notify",, "Mailer system for<br>Email communications")
+}
+
+%% -------------------------------------------------------------------------
+%% Teaching Vacancies Service
+%% -------------------------------------------------------------------------
+Container_Boundary(tv, "Teaching Vacancies service") {
+  Container(web_app, "Web Application", "Ruby on Rails MVC", "Contains all the business logic.<br>Lists Vacancies.<br>Manages/progresses<br>Job Applications.")
+  ContainerQueue(queue, "Jobs Queue", "Redis Queue", "Background Jobs<br>queue")
+  Container(worker, "Worker", "Sidekiq worker", "Runs service background jobs.")
+  ContainerQueue(cache, "Cache", "Redis Cache", "Web Application cache<br>memory")
+  ContainerDb(db, "Database", "PostgreSQL (PostGis)", "Relational DB containing<br>all the service information")
+}
+
+%% -------------------------------------------------------------------------
+%% External services
+%% -------------------------------------------------------------------------
+Container_Boundary(external_services, "External services") {
+  Container_Ext(ats, "ATS",, "Recruitment and<br>Applicant Tracking Systems")
+  Container_Ext(dwp, "DWP<br>Find a Job Service",, "Department of Work and<br>Pensions 'Find a Job' service.<br>Search and<br>apply for jobs")
+  ContainerDb_Ext(ons, "ONS", ,"Office for National Statistics<br>Location Polygons APIs")
+  ContainerDb_Ext(gias, "GIAS",, "<br><br>Get Information<br>About Schools.<br>Stores the org/schools<br>information.<br>Their publishers, school<br>groups, etc.")
+}
+
+%% -------------------------------------------------------------------------
+%% Connections from External actors
+%% -------------------------------------------------------------------------
+Rel(jobseeker, one_login, "Signs in through", "HTTPS")
+Rel(jobseeker, web_app, "Searches vacancies<br>Subscribes to alerts<br>Applies for vacancies<br>", "HTTPS")
+Rel(publisher, dsi, "Signs in through<br>Manages org users access", "HTTPS")
+Rel(publisher, web_app, "Posts vacancies<br>Manages school Profile<br>Manages/progresses Job Applications<br>", "HTTPS")
+Rel(publisher, ats, "Posts vacancies<br>through")
+Rel(referee, web_app, "Provides references<br>for Job Applications", "HTTPS")
+
+%% -------------------------------------------------------------------------
+%% Connections from External services
+%% -------------------------------------------------------------------------
+Rel(one_login, web_app, "Redirects signed<br>Jobseeker to", "HTTPS")
+Rel(dsi, web_app, "Redirects signed<br>Publisher to", "HTTPS")
+Rel(gias, worker, "Imports organisations<br>and publishers from")
+Rel(ons, worker, "Imports UK location<br>polygons from")
+
+%% -------------------------------------------------------------------------
+%% Internal Connections from TV
+%% -------------------------------------------------------------------------
+BiRel(web_app, db, "Stores/Retrieves info<br>Computes searches")
+Rel(web_app, queue, "Sends async<br>jobs & emails")
+BiRel(web_app, cache, "Stores temp & fast<br>access data")
+Rel(queue, worker, "Consumes & Executes<br>the job queue jobs")
+BiRel(worker, db, "Stores/Retrieves info")
+
+%% -------------------------------------------------------------------------
+%% External Connections from TV
+%% -------------------------------------------------------------------------
+Rel(worker, notify, "Sends emails<br>through")
+Rel(worker, dwp, "Reposts TV<br>vacancies to")
+
+UpdateLayoutConfig($c4ShapeInRow="2", $c4BoundaryInRow="2")
+```
 
 ## Architecture Diagram
 This diagram provides an overview of the Teaching Vacancies service, illustrating its core components, data flows, and integrations. It highlights the relationships between the web application, background workers, databases, external APIs, and third-party services involved in publishing, searching, and managing job vacancies.
