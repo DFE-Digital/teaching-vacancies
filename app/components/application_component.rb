@@ -1,4 +1,10 @@
 class ApplicationComponent < GovukComponent::Base
+  include GovukComponentsHelper
+  include GovukLinkHelper
+  include GovukVisuallyHiddenHelper
+
+  include ComponentsHelper
+
   attr_reader :classes
 
   def initialize(classes: [], html_attributes: {})
