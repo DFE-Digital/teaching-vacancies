@@ -10,7 +10,7 @@ class Organisation < ApplicationRecord
   NON_FAITH_RELIGIOUS_CHARACTER_TYPES = ["", "None", "Does not apply", "null"].freeze
   OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES = ["Further education", "Other independent school", "Miscellaneous", "Special post 16 institution", "Other independent special school", "Higher education institutions", "Welsh establishment"].freeze
 
-  friendly_id :slug_candidates, use: :slugged
+  friendly_id :slug_candidates, use: %i[slugged history]
 
   has_one_attached :logo, service: :amazon_s3_images_and_logos
   has_one_attached :photo, service: :amazon_s3_images_and_logos
@@ -163,6 +163,10 @@ class Organisation < ApplicationRecord
     Search::Postgres::TsvectorGenerator.new(
       a: [name],
     ).tsvector
+  end
+
+  def should_generate_new_friendly_id?
+    name_changed? || super
   end
 
   private
