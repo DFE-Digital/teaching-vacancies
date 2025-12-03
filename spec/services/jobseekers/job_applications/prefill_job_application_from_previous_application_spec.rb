@@ -169,17 +169,14 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
           )
         end
 
-        it "copies the baptism certificate attachment" do
+        it "copies the baptism certificate" do
           expect(subject.baptism_certificate).to be_attached
           expect(subject.baptism_certificate.filename.to_s).to eq("baptism_cert.pdf")
           expect(subject.baptism_certificate.content_type).to eq("application/pdf")
         end
 
-        it "copies content" do
+        it "copies content and personal details" do
           expect(subject.content.body).to eq(recent_job_application.content.body)
-        end
-
-        it "copies other personal details" do
           expect(subject.first_name).to eq(recent_job_application.first_name)
           expect(subject.last_name).to eq(recent_job_application.last_name)
         end
@@ -190,13 +187,10 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
         let(:new_job_application) { jobseeker.job_applications.create(vacancy: vacancy_for_faith_school) }
         let(:recent_job_application) { create(:job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker: jobseeker, vacancy: vacancy_for_faith_school) }
 
-        it "still copies personal details without error" do
+        it "copies content and personal details" do
           expect(subject.baptism_certificate).not_to be_attached
           expect(subject.first_name).to eq(recent_job_application.first_name)
           expect(subject.last_name).to eq(recent_job_application.last_name)
-        end
-
-        it "copies content" do
           expect(subject.content.body).to eq(recent_job_application.content.body)
         end
       end
