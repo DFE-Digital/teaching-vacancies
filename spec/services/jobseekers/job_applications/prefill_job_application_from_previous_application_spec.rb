@@ -176,7 +176,7 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
         end
 
         it "copies content" do
-          expect(subject.content.to_plain_text).to eq(recent_job_application.content.to_plain_text)
+          expect(subject.content.body).to eq(recent_job_application.content.body)
         end
 
         it "copies other personal details" do
@@ -197,7 +197,7 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
         end
 
         it "copies content" do
-          expect(subject.content.to_plain_text).to eq(recent_job_application.content.to_plain_text)
+          expect(subject.content.body).to eq(recent_job_application.content.body)
         end
       end
     end
