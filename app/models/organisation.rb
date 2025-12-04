@@ -165,6 +165,7 @@ class Organisation < ApplicationRecord
     ).tsvector
   end
 
+  # Friendly_id method to control whether new friendly IDs are created when a model is updated
   def should_generate_new_friendly_id?
     name_changed? || super
   end
