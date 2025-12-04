@@ -597,7 +597,7 @@ RSpec.configure do |config|
               },
             },
             example: {
-              errors: ["A vacancy with the provided external reference already exists"],
+              errors: ["A vacancy with the same job title, expiry date, contract type, working patterns, phases and salary already exists for this organisation."],
               meta: {
                 link: "https://example.com/vacancies/123",
               },
