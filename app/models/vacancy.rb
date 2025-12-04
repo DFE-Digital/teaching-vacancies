@@ -162,6 +162,8 @@ class Vacancy < ApplicationRecord
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[8:00 9:00 12:00 15:00 23:59].freeze
 
+  self.ignored_columns += %i[geolocation]
+
   # Class method added to help with the mapping of array_enums for paper_trail, which stores the changes
   # as an array of integers in the version.
   def self.array_enums
@@ -263,7 +265,7 @@ class Vacancy < ApplicationRecord
   def reset_markers
     markers.delete_all
     organisations.each do |organisation|
-      markers.create(organisation: organisation, geopoint: organisation.geopoint)
+      markers.create(organisation: organisation, uk_geopoint: organisation.uk_geopoint)
     end
   end
 
@@ -277,11 +279,11 @@ class Vacancy < ApplicationRecord
   end
 
   def distance_in_miles_to(search_coordinates)
-    if geolocation.is_a? RGeo::Geographic::SphericalMultiPointImpl
+    if uk_geolocation.is_a? RGeo::Cartesian::MultiPointImpl
       # if there are multiple geolocations then return the distance to the nearest one to the given search location
-      geolocation.map { |geolocation| calculate_distance(search_coordinates, geolocation) }.min
+      uk_geolocation.map { |geolocation| calculate_distance(search_coordinates, geolocation) }.min
     else
-      calculate_distance(search_coordinates, geolocation)
+      calculate_distance(search_coordinates, uk_geolocation)
     end
   end
 
@@ -307,7 +309,11 @@ class Vacancy < ApplicationRecord
   end
 
   def calculate_distance(search_coordinates, geolocation)
-    Geocoder::Calculations.distance_between(search_coordinates, [geolocation.latitude, geolocation.longitude])
+    search_location = GeoFactories::FACTORY_4326.point(search_coordinates.second, search_coordinates.first)
+    search_point = GeoFactories.convert_wgs84_to_sr27700 search_location
+    search_point.distance(geolocation) / DistanceHelper::METRES_PER_MILE
+    # Geocoder::Calculations.distance_between(search_coordinates, [geolocation.latitude, geolocation.longitude])
+    # geolocation.factory.point(search_coordinates.second, search_coordinates.first).distance geolocation
   end
 
   def slug_candidates
@@ -319,12 +325,12 @@ class Vacancy < ApplicationRecord
   #   * the job location was changed to "central office"
   # In the former case, it gets an argument, which we don't need and thus ignore
   def refresh_geolocation(_school_added_or_removed = nil)
-    self.geolocation = if organisations.one?
-                         organisation&.geopoint
-                       else
-                         points = organisations.filter_map(&:geopoint)
-                         points.presence && points.first.factory.multi_point(points)
-                       end
+    self.uk_geolocation = if organisations.one?
+                            organisation&.uk_geopoint
+                          else
+                            points = organisations.filter_map(&:uk_geopoint)
+                            points.presence && points.first.factory.multi_point(points)
+                          end
     reset_markers if persisted? && (live? || pending?)
   end
 end

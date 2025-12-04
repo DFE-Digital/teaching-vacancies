@@ -73,8 +73,8 @@ class Geocoding
 
   def trigger_google_geocoding_api_hit_event(type:, location:, result:)
     event = DfE::Analytics::Event.new
-      .with_type(:google_geocoding_api_hit)
-      .with_data(data: { type:, location: location.to_s, result: result&.to_s })
+                                 .with_type(:google_geocoding_api_hit)
+                                 .with_data(data: { type:, location: location.to_s, result: result&.to_s })
 
     DfE::Analytics::SendEvents.do([event])
   end

@@ -147,10 +147,10 @@ RSpec.describe Vacancy do
 
   describe "friendly_id generated slug" do
     describe "#slug" do
-      it "the slug cannot be duplicate" do
-        green_school = create(:school, name: "Green school", town: "Greenway", county: "Mars")
-        blue_school = create(:school, name: "Blue school")
+      let(:green_school) { create(:school, name: "Green school", town: "Greenway", county: "Mars") }
+      let(:blue_school) { create(:school, name: "Blue school") }
 
+      it "the slug cannot be duplicate" do
         first_maths_teacher = create(:vacancy, job_title: "Maths Teacher", organisations: [blue_school], expires_at: 1.day.from_now)
         second_maths_teacher = create(:vacancy, job_title: "Maths Teacher", organisations: [green_school], expires_at: 2.day.from_now)
         third_maths_teacher = create(:vacancy, job_title: "Maths Teacher", organisations: [green_school], expires_at: 3.day.from_now)
@@ -580,41 +580,41 @@ RSpec.describe Vacancy do
     end
   end
 
-  describe "#geolocation" do
+  describe "#uk_geolocation" do
     subject { create(:vacancy, organisations: organisations) }
 
     context "for single school vacancies" do
-      let(:organisations) { [create(:school, geopoint: "POINT(1 2)")] }
+      let(:organisations) { [create(:school, uk_geopoint: "POINT(2 1)")] }
 
       it "is set to a point" do
-        expect(subject.geolocation.lat).to eq(2)
-        expect(subject.geolocation.lon).to eq(1)
+        expect(subject.uk_geolocation.x).to eq(2)
+        expect(subject.uk_geolocation.y).to eq(1)
       end
     end
 
     context "for trust central office vacancies" do
-      let(:organisations) { [create(:trust, geopoint: "POINT(1 2)")] }
+      let(:organisations) { [create(:trust, uk_geopoint: "POINT(1 2)")] }
 
       it "is set to a point" do
-        expect(subject.geolocation.lat).to eq(2)
-        expect(subject.geolocation.lon).to eq(1)
+        expect(subject.uk_geolocation.y).to eq(2)
+        expect(subject.uk_geolocation.x).to eq(1)
       end
     end
 
     context "for multi-school vacancies" do
-      let(:organisations) { [create(:school, geopoint: "POINT(1 2)"), create(:school, geopoint: "POINT(3 4)")] }
+      let(:organisations) { [create(:school, uk_geopoint: "POINT(1 2)"), create(:school, uk_geopoint: "POINT(3 4)")] }
 
       it "is set to a multipoint" do
-        expect(subject.geolocation.map(&:lat)).to contain_exactly(2, 4)
-        expect(subject.geolocation.map(&:lon)).to contain_exactly(1, 3)
+        expect(subject.uk_geolocation.map(&:y)).to contain_exactly(2, 4)
+        expect(subject.uk_geolocation.map(&:x)).to contain_exactly(1, 3)
       end
     end
 
     context "if all organisations have no geopoint" do
-      let(:organisations) { [create(:school, geopoint: nil), create(:school, geopoint: nil)] }
+      let(:organisations) { [create(:school, uk_geopoint: nil, geopoint: nil), create(:school, uk_geopoint: nil, geopoint: nil)] }
 
       it "is set to nil" do
-        expect(subject.geolocation).to be_nil
+        expect(subject.uk_geolocation).to be_nil
       end
     end
   end

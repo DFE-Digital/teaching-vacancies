@@ -61,14 +61,14 @@ FactoryBot.define do
 
     trait :with_area_location do
       location { "London" }
-      area { "POLYGON((0 0, 1 1, 0 1, 0 0))" }
-      geopoint { nil }
+      uk_area { "POLYGON((0 0, 1 1, 0 1, 0 0))" }
+      uk_geopoint { nil }
       radius_in_metres { 16_090 } # 10 miles
     end
 
     trait :with_geopoint_location do
-      area { nil }
-      geopoint { "POINT(51.5074 -0.1278)" } # London
+      uk_area { nil }
+      uk_geopoint { "POINT(51.5074 -0.1278)" } # London
       radius_in_metres { 16_090 } # 10 miles
     end
 

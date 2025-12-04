@@ -329,11 +329,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_27_150257) do
     t.uuid "job_preferences_id", null: false
     t.string "name", null: false
     t.integer "radius", null: false
-    t.geography "area", limit: {srid: 4326, type: "geometry", geographic: true}, null: false
+    t.geography "area", limit: {srid: 4326, type: "geometry", geographic: true}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.geometry "uk_area", limit: {srid: 27700, type: "st_polygon"}
     t.index ["area"], name: "index_job_preferences_locations_on_area", using: :gist
     t.index ["job_preferences_id"], name: "index_job_preferences_locations_on_job_preferences_id"
+    t.index ["uk_area"], name: "index_job_preferences_locations_on_uk_area", using: :gist
   end
 
   create_table "job_references", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -442,9 +444,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_27_150257) do
     t.datetime "updated_at", precision: nil, null: false
     t.geography "area", limit: {srid: 4326, type: "geometry", geographic: true}
     t.geography "centroid", limit: {srid: 4326, type: "st_point", geographic: true}
+    t.geometry "uk_area", limit: {srid: 27700, type: "geometry"}
+    t.geometry "uk_centroid", limit: {srid: 27700, type: "st_point"}
     t.index ["area"], name: "index_location_polygons_on_area", using: :gist
     t.index ["centroid"], name: "index_location_polygons_on_centroid", using: :gist
     t.index ["name"], name: "index_location_polygons_on_name"
+    t.index ["uk_area"], name: "index_location_polygons_on_uk_area", using: :gist
+    t.index ["uk_centroid"], name: "index_location_polygons_on_uk_centroid", using: :gist
   end
 
   create_table "markers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -453,8 +459,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_27_150257) do
     t.geography "geopoint", limit: {srid: 4326, type: "st_point", geographic: true}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.geometry "uk_geopoint", limit: {srid: 27700, type: "st_point"}
     t.index ["geopoint"], name: "index_markers_on_geopoint", using: :gist
     t.index ["organisation_id"], name: "index_markers_on_organisation_id"
+    t.index ["uk_geopoint"], name: "index_markers_on_uk_geopoint", using: :gist
     t.index ["vacancy_id"], name: "index_markers_on_vacancy_id"
   end
 
@@ -574,12 +582,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_27_150257) do
     t.string "email"
     t.string "safeguarding_information", default: "Our organisation is committed to safeguarding and promoting the welfare of children, young people and vulnerable adults. We expect all staff, volunteers and trustees to share this commitment.\n\nOur recruitment process follows the keeping children safe in education guidance.\n\nOffers of employment may be subject to the following checks (where relevant):\nchildcare disqualification\nDisclosure and Barring Service (DBS)\nmedical\nonline and social media\nprohibition from teaching\nright to work\nsatisfactory references\nsuitability to work with children\n\nYou must tell us about any unspent conviction, cautions, reprimands or warnings under the Rehabilitation of Offenders Act 1974 (Exceptions) Order 1975."
     t.tsvector "searchable_content"
+    t.geometry "uk_geopoint", limit: {srid: 27700, type: "st_point"}
     t.index ["geopoint"], name: "index_organisations_on_geopoint", using: :gist
     t.index ["local_authority_code"], name: "index_organisations_on_local_authority_code", unique: true
     t.index ["searchable_content"], name: "index_organisations_on_searchable_content", using: :gin
     t.index ["slug"], name: "index_organisations_on_slug", unique: true
     t.index ["type"], name: "index_organisations_on_type"
     t.index ["uid"], name: "index_organisations_on_uid", unique: true
+    t.index ["uk_geopoint"], name: "index_organisations_on_uk_geopoint", using: :gist
     t.index ["urn"], name: "index_organisations_on_urn", unique: true
   end
 
@@ -784,9 +794,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_27_150257) do
     t.geometry "area", limit: {srid: 4326, type: "geometry"}
     t.geometry "geopoint", limit: {srid: 4326, type: "geometry"}
     t.integer "radius_in_metres"
+    t.geometry "uk_area", limit: {srid: 27700, type: "st_polygon"}
+    t.geometry "uk_geopoint", limit: {srid: 27700, type: "st_point"}
     t.index ["area"], name: "index_subscriptions_on_area", using: :gist
     t.index ["email"], name: "index_subscriptions_on_email"
     t.index ["geopoint"], name: "index_subscriptions_on_geopoint", using: :gist
+    t.index ["uk_area"], name: "index_subscriptions_on_uk_area", using: :gist
+    t.index ["uk_geopoint"], name: "index_subscriptions_on_uk_geopoint", using: :gist
   end
 
   create_table "support_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -887,6 +901,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_27_150257) do
     t.datetime "discarded_at"
     t.string "type", null: false
     t.boolean "anonymise_applications", default: false
+    t.geometry "uk_geolocation", limit: {srid: 27700, type: "geometry"}
     t.index ["discarded_at"], name: "index_vacancies_on_discarded_at"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["external_reference", "publisher_ats_api_client_id"], name: "index_kept_unique_vacancies_on_external_ref_and_client_id", unique: true, where: "(discarded_at IS NULL)"
@@ -899,6 +914,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_27_150257) do
     t.index ["searchable_content"], name: "index_vacancies_on_searchable_content", using: :gin
     t.index ["slug"], name: "index_vacancies_on_slug"
     t.index ["type"], name: "index_vacancies_on_type"
+    t.index ["uk_geolocation"], name: "index_vacancies_on_uk_geolocation", using: :gist
   end
 
   create_table "vacancy_analytics", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

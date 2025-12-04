@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "publishers/organisations/preview" do
   before do
-    allow(organisation).to receive(:geopoint?).and_return(true)
+    allow(organisation).to receive(:uk_geopoint?).and_return(true)
 
     assign :organisation, organisation
     assign :vacancies, vacancies

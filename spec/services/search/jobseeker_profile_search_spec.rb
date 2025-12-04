@@ -16,7 +16,7 @@ RSpec.describe Search::JobseekerProfileSearch do
     let(:filters) { { qualified_teacher_status: [], roles: [], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
 
     context "when the organisation is a school" do
-      let(:organisation) { create(:school, geopoint: RGeo::Geographic.spherical_factory(srid: 4326).point(0.2861, 51.7094)) }
+      let(:organisation) { create(:school, geopoint: "POINT (0.2861 51.7094)") }
 
       context "when no job preference area contains the school" do
         it "returns an empty array" do
@@ -72,8 +72,8 @@ RSpec.describe Search::JobseekerProfileSearch do
       it "searches for jobseeker profiles using the location of every individual school within the trust" do
         search.jobseeker_profiles
 
-        expect(JobPreferences::Location).to have_received(:containing).with(school1.geopoint)
-        expect(JobPreferences::Location).to have_received(:containing).with(school2.geopoint)
+        expect(JobPreferences::Location).to have_received(:containing).with(school1.uk_geopoint)
+        expect(JobPreferences::Location).to have_received(:containing).with(school2.uk_geopoint)
       end
 
       it "returns every jobseeker profile with a preference area that contains any of their schools" do

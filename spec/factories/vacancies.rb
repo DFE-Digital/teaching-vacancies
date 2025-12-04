@@ -31,6 +31,7 @@ FactoryBot.define do
 
     transient do
       expiry_date { 6.months.from_now }
+      geolocation { nil }
     end
 
     actual_salary { factory_rand(20_000..100_000) }
@@ -73,6 +74,13 @@ FactoryBot.define do
     is_job_share { false }
     flexi_working_details_provided { true }
     flexi_working { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
+
+    after(:build) do |vacancy, evaluator|
+      if evaluator.geolocation.present?
+        earth_point = GeoFactories::FACTORY_4326.parse_wkt(evaluator.geolocation)
+        vacancy.uk_geolocation = GeoFactories.convert_wgs84_to_sr27700 earth_point
+      end
+    end
 
     trait :secondary do
       phases { %w[secondary] }

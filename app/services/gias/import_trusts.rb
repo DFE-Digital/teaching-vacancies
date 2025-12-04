@@ -94,7 +94,7 @@ class Gias::ImportTrusts
 
         {
           uid: trust[:uid],
-          geopoint: "POINT(#{coordinates.second} #{coordinates.first})",
+          uk_geopoint: "SRID=4326;POINT(#{coordinates.second} #{coordinates.first})",
         }
       }.compact
 

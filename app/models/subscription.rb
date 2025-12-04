@@ -20,6 +20,8 @@ class Subscription < ApplicationRecord
   # support_job_roles used to be called teaching_support_job_roles and non_teaching_support_job_roles in the past, and there are still active subscriptions with this name
   JOB_ROLE_ALIASES = %i[teaching_job_roles support_job_roles teaching_support_job_roles non_teaching_support_job_roles].freeze
 
+  self.ignored_columns += %i[area geopoint]
+
   def self.encryptor(serializer: :json_allow_marshal)
     key_generator_secret = SUBSCRIPTION_KEY_GENERATOR_SECRET
     key_generator_salt = SUBSCRIPTION_KEY_GENERATOR_SALT
@@ -93,8 +95,8 @@ class Subscription < ApplicationRecord
     def limit_by_location(vacancies, location, radius_in_miles)
       polygon = LocationPolygon.buffered(radius_in_miles).with_name(location)
       begin
-        if polygon.present? && !polygon.name.in?(INVALID_POLYGONS) && polygon.area.invalid_reason.nil?
-          return vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon.area.contains?(point) } }
+        if polygon.present? && !polygon.name.in?(INVALID_POLYGONS) && polygon.uk_area.invalid_reason.nil?
+          return vacancies.select { |v| v.organisations.map(&:uk_geopoint).any? { |point| polygon.uk_area.contains?(point) } }
         end
       rescue RGeo::Error::InvalidGeometry => e
         Sentry.with_scope do |scope|
@@ -105,8 +107,9 @@ class Subscription < ApplicationRecord
 
       radius_in_metres = convert_miles_to_metres(radius_in_miles)
       coordinates = Geocoding.new(location).coordinates
-      search_point = RGeo::Geographic.spherical_factory(srid: 4326).point(coordinates.second, coordinates.first)
-      vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| search_point.distance(point) < radius_in_metres } }
+      search_location = GeoFactories::FACTORY_4326.point(coordinates.second, coordinates.first)
+      search_point = GeoFactories.convert_wgs84_to_sr27700 search_location
+      vacancies.select { |v| v.organisations.map(&:uk_geopoint).any? { |point| search_point.distance(point) < radius_in_metres } }
     end
     # rubocop:enable Metrics/AbcSize
 
@@ -146,15 +149,17 @@ class Subscription < ApplicationRecord
   # A subscription with location area has a polygon area seat buffered by radius, no geopoint.
   def set_location_from_polygon(polygon, radius)
     # Cast polygon area from geography to geometry and buffer by radius before storing
-    self.area = polygon.buffered_geometry_area(self.class.convert_miles_to_metres(radius))
-    self.geopoint = nil
+    self.uk_area = polygon.buffered_geometry_area(self.class.convert_miles_to_metres(radius))
+    self.uk_geopoint = nil
     self.radius_in_metres = self.class.convert_miles_to_metres(radius)
   end
 
   # A subscription with location coordinates has a geopoint, no area.
   def set_location_from_coordinates(coordinates, radius)
-    self.geopoint = RGeo::Cartesian.factory(srid: 4326).point(coordinates.second, coordinates.first)
-    self.area = nil
+    # geopoint = RGeo::Cartesian.factory(srid: 4326).point(coordinates.second, coordinates.first)
+    geopoint = GeoFactories::FACTORY_4326.point(coordinates.second, coordinates.first)
+    self.uk_geopoint = GeoFactories.convert_wgs84_to_sr27700 geopoint
+    self.uk_area = nil
     self.radius_in_metres = self.class.convert_miles_to_metres(radius)
   end
 end

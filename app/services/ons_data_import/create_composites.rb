@@ -16,18 +16,18 @@ class OnsDataImport::CreateComposites
       WITH composite_area AS (
         SELECT ST_MakeValid(
           ST_SimplifyPreserveTopology(
-            ST_Union(area::geometry),
+            ST_Union(uk_area::geometry),
             #{OnsDataImport::Base::SIMPLIFICATION_TOLERANCE}
           ),
           'method=structure'
-        )::geography AS geo
+        )::geometry AS geo
         FROM location_polygons
         WHERE name IN (#{quoted_constituents.join(', ')})
       )
       UPDATE location_polygons
-      SET area=composite_area.geo,
+      SET uk_area=composite_area.geo,
           location_type='composite',
-          centroid=ST_Centroid(composite_area.geo)
+          uk_centroid=ST_Centroid(composite_area.geo)
       FROM composite_area
       WHERE id='#{composite.id}'
     ")

@@ -169,7 +169,6 @@ GEM
       debug_inspector (>= 1.2.0)
     brakeman (7.1.1)
       racc
-    breasal (0.0.1)
     builder (3.3.0)
     business_time (0.13.0)
       activesupport (>= 3.2.0)
@@ -680,6 +679,8 @@ GEM
     rgeo-geojson (2.2.0)
       multi_json (~> 1.15)
       rgeo (>= 1.0.0)
+    rgeo-proj4 (4.0.0)
+      rgeo (~> 3.0.0)
     rouge (4.2.0)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
@@ -976,7 +977,6 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   brakeman
-  breasal
   business_time
   byebug
   capybara
@@ -1057,6 +1057,7 @@ DEPENDENCIES
   redis
   redis-client
   rgeo-geojson
+  rgeo-proj4
   rspec-rails
   rswag-api
   rswag-specs
