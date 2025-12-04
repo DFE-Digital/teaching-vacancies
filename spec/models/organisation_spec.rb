@@ -226,4 +226,21 @@ RSpec.describe Organisation do
       expect(described_class.new.live_group_vacancies).to be_empty
     end
   end
+
+  describe "#should_generate_new_friendly_id?" do
+    subject { create(:school) }
+
+    context "when name changes" do
+      it "creates a new slug" do
+        old_slug = subject.slug
+        expect { subject.update(name: "new name school") }.to change(subject, :slug).from(old_slug).to("new-name-school")
+      end
+    end
+
+    context "when another field changes" do
+      it "does not create a new slug" do
+        expect { subject.update(description: "Oh it is terrific") }.not_to change(subject, :slug)
+      end
+    end
+  end
 end
