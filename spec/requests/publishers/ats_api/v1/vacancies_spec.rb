@@ -440,7 +440,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         end
       end
 
-      response(409, "An existing vacancy with the same external_reference already exists.") do
+      response(409, "An existing vacancy with the same external reference already exists.") do
         schema "$ref" => "#/components/schemas/conflict_error"
 
         let(:school) { create(:school) }
@@ -977,7 +977,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         end
       end
 
-      response(409, "An existing vacancy with the same external_reference already exists.") do
+      response(409, "An existing vacancy with the same external reference already exists.") do
         schema "$ref" => "#/components/schemas/conflict_error"
 
         let!(:other_vacancy) { create(:vacancy, :external, publisher_ats_api_client: client, external_reference: "EXISTING-REF") }

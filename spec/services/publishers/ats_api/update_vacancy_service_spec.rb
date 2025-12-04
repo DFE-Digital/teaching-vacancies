@@ -305,7 +305,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
         {
           status: :conflict,
           json: {
-            errors: ["A vacancy with the same job title, expiry date, contract type, working_patterns, phases and salary already exists for this organisation."],
+            errors: ["A vacancy with the same job title, expiry date, contract type, working patterns, phases and salary already exists for this organisation."],
             meta: { link: Rails.application.routes.url_helpers.vacancy_url(existing_vacancy.id) },
           },
         },
