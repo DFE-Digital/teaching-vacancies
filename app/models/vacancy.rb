@@ -157,6 +157,8 @@ class Vacancy < ApplicationRecord
 
   after_save :update_conversation_searchable_content, if: -> { saved_change_to_job_title? }
 
+  self.ignored_columns += %i[geolocation]
+
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[8:00 9:00 12:00 15:00 23:59].freeze
 
@@ -268,11 +270,11 @@ class Vacancy < ApplicationRecord
   end
 
   def distance_in_miles_to(search_coordinates)
-    if geolocation.is_a? RGeo::Geographic::SphericalMultiPointImpl
+    if uk_geolocation.is_a? RGeo::Cartesian::MultiPointImpl
       # if there are multiple geolocations then return the distance to the nearest one to the given search location
-      geolocation.map { |geolocation| calculate_distance(search_coordinates, geolocation) }.min
+      uk_geolocation.map { |geolocation| calculate_distance(search_coordinates, geolocation) }.min
     else
-      calculate_distance(search_coordinates, geolocation)
+      calculate_distance(search_coordinates, uk_geolocation)
     end
   end
 
@@ -298,7 +300,10 @@ class Vacancy < ApplicationRecord
   end
 
   def calculate_distance(search_coordinates, geolocation)
-    Geocoder::Calculations.distance_between(search_coordinates, [geolocation.latitude, geolocation.longitude])
+    # Geocoder::Calculations.distance_between(search_coordinates, [geolocation.latitude, geolocation.longitude])
+    search_location = GeoFactories::FACTORY_4326.point(search_coordinates.second, search_coordinates.first)
+    search_point = GeoFactories.convert_wgs84_to_sr27700 search_location
+    search_point.distance(geolocation) / DistanceHelper::METRES_PER_MILE
   end
 
   def slug_candidates
@@ -309,13 +314,17 @@ class Vacancy < ApplicationRecord
   #   * an organisation association is added or removed, or
   #   * the job location was changed to "central office"
   # In the former case, it gets an argument, which we don't need and thus ignore
+  #
   def refresh_geolocation(_school_added_or_removed = nil)
-    self.geolocation = if organisations.one?
-                         organisation&.geopoint
-                       else
-                         points = organisations.filter_map(&:geopoint)
-                         points.presence && points.first.factory.multi_point(points)
-                       end
+    if organisations.one?
+      # self.geolocation = GeoFactories.convert_sr27700_to_wgs84(organisation.uk_geopoint) if organisation.uk_geopoint
+      self.uk_geolocation = organisation.uk_geopoint
+    else
+      uk_points = organisations.filter_map(&:uk_geopoint)
+      self.uk_geolocation = uk_points.presence && uk_points.first.factory.multi_point(uk_points)
+      # points = uk_points.map { |p| GeoFactories.convert_sr27700_to_wgs84(p) }
+      # self.geolocation = points.presence && points.first.factory.multi_point(points)
+    end
   end
 end
 # rubocop:enable Metrics/ClassLength

@@ -1,8 +1,7 @@
 require "rails_helper"
 
-RSpec.describe "Jobseekers can manage their profile" do
+RSpec.describe "Jobseekers can manage their profile", :geocode do
   let(:jobseeker) { create(:jobseeker) }
-  let(:geocoding_stub) { instance_double(Geocoding) }
   let(:bexleyheath) { %w[0.14606549011864176 51.457814649098104] }
   let(:organisation) do
     create(:school,
@@ -10,11 +9,6 @@ RSpec.describe "Jobseekers can manage their profile" do
            geopoint: RGeo::Geographic.spherical_factory(srid: 4326).point(*bexleyheath))
   end
   let(:publisher) { organisation.publishers.first }
-
-  before do
-    allow(Geocoding).to receive(:new).with(anything).and_return(geocoding_stub)
-    allow(Geocoding).to receive(:new).with("San Francisco").and_return(instance_double(Geocoding, uk_coordinates?: false))
-  end
 
   context "with a jobseeker" do
     before { login_as(jobseeker, scope: :jobseeker) }
@@ -435,11 +429,10 @@ RSpec.describe "Jobseekers can manage their profile" do
     # beware - bexleyheath here is long/lat which is DB order, however Geocoder API
     # returns lat/long so we have to reverse the order for the stub call
     before do
-      allow(geocoding_stub).to receive(:coordinates).and_return(bexleyheath.reverse)
-      create(:job_preferences_location, radius: 200, job_preferences: job_preferences)
+      create(:job_preferences_location, name: "London", radius: 200, job_preferences: job_preferences)
     end
 
-    context "if the profile is inactive" do
+    context "if the profile is inactive", :vcr do
       let!(:profile) { create(:jobseeker_profile, :with_personal_details, jobseeker:, job_preferences:, active: false) }
 
       it "does not appear in search results" do
@@ -450,7 +443,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       end
     end
 
-    context "when profile contains minimum information required for publishing" do
+    context "when profile contains minimum information required for publishing", :vcr do
       let!(:profile) do
         create(:jobseeker_profile, :with_personal_details,
                :with_qualifications,
@@ -512,9 +505,9 @@ RSpec.describe "Jobseekers can manage their profile" do
       end
     end
 
-    context "when profile does not contain minimum information required for publishing" do
+    context "when profile does not contain minimum information required for publishing", :vcr do
       let!(:profile) do
-        create(:jobseeker_profile, %i[with_personal_details with_job_preferences].sample,
+        create(:jobseeker_profile, %i[with_personal_details].sample,
                jobseeker:,
                active: false)
       end
@@ -536,10 +529,9 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
   end
 
-  describe "hiding profile from specific organisations" do
+  describe "hiding profile from specific organisations", :vcr do
     before do
-      allow(geocoding_stub).to receive(:coordinates).and_return(bexleyheath.reverse)
-      create(:job_preferences_location, radius: 200, job_preferences: job_preferences)
+      create(:job_preferences_location, name: "London", radius: 200, job_preferences: job_preferences)
     end
 
     let(:bexleyheath_geopoint) do
@@ -631,7 +623,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       end
     end
 
-    context "if the organisation is a trust" do
+    context "if the organisation is a trust", :vcr do
       let!(:forbidden_trust) do
         create(:trust,
                name: "Forbidden Trust",
@@ -678,7 +670,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       end
     end
 
-    context "if the forbidden organisation is within a trust" do
+    context "if the forbidden organisation is within a trust", :vcr do
       let!(:forbidden_trust) do
         create(:trust,
                name: "Forbidden Trust",
@@ -727,13 +719,12 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
   end
 
-  describe "job preferences" do
+  describe "job preferences", :vcr do
     let(:profile) { create(:jobseeker_profile, :with_personal_details, jobseeker:) }
 
     before do
       login_as(jobseeker, scope: :jobseeker)
       visit jobseekers_profile_path
-      allow(geocoding_stub).to receive_messages(uk_coordinates?: true, coordinates: Geocoder::DEFAULT_STUB_COORDINATES)
     end
 
     after { logout }
@@ -886,7 +877,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       expect(page).to have_content("Manchester (10 miles)")
     end
 
-    context "when a jobseeker enters non-teacher preferences" do
+    context "when a jobseeker enters non-teacher preferences", :vcr do
       it "changes the journey" do
         click_link("Add job preferences")
         expect(page).to have_current_path(jobseekers_job_preferences_step_path(:roles), ignore_query: true)
