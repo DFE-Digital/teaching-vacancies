@@ -67,14 +67,14 @@ class Search::JobseekerProfileSearch
 
   def location_preferences
     if current_organisation.school?
-      JobPreferences::Location.containing(current_organisation.geopoint)
+      JobPreferences::Location.containing(current_organisation.uk_geopoint)
     elsif filters[:locations].present?
       School.where(id: filters[:locations])
-            .map { |school| JobPreferences::Location.containing(school.geopoint) }
+            .map { |school| JobPreferences::Location.containing(school.uk_geopoint) }
             .reduce { |q, item| q.or(item) }
     else
       current_organisation.schools
-            .map { |school| JobPreferences::Location.containing(school.geopoint) }
+            .map { |school| JobPreferences::Location.containing(school.uk_geopoint) }
             .reduce { |q, item| q.or(item) }
     end
   end

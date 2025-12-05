@@ -177,9 +177,9 @@ class SubscriptionVacanciesMatchingQuery
     # 'area_before_type_cast' and 'geopoint_before_type_cast' are used to avoid casting the fields into RGeo objects.
     # This reduces memory usage and speeds up the query. As we don't need to use the actual objects in Ruby code,
     # just need to know if they are present in DB.
-    if subscription.area_before_type_cast.present?
+    if subscription.uk_area_before_type_cast.present?
       location_by_area_filter(scope, subscription)
-    elsif subscription.geopoint_before_type_cast.present? && subscription.radius_in_metres.present?
+    elsif subscription.uk_geopoint_before_type_cast.present? && subscription.radius_in_metres.present?
       location_by_geopoint_filter(scope, subscription)
     else
       scope.none # Invalid location filter (having no area or geopoint) returns no matches
@@ -199,7 +199,7 @@ class SubscriptionVacanciesMatchingQuery
   def location_by_area_filter(scope, subscription)
     scope.joins("INNER JOIN subscriptions ON subscriptions.id = '#{subscription.id}'")
          .joins(:organisations)
-         .where("ST_Contains(subscriptions.area, organisations.geopoint::geometry)")
+         .where("ST_Contains(subscriptions.uk_area, organisations.uk_geopoint::geometry)")
   end
 
   # Filter vacancies where their organisations' geopoints fall within the subscription's radius from the subscription's
@@ -214,8 +214,8 @@ class SubscriptionVacanciesMatchingQuery
   def location_by_geopoint_filter(scope, subscription)
     scope.joins("INNER JOIN subscriptions ON subscriptions.id = '#{subscription.id}'")
          .joins(:organisations)
-         .where("ST_DWithin(ST_Transform(organisations.geopoint::geometry, #{BRITISH_NATIONAL_GRID_SRID}),
-                            ST_Transform(subscriptions.geopoint, #{BRITISH_NATIONAL_GRID_SRID}),
+         .where("ST_DWithin(organisations.uk_geopoint::geometry,
+                            subscriptions.uk_geopoint,
                             subscriptions.radius_in_metres)")
   end
 end

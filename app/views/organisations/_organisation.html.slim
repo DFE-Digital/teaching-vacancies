@@ -76,7 +76,7 @@ h2.govuk-heading-m = t("organisations.show.summary.heading")
   h2.govuk-heading-m = t("organisations.show.summary.safeguarding_information")
   p.govuk-body = simple_format(organisation.safeguarding_information)
 
-- if organisation.geopoint?
+- if organisation.uk_geopoint?
   h2.govuk-heading-m = t("organisations.map.heading")
   p.govuk-body = full_address(organisation)
 

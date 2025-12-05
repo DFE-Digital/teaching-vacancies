@@ -72,7 +72,7 @@ FactoryBot.create(:vacancy, :for_seed_data, **attrs)
 # Vacancies at multiple schools in Weydon trust
 attrs = { organisations: weydon_trust.schools, phases: %w[secondary], publisher_organisation: weydon_trust, publisher: Publisher.all.sample }
 # need some secondary jobs with subjects sometimes
-300.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+30.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
 
 # Vacancies at multiple schools in Southampton local authority
 attrs = { organisations: southampton_la.schools.first(5), phases: %w[primary], publisher_organisation: southampton_la, publisher: Publisher.all.sample }

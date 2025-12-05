@@ -30,15 +30,15 @@ class Search::LocationBuilder
     location_filter[:radius]
   end
 
-  def geojson_point
-    return unless location_filter[:point_coordinates]
-
-    RGeo::GeoJSON.encode(factory.point(*location_filter[:point_coordinates].reverse))
-  end
-
-  def geojson_polygon
-    RGeo::GeoJSON.encode(polygon&.area)
-  end
+  # def geojson_point
+  #   return unless location_filter[:point_coordinates]
+  #
+  #   RGeo::GeoJSON.encode(GeoFactories::FACTORY_4326.point(*location_filter[:point_coordinates].reverse))
+  # end
+  #
+  # def geojson_polygon
+  #   RGeo::GeoJSON.encode(polygon&.uk_area)
+  # end
 
   private
 
@@ -47,9 +47,5 @@ class Search::LocationBuilder
       point_coordinates: Geocoding.new(location).coordinates,
       radius: convert_miles_to_metres(radius),
     }
-  end
-
-  def factory
-    @factory ||= RGeo::ActiveRecord::SpatialFactoryStore.instance.default
   end
 end

@@ -132,7 +132,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "full_time_details" => nil,
           "further_details" => "details",
           "further_details_provided" => true,
-          "geolocation" => "POINT (2.0 1.0)",
+          "uk_geolocation" => "POINT (845357.1843978604 -5416269.153920948)",
           "google_index_removed" => false,
           "hired_status" => nil,
           "id" => nil,

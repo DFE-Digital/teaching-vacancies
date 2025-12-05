@@ -47,20 +47,23 @@ class OnsDataImport::Base
     #
     # The area centroid is precomputed and stored to avoid recomputing it every time it's needed.
     def set_area_data(location_polygon, geometry, type)
+      # This is necessary as the ST_GeomFromGeoJSON() method that we would like to use
+      # doesn't appear to support the optional 'srid' parameter that we need to pass
+      geometry_as_wkt = RGeo::GeoJSON.decode(geometry).as_text
       ActiveRecord::Base.connection.exec_update("
       WITH geom AS (
         SELECT ST_MakeValid(
           ST_SimplifyPreserveTopology(
-            ST_GeomFromGeoJSON(#{ActiveRecord::Base.connection.quote(geometry)}),
+            ST_GeomFromText(#{ActiveRecord::Base.connection.quote(geometry_as_wkt)}, 27700),
             #{SIMPLIFICATION_TOLERANCE}
           ),
           'method=structure'
-        )::geography AS geo
+        )::geometry AS geo
       )
       UPDATE location_polygons
-      SET area=geom.geo,
+      SET uk_area=geom.geo,
           location_type=#{ActiveRecord::Base.connection.quote(type)},
-          centroid=ST_Centroid(geom.geo)
+          uk_centroid=ST_Centroid(geom.geo)
       FROM geom
       WHERE id='#{location_polygon.id}'
     ")
@@ -69,7 +72,7 @@ class OnsDataImport::Base
     def arcgis_features(offset:, name_field:, api_name:)
       params = [
         "where=1%3D1",
-        "outSR=4326",
+        "outSR=27700",
         "f=pgeojson",
         "outFields=#{name_field}",
         "resultRecordCount=#{PER_PAGE}",

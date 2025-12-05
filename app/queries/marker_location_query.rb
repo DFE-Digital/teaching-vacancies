@@ -4,6 +4,6 @@ class MarkerLocationQuery < LocationQuery
   end
 
   def call(...)
-    super("markers.geopoint", ...)
+    super("markers.uk_geopoint", ...)
   end
 end
