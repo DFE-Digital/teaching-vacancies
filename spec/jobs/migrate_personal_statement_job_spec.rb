@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe MigratePersonalStatementJob do
   describe "#perform" do
     let!(:job_application_with_statement) do
-      create(:job_application, personal_statement: "My personal statement", content: nil)
+      create(:job_application, personal_statement: "My personal statement", personal_statement_richtext: nil)
     end
 
     it "migrates personal_statement to content field" do
@@ -14,25 +14,25 @@ RSpec.describe MigratePersonalStatementJob do
 
     context "when content is already present" do
       let!(:job_application_with_content) do
-        create(:job_application, personal_statement: "Old statement", content: "Existing content")
+        create(:job_application, personal_statement: "Old statement", personal_statement_richtext: "Existing content")
       end
 
       it "skips migration" do
         described_class.perform_now([job_application_with_content.id])
 
-        expect(job_application_with_content.reload.content.to_plain_text).to eq("Existing content")
+        expect(job_application_with_content.reload.personal_statement_richtext.to_plain_text).to eq("Existing content")
       end
     end
 
     context "when personal_statement is blank" do
       let!(:job_application_without_statement) do
-        create(:job_application, personal_statement: nil, content: nil)
+        create(:job_application, personal_statement: nil, personal_statement_richtext: nil)
       end
 
       it "skips migration" do
         expect {
           described_class.perform_now([job_application_without_statement.id])
-        }.not_to(change { job_application_without_statement.reload.content })
+        }.not_to(change { job_application_without_statement.reload.personal_statement_richtext })
       end
     end
 
@@ -56,16 +56,16 @@ RSpec.describe MigratePersonalStatementJob do
     end
 
     context "when processing multiple job applications" do
-      let!(:job_app_english) { create(:job_application, personal_statement: "Statement about english", content: nil) }
-      let!(:job_app_maths) { create(:job_application, personal_statement: "Statement to do with maths", content: nil) }
-      let!(:job_app_french) { create(:job_application, personal_statement: "Ahhh bonjour mon ami", content: "Has content") }
+      let!(:job_app_english) { create(:job_application, personal_statement: "Statement about english", personal_statement_richtext: nil) }
+      let!(:job_app_maths) { create(:job_application, personal_statement: "Statement to do with maths", personal_statement_richtext: nil) }
+      let!(:job_app_french) { create(:job_application, personal_statement: "Ahhh bonjour mon ami", personal_statement_richtext: "Has content") }
 
       it "migrates only applications without content" do
         described_class.perform_now([job_app_english.id, job_app_maths.id, job_app_french.id])
 
-        expect(job_app_english.reload.content.to_plain_text).to eq("Statement about english")
-        expect(job_app_maths.reload.content.to_plain_text).to eq("Statement to do with maths")
-        expect(job_app_french.reload.content.to_plain_text).to eq("Has content")
+        expect(job_app_english.reload.personal_statement_richtext.to_plain_text).to eq("Statement about english")
+        expect(job_app_maths.reload.personal_statement_richtext.to_plain_text).to eq("Statement to do with maths")
+        expect(job_app_french.reload.personal_statement_richtext.to_plain_text).to eq("Has content")
       end
     end
   end

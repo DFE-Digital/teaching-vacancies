@@ -1,6 +1,6 @@
 - r.with_section :personal_statement
-  - if job_application.content.present?
-    .govuk-body.review-component__section__body--border = job_application.content
+  - if job_application.personal_statement_richtext.present?
+    .govuk-body.review-component__section__body--border = job_application.personal_statement_richtext
   - elsif job_application.personal_statement.present?
     .govuk-body.review-component__section__body--border = simple_format(job_application.personal_statement)
   - else

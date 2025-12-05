@@ -175,8 +175,8 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
           expect(subject.baptism_certificate.content_type).to eq("application/pdf")
         end
 
-        it "copies content and personal details" do
-          expect(subject.content.body).to eq(recent_job_application.content.body)
+        it "copies personal_statement_richtext and personal details" do
+          expect(subject.personal_statement_richtext.body).to eq(recent_job_application.personal_statement_richtext.body)
           expect(subject.first_name).to eq(recent_job_application.first_name)
           expect(subject.last_name).to eq(recent_job_application.last_name)
         end
@@ -187,11 +187,11 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
         let(:new_job_application) { jobseeker.job_applications.create(vacancy: vacancy_for_faith_school) }
         let(:recent_job_application) { create(:job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker: jobseeker, vacancy: vacancy_for_faith_school) }
 
-        it "copies content and personal details" do
+        it "copies personal_statement_richtext and personal details" do
           expect(subject.baptism_certificate).not_to be_attached
           expect(subject.first_name).to eq(recent_job_application.first_name)
           expect(subject.last_name).to eq(recent_job_application.last_name)
-          expect(subject.content.body).to eq(recent_job_application.content.body)
+          expect(subject.personal_statement_richtext.body).to eq(recent_job_application.personal_statement_richtext.body)
         end
       end
     end
