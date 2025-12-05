@@ -115,7 +115,7 @@ class JobseekerProfile < ApplicationRecord
   def qts_status
     case qualified_teacher_status
     when "yes"
-      "Awarded QTS #{qualified_teacher_status_year}"
+      "Gained QTS #{qualified_teacher_status_year}"
     when "on_track"
       "On track to receive QTS"
     else
