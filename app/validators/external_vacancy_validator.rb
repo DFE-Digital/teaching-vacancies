@@ -27,7 +27,7 @@ class ExternalVacancyValidator < ActiveModel::Validator
 
   def validate_no_duplicate_vacancy(record)
     if record.find_duplicate_external_vacancy.present?
-      record.errors.add(:base, "A vacancy with the same job title, expiry date, contract type, working_patterns, phases and salary already exists for this organisation.")
+      record.errors.add(:base, "A vacancy with the same job title, expiry date, contract type, working patterns, phases and salary already exists for this organisation.")
     end
   end
 
