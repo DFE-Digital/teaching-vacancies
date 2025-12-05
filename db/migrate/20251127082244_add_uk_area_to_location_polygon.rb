@@ -1,4 +1,7 @@
 class AddUkAreaToLocationPolygon < ActiveRecord::Migration[8.0]
+  # for adding indexes
+  disable_ddl_transaction!
+
   def change
     # could be polygon or multi_polygon
     add_column :location_polygons, :uk_area, :geometry, srid: 27_700
@@ -15,8 +18,8 @@ class AddUkAreaToLocationPolygon < ActiveRecord::Migration[8.0]
     add_column :organisations, :uk_geopoint, :st_point, srid: 27_700
     add_index :organisations, :uk_geopoint, using: :gist, algorithm: :concurrently
 
-    add_column :markers, :uk_geopoint, :st_point, srid: 27_700
-    add_index :markers, :uk_geopoint, using: :gist, algorithm: :concurrently
+    # add_column :markers, :uk_geopoint, :st_point, srid: 27_700
+    # add_index :markers, :uk_geopoint, using: :gist, algorithm: :concurrently
 
     add_column :job_preferences_locations, :uk_area, :st_polygon, srid: 27_700
     add_index :job_preferences_locations, :uk_area, using: :gist, algorithm: :concurrently
@@ -29,7 +32,9 @@ class AddUkAreaToLocationPolygon < ActiveRecord::Migration[8.0]
     change_column_null :job_preferences_locations, :area, true
 
     # would like to set this, but won't work on existing data
-    change_column_null :location_polygons, :uk_area, false
-    change_column_null :job_preferences_locations, :uk_area, false
+    safety_assured do
+      change_column_null :location_polygons, :uk_area, false
+      change_column_null :job_preferences_locations, :uk_area, false
+    end
   end
 end
