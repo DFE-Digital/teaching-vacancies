@@ -65,6 +65,10 @@ class School < Organisation
     religious_character.present?
   end
 
+  def catholic_school?
+    religious_character&.include?("Catholic") || false
+  end
+
   def school_type
     read_attribute(:school_type).singularize
   end
@@ -89,5 +93,12 @@ class School < Organisation
 
   def all_organisation_ids
     [id]
+  end
+
+  def ats_religious_variant
+    return "catholic" if catholic_school?
+    return "other_faith" if faith_school?
+
+    "non_faith"
   end
 end
