@@ -70,7 +70,7 @@ section#job-details class="govuk-!-margin-bottom-5"
     .govuk-body.editor-rendered-content == vacancy.skills_and_experience
   - elsif vacancy.job_advert.present?
     h2.govuk-heading-m = t("jobs.job_summary", job_title: vacancy.job_title)
-    .govuk-body.editor-rendered-content == vacancy.job_advert
+    .govuk-body.editor-rendered-content == simple_format(vacancy.job_advert)
 
   - if vacancy.school_offer.present?
     h2.govuk-heading-m = t("jobs.school_offer.jobseeker")
