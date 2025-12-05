@@ -23,8 +23,8 @@ class JobPreferences < ApplicationRecord
         self.uk_area = LocationPolygon.buffered(radius).with_name(name).uk_area
       else
         lat, long = Geocoding.new(name).coordinates.map(&:to_s)
-        radius_metres = convert_miles_to_metres(Search::RadiusBuilder.new(name, radius).radius)
-        area = GeoFactories::FACTORY_4326.point(long, lat).buffer(radius_metres)
+        radius_meters = convert_miles_to_metres(Search::RadiusBuilder.new(name, radius).radius)
+        area = GeoFactories::FACTORY_4326.point(long, lat).buffer(radius_meters)
 
         self.uk_area = GeoFactories.convert_wgs84_to_sr27700(area)
       end
