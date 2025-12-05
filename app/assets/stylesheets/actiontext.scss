@@ -99,8 +99,8 @@ trix-editor {
 }
 
 /* Hide attachment and link buttons only on personal statement form */
-.personal-statement-form .trix-button--icon-attach,
-.personal-statement-form .trix-button--icon-link {
+.personal-statement-form trix-toolbar .trix-button--icon-attach,
+.personal-statement-form trix-toolbar .trix-button--icon-link {
   display: none !important;
 }
 
