@@ -3,7 +3,7 @@ class AddUkAreaToLocationPolygon < ActiveRecord::Migration[8.0]
 
   def change
     # could be polygon or multi_polygon
-    add_column :location_polygons, :uk_area, :geometry, srid: 27_700, null: false
+    add_column :location_polygons, :uk_area, :geometry, srid: 27_700
     add_index :location_polygons, :uk_area, using: :gist, algorithm: :concurrently
 
     add_column :location_polygons, :uk_centroid, :st_point, srid: 27_700
@@ -27,6 +27,14 @@ class AddUkAreaToLocationPolygon < ActiveRecord::Migration[8.0]
     add_column :vacancies, :uk_geolocation, :geometry, srid: 27_700
     add_index :vacancies, :uk_geolocation, using: :gist, algorithm: :concurrently
 
+    # have to allow nulls on this column as its now being ignored so won't be populated
     change_column_null :job_preferences_locations, :area, true
+
+    # would like to set this, but won't work on existing data
+    validate_not_null_constraint :location_polygons, :uk_area, name: "location_polygons_uk_area_null"
+    change_column_null :location_polygons, :uk_area, false
+    remove_check_constraint :location_polygons, name: "location_polygons_uk_area_null"
+
+    change_column_null :job_preferences_locations, :uk_area, false
   end
 end
