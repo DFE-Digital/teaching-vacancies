@@ -52,7 +52,7 @@ RSpec.describe "Jobseekers can prefill applications" do
 
         # saving converts 'imported' sections to 'completed'
         click_on "Personal statement"
-        expect(page).to have_content(previous_application.content.to_plain_text)
+        expect(page).to have_content(previous_application.personal_statement_richtext.to_plain_text)
         click_on "Save and continue"
         within("#personal_statement") do
           expect(page).to have_css(".govuk-task-list__status", text: I18n.t("shared.status_tags.incomplete"))
