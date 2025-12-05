@@ -42,8 +42,8 @@ module TeachingVacancies
       g.orm :active_record, primary_key_type: :uuid
     end
 
-    config.action_view.sanitized_allowed_tags = %w[p br strong em ul li h1 h2 h3 h4 h5 a]
-    config.action_view.sanitized_allowed_attributes = %w[href]
+    config.action_view.sanitized_allowed_tags = %w[p br strong em ul li h1 h2 h3 h4 h5 a blockquote]
+    config.action_view.sanitized_allowed_attributes = %w[href target rel]
     config.action_view.default_form_builder = GOVUKDesignSystemFormBuilder::FormBuilder
 
     # Given we are using Lockbox, this ensures that Rails does not include unnecessary support for SHA-1,
