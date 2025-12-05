@@ -125,7 +125,7 @@ RSpec.describe JobApplicationPdf do
       let(:label_scope) { "helpers.label.jobseekers_job_application_personal_details_form" }
       let(:basic_professional_status_data) do
         [
-          [I18n.t("qualified_teacher_status", scope:), "Yes, awarded in #{job_application.qualified_teacher_status_year}"],
+          [I18n.t("qualified_teacher_status", scope:), "Yes, gained in #{job_application.qualified_teacher_status_year}"],
           [I18n.t("jobseekers.job_application.age_range_and_subject"), "not provided"],
           [I18n.t("teacher_reference_number_review", scope: label_scope), job_application.teacher_reference_number],
           [I18n.t("is_statutory_induction_complete", scope:), "Yes"],
@@ -155,7 +155,7 @@ RSpec.describe JobApplicationPdf do
 
         it "includes the proper status info" do
           expected_row = [
-            [I18n.t("qualified_teacher_status", scope:), "Yes, awarded in 2020"],
+            [I18n.t("qualified_teacher_status", scope:), "Yes, gained in 2020"],
             [I18n.t("jobseekers.job_application.age_range_and_subject"), "not provided"],
             [I18n.t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number_review"), job_application.teacher_reference_number],
             [I18n.t("is_statutory_induction_complete", scope:), "Yes"],
