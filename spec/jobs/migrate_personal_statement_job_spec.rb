@@ -9,7 +9,7 @@ RSpec.describe MigratePersonalStatementJob do
     it "migrates personal_statement to content field" do
       described_class.perform_now([job_application_with_statement.id])
 
-      expect(job_application_with_statement.reload.content.to_plain_text).to eq("My personal statement")
+      expect(job_application_with_statement.reload.personal_statement_richtext.to_plain_text).to eq("My personal statement")
     end
 
     context "when content is already present" do
@@ -40,7 +40,7 @@ RSpec.describe MigratePersonalStatementJob do
       before do
         allow(Rails.logger).to receive(:error)
         # rubocop:disable RSpec/AnyInstance
-        allow_any_instance_of(JobApplication).to receive(:update!).and_raise(StandardError.new("Test error"))
+        allow_any_instance_of(JobApplication).to receive(:save!).and_raise(StandardError.new("Test error"))
         # rubocop:enable RSpec/AnyInstance
       end
 
