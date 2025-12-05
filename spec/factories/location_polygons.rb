@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :location_polygon do
     transient do
-      area { GeoFactories::FACTORY_4326.parse_wkt("POLYGON((0 0, 1 1, 0 1, 0 0))") }
-      centroid { GeoFactories::FACTORY_4326.parse_wkt("POINT(0.33331264776372055 0.6666929898148579)") }
+      area { "POLYGON((0 0, 1 1, 0 1, 0 0))" }
+      centroid { "POINT(0.33331264776372055 0.6666929898148579)" }
     end
 
     name { "London" }
@@ -17,7 +17,12 @@ FactoryBot.define do
                           end
       end
       if evaluator.centroid.present? && polygon.uk_centroid.nil?
-        polygon.uk_centroid = GeoFactories.convert_wgs84_to_sr27700 evaluator.centroid
+        polygon.uk_centroid = if evaluator.centroid.is_a?(String)
+                                GeoFactories.convert_wgs84_to_sr27700 GeoFactories::FACTORY_4326.parse_wkt(evaluator.centroid)
+                              else
+                                GeoFactories.convert_wgs84_to_sr27700 evaluator.centroid
+
+                              end
       end
     end
   end

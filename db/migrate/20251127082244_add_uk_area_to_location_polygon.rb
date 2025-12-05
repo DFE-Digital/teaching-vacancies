@@ -3,7 +3,7 @@ class AddUkAreaToLocationPolygon < ActiveRecord::Migration[8.0]
 
   def change
     # could be polygon or multi_polygon
-    add_column :location_polygons, :uk_area, :geometry, srid: 27_700
+    add_column :location_polygons, :uk_area, :geometry, srid: 27_700, null: false
     add_index :location_polygons, :uk_area, using: :gist, algorithm: :concurrently
 
     add_column :location_polygons, :uk_centroid, :st_point, srid: 27_700

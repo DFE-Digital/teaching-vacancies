@@ -212,11 +212,6 @@ class SubscriptionVacanciesMatchingQuery
   # Including 'publish_on' in the distinct: The provided scope may be ordered by publish on date. When using distinct
   # with ordering, Postgres requires all selected columns to be included in the distinct clause or will fail during execution.
   def location_by_geopoint_filter(scope, subscription)
-    # scope.joins("INNER JOIN subscriptions ON subscriptions.id = '#{subscription.id}'")
-    #      .joins(:organisations)
-    #      .where("ST_DWithin(ST_Transform(organisations.geopoint::geometry, #{BRITISH_NATIONAL_GRID_SRID}),
-    #                         ST_Transform(subscriptions.geopoint, #{BRITISH_NATIONAL_GRID_SRID}),
-    #                         subscriptions.radius_in_metres)")
     scope.joins("INNER JOIN subscriptions ON subscriptions.id = '#{subscription.id}'")
          .joins(:organisations)
          .where("ST_DWithin(organisations.uk_geopoint::geometry,

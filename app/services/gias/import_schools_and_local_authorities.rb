@@ -124,14 +124,7 @@ class Gias::ImportSchoolsAndLocalAuthorities
 
     return { uk_geopoint: nil } unless easting.positive? && northing.positive?
 
-    # Breasal::EastingNorthing.new(
-    #   easting: easting,
-    #   northing: northing,
-    #   type: :gb,
-    # ).to_wgs84
-
     uk27700 = RGeo::Cartesian.factory(srid: 27_700)
-    # Rails.logger.debug { "#{row.fetch('EstablishmentName')} Easting #{easting} Northing #{northing}" }
     { uk_geopoint: uk27700.point(easting, northing) }
   end
 

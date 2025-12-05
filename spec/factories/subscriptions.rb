@@ -14,6 +14,26 @@ FactoryBot.define do
       subject { nil } # Legacy criteria
       organisation_slug { nil }
       newly_qualified_teacher { nil } # Legacy criteria
+
+      area { nil }
+      geopoint { nil }
+    end
+
+    after(:build) do |subscription, evaluator|
+      if subscription.uk_geopoint.nil? && evaluator.geopoint.present?
+        subscription.uk_geopoint = if evaluator.geopoint.is_a?(String)
+                                     GeoFactories.convert_wgs84_to_sr27700(GeoFactories::FACTORY_4326.parse_wkt(evaluator.geopoint))
+                                   else
+                                     GeoFactories.convert_wgs84_to_sr27700(evaluator.geopoint)
+                                   end
+      end
+      if subscription.uk_area.nil? && evaluator.area.present?
+        subscription.uk_area = if evaluator.area.is_a?(String)
+                                 GeoFactories.convert_wgs84_to_sr27700(GeoFactories::FACTORY_4326.parse_wkt(evaluator.area))
+                               else
+                                 GeoFactories.convert_wgs84_to_sr27700(evaluator.area)
+                               end
+      end
     end
 
     email { Faker::Internet.email(domain: "contoso.com") }
@@ -61,14 +81,14 @@ FactoryBot.define do
 
     trait :with_area_location do
       location { "London" }
-      uk_area { "POLYGON((0 0, 1 1, 0 1, 0 0))" }
-      uk_geopoint { nil }
+      area { "POLYGON((0 0, 1 1, 0 1, 0 0))" }
+      geopoint { nil }
       radius_in_metres { 16_090 } # 10 miles
     end
 
     trait :with_geopoint_location do
-      uk_area { nil }
-      uk_geopoint { "POINT(51.5074 -0.1278)" } # London
+      area { nil }
+      geopoint { "POINT(51.5074 -0.1278)" } # London
       radius_in_metres { 16_090 } # 10 miles
     end
 

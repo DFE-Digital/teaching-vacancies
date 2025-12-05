@@ -92,9 +92,11 @@ class Gias::ImportTrusts
         coordinates = Geocoding.new(trust[:postcode]).coordinates
         next if coordinates == [0, 0]
 
+        point = GeoFactories::FACTORY_4326.point(coordinates.second, coordinates.first)
+
         {
           uid: trust[:uid],
-          uk_geopoint: "SRID=4326;POINT(#{coordinates.second} #{coordinates.first})",
+          uk_geopoint: GeoFactories.convert_wgs84_to_sr27700(point),
         }
       }.compact
 

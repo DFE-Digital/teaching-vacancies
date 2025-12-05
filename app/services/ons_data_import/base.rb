@@ -26,7 +26,7 @@ class OnsDataImport::Base
           type = LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES[name]
           geometry = feature["geometry"].to_json
 
-          Rails.logger.info("Persisting new area data '#{geometry}' for '#{name}' (#{type})")
+          Rails.logger.info("Persisting new area data for '#{name}' (#{type})")
           set_area_data(location_polygon, geometry, type)
         end
       end
@@ -50,7 +50,6 @@ class OnsDataImport::Base
       # This is necessary as the ST_GeomFromGeoJSON() method that we would like to use
       # doesn't appear to support the optional 'srid' parameter that we need to pass
       geometry_as_wkt = RGeo::GeoJSON.decode(geometry).as_text
-      # debugger
       ActiveRecord::Base.connection.exec_update("
       WITH geom AS (
         SELECT ST_MakeValid(

@@ -156,7 +156,6 @@ class Subscription < ApplicationRecord
 
   # A subscription with location coordinates has a geopoint, no area.
   def set_location_from_coordinates(coordinates, radius)
-    # geopoint = RGeo::Cartesian.factory(srid: 4326).point(coordinates.second, coordinates.first)
     geopoint = GeoFactories::FACTORY_4326.point(coordinates.second, coordinates.first)
     self.uk_geopoint = GeoFactories.convert_wgs84_to_sr27700 geopoint
     self.uk_area = nil

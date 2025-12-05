@@ -33,85 +33,85 @@ RSpec.describe BackfillSubscriptionLocationJob do
     allow(Rails.logger).to receive(:info)
   end
 
-  # context "with subscriptions with a location matching a valid polygon" do
-  #   let!(:subs_matching_polygon) do
-  #     [
-  #       Subscription.create!(search_criteria: { "location" => "london", "radius" => 10 }),
-  #       Subscription.create!(search_criteria: { "location" => " LonDON ", "radius" => 10 }),
-  #       Subscription.create!(search_criteria: { "location" => "london", "radius" => 200 }),
-  #     ]
-  #   end
-  #
-  #   it "populates the location area and radius in metres for all of them" do
-  #     described_class.perform_now
-  #     subs_matching_polygon.each do |sub|
-  #       sub.reload
-  #       expect(sub.area.as_text).to eq(polygon_wkt)
-  #       expect(sub.geopoint).to be_nil
-  #       expect(sub.radius_in_metres).to eq(Subscription.convert_miles_to_metres(sub.search_criteria["radius"]))
-  #     end
-  #   end
-  #
-  #   it "does a single update for all the subscriptions matching the same location/radius pair" do
-  #     updated_instances = []
-  #
-  #     allow_any_instance_of(Subscription.const_get(:ActiveRecord_Relation)).to receive(:update_all) do |instance, *_args|
-  #       updated_instances << instance
-  #     end
-  #
-  #     described_class.perform_now
-  #
-  #     expect(updated_instances.size).to eq(2)
-  #     expect(updated_instances.uniq.size).to eq(2)
-  #   end
-  #
-  #   it "logs the job stats" do
-  #     expect(Rails.logger).to receive(:info).with(
-  #       "BackfillSubscriptionLocationJob completed. Total unique locations: 2. Polygons: 2, Coordinates: 0, Invalid: 0.",
-  #     )
-  #     described_class.perform_now
-  #   end
-  # end
+  context "with subscriptions with a location matching a valid polygon" do
+    let!(:subs_matching_polygon) do
+      [
+        Subscription.create!(search_criteria: { "location" => "london", "radius" => 10 }),
+        Subscription.create!(search_criteria: { "location" => " LonDON ", "radius" => 10 }),
+        Subscription.create!(search_criteria: { "location" => "london", "radius" => 200 }),
+      ]
+    end
 
-  # context "with subscriptions with a location not matching any valid polygon but with coordinates" do
-  #   let!(:subs_matching_coordinates) do
-  #     [
-  #       Subscription.create!(search_criteria: { "location" => "E12JP", "radius" => 10 }),
-  #       Subscription.create!(search_criteria: { "location" => " e12jp ", "radius" => 10 }),
-  #       Subscription.create!(search_criteria: { "location" => "E12JP", "radius" => 15 }),
-  #     ]
-  #   end
-  #
-  #   it "populates the geopoint and radius in metres for all of them" do
-  #     described_class.perform_now
-  #     subs_matching_coordinates.each do |sub|
-  #       sub.reload
-  #       expect(sub.area).to be_nil
-  #       expect(sub.geopoint.as_text).to eq point_wkt
-  #       expect(sub.radius_in_metres).to eq(Subscription.convert_miles_to_metres(sub.search_criteria["radius"]))
-  #     end
-  #   end
-  #
-  #   it "does a single update for all the subscriptions matching the same location/radius pair" do
-  #     updated_instances = []
-  #
-  #     allow_any_instance_of(Subscription.const_get(:ActiveRecord_Relation)).to receive(:update_all) do |instance, *_args|
-  #       updated_instances << instance
-  #     end
-  #
-  #     described_class.perform_now
-  #
-  #     expect(updated_instances.size).to eq(2)
-  #     expect(updated_instances.uniq.size).to eq(2)
-  #   end
-  #
-  #   it "logs the job stats" do
-  #     expect(Rails.logger).to receive(:info).with(
-  #       "BackfillSubscriptionLocationJob completed. Total unique locations: 2. Polygons: 0, Coordinates: 2, Invalid: 0.",
-  #     )
-  #     described_class.perform_now
-  #   end
-  # end
+    it "populates the location area and radius in metres for all of them" do
+      described_class.perform_now
+      subs_matching_polygon.each do |sub|
+        sub.reload
+        expect(sub.area.as_text).to eq(polygon_wkt)
+        expect(sub.geopoint).to be_nil
+        expect(sub.radius_in_metres).to eq(Subscription.convert_miles_to_metres(sub.search_criteria["radius"]))
+      end
+    end
+
+    it "does a single update for all the subscriptions matching the same location/radius pair" do
+      updated_instances = []
+
+      allow_any_instance_of(Subscription.const_get(:ActiveRecord_Relation)).to receive(:update_all) do |instance, *_args|
+        updated_instances << instance
+      end
+
+      described_class.perform_now
+
+      expect(updated_instances.size).to eq(2)
+      expect(updated_instances.uniq.size).to eq(2)
+    end
+
+    it "logs the job stats" do
+      expect(Rails.logger).to receive(:info).with(
+        "BackfillSubscriptionLocationJob completed. Total unique locations: 2. Polygons: 2, Coordinates: 0, Invalid: 0.",
+      )
+      described_class.perform_now
+    end
+  end
+
+  context "with subscriptions with a location not matching any valid polygon but with coordinates" do
+    let!(:subs_matching_coordinates) do
+      [
+        Subscription.create!(search_criteria: { "location" => "E12JP", "radius" => 10 }),
+        Subscription.create!(search_criteria: { "location" => " e12jp ", "radius" => 10 }),
+        Subscription.create!(search_criteria: { "location" => "E12JP", "radius" => 15 }),
+      ]
+    end
+
+    it "populates the geopoint and radius in metres for all of them" do
+      described_class.perform_now
+      subs_matching_coordinates.each do |sub|
+        sub.reload
+        expect(sub.area).to be_nil
+        expect(sub.geopoint.as_text).to eq point_wkt
+        expect(sub.radius_in_metres).to eq(Subscription.convert_miles_to_metres(sub.search_criteria["radius"]))
+      end
+    end
+
+    it "does a single update for all the subscriptions matching the same location/radius pair" do
+      updated_instances = []
+
+      allow_any_instance_of(Subscription.const_get(:ActiveRecord_Relation)).to receive(:update_all) do |instance, *_args|
+        updated_instances << instance
+      end
+
+      described_class.perform_now
+
+      expect(updated_instances.size).to eq(2)
+      expect(updated_instances.uniq.size).to eq(2)
+    end
+
+    it "logs the job stats" do
+      expect(Rails.logger).to receive(:info).with(
+        "BackfillSubscriptionLocationJob completed. Total unique locations: 2. Polygons: 0, Coordinates: 2, Invalid: 0.",
+      )
+      described_class.perform_now
+    end
+  end
 
   context "with subscriptions with an invalid location" do
     let!(:subs_invalid) do

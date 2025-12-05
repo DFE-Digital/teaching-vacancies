@@ -444,7 +444,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_27_150257) do
     t.datetime "updated_at", precision: nil, null: false
     t.geography "area", limit: {srid: 4326, type: "geometry", geographic: true}
     t.geography "centroid", limit: {srid: 4326, type: "st_point", geographic: true}
-    t.geometry "uk_area", limit: {srid: 27700, type: "geometry"}
+    t.geometry "uk_area", limit: {srid: 27700, type: "geometry"}, null: false
     t.geometry "uk_centroid", limit: {srid: 27700, type: "st_point"}
     t.index ["area"], name: "index_location_polygons_on_area", using: :gist
     t.index ["centroid"], name: "index_location_polygons_on_centroid", using: :gist

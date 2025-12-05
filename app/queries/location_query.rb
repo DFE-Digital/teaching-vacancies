@@ -47,7 +47,6 @@ class LocationQuery < ApplicationQuery
     # suitable error instead. Refactor later!
     return scope.none if coordinates == [0, 0]
 
-    # point = "POINT(#{coordinates.second} #{coordinates.first})"
     earth_point = GeoFactories::FACTORY_4326.point(coordinates.second, coordinates.first)
     point = GeoFactories.convert_wgs84_to_sr27700 earth_point
     @scope = scope.where("ST_DWithin(#{field_name}, ?, ?)", "SRID=#{point.srid};#{point}", radius)
