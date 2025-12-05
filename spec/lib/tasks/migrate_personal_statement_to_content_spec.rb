@@ -7,9 +7,9 @@ RSpec.describe "migrate_personal_statement_to_content" do
 
   let!(:job_applications) do
     [
-      create(:job_application, personal_statement: "Statement 1", content: nil),
-      create(:job_application, personal_statement: "Statement 2", content: nil),
-      create(:job_application, personal_statement: nil, content: nil),
+      create(:job_application, personal_statement: "Statement 1", personal_statement_richtext: nil),
+      create(:job_application, personal_statement: "Statement 2", personal_statement_richtext: nil),
+      create(:job_application, personal_statement: nil, personal_statement_richtext: nil),
     ]
   end
 

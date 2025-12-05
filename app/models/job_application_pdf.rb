@@ -48,8 +48,8 @@ class JobApplicationPdf
   end
 
   def personal_statement
-    if job_application.content.present?
-      job_application.content.to_plain_text
+    if job_application.personal_statement_richtext.present?
+      job_application.personal_statement_richtext.to_plain_text
     elsif job_application.personal_statement.present?
       job_application.personal_statement
     else

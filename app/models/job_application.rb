@@ -108,7 +108,7 @@ class JobApplication < ApplicationRecord
                 :religious_referee_email, :religious_referee_phone
   has_encrypted :baptism_date, type: :date
 
-  has_rich_text :content
+  has_rich_text :personal_statement_richtext
 
   belongs_to :jobseeker
   belongs_to :vacancy

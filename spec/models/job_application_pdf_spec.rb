@@ -106,14 +106,14 @@ RSpec.describe JobApplicationPdf do
       context "when present" do
         let(:statement) { "My personal statement" }
 
-        before { job_application.content = statement }
+        before { job_application.personal_statement_richtext = statement }
 
         it { is_expected.to eq(statement) }
       end
 
       context "when blank" do
         before do
-          job_application.content = nil
+          job_application.personal_statement_richtext = nil
           job_application.personal_statement = nil
         end
 
