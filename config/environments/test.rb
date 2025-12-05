@@ -75,3 +75,8 @@ OmniAuth.config.on_failure = proc { |env|
 
 # Lockbox key token is specific to test environment
 Lockbox.master_key = "5b1f54d9c713b028b34a34b2bf95b4e22150fcd636069efc67cf7bff64ddfb04"
+
+# Active Record encryption keys for test environment
+Rails.application.config.active_record.encryption.primary_key = "cQ1D8Qtq1mYt2EEiIQys0c5oApVpHA4S"
+Rails.application.config.active_record.encryption.deterministic_key = "bXvtgpDwOlGr0AAmpfTM4BZwZhMKyK5I"
+Rails.application.config.active_record.encryption.key_derivation_salt = "3O2ASiAbc8bPTELuJB5aMmch2fncuBuV"
