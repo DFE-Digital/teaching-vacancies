@@ -5,7 +5,7 @@ module Jobseekers
       include ActiveModel::Attributes
       include CompletedFormAttribute
 
-      FIELDS = %i[personal_statement].freeze
+      FIELDS = %i[personal_statement_richtext].freeze
 
       class << self
         def storable_fields
@@ -22,7 +22,7 @@ module Jobseekers
       end
       attr_accessor(*FIELDS)
 
-      validates :personal_statement, presence: true, if: -> { personal_statement_section_completed }
+      validates :personal_statement_richtext, presence: true, if: -> { personal_statement_section_completed }
 
       completed_attribute(:personal_statement)
     end

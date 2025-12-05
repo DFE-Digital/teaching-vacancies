@@ -28,13 +28,11 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
       new_job_application.assign_attributes(recent_job_application.slice(*(attributes - [:baptism_certificate])))
 
       if recent_job_application.baptism_certificate.present?
-        recent_job_application.baptism_certificate.blob.open do |tempfile|
-          new_job_application.baptism_certificate.attach({
-            io: tempfile,
-            filename: recent_job_application.baptism_certificate.blob.filename,
-            content_type: recent_job_application.baptism_certificate.blob.content_type,
-          })
-        end
+        new_job_application.baptism_certificate.attach(
+          io: StringIO.new(recent_job_application.baptism_certificate.download),
+          filename: recent_job_application.baptism_certificate.blob.filename,
+          content_type: recent_job_application.baptism_certificate.blob.content_type,
+        )
       end
     else
       new_job_application.assign_attributes(recent_job_application.slice(*attributes))

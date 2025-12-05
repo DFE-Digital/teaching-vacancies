@@ -155,6 +155,45 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
         expect(subject.religion).to be_blank
         expect(subject.religion_description).to be_blank
       end
+
+      context "when previous application has a baptism certificate" do
+        let(:vacancy_for_faith_school) { create(:vacancy, :catholic) }
+        let(:new_job_application) { jobseeker.job_applications.create(vacancy: vacancy_for_faith_school) }
+        let(:recent_job_application) { create(:job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker: jobseeker, vacancy: vacancy_for_faith_school) }
+
+        before do
+          recent_job_application.baptism_certificate.attach(
+            io: Rails.root.join("spec/fixtures/files/blank_baptism_cert.pdf").open,
+            filename: "baptism_cert.pdf",
+            content_type: "application/pdf",
+          )
+        end
+
+        it "copies the baptism certificate" do
+          expect(subject.baptism_certificate).to be_attached
+          expect(subject.baptism_certificate.filename.to_s).to eq("baptism_cert.pdf")
+          expect(subject.baptism_certificate.content_type).to eq("application/pdf")
+        end
+
+        it "copies personal_statement_richtext and personal details" do
+          expect(subject.personal_statement_richtext.body).to eq(recent_job_application.personal_statement_richtext.body)
+          expect(subject.first_name).to eq(recent_job_application.first_name)
+          expect(subject.last_name).to eq(recent_job_application.last_name)
+        end
+      end
+
+      context "when previous application is for a faith school but has no baptism certificate" do
+        let(:vacancy_for_faith_school) { create(:vacancy, :catholic) }
+        let(:new_job_application) { jobseeker.job_applications.create(vacancy: vacancy_for_faith_school) }
+        let(:recent_job_application) { create(:job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker: jobseeker, vacancy: vacancy_for_faith_school) }
+
+        it "copies personal_statement_richtext and personal details" do
+          expect(subject.baptism_certificate).not_to be_attached
+          expect(subject.first_name).to eq(recent_job_application.first_name)
+          expect(subject.last_name).to eq(recent_job_application.last_name)
+          expect(subject.personal_statement_richtext.body).to eq(recent_job_application.personal_statement_richtext.body)
+        end
+      end
     end
   end
 end

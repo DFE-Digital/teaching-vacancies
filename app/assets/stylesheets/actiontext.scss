@@ -93,3 +93,14 @@ trix-editor {
   }
 }
 
+/* Personal statement editor height */
+.personal-statement-editor {
+  min-height: 350px;
+}
+
+/* Hide attachment and link buttons only on personal statement form */
+.personal-statement-form trix-toolbar .trix-button--icon-attach,
+.personal-statement-form trix-toolbar .trix-button--icon-link {
+  display: none !important;
+}
+
