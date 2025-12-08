@@ -49,7 +49,12 @@ class JobApplicationPdf
 
   def personal_statement
     if job_application.personal_statement_richtext.present?
-      job_application.personal_statement_richtext.to_plain_text
+      html = job_application.personal_statement_richtext.to_s
+      # Convert tags to prawn format (we only need bold and italic)
+      html = html.gsub(%r{<strong>(.*?)</strong>}m, '<b>\1</b>')
+      html = html.gsub(%r{<em>(.*?)</em>}m, '<i>\1</i>')
+      # Strip all HTML tags except b and i so prawn doesn't display them as a string
+      ActionView::Base.full_sanitizer.sanitize(html, tags: %w[b i])
     elsif job_application.personal_statement.present?
       job_application.personal_statement
     else

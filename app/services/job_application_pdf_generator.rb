@@ -79,7 +79,7 @@ class JobApplicationPdfGenerator
     page_section do
       page_title(I18n.t("jobseekers.job_applications.show.#{page_name}.heading"))
       move_down 0.3.cm
-      text datasource.public_send(page_name), size: 12, leading: 4
+      text datasource.public_send(page_name), size: 12, leading: 4, inline_format: true
     end
     start_new_page
   end
