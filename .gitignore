@@ -99,6 +99,9 @@ dump.rdb
 .vscode
 .idea
 
+# Personal AI agent instructions (for individual developer use only)
+.github/copilot-instructions.md
+
 # devops files
 bin/konduit.sh
 /swagger/v1/swagger.yaml
