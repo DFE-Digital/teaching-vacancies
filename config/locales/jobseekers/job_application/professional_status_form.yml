@@ -7,8 +7,8 @@ en:
             qualified_teacher_status:
               inclusion: Select yes if you have qualified teacher status (QTS)
             qualified_teacher_status_year:
-              less_than_or_equal_to: The year your QTS was awarded must be the current year or in the past
-              not_a_number: Enter the year your QTS was awarded
+              less_than_or_equal_to: The year your QTS was gained must be the current year or in the past
+              not_a_number: Enter the year your QTS was gained
             is_statutory_induction_complete:
               inclusion: Select yes if you have completed your statutory induction year
             teacher_reference_number:
@@ -19,8 +19,8 @@ en:
             qualified_teacher_status:
               inclusion: Select yes if you have qualified teacher status
             qualified_teacher_status_year:
-              less_than_or_equal_to: The year your QTS was awarded must be the current year or in the past
-              not_a_number: Enter the year your QTS was awarded
+              less_than_or_equal_to: The year your QTS was gained must be the current year or in the past
+              not_a_number: Enter the year your QTS was gained
             teacher_reference_number:
               invalid: Enter a teacher reference number (TRN) that is 7 digits long
               blank: Enter a teacher reference number (TRN) that is 7 digits long

@@ -245,7 +245,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       end
 
       it "prefills the form with the jobseeker's personal details" do
-        expect(page).to have_content("Year QTS awarded#{previous_application.qualified_teacher_status_year}")
+        expect(page).to have_content("Year QTS gained#{previous_application.qualified_teacher_status_year}")
       end
     end
 

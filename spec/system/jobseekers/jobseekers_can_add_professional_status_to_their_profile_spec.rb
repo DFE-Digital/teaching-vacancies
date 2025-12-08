@@ -40,19 +40,19 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
           end
           click_on "Save and continue"
           within "ul.govuk-list.govuk-error-summary__list" do
-            expect(page).to have_link("Enter the year your QTS was awarded", href: "#jobseekers-profiles-qualified-teacher-status-form-qualified-teacher-status-year-field-error")
+            expect(page).to have_link("Enter the year your QTS was gained", href: "#jobseekers-profiles-qualified-teacher-status-form-qualified-teacher-status-year-field-error")
             expect(page).to have_link("Enter a teacher reference number (TRN) that is 7 digits long", href: "#jobseekers-profiles-qualified-teacher-status-form-teacher-reference-number-field-error")
             expect(page).to have_link("Select yes if you have completed your statutory induction year", href: "#jobseekers-profiles-qualified-teacher-status-form-is-statutory-induction-complete-field-error")
           end
-          fill_in "Year QTS was awarded", with: "2032"
+          fill_in "Year QTS was gained", with: "2032"
           fill_in "What is your teacher reference number (TRN)?", with: "ABC"
           choose "Yes, I have completed my induction period"
           click_on "Save and continue"
           within "ul.govuk-list.govuk-error-summary__list" do
-            expect(page).to have_link("The year your QTS was awarded must be the current year or in the past", href: "#jobseekers-profiles-qualified-teacher-status-form-qualified-teacher-status-year-field-error")
+            expect(page).to have_link("The year your QTS was gained must be the current year or in the past", href: "#jobseekers-profiles-qualified-teacher-status-form-qualified-teacher-status-year-field-error")
             expect(page).to have_link("Enter a teacher reference number (TRN) that is 7 digits long", href: "#jobseekers-profiles-qualified-teacher-status-form-teacher-reference-number-field-error")
           end
-          fill_in "Year QTS was awarded", with: "2022"
+          fill_in "Year QTS was gained", with: "2022"
           fill_in "What is your teacher reference number (TRN)?", with: "1234567"
           choose "No, I have not completed my induction period"
           fill_in "jobseekers-profiles-qualified-teacher-status-form-statutory-induction-complete-details-field", with: "Don't have time to explain"
@@ -95,7 +95,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
       end
       expect(find("#jobseekers-profiles-qualified-teacher-status-form-teacher-reference-number-field", visible: false).value).to eq("7777777")
 
-      fill_in "Year QTS was awarded", with: "2000"
+      fill_in "Year QTS was gained", with: "2000"
       fill_in "What is your teacher reference number (TRN)?", with: "1234567"
       choose "No, I have not completed my induction period"
       fill_in "jobseekers-profiles-qualified-teacher-status-form-statutory-induction-complete-details-field", with: "I am working on it."
@@ -121,10 +121,10 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
     expect(page).to have_css(".govuk-summary-list__value", text: I18n.t("helpers.label.jobseekers_profiles_qualified_teacher_status_form.qualified_teacher_status_options.#{qts}"))
 
     if qts == "yes"
-      expect(page).to have_css(".govuk-summary-list__key", text: "Year QTS awarded")
+      expect(page).to have_css(".govuk-summary-list__key", text: "Year QTS gained")
       expect(page).to have_css(".govuk-summary-list__value", text: year)
     else
-      expect(page).not_to have_css(".govuk-summary-list__key", text: "Year QTS awarded")
+      expect(page).not_to have_css(".govuk-summary-list__key", text: "Year QTS gained")
     end
 
     expect(page).to have_css(".govuk-summary-list__key", text: "Teacher reference number (TRN)")
