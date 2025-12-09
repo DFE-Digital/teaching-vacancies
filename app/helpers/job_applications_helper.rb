@@ -75,7 +75,7 @@ module JobApplicationsHelper
   def job_application_qualified_teacher_status_info(job_application)
     case job_application.qualified_teacher_status
     when "yes"
-      safe_join([tag.span("Yes, awarded in ", class: "govuk-body", id: "qualified_teacher_status"),
+      safe_join([tag.span("Yes, gained in ", class: "govuk-body", id: "qualified_teacher_status"),
                  tag.span(job_application.qualified_teacher_status_year, class: "govuk-body", id: "qualified_teacher_status_year")])
     when "no"
       safe_join([tag.div("No", class: "govuk-body", id: "qualified_teacher_status"),

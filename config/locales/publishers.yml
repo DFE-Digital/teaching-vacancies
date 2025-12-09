@@ -154,7 +154,7 @@ en:
         qts_options:
           "no": Does not have QTS
           on_track: On track to receive QTS
-          "yes": Awarded QTS
+          "yes": Gained QTS
         role_options:
           teacher: Teacher
           head_of_year_or_phase: Head of year or phase

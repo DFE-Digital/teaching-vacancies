@@ -33,10 +33,10 @@ RSpec.describe "Jobseekers can add details about their qualified teacher status 
     click_on "Save and continue"
 
     within "ul.govuk-list.govuk-error-summary__list" do
-      expect(page).to have_link("Enter the year your QTS was awarded", href: "#jobseekers-job-application-professional-status-form-qualified-teacher-status-year-field-error")
+      expect(page).to have_link("Enter the year your QTS was gained", href: "#jobseekers-job-application-professional-status-form-qualified-teacher-status-year-field-error")
     end
 
-    fill_in "Year QTS was awarded", with: "2022"
+    fill_in "Year QTS was gained", with: "2022"
     fill_in I18n.t("helpers.label.jobseekers_job_application_professional_status_form.qts_age_range_and_subject"), with: "Adding up for little ones"
     choose("Yes, I have completed my induction period")
 

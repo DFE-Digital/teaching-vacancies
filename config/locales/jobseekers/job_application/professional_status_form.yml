@@ -7,8 +7,8 @@ en:
             qualified_teacher_status:
               inclusion: Select yes if you have qualified teacher status (QTS)
             qualified_teacher_status_year:
-              less_than_or_equal_to: The year your QTS was awarded must be the current year or in the past
-              not_a_number: Enter the year your QTS was awarded
+              less_than_or_equal_to: The year your QTS was gained must be the current year or in the past
+              not_a_number: Enter the year your QTS was gained
             is_statutory_induction_complete:
               inclusion: Select yes if you have completed your statutory induction year
             teacher_reference_number:
@@ -19,8 +19,8 @@ en:
             qualified_teacher_status:
               inclusion: Select yes if you have qualified teacher status
             qualified_teacher_status_year:
-              less_than_or_equal_to: The year your QTS was awarded must be the current year or in the past
-              not_a_number: Enter the year your QTS was awarded
+              less_than_or_equal_to: The year your QTS was gained must be the current year or in the past
+              not_a_number: Enter the year your QTS was gained
             teacher_reference_number:
               invalid: Enter a teacher reference number (TRN) that is 7 digits long
               blank: Enter a teacher reference number (TRN) that is 7 digits long
@@ -50,7 +50,7 @@ en:
         is_statutory_induction_complete_options:
           "false": "No, I have not completed my induction period"
           "true": "Yes, I have completed my induction period"
-        qualified_teacher_status_year: Year QTS was awarded
+        qualified_teacher_status_year: Year QTS was gained
         qts_age_range_and_subject: Age range and subject you trained to teach
         teacher_reference_number: What is your teacher reference number (TRN)?
         is_statutory_induction_complete: Have you completed your induction period?
@@ -68,7 +68,7 @@ en:
         is_statutory_induction_complete_options:
           "false": "No, I have not completed my induction period"
           "true": "Yes, I have completed my induction period"
-        qualified_teacher_status_year: Year QTS was awarded
+        qualified_teacher_status_year: Year QTS was gained
         qts_age_range_and_subject: Age range and subject you trained to teach
         hint: You're unlikely to get a teaching job in England unless you have QTS. Find out %{link}. If you answer yes to this question, we’ll ask you to provide your teacher reference number (TRN).
         link_text: how to get QTS
