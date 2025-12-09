@@ -448,10 +448,7 @@ class JobApplicationPdf
   def process_node(node)
     return "" if node.nil?
 
-    if node.text?
-      # Return text content, HTML entities are automatically decoded by Nokogiri
-      node.text
-    elsif node.element?
+    if node.element?
       content = node.children.map { |child| process_node(child) }.join
 
       case node.name.downcase
@@ -470,6 +467,9 @@ class JobApplicationPdf
       else
         content
       end
+    else
+      # Return text content, HTML entities are automatically decoded by Nokogiri
+      node.text
     end
   end
   # rubocop:enable Metrics/MethodLength
