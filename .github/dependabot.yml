@@ -5,6 +5,8 @@ updates:
     schedule:
       interval: "weekly"
       day: "monday"
+    cooldown:
+      default-days: 7
     open-pull-requests-limit: 10
     ignore:
       # TODO: Remove this ignore config once moved to a Redis v6.2+ instance in AKS.
@@ -82,6 +84,8 @@ updates:
     schedule:
       interval: "weekly"
       day: "tuesday"
+    cooldown:
+      default-days: 7
     open-pull-requests-limit: 2
 
   - package-ecosystem: "github-actions"
@@ -89,6 +93,8 @@ updates:
     schedule:
       interval: "weekly"
       day: "thursday"
+    cooldown:
+      default-days: 7
     open-pull-requests-limit: 2
     labels:
     - devops
@@ -100,6 +106,8 @@ updates:
     schedule:
       interval: "weekly"
       day: "wednesday"
+    cooldown:
+      default-days: 7
     open-pull-requests-limit: 10
     groups:
       npm-dependencies:
