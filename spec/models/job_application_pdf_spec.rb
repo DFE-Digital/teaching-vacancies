@@ -119,6 +119,62 @@ RSpec.describe JobApplicationPdf do
 
         it { is_expected.to eq(I18n.t("jobseekers.job_applications.review.personal_statement.blank")) }
       end
+
+      context "with rich text formatting" do
+        context "when text contains line breaks, bold and italics" do
+          let(:html) do
+            '<div class="trix-content"><div><strong>bold text<br>next line</strong><br><em>italic only</em><br><strong><em>bold and italic</em></strong></div></div>'
+          end
+
+          before { job_application.personal_statement_richtext = html }
+
+          it "preserves line breaks and all formatting types" do
+            expect(personal_statement).to eq("<b>bold text\nnext line</b>\n<i>italic only</i>\n<b><i>bold and italic</i></b>")
+          end
+        end
+
+        context "when text contains bullet points" do
+          let(:html) do
+            '<div class="trix-content"><ul><li>first item</li><li>second item</li></ul></div>'
+          end
+
+          before { job_application.personal_statement_richtext = html }
+
+          it "formats bullets with bullet character" do
+            expect(personal_statement).to eq("• first item\n• second item")
+          end
+        end
+
+        context "when text contains unhandled HTML tags" do
+          let(:html) do
+            '<div class="trix-content"><div><span>text in span</span></div></div>'
+          end
+
+          before { job_application.personal_statement_richtext = html }
+
+          it "strips unhandled tags but keeps content" do
+            expect(personal_statement).to eq("text in span")
+          end
+        end
+      end
+
+      context "when text contains HTML comments" do
+        let(:html) do
+          '<div class="trix-content"><div>text before<!-- comment -->text after</div></div>'
+        end
+
+        before { job_application.personal_statement_richtext = html }
+
+        it "strips comments from output" do
+          expect(personal_statement).to eq("text beforetext after")
+        end
+      end
+
+      describe "#process_node" do
+        it "returns empty string when node is nil" do
+          expect(datasource.send(:process_node, nil)).to eq("")
+        end
+      end
     end
 
     describe "#professional_status" do

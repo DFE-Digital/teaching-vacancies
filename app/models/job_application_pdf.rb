@@ -49,12 +49,7 @@ class JobApplicationPdf
 
   def personal_statement
     if job_application.personal_statement_richtext.present?
-      html = job_application.personal_statement_richtext.to_s
-      # Convert tags to prawn format (we only need bold and italic)
-      html = html.gsub(%r{<strong>(.*?)</strong>}m, '<b>\1</b>')
-      html = html.gsub(%r{<em>(.*?)</em>}m, '<i>\1</i>')
-      # Strip all HTML tags except b and i so prawn doesn't display them as a string
-      ActionView::Base.full_sanitizer.sanitize(html, tags: %w[b i])
+      convert_richtext_to_prawn_format(job_application.personal_statement_richtext)
     elsif job_application.personal_statement.present?
       job_application.personal_statement
     else
@@ -440,5 +435,43 @@ class JobApplicationPdf
       "Status not provided"
     end
   end
+
+  def convert_richtext_to_prawn_format(richtext)
+    html = richtext.to_s
+    doc = Nokogiri::HTML.fragment(html)
+
+    # Process all children of the document fragment
+    doc.children.map { |child| process_node(child) }.join.strip
+  end
+
+  # rubocop:disable Metrics/MethodLength
+  def process_node(node)
+    return "" if node.nil?
+
+    if node.text?
+      # Return text content, HTML entities are automatically decoded by Nokogiri
+      node.text
+    elsif node.element?
+      content = node.children.map { |child| process_node(child) }.join
+
+      case node.name.downcase
+      when "strong", "b"
+        "<b>#{content}</b>"
+      when "em", "i"
+        "<i>#{content}</i>"
+      when "p", "div"
+        "#{content}\n"
+      when "br"
+        "\n"
+      when "ul", "ol"
+        content.to_s
+      when "li"
+        "• #{content}"
+      else
+        content
+      end
+    end
+  end
+  # rubocop:enable Metrics/MethodLength
 end
 # rubocop:enable Metrics/ClassLength
