@@ -113,6 +113,8 @@ RSpec.describe "Publishers can send messages to job applicants" do
         fill_in_trix_editor "publishers_job_application_messages_form_content", with: new_message_content
 
         click_button "Send message"
+        # wait for page load
+        find(".govuk-notification-banner.govuk-notification-banner--success")
 
         expect(conversation.reload.messages.count).to eq(2)
         message_cards = all(".govuk-summary-card")

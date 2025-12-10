@@ -66,16 +66,26 @@ RSpec.shared_examples "a successful search" do
 end
 
 RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
-  let(:academy1) { create(:school, school_type: "Academies") }
+  let(:academy1) { create(:school, school_type: "Academies", geopoint: "POINT(-0.1273 51.4994)") }
   let(:academy2) { create(:school, school_type: "Academy") }
   let(:free_school1) { create(:school, school_type: "Free schools") }
   let(:free_school2) { create(:school, school_type: "Free school") }
   let(:local_authority_school1) { create(:school, school_type: "Local authority maintained schools") }
   let(:local_authority_school2) { create(:school, school_type: "Local authority maintained schools") }
-  let(:school) { create(:school) }
-  let!(:maths_job1) { create(:vacancy, :secondary, :past_publish, :no_tv_applications, job_roles: ["teacher"], publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school], expires_at: Date.current + 1, geolocation: "POINT(-0.019501 51.504949)") }
-  let!(:maths_job2) { create(:vacancy, :secondary, :past_publish, :no_tv_applications, job_roles: ["teacher"], publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school], expires_at: Date.current + 3, geolocation: "POINT(-1.8964 52.4820)") }
-  let!(:job1) { create(:vacancy, :secondary, :past_publish, :no_tv_applications, job_roles: ["teacher"], publish_on: Date.current - 3, job_title: "Physics Teacher", subjects: ["Physics"], organisations: [academy1], expires_at: Date.current + 2, geolocation: "POINT(-0.1273 51.4994)", visa_sponsorship_available: true) }
+  let(:school) { create(:school, geopoint: "POINT(-0.019501 51.504949)") }
+  let(:school2) { create(:school, geopoint: "POINT(-1.8964 52.4820)") }
+  let!(:maths_job1) do
+    create(:vacancy, :secondary, :past_publish, :no_tv_applications, job_roles: ["teacher"], publish_on: Date.current - 1, job_title: "Maths 1",
+                                                                     subjects: %w[Mathematics], organisations: [school], expires_at: Date.current + 1)
+  end
+  let!(:maths_job2) do
+    create(:vacancy, :secondary, :past_publish, :no_tv_applications, job_roles: ["teacher"], publish_on: Date.current - 2,
+                                                                     job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school2], expires_at: Date.current + 3)
+  end
+  let!(:job1) do
+    create(:vacancy, :secondary, :past_publish, :no_tv_applications, job_roles: ["teacher"], publish_on: Date.current - 3,
+                                                                     job_title: "Physics Teacher", subjects: ["Physics"], organisations: [academy1], expires_at: Date.current + 2, visa_sponsorship_available: true)
+  end
   let!(:job2) { create(:vacancy, :past_publish, :no_tv_applications, job_roles: ["teacher"], job_title: "PE Teacher", subjects: [], organisations: [academy2], expires_at: Date.current + 5) }
   let!(:job3) { create(:vacancy, :past_publish, :no_tv_applications, job_roles: ["teacher"], job_title: "Chemistry Teacher", subjects: [], organisations: [free_school1], expires_at: Date.current + 4, visa_sponsorship_available: true) }
   let!(:job4) { create(:vacancy, :past_publish, :no_tv_applications, job_roles: ["teacher"], job_title: "Geography Teacher", subjects: [], publisher_organisation: free_school1, organisations: [free_school1, free_school2], expires_at: Date.current + 6) }
@@ -311,28 +321,28 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   end
 
   context "when filtering by school type" do
-    let(:special_school1) { create(:school, name: "Community special school", detailed_school_type: "Community special school") }
-    let(:special_school2) { create(:school, name: "Foundation special school", detailed_school_type: "Foundation special school") }
-    let(:special_school3) { create(:school, name: "Non-maintained special school", detailed_school_type: "Non-maintained special school") }
-    let(:special_school4) { create(:school, name: "Academy special converter", detailed_school_type: "Academy special converter") }
-    let(:special_school5) { create(:school, name: "Academy special sponsor led", detailed_school_type: "Academy special sponsor led") }
-    let(:special_school6) { create(:school, name: "Non-maintained special school", detailed_school_type: "Free schools special") }
-    let(:faith_school) { create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "anything" }) }
-    let(:faith_school2) { create(:school, name: "ABCDEF", gias_data: { "ReligiousCharacter (name)" => "somethingelse" }) }
-    let(:non_faith_school1) { create(:school, name: "nonfaith1", gias_data: { "ReligiousCharacter (name)" => "" }) }
-    let(:non_faith_school2) { create(:school, name: "nonfaith2", gias_data: { "ReligiousCharacter (name)" => "Does not apply" }) }
-    let(:non_faith_school3) { create(:school, name: "nonfaith3", gias_data: { "ReligiousCharacter (name)" => "None" }) }
+    let(:special_school1) { create(:school, name: "Community special school", detailed_school_type: "Community special school", geopoint: "POINT(-0.019501 51.504949)") }
+    let(:special_school2) { create(:school, name: "Foundation special school", detailed_school_type: "Foundation special school", geopoint: "POINT(-0.019501 51.504949)") }
+    let(:special_school3) { create(:school, name: "Non-maintained special school", detailed_school_type: "Non-maintained special school", geopoint: "POINT(-0.019501 51.504949)") }
+    let(:special_school4) { create(:school, name: "Academy special converter", detailed_school_type: "Academy special converter", geopoint: "POINT(-0.019501 51.504949)") }
+    let(:special_school5) { create(:school, name: "Academy special sponsor led", detailed_school_type: "Academy special sponsor led", geopoint: "POINT(-0.019501 51.504949)") }
+    let(:special_school6) { create(:school, name: "Non-maintained special school", detailed_school_type: "Free schools special", geopoint: "POINT(-0.019501 51.504949)") }
+    let(:faith_school) { create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "anything" }, geopoint: "POINT(-0.019501 51.504949)") }
+    let(:faith_school2) { create(:school, name: "ABCDEF", gias_data: { "ReligiousCharacter (name)" => "somethingelse" }, geopoint: "POINT(-0.019501 51.504949)") }
+    let(:non_faith_school1) { create(:school, name: "nonfaith1", gias_data: { "ReligiousCharacter (name)" => "" }, geopoint: "POINT(-0.019501 51.504949)") }
+    let(:non_faith_school2) { create(:school, name: "nonfaith2", gias_data: { "ReligiousCharacter (name)" => "Does not apply" }, geopoint: "POINT(-0.019501 51.504949)") }
+    let(:non_faith_school3) { create(:school, name: "nonfaith3", gias_data: { "ReligiousCharacter (name)" => "None" }, geopoint: "POINT(-0.019501 51.504949)") }
 
-    let!(:special_job1) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "AAAA", subjects: [], organisations: [special_school1], geolocation: "POINT(-0.019501 51.504949)") }
-    let!(:special_job2) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "BBBB", subjects: [], organisations: [special_school2], geolocation: "POINT(-0.019501 51.504949)") }
-    let!(:special_job3) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "CCCC", subjects: [], organisations: [special_school3], geolocation: "POINT(-0.019501 51.504949)") }
-    let!(:special_job4) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "DDDD", subjects: [], organisations: [special_school4], geolocation: "POINT(-0.019501 51.504949)") }
-    let!(:special_job5) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "EEEE", subjects: [], organisations: [special_school5], geolocation: "POINT(-0.019501 51.504949)") }
-    let!(:special_job6) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "FFFF", subjects: [], organisations: [special_school6], geolocation: "POINT(-0.019501 51.504949)") }
-    let!(:faith_job) { create(:vacancy, :secondary, :past_publish, job_roles: ["teacher"], job_title: "religious", subjects: ["Physics"], publisher_organisation: faith_school, organisations: [faith_school, faith_school2], geolocation: "POINT(-0.019501 51.504949)") }
-    let!(:non_faith_job1) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "nonfaith1", subjects: [], organisations: [non_faith_school1], geolocation: "POINT(-0.019501 51.504949)") }
-    let!(:non_faith_job2) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "nonfaith2", subjects: [], organisations: [non_faith_school2], geolocation: "POINT(-0.019501 51.504949)") }
-    let!(:non_faith_job3) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "nonfaith3", subjects: [], organisations: [non_faith_school3], geolocation: "POINT(-0.019501 51.504949)") }
+    let!(:special_job1) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "AAAA", subjects: [], organisations: [special_school1]) }
+    let!(:special_job2) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "BBBB", subjects: [], organisations: [special_school2]) }
+    let!(:special_job3) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "CCCC", subjects: [], organisations: [special_school3]) }
+    let!(:special_job4) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "DDDD", subjects: [], organisations: [special_school4]) }
+    let!(:special_job5) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "EEEE", subjects: [], organisations: [special_school5]) }
+    let!(:special_job6) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "FFFF", subjects: [], organisations: [special_school6]) }
+    let!(:faith_job) { create(:vacancy, :secondary, :past_publish, job_roles: ["teacher"], job_title: "religious", subjects: ["Physics"], publisher_organisation: faith_school, organisations: [faith_school, faith_school2]) }
+    let!(:non_faith_job1) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "nonfaith1", subjects: [], organisations: [non_faith_school1]) }
+    let!(:non_faith_job2) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "nonfaith2", subjects: [], organisations: [non_faith_school2]) }
+    let!(:non_faith_job3) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "nonfaith3", subjects: [], organisations: [non_faith_school3]) }
 
     it "allows user to filter by special schools" do
       visit jobs_path

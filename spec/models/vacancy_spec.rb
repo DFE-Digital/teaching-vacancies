@@ -147,10 +147,10 @@ RSpec.describe Vacancy do
 
   describe "friendly_id generated slug" do
     describe "#slug" do
-      it "the slug cannot be duplicate" do
-        green_school = create(:school, name: "Green school", town: "Greenway", county: "Mars")
-        blue_school = create(:school, name: "Blue school")
+      let(:green_school) { create(:school, name: "Green school", town: "Greenway", county: "Mars") }
+      let(:blue_school) { create(:school, name: "Blue school") }
 
+      it "the slug cannot be duplicate" do
         first_maths_teacher = create(:vacancy, job_title: "Maths Teacher", organisations: [blue_school], expires_at: 1.day.from_now)
         second_maths_teacher = create(:vacancy, job_title: "Maths Teacher", organisations: [green_school], expires_at: 2.day.from_now)
         third_maths_teacher = create(:vacancy, job_title: "Maths Teacher", organisations: [green_school], expires_at: 3.day.from_now)

@@ -95,11 +95,6 @@ delete_old_alert_runs:
   class: 'DeleteOldAlertRunsJob'
   queue: low
 
-refresh_markers:
-  cron: '0 6 * * *' # "At 06:00."
-  class: 'RefreshMarkersJob'
-  queue: low
-
 send_job_application_data_expiry_notification:
   cron: '0 6 * * *' # "At 06:00."
   class: 'SendJobApplicationDataExpiryNotifierJob'

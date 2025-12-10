@@ -2,8 +2,6 @@ require "rails_helper"
 
 RSpec.describe "publishers/organisations/preview" do
   before do
-    allow(organisation).to receive(:geopoint?).and_return(true)
-
     assign :organisation, organisation
     assign :vacancies, vacancies
     render
@@ -39,7 +37,7 @@ RSpec.describe "publishers/organisations/preview" do
   end
 
   context "when the organisation is a school group" do
-    let(:trust) { build_stubbed(:trust, schools: [school_one, school_two]) }
+    let(:trust) { build_stubbed(:trust, :with_geopoint, schools: [school_one, school_two]) }
     let(:vacancies) { build_stubbed_list(:vacancy, 1, organisations: [trust]) }
     let(:school_one) { build_stubbed(:school, name: "Test school one") }
     let(:school_two) { build_stubbed(:school, name: "Test school two") }

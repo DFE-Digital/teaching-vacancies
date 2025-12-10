@@ -7,7 +7,9 @@ FactoryBot.define do
     description { Faker::Lorem.paragraph(sentence_count: 1) }
     email { Faker::Internet.email(domain: "contoso.com") }
     establishment_status { "Open" }
-    geopoint { "POINT(2 1)" }
+
+    # make default inside the U.K.
+    geopoint { "POINT(-1 51.5)" }
     gias_data do
       {
         CloseDate: nil,

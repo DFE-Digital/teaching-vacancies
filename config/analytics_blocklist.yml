@@ -64,13 +64,6 @@
   - created_at
   - updated_at
   - discarded_at
-  :markers:
-  - id
-  - vacancy_id
-  - organisation_id
-  - geopoint
-  - created_at
-  - updated_at
   :jobseeker_profiles:
   - teacher_reference_number_ciphertext
   - qualified_teacher_status_details

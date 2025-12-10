@@ -6,8 +6,6 @@ require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
 require "dfe/analytics/testing"
 require "factory_bot_rails"
-require "geocoder"
-require "geocoding"
 require "paper_trail/frameworks/rspec"
 require "rack_session_access/capybara"
 require "sidekiq/testing"

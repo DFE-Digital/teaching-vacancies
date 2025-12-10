@@ -42,6 +42,10 @@ FactoryBot.define do
     trait :profile_incomplete do
       description { nil }
     end
+
+    trait :with_geopoint do
+      geopoint { "POINT (-0.108267 51.506438)" }
+    end
   end
 
   factory :local_authority, parent: :school_group do
