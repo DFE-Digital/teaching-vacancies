@@ -30,16 +30,6 @@ class Search::LocationBuilder
     location_filter[:radius]
   end
 
-  def geojson_point
-    return unless location_filter[:point_coordinates]
-
-    RGeo::GeoJSON.encode(factory.point(*location_filter[:point_coordinates].reverse))
-  end
-
-  def geojson_polygon
-    RGeo::GeoJSON.encode(polygon&.area)
-  end
-
   private
 
   def build_location_filter
