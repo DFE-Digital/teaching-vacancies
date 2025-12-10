@@ -103,7 +103,6 @@ class Vacancy < ApplicationRecord
            validate: false, # If an organisation has some validation error, we do not want to block users from creating a vacancy.
            after_add: :refresh_geolocation,
            after_remove: :refresh_geolocation
-  has_many :markers, dependent: :destroy
   has_many :feedbacks, dependent: :destroy, inverse_of: :vacancy
   has_one :vacancy_analytics, dependent: :destroy
   has_many :job_application_batches, dependent: :destroy
@@ -156,7 +155,6 @@ class Vacancy < ApplicationRecord
   # Publisher will need to set a new publish date if wanting to re-publish an scheduled vacancy turned back to a draft.
   before_save -> { self.publish_on = nil if type_changed?(from: "PublishedVacancy", to: "DraftVacancy") }
 
-  after_save :reset_markers, if: -> { saved_change_to_type? && (live? || pending?) }
   after_save :update_conversation_searchable_content, if: -> { saved_change_to_job_title? }
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
@@ -260,13 +258,6 @@ class Vacancy < ApplicationRecord
     job_applications.after_submission.count >= EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD
   end
 
-  def reset_markers
-    markers.delete_all
-    organisations.each do |organisation|
-      markers.create(organisation: organisation, geopoint: organisation.geopoint)
-    end
-  end
-
   def salary_types
     [
       salary.present? ? "full_time" : nil,
@@ -325,7 +316,6 @@ class Vacancy < ApplicationRecord
                          points = organisations.filter_map(&:geopoint)
                          points.presence && points.first.factory.multi_point(points)
                        end
-    reset_markers if persisted? && (live? || pending?)
   end
 end
 # rubocop:enable Metrics/ClassLength
