@@ -48,9 +48,13 @@ class JobApplicationPdf
   end
 
   def personal_statement
-    return job_application.personal_statement if job_application.personal_statement.present?
-
-    I18n.t("jobseekers.job_applications.review.personal_statement.blank")
+    if job_application.personal_statement_richtext.present?
+      convert_richtext_to_prawn_format(job_application.personal_statement_richtext)
+    elsif job_application.personal_statement.present?
+      job_application.personal_statement
+    else
+      I18n.t("jobseekers.job_applications.review.personal_statement.blank")
+    end
   end
 
   def professional_status
@@ -431,5 +435,43 @@ class JobApplicationPdf
       "Status not provided"
     end
   end
+
+  def convert_richtext_to_prawn_format(richtext)
+    html = richtext.to_s
+    doc = Nokogiri::HTML.fragment(html)
+
+    # Process all children of the document fragment
+    doc.children.map { |child| process_node(child) }.join.strip
+  end
+
+  # rubocop:disable Metrics/MethodLength
+  def process_node(node)
+    return "" if node.nil?
+
+    if node.element?
+      content = node.children.map { |child| process_node(child) }.join
+
+      case node.name.downcase
+      when "strong", "b"
+        "<b>#{content}</b>"
+      when "em", "i"
+        "<i>#{content}</i>"
+      when "p", "div"
+        "#{content}\n"
+      when "br"
+        "\n"
+      when "ul", "ol"
+        content.to_s
+      when "li"
+        "• #{content}"
+      else
+        content
+      end
+    else
+      # Return text content, HTML entities are automatically decoded by Nokogiri
+      node.text
+    end
+  end
+  # rubocop:enable Metrics/MethodLength
 end
 # rubocop:enable Metrics/ClassLength

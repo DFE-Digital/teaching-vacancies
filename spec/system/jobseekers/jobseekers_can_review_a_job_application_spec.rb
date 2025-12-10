@@ -62,7 +62,7 @@ RSpec.describe "Jobseekers can review a job application" do
     end
 
     within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.personal_statement.heading") do
-      expect(page).to have_content(job_application.personal_statement)
+      expect(page).to have_content(job_application.personal_statement_richtext.to_plain_text)
     end
 
     within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.referees.heading") do
