@@ -13,7 +13,8 @@ FactoryBot.define do
 
     # Personal details
     first_name { Faker::Name.first_name }
-    last_name { Faker::Name.last_name }
+    # avoid last names with single quotes, as they are escaped and make tests fail sometimes
+    last_name { Faker::Name.last_name.delete("'") }
     previous_names { Faker::Name.name }
     street_address { Faker::Address.street_address }
     city { Faker::Address.city }

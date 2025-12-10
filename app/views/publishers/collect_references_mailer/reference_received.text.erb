@@ -1,8 +1,0 @@
-# <%= t(".title", name: @job_application.vacancy.publisher.papertrail_display_name) %>
-
-<%= t(".body", job_title: @job_application.vacancy.job_title,
-      organisation_name: @job_application.vacancy.organisation.name,
-      candidate_name: @job_application.name,
-      link: notify_link(organisation_job_job_application_reference_request_url(@job_application.vacancy.id, @job_application, @reference_request), t(".sign_in")) ) %>
-
-<%= t("shared.footer", home_page_link: home_page_link) %>

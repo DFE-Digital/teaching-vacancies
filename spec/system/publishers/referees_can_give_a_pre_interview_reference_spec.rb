@@ -1,9 +1,11 @@
 require "rails_helper"
 
 RSpec.describe "Publishers can select a job application for interview" do
+  include ActiveJob::TestHelper
+
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
-  let(:vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
+  let(:vacancy) { create(:vacancy, :expired, organisations: [organisation], publisher: publisher) }
   let(:jobseeker) { create(:jobseeker) }
   let(:job_application) do
     create(:job_application, :status_submitted,
@@ -65,7 +67,7 @@ RSpec.describe "Publishers can select a job application for interview" do
       end
 
       #  have to use JS driver for send_keys support
-      it "displays the fit_and_proper page followed by the employment_reference page", :a11y do
+      it "displays the fit_and_proper page followed by the employment_reference page", :a11y, :perform_enqueued do
         expect(page).to be_axe_clean
 
         choose I18n.t("helpers.label.referees_can_share_reference_form.is_reference_sharable_options.false")
@@ -79,6 +81,7 @@ RSpec.describe "Publishers can select a job application for interview" do
         expect(referee_employment_reference_page).to be_displayed
         #  https://github.com/alphagov/govuk-frontend/issues/979
         expect(page).to be_axe_clean.skipping "aria-allowed-attr"
+
         referee_employment_reference_page.currently_employed_no.click
         referee_employment_reference_page.reemploy_current_yes.click
         referee_employment_reference_page.reemploy_any_yes.click
@@ -152,6 +155,9 @@ RSpec.describe "Publishers can select a job application for interview" do
         find(".govuk-panel")
         expect(reference_request.job_reference.reload).to be_complete
         expect(page).to have_current_path(completed_reference_build_index_path(reference_request.id))
+
+        # sends notification email to publisher
+        expect(ActionMailer::Base.deliveries.map(&:to)).to eq([[publisher.email]])
       end
     end
   end

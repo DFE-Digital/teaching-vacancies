@@ -10,12 +10,12 @@ RSpec.describe "Publishers can unsubscribe from emails" do
       ActionMailer::Base.deliveries.clear
       create(:vacancy, publisher: publisher, expires_at: 3.weeks.ago)
       perform_enqueued_jobs do
-        SendExpiredVacancyFeedbackPromptJob.new.perform
+        SendExpiredVacancyFeedbackPromptJob.perform_later
       end
     end
 
     context "when a publisher receives an expired vacancy feedback prompt email" do
-      let(:link_to_unsubscribe) { last_email.body.to_s[/\[Unsubscribe from these emails\]\((.*)\)/, 1] }
+      let(:link_to_unsubscribe) { ActionMailer::Base.deliveries.last.personalisation.fetch(:expired_vacancy_unsubscribe_link) }
 
       scenario "they can unsubscribe from these emails and future emails won't be sent" do
         visit link_to_unsubscribe
@@ -30,7 +30,7 @@ RSpec.describe "Publishers can unsubscribe from emails" do
         ActionMailer::Base.deliveries.clear
 
         perform_enqueued_jobs do
-          SendExpiredVacancyFeedbackPromptJob.new.perform
+          SendExpiredVacancyFeedbackPromptJob.perform_later
         end
 
         expect(ActionMailer::Base.deliveries).to be_empty
