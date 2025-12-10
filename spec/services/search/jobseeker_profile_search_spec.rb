@@ -1,16 +1,7 @@
 require "rails_helper"
 
-RSpec.describe Search::JobseekerProfileSearch do
+RSpec.describe Search::JobseekerProfileSearch, :geocode do
   subject(:search) { described_class.new(current_organisation: organisation, filters: filters) }
-
-  let(:geocoding_stub) { instance_double(Geocoding) }
-
-  # This stub makes these tests very fragile. The geocoder call is made in a before_validation hook which can be called twice
-  # per Location object, which then completely messes up the stub ordering (the last value is repeated if/when it overflows)
-  # The solution is just to be very careful where 'location' objects (job_preferences_location) are created/saved in the tests
-  before do
-    allow(Geocoding).to receive(:new).and_return(geocoding_stub)
-  end
 
   context "when the results are only filtered by organisation" do
     let(:filters) { { qualified_teacher_status: [], roles: [], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
@@ -24,7 +15,7 @@ RSpec.describe Search::JobseekerProfileSearch do
         end
       end
 
-      context "when a job preference area contains the school" do
+      context "when a job preference area contains the school", :vcr do
         let(:location_in_london) { [51.5072, -0.1275] }
         let(:london_jobseeker_profile) { create(:jobseeker_profile) }
         let(:london_job_preferences) { create(:job_preferences, jobseeker_profile: london_jobseeker_profile) }
@@ -34,7 +25,6 @@ RSpec.describe Search::JobseekerProfileSearch do
         let(:manchester_job_preferences) { create(:job_preferences, jobseeker_profile: manchester_jobseeker_profile) }
 
         before do
-          allow(geocoding_stub).to receive(:coordinates).and_return(location_in_london, location_in_manchester)
           create(:job_preferences_location, name: "London", radius: 200, job_preferences: london_job_preferences)
           create(:job_preferences_location, name: "Manchester", radius: 10, job_preferences: manchester_job_preferences)
         end
@@ -49,7 +39,7 @@ RSpec.describe Search::JobseekerProfileSearch do
       end
     end
 
-    context "when the organisation is a trust" do
+    context "when the organisation is a trust", :vcr do
       let!(:organisation) { create(:trust, schools: [school1, school2]) }
       let(:location_near_school1) { [51.5538288, -0.1110617] }
       let(:school1) { create(:school, geopoint: RGeo::Geographic.spherical_factory(srid: 4326).point(-0.1084749, 51.5542907)) }
@@ -58,7 +48,6 @@ RSpec.describe Search::JobseekerProfileSearch do
 
       before do
         allow(JobPreferences::Location).to receive(:containing).and_call_original
-        allow(geocoding_stub).to receive(:coordinates).and_return(location_near_school1, location_near_school2)
       end
 
       let(:jobseeker_profile) { create(:jobseeker_profile) }
@@ -99,11 +88,10 @@ RSpec.describe Search::JobseekerProfileSearch do
     let(:control_job_preferences) { create(:job_preferences, **control_job_preferences_attrs, jobseeker_profile: control_jobseeker_profile) }
 
     before do
-      allow(geocoding_stub).to receive(:coordinates).and_return(Geocoder::DEFAULT_STUB_COORDINATES, location_near_organisation)
-      create(:job_preferences_location, **location_preference, job_preferences: control_job_preferences)
+      create(:job_preferences_location, name: "manchester", radius: 2, job_preferences: control_job_preferences)
     end
 
-    context "jobseeker_profile qualified_teacher_status" do
+    context "jobseeker_profile qualified_teacher_status", :vcr do
       let(:filters) { { current_organisation: organisation, qualified_teacher_status: %w[yes], roles: [], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
       let(:control_profile_attrs) { { qualified_teacher_status: "no" } }
       let(:control_job_preferences_attrs) { {} }
@@ -151,7 +139,7 @@ RSpec.describe Search::JobseekerProfileSearch do
       end
     end
 
-    context "job_preferences roles" do
+    context "job_preferences roles", :vcr do
       let(:filters) { { current_organisation: organisation, qualified_teacher_status: [], teaching_job_roles: [], support_job_roles: %w[other_support], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
       let(:control_job_preferences_attrs) { { roles: %w[leader] } }
       let(:control_profile_attrs) { {} }
@@ -185,7 +173,7 @@ RSpec.describe Search::JobseekerProfileSearch do
       end
     end
 
-    context "job_preferences working_patterns" do
+    context "job_preferences working_patterns", :vcr do
       let(:filters) { { current_organisation: organisation, qualified_teacher_status: [], roles: [], working_patterns: %w[full_time], phases: [], key_stages: [], subjects: [] } }
       let(:control_job_preferences_attrs) { { working_patterns: %w[made_up_working_pattern] } }
       let(:control_profile_attrs) { {} }
@@ -211,7 +199,7 @@ RSpec.describe Search::JobseekerProfileSearch do
       end
     end
 
-    context "job_preferences phases" do
+    context "job_preferences phases", :vcr do
       let(:filters) { { current_organisation: organisation, qualified_teacher_status: [], roles: [], working_patterns: [], phases: %w[secondary], key_stages: [], subjects: [] } }
       let(:control_job_preferences_attrs) { { phases: %w[sixth_form_or_college] } }
       let(:control_profile_attrs) { {} }
@@ -237,7 +225,7 @@ RSpec.describe Search::JobseekerProfileSearch do
       end
     end
 
-    context "job_preferences key_stages" do
+    context "job_preferences key_stages", :vcr do
       let(:filters) { { current_organisation: organisation, qualified_teacher_status: [], roles: [], working_patterns: [], phases: [], key_stages: %w[ks1], subjects: [] } }
       let(:control_job_preferences_attrs) { { key_stages: %w[ks4] } }
       let(:control_profile_attrs) { {} }
@@ -263,7 +251,7 @@ RSpec.describe Search::JobseekerProfileSearch do
       end
     end
 
-    context "job_preferences subjects" do
+    context "job_preferences subjects", :vcr do
       let(:filters) { { current_organisation: organisation, qualified_teacher_status: [], roles: [], working_patterns: [], phases: [], key_stages: [], subjects: %w[History] } }
       let(:control_job_preferences_attrs) { { subjects: %w[Biology] } }
       let(:control_profile_attrs) { {} }
@@ -289,7 +277,7 @@ RSpec.describe Search::JobseekerProfileSearch do
       end
     end
 
-    context "when multiple filters have been applied" do
+    context "when multiple filters have been applied", :vcr do
       let(:filters) { { current_organisation: organisation, qualified_teacher_status: %w[yes], roles: %w[teacher], working_patterns: %w[part_time], phases: %w[primary], key_stages: %w[KS1], subjects: [] } }
       let(:control_job_preferences_attrs) { { roles: %w[leader], working_patterns: %w[full_time], phases: %w[secondary], key_stages: %w[KS4] } }
       let(:control_profile_attrs) { { qualified_teacher_status: "no" } }
