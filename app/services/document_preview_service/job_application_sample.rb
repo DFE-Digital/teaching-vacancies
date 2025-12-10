@@ -18,7 +18,7 @@ class DocumentPreviewService::JobApplicationSample
       job_application.training_and_cpds = builder.training_and_cpds(training_and_cpds)
       job_application.qualifications = builder.qualifications(**qualifications)
       job_application.professional_body_memberships = builder.professional_body_memberships(professional_body_memberships)
-      job_application.personal_statement = builder.personal_statement
+      job_application.personal_statement_richtext = builder.personal_statement
 
       case vacancy.religion_type
       when "other_religion"
