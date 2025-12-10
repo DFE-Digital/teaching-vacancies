@@ -1079,7 +1079,6 @@ RSpecRails/TravelAround:
 # Include: **/app/controllers/**/*.rb
 Rails/ActionOrder:
   Exclude:
-    - 'app/controllers/jobseekers/job_applications/training_and_cpds_controller.rb'
     - 'app/controllers/jobseekers/job_applications_controller.rb'
     - 'app/controllers/jobseekers/profiles/qualifications_controller.rb'
     - 'app/controllers/jobseekers/profiles/training_and_cpds_controller.rb'
@@ -1321,7 +1320,6 @@ Rails/SaveBang:
     - 'app/controllers/jobseekers/job_applications/employments_controller.rb'
     - 'app/controllers/jobseekers/job_applications/feedbacks_controller.rb'
     - 'app/controllers/jobseekers/job_applications/qualifications_controller.rb'
-    - 'app/controllers/jobseekers/job_applications/training_and_cpds_controller.rb'
     - 'app/controllers/jobseekers/job_applications_controller.rb'
     - 'app/controllers/jobseekers/profiles/about_you_controller.rb'
     - 'app/controllers/jobseekers/profiles/breaks_controller.rb'

@@ -140,7 +140,7 @@ RSpec.describe JobApplicationsHelper do
 
       it "returns the correct info" do
         expect(subject).to eq(safe_join([
-          tag.span("Yes, awarded in ", class: "govuk-body", id: "qualified_teacher_status"),
+          tag.span("Yes, gained in ", class: "govuk-body", id: "qualified_teacher_status"),
           tag.span(job_application.qualified_teacher_status_year, class: "govuk-body", id: "qualified_teacher_status_year"),
         ]))
       end

@@ -6,31 +6,6 @@ en:
     jobseeker_footer: "%{home_page_link} is a free job-listing service from the Department for Education. It helps you find the right jobs in schools and take the next step in your career."
   admins:
   jobseekers:
-    account_mailer:
-      account_closed:
-        heading: You have closed your Teaching Vacancies account
-        intro: >-
-          You will no longer receive any job alerts that you have subscribed to,
-          and any job applications you have made will be withdrawn.
-        reactivate: >-
-          If you want to reactivate your account at any point
-          you can just sign back in with this email address.
-        delete: If you want us to delete your data, please email %{mail_to}
-        subject: Your Teaching Vacancies account has been closed
-      inactive_account:
-        intro: We will delete your Teaching Vacancies account and data unless you sign into your account in the next 2 weeks.
-        explanation: This is because you have not used your account for 5 years.
-        link: Sign into Teaching Vacancies
-        reactivate: If you want to keep your account and your data, please sign into your account before %{date}.
-        subject: Your Teaching Vacancies account and data
-      request_account_transfer:
-        subject: Transfer your account data
-        heading: Your verification code
-        intro: Use this verification code to confirm the transfer of your Teaching Vacancies account details.
-        verification_code: "Your verification code: %{code}"
-        valid_for: The code is only valid for one hour.
-        not_requested: If you did not request this, you can ignore this email.
-        need_help: If you need help using the verification code, you can %{mail_to}.
     peak_times_mailer:
       may_reminder:
         subject: "%{first_name}, now is the best time to find school jobs"
@@ -234,13 +209,6 @@ en:
           sign_in_prompt: "You'll need to %{sign_in_link} to view the message in full and reply to it."
 
   publishers:
-    job_application_data_expiry_mailer:
-      job_application_data_expiry:
-        expiry: From %{expiration_date}, you will no longer be able to access applications for %{job_title} listed in %{published_month}
-        privacy_policy: This is due to our data retention policy. To find out more about how we manage your personal data, you can read our %{privacy_policy_link}
-        privacy_policy_link: Privacy Policy.
-        subject: "%{job_title} listed on %{published_date} is being removed"
-        view_applications_for: View applications for %{job_title}
     job_application_mailer:
       applications_received:
         applications:
@@ -262,20 +230,6 @@ en:
     expired_vacancy_feedback_prompt_mailer:
       feedback_link_text: Tell us how you filled your vacancy.
     collect_references_mailer:
-      collect_references:
-        subject: Provide a reference for %{name} for %{job_title} at %{organisation_name}
-        title: Dear %{name}
-        submit_reference: reference request form
-        body: |
-          You have been provided as a referee by %{candidate_name} for the %{job_title} role at %{organisation_name}.
-
-          Do not reply to this email to provide your reference. You must complete the %{link} to provide a reference. You can decline to provide a reference.
-
-          If you cannot complete the above reference request form using the link provided, contact %{school_email}.
-
-          Kind regards,
-
-          Teaching Vacancies team
       inform_applicant_about_references:
         subject: References are being collected for role %{job_title} at %{organisation_name}
         sign_in: sign in to your Teaching vacancies account
@@ -295,17 +249,6 @@ en:
           You have received a self-disclosure form from %{candidate_name} for %{job_title} at %{organisation_name}.
 
           You can review the self-disclosure form by signing in to your %{link}.
-
-          Kind regards,
-          Teaching Vacancies team
-      reference_received:
-        subject: You have received a reference for %{candidate_name} for %{job_title} at %{organisation_name}
-        title: Dear %{name}
-        sign_in: Teaching Vacancies account
-        body: |
-          You have received a reference for %{candidate_name} for %{job_title} at %{organisation_name}.
-
-          Sign in to your %{link} to view the reference provided.
 
           Kind regards,
           Teaching Vacancies team

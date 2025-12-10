@@ -29,6 +29,7 @@ module PdfUiHelper
           bold: Rails.root.join("app/assets/fonts/Arial-Unicode-Bold.ttf").to_s,
           normal: Rails.root.join("app/assets/fonts/Arial-Unicode-Regular.ttf").to_s,
           italic: Rails.root.join("app/assets/fonts/Arial-Unicode-Italic.ttf").to_s,
+          bold_italic: Rails.root.join("app/assets/fonts/Arial-Unicode-Bold.ttf").to_s, # Fallback to bold
         },
     )
     font("Arial Unicode", encoding: "UTF-8")

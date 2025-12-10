@@ -1,22 +1,20 @@
 - content_for :page_title_prefix, job_application_page_title_prefix(@form, t(".title"))
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    span.govuk-caption-l = t(".caption")
-    h1.govuk-heading-xl = t(".heading")
+span.govuk-caption-l = t(".caption")
+h1.govuk-heading-xl = t(".heading")
 
-    p.govuk-body = t(".description.html", link: govuk_link_to(t(".kcsie"), "https://www.gov.uk/government/publications/keeping-children-safe-in-education--2"))
-    h2.govuk-heading-m = t(".work_in_school_heading")
-    p.govuk-body = t(".work_in_school_guidance")
-    h2.govuk-heading-m = t(".trainee_teacher_heading")
-    p.govuk-body = t(".trainee_teacher_guidance")
-    h2.govuk-heading-m = t(".work_with_children_heading")
-    p.govuk-body = t(".work_with_children_guidance")
+p.govuk-body = t(".description.html", link: govuk_link_to(t(".kcsie"), "https://www.gov.uk/government/publications/keeping-children-safe-in-education--2"))
+h2.govuk-heading-m = t(".work_in_school_heading")
+p.govuk-body = t(".work_in_school_guidance")
+h2.govuk-heading-m = t(".trainee_teacher_heading")
+p.govuk-body = t(".trainee_teacher_guidance")
+h2.govuk-heading-m = t(".work_with_children_heading")
+p.govuk-body = t(".work_with_children_guidance")
 
-    = form_for @form, url: jobseekers_job_application_referee_path(job_application, referee), method: :patch do |f|
-      = f.govuk_error_summary
+= form_for @form, url: jobseekers_job_application_referee_path(job_application, referee), method: :patch do |f|
+  = f.govuk_error_summary
 
-      = render "fields", f: f
+  = render "fields", f: f
 
-      p.govuk-body = t(".consent_confirmation")
-      = f.govuk_submit t("buttons.save_reference")
+  p.govuk-body = t(".consent_confirmation")
+  = f.govuk_submit t("buttons.save_reference")

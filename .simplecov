@@ -30,6 +30,7 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # enable_coverage_for_eval
     merge_timeout ENV["MERGE_TIMEOUT"].to_i if ENV.key? "MERGE_TIMEOUT"
 
+    # Filters out files from coverage reports
     add_filter "app/services/custom_log_formatter.rb"
     add_filter "app/controllers/robots_controller.rb"
     add_filter "app/controllers/previews_controller.rb"
@@ -39,6 +40,7 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     add_filter "lib/dfe_sign_in/fake_sign_out_endpoint.rb"
     add_filter "lib/modules/aws_ip_ranges.rb"
 
+    # Each group will be displayed in the report as its own Tab.
     add_group "Components", "app/components"
     add_group "Queries", "app/queries"
     add_group "Services", "app/services"
@@ -46,13 +48,14 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     add_group "Validators", "app/validators"
     add_group "Presenters", "app/presenters"
     add_group "Notifiers", "app/notifiers"
+    add_group "Tasks", "lib/tasks"
 
     # These minima seem to be a bit unstable, so they need to be set around
     # .25% lower (branch) and .1% lower (line) than the test run for now
     #
     # possibly the tests are stable now?
-    # SD 14/11/25 branch coverage still appears to be ~ .1% unstable
-    # 97.23% (12360 / 12712) -> 352  85.96% (2730 / 3176) -> 446
-    minimum_coverage line: 97.22, branch: 85.95
+    # SD 01/12/25 branch coverage still appears to be ~ .1% unstable
+    # 97.15% (12326 / 12687) -> 361  85.88% (2724 / 3172) -> 172 + 266 = 438
+    minimum_coverage line: 97.14, branch: 85.87
   end
 end

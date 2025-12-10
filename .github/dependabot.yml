@@ -5,6 +5,8 @@ updates:
     schedule:
       interval: "weekly"
       day: "monday"
+    cooldown:
+      default-days: 7
     open-pull-requests-limit: 10
     ignore:
       # TODO: Remove this ignore config once moved to a Redis v6.2+ instance in AKS.
@@ -24,10 +26,50 @@ updates:
 
       # TODO: Remove this ignore config when we can upgrade to view components 4.x
       # which is brought in by govuk-components 5.11.2
-      - dependency-name: "view-components"
+      - dependency-name: "view_component"
         update-types: ["version-update:semver-major"]
 
+      # We don't want Dependabot to update Rails major or minor versions automatically.
+      # We will update Rails manually, besides patch updates which are handled by the 'rails' group below.
+      - dependency-name: "actionmailer"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "actionpack"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "actiontext"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "activejob"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "activemodel"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "activerecord"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "activestorage"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "activesupport"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "rails"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "railties"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+
     groups:
+      # Rails patch updates are grouped together into a single PR.
+      rails:
+        patterns:
+          - "actionmailer"
+          - "actionpack"
+          - "actiontext"
+          - "activejob"
+          - "activemodel"
+          - "activerecord"
+          - "activestorage"
+          - "activesupport"
+          - "rails"
+          - "railties"
+        update-types:
+          - "patch"
+
+      # By default, all other gem updates (excluding govuk* gems) are grouped into a single PR.
       gem-dependencies:
         update-types:
           - "minor"
@@ -42,6 +84,8 @@ updates:
     schedule:
       interval: "weekly"
       day: "tuesday"
+    cooldown:
+      default-days: 7
     open-pull-requests-limit: 2
 
   - package-ecosystem: "github-actions"
@@ -49,6 +93,8 @@ updates:
     schedule:
       interval: "weekly"
       day: "thursday"
+    cooldown:
+      default-days: 7
     open-pull-requests-limit: 2
     labels:
     - devops
@@ -60,6 +106,8 @@ updates:
     schedule:
       interval: "weekly"
       day: "wednesday"
+    cooldown:
+      default-days: 7
     open-pull-requests-limit: 10
     groups:
       npm-dependencies:

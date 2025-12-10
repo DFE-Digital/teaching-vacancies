@@ -4,7 +4,7 @@ en:
       models:
         jobseekers/job_application/personal_statement_form:
           attributes:
-            personal_statement:
+            personal_statement_richtext:
               blank: Enter your personal statement
             personal_statement_section_completed:
               inclusion: Select yes if you have completed this section

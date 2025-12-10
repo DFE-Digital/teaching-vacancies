@@ -440,11 +440,11 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         end
       end
 
-      response(409, "An existing vacancy with the same external_reference already exists.") do
+      response(409, "A conflicting vacancy exists.<br>The conflicting vacancy contains the same values for either:<ul><li>The external reference.</li><li>All these fields:</li><ul><li>job title</li><li>expiry date</li><li>contract type</li><li>working patterns</li><li>phases</li><li>salary</li></ul></ul>") do
         schema "$ref" => "#/components/schemas/conflict_error"
 
         let(:school) { create(:school) }
-        let(:source) { create(:vacancy, :external, external_reference: "Ext-ref", publisher_ats_api_client: client) }
+        let(:source) { create(:vacancy, :external, external_reference: "Ext-ref", organisations: [school], publisher_ats_api_client: client) }
         let(:vacancy) do
           {
             vacancy: {
@@ -454,7 +454,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
               job_advert: source.job_advert,
               salary: source.salary,
               visa_sponsorship_available: source.visa_sponsorship_available,
-              external_reference: source.external_reference,
+              external_reference: "different-reference-value",
               is_job_share: source.is_job_share,
               job_roles: source.job_roles,
               working_patterns: source.working_patterns,
@@ -469,7 +469,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
         run_test! do |response|
           expect(response.parsed_body.keys).to match_array(%w[errors meta])
-          expect(response.parsed_body["errors"]).to eq(["A vacancy with the provided ATS client ID and external reference already exists."])
+          expect(response.parsed_body["errors"]).to eq(["A vacancy with the same job title, expiry date, contract type, working patterns, phases and salary already exists for this organisation."])
           expect(response.parsed_body["meta"]["link"]).to end_with("/ats-api/v1/vacancies/#{source.id}")
         end
       end
@@ -977,7 +977,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         end
       end
 
-      response(409, "An existing vacancy with the same external_reference already exists.") do
+      response(409, "A conflicting vacancy exists.<br>The conflicting vacancy contains the same values for either:<ul><li>The external reference.</li><li>All these fields:</li><ul><li>job title</li><li>expiry date</li><li>contract type</li><li>working patterns</li><li>phases</li><li>salary</li></ul></ul>") do
         schema "$ref" => "#/components/schemas/conflict_error"
 
         let!(:other_vacancy) { create(:vacancy, :external, publisher_ats_api_client: client, external_reference: "EXISTING-REF") }

@@ -2,46 +2,44 @@
 
 = render "banner", vacancy: vacancy, back_path: back_path
 
-.govuk-grid-row
-  div
-    h2.govuk-heading-l = t(".heading")
-    p.govuk-body = t(".description")
+h2.govuk-heading-l = t(".heading")
+p.govuk-body = t(".description")
 
-    = form_for @form, url: jobseekers_job_application_build_path(job_application, :personal_details), method: :patch do |f|
-      = f.govuk_error_summary
+= form_for @form, url: jobseekers_job_application_build_path(job_application, :personal_details), method: :patch do |f|
+  = f.govuk_error_summary
 
-      = f.govuk_text_field :first_name, label: { size: "s" }, width: "one-half", aria: { required: true }, autocomplete: "given-name"
-      = f.govuk_text_field :last_name, label: { size: "s" }, width: "one-half", aria: { required: true }, autocomplete: "family-name"
-      = f.govuk_text_field :previous_names, label: { size: "s" }, width: "one-half"
-      = f.govuk_fieldset legend: { text: t("helpers.legend.jobseekers_job_application_personal_details_form.your_address") } do
-        = f.govuk_text_field :street_address, width: "two-thirds", autocomplete: "street-address"
-        = f.govuk_text_field :city, width: "two-thirds", autocomplete: "address-level2"
-        = f.govuk_text_field :postcode, width: "one-third", autocomplete: "postal-code"
-        = f.govuk_text_field :country, width: "one-third", autocomplete: "country"
-      = f.govuk_phone_field :phone_number, label: { size: "s" }, width: "one-half", aria: { required: true }, autocomplete: "tel"
-      = f.govuk_email_field :email_address, value: @form.email_address.presence || job_application.email_address, label: { size: "s" }, width: "one-half", aria: { required: true }, autocomplete: "email"
-      = f.govuk_radio_buttons_fieldset :has_right_to_work_in_uk,
-        legend: { text: t("jobseekers.profiles.personal_details.work.page_title"), size: "s" },
-        hint: { text: t(radio_button_legend_hint(vacancy)[:text], link: govuk_link_to(t(radio_button_legend_hint(vacancy)[:link]), "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas#apply-for-your-visa", target: "_blank")).html_safe } do
-        = f.govuk_radio_button :has_right_to_work_in_uk, "true", label: { text: t("jobseekers.profiles.personal_details.work.options.true") }, link_errors: true
-        = f.govuk_radio_button :has_right_to_work_in_uk, "false", label: { text: t("jobseekers.profiles.personal_details.work.options.false") } do
-          - unless vacancy.visa_sponsorship_available?
-            = govuk_warning_text(text: t("jobseekers.profiles.personal_details.work.warning.text"))
-            p.govuk-body = t("jobseekers.profiles.personal_details.work.warning.paragraph_1")
-            p.govuk-body = t("jobseekers.profiles.personal_details.work.warning.paragraph_2.text", link: govuk_link_to(t("jobseekers.profiles.personal_details.work.warning.paragraph_2.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas#apply-for-your-visa", target: "_blank")).html_safe
-            = link_to t("jobseekers.profiles.personal_details.work.warning.search_for_jobs"), jobs_path, class: "govuk-button govuk-button--secondary"
+  = f.govuk_text_field :first_name, label: { size: "s" }, width: "one-half", aria: { required: true }, autocomplete: "given-name"
+  = f.govuk_text_field :last_name, label: { size: "s" }, width: "one-half", aria: { required: true }, autocomplete: "family-name"
+  = f.govuk_text_field :previous_names, label: { size: "s" }, width: "one-half"
+  = f.govuk_fieldset legend: { text: t("helpers.legend.jobseekers_job_application_personal_details_form.your_address") } do
+    = f.govuk_text_field :street_address, width: "two-thirds", autocomplete: "street-address"
+    = f.govuk_text_field :city, width: "two-thirds", autocomplete: "address-level2"
+    = f.govuk_text_field :postcode, width: "one-third", autocomplete: "postal-code"
+    = f.govuk_text_field :country, width: "one-third", autocomplete: "country"
+  = f.govuk_phone_field :phone_number, label: { size: "s" }, width: "one-half", aria: { required: true }, autocomplete: "tel"
+  = f.govuk_email_field :email_address, value: @form.email_address.presence || job_application.email_address, label: { size: "s" }, width: "one-half", aria: { required: true }, autocomplete: "email"
+  = f.govuk_radio_buttons_fieldset :has_right_to_work_in_uk,
+    legend: { text: t("jobseekers.profiles.personal_details.work.page_title"), size: "s" },
+    hint: { text: t(radio_button_legend_hint(vacancy)[:text], link: govuk_link_to(t(radio_button_legend_hint(vacancy)[:link]), "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas#apply-for-your-visa", target: "_blank")).html_safe } do
+    = f.govuk_radio_button :has_right_to_work_in_uk, "true", label: { text: t("jobseekers.profiles.personal_details.work.options.true") }, link_errors: true
+    = f.govuk_radio_button :has_right_to_work_in_uk, "false", label: { text: t("jobseekers.profiles.personal_details.work.options.false") } do
+      - unless vacancy.visa_sponsorship_available?
+        = govuk_warning_text(text: t("jobseekers.profiles.personal_details.work.warning.text"))
+        p.govuk-body = t("jobseekers.profiles.personal_details.work.warning.paragraph_1")
+        p.govuk-body = t("jobseekers.profiles.personal_details.work.warning.paragraph_2.text", link: govuk_link_to(t("jobseekers.profiles.personal_details.work.warning.paragraph_2.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas#apply-for-your-visa", target: "_blank")).html_safe
+        = link_to t("jobseekers.profiles.personal_details.work.warning.search_for_jobs"), jobs_path, class: "govuk-button govuk-button--secondary"
 
-      = f.govuk_radio_buttons_fieldset :has_ni_number do
-        = f.govuk_radio_button :has_ni_number, :yes, link_errors: true do
-          = f.govuk_text_field :national_insurance_number, label: { size: "s" }, width: "one-half"
-        = f.govuk_radio_button :has_ni_number, :no
+  = f.govuk_radio_buttons_fieldset :has_ni_number do
+    = f.govuk_radio_button :has_ni_number, :yes, link_errors: true do
+      = f.govuk_text_field :national_insurance_number, label: { size: "s" }, width: "one-half"
+    = f.govuk_radio_button :has_ni_number, :no
 
-      = f.govuk_collection_check_boxes :working_patterns, @form.working_pattern_options, :first, :last
-      = f.govuk_text_area :working_pattern_details, label: { size: "s" }, max_words: 50
+  = f.govuk_collection_check_boxes :working_patterns, @form.working_pattern_options, :first, :last
+  = f.govuk_text_area :working_pattern_details, label: { size: "s" }, max_words: 50
 
-      = f.govuk_collection_radio_buttons :personal_details_section_completed, %w[true false], :to_s
+  = f.govuk_collection_radio_buttons :personal_details_section_completed, %w[true false], :to_s
 
-      = f.govuk_submit job_application_build_submit_button_text do
-        = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
-        span.govuk-caption-m
-          = t("jobseekers.job_applications.cancel_caption")
+  = f.govuk_submit job_application_build_submit_button_text do
+    = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
+    span.govuk-caption-m
+      = t("jobseekers.job_applications.cancel_caption")

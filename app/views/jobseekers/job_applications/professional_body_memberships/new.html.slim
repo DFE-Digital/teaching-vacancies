@@ -1,21 +1,14 @@
 - content_for :page_title_prefix, t(".page_title")
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    span.govuk-caption-l = t(".page_title")
-    h1.govuk-heading-xl = t(".heading")
+span.govuk-caption-l = t(".page_title")
+h1.govuk-heading-xl = t(".heading")
 
-    = form_for @form, url: jobseekers_job_application_professional_body_memberships_path(job_application), method: :post do |f|
-      = f.govuk_error_summary
+= form_for @form, url: jobseekers_job_application_professional_body_memberships_path(job_application), method: :post do |f|
+  = f.govuk_error_summary
 
-      = f.govuk_text_field :name, label: { size: "s" }, aria: { required: true }
-      = f.govuk_text_field :membership_type, label: { size: "s" }, aria: { required: true }
-      = f.govuk_text_field :membership_number, label: { size: "s" }
-      = f.govuk_text_field :year_membership_obtained, label: { size: "s" }, type: "number", width: 4
-      = f.govuk_radio_buttons_fieldset(:exam_taken, legend: { size: "m", tag: "h2" }) do
-        = f.govuk_radio_button :exam_taken, "true", link_errors: true
-        = f.govuk_radio_button :exam_taken, "false"
-      = f.govuk_submit t("buttons.save_and_continue")
+  = render "fields", f: f
 
-    .govuk-button-group
-      = govuk_link_to t("buttons.cancel"), jobseekers_job_application_build_path(job_application, :professional_body_memberships)
+  = f.govuk_submit t("buttons.save_and_continue")
+
+.govuk-button-group
+  = govuk_link_to t("buttons.cancel"), jobseekers_job_application_build_path(job_application, :professional_body_memberships)

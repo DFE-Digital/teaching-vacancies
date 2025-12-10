@@ -25,6 +25,7 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
           visit organisation_jobs_with_type_path(:live)
           # wait for page load
           find(".dashboard-component")
+          find("a[href='/organisation/jobs?sort_by=job_title']")
         end
 
         it "passes a11y", :a11y do
@@ -42,7 +43,10 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
 
         scenario "it shows filtered published vacancies" do
           check "Happy Rainbows School (1)"
-          click_on I18n.t("buttons.apply_filters")
+          # Apply filters
+          within ".filters-component" do
+            first("button").click
+          end
 
           expect(page).to have_css(".filters-component__remove-tags__tag", count: 1)
 

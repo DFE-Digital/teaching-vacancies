@@ -4,7 +4,7 @@ class DestroyInactiveAccountsJob < ApplicationJob
   def perform
     return if DisableExpensiveJobs.enabled?
 
-    Jobseeker.where(last_sign_in_at: ..6.years.ago).each do |jobseeker|
+    Jobseeker.very_inactive_will_be_deleted.each do |jobseeker|
       Subscription.where(email: jobseeker.email).destroy_all
       Feedback.where(email: jobseeker.email).destroy_all
       Feedback.where(jobseeker:).destroy_all

@@ -98,7 +98,21 @@ RSpec.configure do |config|
                   job_advert: {
                     type: :string,
                     example: "We're looking for a dedicated Teacher of Geography to join our team. The ideal candidate will have a passion for teaching and a deep understanding of the subject matter. Responsibilities include preparing lesson plans, delivering engaging lessons, and assessing student progress.",
-                    description: "The long form job advert text shown on the job listing.",
+                    description: "The advert text shown on the job listing." \
+                                 "<br>Two different formats are allowed for the job advert content:" \
+                                 "<dl>" \
+                                 "<dt>Plain text:</dt>" \
+                                 "<dd>Use plain text for simple formatting." \
+                                 "<ul><li>One newline ('\\n' or '\\r\\n') is considered a linebreak and interpreted as a '&lt;br /&gt;' tag in the resulting advert display.</li>" \
+                                 "<li>Two or more consecutive newlines ('\\n\\n' or '\\r\\n\\r\\n') are considered a paragraph and wrapped in '&lt;p&gt;' tags in the resulting advert display.</li><ul>" \
+                                 "</dd>" \
+                                 "<dt>HTML markup:</dt>" \
+                                 "<dd>Use HTML markup for rich text formatting." \
+                                 "<ul><li>The following tags are allowed: p, br, strong, em, ul, li, h1, h2, h3, h4, h5, a, blockquote.</li>" \
+                                 "<li>Any other HTML tags will be stripped out.</li>" \
+                                 "<li>We do not allow 'style' modifications for security and to ensure consistent styling, matching GovUK Design System and its usability requirements.</li></ul>" \
+                                 "</dd>" \
+                                 "</dl>",
                   },
                   external_advert_url: {
                     type: :string,
@@ -340,7 +354,7 @@ RSpec.configure do |config|
               job_advert: {
                 type: :string,
                 example: "We're looking for a dedicated Teacher of Geography to join our team. The ideal candidate will have a passion for teaching and a deep understanding of the subject matter. Responsibilities include preparing lesson plans, delivering engaging lessons, and assessing student progress.",
-                description: "The long form job advert text shown on the job listing.",
+                description: "The advert text shown on the job listing.",
               },
               salary: {
                 type: :string,
@@ -597,7 +611,7 @@ RSpec.configure do |config|
               },
             },
             example: {
-              errors: ["A vacancy with the provided external reference already exists"],
+              errors: ["A vacancy with the same job title, expiry date, contract type, working patterns, phases and salary already exists for this organisation."],
               meta: {
                 link: "https://example.com/vacancies/123",
               },

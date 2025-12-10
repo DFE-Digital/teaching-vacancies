@@ -98,13 +98,22 @@ module JobseekerHelpers
   end
 
   def fill_in_personal_statement
-    fill_in "Your personal statement", with: "A brilliant, glowing statement about your person"
+    statement_text = "Blah blah I am so great"
+
+    # usually JS disabled so use text area
+    if page.has_css?("textarea[name*='personal_statement_richtext']", wait: 1)
+      fill_in "Personal statement", with: statement_text
+    # fallback to using trix editor when JS enabled (like for a11y tests)
+    else
+      fill_in_trix_editor("jobseekers_job_application_personal_statement_form_personal_statement_richtext", with: statement_text)
+    end
+
     choose I18n.t("helpers.label.jobseekers_job_application_personal_statement_form.personal_statement_section_completed_options.true")
   end
 
   def fill_in_professional_status
     choose "Yes", name: "jobseekers_job_application_professional_status_form[qualified_teacher_status]"
-    fill_in "Year QTS was awarded", with: Time.current.year
+    fill_in "Year QTS was gained", with: Time.current.year
     fill_in "What is your teacher reference number (TRN)?", with: "1234567"
     choose "Yes", name: "jobseekers_job_application_professional_status_form[is_statutory_induction_complete]"
 

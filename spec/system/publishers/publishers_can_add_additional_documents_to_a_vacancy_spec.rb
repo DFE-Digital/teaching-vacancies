@@ -12,6 +12,7 @@ RSpec.describe "Publishers can add additional documents to a vacancy" do
     visit organisation_job_build_path(vacancy.id, :include_additional_documents)
     # wait for page load
     find("label[for='publishers-job-listing-include-additional-documents-form-include-additional-documents-true-field']")
+    find("footer")
   end
 
   after { logout }

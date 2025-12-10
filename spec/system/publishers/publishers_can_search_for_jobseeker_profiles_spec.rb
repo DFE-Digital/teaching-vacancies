@@ -95,8 +95,9 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         check I18n.t("publishers.jobseeker_profiles.filters.working_pattern_options.part_time")
       end
 
+      # Apply filters
       within ".filters-component" do
-        click_on I18n.t("buttons.apply_filters")
+        first("button").click
       end
 
       expect(page).to have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
@@ -111,8 +112,9 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
           check I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.true")
         end
 
+        # Apply filters
         within ".filters-component" do
-          click_on I18n.t("buttons.apply_filters")
+          first("button").click
         end
 
         expect(page).to_not have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
@@ -159,7 +161,8 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
           find('span[title="Support"]').click
           check "Catering, cleaning and site management"
           check "HLTA (higher level teaching assistant)"
-          click_on I18n.t("buttons.apply_filters")
+          # Apply filters
+          first("button").click
         end
 
         expect(page).not_to have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
@@ -175,7 +178,8 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         within ".filters-component" do
           find('span[title="Teaching & leadership"]').click
           check "Teacher"
-          click_on I18n.t("buttons.apply_filters")
+          # Apply filters
+          first("button").click
         end
 
         expect(page).to have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
@@ -214,7 +218,10 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
     context "when 1 location is selected in the filters" do
       it "shows text explaining that the candidates are willing travel to the selected location" do
         check "Oxford"
-        click_button "Apply filters"
+        # Apply filters
+        within ".filters-component" do
+          first("button").click
+        end
         expect(page).to have_selector("p", text: "These candidates are willing to travel to your selected school location.")
       end
     end
@@ -223,7 +230,10 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
       it "shows text explaining that the candidates are willing travel to at least one of the selected locations" do
         check "Oxford"
         check "Cambridge"
-        click_button "Apply filters"
+        # Apply filters
+        within ".filters-component" do
+          first("button").click
+        end
         expect(page).to have_selector("p", text: "These candidates are willing to travel to at least one of your selected school locations.")
       end
     end

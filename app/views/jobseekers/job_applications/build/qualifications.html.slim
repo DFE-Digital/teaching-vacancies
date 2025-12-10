@@ -2,45 +2,43 @@
 
 = render "banner", vacancy: vacancy, back_path: back_path
 
-.govuk-grid-row
-  div
-    h2.govuk-heading-l = t(".heading")
+h2.govuk-heading-l = t(".heading")
 
-    - if job_application.qualifications.any?
-      - qualifications_sort_and_group(job_application.qualifications).each_value do |qualification_group|
-        - qualification_group.each do |qualification|
-          = render DetailComponent.new title: qualification.name do |detail|
-            - detail.with_body do
-              = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
-                - if qualification.secondary?
-                  - summary_list.with_row do |row|
-                    - row.with_key text: t("jobseekers.job_applications.qualifications.subjects_and_grades")
-                    - row.with_value text: safe_join(qualification.qualification_results.map { |res| tag.div(display_secondary_qualification(res), class: "govuk-body govuk-!-margin-bottom-1") })
-
-                - qualification.display_attributes.each do |attribute|
-                  - summary_list.with_row do |row|
-                    - row.with_key text: t("helpers.label.#{qualification_form_param_key(qualification.category)}.#{attribute}")
-                    - row.with_value text: qualification.public_send(attribute)
-
-                - if qualification.finished_studying == false
-                  - summary_list.with_row do |row|
-                    - row.with_key text: t("helpers.legend.#{qualification_form_param_key(qualification.category)}.finished_studying")
-                    - row.with_value text: safe_join([tag.div(t("helpers.label.jobseekers_qualifications_shared_labels.finished_studying_options.#{qualification.finished_studying}"), class: "govuk-body"), tag.div(qualification.finished_studying_details.presence, class: "govuk-body")])
-
+- if job_application.qualifications.any?
+  - qualifications_sort_and_group(job_application.qualifications).each_value do |qualification_group|
+    - qualification_group.each do |qualification|
+      = render DetailComponent.new title: qualification.name do |detail|
+        - detail.with_body do
+          = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
             - if qualification.secondary?
-              - detail.with_action govuk_link_to t("buttons.add_another_subject"), edit_jobseekers_job_application_qualification_path(job_application, qualification, new_subject: true), class: "govuk-link--no-visited-state"
-            - detail.with_action govuk_link_to t("buttons.change"), edit_jobseekers_job_application_qualification_path(job_application, qualification), class: "govuk-link--no-visited-state"
-            - detail.with_action govuk_link_to t("buttons.delete"), jobseekers_job_application_qualification_path(job_application, qualification), method: :delete
+              - summary_list.with_row do |row|
+                - row.with_key text: t("jobseekers.job_applications.qualifications.subjects_and_grades")
+                - row.with_value text: safe_join(qualification.qualification_results.map { |res| tag.div(display_secondary_qualification(res), class: "govuk-body govuk-!-margin-bottom-1") })
 
-      = govuk_button_link_to t("buttons.add_another_qualification"), select_category_jobseekers_job_application_qualifications_path(job_application)
-    - else
-      = render EmptySectionComponent.new title: t(".no_qualifications") do
-        = govuk_button_link_to t("buttons.add_qualification"), select_category_jobseekers_job_application_qualifications_path(job_application), class: "govuk-!-margin-bottom-0"
+            - qualification.display_attributes.each do |attribute|
+              - summary_list.with_row do |row|
+                - row.with_key text: t("helpers.label.#{qualification_form_param_key(qualification.category)}.#{attribute}")
+                - row.with_value text: qualification.public_send(attribute)
 
-    = form_for @form, url: jobseekers_job_application_build_path(job_application, :qualifications), method: :patch do |f|
-      = f.govuk_error_summary
-      = f.govuk_collection_radio_buttons :qualifications_section_completed, %w[true false], :to_s
-      = f.govuk_submit job_application_build_submit_button_text do
-        = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
-        span.govuk-caption-m
-          = t("jobseekers.job_applications.cancel_caption")
+            - if qualification.finished_studying == false
+              - summary_list.with_row do |row|
+                - row.with_key text: t("helpers.legend.#{qualification_form_param_key(qualification.category)}.finished_studying")
+                - row.with_value text: safe_join([tag.div(t("helpers.label.jobseekers_qualifications_shared_labels.finished_studying_options.#{qualification.finished_studying}"), class: "govuk-body"), tag.div(qualification.finished_studying_details.presence, class: "govuk-body")])
+
+        - if qualification.secondary?
+          - detail.with_action govuk_link_to t("buttons.add_another_subject"), edit_jobseekers_job_application_qualification_path(job_application, qualification, new_subject: true), class: "govuk-link--no-visited-state"
+        - detail.with_action govuk_link_to t("buttons.change"), edit_jobseekers_job_application_qualification_path(job_application, qualification), class: "govuk-link--no-visited-state"
+        - detail.with_action govuk_link_to t("buttons.delete"), jobseekers_job_application_qualification_path(job_application, qualification), method: :delete
+
+  = govuk_button_link_to t("buttons.add_another_qualification"), select_category_jobseekers_job_application_qualifications_path(job_application)
+- else
+  = render EmptySectionComponent.new title: t(".no_qualifications") do
+    = govuk_button_link_to t("buttons.add_qualification"), select_category_jobseekers_job_application_qualifications_path(job_application), class: "govuk-!-margin-bottom-0"
+
+= form_for @form, url: jobseekers_job_application_build_path(job_application, :qualifications), method: :patch do |f|
+  = f.govuk_error_summary
+  = f.govuk_collection_radio_buttons :qualifications_section_completed, %w[true false], :to_s
+  = f.govuk_submit job_application_build_submit_button_text do
+    = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
+    span.govuk-caption-m
+      = t("jobseekers.job_applications.cancel_caption")

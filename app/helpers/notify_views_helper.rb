@@ -54,13 +54,6 @@ module NotifyViewsHelper
     notify_link(url, text)
   end
 
-  def invitation_to_apply_vacancy_link(vacancy)
-    url = job_url(vacancy)
-    url_with_utm_params = job_url(vacancy, **utm_params)
-
-    safe_join([tag.p("#{vacancy.job_title}:"), notify_link(url_with_utm_params, url)])
-  end
-
   def job_alert_relevance_feedback_link(relevant, subscription, vacancies)
     params = { job_alert_relevance_feedback: { relevant_to_user: relevant,
                                                job_alert_vacancy_ids: vacancies.pluck(:id),
@@ -84,11 +77,6 @@ module NotifyViewsHelper
   def jobseeker_profile_link
     url = jobseekers_profile_url(**utm_params)
     notify_link(url, t(".create_a_profile.link_text"))
-  end
-
-  def privacy_policy_link
-    url = "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers"
-    notify_link(url, t(".privacy_policy_link"))
   end
 
   def publisher_job_applications_link(vacancy)
@@ -153,11 +141,6 @@ module NotifyViewsHelper
   def edit_job_alert_link(subscription)
     url = edit_subscription_url(subscription.token)
     notify_link(url, t(".edit_link_text"))
-  end
-
-  def view_applications_for_link(vacancy)
-    url = organisation_job_job_applications_url(vacancy.id, **utm_params)
-    notify_link(url, t(".view_applications_for", job_title: vacancy.job_title))
   end
 
   private

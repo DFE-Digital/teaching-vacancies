@@ -6,7 +6,7 @@ module Jobseekers
 
     deliver_by :email do |config|
       config.mailer = "Jobseekers::JobApplicationMailer"
-      config.method = "self_disclosure"
+      config.method = :self_disclosure
       config.args = :job_application
     end
 

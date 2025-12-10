@@ -52,7 +52,7 @@ export_users:
 
 send_entity_table_checks_to_bigquery:
   cron: "30 1 * * *" # "At 01:30."
-  class: "DfE::Analytics::EntityTableCheckJob"
+  class: "DfE::Analytics::Jobs::EntityTableCheckJob"
   queue: low
 
 reset_sessions:
@@ -116,7 +116,7 @@ queue_messages_received:
   queue: default
 
 send_inactive_account_email:
-  cron: '0 8 * * *' # "At 08:00."
+  cron: '0 8 * * *' # "At 8:00."
   class: 'SendInactiveAccountEmailJob'
   queue: low
 
@@ -126,18 +126,13 @@ destroy_inactive_accounts:
   queue: low
 
 inactive_profile_warnings:
-  cron: '10 14 * * *' # "At 08:40."
+  cron: '40 08 * * *' # "At 08:40."
   class: 'InactiveProfileWarningsJob'
   queue: low
 
 disable_inactive_profiles:
-  cron: '20 14 * * *' # "At 08:20."
+  cron: '20 08 * * *' # "At 08:20."
   class: 'DisableInactiveProfilesJob'
-  queue: low
-
-disable_active_profiles_without_new_fields:
-  cron: '30 14 * * *' # "At 08:30."
-  class: 'DisableActiveProfilesWithoutNewFieldsJob'
   queue: low
 
 email_feedback_prompt:

@@ -19,7 +19,7 @@ RSpec.describe ProfilesHelper do
         end
 
         it "returns correct string" do
-          expect(helper.jobseeker_status(profile)).to eq "QTS awarded in 2020. Has the right to work in the UK."
+          expect(helper.jobseeker_status(profile)).to eq "QTS gained in 2020. Has the right to work in the UK."
         end
       end
 
@@ -54,7 +54,7 @@ RSpec.describe ProfilesHelper do
         end
 
         it "returns correct string" do
-          expect(helper.jobseeker_status(profile)).to eq "QTS awarded in 2020. Does not have the right to work in the UK."
+          expect(helper.jobseeker_status(profile)).to eq "QTS gained in 2020. Does not have the right to work in the UK."
         end
       end
 
@@ -89,7 +89,7 @@ RSpec.describe ProfilesHelper do
         end
 
         it "returns correct string" do
-          expect(helper.jobseeker_status(profile)).to eq "QTS awarded in 2020."
+          expect(helper.jobseeker_status(profile)).to eq "QTS gained in 2020."
         end
       end
 

@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: 23ae21ef25f5bd1ce081631fbada4cd3b2667cf7
-  tag: v1.15.10
+  revision: 91427abc46315f266dea803834d21edd6c7ef136
+  tag: v1.15.12
   specs:
-    dfe-analytics (1.15.10)
+    dfe-analytics (1.15.12)
       google-cloud-bigquery (~> 1.38)
       httparty (~> 0.21)
       multi_xml (~> 0.6.0)
@@ -394,7 +394,7 @@ GEM
     jmespath (1.6.2)
     jsbundling-rails (1.3.1)
       railties (>= 6.0.0)
-    json (2.16.0)
+    json (2.17.1)
     json-jwt (1.16.6)
       activesupport (>= 4.2)
       aes_key_wrap
@@ -450,7 +450,7 @@ GEM
     mini_mime (1.1.5)
     minitest (5.26.2)
     mock_redis (0.48.1)
-    multi_json (1.17.0)
+    multi_json (1.18.0)
     multi_xml (0.6.0)
     multipart-post (2.4.1)
     mutex_m (0.3.0)
@@ -1049,6 +1049,7 @@ DEPENDENCIES
   rack-cors
   rack-mini-profiler
   rack_session_access
+  rails (< 8.1)
   rails-controller-testing
   rails_semantic_logger
   railties (< 8.1)

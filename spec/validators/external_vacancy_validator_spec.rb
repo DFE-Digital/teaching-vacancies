@@ -146,7 +146,7 @@ RSpec.describe ExternalVacancyValidator, type: :model do
       it "the new vacancy is invalid" do
         expect(vacancy).not_to be_valid
         expect(vacancy.errors[:base])
-          .to include("A vacancy with the same job title, expiry date, contract type, working_patterns, phases and salary already exists for this organisation.")
+          .to include("A vacancy with the same job title, expiry date, contract type, working patterns, phases and salary already exists for this organisation.")
       end
 
       context "when the existing vacancy was discarded" do

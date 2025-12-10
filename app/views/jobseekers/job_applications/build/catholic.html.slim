@@ -2,52 +2,50 @@
 
 = render "banner", vacancy: vacancy, back_path: back_path
 
-.govuk-grid-row
-  div
-    h2.govuk-heading-l = t(".heading")
+h2.govuk-heading-l = t(".heading")
 
-    p.govuk-body = t(".is_a_catholic_school", name: vacancy.organisation.name)
+p.govuk-body = t(".is_a_catholic_school", name: vacancy.organisation.name)
 
-    p.govuk-body = t(".preference_to_catholics")
+p.govuk-body = t(".preference_to_catholics")
 
-    p.govuk-body = t(".preference_for_support_staff")
+p.govuk-body = t(".preference_for_support_staff")
 
-    p.govuk-body = t(".processing")
+p.govuk-body = t(".processing")
 
-    p.govuk-body = t(".non_catholics_apply")
+p.govuk-body = t(".non_catholics_apply")
 
-    = form_for @form, url: jobseekers_job_application_build_path(job_application, :catholic), method: :patch, multipart: true do |f|
-      = f.govuk_error_summary
+= form_for @form, url: jobseekers_job_application_build_path(job_application, :catholic), method: :patch, multipart: true do |f|
+  = f.govuk_error_summary
 
-      = f.govuk_radio_buttons_fieldset :following_religion do
-        = f.govuk_radio_button :following_religion, true, link_errors: true do
-          = f.govuk_text_field :faith, label: { size: "s" }
+  = f.govuk_radio_buttons_fieldset :following_religion do
+    = f.govuk_radio_button :following_religion, true, link_errors: true do
+      = f.govuk_text_field :faith, label: { size: "s" }
 
-          = f.govuk_text_area :place_of_worship, label: { size: "s" }, rows: 6
+      = f.govuk_text_area :place_of_worship, label: { size: "s" }, rows: 6
 
-          = f.govuk_radio_buttons_fieldset :religious_reference_type do
-            = f.govuk_radio_button :religious_reference_type, :religious_referee, link_errors: true do
-              = f.govuk_text_field :religious_referee_name, label: { size: "s" }
-              = f.govuk_text_area :religious_referee_address, rows: 6, label: { size: "s" }
-              = f.govuk_text_field :religious_referee_role, label: { size: "s" }
-              = f.govuk_text_field :religious_referee_email, label: { size: "s" }
-              = f.govuk_text_field :religious_referee_phone, label: { size: "s" }
-            = f.govuk_radio_button :religious_reference_type, :baptism_certificate do
-              - if f.object.baptism_certificate.respond_to?(:attached?) && f.object.baptism_certificate.attached? # If form validations fail, the file is a tempfile that doesn't respond to ActiveStorage methods.
-                p.govuk-body
-                  = govuk_link_to("#{f.object.baptism_certificate.filename}  (#{number_to_human_size(f.object.baptism_certificate.byte_size)})", f.object.baptism_certificate, download: "true")
-              = f.govuk_file_field :baptism_certificate,
-                label: { size: "s" },
-                javascript: true,
-                accept: BaseForm::VALID_DOCUMENT_TYPES.map(&:downcase).join(",")
-            = f.govuk_radio_button :religious_reference_type, :baptism_date do
-              = f.govuk_text_area :baptism_address, rows: 6
-              = f.govuk_date_field :baptism_date
-            = f.govuk_radio_button :religious_reference_type, :no_religious_referee
+      = f.govuk_radio_buttons_fieldset :religious_reference_type do
+        = f.govuk_radio_button :religious_reference_type, :religious_referee, link_errors: true do
+          = f.govuk_text_field :religious_referee_name, label: { size: "s" }
+          = f.govuk_text_area :religious_referee_address, rows: 6, label: { size: "s" }
+          = f.govuk_text_field :religious_referee_role, label: { size: "s" }
+          = f.govuk_text_field :religious_referee_email, label: { size: "s" }
+          = f.govuk_text_field :religious_referee_phone, label: { size: "s" }
+        = f.govuk_radio_button :religious_reference_type, :baptism_certificate do
+          - if f.object.baptism_certificate.respond_to?(:attached?) && f.object.baptism_certificate.attached? # If form validations fail, the file is a tempfile that doesn't respond to ActiveStorage methods.
+            p.govuk-body
+              = govuk_link_to("#{f.object.baptism_certificate.filename}  (#{number_to_human_size(f.object.baptism_certificate.byte_size)})", f.object.baptism_certificate, download: "true")
+          = f.govuk_file_field :baptism_certificate,
+            label: { size: "s" },
+            javascript: true,
+            accept: BaseForm::VALID_DOCUMENT_TYPES.map(&:downcase).join(",")
+        = f.govuk_radio_button :religious_reference_type, :baptism_date do
+          = f.govuk_text_area :baptism_address, rows: 6
+          = f.govuk_date_field :baptism_date
+        = f.govuk_radio_button :religious_reference_type, :no_religious_referee
 
-        = f.govuk_radio_button :following_religion, "false"
+    = f.govuk_radio_button :following_religion, "false"
 
-      = f.govuk_collection_radio_buttons :catholic_section_completed, %w[true false], :to_s
+  = f.govuk_collection_radio_buttons :catholic_section_completed, %w[true false], :to_s
 
-      = f.govuk_submit job_application_build_submit_button_text do
-        = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
+  = f.govuk_submit job_application_build_submit_button_text do
+    = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"

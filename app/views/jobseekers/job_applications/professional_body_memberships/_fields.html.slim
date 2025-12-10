@@ -1,0 +1,7 @@
+= f.govuk_text_field :name, label: { size: "s" }, width: "two-thirds", aria: { required: true }
+= f.govuk_text_field :membership_type, label: { size: "s" }, width: "two-thirds", aria: { required: true }
+= f.govuk_text_field :membership_number, label: { size: "s" }, width: "two-thirds"
+= f.govuk_text_field :year_membership_obtained, label: { size: "s" }, type: "number", width: 4
+= f.govuk_radio_buttons_fieldset(:exam_taken, legend: { size: "m", tag: "h2" }) do
+  = f.govuk_radio_button :exam_taken, "true", link_errors: true
+  = f.govuk_radio_button :exam_taken, "false"
