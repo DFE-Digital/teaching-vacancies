@@ -38,8 +38,4 @@ class Search::LocationBuilder
       radius: convert_miles_to_metres(radius),
     }
   end
-
-  def factory
-    @factory ||= RGeo::ActiveRecord::SpatialFactoryStore.instance.default
-  end
 end
