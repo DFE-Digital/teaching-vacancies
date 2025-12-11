@@ -134,7 +134,6 @@ shared:
     - qts_age_range_and_subject
     - qualified_teacher_status_year
     - is_statutory_induction_complete
-    - personal_statement
     - is_support_needed
     - support_needed_details
     - has_close_relationships

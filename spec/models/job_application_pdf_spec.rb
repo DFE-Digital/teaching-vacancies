@@ -114,7 +114,6 @@ RSpec.describe JobApplicationPdf do
       context "when blank" do
         before do
           job_application.personal_statement_richtext = nil
-          job_application.personal_statement = nil
         end
 
         it { is_expected.to eq(I18n.t("jobseekers.job_applications.review.personal_statement.blank")) }

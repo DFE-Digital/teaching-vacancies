@@ -33,7 +33,6 @@ FactoryBot.define do
     is_statutory_induction_complete { true }
 
     # Personal statement
-    personal_statement { Faker::Lorem.paragraph(sentence_count: 8) }
     personal_statement_richtext { Faker::Lorem.paragraph(sentence_count: 8) }
 
     # Ask for support
@@ -184,7 +183,6 @@ FactoryBot.define do
     is_statutory_induction_complete { nil }
 
     # Personal statement
-    personal_statement { "" }
     personal_statement_richtext { "" }
 
     # Equal opportunities

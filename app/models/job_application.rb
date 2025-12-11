@@ -1,5 +1,7 @@
 # rubocop:disable Metrics/ClassLength
 class JobApplication < ApplicationRecord
+  self.ignored_columns += %w[personal_statement_ciphertext]
+
   before_save :update_status_timestamp, if: %i[will_save_change_to_status? ignore_manually_set_timestamps?]
   before_save :reset_support_needed_details
   after_save :anonymise_equal_opportunities_fields, if: -> { saved_change_to_status? && status == "submitted" }
@@ -101,7 +103,7 @@ class JobApplication < ApplicationRecord
 
   has_encrypted :first_name, :last_name, :previous_names, :street_address, :city, :postcode,
                 :phone_number, :teacher_reference_number, :national_insurance_number,
-                :personal_statement, :support_needed_details, :close_relationships_details,
+                :support_needed_details, :close_relationships_details,
                 :further_instructions, :rejection_reasons, :gaps_in_employment_details,
                 :faith, :place_of_worship, :baptism_address, :ethos_and_aims,
                 :religious_referee_name, :religious_referee_address, :religious_referee_role,
