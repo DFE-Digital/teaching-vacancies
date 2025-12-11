@@ -1,7 +1,5 @@
 # rubocop:disable Metrics/ClassLength
 class JobApplication < ApplicationRecord
-  self.ignored_columns += %w[personal_statement_ciphertext]
-
   before_save :update_status_timestamp, if: %i[will_save_change_to_status? ignore_manually_set_timestamps?]
   before_save :reset_support_needed_details
   after_save :anonymise_equal_opportunities_fields, if: -> { saved_change_to_status? && status == "submitted" }
