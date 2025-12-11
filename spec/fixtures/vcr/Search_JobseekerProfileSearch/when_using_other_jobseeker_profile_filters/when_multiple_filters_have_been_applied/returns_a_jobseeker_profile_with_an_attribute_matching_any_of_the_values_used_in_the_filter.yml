@@ -1,0 +1,178 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/geocode/json?address=manchester&components=country:gb&key=<GOOGLE_LOCATION_SEARCH_API_KEY>&language=en&sensor=false
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Teaching Vacancies Service teaching.vacancies@education.gov.uk
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 11 Dec 2025 15:57:07 GMT
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Goog-Maps-Metro-Area:
+      - Manchester
+      Content-Security-Policy-Report-Only:
+      - script-src 'none'; form-action 'none'; frame-src 'none'; report-uri https://csp.withgoogle.com/csp/scaffolding/msaifdggmnwc:214:0
+      Cross-Origin-Opener-Policy-Report-Only:
+      - same-origin; report-to=msaifdggmnwc:214:0
+      Report-To:
+      - '{"group":"msaifdggmnwc:214:0","max_age":2592000,"endpoints":[{"url":"https://csp.withgoogle.com/csp/report-to/scaffolding/msaifdggmnwc:214:0"}],}'
+      Server:
+      - mafe
+      Content-Length:
+      - '2401'
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server-Timing:
+      - gfet4t7; dur=52
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: "{\n   \"results\" : \n   [\n      {\n         \"address_components\"
+        : \n         [\n            {\n               \"long_name\" : \"Manchester\",\n
+        \              \"short_name\" : \"Manchester\",\n               \"types\"
+        : \n               [\n                  \"locality\",\n                  \"political\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Manchester\",\n               \"short_name\" : \"Manchester\",\n               \"types\"
+        : \n               [\n                  \"postal_town\"\n               ]\n
+        \           },\n            {\n               \"long_name\" : \"Greater Manchester\",\n
+        \              \"short_name\" : \"Greater Manchester\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"England\",\n               \"short_name\"
+        : \"England\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"United Kingdom\",\n               \"short_name\"
+        : \"GB\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            }\n         ],\n
+        \        \"formatted_address\" : \"Manchester, UK\",\n         \"geometry\"
+        : \n         {\n            \"bounds\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 53.5445879,\n                  \"lng\"
+        : -2.1468288\n               },\n               \"southwest\" : \n               {\n
+        \                 \"lat\" : 53.39990299999999,\n                  \"lng\"
+        : -2.3000969\n               }\n            },\n            \"location\" :
+        \n            {\n               \"lat\" : 53.4807593,\n               \"lng\"
+        : -2.2426305\n            },\n            \"location_type\" : \"APPROXIMATE\",\n
+        \           \"viewport\" : \n            {\n               \"northeast\" :
+        \n               {\n                  \"lat\" : 53.5445879,\n                  \"lng\"
+        : -2.1468288\n               },\n               \"southwest\" : \n               {\n
+        \                 \"lat\" : 53.39990299999999,\n                  \"lng\"
+        : -2.3000969\n               }\n            }\n         },\n         \"place_id\"
+        : \"ChIJ2_UmUkxNekgRqmv-BDgUvtk\",\n         \"types\" : \n         [\n            \"locality\",\n
+        \           \"political\"\n         ]\n      }\n   ],\n   \"status\" : \"OK\"\n}"
+  recorded_at: Thu, 11 Dec 2025 15:57:07 GMT
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/geocode/json?address=N7%207DD&components=country:gb&key=<GOOGLE_LOCATION_SEARCH_API_KEY>&language=en&sensor=false
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Teaching Vacancies Service teaching.vacancies@education.gov.uk
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 11 Dec 2025 15:57:07 GMT
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Goog-Maps-Metro-Area:
+      - London
+      Content-Security-Policy-Report-Only:
+      - script-src 'none'; form-action 'none'; frame-src 'none'; report-uri https://csp.withgoogle.com/csp/scaffolding/msaifdggmnwc:214:0
+      Cross-Origin-Opener-Policy-Report-Only:
+      - same-origin; report-to=msaifdggmnwc:214:0
+      Report-To:
+      - '{"group":"msaifdggmnwc:214:0","max_age":2592000,"endpoints":[{"url":"https://csp.withgoogle.com/csp/report-to/scaffolding/msaifdggmnwc:214:0"}],}'
+      Server:
+      - mafe
+      Content-Length:
+      - '2791'
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server-Timing:
+      - gfet4t7; dur=114
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: "{\n   \"results\" : \n   [\n      {\n         \"address_components\"
+        : \n         [\n            {\n               \"long_name\" : \"N7 7DD\",\n
+        \              \"short_name\" : \"N7 7DD\",\n               \"types\" : \n
+        \              [\n                  \"postal_code\"\n               ]\n            },\n
+        \           {\n               \"long_name\" : \"Hornsey Road\",\n               \"short_name\"
+        : \"Hornsey Rd\",\n               \"types\" : \n               [\n                  \"route\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"London\",\n               \"short_name\" : \"London\",\n               \"types\"
+        : \n               [\n                  \"postal_town\"\n               ]\n
+        \           },\n            {\n               \"long_name\" : \"Greater London\",\n
+        \              \"short_name\" : \"Greater London\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"England\",\n               \"short_name\"
+        : \"England\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"United Kingdom\",\n               \"short_name\"
+        : \"GB\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            }\n         ],\n
+        \        \"formatted_address\" : \"Hornsey Rd, London N7 7DD, UK\",\n         \"geometry\"
+        : \n         {\n            \"bounds\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 51.5550223,\n                  \"lng\"
+        : -0.1104389\n               },\n               \"southwest\" : \n               {\n
+        \                 \"lat\" : 51.5531282,\n                  \"lng\" : -0.1124511\n
+        \              }\n            },\n            \"location\" : \n            {\n
+        \              \"lat\" : 51.5538289,\n               \"lng\" : -0.1110618\n
+        \           },\n            \"location_type\" : \"APPROXIMATE\",\n            \"viewport\"
+        : \n            {\n               \"northeast\" : \n               {\n                  \"lat\"
+        : 51.5554242302915,\n                  \"lng\" : -0.110096019708498\n               },\n
+        \              \"southwest\" : \n               {\n                  \"lat\"
+        : 51.5527262697085,\n                  \"lng\" : -0.112793980291502\n               }\n
+        \           }\n         },\n         \"navigation_points\" : \n         [\n
+        \           {\n               \"location\" : \n               {\n                  \"latitude\"
+        : 51.5538035,\n                  \"longitude\" : -0.110985\n               }\n
+        \           }\n         ],\n         \"place_id\" : \"ChIJQ-hQhXYbdkgRowGcSItEnj4\",\n
+        \        \"types\" : \n         [\n            \"postal_code\"\n         ]\n
+        \     }\n   ],\n   \"status\" : \"OK\"\n}"
+  recorded_at: Thu, 11 Dec 2025 15:57:07 GMT
+recorded_with: VCR 6.3.1
