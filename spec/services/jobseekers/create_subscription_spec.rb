@@ -38,7 +38,7 @@ RSpec.describe Jobseekers::CreateSubscription do
 
   it "sends a confirmation email" do
     subscription = described_class.new(form, recaptcha_score).call
-    expect(Jobseekers::SubscriptionMailer).to have_received(:confirmation).with(subscription.id)
+    expect(Jobseekers::SubscriptionMailer).to have_received(:confirmation).with(subscription)
     expect(mailer).to have_received(:deliver_later).once
   end
 end

@@ -1,6 +1,0 @@
-<%= t(".dear", name: @job_application.name) %>
-
-<%= t(".body",
-      school_name: @organisation_name,
-      job_title: @vacancy.job_title,
-      link: notify_link(jobseekers_job_application_self_disclosure_url(@job_application, Wicked::FIRST_STEP), t(".self_disclosure_form"))) %>
