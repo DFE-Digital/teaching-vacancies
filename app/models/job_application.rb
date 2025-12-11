@@ -133,7 +133,8 @@ class JobApplication < ApplicationRecord
   scope :after_submission, -> { where.not(status: :draft) }
   scope :draft, -> { where(status: "draft") }
 
-  scope :within_retention_period, -> { where(updated_at: 12.months.ago..) }
+  scope :within_jobseeker_retention_period, -> { where(updated_at: 12.months.ago..) }
+  scope :within_hiring_staff_retention_period, -> { where(updated_at: 6.months.ago..) }
 
   scope :active_for_selection, -> { where.not(status: INACTIVE_STATUSES) }
 

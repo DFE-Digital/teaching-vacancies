@@ -15,7 +15,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def index
     # only show applications from the last 12 months to avoid cluttering up the display
     default_scope = JobApplication.includes(:self_disclosure_request, :vacancy)
-                                  .within_retention_period
+                                  .within_jobseeker_retention_period
                                   .where(jobseeker: current_jobseeker)
     draft_job_applications = default_scope.draft.order(updated_at: :desc)
     active_drafts, expired_drafts = draft_job_applications.partition { |job_application| job_application.vacancy.expires_at.future? }
