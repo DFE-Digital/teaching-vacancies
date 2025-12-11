@@ -42,37 +42,38 @@ Plus
 One of TV developers needs to add the new developer to [teaching-vacancies-developers](https://github.com/orgs/DFE-Digital/teams/teaching-vacancies-developers) as `maintainer` role.
 
 ## DFE Azure Platform Identity
-
 Follow the [developer onboarding docs](https://github.com/DFE-Digital/teacher-services-cloud/blob/main/documentation/developer-onboarding.md#developer-onboarding) to setup your account in DFE Azure Platform Identity.
 
 ## GovUK Notify
-
 Ask a TV developer to add you to the [GovUK Notify team DfE Teaching Vacancies](https://www.notifications.service.gov.uk/services/786d369d-11d1-4c7e-9a11-ef06aab2978b/users/invite) team.
 
 New members will need this to be able to receive emails on testing environments.
 
 ## Sentry
-
-Developer will need to request access to our Sentry `teaching-vacancies` organisation through the [DfE Service portal](https://dfe.service-now.com.mcas.ms/serviceportal?id=sc_cat_item&sys_id=f350f8421b65a5104f999978b04bcb51&sysparm_category=7ed771041bc61150b192ec69b04bcb3e).
+The Developer will need to request access to our Sentry `teaching-vacancies` organisation through the [DfE Service portal](https://dfe.service-now.com.mcas.ms/serviceportal?id=sc_cat_item&sys_id=f350f8421b65a5104f999978b04bcb51&sysparm_category=7ed771041bc61150b192ec69b04bcb3e).
 
 ## Logit.io
-Developer will need to request access to Logit.io `TWD` account `Teaching Vacancies` stack for Kibana access.
+The Developer will need to request access to Logit.io `TWD` account `Teaching Vacancies` stack for Kibana access.
 
 The access request can be raised through the [DfE Service portal](https://dfe.service-now.com.mcas.ms/serviceportal?id=sc_cat_item&sys_id=45717cc71b02e1904f999978b04bcb61)
 
-## Status Cake
-Developer will need to request account access to Status Cake for `DfEStatusCake` workspace through the [DfE Service portal](https://dfe.service-now.com.mcas.ms/serviceportal?id=sc_cat_item&sys_id=e7a004df1b399c502fe864606e4bcb21).
+## Google Cloud Platform services
+The Developer needs to request a Google Cloud account under your DfE email through the [DfE Service portal](https://dfe.service-now.com.mcas.ms/ithelpcentre?id=sc_cat_item&sys_id=781db3951bce69504f999978b04bcbdb&table=sc_cat_item&searchTerm=Google%20cloud)
 
-## Zendesk
-
-Someone on the support team can add developers to Zendesk as and when needed (as there are limited seats available).
-
-## Other services
-
-Any team member can invite the new developer to the following services:
-
-* Skylight (Access through Github user with access to TV project).
+* [Google Cloud Console](https://console.cloud.google.com/)
 * Google Analytics
 * [Google Tag Manager](https://tagmanager.google.com/?authuser=2#/container/accounts/4702787029/containers/12903245/workspaces/103)
 * [Google BigQ Looker studio](https://lookerstudio.google.com/u/2/reporting/1X_lrbWUn7Nw5LZnRWynJKtalYg6-L4Oi)
 * [Google reCAPTCHA](https://www.google.com/u/2/recaptcha/admin/site/674609893)
+* [Google Search Console](https://search.google.com/u/2/search-console?resource_id=sc-domain:teaching-vacancies.service.gov.uk)
+
+## Status Cake
+The Developer will need to request account access to Status Cake for `DfEStatusCake` workspace through the [DfE Service portal](https://dfe.service-now.com.mcas.ms/serviceportal?id=sc_cat_item&sys_id=e7a004df1b399c502fe864606e4bcb21).
+
+## Zendesk
+Someone on the support team can add developers to Zendesk as and when needed (as there are limited seats available).
+
+## Other services
+Any team member can invite the new developer to the following services:
+
+* Skylight (Access through Github user with access to TV project).
