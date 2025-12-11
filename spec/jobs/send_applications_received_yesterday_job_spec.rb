@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe SendApplicationsReceivedYesterdayJob do
-  # subject(:job) { described_class.perform_later }
-
   let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
   let(:school) { create(:school) }
   let(:vacancy) { create(:vacancy, organisations: [school], contact_email: "test@contoso.com") }
@@ -19,17 +17,17 @@ RSpec.describe SendApplicationsReceivedYesterdayJob do
       # Should receive exactly 2 email calls, one for each contact_email
       expect(Publishers::JobApplicationMailer)
         .to receive(:applications_received)
-        .with(contact_email: "test@contoso.com")
+        .with("test@contoso.com")
         .and_return(message_delivery)
 
       expect(Publishers::JobApplicationMailer)
         .to receive(:applications_received)
-        .with(contact_email: "admin@contoso.com")
+        .with("admin@contoso.com")
         .and_return(message_delivery)
 
       expect(message_delivery).to receive(:deliver_later).twice
 
-      perform_enqueued_jobs { job }
+      described_class.perform_now
     end
   end
 
@@ -41,7 +39,7 @@ RSpec.describe SendApplicationsReceivedYesterdayJob do
     it "does not send emails for applications submitted today" do
       expect(Publishers::JobApplicationMailer).not_to receive(:applications_received)
 
-      perform_enqueued_jobs { job }
+      described_class.perform_now
     end
   end
 
@@ -53,7 +51,7 @@ RSpec.describe SendApplicationsReceivedYesterdayJob do
     it "does not send emails for draft applications from yesterday" do
       expect(Publishers::JobApplicationMailer).not_to receive(:applications_received)
 
-      perform_enqueued_jobs { job }
+      described_class.perform_now
     end
   end
 
@@ -67,7 +65,7 @@ RSpec.describe SendApplicationsReceivedYesterdayJob do
     it "does not attempt to send email" do
       expect(Publishers::JobApplicationMailer).not_to receive(:applications_received)
 
-      perform_enqueued_jobs { job }
+      described_class.perform_now
     end
   end
 end
