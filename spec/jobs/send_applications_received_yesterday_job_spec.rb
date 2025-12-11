@@ -55,8 +55,8 @@ RSpec.describe SendApplicationsReceivedYesterdayJob do
     end
   end
 
-  context "when there are vacancies missing contact_emails" do
-    let(:vacancy_without_contact_email) { create(:vacancy, organisations: [school], contact_email: nil) }
+  context "when there are vacancies with blank contact_emails" do
+    let(:vacancy_without_contact_email) { create(:vacancy, organisations: [school], contact_email: "") }
 
     before do
       create(:job_application, :status_submitted, vacancy: vacancy_without_contact_email, submitted_at: 1.day.ago)

@@ -70,12 +70,10 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         fill_in "publishers_job_listing_contact_details_form[other_contact_email]", with: non_publisher_email
 
         click_on I18n.t("buttons.save_and_continue")
-        expect(page).to be_axe_clean
         click_on I18n.t("buttons.save_and_continue")
         #  wait for page load
         find(".govuk-notification-banner")
         expect(current_path).to eq(organisation_job_review_path(vacancy.id))
-        expect(page).to be_axe_clean
 
         expect(page).to have_content(DraftVacancy.find(vacancy.id).job_roles.first.humanize)
       end

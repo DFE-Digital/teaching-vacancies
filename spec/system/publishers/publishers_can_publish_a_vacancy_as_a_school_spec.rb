@@ -272,7 +272,7 @@ RSpec.describe "Creating a vacancy" do
 
         invitation_email = ActionMailer::Base.deliveries.last
         expect(invitation_email.to).to include(non_publisher_email)
-        expect(invitation_email[:template_id].value).to eq("dd91745e-ff16-4ba8-9de6-fb1aea1cf24c")
+        expect(invitation_email.template_id).to eq("dd91745e-ff16-4ba8-9de6-fb1aea1cf24c")
 
         expect(page).to have_current_path(organisation_job_summary_path(created_vacancy.id), ignore_query: true)
       end

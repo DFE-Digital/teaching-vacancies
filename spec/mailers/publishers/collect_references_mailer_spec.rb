@@ -10,16 +10,10 @@ RSpec.describe Publishers::CollectReferencesMailer do
     let(:mail) { described_class.reference_received(reference_request) }
 
     it "includes all expected information" do
-      expected_subject = I18n.t(
-        "publishers.collect_references_mailer.reference_received.subject",
-        organisation_name: organisation.name,
-        candidate_name: job_application.name,
-        job_title: vacancy.job_title,
-      )
       expect(mail.to).to eq(["contact@contoso.com"])
-      expect(mail.subject).to eq(expected_subject)
-      expect(mail.body.encoded).to include(job_application.name)
-      expect(mail.body.encoded).to include(vacancy.job_title)
+      expect(mail.personalisation[:candidate_name]).to eq(job_application.name)
+      expect(mail.personalisation[:job_title]).to eq(vacancy.job_title)
+      expect(mail.personalisation[:organisation_name]).to eq(vacancy.organisation_name)
     end
   end
 end
