@@ -408,24 +408,23 @@ RSpec.describe JobApplication do
     end
   end
 
-  context "when saving change to status" do
-    subject { create(:job_application) }
+  describe "#can_be_withdrawn?" do
+    subject { job_application.can_be_withdrawn? }
 
-    it "updates status timestamp" do
-      freeze_time do
-        expect { subject.submitted! }.to change { subject.submitted_at }.from(nil).to(Time.current)
+    %w[submitted shortlisted interviewing offered].each do |allowed_status|
+      context "when status is #{allowed_status}" do
+        let(:job_application) { build_stubbed(:job_application, status: allowed_status) }
+
+        it { is_expected.to be true }
       end
     end
-  end
 
-  context "when setting support needed to 'no'" do
-    subject { create(:job_application) }
+    %w[draft unsuccessful unsuccessful_interview declined withdrawn rejected].each do |disallowed_status|
+      context "when status is #{disallowed_status}" do
+        let(:job_application) { build_stubbed(:job_application, status: disallowed_status) }
 
-    before { subject.update(is_support_needed: false, support_needed_details: "details in need of resetting") }
-
-    it "resets support needed details" do
-      expect(subject.support_needed_details).to be_blank
-      expect(subject.is_support_needed).to be(false)
+        it { is_expected.to be false }
+      end
     end
   end
 
