@@ -61,7 +61,7 @@ class Jobseekers::JobApplications::SelfDisclosureController < Jobseekers::BaseCo
   end
 
   def redirect_when_self_disclosure_not_pending
-    unless self_disclosure && self_disclosure.self_disclosure_request.sent? && !job_application.status.in?(JobApplication::TERMINAL_STATUSES)
+    unless self_disclosure && self_disclosure.self_disclosure_request.sent? && !job_application.terminal_status?
       redirect_to(jobseekers_job_application_path(job_application))
     end
   end

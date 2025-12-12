@@ -84,7 +84,7 @@ module Referees
     end
 
     def check_application_status
-      if @reference_request.referee.job_application.status.in?(JobApplication::TERMINAL_STATUSES)
+      if @reference_request.referee.job_application.terminal_status?
         render :no_longer_available and return
       end
     end
