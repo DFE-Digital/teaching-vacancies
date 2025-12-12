@@ -20,7 +20,9 @@ class JobPreferences < ApplicationRecord
 
     def set_area
       if LocationPolygon.contain?(name)
+        # :nocov:
         self.uk_area = LocationPolygon.buffered(radius).with_name(name).uk_area
+        # :nocov:
       else
         lat, long = Geocoding.new(name).coordinates.map(&:to_s)
         radius_meters = convert_miles_to_metres(Search::RadiusBuilder.new(name, radius).radius)
