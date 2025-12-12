@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_27_150257) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_11_160730) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -267,7 +267,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_27_150257) do
     t.text "phone_number_ciphertext"
     t.text "teacher_reference_number_ciphertext"
     t.text "national_insurance_number_ciphertext"
-    t.text "personal_statement_ciphertext"
     t.text "support_needed_details_ciphertext"
     t.text "close_relationships_details_ciphertext"
     t.text "further_instructions_ciphertext"
