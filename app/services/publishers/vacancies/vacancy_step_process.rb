@@ -32,16 +32,10 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
     steps
   end
 
-  # rubocop:disable Metrics/MethodLength
   def application_process_steps
     # if the user enters a contact email that doesn't belong to a publisher in our service we want to make them confirm it.
     core_steps = %i[contact_details confirm_contact_details]
-
-    early_steps = if vacancy.published?
-                    []
-                  else
-                    %i[applying_for_the_job]
-                  end
+    early_steps = vacancy.published? ? [] : %i[applying_for_the_job]
 
     if vacancy.enable_job_applications
       early_steps + %i[anonymise_applications] + core_steps
@@ -60,7 +54,6 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
       end
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
   def about_the_role_steps
     first_steps = %i[about_the_role include_additional_documents]
