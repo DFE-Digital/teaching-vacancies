@@ -145,15 +145,13 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def confirm_withdraw
-    raise ActionController::RoutingError, "Cannot withdraw non-reviewed/shortlisted/submitted application" unless
-      job_application.status.in?(%w[reviewed shortlisted submitted])
+    raise ActionController::RoutingError, "Cannot withdraw application in this state" unless job_application.can_be_withdrawn?
 
     @withdraw_form = Jobseekers::JobApplication::WithdrawForm.new
   end
 
   def withdraw
-    raise ActionController::RoutingError, "Cannot withdraw non-reviewed/shortlisted/submitted application" unless
-      job_application.status.in?(%w[reviewed shortlisted submitted])
+    raise ActionController::RoutingError, "Cannot withdraw application in this state" unless job_application.can_be_withdrawn?
 
     @withdraw_form = Jobseekers::JobApplication::WithdrawForm.new(withdraw_form_params)
 

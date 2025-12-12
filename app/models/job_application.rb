@@ -226,6 +226,10 @@ class JobApplication < ApplicationRecord
     end
   end
 
+  def can_be_withdrawn?
+    self.class.next_statuses(status).include?("withdrawn")
+  end
+
   def hide_personal_details?
     vacancy.anonymise_applications? && status.in?(PRE_SHORTLIST_STATUSES)
   end
