@@ -307,12 +307,36 @@ RSpec.describe "Job applications" do
         end
       end
 
-      context "when the application is not reviewed, submitted or shortlisted" do
-        let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+      context "when the application is shortlisted" do
+        let!(:job_application) { create(:job_application, :status_shortlisted, jobseeker: jobseeker, vacancy: vacancy) }
+
+        it "shows a confirmation page" do
+          expect(get(jobseekers_job_application_confirm_withdraw_path(job_application.id))).to render_template(:confirm_withdraw)
+        end
+      end
+
+      context "when the application is interviewing" do
+        let!(:job_application) { create(:job_application, :status_interviewing, jobseeker: jobseeker, vacancy: vacancy) }
+
+        it "shows a confirmation page" do
+          expect(get(jobseekers_job_application_confirm_withdraw_path(job_application.id))).to render_template(:confirm_withdraw)
+        end
+      end
+
+      context "when the application is offered" do
+        let!(:job_application) { create(:job_application, :status_offered, jobseeker: jobseeker, vacancy: vacancy) }
+
+        it "shows a confirmation page" do
+          expect(get(jobseekers_job_application_confirm_withdraw_path(job_application.id))).to render_template(:confirm_withdraw)
+        end
+      end
+
+      context "when the application is not in a withdrawable state" do
+        let!(:job_application) { create(:job_application, :status_declined, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "raises an error" do
           expect { get(jobseekers_job_application_confirm_withdraw_path(job_application.id)) }
-            .to raise_error(ActionController::RoutingError, %r{non-reviewed/shortlisted/submitted})
+            .to raise_error(ActionController::RoutingError, "Cannot withdraw application in this state")
         end
       end
     end
@@ -409,12 +433,39 @@ RSpec.describe "Job applications" do
         end
       end
 
-      context "when the application is not reviewed, submitted or shortlisted" do
-        let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+      context "when the application is interviewing" do
+        let!(:job_application) { create(:job_application, :status_interviewing, jobseeker: jobseeker, vacancy: vacancy) }
+
+        context "when the withdraw form is valid" do
+          it "withdraws the job application and redirects to the applications dashboard" do
+            expect { post jobseekers_job_application_withdraw_path(job_application.id), params: params }
+              .to change { job_application.reload.status }.from("interviewing").to("withdrawn")
+
+            expect(response).to redirect_to(jobseekers_job_applications_path)
+            expect(flash[:success]).to include(vacancy.job_title)
+          end
+        end
+      end
+
+      context "when the application is offered" do
+        let!(:job_application) { create(:job_application, :status_offered, jobseeker: jobseeker, vacancy: vacancy) }
+
+        context "when the withdraw form is valid" do
+          it "withdraws the job application and redirects to the applications dashboard" do
+            expect { post jobseekers_job_application_withdraw_path(job_application.id), params: params }
+              .to change { job_application.reload.status }.from("offered").to("withdrawn")
+
+            expect(response).to redirect_to(jobseekers_job_applications_path)
+          end
+        end
+      end
+
+      context "when the application is not in a withdrawable state" do
+        let!(:job_application) { create(:job_application, :status_declined, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "raises an error" do
           expect { post(jobseekers_job_application_withdraw_path(job_application.id)) }
-            .to raise_error(ActionController::RoutingError, %r{non-reviewed/shortlisted/submitted})
+            .to raise_error(ActionController::RoutingError, "Cannot withdraw application in this state")
         end
       end
     end

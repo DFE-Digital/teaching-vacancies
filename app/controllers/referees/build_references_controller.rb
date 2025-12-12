@@ -5,6 +5,7 @@ module Referees
     include Wicked::Wizard
 
     before_action :set_reference, only: %i[show update]
+    before_action :check_application_status, only: %i[show update]
 
     FORMS = {
       can_give: Referees::CanGiveReferenceForm,
@@ -80,6 +81,12 @@ module Referees
                                            .find(params[:reference_id])
       @reference = @reference_request.job_reference
       @referee = @reference_request.referee
+    end
+
+    def check_application_status
+      if @reference_request.referee.job_application.terminal_status?
+        render :no_longer_available and return
+      end
     end
 
     def finish_wizard_path
