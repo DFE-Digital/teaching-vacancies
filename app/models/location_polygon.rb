@@ -36,11 +36,6 @@ class LocationPolygon < ApplicationRecord
     nil
   end
 
-  # Memoized factory for parsing WKB into geometry objects
-  def self.cartesian_factory_4326
-    @cartesian_factory_4326 ||= RGeo::Cartesian.factory(srid: 4326)
-  end
-
   # Buffers the polygon's area by the given radius in metres and returns the resulting expanded area in geometry.
   # Transformations are needed since the original area is a geographic type.
   #
@@ -65,8 +60,17 @@ class LocationPolygon < ApplicationRecord
     return nil unless wkb
 
     # Has to use this or the returned geometry gets a SRID: 0 even when set in the DB as 4326
-    self.class.cartesian_factory_4326.parse_wkb(wkb)
+    RGeo::Cartesian.factory(srid: 4326).parse_wkb(wkb)
   rescue RGeo::Error::InvalidGeometry
     nil
+  end
+
+  # Buffers the polygon's area by the given radius in metres and returns the resulting expanded area in geometry.
+  # The "where & pick" approach is more efficient to retrieve a single computed value from the DB than loading the whole object.
+  def buffered_geometry_uk_area(radius_in_metres)
+    wkb = self.class.where(id: id)
+              .pick(Arel.sql("ST_AsBinary(ST_Buffer(uk_area::geometry,#{radius_in_metres}))"))
+    # Has to use this or the returned geometry gets a SRID: 0 even when set in the DB as 27700
+    GeoFactories::FACTORY_27700.parse_wkb(wkb) if wkb
   end
 end
