@@ -127,7 +127,7 @@ RSpec.describe "Creating a vacancy" do
     submit_empty_form
     expect(publisher_how_to_receive_applications_page).to be_displayed
     expect(publisher_how_to_receive_applications_page.errors.map(&:text)).to contain_exactly(I18n.t("how_to_receive_applications_errors.receive_applications.inclusion"))
-    publisher_how_to_receive_applications_page.fill_in_and_submit_form(vacancy)
+    publisher_how_to_receive_applications_page.fill_in_and_submit_form("website")
 
     expect(publisher_application_link_page).to be_displayed
     submit_empty_form

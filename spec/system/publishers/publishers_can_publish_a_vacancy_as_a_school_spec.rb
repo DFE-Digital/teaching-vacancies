@@ -146,13 +146,16 @@ RSpec.describe "Creating a vacancy" do
         submit_empty_form
         expect(publisher_how_to_receive_applications_page).to be_displayed
         expect(publisher_how_to_receive_applications_page.errors.map(&:text)).to contain_exactly(I18n.t("how_to_receive_applications_errors.receive_applications.inclusion"))
-        publisher_how_to_receive_applications_page.fill_in_and_submit_form(vacancy)
+        publisher_how_to_receive_applications_page.fill_in_and_submit_form("uploaded_form")
 
-        expect(publisher_application_link_page).to be_displayed
-        submit_empty_form
-        expect(publisher_application_link_page.errors.map(&:text)).to contain_exactly(I18n.t("application_link_errors.application_link.blank"))
-        expect(publisher_application_link_page).to be_displayed
-        publisher_application_link_page.fill_in_and_submit_form(vacancy.application_link)
+        expect(publisher_application_form_page).to be_displayed
+        allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(instance_double(Publishers::DocumentVirusCheck, safe?: true))
+        page.attach_file("publishers_job_listing_application_form_form[application_form]", Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"))
+        click_on I18n.t("buttons.save_and_continue")
+
+        expect(publisher_anonymise_applications_page).to be_displayed
+        publisher_anonymise_applications_page.anonymous_option.click
+        click_on "Save and continue"
 
         expect(publisher_contact_details_page).to be_displayed
         submit_empty_form
