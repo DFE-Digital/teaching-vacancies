@@ -25,6 +25,10 @@ runs:
       run: sudo apt-get install imagemagick libproj-dev
       shell: bash
 
+    - name: Install Proj4 GeoCoding library
+      run: sudo apt-get install libproj-dev
+      shell: bash
+
     - name: Set up Ruby
       if: ${{ inputs.skip-ruby == 'false' }}
       uses: ruby/setup-ruby@v1

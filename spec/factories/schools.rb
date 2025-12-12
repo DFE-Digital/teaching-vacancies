@@ -2,14 +2,18 @@ FactoryBot.define do
   ofsted_ratings = ["Outstanding", "Good", "Requires Improvement", "Inadequate"].freeze
 
   factory :school do
+    transient do
+      # geopoint { "POINT(2 1)" }
+      # make default inside the U.K.
+      geopoint { "POINT(-1 51.5)" }
+    end
+
     address { Faker::Address.street_name.delete("'") }
     county { Faker::Address.state_abbr }
     description { Faker::Lorem.paragraph(sentence_count: 1) }
     email { Faker::Internet.email(domain: "contoso.com") }
     establishment_status { "Open" }
 
-    # make default inside the U.K.
-    geopoint { "POINT(-1 51.5)" }
     gias_data do
       {
         CloseDate: nil,
@@ -40,6 +44,22 @@ FactoryBot.define do
     # URN is validated unique for a school
     sequence(:urn) { |n| n + 100_000 }
     url { Faker::Internet.url(host: "example.com") }
+
+    after(:build) do |org, evaluator|
+      if org.uk_geopoint.nil? && evaluator.geopoint.present?
+        org.uk_geopoint = if evaluator.geopoint.is_a?(String)
+                            GeoFactories.convert_wgs84_to_sr27700(GeoFactories::FACTORY_4326.parse_wkt(evaluator.geopoint))
+                          else
+                            GeoFactories.convert_wgs84_to_sr27700(evaluator.geopoint)
+                          end
+      end
+    end
+
+    after(:stub) do |org, evaluator|
+      if org.uk_geopoint.nil? && evaluator.geopoint.present?
+        org.uk_geopoint = GeoFactories.convert_wgs84_to_sr27700(GeoFactories::FACTORY_4326.parse_wkt(evaluator.geopoint))
+      end
+    end
 
     trait :with_image do
       after(:build) do |school|
