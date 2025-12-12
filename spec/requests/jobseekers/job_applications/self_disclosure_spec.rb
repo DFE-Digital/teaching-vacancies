@@ -37,6 +37,23 @@ RSpec.describe "Job applications self disclosure" do
 
       it { expect(response).to redirect_to(jobseekers_job_application_path(job_application)) }
     end
+
+    context "when the job application is in a terminal state" do
+      let(:status) { "sent" }
+
+      JobApplication::TERMINAL_STATUSES.each do |terminal_status|
+        context "when status is #{terminal_status}" do
+          before do
+            job_application.update_column(:status, JobApplication.statuses[terminal_status])
+            get jobseekers_job_application_self_disclosure_path(job_application, :personal_details)
+          end
+
+          it "redirects to job application page" do
+            expect(response).to redirect_to(jobseekers_job_application_path(job_application))
+          end
+        end
+      end
+    end
   end
 
   describe "PATCH #update" do
@@ -101,6 +118,22 @@ RSpec.describe "Job applications self disclosure" do
 
       it { expect { request }.not_to change(self_disclosure, :reload) }
       it { expect(request).to render_template(:personal_details) }
+    end
+
+    context "when the job application is in a terminal state" do
+      JobApplication::TERMINAL_STATUSES.each do |terminal_status|
+        context "when status is #{terminal_status}" do
+          before do
+            job_application.update_column(:status, JobApplication.statuses[terminal_status])
+          end
+
+          it "redirects to job application page and does not update" do
+            expect { request }.not_to(change { self_disclosure.reload.name })
+
+            expect(response).to redirect_to(jobseekers_job_application_path(job_application))
+          end
+        end
+      end
     end
   end
 end
