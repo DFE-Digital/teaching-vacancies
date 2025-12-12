@@ -7,7 +7,7 @@ class FormSequence
   end
 
   def validate_all_steps
-    validatable_steps.each.with_object({}) { |s, h| h[s] = validate_step(s) }
+    validatable_steps.each.with_object({}) { |step_name, hash| hash[step_name] = validate_step(step_name) }
   end
 
   def all_steps_valid?

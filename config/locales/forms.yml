@@ -65,6 +65,7 @@ en:
     extend_closing_date: Extend closing date
     find: Find
     go_to_teaching_vacancies: Go to Teaching Vacancies
+    go_back_to_change_email: Go back to change the email
     hide_filters: Hide filters
     job_listing: Job listing
     make_changes: Make changes
@@ -218,6 +219,12 @@ en:
         application_link: For example, https://www.example.com
       publishers_job_listing_application_form_form:
         application_form: You can only upload a PDF or DOCX file under 20MB
+      publishers_job_listing_contact_details_form:
+        contact_email: The email address that you enter on this page will be shown on the job listing, and will receive all communications about this role.
+      publishers_job_listing_confirm_contact_details_form:
+        banner_heading: The email address selected is not linked to a Teaching Vacancies account.
+        warning_text_html: When you select ‘Save and continue’ below, you agree to share your email address with the recipient. They will be able to view your email address when we send them <a href="https://teaching-vacancies.service.gov.uk/get-help-hiring/how-to-setup-your-account/how-to-request-organisation-access" class="govuk-link">guidance on how to set up their account</a>.
+        contact_details: Contact details
       publishers_job_listing_documents_form:
         documents: You can only upload PDF or DOCX files under 20MB, You can upload multiple files at the same time.
       publishers_job_listing_feedback_form:
@@ -502,6 +509,10 @@ en:
           false: "No"
           true: "Yes"
         other_contact_email: Email address
+      publishers_job_listing_confirm_contact_details_form:
+        confirm_contact_email_options:
+          "true": "Yes"
+          "false": "No - add another email address"
       publishers_job_listing_copy_vacancy_form:
         job_title: Job title
         publish_on_day_options:
@@ -731,6 +742,8 @@ en:
       publishers_job_listing_contact_details_form:
         contact_email: Email address
         contact_number_provided: Do you want to give a contact phone number?
+      publishers_job_listing_confirm_contact_details_form:
+        confirm_contact_email: Do you want to use this email address?
       publishers_job_listing_copy_vacancy_form:
         expires_at: Closing date
         expiry_time: Time application is due

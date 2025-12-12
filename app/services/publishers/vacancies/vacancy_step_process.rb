@@ -33,12 +33,15 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
   end
 
   def application_process_steps
-    core_steps = %i[contact_details]
+    # if the user enters a contact email that doesn't belong to a publisher in our service we want to make them confirm it.
+    core_steps = %i[contact_details confirm_contact_details]
+
     early_steps = if vacancy.published?
                     []
                   else
                     %i[applying_for_the_job]
                   end
+
     if vacancy.enable_job_applications
       early_steps + %i[anonymise_applications] + core_steps
     else

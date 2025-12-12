@@ -144,7 +144,7 @@ RSpec.describe "Publishers can edit a vacancy" do
     end
 
     describe "#application_form" do
-      let(:vacancy) { create(:vacancy, :secondary, :with_application_form, organisations: [school]) }
+      let(:vacancy) { create(:vacancy, :secondary, :with_application_form, organisations: [school], publisher: publisher, contact_email: publisher.email) }
 
       before do
         publisher_vacancy_page.change_application_form_link.click
@@ -199,7 +199,7 @@ RSpec.describe "Publishers can edit a vacancy" do
     end
 
     describe "#contact_details" do
-      let(:contact_email) { Faker::Internet.email(domain: "contoso.com") }
+      let(:contact_email) { publisher.email }
 
       before do
         click_review_page_change_link(section: "application_process", row: "contact_email")
@@ -217,11 +217,19 @@ RSpec.describe "Publishers can edit a vacancy" do
       it "can be successfully edited and adds a job to update the Google index in the queue" do
         expect(publisher_contact_details_page).to be_displayed
 
-        expect_any_instance_of(Publishers::Vacancies::BaseController)
-          .to receive(:update_google_index).with(vacancy)
-
         choose I18n.t("helpers.label.publishers_job_listing_contact_details_form.contact_email_options.other")
-        fill_in "publishers_job_listing_contact_details_form[other_contact_email]", with: contact_email
+        fill_in "publishers_job_listing_contact_details_form[other_contact_email]", with: "not_a_publisher_email@contoso.com"
+        click_on I18n.t("buttons.save_and_continue")
+
+        expect(publisher_confirm_contact_details_page).to be_displayed
+
+        publisher_confirm_contact_details_page.click_change_email_link
+
+        expect(publisher_contact_details_page).to be_displayed
+
+        expect_any_instance_of(Publishers::Vacancies::BaseController).to receive(:update_google_index).with(vacancy)
+
+        choose publisher.email
         click_on I18n.t("buttons.save_and_continue")
 
         expect(publisher_vacancy_page).to be_displayed

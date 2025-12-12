@@ -165,7 +165,12 @@ class JobApplication < ApplicationRecord
 
   def submit!
     submitted!
-    Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: self).deliver(vacancy.publisher)
+
+    registered_publisher_user = vacancy.find_publisher_by_contact_email
+
+    if registered_publisher_user
+      Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: self).deliver(registered_publisher_user)
+    end
     Jobseekers::JobApplicationMailer.application_submitted(self).deliver_later
   end
 

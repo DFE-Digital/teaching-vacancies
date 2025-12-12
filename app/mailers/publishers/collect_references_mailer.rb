@@ -29,10 +29,9 @@ module Publishers
     end
 
     def self_disclosure_received(job_application)
-      template_mail("c08269dd-c2d1-4007-a119-f45105e329c9",
-                    to: job_application.vacancy.publisher.email,
+      template_mail("ca7d2ded-6cbc-4d6c-abdd-694c20f66117",
+                    to: job_application.vacancy.contact_email,
                     personalisation: {
-                      name: job_application.vacancy.publisher.papertrail_display_name,
                       candidate_name: job_application.name,
                       job_title: job_application.vacancy.job_title,
                       organisation_name: job_application.vacancy.organisation_name,
@@ -43,11 +42,9 @@ module Publishers
 
     def reference_received(reference_request)
       job_application = reference_request.referee.job_application
-
-      template_mail("bc0a44f5-d8d3-44d3-b18d-10b99f61be16",
-                    to: job_application.vacancy.publisher.email,
+      template_mail("6fa555aa-0205-4883-8f6f-f43c6603ed7e",
+                    to: job_application.vacancy.contact_email,
                     personalisation: {
-                      name: job_application.vacancy.publisher.papertrail_display_name,
                       candidate_name: job_application.name,
                       job_title: job_application.vacancy.job_title,
                       organisation_name: job_application.vacancy.organisation_name,
