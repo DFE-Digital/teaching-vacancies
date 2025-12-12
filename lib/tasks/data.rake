@@ -4,11 +4,6 @@ namespace :db do
     SeedDatabaseJob.perform_later
   end
 
-  desc "Reset markers"
-  task reset_markers: :environment do
-    PublishedVacancy.applicable.find_each(&:reset_markers)
-  end
-
   desc "Generates 1000 random vacancies for testing purposes"
   task create_random_vacancies: :environment do
     1000.times do

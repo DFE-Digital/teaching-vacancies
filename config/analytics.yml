@@ -172,6 +172,7 @@ shared:
     - name
     - radius
     - area
+    - uk_area
     - created_at
     - updated_at
   jobseeker_profiles:
@@ -233,6 +234,8 @@ shared:
     - location_type
     - area
     - centroid
+    - uk_area
+    - uk_centroid
     - created_at
     - updated_at
   organisations:
@@ -255,6 +258,7 @@ shared:
     - locality
     - address3
     - geopoint
+    - uk_geopoint
     - gias_data
     - created_at
     - updated_at
@@ -466,6 +470,7 @@ shared:
     - phases
     - key_stages
     - geolocation
+    - uk_geolocation
     - external_source
     - external_reference
     - external_advert_url

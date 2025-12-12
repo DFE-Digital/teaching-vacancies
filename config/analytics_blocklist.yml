@@ -237,6 +237,8 @@
   :subscriptions:
   - area
   - geopoint
+  - uk_area
+  - uk_geopoint
   - radius_in_metres
   :conversations:
     - searchable_content

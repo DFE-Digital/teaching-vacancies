@@ -99,6 +99,10 @@ class Subscription < ApplicationRecord
     # Cast polygon area from geography to geometry and buffer by radius before storing
     self.area = polygon.buffered_geometry_area(self.class.convert_miles_to_metres(radius))
     self.geopoint = nil
+
+    self.uk_area = polygon.buffered_geometry_uk_area(self.class.convert_miles_to_metres(radius))
+    self.uk_geopoint = nil
+
     self.radius_in_metres = self.class.convert_miles_to_metres(radius)
   end
 
@@ -106,6 +110,11 @@ class Subscription < ApplicationRecord
   def set_location_from_coordinates(coordinates, radius)
     self.geopoint = RGeo::Cartesian.factory(srid: 4326).point(coordinates.second, coordinates.first)
     self.area = nil
+
+    geopoint = GeoFactories::FACTORY_4326.point(coordinates.second, coordinates.first)
+    self.uk_geopoint = GeoFactories.convert_wgs84_to_sr27700 geopoint
+    self.uk_area = nil
+
     self.radius_in_metres = self.class.convert_miles_to_metres(radius)
   end
 end

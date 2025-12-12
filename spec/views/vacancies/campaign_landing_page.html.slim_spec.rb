@@ -3,7 +3,8 @@ require "rails_helper"
 RSpec.describe "vacancies/campaign_landing_page" do
   subject(:campaign_landing_view) { Capybara.string(rendered) }
 
-  let(:school) { build_stubbed(:school) }
+  let(:school) { build_stubbed(:school, geopoint: "POINT(-0.019501 51.504949)") }
+  let(:school2) { build_stubbed(:school, geopoint: "POINT(-1.8964 52.4820)") }
 
   let(:recent_part_time_maths_job) do
     build_stubbed(
@@ -18,7 +19,6 @@ RSpec.describe "vacancies/campaign_landing_page" do
       subjects: %w[Mathematics],
       organisations: [school],
       expires_at: Date.current + 1,
-      geolocation: "POINT(-0.019501 51.504949)",
     )
   end
 
@@ -33,9 +33,8 @@ RSpec.describe "vacancies/campaign_landing_page" do
       publish_on: Date.current - 2,
       job_title: "Maths Teacher",
       subjects: %w[Mathematics],
-      organisations: [school],
+      organisations: [school2],
       expires_at: Date.current + 3,
-      geolocation: "POINT(-1.8964 52.4820)",
     )
   end
   let(:vacancies) { [recent_part_time_maths_job, older_part_time_maths_job] }

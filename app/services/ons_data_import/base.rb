@@ -28,6 +28,7 @@ class OnsDataImport::Base
 
           Rails.logger.info("Persisting new area data for '#{name}' (#{type})")
           set_area_data(location_polygon, geometry, type)
+          set_uk_area_data(location_polygon, geometry, type)
         end
       end
     end
@@ -61,6 +62,30 @@ class OnsDataImport::Base
       SET area=geom.geo,
           location_type=#{ActiveRecord::Base.connection.quote(type)},
           centroid=ST_Centroid(geom.geo)
+      FROM geom
+      WHERE id='#{location_polygon.id}'
+    ")
+    end
+
+    def set_uk_area_data(location_polygon, geometry_json, type)
+      # This is necessary as the ST_GeomFromGeoJSON() method that we would like to use
+      # doesn't appear to support the optional 'srid' parameter that we need to pass
+      geometry = RGeo::GeoJSON.decode(geometry_json)
+      geometry_as_wkt = GeoFactories.convert_wgs84_to_sr27700(geometry).as_text
+      ActiveRecord::Base.connection.exec_update("
+      WITH geom AS (
+        SELECT ST_MakeValid(
+          ST_SimplifyPreserveTopology(
+            ST_GeomFromText(#{ActiveRecord::Base.connection.quote(geometry_as_wkt)}, 27700),
+            #{SIMPLIFICATION_TOLERANCE}
+          ),
+          'method=structure'
+        )::geometry AS geo
+      )
+      UPDATE location_polygons
+      SET uk_area=geom.geo,
+          location_type=#{ActiveRecord::Base.connection.quote(type)},
+          uk_centroid=ST_Centroid(geom.geo)
       FROM geom
       WHERE id='#{location_polygon.id}'
     ")
