@@ -75,55 +75,6 @@ class Subscription < ApplicationRecord
 
   extend DistanceHelper
 
-  # These polygons seem to be extremely invalid - they respond to the 'invalid_reason' call by throwing an exception,
-  # as opposed to the other 31 invalid ones in the production database, which are just 'invalid'
-  INVALID_POLYGONS = ["somerset, bath and bristol",
-                      "devon, plymouth and torbay",
-                      "essex, southend and thurrock",
-                      "leicestershire and rutland",
-                      "lincolnshire and lincoln",
-                      "derbyshire and derby",
-                      "county durham, darlington, hartlepool and stockton",
-                      "cheshire",
-                      "staffordshire and stoke",
-                      "lancashire, blackburn and blackpool"].freeze
-
-  class << self
-    # rubocop:disable Metrics/AbcSize
-    def limit_by_location(vacancies, location, radius_in_miles)
-      polygon = LocationPolygon.buffered(radius_in_miles).with_name(location)
-      begin
-        if polygon.present? && !polygon.name.in?(INVALID_POLYGONS) && polygon.area.invalid_reason.nil?
-          return vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon.area.contains?(point) } }
-        end
-      rescue RGeo::Error::InvalidGeometry => e
-        Sentry.with_scope do |scope|
-          scope.set_context("Polygon", { id: polygon.id, name: polygon.name })
-          Sentry.capture_exception(e)
-        end
-      end
-
-      radius_in_metres = convert_miles_to_metres(radius_in_miles)
-      coordinates = Geocoding.new(location).coordinates
-      search_point = RGeo::Geographic.spherical_factory(srid: 4326).point(coordinates.second, coordinates.first)
-      vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| search_point.distance(point) < radius_in_metres } }
-    end
-    # rubocop:enable Metrics/AbcSize
-
-    def handle_location(vacancies, criteria)
-      if criteria.key?(:location)
-        location = criteria[:location].strip.downcase
-        if location.blank? || LocationQuery::NATIONWIDE_LOCATIONS.include?(location)
-          vacancies
-        else
-          limit_by_location(vacancies, location, criteria[:radius] || 10)
-        end
-      else
-        vacancies
-      end
-    end
-  end
-
   # Reads the location and radius from the search criteria and precomputes the area or geopoint for faster matching later.
   # Expensive operations (external API calls or database geometry operations).
   # Avoid calling this method directly on the user request path.

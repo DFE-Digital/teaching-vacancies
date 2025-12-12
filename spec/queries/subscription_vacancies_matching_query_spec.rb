@@ -478,7 +478,7 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
         end
 
         context "when the vacancy belongs to multiple organisations matching the location filter" do
-          let(:subscription) { create(:daily_subscription, location: "Basildon", radius: 50) }
+          let(:subscription) { create(:daily_subscription, location: "Basildon", radius: 50).tap(&:set_location_data!) }
 
           let(:basildon_vacancy) do
             create(:vacancy, :published_slugged, slug: "bas-sta", organisations: [basildon_school, st_albans_school])

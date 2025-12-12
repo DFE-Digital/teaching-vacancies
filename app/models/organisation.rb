@@ -29,11 +29,6 @@ class Organisation < ApplicationRecord
   scope :school_groups, -> { where(type: "SchoolGroup") }
   scope :trusts, -> { school_groups.where.not(uid: nil) }
   scope :local_authorities, -> { school_groups.where.not(local_authority_code: nil) }
-  scope :within_polygon, ->(location_polygon) { where("ST_Intersects(?, geopoint)", location_polygon.area.to_s) if location_polygon }
-  scope :within_area, lambda { |coordinates, radius|
-    point = "POINT(#{coordinates&.second} #{coordinates&.first})"
-    where("ST_DWithin(geopoint, ?, ?, false)", point, radius) if coordinates && radius
-  }
   scope :in_vacancy_ids, ->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { vacancy_id: ids }).distinct }
 
   scope :search_by_location, OrganisationLocationQuery

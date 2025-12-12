@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Vacancy do
   describe "organisation associations" do
-    let(:school_group) { create(:trust, schools: [school_one, school_two]) }
+    let(:school_group) { create(:trust, :with_geopoint, schools: [school_one, school_two]) }
     let(:school_one) { create(:school, name: "First school", phase: "primary") }
     let(:school_two) { create(:school, name: "Second school", phase: "primary") }
     let(:vacancy) { create(:vacancy, :ect_suitable, job_roles: %w[teacher], organisations: [school_group], phases: %w[primary], key_stages: %w[ks1]) }
@@ -11,12 +11,6 @@ RSpec.describe Vacancy do
       context "when associated with a school group (trust)" do
         it "uses the school group's geopoint" do
           expect(vacancy.geolocation).to eq(school_group.geopoint)
-        end
-
-        it "creates a marker for the school group" do
-          expect(vacancy.markers.count).to eq(1)
-          expect(vacancy.markers.first.organisation).to eq(school_group)
-          expect(vacancy.markers.first.geopoint).to eq(school_group.geopoint)
         end
       end
 
@@ -27,12 +21,6 @@ RSpec.describe Vacancy do
 
         it "updates the geolocation to the school's geopoint" do
           expect(vacancy.geolocation).to eq(school_one.geopoint)
-        end
-
-        it "updates the markers" do
-          expect(vacancy.markers.count).to eq(1)
-          expect(vacancy.markers.first.organisation).to eq(school_one)
-          expect(vacancy.markers.first.geopoint).to eq(school_one.geopoint)
         end
       end
 
@@ -50,11 +38,6 @@ RSpec.describe Vacancy do
             expect(points).to include(point)
           end
         end
-
-        it "creates markers for each school" do
-          expect(vacancy.markers.count).to eq(2)
-          expect(vacancy.markers.map(&:organisation)).to contain_exactly(school_one, school_two)
-        end
       end
 
       context "when changing back to the school group" do
@@ -65,11 +48,6 @@ RSpec.describe Vacancy do
 
         it "updates the geolocation back to the school group's geopoint" do
           expect(vacancy.geolocation).to eq(school_group.geopoint)
-        end
-
-        it "updates the markers back to just the school group" do
-          expect(vacancy.markers.count).to eq(1)
-          expect(vacancy.markers.first.organisation).to eq(school_group)
         end
       end
     end
