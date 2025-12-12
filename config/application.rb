@@ -127,8 +127,6 @@ module TeachingVacancies
 
     config.enforce_local_authority_allowlist = ActiveModel::Type::Boolean.new.cast(ENV.fetch("ENFORCE_LOCAL_AUTHORITY_ALLOWLIST", nil))
 
-    config.geocoder_lookup = :default
-
     config.landing_pages = config_for(:landing_pages)
     config.campaign_pages = config_for(:campaign_pages)
 

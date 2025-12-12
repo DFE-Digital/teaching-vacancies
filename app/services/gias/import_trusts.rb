@@ -94,7 +94,7 @@ class Gias::ImportTrusts
 
         {
           uid: trust[:uid],
-          geopoint: "POINT(#{coordinates.second} #{coordinates.first})",
+          uk_geopoint: GeoFactories.convert_wgs84_to_sr27700(GeoFactories::FACTORY_4326.point(coordinates.second, coordinates.first)),
         }
       }.compact
 

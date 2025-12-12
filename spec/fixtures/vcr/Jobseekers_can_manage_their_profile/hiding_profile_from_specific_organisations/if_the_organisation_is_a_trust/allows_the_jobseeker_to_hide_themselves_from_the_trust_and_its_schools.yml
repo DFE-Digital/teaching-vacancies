@@ -1,0 +1,88 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/geocode/json?address=London&components=country:gb&key=<GOOGLE_LOCATION_SEARCH_API_KEY>&language=en&sensor=false
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Teaching Vacancies Service teaching.vacancies@education.gov.uk
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Wed, 10 Dec 2025 13:10:53 GMT
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Goog-Maps-Metro-Area:
+      - London
+      Content-Security-Policy-Report-Only:
+      - script-src 'none'; form-action 'none'; frame-src 'none'; report-uri https://csp.withgoogle.com/csp/scaffolding/msaifdggmnwc:214:0
+      Cross-Origin-Opener-Policy-Report-Only:
+      - same-origin; report-to=msaifdggmnwc:214:0
+      Report-To:
+      - '{"group":"msaifdggmnwc:214:0","max_age":2592000,"endpoints":[{"url":"https://csp.withgoogle.com/csp/report-to/scaffolding/msaifdggmnwc:214:0"}],}'
+      Server:
+      - mafe
+      Content-Length:
+      - '2369'
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server-Timing:
+      - gfet4t7; dur=42
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: "{\n   \"results\" : \n   [\n      {\n         \"address_components\"
+        : \n         [\n            {\n               \"long_name\" : \"London\",\n
+        \              \"short_name\" : \"London\",\n               \"types\" : \n
+        \              [\n                  \"locality\",\n                  \"political\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"London\",\n               \"short_name\" : \"London\",\n               \"types\"
+        : \n               [\n                  \"postal_town\"\n               ]\n
+        \           },\n            {\n               \"long_name\" : \"Greater London\",\n
+        \              \"short_name\" : \"Greater London\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"England\",\n               \"short_name\"
+        : \"England\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"United Kingdom\",\n               \"short_name\"
+        : \"GB\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            }\n         ],\n
+        \        \"formatted_address\" : \"London, UK\",\n         \"geometry\" :
+        \n         {\n            \"bounds\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 51.6723432,\n                  \"lng\"
+        : 0.148271\n               },\n               \"southwest\" : \n               {\n
+        \                 \"lat\" : 51.38494009999999,\n                  \"lng\"
+        : -0.3514683\n               }\n            },\n            \"location\" :
+        \n            {\n               \"lat\" : 51.5072178,\n               \"lng\"
+        : -0.1275862\n            },\n            \"location_type\" : \"APPROXIMATE\",\n
+        \           \"viewport\" : \n            {\n               \"northeast\" :
+        \n               {\n                  \"lat\" : 51.8822255,\n                  \"lng\"
+        : 0.148271\n               },\n               \"southwest\" : \n               {\n
+        \                 \"lat\" : 51.38494009999999,\n                  \"lng\"
+        : -0.4149317\n               }\n            }\n         },\n         \"place_id\"
+        : \"ChIJdd4hrwug2EcRmSrV3Vo6llI\",\n         \"types\" : \n         [\n            \"locality\",\n
+        \           \"political\"\n         ]\n      }\n   ],\n   \"status\" : \"OK\"\n}"
+  recorded_at: Wed, 10 Dec 2025 13:10:53 GMT
+recorded_with: VCR 6.3.1

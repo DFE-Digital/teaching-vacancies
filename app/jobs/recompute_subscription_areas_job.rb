@@ -11,7 +11,7 @@ class RecomputeSubscriptionAreasJob < ApplicationJob
       subs_scope = subscriptions_scope(radius, location)
 
       if (polygon = LocationPolygon.find_valid_for_location(location))
-        subs_scope.update_all(area: polygon.buffered_geometry_area(radius_in_metres))
+        subs_scope.update_all(uk_area: polygon.buffered_geometry_area(radius_in_metres))
         polygon_locations += 1
       else
         invalid_locations += 1
@@ -27,7 +27,7 @@ class RecomputeSubscriptionAreasJob < ApplicationJob
   # Get all unique normalized location/radius pairs for subscriptions with an area
   def unique_subscriptions_area_locations_radius_pairs
     Subscription
-      .where.not(area: nil)
+      .where.not(uk_area: nil)
       .pluck(
         Arel.sql("DISTINCT LOWER(TRIM(search_criteria->>'location'))"),
         Arel.sql("COALESCE((search_criteria->>'radius')::integer, 10)"),
@@ -36,7 +36,7 @@ class RecomputeSubscriptionAreasJob < ApplicationJob
 
   # Subscriptions with area for given location and radius that need updating
   def subscriptions_scope(radius, location)
-    Subscription.where.not(area: nil)
+    Subscription.where.not(uk_area: nil)
                 .where("LOWER(TRIM(search_criteria->>'location')) = ?", location)
                 .where("COALESCE((search_criteria->>'radius')::integer, 10) = ?", radius)
   end

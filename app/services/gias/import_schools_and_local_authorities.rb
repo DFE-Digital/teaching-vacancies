@@ -119,15 +119,13 @@ class Gias::ImportSchoolsAndLocalAuthorities
   end
 
   def school_location_data(row)
-    return {} unless row["Easting"] && row["Northing"]
+    easting = row["Easting"].to_i
+    northing = row["Northing"].to_i
 
-    wgs84 = Breasal::EastingNorthing.new(
-      easting: row["Easting"].to_i,
-      northing: row["Northing"].to_i,
-      type: :gb,
-    ).to_wgs84
+    return { uk_geopoint: nil } unless easting.positive? && northing.positive?
 
-    { geopoint: "POINT(#{wgs84[:longitude]} #{wgs84[:latitude]})" }
+    uk27700 = RGeo::Cartesian.factory(srid: 27_700)
+    { uk_geopoint: uk27700.point(easting, northing) }
   end
 
   def membership_data(row)

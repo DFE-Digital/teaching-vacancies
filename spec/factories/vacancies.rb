@@ -74,6 +74,17 @@ FactoryBot.define do
     flexi_working_details_provided { true }
     flexi_working { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
 
+    # after(:build) do |vacancy|
+    #   if vacancy.geolocation.present?
+    #     earth_point = if vacancy.geolocation.is_a?(String)
+    #                     GeoFactories::FACTORY_4326.parse_wkt(vacancy.geolocation)
+    #                   else
+    #                     vacancy.geolocation
+    #                   end
+    #     vacancy.uk_geolocation = GeoFactories.convert_wgs84_to_sr27700 earth_point
+    #   end
+    # end
+
     trait :secondary do
       phases { %w[secondary] }
       key_stages { %w[ks3] }
