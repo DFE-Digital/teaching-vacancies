@@ -173,6 +173,37 @@ variable "dataset_name" {
   default     = "not in use"
 }
 
+# Azure Storage for attachments (S3 migration)
+variable "azure_storage_documents_enabled" {
+  default     = true
+  description = "Create Azure storage account for documents attachments"
+}
+
+variable "azure_storage_images_logos_enabled" {
+  default     = true
+  description = "Create Azure storage account for school images/logos"
+}
+
+variable "azure_storage_production_replication_type" {
+  default     = "ZRS"
+  description = "Replication type for production storage accounts (ZRS or GRS)"
+}
+
+variable "azure_storage_blob_delete_retention_days" {
+  default     = null
+  description = "Days to retain deleted blobs (soft delete). Null to disable."
+}
+
+variable "azure_storage_blob_versioning_enabled" {
+  default     = false
+  description = "Enable blob versioning for recovery"
+}
+
+variable "azure_storage_blob_delete_after_days" {
+  default     = 0
+  description = "Auto-delete blobs after X days (0 to disable)"
+}
+
 locals {
   app_env_values             = yamldecode(file("${path.module}/../workspace-variables/${var.app_environment}_app_env.yml"))
   infra_secrets              = yamldecode(data.aws_ssm_parameter.infra_secrets.value)

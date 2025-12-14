@@ -92,6 +92,13 @@ module "paas" {
   aks_web_app_memory                  = var.aks_web_app_memory
   enable_dfe_analytics_federated_auth = var.enable_dfe_analytics_federated_auth
   dataset_name                        = var.dataset_name
+  # Azure Storage variables (S3 migration)
+  azure_storage_documents_enabled           = var.azure_storage_documents_enabled
+  azure_storage_images_logos_enabled        = var.azure_storage_images_logos_enabled
+  azure_storage_production_replication_type = var.azure_storage_production_replication_type
+  azure_storage_blob_delete_retention_days  = var.azure_storage_blob_delete_retention_days
+  azure_storage_blob_versioning_enabled     = var.azure_storage_blob_versioning_enabled
+  azure_storage_blob_delete_after_days      = var.azure_storage_blob_delete_after_days
 }
 
 module "statuscake" {
