@@ -109,6 +109,27 @@ variable "run_as_non_root" {
   description = "Whether to enforce that containers must run as non-root user"
 }
 
+# Azure Storage for attachments
+variable "azure_storage_production_replication_type" {
+  default     = "ZRS"
+  description = "Replication type for production storage accounts (ZRS or GRS)"
+}
+
+variable "azure_storage_blob_delete_retention_days" {
+  default     = null
+  description = "Days to retain deleted blobs (soft delete). Null to disable."
+}
+
+variable "azure_storage_blob_versioning_enabled" {
+  default     = false
+  description = "Enable blob versioning for recovery"
+}
+
+variable "azure_storage_blob_delete_after_days" {
+  default     = 0
+  description = "Auto-delete blobs after X days (0 to disable)"
+}
+
 locals {
   postgres_ssl_mode = var.enable_postgres_ssl ? "require" : "disable"
 
