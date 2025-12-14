@@ -101,3 +101,65 @@ resource "aws_iam_user_policy_attachment" "attachment_images_logos" {
   user       = aws_iam_user.schools_images_logos_s3_bucket_user.name
   policy_arn = aws_iam_policy.schools_images_logos_s3_bucket_policy.arn
 }
+
+# Azure Storage Account for Documents
+module "documents_azure_storage" {
+  source = "git::https://github.com/DFE-Digital/terraform-modules.git//aks/storage_account?ref=stable"
+
+  name                  = "doc"
+  environment           = var.environment
+  azure_resource_prefix = var.azure_resource_prefix
+  service_short         = var.service_short
+  config_short          = var.config_short
+
+  # Redundancy: ZRS for production, LRS for non-prod (module enforced)
+  production_replication_type = var.azure_storage_production_replication_type
+
+  # Security settings
+  public_network_access_enabled     = true # Required for app access
+  infrastructure_encryption_enabled = true
+
+  # Versioning and retention
+  blob_versioning_enabled         = var.azure_storage_blob_versioning_enabled
+  blob_delete_retention_days      = var.azure_storage_blob_delete_retention_days
+  container_delete_retention_days = var.azure_storage_blob_delete_retention_days
+  blob_delete_after_days          = var.azure_storage_blob_delete_after_days
+
+  # Container for documents
+  containers = [
+    { name = "documents" }
+  ]
+
+  create_encryption_scope = false
+}
+
+# Azure Storage Account for School Images/Logos
+module "images_logos_azure_storage" {
+  source = "git::https://github.com/DFE-Digital/terraform-modules.git//aks/storage_account?ref=stable"
+
+  name                  = "img"
+  environment           = var.environment
+  azure_resource_prefix = var.azure_resource_prefix
+  service_short         = var.service_short
+  config_short          = var.config_short
+
+  # Redundancy: ZRS for production, LRS for non-prod (module enforced)
+  production_replication_type = var.azure_storage_production_replication_type
+
+  # Security settings
+  public_network_access_enabled     = true # Required for app access
+  infrastructure_encryption_enabled = true
+
+  # Versioning and retention
+  blob_versioning_enabled         = var.azure_storage_blob_versioning_enabled
+  blob_delete_retention_days      = var.azure_storage_blob_delete_retention_days
+  container_delete_retention_days = var.azure_storage_blob_delete_retention_days
+  blob_delete_after_days          = var.azure_storage_blob_delete_after_days
+
+  # Container for images/logos
+  containers = [
+    { name = "images-logos" }
+  ]
+
+  create_encryption_scope = false
+}
