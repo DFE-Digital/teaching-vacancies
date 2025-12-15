@@ -22,6 +22,10 @@ en:
       no_reference:
         page_title: Cannot provide a reference
         no_reference: Thank you for your response.
+      no_longer_available:
+        page_title: Cannot provide a reference
+        heading: This reference request is no longer available
+        body: This reference request is no longer available. You do not need to take any further action.
       fit_and_proper_persons:
         page_title: Professional and character reference enquiry for %{name}
         heading: Regulation 19 – Fit and proper person requirements

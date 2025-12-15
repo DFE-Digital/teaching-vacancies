@@ -9,29 +9,56 @@ RSpec.describe JobApplication do
   describe "before save hook" do
     let(:job_application) { create(:job_application) }
 
-    it "enqueue equal opportunities report update job" do
+    it "submitting the job application enqueues the equal opportunities report update job" do
       expect { job_application.submitted! }
         .to have_enqueued_job(EqualOpportunitiesReportUpdateJob).with(job_application.id)
     end
-  end
 
-  describe "#active_status?" do
-    subject { job_application.active_status? }
-
-    (%w[draft] + described_class::INACTIVE_STATUSES).each do |status|
-      context "when status #{status}" do
-        let(:job_application) { build_stubbed(:job_application, :"status_#{status}") }
-
-        it { is_expected.to be false }
+    it "submitting the job application updates the status timestamp" do
+      freeze_time do
+        expect { job_application.submitted! }.to change { job_application.submitted_at }.from(nil).to(Time.current)
       end
     end
 
-    (described_class.statuses.keys - described_class::INACTIVE_STATUSES - %w[draft]).each do |status|
-      context "when status #{status}" do
-        let(:job_application) { build_stubbed(:job_application, :"status_#{status}") }
-
-        it { is_expected.to be true }
+    describe "support needed callbacks" do
+      let(:job_application) do
+        create(:job_application, is_support_needed: true, support_needed_details: "details in need of resetting")
       end
+
+      before { job_application.update(is_support_needed: false, support_needed_details: "details in need of resetting") }
+
+      it "setting support needed to 'no' resets support needed details" do
+        expect(job_application.support_needed_details).to be_blank
+        expect(job_application.is_support_needed).to be(false)
+      end
+    end
+  end
+
+  describe "basic state machine" do
+    before do
+      job_application.status = status
+      job_application.valid?
+    end
+
+    context "with invalid status transition pre submission" do
+      let(:job_application) { create(:job_application, :status_draft) }
+      let(:status) { "withdrawn" }
+
+      it { expect(job_application.errors.details).to include(status: [{ error: "Invalid status transition from: draft to: withdrawn" }]) }
+    end
+
+    context "with invalid status transition post submission" do
+      let(:job_application) { create(:job_application, :status_interviewing) }
+      let(:status) { "submitted" }
+
+      it { expect(job_application.errors.details).to include(status: [{ error: "Invalid status transition from: interviewing to: submitted" }]) }
+    end
+
+    context "with valid status transition post submission" do
+      let(:job_application) { create(:job_application, :status_interviewing) }
+      let(:status) { "unsuccessful_interview" }
+
+      it { expect(job_application.errors.details).not_to include(status: [{ error: "Invalid status transition from: interviewing to: unsuccessful_interview" }]) }
     end
   end
 
@@ -125,22 +152,7 @@ RSpec.describe JobApplication do
     end
   end
 
-  describe "#has_noticed_notifications" do
-    subject { create(:job_application) }
-
-    before do
-      Publishers::JobApplicationReceivedNotifier.with(vacancy: subject.vacancy, job_application: subject)
-                                                    .deliver(subject.vacancy.publisher)
-      expect(Noticed::Notification.count).to eq 1
-      subject.destroy
-    end
-
-    it "removes the notification when destroyed" do
-      expect(Noticed::Notification.count).to eq 0
-    end
-  end
-
-  describe "#next_statuses" do
+  describe ".next_statuses" do
     subject { described_class.next_statuses(from_status) }
 
     context "when from status is nil" do
@@ -186,35 +198,42 @@ RSpec.describe JobApplication do
     end
   end
 
-  describe "basic state machine" do
-    before do
-      job_application.status = status
-      job_application.valid?
+  describe "#active_status?" do
+    subject { job_application.active_status? }
+
+    (%w[draft] + described_class::INACTIVE_STATUSES).each do |status|
+      context "when status #{status}" do
+        let(:job_application) { build_stubbed(:job_application, :"status_#{status}") }
+
+        it { is_expected.to be false }
+      end
     end
 
-    context "with invalid status transition pre submission" do
-      let(:job_application) { create(:job_application, :status_draft) }
-      let(:status) { "withdrawn" }
+    (described_class.statuses.keys - described_class::INACTIVE_STATUSES - %w[draft]).each do |status|
+      context "when status #{status}" do
+        let(:job_application) { build_stubbed(:job_application, :"status_#{status}") }
 
-      it { expect(job_application.errors.details).to include(status: [{ error: "Invalid status transition from: draft to: withdrawn" }]) }
-    end
-
-    context "with invalid status transition post submission" do
-      let(:job_application) { create(:job_application, :status_interviewing) }
-      let(:status) { "submitted" }
-
-      it { expect(job_application.errors.details).to include(status: [{ error: "Invalid status transition from: interviewing to: submitted" }]) }
-    end
-
-    context "with valid status transition post submission" do
-      let(:job_application) { create(:job_application, :status_interviewing) }
-      let(:status) { "unsuccessful_interview" }
-
-      it { expect(job_application.errors.details).not_to include(status: [{ error: "Invalid status transition from: interviewing to: unsuccessful_interview" }]) }
+        it { is_expected.to be true }
+      end
     end
   end
 
-  describe "terminal_status?" do
+  describe "#has_noticed_notifications" do
+    subject { create(:job_application) }
+
+    before do
+      Publishers::JobApplicationReceivedNotifier.with(vacancy: subject.vacancy, job_application: subject)
+                                                    .deliver(subject.vacancy.publisher)
+      expect(Noticed::Notification.count).to eq 1
+      subject.destroy
+    end
+
+    it "removes the notification when destroyed" do
+      expect(Noticed::Notification.count).to eq 0
+    end
+  end
+
+  describe "#terminal_status?" do
     subject { create(:job_application, :"status_#{status}").terminal_status? }
 
     context "with all statuses" do
@@ -389,24 +408,23 @@ RSpec.describe JobApplication do
     end
   end
 
-  context "when saving change to status" do
-    subject { create(:job_application) }
+  describe "#can_be_withdrawn?" do
+    subject { job_application.can_be_withdrawn? }
 
-    it "updates status timestamp" do
-      freeze_time do
-        expect { subject.submitted! }.to change { subject.submitted_at }.from(nil).to(Time.current)
+    %w[submitted shortlisted interviewing offered].each do |allowed_status|
+      context "when status is #{allowed_status}" do
+        let(:job_application) { build_stubbed(:job_application, status: allowed_status) }
+
+        it { is_expected.to be true }
       end
     end
-  end
 
-  context "when setting support needed to 'no'" do
-    subject { create(:job_application) }
+    %w[draft unsuccessful unsuccessful_interview declined withdrawn rejected].each do |disallowed_status|
+      context "when status is #{disallowed_status}" do
+        let(:job_application) { build_stubbed(:job_application, status: disallowed_status) }
 
-    before { subject.update(is_support_needed: false, support_needed_details: "details in need of resetting") }
-
-    it "resets support needed details" do
-      expect(subject.support_needed_details).to be_blank
-      expect(subject.is_support_needed).to be(false)
+        it { is_expected.to be false }
+      end
     end
   end
 
