@@ -380,11 +380,12 @@ RSpec.describe "Job applications" do
       end
 
       context "when date is valid" do
+        let(:offer_date) { Date.current }
         let(:form_params) do
           { origin:, status:, job_applications: }.merge(
-            "offered_at(1i)" => 2025,
-            "offered_at(2i)" => 12,
-            "offered_at(3i)" => 11,
+            "offered_at(1i)" => offer_date.year,
+            "offered_at(2i)" => offer_date.month,
+            "offered_at(3i)" => offer_date.day,
           )
         end
 
@@ -396,17 +397,19 @@ RSpec.describe "Job applications" do
 
         it "update date" do
           expect { post(offer_organisation_job_job_applications_path(vacancy.id), params:) }
-            .to change { job_application.reload.offered_at }.from(nil).to(Date.new(2025, 12, 11))
+            .to change { job_application.reload.offered_at }.from(nil).to(offer_date)
         end
       end
 
       context "when offered date is before interview date" do
-        let(:job_application) { create(:job_application, :status_interviewing, vacancy: vacancy, interviewing_at: Date.new(2025, 12, 15)) }
+        let(:interview_date) { Date.current }
+        let(:offer_date) { interview_date - 1.day }
+        let(:job_application) { create(:job_application, :status_interviewing, vacancy: vacancy, interviewing_at: interview_date) }
         let(:form_params) do
           { origin:, status:, job_applications: [job_application.id] }.merge(
-            "offered_at(1i)" => 2025,
-            "offered_at(2i)" => 12,
-            "offered_at(3i)" => 10,
+            "offered_at(1i)" => offer_date.year,
+            "offered_at(2i)" => offer_date.month,
+            "offered_at(3i)" => offer_date.day,
           )
         end
 
@@ -437,6 +440,7 @@ RSpec.describe "Job applications" do
     end
 
     describe "feedback form" do
+      let(:feedback_date) { Date.current }
       let(:origin) { "interviewing" }
       let(:params) do
         {
@@ -449,9 +453,9 @@ RSpec.describe "Job applications" do
       context "when params valid" do
         let(:form_params) do
           { origin:, status:, job_applications: }.merge(
-            "interview_feedback_received_at(1i)" => 2025,
-            "interview_feedback_received_at(2i)" => 12,
-            "interview_feedback_received_at(3i)" => 11,
+            "interview_feedback_received_at(1i)" => feedback_date.year,
+            "interview_feedback_received_at(2i)" => feedback_date.month,
+            "interview_feedback_received_at(3i)" => feedback_date.day,
             "interview_feedback_received" => "true",
           )
         end
@@ -464,7 +468,7 @@ RSpec.describe "Job applications" do
 
         it "update date" do
           expect { post(offer_organisation_job_job_applications_path(vacancy.id), params:) }
-            .to change { job_application.reload.interview_feedback_received_at }.from(nil).to(Date.new(2025, 12, 11))
+            .to change { job_application.reload.interview_feedback_received_at }.from(nil).to(feedback_date)
         end
       end
 
