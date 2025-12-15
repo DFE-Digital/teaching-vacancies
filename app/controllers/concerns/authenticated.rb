@@ -2,7 +2,8 @@ module Authenticated
   extend ActiveSupport::Concern
 
   included do
-    before_action :authenticate_scope!
+    # Ensure authentication runs before any other callbacks
+    prepend_before_action :authenticate_scope!
     mattr_accessor :authentication_scope
     helper_method :user_type, :jobseeker?
   end
