@@ -40,6 +40,7 @@ module Jobseekers
       template_mail("0a75c46b-923f-4ee0-807c-99fd289a881a",
                     to: email,
                     personalisation: {
+                      home_page_link: root_url,
                       job_title: vacancy.job_title,
                       organisation_name: vacancy.organisation_name,
                       contact_email: vacancy.contact_email,
@@ -53,6 +54,7 @@ module Jobseekers
       template_mail("76fabced-ca9c-4ebb-8c57-58f970124fa9",
                     to: email,
                     personalisation: {
+                      home_page_link: root_url,
                       job_title: vacancy.job_title,
                       organisation_name: vacancy.organisation_name,
                       contact_email: vacancy.contact_email,
