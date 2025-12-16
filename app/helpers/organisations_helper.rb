@@ -109,6 +109,7 @@ module OrganisationsHelper
   end
 
   def school_readable_phase(school)
-    School::READABLE_PHASE_MAPPINGS.fetch(school.phase.to_sym).capitalize
+    phase = School::READABLE_PHASE_MAPPINGS.fetch(school.phase.to_sym)
+    t("organisations.search.results.phases.#{phase}")
   end
 end
