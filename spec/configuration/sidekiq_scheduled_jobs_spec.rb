@@ -30,7 +30,6 @@ RSpec.describe "Sidekiq configuration" do
       EqualOpportunitiesReportUpdateJob
       BackfillSubscriptionLocationJob
       SetSubscriptionLocationDataJob
-      RecomputeSubscriptionAreasJob
       MigratePersonalStatementJob
     ]
   end
