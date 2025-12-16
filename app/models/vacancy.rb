@@ -315,13 +315,20 @@ class Vacancy < ApplicationRecord
   #   * an organisation association is added or removed, or
   #   * the job location was changed to "central office"
   # In the former case, it gets an argument, which we don't need and thus ignore
+  #
   def refresh_geolocation(_school_added_or_removed = nil)
     self.geolocation = if organisations.one?
-                         organisation&.geopoint
+                         organisation.geopoint
                        else
                          points = organisations.filter_map(&:geopoint)
                          points.presence && points.first.factory.multi_point(points)
                        end
+    self.uk_geolocation = if organisations.one?
+                            organisation.uk_geopoint
+                          else
+                            uk_points = organisations.filter_map(&:uk_geopoint)
+                            uk_points.presence && uk_points.first.factory.multi_point(uk_points)
+                          end
   end
 end
 # rubocop:enable Metrics/ClassLength

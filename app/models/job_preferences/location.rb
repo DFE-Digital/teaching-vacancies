@@ -19,11 +19,17 @@ class JobPreferences < ApplicationRecord
 
     def set_area
       if LocationPolygon.contain?(name)
-        self.area = LocationPolygon.buffered(radius).with_name(name).area
+        # :nocov:
+        polygon = LocationPolygon.buffered(radius).with_name(name)
+        self.area = polygon.area
+        self.uk_area = polygon.uk_area
+        # :nocov:
       else
         lat, long = Geocoding.new(name).coordinates.map(&:to_s)
         radius_meters = convert_miles_to_metres(Search::RadiusBuilder.new(name, radius).radius)
-        self.area = RGeo::Geographic.spherical_factory(srid: 4326).point(long, lat).buffer(radius_meters)
+        geopoint = GeoFactories::FACTORY_4326.point(long, lat)
+        self.area = geopoint.buffer(radius_meters)
+        self.uk_area = GeoFactories.convert_wgs84_to_sr27700(geopoint).buffer(radius_meters)
       end
     end
   end

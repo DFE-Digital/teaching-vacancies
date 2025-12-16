@@ -15,54 +15,54 @@ http_interactions:
       - Ruby
   response:
     status:
-      code: 200
-      message: OK
+      code: 400
+      message: Bad Request
     headers:
+      Date:
+      - Fri, 12 Dec 2025 16:00:24 GMT
       Content-Type:
-      - application/json; charset=utf-8
+      - text/html
       Content-Length:
-      - '170'
+      - '11'
       Connection:
       - keep-alive
-      Date:
-      - Tue, 18 Feb 2025 12:29:48 GMT
-      Access-Control-Allow-Origin:
-      - "*"
       Cache-Control:
       - no-cache
       Pragma:
       - no-cache
       Expires:
       - "-1"
+      Vary:
+      - X-Esri-Authorization
       Request-Context:
       - appId=cid-v1:02d88829-cd35-4b36-83db-f89bb9f85514
       - appId=cid-v1:3e4b9f12-ca59-424b-b320-0c429e32d54c
       X-Arcgis-Upstream:
-      - us1h01c00
+      - us1h01c00-services
       Strict-Transport-Security:
       - max-age=63072000
       X-Arcgis-Trace-Id:
-      - hOySWJdO214L0BQsVPvUabzlsB5dvTNZ44VxtqqCEh9h-iB1wv4RBw==
+      - 20251212T160023Z-r18674967785mskmhC1LONmqug000000064g00000000bfaw
       X-Arcgis-Correlation-Id:
-      - 00-e517224d7c3da72ca1eb0fe65f2f8807-ba0f6c624760f1c6-00
+      - '08c3f865a0f94787'
       X-Arcgis-Instance:
-      - i7tdixsfq000EP4
+      - i7tdixsfq00000H
       Access-Control-Expose-Headers:
       - Request-Context
-      Vary:
-      - X-Esri-Authorization
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - Content-Type, Authorization, X-Esri-Authorization
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Azure-Ref:
+      - 20251212T160023Z-r18674967785mskmhC1LONmqug000000064g00000000bfaw
+      X-Fd-Int-Roxy-Purgeid:
+      - '0'
       X-Cache:
-      - Miss from cloudfront
-      Via:
-      - 1.1 87911f7f4ec2932c1f9ed5a36cc017ae.cloudfront.net (CloudFront)
-      X-Amz-Cf-Pop:
-      - LHR61-P1
-      X-Amz-Cf-Id:
-      - hOySWJdO214L0BQsVPvUabzlsB5dvTNZ44VxtqqCEh9h-iB1wv4RBw==
+      - TCP_MISS
     body:
-      encoding: ASCII-8BIT
-      string: "\r\n{\r\n  \"error\" : \r\n  {\r\n    \"code\" : 499, \r\n    \"message\"
-        : \"Token Required\", \r\n    \"messageCode\" : \"GWM_0003\", \r\n    \"details\"
-        : [\r\n      \"Token Required\"\r\n    ]\r\n  }\r\n}"
-  recorded_at: Tue, 18 Feb 2025 12:29:48 GMT
+      encoding: UTF-8
+      string: Bad Request
+  recorded_at: Fri, 12 Dec 2025 16:00:24 GMT
 recorded_with: VCR 6.3.1

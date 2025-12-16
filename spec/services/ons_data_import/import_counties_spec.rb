@@ -8,8 +8,8 @@ RSpec.describe OnsDataImport::ImportCounties do
   # which is impractical to even cut-down
   before do
     allow(HTTParty).to receive(:get)
-      .with(/Counties_and_Unitary_Authorities_April_2019_Boundaries_EW_BFC_2022/)
-      .and_return(response1, response2)
+                         .with(/Counties_and_Unitary_Authorities_April_2019_Boundaries_EW_BFC_2022/)
+                         .and_return(response1, response2)
     described_class.call
   end
 
