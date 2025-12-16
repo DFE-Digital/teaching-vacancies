@@ -32,7 +32,9 @@ module Jobseekers
     end
 
     def jobseeker_missing_content(subscription)
-      unless Jobseeker.exists?(email: subscription.email.downcase)
+      if Jobseeker.exists?(email: subscription.email.downcase)
+        ""
+      else
         text = t("jobseekers.subscription_mailer.confirmation.create_account.link")
         url = new_jobseeker_session_url
         @sign_up_link = "[#{text}](#{url})"
