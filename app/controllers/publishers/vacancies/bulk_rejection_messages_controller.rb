@@ -2,11 +2,14 @@ module Publishers
   module Vacancies
     class BulkRejectionMessagesController < BulkMessagesController
       def update
-        send_messages_for(@job_applications)
+        ActiveRecord::Base.transaction do
+          send_messages_for(@job_applications)
 
-        @job_applications.each do |job_application|
-          job_application.update!(status: :rejected)
+          @job_applications.each do |job_application|
+            job_application.update!(status: :rejected)
+          end
         end
+
         redirect_to_next next_step
       end
 
