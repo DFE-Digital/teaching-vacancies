@@ -18,7 +18,7 @@ RSpec.describe OnsDataImport::ImportCounties do
     let(:conwy) { LocationPolygon.find_by(name: "conwy") }
 
     it "creates a LocationPolygon for Lincolnshire" do
-      expect(lincolnshire.area.to_s).to eq("POLYGON ((0.0 0.0, 1.0 1.0, 1.0 -1.0, 0.0 0.0))")
+      expect(lincolnshire.uk_area.to_s).to eq("POLYGON ((0.0 0.0, 1.0 1.0, 1.0 -1.0, 0.0 0.0))")
       expect(lincolnshire.location_type).to eq("counties")
     end
 

@@ -27,7 +27,6 @@ class OnsDataImport::Base
           geometry = feature["geometry"].to_json
 
           Rails.logger.info("Persisting new area data for '#{name}' (#{type})")
-          set_area_data(location_polygon, geometry, type)
           set_uk_area_data(location_polygon, geometry, type)
         end
       end
@@ -47,31 +46,11 @@ class OnsDataImport::Base
     # non-overlapping polygon
     #
     # The area centroid is precomputed and stored to avoid recomputing it every time it's needed.
-    def set_area_data(location_polygon, geometry, type)
-      ActiveRecord::Base.connection.exec_update("
-      WITH geom AS (
-        SELECT ST_MakeValid(
-          ST_SimplifyPreserveTopology(
-            ST_GeomFromGeoJSON(#{ActiveRecord::Base.connection.quote(geometry)}),
-            #{SIMPLIFICATION_TOLERANCE}
-          ),
-          'method=structure'
-        )::geography AS geo
-      )
-      UPDATE location_polygons
-      SET area=geom.geo,
-          location_type=#{ActiveRecord::Base.connection.quote(type)},
-          centroid=ST_Centroid(geom.geo)
-      FROM geom
-      WHERE id='#{location_polygon.id}'
-    ")
-    end
 
     def set_uk_area_data(location_polygon, geometry_json, type)
       # This is necessary as the ST_GeomFromGeoJSON() method that we would like to use
       # doesn't appear to support the optional 'srid' parameter that we need to pass
-      geometry = RGeo::GeoJSON.decode(geometry_json)
-      geometry_as_wkt = GeoFactories.convert_wgs84_to_sr27700(geometry).as_text
+      geometry_as_wkt = RGeo::GeoJSON.decode(geometry_json).as_text
       ActiveRecord::Base.connection.exec_update("
       WITH geom AS (
         SELECT ST_MakeValid(
@@ -94,7 +73,7 @@ class OnsDataImport::Base
     def arcgis_features(offset:, name_field:, api_name:)
       params = [
         "where=1%3D1",
-        "outSR=4326",
+        "outSR=27700",
         "f=pgeojson",
         "outFields=#{name_field}",
         "resultRecordCount=#{PER_PAGE}",

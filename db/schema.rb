@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_11_160730) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_15_122613) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -328,10 +328,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_11_160730) do
     t.uuid "job_preferences_id", null: false
     t.string "name", null: false
     t.integer "radius", null: false
-    t.geography "area", limit: {srid: 4326, type: "geometry", geographic: true}, null: false
+    t.geography "area", limit: {srid: 4326, type: "geometry", geographic: true}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.geometry "uk_area", limit: {srid: 27700, type: "st_polygon"}
+    t.geometry "uk_area", limit: {srid: 27700, type: "st_polygon"}, null: false
     t.index ["area"], name: "index_job_preferences_locations_on_area", using: :gist
     t.index ["job_preferences_id"], name: "index_job_preferences_locations_on_job_preferences_id"
     t.index ["uk_area"], name: "index_job_preferences_locations_on_uk_area", using: :gist

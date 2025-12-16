@@ -1,10 +1,10 @@
 module MapsHelper
   def vacancy_organisations_map_markers(vacancy)
-    vacancy.organisations.map do |organisation|
+    vacancy.organisations.select(&:uk_geopoint?).map do |organisation|
       {
         id: vacancy.id,
         parent_id: organisation.id,
-        geopoint: RGeo::GeoJSON.encode(organisation.geopoint)&.to_json,
+        geopoint: RGeo::GeoJSON.encode(GeoFactories.convert_sr27700_to_wgs84(organisation.uk_geopoint)).to_json,
       }
     end
   end
@@ -13,7 +13,7 @@ module MapsHelper
     [
       {
         parent_id: organisation.id,
-        geopoint: RGeo::GeoJSON.encode(organisation.geopoint)&.to_json,
+        geopoint: RGeo::GeoJSON.encode(GeoFactories.convert_sr27700_to_wgs84(organisation.uk_geopoint)).to_json,
       },
     ]
   end
@@ -21,6 +21,8 @@ module MapsHelper
   def organisation_map_can_be_displayed?(vacancy)
     return true unless vacancy.central_office?
 
-    vacancy.organisation.geopoint.present?
+    # :nocov:
+    vacancy.organisation.uk_geopoint.present?
+    # :nocov:
   end
 end
