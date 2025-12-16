@@ -48,7 +48,7 @@ jobs:
         id: swagger-cache
         with:
           path: swagger
-          key: ${{ runner.os }}-swagger-${{ hashFiles('spec/requests/**/*_spec.rb', 'spec/swagger_helper.rb', 'app/controllers/**/*.rb') }}
+          key: ${{ runner.os }}-swagger-${{ hashFiles('spec/swagger_helper.rb', 'spec/requests/publishers/ats_api/v1/**', 'app/controllers/publishers/ats_api/v1/**') }}
           restore-keys: |
             ${{ runner.os }}-swagger-
 
