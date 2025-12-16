@@ -446,17 +446,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_11_160730) do
     t.index ["name"], name: "index_location_polygons_on_name"
   end
 
-  create_table "markers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "vacancy_id", null: false
-    t.uuid "organisation_id", null: false
-    t.geography "geopoint", limit: {srid: 4326, type: "st_point", geographic: true}
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["geopoint"], name: "index_markers_on_geopoint", using: :gist
-    t.index ["organisation_id"], name: "index_markers_on_organisation_id"
-    t.index ["vacancy_id"], name: "index_markers_on_vacancy_id"
-  end
-
   create_table "message_templates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "publisher_id", null: false
     t.integer "template_type", null: false
@@ -946,8 +935,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_11_160730) do
   add_foreign_key "jobseeker_profiles", "jobseekers"
   add_foreign_key "local_authority_publisher_schools", "organisations", column: "school_id"
   add_foreign_key "local_authority_publisher_schools", "publisher_preferences"
-  add_foreign_key "markers", "organisations"
-  add_foreign_key "markers", "vacancies"
   add_foreign_key "message_templates", "publishers"
   add_foreign_key "messages", "conversations"
   add_foreign_key "notes", "job_applications"
