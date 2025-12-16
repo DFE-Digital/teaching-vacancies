@@ -46,7 +46,19 @@ jobs:
       - name: Generate Swagger (OpenAPI) docs
         run: bundle exec rake rswag:specs:swaggerize
 
+      - name: Cache precompiled assets
+        uses: actions/cache@v4
+        id: assets-cache
+        with:
+          path: |
+            public/assets
+            tmp/cache/assets
+          key: ${{ runner.os }}-assets-${{ hashFiles('app/assets/**/*', 'app/components/**/*.scss', 'app/components/**/*.js', 'config/initializers/assets.rb', 'esbuild.config.js', 'yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-assets-
+
       - name: Precompile assets
+        if: steps.assets-cache.outputs.cache-hit != 'true'
         run: bin/rails assets:precompile
 
       - name: Cache Test Runtimes
