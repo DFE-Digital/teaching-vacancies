@@ -65,6 +65,119 @@ C4Context
 ```
 
 
+## C4 Teaching Vacancies Container Diagram
+Major components forming Teaching Vacancies service, and how they interact with each other and external actors.
+```mermaid
+C4Container
+title Container diagram for Teaching Vacancies
+
+%% -------------------------------------------------------------------------
+%% External actors
+%% -------------------------------------------------------------------------
+Container_Boundary(external_actors, "External Actors") {
+  Person(referee, Referee, "Member of the public.<br>Designed by Jobseekers<br>during their job applications")
+  Person(jobseeker, Jobseeker, "A member of the public.<br>Job candidate that applies<br>for listed vacancies.")
+  Person(publisher, "<br>Publisher<br>Hiring staff", "A member of the public.<br>Employee for a school/group/LA<br>that lists and manages vacancies.")
+}
+%% -------------------------------------------------------------------------
+%% External services
+%% -------------------------------------------------------------------------
+Container_Boundary(auth_notify, "User authentication and notification<br>services") {
+  Container_Ext(one_login, "Gov UK<br>One Login",, "User authentication<br>system for the public")
+  Container_Ext(dsi, "DfE Sign In",,"User authentication system<br>for education organisation<br>publishers/hiring staff")
+  Container_Ext(notify, "Gov UK<br>Notify",, "Mailer system for<br>Email communications")
+}
+
+%% -------------------------------------------------------------------------
+%% Teaching Vacancies Service
+%% -------------------------------------------------------------------------
+Container_Boundary(tv, "Teaching Vacancies service") {
+  Container(web_app, "Web Application", "Ruby on Rails MVC", "Contains all the business logic.<br>Lists Vacancies.<br>Manages/progresses<br>Job Applications.")
+  ContainerQueue(queue, "Jobs Queue", "Redis Queue", "Background Jobs<br>queue")
+  Container(worker, "Worker", "Sidekiq worker", "Runs service background jobs.")
+  ContainerQueue(cache, "Cache", "Redis Cache", "Web Application cache<br>memory")
+  ContainerDb(db, "Database", "PostgreSQL (PostGis)", "Relational DB containing<br>all the service information")
+}
+
+%% -------------------------------------------------------------------------
+%% External services
+%% -------------------------------------------------------------------------
+Container_Boundary(external_services, "External services") {
+  Container_Ext(ats, "ATS",, "Recruitment and<br>Applicant Tracking Systems")
+  Container_Ext(dwp, "DWP<br>Find a Job Service",, "Department of Work and<br>Pensions 'Find a Job' service.<br>Search and<br>apply for jobs")
+  ContainerDb_Ext(ons, "ONS", ,"Office for National Statistics<br>Location Polygons APIs")
+  ContainerDb_Ext(gias, "GIAS",, "<br><br>Get Information<br>About Schools.<br>Stores the org/schools<br>information.<br>Their publishers, school<br>groups, etc.")
+}
+
+%% -------------------------------------------------------------------------
+%% Connections from External actors
+%% -------------------------------------------------------------------------
+Rel(jobseeker, one_login, "Signs in through", "HTTPS")
+UpdateRelStyle(jobseeker, one_login, $textColor="blue", $lineColor="blue", $offsetX="-50", $offsetY="-30")
+
+Rel(jobseeker, web_app, "Searches vacancies<br>Subscribes to alerts<br>Applies for vacancies<br>", "HTTPS")
+UpdateRelStyle(jobseeker, web_app, $textColor="blue", $lineColor="blue", $offsetX="-10", $offsetY="-250")
+
+Rel(publisher, dsi, "Signs in through<br>Manages org users access", "HTTPS")
+UpdateRelStyle(publisher, dsi, $textColor="darkblue", $lineColor="darkblue", $offsetX="-35", $offsetY="10")
+
+Rel(publisher, web_app, "Posts vacancies<br>Manages school Profile<br>Manages Job Applications<br>", "HTTPS")
+UpdateRelStyle(publisher, web_app, $textColor="darkblue", $lineColor="darkblue", $offsetX="-150", $offsetY="-90")
+
+Rel(publisher, ats, "Posts vacancies<br>through")
+UpdateRelStyle(publisher, ats, $textColor="darkblue", $lineColor="darkblue", $offsetX="20", $offsetY="45")
+
+Rel(referee, web_app, "Provides references<br>for Job Applications", "HTTPS")
+UpdateRelStyle(referee, web_app, $textColor="green", $lineColor="green", $offsetX="-120", $offsetY="-300")
+
+%% -------------------------------------------------------------------------
+%% Connections from External services
+%% -------------------------------------------------------------------------
+Rel(one_login, web_app, "Redirects signed<br>Jobseeker to", "HTTPS")
+UpdateRelStyle(one_login, web_app, $textColor="orange", $lineColor="orange", $offsetX="-25", $offsetY="-20")
+
+Rel(dsi, web_app, "Redirects signed<br>Publisher to", "HTTPS")
+UpdateRelStyle(dsi, web_app, $textColor="orange", $lineColor="orange", $offsetX="55", $offsetY="20")
+
+Rel(gias, worker, "Imports organisations<br>and publishers from", "CSV")
+UpdateRelStyle(gias, worker, $textColor="brown", $lineColor="brown", $offsetX="-50", $offsetY="70")
+
+Rel(ons, worker, "Imports UK location<br>polygons from", "API")
+UpdateRelStyle(ons, worker, $textColor="brown", $lineColor="brown", $offsetX="40", $offsetY="0")
+
+Rel(ats, web_app,"Posts vacancies", "REST API")
+UpdateRelStyle(ats, web_app, $textColor="orange", $lineColor="orange", $offsetX="-70", $offsetY="10")
+
+%% -------------------------------------------------------------------------
+%% Internal Connections from TV
+%% -------------------------------------------------------------------------
+BiRel(web_app, db, "Stores/Retrieves info<br>Computes searches")
+UpdateRelStyle(web_app, db, $textColor="red", $lineColor="red", $offsetX="-70", $offsetY="100")
+
+Rel(web_app, queue, "Sends<br>async<br>jobs<br>and<br>emails")
+UpdateRelStyle(web_app, queue, $textColor="purple", $lineColor="purple", $offsetX="5", $offsetY="0")
+
+BiRel(web_app, cache, "Stores temp & fast<br>access data")
+UpdateRelStyle(web_app, cache, $textColor="red", $lineColor="red", $offsetX="-110", $offsetY="100")
+
+Rel(queue, worker, "Consumes and<br>Executes<br>the job<br>queue jobs")
+UpdateRelStyle(queue, worker, $textColor="purple", $lineColor="purple", $offsetX="-30", $offsetY="-40")
+
+BiRel(worker, db, "Stores/Retrieves<br>info")
+UpdateRelStyle(worker, db, $textColor="red", $lineColor="red", $offsetX="-100", $offsetY="-20")
+
+%% -------------------------------------------------------------------------
+%% External Connections from TV
+%% -------------------------------------------------------------------------
+Rel(worker, notify, "Sends emails<br>through")
+UpdateRelStyle(worker, notify, $textColor="brown", $lineColor="brown", $offsetX="-125", $offsetY="10")
+
+Rel(worker, dwp, "Reposts TV<br>vacancies to", "SFTP")
+UpdateRelStyle(worker, dwp, $textColor="brown", $lineColor="brown", $offsetX="-30", $offsetY="-30")
+
+
+UpdateLayoutConfig($c4ShapeInRow="2", $c4BoundaryInRow="2")
+```
 
 ## Architecture Diagram
 This diagram provides an overview of the Teaching Vacancies service, illustrating its core components, data flows, and integrations. It highlights the relationships between the web application, background workers, databases, external APIs, and third-party services involved in publishing, searching, and managing job vacancies.
