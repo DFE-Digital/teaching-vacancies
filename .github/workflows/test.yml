@@ -43,7 +43,17 @@ jobs:
       - name: Set up test database
         run: bundle exec rake db:create db:schema:load parallel:create parallel:load_schema
 
+      - name: Cache Swagger docs
+        uses: actions/cache@v4
+        id: swagger-cache
+        with:
+          path: swagger
+          key: ${{ runner.os }}-swagger-${{ hashFiles('spec/requests/**/*_spec.rb', 'spec/swagger_helper.rb', 'app/controllers/**/*.rb') }}
+          restore-keys: |
+            ${{ runner.os }}-swagger-
+
       - name: Generate Swagger (OpenAPI) docs
+        if: steps.swagger-cache.outputs.cache-hit != 'true'
         run: bundle exec rake rswag:specs:swaggerize
 
       - name: Cache precompiled assets
