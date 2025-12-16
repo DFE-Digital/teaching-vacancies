@@ -1,16 +1,16 @@
 module Jobseekers
   class SubscriptionMailer < BaseMailer
     def confirmation(subscription)
-      subscription_email(subscription, "subscribed")
+      subscription_email(subscription, "subscribed", "subscribed_to")
     end
 
     def update(subscription)
-      subscription_email(subscription, "updated")
+      subscription_email(subscription, "updated", "updated")
     end
 
     private
 
-    def subscription_email(subscription, action)
+    def subscription_email(subscription, action, action_desc)
       template = ERB.new(Rails.root.join("app/views/jobseekers/subscription_mailer/confirmation.text.erb").read)
 
       @filtered_search_criteria = SubscriptionPresenter.new(subscription).filtered_search_criteria
@@ -21,6 +21,7 @@ module Jobseekers
                       subscription_link: new_subscription_url,
                       frequency: subscription.daily? ? "at the end of the day" : "weekly",
                       action: action,
+                      action_description: action_desc,
                       jobseeker_missing_content: jobseeker_missing_content(subscription),
                       criteria_list: template.result(binding),
                       unsubscribe_link: unsubscribe_subscription_url(subscription.token),
