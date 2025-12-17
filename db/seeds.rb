@@ -14,6 +14,8 @@ weydon_trust = SchoolGroup.find_by!(uid: "16644")
 southampton_la = SchoolGroup.find_by!(local_authority_code: "852")
 #  Through school
 abraham_moss = School.find_by!(urn: "150009")
+#  sizth form or college
+aston_maths = School.find_by!(urn: "151725")
 
 # Team users
 users = [
@@ -36,16 +38,17 @@ users = [
 # Schools with phase 'n/a' are tricky to create dynamic vacancies for - they tend to be
 # special schools that don't quite fit the primary/secondary/higher pattern
 schools = [bexleyheath_school,
+           aston_maths,
            weydon_trust.schools.detect { |s| s.phase != "not_applicable" && s.phase.exclude?("middle") },
            southampton_la.schools.detect { |s| s.phase != "not_applicable" && s.phase.exclude?("middle") },
            abraham_moss]
 
 user_emails = users.map { |u| u.fetch(:email) }
 
-organisations = [bexleyheath_school, weydon_trust, southampton_la, abraham_moss]
-
 users.each do |user|
+  organisations = [bexleyheath_school, weydon_trust, southampton_la, abraham_moss, aston_maths]
   publisher = Publisher.create(organisations: organisations, **user)
+
   organisations.each do |organisation|
     FactoryBot.create(:publisher_preference, publisher: publisher, organisation: organisation)
   end
