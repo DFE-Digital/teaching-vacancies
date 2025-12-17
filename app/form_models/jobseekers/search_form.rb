@@ -1,5 +1,9 @@
 class Jobseekers::SearchForm
   include ActiveModel::Model
+  include ActiveModel::Attributes
+  include ActiveModel::AttributeAssignment
+
+  attribute :radius, :integer
 
   attr_reader :ect_status_options,
               :ect_statuses,
@@ -14,7 +18,6 @@ class Jobseekers::SearchForm
               :previous_keyword,
               :quick_apply,
               :quick_apply_options,
-              :radius,
               :school_type_options,
               :school_types,
               :sort,
@@ -31,12 +34,12 @@ class Jobseekers::SearchForm
               :working_patterns
 
   def initialize(params = {})
+    super(radius: Search::RadiusBuilder.new(params[:location], params[:radius]).radius)
     strip_trailing_whitespaces_from_params(params)
     set_filter_variables(params)
     @sort = Search::VacancySort.new(keyword: keyword, location: location).update(sort_by: params[:sort_by])
     set_filters_from_keyword
     unset_filters_from_previous_keyword
-    set_radius(params[:radius])
     set_facet_options
     set_total_filters
     @filters_list = %i[visa_sponsorship_availability teaching_job_roles support_job_roles phases subjects ect_statuses organisation_types school_types working_patterns quick_apply]
@@ -47,7 +50,7 @@ class Jobseekers::SearchForm
       keyword: @keyword,
       previous_keyword: @previous_keyword,
       location: @location,
-      radius: @radius,
+      radius: radius,
       organisation_slug: @organisation_slug,
       teaching_job_roles: @teaching_job_roles,
       support_job_roles: @support_job_roles,
@@ -154,10 +157,6 @@ class Jobseekers::SearchForm
     ].compact.sum
   end
   # :nocov:
-
-  def set_radius(radius_param)
-    @radius = Search::RadiusBuilder.new(location, radius_param).radius.to_s
-  end
 
   def set_organisation_type_options
     @organisation_type_options = [
