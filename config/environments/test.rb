@@ -64,6 +64,11 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # Ensure that query logs are not verbose in tests (tests are way slower when enabled).
+  config.active_record.verbose_query_logs = false
+  config.active_record.query_log_tags_enabled = false
+  config.log_level = :fatal
 end
 
 # Avoid OmniAuth output in tests:
