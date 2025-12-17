@@ -12,7 +12,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       external_reference: "old-ref",
       publisher_ats_api_client_id: publisher_ats_api_client_id,
       job_title: "English Teacher",
-      expires_at: "2025-12-31",
+      expires_at: Date.current + 1.year,
       organisations: [school],
       ect_status: "ect_unsuitable",
       working_patterns: %w[part_time],
