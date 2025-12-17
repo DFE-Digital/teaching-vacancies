@@ -425,7 +425,7 @@ en:
       build:
         anonymise_applications:
           you_can_choose: >-
-            You can choose to view candidates personal details, or to anonymise their applications.
+            You can choose to view candidates' personal details, or to anonymise their applications.
             Shortlisted applications cannot be anonymised.
         applying_for_the_job:
           accepting_job_applications_link_text: why you should use Teaching Vacancies for applications
