@@ -34,7 +34,7 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
     context "when religious vacancy" do
       let(:vacancy) { build_stubbed(:vacancy, :catholic, :expired, organisations:, job_applications: [job_application]) }
 
-      it "renders religious informaiton quick link" do
+      it "renders religious information quick link" do
         expect(rendered).to have_css(".navigation-list-component__anchors .govuk-link[href=\"#following_religion\"]", text: "Religious information")
       end
 
@@ -172,6 +172,28 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
       expect(rendered).to have_css(".govuk-summary-list__value", text: uploaded_job_application.teacher_reference_number)
 
       expect(rendered).to have_link("Download application", href: organisation_job_job_application_download_path(uploaded_job_application.vacancy.id, uploaded_job_application))
+    end
+  end
+
+  describe "pre-interviewing link" do
+    let(:pre_interview_text) { "Pre-interview checks" }
+
+    context "when interviewing" do
+      let(:status) { "interviewing" }
+
+      it { expect(rendered).to have_link(pre_interview_text) }
+    end
+
+    context "when submitted" do
+      let(:status) { "submitted" }
+
+      it { expect(rendered).to have_no_link(pre_interview_text) }
+    end
+
+    context "when offered" do
+      let(:status) { "offered" }
+
+      it { expect(rendered).to have_link(pre_interview_text) }
     end
   end
 
