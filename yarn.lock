@@ -1623,10 +1623,10 @@
   resolved "https://registry.yarnpkg.com/@kurkle/color/-/color-0.3.4.tgz#4d4ff677e1609214fc71c580125ddddd86abcabf"
   integrity sha512-M5UknZPHRu3DEDWoipU6sE8PdkZ6Z/S+v4dD+Ke8IaNlpdSQah50lz1KtcFBa2vsdOnwbbnxJwVM4wty6udA5w==
 
-"@ministryofjustice/frontend@^3.7.2":
-  version "3.7.2"
-  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-3.7.2.tgz#8dc5ed3d7db85c3c0ebe2772a3e7482762faf20e"
-  integrity sha512-px1xC2wnY2JxGspbv+CSFpONvcPzlDs0WICXlktgGkd/1P08pXv8Kprt7YCvRZN4idxXBAkuLX5Um3G4YYpkUQ==
+"@ministryofjustice/frontend@^7.1.1":
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-7.1.1.tgz#7cbdc00629f213cfc01ed0f152673d13c985a7e9"
+  integrity sha512-A26Vn8ov7R5oETQ4F3ZqlW3wn6fSrNAHl5UUEnCRx/+wUM1t6mC6GyUcs7o29kgazOy00CWPpVfKfVJt8Mq7vg==
 
 "@napi-rs/wasm-runtime@^0.2.11":
   version "0.2.11"
