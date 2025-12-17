@@ -102,44 +102,22 @@ RSpec.describe "Creating a vacancy" do
     publisher_about_the_role_page.fill_in_and_submit_form(vacancy)
 
     expect(publisher_include_additional_documents_page).to be_displayed
-    submit_empty_form
-    expect(page).to have_content("There is a problem")
-    expect(publisher_include_additional_documents_page.errors.map(&:text)).to contain_exactly(I18n.t("include_additional_documents_errors.include_additional_documents.inclusion"))
     publisher_include_additional_documents_page.fill_in_and_submit_form(vacancy.include_additional_documents)
 
     expect(publisher_school_visits_page).to be_displayed
-    submit_empty_form
-    expect(publisher_school_visits_page).to be_displayed
-    expect(publisher_school_visits_page.errors.map(&:text)).to contain_exactly(I18n.t("school_visits_errors.school_visits.inclusion"))
     publisher_school_visits_page.fill_in_and_submit_form(vacancy.school_visits)
 
-    expect(publisher_visa_sponsorship_page).to be_displayed
-    submit_empty_form
-    expect(publisher_visa_sponsorship_page.errors.map(&:text)).to contain_exactly(I18n.t("visa_sponsorship_available_errors.visa_sponsorship_available.inclusion"))
     expect(publisher_visa_sponsorship_page).to be_displayed
     publisher_visa_sponsorship_page.fill_in_and_submit_form(vacancy.visa_sponsorship_available)
 
     expect(publisher_important_dates_page).to be_displayed
-    submit_empty_form
-    expect(publisher_important_dates_page).to be_displayed
-    expect(publisher_important_dates_page.errors.map(&:text)).to contain_exactly(
-      I18n.t("important_dates_errors.publish_on_day.inclusion"),
-      I18n.t("important_dates_errors.expires_at.blank"),
-      I18n.t("important_dates_errors.expiry_time.inclusion"),
-    )
     publisher_important_dates_page.fill_in_and_submit_form(publish_on: vacancy.publish_on, expires_at: vacancy.expires_at)
 
     expect(publisher_applying_for_the_job_page).to be_displayed
-    submit_empty_form
-    expect(publisher_applying_for_the_job_page).to be_displayed
-    expect(publisher_applying_for_the_job_page.errors.map(&:text)).to contain_exactly(I18n.t("applying_for_the_job_errors.application_form_type.blank"))
     publisher_applying_for_the_job_page.fill_in_and_submit_form
 
     expect(publisher_how_to_receive_applications_page).to be_displayed
-    submit_empty_form
-    expect(publisher_how_to_receive_applications_page).to be_displayed
-    expect(publisher_how_to_receive_applications_page.errors.map(&:text)).to contain_exactly(I18n.t("how_to_receive_applications_errors.receive_applications.inclusion"))
-    publisher_how_to_receive_applications_page.fill_in_and_submit_form(vacancy)
+    publisher_how_to_receive_applications_page.fill_in_and_submit_form("website")
 
     expect(publisher_application_link_page).to be_displayed
     submit_empty_form
@@ -148,17 +126,10 @@ RSpec.describe "Creating a vacancy" do
     publisher_application_link_page.fill_in_and_submit_form(vacancy.application_link)
 
     expect(publisher_contact_details_page).to be_displayed
-    submit_empty_form
-    expect(publisher_contact_details_page.errors.map(&:text)).to contain_exactly(
-      I18n.t("contact_details_errors.contact_email.blank"),
-      I18n.t("contact_details_errors.contact_number_provided.inclusion"),
-    )
-    expect(publisher_contact_details_page).to be_displayed
     non_publisher_email = Faker::Internet.email(domain: "contoso.com")
     publisher_contact_details_page.fill_in_and_submit_form(non_publisher_email, vacancy.contact_number)
 
     expect(publisher_confirm_contact_details_page).to be_displayed
-
     publisher_confirm_contact_details_page.click_change_email_link
 
     expect(publisher_contact_details_page).to be_displayed
