@@ -1,7 +1,6 @@
 class Jobseekers::SearchForm
   include ActiveModel::Model
   include ActiveModel::Attributes
-  include ActiveModel::AttributeAssignment
 
   attribute :radius, :integer
 
