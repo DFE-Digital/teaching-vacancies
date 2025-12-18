@@ -1,6 +1,6 @@
 - content_for :page_title_prefix, t(".page_title")
 
-= render "publishers/vacancies/job_applications/header", vacancy: @vacancy, job_application: @job_application,
+= render "header", vacancy: @vacancy, job_application: @job_application,
   back_link: organisation_job_job_applications_path(@vacancy.id, anchor: tab_name(@job_application.status))
 
 .govuk-grid-row class="govuk-!-margin-top-4"
