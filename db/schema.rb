@@ -468,7 +468,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_11_160730) do
   end
 
   create_table "notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "content"
+    t.string "content", null: false
     t.uuid "publisher_id", null: false
     t.uuid "job_application_id", null: false
     t.datetime "created_at", null: false

@@ -46,22 +46,27 @@ RSpec.describe "Publishers can add notes to a job application" do
     context "without a note" do
       before do
         publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
+        fill_in "Add a note", with: note_content
+        click_on I18n.t("buttons.save")
       end
 
-      it "allows notes to be added to job applications" do
-        expect(publisher_application_page).to be_displayed
+      context "with too much content" do
+        let(:note_content) { Faker::Lorem.characters(number: 151) }
 
-        click_on I18n.t("buttons.save")
+        it "handles errors" do
+          expect(page).to have_content("A note must not be more than 150 characters")
+        end
+      end
 
-        expect(page).to have_content("Note did not save. Notes must not be blank or more than 150 words")
+      context "with ok content" do
+        let(:note_content) { "ABCDEFG" }
 
-        fill_in "Add a note", with: "ABCDEFG"
-        click_on I18n.t("buttons.save")
+        it "allows notes to be added to job applications" do
+          # wait for action to complete
+          expect(publisher_application_page.notification_banner.text).to eq("Success\nA note has been added")
 
-        # wait for action to complete
-        expect(publisher_application_page.notification_banner.text).to eq("Success\nA note has been added")
-
-        expect(page).to have_content("ABCDEFG")
+          expect(page).to have_content("ABCDEFG")
+        end
       end
     end
 
@@ -99,16 +104,26 @@ RSpec.describe "Publishers can add notes to a job application" do
       context "without a note" do
         before do
           publisher_ats_reference_request_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id, reference_request_id: reference_request.id)
+
+          fill_in "Add a note", with: note_content
+          click_on I18n.t("buttons.save_note")
         end
 
-        it "allows notes to be added and redirects back to reference request page" do
-          expect(publisher_ats_reference_request_page).to be_displayed
+        context "with good note" do
+          let(:note_content) { "New reference note" }
 
-          fill_in "Add a note", with: "New reference note"
-          click_on I18n.t("buttons.save_note")
+          it "allows notes to be added and redirects back to reference request page" do
+            expect(publisher_ats_reference_request_page).to be_displayed
+            expect(page).to have_content("New reference note")
+          end
+        end
 
-          expect(publisher_ats_reference_request_page).to be_displayed
-          expect(page).to have_content("New reference note")
+        context "with too many characters" do
+          let(:note_content) { Faker::Lorem.characters(number: 151) }
+
+          it "copes with errors" do
+            expect(publisher_ats_self_disclosure_page.errors.map(&:text)).to eq(["A note must not be more than 150 characters"])
+          end
         end
       end
     end
@@ -147,13 +162,18 @@ RSpec.describe "Publishers can add notes to a job application" do
         end
 
         it "allows notes to be added and redirects back to self disclosure page" do
-          expect(publisher_ats_self_disclosure_page).to be_displayed
-
           fill_in "Add a note", with: "New self disclosure note"
           click_on I18n.t("buttons.save_note")
 
           expect(publisher_ats_self_disclosure_page).to be_displayed
           expect(page).to have_content("New self disclosure note")
+        end
+
+        it "copes with errors" do
+          fill_in "Add a note", with: Faker::Lorem.characters(number: 151)
+          click_on I18n.t("buttons.save_note")
+
+          expect(publisher_ats_self_disclosure_page.errors.map(&:text)).to eq(["A note must not be more than 150 characters"])
         end
       end
     end
