@@ -32,7 +32,7 @@ jobs:
     steps:
       # Shallow clone for speed; fetch origin/main separately for undercover diff
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Fetch origin/main for coverage diff
         run: git fetch --no-tags --depth=1 origin main
@@ -115,7 +115,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Prepare application environment
         uses: ./.github/actions/prepare-app-env
