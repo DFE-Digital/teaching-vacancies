@@ -124,7 +124,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         let(:vacancy_params) do
           {
             external_advert_url: "https://www.example.com/ats-site/advertid",
-            expires_at: "2026-01-01",
+            expires_at: (Time.zone.today + 7).strftime("%Y-%m-%d"),
             job_title: "Teacher of Geography",
             job_advert: "We're looking for a dedicated Teacher of Geography",
             salary: "£12,345 to £67,890",
@@ -152,7 +152,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           expect(response.parsed_body).to eq("id" => created_vacancy.id)
           expect(created_vacancy).to have_attributes(
             external_advert_url: "https://www.example.com/ats-site/advertid",
-            expires_at: Date.new(2026, 1, 1),
+            expires_at: Time.zone.today + 7.days,
             job_title: "Teacher of Geography",
             job_advert: "We're looking for a dedicated Teacher of Geography",
             salary: "£12,345 to £67,890",
@@ -177,7 +177,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           let(:vacancy_params) do
             {
               external_advert_url: "https://www.example.com/ats-site/advertid",
-              expires_at: "2026-01-01",
+              expires_at: (Time.zone.today + 7).strftime("%Y-%m-%d"),
               job_title: "Headteacher",
               job_advert: "An exciting opportunity for a headteacher",
               salary: "£70,000 to £90,000",
@@ -954,7 +954,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           {
             vacancy: {
               external_advert_url: "https://www.example.com/ats-site/advertid",
-              expires_at: "2022-01-01",
+              expires_at: (Time.zone.today + 7).strftime("%Y-%m-%d"),
               job_title: "Teacher of Geography",
               job_advert: "We're looking for a dedicated Teacher of Geography",
               salary: "£12,345 to £67,890",
@@ -985,7 +985,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           {
             vacancy: {
               external_advert_url: "https://www.example.com/ats-site/advertid",
-              expires_at: "2022-01-01",
+              expires_at: (Time.zone.today + 7).strftime("%Y-%m-%d"),
               job_title: "Teacher of Geography",
               job_advert: "We're looking for a dedicated Teacher of Geography",
               salary: "£12,345 to £67,890",
@@ -1017,7 +1017,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           {
             vacancy: {
               external_advert_url: "https://www.example.com/ats-site/advertid",
-              expires_at: "2022-01-01",
+              expires_at: (Time.zone.today - 1).strftime("%Y-%m-%d"),
               job_title: "",
               job_advert: "We're looking for a dedicated Teacher of Geography",
               salary: "£12,345 to £67,890",
@@ -1051,7 +1051,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           {
             vacancy: {
               external_advert_url: "https://www.example.com/ats-site/advertid",
-              expires_at: "2022-01-01",
+              expires_at: (Time.zone.today + 7).strftime("%Y-%m-%d"),
               job_title: "Teacher of Geography",
               job_advert: "We're looking for a dedicated Teacher of Geography",
               salary: "£12,345 to £67,890",
