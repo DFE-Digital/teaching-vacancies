@@ -251,6 +251,8 @@ en:
           applying_for_a_teaching_role: If you're applying for a teaching role
           you_could_provide: "You could include information about:"
           personal_statement_preamble: "Get advice from experienced teachers and school leaders on "
+          personal_statement_preamble_continued_html: . You can can also use the %{tool_link} for prompts and tips to help you get started.
+          tool_link_text: personal statement tool
           bullets:
             - your teaching and classroom management style
             - your knowledge of the curriculum
