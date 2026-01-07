@@ -28,6 +28,7 @@
 .govuk-grid-row class="govuk-!-margin-top-6"
   .govuk-grid-column-one-third
     = render "vacancies/listing/key_dates_sidebar", vacancy: @vacancy, similar_jobs: @similar_jobs
+    = render "vacancies/listing/personal_statement_help", vacancy: @vacancy
 
   .govuk-grid-column-two-thirds
     = render "vacancies/listing/multi_school_banner", vacancy: @vacancy

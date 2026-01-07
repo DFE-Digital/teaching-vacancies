@@ -1,0 +1,15 @@
+@import 'base';
+
+@mixin sidebar-info-box-styles {
+  background-color: govuk-colour('light-grey');
+  margin-bottom: govuk-spacing(5);
+  padding: govuk-spacing(6);
+
+  @include govuk-media-query($until: tablet) {
+    margin-top: govuk-spacing(5);
+  }
+}
+
+.sidebar-info-box {
+  @include sidebar-info-box-styles;
+}
