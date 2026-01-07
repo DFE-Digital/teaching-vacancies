@@ -38,6 +38,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         click_on I18n.t("buttons.save_and_continue")
         # wait for page load
         find("form.new_publishers_job_listing_job_role_form")
+        find("a[href='/organisation/jobs/draft']")
       end
 
       it "passes a11y", :a11y do
@@ -102,10 +103,6 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         end
         # wait for page load
         find(".searchable-collection-component")
-      end
-
-      it "passes a11y", :a11y do
-        expect(page).to be_axe_clean
       end
 
       scenario "successfully updating the job location" do

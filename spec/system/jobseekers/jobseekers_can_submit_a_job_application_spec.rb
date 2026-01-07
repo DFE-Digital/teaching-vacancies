@@ -35,7 +35,7 @@ RSpec.describe "Jobseekers can submit a job application" do
 
         expect(page).to have_content(I18n.t("jobseekers.job_applications.post_submit.panel.title"))
 
-        visit first_link_from_last_mail
+        visit ActionMailer::Base.deliveries.last.personalisation.fetch(:job_application_link)
         expect(current_path).to eq(jobseekers_job_applications_path)
       end
     end
@@ -80,7 +80,7 @@ RSpec.describe "Jobseekers can submit a job application" do
   end
 
   context "when it is uploaded job application" do
-    let(:vacancy) { create(:vacancy, :with_uploaded_application_form, organisations: [organisation]) }
+    let(:vacancy) { create(:vacancy, :with_uploaded_application_form, job_roles: %w[it_support], organisations: [organisation]) }
     let(:uploaded_job_application) { create(:uploaded_job_application, :with_uploaded_application_form, jobseeker: jobseeker, vacancy: vacancy, completed_steps: %w[personal_details upload_application_form]) }
 
     before do
@@ -101,7 +101,7 @@ RSpec.describe "Jobseekers can submit a job application" do
 
         expect(page).to have_content(I18n.t("jobseekers.job_applications.post_submit.panel.title"))
 
-        visit first_link_from_last_mail
+        visit ActionMailer::Base.deliveries.last.personalisation.fetch(:job_application_link)
         expect(current_path).to eq(jobseekers_job_applications_path)
       end
     end

@@ -2,8 +2,8 @@ class Jobseekers::PeakTimesMailer < Jobseekers::BaseMailer
   helper_method :jobseeker, :first_name, :campaign_url, :campaign_key
 
   def reminder(jobseeker_id)
-    @jobseeker_id = jobseeker_id
-
+    jobseeker = Jobseeker.includes(jobseeker_profile: :personal_details).find_by(id: jobseeker_id)
+    first_name = jobseeker.jobseeker_profile&.personal_details&.first_name
     subject = if first_name.present?
                 I18n.t("jobseekers.peak_times_mailer.#{campaign_key}.subject", first_name: first_name)
               else
@@ -13,18 +13,6 @@ class Jobseekers::PeakTimesMailer < Jobseekers::BaseMailer
   end
 
   private
-
-  attr_reader :jobseeker_id
-
-  def jobseeker
-    return @jobseeker if defined?(@jobseeker)
-
-    @jobseeker = Jobseeker.includes(jobseeker_profile: :personal_details).find_by(id: jobseeker_id)
-  end
-
-  def first_name
-    @first_name ||= jobseeker.jobseeker_profile&.personal_details&.first_name
-  end
 
   def campaign_url
     case current_month

@@ -20,12 +20,15 @@ module Publishers
     end
 
     def inform_applicant_about_references(job_application)
-      @job_application = job_application
-      @job_title = job_application.vacancy.job_title
-      @organisation_name = job_application.vacancy.organisation_name
-      send_email(to: job_application.email_address, subject: t(".subject",
-                                                               job_title: @job_title,
-                                                               organisation_name: @organisation_name))
+      template_mail("4a85ba4d-2033-47a5-8f64-101479778ba2",
+                    to: job_application.email_address,
+                    personalisation: {
+                      name: job_application.name,
+                      job_title: job_application.vacancy.job_title,
+                      organisation_name: job_application.vacancy.organisation_name,
+                      link: jobseekers_job_application_url(job_application, anchor: "referees"),
+                      home_page_link: root_url,
+                    })
     end
 
     def self_disclosure_received(job_application)

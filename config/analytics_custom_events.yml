@@ -30,6 +30,7 @@ shared:
   - jobseeker_unapplied_saved_vacancy
   - jobseeker_peak_times_reminder
   - jobseeker_message_received
+  - jobseeker_rejection_message
   - publisher_applications_received
   - publisher_collect_references
   - publisher_inform_applicant_about_references

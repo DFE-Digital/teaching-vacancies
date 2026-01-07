@@ -6,7 +6,10 @@ module Jobseekers
 
     deliver_by :email do |config|
       config.mailer = "Jobseekers::MessageMailer"
-      config.method = :message_received
+      # called in the scope of the notification via instance_exec
+      # This has to check the 'failed' concept as it is run later, and the job_application has already been marked as
+      # rejected before this code has run
+      config.method = proc { record.conversation.job_application.application_failed? ? :rejection_message : :message_received }
       config.args = :message_instance
     end
 

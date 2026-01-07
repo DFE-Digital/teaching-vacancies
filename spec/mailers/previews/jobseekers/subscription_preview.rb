@@ -5,7 +5,7 @@ class Jobseekers::SubscriptionPreview < ActionMailer::Preview
       raise "I don't want to mess up your development database with factory-created subscriptions, so this preview won't
             run unless there is a subscription in the database."
     end
-    Jobseekers::SubscriptionMailer.confirmation(Subscription.first.id)
+    Jobseekers::SubscriptionMailer.confirmation(Subscription.first)
   end
 
   def update
@@ -13,6 +13,6 @@ class Jobseekers::SubscriptionPreview < ActionMailer::Preview
       raise "I don't want to mess up your development database with factory-created subscriptions, so this preview won't
             run unless there is a subscription in the database."
     end
-    Jobseekers::SubscriptionMailer.update(Subscription.first.id)
+    Jobseekers::SubscriptionMailer.update(Subscription.first)
   end
 end

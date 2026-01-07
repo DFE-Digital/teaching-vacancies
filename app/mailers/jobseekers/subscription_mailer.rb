@@ -1,37 +1,54 @@
-class Jobseekers::SubscriptionMailer < Jobseekers::BaseMailer
-  helper_method :subscription, :jobseeker
+module Jobseekers
+  class SubscriptionMailer < BaseMailer
+    def confirmation(subscription)
+      subscription_email(subscription, "subscribed", "subscribed to")
+    end
 
-  def confirmation(subscription_id)
-    @subscription_id = subscription_id
+    def update(subscription)
+      subscription_email(subscription, "updated", "updated")
+    end
 
-    send_email(to: subscription.email, subject: I18n.t("jobseekers.subscription_mailer.confirmation.subject"))
-  end
+    private
 
-  def update(subscription_id)
-    @subscription_id = subscription_id
+    def subscription_email(subscription, action, action_desc)
+      template = ERB.new(Rails.root.join("app/views/jobseekers/subscription_mailer/confirmation.text.erb").read)
 
-    send_email(to: subscription.email, subject: I18n.t("jobseekers.subscription_mailer.update.subject"))
-  end
+      @filtered_search_criteria = SubscriptionPresenter.new(subscription).filtered_search_criteria
 
-  private
+      template_mail("35ad9468-5042-439d-959d-3166325b265a",
+                    to: subscription.email,
+                    personalisation: {
+                      subscription_link: new_subscription_url,
+                      frequency: subscription.daily? ? "at the end of the day" : "weekly",
+                      action: action,
+                      action_description: action_desc,
+                      jobseeker_missing_content: jobseeker_missing_content(subscription),
+                      criteria_list: template.result(binding),
+                      unsubscribe_link: unsubscribe_subscription_url(subscription.token),
+                      home_page_link: root_url,
+                    })
+      # for the DfeAnalytics data
+      @subscription_id = subscription.id
+    end
 
-  def dfe_analytics_custom_data
-    { subscription_identifier: subscription.id }
-  end
+    def jobseeker_missing_content(subscription)
+      if Jobseeker.exists?(email: subscription.email.downcase)
+        ""
+      else
+        text = t("jobseekers.subscription_mailer.confirmation.create_account.link")
+        url = new_jobseeker_session_url
+        @sign_up_link = "[#{text}](#{url})"
+        jobseeker_template = ERB.new(Rails.root.join("app/views/jobseekers/subscription_mailer/jobseeker_missing.text.erb").read)
+        jobseeker_template.result(binding)
+      end
+    end
 
-  def email_event_prefix
-    "jobseeker_subscription"
-  end
+    def dfe_analytics_custom_data
+      { subscription_identifier: @subscription_id }
+    end
 
-  # :nocov:
-  def jobseeker
-    return @jobseeker if defined?(@jobseeker)
-
-    @jobseeker = Jobseeker.find_by(email: subscription.email.downcase)
-  end
-  # :nocov:
-
-  def subscription
-    @subscription ||= SubscriptionPresenter.new(Subscription.find(@subscription_id))
+    def email_event_prefix
+      "jobseeker_subscription"
+    end
   end
 end

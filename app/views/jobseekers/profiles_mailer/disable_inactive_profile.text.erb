@@ -1,9 +1,0 @@
-Dear <%= @profile.personal_details&.first_name || "Jobseeker" %>,
-
-Your Teaching Vacancies profile has been deactivated. Profiles are deactivated when you do not sign in to them for 6 months or longer.
-
-When your profile is active, school and trust hiring staff can view your details and contact you about jobs by email.
-
-To reactivate your profile, <%= sign_in_link %>, go to ‘Your profile’ and select ‘Turn on profile’.
-
-<%= t(".footer", link: notify_mail_to("teaching.vacancies@education.gov.uk")) %>

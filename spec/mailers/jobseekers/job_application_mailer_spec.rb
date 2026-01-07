@@ -22,12 +22,8 @@ RSpec.describe Jobseekers::JobApplicationMailer do
     let(:mail) { described_class.application_submitted(job_application) }
 
     it "sends a `jobseeker_application_submitted` email" do
-      expect(mail.subject).to eq(I18n.t("jobseekers.job_application_mailer.application_submitted.subject"))
       expect(mail.to).to eq([job_application.email_address])
-      expect(mail.body.encoded).to include(I18n.t("jobseekers.job_application_mailer.application_submitted.heading",
-                                                  organisation_name: organisation.name))
-                               .and include(I18n.t("jobseekers.job_application_mailer.shared.more_info.description",
-                                                   email: "[#{contact_email}](mailto:#{contact_email})"))
+      expect(mail.personalisation).to include(organisation_name: organisation.name, contact_email: contact_email)
     end
 
     it "triggers a `jobseeker_application_submitted` email event", :dfe_analytics do
@@ -41,11 +37,8 @@ RSpec.describe Jobseekers::JobApplicationMailer do
     let(:mail) { described_class.job_listing_ended_early(job_application, vacancy) }
 
     it "sends a `jobseeker_job_listing_ended_early` email to the jobseeker account's email address" do
-      expect(mail.subject).to eq("Update on #{vacancy.job_title} at #{vacancy.organisation_name}")
       expect(mail.to).to eq([jobseeker.email])
-      expect(mail.body.encoded).to include(I18n.t("jobseekers.job_application_mailer.job_listing_ended_early.heading",
-                                                  job_title: vacancy.job_title, organisation_name: vacancy.organisation_name))
-      expect(mail.body.encoded).to include(jobseekers_job_application_url(job_application))
+      expect(mail.personalisation).to include(job_title: vacancy.job_title, organisation_name: vacancy.organisation_name, link: jobseekers_job_application_url(job_application))
     end
 
     it "triggers a `jobseeker_job_listing_ended_early` email event", :dfe_analytics do
@@ -60,9 +53,8 @@ RSpec.describe Jobseekers::JobApplicationMailer do
     let(:self_disclosure_link) { jobseekers_job_application_self_disclosure_url(job_application, Wicked::FIRST_STEP) }
 
     it "sends a `declarations` email" do
-      expect(mail.subject).to eq("Complete your self-disclosure form for #{job_title} at #{vacancy.organisation_name}")
       expect(mail.to).to eq([job_application.email_address])
-      expect(mail.body).to include(self_disclosure_link)
+      expect(mail.personalisation).to include({ link: self_disclosure_link })
     end
   end
 end

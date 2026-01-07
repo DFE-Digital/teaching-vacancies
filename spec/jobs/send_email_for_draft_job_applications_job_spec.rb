@@ -24,7 +24,7 @@ RSpec.describe SendEmailForDraftJobApplicationsJob, type: :job do
       }.to change(ActionMailer::Base.deliveries, :count).by(1)
       sent_email = ActionMailer::Base.deliveries.last
       expect(sent_email.to).to eq([jobseeker.email])
-      expect(sent_email.body).to include(jobseekers_job_application_review_url(job_application))
+      expect(sent_email.personalisation).to include(application_link: jobseekers_job_application_review_url(job_application))
     end
   end
 

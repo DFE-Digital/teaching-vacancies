@@ -141,12 +141,12 @@ RSpec.describe "Publishers can select a job application for interview", :perform
         it "sends emails to referees and applicant" do
           expect(publisher_ats_applications_page).to be_displayed
 
-          expect(emails_with_subjects.keys)
-            .to eq([
-              current_referee.email,
-              old_referee.email,
-              job_application.email_address,
-            ])
+          expect(emails_with_subjects.transform_values(&:count))
+            .to eq({
+              current_referee.email => 1,
+              old_referee.email => 1,
+              job_application.email_address => 1,
+            })
         end
       end
 
@@ -180,12 +180,12 @@ RSpec.describe "Publishers can select a job application for interview", :perform
             it "sends emails to referees and notifies applicant that references are being collected" do
               expect(publisher_ats_applications_page).to be_displayed
 
-              expect(emails_with_subjects.keys)
-                .to eq([
-                  current_referee.email,
-                  old_referee.email,
-                  job_application.email_address,
-                ])
+              expect(emails_with_subjects.transform_values(&:count))
+                .to eq({
+                  current_referee.email => 1,
+                  old_referee.email => 1,
+                  job_application.email_address => 2,
+                })
             end
           end
 
@@ -195,12 +195,12 @@ RSpec.describe "Publishers can select a job application for interview", :perform
             it "only sends referee emails, and doesn't send email about reference collection" do
               expect(publisher_ats_interviewing_page).to be_displayed
 
-              expect(emails_with_subjects.keys)
-                .to eq([
-                  current_referee.email,
-                  old_referee.email,
-                  job_application.email_address,
-                ])
+              expect(emails_with_subjects.transform_values(&:count))
+                .to eq({
+                  current_referee.email => 1,
+                  old_referee.email => 1,
+                  job_application.email_address => 1,
+                })
             end
           end
         end

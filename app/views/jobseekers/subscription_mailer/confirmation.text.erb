@@ -1,24 +1,3 @@
-# <%= t(".title") %>
-<%= t("subscriptions.intro") %>
-
-<%- subscription.filtered_search_criteria.each_pair do |filter, value| %>
+<% @filtered_search_criteria.each_pair do |filter, value| %>
   <%= "- #{filter.humanize}: #{value}" %>
 <% end %>
-
-<%= t(".next_steps", frequency: t(".frequency.#{subscription.frequency}")) %>
-
-<%= t(".multiple_job_alerts", link: notify_link(new_subscription_url, t(".multiple_job_alerts_link_text")))%>
-
----
-
-<%- unless jobseeker.present? %>
-  # <%= t(".create_account.heading") %>
-  <%= t(".create_account.intro", link_to: sign_up_link) %>
-
-  ---
-
-<% end %>
-
-<%= t(".unsubscribe", unsubscribe_link: unsubscribe_link(subscription)) %>
-
-<%= t("shared.footer", home_page_link: home_page_link) %>
