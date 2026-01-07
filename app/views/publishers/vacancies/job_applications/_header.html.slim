@@ -23,7 +23,7 @@ h1.govuk-heading-xl class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
 
 = tabs do |tabs|
   - tabs.with_navigation_item text: t(".tabs.application"), link: organisation_job_job_application_path(vacancy.id, job_application)
-  - if job_application.interviewing?
+  - if job_application.has_pre_interview_checks?
     - tabs.with_navigation_item text: t(".tabs.pre_interview_checks"), link: pre_interview_checks_organisation_job_job_application_path(vacancy.id, job_application)
   - tabs.with_navigation_item text: "Messages", active: current_page?(messages_organisation_job_job_application_path(vacancy.id, job_application.id)),
     link: messages_organisation_job_job_application_path(vacancy.id, job_application.id, back_link: organisation_job_job_applications_path(vacancy.id, anchor: tab_name(job_application.status)))
