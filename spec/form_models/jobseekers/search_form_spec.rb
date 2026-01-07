@@ -5,7 +5,7 @@ RSpec.describe Jobseekers::SearchForm, type: :model do
 
   describe "#initialize" do
     let(:radius_builder) { instance_double(Search::RadiusBuilder) }
-    let(:expected_radius) { "1000" }
+    let(:expected_radius) { 1000 }
     let(:params) { { radius: radius, location: location } }
 
     before { allow(radius_builder).to receive(:radius).and_return(expected_radius) }
