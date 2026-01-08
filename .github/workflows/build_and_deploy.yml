@@ -55,7 +55,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Cache swagger docs
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         id: swagger-cache
         with:
           path: 'swagger'
@@ -139,7 +139,7 @@ jobs:
             password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Restore swagger
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         id: swagger-cache
         with:
           path: 'swagger'
