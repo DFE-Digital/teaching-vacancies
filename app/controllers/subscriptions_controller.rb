@@ -80,6 +80,17 @@ class SubscriptionsController < ApplicationController
     redirect_to new_subscription_unsubscribe_feedback_path(subscription)
   end
 
+  def keep
+    subscription = Subscription.find_and_verify_by_token(token)
+
+    subscription.update_columns(
+      updated_at: Time.current,
+      deletion_warning_email_sent_at: nil,
+    )
+
+    redirect_to root_path, success: t(".success")
+  end
+
   private
 
   def campaign_link?

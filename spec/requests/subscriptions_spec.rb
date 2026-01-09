@@ -344,4 +344,40 @@ RSpec.describe "Subscriptions" do
       )
     end
   end
+
+  describe "GET #keep" do
+    let!(:subscription) do
+      create(:subscription, frequency: :daily).tap do |s|
+        s.update_column(:deletion_warning_email_sent_at, 2.weeks.ago)
+        s.update_column(:updated_at, 13.months.ago)
+      end
+    end
+
+    subject { get keep_subscription_path(subscription.token) }
+
+    it "clears deletion_warning_email_sent_at and updates updated_at to prevent another warning" do
+      freeze_time do
+        expect {
+          subject
+          subscription.reload
+        }.to change { subscription.deletion_warning_email_sent_at }.from(kind_of(ActiveSupport::TimeWithZone)).to(nil)
+          .and change { subscription.updated_at }.to(be_within(1.second).of(Time.current))
+      end
+    end
+
+    it "redirects with a success message" do
+      subject
+      expect(response).to redirect_to(root_path)
+      expect(flash[:success]).to be_present
+    end
+
+    context "with an invalid token" do
+      subject { get keep_subscription_path("invalid-token") }
+
+      it "returns a 404 status" do
+        subject
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
 end
