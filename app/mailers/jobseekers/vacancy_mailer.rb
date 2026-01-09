@@ -19,7 +19,7 @@ module Jobseekers
                     personalisation: {
                       date: vacancy.expires_at.to_date.to_fs,
                       job_title: vacancy.job_title,
-                      first_name: jobseeker.jobseeker_profile&.first_name,
+                      first_name: jobseeker.jobseeker_profile&.first_name || "Jobseeker",
                       school: vacancy.organisation.name,
                       apply_for_link: job_url(vacancy),
                       advice_link: jobseeker_guides_write_a_great_teaching_job_application_in_five_steps_url,
