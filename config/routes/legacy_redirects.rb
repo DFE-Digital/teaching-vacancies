@@ -66,7 +66,7 @@ get "teaching-jobs-for-philosophy", to: redirect("psychology-philosophy-sociolog
 get "teaching-jobs-for-physical-education", to: redirect("physical-education-teacher-jobs")
 get "teaching-jobs-for-physics", to: redirect("physics-teacher-jobs")
 get "teaching-jobs-for-politics", to: redirect("politics-humanities-social-sciences-teacher-jobs")
-get "teaching-jobs-for-psychology", to: redirect("psychology-philosophy-sociology-re-teacher jobs")
+get "teaching-jobs-for-psychology", to: redirect("psychology-philosophy-sociology-re-teacher-jobs")
 get "teaching-jobs-for-relationships-and-sex-education", to: redirect("health-relationships-social-care-teacher-jobs")
 get "teaching-jobs-for-religious-education", to: redirect("health-relationships-social-care-teacher-jobs")
 get "teaching-jobs-for-science", to: redirect("science-teacher-jobs")
