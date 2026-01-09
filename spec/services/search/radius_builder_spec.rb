@@ -41,8 +41,8 @@ RSpec.describe Search::RadiusBuilder do
       context "when radius is not an integer" do
         let(:radius) { "; DROP TABLE Vacancies; " }
 
-        it "raises an error" do
-          expect { subject.radius }.to raise_error(ArgumentError)
+        it "defaults to the point search radius" do
+          expect(subject.radius).to eq(32)
         end
       end
     end
@@ -71,6 +71,14 @@ RSpec.describe Search::RadiusBuilder do
           let(:radius) { 64 }
 
           it "preserves the radius attribute" do
+            expect(subject.radius).to eq(64)
+          end
+        end
+
+        context "when radius is not an integer" do
+          let(:radius) { "; DROP TABLE Vacancies; " }
+
+          it "defaults to the polygon search radius" do
             expect(subject.radius).to eq(64)
           end
         end

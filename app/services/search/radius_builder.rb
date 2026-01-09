@@ -20,7 +20,7 @@ class Search::RadiusBuilder
     elsif polygon.blank? && radius.to_s == DEFAULT_BUFFER_FOR_POLYGON_SEARCHES.to_s
       DEFAULT_RADIUS_FOR_POINT_SEARCHES
     else
-      Integer(radius || default_radius).abs
+      Integer(radius, exception: false)&.abs || default_radius
     end
   end
 
