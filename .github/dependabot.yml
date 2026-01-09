@@ -52,9 +52,33 @@ updates:
       - dependency-name: "railties"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
 
+    # Major gem updates are opened in separate PRs.
+    # Minor and patch updates are grouped together as per the groups defined below.
     groups:
+      # By default, all gem minor & patch updates (excluding govuk* and rails gems) are grouped into a single PR.
+      general-gems:
+        update-types:
+          - "minor"
+          - "patch"
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "govuk-components"
+          - "govuk_design_system_formbuilder"
+          - "actionmailer"
+          - "actionpack"
+          - "actiontext"
+          - "activejob"
+          - "activemodel"
+          - "activerecord"
+          - "activestorage"
+          - "activesupport"
+          - "rails"
+          - "railties"
       # Rails patch updates are grouped together into a single PR.
-      rails:
+      rails-gems:
+        update-types:
+          - "patch"
         patterns:
           - "actionmailer"
           - "actionpack"
@@ -66,19 +90,14 @@ updates:
           - "activesupport"
           - "rails"
           - "railties"
-        update-types:
-          - "patch"
-
-      # By default, all other gem updates (excluding govuk* gems) are grouped into a single PR.
-      gem-dependencies:
+      # GOV.UK gems minor & patch updates are grouped together into a single PR.
+      govuk-gems:
         update-types:
           - "minor"
           - "patch"
         patterns:
-          - "*"
-        exclude-patterns:
-          - "govuk*"
-
+          - "govuk-components"
+          - "govuk_design_system_formbuilder"
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
