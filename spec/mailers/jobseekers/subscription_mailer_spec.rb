@@ -115,4 +115,68 @@ RSpec.describe Jobseekers::SubscriptionMailer do
       end
     end
   end
+
+  describe "#governance_email_registered_never_updated" do
+    let(:mail) { described_class.governance_email_registered_never_updated(subscription) }
+    let(:notify_template) { NOTIFY_SUBSCRIPTION_GOVERNANCE_REGISTERED_NEVER_UPDATED_TEMPLATE }
+    let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "subscription_governance_registered_never_updated" } }
+
+    it "sends a governance email" do
+      expect(mail.to).to eq([subscription.email])
+      expect(mail.personalisation).to include(
+        alert_date: subscription.created_at.strftime("%-d %B %Y"),
+        keep_job_alert_url: keep_subscription_url(subscription.token, **campaign_params),
+        deletion_date: 1.month.from_now.strftime("%-d %B %Y"),
+      )
+      expect(mail.personalisation[:criteria_list]).to be_present
+    end
+  end
+
+  describe "#governance_email_registered_was_updated" do
+    let(:mail) { described_class.governance_email_registered_was_updated(subscription) }
+    let(:notify_template) { NOTIFY_SUBSCRIPTION_GOVERNANCE_REGISTERED_WAS_UPDATED_TEMPLATE }
+    let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "subscription_governance_registered_was_updated" } }
+
+    it "sends a governance email" do
+      expect(mail.to).to eq([subscription.email])
+      expect(mail.personalisation).to include(
+        alert_date: subscription.updated_at.strftime("%-d %B %Y"),
+        keep_job_alert_url: keep_subscription_url(subscription.token, **campaign_params),
+        deletion_date: 1.month.from_now.strftime("%-d %B %Y"),
+      )
+      expect(mail.personalisation[:criteria_list]).to be_present
+    end
+  end
+
+  describe "#governance_email_unregistered_never_updated" do
+    let(:mail) { described_class.governance_email_unregistered_never_updated(subscription) }
+    let(:notify_template) { NOTIFY_SUBSCRIPTION_GOVERNANCE_UNREGISTERED_NEVER_UPDATED_TEMPLATE }
+    let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "subscription_governance_unregistered_never_updated" } }
+
+    it "sends a governance email" do
+      expect(mail.to).to eq([subscription.email])
+      expect(mail.personalisation).to include(
+        alert_date: subscription.created_at.strftime("%-d %B %Y"),
+        keep_job_alert_url: keep_subscription_url(subscription.token, **campaign_params),
+        deletion_date: 1.month.from_now.strftime("%-d %B %Y"),
+      )
+      expect(mail.personalisation[:criteria_list]).to be_present
+    end
+  end
+
+  describe "#governance_email_unregistered_was_updated" do
+    let(:mail) { described_class.governance_email_unregistered_was_updated(subscription) }
+    let(:notify_template) { NOTIFY_SUBSCRIPTION_GOVERNANCE_UNREGISTERED_WAS_UPDATED_TEMPLATE }
+    let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "subscription_governance_unregistered_was_updated" } }
+
+    it "sends a governance email" do
+      expect(mail.to).to eq([subscription.email])
+      expect(mail.personalisation).to include(
+        alert_date: subscription.updated_at.strftime("%-d %B %Y"),
+        keep_job_alert_url: keep_subscription_url(subscription.token, **campaign_params),
+        deletion_date: 1.month.from_now.strftime("%-d %B %Y"),
+      )
+      expect(mail.personalisation[:criteria_list]).to be_present
+    end
+  end
 end
