@@ -1,0 +1,38 @@
+- content_for :page_title_prefix, t(".page_title")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("app.back_link"), href: pre_interview_checks_organisation_job_job_application_path(@vacancy.id, @job_application), html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
+
+span.govuk-caption-l
+  = t(".caption")
+h1.govuk-heading-l = t(".heading")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_with model: @referee, url: organisation_job_job_application_references_path(@vacancy.id, @job_application.id), method: :post, id: "referee_form" do |f|
+      = f.govuk_error_summary
+
+      = f.govuk_text_field :name
+
+      = f.govuk_radio_buttons_fieldset(:uploaded_details, legend: { size: "m" }) do
+        = f.govuk_radio_button :uploaded_details, "true", link_errors: true do
+          = f.govuk_file_field :reference_document,
+            label: nil,
+            hint: { text: t("helpers.hint.publishers_job_listing_application_form_form.application_form") },
+            accept: ".doc, .docx, .pdf",
+            multiple: false,
+            include_hidden: false,
+            enctype: "multipart/form-data"
+
+        = f.govuk_radio_button :uploaded_details, "false" do
+          = f.govuk_text_field :job_title, label: { size: "s" }
+          = f.govuk_text_field :organisation, label: { size: "s" }
+          = f.govuk_text_field :relationship, label: { size: "s" }
+          = f.govuk_email_field :email, label: { size: "s" }
+          = f.govuk_phone_field :phone_number, label: { size: "s" }
+
+      = f.govuk_submit t(".submit")
+
+  .govuk-grid-column-one-third
+    = render PublisherNotesOnJobApplicationComponent.new(job_application: @job_application, vacancy: @vacancy, notes_form: @notes_form,
+        return_to_url: new_organisation_job_job_application_reference_path(@vacancy.id, @job_application.id))
