@@ -20,7 +20,12 @@
     - @reference_requests.each do |reference_request|
       - body.with_row do |row|
         - row.with_cell(text: t("publishers.vacancies.job_applications.pre_interview_checks.reference"))
-        - row.with_cell(text: govuk_link_to(reference_request.referee.name, organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, reference_request)))
+        - if reference_request.reference_form.attached?
+          - row.with_cell do
+            div = reference_request.referee.name
+            div = govuk_link_to("#{reference_request.reference_form.filename} (#{number_to_human_size(reference_request.reference_form.byte_size)})", reference_request.reference_form)
+        - else
+          - row.with_cell(text: govuk_link_to(reference_request.referee.name, organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, reference_request)))
         - status = reference_request_status(reference_request, reference_request.job_reference)
 
         - row.with_cell(text: t("publishers.vacancies.job_applications.pre_interview_checks.#{status}_at", date: reference_request.updated_at.to_fs(:time_on_date)))
@@ -51,3 +56,5 @@
           - row.with_cell(text: t("publishers.vacancies.job_applications.pre_interview_checks.created_at", date: @job_application.self_disclosure_request.updated_at.to_fs(:time_on_date)))
         - row.with_cell do
           = govuk_tag(text: t("reference_requests.#{disclosure_status}.status"), colour: t("reference_requests.#{disclosure_status}.colour"))
+
+= govuk_button_link_to t("buttons.add_reference"), new_organisation_job_job_application_reference_path(@vacancy.id, @job_application.id), secondary: true

@@ -671,10 +671,10 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_20_090246) do
 
   create_table "reference_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "reference_id", null: false
-    t.uuid "token", null: false
+    t.uuid "token"
     t.integer "status", null: false
     t.boolean "marked_as_complete", default: false, null: false
-    t.string "email", null: false
+    t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "reminder_sent", default: false, null: false
