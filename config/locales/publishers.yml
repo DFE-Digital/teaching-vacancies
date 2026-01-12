@@ -646,7 +646,7 @@ en:
         notes:
           create:
             success: A note has been added
-            failure: Note did not save. Notes must not be blank or more than 150 words.
+            failure: Note did not save.
           destroy:
             success: Note deleted
           index:
