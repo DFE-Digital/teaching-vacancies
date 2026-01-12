@@ -9,8 +9,8 @@ RSpec.describe Jobseekers::VacancyMailer do
   context "without a profile" do
     let(:jobseeker) { build_stubbed(:jobseeker) }
 
-    it "has a nil first name" do
-      expect(mail.personalisation).to include(first_name: nil)
+    it "has a fallback 'Jobseeker' as a first name" do
+      expect(mail.personalisation).to include(first_name: "Jobseeker")
     end
   end
 
@@ -18,7 +18,9 @@ RSpec.describe Jobseekers::VacancyMailer do
     let(:jobseeker) { build_stubbed(:jobseeker, jobseeker_profile: build_stubbed(:jobseeker_profile, :with_personal_details)) }
 
     it "has a filled in first name" do
-      expect(mail.personalisation).not_to include(first_name: nil)
+      mail_first_name = mail.personalisation.fetch(:first_name)
+      expect(mail_first_name).not_to be_blank
+      expect(mail_first_name).to eq(jobseeker.jobseeker_profile.first_name)
     end
   end
 end
