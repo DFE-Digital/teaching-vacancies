@@ -427,6 +427,7 @@ shared:
     - updated_at
     - recaptcha_score
     - unsubscribed_at
+    - deletion_warning_email_sent_at
   vacancies:
     - id
     - job_title
