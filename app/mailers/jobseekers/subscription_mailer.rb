@@ -60,41 +60,39 @@ module Jobseekers
     end
 
     def governance_email(subscription, registered:, never_updated:)
-      template = ERB.new(Rails.root.join("app/views/jobseekers/subscription_mailer/confirmation.text.erb").read)
-
       @filtered_search_criteria = SubscriptionPresenter.new(subscription).filtered_search_criteria
+      @subscription_id = subscription.id
+      @governance_email_type = "governance_#{registered ? 'registered' : 'unregistered'}_#{never_updated ? 'created' : 'updated'}"
 
-      # Format date as '1 December 2025'
+      template_id = governance_template_id(registered, never_updated)
+      personalisation = governance_personalisation(subscription, registered, never_updated)
+
+      template_mail(template_id, to: subscription.email, personalisation: personalisation)
+    end
+
+    def governance_template_id(registered, never_updated)
+      case [registered, never_updated]
+      when [true, true]   then "18bc8ad4-007a-4347-99da-c67b0e471bd0"  # Registered, Created
+      when [true, false]  then "e2bd00b4-3a12-4ab4-86a9-424d1d780bf2"  # Registered, Updated
+      when [false, true]  then "07f84d0f-300e-4843-a135-8830e86a53b1"  # Unregistered, Created
+      when [false, false] then "a8777937-fc89-495f-a196-b4242eec0193"  # Unregistered, Updated
+      end
+    end
+
+    def governance_personalisation(subscription, registered, never_updated)
+      template = ERB.new(Rails.root.join("app/views/jobseekers/subscription_mailer/confirmation.text.erb").read)
       reference_date = never_updated ? subscription.created_at : subscription.updated_at
-      alert_date = reference_date.strftime("%-d %B %Y")
-
-      # Calculate deletion date (1 month from now)
-      deletion_date = 1.month.from_now.strftime("%-d %B %Y")
-
-      # Determine template ID based on registered and never_updated flags
-      template_id = case [registered, never_updated]
-                    when [true, true]   then "18bc8ad4-007a-4347-99da-c67b0e471bd0"  # Registered, Created
-                    when [true, false]  then "e2bd00b4-3a12-4ab4-86a9-424d1d780bf2"  # Registered, Updated
-                    when [false, true]  then "07f84d0f-300e-4843-a135-8830e86a53b1"  # Unregistered, Created
-                    when [false, false] then "a8777937-fc89-495f-a196-b4242eec0193"  # Unregistered, Updated
-                    end
 
       personalisation = {
-        alert_date: alert_date,
+        alert_date: reference_date.strftime("%-d %B %Y"),
         criteria_list: template.result(binding),
         keep_job_alert_url: keep_subscription_url(subscription.token),
-        deletion_date: deletion_date,
+        deletion_date: 1.month.from_now.strftime("%-d %B %Y"),
         unsubscribe_link: unsubscribe_subscription_url(subscription.token),
       }
 
-      # Add sign_in_url for registered users
       personalisation[:sign_in_url] = new_jobseeker_session_url if registered
-
-      template_mail(template_id, to: subscription.email, personalisation: personalisation)
-
-      # for the DfeAnalytics data
-      @subscription_id = subscription.id
-      @governance_email_type = "governance_#{registered ? 'registered' : 'unregistered'}_#{never_updated ? 'created' : 'updated'}"
+      personalisation
     end
 
     def dfe_analytics_custom_data

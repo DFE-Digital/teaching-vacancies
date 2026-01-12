@@ -32,7 +32,7 @@ RSpec.describe SendSubscriptionGovernanceEmailsJob do
 
     context "with unregistered jobseeker, never updated subscription" do
       it "sends governance_email_unregistered_never_updated" do
-        expect(Jobseekers::SubscriptionMailer)
+        allow(Jobseekers::SubscriptionMailer)
           .to receive(:governance_email_unregistered_never_updated)
           .with(old_subscription)
           .and_return(message_delivery)
@@ -54,7 +54,7 @@ RSpec.describe SendSubscriptionGovernanceEmailsJob do
       end
 
       it "sends governance_email_unregistered_was_updated" do
-        expect(Jobseekers::SubscriptionMailer)
+        allow(Jobseekers::SubscriptionMailer)
           .to receive(:governance_email_unregistered_was_updated)
           .with(old_subscription)
           .and_return(message_delivery)
@@ -71,7 +71,9 @@ RSpec.describe SendSubscriptionGovernanceEmailsJob do
       let!(:jobseeker) { create(:jobseeker, email: old_subscription.email.downcase) }
 
       it "sends governance_email_registered_never_updated" do
-        expect(Jobseekers::SubscriptionMailer)
+        expect(jobseeker).to be_present
+
+        allow(Jobseekers::SubscriptionMailer)
           .to receive(:governance_email_registered_never_updated)
           .with(old_subscription)
           .and_return(message_delivery)
@@ -94,7 +96,9 @@ RSpec.describe SendSubscriptionGovernanceEmailsJob do
       let!(:jobseeker) { create(:jobseeker, email: old_subscription.email.downcase) }
 
       it "sends governance_email_registered_was_updated" do
-        expect(Jobseekers::SubscriptionMailer)
+        expect(jobseeker).to be_present
+
+        allow(Jobseekers::SubscriptionMailer)
           .to receive(:governance_email_registered_was_updated)
           .with(old_subscription)
           .and_return(message_delivery)
@@ -117,7 +121,7 @@ RSpec.describe SendSubscriptionGovernanceEmailsJob do
     end
 
     it "does not send emails to recent subscriptions" do
-      expect(Jobseekers::SubscriptionMailer)
+      allow(Jobseekers::SubscriptionMailer)
         .to receive(:governance_email_unregistered_never_updated)
         .with(old_subscription)
         .and_return(message_delivery)
@@ -130,7 +134,7 @@ RSpec.describe SendSubscriptionGovernanceEmailsJob do
     end
 
     it "does not send emails to already warned subscriptions" do
-      expect(Jobseekers::SubscriptionMailer)
+      allow(Jobseekers::SubscriptionMailer)
         .to receive(:governance_email_unregistered_never_updated)
         .with(old_subscription)
         .and_return(message_delivery)
@@ -143,7 +147,7 @@ RSpec.describe SendSubscriptionGovernanceEmailsJob do
     end
 
     it "does not send emails to unsubscribed subscriptions" do
-      expect(Jobseekers::SubscriptionMailer)
+      allow(Jobseekers::SubscriptionMailer)
         .to receive(:governance_email_unregistered_never_updated)
         .with(old_subscription)
         .and_return(message_delivery)
