@@ -62,7 +62,6 @@ module Jobseekers
     def governance_email(subscription, registered:, never_updated:)
       @filtered_search_criteria = SubscriptionPresenter.new(subscription).filtered_search_criteria
       @subscription_id = subscription.id
-      @governance_email_type = "governance_#{registered ? 'registered' : 'unregistered'}_#{never_updated ? 'created' : 'updated'}"
 
       template_id = governance_template_id(registered, never_updated)
       personalisation = governance_personalisation(subscription, registered, never_updated)

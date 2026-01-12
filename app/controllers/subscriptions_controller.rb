@@ -83,10 +83,7 @@ class SubscriptionsController < ApplicationController
   def keep
     subscription = Subscription.find_and_verify_by_token(token)
 
-    subscription.update_columns(
-      updated_at: Time.current,
-      deletion_warning_email_sent_at: nil,
-    )
+    subscription.update(deletion_warning_email_sent_at: nil)
 
     redirect_to root_path, success: t(".success")
   end
