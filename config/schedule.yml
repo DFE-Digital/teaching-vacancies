@@ -130,9 +130,19 @@ disable_inactive_profiles:
   class: 'DisableInactiveProfilesJob'
   queue: low
 
+send_subscription_governance_emails:
+  cron: '50 08 * * *' # "At 08:50."
+  class: 'SendSubscriptionGovernanceEmailsJob'
+  queue: low
+
 email_feedback_prompt:
   cron: '0 09 * * *' # "At 09:00."
   class: 'SendExpiredVacancyFeedbackPromptJob'
+  queue: low
+
+delete_unconfirmed_subscriptions:
+  cron: '10 09 * * *' # "At 09:10."
+  class: 'DeleteUnconfirmedSubscriptionsJob'
   queue: low
 
 withdraw_stale_drafts:
