@@ -76,4 +76,9 @@ namespace :publishers do
   task reset_new_features_attributes: :environment do
     Publisher.update_all(dismissed_new_features_page_at: nil)
   end
+
+  desc "Reset accepted terms for all publishers"
+  task reset_accepted_terms_at: :environment do
+    Publisher.update_all(accepted_terms_at: nil)
+  end
 end
