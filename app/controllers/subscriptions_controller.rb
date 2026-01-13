@@ -142,15 +142,17 @@ class SubscriptionsController < ApplicationController
   end
 
   def trigger_subscription_event(type, subscription)
+    data = {
+      autopopulated: session.delete(:subscription_autopopulated),
+      frequency: subscription.frequency,
+      recaptcha_score: subscription.recaptcha_score,
+      search_criteria: subscription.search_criteria,
+      subscription_identifier: subscription.id,
+    }
+    data[:utm_campaign] = params[:utm_campaign] if params[:utm_campaign].present?
+
     event_data = {
-      data: {
-        autopopulated: session.delete(:subscription_autopopulated),
-        frequency: subscription.frequency,
-        recaptcha_score: subscription.recaptcha_score,
-        search_criteria: subscription.search_criteria,
-        subscription_identifier: subscription.id,
-        utm_campaign: params[:utm_campaign],
-      }.compact,
+      data: data,
       hidden_data: {
         email_identifier: subscription.email,
       },
