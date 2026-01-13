@@ -2,6 +2,8 @@ class SendSubscriptionGovernanceEmailsJob < ApplicationJob
   queue_as :low
 
   def perform
+    return if DisableEmailNotifications.enabled?
+
     subscriptions_needing_governance_email.find_each do |subscription|
       send_appropriate_governance_email(subscription)
       subscription.update_column(:deletion_warning_email_sent_at, Time.current)
@@ -12,9 +14,9 @@ class SendSubscriptionGovernanceEmailsJob < ApplicationJob
 
   def subscriptions_needing_governance_email
     Subscription
-      .where(updated_at: ...12.months.ago)
+      .kept
+      .where("updated_at < ?", 12.months.ago)
       .where(deletion_warning_email_sent_at: nil)
-      .where(unsubscribed_at: nil)
   end
 
   def send_appropriate_governance_email(subscription)
