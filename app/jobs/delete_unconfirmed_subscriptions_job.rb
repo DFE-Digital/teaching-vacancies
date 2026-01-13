@@ -2,7 +2,7 @@ class DeleteUnconfirmedSubscriptionsJob < ApplicationJob
   queue_as :low
 
   def perform
-    subscriptions_to_delete.find_each(&:destroy)
+    subscriptions_to_delete.find_each(&:discard)
   end
 
   private
