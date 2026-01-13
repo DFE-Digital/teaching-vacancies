@@ -38,6 +38,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
     let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "jobseeker_subscription_confirmation" } }
 
     it "sends a confirmation email" do
+      mail.deliver_now
       expect(mail.to).to eq([subscription.email])
       expect(mail.personalisation).to include(unsubscribe_link: unsubscribe_subscription_url(subscription.token),
                                               frequency: I18n.t("jobseekers.subscription_mailer.confirmation.frequency.#{subscription.frequency}"))

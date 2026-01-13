@@ -74,14 +74,14 @@ module Jobseekers
       when [true, true]   then "18bc8ad4-007a-4347-99da-c67b0e471bd0"  # Registered, Created
       when [true, false]  then "e2bd00b4-3a12-4ab4-86a9-424d1d780bf2"  # Registered, Updated
       when [false, true]  then "07f84d0f-300e-4843-a135-8830e86a53b1"  # Unregistered, Created
-      when [false, false] then "a8777937-fc89-495f-a196-b4242eec0193"  # Unregistered, Updated
+      else "a8777937-fc89-495f-a196-b4242eec0193" # Unregistered, Updated
       end
     end
 
     def governance_personalisation(subscription, registered, never_updated)
       template = ERB.new(Rails.root.join("app/views/jobseekers/subscription_mailer/confirmation.text.erb").read)
       reference_date = never_updated ? subscription.created_at : subscription.updated_at
-      campaign_params = { utm_source: uid, utm_medium: "email", utm_campaign: utm_campaign }
+      campaign_params = { utm_source: uid, utm_medium: "email", utm_campaign: "subscription_governance" }
 
       personalisation = {
         alert_date: reference_date.strftime("%-d %B %Y"),
@@ -101,14 +101,6 @@ module Jobseekers
 
     def email_event_prefix
       "jobseeker_subscription"
-    end
-
-    def utm_campaign
-      if action_name.start_with?("governance_email_")
-        "subscription_governance"
-      else
-        email_event_type
-      end
     end
   end
 end

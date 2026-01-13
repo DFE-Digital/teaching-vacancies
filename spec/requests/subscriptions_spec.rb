@@ -343,6 +343,14 @@ RSpec.describe "Subscriptions" do
         with_data: %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier],
       )
     end
+
+    it "includes utm_campaign in analytics event when present", :dfe_analytics do
+      delete subscription_path(subscription.token, utm_campaign: "subscription_governance")
+
+      expect(:job_alert_subscription_unsubscribed).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
+        with_data: %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier utm_campaign],
+      )
+    end
   end
 
   describe "GET #keep" do
