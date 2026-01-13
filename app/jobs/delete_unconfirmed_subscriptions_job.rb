@@ -9,8 +9,8 @@ class DeleteUnconfirmedSubscriptionsJob < ApplicationJob
 
   def subscriptions_to_delete
     Subscription
+      .kept
       .where(deletion_warning_email_sent_at: ...1.month.ago)
       .where.not(deletion_warning_email_sent_at: nil)
-      .where(unsubscribed_at: nil)
   end
 end

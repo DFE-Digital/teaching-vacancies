@@ -119,7 +119,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
   describe "#governance_email_registered_never_updated" do
     let(:mail) { described_class.governance_email_registered_never_updated(subscription) }
     let(:notify_template) { NOTIFY_SUBSCRIPTION_GOVERNANCE_REGISTERED_NEVER_UPDATED_TEMPLATE }
-    let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "subscription_governance_registered_never_updated" } }
+    let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "subscription_governance" } }
 
     it "sends a governance email" do
       expect(mail.to).to eq([subscription.email])
@@ -135,7 +135,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
   describe "#governance_email_registered_was_updated" do
     let(:mail) { described_class.governance_email_registered_was_updated(subscription) }
     let(:notify_template) { NOTIFY_SUBSCRIPTION_GOVERNANCE_REGISTERED_WAS_UPDATED_TEMPLATE }
-    let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "subscription_governance_registered_was_updated" } }
+    let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "subscription_governance" } }
 
     it "sends a governance email" do
       expect(mail.to).to eq([subscription.email])
@@ -151,7 +151,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
   describe "#governance_email_unregistered_never_updated" do
     let(:mail) { described_class.governance_email_unregistered_never_updated(subscription) }
     let(:notify_template) { NOTIFY_SUBSCRIPTION_GOVERNANCE_UNREGISTERED_NEVER_UPDATED_TEMPLATE }
-    let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "subscription_governance_unregistered_never_updated" } }
+    let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "subscription_governance" } }
 
     it "sends a governance email" do
       expect(mail.to).to eq([subscription.email])
@@ -167,7 +167,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
   describe "#governance_email_unregistered_was_updated" do
     let(:mail) { described_class.governance_email_unregistered_was_updated(subscription) }
     let(:notify_template) { NOTIFY_SUBSCRIPTION_GOVERNANCE_UNREGISTERED_WAS_UPDATED_TEMPLATE }
-    let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "subscription_governance_unregistered_was_updated" } }
+    let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "subscription_governance" } }
 
     it "sends a governance email" do
       expect(mail.to).to eq([subscription.email])

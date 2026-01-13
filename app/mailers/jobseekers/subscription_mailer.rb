@@ -81,13 +81,14 @@ module Jobseekers
     def governance_personalisation(subscription, registered, never_updated)
       template = ERB.new(Rails.root.join("app/views/jobseekers/subscription_mailer/confirmation.text.erb").read)
       reference_date = never_updated ? subscription.created_at : subscription.updated_at
+      campaign_params = { utm_source: uid, utm_medium: "email", utm_campaign: utm_campaign }
 
       personalisation = {
         alert_date: reference_date.strftime("%-d %B %Y"),
         criteria_list: template.result(binding),
-        keep_job_alert_url: keep_subscription_url(subscription.token),
+        keep_job_alert_url: keep_subscription_url(subscription.token, **campaign_params),
         deletion_date: 1.month.from_now.strftime("%-d %B %Y"),
-        unsubscribe_link: unsubscribe_subscription_url(subscription.token),
+        unsubscribe_link: unsubscribe_subscription_url(subscription.token, **campaign_params),
       }
 
       personalisation[:sign_in_url] = new_jobseeker_session_url if registered
@@ -100,6 +101,14 @@ module Jobseekers
 
     def email_event_prefix
       "jobseeker_subscription"
+    end
+
+    def utm_campaign
+      if action_name.start_with?("governance_email_")
+        "subscription_governance"
+      else
+        email_event_type
+      end
     end
   end
 end

@@ -30,7 +30,10 @@ RSpec.describe DeleteUnconfirmedSubscriptionsJob do
     end
 
     it "destroys subscriptions warned more than 1 month ago" do
-      expect { subscription_to_delete.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      subscription_to_delete.reload
+      expect(subscription_to_delete.discarded?).to be(true)
+      # unsubscribed_at is our discard column
+      expect(subscription_to_delete.unsubscribed_at?).not_to be_nil
     end
 
     it "does not destroy recently warned subscriptions" do
@@ -47,10 +50,9 @@ RSpec.describe DeleteUnconfirmedSubscriptionsJob do
 
     it "results in the correct subscription count" do
       # Total created: 4
-      # Deleted: 1 (subscription_to_delete)
       # Active remaining: 2 (recently_warned_subscription, unwarned_subscription)
-      # Discarded: 1 (already_unsubscribed, not counted by default)
-      expect(Subscription.count).to eq(2)
+      # Discarded: 2 (already_unsubscribed, not counted by default and subscription_to_delete)
+      expect(Subscription.kept.count).to eq(2)
     end
   end
 end

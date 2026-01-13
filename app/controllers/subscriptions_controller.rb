@@ -149,7 +149,8 @@ class SubscriptionsController < ApplicationController
         recaptcha_score: subscription.recaptcha_score,
         search_criteria: subscription.search_criteria,
         subscription_identifier: subscription.id,
-      },
+        utm_campaign: params[:utm_campaign],
+      }.compact,
       hidden_data: {
         email_identifier: subscription.email,
       },
