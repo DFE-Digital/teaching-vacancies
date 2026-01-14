@@ -373,10 +373,13 @@ RSpec.describe "Subscriptions" do
       end
     end
 
-    it "redirects with a success message" do
+    it "redirects with a success message and triggers event", :dfe_analytics do
       subject
       expect(response).to redirect_to(root_path)
       expect(flash[:success]).to be_present
+      expect(:job_alert_subscription_kept).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
+        with_data: %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier],
+      )
     end
 
     context "with an invalid token" do

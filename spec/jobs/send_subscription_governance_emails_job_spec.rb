@@ -4,11 +4,7 @@ RSpec.describe SendSubscriptionGovernanceEmailsJob do
   let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
 
   describe "#perform" do
-    let!(:old_subscription) do
-      create(:subscription, frequency: :daily).tap do |s|
-        s.update_columns(created_at: 13.months.ago, updated_at: 13.months.ago)
-      end
-    end
+    let!(:old_subscription) { create(:subscription, frequency: :daily) }
 
     let!(:recent_subscription) do
       create(:subscription, frequency: :daily).tap do |s|
@@ -30,133 +26,95 @@ RSpec.describe SendSubscriptionGovernanceEmailsJob do
       end
     end
 
-    context "with unregistered jobseeker, never updated subscription" do
-      it "sends governance_email_unregistered_never_updated" do
-        allow(Jobseekers::SubscriptionMailer)
-          .to receive(:governance_email_unregistered_never_updated)
-          .with(have_attributes(id: old_subscription.id))
-          .and_return(message_delivery)
+    let!(:already_warned_subscription_deletion_email_sent_at) { already_warned_subscription.deletion_warning_email_sent_at }
 
-        expect(message_delivery).to receive(:deliver_later)
+    it "sends governance_email_unregistered_never_updated to unregistered, never updated subscriptions" do
+      old_subscription.update_columns(created_at: 13.months.ago, updated_at: 13.months.ago)
 
-        described_class.perform_now
+      expect(Jobseekers::SubscriptionMailer)
+        .to receive(:governance_email_unregistered_never_updated)
+        .with(have_attributes(id: old_subscription.id))
+        .and_return(message_delivery)
 
-        expect(old_subscription.reload.deletion_warning_email_sent_at).not_to be_nil
-      end
+      expect(message_delivery).to receive(:deliver_later)
+
+      described_class.perform_now
+
+      expect(old_subscription.reload.deletion_warning_email_sent_at).not_to be_nil
+      expect(recent_subscription.reload.deletion_warning_email_sent_at).to be_nil
+      expect(already_warned_subscription.reload.deletion_warning_email_sent_at).to eq(already_warned_subscription_deletion_email_sent_at)
+      expect(unsubscribed_subscription.reload.deletion_warning_email_sent_at).to be_nil
     end
 
-    context "with unregistered jobseeker, updated subscription" do
-      let!(:old_subscription) do
-        create(:subscription, frequency: :daily).tap do |s|
-          s.update_column(:created_at, 14.months.ago)
-          s.update_column(:updated_at, 13.months.ago)
-        end
-      end
+    it "sends governance_email_unregistered_was_updated to unregistered, updated subscriptions" do
+      old_subscription.update_columns(created_at: 14.months.ago, updated_at: 13.months.ago)
 
-      it "sends governance_email_unregistered_was_updated" do
-        allow(Jobseekers::SubscriptionMailer)
-          .to receive(:governance_email_unregistered_was_updated)
-          .with(have_attributes(id: old_subscription.id))
-          .and_return(message_delivery)
+      expect(Jobseekers::SubscriptionMailer)
+        .to receive(:governance_email_unregistered_was_updated)
+        .with(have_attributes(id: old_subscription.id))
+        .and_return(message_delivery)
 
-        expect(message_delivery).to receive(:deliver_later)
+      expect(message_delivery).to receive(:deliver_later)
 
-        described_class.perform_now
+      described_class.perform_now
 
-        expect(old_subscription.reload.deletion_warning_email_sent_at).not_to be_nil
-      end
+      expect(old_subscription.reload.deletion_warning_email_sent_at).not_to be_nil
+      expect(recent_subscription.reload.deletion_warning_email_sent_at).to be_nil
+      expect(already_warned_subscription.reload.deletion_warning_email_sent_at).to eq(already_warned_subscription_deletion_email_sent_at)
+      expect(unsubscribed_subscription.reload.deletion_warning_email_sent_at).to be_nil
     end
 
-    context "with registered jobseeker, never updated subscription" do
-      let!(:jobseeker) { create(:jobseeker, email: old_subscription.email.downcase) }
+    it "sends governance_email_registered_never_updated to registered, never updated subscriptions" do
+      old_subscription.update_columns(created_at: 13.months.ago, updated_at: 13.months.ago)
+      jobseeker = create(:jobseeker, email: old_subscription.email.downcase)
 
-      it "sends governance_email_registered_never_updated" do
-        expect(jobseeker).to be_present
+      expect(jobseeker).to be_present
 
-        allow(Jobseekers::SubscriptionMailer)
-          .to receive(:governance_email_registered_never_updated)
-          .with(have_attributes(id: old_subscription.id))
-          .and_return(message_delivery)
+      expect(Jobseekers::SubscriptionMailer)
+        .to receive(:governance_email_registered_never_updated)
+        .with(have_attributes(id: old_subscription.id))
+        .and_return(message_delivery)
 
-        expect(message_delivery).to receive(:deliver_later)
+      expect(message_delivery).to receive(:deliver_later)
 
-        described_class.perform_now
+      described_class.perform_now
 
-        expect(old_subscription.reload.deletion_warning_email_sent_at).not_to be_nil
-      end
+      expect(old_subscription.reload.deletion_warning_email_sent_at).not_to be_nil
+      expect(recent_subscription.reload.deletion_warning_email_sent_at).to be_nil
+      expect(already_warned_subscription.reload.deletion_warning_email_sent_at).to eq(already_warned_subscription_deletion_email_sent_at)
+      expect(unsubscribed_subscription.reload.deletion_warning_email_sent_at).to be_nil
     end
 
-    context "with registered jobseeker, updated subscription" do
-      let!(:old_subscription) do
-        create(:subscription, frequency: :daily).tap do |s|
-          s.update_column(:created_at, 14.months.ago)
-          s.update_column(:updated_at, 13.months.ago)
-        end
-      end
-      let!(:jobseeker) { create(:jobseeker, email: old_subscription.email.downcase) }
+    it "sends governance_email_registered_was_updated to registered, updated subscriptions" do
+      old_subscription.update_columns(created_at: 14.months.ago, updated_at: 13.months.ago)
+      jobseeker = create(:jobseeker, email: old_subscription.email.downcase)
 
-      it "sends governance_email_registered_was_updated" do
-        expect(jobseeker).to be_present
+      expect(jobseeker).to be_present
 
-        allow(Jobseekers::SubscriptionMailer)
-          .to receive(:governance_email_registered_was_updated)
-          .with(have_attributes(id: old_subscription.id))
-          .and_return(message_delivery)
+      expect(Jobseekers::SubscriptionMailer)
+        .to receive(:governance_email_registered_was_updated)
+        .with(have_attributes(id: old_subscription.id))
+        .and_return(message_delivery)
 
-        expect(message_delivery).to receive(:deliver_later)
+      expect(message_delivery).to receive(:deliver_later)
 
-        described_class.perform_now
+      described_class.perform_now
 
-        expect(old_subscription.reload.deletion_warning_email_sent_at).not_to be_nil
-      end
+      expect(old_subscription.reload.deletion_warning_email_sent_at).not_to be_nil
+      expect(recent_subscription.reload.deletion_warning_email_sent_at).to be_nil
+      expect(already_warned_subscription.reload.deletion_warning_email_sent_at).to eq(already_warned_subscription_deletion_email_sent_at)
+      expect(unsubscribed_subscription.reload.deletion_warning_email_sent_at).to be_nil
     end
 
     context "when email notifications are disabled", :disable_email_notifications do
       it "does not send emails" do
+        old_subscription.update_columns(created_at: 13.months.ago, updated_at: 13.months.ago)
+
         expect(Jobseekers::SubscriptionMailer)
           .not_to receive(:governance_email_unregistered_never_updated)
 
         described_class.perform_now
       end
-    end
-
-    it "does not send emails to recent subscriptions" do
-      allow(Jobseekers::SubscriptionMailer)
-        .to receive(:governance_email_unregistered_never_updated)
-        .with(have_attributes(id: old_subscription.id))
-        .and_return(message_delivery)
-
-      expect(message_delivery).to receive(:deliver_later)
-
-      described_class.perform_now
-
-      expect(recent_subscription.reload.deletion_warning_email_sent_at).to be_nil
-    end
-
-    it "does not send emails to already warned subscriptions" do
-      allow(Jobseekers::SubscriptionMailer)
-        .to receive(:governance_email_unregistered_never_updated)
-        .with(have_attributes(id: old_subscription.id))
-        .and_return(message_delivery)
-
-      expect(message_delivery).to receive(:deliver_later)
-
-      described_class.perform_now
-
-      expect(already_warned_subscription.reload.deletion_warning_email_sent_at).to eq(already_warned_subscription.deletion_warning_email_sent_at)
-    end
-
-    it "does not send emails to unsubscribed subscriptions" do
-      allow(Jobseekers::SubscriptionMailer)
-        .to receive(:governance_email_unregistered_never_updated)
-        .with(have_attributes(id: old_subscription.id))
-        .and_return(message_delivery)
-
-      expect(message_delivery).to receive(:deliver_later)
-
-      described_class.perform_now
-
-      expect(unsubscribed_subscription.reload.deletion_warning_email_sent_at).to be_nil
     end
   end
 end
