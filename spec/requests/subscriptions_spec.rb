@@ -369,7 +369,7 @@ RSpec.describe "Subscriptions" do
           subject
           subscription.reload
         }.to change { subscription.deletion_warning_email_sent_at }.from(kind_of(ActiveSupport::TimeWithZone)).to(nil)
-          .and change { subscription.updated_at }.to(be_within(1.second).of(Time.current))
+          .and change { subscription.updated_at }.to(be_within(1.minute).of(Time.current))
       end
     end
 

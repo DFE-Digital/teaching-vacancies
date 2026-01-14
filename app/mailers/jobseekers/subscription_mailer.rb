@@ -27,9 +27,8 @@ module Jobseekers
     private
 
     def subscription_email(subscription, action, action_desc)
-      template = ERB.new(Rails.root.join("app/views/jobseekers/subscription_mailer/confirmation.text.erb").read)
-
       @filtered_search_criteria = SubscriptionPresenter.new(subscription).filtered_search_criteria
+      criteria_list = @filtered_search_criteria.map { |filter, value| "- #{filter.humanize}: #{value}" }.join("\n")
 
       template_mail("35ad9468-5042-439d-959d-3166325b265a",
                     to: subscription.email,
@@ -39,7 +38,7 @@ module Jobseekers
                       action: action,
                       action_description: action_desc,
                       jobseeker_missing_content: jobseeker_missing_content(subscription),
-                      criteria_list: template.result(binding),
+                      criteria_list: criteria_list,
                       unsubscribe_link: unsubscribe_subscription_url(subscription.token),
                       home_page_link: root_url,
                     })
@@ -79,13 +78,13 @@ module Jobseekers
     end
 
     def governance_personalisation(subscription, registered, never_updated)
-      template = ERB.new(Rails.root.join("app/views/jobseekers/subscription_mailer/confirmation.text.erb").read)
       reference_date = never_updated ? subscription.created_at : subscription.updated_at
       campaign_params = { utm_source: uid, utm_medium: "email", utm_campaign: "subscription_governance" }
+      criteria_list = @filtered_search_criteria.map { |filter, value| "- #{filter.humanize}: #{value}" }.join("\n")
 
       personalisation = {
         alert_date: reference_date.strftime("%-d %B %Y"),
-        criteria_list: template.result(binding),
+        criteria_list: criteria_list,
         keep_job_alert_url: keep_subscription_url(subscription.token, **campaign_params),
         deletion_date: 1.month.from_now.strftime("%-d %B %Y"),
         unsubscribe_link: unsubscribe_subscription_url(subscription.token, **campaign_params),
