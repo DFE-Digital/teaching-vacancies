@@ -83,6 +83,7 @@ class SubscriptionsController < ApplicationController
   def keep
     subscription = Subscription.find_and_verify_by_token(token)
 
+    trigger_subscription_event(:job_alert_subscription_kept, subscription)
     subscription.update(deletion_warning_email_sent_at: nil)
 
     redirect_to root_path, success: t(".success")
