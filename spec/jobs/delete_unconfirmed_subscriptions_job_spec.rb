@@ -33,28 +33,28 @@ RSpec.describe DeleteUnconfirmedSubscriptionsJob do
       subscription_to_delete.reload
       expect(subscription_to_delete.discarded?).to be(true)
       # unsubscribed_at is our discard column
-      expect(subscription_to_delete.unsubscribed_at?).not_to be_nil
+      expect(subscription_to_delete.unsubscribed_at).not_to be_nil
     end
 
     it "does not discard recently warned subscriptions" do
       recently_warned_subscription.reload
       expect(recently_warned_subscription.discarded?).to be(false)
       # unsubscribed_at is our discard column
-      expect(recently_warned_subscription.unsubscribed_at?).to be_nil
+      expect(recently_warned_subscription.unsubscribed_at).to be_nil
     end
 
     it "does not discard unwarned subscriptions" do
       unwarned_subscription.reload
       expect(unwarned_subscription.discarded?).to be(false)
       # unsubscribed_at is our discard column
-      expect(unwarned_subscription.unsubscribed_at?).to be_nil
+      expect(unwarned_subscription.unsubscribed_at).to be_nil
     end
 
     it "does not destroy already unsubscribed subscriptions" do
       already_unsubscribed.reload
       expect(already_unsubscribed.discarded?).to be(true)
       # unsubscribed_at is our discard column
-      expect(already_unsubscribed.unsubscribed_at?).not_to be_nil
+      expect(already_unsubscribed.unsubscribed_at).not_to be_nil
     end
 
     it "results in the correct subscription count" do
