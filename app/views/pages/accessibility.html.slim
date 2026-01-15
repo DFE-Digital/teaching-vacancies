@@ -13,7 +13,7 @@
       ul.govuk-list.govuk-list--bullet
         li change colours, contrast levels and fonts
 
-        li zoom in up to 300% without the text spilling off the screen
+        li zoom in up to 400% without the text spilling off the screen
 
         li navigate most of the website using just a keyboard
 
@@ -33,13 +33,8 @@
     p.govuk-body
       |  We know some parts of this website are not fully accessible:
       ul.govuk-list.govuk-list--bullet
-        li
-          | users navigating with a Mac with VoiceOver enabled cannot access the site past the
-          |  ‘skip to main content’ link
 
-        li some elements are not using supported ARIA attributes
-
-        li some buttons do not function when iOS VoiceOver is enabled
+        li radio buttons that reveal additional content do not use supported ARIA attributes
 
     h2.govuk-heading-l Feedback and contact information
 
@@ -87,24 +82,10 @@
     h3.govuk-heading-m Non-compliance with the accessibility regulations
 
     p.govuk-body
-      |  Users of Mac iOS with VoiceOver enabled are not able to access the site past the ‘skip to main content’
-      |   link. This fails WCAG 2.2 success criterion 2.4.3 Focus Order.
+      |  Radio buttons that reveal additional content do not use supported ARIA attributes. The use of ARIA attributes in roles where they are not permitted can interfere with accessibility. This fails WCAG 2.2 success criterion 4.1.2 (name, role, value).
 
     p.govuk-body
-      |  Some elements are not supported by ARIA attributes, which may interfere with the accessibility of the
-      |   webpage. This can mainly be seen where radio buttons are present. This fails WCAG 2.2 success
-      |   criterion 4.1.2 Name, Role, Value.
-
-    p.govuk-body
-      |  While navigating with a screen reader, there are incorrect announcements on several of the pages. For example:
-      ul.govuk-list.govuk-list--bullet
-        li decorative separator elements are announced by screen readers on the 'candidate profile' page
-
-        li form field labels on the 'job application, quick apply' page are read out in stages
-
-        li hidden words on the 'create a jobseeker account' are announced.
-
-    p.govuk-body This fails WCAG 2.2 success criterion 4.1.2 Name, Role, Value.
+      | We are currently unable to fix this issue, as radio buttons are a standard GOV.UK design system component. We are monitoring this and will fix this issue as soon as we can.
 
     h3.govuk-heading-m Content that’s not within the scope of the accessibility regulations
 
@@ -119,19 +100,6 @@
       |   exempt from accessibility regulations, but we are currently working to make this area of the
       |   website more accessible.
 
-    h2.govuk-heading-l Disproportionate burden
-
-    p.govuk-body
-      |  Dragon Naturally Speaking (speech recognition software) can only upload files when using the mouse
-      |   grid feature. This issue is believed to be an ongoing issue with the Dragon Naturally Speaking
-      |   software and further information can be found on the following link:
-      |   #{govuk_link_to("https://github.com/alphagov/reported-bugs/issues/35", "https://github.com/alphagov/reported-bugs/issues/35")}.
-
-    p.govuk-body
-      |  As this is a third-party issue, we are unable to fix this and it is therefore
-      |   #{govuk_link_to("exempt from meeting the accessibility regulations", "http://www.legislation.gov.uk/uksi/2018/952/regulation/4/made")}
-      |   and consequently a #{govuk_link_to("disproportionate burden", "http://www.legislation.gov.uk/uksi/2018/952/regulation/7/made")} within the meaning of the accessibility regulations.
-
     h2.govuk-heading-l What we’re doing to improve accessibility
 
     p.govuk-body We will continue to test the accessibility of this website as it develops.
@@ -139,10 +107,10 @@
     h2.govuk-heading-l Preparation of this accessibility statement
 
     p.govuk-body
-      |  This statement was prepared on 24 July 2024. It was last reviewed on 12 December 2024.
+      |  This statement was prepared on 6 January 2026. It was last reviewed on 6 January 2026.
 
     p.govuk-body
-      |   This website was last tested on 25 June 2024. The test was carried out by Zoonou.
+      |   This website was last tested on 5 January 2026. The test was carried out by Zoonou.
 
     p.govuk-body
-      |   Zoonou used #{govuk_link_to("WCAG-EM", "https://www.w3.org/TR/WCAG-EM/")} to define a representative selection of pages and test approach.
+      |   Zoonou used #{govuk_link_to("WCAG-EM", "https://www.w3.org/TR/WCAG-EM/")} to define the pages tested and test approach.
