@@ -94,7 +94,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
   context "when searching using the desktop search field" do
     before do
-      stub_const("Pagy::DEFAULT", Pagy::DEFAULT.merge(items: per_page))
+      stub_const("Pagy::DEFAULT", Pagy::DEFAULT.merge(limit: per_page))
       visit jobs_path
       fill_in "Keyword", with: keyword
       click_on I18n.t("buttons.search")

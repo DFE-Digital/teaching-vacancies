@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "vacancies/campaign_landing_page" do
+  include Pagy::Backend
+
   subject(:campaign_landing_view) { Capybara.string(rendered) }
 
   let(:school) { build_stubbed(:school, geopoint: "POINT(-0.019501 51.504949)") }
@@ -42,7 +44,7 @@ RSpec.describe "vacancies/campaign_landing_page" do
   let(:campaign_params) { CampaignSearchParamsMerger.new({}, campaign_page).merged_params }
   let(:form) { Jobseekers::SearchForm.new(campaign_params.merge(landing_page: campaign_page)) }
   let(:vacancies_search) { Search::VacancySearch.new(form.to_hash, sort: form.sort) }
-  let(:pagy) { Pagy.new({ count: 2, page: 1 }) }
+  let(:pagy) { pagy_array(vacancies).first }
 
   before do
     allow(vacancies_search).to receive(:vacancies) { vacancies }

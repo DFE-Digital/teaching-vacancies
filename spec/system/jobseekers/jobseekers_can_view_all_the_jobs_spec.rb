@@ -59,7 +59,7 @@ RSpec.describe "Jobseekers can view all the jobs" do
     end
 
     before do
-      stub_const("Pagy::DEFAULT", Pagy::DEFAULT.merge(items: 2))
+      stub_const("Pagy::DEFAULT", Pagy::DEFAULT.merge(limit: 2))
     end
 
     context "when visiting the home page and performing an empty search" do

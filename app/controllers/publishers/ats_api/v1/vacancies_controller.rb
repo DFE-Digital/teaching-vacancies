@@ -13,7 +13,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   rescue_from ActionController::ParameterMissing, with: :render_bad_request
 
   def index
-    @pagy, @vacancies = pagy(vacancies, items: 100)
+    @pagy, @vacancies = pagy(vacancies, limit: 100, page: params[:page] || 1)
     respond_to(&:json)
   end
 
