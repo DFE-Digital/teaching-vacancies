@@ -13,8 +13,7 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
       before do
         allow(vacancy).to receive(:uploaded_form?).and_return(false)
         allow(vacancy).to receive(:create_job_application_for).with(jobseeker).and_return(new_job_application)
-        allow(jobseeker).to receive_message_chain(:native_job_applications, :not_draft, :any?).and_return(true)
-        allow(jobseeker).to receive(:jobseeker_profile).and_return(nil)
+        allow(jobseeker).to receive_messages(has_submitted_native_job_application?: true, jobseeker_profile: nil)
       end
 
       it "prefills the new job application from the previous job application" do
@@ -78,8 +77,7 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
       before do
         allow(vacancy).to receive(:uploaded_form?).and_return(false)
         allow(vacancy).to receive(:create_job_application_for).with(jobseeker).and_return(new_job_application)
-        allow(jobseeker).to receive_message_chain(:native_job_applications, :not_draft, :any?).and_return(false)
-        allow(jobseeker).to receive(:jobseeker_profile).and_return(double("JobseekerProfile"))
+        allow(jobseeker).to receive_messages(has_submitted_native_job_application?: false, jobseeker_profile: double("JobseekerProfile"))
       end
 
       it "prefills the new job application from the jobseeker profile" do
