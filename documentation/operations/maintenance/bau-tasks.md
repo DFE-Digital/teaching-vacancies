@@ -39,13 +39,13 @@ Example:
 ### Exporting SQL query outputs from service DB to the developer machine as CSV file
 
 You will need konduit
-If not already setup, you can install it using the project Maefile. From the project's root:
+If not already setup, you can install it using the project Makefile. From the project's root:
 ```
- make bin/konduit.sh
+make bin/konduit.sh
 ```
 Connect to the DB PSQL console:
 ```
-bin/konduit.sh teaching-vacancies-production -- psql
+NAMESPACE=tv-production bin/konduit.sh teaching-vacancies-production -- psql
 ```
 From the PSQL console, execute a query:
 ```

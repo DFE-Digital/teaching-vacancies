@@ -207,6 +207,26 @@ Scale it back when not needed anymore:
 kubectl scale --replicas=4 deployment teaching-vacancies-production-worker -n tv-production
 ```
 
+## Connecting to a PostgreSQL PSQL console in our environments
+You will need konduit
+If not already setup, you can install it using the project Makefile. From the project's root:
+```
+make bin/konduit.sh
+```
+Connect to the DB PSQL console:
+```
+NAMESPACE=tv-production bin/konduit.sh teaching-vacancies-production -- psql
+```
+### Some useful queries:
+#### Listing our installed extensions and their versions:
+```
+SELECT * FROM pg_extension;
+```
+#### Upgrading PostGis extension to latest version:
+```
+ALTER EXTENSION postgis UPDATE;
+```
+
 ## Set up a new environment
 - Create file `terraform/workspace-variables/<env>.tfvars.json`
 - Create file `terraform/workspace-variables/<env>_app_env.yml`
