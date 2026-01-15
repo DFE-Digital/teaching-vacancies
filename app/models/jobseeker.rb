@@ -48,6 +48,10 @@ class Jobseeker < ApplicationRecord
     !!account_closed_on
   end
 
+  def has_submitted_native_job_application?
+    native_job_applications.not_draft.any?
+  end
+
   def generate_merge_verification_code
     self.account_merge_confirmation_code = SecureRandom.alphanumeric(6)
     self.account_merge_confirmation_code_generated_at = Time.current
