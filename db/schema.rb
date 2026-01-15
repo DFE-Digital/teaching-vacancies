@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_11_160730) do
+ActiveRecord::Schema[8.0].define(version: 2026_01_15_140453) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -780,8 +780,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_11_160730) do
     t.geometry "area", limit: {srid: 4326, type: "geometry"}
     t.geometry "geopoint", limit: {srid: 4326, type: "geometry"}
     t.integer "radius_in_metres"
-    t.geometry "uk_area", limit: {srid: 27700, type: "st_polygon"}
     t.geometry "uk_geopoint", limit: {srid: 27700, type: "st_point"}
+    t.geometry "uk_area", limit: {srid: 27700, type: "geometry"}
     t.index ["area"], name: "index_subscriptions_on_area", using: :gist
     t.index ["email"], name: "index_subscriptions_on_email"
     t.index ["geopoint"], name: "index_subscriptions_on_geopoint", using: :gist
