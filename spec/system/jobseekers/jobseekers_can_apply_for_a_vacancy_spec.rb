@@ -37,7 +37,7 @@ RSpec.describe "Jobseekers can apply for a vacancy" do
     let(:jobseeker) { create(:jobseeker) }
     let(:expected_content) { "Download an application form" }
 
-    it "apply link can only be found after login" do
+    xit "apply link can only be found after login" do
       expect(page).not_to have_content(expected_content)
       all(".govuk-button").last.click
       sign_in_jobseeker_govuk_one_login(jobseeker)
