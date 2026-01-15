@@ -32,7 +32,7 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
 
       before do
         create(:uploaded_job_application, :status_submitted, jobseeker: jobseeker, vacancy: uploaded_vacancy,
-                first_name: "Jane", last_name: "Smith", phone_number: "9876543210")
+                                                             first_name: "Jane", last_name: "Smith", phone_number: "9876543210")
       end
 
       it "creates blank native job application" do
@@ -52,12 +52,12 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
 
       before do
         create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: old_native_vacancy,
-               first_name: "John", last_name: "Doe", phone_number: "1234567890",
-               created_at: 2.weeks.ago, updated_at: 2.weeks.ago)
+                                                    first_name: "John", last_name: "Doe", phone_number: "1234567890",
+                                                    created_at: 2.weeks.ago, updated_at: 2.weeks.ago)
 
         create(:uploaded_job_application, :status_submitted, jobseeker: jobseeker, vacancy: recent_uploaded_vacancy,
-               first_name: "Jane", last_name: "Smith", phone_number: "9876543210",
-               created_at: 1.day.ago, updated_at: 1.day.ago)
+                                                             first_name: "Jane", last_name: "Smith", phone_number: "9876543210",
+                                                             created_at: 1.day.ago, updated_at: 1.day.ago)
       end
 
       it "prefills the new job application from the previous native job application, not the uploaded one" do
