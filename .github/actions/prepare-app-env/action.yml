@@ -21,8 +21,8 @@ runs:
       run: sudo apt-get update
       shell: bash
 
-    - name: Install ImageMagick
-      run: sudo apt-get install imagemagick
+    - name: Install ImageMagick and Proj4 GeoCoding library
+      run: sudo apt-get install imagemagick libproj-dev
       shell: bash
 
     - name: Set up Ruby

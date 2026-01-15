@@ -169,7 +169,6 @@ GEM
       debug_inspector (>= 1.2.0)
     brakeman (7.1.1)
       racc
-    breasal (0.0.1)
     builder (3.3.0)
     business_time (0.13.0)
       activesupport (>= 3.2.0)
@@ -680,6 +679,8 @@ GEM
     rgeo-geojson (2.2.0)
       multi_json (~> 1.15)
       rgeo (>= 1.0.0)
+    rgeo-proj4 (4.0.0)
+      rgeo (~> 3.0.0)
     rouge (4.2.0)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
@@ -976,7 +977,6 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   brakeman
-  breasal
   business_time
   byebug
   capybara
@@ -1057,6 +1057,7 @@ DEPENDENCIES
   redis
   redis-client
   rgeo-geojson
+  rgeo-proj4
   rspec-rails
   rswag-api
   rswag-specs
@@ -1143,7 +1144,6 @@ CHECKSUMS
   bindex (0.8.1) sha256=7b1ecc9dc539ed8bccfc8cb4d2732046227b09d6f37582ff12e50a5047ceb17e
   binding_of_caller (1.0.1) sha256=2b2902abff4246ddcfbc4da9b69bc4a019e22aeb300c2ff6289a173d4b90b29a
   brakeman (7.1.1) sha256=629426b5d6496c75e3ffa2299e1ab1bb3ba721fea03d8808414c083660439498
-  breasal (0.0.1) sha256=8201918bdc101bf7907cb5984eb6199e461d434aef75f0cf28b3315cbe64a0e5
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
   business_time (0.13.0) sha256=d62cdd1dff5e619328701b8376b38934572bdc664e2bc7831573b1d2f7026f69
   byebug (12.0.0) sha256=d4a150d291cca40b66ec9ca31f754e93fed8aa266a17335f71bb0afa7fca1a1e
@@ -1357,6 +1357,7 @@ CHECKSUMS
   rgeo (3.0.1) sha256=5e9962a78116d4d7a39fddd917d2b6b1463c52993e4da800ec1792a9617fddd5
   rgeo-activerecord (8.0.0) sha256=c8a22f8dc568b875a734b5288d1dbad12ff846cd63a9a2e6b09decaac4ff3094
   rgeo-geojson (2.2.0) sha256=ceed2ce1bd4c43efe9fcc494c6fec8708ec1438073425e5805d2c27fb671b210
+  rgeo-proj4 (4.0.0) sha256=91b110abc3c8d65b5d471a030278a3a6b4282bc9bf2ea2af44b6ea797b788dda
   rouge (4.2.0) sha256=60dd666b3a223467dc72f5b7384764dfd7ad4e50b0df9eff072be58123506eba
   rspec (3.13.0) sha256=d490914ac1d5a5a64a0e1400c1d54ddd2a501324d703b8cfe83f458337bab993
   rspec-core (3.13.5) sha256=ab3f682897c6131c67f9a17cfee5022a597f283aebe654d329a565f9937a4fa3
@@ -1450,7 +1451,7 @@ CHECKSUMS
   zendesk_api (3.1.1) sha256=f85b646263729fee8dc3c47f02bb3caaf26f1650a094299dee46c063e26e7216
 
 RUBY VERSION
-   ruby 3.4.7p58
+  ruby 3.4.7p58
 
 BUNDLED WITH
-   2.7.2
+  2.7.2

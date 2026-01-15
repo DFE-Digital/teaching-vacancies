@@ -122,7 +122,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/location_polygon.rb",
-      "line": 59,
+      "line": 54,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "Arel.sql(\"ST_AsBinary(\\n            ST_Transform(\\n              ST_Buffer(\\n                ST_Transform(area::geometry, #{27700}),\\n                #{radius_in_metres}\\n              ),\\n            4326)\\n          )\")",
       "render_path": null,
@@ -168,7 +168,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/services/ons_data_import/create_composites.rb",
-      "line": 25,
+      "line": 26,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "ActiveRecord::Base.connection.exec_update(\"\\n      WITH composite_area AS (\\n        SELECT ST_MakeValid(\\n          ST_SimplifyPreserveTopology(\\n            ST_Union(area::geometry),\\n            #{0.001}\\n          ),\\n          'method=structure'\\n        )::geography AS geo\\n        FROM location_polygons\\n        WHERE name IN (#{quoted_constituents.join(\", \")})\\n      )\\n      UPDATE location_polygons\\n      SET area=composite_area.geo,\\n          location_type='composite',\\n          centroid=ST_Centroid(composite_area.geo)\\n      FROM composite_area\\n      WHERE id='#{composite.id}'\\n    \")",
       "render_path": null,
@@ -178,6 +178,29 @@
         "method": "set_area_data"
       },
       "user_input": "quoted_constituents.join(\", \")",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "8290d1619d3aad637ca2386bd7527a9131daed3bde82808c5e2b00a318d1b7bd",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/location_polygon.rb",
+      "line": 72,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "Arel.sql(\"ST_AsBinary(ST_Buffer(uk_area::geometry,#{radius_in_metres}))\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "LocationPolygon",
+        "method": "buffered_geometry_uk_area"
+      },
+      "user_input": "radius_in_metres",
       "confidence": "Medium",
       "cwe_id": [
         89
@@ -215,6 +238,29 @@
       "confidence": "Weak",
       "cwe_id": [
         79
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "b8a31cd61c10f5d331ab5d00cf45abd47bf6ace7cb0ba833de306c760de2dc13",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/services/ons_data_import/create_composites.rb",
+      "line": 48,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.exec_update(\"\\n      WITH composite_area AS (\\n        SELECT ST_MakeValid(\\n          ST_SimplifyPreserveTopology(\\n            ST_Union(uk_area::geometry),\\n            #{0.001}\\n          ),\\n          'method=structure'\\n        )::geometry AS geo\\n        FROM location_polygons\\n        WHERE name IN (#{quoted_constituents.join(\", \")})\\n      )\\n      UPDATE location_polygons\\n      SET uk_area=composite_area.geo,\\n          location_type='composite',\\n          uk_centroid=ST_Centroid(composite_area.geo)\\n      FROM composite_area\\n      WHERE id='#{composite.id}'\\n    \")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "OnsDataImport::CreateComposites",
+        "method": "set_uk_area_data"
+      },
+      "user_input": "quoted_constituents.join(\", \")",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
       ],
       "note": ""
     },
@@ -288,5 +334,5 @@
       "note": ""
     }
   ],
-  "brakeman_version": "7.1.0"
+  "brakeman_version": "7.1.1"
 }

@@ -46,7 +46,7 @@
             .govuk-grid-column-full
               hr class="govuk-section-break govuk-section-break--s govuk-section-break--visible govuk-!-margin-bottom-3"
 
-          = render "vacancies/search/results", vacancies: @vacancies
+          = render "vacancies/search/results", vacancies: @vacancies, search_coordinates: @search_coordinates
         - elsif @vacancies_search.organisation_slug
           = render "vacancies/search/no_results_organisation", organisation_name: @vacancies_search.organisation.name
         - elsif @vacancies_search.active_criteria?
