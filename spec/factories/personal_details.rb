@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :personal_details do
-    first_name { Faker::Name.first_name }
+    # first name sometimes resolves to 'Al' which is too short for a negative test
+    first_name { "#{Faker::Name.initials}#{Faker::Name.first_name}" }
     last_name { Faker::Name.last_name.delete("'") }
     phone_number_provided { true }
     phone_number { "07777777777" }
