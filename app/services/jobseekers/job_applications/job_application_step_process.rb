@@ -14,7 +14,6 @@ class Jobseekers::JobApplications::JobApplicationStepProcess
     equal_opportunities: %i[equal_opportunities],
     ask_for_support: %i[ask_for_support],
     declarations: %i[declarations],
-    review: %i[review],
   }.freeze
 
   def initialize(job_application:)
@@ -37,7 +36,7 @@ class Jobseekers::JobApplications::JobApplicationStepProcess
   end
 
   def validatable_steps
-    steps.excluding(:review).map(&:to_s)
+    steps.map(&:to_s)
   end
 
   def next_step(step)

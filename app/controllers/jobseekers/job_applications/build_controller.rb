@@ -30,7 +30,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   private
 
   def steps_complete?
-    step_process.last_of_group?(step) || (step.in?(%i[catholic_following_religion non_catholic_following_religion]) && !job_application.following_religion)
+    step_process.last_of_group?(step)
   end
 
   def back_path
@@ -46,7 +46,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def form_class
-    "jobseekers/job_application/#{step}_form".camelize.constantize
+    step_process.form_class_for(step)
   end
 
   def form_params
