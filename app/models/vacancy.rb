@@ -295,6 +295,11 @@ class Vacancy < ApplicationRecord
     Publisher.find_by(email: contact_email).present?
   end
 
+  # We won't allow editing of publish_on if the vacancy is already published
+  def disable_editing_publish_on?
+    published? && (publish_on.past? || publish_on.today?)
+  end
+
   private
 
   def update_conversation_searchable_content

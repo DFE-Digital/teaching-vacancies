@@ -773,9 +773,10 @@ en:
         user_participation_response: Would you like to participate in our research?
       publishers_job_listing_how_to_receive_applications_form:
         receive_applications: How do you want candidates to apply for the role?
-      publishers_job_listing_important_dates_form:
+      publishers_job_listing_expiry_date_time_form:
         expires_at: Closing date
         expiry_time: Closing time
+      publishers_job_listing_important_dates_form:
         publish_on: Another date
         publish_on_day: Publish date
       publishers_job_listing_relist_form:
@@ -822,7 +823,7 @@ en:
           "12:00": 12pm (midday)
           "15:00": 3pm
           "23:59": 11:59pm
-      publishers_job_listing_important_dates_form:
+      publishers_job_listing_expiry_date_time_form:
         expiry_time:
           "8:00": 8am
           "9:00": 9am

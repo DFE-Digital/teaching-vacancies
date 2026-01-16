@@ -183,7 +183,7 @@ en:
       blank: Enter hourly rate
     salary_types:
       invalid: Select salary details
-  important_dates_errors: &important_dates_errors
+  expiry_date_time_errors: &expiry_date_time_errors
     expires_at:
       after: The closing date must be after the publish date
       blank: Enter closing date
@@ -192,6 +192,7 @@ en:
       on_or_before: The closing date must be less than two years in the future
     expiry_time:
       inclusion: Select closing time
+  important_dates_errors: &important_dates_errors
     publish_on_day:
       inclusion: Select publish date
     publish_on:
@@ -383,6 +384,9 @@ en:
         publishers/job_listing/important_dates_form:
           attributes:
             <<: *important_dates_errors
+        publishers/job_listing/expiry_date_time_form:
+          attributes:
+            <<: *expiry_date_time_errors
         publishers/job_listing/start_date_form:
           attributes:
             <<: *start_date_errors
@@ -425,6 +429,7 @@ en:
         publishers/job_listing/copy_vacancy_form:
           attributes:
             <<: *important_dates_errors
+            <<: *expiry_date_time_errors
             <<: *start_date_errors
         publishers/job_listing/feedback_form:
           attributes:
@@ -438,10 +443,12 @@ en:
         publishers/job_listing/extend_deadline_form:
           attributes:
             <<: *important_dates_errors
+            <<: *expiry_date_time_errors
             <<: *start_date_errors
         publishers/job_listing/relist_form:
           attributes:
             <<: *important_dates_errors
+            <<: *expiry_date_time_errors
             extension_reason:
               inclusion: Select the reason why the vacancy is being relisted
         publishers/login_keys/choose_organisation_form:
@@ -685,6 +692,7 @@ en:
             <<: *contract_information_errors
             <<: *pay_package_errors
             <<: *important_dates_errors
+            <<: *expiry_date_time_errors
             <<: *start_date_errors
             <<: *applying_for_the_job_errors
             <<: *how_to_receive_applications_errors

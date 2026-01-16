@@ -13,19 +13,36 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   helper_method :current_publisher_preference
 
   def show
-    @form = form_class.new(form_class.load_form(vacancy), vacancy, current_publisher)
     case current_step
+    when :important_dates
+      @form = if vacancy.disable_editing_publish_on?
+                Publishers::JobListing::ExpiryDateTimeForm.new(vacancy.slice(Publishers::JobListing::ExpiryDateTimeForm.fields), vacancy)
+              else
+                Publishers::JobListing::ImportantDatesForm.new(vacancy.slice(Publishers::JobListing::ImportantDatesForm.fields), vacancy)
+              end
     when :documents
       return redirect_to(new_organisation_job_document_path(vacancy.id,
                                                             back_to_review: params[:back_to_review],
                                                             back_to_show: params[:back_to_show]))
+    else
+      @form = form_class.new(form_class.load_form(vacancy), vacancy, current_publisher)
     end
 
     render_wizard
   end
 
   def update
-    @form = form_class.new(form_params, vacancy, current_publisher)
+    @form = case current_step
+            when :important_dates
+              if vacancy.disable_editing_publish_on?
+                # expiry date time form still needs to know publish_on from the vacancy so that it can be validated to be later
+                Publishers::JobListing::ExpiryDateTimeForm.new(form_params.merge(publish_on: vacancy.publish_on), vacancy)
+              else
+                Publishers::JobListing::ImportantDatesForm.new(form_params, vacancy)
+              end
+            else
+              form_class.new(form_params, vacancy, current_publisher)
+            end
 
     if @form.valid?
       update_vacancy
@@ -44,7 +61,16 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   end
 
   def form_params
-    send(:"#{step}_params", params)
+    case step
+    when :important_dates
+      if vacancy.disable_editing_publish_on?
+        expiry_date_time_params(params)
+      else
+        important_dates_params(params)
+      end
+    else
+      send(:"#{step}_params", params)
+    end
   end
 
   def set_school_options
@@ -73,8 +99,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   end
 
   def update_vacancy
-    updated_completed_steps = completed_steps(steps_to_reset: form.steps_to_reset)
-    vacancy.assign_attributes(form.params_to_save.merge(completed_steps: updated_completed_steps))
+    updated_completed_steps = completed_steps(steps_to_reset: @form.steps_to_reset)
+    vacancy.assign_attributes(@form.params_to_save.merge(completed_steps: updated_completed_steps))
     vacancy.refresh_slug
     update_google_index(vacancy) if vacancy.live?
 

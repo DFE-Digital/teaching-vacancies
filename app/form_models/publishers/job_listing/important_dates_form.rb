@@ -1,42 +1,18 @@
-class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::VacancyForm
-  include ActiveRecord::AttributeAssignment
-  include DateAttributeAssignment
-
-  attr_accessor :expiry_time
-  attr_reader :expires_at, :publish_on
+class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::ExpiryDateTimeForm
   attr_writer :publish_on_day
+  attr_reader :publish_on
 
-  validates(:publish_on, date: { on_or_after: :today, on_or_before: :far_future }, unless: lambda do
-    publish_on_day.blank? || disable_editing_publish_on? || (publish_on.is_a?(Date) && (publish_on.today? || publish_on.tomorrow?))
-  end)
-  validates :publish_on_day, inclusion: { in: %w[today tomorrow another_day] }, unless: :disable_editing_publish_on?
-  validates :expires_at, date: { on_or_after: :now, on_or_before: :far_future, after: :publish_on }
-  validates :expiry_time, inclusion: { in: Vacancy::EXPIRY_TIME_OPTIONS }
+  #  ;publish_on_day is a radio, so this validation is skipped if it hasn't been selected
+  validates :publish_on, date: { on_or_after: :today, on_or_before: :far_future }, unless: -> { publish_on_day.blank? }
+  validates :publish_on_day, inclusion: { in: %w[today tomorrow another_day] }
 
   def self.fields
     %i[publish_on expires_at]
   end
 
-  def initialize(params, vacancy, current_publisher = nil)
-    @expiry_time = params[:expiry_time] || vacancy.expires_at&.strftime("%k:%M")&.strip
-
-    super
-  end
-
-  # We won't allow editing of publish_on if the vacancy is already published
-  def disable_editing_publish_on?
-    vacancy.published? && (vacancy.publish_on.past? || vacancy.publish_on.today?)
-  end
-
   def params_to_save
-    { expires_at: expires_at }.tap do |params|
-      params[:publish_on] = publish_on if save_publish_on?
-    end
-  end
-
-  def expires_at=(value)
-    expires_on = date_from_multiparameter_hash(value)
-    @expires_at = datetime_from_date_and_time(expires_on, expiry_time)
+    { expires_at: expires_at,
+      publish_on: publish_on }
   end
 
   def publish_on_day
@@ -53,14 +29,5 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Vacan
       when "tomorrow" then Date.tomorrow
       else date_from_multiparameter_hash(value)
       end
-  end
-
-  private
-
-  # Determines if the publish_on date should be saved based on its presence and type.
-  # If publish_on is a Date and not disabled for editing (cannot change publishing date on already published vacancy),
-  # it will be saved.
-  def save_publish_on?
-    publish_on.present? && publish_on.is_a?(Date) && !disable_editing_publish_on?
   end
 end
