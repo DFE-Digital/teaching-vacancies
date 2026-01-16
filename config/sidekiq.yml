@@ -3,20 +3,28 @@
 # Configures the concurrency for Sidekiq
 #
 # It limits how many concurrent threads Sidekiq will use to process jobs from a queue.
-# EG: 'verylow: 2' means that only 2 jobs from the 'verylow' queue can be processed at the same time.
+# EG: 'foobar: 2' means that only 2 jobs from the 'foobar' queue can be processed at the same time.
 #
 # This is useful to prevent overloading resources like databases or external APIs with too many simultaneous requests
 # and to ensure that lower priority jobs don't clog all the worker threads.
 #
 # https://github.com/deanpcmad/sidekiq-limit_fetch
 :limits:
-  verylow: 2
+  jobalerts: 2
+  dbintensive: 4
 
+# Queues priorities reasoning:
+#
 # notify queue needs to be above default so that emails don't get blocked behind other operations
-# and create an operational backlog
-
+# and create an operational backlog.
+#
+# low and dbintensive queues have the same priority but dbintensive has a concurrency limit to avoid DB heavy hitter
+# jobs from overwhelming the database resources if run in parallel.
+#
+# jobalerts is the lowest priority queue as these jobs are not time sensitive.
 :queues:
   - [notify, 6]
   - [default, 4]
   - [low, 2]
-  - [verylow, 1]
+  - [dbintensive, 2]
+  - [jobalerts, 1]
