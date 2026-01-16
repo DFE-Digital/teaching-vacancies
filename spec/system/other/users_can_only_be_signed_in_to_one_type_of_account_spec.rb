@@ -70,7 +70,7 @@ RSpec.describe "Users can only be signed in to one type of account" do
     after { logout }
 
     context "when email fallback is disabled" do
-      xit "signs out from the publisher account when signing in as a jobseeker" do
+      it "signs out from the publisher account when signing in as a jobseeker" do
         visit organisation_jobs_with_type_path
         expect(current_path).to eq(organisation_jobs_with_type_path)
 
@@ -87,7 +87,7 @@ RSpec.describe "Users can only be signed in to one type of account" do
     context "when email fallback is enabled" do
       let(:authentication_fallback_enabled?) { true }
 
-      xit "signs out from the publisher account when signing in as a jobseeker" do
+      it "signs out from the publisher account when signing in as a jobseeker" do
         visit organisation_jobs_with_type_path
         expect(current_path).to eq(organisation_jobs_with_type_path)
 

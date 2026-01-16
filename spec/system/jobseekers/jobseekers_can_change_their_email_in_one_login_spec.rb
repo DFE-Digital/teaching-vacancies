@@ -9,7 +9,7 @@ RSpec.describe "Jobseekers can schange their email in GovUK One Login" do
     before { sign_in_jobseeker_govuk_one_login(one_login_jobseeker, navigate: true, email: updated_email) }
     after { logout }
 
-    xscenario "gets signed in with their updated email in teaching vacancies" do
+    scenario "gets signed in with their updated email in teaching vacancies" do
       expect(page).to have_current_path(jobseekers_job_applications_path, ignore_query: true)
       expect(page).to have_css("h1", text: I18n.t("jobseekers.job_applications.index.page_title"))
       expect(page).to have_link(text: I18n.t("nav.sign_out"))
@@ -25,7 +25,7 @@ RSpec.describe "Jobseekers can schange their email in GovUK One Login" do
       before { sign_in_jobseeker_govuk_one_login(one_login_jobseeker, navigate: true, email: updated_email) }
       after { logout }
 
-      xscenario "merges both accounts migrating the old account data into the new one" do
+      scenario "merges both accounts migrating the old account data into the new one" do
         expect(page).to have_current_path(jobseekers_job_applications_path, ignore_query: true)
         expect(page).to have_css("h1", text: I18n.t("jobseekers.job_applications.index.page_title"))
 
@@ -43,7 +43,7 @@ RSpec.describe "Jobseekers can schange their email in GovUK One Login" do
       before { sign_in_jobseeker_govuk_one_login(one_login_jobseeker, navigate: true, email: updated_email) }
       after { logout }
 
-      xscenario "gets signed in wile keeping their original email in teaching vacancies" do
+      scenario "gets signed in wile keeping their original email in teaching vacancies" do
         expect(page).to have_current_path(jobseekers_job_applications_path, ignore_query: true)
         expect(page).to have_css("h1", text: I18n.t("jobseekers.job_applications.index.page_title"))
 

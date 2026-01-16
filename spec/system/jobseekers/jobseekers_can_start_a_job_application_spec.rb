@@ -40,7 +40,7 @@ RSpec.describe "Jobseekers can start or continue a job application" do
             end
           end
 
-          xit "starts a job application after signing in" do
+          it "starts a job application after signing in" do
             expect(current_path).not_to eq(new_jobseekers_job_job_application_path(vacancy.id))
 
             sign_in_jobseeker_govuk_one_login(jobseeker)

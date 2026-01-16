@@ -170,7 +170,7 @@ module AuthHelpers
 
   def stub_jobseeker_govuk_one_login_rsa_key
     allow(Rails.application.config).to receive(:govuk_one_login_private_key).and_return("private_key")
-    rsa_stub = OpenSSL::PKey::RSA.new(1024)
+    rsa_stub = OpenSSL::PKey::RSA.new(2048)
     allow(OpenSSL::PKey::RSA).to receive(:new).and_return(rsa_stub)
   end
 

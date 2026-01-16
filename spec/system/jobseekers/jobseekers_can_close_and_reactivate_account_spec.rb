@@ -11,7 +11,7 @@ RSpec.describe "Jobseekers can close and reactivate their account" do
 
   after { logout }
 
-  xit "allows closing and reactivating a jobseeker account" do
+  it "allows closing and reactivating a jobseeker account" do
     visit jobseekers_account_path
 
     click_on I18n.t("jobseekers.accounts.show.close_account")
