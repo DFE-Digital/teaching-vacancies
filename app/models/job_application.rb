@@ -136,8 +136,6 @@ class JobApplication < ApplicationRecord
   scope :within_jobseeker_retention_period, -> { where(updated_at: 12.months.ago..) }
   scope :within_hiring_staff_retention_period, -> { where(updated_at: 6.months.ago..) }
 
-  scope :active_for_selection, -> { where.not(status: INACTIVE_STATUSES) }
-
   validates :email_address, email_address: true, if: -> { email_address_changed? } # Allows data created prior to validation to still be valid
 
   has_one_attached :baptism_certificate, service: :amazon_s3_documents

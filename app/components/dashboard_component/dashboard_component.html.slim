@@ -67,7 +67,8 @@
       - else
         = govuk_summary_list do |summary_list|
           - vacancies.each do |vacancy|
-            - job_applications_count = vacancy.job_applications.active_for_selection.within_hiring_staff_retention_period.count
+            / only ignore draft aplications in this count, otherwise 1 withdrawn application doesn't show up and can't be viewed.
+            - job_applications_count = vacancy.job_applications.after_submission.within_hiring_staff_retention_period.count
             - summary_list.with_row do |row|
               - row.with_key do
                 - if vacancy.external?
