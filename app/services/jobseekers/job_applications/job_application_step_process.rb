@@ -36,7 +36,7 @@ class Jobseekers::JobApplications::JobApplicationStepProcess
   end
 
   def validatable_steps
-    steps.excluding(:review).map(&:to_s)
+    steps.map(&:to_s)
   end
 
   def next_step(step)
