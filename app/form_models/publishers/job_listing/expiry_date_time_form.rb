@@ -17,7 +17,8 @@ module Publishers
       end
 
       def initialize(params, vacancy)
-        @expiry_time = params[:expiry_time] || vacancy.expires_at&.strftime("%k:%M")&.strip
+        # @expiry_time = params[:expiry_time] || vacancy.expires_at&.strftime("%k:%M")&.strip
+        @expiry_time = params[:expiry_time] || params[:expires_at]&.strftime("%k:%M")&.strip
 
         super(params, vacancy, nil)
       end
