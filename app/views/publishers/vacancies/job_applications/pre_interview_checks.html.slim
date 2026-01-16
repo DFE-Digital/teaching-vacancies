@@ -11,26 +11,26 @@
 = govuk_table html_attributes: { id: "references" } do |table|
   - table.with_head do |head|
     - head.with_row do |row|
-      - row.with_cell(text: t(".request_type"))
-      - row.with_cell(text: t(".form_requests"))
-      - row.with_cell(text: t(".last_action"))
-      - row.with_cell(text: t(".status"))
+      - row.with_cell(text: t("publishers.vacancies.job_applications.pre_interview_checks.request_type"))
+      - row.with_cell(text: t("publishers.vacancies.job_applications.pre_interview_checks.form_requests"))
+      - row.with_cell(text: t("publishers.vacancies.job_applications.pre_interview_checks.last_action"))
+      - row.with_cell(text: t("publishers.vacancies.job_applications.pre_interview_checks.status"))
 
   - table.with_body do |body|
     - @reference_requests.each do |reference_request|
       - body.with_row do |row|
-        - row.with_cell(text: t(".reference"))
+        - row.with_cell(text: t("publishers.vacancies.job_applications.pre_interview_checks.reference"))
         - row.with_cell(text: govuk_link_to(reference_request.referee.name, organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, reference_request)))
         - status = reference_request_status(reference_request, reference_request.job_reference)
 
-        - row.with_cell(text: t(".#{status}_at", date: reference_request.updated_at.to_fs(:time_on_date)))
+        - row.with_cell(text: t("publishers.vacancies.job_applications.pre_interview_checks.#{status}_at", date: reference_request.updated_at.to_fs(:time_on_date)))
         - row.with_cell(text: govuk_tag(text: t("reference_requests.#{status}.status"), colour: t("reference_requests.#{status}.colour")))
 
     - if @job_application.religious_reference_request.present?
       - status = religious_request_status(@job_application.religious_reference_request)
 
       - body.with_row html_attributes: { id: "religious_reference" } do |row|
-        - row.with_cell(text: t(".religious_reference"))
+        - row.with_cell(text: t("publishers.vacancies.job_applications.pre_interview_checks.religious_reference"))
         - row.with_cell(text: govuk_link_to(@job_application.religious_referee_name, edit_organisation_job_job_application_religious_reference_path(@vacancy.id, @job_application.id)))
 
         / no dates for religious references as we don't collect them
@@ -39,15 +39,15 @@
 
     - if @job_application.self_disclosure_request
       - body.with_row do |row|
-        - row.with_cell(text: t(".self_disclosure"))
+        - row.with_cell(text: t("publishers.vacancies.job_applications.pre_interview_checks.self_disclosure"))
         - row.with_cell do
           = govuk_link_to("Self-disclosure form", organisation_job_job_application_self_disclosure_path(@vacancy.id, @job_application.id))
         - disclosure_status = self_disclosure_status(@job_application.self_disclosure_request)
         - if disclosure_status == "completed"
-          - row.with_cell(text: t(".completed_at", date: @job_application.self_disclosure_request.updated_at.to_fs(:time_on_date)))
+          - row.with_cell(text: t("publishers.vacancies.job_applications.pre_interview_checks.completed_at", date: @job_application.self_disclosure_request.updated_at.to_fs(:time_on_date)))
         - elsif disclosure_status == "pending"
-          - row.with_cell(text: t(".pending_at", date: @job_application.self_disclosure_request.updated_at.to_fs(:time_on_date)))
+          - row.with_cell(text: t("publishers.vacancies.job_applications.pre_interview_checks.pending_at", date: @job_application.self_disclosure_request.updated_at.to_fs(:time_on_date)))
         - else
-          - row.with_cell(text: t(".created_at", date: @job_application.self_disclosure_request.updated_at.to_fs(:time_on_date)))
+          - row.with_cell(text: t("publishers.vacancies.job_applications.pre_interview_checks.created_at", date: @job_application.self_disclosure_request.updated_at.to_fs(:time_on_date)))
         - row.with_cell do
           = govuk_tag(text: t("reference_requests.#{disclosure_status}.status"), colour: t("reference_requests.#{disclosure_status}.colour"))

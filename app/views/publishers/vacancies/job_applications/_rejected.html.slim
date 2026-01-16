@@ -8,10 +8,10 @@
   = govuk_table(id: "rejected_emails") do |table|
     - table.with_head do |head|
       - head.with_row do |row|
-        - row.with_cell(text: t(".table.name"))
-        - row.with_cell(text: t(".table.contact_details"))
-        - row.with_cell(text: t(".table.status"))
-        - row.with_cell(text: t(".table.date"))
+        - row.with_cell(text: t("publishers.vacancies.job_applications.rejected.table.name"))
+        - row.with_cell(text: t("publishers.vacancies.job_applications.rejected.table.contact_details"))
+        - row.with_cell(text: t("publishers.vacancies.job_applications.rejected.table.status"))
+        - row.with_cell(text: t("publishers.vacancies.job_applications.rejected.table.date"))
     - table.with_body do |body|
       - emails.each do |email_batch|
         - email_batch.job_applications.each do |job_application|

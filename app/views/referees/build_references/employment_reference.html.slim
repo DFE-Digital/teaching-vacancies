@@ -10,13 +10,13 @@ h1.govuk-heading-l = t(".heading", name: @referee.job_application.name)
   = govuk_summary_card(title: t(".candidate_details")) do |card|
     - card.with_summary_list do |summary_list|
       - summary_list.with_row do |row|
-        - row.with_key text: t(".full_name")
+        - row.with_key text: t("referees.build_references.employment_reference.full_name")
         - row.with_value text: @referee.job_application.name
       - summary_list.with_row do |row|
-        - row.with_key text: t(".job_title")
+        - row.with_key text: t("referees.build_references.employment_reference.job_title")
         - row.with_value text: @referee.job_title
       - summary_list.with_row do |row|
-        - row.with_key text: t(".organisation")
+        - row.with_key text: t("referees.build_references.employment_reference.organisation")
         - row.with_value text: @referee.organisation
 
 = form_with model: @form, url: wizard_path(step), method: :patch do |f|
