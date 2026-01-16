@@ -1,14 +1,17 @@
 require "rails_helper"
 
 RSpec.describe "publishers/candidate_messages/index" do
+  include Pagy::Backend
+
   before do
     assign :tab, "inbox"
     assign :search_form, Publishers::CandidateMessagesSearchForm.new
     assign :sort, Publishers::CandidateMessagesSort.new
 
     assign :total_count, 16
-    assign :conversations, conversations.first(15)
-    assign :pagy, Pagy.new(count: 15, page: 1, items: 15)
+    pagy, data = pagy_array(conversations, limit: 15)
+    assign :conversations, data
+    assign :pagy, pagy
 
     assign :inbox_count, 1
 

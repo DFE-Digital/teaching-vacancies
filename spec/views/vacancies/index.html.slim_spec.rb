@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "vacancies/index" do
+  include Pagy::Backend
+
   subject(:index_view) { Capybara.string(rendered) }
 
   let(:form) { Jobseekers::SearchForm.new(search_criteria) }
@@ -12,7 +14,7 @@ RSpec.describe "vacancies/index" do
   let(:vacancies) { [vacancy] }
   let(:search_criteria) { {} }
   let(:sort) { form.sort }
-  let(:pagy) { Pagy.new({ count: 2, page: 1 }) }
+  let(:pagy) { pagy_array(build_stubbed_list(:vacancy, 2)).first }
 
   before do
     allow(sort).to receive(:many?).and_return(false)

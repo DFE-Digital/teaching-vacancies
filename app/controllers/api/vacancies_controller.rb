@@ -5,7 +5,7 @@ class Api::VacanciesController < Api::ApplicationController
   MAX_API_RESULTS_PER_PAGE = 100
 
   def index
-    @pagy, @vacancies = pagy(vacancies, items: MAX_API_RESULTS_PER_PAGE, overflow: :empty_page)
+    @pagy, @vacancies = pagy(vacancies, limit: MAX_API_RESULTS_PER_PAGE, overflow: :empty_page)
 
     respond_to(&:json)
   end

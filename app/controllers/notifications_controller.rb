@@ -6,7 +6,7 @@ class NotificationsController < ApplicationController
 
   def index
     @unread_count = @raw_notifications.unread.count
-    @pagy, @notifications = pagy(@raw_notifications, items: NOTIFICATIONS_PER_PAGE)
+    @pagy, @notifications = pagy(@raw_notifications, limit: NOTIFICATIONS_PER_PAGE)
   end
 
   private
