@@ -2,9 +2,11 @@
 
 module Publishers
   module JobListing
-    class ExpiryDateTimeForm < VacancyForm
+    class ExpiryDateTimeForm < ::BaseForm
       include ActiveRecord::AttributeAssignment
       include DateAttributeAssignment
+
+      attr_writer :completed_steps, :current_organisation
 
       attr_accessor :expiry_time, :publish_on
       attr_reader :expires_at
@@ -12,15 +14,21 @@ module Publishers
       validates :expires_at, date: { on_or_after: :now, on_or_before: :far_future, after: :publish_on }
       validates :expiry_time, inclusion: { in: Vacancy::EXPIRY_TIME_OPTIONS }
 
-      def self.fields
-        %i[expires_at]
+      class << self
+        def fields
+          %i[expires_at]
+        end
+
+        def load_form(model)
+          model.slice(*fields)
+        end
       end
 
-      def initialize(params, vacancy)
-        # @expiry_time = params[:expiry_time] || vacancy.expires_at&.strftime("%k:%M")&.strip
+      def initialize(params)
         @expiry_time = params[:expiry_time] || params[:expires_at]&.strftime("%k:%M")&.strip
 
-        super(params, vacancy, nil)
+        @params = params
+        super
       end
 
       def params_to_save
@@ -31,6 +39,14 @@ module Publishers
         expires_on = date_from_multiparameter_hash(value)
         @expires_at = datetime_from_date_and_time(expires_on, expiry_time)
       end
+
+      def steps_to_reset
+        []
+      end
+
+      private
+
+      attr_reader :params
     end
   end
 end

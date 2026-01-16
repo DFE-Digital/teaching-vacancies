@@ -10,6 +10,10 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Expir
     %i[publish_on expires_at]
   end
 
+  def initialize(params, _model)
+    super(params)
+  end
+
   def params_to_save
     { expires_at: expires_at,
       publish_on: publish_on }
