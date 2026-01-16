@@ -1,5 +1,14 @@
 :max_retries: 5
 
+# Configures the concurrency for Sidekiq
+#
+# It limits how many concurrent threads Sidekiq will use to process jobs from a queue.
+# EG: 'verylow: 2' means that only 2 jobs from the 'verylow' queue can be processed at the same time.
+#
+# This is useful to prevent overloading resources like databases or external APIs with too many simultaneous requests
+# and to ensure that lower priority jobs don't clog all the worker threads.
+#
+# https://github.com/deanpcmad/sidekiq-limit_fetch
 :limits:
   verylow: 2
 
