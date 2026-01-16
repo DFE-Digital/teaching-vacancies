@@ -220,8 +220,11 @@ en:
           If the candidate is employed in a position where they are subject to a fit and proper persons check,
           have they been investigated for, or been found not fit to practice?
         able_to_undertake_role: >-
-          To the best of your knowledge and with reference to the attached job description and person specification,
+          To the best of your knowledge and with reference to the job description and person specification,
           are you satisfied that the candidate has the ability and is suitable to undertake this role?
+        able_to_undertake_role_html: "To the best of your knowledge and with %{link}, are you satisfied that the candidate has the ability and is suitable to undertake this role?"
+        able_to_undertake_role_link_text: reference to the attached job description and person specification
+
 
       referees_how_would_you_rate_form1:
         punctuality: Punctuality/timekeeping
