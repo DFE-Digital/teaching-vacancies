@@ -1,5 +1,5 @@
 class SendJobAlertsJob < ApplicationJob
-  queue_as :verylow
+  queue_as :jobalerts
 
   MAXIMUM_RESULTS_PER_RUN = 500
 
