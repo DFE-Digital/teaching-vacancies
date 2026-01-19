@@ -11,8 +11,8 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Expir
   end
 
   def initialize(params, _model)
-    super(params)
     @publish_on_day = extract_publish_on_day(params)
+    super(params)
   end
 
   def params_to_save
@@ -22,7 +22,7 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Expir
 
   def publish_on=(value)
     @publish_on =
-      case params[:publish_on_day]
+      case @publish_on_day
       when "today" then Date.today
       when "tomorrow" then Date.tomorrow
       else date_from_multiparameter_hash(value)
