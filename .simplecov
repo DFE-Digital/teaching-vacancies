@@ -32,7 +32,6 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
 
     # Filters out files from coverage reports
     add_filter "app/services/custom_log_formatter.rb"
-    add_filter "app/controllers/robots_controller.rb"
     add_filter "app/controllers/previews_controller.rb"
     add_filter "app/controllers/sha_controller.rb"
     add_filter "app/jobs/set_organisation_slugs_job.rb"
