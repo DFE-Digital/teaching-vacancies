@@ -30,7 +30,13 @@ class FormSequence
     params = step_form_class.load_form(@model)
       .merge(current_organisation: @organisation)
 
-    step_form_class.new(params, @model).tap do |form|
+    form = if step_name == :important_dates
+             step_form_class.new(params)
+           else
+             step_form_class.new(params, @model)
+           end
+
+    form.tap do |form|
       form.valid?
       @model.errors.merge!(
         form.errors.tap do |errors|

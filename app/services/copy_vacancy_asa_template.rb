@@ -53,7 +53,12 @@ class CopyVacancyAsaTemplate
         params = step_form_class.load_form(vacancy)
                                 .merge(current_organisation: @organisation)
 
-        step_form_class.new(params, vacancy).valid?
+        form = if step_name == :important_dates
+                 Publishers::JobListing::ImportantDatesForm.new(params)
+               else
+                 step_form_class.new(params, vacancy)
+               end
+        form.valid?
       end
     end
   end

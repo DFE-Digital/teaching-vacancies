@@ -29,8 +29,8 @@ module Referees
       validates field, inclusion: { in: [true, false], allow_nil: false }
     end
 
-    validates :employment_start_date, date: { before: :today }
-    validates :employment_end_date, date: { before: :today, after: :employment_start_date, allow_nil: false }, unless: -> { currently_employed }
+    validates :employment_start_date, tvs_date: { before: :today }
+    validates :employment_end_date, tvs_date: { before: :today, after: :employment_start_date, allow_nil: false }, unless: -> { currently_employed }
 
     class << self
       def storable_fields

@@ -13,7 +13,7 @@ class Publishers::JobApplication::InterviewDatetimeForm
 
   attr_accessor :job_applications, :origin, :validate_all_attributes
 
-  validates :interview_date, date: {}, if: -> { validate_all_attributes }
+  validates :interview_date, tvs_date: {}, if: -> { validate_all_attributes }
   validates :interview_time, time: {}, if: -> { validate_all_attributes }
   validate :job_application_status
 

@@ -9,8 +9,8 @@ class Employment < ApplicationRecord
 
   # KSIE dictates that we need a reason_for_leaving even for current role
   validates :organisation, :job_title, :main_duties, :reason_for_leaving, presence: true, if: -> { job? }
-  validates :started_on, date: { before: :today }, if: -> { job? }
+  validates :started_on, tvs_date: { before: :today }, if: -> { job? }
 
-  validates :ended_on, date: { before: :today, on_or_after: :started_on }, unless: -> { is_current_role? }, if: -> { job? }
+  validates :ended_on, tvs_date: { before: :today, on_or_after: :started_on }, unless: -> { is_current_role? }, if: -> { job? }
   validates :ended_on, absence: true, if: -> { job? && is_current_role? }
 end

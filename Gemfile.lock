@@ -209,6 +209,9 @@ GEM
     database_consistency (2.0.8)
       activerecord (>= 3.2)
     date (3.5.0)
+    date_validator (0.12.0)
+      activemodel (>= 3)
+      activesupport (>= 3)
     debug (1.11.0)
       irb (~> 1.10)
       reline (>= 0.3.8)
@@ -985,6 +988,7 @@ DEPENDENCIES
   cssbundling-rails
   cuprite
   database_consistency
+  date_validator
   debug (>= 1.0.0)
   devise
   dfe-analytics!
@@ -1164,6 +1168,7 @@ CHECKSUMS
   cuprite (0.17) sha256=b140d5dc70d08b97ad54bcf45cd95d0bd430e291e9dffe76fff851fddd57c12b
   database_consistency (2.0.8) sha256=94f7c80b272f85c2a48942964abdce6f79e3dfff63c5a263e98561e97755d107
   date (3.5.0) sha256=5e74fd6c04b0e65d97ad4f3bb5cb2d8efb37f386cc848f46310b4593ffc46ee5
+  date_validator (0.12.0) sha256=68c9834da240347b9c17441c553a183572508617ebfbe8c020020f3192ce3058
   debug (1.11.0) sha256=1425db64cfa0130c952684e3dc974985be201dd62899bf4bbe3f8b5d6cf1aef2
   debug_inspector (1.2.0) sha256=9bdfa02eebc3da163833e6a89b154084232f5766087e59573b70521c77ea68a2
   declarative (0.0.20) sha256=8021dd6cb17ab2b61233c56903d3f5a259c5cf43c80ff332d447d395b17d9ff9
@@ -1451,7 +1456,7 @@ CHECKSUMS
   zendesk_api (3.1.1) sha256=f85b646263729fee8dc3c47f02bb3caaf26f1650a094299dee46c063e26e7216
 
 RUBY VERSION
-  ruby 3.4.7p58
+   ruby 3.4.7p58
 
 BUNDLED WITH
-  2.7.2
+   2.7.2

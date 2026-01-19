@@ -1,7 +1,7 @@
 class Publishers::JobApplication::OfferedForm < Publishers::JobApplication::TagForm
   attribute :offered_at, :date_or_hash
 
-  validates :offered_at, date: {}, allow_nil: true
+  validates :offered_at, tvs_date: {}, allow_nil: true
   validate :offered_date_after_interview_dates, if: -> { offered_at.respond_to?(:to_date) }
 
   private

@@ -5,12 +5,12 @@ class Publishers::JobListing::ExtendDeadlineForm < BaseForm
   attr_accessor :expiry_time, :other_start_date_details, :start_date_type, :previous_deadline, :extension_reason, :other_extension_reason_details
   attr_reader :expires_at, :starts_on, :earliest_start_date, :latest_start_date
 
-  validates :expires_at, date: { on_or_after: :now, on_or_before: :far_future, after: :previous_deadline }
+  validates :expires_at, tvs_date: { on_or_after: :now, on_or_before: :far_future, after: :previous_deadline }
   validates :expiry_time, inclusion: { in: Vacancy::EXPIRY_TIME_OPTIONS }
   validates :start_date_type, inclusion: { in: Vacancy.start_date_types.keys }
-  validates :starts_on, presence: true, date: { on_or_after: :today, on_or_before: :far_future, after: :expires_at }, if: -> { start_date_type == "specific_date" }
-  validates :earliest_start_date, presence: true, date: { on_or_after: :today, on_or_before: :far_future, after: :expires_at, before: :latest_start_date }, if: -> { start_date_type == "date_range" }
-  validates :latest_start_date, presence: true, date: { on_or_after: :today, on_or_before: :far_future, after: :earliest_start_date }, if: -> { start_date_type == "date_range" }
+  validates :starts_on, presence: true, tvs_date: { on_or_after: :today, on_or_before: :far_future, after: :expires_at }, if: -> { start_date_type == "specific_date" }
+  validates :earliest_start_date, presence: true, tvs_date: { on_or_after: :today, on_or_before: :far_future, after: :expires_at, before: :latest_start_date }, if: -> { start_date_type == "date_range" }
+  validates :latest_start_date, presence: true, tvs_date: { on_or_after: :today, on_or_before: :far_future, after: :earliest_start_date }, if: -> { start_date_type == "date_range" }
   validates :other_start_date_details, presence: true, if: -> { start_date_type == "other" }
   validates :extension_reason, inclusion: { in: Vacancy.extension_reasons.keys }
 

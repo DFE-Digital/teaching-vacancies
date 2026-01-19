@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
-  subject { described_class.new(params, vacancy) }
+  subject { described_class.new(params) }
 
   let(:vacancy) { build_stubbed(:vacancy, publish_on: publish_on) }
 

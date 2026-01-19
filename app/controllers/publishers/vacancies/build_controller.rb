@@ -18,7 +18,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
       @form = if vacancy.disable_editing_publish_on?
                 Publishers::JobListing::ExpiryDateTimeForm.new(vacancy.slice(Publishers::JobListing::ExpiryDateTimeForm.fields))
               else
-                Publishers::JobListing::ImportantDatesForm.new(vacancy.slice(Publishers::JobListing::ImportantDatesForm.fields), vacancy)
+                Publishers::JobListing::ImportantDatesForm.new(vacancy.slice(Publishers::JobListing::ImportantDatesForm.fields))
               end
     when :documents
       return redirect_to(new_organisation_job_document_path(vacancy.id,
@@ -38,7 +38,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
                 # expiry date time form still needs to know publish_on from the vacancy so that it can be validated to be later
                 Publishers::JobListing::ExpiryDateTimeForm.new(form_params.merge(publish_on: vacancy.publish_on))
               else
-                Publishers::JobListing::ImportantDatesForm.new(form_params, vacancy)
+                Publishers::JobListing::ImportantDatesForm.new(form_params)
               end
             else
               form_class.new(form_params, vacancy, current_publisher)

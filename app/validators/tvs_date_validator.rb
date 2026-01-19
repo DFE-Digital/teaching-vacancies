@@ -1,4 +1,4 @@
-class DateValidator < ActiveModel::EachValidator
+class TvsDateValidator < ActiveModel::EachValidator
   RESTRICTION_TYPES = {
     after: :>,
     before: :<,

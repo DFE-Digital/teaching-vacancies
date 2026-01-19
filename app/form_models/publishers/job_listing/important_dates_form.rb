@@ -3,16 +3,16 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Expir
   attr_reader :publish_on
 
   #  ;publish_on_day is a radio, so this validation is skipped if it hasn't been selected
-  validates :publish_on, date: { on_or_after: :today, on_or_before: :far_future }, unless: -> { publish_on_day.blank? }
+  validates :publish_on, tvs_date: { on_or_after: :today, on_or_before: :far_future }, unless: -> { publish_on_day.blank? }
   validates :publish_on_day, inclusion: { in: %w[today tomorrow another_day] }
 
   def self.fields
     %i[publish_on expires_at]
   end
 
-  def initialize(params, _model)
+  def initialize(params)
     @publish_on_day = extract_publish_on_day(params)
-    super(params)
+    super
   end
 
   def params_to_save

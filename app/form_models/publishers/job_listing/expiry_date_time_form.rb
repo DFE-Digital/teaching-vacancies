@@ -11,7 +11,7 @@ module Publishers
       attr_accessor :expiry_time, :publish_on
       attr_reader :expires_at
 
-      validates :expires_at, date: { on_or_after: :now, on_or_before: :far_future, after: :publish_on }
+      validates :expires_at, tvs_date: { on_or_after: :now, on_or_before: :far_future, after: :publish_on }
       validates :expiry_time, inclusion: { in: Vacancy::EXPIRY_TIME_OPTIONS }
 
       class << self
@@ -27,7 +27,6 @@ module Publishers
       def initialize(params)
         @expiry_time = params[:expiry_time] || params[:expires_at]&.strftime("%k:%M")&.strip
 
-        @params = params
         super
       end
 
@@ -43,10 +42,6 @@ module Publishers
       def steps_to_reset
         []
       end
-
-      private
-
-      attr_reader :params
     end
   end
 end

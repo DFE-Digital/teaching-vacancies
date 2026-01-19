@@ -5,14 +5,14 @@ class Publishers::JobListing::RelistForm < BaseForm
   attr_reader :publish_on, :expires_at
   attr_writer :publish_on_day
 
-  validates(:publish_on, date: { on_or_after: :today, on_or_before: :far_future }, unless: lambda do
+  validates(:publish_on, tvs_date: { on_or_after: :today, on_or_before: :far_future }, unless: lambda do
     publish_on_day.blank? || (publish_on.is_a?(Date) && (publish_on.today? || publish_on.tomorrow?))
   end)
   validates :publish_on_day, inclusion: { in: %w[today tomorrow another_day] }
 
   attr_accessor :expiry_time, :extension_reason, :other_extension_reason_details
 
-  validates :expires_at, date: { on_or_after: :now, on_or_before: :far_future }
+  validates :expires_at, tvs_date: { on_or_after: :now, on_or_before: :far_future }
   validates :expiry_time, inclusion: { in: Vacancy::EXPIRY_TIME_OPTIONS }
 
   validates :extension_reason, inclusion: { in: Vacancy.extension_reasons.keys }

@@ -2,7 +2,7 @@ class Publishers::JobApplication::FeedbackForm < Publishers::JobApplication::Tag
   attribute :interview_feedback_received_at, :date_or_hash
   attribute :interview_feedback_received, :boolean
 
-  validates :interview_feedback_received_at, date: {}, allow_nil: true
+  validates :interview_feedback_received_at, tvs_date: {}, allow_nil: true
   validate :feedback_date_after_interview_dates, if: -> { interview_feedback_received_at.respond_to?(:to_date) && interview_feedback_received }
 
   private
