@@ -13,7 +13,7 @@ RUN apt update -yq \
    && curl -sL https://deb.nodesource.com/setup_$NODEJS_MAJOR_VERSION.x | bash
 
 # Set up dependencies
-RUN apt update && apt install -y nodejs postgresql-client redis-tools less vim sudo shared-mime-info man-db chromium
+RUN apt update && apt install -y nodejs postgresql-client redis-tools less vim sudo shared-mime-info man-db chromium libproj-dev
 RUN npm install -g yarn
 
 # Install Terraform
