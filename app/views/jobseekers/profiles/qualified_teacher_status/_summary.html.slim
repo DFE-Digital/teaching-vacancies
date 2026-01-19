@@ -1,17 +1,17 @@
 = govuk_summary_list do |summary_list|
   - summary_list.with_row do |row|
-    - row.with_key text: t(".status_title")
+    - row.with_key text: t("jobseekers.profiles.qualified_teacher_status.summary.status_title")
     - row.with_value text: t("helpers.label.jobseekers_profiles_qualified_teacher_status_form.qualified_teacher_status_options.#{profile.qualified_teacher_status}")
     - row.with_action(text: t("buttons.change"), href: edit_jobseekers_profile_qualified_teacher_status_path, visually_hidden_text: "qualified teacher status")
 
   - if profile.qualified_teacher_status_year.present?
     - summary_list.with_row do |row|
-      - row.with_key text: t(".year_title")
+      - row.with_key text: t("jobseekers.profiles.qualified_teacher_status.summary.year_title")
       - row.with_value text: profile.qualified_teacher_status_year
       - row.with_action(text: t("buttons.change"), href: edit_jobseekers_profile_qualified_teacher_status_path, visually_hidden_text: "year QTS awarded")
 
   - summary_list.with_row do |row|
-    - row.with_key text: t(".trn_title")
+    - row.with_key text: t("jobseekers.profiles.qualified_teacher_status.summary.trn_title")
     - row.with_value text: profile.teacher_reference_number.presence || "None"
     - row.with_action(text: t("buttons.change"), href: edit_jobseekers_profile_qualified_teacher_status_path, visually_hidden_text: "teacher reference number")
 
@@ -23,12 +23,12 @@
 
   - unless profile.is_statutory_induction_complete.nil?
     - summary_list.with_row do |row|
-      - row.with_key text: t(".completed_statutory_induction_title")
+      - row.with_key text: t("jobseekers.profiles.qualified_teacher_status.summary.completed_statutory_induction_title")
       - row.with_value text: I18n.t("helpers.label.jobseekers_job_application_professional_status_form.is_statutory_induction_complete_options.#{profile.is_statutory_induction_complete}")
       - row.with_action(text: t("buttons.change"), href: edit_jobseekers_profile_qualified_teacher_status_path, visually_hidden_text: "statutory induction completion")
 
   - if profile.statutory_induction_complete_details.present? && !profile.is_statutory_induction_complete?
     - summary_list.with_row do |row|
-      - row.with_key text: t(".completed_statutory_induction_details_title")
+      - row.with_key text: t("jobseekers.profiles.qualified_teacher_status.summary.completed_statutory_induction_details_title")
       - row.with_value text: profile.statutory_induction_complete_details
       - row.with_action(text: t("buttons.change"), href: edit_jobseekers_profile_qualified_teacher_status_path, visually_hidden_text: "statutory induction completion details")

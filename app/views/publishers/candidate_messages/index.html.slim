@@ -41,9 +41,9 @@ h1.govuk-heading-l Candidate messages
       - table.with_head do |head|
         - head.with_row do |row|
           - row.with_cell html_attributes: { id: "multi_select_conversations" }
-          - row.with_cell text: t(".table_headers.name")
-          - row.with_cell text: t(".table_headers.application")
-          - row.with_cell text: t(".table_headers.date_and_time")
+          - row.with_cell text: t("publishers.candidate_messages.index.table_headers.name")
+          - row.with_cell text: t("publishers.candidate_messages.index.table_headers.application")
+          - row.with_cell text: t("publishers.candidate_messages.index.table_headers.date_and_time")
       - table.with_body do |body|
         - @conversations.each do |conversation|
           - job_application = conversation.job_application

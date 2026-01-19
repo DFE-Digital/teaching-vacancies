@@ -7,7 +7,7 @@
 
 = tabs do |tabs|
   - @satisfaction_ratings.each do |satisfaction_rating_type|
-    - tabs.with_navigation_item text: t(".#{satisfaction_rating_type[:feedback_type]}.tab_heading"),
+    - tabs.with_navigation_item text: t("support_users.feedbacks.satisfaction_ratings.#{satisfaction_rating_type[:feedback_type]}.tab_heading"),
                            link: support_users_feedback_satisfaction_ratings_path(satisfaction_rating_type: satisfaction_rating_type[:feedback_type]),
                            active: @satisfaction_rating_type[:feedback_type] == satisfaction_rating_type[:feedback_type]
 
@@ -16,7 +16,7 @@
     - head.with_row do |row|
       - row.with_cell(header: true, text: t("support_users.feedbacks.satisfaction_ratings.reporting_period"))
       - @satisfaction_rating_type[:feedback_responses].each do |feedback_response|
-        - row.with_cell(header: true, text: t(".#{@satisfaction_rating_type[:feedback_type]}.table_headings.#{feedback_response}"))
+        - row.with_cell(header: true, text: t("support_users.feedbacks.satisfaction_ratings.#{@satisfaction_rating_type[:feedback_type]}.table_headings.#{feedback_response}"))
 
   - table.with_body do |body|
     - @summaries.each do |summary|

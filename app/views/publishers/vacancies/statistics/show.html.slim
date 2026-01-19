@@ -26,15 +26,15 @@
         = govuk_table do |table|
           - table.with_head do |head|
             - head.with_row do |row|
-              - row.with_cell text: t(".applications_header.label")
-              - row.with_cell text: t(".applications_header.data"), numeric: true
+              - row.with_cell text: t("publishers.vacancies.statistics.show.applications_header.label")
+              - row.with_cell text: t("publishers.vacancies.statistics.show.applications_header.data"), numeric: true
 
           - table.with_body html_attributes: { id: "job_applications_statistics" } do |body|
             - body.with_row do |row|
-              - row.with_cell text: t(".total_applications")
+              - row.with_cell text: t("publishers.vacancies.statistics.show.total_applications")
               - row.with_cell text: @job_application_counts.sum, numeric: true
 
             - @job_application_counts.each.with_index do |count, index|
               - body.with_row do |row|
-                - row.with_cell text: t(".applications.#{index}")
+                - row.with_cell text: t("publishers.vacancies.statistics.show.applications.#{index}")
                 - row.with_cell text: count, numeric: true

@@ -132,11 +132,6 @@ module TeachingVacancies
 
     config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets")
 
-    # ViewComponent configuration
-    config.view_component.preview_paths << "#{Rails.root}/app/components/previews"
-    config.view_component.preview_route = "/components"
-    config.view_component.preview_controller = "PreviewsController"
-
     # GovUK One Login
     config.govuk_one_login_base_url = ENV.fetch("GOVUK_ONE_LOGIN_BASE_URL", nil)
     config.govuk_one_login_client_id = ENV.fetch("GOVUK_ONE_LOGIN_CLIENT_ID", nil)

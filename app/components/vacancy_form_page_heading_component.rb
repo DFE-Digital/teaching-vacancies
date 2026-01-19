@@ -1,4 +1,4 @@
-class VacancyFormPageHeadingComponent < ViewComponent::Base
+class VacancyFormPageHeadingComponent < ApplicationComponent
   delegate :current_organisation, to: :helpers
   attr_reader :sub_caption
 
