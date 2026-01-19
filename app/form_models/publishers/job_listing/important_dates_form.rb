@@ -1,5 +1,5 @@
 class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::ExpiryDateTimeForm
-  attr_writer :publish_on_day
+  attr_accessor :publish_on_day
   attr_reader :publish_on
 
   #  ;publish_on_day is a radio, so this validation is skipped if it hasn't been selected
@@ -12,18 +12,12 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Expir
 
   def initialize(params, _model)
     super(params)
+    @publish_on_day = extract_publish_on_day(params)
   end
 
   def params_to_save
     { expires_at: expires_at,
       publish_on: publish_on }
-  end
-
-  def publish_on_day
-    return "today" if params[:publish_on_day] == "today" || params[:publish_on] == Date.today
-    return "tomorrow" if params[:publish_on_day] == "tomorrow" || params[:publish_on] == Date.tomorrow
-
-    "another_day" if params[:publish_on_day] == "another_day" || params[:publish_on].is_a?(Date)
   end
 
   def publish_on=(value)
@@ -33,5 +27,14 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Expir
       when "tomorrow" then Date.tomorrow
       else date_from_multiparameter_hash(value)
       end
+  end
+
+  private
+
+  def extract_publish_on_day(params)
+    return "today" if params[:publish_on_day] == "today" || params[:publish_on] == Date.today
+    return "tomorrow" if params[:publish_on_day] == "tomorrow" || params[:publish_on] == Date.tomorrow
+
+    "another_day" if params[:publish_on_day] == "another_day" || params[:publish_on].is_a?(Date)
   end
 end
