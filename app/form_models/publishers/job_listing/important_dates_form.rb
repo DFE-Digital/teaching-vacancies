@@ -10,7 +10,7 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Expir
     %i[publish_on expires_at]
   end
 
-  def initialize(params)
+  def initialize(params = {})
     @publish_on_day = extract_publish_on_day(params)
     super
   end

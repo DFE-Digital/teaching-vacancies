@@ -35,7 +35,7 @@ module Jobseekers::JobApplications::SelfDisclosure
       before { form.valid? }
 
       context "when over 18" do
-        let(:date_of_birth) { 18.years.ago }
+        let(:date_of_birth) { Date.current - 18.years }
 
         it { expect(form.errors[:date_of_birth]).to be_blank }
       end

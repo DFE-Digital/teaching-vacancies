@@ -29,8 +29,8 @@ en:
               blank: Upload your baptism certificate
             baptism_date:
               blank: Enter the baptism date
-              invalid: Enter a valid baptism date
-              on_or_before: Baptism date must be in the past
+              not_a_date: Enter a valid baptism date
+              date_before: Baptism date must be in the past
         jobseekers/job_application/non_catholic_form:
           attributes:
             non_catholic_section_completed:
