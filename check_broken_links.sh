@@ -1,0 +1,23 @@
+#!/bin/bash -e
+
+# parameters 1 - base URL 2 - user - 3 password
+
+# grab sitemap and roughly parse it into a link of pages to be passed to wget spider-mode
+# Try not to spider school sites or big slow govuk ones.
+
+# get-information-schools.service.gov.uk refuses to be spidered so we
+# can't check broken links to their domain
+# signin.education.co.uk and friends don't respond to robots.txt
+#
+# we need -P option, otherwise lots of empty directories get created
+#
+wget --auth-no-challenge -q --user=$2 --password=$3 $1/sitemap.xml -O - \
+  | fgrep loc \
+  | sed s'/    <loc>//' \
+  | sed s'/<\/loc>//' \
+  | wget -nv -np -w 0.1 --spider -H -r -l1 -i - --user=$2 --password=$3 \
+  -P /tmp/spider \
+  --auth-no-challenge \
+  --no-relative \
+  --domains="gov.uk" \
+  --exclude-domains="signin.education.gov.uk,get-information-schools.service.gov.uk,ofsted.gov.uk,nationalarchives.gov.uk"

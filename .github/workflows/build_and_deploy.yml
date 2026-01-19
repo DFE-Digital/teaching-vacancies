@@ -323,6 +323,15 @@ jobs:
       if: steps.smoke-test.conclusion != 'success'
       run: exit 1
 
+    - name: Trigger Broken Link action
+      id: check-broken-links
+      uses: ./.github/actions/check-broken-links/
+      with:
+        aks_environment: ${{ env.ENVIRONMENT }}
+        event_name: ${{ github.event_name }}
+        http_basic_user: ${{ secrets.HTTP_BASIC_USER }}
+        http_basic_password: ${{ secrets.HTTP_BASIC_PASSWORD }}
+
     - name: Post sticky pull request comment
       if: github.event_name == 'pull_request'
       uses: marocchino/sticky-pull-request-comment@v2

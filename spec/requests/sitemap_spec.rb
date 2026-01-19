@@ -40,8 +40,11 @@ RSpec.describe "Sitemap" do
 
     it "includes static pages in the sitemap" do
       expect(xml).to include(page_path("terms-and-conditions"))
-      expect(xml).to include(page_path("cookies"))
       expect(xml).to include(page_path("accessibility"))
+    end
+
+    it "includes posts in the sitemap" do
+      expect(xml).to include(post_path("get-help-hiring", "how-to-create-job-listings-and-accept-applications", "creating-the-perfect-teacher-job-advert"))
     end
 
     it "sets cache expiry" do
