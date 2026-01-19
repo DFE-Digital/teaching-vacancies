@@ -33,6 +33,6 @@ h1.govuk-heading-l = t(".page_title")
       = render EmptySectionComponent.new title: t(".zero_subscriptions_title") do
         = t(".zero_subscriptions_body_html", link_to: govuk_link_to(t(".link_create"), new_subscription_path))
 
-= govuk_details summary_text: t(".one_login_banner.header") do
-  p.govuk-body = t(".one_login_banner.paragraph1")
-  p.govuk-body = t(".one_login_banner.paragraph2_html", link: govuk_link_to(t(".one_login_banner.transfer_profile_link_text"), new_jobseekers_request_account_transfer_email_path))
+    = govuk_details summary_text: t(".one_login_banner.header") do
+      p.govuk-body = t(".one_login_banner.paragraph1")
+      p.govuk-body = t(".one_login_banner.paragraph2_html", link: govuk_link_to(t(".one_login_banner.transfer_profile_link_text"), new_jobseekers_request_account_transfer_email_path))
