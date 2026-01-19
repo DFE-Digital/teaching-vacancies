@@ -59,6 +59,8 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
           within("div.govuk-summary-list__row#website") do
             click_link("Change")
           end
+          # wait for page load
+          find("form.new_publishers_organisation_url_override_form")
         end
 
         it "passes a11y", :a11y do
