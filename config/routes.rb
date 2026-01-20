@@ -437,6 +437,7 @@ Rails.application.routes.draw do
           get :pre_interview_checks
         end
         resource :religious_reference, only: %i[edit update], controller: "publishers/vacancies/job_applications/religious_references"
+        resource :online_checks, only: %i[edit update], controller: "publishers/vacancies/job_applications/online_checks"
         member do
           get :messages
           get :download_messages
