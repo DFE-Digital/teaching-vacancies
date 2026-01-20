@@ -56,5 +56,17 @@
           - row.with_cell(text: t("publishers.vacancies.job_applications.pre_interview_checks.created_at", date: @job_application.self_disclosure_request.updated_at.to_fs(:time_on_date)))
         - row.with_cell do
           = govuk_tag(text: t("reference_requests.#{disclosure_status}.status"), colour: t("reference_requests.#{disclosure_status}.colour"))
+    
+    - body.with_row do |row|
+      - row.with_cell(text: t("publishers.vacancies.job_applications.pre_interview_checks.online_checks"))
+      - row.with_cell do
+        = govuk_link_to(t("publishers.vacancies.job_applications.pre_interview_checks.online_checks"), edit_organisation_job_job_application_online_checks_path(@vacancy.id, @job_application.id))
+      - status = online_checks_status(@job_application)
+      - if @job_application.online_checks_updated_at.present?
+        - row.with_cell(text: t("publishers.vacancies.job_applications.pre_interview_checks.created_at", date: @job_application.online_checks_updated_at.to_fs(:time_on_date)))
+      - else
+        - row.with_cell(text: t("publishers.vacancies.job_applications.pre_interview_checks.created_at", date: @job_application.created_at.to_fs(:time_on_date)))
+      - row.with_cell(text: govuk_tag(text: t("reference_requests.#{status}.status"), colour: t("reference_requests.#{status}.colour")))
 
 = govuk_button_link_to t("buttons.add_reference"), new_organisation_job_job_application_reference_path(@vacancy.id, @job_application.id), secondary: true
+

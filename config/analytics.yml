@@ -166,6 +166,8 @@ shared:
     - working_pattern_details
     - notify_before_contact_referers
     - type
+    - online_checks
+    - online_checks_updated_at
   job_preferences_locations:
     - id
     - job_preferences_id

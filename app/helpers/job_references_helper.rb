@@ -52,4 +52,13 @@ module JobReferencesHelper
       "created"
     end
   end
+
+  def online_checks_status(job_application)
+    case job_application.online_checks
+    when "yes", "not_doing"
+      "completed"
+    else
+      "pending"
+    end
+  end
 end
