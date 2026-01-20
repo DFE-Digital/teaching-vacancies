@@ -1,6 +1,7 @@
 # rubocop:disable Metrics/ClassLength
 class JobApplication < ApplicationRecord
   before_save :update_status_timestamp, if: %i[will_save_change_to_status? ignore_manually_set_timestamps?]
+  before_save :update_online_checks_timestamp, if: :will_save_change_to_online_checks?
   before_save :reset_support_needed_details
   after_save :anonymise_equal_opportunities_fields, if: -> { saved_change_to_status? && status == "submitted" }
   after_save :update_conversation_searchable_content, if: lambda {
@@ -86,6 +87,7 @@ class JobApplication < ApplicationRecord
                   declined: 8,
                   unsuccessful_interview: 9,
                   rejected: 10 }, default: 0
+  enum :online_checks, { yes: 0, no: 1, not_doing: 2 }, default: :no
   array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
 
   # end of the road statuses for job application we cannot further update status at the point
@@ -254,6 +256,10 @@ class JobApplication < ApplicationRecord
 
   def update_status_timestamp
     self["#{status}_at"] = Time.current
+  end
+
+  def update_online_checks_timestamp
+    self.online_checks_updated_at = Time.current
   end
 
   def anonymise_equal_opportunities_fields
