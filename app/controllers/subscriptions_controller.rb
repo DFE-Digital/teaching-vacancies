@@ -84,7 +84,10 @@ class SubscriptionsController < ApplicationController
     subscription = Subscription.find_and_verify_by_token(token)
 
     trigger_subscription_event(:job_alert_subscription_kept, subscription)
-    subscription.update(deletion_warning_email_sent_at: nil)
+    # We are using deletion_warning_email_sent_at to calculate when to delete the job alert i.e if the warning email was sent a month ago and the user
+    # has not opted to keep it then delete the job alert. Setting it to nil means the job alert will not be deleted until a month after the next governance email is sent.
+    # This also changes the updated_at timestamp which is used to calculate when we send the email, so they won't get another email asking if they want to keep it for another year.
+    subscription.update!(deletion_warning_email_sent_at: nil)
 
     redirect_to root_path, success: t(".success")
   end
