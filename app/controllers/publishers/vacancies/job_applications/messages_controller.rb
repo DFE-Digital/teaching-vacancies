@@ -19,7 +19,6 @@ class Publishers::Vacancies::JobApplications::MessagesController < Publishers::V
                     []
                   end
       @message_form = message_form
-      @notes_form = Publishers::JobApplication::NotesForm.new
 
       render "publishers/vacancies/job_applications/messages", status: :unprocessable_entity
     end

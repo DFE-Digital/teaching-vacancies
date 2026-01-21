@@ -5,7 +5,7 @@ RSpec.describe "Publishers::Vacancies::JobApplications::Notes" do
   let(:organisation) { create(:school) }
   let(:vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
   let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
-  let(:valid_note_params) { { publishers_job_application_notes_form: { content: "Test note" } } }
+  let(:valid_note_params) { { note: { content: "Test note" } } }
 
   before do
     sign_in(publisher, scope: :publisher)

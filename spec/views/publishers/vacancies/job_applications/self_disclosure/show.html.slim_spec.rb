@@ -11,7 +11,7 @@ RSpec.describe "publishers/vacancies/job_applications/self_disclosure/show" do
     assign :vacancy, vacancy
     assign :job_application, job_application
     assign :self_disclosure, SelfDisclosurePresenter.new(job_application)
-    assign :notes_form, Publishers::JobApplication::NotesForm.new
+    assign :note, Note.new
 
     render
   end

@@ -3,7 +3,7 @@ class Publishers::Vacancies::JobApplications::SelfDisclosureController < Publish
 
   def show
     @self_disclosure = SelfDisclosurePresenter.new(@job_application)
-    @notes_form = Publishers::JobApplication::NotesForm.new
+    @note = Note.new
 
     respond_to do |format|
       format.html
@@ -39,6 +39,6 @@ class Publishers::Vacancies::JobApplications::SelfDisclosureController < Publish
   end
 
   def set_job_application
-    @job_application = JobApplication.includes(:self_disclosure_request).find(params[:job_application_id])
+    @job_application = ::JobApplication.includes(:self_disclosure_request).find(params[:job_application_id])
   end
 end

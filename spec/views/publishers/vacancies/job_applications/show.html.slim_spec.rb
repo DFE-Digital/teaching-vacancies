@@ -14,7 +14,7 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
   before do
     assign :vacancy, vacancy
     assign :job_application, job_application.decorate
-    assign :notes_form, Publishers::JobApplication::NotesForm.new
+    assign :note, build_stubbed(:note)
     render
   end
 
@@ -146,7 +146,6 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
       allow(uploaded_form_vacancy).to receive(:uploaded_form?).and_return(true)
       assign :vacancy, uploaded_form_vacancy
       assign :job_application, uploaded_job_application
-      assign :notes_form, Publishers::JobApplication::NotesForm.new
       render
     end
 
