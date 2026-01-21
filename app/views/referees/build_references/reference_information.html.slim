@@ -35,7 +35,7 @@ h1.govuk-heading-l = t(".heading", name: @referee.job_application.name)
       p.govuk-hint = t(".must_report")
     = f.govuk_radio_button :not_fit_to_practice, "false"
 
-  = f.govuk_radio_buttons_fieldset :able_to_undertake_role, legend: { tag: "h2" } do
+  = f.govuk_radio_buttons_fieldset :able_to_undertake_role, legend: { tag: "h2", text: t("helpers.legend.referees_reference_information_form.able_to_undertake_role_html", link: open_in_new_tab_link_to(t("helpers.legend.referees_reference_information_form.able_to_undertake_role_link_text"), job_path(@referee.job_application.vacancy))) } do
     = f.govuk_radio_button :able_to_undertake_role, "true"
     = f.govuk_radio_button :able_to_undertake_role, "false" do
       = f.govuk_text_area :unable_to_undertake_reason, label: nil, rows: 5, max_chars: Referees::ReferenceInformationForm::MAX_REFERENCE_FIELD_LENGTH
