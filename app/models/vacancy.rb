@@ -306,7 +306,6 @@ class Vacancy < ApplicationRecord
   end
 
   def calculate_distance(search_coordinates, geolocation)
-    # Geocoder::Calculations.distance_between(search_coordinates, [geolocation.latitude, geolocation.longitude])
     search_location = GeoFactories::FACTORY_4326.point(search_coordinates.second, search_coordinates.first)
     search_point = GeoFactories.convert_wgs84_to_sr27700 search_location
     search_point.distance(geolocation) / DistanceHelper::METRES_PER_MILE

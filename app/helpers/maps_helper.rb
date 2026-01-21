@@ -1,11 +1,13 @@
 module MapsHelper
   def vacancy_organisations_map_markers(vacancy)
-    vacancy.organisations.select(&:uk_geopoint?).map do |organisation|
-      {
-        id: vacancy.id,
-        parent_id: organisation.id,
-        geopoint: RGeo::GeoJSON.encode(GeoFactories.convert_sr27700_to_wgs84(organisation.uk_geopoint)).to_json,
-      }
+    vacancy.organisations.filter_map do |organisation|
+      if organisation.uk_geopoint?
+        {
+          id: vacancy.id,
+          parent_id: organisation.id,
+          geopoint: RGeo::GeoJSON.encode(GeoFactories.convert_sr27700_to_wgs84(organisation.uk_geopoint)).to_json,
+        }
+      end
     end
   end
 

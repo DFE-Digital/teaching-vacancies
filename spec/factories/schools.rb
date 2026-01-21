@@ -3,7 +3,6 @@ FactoryBot.define do
 
   factory :school do
     transient do
-      # geopoint { "POINT(2 1)" }
       # make default inside the U.K.
       geopoint { "POINT(-1 51.5)" }
     end
