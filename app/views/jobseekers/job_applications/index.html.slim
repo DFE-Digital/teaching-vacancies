@@ -19,6 +19,6 @@ h1.govuk-heading-l = t(".page_title_with_count", count: @count)
       = render EmptySectionComponent.new title: t(".no_job_applications") do
         = t(".no_job_applications_body_html", link_to: govuk_link_to(t(".find_and_apply"), root_path))
 
-= govuk_details summary_text: t(".one_login_banner.header") do
-  p.govuk-body = t(".one_login_banner.paragraph1")
-  p.govuk-body = t(".one_login_banner.paragraph2_html", link: govuk_link_to(t(".one_login_banner.transfer_profile_link_text"), new_jobseekers_request_account_transfer_email_path))
+    = govuk_details summary_text: t(".one_login_banner.header"), classes: "govuk-!-margin-top-6" do
+      p.govuk-body = t(".one_login_banner.paragraph1")
+      p.govuk-body = t(".one_login_banner.paragraph2_html", link: govuk_link_to(t(".one_login_banner.transfer_profile_link_text"), new_jobseekers_request_account_transfer_email_path))
