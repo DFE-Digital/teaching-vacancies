@@ -13,9 +13,9 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@ministryofjustice/frontend": "^3.7.2",
-    "@sentry/browser": "10.32.1",
-    "@rails/actiontext": "^8.1.100",
-    "@rails/activestorage": "^8.1.100",
+    "@sentry/browser": "10.33.0",
+    "@rails/actiontext": "^8.1.200",
+    "@rails/activestorage": "^8.1.200",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^3.0.1",
     "axios": "^1.13.2",
@@ -36,8 +36,8 @@
     "trix": "^2.1.16"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.5",
-    "@babel/preset-env": "^7.28.5",
+    "@babel/core": "^7.28.6",
+    "@babel/preset-env": "^7.28.6",
     "concurrently": "^9.2.1",
     "dotenv": "^17.2.3",
     "esbuild": "^0.27.2",
