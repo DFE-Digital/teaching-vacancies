@@ -331,7 +331,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_20_090246) do
     t.geography "area", limit: {srid: 4326, type: "geometry", geographic: true}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.geometry "uk_area", limit: {srid: 27700, type: "geometry"}
+    t.geometry "uk_area", limit: {srid: 27700, type: "geometry"}, null: false
     t.index ["area"], name: "index_job_preferences_locations_on_area", using: :gist
     t.index ["job_preferences_id"], name: "index_job_preferences_locations_on_job_preferences_id"
     t.index ["uk_area"], name: "index_job_preferences_locations_on_uk_area", using: :gist

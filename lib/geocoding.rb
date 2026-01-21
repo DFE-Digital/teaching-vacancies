@@ -11,8 +11,6 @@ class Geocoding
 
   attr_reader :location
 
-  include DistanceHelper
-
   def initialize(location)
     @location = location
   end
