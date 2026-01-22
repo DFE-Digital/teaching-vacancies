@@ -189,10 +189,17 @@ RSpec.describe "Publishers can select a job application for interview", :perform
                 expect(publisher_ats_pre_interview_checks_page.reference_links.count).to eq(3)
                 publisher_ats_pre_interview_checks_page.reference_links.first.click
 
+<<<<<<< HEAD
                 expect(publisher_ats_reference_request_page).to be_displayed
                 expect(publisher_ats_reference_request_page.timeline_titles.map(&:text))
                   .to eq(["Reference requested", "Marked as interviewing"])
               end
+=======
+                  expect(publisher_ats_pre_interview_checks_page).to be_displayed
+                  # This now includes the self disclosure and online checks
+                  expect(publisher_ats_pre_interview_checks_page.reference_links.count).to eq(4)
+                  publisher_ats_pre_interview_checks_page.reference_links.first.click
+>>>>>>> 3179aee75 (Fix failing test)
 
               scenario "contacting applicant" do
                 choose "Yes"
