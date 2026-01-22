@@ -25,15 +25,6 @@ RSpec.describe "Publishers can manage a reference request", :perform_enqueued do
 
   after { logout }
 
-  context "when the reference is declined", :versioning do
-    let(:reference_request) { build(:reference_request, :reference_received, job_reference: build(:job_reference, :reference_declined)) }
-
-    it "shows the reference as declined" do
-      expect(page).to have_content("You will need to request a new referee")
-      expect(publisher_ats_pre_interview_checks_page.timeline).to have_content("Reference declined")
-    end
-  end
-
   context "with a pending reference" do
     let(:reference_request) { build(:reference_request, updated_at: updated_at, job_reference: build(:job_reference)) }
 
@@ -87,6 +78,15 @@ RSpec.describe "Publishers can manage a reference request", :perform_enqueued do
 
   context "with a reference" do
     let(:reference_request) { build(:reference_request, :reference_received, job_reference: job_reference) }
+
+    context "when the reference is declined", :versioning do
+      let(:job_reference) { build(:job_reference, :reference_declined) }
+
+      it "shows the reference as declined" do
+        expect(page).to have_content("You will need to request a new referee")
+        expect(publisher_ats_pre_interview_checks_page.timeline).to have_content("Reference declined")
+      end
+    end
 
     context "with a simple reference" do
       let(:job_reference) { build(:job_reference, :reference_given) }

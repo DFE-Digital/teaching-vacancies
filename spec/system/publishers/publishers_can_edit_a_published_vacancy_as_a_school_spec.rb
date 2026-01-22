@@ -160,7 +160,7 @@ RSpec.describe "Publishers can edit a vacancy" do
 
         old_file_id = vacancy.application_form.id
 
-        allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
+        allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(instance_double(Publishers::DocumentVirusCheck, safe?: true))
         page.attach_file("publishers_job_listing_application_form_form[application_form]", Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"))
         click_on I18n.t("buttons.save_and_continue")
 
@@ -181,7 +181,7 @@ RSpec.describe "Publishers can edit a vacancy" do
 
         click_on I18n.t("buttons.save_and_continue")
 
-        allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
+        allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(instance_double(Publishers::DocumentVirusCheck, safe?: true))
         upload_file(
           "new_publishers_job_listing_documents_form",
           "publishers-job-listing-documents-form-supporting-documents-field",
