@@ -31,4 +31,4 @@ Use our online application form to quickly apply for jobs.
 
 We'll save your details so you won’t have to spend time filling in new applications every time, where quick apply is available. 
 
-<a href="https://teaching-vacancies.service.gov.uk/jobseekers/sign_up" class="govuk-button">Create a Teaching Vacancies account now</a>
+<a href="https://teaching-vacancies.service.gov.uk/jobseekers/sign-in" class="govuk-button">Create a Teaching Vacancies account now</a>
