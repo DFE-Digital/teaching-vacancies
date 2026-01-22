@@ -39,7 +39,7 @@ RSpec.describe "Viewing a single published vacancy" do
 
     scenario "tracks the view in Redis" do
       mock_redis = MockRedis.new
-      allow(Redis).to receive(:current).and_return(mock_redis)
+      allow(VacancyAnalyticsService).to receive(:redis).and_return(mock_redis)
 
       referrer_url = "https://example.com/some/path?utm=123"
       redis_key = "vacancy_referrer_stats:#{vacancy.id}:example"
@@ -48,7 +48,7 @@ RSpec.describe "Viewing a single published vacancy" do
         page.driver.header("Referer", referrer_url)
         visit job_path(vacancy)
       end
-      expect(Redis.current.get(redis_key).to_i).to be > 0
+      expect(mock_redis.get(redis_key).to_i).to be > 0
     end
 
     context "when the publish_on date is in the future" do

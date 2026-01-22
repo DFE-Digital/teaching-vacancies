@@ -7,19 +7,19 @@ class VacancyAnalyticsService
     # Generate a Redis key for this vacancy and referrer
     redis_key = "#{REDIS_KEY_PREFIX}:#{vacancy_id}:#{normalize_referrer(referrer_url, hostname, params)}"
     # Increment the counter in Redis
-    Redis.current.incr(redis_key)
+    redis.incr(redis_key)
   end
 
   def self.aggregate_and_save_stats
     keys_pattern = "#{REDIS_KEY_PREFIX}:*"
 
-    Redis.current.scan_each(match: keys_pattern).each_slice(100) do |keys_batch|
+    redis.scan_each(match: keys_pattern).each_slice(100) do |keys_batch|
       # Creates hash that, when accessed with a missing key, assigns a new nested hash as the value. This nested hash defaults to 0 for any missing keys.
       updates_by_vacancy = Hash.new { |h, k| h[k] = Hash.new(0) }
       keys_to_delete = []
 
       keys_batch.each do |key|
-        count = Redis.current.get(key).to_i
+        count = redis.get(key).to_i
         next if count.zero?
 
         # Parse key to extract vacancy_id and referrer
@@ -30,7 +30,7 @@ class VacancyAnalyticsService
       end
 
       update_stats_in_database(updates_by_vacancy) if updates_by_vacancy.any?
-      Redis.current.del(*keys_to_delete)
+      redis.del(*keys_to_delete)
     end
   end
 
@@ -64,6 +64,12 @@ class VacancyAnalyticsService
     end
 
     private
+
+    def redis
+      # :nocov:
+      @redis ||= Redis.new(url: Rails.configuration.redis_cache_url)
+      # :nocov:
+    end
 
     def normalize_referrer_url(referrer, hostname)
       referrer_uri = Addressable::URI.parse(referrer)

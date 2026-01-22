@@ -5,10 +5,10 @@ RSpec.describe VacancyAnalyticsService do
   let(:referrer_url) { "https://www.example.com/some/path?utm=source" }
   let(:hostname) { "www.tvs.service.gov.uk" }
   let(:test_redis_key) { "example" }
+  let(:mock_redis) { MockRedis.new }
 
   before do
-    mock_redis = MockRedis.new
-    allow(Redis).to receive(:current).and_return(mock_redis)
+    allow(described_class).to receive(:redis).and_return(mock_redis)
     # Manually stub scan_each to return all keys at once, mock_redis doesn't seem to be able to do this as standard
     allow(mock_redis).to receive(:scan_each) { mock_redis.keys.each }
   end
@@ -19,13 +19,13 @@ RSpec.describe VacancyAnalyticsService do
     it "increments the Redis counter for a normalized referrer" do
       expect {
         described_class.track_visit(vacancy.id, referrer_url, hostname, {})
-      }.to change { Redis.current.get(redis_key).to_i }.by(1)
+      }.to change { mock_redis.get(redis_key).to_i }.by(1)
     end
 
     it "does nothing if vacancy id is blank" do
       expect {
         described_class.track_visit(nil, referrer_url, hostname, {})
-      }.not_to(change { Redis.current.keys("vacancy_referrer_stats:*").count })
+      }.not_to(change { mock_redis.keys("vacancy_referrer_stats:*").count })
     end
   end
 
@@ -66,16 +66,16 @@ RSpec.describe VacancyAnalyticsService do
     end
 
     it "upserts the correct stat into the database and deletes the Redis key" do
-      Redis.current.set(key, 5)
-      Redis.current.set(second_key, 3)
-      Redis.current.set(third_key, 1)
+      mock_redis.set(key, 5)
+      mock_redis.set(second_key, 3)
+      mock_redis.set(third_key, 1)
 
       # test that we create one new vacancy_analytics, we are updating the existing one.
       expect { described_class.aggregate_and_save_stats }.to change(VacancyAnalytics, :count).by(1)
 
       # test that we delete keys after aggregating and saving stats.
-      expect(Redis.current.exists?(key)).to be(false)
-      expect(Redis.current.exists?(second_key)).to be(false)
+      expect(mock_redis.exists?(key)).to be(false)
+      expect(mock_redis.exists?(second_key)).to be(false)
 
       vacancy_analytics_1 = VacancyAnalytics.find_by(vacancy_id: vacancy.id)
       vacancy_analytics_2 = VacancyAnalytics.find_by(vacancy_id: another_vacancy.id)
@@ -85,8 +85,8 @@ RSpec.describe VacancyAnalyticsService do
     end
 
     it "skips keys with zero counts" do
-      Redis.current.set(key, 0)
-      Redis.current.set(second_key, 3)
+      mock_redis.set(key, 0)
+      mock_redis.set(second_key, 3)
 
       described_class.aggregate_and_save_stats
 
