@@ -268,8 +268,8 @@ RSpec.describe "Publishers can select a job application for interview", :perform
                     .to contain_exactly("employer@contoso.com", "previous@contoso.com")
 
                   expect(publisher_ats_pre_interview_checks_page).to be_displayed
-                  # This now includes the self disclosure
-                  expect(publisher_ats_pre_interview_checks_page.reference_links.count).to eq(3)
+                  # This now includes the self disclosure and online checks
+                  expect(publisher_ats_pre_interview_checks_page.reference_links.count).to eq(4)
                   publisher_ats_pre_interview_checks_page.reference_links.first.click
 
                   expect(publisher_ats_reference_request_page).to be_displayed
