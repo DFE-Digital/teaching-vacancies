@@ -1,4 +1,4 @@
-class Publishers::JobListing::JobRoleForm < Publishers::JobListing::VacancyForm
+class Publishers::JobListing::JobRoleForm < Publishers::JobListing::JobListingForm
   validates :job_roles, presence: { message: "At least one job role is required" }
   validate :job_roles_inclusion, if: -> { job_roles.present? }
 

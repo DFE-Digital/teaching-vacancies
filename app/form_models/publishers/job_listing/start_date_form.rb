@@ -1,4 +1,4 @@
-class Publishers::JobListing::StartDateForm < Publishers::JobListing::VacancyForm
+class Publishers::JobListing::StartDateForm < Publishers::JobListing::JobListingForm
   include ActiveRecord::AttributeAssignment
   include DateAttributeAssignment
 

@@ -1,4 +1,4 @@
-class Publishers::JobListing::SubjectsForm < Publishers::JobListing::VacancyForm
+class Publishers::JobListing::SubjectsForm < Publishers::JobListing::JobListingForm
   def self.fields
     %i[subjects]
   end

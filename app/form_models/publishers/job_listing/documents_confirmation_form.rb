@@ -1,4 +1,4 @@
-class Publishers::JobListing::DocumentsConfirmationForm < Publishers::JobListing::VacancyForm
+class Publishers::JobListing::DocumentsConfirmationForm < BaseForm
   include ActiveModel::Attributes
 
   validates :upload_additional_document, inclusion: { in: [true, false] }

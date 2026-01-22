@@ -1,4 +1,4 @@
-class Publishers::JobListing::SchoolVisitsForm < Publishers::JobListing::VacancyForm
+class Publishers::JobListing::SchoolVisitsForm < Publishers::JobListing::JobListingForm
   validates :school_visits, inclusion: { in: [true, false] }
 
   def self.fields

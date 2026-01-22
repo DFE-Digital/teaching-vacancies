@@ -2,7 +2,7 @@
 
 module Publishers
   module JobListing
-    class AnonymiseApplicationsForm < VacancyForm
+    class AnonymiseApplicationsForm < JobListingForm
       class << self
         def fields
           [:anonymise_applications]
