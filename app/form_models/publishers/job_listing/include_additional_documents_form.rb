@@ -1,4 +1,4 @@
-class Publishers::JobListing::IncludeAdditionalDocumentsForm < Publishers::JobListing::VacancyForm
+class Publishers::JobListing::IncludeAdditionalDocumentsForm < Publishers::JobListing::JobListingForm
   include ActiveModel::Attributes
 
   validates :include_additional_documents, inclusion: { in: [true, false] }

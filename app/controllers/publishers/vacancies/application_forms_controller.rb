@@ -22,12 +22,12 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
   end
 
   def form
-    @form ||= Publishers::JobListing::ApplicationFormForm.new(application_form_params, vacancy, current_publisher)
+    @form ||= Publishers::JobListing::ApplicationFormForm.new(application_form_params, vacancy)
   end
 
   def application_form_params
     params.expect(publishers_job_listing_application_form_form: %i[application_form application_form_staged_for_replacement])
-          .merge(completed_steps: completed_steps, current_organisation: current_organisation)
+          .merge(completed_steps: completed_steps)
   end
 
   def update_vacancy

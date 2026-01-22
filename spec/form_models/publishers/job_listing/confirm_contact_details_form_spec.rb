@@ -1,10 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobListing::ConfirmContactDetailsForm, type: :model do
-  subject(:form) { described_class.new(params, vacancy, current_publisher) }
+  subject(:form) { described_class.new(params, vacancy) }
 
   let(:vacancy) { build_stubbed(:vacancy) }
-  let(:current_publisher) { build_stubbed(:publisher, email: "test@example.com") }
   let(:params) { {} }
 
   describe "confirm_contact_email" do
@@ -50,15 +49,15 @@ RSpec.describe Publishers::JobListing::ConfirmContactDetailsForm, type: :model d
     end
   end
 
-  describe ".load_form" do
+  describe ".load_from_model" do
     context "when the step is recorded as completed" do
       before do
         allow(vacancy).to receive(:completed_steps).and_return(%w[confirm_contact_details])
       end
 
       it "loads confirm_contact_email as true" do
-        loaded_params = described_class.load_form(vacancy)
-        expect(loaded_params[:confirm_contact_email]).to be true
+        loaded_params = described_class.load_from_model(vacancy, current_publisher: nil)
+        expect(loaded_params.confirm_contact_email).to be true
       end
     end
 
@@ -68,8 +67,8 @@ RSpec.describe Publishers::JobListing::ConfirmContactDetailsForm, type: :model d
       end
 
       it "loads an empty hash" do
-        loaded_params = described_class.load_form(vacancy)
-        expect(loaded_params).to eq({})
+        loaded_params = described_class.load_from_model(vacancy, current_publisher: nil)
+        expect(loaded_params.confirm_contact_email).to be_nil
       end
     end
   end

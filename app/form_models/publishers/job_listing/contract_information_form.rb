@@ -1,4 +1,4 @@
-class Publishers::JobListing::ContractInformationForm < Publishers::JobListing::VacancyForm
+class Publishers::JobListing::ContractInformationForm < Publishers::JobListing::JobListingForm
   include ActiveModel::Attributes
 
   attr_accessor :contract_type, :fixed_term_contract_duration, :working_patterns, :working_patterns_details

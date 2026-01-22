@@ -10,14 +10,17 @@ class Publishers::JobListing::ConfirmContactDetailsForm < Publishers::JobListing
       %i[confirm_contact_email]
     end
 
-    def load_form(model)
+    # rubocop:disable Lint/UnusedMethodArgument
+    def load_from_model(model, current_publisher:)
       # If the step is recorded as completed means they confirmed previously.
-      if model.completed_steps.include?("confirm_contact_details")
-        { confirm_contact_email: true }
-      else
-        {}
-      end
+      attrs = if model.completed_steps.include?("confirm_contact_details")
+                { confirm_contact_email: true }
+              else
+                {}
+              end
+      new(attrs, model)
     end
+    # rubocop:enable Lint/UnusedMethodArgument
   end
 
   # confirm_contact_email is not a value that we store, only used for confirmation of contact_email, and navigation purposes.

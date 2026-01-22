@@ -1,7 +1,7 @@
 module ReviewHelper
   def section_begun?(model, section, step_process)
     retrieve_section_forms(section, step_process)
-      .map { |form_class| form_class.load_form(model).values }
+      .map { |form_class| form_class.load_from_model(model, current_publisher: nil).slice(*form_class.fields).values }
       .flatten
       .any? { |value| !value.nil? }
   end

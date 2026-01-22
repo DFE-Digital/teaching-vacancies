@@ -1,4 +1,4 @@
-class Publishers::JobListing::EducationPhasesForm < Publishers::JobListing::VacancyForm
+class Publishers::JobListing::EducationPhasesForm < Publishers::JobListing::JobListingForm
   validates :phases, presence: true, inclusion: { in: Vacancy.phases.keys }
 
   def self.fields
