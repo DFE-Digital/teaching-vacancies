@@ -1,0 +1,39 @@
+- content_for :page_title_prefix, t(".page_title")
+
+= render "header", vacancy: @vacancy, job_application: @job_application,
+  back_link: organisation_job_job_applications_path(@vacancy.id, anchor: tab_name(@job_application.status))
+
+.govuk-grid-row class="govuk-!-margin-top-4"
+  .govuk-grid-column-two-thirds
+    .govuk-button-group class="govuk-!-display-none-print"
+      = govuk_button_link_to t("buttons.download_application"), organisation_job_job_application_download_path(@vacancy.id, @job_application.id)
+      = govuk_button_link_to t("buttons.update_application_status"), tag_organisation_job_job_applications_path(@vacancy.id, params: { publishers_job_application_tag_form: { origin: tab_name(@job_application.status), job_applications: [@job_application.id] } }), class: "govuk-button--secondary"
+
+= form_with model: @pre_employment_check_set, url: organisation_job_job_application_pre_employment_check_set_path(@vacancy.id, @job_application.id), method: :patch do |f|
+  = f.govuk_error_summary
+
+  = f.govuk_check_boxes_fieldset :identity_check do
+    = f.govuk_check_box :identity_check, true, 0,
+      multiple: false,
+      hint: { text: t("helpers.hint.pre_employment_check_set.identity_check_options.true_html",
+                        link: open_in_new_tab_link_to(t(".verify_identity_link"), "https://www.gov.uk/government/publications/identity-proofing-and-verification-of-an-individual")) }
+
+    = f.govuk_check_box :enhanced_dbs_check, true, 0,
+      multiple: false,
+      hint: { text: t("helpers.hint.pre_employment_check_set.enhanced_dbs_check_options.true_html",
+      link: open_in_new_tab_link_to(t(".section_128_list_link"), "https://www.gov.uk/government/collections/individuals-prohibited-from-managing-or-governing-schools")) }
+
+    = f.govuk_check_box :mental_and_physical_fitness, true, 0, multiple: false
+    = f.govuk_check_box :right_to_work_in_uk, true, 0,
+      multiple: false,
+      hint: { text: t("helpers.hint.pre_employment_check_set.right_to_work_in_uk_options.true_html",
+        link: open_in_new_tab_link_to(t(".verified_right_to_work_link"), "https://www.gov.uk/check-job-applicant-right-to-work")) }
+
+    - if @job_application.for_a_teaching_role?
+      = f.govuk_check_box :professional_qualifications, true, 0, multiple: false
+
+  = f.govuk_check_boxes_fieldset :childrens_barred_list do
+    = f.govuk_check_box :childrens_barred_list, true, 0, multiple: false
+    = f.govuk_check_box :overseas_checks, true, 0, multiple: false
+
+  = f.govuk_submit t(".save_and_update_checklist")

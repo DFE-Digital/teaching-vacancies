@@ -1,0 +1,45 @@
+en:
+  helpers:
+    hint:
+      pre_employment_check_set:
+        identity_check_options:
+          true_html: There is guidance on %{link}
+        enhanced_dbs_check_options:
+          true_html: >-
+            Required for anyone in regulated activity with children.
+            Record their DBS certificate and issue date.
+            For leadership and management roles, you must also %{link}
+        mental_and_physical_fitness_options:
+          true: Confirm candidate has capacity to perform the role, relevant health questions may be asked.
+        right_to_work_in_uk_options:
+          true_html: There is guidance on %{link}
+        professional_qualifications_options:
+          true: >-
+            The Teaching Regulation Agency's (TRA) Employer Access Service should be used to verify qualified teacher status (QTS)
+            and the completion of teacher induction or probation.
+        childrens_barred_list_options:
+          true: This is only needed if the person starts before the DBS certificate is available.
+        overseas_checks_options:
+          true: For candidates that have lived or worked outside the UK, carry out additional checks as appropriate.
+
+    label:
+      pre_employment_check_set:
+        identity_check_options:
+          true: Verified identity
+        enhanced_dbs_check_options:
+          true: Enhanced DBS Check
+        mental_and_physical_fitness_options:
+          true: Verified mental and physical fitness for role
+        right_to_work_in_uk_options:
+          true: Verified right to work in the UK
+        professional_qualifications_options:
+          true: Verified professional qualifications
+        childrens_barred_list_options:
+          true: Seperate children's barred list check
+        overseas_checks_options:
+          true: Overseas checks
+
+    legend:
+      pre_employment_check_set:
+        identity_check: Mandatory checks
+        childrens_barred_list: Optional checks (if required)

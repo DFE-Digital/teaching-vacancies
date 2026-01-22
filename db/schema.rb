@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_01_20_090246) do
+ActiveRecord::Schema[8.0].define(version: 2026_01_22_161523) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -594,6 +594,20 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_20_090246) do
     t.index ["jobseeker_profile_id"], name: "index_personal_details_jobseeker_profile_id", unique: true
   end
 
+  create_table "pre_employment_check_sets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "job_application_id", null: false
+    t.boolean "identity_check", default: false, null: false
+    t.boolean "enhanced_dbs_check", default: false, null: false
+    t.boolean "mental_and_physical_fitness", default: false, null: false
+    t.boolean "right_to_work_in_uk", default: false, null: false
+    t.boolean "professional_qualifications", default: false, null: false
+    t.boolean "childrens_barred_list", default: false, null: false
+    t.boolean "overseas_checks", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_application_id"], name: "index_pre_employment_check_sets_on_job_application_id", unique: true
+  end
+
   create_table "professional_body_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -963,6 +977,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_20_090246) do
   add_foreign_key "organisation_vacancies", "organisations"
   add_foreign_key "organisation_vacancies", "vacancies"
   add_foreign_key "personal_details", "jobseeker_profiles"
+  add_foreign_key "pre_employment_check_sets", "job_applications"
   add_foreign_key "professional_body_memberships", "job_applications"
   add_foreign_key "professional_body_memberships", "jobseeker_profiles"
   add_foreign_key "publisher_preferences", "organisations"
