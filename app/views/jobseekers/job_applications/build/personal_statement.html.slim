@@ -30,8 +30,10 @@ p.govuk-body
 = form_for @form, url: jobseekers_job_application_build_path(job_application, :personal_statement), method: :patch do |f|
   = f.govuk_error_summary
 
-  div class="personal-statement-form"
-    = f.rich_text_area :personal_statement_richtext, aria: { label: "Personal statement", required: true }, class: "personal-statement-editor govuk-!-margin-bottom-6"
+  div class="personal-statement-form" data-controller="word-counter"
+    = f.rich_text_area :personal_statement_richtext, aria: { label: "Personal statement", required: true }, class: "personal-statement-editor govuk-!-margin-bottom-6", data: { word_counter_target: "editor" }
+
+    div class="govuk-hint govuk-!-margin-bottom-6" data-word-counter-target="counter"
 
     noscript
       = f.govuk_text_area :personal_statement_richtext, label: { text: "Personal statement" }, rows: 10, class: "govuk-!-margin-bottom-6"
