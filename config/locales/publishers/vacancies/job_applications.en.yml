@@ -2,12 +2,6 @@ en:
   publishers:
     vacancies:
       job_applications:
-        references:
-          new:
-            page_title: Create reference
-            caption: Reference
-            heading: Adding a referee
-            submit: Save reference
         interview_datetime:
           page_title: Add interview date
           add_interview_date: Add interview date
