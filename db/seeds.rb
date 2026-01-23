@@ -23,14 +23,17 @@ users = [
   { email: "alice.fitzgibbon@education.gov.uk", family_name: "Fitzgibbon", given_name: "Alice" },
   { email: "alisa.ali@education.gov.uk", family_name: "Ali", given_name: "Alisa" },
   { email: "chloe.ewens@education.gov.uk", family_name: "Ewens", given_name: "Chloe" },
+  { email: "christopher.weston@education.gov.uk", family_name: "Weston", given_name: "Christopher" },
   { email: "david.thacker@education.gov.uk", family_name: "Thacker", given_name: "David" },
   { email: "fisal.yusuf@education.gov.uk", family_name: "Yusuf", given_name: "Fisal" },
   { email: "hannah.vesey-byrne@education.gov.uk", family_name: "Vesey-Byrne", given_name: "Hannah" },
   { email: "kyle.macpherson@education.gov.uk", family_name: "MacPherson", given_name: "Kyle" },
   { email: "marc.sardon@education.gov.uk", family_name: "Sardon", given_name: "Marc" },
+  { email: "patrick.cootes@education.gov.uk", family_name: "Cootes", given_name: "Patrick" },
   { email: "richard.pattinson@education.gov.uk", family_name: "Pattinson", given_name: "Richard" },
   { email: "sophie.mcmillan@education.gov.uk", family_name: "McMillan", given_name: "Sophie" },
   { email: "stephen.dicks@education.gov.uk", family_name: "Dicks", given_name: "Stephen" },
+  { email: "tayyaba.riaz-jamil@education.gov.uk", family_name: "Riaz-Jamil", given_name: "Tayyaba" },
   { email: "yvonne.ridley@education.gov.uk", family_name: "Ridley", given_name: "Yvonne" },
 ]
 
