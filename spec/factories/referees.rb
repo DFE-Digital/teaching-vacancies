@@ -6,8 +6,7 @@ FactoryBot.define do
     relationship { factory_sample(["Line Manager", "Colleague", "Mentor"]) }
     # Can't use TEST_EMAIL_DOMAIN as factories are used by seeds to populate review apps
     email { Faker::Internet.email(domain: "contoso.com") }
-    phone_number { "01234 567890" }
-    created_at { Faker::Date.in_date_period(year: 2016) }
+    phone_number { Faker::PhoneNumber.phone_number }
     is_most_recent_employer { true }
 
     job_application

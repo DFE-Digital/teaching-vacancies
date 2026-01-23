@@ -126,6 +126,12 @@ FactoryBot.define do
         create_list(:training_and_cpd, 2, job_application: job_application)
       end
 
+      if options.create_references
+        referee_one = create(:referee, job_application:, is_most_recent_employer: true)
+        req_one = create(:reference_request, :reference_received, referee: referee_one)
+        create(:job_reference, :reference_given, reference_request: req_one)
+      end
+
       job_application.update_columns(
         # move status here to skip state machine validation
         status: options.status,
@@ -334,6 +340,7 @@ FactoryBot.define do
   end
 
   trait :with_religious_referee do
+    following_religion { true }
     religious_reference_type { :religious_referee }
     religious_referee_name { Faker::Name.name }
     religious_referee_address { Faker::Address.full_address }
