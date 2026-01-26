@@ -833,7 +833,7 @@ GEM
     slim (5.2.1)
       temple (~> 0.10.0)
       tilt (>= 2.1.0)
-    slim-rails (3.7.0)
+    slim-rails (4.0.0)
       actionpack (>= 3.1)
       railties (>= 3.1)
       slim (>= 3.0, < 6.0, != 5.0.0)
@@ -870,7 +870,7 @@ GEM
       attr_required (>= 0.0.5)
       faraday (~> 2.0)
       faraday-follow_redirects
-    temple (0.10.3)
+    temple (0.10.4)
     thor (1.5.0)
     thread_safe (0.3.6)
     tilt (2.7.0)
@@ -1413,12 +1413,12 @@ CHECKSUMS
   site_prism-all_there (3.0.7) sha256=87b344fba06ddd8a21569b66558ab549226991b3c5a5076bfd2561950c5e6473
   skylight (7.0.0) sha256=afbbe711b13493eb2db795b1b533b02f9f247e0a07e6b31ae0169ef977dcbbd0
   slim (5.2.1) sha256=72351dff7e2ff20e2d5c393cfc385bb9142cef5db059141628fd7163ac3c13e7
-  slim-rails (3.7.0) sha256=637dd3b07281bc6ee7e3395b153b26f04370dfac517058c334225818fffa1c96
+  slim-rails (4.0.0) sha256=2cfee5c4ba00d4d935676db1e74a05dbaf9dd6f789903a1006e3bb687bbe36e2
   slim_lint (0.33.0) sha256=1d05f92915c02febf6bdb5557b73c81e75ca683293d3a51a2ad0e490bb0018de
   solargraph (0.58.1) sha256=356ae338069b724ca6a1baf9f5af7097600c2b28708eb8694462f7c9d938aaca
   stringio (3.2.0) sha256=c37cb2e58b4ffbd33fe5cd948c05934af997b36e0b6ca6fdf43afa234cf222e1
   swd (2.0.3) sha256=4cdbe2a4246c19f093fce22e967ec3ebdd4657d37673672e621bf0c7eb770655
-  temple (0.10.3) sha256=df3145fe6577af1e25387eb7f7122d32ed51bdb6f2e7bb0f4fbf07b66151913b
+  temple (0.10.4) sha256=b7a1e94b6f09038ab0b6e4fe0126996055da2c38bec53a8a336f075748fff72c
   thor (1.5.0) sha256=e3a9e55fe857e44859ce104a84675ab6e8cd59c650a49106a05f55f136425e73
   thread_safe (0.3.6) sha256=9ed7072821b51c57e8d6b7011a8e282e25aeea3a4065eab326e43f66f063b05a
   tilt (2.7.0) sha256=0d5b9ba69f6a36490c64b0eee9f6e9aad517e20dcc848800a06eb116f08c6ab3
