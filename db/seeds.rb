@@ -19,6 +19,7 @@ aston_maths = School.find_by!(urn: "151725")
 
 # Team users
 users = [
+  { email: "ade.aina@education.gov.uk", family_name: "Aina", given_name: "Ade" },
   { email: "alex.lee@education.gov.uk", family_name: "Lee", given_name: "Alex" },
   { email: "alice.fitzgibbon@education.gov.uk", family_name: "Fitzgibbon", given_name: "Alice" },
   { email: "alisa.ali@education.gov.uk", family_name: "Ali", given_name: "Alisa" },
@@ -27,6 +28,7 @@ users = [
   { email: "david.thacker@education.gov.uk", family_name: "Thacker", given_name: "David" },
   { email: "fisal.yusuf@education.gov.uk", family_name: "Yusuf", given_name: "Fisal" },
   { email: "hannah.vesey-byrne@education.gov.uk", family_name: "Vesey-Byrne", given_name: "Hannah" },
+  { email: "joe.jeffrey@education.gov.uk", family_name: "Jeffrey", given_name: "Joe" },
   { email: "kyle.macpherson@education.gov.uk", family_name: "MacPherson", given_name: "Kyle" },
   { email: "marc.sardon@education.gov.uk", family_name: "Sardon", given_name: "Marc" },
   { email: "patrick.cootes@education.gov.uk", family_name: "Cootes", given_name: "Patrick" },
