@@ -35,7 +35,6 @@ export default class extends Controller {
   }
 
   displayCount(wordCount) {
-    const remaining = this.maxWordsValue - wordCount;
     this.counterTarget.textContent = `You have used ${wordCount} of ${this.maxWordsValue} words`;
   }
 }
