@@ -243,9 +243,9 @@ en:
           banner_documents_html: >-
             Documents supplied with %{job_link} listing that may be of some help with your personal statement.
           banner_no_documents_html: >-
-            It may be helpful to refer back to %{job_link} and include any relevant personal qualities and experiences.
+            It may be helpful to refer to %{job_link}. You should include any skills, qualities and experience that are relevant to this role.
           description: >-
-            Explain why you are suitable for this role.
+            Your personal statement is your opportunity to explain why you are suitable for this role. Schools typically expect personal statements to be about 2 pages long, which is approximately 500 to 1,000 words.
           job_description: job description
           heading: Personal statement
           applying_for_a_teaching_role: If you're applying for a teaching role
@@ -254,7 +254,7 @@ en:
           bullets:
             - your teaching and classroom management style
             - your knowledge of the curriculum
-            - your understanding of safeguarding and student wellbeing
+            - your understanding of safeguarding and pupil wellbeing
             - additional responsibilities you’ve taken on in school
             - experience in special educational needs and disability (SEND)
             - any relevant interests or extra-curricular activities
