@@ -264,4 +264,45 @@ RSpec.describe Jobseeker do
       it { is_expected.to eq("First Last") }
     end
   end
+
+  describe "#has_submitted_native_job_application?" do
+    let(:jobseeker) { create(:jobseeker) }
+    let(:vacancy) { create(:vacancy) }
+
+    context "when jobseeker has a submitted native job application" do
+      before do
+        create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy)
+      end
+
+      it "returns true" do
+        expect(jobseeker.has_submitted_native_job_application?).to be(true)
+      end
+    end
+
+    context "when jobseeker has only a draft native job application" do
+      before do
+        create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy)
+      end
+
+      it "returns false" do
+        expect(jobseeker.has_submitted_native_job_application?).to be(false)
+      end
+    end
+
+    context "when jobseeker has no job applications" do
+      it "returns false" do
+        expect(jobseeker.has_submitted_native_job_application?).to be(false)
+      end
+    end
+
+    context "when jobseeker has only an uploaded job application" do
+      before do
+        create(:uploaded_job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy)
+      end
+
+      it "returns false" do
+        expect(jobseeker.has_submitted_native_job_application?).to be(false)
+      end
+    end
+  end
 end

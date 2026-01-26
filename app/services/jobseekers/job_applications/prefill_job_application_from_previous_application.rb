@@ -58,7 +58,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
   end
 
   def recent_job_application
-    @recent_job_application ||= jobseeker.job_applications.not_draft.order(submitted_at: :desc).first
+    @recent_job_application ||= jobseeker.native_job_applications.not_draft.order(submitted_at: :desc).first
   end
 
   def relevant_steps

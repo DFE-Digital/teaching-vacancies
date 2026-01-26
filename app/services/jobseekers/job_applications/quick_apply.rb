@@ -24,7 +24,7 @@ class Jobseekers::JobApplications::QuickApply
   end
 
   def previously_submitted_application?
-    jobseeker.job_applications.not_draft.any?
+    jobseeker.has_submitted_native_job_application?
   end
 
   def jobseeker_profile

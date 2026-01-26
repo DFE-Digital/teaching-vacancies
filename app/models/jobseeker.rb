@@ -8,6 +8,8 @@ class Jobseeker < ApplicationRecord
 
   has_many :feedbacks, dependent: :destroy, inverse_of: :jobseeker
   has_many :job_applications, dependent: :destroy
+  has_many :native_job_applications
+  has_many :uploaded_job_applications
   has_many :saved_jobs, dependent: :destroy
   has_many :emergency_login_keys, as: :owner
   has_many :jobseeker_messages, foreign_key: :sender_id, dependent: :destroy
@@ -44,6 +46,10 @@ class Jobseeker < ApplicationRecord
 
   def account_closed?
     !!account_closed_on
+  end
+
+  def has_submitted_native_job_application?
+    native_job_applications.not_draft.any?
   end
 
   def generate_merge_verification_code

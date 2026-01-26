@@ -267,7 +267,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   helper_method :profile
 
   def previous_application?
-    current_jobseeker.job_applications.not_draft.any?
+    current_jobseeker.has_submitted_native_job_application?
   end
 
   def quick_apply?
