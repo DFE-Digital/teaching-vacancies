@@ -30,7 +30,7 @@ module Jobseekers
       private
 
       def word_count_within_limit
-        word_count = personal_statement_richtext.strip.split(/\s+/).reject(&:empty?).length
+        word_count = personal_statement_richtext.strip.split(/\s+/).count { |element| !element.empty? }
         return if word_count <= 1500
 
         errors.add(:personal_statement_richtext, "must be 1,500 words or fewer (currently #{word_count} words)")
