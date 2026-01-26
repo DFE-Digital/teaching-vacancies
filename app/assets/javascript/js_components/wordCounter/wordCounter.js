@@ -24,7 +24,7 @@ export default class extends Controller {
   }
 
   countWords() {
-    const editor = this.editorTarget.editor;
+    const { editor } = this.editorTarget;
     if (!editor) return 0;
 
     const text = editor.getDocument().toString().trim();
@@ -35,6 +35,6 @@ export default class extends Controller {
   }
 
   displayCount(wordCount) {
-    this.counterTarget.textContent = `You have used ${wordCount} of ${this.maxWordsValue} words`;
+    this.counterTarget.textContent = ` you have used ${wordCount} words`;
   }
 }
