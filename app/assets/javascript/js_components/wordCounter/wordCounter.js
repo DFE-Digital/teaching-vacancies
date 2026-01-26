@@ -24,7 +24,7 @@ export default class extends Controller {
   }
 
   countWords() {
-    const { editor } = this.editorTarget.editor;
+    const editor = this.editorTarget.editor;
     if (!editor) return 0;
 
     const text = editor.getDocument().toString().trim();

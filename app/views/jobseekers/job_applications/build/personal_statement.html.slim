@@ -33,7 +33,10 @@ p.govuk-body
   div class="personal-statement-form" data-controller="word-counter"
     = f.rich_text_area :personal_statement_richtext, aria: { label: "Personal statement", required: true }, class: "personal-statement-editor govuk-!-margin-bottom-6", data: { word_counter_target: "editor" }
 
-    div class="govuk-hint govuk-!-margin-bottom-6" data-word-counter-target="counter"
+    div class="govuk-hint" data-word-counter-target="counter"
+
+    div class="govuk-hint govuk-!-margin-bottom-6"
+      | You can write up to 1,500 words in this section. Schools typically expect your personal statement to be between 500 and 1,000 words long.
 
     noscript
       = f.govuk_text_area :personal_statement_richtext, label: { text: "Personal statement" }, rows: 10, class: "govuk-!-margin-bottom-6"
