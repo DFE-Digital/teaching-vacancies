@@ -185,7 +185,9 @@ en:
       invalid: Select salary details
   important_dates_errors: &important_dates_errors
     expires_at:
-      after: The closing date must be after the publish date
+      after: >-
+        The closing date must be after the publish date entered above.
+        If the closing date is correct, check your formatting
       blank: Enter closing date
       invalid: Enter closing date in the correct format
       on_or_after: The closing date must be in the future
