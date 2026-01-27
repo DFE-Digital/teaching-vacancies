@@ -14,6 +14,7 @@ RSpec.describe "Publishers can preview a vacancy" do
       visit organisation_job_preview_path(vacancy.id)
       # wait for page load
       find("span.govuk-caption-l")
+      find("footer")
     end
 
     it "passes a11y", :a11y do
