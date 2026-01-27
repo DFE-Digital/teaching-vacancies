@@ -18,6 +18,8 @@ RSpec.describe "Publishers can add notes to a job application" do
 
       before do
         publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
+        # wait for page load
+        find("a.govuk-link[href='#personal_details']")
       end
 
       it "passes a11y", :a11y do
@@ -25,8 +27,6 @@ RSpec.describe "Publishers can add notes to a job application" do
       end
 
       it "shows the current notes" do
-        expect(publisher_application_page).to be_displayed
-
         expect(page).to have_content(note.content)
       end
 
@@ -50,15 +50,20 @@ RSpec.describe "Publishers can add notes to a job application" do
       end
 
       context "with too much content" do
-        let(:note_content) { Faker::Lorem.question(word_count: 26) }
+        let(:note_content) { Faker::Lorem.question(word_count: 151) }
+
+        it "handles errors without removing the content", :js do
+          expect(page).to have_content("A note must not be more than 150 words")
+          expect(page.find_by_id("note-content-field-error")).to have_content(note_content)
+        end
 
         it "handles errors when JS is not present" do
-          expect(page).to have_content("A note must not be more than 150 characters")
+          expect(page).to have_content("A note must not be more than 150 words")
         end
       end
 
       context "with ok content" do
-        let(:note_content) { Faker::Lorem.question(word_count: 5) }
+        let(:note_content) { Faker::Lorem.sentence(word_count: 150) }
 
         it "allows notes to be added to job applications" do
           # wait for action to complete
@@ -121,7 +126,7 @@ RSpec.describe "Publishers can add notes to a job application" do
           let(:note_content) { Faker::Lorem.characters(number: 151) }
 
           it "copes with errors" do
-            expect(page).to have_content("A note must not be more than 150 characters")
+            expect(page).to have_content("A note must not be more than 150 words")
           end
         end
       end
@@ -133,7 +138,7 @@ RSpec.describe "Publishers can add notes to a job application" do
       end
 
       context "with a note" do
-        let!(:note) { create(:note, job_application: job_application, publisher: publisher, content: "This is a self disclosure note") }
+        let!(:note) { create(:note, job_application: job_application, publisher: publisher) }
 
         before do
           publisher_ats_self_disclosure_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
@@ -169,10 +174,10 @@ RSpec.describe "Publishers can add notes to a job application" do
         end
 
         it "copes with errors" do
-          fill_in "Add a note", with: Faker::Lorem.characters(number: 151)
+          fill_in "Add a note", with: Faker::Lorem.sentence(word_count: 151)
           click_on I18n.t("buttons.save_note")
 
-          expect(page).to have_content("A note must not be more than 150 characters")
+          expect(page).to have_content("A note must not be more than 150 words")
         end
       end
     end

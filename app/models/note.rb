@@ -4,5 +4,9 @@ class Note < ApplicationRecord
   include Discard::Model
 
   validates :content, presence: true
-  validates :content, length: { maximum: 150 }
+  # from https://guides.rubyonrails.org/v4.1/active_record_validations.html
+  validates :content, length: {
+    maximum: 150,
+    tokenizer: ->(str) { str.scan(/\w+/) },
+  }
 end
