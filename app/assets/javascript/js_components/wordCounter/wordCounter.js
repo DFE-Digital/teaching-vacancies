@@ -3,10 +3,6 @@ import { Controller } from '@hotwired/stimulus';
 export default class extends Controller {
   static targets = ['editor', 'counter'];
 
-  static values = {
-    maxWords: { type: Number, default: 1500 },
-  };
-
   connect() {
     this.boundUpdateCount = this.updateCount.bind(this);
     this.editorTarget.addEventListener('trix-initialize', this.boundUpdateCount);
