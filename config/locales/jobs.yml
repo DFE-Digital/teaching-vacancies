@@ -158,7 +158,7 @@ en:
     personal_statement_help:
       heading: Need help writing your personal statement for this role?
       body_html: Use the %{tool_link} to get AI-powered support in highlighting your skills and experience.
-      tool_link_text: personal statement tool
+      tool_link_text: personal statement builder
     school_type: School type
     trust_type: Trust type
     expired_listing:
