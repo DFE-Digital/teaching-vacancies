@@ -52,6 +52,11 @@ RSpec.describe "Publishers can add notes to a job application" do
       context "with too much content" do
         let(:note_content) { Faker::Lorem.question(word_count: 26) }
 
+        it "handles errors without removing the content", :js do
+          expect(page).to have_content("A note must not be more than 150 characters")
+          expect(page.find_by_id("note-content-field-error")).to have_content(note_content)
+        end
+
         it "handles errors when JS is not present" do
           expect(page).to have_content("A note must not be more than 150 characters")
         end
