@@ -296,6 +296,8 @@ en:
       weekly: weekly (Friday evening at around 6 pm)
     create:
       success: Your job alert has been created
+    keep:
+      success: Your job alert has been kept and will continue for another year
     confirm:
       back_to_search_results: Return to your search results
       body: We sent an email confirmation to %{email}.

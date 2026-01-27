@@ -38,6 +38,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
     let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "jobseeker_subscription_confirmation" } }
 
     it "sends a confirmation email" do
+      mail.deliver_now
       expect(mail.to).to eq([subscription.email])
       expect(mail.personalisation).to include(unsubscribe_link: unsubscribe_subscription_url(subscription.token),
                                               frequency: I18n.t("jobseekers.subscription_mailer.confirmation.frequency.#{subscription.frequency}"))
@@ -113,6 +114,66 @@ RSpec.describe Jobseekers::SubscriptionMailer do
         mail.deliver_now
         expect(:jobseeker_subscription_update).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
       end
+    end
+  end
+
+  describe "#governance_email_registered_never_updated" do
+    let(:mail) { described_class.governance_email_registered_never_updated(subscription) }
+    let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "subscription_governance" } }
+
+    it "sends a governance email" do
+      expect(mail.to).to eq([subscription.email])
+      expect(mail.personalisation).to include(
+        alert_date: subscription.created_at.strftime("%-d %B %Y"),
+        keep_job_alert_url: keep_subscription_url(subscription.token, **campaign_params),
+        deletion_date: 1.month.from_now.strftime("%-d %B %Y"),
+      )
+      expect(mail.personalisation[:criteria_list]).to be_present
+    end
+  end
+
+  describe "#governance_email_registered_was_updated" do
+    let(:mail) { described_class.governance_email_registered_was_updated(subscription) }
+    let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "subscription_governance" } }
+
+    it "sends a governance email" do
+      expect(mail.to).to eq([subscription.email])
+      expect(mail.personalisation).to include(
+        alert_date: subscription.updated_at.strftime("%-d %B %Y"),
+        keep_job_alert_url: keep_subscription_url(subscription.token, **campaign_params),
+        deletion_date: 1.month.from_now.strftime("%-d %B %Y"),
+      )
+      expect(mail.personalisation[:criteria_list]).to be_present
+    end
+  end
+
+  describe "#governance_email_unregistered_never_updated" do
+    let(:mail) { described_class.governance_email_unregistered_never_updated(subscription) }
+    let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "subscription_governance" } }
+
+    it "sends a governance email" do
+      expect(mail.to).to eq([subscription.email])
+      expect(mail.personalisation).to include(
+        alert_date: subscription.created_at.strftime("%-d %B %Y"),
+        keep_job_alert_url: keep_subscription_url(subscription.token, **campaign_params),
+        deletion_date: 1.month.from_now.strftime("%-d %B %Y"),
+      )
+      expect(mail.personalisation[:criteria_list]).to be_present
+    end
+  end
+
+  describe "#governance_email_unregistered_was_updated" do
+    let(:mail) { described_class.governance_email_unregistered_was_updated(subscription) }
+    let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "subscription_governance" } }
+
+    it "sends a governance email" do
+      expect(mail.to).to eq([subscription.email])
+      expect(mail.personalisation).to include(
+        alert_date: subscription.updated_at.strftime("%-d %B %Y"),
+        keep_job_alert_url: keep_subscription_url(subscription.token, **campaign_params),
+        deletion_date: 1.month.from_now.strftime("%-d %B %Y"),
+      )
+      expect(mail.personalisation[:criteria_list]).to be_present
     end
   end
 end

@@ -53,3 +53,8 @@ shared:
   - vacancy_apply_clicked
   - vacancy_create_job_alert_clicked
   - vacancy_document_downloaded
+  - jobseeker_subscription_governance_email_registered_never_updated
+  - jobseeker_subscription_governance_email_registered_was_updated
+  - jobseeker_subscription_governance_email_unregistered_never_updated
+  - jobseeker_subscription_governance_email_unregistered_was_updated
+  - job_alert_subscription_kept

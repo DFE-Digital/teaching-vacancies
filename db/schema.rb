@@ -782,6 +782,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_20_090246) do
     t.integer "radius_in_metres"
     t.geometry "uk_geopoint", limit: {srid: 27700, type: "st_point"}
     t.geometry "uk_area", limit: {srid: 27700, type: "geometry"}
+    t.datetime "deletion_warning_email_sent_at"
     t.index ["area"], name: "index_subscriptions_on_area", using: :gist
     t.index ["email"], name: "index_subscriptions_on_email"
     t.index ["geopoint"], name: "index_subscriptions_on_geopoint", using: :gist

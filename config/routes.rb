@@ -356,6 +356,7 @@ Rails.application.routes.draw do
 
   resources :subscriptions, except: %i[index show] do
     get :unsubscribe, on: :member
+    get :keep, on: :member
 
     get :submit_feedback, controller: "jobseekers/subscriptions/feedbacks/relevance_feedbacks"
 

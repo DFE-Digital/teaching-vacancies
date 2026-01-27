@@ -110,6 +110,11 @@ queue_messages_received:
   class: 'SendMessagesReceivedYesterdayJob'
   queue: default
 
+send_subscription_governance_emails:
+  cron: '50 08 * * *' # "At 08:50."
+  class: 'SendSubscriptionGovernanceEmailsJob'
+  queue: low
+
 send_inactive_account_email:
   cron: '0 8 * * *' # "At 8:00."
   class: 'SendInactiveAccountEmailJob'
@@ -133,6 +138,11 @@ disable_inactive_profiles:
 email_feedback_prompt:
   cron: '0 09 * * *' # "At 09:00."
   class: 'SendExpiredVacancyFeedbackPromptJob'
+  queue: low
+
+delete_unconfirmed_subscriptions:
+  cron: '10 09 * * *' # "At 09:10."
+  class: 'DeleteUnconfirmedSubscriptionsJob'
   queue: low
 
 withdraw_stale_drafts:

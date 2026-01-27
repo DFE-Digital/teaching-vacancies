@@ -80,6 +80,18 @@ class SubscriptionsController < ApplicationController
     redirect_to new_subscription_unsubscribe_feedback_path(subscription)
   end
 
+  def keep
+    subscription = Subscription.find_and_verify_by_token(token)
+
+    trigger_subscription_event(:job_alert_subscription_kept, subscription)
+    # We are using deletion_warning_email_sent_at to calculate when to delete the job alert i.e if the warning email was sent a month ago and the user
+    # has not opted to keep it then delete the job alert. Setting it to nil means the job alert will not be deleted until a month after the next governance email is sent.
+    # This also changes the updated_at timestamp which is used to calculate when we send the email, so they won't get another email asking if they want to keep it for another year.
+    subscription.update!(deletion_warning_email_sent_at: nil)
+
+    redirect_to root_path, success: t(".success")
+  end
+
   private
 
   def campaign_link?
@@ -134,14 +146,17 @@ class SubscriptionsController < ApplicationController
   end
 
   def trigger_subscription_event(type, subscription)
+    data = {
+      autopopulated: session.delete(:subscription_autopopulated),
+      frequency: subscription.frequency,
+      recaptcha_score: subscription.recaptcha_score,
+      search_criteria: subscription.search_criteria,
+      subscription_identifier: subscription.id,
+    }
+    data[:utm_campaign] = params[:utm_campaign] if params[:utm_campaign].present?
+
     event_data = {
-      data: {
-        autopopulated: session.delete(:subscription_autopopulated),
-        frequency: subscription.frequency,
-        recaptcha_score: subscription.recaptcha_score,
-        search_criteria: subscription.search_criteria,
-        subscription_identifier: subscription.id,
-      },
+      data: data,
       hidden_data: {
         email_identifier: subscription.email,
       },
