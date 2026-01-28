@@ -26,7 +26,7 @@
             h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-1" = sorted_by_string
           div class="right"
             = render SortComponent.new(path: method(:organisation_jobs_with_type_path), sort: @sort, url_params: { type: @selected_type }, display_type: "inline-select")
-        
+
     - if @organisation.school_group?
       .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-4"
         - if @organisation.local_authority?
