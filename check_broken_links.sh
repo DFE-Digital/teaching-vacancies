@@ -13,7 +13,8 @@ wget --auth-no-challenge -q --user=$2 --password=$3 $1/sitemap.xml -O - \
   | fgrep loc \
   | sed s'/    <loc>//' \
   | sed s'/<\/loc>//' \
-  | wget -nv -np -w 0.1 --spider -H -r -l1 -i - --user=$2 --password=$3 -P /tmp/spider \
+  | wget -nv -np -w 0.1 --spider -H -r -l1 -i - --user=$2 --password=$3 \
+  -P /tmp/spider \
   --auth-no-challenge \
   --no-relative \
   --domains="gov.uk" \
