@@ -50,6 +50,7 @@ en:
       add_decline_date: Add decline date
       add_job_offer_date: Add job offer date
       add_feedback_date: Add feedback date
+      pre_employment_checks: Pre-employment checks
     declined:
       heading: Offer declined
       none: No applications have been declined yet
