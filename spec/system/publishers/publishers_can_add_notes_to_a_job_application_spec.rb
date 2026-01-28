@@ -18,6 +18,8 @@ RSpec.describe "Publishers can add notes to a job application" do
 
       before do
         publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
+        # wait for page load
+        find("a.govuk-link[href='personal_details']")
       end
 
       it "passes a11y", :a11y do
@@ -25,8 +27,6 @@ RSpec.describe "Publishers can add notes to a job application" do
       end
 
       it "shows the current notes" do
-        expect(publisher_application_page).to be_displayed
-
         expect(page).to have_content(note.content)
       end
 
