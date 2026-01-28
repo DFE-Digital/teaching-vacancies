@@ -22,7 +22,7 @@ module Publishers
 
       def show
         redirect_to organisation_job_job_application_terminal_path(@vacancy.id, @job_application) if @job_application.withdrawn?
-        @note = Note.new
+        @note = @job_application.notes.build
 
         raise ActionController::RoutingError, "Cannot view a draft application" if @job_application.draft?
       end

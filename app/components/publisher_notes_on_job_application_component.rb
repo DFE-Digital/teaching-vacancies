@@ -2,8 +2,8 @@ class PublisherNotesOnJobApplicationComponent < ApplicationComponent
   attr_reader :job_application, :vacancy, :note, :return_to_url
 
   def initialize(job_application:, vacancy:, note:,
-                 return_to_url: nil, classes: [], html_attributes: {})
-    super(classes: classes, html_attributes: html_attributes)
+                 return_to_url: nil)
+    super()
 
     @job_application = job_application
     @vacancy = vacancy

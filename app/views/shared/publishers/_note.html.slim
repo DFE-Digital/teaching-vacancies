@@ -1,0 +1,9 @@
+= form_for note, url: organisation_job_job_application_notes_path(note.job_application.vacancy.id, note.job_application),
+    html: { data: { "show-hidden-content-target": "content" } } do |f|
+  = f.govuk_error_summary
+  - if return_to_url.present?
+    = hidden_field_tag :return_to, return_to_url
+
+  = f.govuk_text_area :content, rows: 7, max_chars: 150
+
+  = f.govuk_submit t("buttons.save_note")

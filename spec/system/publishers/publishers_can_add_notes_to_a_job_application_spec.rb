@@ -5,7 +5,6 @@ RSpec.describe "Publishers can add notes to a job application" do
   let(:organisation) { create(:school) }
   let(:vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
   let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
-  let(:note_content) { "This is another note" }
 
   before do
     login_publisher(publisher: publisher, organisation: organisation)
@@ -43,7 +42,7 @@ RSpec.describe "Publishers can add notes to a job application" do
       end
     end
 
-    context "without a note" do
+    describe "adding a note" do
       before do
         publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
         fill_in "Add a note", with: note_content
@@ -51,21 +50,21 @@ RSpec.describe "Publishers can add notes to a job application" do
       end
 
       context "with too much content" do
-        let(:note_content) { Faker::Lorem.characters(number: 151) }
+        let(:note_content) { Faker::Lorem.question(word_count: 26) }
 
-        it "handles errors" do
+        it "handles errors when JS is not present" do
           expect(page).to have_content("A note must not be more than 150 characters")
         end
       end
 
       context "with ok content" do
-        let(:note_content) { "ABCDEFG" }
+        let(:note_content) { Faker::Lorem.question(word_count: 5) }
 
         it "allows notes to be added to job applications" do
           # wait for action to complete
           expect(publisher_application_page.notification_banner.text).to eq("Success\nA note has been added")
 
-          expect(page).to have_content("ABCDEFG")
+          expect(page).to have_content(note_content)
         end
       end
     end

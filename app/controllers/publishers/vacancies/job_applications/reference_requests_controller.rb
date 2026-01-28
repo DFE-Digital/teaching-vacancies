@@ -9,7 +9,7 @@ module Publishers
         def show
           @referee = RefereePresenter.new(@reference_request.referee)
           @job_reference = @reference_request.job_reference
-          @note = Note.new
+          @note = @job_application.notes.build
           respond_to do |format|
             format.html
             format.pdf { send_reference_pdf }

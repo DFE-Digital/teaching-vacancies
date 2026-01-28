@@ -13,9 +13,9 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@ministryofjustice/frontend": "^3.7.2",
-    "@sentry/browser": "10.35.0",
     "@rails/actiontext": "^8.1.200",
     "@rails/activestorage": "^8.1.200",
+    "@sentry/browser": "10.35.0",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^3.0.1",
     "axios": "^1.13.2",
