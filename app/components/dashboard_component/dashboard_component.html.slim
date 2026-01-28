@@ -19,7 +19,13 @@
   .govuk-grid-row class="govuk-!-margin-bottom-7"
     - if @vacancies.many?
       .govuk-grid-column-full
-        = render SortComponent.new(path: method(:organisation_jobs_with_type_path), sort: @sort, url_params: { type: @selected_type }, display_type: "inline-select")
+        div class="sort-container"
+          div class="left"
+            - sort_by_value = @sort.options.find { |option| option.by == @sort.by }.display_name.downcase
+            - sorted_by_string = t("jobs.sort_by.jobs_page_label", sort_by_value: sort_by_value)
+            h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-1" = sorted_by_string
+          div class="right"
+            = render SortComponent.new(path: method(:organisation_jobs_with_type_path), sort: @sort, url_params: { type: @selected_type }, display_type: "inline-select")
         
     - if @organisation.school_group?
       .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-4"
