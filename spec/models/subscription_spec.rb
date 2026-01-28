@@ -169,9 +169,9 @@ RSpec.describe Subscription do
         expect {
           subscription.set_location_data!
           subscription.reload
-        }.to not_change(subscription, :uk_geopoint).from(nil)
+        }.to not_change(subscription, :geopoint).from(nil)
          .and not_change(subscription, :radius_in_metres).from(nil)
-         .and not_change(subscription, :uk_area).from(nil)
+         .and not_change(subscription, :area).from(nil)
       end
     end
 
@@ -186,9 +186,9 @@ RSpec.describe Subscription do
         expect {
           subscription.set_location_data!
           subscription.reload
-        }.to change(subscription, :uk_area).from(nil).to(kind_of(RGeo::Cartesian::PolygonImpl))
+        }.to change(subscription, :area).from(nil).to(kind_of(RGeo::Cartesian::PolygonImpl))
          .and change(subscription, :radius_in_metres).from(nil).to(16_090)
-         .and not_change(subscription, :uk_geopoint).from(nil)
+         .and not_change(subscription, :geopoint).from(nil)
       end
 
       context "when the polygon previously had location data from coordinates" do
@@ -200,8 +200,8 @@ RSpec.describe Subscription do
           expect {
             subscription.set_location_data!
             subscription.reload
-          }.to change(subscription, :uk_area).from(nil).to(kind_of(RGeo::Cartesian::PolygonImpl))
-           .and change { subscription.uk_geopoint.class }.from(RGeo::Cartesian::PointImpl).to(NilClass)
+          }.to change(subscription, :area).from(nil).to(kind_of(RGeo::Cartesian::PolygonImpl))
+           .and change { subscription.geopoint.class }.from(RGeo::Cartesian::PointImpl).to(NilClass)
            .and change(subscription, :radius_in_metres).from(16_090).to(24_135)
         end
       end
@@ -221,9 +221,9 @@ RSpec.describe Subscription do
         expect {
           subscription.set_location_data!
           subscription.reload
-        }.to change(subscription, :uk_geopoint).from(nil).to(kind_of(RGeo::Cartesian::PointImpl))
+        }.to change(subscription, :geopoint).from(nil).to(kind_of(RGeo::Cartesian::PointImpl))
          .and change(subscription, :radius_in_metres).from(nil).to(16_090)
-         .and not_change(subscription, :uk_area).from(nil)
+         .and not_change(subscription, :area).from(nil)
       end
 
       context "when Geocoding returns no match coordinates" do
@@ -233,9 +233,9 @@ RSpec.describe Subscription do
           expect {
             subscription.set_location_data!
             subscription.reload
-          }.to not_change(subscription, :uk_geopoint).from(nil)
+          }.to not_change(subscription, :geopoint).from(nil)
            .and not_change(subscription, :radius_in_metres).from(nil)
-           .and not_change(subscription, :uk_area).from(nil)
+           .and not_change(subscription, :area).from(nil)
         end
       end
 
@@ -246,9 +246,9 @@ RSpec.describe Subscription do
           expect {
             subscription.set_location_data!
             subscription.reload
-          }.to not_change(subscription, :uk_geopoint).from(nil)
+          }.to not_change(subscription, :geopoint).from(nil)
            .and not_change(subscription, :radius_in_metres).from(nil)
-           .and not_change(subscription, :uk_area).from(nil)
+           .and not_change(subscription, :area).from(nil)
         end
       end
 
@@ -261,9 +261,9 @@ RSpec.describe Subscription do
           expect {
             subscription.set_location_data!
             subscription.reload
-          }.to change(subscription, :uk_geopoint).from(nil).to(kind_of(RGeo::Cartesian::PointImpl))
+          }.to change(subscription, :geopoint).from(nil).to(kind_of(RGeo::Cartesian::PointImpl))
            .and change(subscription, :radius_in_metres).from(16_090).to(24_135)
-           .and change { subscription.uk_area.class }.from(RGeo::Cartesian::PolygonImpl).to(NilClass)
+           .and change { subscription.area.class }.from(RGeo::Cartesian::PolygonImpl).to(NilClass)
         end
       end
     end

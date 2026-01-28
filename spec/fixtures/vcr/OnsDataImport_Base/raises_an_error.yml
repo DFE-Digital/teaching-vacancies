@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Counties_and_Unitary_Authorities_April_2019_Boundaries_EW_BUC_2022/FeatureServer/0/query?f=pgeojson&outFields=CTYUA19NM&outSR=27700&resultOffset=0&resultRecordCount=20&where=1=1
+    uri: https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Counties_and_Unitary_Authorities_April_2019_Boundaries_EW_BUC_2022/FeatureServer/0/query?f=pgeojson&outFields=CTYUA19NM&outSR=4326&resultOffset=0&resultRecordCount=20&where=1=1
     body:
       encoding: US-ASCII
       string: ''
@@ -15,15 +15,15 @@ http_interactions:
       - Ruby
   response:
     status:
-      code: 200
-      message: OK
+      code: 400
+      message: Bad Request
     headers:
       Date:
-      - Fri, 28 Nov 2025 15:33:54 GMT
+      - Fri, 12 Dec 2025 16:00:24 GMT
       Content-Type:
-      - application/json; charset=utf-8
+      - text/html
       Content-Length:
-      - '170'
+      - '11'
       Connection:
       - keep-alive
       Cache-Control:
@@ -42,11 +42,11 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=63072000
       X-Arcgis-Trace-Id:
-      - 20251128T153354Z-1645667f544dsq4dhC1LONc4h80000002ung000000005qqz
+      - 20251212T160023Z-r18674967785mskmhC1LONmqug000000064g00000000bfaw
       X-Arcgis-Correlation-Id:
-      - 1b23fbae2aee46ae
+      - '08c3f865a0f94787'
       X-Arcgis-Instance:
-      - i7tdixsfq00000M
+      - i7tdixsfq00000H
       Access-Control-Expose-Headers:
       - Request-Context
       Access-Control-Allow-Origin:
@@ -56,17 +56,13 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Azure-Ref:
-      - 20251128T153354Z-1645667f544dsq4dhC1LONc4h80000002ung000000005qqz
+      - 20251212T160023Z-r18674967785mskmhC1LONmqug000000064g00000000bfaw
       X-Fd-Int-Roxy-Purgeid:
       - '0'
       X-Cache:
       - TCP_MISS
-      Accept-Ranges:
-      - bytes
     body:
       encoding: UTF-8
-      string: "\r\n{\r\n  \"error\" : \r\n  {\r\n    \"code\" : 499, \r\n    \"message\"
-        : \"Token Required\", \r\n    \"messageCode\" : \"GWM_0003\", \r\n    \"details\"
-        : [\r\n      \"Token Required\"\r\n    ]\r\n  }\r\n}"
-  recorded_at: Fri, 28 Nov 2025 15:33:54 GMT
+      string: Bad Request
+  recorded_at: Fri, 12 Dec 2025 16:00:24 GMT
 recorded_with: VCR 6.3.1

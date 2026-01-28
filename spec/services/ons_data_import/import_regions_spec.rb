@@ -6,8 +6,8 @@ RSpec.describe OnsDataImport::ImportRegions do
 
   before do
     allow(HTTParty).to receive(:get)
-                         .with(/regions/)
-                         .and_return(response1, response2)
+      .with(/regions/)
+      .and_return(response1, response2)
     described_class.call
   end
 
@@ -16,7 +16,7 @@ RSpec.describe OnsDataImport::ImportRegions do
     let(:mid_eastlands) { LocationPolygon.find_by(name: "mid eastlands") }
 
     it "creates a LocationPolygon for East Midlands" do
-      expect(east_midlands.uk_area.to_s).to eq("POLYGON ((0.0 0.0, 1.0 1.0, 1.0 -1.0, 0.0 0.0))")
+      expect(east_midlands.area.to_s).to eq("POLYGON ((0.0 0.0, 1.0 1.0, 1.0 -1.0, 0.0 0.0))")
       expect(east_midlands.location_type).to eq("regions")
     end
 

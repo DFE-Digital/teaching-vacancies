@@ -3,35 +3,35 @@
   concise_attributes:
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: id
-    value_before_type_cast: 02b05e50-0594-41e1-87e4-f5f05bab844b
+    value_before_type_cast: '03478573-5c05-4968-b0bb-4c56df530148'
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: type
     value_before_type_cast: School
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: name
-    value_before_type_cast: St Albans Girls' School
+    value_before_type_cast: St Luke's School
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: description
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: urn
-    value_before_type_cast: '137339'
+    value_before_type_cast: '117671'
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: uid
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: phase
-    value_before_type_cast: 4
+    value_before_type_cast: 0
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: url
-    value_before_type_cast: http://www.stags.aetrust.uk
+    value_before_type_cast: http://www.stlukes.herts.sch.uk/
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: minimum_age
-    value_before_type_cast: 11
+    value_before_type_cast: 7
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: maximum_age
-    value_before_type_cast: 18
+    value_before_type_cast: 16
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: address
-    value_before_type_cast: Sandridgebury Lane
+    value_before_type_cast: Crouch Hall Lane
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: town
     value_before_type_cast: St Albans
@@ -40,59 +40,364 @@
     value_before_type_cast: Hertfordshire
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: postcode
-    value_before_type_cast: AL3 6DB
+    value_before_type_cast: AL3 7ET
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: locality
+    value_before_type_cast: Redbourn
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: address3
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: gias_data
+    value_before_type_cast: '{"URN":"117671","LA (code)":"919","LA (name)":"Hertfordshire","EstablishmentNumber":"7012","EstablishmentName":"St
+      Luke''s School","TypeOfEstablishment (code)":"12","TypeOfEstablishment (name)":"Foundation
+      special school","EstablishmentTypeGroup (code)":"5","EstablishmentTypeGroup
+      (name)":"Special schools","EstablishmentStatus (code)":"1","EstablishmentStatus
+      (name)":"Open","ReasonEstablishmentOpened (code)":"00","ReasonEstablishmentOpened
+      (name)":"Not applicable","OpenDate":"","ReasonEstablishmentClosed (code)":"00","ReasonEstablishmentClosed
+      (name)":"Not applicable","CloseDate":"","PhaseOfEducation (code)":"0","PhaseOfEducation
+      (name)":"Not applicable","StatutoryLowAge":"7","StatutoryHighAge":"16","Boarders
+      (code)":"1","Boarders (name)":"No boarders","NurseryProvision (name)":"Not applicable","OfficialSixthForm
+      (code)":"0","OfficialSixthForm (name)":"Not applicable","Gender (code)":"3","Gender
+      (name)":"Mixed","ReligiousCharacter (code)":"00","ReligiousCharacter (name)":"Does
+      not apply","ReligiousEthos (name)":"Does not apply","Diocese (code)":"0000","Diocese
+      (name)":"Not applicable","AdmissionsPolicy (code)":"0","AdmissionsPolicy (name)":"Not
+      applicable","SchoolCapacity":"175","SpecialClasses (code)":"1","SpecialClasses
+      (name)":"Has Special Classes","CensusDate":"18-01-2024","NumberOfPupils":"172","NumberOfBoys":"113","NumberOfGirls":"59","PercentageFSM":"41.90","TrustSchoolFlag
+      (code)":"2","TrustSchoolFlag (name)":"Not supported by a trust","Trusts (code)":"","Trusts
+      (name)":"","SchoolSponsorFlag (name)":"Not applicable","SchoolSponsors (name)":"","FederationFlag
+      (name)":"Not under a federation","Federations (code)":"","Federations (name)":"","UKPRN":"10008515","FEHEIdentifier":"","FurtherEducationType
+      (name)":"Not applicable","OfstedLastInsp":"07-06-2023","OfstedSpecialMeasures
+      (code)":"0","OfstedSpecialMeasures (name)":"Not applicable","LastChangedDate":"15-11-2024","Street":"Crouch
+      Hall Lane","Locality":"Redbourn","Address3":"","Town":"St Albans","County (name)":"Hertfordshire","Postcode":"AL3
+      7ET","SchoolWebsite":"http://www.stlukes.herts.sch.uk/","TelephoneNum":"01582626727","HeadTitle
+      (name)":"Mr","HeadFirstName":"Stephen","HeadLastName":"Hoult-Allen","HeadPreferredJobTitle":"Headteacher","BSOInspectorateName
+      (name)":"Not applicable","InspectorateReport":"","DateOfLastInspectionVisit":"","NextInspectionVisit":"","TeenMoth
+      (name)":"Not applicable","TeenMothPlaces":"","CCF (name)":"Not applicable","SENPRU
+      (name)":"Not applicable","EBD (name)":"Not applicable","PlacesPRU":"","FTProv
+      (name)":"","EdByOther (name)":"Not applicable","Section41Approved (name)":"Not
+      applicable","SEN1 (name)":"SpLD - Specific Learning Difficulty","SEN2 (name)":"VI
+      - Visual Impairment","SEN3 (name)":"OTH - Other Difficulty/Disability","SEN4
+      (name)":"SLCN - Speech, language and Communication","SEN5 (name)":"ASD - Autistic
+      Spectrum Disorder","SEN6 (name)":"MLD - Moderate Learning Difficulty","SEN7
+      (name)":"","SEN8 (name)":"","SEN9 (name)":"","SEN10 (name)":"","SEN11 (name)":"","SEN12
+      (name)":"","SEN13 (name)":"","TypeOfResourcedProvision (name)":"Not applicable","ResourcedProvisionOnRoll":"","ResourcedProvisionCapacity":"","SenUnitOnRoll":"","SenUnitCapacity":"","GOR
+      (code)":"G","GOR (name)":"East of England","DistrictAdministrative (code)":"E07000240","DistrictAdministrative
+      (name)":"St Albans","AdministrativeWard (code)":"E05013961","AdministrativeWard
+      (name)":"Redbourn","ParliamentaryConstituency (code)":"E14001268","ParliamentaryConstituency
+      (name)":"Harpenden and Berkhamsted","UrbanRural (code)":"D1","UrbanRural (name)":"(England/Wales)
+      Rural town and fringe","GSSLACode (name)":"E10000015","Easting":"510132","Northing":"212893","MSOA
+      (name)":"St Albans 006","LSOA (name)":"St Albans 006D","InspectorateName (name)":"","SENStat":"","SENNoStat":"","BoardingEstablishment
+      (name)":"","PropsName":"","PreviousLA (code)":"999","PreviousLA (name)":"","PreviousEstablishmentNumber":"","OfstedRating
+      (name)":"Good","Country (name)":"","UPRN":"100081153864","SiteName":"","QABName
+      (code)":"0","QABName (name)":"Not applicable","EstablishmentAccredited (code)":"0","EstablishmentAccredited
+      (name)":"Not applicable","QABReport":"","CHNumber":"","MSOA (code)":"E02004929","LSOA
+      (code)":"E01023725","FSM":"72","AccreditationExpiryDate":""}'
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: created_at
+    value_before_type_cast: 2024-11-28 16:26:34.298924000 Z
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: updated_at
+    value_before_type_cast: 2024-11-28 23:00:43.233243000 Z
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: url_override
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: region
+    value_before_type_cast: East of England
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: detailed_school_type
+    value_before_type_cast: Foundation special school
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: school_type
+    value_before_type_cast: Special schools
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: local_authority_code
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: group_type
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: local_authority_within
+    value_before_type_cast: Hertfordshire
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: establishment_status
+    value_before_type_cast: Open
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: geopoint
+    value_before_type_cast: 0101000020E6100000A323C00414DDD9BF17358951E4E64940
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: gias_data_hash
+    value_before_type_cast: 0a84f86339ce7f69c5c9ff3cf11d60b0192d1334ead9bc835cdbdf5c38e265b1
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: slug
+    value_before_type_cast: st-luke-s-school
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: email
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: safeguarding_information
+    value_before_type_cast: |-
+      Our organisation is committed to safeguarding and promoting the welfare of children, young people and vulnerable adults. We expect all staff, volunteers and trustees to share this commitment.
+
+      Our recruitment process follows the keeping children safe in education guidance.
+
+      Offers of employment may be subject to the following checks (where relevant):
+      childcare disqualification
+      Disclosure and Barring Service (DBS)
+      medical
+      online and social media
+      prohibition from teaching
+      right to work
+      satisfactory references
+      suitability to work with children
+
+      You must tell us about any unspent conviction, cautions, reprimands or warnings under the Rehabilitation of Offenders Act 1974 (Exceptions) Order 1975.
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: searchable_content
+    value_before_type_cast: "'luke':2A 's':3A 'school':4A 'st':1A"
+  new_record: false
+  active_record_yaml_version: 2
+- !ruby/object:School
+  concise_attributes:
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: id
+    value_before_type_cast: 0a4962b9-cb35-4fb5-ac71-b95433d6ed39
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: type
+    value_before_type_cast: School
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: name
+    value_before_type_cast: Links Academy
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: description
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: urn
+    value_before_type_cast: '139197'
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: uid
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: phase
+    value_before_type_cast: 0
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: url
+    value_before_type_cast: https://linksacademystalbans.co.uk/
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: minimum_age
+    value_before_type_cast: 11
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: maximum_age
+    value_before_type_cast: 16
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: address
+    value_before_type_cast: 1 Hixberry Lane
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: town
+    value_before_type_cast: St Albans
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: county
+    value_before_type_cast: Hertfordshire
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: postcode
+    value_before_type_cast: AL4 0TZ
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: locality
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: address3
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: gias_data
-    value_before_type_cast: '{"URN":"137339","LA (code)":"919","LA (name)":"Hertfordshire","EstablishmentNumber":"4083","EstablishmentName":"St
-      Albans Girls'' School","TypeOfEstablishment (code)":"34","TypeOfEstablishment
-      (name)":"Academy converter","EstablishmentTypeGroup (code)":"10","EstablishmentTypeGroup
+    value_before_type_cast: '{"URN":"139197","LA (code)":"919","LA (name)":"Hertfordshire","EstablishmentNumber":"1106","EstablishmentName":"Links
+      Academy","TypeOfEstablishment (code)":"42","TypeOfEstablishment (name)":"Academy
+      alternative provision converter","EstablishmentTypeGroup (code)":"10","EstablishmentTypeGroup
       (name)":"Academies","EstablishmentStatus (code)":"1","EstablishmentStatus (name)":"Open","ReasonEstablishmentOpened
-      (code)":"10","ReasonEstablishmentOpened (name)":"Academy Converter","OpenDate":"01-09-2011","ReasonEstablishmentClosed
+      (code)":"10","ReasonEstablishmentOpened (name)":"Academy Converter","OpenDate":"01-02-2013","ReasonEstablishmentClosed
       (code)":"99","ReasonEstablishmentClosed (name)":"","CloseDate":"","PhaseOfEducation
-      (code)":"4","PhaseOfEducation (name)":"Secondary","StatutoryLowAge":"11","StatutoryHighAge":"18","Boarders
+      (code)":"0","PhaseOfEducation (name)":"Not applicable","StatutoryLowAge":"11","StatutoryHighAge":"16","Boarders
       (code)":"1","Boarders (name)":"No boarders","NurseryProvision (name)":"Not applicable","OfficialSixthForm
-      (code)":"1","OfficialSixthForm (name)":"Has a sixth form","Gender (code)":"2","Gender
-      (name)":"Girls","ReligiousCharacter (code)":"00","ReligiousCharacter (name)":"Does
-      not apply","ReligiousEthos (name)":"Does not apply","Diocese (code)":"0000","Diocese
-      (name)":"Not applicable","AdmissionsPolicy (code)":"4","AdmissionsPolicy (name)":"Non-selective","SchoolCapacity":"1450","SpecialClasses
-      (code)":"2","SpecialClasses (name)":"No Special Classes","CensusDate":"16-01-2025","NumberOfPupils":"1428","NumberOfBoys":"0","NumberOfGirls":"1428","PercentageFSM":"10.60","TrustSchoolFlag
+      (code)":"0","OfficialSixthForm (name)":"Not applicable","Gender (code)":"3","Gender
+      (name)":"Mixed","ReligiousCharacter (code)":"00","ReligiousCharacter (name)":"Does
+      not apply","ReligiousEthos (name)":"None","Diocese (code)":"0000","Diocese (name)":"Not
+      applicable","AdmissionsPolicy (code)":"0","AdmissionsPolicy (name)":"Not applicable","SchoolCapacity":"40","SpecialClasses
+      (code)":"0","SpecialClasses (name)":"Not applicable","CensusDate":"18-01-2024","NumberOfPupils":"5","NumberOfBoys":"4","NumberOfGirls":"1","PercentageFSM":"80.00","TrustSchoolFlag
       (code)":"3","TrustSchoolFlag (name)":"Supported by a multi-academy trust","Trusts
-      (code)":"16752","Trusts (name)":"AMBITION EDUCATION TRUST","SchoolSponsorFlag
-      (name)":"Linked to a sponsor","SchoolSponsors (name)":"Ambition Education Trust","FederationFlag
-      (name)":"Not applicable","Federations (code)":"","Federations (name)":"","UKPRN":"10035080","FEHEIdentifier":"","FurtherEducationType
-      (name)":"Not applicable","LastChangedDate":"17-11-2025","Street":"Sandridgebury
-      Lane","Locality":"","Address3":"","Town":"St Albans","County (name)":"Hertfordshire","Postcode":"AL3
-      6DB","SchoolWebsite":"http://www.stags.aetrust.uk","TelephoneNum":"01727853134","HeadTitle
-      (name)":"Mr","HeadFirstName":"Paul","HeadLastName":"Kershaw","HeadPreferredJobTitle":"Headteacher","BSOInspectorateName
+      (code)":"17357","Trusts (name)":"LINKS MULTI ACADEMY TRUST","SchoolSponsorFlag
+      (name)":"Linked to a sponsor","SchoolSponsors (name)":"Links Academy Trust","FederationFlag
+      (name)":"Not applicable","Federations (code)":"","Federations (name)":"","UKPRN":"10040055","FEHEIdentifier":"","FurtherEducationType
+      (name)":"Not applicable","OfstedLastInsp":"25-05-2023","OfstedSpecialMeasures
+      (code)":"0","OfstedSpecialMeasures (name)":"Not applicable","LastChangedDate":"09-10-2024","Street":"1
+      Hixberry Lane","Locality":"","Address3":"","Town":"St Albans","County (name)":"Hertfordshire","Postcode":"AL4
+      0TZ","SchoolWebsite":"https://linksacademystalbans.co.uk/","TelephoneNum":"01727836150","HeadTitle
+      (name)":"","HeadFirstName":"David","HeadLastName":"Allen","HeadPreferredJobTitle":"Headteacher","BSOInspectorateName
       (name)":"Not applicable","InspectorateReport":"","DateOfLastInspectionVisit":"","NextInspectionVisit":"","TeenMoth
-      (name)":"Not applicable","TeenMothPlaces":"","CCF (name)":"Not applicable","SENPRU
-      (name)":"Not applicable","EBD (name)":"Not applicable","PlacesPRU":"","FTProv
-      (name)":"","EdByOther (name)":"Not applicable","Section41Approved (name)":"Not
-      applicable","SEN1 (name)":"","SEN2 (name)":"","SEN3 (name)":"","SEN4 (name)":"","SEN5
-      (name)":"","SEN6 (name)":"","SEN7 (name)":"","SEN8 (name)":"","SEN9 (name)":"","SEN10
-      (name)":"","SEN11 (name)":"","SEN12 (name)":"","SEN13 (name)":"","TypeOfResourcedProvision
-      (name)":"","ResourcedProvisionOnRoll":"","ResourcedProvisionCapacity":"","SenUnitOnRoll":"","SenUnitCapacity":"","GOR
+      (name)":"Not applicable","TeenMothPlaces":"","CCF (name)":"","SENPRU (name)":"Not
+      applicable","EBD (name)":"Not applicable","PlacesPRU":"","FTProv (name)":"","EdByOther
+      (name)":"","Section41Approved (name)":"Not applicable","SEN1 (name)":"","SEN2
+      (name)":"","SEN3 (name)":"","SEN4 (name)":"","SEN5 (name)":"","SEN6 (name)":"","SEN7
+      (name)":"","SEN8 (name)":"","SEN9 (name)":"","SEN10 (name)":"","SEN11 (name)":"","SEN12
+      (name)":"","SEN13 (name)":"","TypeOfResourcedProvision (name)":"","ResourcedProvisionOnRoll":"","ResourcedProvisionCapacity":"","SenUnitOnRoll":"","SenUnitCapacity":"","GOR
       (code)":"G","GOR (name)":"East of England","DistrictAdministrative (code)":"E07000240","DistrictAdministrative
-      (name)":"St Albans","AdministrativeWard (code)":"E05013948","AdministrativeWard
-      (name)":"Bernards Heath","ParliamentaryConstituency (code)":"E14001507","ParliamentaryConstituency
-      (name)":"St Albans","UrbanRural (code)":"UN1","UrbanRural (name)":"Urban: Nearer
-      to a major town or city","GSSLACode (name)":"E10000015","Easting":"515194","Northing":"209265","MSOA
-      (name)":"St Albans 007","LSOA (name)":"St Albans 007A","InspectorateName (name)":"","SENStat":"","SENNoStat":"","BoardingEstablishment
-      (name)":"","PropsName":"","PreviousLA (code)":"999","PreviousLA (name)":"","PreviousEstablishmentNumber":"","Country
-      (name)":"","UPRN":"200003634003","SiteName":"","QABName (code)":"0","QABName
-      (name)":"Not applicable","EstablishmentAccredited (code)":"0","EstablishmentAccredited
-      (name)":"Not applicable","QABReport":"","CHNumber":"","MSOA (code)":"E02004930","LSOA
-      (code)":"E01023713","FSM":"126","AccreditationExpiryDate":""}'
+      (name)":"St Albans","AdministrativeWard (code)":"E05013956","AdministrativeWard
+      (name)":"Hill End","ParliamentaryConstituency (code)":"E14001507","ParliamentaryConstituency
+      (name)":"St Albans","UrbanRural (code)":"C1","UrbanRural (name)":"(England/Wales)
+      Urban city and town","GSSLACode (name)":"E10000015","Easting":"517883","Northing":"206960","MSOA
+      (name)":"St Albans 021","LSOA (name)":"St Albans 021B","InspectorateName (name)":"","SENStat":"","SENNoStat":"","BoardingEstablishment
+      (name)":"","PropsName":"","PreviousLA (code)":"999","PreviousLA (name)":"","PreviousEstablishmentNumber":"1111","OfstedRating
+      (name)":"Good","Country (name)":"","UPRN":"200003633791","SiteName":"","QABName
+      (code)":"0","QABName (name)":"Not applicable","EstablishmentAccredited (code)":"0","EstablishmentAccredited
+      (name)":"Not applicable","QABReport":"","CHNumber":"","MSOA (code)":"E02007090","LSOA
+      (code)":"E01023677","FSM":"4","AccreditationExpiryDate":""}'
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
-    value_before_type_cast: 2025-12-04 21:31:22.181008000 Z
+    value_before_type_cast: 2024-11-28 16:28:20.135037000 Z
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: updated_at
-    value_before_type_cast: 2025-12-04 21:31:22.181008000 Z
+    value_before_type_cast: 2024-11-28 23:00:53.290075000 Z
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: url_override
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: region
+    value_before_type_cast: East of England
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: detailed_school_type
+    value_before_type_cast: Academy alternative provision converter
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: school_type
+    value_before_type_cast: Academies
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: local_authority_code
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: group_type
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: local_authority_within
+    value_before_type_cast: Hertfordshire
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: establishment_status
+    value_before_type_cast: Open
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: geopoint
+    value_before_type_cast: 0101000020E6100000320240E119CDD2BF870A3B63DDDF4940
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: gias_data_hash
+    value_before_type_cast: 9c0ecb9a5bd95f44008cb35483cdbde037505059e5e070ce08ddf9a9f933dd36
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: slug
+    value_before_type_cast: links-academy
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: email
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: safeguarding_information
+    value_before_type_cast: |-
+      Our organisation is committed to safeguarding and promoting the welfare of children, young people and vulnerable adults. We expect all staff, volunteers and trustees to share this commitment.
+
+      Our recruitment process follows the keeping children safe in education guidance.
+
+      Offers of employment may be subject to the following checks (where relevant):
+      childcare disqualification
+      Disclosure and Barring Service (DBS)
+      medical
+      online and social media
+      prohibition from teaching
+      right to work
+      satisfactory references
+      suitability to work with children
+
+      You must tell us about any unspent conviction, cautions, reprimands or warnings under the Rehabilitation of Offenders Act 1974 (Exceptions) Order 1975.
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: searchable_content
+    value_before_type_cast: "'academy':2A 'links':1A"
+  new_record: false
+  active_record_yaml_version: 2
+- !ruby/object:School
+  concise_attributes:
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: id
+    value_before_type_cast: 0c66dc6d-46eb-47b2-a27e-2bb75fca9029
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: type
+    value_before_type_cast: School
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: name
+    value_before_type_cast: Mandeville Primary School
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: description
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: urn
+    value_before_type_cast: '139159'
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: uid
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: phase
+    value_before_type_cast: 2
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: url
+    value_before_type_cast: http://www.mandeville.herts.sch.uk
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: minimum_age
+    value_before_type_cast: 3
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: maximum_age
+    value_before_type_cast: 11
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: address
+    value_before_type_cast: Mandeville Drive
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: town
+    value_before_type_cast: St Albans
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: county
+    value_before_type_cast: Hertfordshire
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: postcode
+    value_before_type_cast: AL1 2LE
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: locality
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: address3
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: gias_data
+    value_before_type_cast: '{"URN":"139159","LA (code)":"919","LA (name)":"Hertfordshire","EstablishmentNumber":"2099","EstablishmentName":"Mandeville
+      Primary School","TypeOfEstablishment (code)":"34","TypeOfEstablishment (name)":"Academy
+      converter","EstablishmentTypeGroup (code)":"10","EstablishmentTypeGroup (name)":"Academies","EstablishmentStatus
+      (code)":"1","EstablishmentStatus (name)":"Open","ReasonEstablishmentOpened (code)":"10","ReasonEstablishmentOpened
+      (name)":"Academy Converter","OpenDate":"01-01-2013","ReasonEstablishmentClosed
+      (code)":"99","ReasonEstablishmentClosed (name)":"","CloseDate":"","PhaseOfEducation
+      (code)":"2","PhaseOfEducation (name)":"Primary","StatutoryLowAge":"3","StatutoryHighAge":"11","Boarders
+      (code)":"1","Boarders (name)":"No boarders","NurseryProvision (name)":"Has Nursery
+      Classes","OfficialSixthForm (code)":"2","OfficialSixthForm (name)":"Does not
+      have a sixth form","Gender (code)":"3","Gender (name)":"Mixed","ReligiousCharacter
+      (code)":"00","ReligiousCharacter (name)":"Does not apply","ReligiousEthos (name)":"Does
+      not apply","Diocese (code)":"0000","Diocese (name)":"Not applicable","AdmissionsPolicy
+      (code)":"0","AdmissionsPolicy (name)":"Not applicable","SchoolCapacity":"446","SpecialClasses
+      (code)":"2","SpecialClasses (name)":"No Special Classes","CensusDate":"18-01-2024","NumberOfPupils":"394","NumberOfBoys":"182","NumberOfGirls":"212","PercentageFSM":"25.90","TrustSchoolFlag
+      (code)":"3","TrustSchoolFlag (name)":"Supported by a multi-academy trust","Trusts
+      (code)":"3107","Trusts (name)":"SPIRAL PARTNERSHIP TRUST","SchoolSponsorFlag
+      (name)":"Linked to a sponsor","SchoolSponsors (name)":"Spiral Partnership Trust","FederationFlag
+      (name)":"Not applicable","Federations (code)":"","Federations (name)":"","UKPRN":"10039766","FEHEIdentifier":"","FurtherEducationType
+      (name)":"Not applicable","OfstedLastInsp":"14-10-2021","OfstedSpecialMeasures
+      (code)":"0","OfstedSpecialMeasures (name)":"Not applicable","LastChangedDate":"08-11-2024","Street":"Mandeville
+      Drive","Locality":"","Address3":"","Town":"St Albans","County (name)":"Hertfordshire","Postcode":"AL1
+      2LE","SchoolWebsite":"www.mandeville.herts.sch.uk","TelephoneNum":"01727519220","HeadTitle
+      (name)":"Mrs","HeadFirstName":"Cathy","HeadLastName":"Longhurst","HeadPreferredJobTitle":"Head
+      Teacher","BSOInspectorateName (name)":"Not applicable","InspectorateReport":"","DateOfLastInspectionVisit":"","NextInspectionVisit":"","TeenMoth
+      (name)":"Not applicable","TeenMothPlaces":"","CCF (name)":"Not applicable","SENPRU
+      (name)":"Not applicable","EBD (name)":"Not applicable","PlacesPRU":"","FTProv
+      (name)":"Not applicable","EdByOther (name)":"Not applicable","Section41Approved
+      (name)":"Not applicable","SEN1 (name)":"","SEN2 (name)":"","SEN3 (name)":"","SEN4
+      (name)":"","SEN5 (name)":"","SEN6 (name)":"","SEN7 (name)":"","SEN8 (name)":"","SEN9
+      (name)":"","SEN10 (name)":"","SEN11 (name)":"","SEN12 (name)":"","SEN13 (name)":"","TypeOfResourcedProvision
+      (name)":"","ResourcedProvisionOnRoll":"","ResourcedProvisionCapacity":"","SenUnitOnRoll":"","SenUnitCapacity":"","GOR
+      (code)":"G","GOR (name)":"East of England","DistrictAdministrative (code)":"E07000240","DistrictAdministrative
+      (name)":"St Albans","AdministrativeWard (code)":"E05013963","AdministrativeWard
+      (name)":"Sopwell","ParliamentaryConstituency (code)":"E14001507","ParliamentaryConstituency
+      (name)":"St Albans","UrbanRural (code)":"C1","UrbanRural (name)":"(England/Wales)
+      Urban city and town","GSSLACode (name)":"E10000015","Easting":"514697","Northing":"205557","MSOA
+      (name)":"St Albans 017","LSOA (name)":"St Albans 017C","InspectorateName (name)":"","SENStat":"","SENNoStat":"","BoardingEstablishment
+      (name)":"","PropsName":"","PreviousLA (code)":"999","PreviousLA (name)":"","PreviousEstablishmentNumber":"","OfstedRating
+      (name)":"Good","Country (name)":"","UPRN":"100081149771","SiteName":"","QABName
+      (code)":"0","QABName (name)":"Not applicable","EstablishmentAccredited (code)":"0","EstablishmentAccredited
+      (name)":"Not applicable","QABReport":"","CHNumber":"","MSOA (code)":"E02004940","LSOA
+      (code)":"E01023739","FSM":"96","AccreditationExpiryDate":""}'
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: created_at
+    value_before_type_cast: 2024-11-28 16:28:20.135037000 Z
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: updated_at
+    value_before_type_cast: 2024-11-28 23:00:56.309950000 Z
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: url_override
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -115,9 +420,14 @@
     name: establishment_status
     value_before_type_cast: Open
   - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: geopoint
+    value_before_type_cast: 0101000020E6100000DB49E29078C8D5BFC11022DC55DE4940
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: gias_data_hash
+    value_before_type_cast: 53ddf0fd9e5bb33ade12784f2b321f95d338947b35ac7f2ab83ee558c1454801
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: slug
+    value_before_type_cast: mandeville-primary-school
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: email
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -140,297 +450,6 @@
       You must tell us about any unspent conviction, cautions, reprimands or warnings under the Rehabilitation of Offenders Act 1974 (Exceptions) Order 1975.
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: searchable_content
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: uk_geopoint
-    value_before_type_cast: 0101000020346C000000000000E8711F4100000000888B0941
-  new_record: false
-  active_record_yaml_version: 2
-- !ruby/object:School
-  concise_attributes:
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: id
-    value_before_type_cast: 054bb208-8b45-4ab5-a586-56b3905dd2b2
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: type
-    value_before_type_cast: School
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: name
-    value_before_type_cast: St Adrian Roman Catholic Primary School
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: description
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: urn
-    value_before_type_cast: '117470'
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: uid
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: phase
-    value_before_type_cast: 2
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: url
-    value_before_type_cast: http://www.stadrians.herts.sch.uk
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: minimum_age
-    value_before_type_cast: 3
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: maximum_age
-    value_before_type_cast: 11
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: address
-    value_before_type_cast: Watling View
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: town
-    value_before_type_cast: St Albans
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: county
-    value_before_type_cast: Hertfordshire
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: postcode
-    value_before_type_cast: AL1 2PB
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: locality
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: address3
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: gias_data
-    value_before_type_cast: '{"URN":"117470","LA (code)":"919","LA (name)":"Hertfordshire","EstablishmentNumber":"3389","EstablishmentName":"St
-      Adrian Roman Catholic Primary School","TypeOfEstablishment (code)":"02","TypeOfEstablishment
-      (name)":"Voluntary aided school","EstablishmentTypeGroup (code)":"4","EstablishmentTypeGroup
-      (name)":"Local authority maintained schools","EstablishmentStatus (code)":"1","EstablishmentStatus
-      (name)":"Open","ReasonEstablishmentOpened (code)":"00","ReasonEstablishmentOpened
-      (name)":"Not applicable","OpenDate":"","ReasonEstablishmentClosed (code)":"00","ReasonEstablishmentClosed
-      (name)":"Not applicable","CloseDate":"","PhaseOfEducation (code)":"2","PhaseOfEducation
-      (name)":"Primary","StatutoryLowAge":"3","StatutoryHighAge":"11","Boarders (code)":"1","Boarders
-      (name)":"No boarders","NurseryProvision (name)":"Has Nursery Classes","OfficialSixthForm
-      (code)":"2","OfficialSixthForm (name)":"Does not have a sixth form","Gender
-      (code)":"3","Gender (name)":"Mixed","ReligiousCharacter (code)":"03","ReligiousCharacter
-      (name)":"Roman Catholic","ReligiousEthos (name)":"Does not apply","Diocese (code)":"RC01","Diocese
-      (name)":"Archdiocese of Westminster","AdmissionsPolicy (code)":"0","AdmissionsPolicy
-      (name)":"Not applicable","SchoolCapacity":"210","SpecialClasses (code)":"2","SpecialClasses
-      (name)":"No Special Classes","CensusDate":"16-01-2025","NumberOfPupils":"204","NumberOfBoys":"96","NumberOfGirls":"108","PercentageFSM":"10.20","TrustSchoolFlag
-      (code)":"0","TrustSchoolFlag (name)":"Not applicable","Trusts (code)":"","Trusts
-      (name)":"","SchoolSponsorFlag (name)":"Not applicable","SchoolSponsors (name)":"","FederationFlag
-      (name)":"Not under a federation","Federations (code)":"","Federations (name)":"","UKPRN":"10076830","FEHEIdentifier":"","FurtherEducationType
-      (name)":"Not applicable","LastChangedDate":"08-10-2025","Street":"Watling View","Locality":"","Address3":"","Town":"St
-      Albans","County (name)":"Hertfordshire","Postcode":"AL1 2PB","SchoolWebsite":"http://www.stadrians.herts.sch.uk","TelephoneNum":"01727852687","HeadTitle
-      (name)":"Mrs","HeadFirstName":"Aideen","HeadLastName":"Porter","HeadPreferredJobTitle":"Headteacher","BSOInspectorateName
-      (name)":"Not applicable","InspectorateReport":"","DateOfLastInspectionVisit":"","NextInspectionVisit":"","TeenMoth
-      (name)":"Not applicable","TeenMothPlaces":"","CCF (name)":"Not applicable","SENPRU
-      (name)":"Not applicable","EBD (name)":"Not applicable","PlacesPRU":"","FTProv
-      (name)":"","EdByOther (name)":"Not applicable","Section41Approved (name)":"Not
-      applicable","SEN1 (name)":"","SEN2 (name)":"","SEN3 (name)":"","SEN4 (name)":"","SEN5
-      (name)":"","SEN6 (name)":"","SEN7 (name)":"","SEN8 (name)":"","SEN9 (name)":"","SEN10
-      (name)":"","SEN11 (name)":"","SEN12 (name)":"","SEN13 (name)":"","TypeOfResourcedProvision
-      (name)":"","ResourcedProvisionOnRoll":"","ResourcedProvisionCapacity":"","SenUnitOnRoll":"","SenUnitCapacity":"","GOR
-      (code)":"G","GOR (name)":"East of England","DistrictAdministrative (code)":"E07000240","DistrictAdministrative
-      (name)":"St Albans","AdministrativeWard (code)":"E05013963","AdministrativeWard
-      (name)":"Sopwell","ParliamentaryConstituency (code)":"E14001507","ParliamentaryConstituency
-      (name)":"St Albans","UrbanRural (code)":"UN1","UrbanRural (name)":"Urban: Nearer
-      to a major town or city","GSSLACode (name)":"E10000015","Easting":"514458","Northing":"205647","MSOA
-      (name)":"St Albans 017","LSOA (name)":"St Albans 017C","InspectorateName (name)":"","SENStat":"","SENNoStat":"","BoardingEstablishment
-      (name)":"","PropsName":"","PreviousLA (code)":"999","PreviousLA (name)":"","PreviousEstablishmentNumber":"","Country
-      (name)":"","UPRN":"200003641157","SiteName":"","QABName (code)":"0","QABName
-      (name)":"Not applicable","EstablishmentAccredited (code)":"0","EstablishmentAccredited
-      (name)":"Not applicable","QABReport":"","CHNumber":"","MSOA (code)":"E02004940","LSOA
-      (code)":"E01023739","FSM":"20","AccreditationExpiryDate":""}'
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: created_at
-    value_before_type_cast: 2025-12-04 21:29:01.973480000 Z
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: updated_at
-    value_before_type_cast: 2025-12-04 21:29:01.973480000 Z
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: url_override
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: region
-    value_before_type_cast: East of England
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: detailed_school_type
-    value_before_type_cast: Voluntary aided school
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: school_type
-    value_before_type_cast: Local authority maintained schools
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: local_authority_code
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: group_type
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: local_authority_within
-    value_before_type_cast: Hertfordshire
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: establishment_status
-    value_before_type_cast: Open
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: gias_data_hash
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: slug
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: email
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: safeguarding_information
-    value_before_type_cast: |-
-      Our organisation is committed to safeguarding and promoting the welfare of children, young people and vulnerable adults. We expect all staff, volunteers and trustees to share this commitment.
-
-      Our recruitment process follows the keeping children safe in education guidance.
-
-      Offers of employment may be subject to the following checks (where relevant):
-      childcare disqualification
-      Disclosure and Barring Service (DBS)
-      medical
-      online and social media
-      prohibition from teaching
-      right to work
-      satisfactory references
-      suitability to work with children
-
-      You must tell us about any unspent conviction, cautions, reprimands or warnings under the Rehabilitation of Offenders Act 1974 (Exceptions) Order 1975.
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: searchable_content
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: uk_geopoint
-    value_before_type_cast: 0101000020346C00000000000068661F4100000000781A0941
-  new_record: false
-  active_record_yaml_version: 2
-- !ruby/object:School
-  concise_attributes:
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: id
-    value_before_type_cast: 05fefd30-575e-478c-b4a7-24ef235e7971
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: type
-    value_before_type_cast: School
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: name
-    value_before_type_cast: Beaumont School
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: description
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: urn
-    value_before_type_cast: '117514'
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: uid
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: phase
-    value_before_type_cast: 4
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: url
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: minimum_age
-    value_before_type_cast: 11
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: maximum_age
-    value_before_type_cast: 18
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: address
-    value_before_type_cast: Oakwood Drive
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: town
-    value_before_type_cast: St Albans
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: county
-    value_before_type_cast: Hertfordshire
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: postcode
-    value_before_type_cast: AL4 0XB
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: locality
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: address3
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: gias_data
-    value_before_type_cast: '{"URN":"117514","LA (code)":"919","LA (name)":"Hertfordshire","EstablishmentNumber":"4043","EstablishmentName":"Beaumont
-      School","TypeOfEstablishment (code)":"01","TypeOfEstablishment (name)":"Community
-      school","EstablishmentTypeGroup (code)":"4","EstablishmentTypeGroup (name)":"Local
-      authority maintained schools","EstablishmentStatus (code)":"2","EstablishmentStatus
-      (name)":"Closed","ReasonEstablishmentOpened (code)":"00","ReasonEstablishmentOpened
-      (name)":"Not applicable","OpenDate":"","ReasonEstablishmentClosed (code)":"10","ReasonEstablishmentClosed
-      (name)":"Academy Converter","CloseDate":"30-06-2012","PhaseOfEducation (code)":"4","PhaseOfEducation
-      (name)":"Secondary","StatutoryLowAge":"11","StatutoryHighAge":"18","Boarders
-      (code)":"1","Boarders (name)":"No boarders","NurseryProvision (name)":"No Nursery
-      Classes","OfficialSixthForm (code)":"1","OfficialSixthForm (name)":"Has a sixth
-      form","Gender (code)":"3","Gender (name)":"Mixed","ReligiousCharacter (code)":"00","ReligiousCharacter
-      (name)":"Does not apply","ReligiousEthos (name)":"Does not apply","Diocese (code)":"0000","Diocese
-      (name)":"Not applicable","AdmissionsPolicy (code)":"4","AdmissionsPolicy (name)":"Non-selective","SchoolCapacity":"1277","SpecialClasses
-      (code)":"2","SpecialClasses (name)":"No Special Classes","CensusDate":"","NumberOfPupils":"","NumberOfBoys":"","NumberOfGirls":"","PercentageFSM":"","TrustSchoolFlag
-      (code)":"0","TrustSchoolFlag (name)":"Not applicable","Trusts (code)":"","Trusts
-      (name)":"","SchoolSponsorFlag (name)":"Not applicable","SchoolSponsors (name)":"","FederationFlag
-      (name)":"Not under a federation","Federations (code)":"","Federations (name)":"","UKPRN":"10000600","FEHEIdentifier":"","FurtherEducationType
-      (name)":"Not applicable","LastChangedDate":"14-11-2018","Street":"Oakwood Drive","Locality":"","Address3":"","Town":"St
-      Albans","County (name)":"Hertfordshire","Postcode":"AL4 0XB","SchoolWebsite":"","TelephoneNum":"","HeadTitle
-      (name)":"Mrs","HeadFirstName":"Elizabeth","HeadLastName":"Hitch","HeadPreferredJobTitle":"Headteacher","BSOInspectorateName
-      (name)":"Not applicable","InspectorateReport":"","DateOfLastInspectionVisit":"","NextInspectionVisit":"","TeenMoth
-      (name)":"Not applicable","TeenMothPlaces":"","CCF (name)":"Not applicable","SENPRU
-      (name)":"Not applicable","EBD (name)":"Not applicable","PlacesPRU":"","FTProv
-      (name)":"","EdByOther (name)":"Not applicable","Section41Approved (name)":"Not
-      applicable","SEN1 (name)":"PD - Physical Disability","SEN2 (name)":"","SEN3
-      (name)":"","SEN4 (name)":"","SEN5 (name)":"","SEN6 (name)":"","SEN7 (name)":"","SEN8
-      (name)":"","SEN9 (name)":"","SEN10 (name)":"","SEN11 (name)":"","SEN12 (name)":"","SEN13
-      (name)":"","TypeOfResourcedProvision (name)":"Resourced provision","ResourcedProvisionOnRoll":"","ResourcedProvisionCapacity":"","SenUnitOnRoll":"","SenUnitCapacity":"","GOR
-      (code)":"G","GOR (name)":"East of England","DistrictAdministrative (code)":"E07000240","DistrictAdministrative
-      (name)":"St Albans","AdministrativeWard (code)":"E05004785","AdministrativeWard
-      (name)":"Ashley","ParliamentaryConstituency (code)":"E14000960","ParliamentaryConstituency
-      (name)":"St Albans","UrbanRural (code)":"C1","UrbanRural (name)":"(England/Wales)
-      Urban city and town","GSSLACode (name)":"E10000015","Easting":"517492","Northing":"207641","MSOA
-      (name)":"St Albans 013","LSOA (name)":"St Albans 013A","InspectorateName (name)":"","SENStat":"","SENNoStat":"","BoardingEstablishment
-      (name)":"","PropsName":"","PreviousLA (code)":"999","PreviousLA (name)":"","PreviousEstablishmentNumber":"","Country
-      (name)":"","UPRN":"","SiteName":"","QABName (code)":"0","QABName (name)":"Not
-      applicable","EstablishmentAccredited (code)":"0","EstablishmentAccredited (name)":"Not
-      applicable","QABReport":"","CHNumber":"","MSOA (code)":"E02004936","LSOA (code)":"E01023664","FSM":"","AccreditationExpiryDate":""}'
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: created_at
-    value_before_type_cast: 2025-12-04 21:29:01.973480000 Z
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: updated_at
-    value_before_type_cast: 2025-12-04 21:29:01.973480000 Z
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: url_override
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: region
-    value_before_type_cast: East of England
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: detailed_school_type
-    value_before_type_cast: Community school
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: school_type
-    value_before_type_cast: Local authority maintained schools
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: local_authority_code
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: group_type
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: local_authority_within
-    value_before_type_cast: Hertfordshire
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: establishment_status
-    value_before_type_cast: Closed
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: gias_data_hash
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: slug
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: email
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: safeguarding_information
-    value_before_type_cast: |-
-      Our organisation is committed to safeguarding and promoting the welfare of children, young people and vulnerable adults. We expect all staff, volunteers and trustees to share this commitment.
-
-      Our recruitment process follows the keeping children safe in education guidance.
-
-      Offers of employment may be subject to the following checks (where relevant):
-      childcare disqualification
-      Disclosure and Barring Service (DBS)
-      medical
-      online and social media
-      prohibition from teaching
-      right to work
-      satisfactory references
-      suitability to work with children
-
-      You must tell us about any unspent conviction, cautions, reprimands or warnings under the Rehabilitation of Offenders Act 1974 (Exceptions) Order 1975.
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: searchable_content
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: uk_geopoint
-    value_before_type_cast: 0101000020346C000000000000D0951F4100000000C8580941
+    value_before_type_cast: "'mandeville':1A 'primary':2A 'school':3A"
   new_record: false
   active_record_yaml_version: 2

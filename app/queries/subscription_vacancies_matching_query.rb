@@ -1,6 +1,14 @@
 class SubscriptionVacanciesMatchingQuery
   attr_reader :scope
 
+  # British National Grid SRID (EPSG:27700) is a projected coordinate system used for mapping in Great Britain.
+  # It provides coordinates in meters, which is useful for distance calculations, which we need
+  # for radius-based searches.
+  # It is significantly more accurate for distance calculations in Great Britain that EPSG:3857 (Web Mercator).
+  # EPSG:3857 distort distances and areas, especially as you move away from the equator. What would cause a multiplier
+  # between 1.5x and 1.7x for radius/buffer distances in our case to get the matches we would expect.
+  BRITISH_NATIONAL_GRID_SRID = 27700 # rubocop:disable Style/NumericLiterals
+
   # Builds the query to find the IDs for the vacancies matching the subscription criteria.
   # The subquery is needed to be able to combine our requirements into a valid single SQL statement:
   # - retrieve unique DISTINCT ON vacancy ids: As the location filter may return the same vacancy multiple times (vacancy for multiple orgs).
@@ -169,9 +177,9 @@ class SubscriptionVacanciesMatchingQuery
     # 'area_before_type_cast' and 'geopoint_before_type_cast' are used to avoid casting the fields into RGeo objects.
     # This reduces memory usage and speeds up the query. As we don't need to use the actual objects in Ruby code,
     # just need to know if they are present in DB.
-    if subscription.uk_area_before_type_cast.present?
+    if subscription.area_before_type_cast.present?
       location_by_area_filter(scope, subscription)
-    elsif subscription.uk_geopoint_before_type_cast.present? && subscription.radius_in_metres.present?
+    elsif subscription.geopoint_before_type_cast.present? && subscription.radius_in_metres.present?
       location_by_geopoint_filter(scope, subscription)
     else
       scope.none # Invalid location filter (having no area or geopoint) returns no matches
@@ -189,11 +197,9 @@ class SubscriptionVacanciesMatchingQuery
   # Including 'publish_on' in the distinct: The provided scope may be ordered by publish on date. When using distinct
   # with ordering, Postgres requires all selected columns to be included in the distinct clause or will fail during execution.
   def location_by_area_filter(scope, subscription)
-    subscriptions = Subscription.arel_table
-    organisations = Organisation.arel_table
     scope.joins("INNER JOIN subscriptions ON subscriptions.id = '#{subscription.id}'")
          .joins(:organisations)
-         .where(subscriptions[:uk_area].st_contains(organisations[:uk_geopoint]))
+         .where("ST_Contains(subscriptions.area, organisations.geopoint::geometry)")
   end
 
   # Filter vacancies where their organisations' geopoints fall within the subscription's radius from the subscription's
@@ -208,8 +214,8 @@ class SubscriptionVacanciesMatchingQuery
   def location_by_geopoint_filter(scope, subscription)
     scope.joins("INNER JOIN subscriptions ON subscriptions.id = '#{subscription.id}'")
          .joins(:organisations)
-         .where("ST_DWithin(organisations.uk_geopoint::geometry,
-                            subscriptions.uk_geopoint,
+         .where("ST_DWithin(ST_Transform(organisations.geopoint::geometry, #{BRITISH_NATIONAL_GRID_SRID}),
+                            ST_Transform(subscriptions.geopoint, #{BRITISH_NATIONAL_GRID_SRID}),
                             subscriptions.radius_in_metres)")
   end
 end
