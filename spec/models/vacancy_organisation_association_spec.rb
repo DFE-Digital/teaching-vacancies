@@ -10,7 +10,7 @@ RSpec.describe Vacancy do
     describe "#refresh_geolocation" do
       context "when associated with a school group (trust)" do
         it "uses the school group's geopoint" do
-          expect(vacancy.uk_geolocation.to_s).to eq("POINT (531387.0072560036 180307.9721039306)")
+          expect(vacancy.geolocation).to eq(school_group.geopoint)
         end
       end
 
@@ -20,7 +20,7 @@ RSpec.describe Vacancy do
         end
 
         it "updates the geolocation to the school's geopoint" do
-          expect(vacancy.uk_geolocation).to eq(school_one.uk_geopoint)
+          expect(vacancy.geolocation).to eq(school_one.geopoint)
         end
       end
 
@@ -30,11 +30,11 @@ RSpec.describe Vacancy do
         end
 
         it "creates a multi-point geolocation" do
-          expect(vacancy.uk_geolocation).to be_a(RGeo::Cartesian::MultiPointImpl)
-          points = [school_one.uk_geopoint, school_two.uk_geopoint]
-          expect(vacancy.uk_geolocation.count).to eq(2)
+          expect(vacancy.geolocation).to be_a(RGeo::Geographic::SphericalMultiPointImpl)
+          points = [school_one.geopoint, school_two.geopoint]
+          expect(vacancy.geolocation.count).to eq(2)
           # We need to test that each point in the multipoint is one of our school geopoints
-          vacancy.uk_geolocation.each do |point|
+          vacancy.geolocation.each do |point|
             expect(points).to include(point)
           end
         end
@@ -47,7 +47,7 @@ RSpec.describe Vacancy do
         end
 
         it "updates the geolocation back to the school group's geopoint" do
-          expect(vacancy.uk_geolocation).to eq(school_group.uk_geopoint)
+          expect(vacancy.geolocation).to eq(school_group.geopoint)
         end
       end
     end

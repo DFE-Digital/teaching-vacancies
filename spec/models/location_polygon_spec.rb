@@ -46,7 +46,7 @@ RSpec.describe LocationPolygon do
 
     context "with a polygon matching the location" do
       let(:area) { instance_double(RGeo::Geographic::SphericalPolygonImpl, invalid_reason: nil) }
-      let!(:polygon) { instance_double(described_class, name: "london", uk_area: area) }
+      let!(:polygon) { instance_double(described_class, name: "london", area: area) }
 
       before do
         allow(described_class).to receive(:with_name).with("london").and_return(polygon)
@@ -68,7 +68,7 @@ RSpec.describe LocationPolygon do
 
       context "when the polygon area raises an InvalidGeometry error" do
         before do
-          allow(polygon.uk_area).to receive(:invalid_reason).and_raise(RGeo::Error::InvalidGeometry)
+          allow(polygon.area).to receive(:invalid_reason).and_raise(RGeo::Error::InvalidGeometry)
         end
 
         it "doesn't return the polygon" do
@@ -81,13 +81,13 @@ RSpec.describe LocationPolygon do
   describe "#buffered_geometry_area" do
     let!(:polygon) { create(:location_polygon) }
 
-    it "returns a buffered geometry for the polygon with the expected SRID (27700)" do
+    it "returns a buffered geometry for the polygon with the expected SRID (4326)" do
       buffered = polygon.buffered_geometry_area(1000)
 
       expect(buffered).to be_present
       expect(buffered).to be_a(RGeo::Cartesian::PolygonImpl)
-      expect(buffered).not_to eq(polygon.uk_area)
-      expect(buffered.srid).to eq(27_700)
+      expect(buffered).not_to eq(polygon.area)
+      expect(buffered.srid).to eq(4326)
     end
 
     context "when the area transformation returns no value" do

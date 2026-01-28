@@ -171,6 +171,7 @@ shared:
     - job_preferences_id
     - name
     - radius
+    - area
     - uk_area
     - created_at
     - updated_at
@@ -231,6 +232,8 @@ shared:
     - id
     - name
     - location_type
+    - area
+    - centroid
     - uk_area
     - uk_centroid
     - created_at
@@ -254,6 +257,7 @@ shared:
     - postcode
     - locality
     - address3
+    - geopoint
     - uk_geopoint
     - gias_data
     - created_at
@@ -466,6 +470,7 @@ shared:
     - part_time_details
     - phases
     - key_stages
+    - geolocation
     - uk_geolocation
     - external_source
     - external_reference

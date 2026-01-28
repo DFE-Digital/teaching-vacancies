@@ -93,7 +93,7 @@ RSpec.describe "Subscriptions" do
       perform_enqueued_jobs do
         subject
       end
-      expect(created_subscription.reload.uk_area).not_to be_nil
+      expect(created_subscription.reload.area).not_to be_nil
       expect(created_subscription.radius_in_metres).to eq(16_090)
     end
 
@@ -278,8 +278,8 @@ RSpec.describe "Subscriptions" do
         }.to change { subscription.search_criteria["keyword"] }.to("maths")
          .and(not_change { subscription.search_criteria["location"] })
          .and(not_change { subscription.search_criteria["radius"] })
-         .and(not_change { subscription.uk_area })
-         .and(not_change { subscription.uk_geopoint })
+         .and(not_change { subscription.area })
+         .and(not_change { subscription.geopoint })
          .and(not_change { subscription.radius_in_metres })
       end
     end
@@ -294,8 +294,8 @@ RSpec.describe "Subscriptions" do
           subscription.reload
         }.to change { subscription.search_criteria.symbolize_keys }.to({ keyword: "maths", location: "London", radius: "15" })
           .and change { subscription.radius_in_metres }.to(24_135)
-          .and change { subscription.uk_area }
-          .and(not_change { subscription.uk_geopoint })
+          .and change { subscription.area }
+          .and(not_change { subscription.geopoint })
       end
     end
 
@@ -308,8 +308,8 @@ RSpec.describe "Subscriptions" do
           subject
           subscription.reload
         }.to change { subscription.search_criteria.symbolize_keys }.to({ keyword: "maths", location: "EC12JP", radius: "10" })
-        .and change { subscription.uk_geopoint&.as_text }.from(nil).to("POINT (412245.368031182 142199.44022881394)") # Default stub coordinates for tests.
-        .and change { subscription.uk_area }.to(nil)
+        .and change { subscription.geopoint&.as_text }.from(nil).to("POINT (-1.8262 51.1789)") # Default stub coordinates for tests.
+        .and change { subscription.area }.to(nil)
       end
     end
 
@@ -325,8 +325,8 @@ RSpec.describe "Subscriptions" do
           subject
           subscription.reload
         }.to change { subscription.search_criteria.symbolize_keys }.to({ keyword: "maths", location: "London", radius: "10" })
-        .and change { subscription.uk_geopoint }.to(nil)
-        .and change { subscription.uk_area }.from(nil).to(kind_of(RGeo::Cartesian::PolygonImpl))
+        .and change { subscription.geopoint }.to(nil)
+        .and change { subscription.area }.from(nil).to(kind_of(RGeo::Cartesian::PolygonImpl))
       end
     end
   end

@@ -3,18 +3,18 @@
   concise_attributes:
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: id
-    value_before_type_cast: '0285592a-5ded-4847-923a-039c235065c6'
+    value_before_type_cast: 0542b7c8-6818-471f-a9eb-13b478b09719
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: type
     value_before_type_cast: School
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: name
-    value_before_type_cast: Great Berry Primary School
+    value_before_type_cast: St Teresa's Catholic Primary School, Basildon
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: description
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: urn
-    value_before_type_cast: '137226'
+    value_before_type_cast: '139917'
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: uid
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -22,305 +22,7 @@
     value_before_type_cast: 2
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: url
-    value_before_type_cast: http://www.greatberry.co.uk/
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: minimum_age
-    value_before_type_cast: 4
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: maximum_age
-    value_before_type_cast: 11
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: address
-    value_before_type_cast: Great Berry Primary School, Forest Glade
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: town
-    value_before_type_cast: Basildon
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: county
-    value_before_type_cast: Essex
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: postcode
-    value_before_type_cast: SS16 6SG
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: locality
-    value_before_type_cast: Langdon Hills
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: address3
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: gias_data
-    value_before_type_cast: '{"URN":"137226","LA (code)":"881","LA (name)":"Essex","EstablishmentNumber":"2598","EstablishmentName":"Great
-      Berry Primary School","TypeOfEstablishment (code)":"34","TypeOfEstablishment
-      (name)":"Academy converter","EstablishmentTypeGroup (code)":"10","EstablishmentTypeGroup
-      (name)":"Academies","EstablishmentStatus (code)":"1","EstablishmentStatus (name)":"Open","ReasonEstablishmentOpened
-      (code)":"10","ReasonEstablishmentOpened (name)":"Academy Converter","OpenDate":"01-08-2011","ReasonEstablishmentClosed
-      (code)":"99","ReasonEstablishmentClosed (name)":"","CloseDate":"","PhaseOfEducation
-      (code)":"2","PhaseOfEducation (name)":"Primary","StatutoryLowAge":"4","StatutoryHighAge":"11","Boarders
-      (code)":"1","Boarders (name)":"No boarders","NurseryProvision (name)":"No Nursery
-      Classes","OfficialSixthForm (code)":"0","OfficialSixthForm (name)":"Not applicable","Gender
-      (code)":"3","Gender (name)":"Mixed","ReligiousCharacter (code)":"00","ReligiousCharacter
-      (name)":"Does not apply","ReligiousEthos (name)":"Does not apply","Diocese (code)":"0000","Diocese
-      (name)":"Not applicable","AdmissionsPolicy (code)":"0","AdmissionsPolicy (name)":"Not
-      applicable","SchoolCapacity":"420","SpecialClasses (code)":"2","SpecialClasses
-      (name)":"No Special Classes","CensusDate":"16-01-2025","NumberOfPupils":"426","NumberOfBoys":"210","NumberOfGirls":"216","PercentageFSM":"1.40","TrustSchoolFlag
-      (code)":"3","TrustSchoolFlag (name)":"Supported by a multi-academy trust","Trusts
-      (code)":"16922","Trusts (name)":"CRESCO MULTI ACADEMY TRUST","SchoolSponsorFlag
-      (name)":"Linked to a sponsor","SchoolSponsors (name)":"Cresco Multi Academy
-      Trust","FederationFlag (name)":"Not applicable","Federations (code)":"","Federations
-      (name)":"","UKPRN":"10034641","FEHEIdentifier":"","FurtherEducationType (name)":"Not
-      applicable","LastChangedDate":"09-07-2025","Street":"Great Berry Primary School,
-      Forest Glade","Locality":"Langdon Hills","Address3":"","Town":"Basildon","County
-      (name)":"Essex","Postcode":"SS16 6SG","SchoolWebsite":"http://www.greatberry.co.uk/","TelephoneNum":"01268544709","HeadTitle
-      (name)":"","HeadFirstName":"Damian","HeadLastName":"Pye","HeadPreferredJobTitle":"Headteacher","BSOInspectorateName
-      (name)":"Not applicable","InspectorateReport":"","DateOfLastInspectionVisit":"","NextInspectionVisit":"","TeenMoth
-      (name)":"Not applicable","TeenMothPlaces":"","CCF (name)":"Not applicable","SENPRU
-      (name)":"Not applicable","EBD (name)":"Not applicable","PlacesPRU":"","FTProv
-      (name)":"","EdByOther (name)":"Not applicable","Section41Approved (name)":"Not
-      applicable","SEN1 (name)":"","SEN2 (name)":"","SEN3 (name)":"","SEN4 (name)":"","SEN5
-      (name)":"","SEN6 (name)":"","SEN7 (name)":"","SEN8 (name)":"","SEN9 (name)":"","SEN10
-      (name)":"","SEN11 (name)":"","SEN12 (name)":"","SEN13 (name)":"","TypeOfResourcedProvision
-      (name)":"","ResourcedProvisionOnRoll":"","ResourcedProvisionCapacity":"","SenUnitOnRoll":"","SenUnitCapacity":"","GOR
-      (code)":"G","GOR (name)":"East of England","DistrictAdministrative (code)":"E07000066","DistrictAdministrative
-      (name)":"Basildon","AdministrativeWard (code)":"E05015643","AdministrativeWard
-      (name)":"Langdon Hills","ParliamentaryConstituency (code)":"E14001480","ParliamentaryConstituency
-      (name)":"South Basildon and East Thurrock","UrbanRural (code)":"UN1","UrbanRural
-      (name)":"Urban: Nearer to a major town or city","GSSLACode (name)":"E10000012","Easting":"566967","Northing":"187721","MSOA
-      (name)":"Basildon 021","LSOA (name)":"Basildon 021A","InspectorateName (name)":"","SENStat":"","SENNoStat":"","BoardingEstablishment
-      (name)":"","PropsName":"","PreviousLA (code)":"915","PreviousLA (name)":"Pre
-      LGR (1998) Essex","PreviousEstablishmentNumber":"2598","Country (name)":"","UPRN":"100091590616","SiteName":"","QABName
-      (code)":"0","QABName (name)":"Not applicable","EstablishmentAccredited (code)":"0","EstablishmentAccredited
-      (name)":"Not applicable","QABReport":"","CHNumber":"","MSOA (code)":"E02004444","LSOA
-      (code)":"E01021280","FSM":"6","AccreditationExpiryDate":""}'
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: created_at
-    value_before_type_cast: 2025-12-04 21:31:21.238531000 Z
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: updated_at
-    value_before_type_cast: 2025-12-04 21:31:21.238531000 Z
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: url_override
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: region
-    value_before_type_cast: East of England
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: detailed_school_type
-    value_before_type_cast: Academy converter
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: school_type
-    value_before_type_cast: Academies
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: local_authority_code
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: group_type
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: local_authority_within
-    value_before_type_cast: Essex
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: establishment_status
-    value_before_type_cast: Open
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: gias_data_hash
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: slug
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: email
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: safeguarding_information
-    value_before_type_cast: |-
-      Our organisation is committed to safeguarding and promoting the welfare of children, young people and vulnerable adults. We expect all staff, volunteers and trustees to share this commitment.
-
-      Our recruitment process follows the keeping children safe in education guidance.
-
-      Offers of employment may be subject to the following checks (where relevant):
-      childcare disqualification
-      Disclosure and Barring Service (DBS)
-      medical
-      online and social media
-      prohibition from teaching
-      right to work
-      satisfactory references
-      suitability to work with children
-
-      You must tell us about any unspent conviction, cautions, reprimands or warnings under the Rehabilitation of Offenders Act 1974 (Exceptions) Order 1975.
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: searchable_content
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: uk_geopoint
-    value_before_type_cast: 0101000020346C0000000000006E4D21410000000048EA0641
-  new_record: false
-  active_record_yaml_version: 2
-- !ruby/object:School
-  concise_attributes:
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: id
-    value_before_type_cast: 031f8479-96b9-45fc-ae14-5047c39d40b8
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: type
-    value_before_type_cast: School
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: name
-    value_before_type_cast: St Anne Line Catholic Infant School
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: description
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: urn
-    value_before_type_cast: '115160'
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: uid
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: phase
-    value_before_type_cast: 2
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: url
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: minimum_age
-    value_before_type_cast: 2
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: maximum_age
-    value_before_type_cast: 7
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: address
-    value_before_type_cast: Wickhay
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: town
-    value_before_type_cast: Basildon
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: county
-    value_before_type_cast: Essex
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: postcode
-    value_before_type_cast: SS15 5AF
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: locality
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: address3
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: gias_data
-    value_before_type_cast: '{"URN":"115160","LA (code)":"881","LA (name)":"Essex","EstablishmentNumber":"3451","EstablishmentName":"St
-      Anne Line Catholic Infant School","TypeOfEstablishment (code)":"02","TypeOfEstablishment
-      (name)":"Voluntary aided school","EstablishmentTypeGroup (code)":"4","EstablishmentTypeGroup
-      (name)":"Local authority maintained schools","EstablishmentStatus (code)":"2","EstablishmentStatus
-      (name)":"Closed","ReasonEstablishmentOpened (code)":"00","ReasonEstablishmentOpened
-      (name)":"Not applicable","OpenDate":"","ReasonEstablishmentClosed (code)":"10","ReasonEstablishmentClosed
-      (name)":"Academy Converter","CloseDate":"31-01-2024","PhaseOfEducation (code)":"2","PhaseOfEducation
-      (name)":"Primary","StatutoryLowAge":"2","StatutoryHighAge":"7","Boarders (code)":"1","Boarders
-      (name)":"No boarders","NurseryProvision (name)":"Has Nursery Classes","OfficialSixthForm
-      (code)":"2","OfficialSixthForm (name)":"Does not have a sixth form","Gender
-      (code)":"3","Gender (name)":"Mixed","ReligiousCharacter (code)":"03","ReligiousCharacter
-      (name)":"Roman Catholic","ReligiousEthos (name)":"Does not apply","Diocese (code)":"RC04","Diocese
-      (name)":"Diocese of Brentwood","AdmissionsPolicy (code)":"0","AdmissionsPolicy
-      (name)":"Not applicable","SchoolCapacity":"180","SpecialClasses (code)":"2","SpecialClasses
-      (name)":"No Special Classes","CensusDate":"18-01-2024","NumberOfPupils":"182","NumberOfBoys":"88","NumberOfGirls":"94","PercentageFSM":"12.10","TrustSchoolFlag
-      (code)":"0","TrustSchoolFlag (name)":"Not applicable","Trusts (code)":"","Trusts
-      (name)":"","SchoolSponsorFlag (name)":"Not applicable","SchoolSponsors (name)":"","FederationFlag
-      (name)":"Not under a federation","Federations (code)":"","Federations (name)":"","UKPRN":"10080357","FEHEIdentifier":"","FurtherEducationType
-      (name)":"Not applicable","LastChangedDate":"09-07-2024","Street":"Wickhay","Locality":"","Address3":"","Town":"Basildon","County
-      (name)":"Essex","Postcode":"SS15 5AF","SchoolWebsite":"","TelephoneNum":"","HeadTitle
-      (name)":"Mrs","HeadFirstName":"Melanie","HeadLastName":"Clayton","HeadPreferredJobTitle":"Headteacher","BSOInspectorateName
-      (name)":"Not applicable","InspectorateReport":"","DateOfLastInspectionVisit":"","NextInspectionVisit":"","TeenMoth
-      (name)":"Not applicable","TeenMothPlaces":"","CCF (name)":"Not applicable","SENPRU
-      (name)":"Not applicable","EBD (name)":"Not applicable","PlacesPRU":"","FTProv
-      (name)":"","EdByOther (name)":"Not applicable","Section41Approved (name)":"Not
-      applicable","SEN1 (name)":"SpLD - Specific Learning Difficulty","SEN2 (name)":"OTH
-      - Other Difficulty/Disability","SEN3 (name)":"SLCN - Speech, language and Communication","SEN4
-      (name)":"ASD - Autistic Spectrum Disorder","SEN5 (name)":"SEMH - Social, Emotional
-      and Mental Health","SEN6 (name)":"MSI - Multi-Sensory Impairment","SEN7 (name)":"MLD
-      - Moderate Learning Difficulty","SEN8 (name)":"SLD - Severe Learning Difficulty","SEN9
-      (name)":"PMLD - Profound and Multiple Learning Difficulty","SEN10 (name)":"","SEN11
-      (name)":"","SEN12 (name)":"","SEN13 (name)":"","TypeOfResourcedProvision (name)":"SEN
-      unit","ResourcedProvisionOnRoll":"","ResourcedProvisionCapacity":"","SenUnitOnRoll":"6","SenUnitCapacity":"8","GOR
-      (code)":"G","GOR (name)":"East of England","DistrictAdministrative (code)":"E07000066","DistrictAdministrative
-      (name)":"Basildon","AdministrativeWard (code)":"E05004028","AdministrativeWard
-      (name)":"Lee Chapel North","ParliamentaryConstituency (code)":"E14000544","ParliamentaryConstituency
-      (name)":"Basildon and Billericay","UrbanRural (code)":"C1","UrbanRural (name)":"(England/Wales)
-      Urban city and town","GSSLACode (name)":"E10000012","Easting":"569590","Northing":"188570","MSOA
-      (name)":"Basildon 017","LSOA (name)":"Basildon 017C","InspectorateName (name)":"","SENStat":"","SENNoStat":"","BoardingEstablishment
-      (name)":"","PropsName":"","PreviousLA (code)":"915","PreviousLA (name)":"Pre
-      LGR (1998) Essex","PreviousEstablishmentNumber":"3451","Country (name)":"","UPRN":"100091589703","SiteName":"","QABName
-      (code)":"0","QABName (name)":"Not applicable","EstablishmentAccredited (code)":"0","EstablishmentAccredited
-      (name)":"Not applicable","QABReport":"","CHNumber":"","MSOA (code)":"E02004440","LSOA
-      (code)":"E01021293","FSM":"22","AccreditationExpiryDate":""}'
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: created_at
-    value_before_type_cast: 2025-12-04 21:28:46.725641000 Z
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: updated_at
-    value_before_type_cast: 2025-12-04 21:28:46.725641000 Z
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: url_override
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: region
-    value_before_type_cast: East of England
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: detailed_school_type
-    value_before_type_cast: Voluntary aided school
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: school_type
-    value_before_type_cast: Local authority maintained schools
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: local_authority_code
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: group_type
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: local_authority_within
-    value_before_type_cast: Essex
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: establishment_status
-    value_before_type_cast: Closed
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: gias_data_hash
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: slug
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: email
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: safeguarding_information
-    value_before_type_cast: |-
-      Our organisation is committed to safeguarding and promoting the welfare of children, young people and vulnerable adults. We expect all staff, volunteers and trustees to share this commitment.
-
-      Our recruitment process follows the keeping children safe in education guidance.
-
-      Offers of employment may be subject to the following checks (where relevant):
-      childcare disqualification
-      Disclosure and Barring Service (DBS)
-      medical
-      online and social media
-      prohibition from teaching
-      right to work
-      satisfactory references
-      suitability to work with children
-
-      You must tell us about any unspent conviction, cautions, reprimands or warnings under the Rehabilitation of Offenders Act 1974 (Exceptions) Order 1975.
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: searchable_content
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: uk_geopoint
-    value_before_type_cast: 0101000020346C000000000000EC61214100000000D0040741
-  new_record: false
-  active_record_yaml_version: 2
-- !ruby/object:School
-  concise_attributes:
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: id
-    value_before_type_cast: 03c76a32-7c34-4d6d-bf09-8dc9f59a2f9a
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: type
-    value_before_type_cast: School
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: name
-    value_before_type_cast: Greensted Primary School & Nursery
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: description
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: urn
-    value_before_type_cast: '138604'
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: uid
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: phase
-    value_before_type_cast: 2
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: url
-    value_before_type_cast: http://www.greensted.essex.sch.uk
+    value_before_type_cast: http://www.st-teresasrc.essex.sch.uk
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: minimum_age
     value_before_type_cast: 3
@@ -329,7 +31,7 @@
     value_before_type_cast: 11
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: address
-    value_before_type_cast: Kirby Road
+    value_before_type_cast: Elsenham Crescent
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: town
     value_before_type_cast: Basildon
@@ -338,35 +40,37 @@
     value_before_type_cast: Essex
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: postcode
-    value_before_type_cast: SS14 1RX
+    value_before_type_cast: SS14 1UE
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: locality
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: address3
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: gias_data
-    value_before_type_cast: '{"URN":"138604","LA (code)":"881","LA (name)":"Essex","EstablishmentNumber":"2023","EstablishmentName":"Greensted
-      Primary School \u0026 Nursery","TypeOfEstablishment (code)":"28","TypeOfEstablishment
+    value_before_type_cast: '{"URN":"139917","LA (code)":"881","LA (name)":"Essex","EstablishmentNumber":"2091","EstablishmentName":"St
+      Teresa''s Catholic Primary School, Basildon","TypeOfEstablishment (code)":"28","TypeOfEstablishment
       (name)":"Academy sponsor led","EstablishmentTypeGroup (code)":"10","EstablishmentTypeGroup
       (name)":"Academies","EstablishmentStatus (code)":"1","EstablishmentStatus (name)":"Open","ReasonEstablishmentOpened
-      (code)":"06","ReasonEstablishmentOpened (name)":"New Provision","OpenDate":"01-09-2012","ReasonEstablishmentClosed
+      (code)":"06","ReasonEstablishmentOpened (name)":"New Provision","OpenDate":"01-12-2013","ReasonEstablishmentClosed
       (code)":"99","ReasonEstablishmentClosed (name)":"","CloseDate":"","PhaseOfEducation
       (code)":"2","PhaseOfEducation (name)":"Primary","StatutoryLowAge":"3","StatutoryHighAge":"11","Boarders
-      (code)":"9","Boarders (name)":"","NurseryProvision (name)":"Has Nursery Classes","OfficialSixthForm
-      (code)":"0","OfficialSixthForm (name)":"Not applicable","Gender (code)":"3","Gender
-      (name)":"Mixed","ReligiousCharacter (code)":"06","ReligiousCharacter (name)":"None","ReligiousEthos
-      (name)":"None","Diocese (code)":"0000","Diocese (name)":"Not applicable","AdmissionsPolicy
-      (code)":"0","AdmissionsPolicy (name)":"Not applicable","SchoolCapacity":"420","SpecialClasses
-      (code)":"0","SpecialClasses (name)":"Not applicable","CensusDate":"16-01-2025","NumberOfPupils":"505","NumberOfBoys":"254","NumberOfGirls":"251","PercentageFSM":"23.60","TrustSchoolFlag
+      (code)":"1","Boarders (name)":"No boarders","NurseryProvision (name)":"Has Nursery
+      Classes","OfficialSixthForm (code)":"2","OfficialSixthForm (name)":"Does not
+      have a sixth form","Gender (code)":"3","Gender (name)":"Mixed","ReligiousCharacter
+      (code)":"03","ReligiousCharacter (name)":"Roman Catholic","ReligiousEthos (name)":"Roman
+      Catholic","Diocese (code)":"RC04","Diocese (name)":"Diocese of Brentwood","AdmissionsPolicy
+      (code)":"0","AdmissionsPolicy (name)":"Not applicable","SchoolCapacity":"236","SpecialClasses
+      (code)":"0","SpecialClasses (name)":"Not applicable","CensusDate":"18-01-2024","NumberOfPupils":"235","NumberOfBoys":"102","NumberOfGirls":"133","PercentageFSM":"12.30","TrustSchoolFlag
       (code)":"3","TrustSchoolFlag (name)":"Supported by a multi-academy trust","Trusts
-      (code)":"3718","Trusts (name)":"LEE CHAPEL MULTI ACADEMY TRUST","SchoolSponsorFlag
-      (name)":"Linked to a sponsor","SchoolSponsors (name)":"Lee Chapel Multi Academy
-      Trust","FederationFlag (name)":"Not applicable","Federations (code)":"","Federations
-      (name)":"","UKPRN":"10038490","FEHEIdentifier":"","FurtherEducationType (name)":"Not
-      applicable","LastChangedDate":"04-11-2025","Street":"Kirby Road","Locality":"","Address3":"","Town":"Basildon","County
-      (name)":"Essex","Postcode":"SS14 1RX","SchoolWebsite":"www.greensted.essex.sch.uk","TelephoneNum":"01268553359","HeadTitle
-      (name)":"Mr","HeadFirstName":"Shiven","HeadLastName":"Chetty","HeadPreferredJobTitle":"Head
-      of School","BSOInspectorateName (name)":"Not applicable","InspectorateReport":"","DateOfLastInspectionVisit":"","NextInspectionVisit":"","TeenMoth
+      (code)":"2893","Trusts (name)":"CHRISTUS CATHOLIC TRUST","SchoolSponsorFlag
+      (name)":"Linked to a sponsor","SchoolSponsors (name)":"Catholic Diocese of Brentwood","FederationFlag
+      (name)":"Not applicable","Federations (code)":"","Federations (name)":"","UKPRN":"10042438","FEHEIdentifier":"","FurtherEducationType
+      (name)":"Not applicable","OfstedLastInsp":"21-10-2021","OfstedSpecialMeasures
+      (code)":"0","OfstedSpecialMeasures (name)":"Not applicable","LastChangedDate":"30-09-2024","Street":"Elsenham
+      Crescent","Locality":"","Address3":"","Town":"Basildon","County (name)":"Essex","Postcode":"SS14
+      1UE","SchoolWebsite":"www.st-teresasrc.essex.sch.uk","TelephoneNum":"01268553502","HeadTitle
+      (name)":"Mr","HeadFirstName":"Jacques","HeadLastName":"Bottjer","HeadPreferredJobTitle":"Headteacher","BSOInspectorateName
+      (name)":"Not applicable","InspectorateReport":"","DateOfLastInspectionVisit":"","NextInspectionVisit":"","TeenMoth
       (name)":"Not applicable","TeenMothPlaces":"","CCF (name)":"","SENPRU (name)":"Not
       applicable","EBD (name)":"Not applicable","PlacesPRU":"","FTProv (name)":"","EdByOther
       (name)":"","Section41Approved (name)":"Not applicable","SEN1 (name)":"","SEN2
@@ -374,22 +78,22 @@
       (name)":"","SEN8 (name)":"","SEN9 (name)":"","SEN10 (name)":"","SEN11 (name)":"","SEN12
       (name)":"","SEN13 (name)":"","TypeOfResourcedProvision (name)":"","ResourcedProvisionOnRoll":"","ResourcedProvisionCapacity":"","SenUnitOnRoll":"","SenUnitCapacity":"","GOR
       (code)":"G","GOR (name)":"East of England","DistrictAdministrative (code)":"E07000066","DistrictAdministrative
-      (name)":"Basildon","AdministrativeWard (code)":"E05015648","AdministrativeWard
-      (name)":"St Martin''s","ParliamentaryConstituency (code)":"E14001077","ParliamentaryConstituency
-      (name)":"Basildon and Billericay","UrbanRural (code)":"UN1","UrbanRural (name)":"Urban:
-      Nearer to a major town or city","GSSLACode (name)":"E10000012","Easting":"572687","Northing":"188664","MSOA
-      (name)":"Basildon 019","LSOA (name)":"Basildon 019E","InspectorateName (name)":"","SENStat":"","SENNoStat":"","BoardingEstablishment
-      (name)":"","PropsName":"","PreviousLA (code)":"999","PreviousLA (name)":"","PreviousEstablishmentNumber":"","Country
-      (name)":"","UPRN":"10013347571","SiteName":"","QABName (code)":"0","QABName
-      (name)":"Not applicable","EstablishmentAccredited (code)":"0","EstablishmentAccredited
-      (name)":"Not applicable","QABReport":"","CHNumber":"","MSOA (code)":"E02004442","LSOA
-      (code)":"E01021327","FSM":"119","AccreditationExpiryDate":""}'
+      (name)":"Basildon","AdministrativeWard (code)":"E05004033","AdministrativeWard
+      (name)":"Vange","ParliamentaryConstituency (code)":"E14001077","ParliamentaryConstituency
+      (name)":"Basildon and Billericay","UrbanRural (code)":"C1","UrbanRural (name)":"(England/Wales)
+      Urban city and town","GSSLACode (name)":"E10000012","Easting":"572949","Northing":"188608","MSOA
+      (name)":"Basildon 022","LSOA (name)":"Basildon 022D","InspectorateName (name)":"","SENStat":"","SENNoStat":"","BoardingEstablishment
+      (name)":"","PropsName":"","PreviousLA (code)":"999","PreviousLA (name)":"","PreviousEstablishmentNumber":"","OfstedRating
+      (name)":"Good","Country (name)":"","UPRN":"10090454349","SiteName":"","QABName
+      (code)":"0","QABName (name)":"Not applicable","EstablishmentAccredited (code)":"0","EstablishmentAccredited
+      (name)":"Not applicable","QABReport":"","CHNumber":"","MSOA (code)":"E02004445","LSOA
+      (code)":"E01021326","FSM":"29","AccreditationExpiryDate":""}'
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
-    value_before_type_cast: 2025-12-04 21:31:33.300566000 Z
+    value_before_type_cast: 2024-11-28 16:28:24.401152000 Z
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: updated_at
-    value_before_type_cast: 2025-12-04 21:31:33.300566000 Z
+    value_before_type_cast: 2024-11-28 23:00:46.134741000 Z
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: url_override
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -412,9 +116,14 @@
     name: establishment_status
     value_before_type_cast: Open
   - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: geopoint
+    value_before_type_cast: 0101000020E6100000EE69ECB108A0DF3F57A1B2BBEFC84940
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: gias_data_hash
+    value_before_type_cast: 953da3c0acd2b024bbc2bde43a3b16b5afe5c0bf0880b56f9ac296d104368f66
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: slug
+    value_before_type_cast: st-teresa-s-catholic-primary-school-basildon
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: email
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -437,8 +146,308 @@
       You must tell us about any unspent conviction, cautions, reprimands or warnings under the Rehabilitation of Offenders Act 1974 (Exceptions) Order 1975.
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: searchable_content
+    value_before_type_cast: "'basildon':7A 'catholic':4A 'primary':5A 's':3A 'school':6A
+      'st':1A 'teresa':2A"
+  new_record: false
+  active_record_yaml_version: 2
+- !ruby/object:School
+  concise_attributes:
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: uk_geopoint
-    value_before_type_cast: 0101000020346C0000000000001E7A214100000000C0070741
+    name: id
+    value_before_type_cast: 0f655e5a-0769-4173-aca1-6421f3c2e5c9
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: type
+    value_before_type_cast: School
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: name
+    value_before_type_cast: Northlands Primary School and Nursery
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: description
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: urn
+    value_before_type_cast: '114995'
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: uid
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: phase
+    value_before_type_cast: 2
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: url
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: minimum_age
+    value_before_type_cast: 3
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: maximum_age
+    value_before_type_cast: 11
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: address
+    value_before_type_cast: Winifred Road
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: town
+    value_before_type_cast: Basildon
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: county
+    value_before_type_cast: Essex
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: postcode
+    value_before_type_cast: SS13 3JQ
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: locality
+    value_before_type_cast: Pitsea
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: address3
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: gias_data
+    value_before_type_cast: '{"URN":"114995","LA (code)":"881","LA (name)":"Essex","EstablishmentNumber":"2786","EstablishmentName":"Northlands
+      Primary School and Nursery","TypeOfEstablishment (code)":"01","TypeOfEstablishment
+      (name)":"Community school","EstablishmentTypeGroup (code)":"4","EstablishmentTypeGroup
+      (name)":"Local authority maintained schools","EstablishmentStatus (code)":"2","EstablishmentStatus
+      (name)":"Closed","ReasonEstablishmentOpened (code)":"00","ReasonEstablishmentOpened
+      (name)":"Not applicable","OpenDate":"","ReasonEstablishmentClosed (code)":"06","ReasonEstablishmentClosed
+      (name)":"For Academy","CloseDate":"31-08-2016","PhaseOfEducation (code)":"2","PhaseOfEducation
+      (name)":"Primary","StatutoryLowAge":"3","StatutoryHighAge":"11","Boarders (code)":"1","Boarders
+      (name)":"No boarders","NurseryProvision (name)":"Has Nursery Classes","OfficialSixthForm
+      (code)":"2","OfficialSixthForm (name)":"Does not have a sixth form","Gender
+      (code)":"3","Gender (name)":"Mixed","ReligiousCharacter (code)":"00","ReligiousCharacter
+      (name)":"Does not apply","ReligiousEthos (name)":"Does not apply","Diocese (code)":"0000","Diocese
+      (name)":"Not applicable","AdmissionsPolicy (code)":"0","AdmissionsPolicy (name)":"Not
+      applicable","SchoolCapacity":"525","SpecialClasses (code)":"2","SpecialClasses
+      (name)":"No Special Classes","CensusDate":"","NumberOfPupils":"","NumberOfBoys":"","NumberOfGirls":"","PercentageFSM":"","TrustSchoolFlag
+      (code)":"0","TrustSchoolFlag (name)":"Not applicable","Trusts (code)":"","Trusts
+      (name)":"","SchoolSponsorFlag (name)":"Not applicable","SchoolSponsors (name)":"","FederationFlag
+      (name)":"Not under a federation","Federations (code)":"","Federations (name)":"","UKPRN":"","FEHEIdentifier":"","FurtherEducationType
+      (name)":"Not applicable","OfstedLastInsp":"09-12-2011","OfstedSpecialMeasures
+      (code)":"0","OfstedSpecialMeasures (name)":"Not applicable","LastChangedDate":"15-10-2018","Street":"Winifred
+      Road","Locality":"Pitsea","Address3":"","Town":"Basildon","County (name)":"Essex","Postcode":"SS13
+      3JQ","SchoolWebsite":"","TelephoneNum":"","HeadTitle (name)":"Mrs","HeadFirstName":"Elizabeth","HeadLastName":"Young","HeadPreferredJobTitle":"Headteacher","BSOInspectorateName
+      (name)":"Not applicable","InspectorateReport":"","DateOfLastInspectionVisit":"","NextInspectionVisit":"","TeenMoth
+      (name)":"Not applicable","TeenMothPlaces":"","CCF (name)":"Not applicable","SENPRU
+      (name)":"Not applicable","EBD (name)":"Not applicable","PlacesPRU":"","FTProv
+      (name)":"","EdByOther (name)":"Not applicable","Section41Approved (name)":"Not
+      applicable","SEN1 (name)":"","SEN2 (name)":"","SEN3 (name)":"","SEN4 (name)":"","SEN5
+      (name)":"","SEN6 (name)":"","SEN7 (name)":"","SEN8 (name)":"","SEN9 (name)":"","SEN10
+      (name)":"","SEN11 (name)":"","SEN12 (name)":"","SEN13 (name)":"","TypeOfResourcedProvision
+      (name)":"","ResourcedProvisionOnRoll":"","ResourcedProvisionCapacity":"","SenUnitOnRoll":"","SenUnitCapacity":"","GOR
+      (code)":"G","GOR (name)":"East of England","DistrictAdministrative (code)":"E07000066","DistrictAdministrative
+      (name)":"Basildon","AdministrativeWard (code)":"E05004030","AdministrativeWard
+      (name)":"Pitsea North West","ParliamentaryConstituency (code)":"E14000933","ParliamentaryConstituency
+      (name)":"South Basildon and East Thurrock","UrbanRural (code)":"C1","UrbanRural
+      (name)":"(England/Wales) Urban city and town","GSSLACode (name)":"E10000012","Easting":"573767","Northing":"188755","MSOA
+      (name)":"Basildon 013","LSOA (name)":"Basildon 013D","InspectorateName (name)":"","SENStat":"","SENNoStat":"","BoardingEstablishment
+      (name)":"","PropsName":"","PreviousLA (code)":"915","PreviousLA (name)":"Pre
+      LGR (1998) Essex","PreviousEstablishmentNumber":"2786","OfstedRating (name)":"Good","Country
+      (name)":"","UPRN":"10090455041","SiteName":"","QABName (code)":"0","QABName
+      (name)":"Not applicable","EstablishmentAccredited (code)":"0","EstablishmentAccredited
+      (name)":"Not applicable","QABReport":"","CHNumber":"","MSOA (code)":"E02004436","LSOA
+      (code)":"E01021305","FSM":"","AccreditationExpiryDate":""}'
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: created_at
+    value_before_type_cast: 2024-11-28 16:26:00.104039000 Z
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: updated_at
+    value_before_type_cast: 2024-11-28 23:01:00.378077000 Z
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: url_override
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: region
+    value_before_type_cast: East of England
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: detailed_school_type
+    value_before_type_cast: Community school
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: school_type
+    value_before_type_cast: Local authority maintained schools
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: local_authority_code
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: group_type
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: local_authority_within
+    value_before_type_cast: Essex
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: establishment_status
+    value_before_type_cast: Closed
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: geopoint
+    value_before_type_cast: 0101000020E61000006C9F23333431E03F492F65C412C94940
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: gias_data_hash
+    value_before_type_cast: 4d92dd2801d8dc556c4abf57d159e2035606210bad9a4e46090ae71a5b1122fc
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: slug
+    value_before_type_cast: northlands-primary-school-and-nursery
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: email
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: safeguarding_information
+    value_before_type_cast: |-
+      Our organisation is committed to safeguarding and promoting the welfare of children, young people and vulnerable adults. We expect all staff, volunteers and trustees to share this commitment.
+
+      Our recruitment process follows the keeping children safe in education guidance.
+
+      Offers of employment may be subject to the following checks (where relevant):
+      childcare disqualification
+      Disclosure and Barring Service (DBS)
+      medical
+      online and social media
+      prohibition from teaching
+      right to work
+      satisfactory references
+      suitability to work with children
+
+      You must tell us about any unspent conviction, cautions, reprimands or warnings under the Rehabilitation of Offenders Act 1974 (Exceptions) Order 1975.
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: searchable_content
+    value_before_type_cast: "'and':4A 'northlands':1A 'nursery':5A 'primary':2A 'school':3A"
+  new_record: false
+  active_record_yaml_version: 2
+- !ruby/object:School
+  concise_attributes:
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: id
+    value_before_type_cast: 0ff3a825-284d-4f46-b359-bc67566dc55e
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: type
+    value_before_type_cast: School
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: name
+    value_before_type_cast: Lincewood Junior School
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: description
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: urn
+    value_before_type_cast: '114868'
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: uid
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: phase
+    value_before_type_cast: 2
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: url
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: minimum_age
+    value_before_type_cast: 7
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: maximum_age
+    value_before_type_cast: 11
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: address
+    value_before_type_cast: Berry Lane
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: town
+    value_before_type_cast: Basildon
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: county
+    value_before_type_cast: Essex
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: postcode
+    value_before_type_cast: SS16 6AZ
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: locality
+    value_before_type_cast: Langdon Hills
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: address3
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: gias_data
+    value_before_type_cast: '{"URN":"114868","LA (code)":"881","LA (name)":"Essex","EstablishmentNumber":"2498","EstablishmentName":"Lincewood
+      Junior School","TypeOfEstablishment (code)":"01","TypeOfEstablishment (name)":"Community
+      school","EstablishmentTypeGroup (code)":"4","EstablishmentTypeGroup (name)":"Local
+      authority maintained schools","EstablishmentStatus (code)":"2","EstablishmentStatus
+      (name)":"Closed","ReasonEstablishmentOpened (code)":"00","ReasonEstablishmentOpened
+      (name)":"Not applicable","OpenDate":"","ReasonEstablishmentClosed (code)":"01","ReasonEstablishmentClosed
+      (name)":"Result of Amalgamation/Merger","CloseDate":"31-08-2003","PhaseOfEducation
+      (code)":"2","PhaseOfEducation (name)":"Primary","StatutoryLowAge":"7","StatutoryHighAge":"11","Boarders
+      (code)":"1","Boarders (name)":"No boarders","NurseryProvision (name)":"No Nursery
+      Classes","OfficialSixthForm (code)":"0","OfficialSixthForm (name)":"Not applicable","Gender
+      (code)":"3","Gender (name)":"Mixed","ReligiousCharacter (code)":"00","ReligiousCharacter
+      (name)":"Does not apply","ReligiousEthos (name)":"Does not apply","Diocese (code)":"0000","Diocese
+      (name)":"Not applicable","AdmissionsPolicy (code)":"0","AdmissionsPolicy (name)":"Not
+      applicable","SchoolCapacity":"","SpecialClasses (code)":"2","SpecialClasses
+      (name)":"No Special Classes","CensusDate":"","NumberOfPupils":"","NumberOfBoys":"","NumberOfGirls":"","PercentageFSM":"","TrustSchoolFlag
+      (code)":"0","TrustSchoolFlag (name)":"Not applicable","Trusts (code)":"","Trusts
+      (name)":"","SchoolSponsorFlag (name)":"Not applicable","SchoolSponsors (name)":"","FederationFlag
+      (name)":"Not under a federation","Federations (code)":"","Federations (name)":"","UKPRN":"","FEHEIdentifier":"","FurtherEducationType
+      (name)":"Not applicable","OfstedLastInsp":"","OfstedSpecialMeasures (code)":"0","OfstedSpecialMeasures
+      (name)":"Not applicable","LastChangedDate":"14-11-2018","Street":"Berry Lane","Locality":"Langdon
+      Hills","Address3":"","Town":"Basildon","County (name)":"Essex","Postcode":"SS16
+      6AZ","SchoolWebsite":"","TelephoneNum":"","HeadTitle (name)":"Mr","HeadFirstName":"T","HeadLastName":"Eastwell","HeadPreferredJobTitle":"Headteacher","BSOInspectorateName
+      (name)":"Not applicable","InspectorateReport":"","DateOfLastInspectionVisit":"","NextInspectionVisit":"","TeenMoth
+      (name)":"Not applicable","TeenMothPlaces":"","CCF (name)":"Not applicable","SENPRU
+      (name)":"Not applicable","EBD (name)":"Not applicable","PlacesPRU":"","FTProv
+      (name)":"","EdByOther (name)":"Not applicable","Section41Approved (name)":"Not
+      applicable","SEN1 (name)":"","SEN2 (name)":"","SEN3 (name)":"","SEN4 (name)":"","SEN5
+      (name)":"","SEN6 (name)":"","SEN7 (name)":"","SEN8 (name)":"","SEN9 (name)":"","SEN10
+      (name)":"","SEN11 (name)":"","SEN12 (name)":"","SEN13 (name)":"","TypeOfResourcedProvision
+      (name)":"","ResourcedProvisionOnRoll":"","ResourcedProvisionCapacity":"","SenUnitOnRoll":"","SenUnitCapacity":"","GOR
+      (code)":"G","GOR (name)":"East of England","DistrictAdministrative (code)":"E07000066","DistrictAdministrative
+      (name)":"Basildon","AdministrativeWard (code)":"E05004027","AdministrativeWard
+      (name)":"Langdon Hills","ParliamentaryConstituency (code)":"E14000933","ParliamentaryConstituency
+      (name)":"South Basildon and East Thurrock","UrbanRural (code)":"C1","UrbanRural
+      (name)":"(England/Wales) Urban city and town","GSSLACode (name)":"E10000012","Easting":"567772","Northing":"187477","MSOA
+      (name)":"Basildon 021","LSOA (name)":"Basildon 021C","InspectorateName (name)":"","SENStat":"","SENNoStat":"","BoardingEstablishment
+      (name)":"","PropsName":"","PreviousLA (code)":"915","PreviousLA (name)":"Pre
+      LGR (1998) Essex","PreviousEstablishmentNumber":"2498","OfstedRating (name)":"","Country
+      (name)":"","UPRN":"","SiteName":"","QABName (code)":"0","QABName (name)":"Not
+      applicable","EstablishmentAccredited (code)":"0","EstablishmentAccredited (name)":"Not
+      applicable","QABReport":"","CHNumber":"","MSOA (code)":"E02004444","LSOA (code)":"E01021282","FSM":"","AccreditationExpiryDate":""}'
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: created_at
+    value_before_type_cast: 2024-11-28 16:25:58.975507000 Z
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: updated_at
+    value_before_type_cast: 2024-11-28 23:01:01.282103000 Z
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: url_override
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: region
+    value_before_type_cast: East of England
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: detailed_school_type
+    value_before_type_cast: Community school
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: school_type
+    value_before_type_cast: Local authority maintained schools
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: local_authority_code
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: group_type
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: local_authority_within
+    value_before_type_cast: Essex
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: establishment_status
+    value_before_type_cast: Closed
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: geopoint
+    value_before_type_cast: 0101000020E6100000F3A8E30080D0DA3F57420906D6C74940
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: gias_data_hash
+    value_before_type_cast: 32e7571418abe718595b5bb84aa7bd301a4b8c17c7eaa3985789568959750d9d
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: slug
+    value_before_type_cast: lincewood-junior-school
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: email
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: safeguarding_information
+    value_before_type_cast: |-
+      Our organisation is committed to safeguarding and promoting the welfare of children, young people and vulnerable adults. We expect all staff, volunteers and trustees to share this commitment.
+
+      Our recruitment process follows the keeping children safe in education guidance.
+
+      Offers of employment may be subject to the following checks (where relevant):
+      childcare disqualification
+      Disclosure and Barring Service (DBS)
+      medical
+      online and social media
+      prohibition from teaching
+      right to work
+      satisfactory references
+      suitability to work with children
+
+      You must tell us about any unspent conviction, cautions, reprimands or warnings under the Rehabilitation of Offenders Act 1974 (Exceptions) Order 1975.
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: searchable_content
+    value_before_type_cast: "'junior':2A 'lincewood':1A 'school':3A"
   new_record: false
   active_record_yaml_version: 2
