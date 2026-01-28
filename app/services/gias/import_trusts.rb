@@ -84,7 +84,6 @@ class Gias::ImportTrusts
     end
   end
 
-  # rubocop:disable Metrics/MethodLength
   def update_geolocation_for_changed_postcodes
     # TODO: This is the slowest part of the whole import flow, and should be moved into individual
     #       background jobs in the future
@@ -93,12 +92,9 @@ class Gias::ImportTrusts
         coordinates = Geocoding.new(trust[:postcode]).coordinates
         next if coordinates == [0, 0]
 
-        geopoint = GeoFactories::FACTORY_4326.point(coordinates.second, coordinates.first)
-
         {
           uid: trust[:uid],
-          uk_geopoint: GeoFactories.convert_wgs84_to_sr27700(geopoint),
-          geopoint: geopoint,
+          uk_geopoint: GeoFactories.convert_wgs84_to_sr27700(GeoFactories::FACTORY_4326.point(coordinates.second, coordinates.first)),
         }
       }.compact
 
@@ -113,7 +109,6 @@ class Gias::ImportTrusts
       end
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
   def multi_academy_trust_data?(row)
     # The CSVs contain data for multiple types of school, but we are only interested in
