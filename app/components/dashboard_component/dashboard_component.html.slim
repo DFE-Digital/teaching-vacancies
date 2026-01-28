@@ -19,7 +19,7 @@
   .govuk-grid-row class="govuk-!-margin-bottom-7"
     - if @vacancies.many?
       .govuk-grid-column-full
-        = render SortComponent.new(path: method(:organisation_jobs_with_type_path),sort: @sort,url_params: { type: @selected_type },display_type: "dropdown")
+        = render SortComponent.new(path: method(:organisation_jobs_with_type_path), sort: @sort, url_params: { type: @selected_type }, display_type: "inline-select")
         
     - if @organisation.school_group?
       .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-4"
