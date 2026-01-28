@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobListing::ContractInformationForm, type: :model do
-  subject(:form) { described_class.new(params, vacancy) }
+  subject(:form) { described_class.new(params) }
 
   let(:vacancy) { build(:vacancy) }
   let(:working_patterns) { nil }

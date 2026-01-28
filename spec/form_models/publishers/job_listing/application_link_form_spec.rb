@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobListing::ApplicationLinkForm, type: :model do
-  subject { described_class.new({ current_organisation: organisation }, vacancy) }
+  subject { described_class.new }
 
   let(:organisation) { build_stubbed(:trust) }
   let(:vacancy) { build_stubbed(:vacancy, enable_job_applications: enable_job_applications) }

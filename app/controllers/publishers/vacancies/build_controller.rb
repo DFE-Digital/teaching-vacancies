@@ -13,7 +13,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   helper_method :current_publisher_preference
 
   def show
-    @form = form_class.new(form_class.load_form(vacancy), vacancy, current_publisher)
+    @form = form_class.load_from_model(vacancy, current_publisher: current_publisher)
     case current_step
     when :documents
       return redirect_to(new_organisation_job_document_path(vacancy.id,
@@ -25,7 +25,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   end
 
   def update
-    @form = form_class.new(form_params, vacancy, current_publisher)
+    @form = form_class.load_from_params(form_params, vacancy, current_publisher: current_publisher)
 
     if @form.valid?
       update_vacancy

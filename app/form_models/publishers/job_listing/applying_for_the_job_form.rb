@@ -1,4 +1,4 @@
-class Publishers::JobListing::ApplyingForTheJobForm < Publishers::JobListing::VacancyForm
+class Publishers::JobListing::ApplyingForTheJobForm < Publishers::JobListing::JobListingForm
   validates :application_form_type, presence: true
 
   def self.fields
@@ -7,15 +7,18 @@ class Publishers::JobListing::ApplyingForTheJobForm < Publishers::JobListing::Va
   attr_accessor(*fields)
 
   class << self
-    def load_form(model)
-      if model.enable_job_applications
-        { application_form_type: model.religion_type || "no_religion" }
-      elsif model.enable_job_applications == false
-        { application_form_type: "other" }
-      else
-        {}
-      end
+    # rubocop:disable Lint/UnusedMethodArgument
+    def load_from_model(model, current_publisher:)
+      attrs = if model.enable_job_applications
+                { application_form_type: model.religion_type || "no_religion" }
+              elsif model.enable_job_applications == false
+                { application_form_type: "other" }
+              else
+                {}
+              end
+      new(attrs)
     end
+    # rubocop:enable Lint/UnusedMethodArgument
   end
 
   def params_to_save

@@ -78,7 +78,7 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
             .permit(:application_form_type)
     else
       {}
-    end.merge(current_organisation: current_organisation)
+    end
   end
 
   def how_to_receive_applications_params(params)
@@ -87,13 +87,12 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
             .permit(:receive_applications)
     else
       {}
-    end.merge(current_organisation: current_organisation)
+    end
   end
 
   def application_link_params(params)
     params.require(:publishers_job_listing_application_link_form)
           .permit(:application_link)
-          .merge(current_organisation: current_organisation)
   end
 
   def school_visits_params(params)
@@ -102,7 +101,7 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
             .permit(:school_visits)
     else
       {}
-    end.merge(current_organisation: current_organisation)
+    end
   end
 
   def visa_sponsorship_params(params)
@@ -111,13 +110,12 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
             .permit(:visa_sponsorship_available)
     else
       {}
-    end.merge(current_organisation: current_organisation)
+    end
   end
 
   def contact_details_params(params)
     params.require(:publishers_job_listing_contact_details_form)
           .permit(:contact_email, :other_contact_email, :contact_number, :contact_number_provided)
-          .merge(current_organisation: current_organisation)
   end
 
   def confirm_contact_details_params(params)

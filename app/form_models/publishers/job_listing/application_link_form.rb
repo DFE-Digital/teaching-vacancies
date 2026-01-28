@@ -1,4 +1,4 @@
-class Publishers::JobListing::ApplicationLinkForm < Publishers::JobListing::VacancyForm
+class Publishers::JobListing::ApplicationLinkForm < Publishers::JobListing::JobListingForm
   validates :application_link, presence: true, url: { allow_blank: true }
 
   def self.fields

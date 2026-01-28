@@ -1,4 +1,4 @@
-class Publishers::JobListing::JobRoleForm < Publishers::JobListing::VacancyForm
+class Publishers::JobListing::JobRoleForm < Publishers::JobListing::JobListingForm
   validates :job_roles, presence: { message: "At least one job role is required" }
   validate :job_roles_inclusion, if: -> { job_roles.present? }
 
@@ -6,10 +6,6 @@ class Publishers::JobListing::JobRoleForm < Publishers::JobListing::VacancyForm
     %i[job_roles]
   end
   attr_accessor(*fields)
-
-  def job_roles
-    params[:job_roles]
-  end
 
   def params_to_save
     { job_roles: job_roles }

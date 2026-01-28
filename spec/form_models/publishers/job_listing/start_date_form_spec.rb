@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobListing::StartDateForm, type: :model do
-  subject { described_class.new(params, vacancy) }
+  subject { described_class.new(params) }
 
   let(:vacancy) { build_stubbed(:vacancy) }
 
@@ -24,6 +24,7 @@ RSpec.describe Publishers::JobListing::StartDateForm, type: :model do
       "latest_start_date(2i)" => latest_start_date.month.to_s,
       "latest_start_date(3i)" => latest_start_date.day.to_s,
       other_start_date_details: other_start_date_details,
+      expires_at: vacancy.expires_at,
     }
   end
 

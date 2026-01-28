@@ -1,4 +1,4 @@
-class Publishers::JobListing::JobTitleForm < Publishers::JobListing::VacancyForm
+class Publishers::JobListing::JobTitleForm < Publishers::JobListing::JobListingForm
   include ActionView::Helpers::SanitizeHelper
 
   attr_accessor :job_title, :status
