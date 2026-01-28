@@ -92,6 +92,7 @@ gem "sidekiq-cron"
 gem "sidekiq-limit_fetch"
 gem "skylight"
 gem "slim-rails"
+gem "turbo-rails"
 gem "validate_url"
 gem "valid_email2"
 # this upgrade creates 848 test failures

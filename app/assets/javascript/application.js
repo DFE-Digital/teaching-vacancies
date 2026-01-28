@@ -3,6 +3,9 @@ import * as Sentry from '@sentry/browser';
 import 'core-js/modules/es.weak-map';
 import 'core-js/modules/es.weak-set';
 import '@stimulus/polyfills';
+
+import '@hotwired/turbo-rails';
+
 import * as govukFrontend from 'govuk-frontend';
 import $ from 'jquery';
 
@@ -38,6 +41,8 @@ import TrackedLinkController from './js_components/trackedLink/trackedLink';
 import UtilsController from './js_components/utils';
 
 import './clarity_cookies';
+
+window.Turbo.session.drive = false;
 
 Sentry.init({
   // `sentryConfig` is set from the application layout

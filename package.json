@@ -12,6 +12,7 @@
   ],
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
+    "@hotwired/turbo-rails": "^8.0.21",
     "@ministryofjustice/frontend": "^3.7.2",
     "@rails/actiontext": "^8.1.200",
     "@rails/activestorage": "^8.1.200",
