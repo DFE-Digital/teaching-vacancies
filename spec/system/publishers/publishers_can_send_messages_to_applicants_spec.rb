@@ -201,6 +201,8 @@ RSpec.describe "Publishers can send messages to job applicants" do
         login_publisher(publisher: publisher, organisation: organisation)
 
         visit messages_organisation_job_job_application_path(vacancy.id, job_application.id)
+
+        find_by_id("messages-list")
       end
 
       after { logout }

@@ -2,9 +2,8 @@ require "rails_helper"
 
 RSpec.describe PublisherNotesOnJobApplicationComponent, type: :component do
   let(:notes_component) { Capybara.string(render_component) }
-  let(:component) { described_class.new(job_application:, vacancy:, notes_form:) }
+  let(:component) { described_class.new(job_application:, vacancy:, note: note) }
   let(:render_component) { render_inline(component) }
-  let(:notes_form) { Publishers::JobApplication::NotesForm.new }
   let(:note) { build_stubbed(:note, created_at:) }
   let(:job_application) { note.job_application }
   let(:vacancy) { job_application.vacancy }

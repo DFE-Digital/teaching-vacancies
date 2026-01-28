@@ -5,6 +5,7 @@ module ComponentsHelper
     dashboard: "DashboardComponent",
     empty_section: "EmptySectionComponent",
     filters: "FiltersComponent",
+    job_application_notes: "PublisherNotesOnJobApplicationComponent",
     job_application_review: "JobApplicationReviewComponent",
     landing_page_link_group: "LandingPageLinkGroupComponent",
     map: "MapComponent",

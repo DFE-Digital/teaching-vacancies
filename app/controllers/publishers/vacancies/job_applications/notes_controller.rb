@@ -2,12 +2,12 @@ class Publishers::Vacancies::JobApplications::NotesController < Publishers::Vaca
   before_action :set_job_application
 
   def create
-    @notes_form = Publishers::JobApplication::NotesForm.new(notes_form_params)
+    @note = @job_application.notes.create(note_params)
 
-    if @notes_form.valid?
-      Note.create(notes_attributes)
+    if @note.persisted?
       redirect_to redirect_path, success: t(".success")
     else
+      flash[:error] = @note.errors.full_messages
       redirect_to redirect_path, warning: t(".failure")
     end
   end
@@ -20,12 +20,8 @@ class Publishers::Vacancies::JobApplications::NotesController < Publishers::Vaca
 
   private
 
-  def notes_attributes
-    notes_form_params.merge(job_application: @job_application, publisher: current_publisher)
-  end
-
-  def notes_form_params
-    params[:publishers_job_application_notes_form].permit(:content)
+  def note_params
+    params[:note].permit(:content).merge(publisher: current_publisher)
   end
 
   def redirect_path

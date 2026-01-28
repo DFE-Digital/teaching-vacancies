@@ -459,7 +459,7 @@ en:
         logo: Upload a file
         url_override: "Override the %{organisation_type}'s website (defaults to \"%{gias_url}\")"
 
-      publishers_job_application_notes_form:
+      note:
         content: Add a note
 
       publishers_job_application_update_status_form:

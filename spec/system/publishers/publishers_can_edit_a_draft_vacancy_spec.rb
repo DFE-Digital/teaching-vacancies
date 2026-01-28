@@ -38,7 +38,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         click_on I18n.t("buttons.save_and_continue")
         # wait for page load
         find("form.new_publishers_job_listing_job_role_form")
-        find("a[href='/organisation/jobs/draft']")
+        find("footer")
       end
 
       it "passes a11y", :a11y do

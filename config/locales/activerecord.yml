@@ -608,13 +608,6 @@ en:
               invalid: Enter a valid email address in the correct format, like name@example.com
             recent_code_request: XYZ
 
-
-        publishers/job_application/notes_form:
-          attributes:
-            content:
-              blank: Enter a note
-              too_long: A note must not be more than 150 characters
-
         publishers/job_application/messages_form:
           attributes:
             content:
@@ -670,6 +663,12 @@ en:
       vacancy/expires_at: Application deadline (time)
     errors:
       models:
+        note:
+          attributes:
+            content:
+              blank: Enter a note
+              too_long: A note must not be more than 150 characters
+
         jobseeker:
           attributes:
             email:

@@ -61,5 +61,5 @@
       - @self_disclosure.events.each do |key, value|
         - timeline.with_item(key:, value:)
 
-    = render PublisherNotesOnJobApplicationComponent.new(job_application: @job_application, vacancy: @vacancy, notes_form: @notes_form,
+    = job_application_notes(job_application: @job_application, vacancy: @vacancy, note: @note,
       return_to_url: organisation_job_job_application_self_disclosure_path(@vacancy.id, @job_application.id))
