@@ -19,7 +19,7 @@ RSpec.describe "Publishers can add notes to a job application" do
       before do
         publisher_application_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
         # wait for page load
-        find("a.govuk-link[href='personal_details']")
+        find("a.govuk-link[href='#personal_details']")
       end
 
       it "passes a11y", :a11y do
