@@ -3,6 +3,10 @@ import { Controller } from '@hotwired/stimulus';
 export default class extends Controller {
   static targets = ['editor', 'counter'];
 
+  static values = {
+    maxWords: { type: Number, default: 1500 },
+  };
+
   connect() {
     this.boundUpdateCount = this.updateCount.bind(this);
     this.editorTarget.addEventListener('trix-initialize', this.boundUpdateCount);
@@ -31,6 +35,12 @@ export default class extends Controller {
   }
 
   displayCount(wordCount) {
-    this.counterTarget.textContent = ` you have used ${wordCount} words`;
+    const formattedCount = this.formatNumber(wordCount);
+    const formattedMax = this.formatNumber(this.maxWordsValue);
+    this.counterTarget.textContent = `You have written ${formattedCount} words in this section. The word limit for this section is ${formattedMax} words. Schools typically expect your personal statement to be between 500 and 1,000 words long.`;
+  }
+
+  formatNumber(num) {
+    return num >= 1000 ? num.toLocaleString('en-GB') : num.toString();
   }
 }

@@ -6,6 +6,7 @@ en:
           attributes:
             personal_statement_richtext:
               blank: Enter your personal statement
+              too_long: Your personal statement must be 1,500 words or fewer
             personal_statement_section_completed:
               inclusion: Select yes if you have completed this section
   helpers:
