@@ -1,0 +1,38 @@
+en:
+  activemodel:
+    errors:
+      models:
+        publishers/vacancies/job_applications/referee_form:
+          attributes:
+            name:
+              blank: Referee name can't be blank
+            job_title:
+              blank: Referee job title can't be blank
+            email:
+              blank: Referee email can't be blank
+              email: Referee email must be of the form example@example.com
+            organisation:
+              blank: Referee organisation can't be blank
+            relationship:
+              blank: Referee relationship can't be blank
+  helpers:
+    legend:
+      publishers_vacancies_job_applications_referee_form:
+        uploaded_details: Would you like to upload a reference or referee details?
+        phone_number: Phone number
+        is_most_recent_employer: Is this your current or most recent employer?
+    label:
+      publishers_vacancies_job_applications_referee_form:
+        name: Referee name
+        uploaded_details_options:
+          true: "Upload a reference"
+          false: "Referee details"
+        email: Referee email address
+        job_title: Referee job title
+        organisation: Referee organisation
+        relationship: Referee relationship to applicant
+        phone_number: Referee phone number
+
+    hint:
+      publishers_vacancies_job_applications_referee_form:
+        uploaded_details: Select one option
