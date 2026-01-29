@@ -35,12 +35,15 @@ export default class extends Controller {
   }
 
   displayCount(wordCount) {
-    const formattedCount = this.formatNumber(wordCount);
-    const formattedMax = this.formatNumber(this.maxWordsValue);
-    this.counterTarget.textContent = `You have written ${formattedCount} words in this section. The word limit for this section is ${formattedMax} words. Schools typically expect your personal statement to be between 500 and 1,000 words long.`;
+    const formattedCount = this.constructor.formatNumber(wordCount);
+    const formattedMax = this.constructor.formatNumber(this.maxWordsValue);
+    const message = `You have written ${formattedCount} words in this section. `
+      + `The word limit for this section is ${formattedMax} words. `
+      + 'Schools typically expect your personal statement to be between 500 and 1,000 words long.';
+    this.counterTarget.textContent = message;
   }
 
-  formatNumber(num) {
+  static formatNumber(num) {
     return num >= 1000 ? num.toLocaleString('en-GB') : num.toString();
   }
 }
