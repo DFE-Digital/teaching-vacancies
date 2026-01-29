@@ -151,14 +151,10 @@ class Gias::ImportSchoolsAndLocalAuthorities
     end
 
     def school_location_data(row)
-      return {} unless row["Easting"] && row["Northing"]
+      return { uk_geopoint: nil } unless row["Easting"].to_i.positive? && row["Northing"].to_i.positive?
 
-      uk27700 = GeoFactories::FACTORY_27700.point(row["Easting"].to_i, row["Northing"].to_i)
-      {
-        uk_geopoint: uk27700,
-        geopoint: GeoFactories.convert_sr27700_to_wgs84(uk27700),
-      }
-    end
+      { uk_geopoint: GeoFactories::FACTORY_27700.point(row["Easting"].to_i, row["Northing"].to_i) }
+  end
 
     def membership_data(row)
       {

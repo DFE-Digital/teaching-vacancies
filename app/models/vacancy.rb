@@ -164,6 +164,8 @@ class Vacancy < ApplicationRecord
 
   after_save :update_conversation_searchable_content, if: -> { saved_change_to_job_title? }
 
+  self.ignored_columns += %i[geolocation]
+
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[8:00 9:00 12:00 15:00 23:59].freeze
 
@@ -258,11 +260,11 @@ class Vacancy < ApplicationRecord
   end
 
   def distance_in_miles_to(search_coordinates)
-    if geolocation.is_a? RGeo::Geographic::SphericalMultiPointImpl
+    if uk_geolocation.is_a? RGeo::Cartesian::MultiPointImpl
       # if there are multiple geolocations then return the distance to the nearest one to the given search location
-      geolocation.map { |geolocation| calculate_distance(search_coordinates, geolocation) }.min
+      uk_geolocation.map { |geolocation| self.class.calculate_distance(search_coordinates, geolocation) }.min
     else
-      calculate_distance(search_coordinates, geolocation)
+      self.class.calculate_distance(search_coordinates, uk_geolocation)
     end
   end
 
@@ -333,8 +335,12 @@ class Vacancy < ApplicationRecord
                 .find_each(&:update_searchable_content)
   end
 
-  def calculate_distance(search_coordinates, geolocation)
-    Geocoder::Calculations.distance_between(search_coordinates, [geolocation.latitude, geolocation.longitude])
+  class << self
+    def calculate_distance(search_coordinates, geolocation)
+      search_location = GeoFactories::FACTORY_4326.point(search_coordinates.second, search_coordinates.first)
+      search_point = GeoFactories.convert_wgs84_to_sr27700 search_location
+      search_point.distance(geolocation) / DistanceHelper::METRES_PER_MILE
+    end
   end
 
   def slug_candidates
@@ -351,12 +357,6 @@ class Vacancy < ApplicationRecord
     return if job_address_fields.any?(&:present?)
 
     # :nocov:
-    self.geolocation = if organisations.one?
-                         organisation.geopoint
-                       else
-                         points = organisations.filter_map(&:geopoint)
-                         points.presence && points.first.factory.multi_point(points)
-                       end
     self.uk_geolocation = if organisations.one?
                             organisation.uk_geopoint
                           else

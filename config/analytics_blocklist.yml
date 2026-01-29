@@ -235,11 +235,9 @@
     - agreed_for_information_sharing_ciphertext
     - true_and_complete_ciphertext
   :subscriptions:
-    - area
-    - geopoint
-    - uk_area
-    - uk_geopoint
-    - radius_in_metres
+  - uk_area
+  - uk_geopoint
+  - radius_in_metres
   :conversations:
     - searchable_content
   :solid_queue_semaphores:

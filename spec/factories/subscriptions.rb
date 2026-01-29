@@ -14,6 +14,26 @@ FactoryBot.define do
       subject { nil } # Legacy criteria
       organisation_slug { nil }
       newly_qualified_teacher { nil } # Legacy criteria
+
+      area { nil }
+      geopoint { nil }
+    end
+
+    after(:build) do |subscription, evaluator|
+      if subscription.uk_geopoint.nil? && evaluator.geopoint.present?
+        subscription.uk_geopoint = if evaluator.geopoint.is_a?(String)
+                                     GeoFactories.convert_wgs84_to_sr27700(GeoFactories::FACTORY_4326.parse_wkt(evaluator.geopoint))
+                                   else
+                                     GeoFactories.convert_wgs84_to_sr27700(evaluator.geopoint)
+                                   end
+      end
+      if subscription.uk_area.nil? && evaluator.area.present?
+        subscription.uk_area = if evaluator.area.is_a?(String)
+                                 GeoFactories.convert_wgs84_to_sr27700(GeoFactories::FACTORY_4326.parse_wkt(evaluator.area))
+                               else
+                                 GeoFactories.convert_wgs84_to_sr27700(evaluator.area)
+                               end
+      end
     end
 
     email { Faker::Internet.email(domain: "contoso.com") }
