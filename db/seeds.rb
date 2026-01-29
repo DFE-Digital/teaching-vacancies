@@ -72,6 +72,17 @@ schools.each do |school|
   2.times { FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false) }
 end
 
+stephen = Publisher.find_by!(email: "stephen.dicks@education.gov.uk")
+
+School.find_each.reject(&:not_applicable?).each do |school|
+  stephen.organisations << school
+  attrs = { organisations: [school],
+            phases: [school.phase],
+            publisher_organisation: school,
+            publisher: stephen }
+  rand(8).times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+end
+
 # Vacancies at Weydon trust central office
 attrs = { organisations: [weydon_trust], phases: %w[secondary], publisher_organisation: weydon_trust, publisher: Publisher.all.sample }
 FactoryBot.create(:vacancy, :for_seed_data, **attrs)
