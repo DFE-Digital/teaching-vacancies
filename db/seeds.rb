@@ -16,6 +16,10 @@ southampton_la = SchoolGroup.find_by!(local_authority_code: "852")
 abraham_moss = School.find_by!(urn: "150009")
 #  sizth form or college
 aston_maths = School.find_by!(urn: "151725")
+# Catholic school
+st_anthony = School.find_by!(urn: "151965")
+# Church of England school
+osmaston_cofe = School.find_by!(urn: "112847")
 
 # Team users
 users = [
@@ -45,12 +49,14 @@ schools = [bexleyheath_school,
            aston_maths,
            weydon_trust.schools.detect { |s| s.phase != "not_applicable" && s.phase.exclude?("middle") },
            southampton_la.schools.detect { |s| s.phase != "not_applicable" && s.phase.exclude?("middle") },
-           abraham_moss]
+           abraham_moss,
+           st_anthony,
+           osmaston_cofe]
 
 user_emails = users.map { |u| u.fetch(:email) }
 
 users.each do |user|
-  organisations = [bexleyheath_school, weydon_trust, southampton_la, abraham_moss, aston_maths]
+  organisations = [bexleyheath_school, weydon_trust, southampton_la, abraham_moss, aston_maths, st_anthony, osmaston_cofe]
   publisher = Publisher.create(organisations: organisations, **user)
 
   organisations.each do |organisation|
