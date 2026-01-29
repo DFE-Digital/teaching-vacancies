@@ -43,10 +43,14 @@ If not already setup, you can install it using the project Makefile. From the pr
 ```
 make bin/konduit.sh
 ```
-Connect to the DB PSQL console:
+Connect to the DB PSQL console on the desired env/review-app:
 ```
-NAMESPACE=tv-production bin/konduit.sh teaching-vacancies-production -- psql
+bin/psql qa
+bin/psql staging
+bin/psql production
+bin/psql pr-8476
 ```
+
 From the PSQL console, execute a query:
 ```
 COPY (

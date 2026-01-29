@@ -213,11 +213,24 @@ If not already setup, you can install it using the project Makefile. From the pr
 ```
 make bin/konduit.sh
 ```
-Connect to the DB PSQL console:
+
+We have provided a PSQL script to directly connect to a PSQL console in our different environments [/bin/psql](/bin/psql).
+This script uses [/bin/konduit.sh](/bin/konduit.sh) underhood.
+
+Examples on how to obtain PSQL consoles on our different environments:
+
+```
+bin/psql qa
+bin/psql staging
+bin/psql production
+bin/psql pr-8476
+```
+
+You can still connect to the DB PSQL console using Konduit directly, if needed:
 ```
 NAMESPACE=tv-production bin/konduit.sh teaching-vacancies-production -- psql
 ```
-### Some useful queries:
+### Some useful queries on PSQL:
 #### Listing our installed extensions and their versions:
 ```
 SELECT * FROM pg_extension;
