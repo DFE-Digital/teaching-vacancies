@@ -52,8 +52,7 @@ RSpec.describe Gias::ImportTrusts do
       expect(trust1.address).to eq("Abbey Road")
       expect(trust1.county).to eq("Not recorded")
       expect(trust1.postcode).to eq("PE10 9EP")
-      expect(trust1.geopoint.lat.round(13)).to eq(Geocoder::DEFAULT_STUB_COORDINATES[0].round(13))
-      expect(trust1.geopoint.lon.round(13)).to eq(Geocoder::DEFAULT_STUB_COORDINATES[1].round(13))
+      expect([trust1.uk_geopoint.x, trust1.uk_geopoint.y].map(&:floor)).to eq([412_245, 142_199])
     end
   end
 end

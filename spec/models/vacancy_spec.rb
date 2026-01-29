@@ -584,29 +584,29 @@ RSpec.describe Vacancy do
     subject { create(:vacancy, organisations: organisations) }
 
     context "for single school vacancies" do
-      let(:organisations) { [create(:school, geopoint: "POINT(1 2)")] }
+      let(:organisations) { [create(:school, uk_geopoint: "POINT(1 2)")] }
 
       it "is set to a point" do
-        expect(subject.geolocation.lat).to eq(2)
-        expect(subject.geolocation.lon).to eq(1)
+        expect(subject.uk_geolocation.y.round(6)).to eq(2)
+        expect(subject.uk_geolocation.x.round(6)).to eq(1)
       end
     end
 
     context "for trust central office vacancies" do
-      let(:organisations) { [create(:trust, geopoint: "POINT(1 2)")] }
+      let(:organisations) { [create(:trust, uk_geopoint: "POINT(1 2)")] }
 
       it "is set to a point" do
-        expect(subject.geolocation.lat).to eq(2)
-        expect(subject.geolocation.lon).to eq(1)
+        expect(subject.uk_geolocation.y.round(6)).to eq(2)
+        expect(subject.uk_geolocation.x.round(6)).to eq(1)
       end
     end
 
     context "for multi-school vacancies" do
-      let(:organisations) { [create(:school, geopoint: "POINT(1 2)"), create(:school, geopoint: "POINT(3 4)")] }
+      let(:organisations) { [create(:school, uk_geopoint: "POINT(1 2)"), create(:school, uk_geopoint: "POINT(3 4)")] }
 
       it "is set to a multipoint" do
-        expect(subject.geolocation.map(&:lat)).to contain_exactly(2, 4)
-        expect(subject.geolocation.map(&:lon)).to contain_exactly(1, 3)
+        expect(subject.uk_geolocation.map { |x| x.y.round(6) }).to contain_exactly(2, 4)
+        expect(subject.uk_geolocation.map { |x| x.x.round(6) }).to contain_exactly(1, 3)
       end
     end
 
@@ -614,7 +614,7 @@ RSpec.describe Vacancy do
       let(:organisations) { [create(:school, geopoint: nil), create(:school, geopoint: nil)] }
 
       it "is set to nil" do
-        expect(subject.geolocation).to be_nil
+        expect(subject.uk_geolocation).to be_nil
       end
     end
   end

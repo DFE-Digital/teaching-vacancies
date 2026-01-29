@@ -2,14 +2,17 @@ FactoryBot.define do
   ofsted_ratings = ["Outstanding", "Good", "Requires Improvement", "Inadequate"].freeze
 
   factory :school do
+    transient do
+      # make default inside the U.K.
+      geopoint { "POINT(-1 51.5)" }
+    end
+
     address { Faker::Address.street_name.delete("'") }
     county { Faker::Address.state_abbr }
     description { Faker::Lorem.paragraph(sentence_count: 1) }
     email { Faker::Internet.email(domain: "contoso.com") }
     establishment_status { "Open" }
 
-    # make default inside the U.K.
-    geopoint { "POINT(-1 51.5)" }
     gias_data do
       {
         CloseDate: nil,
@@ -41,6 +44,22 @@ FactoryBot.define do
     sequence(:urn) { |n| n + 100_000 }
     url { Faker::Internet.url(host: "example.com") }
 
+    after(:build) do |org, evaluator|
+      if org.uk_geopoint.nil? && evaluator.geopoint.present?
+        org.uk_geopoint = if evaluator.geopoint.is_a?(String)
+                            GeoFactories.convert_wgs84_to_sr27700(GeoFactories::FACTORY_4326.parse_wkt(evaluator.geopoint))
+                          else
+                            GeoFactories.convert_wgs84_to_sr27700(evaluator.geopoint)
+                          end
+      end
+    end
+
+    after(:stub) do |org, evaluator|
+      if org.uk_geopoint.nil? && evaluator.geopoint.present?
+        org.uk_geopoint = GeoFactories.convert_wgs84_to_sr27700(GeoFactories::FACTORY_4326.parse_wkt(evaluator.geopoint))
+      end
+    end
+
     trait :with_image do
       after(:build) do |school|
         blank_image = File.open(Rails.root.join("spec/fixtures/files/blank_image.png"))
@@ -51,10 +70,10 @@ FactoryBot.define do
       end
     end
 
-    after(:build) do |org|
-      if org.uk_geopoint.nil? && org.geopoint.present?
-        org.uk_geopoint = if org.geopoint.is_a?(String)
-                            GeoFactories.convert_wgs84_to_sr27700(GeoFactories::FACTORY_4326.parse_wkt(org.geopoint))
+    after(:build) do |org, evaluator|
+      if org.uk_geopoint.nil? && evaluator.geopoint.present?
+        org.uk_geopoint = if evaluator.geopoint.is_a?(String)
+                            GeoFactories.convert_wgs84_to_sr27700(GeoFactories::FACTORY_4326.parse_wkt(evaluator.geopoint))
                           else
                             GeoFactories.convert_wgs84_to_sr27700(org.geopoint)
                           end

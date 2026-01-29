@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Counties_and_Unitary_Authorities_April_2019_Boundaries_EW_BUC_2022/FeatureServer/0/query?f=pgeojson&outFields=CTYUA19NM&outSR=4326&resultOffset=0&resultRecordCount=20&where=1=1
+    uri: https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Counties_and_Unitary_Authorities_April_2019_Boundaries_EW_BUC_2022/FeatureServer/0/query?f=pgeojson&outFields=CTYUA19NM&outSR=27700&resultOffset=0&resultRecordCount=20&where=1=1
     body:
       encoding: US-ASCII
       string: ''
@@ -15,15 +15,15 @@ http_interactions:
       - Ruby
   response:
     status:
-      code: 400
-      message: Bad Request
+      code: 200
+      message: OK
     headers:
       Date:
-      - Wed, 11 Feb 2026 09:36:20 GMT
+      - Fri, 28 Nov 2025 15:33:54 GMT
       Content-Type:
-      - text/html
+      - application/json; charset=utf-8
       Content-Length:
-      - '11'
+      - '170'
       Connection:
       - keep-alive
       Cache-Control:
@@ -38,15 +38,15 @@ http_interactions:
       - appId=cid-v1:02d88829-cd35-4b36-83db-f89bb9f85514
       - appId=cid-v1:3e4b9f12-ca59-424b-b320-0c429e32d54c
       X-Arcgis-Upstream:
-      - us1h01c00
+      - us1h01c00-services
       Strict-Transport-Security:
       - max-age=63072000
       X-Arcgis-Trace-Id:
-      - 20260211T093620Z-r1d6cdf95fcn2mkbhC1LONvbv00000000hdg0000000092fh
+      - 20251128T153354Z-1645667f544dsq4dhC1LONc4h80000002ung000000005qqz
       X-Arcgis-Correlation-Id:
-      - 55bb6553ef2adfe9
+      - 1b23fbae2aee46ae
       X-Arcgis-Instance:
-      - i7tdixsfq00000B
+      - i7tdixsfq00000M
       Access-Control-Expose-Headers:
       - Request-Context
       Access-Control-Allow-Origin:
@@ -56,13 +56,17 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Azure-Ref:
-      - 20260211T093620Z-r1d6cdf95fcn2mkbhC1LONvbv00000000hdg0000000092fh
+      - 20251128T153354Z-1645667f544dsq4dhC1LONc4h80000002ung000000005qqz
       X-Fd-Int-Roxy-Purgeid:
       - '0'
       X-Cache:
       - TCP_MISS
+      Accept-Ranges:
+      - bytes
     body:
       encoding: UTF-8
-      string: Bad Request
-  recorded_at: Wed, 11 Feb 2026 09:36:20 GMT
-recorded_with: VCR 6.4.0
+      string: "\r\n{\r\n  \"error\" : \r\n  {\r\n    \"code\" : 499, \r\n    \"message\"
+        : \"Token Required\", \r\n    \"messageCode\" : \"GWM_0003\", \r\n    \"details\"
+        : [\r\n      \"Token Required\"\r\n    ]\r\n  }\r\n}"
+  recorded_at: Fri, 28 Nov 2025 15:33:54 GMT
+recorded_with: VCR 6.3.1

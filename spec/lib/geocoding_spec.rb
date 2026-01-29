@@ -16,8 +16,8 @@ RSpec.describe Geocoding, geocode: true do
       before do
         allow(Rails.cache)
           .to receive(:fetch)
-          .with([:geocoding, location], expires_in: Geocoding::CACHE_DURATION, skip_nil: true)
-          .and_return(google_coordinates)
+                .with([:geocoding, location], expires_in: Geocoding::CACHE_DURATION, skip_nil: true)
+                .and_return(google_coordinates)
       end
 
       it "retrieves coordinates from the cache" do

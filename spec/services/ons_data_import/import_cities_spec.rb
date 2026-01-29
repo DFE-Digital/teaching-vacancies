@@ -6,8 +6,8 @@ RSpec.describe OnsDataImport::ImportCities do
 
   before do
     allow(HTTParty).to receive(:get)
-      .with(/Major_Towns_and_Cities_December_2015_Boundaries/)
-      .and_return(response1, response2)
+                         .with(/Major_Towns_and_Cities_December_2015_Boundaries/)
+                         .and_return(response1, response2)
     described_class.call
   end
 
@@ -16,7 +16,7 @@ RSpec.describe OnsDataImport::ImportCities do
     let(:atlantis) { LocationPolygon.find_by(name: "atlantis") }
 
     it "creates a LocationPolygon for Lincoln" do
-      expect(lincoln.area.to_s).to eq("POLYGON ((0.0 0.0, 1.0 1.0, 1.0 -1.0, 0.0 0.0))")
+      expect(lincoln.uk_area.to_s).to eq("POLYGON ((0.0 0.0, 1.0 1.0, 1.0 -1.0, 0.0 0.0))")
       expect(lincoln.location_type).to eq("cities")
     end
 
