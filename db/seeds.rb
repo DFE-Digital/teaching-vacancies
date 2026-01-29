@@ -74,7 +74,7 @@ end
 
 stephen = Publisher.find_by!(email: "stephen.dicks@education.gov.uk")
 
-School.find_each.reject(&:not_applicable?).each do |school|
+School.find_each.reject { |s| s.not_applicable? || s.middle_deemed_secondary? || s.middle_deemed_primary? }.each do |school|
   stephen.organisations << school
   attrs = { organisations: [school],
             phases: [school.phase],
