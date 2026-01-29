@@ -7,7 +7,7 @@ module Publishers
         before_action :set_job_application
 
         def edit
-          @notes_form = Publishers::JobApplication::NotesForm.new
+          @note = @job_application.notes.build
         end
 
         def update

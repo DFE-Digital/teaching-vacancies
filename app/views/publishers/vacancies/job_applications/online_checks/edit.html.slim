@@ -23,5 +23,4 @@
       = f.govuk_submit t(".save_and_update")
 
   .govuk-grid-column-one-third
-    = render PublisherNotesOnJobApplicationComponent.new(job_application: @job_application, vacancy: @vacancy, notes_form: @notes_form,
-            return_to_url: edit_organisation_job_job_application_online_checks_path(@vacancy.id, @job_application.id))
+    = job_application_notes(job_application: @job_application, vacancy: @vacancy, note: @note, return_to_url: edit_organisation_job_job_application_online_checks_path(@vacancy.id, @job_application.id))
