@@ -60,27 +60,29 @@ users.each do |user|
   FactoryBot.create(:jobseeker, :for_seed_data, email: user[:email])
 end
 
-schools.each do |school|
-  attrs = { organisations: [school],
-            phases: [school.phase],
-            publisher_organisation: school,
-            publisher: Publisher.all.sample }
-  3.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
-  FactoryBot.create(:vacancy, :for_seed_data, :no_tv_applications, **attrs)
-  2.times { FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs) }
-  FactoryBot.create(:draft_vacancy, :for_seed_data, **attrs)
-  2.times { FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false) }
-end
+# schools.each do |school|
+#   attrs = { organisations: [school],
+#             phases: [school.phase],
+#             publisher_organisation: school,
+#             publisher: Publisher.all.sample }
+#   3.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+#   FactoryBot.create(:vacancy, :for_seed_data, :no_tv_applications, **attrs)
+#   2.times { FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs) }
+#   FactoryBot.create(:draft_vacancy, :for_seed_data, **attrs)
+#   2.times { FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false) }
+# end
 
 stephen = Publisher.find_by!(email: "stephen.dicks@education.gov.uk")
 
-School.find_each.reject { |s| s.not_applicable? || s.middle_deemed_secondary? || s.middle_deemed_primary? }.each do |school|
+School.find_each(batch_size: 100)
+      .select(&:secondary?)
+      .each do |school|
   stephen.organisations << school
   attrs = { organisations: [school],
             phases: [school.phase],
             publisher_organisation: school,
             publisher: stephen }
-  rand(5).times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+  rand(4).times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
 end
 
 # Vacancies at Weydon trust central office
