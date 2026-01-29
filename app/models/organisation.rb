@@ -1,10 +1,14 @@
 require "digest"
 
 class Organisation < ApplicationRecord
+  self.ignored_columns += %w[description]
+
   before_save :update_searchable_content
 
   include PgSearch::Model
   extend FriendlyId
+
+  has_rich_text :description
 
   SPECIAL_SCHOOL_TYPES = ["Community special school", "Foundation special school", "Non-maintained special school", "Academy special converter", "Academy special sponsor led", "Free schools special"].freeze
   NON_FAITH_RELIGIOUS_CHARACTER_TYPES = ["", "None", "Does not apply", "null"].freeze
@@ -141,7 +145,7 @@ class Organisation < ApplicationRecord
   end
 
   def profile_complete?
-    %i[email description safeguarding_information logo photo url].all? { |attribute| send(attribute).present? }
+    %i[email safeguarding_information logo photo url].all? { |attr| send(attr).present? } && description.body.present?
   end
 
   def self.update_all_searchable_content!
