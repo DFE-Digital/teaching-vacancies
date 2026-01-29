@@ -1,37 +1,50 @@
 - content_for :page_title_prefix, job_application_page_title_prefix(@form, t(".title"))
 
-= render "banner", vacancy: vacancy, back_path: back_path
-
-h2.govuk-heading-l = t(".heading")
-p.govuk-body = t(".description")
-
-p.govuk-body
-  - if job_application.vacancy.supporting_documents.any?
-    = t(".banner_documents_html", job_link: open_in_new_tab_link_to("‘#{job_application.vacancy.job_title}’", job_path(job_application.vacancy)))
-    div class="govuk-!-margin-top-3"
-      = render SupportingDocumentComponent.with_collection(job_application.vacancy.supporting_documents)
-  - else
-    = t(".banner_no_documents_html", job_link: open_in_new_tab_link_to("‘#{job_application.vacancy.job_title}’ #{t('.job_description')}", job_path(job_application.vacancy)))
-
-h2.govuk-heading-l = t(".applying_for_a_teaching_role")
-
-p.govuk-body = t(".you_could_provide")
-
-ul
-  - t(".bullets").each do |b|
-    li = b
-
-p.govuk-body
-  = t(".personal_statement_preamble")
-  = open_in_new_tab_link_to(t(".personal_statement_link_text"),
-    post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "how-to-write-teacher-personal-statement"),
-    class: "govuk-link--no-visited-state")
-
 = form_for @form, url: jobseekers_job_application_build_path(job_application, :personal_statement), method: :patch do |f|
   = f.govuk_error_summary
 
-  div class="personal-statement-form"
-    = f.rich_text_area :personal_statement_richtext, aria: { label: "Personal statement", required: true }, class: "personal-statement-editor govuk-!-margin-bottom-6"
+  = render "banner", vacancy: vacancy, back_path: back_path
+
+  h2.govuk-heading-l = t(".heading")
+  p.govuk-body = t(".description")
+
+  p.govuk-body
+    - if job_application.vacancy.supporting_documents.any?
+      = t(".banner_documents_html", job_link: open_in_new_tab_link_to("‘#{job_application.vacancy.job_title}’", job_path(job_application.vacancy)))
+      div class="govuk-!-margin-top-3"
+        = render SupportingDocumentComponent.with_collection(job_application.vacancy.supporting_documents)
+    - else
+      = t(".banner_no_documents_html", job_link: open_in_new_tab_link_to("'#{job_application.vacancy.job_title}' #{t('.job_description')}", job_path(job_application.vacancy)))
+
+  h2.govuk-heading-l = t(".applying_for_a_teaching_role")
+
+  p.govuk-body = t(".you_could_provide")
+
+  ul
+    - t(".bullets").each do |b|
+      li = b
+
+  p.govuk-body
+    = t(".personal_statement_preamble")
+    = open_in_new_tab_link_to(t(".personal_statement_link_text"),
+      post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "how-to-write-teacher-personal-statement"),
+      class: "govuk-link--no-visited-state")
+
+  div class="personal-statement-form" data-controller="word-counter" data-word-counter-max-words-value="1500"
+    - error_class = @form.errors[:personal_statement_richtext].any? ? "govuk-form-group--error" : ""
+    div class="govuk-form-group #{error_class}" id=(@form.errors[:personal_statement_richtext].any? ? "jobseekers-job-application-personal-statement-form-personal-statement-richtext-field-error" : "jobseekers-job-application-personal-statement-form-personal-statement-richtext-field")
+      - if @form.errors[:personal_statement_richtext].any?
+        span id="personal-statement-error" class="govuk-error-message"
+          span class="govuk-visually-hidden" = "Error:"
+          = @form.errors[:personal_statement_richtext].first
+
+      - editor_class = @form.errors[:personal_statement_richtext].any? ? "personal-statement-editor personal-statement-editor--error govuk-!-margin-bottom-6" : "personal-statement-editor govuk-!-margin-bottom-6"
+      - aria_attributes = { label: "Personal statement", required: true }
+      - aria_attributes[:describedby] = "personal-statement-error" if @form.errors[:personal_statement_richtext].any?
+      = f.rich_text_area :personal_statement_richtext, aria: aria_attributes, class: editor_class, data: { word_counter_target: "editor" }
+
+      div class="govuk-hint govuk-!-margin-bottom-6"
+        span data-word-counter-target="counter"
 
     noscript
       = f.govuk_text_area :personal_statement_richtext, label: { text: "Personal statement" }, rows: 10, class: "govuk-!-margin-bottom-6"

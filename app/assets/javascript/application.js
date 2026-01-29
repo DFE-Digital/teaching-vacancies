@@ -36,6 +36,7 @@ import PanelController from './js_components/panel/panel';
 import ShowHiddenContentController from './js_components/showHiddenContent/showHiddenContent';
 import TrackedLinkController from './js_components/trackedLink/trackedLink';
 import UtilsController from './js_components/utils';
+import WordCounterController from './js_components/wordCounter/wordCounter';
 
 import './clarity_cookies';
 
@@ -73,6 +74,7 @@ application.register('editor-preview', EditorPreviewController);
 application.register('show-hidden-content', ShowHiddenContentController);
 application.register('tracked-link', TrackedLinkController);
 application.register('utils', UtilsController);
+application.register('word-counter', WordCounterController);
 
 Rails.start();
 ActiveStorage.start();
