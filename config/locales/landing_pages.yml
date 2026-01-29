@@ -15,12 +15,12 @@ en:
     #   Unlike the other landing pages, `name` doesn't need to be specified as it will be equal to
     #   the place name.
     _location:
-      title: "School & Teaching Jobs in %{location}"
+      title: "School and Teaching Jobs in %{location}"
       heading: "%{count} school and teaching jobs in %{location}"
       meta_description: "Find school and teaching jobs in %{location} with Teaching Vacancies. Search for roles and set up email alerts for the latest jobs near you."
 
     _organisation:
-      title: "School & Teaching Jobs at %{organisation}"
+      title: "School and Teaching Jobs at %{organisation}"
       heading:
         one: "<span class='govuk-!-font-weight-bold'>%{count}</span> job found at <span class='govuk-!-font-weight-bold'>%{organisation}</span>"
         other: "<span class='govuk-!-font-weight-bold'>%{count}</span> jobs found at <span class='govuk-!-font-weight-bold'>%{organisation}</span>"
@@ -48,12 +48,12 @@ en:
       meta_description: "Discover deputy headteacher jobs in primary and secondary schools near you."
     head-of-year-or-phase-jobs:
       name: "Head of year or phase"
-      title: "Head of Year & Phase Jobs"
+      title: "Head of Year and Phase Jobs"
       heading: "%{count} head of year or phase jobs"
       meta_description: "Search for head of year or phase jobs in schools near you. Set up email alerts so you don't miss out on the latest vacancies for subject leads."
     head-of-department-or-curriculum-jobs:
       name: "Head of department or curriculum"
-      title: "Head of Department & Curriculum Jobs"
+      title: "Head of Department and Curriculum Jobs"
       heading: "%{count} head of department or curriculum jobs"
       meta_description: "Search for head of department or curriculum jobs in schools near you. Set up email alerts so you don't miss out on the latest vacancies for subject leads."
     headteacher-jobs:
@@ -68,12 +68,12 @@ en:
       meta_description: "Find higher level teaching assistant jobs in local primary and secondary schools. Get your teaching career off to a great start."
     ect-suitable-jobs:
       name: "Suitable for early career teachers"
-      title: "Early Career Teacher (ECT) & NQT Jobs"
+      title: "Early Career Teacher (ECT) and NQT Jobs"
       heading: "%{count} early career teacher (ECT) jobs"
       meta_description: "Find early career teacher (ECT, formerly known as NQT) jobs in local primary and secondary schools. Get your teaching career off to a great start."
     education-support-jobs:
       name: "Learning support or cover supervisor"
-      title: "Education & School Support Jobs"
+      title: "Education and School Support Jobs"
       heading: "%{count} education and school support jobs"
       meta_description: "Find jobs for LSAs, HR managers, finance officers, admin assistants, cover supervisors and other support roles in schools near you."
     sendco-jobs:
@@ -104,12 +104,12 @@ en:
       meta_description: "Find full and part time teaching support roles in schools. See which schools near you are hiring and apply quickly and easily through Teaching Vacancies."
     administration-hr-data-finance-jobs:
       name: "Administration, HR, data and finance"
-      title: "Administration, HR, Data & Finance Jobs"
+      title: "Administration, HR, Data and Finance Jobs"
       heading: "%{count} administration, HR, data and finance jobs"
       meta_description: "Find administration, HR, data and finance jobs in schools. Apply for full and part time roles quickly and easily through Teaching Vacancies. "
     catering-cleaning-site-management-jobs:
       name: "Catering, cleaning and site management"
-      title: "Catering, Cleaning & Site Management Jobs"
+      title: "Catering, Cleaning and Site Management Jobs"
       heading: "%{count} catering, cleaning and site management jobs"
       meta_description: "Find catering, cleaning and site management jobs in schools. Apply for full and part time roles quickly and easily through Teaching Vacancies."
     it-support-jobs:
@@ -119,7 +119,7 @@ en:
       meta_description: "Find IT support jobs in schools. Apply for full and part time roles quickly and easily through Teaching Vacancies."
     pastoral-health-welfare-jobs:
       name: "Pastoral, health and welfare"
-      title: "Pastoral, Health & Welfare Jobs"
+      title: "Pastoral, Health and Welfare Jobs"
       heading: "%{count} pastoral, health and welfare jobs"
       meta_description: "Find pastoral, health and welfare jobs in schools. Apply for full and part time roles quickly and easily through Teaching Vacancies."
     other-leadership-roles-jobs:
@@ -173,17 +173,17 @@ en:
     ### Subjects
     art-design-technology-teacher-jobs:
       name: "Art and Design Technology"
-      title: "Art & Design Technology (DT) Teacher Jobs"
+      title: "Art and Design Technology (DT) Teacher Jobs"
       heading: "%{count} art and design technology teacher jobs"
       meta_description: "Search for the latest art and design teacher jobs in England. Apply for design technology (DT) teaching roles and set up alerts for new jobs near you."
     art-design-teacher-jobs:
       name: "Art and design"
-      title: "Art & design Teacher Jobs"
+      title: "Art and design Teacher Jobs"
       heading: "%{count} art and design teacher jobs"
       meta_description: "Search for the latest art and design teacher jobs in England. Apply for art and design teaching roles and set up alerts for new jobs near you."
     design-technology-teacher-jobs:
       name: "Design and technology"
-      title: "Design & technology Teacher Jobs"
+      title: "Design and technology Teacher Jobs"
       heading: "%{count} design and technology teacher jobs"
       meta_description: "Search for the latest design and technology teacher jobs in England. Apply for design and technology roles and set up alerts for new jobs near you."
     biology-teacher-jobs:
@@ -198,22 +198,22 @@ en:
       meta_description: "Discover chemistry teacher jobs in secondary schools across England. Search and apply for full time and part time chemistry teacher jobs near you."
     classics-latin-teacher-jobs:
       name: "Classics"
-      title: "Classics & Latin Teacher Jobs"
+      title: "Classics and Latin Teacher Jobs"
       heading: "%{count} classics and Latin teacher jobs"
       meta_description: "Find your next Ancient Greek or Latin teaching position on Teaching Vacancies. Search and apply for the latest classics teacher jobs near you."
     dance-drama-music-teacher-jobs:
       name: "Dance, Drama and Music"
-      title: "Dance, Drama & Music Teacher Jobs"
+      title: "Dance, Drama and Music Teacher Jobs"
       heading: "%{count} dance, drama and music teacher jobs"
       meta_description: "Find dance, drama and music teacher jobs on Teaching Vacancies. Set up alerts and apply for jobs teaching performing arts in schools near you."
     economics-business-studies-teacher-jobs:
       name: "Economics and Business Studies"
-      title: "Economics & Business Studies Teacher Jobs"
+      title: "Economics and Business Studies Teacher Jobs"
       heading: "%{count} economics and business studies teacher jobs"
       meta_description: "Find the latest economics and business studies teacher jobs near you. Search for your next role and set up job alerts on Teaching Vacancies."
     english-media-studies-teacher-jobs:
       name: "English and Media Studies"
-      title: "English & Media Studies Teacher Jobs"
+      title: "English and Media Studies Teacher Jobs"
       heading: "%{count} English and media studies teacher jobs"
       meta_description: "Find English teacher jobs in London, Birmingham, Liverpool and across England. Apply for media studies teaching jobs and set up alerts for the latest roles."
     food-technology-teacher-jobs:
@@ -238,7 +238,7 @@ en:
       meta_description: "Search and apply for German teacher jobs near you on Teaching Vacancies. Set up alerts for jobs in London, Leeds and the rest of England."
     health-relationships-social-care-teacher-jobs:
       name: "Health and Social Care"
-      title: "Health & Social Care Teacher Jobs"
+      title: "Health and Social Care Teacher Jobs"
       heading: "%{count} health, relationships and social care teacher jobs"
       meta_description: "Find jobs for health and social care teachers on Teaching Vacancies. Find and apply for roles teaching all areas of personal health and relationships."
     history-teacher-jobs:
@@ -248,7 +248,7 @@ en:
       meta_description: "Find history teacher jobs near you on Teaching Vacancies. Set up alerts so you don't miss the latest full time and part time jobs for history teachers."
     ict-computer-science-teacher-jobs:
       name: "ICT and Computer Science"
-      title: "ICT & Computer Science Teacher Jobs"
+      title: "ICT and Computer Science Teacher Jobs"
       heading: "%{count} ICT and computer science teacher jobs"
       meta_description: "Search for computer science teacher jobs near you. Teaching Vacancies has the latest ICT teacher jobs in London, Manchester and across England."
     mandarin-teacher-jobs:
@@ -278,12 +278,12 @@ en:
       meta_description: "Search for physics teacher jobs near you on Teaching Vacancies. Set up alerts for physics teaching roles in London, Brighton, Leeds and across England."
     politics-humanities-social-sciences-teacher-jobs:
       name: "Politics, Humanities and Social Sciences"
-      title: "Humanities & Social Sciences teacher jobs"
+      title: "Humanities and Social Sciences teacher jobs"
       heading: "%{count} politics, humanities and social sciences teacher jobs"
       meta_description: "Search the latest jobs for humanities and politics teachers near you. Set up alerts and apply for roles teaching the various areas of social science."
     psychology-philosophy-sociology-re-teacher-jobs:
       name: "Psychology, Sociology and RE"
-      title: "Psychology, Sociology & RE Teacher Jobs"
+      title: "Psychology, Sociology and RE Teacher Jobs"
       heading: "%{count} psychology, philosophy, sociology and RE teacher jobs"
       meta_description: "Find full time and part time jobs for RE and sociology teachers. See the latest roles in schools near you teaching religion, psychology and philosophy."
     science-teacher-jobs:
@@ -310,12 +310,12 @@ en:
       meta_description: "Discover thousands of full time jobs in schools. Teaching Vacancies has full time jobs for teachers, headteachers, SEND coordinators and more."
     part-time-school-jobs:
       name: "Part time"
-      title: "Part Time Teaching & School Jobs"
+      title: "Part Time Teaching and School Jobs"
       heading: "%{count} part time teacher and school jobs"
       meta_description: "Find and apply for part time teacher jobs near you. Discover jobs in local schools that offer flexible hours for teachers, teaching assistants and more."
     school-job-shares:
       name: "Job share"
-      title: "Job Shares for Teachers & School Staff"
+      title: "Job Shares for Teachers and School Staff"
       heading: "%{count} job share vacancies for teachers and school staff"
       meta_description: "Find a school job that works with your schedule. Apply on Teaching Vacancies for job share jobs for teachers, headteachers and teaching assistants."
     school-term-time-jobs:
