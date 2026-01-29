@@ -9,7 +9,7 @@ class JobPreferences < ApplicationRecord
 
     validates :name, presence: true
     validates :radius, presence: true
-    validates :area, presence: true
+    validates :uk_area, presence: true
 
     before_validation :set_area
 
