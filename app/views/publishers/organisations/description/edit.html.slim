@@ -12,9 +12,16 @@
   - if params["vacancy_id"]
     = f.hidden_field "vacancy_id", value: params["vacancy_id"]
 
-  = f.govuk_text_area :description,
-    label: { text: t("helpers.label.publishers_organisation_form.description", organisation_type: organisation_type_basic(@organisation)), size: "s" },
-    hint: { text: t("helpers.hint.publishers_organisation_form.description", organisation_type: organisation_type_basic(@organisation)) },
-    rows: 10
+  .govuk-form-group
+    = f.label :description, t("helpers.label.publishers_organisation_form.description", organisation_type: organisation_type_basic(@organisation)), class: "govuk-label govuk-label--s"
+
+    .govuk-hint
+      = t("helpers.hint.publishers_organisation_form.description", organisation_type: organisation_type_basic(@organisation))
+
+    div class="school-description-form"
+      = f.rich_text_area :description, aria: { label: t("helpers.label.publishers_organisation_form.description"), required: true }, class: "govuk-!-margin-bottom-6"
+
+      noscript
+        = f.govuk_text_area :description, rows: 10, class: "govuk-!-margin-bottom-6"
 
   = f.govuk_submit t("buttons.save_changes")
