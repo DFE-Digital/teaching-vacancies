@@ -16,7 +16,16 @@ RSpec.describe "publishers/organisations/preview" do
     end
 
     it "displays the organisation's description" do
-      expect(rendered).to have_content(organisation.description)
+      expect(rendered).to have_content(organisation.description.to_plain_text)
+    end
+
+    context "when the description contains rich text formatting" do
+      let(:organisation) { create(:school, description: "<strong>Bold</strong> and <em>italic</em>") }
+
+      it "renders the HTML formatting" do
+        expect(rendered).to have_css("strong", text: "Bold")
+        expect(rendered).to have_css("em", text: "italic")
+      end
     end
 
     it "displays the organisation's safeguarding information" do
@@ -48,7 +57,7 @@ RSpec.describe "publishers/organisations/preview" do
     end
 
     it "displays the organisation's description" do
-      expect(rendered).to have_content(organisation.description)
+      expect(rendered).to have_content(organisation.description.to_plain_text)
     end
 
     it "displays the organisation's safeguarding information" do
@@ -82,7 +91,7 @@ RSpec.describe "publishers/organisations/preview" do
       end
 
       it "displays the organisation's description" do
-        expect(rendered).to have_content(school_one.description)
+        expect(rendered).to have_content(school_one.description.to_plain_text)
       end
 
       it "displays the organisation's safeguarding information" do

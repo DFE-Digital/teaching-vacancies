@@ -78,7 +78,16 @@ RSpec.describe "organisations/show", type: :view do
     end
 
     it "displays the organisation's description" do
-      expect(show_view).to have_content(organisation.description)
+      expect(show_view).to have_content(organisation.description.to_plain_text)
+    end
+
+    context "when the description contains rich text formatting" do
+      let(:organisation) { create(:school, school_groups: [school_group], description: "<strong>Bold</strong> and <em>italic</em>") }
+
+      it "renders the HTML formatting" do
+        expect(show_view).to have_css("strong", text: "Bold")
+        expect(show_view).to have_css("em", text: "italic")
+      end
     end
 
     it "displays the organisation's safeguarding information" do

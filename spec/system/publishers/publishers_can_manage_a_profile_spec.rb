@@ -105,13 +105,26 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
       before { click_link I18n.t("nav.organisation_profile", name: organisation.name) }
 
+      it "renders rich text formatting in the description" do
+        organisation.update!(description: "<strong>Bold text</strong> and <em>italic text</em>")
+
+        visit publishers_organisation_path(organisation)
+
+        within("div.govuk-summary-list__row#description") do
+          expect(page).to have_css("strong", text: "Bold text")
+          expect(page).to have_css("em", text: "italic text")
+        end
+      end
+
       it "allows the publisher to edit the school's description" do
         within("div.govuk-summary-list__row#description") do
           click_link("Change")
         end
 
-        expect(find_field("publishers_organisation_description_form[description]").value).to eq(organisation.description)
+        expected_text = organisation.description.body.to_plain_text
 
+        expect(find_field("publishers_organisation_description_form[description]").value)
+          .to eq("#{expected_text}\n")
         fill_in "publishers_organisation_description_form[description]", with: school_description
         click_on I18n.t("buttons.save_changes")
 
@@ -135,7 +148,10 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
           click_link("Change")
         end
 
-        expect(find_field("publishers_organisation_description_form[description]").value).to eq(organisation.description)
+        expected_text = organisation.description.body.to_plain_text
+
+        expect(find_field("publishers_organisation_description_form[description]").value)
+          .to eq("#{expected_text}\n")
 
         fill_in "publishers_organisation_description_form[description]", with: new_trust_description
         click_on I18n.t("buttons.save_changes")
@@ -152,7 +168,10 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
           click_link("Change")
         end
 
-        expect(find_field("publishers_organisation_description_form[description]").value).to eq(school1.description)
+        expected_text = school1.description.body.to_plain_text
+
+        expect(find_field("publishers_organisation_description_form[description]").value)
+          .to eq("#{expected_text}\n")
 
         fill_in "publishers_organisation_description_form[description]", with: new_school_description
         click_on I18n.t("buttons.save_changes")
