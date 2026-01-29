@@ -80,7 +80,7 @@ School.find_each.reject(&:not_applicable?).each do |school|
             phases: [school.phase],
             publisher_organisation: school,
             publisher: stephen }
-  rand(8).times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+  rand(5).times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
 end
 
 # Vacancies at Weydon trust central office
