@@ -323,12 +323,12 @@ class Vacancy < ApplicationRecord
                          points = organisations.filter_map(&:geopoint)
                          points.presence && points.first.factory.multi_point(points)
                        end
-    self.uk_geolocation = if organisations.one?
-                            organisation.uk_geopoint
-                          else
-                            uk_points = organisations.filter_map(&:uk_geopoint)
-                            uk_points.presence && uk_points.first.factory.multi_point(uk_points)
-                          end
+    # self.uk_geolocation = if organisations.one?
+    #                         organisation.uk_geopoint
+    #                       else
+    #                         uk_points = organisations.filter_map(&:uk_geopoint)
+    #                         uk_points.presence && uk_points.first.factory.multi_point(uk_points)
+    #                       end
   end
 end
 # rubocop:enable Metrics/ClassLength
