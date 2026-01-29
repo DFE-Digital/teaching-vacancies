@@ -1,5 +1,5 @@
-<%- if Rails.configuration.app_role.production? %>
-SITEMAP: https://teaching-vacancies.service.gov.uk/sitemap.xml
+<%- if Rails.configuration.app_role.production? || Rails.configuration.app_role.review? %>
+SITEMAP: /sitemap.xml
 User-agent: *
 Allow: /
 Disallow: /check
