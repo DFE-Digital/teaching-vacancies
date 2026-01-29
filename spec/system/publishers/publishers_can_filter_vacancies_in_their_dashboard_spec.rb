@@ -25,7 +25,7 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
           visit organisation_jobs_with_type_path(:live)
           # wait for page load
           find(".dashboard-component")
-          find("a[href='/organisation/jobs?sort_by=job_title']")
+          find("select[name='sort_by']")
         end
 
         it "passes a11y", :a11y do
