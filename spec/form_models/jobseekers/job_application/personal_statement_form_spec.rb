@@ -27,7 +27,7 @@ RSpec.describe Jobseekers::JobApplication::PersonalStatementForm, type: :model d
         )
 
         expect(form).not_to be_valid
-        expect(form.errors[:personal_statement_richtext]).to include("must be 1,500 words or fewer (currently 1501 words)")
+        expect(form.errors[:personal_statement_richtext]).to include("Your personal statement must be 1,500 words or fewer")
       end
     end
 
