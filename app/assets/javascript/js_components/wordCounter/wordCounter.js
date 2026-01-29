@@ -39,7 +39,7 @@ export default class extends Controller {
     const formattedMax = this.constructor.formatNumber(this.maxWordsValue);
     const message = `You have written ${formattedCount} words in this section. `
       + `The word limit for this section is ${formattedMax} words. `
-      + 'Schools typically expect your personal statement to be between 500 and 1,000 words long.';
+      + 'Schools typically expect personal statements to be between 500 and 1,000 words long.';
     this.counterTarget.textContent = message;
   }
 
