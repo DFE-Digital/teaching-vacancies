@@ -85,7 +85,7 @@ First, decide whether to switch on the fallback authentication. This call should
 
 Changing the environment variable within the `<env>_app_env.yml` follows the standard deployment procedure, and allows deployments to production to continue:
 - create a feature branch
-- edit the file [terraform/workspace-variables/production_app_env.yml](../terraform/workspace-variables/production_app_env.yml)
+- edit the file [terraform/workspace-variables/production_app_env.yml](/terraform/workspace-variables/production_app_env.yml)
 - set the environment variable `AUTHENTICATION_FALLBACK_FOR_JOBSEEKERS` to `true` or `false` as required
 - create a Pull Request
 - merge after approval
@@ -147,7 +147,7 @@ The detailed flow of requests/responses between Teaching Vacancies and GOV.UK On
 
 The Jobseeker session is still managed by Devise gem.
 
-Teaching Vacancies configures OneLogin as an Omniauth provider through the [Devise Omniauth configuration](../config/initializers/omniauth.rb).
+Teaching Vacancies configures OneLogin as an Omniauth provider through the [Devise Omniauth configuration](/config/initializers/omniauth.rb).
 
 There are a few paths in our service related with GOV.UK One Login:
 - `/jobseekers/sign-in` --> Bridge page in our service that, upon confirmation, sends the non-signed jobseeker to sign through GOV.UK One Login.

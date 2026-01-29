@@ -35,7 +35,7 @@ Within the service configuration screen, you are able to:
 
 ### Set environment variables
 
-The following are set per-environment, e.g. [terraform/workspace-variables/dev_app_env.yml](../terraform/workspace-variables/dev_app_env.yml)
+The following are set per-environment, e.g. [terraform/workspace-variables/local_app_env.yml](/terraform/workspace-variables/local_app_env.yml)
 
 ```
 DFE_SIGN_IN_ISSUER: https://test-oidc.signin.education.gov.uk
@@ -77,7 +77,7 @@ First, decide whether to switch on the fallback authentication. This call should
 
 Changing the environment variable within the `<env>_app_env.yml` follows the standard deployment procedure, and allows deployments to production to continue:
 - create a feature branch
-- edit the file [terraform/workspace-variables/production_app_env.yml](../terraform/workspace-variables/production_app_env.yml)
+- edit the file [terraform/workspace-variables/production_app_env.yml](/terraform/workspace-variables/production_app_env.yml)
 - set the environment variable `AUTHENTICATION_FALLBACK` to `true` or `false` as required
 - create a Pull Request
 - merge after approval

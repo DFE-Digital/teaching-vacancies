@@ -6,10 +6,10 @@ Teaching Vacancies is hosted on [Azure Cloud Infrastructure Platform (CIP)](http
 
 | Environment | URL                                                                                                    | Code branch | CI/CD workflow      | AKS Cluster             | AKS Namespace |
 | ----------- | ------------------------------------------------------------------------------------------------------ | ----------- | ------------------- | ----------------------------- | ------------------- |
-| Production  | [https://teaching-vacancies.service.gov.uk](https://teaching-vacancies.service.gov.uk)                 | `main`      | [build_and_deploy.yml](../.github/workflows/build_and_deploy.yml) | s189-teacher-services-cloud-production | tv-production
-| Staging     | [https://staging.teaching-vacancies.service.gov.uk](https://staging.teaching-vacancies.service.gov.uk) | `main`      | [build_and_deploy.yml](../.github/workflows/build_and_deploy.yml) | s189-teacher-services-cloud-test    | tv-staging
-| QA          | [https://qa.teaching-vacancies.service.gov.uk](https://qa.teaching-vacancies.service.gov.uk)           | `main`      | [build_and_deploy.yml](../.github/workflows/build_and_deploy.yml) | s189-teacher-services-cloud-test        | tv-development
-| Review      | `https://teaching-vacancies-review-pr-xxxx.test.teacherservices.cloud`                                 | multiple    | [build_and_deploy.yml](../.github/workflows/build_and_deploy.yml) | s189-teacher-services-cloud-test        | tv-development
+| Production  | [https://teaching-vacancies.service.gov.uk](https://teaching-vacancies.service.gov.uk)                 | `main`      | [build_and_deploy.yml](/.github/workflows/build_and_deploy.yml) | s189-teacher-services-cloud-production | tv-production
+| Staging     | [https://staging.teaching-vacancies.service.gov.uk](https://staging.teaching-vacancies.service.gov.uk) | `main`      | [build_and_deploy.yml](/.github/workflows/build_and_deploy.yml) | s189-teacher-services-cloud-test    | tv-staging
+| QA          | [https://qa.teaching-vacancies.service.gov.uk](https://qa.teaching-vacancies.service.gov.uk)           | `main`      | [build_and_deploy.yml](/.github/workflows/build_and_deploy.yml) | s189-teacher-services-cloud-test        | tv-development
+| Review      | `https://teaching-vacancies-review-pr-xxxx.test.teacherservices.cloud`                                 | multiple    | [build_and_deploy.yml](/.github/workflows/build_and_deploy.yml) | s189-teacher-services-cloud-test        | tv-development
 
 Ephemeral review apps that are created when a PR is created on GitHub, and destroyed when the PR is merged. These have URLs which contain the Pull Request number, like `https://teaching-vacancies-review-pr-6441.test.teacherservices.cloud`
 
@@ -175,7 +175,7 @@ Sometimes we may need to temporally scale up our service resources. That can be 
 **Important: These changes are ephemereal and will be overriden to the defaults on the next deployment.**
 
 If you need to scale the changes for a period of time and to keep the new number of instances between deployments, you will
-need to set it up in the [terraform configuration](../terraform/workspace-variables/production.tfvars.json) and release
+need to set it up in the [terraform configuration](/terraform/workspace-variables/production.tfvars.json) and release
 it through a PR/deployment.
 
 #### EG: Executing a task that will enqueue thousands of jobs in our workers, this could cause a bottleneck in our Sidekiq queues.
@@ -246,7 +246,7 @@ ALTER EXTENSION postgis UPDATE;
   ```shell
   make passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 <env> terraform-app-apply
   ```
-- If you want to have a deployment triggered by a push to a branch, add a trigger to [build_and_deploy.yml](../.github/workflows/build_and_deploy.yml)
+- If you want to have a deployment triggered by a push to a branch, add a trigger to [build_and_deploy.yml](/.github/workflows/build_and_deploy.yml)
 ```
 on:
   push:

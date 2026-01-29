@@ -88,7 +88,7 @@ Here we see that it's the addition of a feature flag
 ## GitHub Actions deploy user
 
 Using the principle of least privilege, GitHub Actions uses a separate IAM account for Terraform
-The `deploy` user is itself created through Terraform, in the [terraform/common/iam.tf](../terraform/common/iam.tf) file
+The `deploy` user is itself created through Terraform, in the [terraform/common/iam.tf](/terraform/common/iam.tf) file
 
 ### Deploy user Access key and Secret key
 

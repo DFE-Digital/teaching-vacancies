@@ -24,7 +24,7 @@ If you want to display a HTML element only for JavaScript-enabled browsers, you 
 This way, it will be hidden by default unless loaded by a browser that supports Javascript.
 
 ### Long explanation
-Our system adds `.js-enabled` css class to the html body [when the page loads on a JS-enabled browser](../app/views/layouts/_add_js_enabled_class_to_body.html.slim).
+Our system adds `.js-enabled` css class to the html body [when the page loads on a JS-enabled browser](/app/views/layouts/_add_js_enabled_class_to_body.html.slim).
 
 If the HTML element is tagged with the `.js-action` css class, it will be hidden by default using a `display: none` property.
 - If the browser has JS enabled:
@@ -33,4 +33,4 @@ If the HTML element is tagged with the `.js-action` css class, it will be hidden
 - If the browser does not have JS enabled:
   - Not having `.js-enabled` added, the element will keep the `display: none` property. So it will stay hidden.
 
-[This is where the magic happens](../app/assets/stylesheets/base/_utilities.scss).
+[This is where the magic happens](/app/assets/stylesheets/base/_utilities.scss).
