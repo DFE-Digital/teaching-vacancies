@@ -406,7 +406,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
     it "allows users to filter by job role" do
       visit jobs_path
-      find('span[title="Teaching & leadership"]').click
+      find('span[title="Teaching and leadership"]').click
       check "Teacher"
       # Apply filters
       within ".filters-component" do
