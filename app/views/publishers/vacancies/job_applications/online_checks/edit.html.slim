@@ -14,11 +14,11 @@
     = form_with model: @job_application, url: organisation_job_job_application_online_checks_path(@vacancy.id, @job_application.id), method: :patch do |f|
       = f.govuk_error_summary
 
-      = f.govuk_radio_buttons_fieldset :online_checks, legend: { text: t(".question"), size: "m" } do
-        = f.govuk_radio_button :online_checks, :yes, label: { text: t(".yes") }
-        = f.govuk_radio_button :online_checks, :no, label: { text: t(".no") }
+      = f.govuk_radio_buttons_fieldset :online_checks, legend: { size: "m" } do
+        = f.govuk_radio_button :online_checks, :yes
+        = f.govuk_radio_button :online_checks, :no
         = f.govuk_radio_divider
-        = f.govuk_radio_button :online_checks, :not_doing, label: { text: t(".not_doing") }
+        = f.govuk_radio_button :online_checks, :not_doing
 
       = f.govuk_submit t(".save_and_update")
 
