@@ -169,7 +169,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "starts_on" => (Date.today + 1.year).strftime("%Y-%m-%d"),
           "stats_updated_at" => nil,
           "subjects" => [],
-          "uk_geolocation" => nil,
+          "uk_geolocation" => "POINT (469405.28816918284 178423.54064973217)",
           "updated_at" => nil,
           "working_patterns" => ["full_time"],
           "working_patterns_details" => nil,
