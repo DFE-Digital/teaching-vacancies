@@ -51,7 +51,8 @@ class PublishedVacancy < Vacancy
   end
 
   def applicable?
-    !expired?
+    # This check shouldn't be required, but is as we copy PublishedVacancies into draft ones
+    expires_at.present? && !expired?
   end
 
   def find_external_reference_conflict_vacancy
