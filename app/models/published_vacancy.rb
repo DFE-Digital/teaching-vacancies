@@ -50,11 +50,6 @@ class PublishedVacancy < Vacancy
     discarded_at.nil?
   end
 
-  def applicable?
-    # This check shouldn't be required, but is as we copy PublishedVacancies into draft ones
-    expires_at.present? && !expired?
-  end
-
   def find_external_reference_conflict_vacancy
     return unless publisher_ats_api_client_id.present? && external_reference.present?
 
