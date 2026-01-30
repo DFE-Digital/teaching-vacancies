@@ -4,6 +4,8 @@ FactoryBot.define do
   end
 
   factory :trust, parent: :school_group do
+    geopoint { nil }
+
     address { Faker::Address.street_name.delete("'") }
     county { Faker::Address.state_abbr }
     description { Faker::Lorem.paragraph(sentence_count: 1) }
@@ -28,6 +30,26 @@ FactoryBot.define do
     town { Faker::Address.city.delete("'") }
     uid { Faker::Number.number(digits: 5).to_s }
     url { Faker::Internet.url(host: "example.com") }
+
+    after(:build) do |org|
+      if org.geopoint.present?
+        org.uk_geopoint = if org.geopoint.is_a?(String)
+                            GeoFactories.convert_wgs84_to_sr27700(GeoFactories::FACTORY_4326.parse_wkt(org.geopoint))
+                          else
+                            GeoFactories.convert_wgs84_to_sr27700(org.geopoint)
+                          end
+      end
+    end
+
+    after(:stub) do |org|
+      if org.geopoint.present?
+        org.uk_geopoint = if org.geopoint.is_a?(String)
+                            GeoFactories.convert_wgs84_to_sr27700(GeoFactories::FACTORY_4326.parse_wkt(org.geopoint))
+                          else
+                            GeoFactories.convert_wgs84_to_sr27700(org.geopoint)
+                          end
+      end
+    end
 
     trait :with_logo_and_photo do
       after(:build) do |school_group|
