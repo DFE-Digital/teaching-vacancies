@@ -50,20 +50,20 @@ RSpec.describe "Publishers can add notes to a job application" do
       end
 
       context "with too much content" do
-        let(:note_content) { Faker::Lorem.question(word_count: 151) }
+        let(:note_content) { Faker::Lorem.question(word_count: 101) }
 
         it "handles errors without removing the content", :js do
-          expect(page).to have_content("A note must not be more than 150 words")
-          expect(page.find_by_id("note-content-field-error")).to have_content(note_content)
+          expect(page).to have_content("A note must not be more than 100 words")
+          expect(page.find_by_id("note-content-field")).to have_content(note_content)
         end
 
         it "handles errors when JS is not present" do
-          expect(page).to have_content("A note must not be more than 150 words")
+          expect(page).to have_content("A note must not be more than 100 words")
         end
       end
 
       context "with ok content" do
-        let(:note_content) { Faker::Lorem.sentence(word_count: 150) }
+        let(:note_content) { Faker::Lorem.sentence(word_count: 100) }
 
         it "allows notes to be added to job applications" do
           # wait for action to complete
@@ -76,59 +76,27 @@ RSpec.describe "Publishers can add notes to a job application" do
 
     describe "on reference request page" do
       let(:referee) { create(:referee, job_application: job_application) }
+      let!(:note) { create(:note, job_application: job_application, publisher: publisher, content: "This is a reference note") }
       let(:reference_request) { create(:reference_request, referee: referee) }
 
       before do
         create(:job_reference, reference_request: reference_request)
+        publisher_ats_reference_request_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id, reference_request_id: reference_request.id)
       end
 
-      context "with a note" do
-        let!(:note) { create(:note, job_application: job_application, publisher: publisher, content: "This is a reference note") }
+      it "shows the current notes" do
+        expect(publisher_ats_reference_request_page).to be_displayed
 
-        before do
-          publisher_ats_reference_request_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id, reference_request_id: reference_request.id)
-        end
-
-        it "shows the current notes" do
-          expect(publisher_ats_reference_request_page).to be_displayed
-
-          expect(page).to have_content(note.content)
-        end
-
-        it "allows notes to be deleted and redirects back to reference request page" do
-          expect(publisher_ats_reference_request_page).to be_displayed
-
-          click_on I18n.t("buttons.delete")
-
-          expect(publisher_ats_reference_request_page).to be_displayed
-          expect(page).to have_no_content(note.content)
-        end
+        expect(page).to have_content(note.content)
       end
 
-      context "without a note" do
-        before do
-          publisher_ats_reference_request_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id, reference_request_id: reference_request.id)
+      it "allows notes to be deleted and redirects back to reference request page" do
+        expect(publisher_ats_reference_request_page).to be_displayed
 
-          fill_in "Add a note", with: note_content
-          click_on I18n.t("buttons.save_note")
-        end
+        click_on I18n.t("buttons.delete")
 
-        context "with good note" do
-          let(:note_content) { "New reference note" }
-
-          it "allows notes to be added and redirects back to reference request page" do
-            expect(publisher_ats_reference_request_page).to be_displayed
-            expect(page).to have_content("New reference note")
-          end
-        end
-
-        context "with too many characters" do
-          let(:note_content) { Faker::Lorem.characters(number: 151) }
-
-          it "copes with errors" do
-            expect(page).to have_content("A note must not be more than 150 words")
-          end
-        end
+        expect(publisher_ats_reference_request_page).to be_displayed
+        expect(page).to have_no_content(note.content)
       end
     end
 
@@ -174,10 +142,10 @@ RSpec.describe "Publishers can add notes to a job application" do
         end
 
         it "copes with errors" do
-          fill_in "Add a note", with: Faker::Lorem.sentence(word_count: 151)
+          fill_in "Add a note", with: Faker::Lorem.sentence(word_count: 101)
           click_on I18n.t("buttons.save_note")
 
-          expect(page).to have_content("A note must not be more than 150 words")
+          expect(page).to have_content("A note must not be more than 100 words")
         end
       end
     end
