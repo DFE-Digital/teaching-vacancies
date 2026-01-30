@@ -50,6 +50,10 @@ class PublishedVacancy < Vacancy
     discarded_at.nil?
   end
 
+  def applicable?
+    !expired?
+  end
+
   def find_external_reference_conflict_vacancy
     return unless publisher_ats_api_client_id.present? && external_reference.present?
 

@@ -16,4 +16,8 @@ class DraftVacancy < Vacancy
   def published?
     false
   end
+
+  def applicable?
+    false
+  end
 end

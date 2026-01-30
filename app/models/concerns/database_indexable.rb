@@ -2,7 +2,7 @@ module DatabaseIndexable
   extend ActiveSupport::Concern
 
   included do
-    before_save :update_searchable_content
+    before_save :update_searchable_content, if: -> { applicable? }
 
     # Performs a full "reindex" on all live and pending vacancies (to be run when weightings for
     # searchable_content have been changed)
