@@ -51,6 +51,16 @@ FactoryBot.define do
       end
     end
 
+    after(:build) do |org|
+      if org.uk_geopoint.nil? && org.geopoint.present?
+        org.uk_geopoint = if org.geopoint.is_a?(String)
+                            GeoFactories.convert_wgs84_to_sr27700(GeoFactories::FACTORY_4326.parse_wkt(org.geopoint))
+                          else
+                            GeoFactories.convert_wgs84_to_sr27700(org.geopoint)
+                          end
+      end
+    end
+
     trait :closed do
       establishment_status { "Closed" }
     end
