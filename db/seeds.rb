@@ -90,7 +90,9 @@ School.not_closed.not_excluded
             phases: [phase],
             publisher_organisation: orgs.first,
             publisher: FactoryBot.create(:publisher, organisations: [orgs.first]) }
-  FactoryBot.create(:vacancy, :for_seed_data, **attrs)
+  Vacancy.transaction do
+    20.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+  end
 end
 
 # Vacancies at Weydon trust central office
