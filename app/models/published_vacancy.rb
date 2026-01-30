@@ -43,7 +43,7 @@ class PublishedVacancy < Vacancy
   end
 
   def expired?
-    expires_at.past?
+    expires_at&.past?
   end
 
   def published?
