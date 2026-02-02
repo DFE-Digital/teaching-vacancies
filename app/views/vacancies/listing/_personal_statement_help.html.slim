@@ -1,3 +1,3 @@
 .sidebar-info-box
   h2.govuk-heading-s = t("jobs.personal_statement_help.heading")
-  p.govuk-body = t("jobs.personal_statement_help.body_html", tool_link: govuk_link_to(t("jobs.personal_statement_help.tool_link_text"), "https://personalstatementbuilder.co.uk/?job=#{vacancy.slug}"))
+  p.govuk-body = t("jobs.personal_statement_help.body_html", tool_link: open_in_new_tab_link_to(t("jobs.personal_statement_help.tool_link_text"), "https://personalstatementbuilder.co.uk/?job=#{vacancy.slug}"))

@@ -52,8 +52,8 @@ RSpec.describe "vacancies/show" do
       let(:vacancy) { create(:vacancy, ect_status: :ect_unsuitable) }
 
       it "does not render the personal statement help section" do
-        expect(rendered).not_to have_css(".sidebar-info-box")
-        expect(rendered).not_to have_content(I18n.t("jobs.personal_statement_help.heading"))
+        expect(rendered).to have_no_css(".sidebar-info-box")
+        expect(rendered).to have_no_content(I18n.t("jobs.personal_statement_help.heading"))
       end
     end
   end
