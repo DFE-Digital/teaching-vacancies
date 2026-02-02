@@ -2,7 +2,7 @@ module Resettable
   extend ActiveSupport::Concern
 
   included do
-    before_save :reset_dependent_fields
+    before_save :reset_dependent_fields, if: -> { (published? && !expired?) || draft? }
   end
 
   def reset_dependent_fields
