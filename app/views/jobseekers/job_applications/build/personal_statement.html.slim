@@ -29,7 +29,7 @@
     = open_in_new_tab_link_to(t(".personal_statement_link_text"),
       post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "how-to-write-teacher-personal-statement"),
       class: "govuk-link--no-visited-state")
-    = t(".personal_statement_preamble_continued_html", tool_link: govuk_link_to(t(".tool_link_text"), "https://personalstatementbuilder.co.uk/?job=#{job_application.vacancy.slug}"))
+    = t(".personal_statement_preamble_continued_html", tool_link: open_in_new_tab_link_to(t(".tool_link_text"), "https://personalstatementbuilder.co.uk/?job=#{job_application.vacancy.slug}"))
 
   div class="personal-statement-form" data-controller="word-counter" data-word-counter-max-words-value="1500"
     - error_class = @form.errors[:personal_statement_richtext].any? ? "govuk-form-group--error" : ""
