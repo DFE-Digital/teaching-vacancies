@@ -20,39 +20,52 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
     website: :application_link,
   }.freeze
 
+  def all_steps_valid?
+    validatable_steps.all? { |step| step_form(step).valid? }
+  end
+
+  def next_invalid_step
+    # Due to subjects being an optional step (no validations) it needs to be handled differently
+    return :subjects if next_incomplete_step_subjects?
+
+    validatable_steps.detect { |step| step_form(step).invalid? }
+  end
+
   private
 
   def job_details_steps
-    steps = %i[job_location job_title job_role education_phases key_stages subjects contract_information start_date pay_package]
-    steps.delete(:job_location) if organisation.school?
-    steps.delete(:education_phases) unless vacancy.allow_phase_to_be_set?
-    steps.delete(:key_stages) unless vacancy.allow_key_stages?
-    steps.delete(:subjects) unless vacancy.allow_subjects?
-
-    steps
+    first = if organisation.school?
+              %i[job_title job_role]
+            else
+              %i[job_location job_title job_role]
+            end
+    phases = vacancy.allow_phase_to_be_set? ? %i[education_phases] : []
+    stages = vacancy.allow_key_stages? ? %i[key_stages] : []
+    last = if vacancy.allow_subjects?
+             %i[subjects contract_information start_date pay_package]
+           else
+             %i[contract_information start_date pay_package]
+           end
+    first + phases + stages + last
   end
 
   def application_process_steps
     # if the user enters a contact email that doesn't belong to a publisher in our service we want to make them confirm it.
-    core_steps = %i[contact_details confirm_contact_details]
     early_steps = vacancy.published? ? [] : %i[applying_for_the_job]
 
-    if vacancy.enable_job_applications
-      early_steps + %i[anonymise_applications] + core_steps
-    else
-      first_steps = early_steps + %i[how_to_receive_applications]
-      # receive_applications may not be present (yet) as it is asked in how_to_receive_applications
-      if vacancy.receive_applications.present?
-        last_steps = if vacancy.uploaded_form?
-                       %i[anonymise_applications] + core_steps
-                     else
-                       core_steps
-                     end
-        first_steps + [APPLICATION_METHOD_TO_STEP.fetch(vacancy.receive_applications.to_sym)] + last_steps
-      else
-        first_steps + core_steps
-      end
-    end
+    start_steps = if vacancy.enable_job_applications
+                    early_steps + %i[anonymise_applications]
+                  else
+                    first_steps = early_steps + %i[how_to_receive_applications]
+                    # receive_applications may not be present (yet) as it is asked in how_to_receive_applications
+                    if vacancy.receive_applications.present?
+                      last_steps = vacancy.uploaded_form? ? %i[anonymise_applications] : []
+                      first_steps + [APPLICATION_METHOD_TO_STEP.fetch(vacancy.receive_applications.to_sym)] + last_steps
+                    else
+                      first_steps
+                    end
+                  end
+    start_steps + %i[contact_details confirm_contact_details]
   end
 
   def about_the_role_steps
@@ -63,5 +76,28 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
     else
       first_steps + last_steps
     end
+  end
+
+  def next_incomplete_step_subjects?
+    return false unless @vacancy.allow_subjects?
+    return false if @vacancy.completed_steps.include?("subjects")
+
+    @vacancy.completed_steps.last == if @vacancy.allow_key_stages?
+                                       "key_stages"
+                                     else
+                                       "job_role"
+                                     end
+  end
+
+  def validatable_steps
+    steps - %i[subjects review]
+  end
+
+  def step_form(step_name)
+    step_form_class = "publishers/job_listing/#{step_name}_form".camelize.constantize
+
+    params = step_form_class.load_form(@vacancy)
+
+    step_form_class.new(params, @vacancy)
   end
 end
