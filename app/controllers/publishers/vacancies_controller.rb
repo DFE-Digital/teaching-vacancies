@@ -12,7 +12,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
 
   def show
     @vacancy = VacancyPresenter.new(vacancy)
-    @next_invalid_step = next_invalid_step
+    @next_invalid_step = step_process.next_invalid_step
     @current_organisation = current_organisation
     @step_process = step_process
   end
@@ -82,7 +82,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
   end
 
   def preview
-    redirect_to organisation_job_path(vacancy.id) unless all_steps_valid?
+    redirect_to organisation_job_path(vacancy.id) unless step_process.all_steps_valid?
 
     @vacancy = VacancyPresenter.new(vacancy)
   end

@@ -3,7 +3,7 @@ class Publishers::Vacancies::PublishController < Publishers::Vacancies::WizardBa
   def create
     if vacancy.published?
       redirect_to organisation_job_path(vacancy.id), notice: t("messages.jobs.already_published")
-    elsif all_steps_valid? && PublishVacancy.new(vacancy, current_publisher, current_organisation).call
+    elsif step_process.all_steps_valid? && PublishVacancy.new(vacancy, current_publisher, current_organisation).call
       update_google_index(vacancy) if PublishedVacancy.find(vacancy.id).live?
 
       unless vacancy.contact_email_belongs_to_a_publisher?
