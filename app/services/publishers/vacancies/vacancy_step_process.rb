@@ -20,16 +20,33 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
     website: :application_link,
   }.freeze
 
+  def all_steps_valid?
+    validatable_steps.all? { |step| step_form(step).valid? }
+  end
+
+  def next_invalid_step
+    # Due to subjects being an optional step (no validations) it needs to be handled differently
+    return :subjects if next_incomplete_step_subjects?
+
+    validatable_steps.detect { |step| step_form(step).invalid? }
+  end
+
   private
 
   def job_details_steps
-    steps = %i[job_location job_title job_role education_phases key_stages subjects contract_information start_date pay_package]
-    steps.delete(:job_location) if organisation.school?
-    steps.delete(:education_phases) unless vacancy.allow_phase_to_be_set?
-    steps.delete(:key_stages) unless vacancy.allow_key_stages?
-    steps.delete(:subjects) unless vacancy.allow_subjects?
-
-    steps
+    first = if organisation.school?
+              %i[job_title job_role]
+            else
+              %i[job_location job_title job_role]
+            end
+    phases = vacancy.allow_phase_to_be_set? ? %i[education_phases] : []
+    stages = vacancy.allow_key_stages? ? %i[key_stages] : []
+    last = if vacancy.allow_subjects?
+             %i[subjects contract_information start_date pay_package]
+           else
+             %i[contract_information start_date pay_package]
+           end
+    first + phases + stages + last
   end
 
   def application_process_steps
@@ -61,5 +78,28 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
     else
       first_steps + last_steps
     end
+  end
+
+  def next_incomplete_step_subjects?
+    return false unless @vacancy.allow_subjects?
+    return false if @vacancy.completed_steps.include?("subjects")
+
+    @vacancy.completed_steps.last == if @vacancy.allow_key_stages?
+                                       "key_stages"
+                                     else
+                                       "job_role"
+                                     end
+  end
+
+  def validatable_steps
+    steps - %i[subjects review]
+  end
+
+  def step_form(step_name)
+    step_form_class = "publishers/job_listing/#{step_name}_form".camelize.constantize
+
+    params = step_form_class.load_form(@vacancy)
+
+    step_form_class.new(params, @vacancy)
   end
 end

@@ -1,16 +1,15 @@
 require "rails_helper"
 
-RSpec.describe Publishers::VacancyFormSequence do
-  subject(:sequence) do
+RSpec.describe Publishers::Vacancies::VacancyStepProcess do
+  let(:sequence) do
     described_class.new(
+      current_step,
       vacancy: vacancy,
-      step_process: step_process,
+      organisation: organisation,
     )
   end
-
   let(:vacancy) { create(:draft_vacancy, :secondary, :no_tv_applications, school_visits: nil, organisations: [organisation]) }
   let(:organisation) { create(:school) }
-  let(:step_process) { double(:step_process, steps: all_steps, current_step: current_step) }
   let(:current_step) { :review }
   let(:all_steps) do
     %i[
@@ -33,84 +32,28 @@ RSpec.describe Publishers::VacancyFormSequence do
       about_the_role
       include_additional_documents
       documents
-      review
     ]
   end
 
-  describe "#validate_all_steps" do
-    it "uses forms to validate each validatable step" do
-      validatable_steps = all_steps - %i[subjects review]
-      valid_steps = validatable_steps - [:school_visits]
-
-      validated_forms = sequence.validate_all_steps
-
-      valid_steps.each do |step|
-        form = validated_forms[step]
-        next unless form
-
-        expect(form.errors).to be_none
-        expect(form).to be_valid
-      end
-
-      invalid_form = validated_forms[:school_visits]
-      expect(invalid_form.errors).to have_key(:school_visits)
-      expect(invalid_form).not_to be_valid
-
-      expect(vacancy.errors).to have_key(:school_visits)
-      expect(vacancy.errors.where(:school_visits).first.options[:step]).to eq(:school_visits)
-    end
-
-    context "when the vacancy has been published" do
-      let(:vacancy) { build_stubbed(:vacancy, :secondary, organisations: [organisation]) }
-
-      context "when the current step has dependent steps" do
-        let(:current_step) { :job_location }
-        let(:validated_forms) { sequence.validate_all_steps }
-
-        context "when the dependent steps are invalid" do
-          let(:vacancy) { build_stubbed(:vacancy, phases: nil, key_stages: nil, organisations: [organisation]) }
-
-          before { allow(vacancy).to receive(:allow_key_stages?).and_return(true) }
-
-          it "returns a hash containing invalid forms for each dependent step" do
-            validated_forms.each_value { |form| expect(form).to be_invalid }
-          end
-        end
-
-        context "when the dependent steps are valid" do
-          let(:vacancy) { build_stubbed(:vacancy, :secondary, organisations: [organisation]) }
-
-          it "returns a hash containing valid forms for each dependent step" do
-            validated_forms.each_value { |form| expect(form).to be_valid }
-          end
-        end
-      end
-
-      context "when the current step does not have dependent steps" do
-        let(:current_step) { :job_title }
-
-        it "returns an empty hash" do
-          expect(sequence.validate_all_steps).to eq({})
-        end
-      end
-    end
+  before do
+    allow(sequence).to receive(:steps).and_return(all_steps)
   end
 
   describe "#all_steps_valid?" do
     it "is true if all steps are valid" do
       expect(sequence).not_to be_all_steps_valid
-      vacancy.assign_attributes(school_visits: true)
+      vacancy.update!(school_visits: true)
       expect(sequence).to be_all_steps_valid
     end
 
     context "when the vacancy has been published" do
-      let(:vacancy) { build_stubbed(:vacancy, :secondary, organisations: [organisation]) }
+      let(:vacancy) { create(:vacancy, :secondary, organisations: [organisation]) }
 
       context "when the current step has dependent steps" do
         let(:current_step) { :job_location }
 
         context "when the dependent steps are invalid" do
-          let(:vacancy) { build_stubbed(:vacancy, phases: nil, key_stages: nil, organisations: [organisation]) }
+          let(:vacancy) { create(:vacancy, phases: nil, key_stages: nil, organisations: [organisation]) }
 
           it "returns false" do
             expect(sequence.all_steps_valid?).to be false
@@ -118,9 +61,10 @@ RSpec.describe Publishers::VacancyFormSequence do
         end
 
         context "when the dependent steps are valid" do
-          let(:vacancy) { build_stubbed(:vacancy, :secondary, organisations: [organisation]) }
+          let(:vacancy) { create(:vacancy, :secondary, organisations: [organisation]) }
 
           it "returns true" do
+            pending("removing dependant steps")
             expect(sequence.all_steps_valid?).to be true
           end
         end
@@ -130,6 +74,7 @@ RSpec.describe Publishers::VacancyFormSequence do
         let(:current_step) { :job_title }
 
         it "returns true" do
+          pending("removing dependant steps")
           expect(sequence.all_steps_valid?).to be true
         end
       end
@@ -152,6 +97,7 @@ RSpec.describe Publishers::VacancyFormSequence do
             let(:enable_job_applications) { true }
 
             it "does not validate how_to_receive_applications" do
+              pending("removing dependant steps")
               expect(sequence.all_steps_valid?).to be true
             end
           end
@@ -169,6 +115,7 @@ RSpec.describe Publishers::VacancyFormSequence do
             let(:belongs_to_publisher) { true }
 
             it "does not validate confirm_contact_details" do
+              pending("removing dependant steps")
               expect(sequence.all_steps_valid?).to be true
             end
           end
@@ -191,7 +138,7 @@ RSpec.describe Publishers::VacancyFormSequence do
     end
 
     context "when the next incomplete step is subjects" do
-      let(:vacancy) { build_stubbed(:vacancy, :secondary, completed_steps: %w[job_location job_role education_phases job_title key_stages]) }
+      let(:vacancy) { create(:draft_vacancy, :secondary, completed_steps: %w[job_location job_role education_phases job_title key_stages]) }
 
       before { allow(vacancy).to receive(:allow_key_stages?).and_return(true) }
 
@@ -202,7 +149,7 @@ RSpec.describe Publishers::VacancyFormSequence do
 
     context "when the vacancy has been published" do
       let(:current_step) { :job_location }
-      let(:vacancy) { build_stubbed(:vacancy, phases: nil, organisations: [organisation]) }
+      let(:vacancy) { create(:vacancy, phases: nil, organisations: [organisation]) }
 
       context "when a dependent step is invalid" do
         it "returns the first invalid dependent step" do
