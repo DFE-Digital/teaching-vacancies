@@ -33,12 +33,12 @@ en:
 
     filters:
       campaign:
-        teaching_job_roles: Teaching & leadership roles
+        teaching_job_roles: Teaching and leadership roles
         support_job_roles: Support roles
       job_filters: Job Filters
       job_type: Job type
       job_roles: Job role
-      teaching_job_roles: Teaching & leadership
+      teaching_job_roles: Teaching and leadership
       support_job_roles: Support
       ect_suitable: Suitable for early career teachers
       subject: Subject
@@ -411,6 +411,6 @@ en:
       contact_email_link: Email link for job contact email — %{email}
       sort_by_link: Sort jobs by %{column} in %{order}ending order
       filters:
-        teaching_job_roles: Teaching & leadership job roles
+        teaching_job_roles: Teaching and leadership job roles
         support_job_roles: Support job roles
         subjects: Subjects
