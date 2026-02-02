@@ -17,8 +17,8 @@ class InactiveProfileWarningsJob < ApplicationJob
              .filter_map(&:jobseeker_profile)
              .select(&:active?)
              .each do |profile|
-      profile_expiry_date = (profile.jobseeker.last_sign_in_at + 6.months).to_date
-      Jobseekers::ProfilesMailer.inactive_profile_warning(profile, profile_expiry_date).deliver_later
+               profile_expiry_date = (profile.jobseeker.last_sign_in_at + 6.months).to_date
+               Jobseekers::ProfilesMailer.inactive_profile_warning(profile, profile_expiry_date).deliver_later
     end
   end
 end

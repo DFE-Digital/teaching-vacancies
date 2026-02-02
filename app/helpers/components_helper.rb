@@ -19,7 +19,7 @@ module ComponentsHelper
     define_method(name) do |*args, **kwargs, &block|
       capture do
         render(klass.constantize.new(*args, **kwargs)) do |com|
-          block.call(com) if block.present?
+          block.presence&.call(com)
         end
       end
     end
