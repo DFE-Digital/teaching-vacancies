@@ -2,9 +2,9 @@ module Vacancies::Import::Parser
   # Parses, when possible, the start date values coming from the external vacancy sources
   class StartDate
     # EG: "04-09-2023", "4-9-23", "04/09/2023", "4/9/23", "04.09.2023"
-    REGEXP_DATE_YEAR_END = %r{\d{1,2}[-\/\.]\d{1,2}[-\/\.][2-9]\d{1,3}}
+    REGEXP_DATE_YEAR_END = %r{\d{1,2}[-/.]\d{1,2}[-/.][2-9]\d{1,3}}
     # EG: "2023-09-04", "23-9-4", "2023/09/04", "23/9/4", "2023.09.04"
-    REGEXP_DATE_YEAR_START = %r{\d{2,4}[-\/\.]\d{1,2}[-\/\.]\d{1,2}}
+    REGEXP_DATE_YEAR_START = %r{\d{2,4}[-/.]\d{1,2}[-/.]\d{1,2}}
     # Matches either of the above
     REGEXP_DATE = /(#{REGEXP_DATE_YEAR_START})|(#{REGEXP_DATE_YEAR_END})/
     # EG: "T12:00:00", "12:00:00"
@@ -68,7 +68,7 @@ module Vacancies::Import::Parser
     # Identifies the separator symbol used in the date ('-', '/' or '.')
     # EG: "04-09-2023" => "-"
     def separator(date)
-      date.match(%r{[-\/\.]}).try(:[], 0)
+      date.match(%r{[-/.]}).try(:[], 0)
     end
   end
 end

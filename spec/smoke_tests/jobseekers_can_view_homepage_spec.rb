@@ -9,7 +9,9 @@ CLOUD_DOMAIN = "test.teacherservices.cloud".freeze
 RSpec.describe "Page availability", js: true, smoke_test: true do
   after do |example|
     # Print page on failure to help triage failures
+    # rubocop:disable RSpec/Output
     puts page.html if example.exception
+    # rubocop:enable RSpec/Output
   end
 
   context "Jobseeker visits vacancy page" do

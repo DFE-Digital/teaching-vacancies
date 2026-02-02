@@ -19,7 +19,9 @@ module ComponentsHelper
     define_method(name) do |*args, **kwargs, &block|
       capture do
         render(klass.constantize.new(*args, **kwargs)) do |com|
-          block.call(com) if block.present?
+          # :nocov:
+          block.presence&.call(com)
+          # :nocov:
         end
       end
     end

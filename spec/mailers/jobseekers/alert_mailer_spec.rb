@@ -64,7 +64,7 @@ RSpec.describe Jobseekers::AlertMailer do
   describe "exception handling" do
     # exception message found here
     # https://docs.notifications.service.gov.uk/ruby.html#send-a-file-by-email-response
-    let(:http_response) { double(code: 400, body: message) } # rubocop:disable RSpec/VerifiedDoubles
+    let(:http_response) { double(code: 400, body: message) }
     let(:error) { Notifications::Client::BadRequestError.new(http_response) }
 
     before do

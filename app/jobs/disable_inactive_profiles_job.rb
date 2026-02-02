@@ -9,10 +9,10 @@ class DisableInactiveProfilesJob < ApplicationJob
              .filter_map(&:jobseeker_profile)
              .select(&:active?)
              .each do |jsp|
-      jsp.assign_attributes(active: false)
-      jsp.save!(touch: false)
+               jsp.assign_attributes(active: false)
+               jsp.save!(touch: false)
 
-      Jobseekers::ProfilesMailer.disable_inactive_profile(jsp).deliver_later
+               Jobseekers::ProfilesMailer.disable_inactive_profile(jsp).deliver_later
     end
   end
 end
