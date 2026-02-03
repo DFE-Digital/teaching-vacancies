@@ -11,7 +11,10 @@ RSpec.describe "publishers/vacancies/index" do
     assign :selected_type, :live
     assign :vacancy_types, []
     assign :vacancies, []
+    assign :count, 0
+    assign :sort, Publishers::VacancySort.new(organisation, :live)
     assign :publisher_preference, build_stubbed(:publisher_preference, organisation: organisation)
+    assign :selected_organisation_ids, []
     render
   end
 

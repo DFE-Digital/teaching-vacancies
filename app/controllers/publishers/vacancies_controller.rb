@@ -3,6 +3,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
   before_action :redirect_to_new_features_reminder, only: %i[create]
 
   before_action :set_publisher_preference, only: %i[index]
+  before_action :strip_empty_checkbox_params, only: %i[index]
   before_action :redirect_to_show_publisher_profile_incomplete, only: %i[index], if: -> { signing_in? }, unless: -> { current_organisation.profile_complete? }
 
   helper_method :vacancy_statistics_form
@@ -26,10 +27,10 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
       awaiting_feedback: :awaiting_feedback_recently_expired,
     }.freeze
 
+  # rubocop:disable Metrics/AbcSize
   def index
     @selected_type = (params[:type] || :live).to_sym
     @sort = Publishers::VacancySort.new(current_organisation, @selected_type).update(sort_by: params[:sort_by])
-
     scope = if @selected_type == :draft
               DraftVacancy.kept.where.not(job_title: nil)
             else
@@ -51,6 +52,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
 
     @vacancy_types = VACANCY_TYPES.keys
   end
+  # rubocop:enable Metrics/AbcSize
 
   # We don't save anything here - just redirect to the show page
   def save_and_finish_later
@@ -144,5 +146,9 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
 
   def redirect_to_show_publisher_profile_incomplete
     redirect_to publishers_organisation_profile_incomplete_path(current_organisation)
+  end
+
+  def strip_empty_checkbox_params
+    params[:organisation_ids]&.reject!(&:blank?)
   end
 end

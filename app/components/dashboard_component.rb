@@ -2,7 +2,9 @@ class DashboardComponent < ApplicationComponent
   include DatesHelper
   include VacanciesHelper
 
+  # rubocop:disable Metrics/ParameterLists
   def initialize(organisation:, sort:, selected_type:, publisher_preference:, vacancies:, count:, vacancy_types:, selected_organisation_ids: [])
+    # rubocop:enable Metrics/ParameterLists
     super(classes: [], html_attributes: {})
     @organisation = organisation
     @sort = sort
