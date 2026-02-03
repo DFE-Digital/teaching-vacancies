@@ -2,7 +2,7 @@ class DashboardComponent < ApplicationComponent
   include DatesHelper
   include VacanciesHelper
 
-  def initialize(organisation:, sort:, selected_type:, publisher_preference:, vacancies:, count:, vacancy_types:)
+  def initialize(organisation:, sort:, selected_type:, publisher_preference:, vacancies:, count:, vacancy_types:, selected_organisation_ids: [])
     super(classes: [], html_attributes: {})
     @organisation = organisation
     @sort = sort
@@ -10,6 +10,7 @@ class DashboardComponent < ApplicationComponent
     # only used by dashboard_component.html.slim
     @vacancy_types = vacancy_types
     @selected_type = selected_type
+    @selected_organisation_ids = selected_organisation_ids
 
     @vacancies = vacancies
     set_organisation_options if @organisation.school_group?
@@ -21,7 +22,7 @@ class DashboardComponent < ApplicationComponent
   end
 
   def no_jobs_text
-    t("jobs.manage.#{selected_type}.no_jobs.#{publisher_preference.organisations.any? ? 'with' : 'no'}_filters")
+    t("jobs.manage.#{selected_type}.no_jobs.#{@selected_organisation_ids.any? ? 'with' : 'no'}_filters")
   end
 
   def view_applicants(vacancy, job_applications_count)
@@ -33,7 +34,7 @@ class DashboardComponent < ApplicationComponent
 
   private
 
-  attr_reader :publisher_preference, :organisation, :selected_type, :sort, :vacancies
+  attr_reader :publisher_preference, :organisation, :selected_type, :sort, :vacancies, :selected_organisation_ids
 
   def set_organisation_options
     schools = organisation.local_authority? ? publisher_preference.schools : organisation.schools

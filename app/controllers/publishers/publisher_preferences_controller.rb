@@ -29,31 +29,17 @@ class Publishers::PublisherPreferencesController < Publishers::BaseController
       return render :edit
     elsif publisher_preference_params[:school_ids]&.any?
       @publisher_preference.update schools: Organisation.find(publisher_preference_params[:school_ids])
-    elsif publisher_preference_params[:organisation_ids]
-      @publisher_preference.update organisations: Organisation.find(publisher_preference_params[:organisation_ids])
     end
-    redirect_to organisation_jobs_with_type_path(publisher_preference_params[:jobs_type])
-  end
-
-  def destroy
-    publisher_preference = PublisherPreference.find_by(publisher: current_publisher, organisation: current_organisation)
-    publisher_preference.organisation_publisher_preferences.destroy_all
-    redirect_to organisation_jobs_path
-  end
-
-  def remove_organisation
-    publisher_preference = PublisherPreference.find_by(publisher: current_publisher, organisation: current_organisation)
-    publisher_preference.organisation_publisher_preferences.find_by(organisation_id: params[:filter_id])&.destroy
     redirect_to organisation_jobs_path
   end
 
   private
 
   def publisher_preference_params
-    params.expect(publisher_preference: [:jobs_type, { organisation_ids: [], school_ids: [] }])
+    params.expect(publisher_preference: [{ school_ids: [] }])
   end
 
   def strip_empty_publisher_preference_checkboxes
-    strip_empty_checkboxes(%i[school_ids organisation_ids], :publisher_preference)
+    strip_empty_checkboxes(%i[school_ids], :publisher_preference)
   end
 end

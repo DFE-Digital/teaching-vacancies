@@ -243,7 +243,7 @@ Rails.application.routes.draw do
       end
     end
     resources :notifications, only: %i[index]
-    resources :publisher_preferences, only: %i[new create edit update destroy]
+    resources :publisher_preferences, only: %i[new create edit update]
     resources :organisations, only: %i[show] do
       resource :description, only: %i[edit update], controller: "organisations/description"
       resource :email, only: %i[edit update], controller: "organisations/email"
@@ -262,7 +262,6 @@ Rails.application.routes.draw do
     end
     resource :terms_and_conditions, only: %i[show update]
     resource :candidate_profiles_interstitial, only: %i[show]
-    get :remove_organisation_filter, to: "publisher_preferences#remove_organisation"
   end
 
   scope :publishers do

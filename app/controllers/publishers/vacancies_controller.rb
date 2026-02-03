@@ -35,8 +35,15 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
             else
               PublishedVacancy.kept.public_send(VACANCY_TYPES.fetch(@selected_type))
             end
+    # Start with all accessible organisations
+    accessible_org_ids = current_publisher.accessible_organisations(current_organisation).map(&:id)
+
+    # Apply organisation filter from URL params if present, otherwise show all accessible
+    @selected_organisation_ids = params[:organisation_ids]&.reject(&:blank?) || []
+    org_ids_to_filter = @selected_organisation_ids.any? ? @selected_organisation_ids : accessible_org_ids
+
     vacancies = scope
-                  .in_organisation_ids(current_publisher.accessible_organisations(current_organisation).map(&:id))
+                  .in_organisation_ids(org_ids_to_filter)
                   .order(@sort.by => @sort.order)
 
     @pagy, @vacancies = pagy(vacancies)
