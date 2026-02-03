@@ -51,7 +51,6 @@ class CopyVacancyAsaTemplate
         step_form_class = File.join("publishers/job_listing", "#{step_name}_form").camelize.constantize
 
         params = step_form_class.load_form(vacancy)
-                                .merge(current_organisation: @organisation)
 
         step_form_class.new(params, vacancy).valid?
       end

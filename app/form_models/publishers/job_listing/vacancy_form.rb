@@ -1,6 +1,6 @@
 class Publishers::JobListing::VacancyForm < BaseForm
   # so that these can be passed through the 'params' hash
-  attr_writer :completed_steps, :current_organisation
+  attr_writer :completed_steps
 
   include ActiveModel::Attributes
 
@@ -13,7 +13,7 @@ class Publishers::JobListing::VacancyForm < BaseForm
   end
 
   def params_to_save
-    params.except(:current_organisation)
+    params
   end
 
   # Some forms may cause some previously completed steps in the Vacancy to be marked as incomplete again after updating
