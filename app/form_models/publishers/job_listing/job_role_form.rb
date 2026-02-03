@@ -7,10 +7,6 @@ class Publishers::JobListing::JobRoleForm < Publishers::JobListing::VacancyForm
   end
   attr_accessor(*fields)
 
-  def job_roles
-    params[:job_roles]
-  end
-
   def params_to_save
     { job_roles: job_roles }
   end

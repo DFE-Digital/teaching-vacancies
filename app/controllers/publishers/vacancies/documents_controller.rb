@@ -59,7 +59,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::Wizard
   end
 
   def confirmation_form
-    @confirmation_form ||= Publishers::JobListing::DocumentsConfirmationForm.new(confirmation_form_params, vacancy)
+    @confirmation_form ||= Publishers::JobListing::DocumentsConfirmationForm.new(confirmation_form_params)
   end
 
   def confirmation_form_params

@@ -2,7 +2,7 @@ class Publishers::JobListing::StartDateForm < Publishers::JobListing::VacancyFor
   include ActiveRecord::AttributeAssignment
   include DateAttributeAssignment
 
-  attr_accessor :other_start_date_details, :start_date_type
+  attr_accessor :other_start_date_details, :start_date_type, :expires_at
   attr_reader :starts_on, :earliest_start_date, :latest_start_date
 
   validates :start_date_type, inclusion: { in: Vacancy.start_date_types.keys }
@@ -12,7 +12,7 @@ class Publishers::JobListing::StartDateForm < Publishers::JobListing::VacancyFor
   validates :other_start_date_details, presence: true, if: -> { start_date_type == "other" }
 
   def self.fields
-    %i[start_date_type starts_on earliest_start_date latest_start_date other_start_date_details]
+    %i[start_date_type starts_on earliest_start_date latest_start_date other_start_date_details expires_at]
   end
 
   def params_to_save
@@ -35,9 +35,5 @@ class Publishers::JobListing::StartDateForm < Publishers::JobListing::VacancyFor
 
   def latest_start_date=(value)
     @latest_start_date = date_from_multiparameter_hash(value)
-  end
-
-  def expires_at
-    vacancy.expires_at
   end
 end

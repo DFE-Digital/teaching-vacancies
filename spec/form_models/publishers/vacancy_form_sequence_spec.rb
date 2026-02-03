@@ -4,7 +4,6 @@ RSpec.describe Publishers::VacancyFormSequence do
   subject(:sequence) do
     described_class.new(
       vacancy: vacancy,
-      organisation: organisation,
       step_process: step_process,
     )
   end
@@ -62,14 +61,14 @@ RSpec.describe Publishers::VacancyFormSequence do
     end
 
     context "when the vacancy has been published" do
-      let(:vacancy) { create(:vacancy, :secondary, organisations: [organisation]) }
+      let(:vacancy) { build_stubbed(:vacancy, :secondary, organisations: [organisation]) }
 
       context "when the current step has dependent steps" do
         let(:current_step) { :job_location }
         let(:validated_forms) { sequence.validate_all_steps }
 
         context "when the dependent steps are invalid" do
-          let(:vacancy) { create(:vacancy, phases: nil, key_stages: nil, organisations: [organisation]) }
+          let(:vacancy) { build_stubbed(:vacancy, phases: nil, key_stages: nil, organisations: [organisation]) }
 
           before { allow(vacancy).to receive(:allow_key_stages?).and_return(true) }
 
@@ -79,7 +78,7 @@ RSpec.describe Publishers::VacancyFormSequence do
         end
 
         context "when the dependent steps are valid" do
-          let(:vacancy) { create(:vacancy, :secondary, organisations: [organisation]) }
+          let(:vacancy) { build_stubbed(:vacancy, :secondary, organisations: [organisation]) }
 
           it "returns a hash containing valid forms for each dependent step" do
             validated_forms.each_value { |form| expect(form).to be_valid }
@@ -100,18 +99,18 @@ RSpec.describe Publishers::VacancyFormSequence do
   describe "#all_steps_valid?" do
     it "is true if all steps are valid" do
       expect(sequence).not_to be_all_steps_valid
-      vacancy.update(school_visits: true)
+      vacancy.assign_attributes(school_visits: true)
       expect(sequence).to be_all_steps_valid
     end
 
     context "when the vacancy has been published" do
-      let(:vacancy) { create(:vacancy, :secondary, organisations: [organisation]) }
+      let(:vacancy) { build_stubbed(:vacancy, :secondary, organisations: [organisation]) }
 
       context "when the current step has dependent steps" do
         let(:current_step) { :job_location }
 
         context "when the dependent steps are invalid" do
-          let(:vacancy) { create(:vacancy, phases: nil, key_stages: nil, organisations: [organisation]) }
+          let(:vacancy) { build_stubbed(:vacancy, phases: nil, key_stages: nil, organisations: [organisation]) }
 
           it "returns false" do
             expect(sequence.all_steps_valid?).to be false
@@ -119,7 +118,7 @@ RSpec.describe Publishers::VacancyFormSequence do
         end
 
         context "when the dependent steps are valid" do
-          let(:vacancy) { create(:vacancy, :secondary, organisations: [organisation]) }
+          let(:vacancy) { build_stubbed(:vacancy, :secondary, organisations: [organisation]) }
 
           it "returns true" do
             expect(sequence.all_steps_valid?).to be true
@@ -192,7 +191,7 @@ RSpec.describe Publishers::VacancyFormSequence do
     end
 
     context "when the next incomplete step is subjects" do
-      let(:vacancy) { create(:vacancy, :secondary, completed_steps: %w[job_location job_role education_phases job_title key_stages]) }
+      let(:vacancy) { build_stubbed(:vacancy, :secondary, completed_steps: %w[job_location job_role education_phases job_title key_stages]) }
 
       before { allow(vacancy).to receive(:allow_key_stages?).and_return(true) }
 
@@ -203,7 +202,7 @@ RSpec.describe Publishers::VacancyFormSequence do
 
     context "when the vacancy has been published" do
       let(:current_step) { :job_location }
-      let(:vacancy) { create(:vacancy, phases: nil, organisations: [organisation]) }
+      let(:vacancy) { build_stubbed(:vacancy, phases: nil, organisations: [organisation]) }
 
       context "when a dependent step is invalid" do
         it "returns the first invalid dependent step" do
