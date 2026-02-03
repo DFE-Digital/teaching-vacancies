@@ -1,11 +1,10 @@
 class Publishers::VacancyFormSequence < FormSequence
-  def initialize(vacancy:, organisation:, step_process:)
+  def initialize(vacancy:, step_process:)
     @vacancy = vacancy
     @step_process = step_process
 
     super(
       model: @vacancy,
-      organisation: organisation,
       step_names: @step_process.steps,
       form_prefix: "publishers/job_listing",
     )

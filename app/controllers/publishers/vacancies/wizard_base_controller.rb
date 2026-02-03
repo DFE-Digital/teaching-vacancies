@@ -22,7 +22,6 @@ module Publishers
       def form_sequence
         @form_sequence ||= Publishers::VacancyFormSequence.new(
           vacancy: vacancy,
-          organisation: current_organisation,
           step_process: step_process,
         )
       end

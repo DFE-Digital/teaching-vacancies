@@ -1,7 +1,6 @@
 class FormSequence
-  def initialize(model:, organisation:, step_names:, form_prefix:)
+  def initialize(model:, step_names:, form_prefix:)
     @model = model
-    @organisation = organisation
     @step_names = step_names
     @form_prefix = form_prefix
   end
