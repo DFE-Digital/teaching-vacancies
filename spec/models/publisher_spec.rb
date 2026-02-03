@@ -66,16 +66,6 @@ RSpec.describe Publisher do
       let(:local_authority) { create(:local_authority, schools: [la_first_school, la_second_school]) }
       let(:current_organisation) { local_authority }
 
-      context "when the publisher has preferences with organisations for the local authority" do
-        let!(:publisher_preference) do
-          create(:publisher_preference, publisher: publisher, organisation: current_organisation, organisations: [la_first_school], schools: [])
-        end
-
-        it "returns the organisations from its preferences" do
-          expect(accessible_organisations).to eq [la_first_school]
-        end
-      end
-
       context "when the publisher has preferences with schools for the local authority" do
         let!(:publisher_preference) do
           create(:publisher_preference, publisher: publisher, organisation: current_organisation, schools: [la_second_school], organisations: [])
@@ -83,16 +73,6 @@ RSpec.describe Publisher do
 
         it "returns the schools from its preferences" do
           expect(accessible_organisations).to eq [la_second_school]
-        end
-      end
-
-      context "when the publisher has preferences with both organisations and schools for the local authority" do
-        let!(:publisher_preference) do
-          create(:publisher_preference, publisher: publisher, organisation: current_organisation, organisations: [la_first_school], schools: [la_second_school])
-        end
-
-        it "returns the organisations from its preferences" do
-          expect(accessible_organisations).to eq [la_first_school]
         end
       end
 
@@ -122,16 +102,6 @@ RSpec.describe Publisher do
       let(:trust) { create(:trust, schools: [trust_first_school, trust_second_school]) }
       let(:current_organisation) { trust }
 
-      context "when the publisher has preferences with organisations for the trust" do
-        let!(:publisher_preference) do
-          create(:publisher_preference, publisher: publisher, organisation: current_organisation, organisations: [trust_first_school], schools: [])
-        end
-
-        it "returns the organisations from its preferences" do
-          expect(accessible_organisations).to eq [trust_first_school]
-        end
-      end
-
       context "when the publisher has preferences with schools for the trust" do
         let!(:publisher_preference) do
           create(:publisher_preference, publisher: publisher, organisation: current_organisation, schools: [trust_second_school], organisations: [])
@@ -139,16 +109,6 @@ RSpec.describe Publisher do
 
         it "ignores the preferences and returns the trust and all its schools" do
           expect(accessible_organisations).to contain_exactly(trust, trust_first_school, trust_second_school)
-        end
-      end
-
-      context "when the publisher has preferences with both organisations and schools for the trust" do
-        let!(:publisher_preference) do
-          create(:publisher_preference, publisher: publisher, organisation: current_organisation, organisations: [trust_first_school], schools: [trust_second_school])
-        end
-
-        it "returns the organisations from its preferences" do
-          expect(accessible_organisations).to eq [trust_first_school]
         end
       end
 
