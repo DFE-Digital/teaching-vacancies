@@ -15,6 +15,8 @@ en:
               blank: Referee organisation can't be blank
             relationship:
               blank: Referee relationship can't be blank
+            reference_document:
+              blank: You must upload a file
   helpers:
     legend:
       publishers_vacancies_job_applications_referee_form:
@@ -31,8 +33,9 @@ en:
         job_title: Referee job title
         organisation: Referee organisation
         relationship: Referee relationship to applicant
-        phone_number: Referee phone number
+        phone_number: Referee phone number (Optional)
 
     hint:
       publishers_vacancies_job_applications_referee_form:
         uploaded_details: Select one option
+        job_title: When you complete these fields and select ‘Save reference’, we’ll email this person to request a reference.

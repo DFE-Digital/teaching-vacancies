@@ -29,7 +29,7 @@ p.govuk-body = t(".description_html", link: govuk_link_to(t(".kcsie"), "https://
   = govuk_button_link_to t("buttons.add_another_reference"), new_jobseekers_job_application_referee_path(job_application)
 - else
   = render EmptySectionComponent.new title: t(".no_references") do
-    = govuk_button_link_to t("buttons.add_reference"), new_jobseekers_job_application_referee_path(job_application), class: "govuk-!-margin-bottom-0"
+    = govuk_button_link_to t("buttons.add_referee"), new_jobseekers_job_application_referee_path(job_application), class: "govuk-!-margin-bottom-0"
 
 = form_for @form, url: jobseekers_job_application_build_path(job_application, :referees), method: :patch do |f|
   = f.govuk_error_summary

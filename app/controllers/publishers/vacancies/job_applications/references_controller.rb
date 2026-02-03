@@ -7,12 +7,12 @@ module Publishers
         before_action :set_job_application
 
         def new
-          @notes_form = Publishers::JobApplication::NotesForm.new
+          @note = @job_application.notes.build
           @referee = RefereeForm.new
         end
 
         def create
-          @notes_form = Publishers::JobApplication::NotesForm.new
+          @note = @job_application.notes.build
           @referee = RefereeForm.new(referee_form_params)
           if @referee.valid?
             process_referee_details @referee

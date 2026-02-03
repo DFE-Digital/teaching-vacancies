@@ -26,7 +26,7 @@ RSpec.describe "Jobseekers can add references to their job application" do
 
     context "when adding a referee" do
       before do
-        click_on I18n.t("buttons.add_reference")
+        click_on I18n.t("buttons.add_referee")
       end
 
       it "passes a11y", :a11y do

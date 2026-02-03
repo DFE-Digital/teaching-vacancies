@@ -103,7 +103,7 @@ RSpec.describe "Jobseekers can complete a job application" do
 
       click_on(I18n.t("jobseekers.job_applications.build.referees.heading"))
 
-      click_on I18n.t("buttons.add_reference")
+      click_on I18n.t("buttons.add_referee")
       click_on I18n.t("buttons.save_reference")
       expect(page).to have_content("There is a problem")
       fill_in_referee
