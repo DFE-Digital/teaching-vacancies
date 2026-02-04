@@ -1,17 +1,17 @@
  # Some packages are defined here with a hardcoded version to resolve vulnerabilities in the packages coming with
  # Alpine v3.22.
- # TODO: Regularly check in the alpine ruby "3.4.7-alpine3.22" images for its latest upgraded packages so we can remove
+ # TODO: Regularly check in the alpine ruby "3.4.7-alpine3.23" images for its latest upgraded packages so we can remove
  # the hardcoded versions below when they have been updated in the alpine ruby image.
  # To find the current version of each package in the alpine image, search here:
- # https://pkgs.alpinelinux.org/packages?name=&branch=v3.22
-ARG PROD_PACKAGES="imagemagick libpng=1.6.54-r0 openssl=3.5.5-r0 libjpeg libxml2 libxslt libpq tzdata shared-mime-info postgresql15 vips-poppler vips-magick proj-dev"
+ # https://pkgs.alpinelinux.org/packages?name=&branch=v3.23
+ARG PROD_PACKAGES="imagemagick libpng openssl expat=2.7.4-r0 libjpeg libxml2 libxslt libpq tzdata shared-mime-info postgresql16 vips-poppler vips-magick proj-dev"
 
-FROM ruby:3.4.7-alpine3.22 AS builder
+FROM ruby:3.4.7-alpine3.23 AS builder
 
 WORKDIR /app
 
 ARG PROD_PACKAGES
-ENV DEV_PACKAGES="gcc libc-dev make yaml-dev yarn postgresql15-dev build-base git"
+ENV DEV_PACKAGES="gcc libc-dev make yaml-dev yarn postgresql16-dev build-base git"
 RUN apk add --no-cache $PROD_PACKAGES $DEV_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
@@ -50,7 +50,7 @@ RUN rm -rf node_modules log tmp yarn.lock && \
 
 
 # this stage reduces the image size.
-FROM ruby:3.4.7-alpine3.22 AS production
+FROM ruby:3.4.7-alpine3.23 AS production
 
 RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
 WORKDIR /app
