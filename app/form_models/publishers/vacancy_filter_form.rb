@@ -1,7 +1,7 @@
 class Publishers::VacancyFilterForm
   include ActiveModel::Model
 
-  attr_reader :organisation_ids
+  attr_accessor :organisation_ids
 
   def initialize(params = {})
     @organisation_ids = params[:organisation_ids] || []
@@ -10,6 +10,6 @@ class Publishers::VacancyFilterForm
   def to_hash
     {
       organisation_ids: @organisation_ids,
-    }.delete_if { |_k, v| v.blank? }
+    }.compact_blank!
   end
 end
