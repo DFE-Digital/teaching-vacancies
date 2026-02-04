@@ -59,8 +59,7 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
 
       context "when clearing all filters" do
         before do
-          create(:publisher_preference, publisher: publisher, organisation: trust, organisations: [school1])
-          visit organisation_jobs_with_type_path(:live)
+          visit organisation_jobs_with_type_path(:live, organisation_ids: [school1.id])
           click_on I18n.t("shared.filter_group.clear_all_filters")
         end
 
@@ -86,12 +85,11 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
     end
   end
 
-  context "when organisations have been previously selected" do
+  context "when organisations have been selected via URL params" do
     let(:organisation) { trust }
-    let!(:publisher_preference_trust) { PublisherPreference.create(publisher: publisher, organisation: trust, organisations: [school1, school2]) }
 
-    scenario "it shows filtered published vacancies" do
-      visit organisation_jobs_with_type_path
+    scenario "it shows filtered published vacancies with remove tags" do
+      visit organisation_jobs_with_type_path(organisation_ids: [school1.id, school2.id])
 
       expect(page).to have_css(".filters-component__remove-tags__tag", count: 2)
 
