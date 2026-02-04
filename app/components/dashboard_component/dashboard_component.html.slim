@@ -33,7 +33,7 @@
           = govuk_link_to t("jobs.dashboard.add_or_remove_schools"), edit_publishers_publisher_preference_path(@publisher_preference), class: "govuk-link--no-visited-state"
 
         div class="govuk-!-margin-top-2"
-          = form_with url: organisation_jobs_with_type_path(type: @selected_type), method: :get, html: { data: { controller: "form", "hide-submit": true } } do |f|
+          = form_for @filter_form, as: "", url: organisation_jobs_with_type_path(type: @selected_type), method: :get, html: { data: { controller: "form", "hide-submit": true } } do |f|
             = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
                       filters: { total_count: @selected_organisation_ids.size },
                       clear_filters_link: { text: t("shared.filter_group.clear_all_filters"), url: organisation_jobs_with_type_path(type: @selected_type) },

@@ -51,6 +51,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
     @count = vacancies.count
 
     @vacancy_types = VACANCY_TYPES.keys
+    @filter_form = Publishers::VacancyFilterForm.new(organisation_ids: @selected_organisation_ids)
   end
   # rubocop:enable Metrics/AbcSize
 
