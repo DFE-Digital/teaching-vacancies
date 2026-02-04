@@ -36,7 +36,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
             else
               PublishedVacancy.kept.public_send(VACANCY_TYPES.fetch(@selected_type))
             end
-    # Start with all accessible organisations
+
     accessible_org_ids = current_publisher.accessible_organisations(current_organisation).map(&:id)
 
     # Apply organisation filter from URL params if present, otherwise show all accessible
