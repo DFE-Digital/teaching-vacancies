@@ -8,11 +8,14 @@ end
 = form_for form, url: wizard_path(current_step), method: :patch do |f|
   = f.govuk_error_summary
 
+  / This is a text_area pretending to be a text_input so we get the running total of characters remaining
+  / so we limit the number of rows to 1
   = f.govuk_text_area :job_title,
     label: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" },
     hint: { text: vacancy_job_title_form_hint_text(vacancy) },
     class: "govuk-input",
     max_chars: 75,
+    rows: 1,
     required: true
 
   = render "publishers/vacancies/vacancy_form_partials/submit", f: f

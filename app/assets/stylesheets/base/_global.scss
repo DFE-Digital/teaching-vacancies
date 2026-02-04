@@ -54,3 +54,10 @@ dl {
     display: none !important;
   }
 }
+
+// prevent textareas masqerading as input boxes from being resized
+textarea {
+  .govuk-input {
+    resize: none;
+  }
+}
