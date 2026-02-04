@@ -78,6 +78,23 @@ schools.each do |school|
   2.times { FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false) }
 end
 
+#  about 22k test jobs
+School.not_closed.not_excluded
+      .find_each do |school|
+  phase = school.not_applicable? || school.middle_deemed_primary? || school.middle_deemed_secondary? ? "primary" : school.phase
+
+  # make some vacancies multi-site
+  orgs = school.part_of_a_trust? ? school.trust.schools.sample(2) : [school]
+
+  attrs = { organisations: orgs,
+            phases: [phase],
+            publisher_organisation: orgs.first,
+            publisher: FactoryBot.create(:publisher, organisations: [orgs.first]) }
+  Vacancy.transaction do
+    20.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+  end
+end
+
 # Vacancies at Weydon trust central office
 attrs = { organisations: [weydon_trust], phases: %w[secondary], publisher_organisation: weydon_trust, publisher: Publisher.all.sample }
 FactoryBot.create(:vacancy, :for_seed_data, **attrs)
