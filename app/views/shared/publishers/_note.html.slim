@@ -4,6 +4,6 @@
   - if return_to_url.present?
     = hidden_field_tag :return_to, return_to_url
 
-  = f.govuk_text_area :content, rows: 7, max_chars: 150
+  = f.govuk_text_area :content, rows: 7, max_words: Note::MAX_WORDS
 
   = f.govuk_submit t("buttons.save_note")

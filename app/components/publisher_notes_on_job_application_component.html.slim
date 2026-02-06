@@ -13,4 +13,5 @@
         = govuk_link_to(t("buttons.delete"), organisation_job_job_application_note_path(vacancy.id, job_application, note, delete_params), method: :delete)
       hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
 
-    = render "shared/publishers/note", note: note, return_to_url: return_to_url
+    div data-turbo="true"
+      = render "shared/publishers/note", note: note, return_to_url: return_to_url

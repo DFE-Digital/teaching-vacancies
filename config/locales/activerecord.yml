@@ -667,7 +667,8 @@ en:
           attributes:
             content:
               blank: Enter a note
-              too_long: A note must not be more than 150 characters
+            words_in_content:
+              too_long: A note must not be more than %{count} words
 
         jobseeker:
           attributes:

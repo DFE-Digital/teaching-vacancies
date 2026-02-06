@@ -66,10 +66,11 @@ RSpec.describe "Publishers can interview for a religious vacancy" do
       end
 
       context "with too much content" do
-        let(:note_content) { Faker::Lorem.characters(number: 151) }
+        let(:note_content) { Faker::Lorem.sentence(word_count: 101) }
 
         it "has errors" do
-          expect(page).to have_content("Notes must not be blank or more than 150 characters")
+          expect(page).to have_content("A note must not be more than 100 words")
+          expect(page).to have_content("Note did not save")
         end
       end
 

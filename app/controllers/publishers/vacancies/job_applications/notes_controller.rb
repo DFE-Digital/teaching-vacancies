@@ -7,8 +7,15 @@ class Publishers::Vacancies::JobApplications::NotesController < Publishers::Vaca
     if @note.persisted?
       redirect_to redirect_path, success: t(".success")
     else
-      flash[:error] = @note.errors.full_messages
-      redirect_to redirect_path, warning: t(".failure")
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(@note, partial: "shared/publishers/note", locals: { note: @note, return_to_url: params[:return_to] })
+        end
+        format.html do
+          flash[:error] = @note.errors.full_messages
+          redirect_to redirect_path, warning: t(".failure")
+        end
+      end
     end
   end
 
