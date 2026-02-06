@@ -46,7 +46,7 @@
                                        options: @organisation_options,
                                        value_method: :id,
                                        selected_method: :name,
-                                       remove_filter_link: { url_helper: :organisation_jobs_with_type_path, params: { type: @selected_type, organisation_ids: @selected_organisation_ids } })
+                                       remove_filter_link: { url_helper: :organisation_jobs_with_type_path, params: { "type" => @selected_type, "organisation_ids" => @selected_organisation_ids } })
 
                         - filters_component.with_group key: "locations",
                           component: f.govuk_collection_check_boxes(:organisation_ids, @organisation_options, :id, :label, small: true, legend: { text: "Locations", tag: "h2" }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
