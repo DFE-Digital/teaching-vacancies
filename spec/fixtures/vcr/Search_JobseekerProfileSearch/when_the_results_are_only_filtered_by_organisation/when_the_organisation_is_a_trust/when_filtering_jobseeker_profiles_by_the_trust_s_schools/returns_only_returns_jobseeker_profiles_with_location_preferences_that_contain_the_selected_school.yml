@@ -21,7 +21,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 11 Dec 2025 15:57:28 GMT
+      - Fri, 06 Feb 2026 15:43:26 GMT
       Pragma:
       - no-cache
       Expires:
@@ -33,11 +33,11 @@ http_interactions:
       X-Goog-Maps-Metro-Area:
       - London
       Content-Security-Policy-Report-Only:
-      - script-src 'none'; form-action 'none'; frame-src 'none'; report-uri https://csp.withgoogle.com/csp/scaffolding/msaifdggmnwc:214:0
+      - script-src 'none'; form-action 'none'; frame-src 'none'; report-uri https://csp.withgoogle.com/csp/scaffolding/msaifdggmnwc:213:0
       Cross-Origin-Opener-Policy-Report-Only:
-      - same-origin; report-to=msaifdggmnwc:214:0
+      - same-origin; report-to=msaifdggmnwc:213:0
       Report-To:
-      - '{"group":"msaifdggmnwc:214:0","max_age":2592000,"endpoints":[{"url":"https://csp.withgoogle.com/csp/report-to/scaffolding/msaifdggmnwc:214:0"}],}'
+      - '{"group":"msaifdggmnwc:213:0","max_age":2592000,"endpoints":[{"url":"https://csp.withgoogle.com/csp/report-to/scaffolding/msaifdggmnwc:213:0"}],}'
       Server:
       - mafe
       Content-Length:
@@ -47,7 +47,7 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       Server-Timing:
-      - gfet4t7; dur=16
+      - gfet4t7; dur=15
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
@@ -89,7 +89,7 @@ http_interactions:
         \           }\n         ],\n         \"place_id\" : \"ChIJQ-hQhXYbdkgRowGcSItEnj4\",\n
         \        \"types\" : \n         [\n            \"postal_code\"\n         ]\n
         \     }\n   ],\n   \"status\" : \"OK\"\n}"
-  recorded_at: Thu, 11 Dec 2025 15:57:28 GMT
+  recorded_at: Fri, 06 Feb 2026 15:43:26 GMT
 - request:
     method: get
     uri: https://maps.googleapis.com/maps/api/geocode/json?address=SE1%209NA&components=country:gb&key=<GOOGLE_LOCATION_SEARCH_API_KEY>&language=en&sensor=false
@@ -111,7 +111,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 11 Dec 2025 15:57:29 GMT
+      - Fri, 06 Feb 2026 15:43:26 GMT
       Pragma:
       - no-cache
       Expires:
@@ -123,11 +123,11 @@ http_interactions:
       X-Goog-Maps-Metro-Area:
       - London
       Content-Security-Policy-Report-Only:
-      - script-src 'none'; form-action 'none'; frame-src 'none'; report-uri https://csp.withgoogle.com/csp/scaffolding/msaifdggmnwc:214:0
+      - script-src 'none'; form-action 'none'; frame-src 'none'; report-uri https://csp.withgoogle.com/csp/scaffolding/msaifdggmnwc:213:0
       Cross-Origin-Opener-Policy-Report-Only:
-      - same-origin; report-to=msaifdggmnwc:214:0
+      - same-origin; report-to=msaifdggmnwc:213:0
       Report-To:
-      - '{"group":"msaifdggmnwc:214:0","max_age":2592000,"endpoints":[{"url":"https://csp.withgoogle.com/csp/report-to/scaffolding/msaifdggmnwc:214:0"}],}'
+      - '{"group":"msaifdggmnwc:213:0","max_age":2592000,"endpoints":[{"url":"https://csp.withgoogle.com/csp/report-to/scaffolding/msaifdggmnwc:213:0"}],}'
       Server:
       - mafe
       Content-Length:
@@ -137,7 +137,7 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       Server-Timing:
-      - gfet4t7; dur=17
+      - gfet4t7; dur=12
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
@@ -179,5 +179,5 @@ http_interactions:
         \           }\n         ],\n         \"place_id\" : \"ChIJn_z6WbAEdkgRRfrdBOEAElQ\",\n
         \        \"types\" : \n         [\n            \"postal_code\"\n         ]\n
         \     }\n   ],\n   \"status\" : \"OK\"\n}"
-  recorded_at: Thu, 11 Dec 2025 15:57:29 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 06 Feb 2026 15:43:26 GMT
+recorded_with: VCR 6.4.0

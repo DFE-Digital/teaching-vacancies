@@ -19,7 +19,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Fri, 12 Dec 2025 16:00:24 GMT
+      - Fri, 06 Feb 2026 15:53:36 GMT
       Content-Type:
       - text/html
       Content-Length:
@@ -38,15 +38,15 @@ http_interactions:
       - appId=cid-v1:02d88829-cd35-4b36-83db-f89bb9f85514
       - appId=cid-v1:3e4b9f12-ca59-424b-b320-0c429e32d54c
       X-Arcgis-Upstream:
-      - us1h01c00-services
+      - us1h01c00
       Strict-Transport-Security:
       - max-age=63072000
       X-Arcgis-Trace-Id:
-      - 20251212T160023Z-r18674967785mskmhC1LONmqug000000064g00000000bfaw
+      - 20260206T155336Z-r1d6cdf95fcxp4mghC1LONsd040000001qkg000000005vbr
       X-Arcgis-Correlation-Id:
-      - '08c3f865a0f94787'
+      - a948a67286f4640b
       X-Arcgis-Instance:
-      - i7tdixsfq00000H
+      - i7tdixsfq000MYS
       Access-Control-Expose-Headers:
       - Request-Context
       Access-Control-Allow-Origin:
@@ -56,7 +56,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Azure-Ref:
-      - 20251212T160023Z-r18674967785mskmhC1LONmqug000000064g00000000bfaw
+      - 20260206T155336Z-r1d6cdf95fcxp4mghC1LONsd040000001qkg000000005vbr
       X-Fd-Int-Roxy-Purgeid:
       - '0'
       X-Cache:
@@ -64,5 +64,5 @@ http_interactions:
     body:
       encoding: UTF-8
       string: Bad Request
-  recorded_at: Fri, 12 Dec 2025 16:00:24 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 06 Feb 2026 15:53:36 GMT
+recorded_with: VCR 6.4.0

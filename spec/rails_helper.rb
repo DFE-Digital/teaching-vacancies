@@ -259,6 +259,20 @@ VCR.configure do |config|
       URI::QueryParams.parse(interaction.request.parsed_uri.query)["key"]
     end
   end
+
+  config.filter_sensitive_data("<TOKEN>") do |interaction|
+    if interaction.request.uri == "https://becomingateacher.zendesk.com/api/v2/uploads"
+      content_type = interaction.response.headers["Content-Type"]&.first
+      if content_type.nil? || content_type.starts_with?("application/json")
+        body = JSON.parse(interaction.response.body)
+        body.is_a?(Hash) && body["upload"]["token"]
+      end
+    end
+  end
+
+  config.filter_sensitive_data("<BASIC_AUTH>") do |interaction|
+    interaction.request.headers['Authorization']&.first
+  end
 end
 
 Shoulda::Matchers.configure do |config|

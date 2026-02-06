@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://maps.googleapis.com/maps/api/geocode/json?key=placeholder_key&language=en&latlng=54.5399146,-1.0435559&sensor=false
+    uri: https://maps.googleapis.com/maps/api/geocode/json?key=<GOOGLE_LOCATION_SEARCH_API_KEY>&language=en&latlng=54.54109829999999,-1.0450767&sensor=false
     body:
       encoding: US-ASCII
       string: ''

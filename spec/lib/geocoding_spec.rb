@@ -5,12 +5,12 @@ require "geocoding"
 RSpec.describe Geocoding, :dfe_analytics, geocode: true do
   subject { described_class.new(location) }
 
-  let(:google_coordinates) { [54.5399146, -1.0435559] }
+  let(:google_coordinates) { [54.54109829999999, -1.0450767] }
   let(:location) { "TS14 6RD" }
 
   describe "#coordinates" do
     let(:no_match) { [0, 0] }
-    let(:os_coordinates) { [54.5411000, -1.0450614] }
+    let(:os_coordinates) { [54.5411, -1.0450614] }
 
     context "when location has a cache entry" do
       before do
