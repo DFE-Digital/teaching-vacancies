@@ -1278,18 +1278,18 @@
   resolved "https://registry.npmjs.org/@hotwired/stimulus/-/stimulus-3.2.2.tgz"
   integrity sha512-eGeIqNOQpXoPAIP7tC1+1Yc1yl1xnwYqg+3mzqxyrbE5pg5YFBZcA6YoTiByJB6DKAEsiWtl6tjTJS4IYtbB7A==
 
-"@hotwired/turbo-rails@^8.0.21":
-  version "8.0.21"
-  resolved "https://registry.yarnpkg.com/@hotwired/turbo-rails/-/turbo-rails-8.0.21.tgz#403bfb2b1b92a921d854471772a7aa906f75ab04"
-  integrity sha512-RUnqt7tOVlQT539eVqFaAp4/32y7sLxvt3G7OIMROVlIMWvM8CXJk08xvIro2ueQViYRB6jwRjruNx7drIJPXg==
+"@hotwired/turbo-rails@^8.0.23":
+  version "8.0.23"
+  resolved "https://registry.yarnpkg.com/@hotwired/turbo-rails/-/turbo-rails-8.0.23.tgz#7a84ad041cb0f3e5d9ff97d1a1f0291550a93fc9"
+  integrity sha512-iBILwda3qmQC7FYM70+4s6kEQ7Fx9dJ6+yGxjPyrz9a5JDx1+y7OAA5TA7GGVOZJoicMLrKGdFDNorl40X35lw==
   dependencies:
-    "@hotwired/turbo" "^8.0.21"
+    "@hotwired/turbo" "^8.0.23"
     "@rails/actioncable" ">=7.0"
 
-"@hotwired/turbo@^8.0.21":
-  version "8.0.21"
-  resolved "https://registry.yarnpkg.com/@hotwired/turbo/-/turbo-8.0.21.tgz#a3e80c01d70048200f64bbe3582b84f9bfac034e"
-  integrity sha512-fJTv3JnzFHeDxBb23esZSOhT4r142xf5o3lKMFMvzPC6AllkqbBKk5Yb31UZhtIsKQCwmO/pUQrtTUlYl5CHAQ==
+"@hotwired/turbo@^8.0.23":
+  version "8.0.23"
+  resolved "https://registry.yarnpkg.com/@hotwired/turbo/-/turbo-8.0.23.tgz#a6eebc9ab4a5faadae265a4cbec8cfcb5731e77c"
+  integrity sha512-GZ7cijxEZ6Ig71u7rD6LHaRv/wcE/hNsc+nEfiWOkLNqUgLOwo5MNGWOy5ZV9ZUDSiQx1no7YxjTNnT4O6//cQ==
 
 "@humanwhocodes/config-array@^0.13.0":
   version "0.13.0"
@@ -1801,51 +1801,51 @@
   resolved "https://registry.yarnpkg.com/@rtsao/scc/-/scc-1.1.0.tgz#927dd2fae9bc3361403ac2c7a00c32ddce9ad7e8"
   integrity sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==
 
-"@sentry-internal/browser-utils@10.35.0":
-  version "10.35.0"
-  resolved "https://registry.yarnpkg.com/@sentry-internal/browser-utils/-/browser-utils-10.35.0.tgz#6f1238fd11800a79b2ec0b99519049ed9d18d271"
-  integrity sha512-YjVbyqpJu6E6U/BCdOgIUuUQPUDZ7XdFiBYXtGy59xqQB1qSqNfei163hkfnXxIN90csDubxWNrnit+W5Wo/uQ==
+"@sentry-internal/browser-utils@10.38.0":
+  version "10.38.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/browser-utils/-/browser-utils-10.38.0.tgz#576780062808bd3bae21476393f50caf9acbe12f"
+  integrity sha512-UOJtYmdcxHCcV0NPfXFff/a95iXl/E0EhuQ1y0uE0BuZDMupWSF5t2BgC4HaE5Aw3RTjDF3XkSHWoIF6ohy7eA==
   dependencies:
-    "@sentry/core" "10.35.0"
+    "@sentry/core" "10.38.0"
 
-"@sentry-internal/feedback@10.35.0":
-  version "10.35.0"
-  resolved "https://registry.yarnpkg.com/@sentry-internal/feedback/-/feedback-10.35.0.tgz#fc4de2357f5f806e68cb4807391a3216b4d803b5"
-  integrity sha512-h/rtGcgvGtZIY9njxnzHHMzMwFYAYG/UwDaNtpf8jN63JD6cTQDQ8wNWp0arD9gmUr96YjER55BNRRF8oSg6Fw==
+"@sentry-internal/feedback@10.38.0":
+  version "10.38.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/feedback/-/feedback-10.38.0.tgz#c15b00513cddfbe839dbb86684115ec4860abd58"
+  integrity sha512-JXneg9zRftyfy1Fyfc39bBlF/Qd8g4UDublFFkVvdc1S6JQPlK+P6q22DKz3Pc8w3ySby+xlIq/eTu9Pzqi4KA==
   dependencies:
-    "@sentry/core" "10.35.0"
+    "@sentry/core" "10.38.0"
 
-"@sentry-internal/replay-canvas@10.35.0":
-  version "10.35.0"
-  resolved "https://registry.yarnpkg.com/@sentry-internal/replay-canvas/-/replay-canvas-10.35.0.tgz#864b4c9f4eeac905415b4054b572f6cf5a2f92c1"
-  integrity sha512-efaz8ETDLd0rSpoqX4m8fMnq7abzUJAdqeChz9Jdq6OgvHeBgM6tTfqWSes6sFnSCvFUVkdFngZQfgmBxWGuEA==
+"@sentry-internal/replay-canvas@10.38.0":
+  version "10.38.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/replay-canvas/-/replay-canvas-10.38.0.tgz#40fc937e2d05f9819b68c4c5d4d69e789c324823"
+  integrity sha512-OXWM9jEqNYh4VTvrMu7v+z1anz+QKQ/fZXIZdsO7JTT2lGNZe58UUMeoq386M+Saxen8F9SUH7yTORy/8KI5qw==
   dependencies:
-    "@sentry-internal/replay" "10.35.0"
-    "@sentry/core" "10.35.0"
+    "@sentry-internal/replay" "10.38.0"
+    "@sentry/core" "10.38.0"
 
-"@sentry-internal/replay@10.35.0":
-  version "10.35.0"
-  resolved "https://registry.yarnpkg.com/@sentry-internal/replay/-/replay-10.35.0.tgz#1bc7c0506231b9e360a7144288ce322550b01b9b"
-  integrity sha512-9hGP3lD+7o/4ovGTdwv3T9K2t9LxSlR/CAcRQeFApW2c0AGsjTdcglOxsgxYei4YmaISx0CBJ/YqJfQVYxaxWw==
+"@sentry-internal/replay@10.38.0":
+  version "10.38.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/replay/-/replay-10.38.0.tgz#b901acf514265bf882e3e4ad849e6d9dd8276633"
+  integrity sha512-YWIkL6/dnaiQyFiZXJ/nN+NXGv/15z45ia86bE/TMq01CubX/DUOilgsFz0pk2v/pg3tp/U2MskLO9Hz0cnqeg==
   dependencies:
-    "@sentry-internal/browser-utils" "10.35.0"
-    "@sentry/core" "10.35.0"
+    "@sentry-internal/browser-utils" "10.38.0"
+    "@sentry/core" "10.38.0"
 
-"@sentry/browser@10.35.0":
-  version "10.35.0"
-  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-10.35.0.tgz#814e6540e031a2904a04735364780dfcd1c42bb8"
-  integrity sha512-3wCdmKOTqg6Fvmb9HLHzCVIpSSYCPhXFQ95VaYsb1rESIgL7BMS9nyqhecPcPR3oJppU2a/TqZk4YH3nFrPXmA==
+"@sentry/browser@10.38.0":
+  version "10.38.0"
+  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-10.38.0.tgz#2409e3982756ae8a0b3e46c701a51b63d4ed84cc"
+  integrity sha512-3phzp1YX4wcQr9mocGWKbjv0jwtuoDBv7+Y6Yfrys/kwyaL84mDLjjQhRf4gL5SX7JdYkhBp4WaiNlR0UC4kTA==
   dependencies:
-    "@sentry-internal/browser-utils" "10.35.0"
-    "@sentry-internal/feedback" "10.35.0"
-    "@sentry-internal/replay" "10.35.0"
-    "@sentry-internal/replay-canvas" "10.35.0"
-    "@sentry/core" "10.35.0"
+    "@sentry-internal/browser-utils" "10.38.0"
+    "@sentry-internal/feedback" "10.38.0"
+    "@sentry-internal/replay" "10.38.0"
+    "@sentry-internal/replay-canvas" "10.38.0"
+    "@sentry/core" "10.38.0"
 
-"@sentry/core@10.35.0":
-  version "10.35.0"
-  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-10.35.0.tgz#caf84bdd4ac630e6c37b787029de50736b06f594"
-  integrity sha512-lEK1WFqt6oHtMq5dDLVE/FDzHDGs1PlYT5cZH4aBirYtJVyUiTf0NknKFob4a2zTywczlq7SbLv6Ba8UMU9dYg==
+"@sentry/core@10.38.0":
+  version "10.38.0"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-10.38.0.tgz#391f2535fde084e3eff4b1d2d634aa5619629b34"
+  integrity sha512-1pubWDZE5y5HZEPMAZERP4fVl2NH3Ihp1A+vMoVkb3Qc66Diqj1WierAnStlZP7tCx0TBa0dK85GTW/ZFYyB9g==
 
 "@sinclair/typebox@^0.34.0":
   version "0.34.33"
@@ -2342,10 +2342,10 @@ available-typed-arrays@^1.0.7:
   dependencies:
     possible-typed-array-names "^1.0.0"
 
-axios@^1.13.2:
-  version "1.13.2"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-1.13.2.tgz#9ada120b7b5ab24509553ec3e40123521117f687"
-  integrity sha512-VPk9ebNqPcy5lRGuSlKx752IlDatOjT9paPlm8A7yOuW2Fbvp4X3JznJtT4f0GzGLLiWE9W8onz51SqLYwzGaA==
+axios@^1.13.4:
+  version "1.13.4"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.13.4.tgz#15d109a4817fb82f73aea910d41a2c85606076bc"
+  integrity sha512-1wVkUaAO6WyaYtCkcYCOx12ZgpGf9Zif+qXa4n+oYzK558YryKqiL6UWwd5DqiH3VRW0GYhTZQ/vlgJrCoNQlg==
   dependencies:
     follow-redirects "^1.15.6"
     form-data "^4.0.4"
@@ -2735,10 +2735,10 @@ core-js-compat@^3.43.0:
   dependencies:
     browserslist "^4.25.1"
 
-core-js@^3.4.0, core-js@^3.47.0:
-  version "3.47.0"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.47.0.tgz#436ef07650e191afeb84c24481b298bd60eb4a17"
-  integrity sha512-c3Q2VVkGAUyupsjRnaNX6u8Dq2vAdzm9iuPj5FW0fRxzlxgq9Q39MDq10IvmQSpLgHQNyQzQmOo6bgGHmH3NNg==
+core-js@^3.4.0, core-js@^3.48.0:
+  version "3.48.0"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.48.0.tgz#1f813220a47bbf0e667e3885c36cd6f0593bf14d"
+  integrity sha512-zpEHTy1fjTMZCKLHUZoVeylt9XrzaIN2rbPXEt0k+q7JE5CkCZdo6bNq55bn24a69CH7ErAVLKijxJja4fw+UQ==
 
 cosmiconfig@^8.2.0:
   version "8.2.0"
@@ -5304,10 +5304,10 @@ lodash.truncate@^4.4.2:
   resolved "https://registry.npmjs.org/lodash.truncate/-/lodash.truncate-4.4.2.tgz"
   integrity sha512-jttmRe7bRse52OsWIMDLaXxWqRAmtIUccAQ3garviCqJjafXOfNMO0yMfNpdD6zbGaTU0P5Nz7e7gAT6cKmJRw==
 
-lodash@^4.17.21:
-  version "4.17.21"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
-  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
+lodash@^4.17.23:
+  version "4.17.23"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.23.tgz#f113b0378386103be4f6893388c73d0bde7f2c5a"
+  integrity sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==
 
 lru-cache@^10.2.0, lru-cache@^10.4.3:
   version "10.4.3"
@@ -6231,10 +6231,10 @@ safe-regex-test@^1.1.0:
   resolved "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sass@^1.97.2:
-  version "1.97.2"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.97.2.tgz#e515a319092fd2c3b015228e3094b40198bff0da"
-  integrity sha512-y5LWb0IlbO4e97Zr7c3mlpabcbBtS+ieiZ9iwDooShpFKWXf62zz5pEPdwrLYm+Bxn1fnbwFGzHuCLSA9tBmrw==
+sass@^1.97.3:
+  version "1.97.3"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.97.3.tgz#9cb59339514fa7e2aec592b9700953ac6e331ab2"
+  integrity sha512-fDz1zJpd5GycprAbu4Q2PV/RprsRtKC/0z82z0JLgdytmcq0+ujJbJ/09bPGDxCLkKY3Np5cRAOcWiVkLXJURg==
   dependencies:
     chokidar "^4.0.0"
     immutable "^5.0.2"
