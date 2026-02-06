@@ -39,4 +39,4 @@ en:
       publishers_vacancies_job_applications_referee_form:
         uploaded_details: Select one option
         uploaded_details_options:
-          true: When you complete these fields and select ‘Save reference’, we’ll email this person to request a reference.
+          false: When you complete these fields and select ‘Save reference’, we’ll email this person to request a reference.
