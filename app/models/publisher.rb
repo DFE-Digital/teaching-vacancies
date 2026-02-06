@@ -6,7 +6,9 @@ class Publisher < ApplicationRecord
   has_many :organisation_publishers, dependent: :destroy
   has_many :organisations, through: :organisation_publishers
   has_many :publisher_preferences, dependent: :destroy
-  has_many :vacancies
+  # publishers can't be destroyed sensibly, as it would remove
+  # all trace of their vacancies
+  has_many :vacancies, dependent: :restrict_with_error
   has_many :publisher_messages, foreign_key: :sender_id, dependent: :destroy
   has_many :message_templates, dependent: :destroy
 

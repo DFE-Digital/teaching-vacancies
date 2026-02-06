@@ -17,11 +17,14 @@ class Organisation < ApplicationRecord
 
   has_many :organisation_vacancies, dependent: :destroy
   has_many :vacancies, through: :organisation_vacancies
+  has_many :publisher_vacancies, class_name: "Vacancy", foreign_key: :publisher_organisation_id, dependent: :destroy
 
   has_many :organisation_publishers, dependent: :destroy
   has_many :publishers, through: :organisation_publishers
+  has_many :publisher_preferences, dependent: :destroy
+  has_many :organisation_publisher_preferences, dependent: :destroy
 
-  has_many :jobseeker_profile_exclusions, class_name: "JobseekerProfileExcludedOrganisation"
+  has_many :jobseeker_profile_exclusions, class_name: "JobseekerProfileExcludedOrganisation", dependent: :destroy
   has_many :hidden_jobseeker_profiles, through: :jobseeker_profile_exclusions, source: :jobseeker_profile
 
   scope :not_closed, -> { where.not(establishment_status: "Closed") }

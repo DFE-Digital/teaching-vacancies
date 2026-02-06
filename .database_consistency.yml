@@ -19,7 +19,7 @@ DatabaseConsistencyCheckers:
   # deletion strategy. I think this is an overkill. But we can revisit it in the future if we want to.
   ForeignKeyCascadeChecker:
     enabled: false
-  # Disable the whole rule since is something that we especifically need (unaswered boolean questions for users) in
+  # Disable the whole rule since is something that we specifically need (unanswered boolean questions for users) in
   #  multiple fields
   ThreeStateBooleanChecker:
     enabled: false
@@ -59,17 +59,6 @@ OrganisationVacancy:
   index_organisation_vacancies_on_vacancy_id_and_organisation_id:
     UniqueIndexChecker:
       enabled: false
-# Devise tokens. We don't need to model validate their uniqueness. We can rely on DB unique index.
-Jobseeker:
-  index_jobseekers_on_confirmation_token:
-    UniqueIndexChecker:
-      enabled: false
-  index_jobseekers_on_reset_password_token:
-    UniqueIndexChecker:
-      enabled: false
-  index_jobseekers_on_unlock_token:
-    UniqueIndexChecker:
-      enabled: false
 # it's not idiomatic to validate the type column for nulls, as it represents the class so cannot be nil
 Vacancy:
   type:
@@ -77,7 +66,7 @@ Vacancy:
       enabled: false
   index_kept_unique_vacancies_on_external_ref_and_client_id:
     UniqueIndexChecker:
-      enabled: false # The valdation is done in the ExternalVacancyValidator as custom validation.
+      enabled: false # The validation is done in the ExternalVacancyValidator as custom validation.
 Message:
   type:
     NullConstraintChecker:

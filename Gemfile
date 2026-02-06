@@ -126,6 +126,7 @@ group :development, :test do
   gem "guard-bundler", "~> 3.1", require: false
   gem "guard-rspec", require: false
   gem "guard-rubocop", "~> 1.5", require: false
+  gem "guard-shell", require: false
   gem "guard-slim_lint"
   gem "launchy", "~> 3.1"
   gem "parallel_tests"

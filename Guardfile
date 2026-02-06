@@ -25,6 +25,18 @@
 #  * zeus: 'zeus rspec' (requires the server to be started separately)
 #  * 'just' rspec: 'rspec'
 
+guard :bundler do
+  require "guard/bundler"
+  require "guard/bundler/verify"
+  helper = Guard::Bundler::Verify.new
+
+  files = %w[Gemfile]
+  files += Dir["*.gemspec"] if files.any? { |f| helper.uses_gemspec?(f) }
+
+  # Assume files are symlinked from somewhere
+  files.each { |file| watch(helper.real_path(file)) }
+end
+
 rspec_options = {
   cmd: "bundle exec rspec",
   run_all: {
@@ -85,7 +97,7 @@ guard :rspec, rspec_options do
   end
 end
 
-guard :rubocop, cli: ["-A"] do
+guard :rubocop, cli: ["-A"], all_on_start: false do
   watch(%r{.+\.rb$})
   watch(%r{(?:.+/)?\.rubocop(?:_todo)?\.yml$}) { |m| File.dirname(m[0]) }
 end
@@ -99,14 +111,14 @@ guard :slim_lint, all_on_start: false do
   watch(%r{(?:.+/)?\.slim-lint\.yml$}) { |m| File.dirname(m[0]) }
 end
 
-guard :bundler do
-  require "guard/bundler"
-  require "guard/bundler/verify"
-  helper = Guard::Bundler::Verify.new
-
-  files = %w[Gemfile]
-  files += Dir["*.gemspec"] if files.any? { |f| helper.uses_gemspec?(f) }
-
-  # Assume files are symlinked from somewhere
-  files.each { |file| watch(helper.real_path(file)) }
+guard :shell do
+  watch %r{^app/models/*\.rb$} do
+    system "bundle exec database_consistency"
+  end
+  watch ".database_consistency.yml" do
+    system "bundle exec database_consistency"
+  end
+  watch "db/schema.rb" do
+    system "bundle exec database_consistency"
+  end
 end
