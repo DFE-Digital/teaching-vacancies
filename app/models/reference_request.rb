@@ -1,6 +1,4 @@
 class ReferenceRequest < ApplicationRecord
-  validates :token, presence: true
-
   belongs_to :referee, foreign_key: :reference_id, inverse_of: :reference_request
   has_one :job_reference, dependent: :destroy
 
@@ -12,13 +10,16 @@ class ReferenceRequest < ApplicationRecord
   # the request as complete when they receive it.
   enum :status, { created: 0, requested: 1, received: 2, received_off_service: 3 }
 
-  validates :status, :email, presence: true
+  validates :status, presence: true
+  validates :token, :email, presence: true, unless: -> { received_off_service? }
 
   # expire token after 12 weeks
   scope :active_token, ->(token) { where(token: token, created_at: 12.weeks.ago..) }
 
+  has_one_attached :reference_form
+
   def sent?
-    !created? && !received_off_service?
+    requested? || received?
   end
 
   has_paper_trail skip: [:token]
@@ -48,10 +49,14 @@ class ReferenceRequest < ApplicationRecord
 
     def create_for_external!(job_application)
       job_application.referees.each do |referee|
-        reference_request = create_reference_request!(referee)
-        reference_request.create_job_reference!
-        Publishers::CollectReferencesMailer.collect_references(reference_request).deliver_later
+        create_external_for_referee!(referee)
       end
+    end
+
+    def create_external_for_referee!(referee)
+      reference_request = create_reference_request!(referee)
+      reference_request.create_job_reference!
+      Publishers::CollectReferencesMailer.collect_references(reference_request).deliver_later
     end
 
     private

@@ -365,7 +365,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
   def complete_from_references_page
     click_on(I18n.t("jobseekers.job_applications.build.referees.heading"))
-    click_on I18n.t("buttons.add_reference")
+    click_on I18n.t("buttons.add_referee")
     fill_in_referee
     click_on I18n.t("buttons.save_reference")
     click_on I18n.t("buttons.add_another_reference")
