@@ -39,7 +39,6 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
 
     accessible_org_ids = current_publisher.accessible_organisations(current_organisation).map(&:id)
 
-    # Apply organisation filter from URL params if present, otherwise show all accessible
     @selected_organisation_ids = params[:organisation_ids]&.reject(&:blank?) || []
     org_ids_to_filter = @selected_organisation_ids.any? ? @selected_organisation_ids : accessible_org_ids
 
@@ -47,11 +46,17 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
                   .in_organisation_ids(org_ids_to_filter)
                   .order(@sort.by => @sort.order)
 
+    @selected_job_roles = params[:job_roles]&.reject(&:blank?) || []
+    vacancies = vacancies.with_any_of_job_roles(@selected_job_roles) if @selected_job_roles.any?
+
     @pagy, @vacancies = pagy(vacancies)
     @count = vacancies.count
 
     @vacancy_types = VACANCY_TYPES.keys
-    @filter_form = Publishers::VacancyFilterForm.new(organisation_ids: @selected_organisation_ids)
+    @filter_form = Publishers::VacancyFilterForm.new(
+      organisation_ids: @selected_organisation_ids,
+      job_roles: @selected_job_roles
+    )
   end
   # rubocop:enable Metrics/AbcSize
 
@@ -151,5 +156,6 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
 
   def strip_empty_checkbox_params
     params[:organisation_ids]&.reject!(&:blank?)
+    params[:job_roles]&.reject!(&:blank?)
   end
 end
