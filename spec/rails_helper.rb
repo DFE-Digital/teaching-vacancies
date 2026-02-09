@@ -271,7 +271,7 @@ VCR.configure do |config|
   end
 
   config.filter_sensitive_data("<BASIC_AUTH>") do |interaction|
-    interaction.request.headers['Authorization']&.first
+    interaction.request.headers["Authorization"]&.first
   end
 end
 
