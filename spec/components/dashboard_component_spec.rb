@@ -6,11 +6,16 @@ RSpec.describe DashboardComponent, type: :component do
   let(:selected_type) { :live }
   let(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: organisation) }
 
+  let(:selected_organisation_ids) { [] }
+  let(:filter_form) { Publishers::VacancyFilterForm.new(organisation_ids: selected_organisation_ids) }
+
   subject do
     described_class.new(
       organisation: organisation, sort: sort, selected_type: selected_type,
       publisher_preference: publisher_preference, vacancies: vacancies,
-      count: vacancies.count, vacancy_types: %i[live draft pending expired awaiting_feedback]
+      count: vacancies.count, vacancy_types: %i[live draft pending expired awaiting_feedback],
+      selected_organisation_ids: selected_organisation_ids,
+      filter_form: filter_form
     )
   end
 
@@ -71,7 +76,7 @@ RSpec.describe DashboardComponent, type: :component do
         end
 
         it "does not render the filters sidebar" do
-          expect(inline_component.css('.edit_publisher_preference button[type="submit"]')).to be_blank
+          expect(inline_component.css('.filters-component button[type="submit"]')).to be_blank
         end
 
         context "when there are no jobs within the selected vacancy type" do
@@ -118,20 +123,20 @@ RSpec.describe DashboardComponent, type: :component do
 
         it "renders the filters sidebar" do
           expect(
-            inline_component.css('.edit_publisher_preference button[type="submit"]').first.text,
+            inline_component.css('.filters-component button[type="submit"]').first.text,
           ).to eq(I18n.t("buttons.apply_filters"))
         end
 
         it "renders the head office as a filter option" do
-          expect(inline_component.css(".edit_publisher_preference").to_html).to include("Head office")
+          expect(inline_component.css(".filters-component").to_html).to include("Head office")
         end
 
         it "renders the open school as a filter option" do
-          expect(inline_component.css(".edit_publisher_preference").to_html).to include("Open school")
+          expect(inline_component.css(".filters-component").to_html).to include("Open school")
         end
 
         it "does not render the closed school as a filter option" do
-          expect(inline_component.css(".edit_publisher_preference").to_html).not_to include("Closed school")
+          expect(inline_component.css(".filters-component").to_html).not_to include("Closed school")
         end
       end
 
@@ -169,20 +174,20 @@ RSpec.describe DashboardComponent, type: :component do
 
         it "renders the filters sidebar" do
           expect(
-            inline_component.css('.edit_publisher_preference button[type="submit"]').first.text,
+            inline_component.css('.filters-component button[type="submit"]').first.text,
           ).to eq(I18n.t("buttons.apply_filters"))
         end
 
         it "does not render the head office as a filter option" do
-          expect(inline_component.css(".edit_publisher_preference").to_html).not_to include("Head office")
+          expect(inline_component.css(".filters-component").to_html).not_to include("Head office")
         end
 
         it "renders the open school as a filter option" do
-          expect(inline_component.css(".edit_publisher_preference").to_html).to include("Open school")
+          expect(inline_component.css(".filters-component").to_html).to include("Open school")
         end
 
         it "does not render the closed school as a filter option" do
-          expect(inline_component.css(".edit_publisher_preference").to_html).not_to include("Closed school")
+          expect(inline_component.css(".filters-component").to_html).not_to include("Closed school")
         end
 
         context "when there are no jobs within the selected vacancy type" do
@@ -214,8 +219,7 @@ RSpec.describe DashboardComponent, type: :component do
     let(:school_oxford) { create(:school, name: "Oxford") }
     let(:school_cambridge) { create(:school, name: "Cambridge") }
     let(:vacancy_cambridge) { create(:vacancy, organisations: [school_cambridge], job_title: "Scientist") }
-
-    before { publisher_preference.update organisations: [school_oxford] }
+    let(:selected_organisation_ids) { [school_oxford.id] }
 
     context "when a relevant job exists" do
       let(:vacancies) { school_oxford.vacancies }

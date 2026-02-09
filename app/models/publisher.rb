@@ -32,9 +32,7 @@ class Publisher < ApplicationRecord
     return [] unless current_organisation
 
     if (publisher_preference = publisher_preferences.find_by(organisation: current_organisation))
-      if publisher_preference.organisations.any?
-        publisher_preference.organisations
-      elsif current_organisation.local_authority?
+      if current_organisation.local_authority?
         publisher_preference.schools
       else
         current_organisation.all_organisations
