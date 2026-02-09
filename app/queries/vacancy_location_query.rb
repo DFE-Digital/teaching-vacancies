@@ -4,6 +4,6 @@ class VacancyLocationQuery < LocationQuery
   end
 
   def call(...)
-    super("vacancies.uk_geolocation", ...)
+    super("vacancies.geolocation", ...)
   end
 end

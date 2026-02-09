@@ -7,6 +7,7 @@ RSpec.describe "Publishers can manage candidate messages" do
 
   before do
     login_publisher(publisher: login_user, organisation: login_organisation)
+    visit publishers_candidate_messages_path
   end
 
   after { logout }
@@ -31,7 +32,7 @@ RSpec.describe "Publishers can manage candidate messages" do
       create(:jobseeker_message, conversation: trust_published_conversation, sender: jobseeker)
       create(:jobseeker_message, conversation: school_published_conversation, sender: jobseeker)
 
-      visit publishers_candidate_messages_path
+      visit current_path
       # wait for page load
       find("form[action='/publishers/candidate_messages/toggle_archive']")
     end
@@ -99,7 +100,7 @@ RSpec.describe "Publishers can manage candidate messages" do
       create(:jobseeker_message, conversation: science_conversation, sender: jobseeker, content: "Looking forward to the interview")
       create(:jobseeker_message, conversation: math_conversation, sender: jobseeker, content: "Thank you for considering my application")
 
-      visit publishers_candidate_messages_path
+      visit current_path
     end
 
     scenario "when searching by job title" do
