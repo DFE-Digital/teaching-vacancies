@@ -167,4 +167,18 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
       expect(page).to_not have_content("Unauthorised School")
     end
   end
+
+  context "when filtering by job roles" do
+    let(:organisation) { trust }
+    let!(:teacher_vacancy) { create(:vacancy, job_roles: ["teacher"], organisations: [trust], job_title: "Teacher Position") }
+    let!(:headteacher_vacancy) { create(:vacancy, job_roles: ["headteacher"], organisations: [trust], job_title: "Headteacher Position") }
+
+    scenario "it filters vacancies by selected job role" do
+      visit organisation_jobs_with_type_path(job_roles: ["teacher"])
+
+      expect(page).to have_content(teacher_vacancy.job_title)
+      expect(page).to_not have_content(headteacher_vacancy.job_title)
+      expect(page).to have_css(".filters-component__remove-tags__tag", count: 1)
+    end
+  end
 end

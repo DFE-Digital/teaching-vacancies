@@ -27,40 +27,20 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
       awaiting_feedback: :awaiting_feedback_recently_expired,
     }.freeze
 
-  # rubocop:disable Metrics/AbcSize
   def index
     @selected_type = (params[:type] || :live).to_sym
     @sort = Publishers::VacancySort.new(current_organisation, @selected_type).update(sort_by: params[:sort_by])
-    scope = if @selected_type == :draft
-              DraftVacancy.kept.where.not(job_title: nil)
-            else
-              PublishedVacancy.kept.public_send(VACANCY_TYPES.fetch(@selected_type))
-            end
 
-    accessible_org_ids = current_publisher.accessible_organisations(current_organisation).map(&:id)
-
-    # Only allow filtering by organisations the user has access to
-    requested_org_ids = params[:organisation_ids]&.reject(&:blank?) || []
-    @selected_organisation_ids = requested_org_ids & accessible_org_ids.map(&:to_s)
-    org_ids_to_filter = @selected_organisation_ids.any? ? @selected_organisation_ids : accessible_org_ids
-
-    vacancies = scope
-                  .in_organisation_ids(org_ids_to_filter)
-                  .order(@sort.by => @sort.order)
-
-    @selected_job_roles = params[:job_roles]&.reject(&:blank?) || []
-    vacancies = vacancies.with_any_of_job_roles(@selected_job_roles) if @selected_job_roles.any?
+    vacancies = apply_vacancy_filters
 
     @pagy, @vacancies = pagy(vacancies)
     @count = vacancies.count
-
     @vacancy_types = VACANCY_TYPES.keys
     @filter_form = Publishers::VacancyFilterForm.new(
       organisation_ids: @selected_organisation_ids,
-      job_roles: @selected_job_roles
+      job_roles: @selected_job_roles,
     )
   end
-  # rubocop:enable Metrics/AbcSize
 
   # We don't save anything here - just redirect to the show page
   def save_and_finish_later
@@ -124,6 +104,30 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
       enable_job_applications: true,
       created_at: Publishers::NewFeaturesController::NEW_FEATURES_PAGE_UPDATED_AT..,
     ).none?
+  end
+
+  def apply_vacancy_filters
+    scope = if @selected_type == :draft
+              DraftVacancy.kept.where.not(job_title: nil)
+            else
+              PublishedVacancy.kept.public_send(VACANCY_TYPES.fetch(@selected_type))
+            end
+
+    accessible_org_ids = current_publisher.accessible_organisations(current_organisation).map(&:id)
+
+    # Only allow filtering by organisations the user has access to
+    requested_org_ids = params[:organisation_ids]&.reject(&:blank?) || []
+    @selected_organisation_ids = requested_org_ids & accessible_org_ids.map(&:to_s)
+    org_ids_to_filter = @selected_organisation_ids.any? ? @selected_organisation_ids : accessible_org_ids
+
+    vacancies = scope
+                  .in_organisation_ids(org_ids_to_filter)
+                  .order(@sort.by => @sort.order)
+
+    @selected_job_roles = params[:job_roles]&.reject(&:blank?) || []
+    vacancies = vacancies.with_any_of_job_roles(@selected_job_roles) if @selected_job_roles.any?
+
+    vacancies
   end
 
   def set_publisher_preference
