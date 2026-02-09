@@ -9,6 +9,7 @@ en:
 
     dashboard:
       add_or_remove_schools: Add or remove schools
+      location_filter_hint: You can add or remove schools that are in this list
       awaiting_feedback:
         tab_heading: Jobs awaiting feedback
         with_count: Awaiting feedback (%{count})

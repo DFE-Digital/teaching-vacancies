@@ -255,6 +255,9 @@ en:
         edit_schools_html: "Can't see the school you are looking for? %{link}"
       publishers_job_listing_subjects_form:
         subjects_placeholder: Search
+      publishers_vacancy_filter_form:
+        organisation_ids_placeholder: Search locations
+        job_roles_placeholder: Search job roles
       publishers_job_listing_job_title_form:
         job_title:
           education_support: For example ‘Learning support assistant’

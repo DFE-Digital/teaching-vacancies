@@ -30,7 +30,7 @@
     - if @organisation.school_group?
       .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-4"
         - if @organisation.local_authority?
-          = govuk_link_to t("jobs.dashboard.add_or_remove_schools"), edit_publishers_publisher_preference_path(@publisher_preference), class: "govuk-link--no-visited-state"
+          = govuk_button_link_to t("jobs.dashboard.add_or_remove_schools"), edit_publishers_publisher_preference_path(@publisher_preference)
 
         div class="govuk-!-margin-top-2"
           = form_for @filter_form, as: "", url: organisation_jobs_with_type_path(type: @selected_type), method: :get, html: { data: { controller: "form", "hide-submit": true } } do |f|
@@ -57,10 +57,16 @@
                                          remove_filter_link: { url_helper: :organisation_jobs_with_type_path, params: { "type" => @selected_type, "organisation_ids" => @selected_organisation_ids, "job_roles" => @selected_job_roles } })
 
                         - filters_component.with_group key: "locations",
-                          component: f.govuk_collection_check_boxes(:organisation_ids, @organisation_options, :id, :label, small: true, legend: { text: "Locations", tag: "h2" }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
+                          component: searchable_collection(collection: f.govuk_collection_check_boxes(:organisation_ids, @organisation_options, :id, :label, small: true, legend: { text: "Locations", tag: "h2" }, hint: (@organisation.local_authority? ? { text: t("jobs.dashboard.location_filter_hint") } : nil), form_group: { data: { action: "change->form#submitListener" } }),
+                            collection_count: @organisation_options.count,
+                            options: { scrollable: true },
+                            text: { aria_label: "Locations", placeholder: t("helpers.hint.publishers_vacancy_filter_form.organisation_ids_placeholder") })
 
                         - filters_component.with_group key: "job_roles",
-                          component: f.govuk_collection_check_boxes(:job_roles, @job_role_options, :id, :label, small: true, legend: { text: "Job roles", tag: "h2" }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
+                          component: searchable_collection(collection: f.govuk_collection_check_boxes(:job_roles, @job_role_options, :id, :label, small: true, legend: { text: "Job roles", tag: "h2" }, hint: nil, form_group: { data: { action: "change->form#submitListener" } }),
+                            collection_count: @job_role_options.count,
+                            options: { scrollable: true },
+                            text: { aria_label: "Job roles", placeholder: t("helpers.hint.publishers_vacancy_filter_form.job_roles_placeholder") })
 
         .help-guide--desktop class="govuk-!-margin-top-4"
           h2.govuk-heading-m = t("jobs.dashboard.how_to_accept_job_applications_guide.title")
