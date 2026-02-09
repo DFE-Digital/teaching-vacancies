@@ -39,7 +39,9 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
 
     accessible_org_ids = current_publisher.accessible_organisations(current_organisation).map(&:id)
 
-    @selected_organisation_ids = params[:organisation_ids]&.reject(&:blank?) || []
+    # Only allow filtering by organisations the user has access to
+    requested_org_ids = params[:organisation_ids]&.reject(&:blank?) || []
+    @selected_organisation_ids = requested_org_ids & accessible_org_ids.map(&:to_s)
     org_ids_to_filter = @selected_organisation_ids.any? ? @selected_organisation_ids : accessible_org_ids
 
     vacancies = scope
