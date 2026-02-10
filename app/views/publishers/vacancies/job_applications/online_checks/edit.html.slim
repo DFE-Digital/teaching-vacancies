@@ -7,6 +7,10 @@
     span.govuk-caption-l = t(".online_checks")
     h1.govuk-heading-xl class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
       = @job_application.name
+    
+    - status = online_checks_status(@job_application)
+    .govuk-body
+      = govuk_tag(text: t("online_checks.#{status}.status"), colour: t("online_checks.#{status}.colour"))
 
     p.govuk-body = t(".intro_paragraph_1")
     p.govuk-body = t(".intro_paragraph_2")

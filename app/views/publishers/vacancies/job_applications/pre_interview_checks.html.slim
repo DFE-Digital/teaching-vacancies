@@ -66,7 +66,7 @@
         - row.with_cell(text: t("publishers.vacancies.job_applications.pre_interview_checks.created_at", date: @job_application.online_checks_updated_at.to_fs(:time_on_date)))
       - else
         - row.with_cell(text: t("publishers.vacancies.job_applications.pre_interview_checks.created_at", date: @job_application.created_at.to_fs(:time_on_date)))
-      - row.with_cell(text: govuk_tag(text: t("reference_requests.#{status}.status"), colour: t("reference_requests.#{status}.colour")))
+      - row.with_cell(text: govuk_tag(text: t("online_checks.#{status}.status"), colour: t("online_checks.#{status}.colour")))
 
 = govuk_button_link_to t("buttons.add_reference"), new_organisation_job_job_application_reference_path(@vacancy.id, @job_application.id), secondary: true
 
