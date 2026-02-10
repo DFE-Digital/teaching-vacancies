@@ -1,0 +1,47 @@
+#!/bin/bash
+# Connect to a PSQL console in the given environment
+# Usage: bin/psql <environment>
+#   bin/psql qa              # Connect to QA environment
+#   bin/psql staging         # Connect to staging environment
+#   bin/psql production      # Connect to production environment
+#   bin/psql pr-8476         # Connect to review app for PR 8476
+
+set -e
+
+ENV_ARG="${1:-}"
+
+if [[ -z "$ENV_ARG" ]]; then
+  echo "Usage: bin/psql <environment>"
+  echo ""
+  echo "Environments:"
+  echo "  qa                Connect to QA environment"
+  echo "  staging           Connect to staging environment"
+  echo "  production        Connect to production environment"
+  echo "  pr-<number>       Connect to review app (e.g., pr-8476)"
+  exit 1
+fi
+
+# Check if it's a PR review app (matches pr-XXXX pattern)
+if [[ $ENV_ARG =~ ^pr-([0-9]+)$ ]]; then
+  PR_ID="${BASH_REMATCH[1]}"
+  DEPLOYMENT="teaching-vacancies-review-pr-${PR_ID}"
+  NAMESPACE="tv-development"
+elif [[ "$ENV_ARG" == "qa" ]]; then
+  DEPLOYMENT="teaching-vacancies-qa"
+  NAMESPACE="tv-development"
+elif [[ "$ENV_ARG" == "staging" ]]; then
+  DEPLOYMENT="teaching-vacancies-staging"
+  NAMESPACE="tv-staging"
+elif [[ "$ENV_ARG" == "production" ]]; then
+  DEPLOYMENT="teaching-vacancies-production"
+  NAMESPACE="tv-production"
+else
+  echo "Error: Unknown environment '$ENV_ARG'"
+  echo ""
+  echo "Valid environments:"
+  echo "  qa, staging, production, or pr-<number>"
+  exit 1
+fi
+
+export NAMESPACE
+exec bin/konduit.sh "$DEPLOYMENT" -- psql

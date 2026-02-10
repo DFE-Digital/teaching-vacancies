@@ -32,3 +32,8 @@ make bin/konduit.sh
 make qa get-cluster-credentials
 bin/konduit.sh teaching-vacancies-qa -- psql
 ```
+
+For convenience when obtaining quick DB PSQL consoles, we have a script that maps to konduit internally:
+```shell
+bin/psql qa
+```
