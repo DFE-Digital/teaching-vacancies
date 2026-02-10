@@ -114,6 +114,25 @@ RSpec.describe SortComponent, type: :component do
     end
   end
 
+  context "when display_type is 'dropdown'" do
+    let(:display_type) { "dropdown" }
+    context "when there are more than four sorting options available" do
+      let(:number_of_sorting_options) { 5 }
+
+      it "display_type is 'dropdown'" do
+        expect(described_class.new(**kwargs).display_type).to eq "dropdown"
+      end
+    end
+
+    context "when there are four or less sorting options available" do
+      let(:number_of_sorting_options) { 3 }
+
+      it "display_type is 'dropdown'" do
+        expect(described_class.new(**kwargs).display_type).to eq "dropdown"
+      end
+    end
+  end
+
   context "when there are more than four sorting options available" do
     let(:number_of_sorting_options) { 5 }
 

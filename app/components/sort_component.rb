@@ -26,8 +26,11 @@ class SortComponent < ApplicationComponent
   end
 
   def set_display_type(display_type)
-    if display_type == "inline-select"
+    case display_type
+    when "inline-select"
       "inline-select"
+    when "dropdown"
+      "dropdown"
     else
       sort.count > 4 ? "dropdown" : "links"
     end
