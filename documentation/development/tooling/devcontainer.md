@@ -12,7 +12,7 @@ Code documentation.
 
 ## Container setup script and environment
 
-After building the container, a [custom `postCreate` script](../.devcontainer/post_create.sh) is
+After building the container, a [custom `postCreate` script](/.devcontainer/post_create.sh) is
 executed against it for initial setup (installing dependencies, creating and seeding the database,
 and setting up the environment).
 

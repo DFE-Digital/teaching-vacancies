@@ -6,7 +6,7 @@ It's worth a quick reminder that Containers are created from Images. [Docker's o
 > A Docker container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings.
 > Container images become containers at runtime and in the case of Docker containers - images become containers when they run on Docker Engine.
 
-## A multi-stage [Dockerfile](../Dockerfile)
+## A multi-stage [Dockerfile](/Dockerfile)
 
 - We use multi-stage builds to create significantly smaller images.
 - Docker's [blog entry on multistage builds](https://www.docker.com/blog/advanced-dockerfiles-faster-builds-and-smaller-images-using-buildkit-and-multistage-builds/) helpfully starts:
@@ -43,7 +43,7 @@ RUN RAILS_ENV=production bundle exec rake assets:precompile
 
 - Name the stage `builder` so that it can be built individually, and allow copying of files to the `production` stage
 - Run a Ruby bundle command, excluding `development` and `test` dependencies
-- Copy any remaining files in the repo that were excluded by the [.dockerignore](../.dockerignore) file
+- Copy any remaining files in the repo that were excluded by the [.dockerignore](/.dockerignore) file
 - Precompile application frontend assets
 
 Steps from the `production` stage worth highlighting:
@@ -70,7 +70,7 @@ CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions && bundl
 
 ### Building with `docker` commands
 
-Although it's possible to build a Docker image by typing `docker` commands into a terminal, most images for teaching vacancies are built by a [GitHub Actions workflow](../.github/workflows/deploy.yml)
+Although it's possible to build a Docker image by typing `docker` commands into a terminal, most images for teaching vacancies are built by a [GitHub Actions workflow](/.github/workflows/build_and_deploy.yml)
 
 ### Building with GitHub Actions workflow
 
@@ -97,7 +97,7 @@ Although it's possible to build a Docker image by typing `docker` commands into 
 
 ### Building with Makefile
 
-The [Makefile](../Makefile) in the root of the project supports building a Docker image from local code.
+The [Makefile](/Makefile) in the root of the project supports building a Docker image from local code.
 
 Issuing the command `make build-local-image` executes the following commands:
 
@@ -138,7 +138,7 @@ build-local-image:
 
 ## Run a Docker container on Azure AKS
 
-The GitHub Action workflow [build_and_deploy.yml](../.github/workflows/build_and_deploy.yml):
+The GitHub Action workflow [build_and_deploy.yml](/.github/workflows/build_and_deploy.yml):
 - builds and tags a Docker image
 - pushes the Docker image to the Docker Hub repository
 - sets the Terraform variable `app_docker_image` to the image tag

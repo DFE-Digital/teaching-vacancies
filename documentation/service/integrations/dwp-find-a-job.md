@@ -169,7 +169,7 @@ classDiagram
 
 ## Uploading published/updated vacancies
 
-The service orcherstating the upload of new/edited vacancies is [Vacancies::Export::DwpFindAJob::PublishedAndUpdated](../../app/services/vacancies/export/dwp_find_a_job/published_and_updated.rb)
+The service orcherstating the upload of new/edited vacancies is [Vacancies::Export::DwpFindAJob::PublishedAndUpdated](/app/services/vacancies/export/dwp_find_a_job/published_and_updated.rb)
 
 ### What vacancies are exported?
 We publish vacancies that fall on any of these conditions:
@@ -263,7 +263,7 @@ timeline
 
 ## Uploading vacancies closed early
 
-The service orcherstating the upload of vacancies closed early is [Vacancies::Export::DwpFindAJob::ClosedEarly](../../app/services/vacancies/export/dwp_find_a_job/closed_early.rb)
+The service orcherstating the upload of vacancies closed early is [Vacancies::Export::DwpFindAJob::ClosedEarly](/app/services/vacancies/export/dwp_find_a_job/closed_early.rb)
 
 ### What vacancies are exported?
 

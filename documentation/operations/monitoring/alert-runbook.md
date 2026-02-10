@@ -32,7 +32,7 @@ make production logs CONFIRM_PRODUCTION=YES
 
 ### Terraform
 
-Most AKS settings are in [production.tfvars.json](../terraform/workspace-variables/production.tfvars.json)
+Most AKS settings are in [production.tfvars.json](/terraform/workspace-variables/production.tfvars.json)
 
 ```
 postgres_flexible_server_sku      = "GP_Standard_D4ds_v5"
@@ -52,7 +52,7 @@ Scale out the number of instances by increasing:
 
 Scale up the worker app memory by increasing:
 
-- `aks_worker_app_memory` (the default for app memory is set to 1Gi in [variables.tf](../terraform/app/variables.tf), and then overridden for the worker app in production only.
+- `aks_worker_app_memory` (the default for app memory is set to 1Gi in [variables.tf](/terraform/app/variables.tf), and then overridden for the worker app in production only.
 
 #### Postgres
 

@@ -73,7 +73,7 @@ To block the calling workflow until the triggered workflow is completed, we use 
 
 ### Refresh cached docker image: `ghcr.io/dfe-digital/teaching-vacancies:main`
 
-Refresh the cached `ghcr.io/dfe-digital/teaching-vacancies:main` image on Github packages. In case the build workflow fails at the `Scan ghcr.io/dfe-digital/teaching-vacancies:main image` stage, it may be that a fix is available but our cache is stale; with the vulnerable dependency. In this case use the [rebuild_docker_cache_workflow](../.github/workflows/rebuild_docker_cache.yml) to refresh the cache with updated packages. The rebuild_docker_cache_workflow is scheduled on a weekly run (12 noon on Sundays) and can also be triggered manaully via workflow dispatch.
+Refresh the cached `ghcr.io/dfe-digital/teaching-vacancies:main` image on Github packages. In case the build workflow fails at the `Scan ghcr.io/dfe-digital/teaching-vacancies:main image` stage, it may be that a fix is available but our cache is stale; with the vulnerable dependency. In this case use the [rebuild_docker_cache_workflow](/.github/workflows/rebuild_docker_cache.yml) to refresh the cache with updated packages. The rebuild_docker_cache_workflow is scheduled on a weekly run (12 noon on Sundays) and can also be triggered manaully via workflow dispatch.
 
 
 ## Deploy a pre-built image
@@ -100,13 +100,13 @@ Click "Run workflow", and choose:
 ## Remove review app
 
 The review apps lifecycle will be handled via GitHub Actions:
-- destruction via the [delete_review_app.yml](../.github/workflows/delete_review_app.yml) workflow on PR close
+- destruction via the [delete_review_app.yml](/.github/workflows/delete_review_app.yml) workflow on PR close
 
 This workflow can be triggered manually, passing the PR number corresponding to the review app to remove.
 
 ### Deleting review apps manually
 
-Sometimes, the [delete_review_app.yml](../.github/workflows/delete_review_app.yml) workflow errors as the review app
+Sometimes, the [delete_review_app.yml](/.github/workflows/delete_review_app.yml) workflow errors as the review app
 wasn't healthy/accesible and failed the initial "is this review app running?" check.
 
 The kubernetes pods and other AKS resources (DB, Redis instances...) may still be running but orphaned once the PR is
