@@ -22,7 +22,7 @@ class Publishers::CandidateMessagesController < Publishers::BaseController
 
     Conversation.for_organisations(organisation_ids)
                 .where(id: conversation_ids)
-                .update_all(archived: params[:archive_action] == "archive")
+                .find_each { |c| c.update!(archived: params[:archive_action] == "archive") }
 
     if params[:archive_action] == "archive"
       redirect_to publishers_candidate_messages_path(tab: "archive"), notice: t(".archived")
