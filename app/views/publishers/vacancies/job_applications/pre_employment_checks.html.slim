@@ -9,6 +9,9 @@
       = govuk_button_link_to t("buttons.download_application"), organisation_job_job_application_download_path(@vacancy.id, @job_application.id)
       = govuk_button_link_to t("buttons.update_application_status"), tag_organisation_job_job_applications_path(@vacancy.id, params: { publishers_job_application_tag_form: { origin: tab_name(@job_application.status), job_applications: [@job_application.id] } }), class: "govuk-button--secondary"
 
+h2 = t(".heading")
+p.govuk-hint = t(".hint")
+
 = form_with model: @pre_employment_check_set, url: organisation_job_job_application_pre_employment_check_set_path(@vacancy.id, @job_application.id), method: :patch do |f|
   = f.govuk_error_summary
 
