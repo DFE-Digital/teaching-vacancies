@@ -82,23 +82,6 @@ module TeachingVacancies
     config.active_storage.resolve_model_to_route = :rails_storage_proxy
     config.active_storage.web_image_content_types = %w[image/png image/jpeg image/gif image/webp]
 
-    # Specify the default serializer used by `MessageEncryptor` and `MessageVerifier`
-    # instances.
-    #
-    # The legacy default is `:marshal`, which is a potential vector for
-    # deserialization attacks in cases where a message signing secret has been
-    # leaked.
-    #
-    # In Rails 7.1, the new default is `:json_allow_marshal` which serializes and
-    # deserializes with `ActiveSupport::JSON`, but can fall back to deserializing
-    # with `Marshal` so that legacy messages can still be read.
-    #
-    # In Rails 7.2, the default will become `:json` which serializes and
-    # deserializes with `ActiveSupport::JSON` only.
-    config.active_support.message_serializer = :json_allow_marshal
-
-    config.active_support.use_message_serializer_for_metadata = true
-
     config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info").to_sym
 
     # Set up backing services through VCAP_SERVICES if running on AKS
@@ -140,7 +123,9 @@ module TeachingVacancies
     # TODO: We use Devise's `after_sign_out_path_for` to redirect users to DSI after signing out,
     # and have no way of disabling the foreign host redirect protection in that instance. Until
     # we figure out a way around that, this keeps the pre-Rails 7 default around.
-    Rails.application.config.action_controller.raise_on_open_redirects = false
+    # Rails.application.config.action_controller.raise_on_open_redirects = false
+    # Rails 8.1 it has now beeern re-named
+    config.action_controller.action_on_open_redirect = :log
 
     Rails.autoloaders.main.ignore(Rails.root.join("app/frontend"))
 

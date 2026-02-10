@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby "3.4.7"
 
-RAILS_VERSION = "< 8.1".freeze
+RAILS_VERSION = "8.1.0".freeze
 gem "actionmailer", RAILS_VERSION
 gem "actionpack", RAILS_VERSION
 gem "actionpack-action_caching"
@@ -17,6 +17,7 @@ gem "jsbundling-rails"
 gem "propshaft"
 gem "railties", RAILS_VERSION
 
+# gem "active_model_serializers"
 gem "activerecord-import"
 gem "activerecord-postgis-adapter", ">= 10.0.1"
 gem "activerecord-session_store"
