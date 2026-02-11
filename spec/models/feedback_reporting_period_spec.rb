@@ -71,7 +71,7 @@ RSpec.describe FeedbackReportingPeriod do
   describe "#to_s" do
     it "renders the range visually" do
       expect(described_class.new(from: "2022-01-04", to: "2022-01-10").to_s)
-        .to eq("2022-01-04 -> 2022-01-10")
+        .to eq("2022-01-04 to 2022-01-10")
     end
   end
 

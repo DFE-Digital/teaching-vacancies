@@ -1,6 +1,30 @@
 require "rails_helper"
 
 RSpec.describe NotifyViewsHelper do
+  describe "#vacancy_organisation_and_location" do
+    subject { helper.vacancy_organisation_and_location(vacancy) }
+
+    let(:school) { create(:school, school_groups: [school_group]) }
+    let(:school2) { create(:school, school_groups: [school_group]) }
+    let(:school_group) { create(:school_group) }
+
+    context "when the vacancy is at a single school" do
+      let(:vacancy) { create(:vacancy, organisations: [school]) }
+
+      it "returns the address without organization name" do
+        expect(subject).to eq("#{school.town}, #{school.county}, #{school.postcode}")
+      end
+    end
+
+    context "when the vacancy is at multiple schools" do
+      let(:vacancy) { create(:vacancy, organisations: [school, school2]) }
+
+      it "returns the multiple locations text with organization name" do
+        expect(subject).to eq("#{t('organisations.job_location_summary.at_multiple_locations')}, #{school_group.name}")
+      end
+    end
+  end
+
   describe "#publisher_email_opt_out_link" do
     it "returns nil when no publisher is provided" do
       expect(helper.publisher_email_opt_out_link(nil)).to be_nil
