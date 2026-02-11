@@ -21,7 +21,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 11 Dec 2025 15:57:27 GMT
+      - Wed, 11 Feb 2026 09:36:49 GMT
       Pragma:
       - no-cache
       Expires:
@@ -33,21 +33,21 @@ http_interactions:
       X-Goog-Maps-Metro-Area:
       - Manchester
       Content-Security-Policy-Report-Only:
-      - script-src 'none'; form-action 'none'; frame-src 'none'; report-uri https://csp.withgoogle.com/csp/scaffolding/msaifdggmnwc:214:0
+      - script-src 'none'; form-action 'none'; frame-src 'none'; report-uri https://csp.withgoogle.com/csp/scaffolding/msaifdggmnwc:213:0
       Cross-Origin-Opener-Policy-Report-Only:
-      - same-origin; report-to=msaifdggmnwc:214:0
+      - same-origin; report-to=msaifdggmnwc:213:0
       Report-To:
-      - '{"group":"msaifdggmnwc:214:0","max_age":2592000,"endpoints":[{"url":"https://csp.withgoogle.com/csp/report-to/scaffolding/msaifdggmnwc:214:0"}],}'
+      - '{"group":"msaifdggmnwc:213:0","max_age":2592000,"endpoints":[{"url":"https://csp.withgoogle.com/csp/report-to/scaffolding/msaifdggmnwc:213:0"}],}'
       Server:
       - mafe
       Content-Length:
-      - '2401'
+      - '2393'
       X-Xss-Protection:
       - '0'
       X-Frame-Options:
       - SAMEORIGIN
       Server-Timing:
-      - gfet4t7; dur=19
+      - gfet4t7; dur=12
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
@@ -80,11 +80,11 @@ http_interactions:
         \           \"viewport\" : \n            {\n               \"northeast\" :
         \n               {\n                  \"lat\" : 53.5445879,\n                  \"lng\"
         : -2.1468288\n               },\n               \"southwest\" : \n               {\n
-        \                 \"lat\" : 53.39990299999999,\n                  \"lng\"
-        : -2.3000969\n               }\n            }\n         },\n         \"place_id\"
-        : \"ChIJ2_UmUkxNekgRqmv-BDgUvtk\",\n         \"types\" : \n         [\n            \"locality\",\n
-        \           \"political\"\n         ]\n      }\n   ],\n   \"status\" : \"OK\"\n}"
-  recorded_at: Thu, 11 Dec 2025 15:57:27 GMT
+        \                 \"lat\" : 53.365651,\n                  \"lng\" : -2.3000969\n
+        \              }\n            }\n         },\n         \"place_id\" : \"ChIJ2_UmUkxNekgRqmv-BDgUvtk\",\n
+        \        \"types\" : \n         [\n            \"locality\",\n            \"political\"\n
+        \        ]\n      }\n   ],\n   \"status\" : \"OK\"\n}"
+  recorded_at: Wed, 11 Feb 2026 09:36:49 GMT
 - request:
     method: get
     uri: https://maps.googleapis.com/maps/api/geocode/json?address=N7%207DD&components=country:gb&key=<GOOGLE_LOCATION_SEARCH_API_KEY>&language=en&sensor=false
@@ -106,7 +106,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 11 Dec 2025 15:57:27 GMT
+      - Wed, 11 Feb 2026 09:36:49 GMT
       Pragma:
       - no-cache
       Expires:
@@ -118,11 +118,11 @@ http_interactions:
       X-Goog-Maps-Metro-Area:
       - London
       Content-Security-Policy-Report-Only:
-      - script-src 'none'; form-action 'none'; frame-src 'none'; report-uri https://csp.withgoogle.com/csp/scaffolding/msaifdggmnwc:214:0
+      - script-src 'none'; form-action 'none'; frame-src 'none'; report-uri https://csp.withgoogle.com/csp/scaffolding/msaifdggmnwc:213:0
       Cross-Origin-Opener-Policy-Report-Only:
-      - same-origin; report-to=msaifdggmnwc:214:0
+      - same-origin; report-to=msaifdggmnwc:213:0
       Report-To:
-      - '{"group":"msaifdggmnwc:214:0","max_age":2592000,"endpoints":[{"url":"https://csp.withgoogle.com/csp/report-to/scaffolding/msaifdggmnwc:214:0"}],}'
+      - '{"group":"msaifdggmnwc:213:0","max_age":2592000,"endpoints":[{"url":"https://csp.withgoogle.com/csp/report-to/scaffolding/msaifdggmnwc:213:0"}],}'
       Server:
       - mafe
       Content-Length:
@@ -132,7 +132,7 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       Server-Timing:
-      - gfet4t7; dur=47
+      - gfet4t7; dur=13
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
@@ -174,5 +174,5 @@ http_interactions:
         \           }\n         ],\n         \"place_id\" : \"ChIJQ-hQhXYbdkgRowGcSItEnj4\",\n
         \        \"types\" : \n         [\n            \"postal_code\"\n         ]\n
         \     }\n   ],\n   \"status\" : \"OK\"\n}"
-  recorded_at: Thu, 11 Dec 2025 15:57:27 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Wed, 11 Feb 2026 09:36:49 GMT
+recorded_with: VCR 6.4.0

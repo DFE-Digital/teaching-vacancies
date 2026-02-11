@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://maps.googleapis.com/maps/api/geocode/json?address=TS14%206RD&components=country:gb&key=placeholder_key&language=en&sensor=false
+    uri: https://maps.googleapis.com/maps/api/geocode/json?address=TS14%206RD&components=country:gb&key=<GOOGLE_LOCATION_SEARCH_API_KEY>&language=en&sensor=false
     body:
       encoding: US-ASCII
       string: ''

@@ -5,17 +5,18 @@ http_interactions:
     uri: https://becomingateacher.zendesk.com/api/v2/requests
     body:
       encoding: UTF-8
-      string: '{"request":{"requester":{"name":"User In-Need","email":"test@example.com"},"subject":"[Support
-        request] Teaching Vacancies","comment":{"body":"Help!"}}}'
+      string: '{"request":{"comment":{"body":"Help!","uploads":[]},"requester":{"name":"User
+        In-Need","email":"antoine_williamson@contoso.com"},"subject":"[Support request]
+        Teaching Vacancies"}}'
     headers:
       Accept:
       - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       User-Agent:
-      - ZendeskAPI Ruby 1.33.0
+      - ZendeskAPI Ruby 3.1.1
       Authorization:
-      - Basic jdkkJduWhnCCioLpWWnJiOw=
+      - "<BASIC_AUTH>"
       Content-Type:
       - application/json
   response:
@@ -24,66 +25,84 @@ http_interactions:
       message: Created
     headers:
       Date:
-      - Thu, 21 Oct 2021 13:06:17 GMT
+      - Wed, 11 Feb 2026 09:36:23 GMT
       Content-Type:
-      - application/json; charset=UTF-8
-      Content-Length:
-      - '589'
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
       X-Zendesk-Api-Version:
       - v2
       X-Zendesk-Application-Version:
-      - v10039
+      - v25035
       X-Frame-Options:
       - SAMEORIGIN
       Location:
-      - https://becomingateacher.zendesk.com/api/v2/requests/20930.json
+      - https://becomingateacher.zendesk.com/api/v2/requests/632504.json
       Access-Control-Allow-Origin:
       - "*"
-      Access-Control-Allow-Credentials:
-      - 'true'
       Access-Control-Expose-Headers:
       - X-Zendesk-API-Warn,X-Zendesk-User-Id,X-Zendesk-User-Session-Expires-At
       X-Rate-Limit:
-      - '400'
+      - '700'
+      Ratelimit-Limit:
+      - '700'
       X-Rate-Limit-Remaining:
-      - '400'
+      - '700'
+      Ratelimit-Remaining:
+      - '700'
+      Ratelimit-Reset:
+      - '37'
+      Zendesk-Ratelimit-Anonymous-Requests:
+      - total=5; remaining=3; resets=1418
       Strict-Transport-Security:
-      - max-age=31536000;
+      - max-age=31536000; includeSubDomains
       Etag:
-      - W/"5dfec9fcefdffb2d7433588ea92c6ac2"
+      - W/"5ddd8039bf6f7b1e7cd5c2acad362209"
       Cache-Control:
       - max-age=0, private, must-revalidate
+      Set-Cookie:
+      - __cf_bm=IqarW32eNNviU4Y7KSMGTH7dXUPwyEbe6adol1Nvy3c-1770802583-1.0.1.1-QkClgmMXeREaqeCNV235xf5XwwAjk.Lfc1bo7gLMYJ5arHn7YDBSr4GR_ive5rMegIdy0KdR.8j0zFG.0ayuU.3Ety3sBOCKdolWwVAcHiE;
+        path=/; expires=Wed, 11-Feb-26 10:06:23 GMT; domain=.becomingateacher.zendesk.com;
+        HttpOnly; Secure; SameSite=None
+      - _cfuvid=Wlz69AIMMEB7Fq9T1XsB2WLLGzWZWIqD9P.u_8qZ_cU-1770802583308-0.0.1.1-604800000;
+        path=/; domain=.becomingateacher.zendesk.com; HttpOnly; Secure; SameSite=None
+      - _zendesk_cookie=BAhJIhl7ImRldmljZV90b2tlbnMiOnt9fQY6BkVU--0bf2100788cb010d0183feca16aaf88ccaf719ca;
+        path=/; expires=Thu, 11 Feb 2027 08:36:26 GMT; secure; HttpOnly; SameSite=None
       X-Zendesk-Origin-Server:
-      - classic-app-server-67c7f4d985-vd48s
+      - classic-app-server-56894799dc-f4rkw
       X-Request-Id:
-      - 6a1ab3b94c6d20e9-DUS
-      - 6a1ab3b94c6d20e9-DUS
+      - 9cc2dc8e884ed06a-DUB
       X-Runtime:
-      - '2.589217'
+      - '0.442951'
+      X-Envoy-Upstream-Service-Time:
+      - '446'
+      Zendesk-Service:
+      - classic
+      X-Zendesk-Api-Gateway:
+      - 'yes'
       X-Zendesk-Zorg:
       - 'yes'
-      X-Content-Type-Options:
-      - nosniff
+      Vary:
+      - Accept-Encoding
+      Via:
+      - zorg
+      X-Envoy-Decorator-Operation:
+      - "/api/v2"
       Cf-Cache-Status:
       - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Report-To:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=P1GeCjfMd2aLBiJ6C54LRKiZGCzFXd51kagfOQTqdcM%2B3pCD8HKLZJFMzkloo%2F6HWWYp6jq3pgv1EmRm8MOg4285TgEtZXnccPMD6Vs0BB4rpCAU2wWJkWSJn1lAh5U%2BkViyH%2BFpOQq3jQ%3D%3D"}],"group":"cf-nel","max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=wUJ1H1bweaJ97sHDhy4Jl4UJDRfL3xpVbMtdmswzVpunY%2FJ1gekAiOj%2F5OyyNSKxv3%2FV%2FaLgmMaeh0PElT5tu0L9XEW3kk6JoTzyfsW9PQ%2FtulnPRTFUPC7imYwkrCvOEw9mWyh3z876fGJBbsg%3D"}],"group":"cf-nel","max_age":604800}'
       Nel:
       - '{"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}'
-      Set-Cookie:
-      - __cfruid=2a3d8506ae6f744b5c442f3d66fefdc03ac424bf-1634821577; path=/; domain=.becomingateacher.zendesk.com;
-        HttpOnly; Secure; SameSite=None
       Server:
       - cloudflare
       Cf-Ray:
-      - 6a1ab3b94c6d20e9-LHR
+      - 9cc2dc8e884ed06a-LHR
     body:
       encoding: UTF-8
-      string: '{"request":{"url":"https://becomingateacher.zendesk.com/api/v2/requests/20930.json","id":20930,"status":"new","priority":"normal","type":null,"subject":"[Support
-        request] Teaching Vacancies","description":"Help!","organization_id":null,"via":{"channel":"api","source":{"from":{},"to":{},"rel":null}},"custom_fields":[],"requester_id":389521004560,"collaborator_ids":[],"email_cc_ids":[],"is_public":true,"due_at":null,"can_be_solved_by_me":false,"created_at":"2021-10-21T13:06:15Z","updated_at":"2021-10-21T13:06:15Z","recipient":null,"followup_source_id":null,"assignee_id":null,"fields":[]}}'
-  recorded_at: Thu, 21 Oct 2021 13:06:17 GMT
-recorded_with: VCR 6.0.0
+      string: '{"request":{"url":"https://becomingateacher.zendesk.com/api/v2/requests/632504.json","id":632504,"status":"new","priority":"normal","type":null,"subject":"[Support
+        request] Teaching Vacancies","description":"Help!","organization_id":null,"via":{"channel":"api","source":{"from":{},"to":{},"rel":null}},"custom_fields":[],"requester_id":43737634070033,"collaborator_ids":[],"email_cc_ids":[],"is_public":true,"due_at":null,"can_be_solved_by_me":false,"created_at":"2026-02-11T09:36:23Z","updated_at":"2026-02-11T09:36:23Z","recipient":null,"followup_source_id":null,"assignee_id":null,"ticket_form_id":360000137032,"custom_status_id":5765737,"fields":[]}}'
+  recorded_at: Wed, 11 Feb 2026 09:36:23 GMT
+recorded_with: VCR 6.4.0
