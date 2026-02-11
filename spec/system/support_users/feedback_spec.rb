@@ -24,7 +24,7 @@ end
 
 RSpec.describe "Feedback supportal section" do
   def testid_for(time)
-    [time.to_date.beginning_of_month, time.to_date.end_of_month].map(&:to_s).join(" -> ")
+    [time.to_date.beginning_of_month, time.to_date.end_of_month].map(&:to_s).join(" to ")
   end
 
   let!(:job_alert_feedback) do
