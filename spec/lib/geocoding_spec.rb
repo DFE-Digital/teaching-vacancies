@@ -2,7 +2,7 @@ require "rails_helper"
 require "geocoding"
 
 # rubocop:disable RSpec/ExpectActual
-RSpec.describe Geocoding,  geocode: true do
+RSpec.describe Geocoding, geocode: true do
   subject { described_class.new(location) }
 
   let(:google_coordinates) { [54.54109829999999, -1.0450767] }
