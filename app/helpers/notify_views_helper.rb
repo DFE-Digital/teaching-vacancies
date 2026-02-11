@@ -98,21 +98,10 @@ module NotifyViewsHelper
     notify_link(url, t(".unsubscribe_link_text"))
   end
 
-  def vacancy_location_with_organisation_link(vacancy)
-    organisation = vacancy.organisation
-    url = organisation_landing_page_url(organisation, **utm_params)
-
-    if vacancy.organisations.many?
-      "#{t('organisations.job_location_summary.at_multiple_locations')}, #{notify_link(url, organisation.name)}".html_safe
-    else
-      address_join([notify_link(url, organisation.name), organisation.town, organisation.county, organisation.postcode]).html_safe
-    end
-  end
-
   def vacancy_organisation_and_location(vacancy)
     organisation = vacancy.organisation
     if vacancy.organisations.many?
-      "#{t('organisations.job_location_summary.at_multiple_locations')}, #{organisation.name}".html_safe
+      "#{t('organisations.job_location_summary.at_multiple_locations')}, #{organisation.name}"
     else
       address_join([organisation.town, organisation.county, organisation.postcode])
     end
