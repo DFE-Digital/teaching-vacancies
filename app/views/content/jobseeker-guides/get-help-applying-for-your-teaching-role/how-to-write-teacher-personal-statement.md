@@ -101,7 +101,7 @@ You could include:
 
 * sports and fitness – coaching a football team, starting a new club, or leading a morning fitness session
 *	creative arts – supporting the school choir, directing a play or running an arts workshop
-*	Science, technology, engineering and mathematics (STEM) activities – starting a coding club, organising a science fair or robotics competition
+*	science, technology, engineering and mathematics (STEM) activities – starting a coding club, organising a science fair or robotics competition
 *	pastoral support – mentoring pupils, helping with assemblies, or supporting wellbeing initiatives 
 *	community engagement – coordinating charity events, cultural celebrations or workshops with parents
 
