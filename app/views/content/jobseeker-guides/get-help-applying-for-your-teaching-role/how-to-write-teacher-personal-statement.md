@@ -25,14 +25,17 @@ It can be tricky to know where to start with your personal statement.
 
 Artificial intelligence (AI) tools can help you generate ideas and structure your writing, but it's important not to rely on them too heavily. Schools want to see your skills, experience and personality in your own words.
 
-If you need help getting started, you can use our purpose-built personal statement builder.
+If the teaching job you're applying for on Teaching Vacancies is either:
+
+* eligible for quick apply
+* suitable for early career teachers
+
+You can use our personal statement builder to help you get started.
 
 ## Using the personal statement builder
 The personal statement builder provides writing prompts and guidance based on the job description of the role you’re applying for, and the information you provide about yourself.
 
 It also features short videos from school leaders, with advice from them on what makes a successful teaching personal statement. 
-
-<a href="PERSONAL STATEMENT BUILDER LINK HERE">Use the personal statement builder</a>
 
 ## What to include in your personal statement
 There’s no set length for a teacher personal statement, but many schools expect them to be around 1 to 2 pages. Focus on being clear and concise. 
