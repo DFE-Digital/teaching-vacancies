@@ -28,6 +28,7 @@ RSpec.describe "Publishers can view candidate messages" do
         visit publishers_candidate_messages_path
         # wait for page load
         find("nav.tabs-component")
+        find("footer")
       end
 
       it "passes accessibility checks", :a11y do
