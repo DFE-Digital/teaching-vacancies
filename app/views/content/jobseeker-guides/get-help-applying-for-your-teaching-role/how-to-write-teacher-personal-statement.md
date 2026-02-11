@@ -25,15 +25,13 @@ It can be tricky to know where to start with your personal statement.
 
 Artificial intelligence (AI) tools can help you generate ideas and structure your writing, but it's important not to rely on them too heavily. Schools want to see your skills, experience and personality in your own words.
 
-If the teaching job you're applying for on Teaching Vacancies is either:
+## Using the personal statement builder
+You can use the personal statement builder if the job you're applying for is:
 
 * eligible for quick apply
 * suitable for early career teachers
 
-You can use our personal statement builder to help you get started.
-
-## Using the personal statement builder
-The personal statement builder provides writing prompts and guidance based on the job description of the role you’re applying for, and the information you provide about yourself.
+It provides writing prompts and guidance based on the job description of the role you’re applying for, and the information you provide about yourself.
 
 It also features short videos from school leaders, with advice from them on what makes a successful teaching personal statement. 
 
