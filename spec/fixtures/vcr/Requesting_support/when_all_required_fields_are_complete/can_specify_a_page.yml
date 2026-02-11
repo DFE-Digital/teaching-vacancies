@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"request":{"comment":{"body":"Help!","uploads":[]},"requester":{"name":"User
-        In-Need","email":"bessie.herman@contoso.com"},"subject":"[Support request]
+        In-Need","email":"tiffiny.strosin@contoso.com"},"subject":"[Support request]
         Some page"}}'
     headers:
       Accept:
@@ -25,7 +25,7 @@ http_interactions:
       message: Created
     headers:
       Date:
-      - Mon, 09 Feb 2026 08:55:42 GMT
+      - Wed, 11 Feb 2026 09:36:22 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -35,11 +35,11 @@ http_interactions:
       X-Zendesk-Api-Version:
       - v2
       X-Zendesk-Application-Version:
-      - v25011
+      - v25035
       X-Frame-Options:
       - SAMEORIGIN
       Location:
-      - https://becomingateacher.zendesk.com/api/v2/requests/631761.json
+      - https://becomingateacher.zendesk.com/api/v2/requests/632503.json
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
@@ -53,29 +53,31 @@ http_interactions:
       Ratelimit-Remaining:
       - '700'
       Ratelimit-Reset:
-      - '18'
+      - '38'
+      Zendesk-Ratelimit-Anonymous-Requests:
+      - total=5; remaining=4; resets=1419
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Etag:
-      - W/"61b2d364ad49740d6962be644b1bb312"
+      - W/"bdf0596821e62aef8f34e75ea734451f"
       Cache-Control:
       - max-age=0, private, must-revalidate
       Set-Cookie:
-      - __cf_bm=CmPz.3vIpaoT9IfAmRv3ZdMRwxlmd1wQkTMBhQuseOU-1770627342-1.0.1.1-P3etBXVfLbxTwVgACqnKJh_qSbb1sC15Dd4EVkNBI2Tb7qp6v7eQo.2kEgvM6GpeFSYr3GWcdB4lhfgkRYKYBp2.D_Ki_XboQSi16A2p9SY;
-        path=/; expires=Mon, 09-Feb-26 09:25:42 GMT; domain=.becomingateacher.zendesk.com;
+      - __cf_bm=1W7nA.LhQGr9kClUrTCA.Zf2Uyy9P02qqLqYGqQXwKU-1770802582-1.0.1.1-yDxb78HWTquyJzQjLDxvjaz.gbDonmCNzDrr7LLee8qUx0DQE3YH8RhJXyTKztPuK25ipPxZpaTrFK6syZ7DQZ6pcwO6xzZNHxIG0BcztjI;
+        path=/; expires=Wed, 11-Feb-26 10:06:22 GMT; domain=.becomingateacher.zendesk.com;
         HttpOnly; Secure; SameSite=None
-      - _cfuvid=yIgNITWuNH4QtSARDJbzHoH63JYLhRKaVByYZk4joXM-1770627342428-0.0.1.1-604800000;
+      - _cfuvid=bcgnV6lIrsKd2djlJ11tJTw7zKIJYS9wCYwi2s853Ds-1770802582420-0.0.1.1-604800000;
         path=/; domain=.becomingateacher.zendesk.com; HttpOnly; Secure; SameSite=None
       - _zendesk_cookie=BAhJIhl7ImRldmljZV90b2tlbnMiOnt9fQY6BkVU--0bf2100788cb010d0183feca16aaf88ccaf719ca;
-        path=/; expires=Tue, 09 Feb 2027 08:29:13 GMT; secure; HttpOnly; SameSite=None
+        path=/; expires=Thu, 11 Feb 2027 08:33:38 GMT; secure; HttpOnly; SameSite=None
       X-Zendesk-Origin-Server:
-      - classic-app-server-766dc7f84b-xjpdb
+      - classic-app-server-56894799dc-wcpqv
       X-Request-Id:
-      - 9cb226366ad3efe0-DUB
+      - 9cc2dc884cf5ef48-LHR
       X-Runtime:
-      - '0.547899'
+      - '0.567585'
       X-Envoy-Upstream-Service-Time:
-      - '551'
+      - '571'
       Zendesk-Service:
       - classic
       X-Zendesk-Api-Gateway:
@@ -91,16 +93,16 @@ http_interactions:
       Cf-Cache-Status:
       - DYNAMIC
       Report-To:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=9gUp6S18L6NDkl%2FP6qqNVy19V8t0lq0YbS6yhl%2F5RyXzgwCm1SNOQeBTXDVfscyikMNEo%2B4gFfgVARY0l2R762Vvb%2FfKPRyixzY3%2BdsFL2TspeCmmCrEyBrNRd6VK%2Fv9lZe3%2Bp%2FzGGu1%2Fh26Vzo%3D"}],"group":"cf-nel","max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=K5sEz3crdnOFt%2FOLiiKDXwsmGASvP9GwdHAXOPG9A%2F0XYa8sZZSYq%2FhOXzOcHN3PMk2%2FegTTU2otkhG9EyVMkkfmGiJlVzEZAAj6DDqLAxR2kNeHJrKcjAMpf3D4lmaTMmp1kZQPkP2XkId9WiQ%3D"}],"group":"cf-nel","max_age":604800}'
       Nel:
       - '{"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}'
       Server:
       - cloudflare
       Cf-Ray:
-      - 9cb226366ad3efe0-LHR
+      - 9cc2dc884cf5ef48-LHR
     body:
       encoding: UTF-8
-      string: '{"request":{"url":"https://becomingateacher.zendesk.com/api/v2/requests/631761.json","id":631761,"status":"new","priority":"normal","type":null,"subject":"[Support
-        request] Some page","description":"Help!","organization_id":null,"via":{"channel":"api","source":{"from":{},"to":{},"rel":null}},"custom_fields":[],"requester_id":43659602505233,"collaborator_ids":[],"email_cc_ids":[],"is_public":true,"due_at":null,"can_be_solved_by_me":false,"created_at":"2026-02-09T08:55:42Z","updated_at":"2026-02-09T08:55:42Z","recipient":null,"followup_source_id":null,"assignee_id":null,"ticket_form_id":360000137032,"custom_status_id":5765737,"fields":[]}}'
-  recorded_at: Mon, 09 Feb 2026 08:55:42 GMT
+      string: '{"request":{"url":"https://becomingateacher.zendesk.com/api/v2/requests/632503.json","id":632503,"status":"new","priority":"normal","type":null,"subject":"[Support
+        request] Some page","description":"Help!","organization_id":null,"via":{"channel":"api","source":{"from":{},"to":{},"rel":null}},"custom_fields":[],"requester_id":43737581157905,"collaborator_ids":[],"email_cc_ids":[],"is_public":true,"due_at":null,"can_be_solved_by_me":false,"created_at":"2026-02-11T09:36:22Z","updated_at":"2026-02-11T09:36:22Z","recipient":null,"followup_source_id":null,"assignee_id":null,"ticket_form_id":360000137032,"custom_status_id":5765737,"fields":[]}}'
+  recorded_at: Wed, 11 Feb 2026 09:36:22 GMT
 recorded_with: VCR 6.4.0
