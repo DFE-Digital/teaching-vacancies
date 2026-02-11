@@ -6,9 +6,11 @@ RSpec.describe "backfill_vacancy_geolocation" do
   let(:school) { create(:school) }
   let(:trust) { create(:trust) }
 
+  let(:school_vacancy) { create(:vacancy, organisations: [school]) }
+
   before do
-    create(:vacancy, organisations: [school], geolocation: nil)
-    create(:vacancy, organisations: [trust], geolocation: nil)
+    school_vacancy.update!(geolocation: nil)
+    create(:vacancy, organisations: [trust])
   end
 
   # rubocop:disable RSpec/NamedSubject
