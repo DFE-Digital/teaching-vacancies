@@ -7,51 +7,55 @@ http_interactions:
       encoding: US-ASCII
       string: ''
     headers:
-      Accept-Encoding:
-        - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-        - "*/*"
       User-Agent:
-        - Ruby
+      - Teaching Vacancies Service teaching.vacancies@education.gov.uk
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
   response:
     status:
       code: 200
       message: OK
     headers:
       Content-Type:
-        - application/json; charset=UTF-8
+      - application/json; charset=UTF-8
       Date:
-        - Wed, 08 Sep 2021 16:53:51 GMT
+      - Wed, 11 Feb 2026 14:40:08 GMT
       Pragma:
-        - no-cache
+      - no-cache
       Expires:
-        - Fri, 01 Jan 1990 00:00:00 GMT
+      - Fri, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
-        - no-cache, must-revalidate
+      - no-cache, must-revalidate
       Access-Control-Allow-Origin:
-        - "*"
+      - "*"
+      Content-Security-Policy-Report-Only:
+      - script-src 'none'; form-action 'none'; frame-src 'none'; report-uri https://csp.withgoogle.com/csp/scaffolding/msaifdggmnwc:213:0
+      Cross-Origin-Opener-Policy-Report-Only:
+      - same-origin; report-to=msaifdggmnwc:213:0
+      Report-To:
+      - '{"group":"msaifdggmnwc:213:0","max_age":2592000,"endpoints":[{"url":"https://csp.withgoogle.com/csp/report-to/scaffolding/msaifdggmnwc:213:0"}],}'
       Server:
-        - mafe
+      - mafe
+      Content-Length:
+      - '23309'
       X-Xss-Protection:
-        - '0'
+      - '0'
       X-Frame-Options:
-        - SAMEORIGIN
+      - SAMEORIGIN
       Server-Timing:
-        - gfet4t7; dur=2
+      - gfet4t7; dur=86
       Alt-Svc:
-        - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000,h3-T051=":443"; ma=2592000,h3-Q050=":443";
-          ma=2592000,h3-Q046=":443"; ma=2592000,h3-Q043=":443"; ma=2592000,quic=":443";
-          ma=2592000; v="46,43"
-      Transfer-Encoding:
-        - chunked
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
       encoding: ASCII-8BIT
       string: |
         {
           "status" : "OVER_QUERY_LIMIT"
         }
-  recorded_at: Wed, 08 Sep 2021 16:53:50 GMT
-  recorded_with: VCR 6.0.0
+  recorded_at: Wed, 11 Feb 2026 14:40:08 GMT
+  recorded_with: VCR 6.4.0
 
 - request:
     method: get
@@ -91,5 +95,5 @@ http_interactions:
       encoding: ASCII-8BIT
       string: !binary |-
         eyJwbGFjZV9pZCI6MTA5Njc2MTk5LCJsaWNlbmNlIjoiRGF0YSDCqSBPcGVuU3RyZWV0TWFwIGNvbnRyaWJ1dG9ycywgT0RiTCAxLjAuIGh0dHBzOi8vb3NtLm9yZy9jb3B5cmlnaHQiLCJvc21fdHlwZSI6IndheSIsIm9zbV9pZCI6ODk1NDk5MTYsImxhdCI6IjU0LjU0MDI4ODI1IiwibG9uIjoiLTEuMDQzODIzMTYwNTg4Nzg2NCIsImRpc3BsYXlfbmFtZSI6IkxhdXJlbmNlIEphY2tzb24gU2Nob29sLCBDaHVyY2ggTGFuZSwgR3Vpc2Jvcm91Z2gsIFJlZGNhciBhbmQgQ2xldmVsYW5kLCBOb3J0aCBFYXN0IEVuZ2xhbmQsIEVuZ2xhbmQsIFRTMTQgNlJELCBVbml0ZWQgS2luZ2RvbSIsImFkZHJlc3MiOnsiYW1lbml0eSI6IkxhdXJlbmNlIEphY2tzb24gU2Nob29sIiwicm9hZCI6IkNodXJjaCBMYW5lIiwidG93biI6Ikd1aXNib3JvdWdoIiwiY291bnR5IjoiUmVkY2FyIGFuZCBDbGV2ZWxhbmQiLCJzdGF0ZV9kaXN0cmljdCI6Ik5vcnRoIEVhc3QgRW5nbGFuZCIsInN0YXRlIjoiRW5nbGFuZCIsInBvc3Rjb2RlIjoiVFMxNCA2UkQiLCJjb3VudHJ5IjoiVW5pdGVkIEtpbmdkb20iLCJjb3VudHJ5X2NvZGUiOiJnYiJ9LCJib3VuZGluZ2JveCI6WyI1NC41MzcyMzA1IiwiNTQuNTQyNTYzMSIsIi0xLjA0Njk5MDUiLCItMS4wNDExODI0Il19
-  recorded_at: Wed, 08 Sep 2021 17:04:53 GMT
-recorded_with: VCR 6.0.0
+  recorded_at: Wed, 11 Feb 2026 14:40:08 GMT
+  recorded_with: VCR 6.4.0
