@@ -63,7 +63,7 @@ jobs:
           path: |
             public/assets
             tmp/cache/assets
-          key: ${{ runner.os }}-assets-${{ hashFiles('app/assets/stylesheets/**/*', 'app/assets/javascript/**/*', 'app/assets/images/**/*', 'app/components/**/*.scss', 'app/components/**/*.js', 'config/initializers/assets.rb', 'esbuild.config.js', 'yarn.lock') }}
+          key: ${{ runner.os }}-assets-${{ hashFiles('app/assets/stylesheets/**/*', 'app/assets/javascript/**/*', 'app/assets/images/**/*', 'app/components/**/*.scss', 'config/initializers/assets.rb', 'esbuild.config.js', 'yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-assets-
 

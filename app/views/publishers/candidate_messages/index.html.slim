@@ -37,10 +37,10 @@ h1.govuk-heading-l Candidate messages
         = f.govuk_submit t(".buttons.unarchive"), class: "govuk-button--secondary"
       - else
         = f.govuk_submit t(".buttons.archive"), class: "govuk-button--secondary"
-    = govuk_table html_attributes: { data: { module: "moj-multi-select", multi_select_checkbox: "#multi_select_conversations", multi_select_idprefix: "id_all_conversations" } } do |table|
+    = govuk_table html_attributes: { data: { module: "moj-multi-select", id_prefix: "conversations-" } } do |table|
       - table.with_head do |head|
         - head.with_row do |row|
-          - row.with_cell html_attributes: { id: "multi_select_conversations" }
+          - row.with_cell html_attributes: { id: "conversations-select-all" }
           - row.with_cell text: t("publishers.candidate_messages.index.table_headers.name")
           - row.with_cell text: t("publishers.candidate_messages.index.table_headers.application")
           - row.with_cell text: t("publishers.candidate_messages.index.table_headers.date_and_time")

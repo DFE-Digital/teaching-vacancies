@@ -2,6 +2,8 @@ $govuk-global-styles: true;
 $govuk-new-link-styles: true;
 $govuk-assets-path: "/";
 
+@forward "@ministryofjustice/frontend/moj/all";
+
 // External dependencioes
 @import 'accessible-autocomplete/dist/accessible-autocomplete.min';
 @import 'dfe-frontend/packages/dfefrontend';
@@ -12,9 +14,6 @@ $govuk-assets-path: "/";
 
 //@import "@x-govuk/govuk-prototype-components/src/x-govuk/components/secondary-navigation";
 @import "secondary-navigation";
-
-// file for MoJ frontend work-arounds
-@import 'moj-frontend';
 
 @import 'base/global';
 @import 'base/guide_card';
