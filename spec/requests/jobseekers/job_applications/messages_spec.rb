@@ -47,7 +47,7 @@ RSpec.describe "Jobseekers::JobApplications::Messages" do
 
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response).to render_template("jobseekers/job_applications/show")
-          expect(assigns(:message_form).errors[:content]).to include("Please enter your message")
+          expect(assigns(:message).errors[:content]).to include("Please enter your message")
           expect(assigns(:messages)).to eq([])
         end
 
@@ -61,7 +61,7 @@ RSpec.describe "Jobseekers::JobApplications::Messages" do
 
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response).to render_template("jobseekers/job_applications/show")
-            expect(assigns(:message_form).errors[:content]).to include("Please enter your message")
+            expect(assigns(:message).errors[:content]).to include("Please enter your message")
             expect(assigns(:messages)).to include(existing_message)
           end
         end

@@ -608,11 +608,6 @@ en:
               invalid: Enter a valid email address in the correct format, like name@example.com
             recent_code_request: XYZ
 
-        publishers/job_application/messages_form:
-          attributes:
-            content:
-              blank: Please enter your message
-
         publishers/job_application/tag_form:
           attributes:
             job_applications:
@@ -663,6 +658,11 @@ en:
       vacancy/expires_at: Application deadline (time)
     errors:
       models:
+        message:
+          attributes:
+            content:
+              blank: Please enter your message
+
         note:
           attributes:
             content:

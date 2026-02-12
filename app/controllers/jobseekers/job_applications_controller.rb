@@ -120,7 +120,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
       @show_form = params[:show_form]
       conversation = job_application.conversations.first
       @messages = (conversation && conversation.messages.order(created_at: :desc)) || []
-      @message_form = Publishers::JobApplication::MessagesForm.new
+      @message = JobseekerMessage.new
 
       # Mark publisher messages as read when jobseeker views them
       publisher_messages = @messages.select { |msg| msg.is_a?(PublisherMessage) && msg.unread? }

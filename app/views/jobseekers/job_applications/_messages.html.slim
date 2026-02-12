@@ -13,7 +13,7 @@
 
     - if @show_form == "true" && @job_application.can_jobseeker_send_message?
       = render "shared/message_form",
-              message_object: @message_form,
+              message_object: @message,
               form_url: jobseekers_job_application_messages_path(@job_application),
               form_method: :post,
               form_help_text: t(".form_help_text"),
