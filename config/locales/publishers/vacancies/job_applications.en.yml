@@ -127,7 +127,7 @@ en:
           verify_identity_link: how to prove and verify someone's identity
           section_128_list_link: check the section 128 list
           verified_right_to_work_link: checking a job applicant's right to work
-          heading: Pre-employment check list
+          heading: Pre-employment checklist
           hint: Select all boxes below where checks have been completed to keep track of progress
           update:
             success: Pre-employment checklist updated
