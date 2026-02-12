@@ -3,6 +3,14 @@ class UpdateDSIUsersInDbJob < ApplicationJob
   queue_as :low
 
   def perform
-    Publishers::DfeSignIn::UpdateUsersInDb.new.call
+    Publishers::DfeSignIn::FetchDSIUsers.new.dsi_users.each { |page| convert_to_users(page) }
+  end
+
+  private
+
+  def convert_to_users(api_users)
+    api_users.each do |dsi_user|
+      UpdateSingleDSIUserInDbJob.perform_later(dsi_user)
+    end
   end
 end

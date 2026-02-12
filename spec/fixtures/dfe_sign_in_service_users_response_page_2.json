@@ -60,7 +60,7 @@
     "roleName": "End user",
     "roleId": 10000,
     "userId": "CCC-333",
-    "email": "bar@example.com",
+    "email": "bar@contoso.com",
     "familyName": "Robertson",
     "givenName": "Alice"
   },

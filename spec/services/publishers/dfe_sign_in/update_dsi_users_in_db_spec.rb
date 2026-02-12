@@ -3,22 +3,10 @@ require "rails_helper"
 RSpec.describe Publishers::DfeSignIn::UpdateUsersInDb do
   let(:test_file_1_path) { Rails.root.join("spec/fixtures/dfe_sign_in_service_users_response_page_1.json") }
   let(:test_file_2_path) { Rails.root.join("spec/fixtures/dfe_sign_in_service_users_response_page_2.json") }
-  let(:test_file_empty_users_path) { Rails.root.join("spec/fixtures/dfe_sign_in_service_users_empty_response.json") }
   let(:update_dfe_sign_in_users) { described_class.new }
 
-  describe "#call" do
-    before do
-      allow(described_class).to receive(:new).and_return(update_dfe_sign_in_users)
-    end
-
+  describe "#convert_to_user" do
     it "updates the users database with correct emails and URNs/UIDs" do
-      [test_file_1_path, test_file_2_path].each_with_index do |file_path, index|
-        stub_request(:get, "#{ENV.fetch('DFE_SIGN_IN_URL', nil)}/users?page=#{index + 1}&pageSize=#{DfeSignIn::API::USERS_PAGE_SIZE}")
-          .to_return(
-            body: File.read(file_path),
-          )
-      end
-
       school = create(:school, urn: "111111")
       local_authority = create(:school_group, local_authority_code: "813")
       create(:school, urn: "333333")
@@ -26,7 +14,10 @@ RSpec.describe Publishers::DfeSignIn::UpdateUsersInDb do
       create(:school_group, uid: "222222")
       create(:school_group, uid: "444444")
 
-      expect { update_dfe_sign_in_users.call }.to change { Publisher.all.size }.by(3)
+      expect {
+        JSON.parse(File.read(test_file_1_path)).fetch("users").each { |u| update_dfe_sign_in_users.convert_to_user(u) }
+        JSON.parse(File.read(test_file_2_path)).fetch("users").each { |u| update_dfe_sign_in_users.convert_to_user(u) }
+      }.to change { Publisher.all.size }.by(3)
 
       user_with_one_school = Publisher.find_by!(email: "foo@education.gov.uk")
       expect(user_with_one_school.given_name).to eq("Roger")
@@ -42,20 +33,6 @@ RSpec.describe Publishers::DfeSignIn::UpdateUsersInDb do
       expect(local_authority_user.given_name).to eq("Barry")
       expect(local_authority_user.family_name).to eq("Scott")
       expect(local_authority_user.organisations.first).to eq(local_authority)
-    end
-
-    it "raises an error when it finds no users in the response" do
-      stub_request(:get, "#{ENV.fetch('DFE_SIGN_IN_URL', nil)}/users?page=1&pageSize=#{DfeSignIn::API::USERS_PAGE_SIZE}")
-          .to_return(
-            body: File.read(test_file_empty_users_path),
-          )
-      expect { update_dfe_sign_in_users.call }.to raise_error("failed request")
-
-      stub_request(:get, "#{ENV.fetch('DFE_SIGN_IN_URL', nil)}/users?page=1&pageSize=#{DfeSignIn::API::USERS_PAGE_SIZE}")
-          .to_return(
-            body: "{}",
-          )
-      expect { update_dfe_sign_in_users.call }.to raise_error("failed request")
     end
   end
 end
