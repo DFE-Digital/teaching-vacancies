@@ -18,6 +18,20 @@ class Publishers::JobListing::ContactDetailsForm < Publishers::JobListing::Vacan
     def fields
       FIELDS + %i[contact_number_provided]
     end
+
+    def load_from_model(vacancy, current_publisher:)
+      new(vacancy.slice(*fields), vacancy, current_publisher)
+    end
+
+    def load_from_params(form_params, vacancy, current_publisher:)
+      new(form_params, vacancy, current_publisher)
+    end
+  end
+
+  def initialize(params, vacancy, current_publisher)
+    @current_publisher = current_publisher
+
+    super(params, vacancy)
   end
 
   def contact_email
