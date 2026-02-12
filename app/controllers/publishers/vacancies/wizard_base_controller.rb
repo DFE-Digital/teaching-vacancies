@@ -9,6 +9,8 @@ module Publishers
 
       helper_method :current_step, :step_process, :back_path
 
+      delegate :all_steps_valid?, to: :step_process
+
       def step_process
         Publishers::Vacancies::VacancyStepProcess.new(
           current_step || :review,
@@ -20,7 +22,7 @@ module Publishers
       def redirect_to_next_step
         if save_and_finish_later?
           redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success")
-        elsif step_process.all_steps_valid?
+        elsif all_steps_valid?
           if vacancy.published?
             redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success")
           else
