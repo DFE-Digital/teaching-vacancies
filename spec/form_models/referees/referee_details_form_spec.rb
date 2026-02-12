@@ -24,7 +24,7 @@ RSpec.describe Referees::RefereeDetailsForm do
     let(:form) do
       described_class.new(attributes_for(:job_reference, :reference_given)
                             .slice(*Referees::RefereeDetailsForm::FIELDS)
-                            .merge(email: "fred@example.nowhere"))
+                            .merge(email: "example.nowhere"))
     end
 
     it "has correct errors" do

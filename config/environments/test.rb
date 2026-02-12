@@ -69,6 +69,9 @@ Rails.application.configure do
   config.active_record.verbose_query_logs = false
   config.active_record.query_log_tags_enabled = false
   config.log_level = :fatal
+
+  # we don't need strict mx validation (checking MX records etc) in test mode
+  config.strict_mx_validation = false
 end
 
 # Avoid OmniAuth output in tests:
