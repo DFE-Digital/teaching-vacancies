@@ -96,8 +96,6 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
   def step_form(step_name)
     step_form_class = "publishers/job_listing/#{step_name}_form".camelize.constantize
 
-    params = step_form_class.load_form(@vacancy)
-
-    step_form_class.new(params, @vacancy)
+    step_form_class.load_from_model(@vacancy, current_publisher: nil)
   end
 end
