@@ -83,7 +83,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
 
   # :nocov:
   def preview
-    redirect_to organisation_job_path(vacancy.id) unless step_process.all_steps_valid?
+    redirect_to organisation_job_path(vacancy.id) unless all_steps_valid?
 
     @vacancy = vacancy.decorate
   end
