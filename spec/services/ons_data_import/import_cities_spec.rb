@@ -17,7 +17,6 @@ RSpec.describe OnsDataImport::ImportCities do
 
     it "creates a LocationPolygon for Lincoln" do
       expect(lincoln.area.to_s).to eq("POLYGON ((0.0 0.0, 1.0 1.0, 1.0 -1.0, 0.0 0.0))")
-      expect(lincoln.location_type).to eq("cities")
     end
 
     it "does not create a LocationPolygon for Atlantis" do

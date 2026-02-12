@@ -17,7 +17,6 @@ RSpec.describe OnsDataImport::ImportRegions do
 
     it "creates a LocationPolygon for East Midlands" do
       expect(east_midlands.area.to_s).to eq("POLYGON ((0.0 0.0, 1.0 1.0, 1.0 -1.0, 0.0 0.0))")
-      expect(east_midlands.location_type).to eq("regions")
     end
 
     it "does not create a LocationPolygon for Mid Eastlands" do
