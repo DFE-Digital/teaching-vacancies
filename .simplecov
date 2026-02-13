@@ -25,7 +25,7 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     enable_coverage :branch
     primary_coverage :branch
 
-    # This line would enable template coverage, but the slim compiler
+    # This line would enable coverage for view templates, but the slim compiler
     # appears to have a bug which puts the whole coverage data out by one line.
     # enable_coverage_for_eval
 
