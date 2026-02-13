@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 # rubocop:disable Rails/ApplicationMailer
-# This code is hard to auto-test - and was actually
-# never used and so should probably be deleted
 # :nocov:
 class AmazonSesMailer < ActionMailer::Base
   include MailerAnalyticsEvents
@@ -33,6 +31,10 @@ class AmazonSesMailer < ActionMailer::Base
   private
 
   attr_reader :to
+
+  def template
+    NOTIFY_PRODUCTION_TEMPLATE
+  end
 end
 # :nocov:
 # rubocop:enable Rails/ApplicationMailer
