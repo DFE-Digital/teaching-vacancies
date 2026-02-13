@@ -435,10 +435,12 @@ Rails.application.routes.draw do
         post :offer, on: :collection
         member do
           get :pre_interview_checks
+          get :pre_employment_checks
         end
         resource :religious_reference, only: %i[edit update], controller: "publishers/vacancies/job_applications/religious_references"
         resources :references, only: %i[new create], controller: "publishers/vacancies/job_applications/references"
         resource :online_checks, only: %i[edit update], controller: "publishers/vacancies/job_applications/online_checks"
+        resource :pre_employment_check_set, only: %i[update], controller: "publishers/vacancies/job_applications/pre_employment_checks"
         member do
           get :messages
           get :download_messages

@@ -611,3 +611,15 @@ shared:
     - archived
     - last_message_at
     - has_unread_jobseeker_messages
+  :pre_employment_check_sets:
+    - id
+    - job_application_id
+    - identity_check
+    - enhanced_dbs_check
+    - mental_and_physical_fitness
+    - right_to_work_in_uk
+    - professional_qualifications
+    - childrens_barred_list
+    - overseas_checks
+    - created_at
+    - updated_at

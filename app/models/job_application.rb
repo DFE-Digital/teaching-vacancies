@@ -128,6 +128,7 @@ class JobApplication < ApplicationRecord
   has_one :self_disclosure, through: :self_disclosure_request
 
   has_one :religious_reference_request
+  has_one :pre_employment_check_set
 
   has_noticed_notifications
 

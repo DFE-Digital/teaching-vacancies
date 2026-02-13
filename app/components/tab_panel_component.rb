@@ -66,9 +66,16 @@ class TabPanelComponent < ApplicationComponent
     end
   end
 
+  # rubocop:disable Metrics/AbcSize
   def candidate_status(application)
     # need to show pre-interview checks iff candidate in interview state or later
-    if application.has_pre_interview_checks?
+    if application.offered?
+      tag.div do
+        publisher_job_application_status_tag(application.status) \
+          + tag.br \
+          + govuk_link_to(t("tabs.offered.pre_employment_checks"), pre_employment_checks_organisation_job_job_application_path(application.vacancy.id, application.id))
+      end
+    elsif application.has_pre_interview_checks?
       tag.div do
         publisher_job_application_status_tag(application.status) \
         + tag.br \
@@ -78,6 +85,7 @@ class TabPanelComponent < ApplicationComponent
       publisher_job_application_status_tag(application.status)
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def candidate_offered_at(application)
     if application.offered_at

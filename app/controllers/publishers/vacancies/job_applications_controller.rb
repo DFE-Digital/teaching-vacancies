@@ -13,7 +13,7 @@ module Publishers
         "InterviewDatetimeForm" => Publishers::JobApplication::InterviewDatetimeForm,
       }.freeze
 
-      before_action :set_job_application, only: %i[show download pre_interview_checks messages download_messages]
+      before_action :set_job_application, only: %i[show download pre_interview_checks messages download_messages pre_employment_checks]
       before_action :set_job_applications, only: %i[index tag update_tag offer]
 
       def index
@@ -76,6 +76,10 @@ module Publishers
 
       def pre_interview_checks
         @reference_requests = @job_application.referees.filter_map(&:reference_request)
+      end
+
+      def pre_employment_checks
+        @pre_employment_check_set = @job_application.pre_employment_check_set || @job_application.build_pre_employment_check_set
       end
 
       def messages
