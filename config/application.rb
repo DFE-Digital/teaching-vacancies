@@ -149,5 +149,8 @@ module TeachingVacancies
       # Defined here instead of routes.rb to ensure it doesn't override gem/engine routes
       app.routes.append { match "*path", to: "errors#not_found", via: :all }
     end
+
+    # enable checking MX records on email addresses by default
+    config.strict_mx_validation = true
   end
 end
