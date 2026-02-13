@@ -38,10 +38,8 @@ class JobApplicationReviewComponent::Section < ReviewComponent::Section
   def error_path
     if @job_application.vacancy.uploaded_form?
       return edit_jobseekers_uploaded_job_application_personal_details_path(@job_application) if @name == :personal_details
-      # :nocov:
 
       edit_jobseekers_uploaded_job_application_upload_application_form_path(@job_application) if @name == :upload_application_form
-      # :nocov:
     elsif @job_application.persisted?
       jobseekers_job_application_build_path(@job_application, @name)
     end

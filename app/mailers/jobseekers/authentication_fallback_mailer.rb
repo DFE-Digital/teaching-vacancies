@@ -1,5 +1,4 @@
 class Jobseekers::AuthenticationFallbackMailer < Publishers::BaseMailer
-  # :nocov:
   def sign_in_fallback(login_key_id:, jobseeker:)
     @jobseeker = jobseeker
 
@@ -7,5 +6,4 @@ class Jobseekers::AuthenticationFallbackMailer < Publishers::BaseMailer
 
     send_email(to: jobseeker.email, subject: I18n.t("jobseekers.temp_login.email.subject"))
   end
-  # :nocov:
 end

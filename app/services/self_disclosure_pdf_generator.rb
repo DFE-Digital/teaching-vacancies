@@ -30,7 +30,6 @@ class SelfDisclosurePdfGenerator
 
   attr_reader :datasource, :document
 
-  # :nocov:
   def self_disclosure_page_header
     page_header do
       text datasource.header_text, size: 12, style: :italic
@@ -61,7 +60,6 @@ class SelfDisclosurePdfGenerator
       end
     end
   end
-  # :nocov:
 
   def render_signature_section
     start_new_page unless cursor > 6.cm

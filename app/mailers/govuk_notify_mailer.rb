@@ -10,6 +10,7 @@ class GovukNotifyMailer < Mail::Notify::Mailer
 
   after_action :trigger_dfe_analytics_email_event
 
+  # This line clearly cannot be auto-tested
   # :nocov:
   self.delivery_method = :notify unless Rails.env.test?
 

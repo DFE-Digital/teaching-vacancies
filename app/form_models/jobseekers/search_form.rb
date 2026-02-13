@@ -138,22 +138,20 @@ class Jobseekers::SearchForm
     @school_types = params[:school_types] || []
   end
 
-  # :nocov:
   def set_total_filters
     @total_filters = [
-      @visa_sponsorship_availability&.count,
-      @teaching_job_roles&.count,
-      @support_job_roles&.count,
-      @ect_statuses&.count,
-      @subjects&.count,
-      @phases&.count,
-      @quick_apply&.count,
-      @working_patterns&.count,
-      @organisation_types&.count,
-      @school_types&.count,
-    ].compact.sum
+      @visa_sponsorship_availability,
+      @teaching_job_roles,
+      @support_job_roles,
+      @ect_statuses,
+      @subjects,
+      @phases,
+      @quick_apply,
+      @working_patterns,
+      @organisation_types,
+      @school_types,
+    ].compact.sum(&:count)
   end
-  # :nocov:
 
   def set_organisation_type_options
     @organisation_type_options = [
