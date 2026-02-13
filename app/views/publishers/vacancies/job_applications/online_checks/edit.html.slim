@@ -1,0 +1,30 @@
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("app.back_link"), href: pre_interview_checks_organisation_job_job_application_path(@vacancy.id, @job_application), html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+
+    span.govuk-caption-l = t(".online_checks")
+    h1.govuk-heading-xl class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
+      = @job_application.name
+
+    - status = online_checks_status(@job_application)
+    .govuk-body
+      = govuk_tag(text: t("online_checks.#{status}.status"), colour: t("online_checks.#{status}.colour"))
+
+    p.govuk-body = t(".intro_paragraph_1")
+    p.govuk-body = t(".intro_paragraph_2")
+
+    = form_with model: @job_application, url: organisation_job_job_application_online_checks_path(@vacancy.id, @job_application.id), method: :patch do |f|
+      = f.govuk_error_summary
+
+      = f.govuk_radio_buttons_fieldset :online_checks, legend: { size: "m" } do
+        = f.govuk_radio_button :online_checks, :yes
+        = f.govuk_radio_button :online_checks, :no
+        = f.govuk_radio_divider
+        = f.govuk_radio_button :online_checks, :not_doing
+
+      = f.govuk_submit t(".save_and_update")
+
+  .govuk-grid-column-one-third
+    = job_application_notes(job_application: @job_application, vacancy: @vacancy, note: @note, return_to_url: edit_organisation_job_job_application_online_checks_path(@vacancy.id, @job_application.id))

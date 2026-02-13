@@ -1,0 +1,8 @@
+en:
+  online_checks:
+    pending:
+      status: pending
+      colour: blue
+    completed:
+      status: completed
+      colour: green

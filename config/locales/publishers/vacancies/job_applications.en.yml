@@ -1,4 +1,14 @@
 en:
+  helpers:
+    label:
+      job_application:
+        online_checks_options:
+          "yes": "Yes"
+          "no": "No"
+          not_doing: Not doing online checks
+    legend:
+      job_application:
+        online_checks: Have online checks been completed?
   publishers:
     vacancies:
       job_applications:
@@ -107,6 +117,7 @@ en:
           request_type: Request type
           last_action: Last action
           self_disclosure: Self-disclosure
+          online_checks: Online checks
           status: Status
         religious_references:
           edit:
@@ -123,6 +134,14 @@ en:
             by: By %{name}
             by_tvs: By Teaching Vacancies
             cancel_and_return: Cancel and return to pre-interview checks
+        online_checks:
+          edit:
+            online_checks: Online checks
+            intro_paragraph_1: Schools and colleges should consider carrying out an online search as part of their due diligence on the shortlisted candidates. This may help identify any incidents or issues that have happened, and are publicly available online, which you might want to explore with the applicant at interview.
+            intro_paragraph_2: Your online search approach should be agreed in advance and applied consistently to all shortlisted candidates.
+            save_and_update: Save and update
+          update:
+            success: Online checks updated
         reference_requests:
           reference:
             under_investigation_details: Under investigation details

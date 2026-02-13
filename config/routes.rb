@@ -438,6 +438,7 @@ Rails.application.routes.draw do
         end
         resource :religious_reference, only: %i[edit update], controller: "publishers/vacancies/job_applications/religious_references"
         resources :references, only: %i[new create], controller: "publishers/vacancies/job_applications/references"
+        resource :online_checks, only: %i[edit update], controller: "publishers/vacancies/job_applications/online_checks"
         member do
           get :messages
           get :download_messages
