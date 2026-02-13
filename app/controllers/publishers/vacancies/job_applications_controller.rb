@@ -80,7 +80,7 @@ module Publishers
 
       def messages
         @show_form = params[:show_form]
-        @message_form = Publishers::JobApplication::MessagesForm.new
+        @message = PublisherMessage.new
         @messages = Message.joins(:conversation)
                            .includes(conversation: :job_application)
                            .with_rich_text_content_and_embeds

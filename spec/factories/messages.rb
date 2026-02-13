@@ -9,7 +9,7 @@ FactoryBot.define do
   factory :jobseeker_message do
     conversation
     sender { association(:jobseeker) }
-    content { Faker::Lorem.paragraph }
+    content { Faker::Lorem.sentence }
     read { false }
   end
 end

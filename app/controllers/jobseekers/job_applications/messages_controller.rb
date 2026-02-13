@@ -3,9 +3,10 @@ class Jobseekers::JobApplications::MessagesController < Jobseekers::JobApplicati
   helper_method :vacancy
 
   def create
-    @message = JobseekerMessage.create(message_form_params)
+    conversation = find_or_create_conversation
+    @message = conversation.jobseeker_messages.build(message_form_params)
 
-    if @message.persisted?
+    if @message.save
       redirect_to jobseekers_job_application_path(@job_application, tab: "messages"), success: t("publishers.vacancies.job_applications.messages.create.success")
     else
       @tab = "messages"
@@ -21,8 +22,7 @@ class Jobseekers::JobApplications::MessagesController < Jobseekers::JobApplicati
   private
 
   def message_form_params
-    conversation = find_or_create_conversation
-    params[:publishers_job_application_messages_form].permit(:content).merge(sender: current_jobseeker, conversation: conversation)
+    params.fetch(:jobseeker_message, {}).permit(:content).merge(sender: current_jobseeker)
   end
 
   def set_job_application

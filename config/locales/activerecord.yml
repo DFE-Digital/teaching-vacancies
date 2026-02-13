@@ -662,6 +662,8 @@ en:
           attributes:
             content:
               blank: Please enter your message
+            sender:
+              blank: Sender is mandatory
 
         note:
           attributes:

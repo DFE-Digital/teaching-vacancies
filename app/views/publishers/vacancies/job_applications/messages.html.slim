@@ -5,7 +5,7 @@
 .govuk-grid-row
   .govuk-grid-column-full
     div class="govuk-!-margin-bottom-6"
-       - unless @show_form == "true"
+      - unless @show_form == "true"
         - if @job_application.can_publisher_send_message?
           = govuk_button_link_to t(".send_message_to_candidate"), url_for(params.to_unsafe_h.merge(show_form: "true")), class: "govuk-button--primary"
         = govuk_button_link_to t(".download_messages"), download_messages_organisation_job_job_application_path(@vacancy.id, @job_application.id), class: "govuk-button--secondary govuk-!-margin-left-3"
@@ -14,7 +14,7 @@
         = govuk_warning_text(text: t(".messaging_after_rejection"))
       - if @job_application.can_publisher_send_message?
         = render "shared/message_form",
-                message_object: @message_form,
+                message_object: @message,
                 form_url: organisation_job_job_application_messages_path(@vacancy.id, @job_application.id),
                 form_method: :post,
                 form_help_text: t(".how_will_message_be_sent"),

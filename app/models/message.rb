@@ -2,7 +2,7 @@ class Message < ApplicationRecord
   belongs_to :conversation
 
   validates :content, presence: true
-  validates :sender, presence: true
+  validates :sender, presence: { strict: true }
 
   has_rich_text :content
 
