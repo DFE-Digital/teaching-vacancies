@@ -7,13 +7,12 @@ import '@stimulus/polyfills';
 import '@hotwired/turbo-rails';
 
 import * as govukFrontend from 'govuk-frontend';
-import $ from 'jquery';
+import * as mojFrontend from '@ministryofjustice/frontend';
 
 import { Application } from '@hotwired/stimulus';
 import Rails from 'rails-ujs';
 // required to support images in trix editor
 import * as ActiveStorage from '@rails/activestorage';
-import { initMojFrontEnd } from './init-moj-front-end';
 
 import 'chartkick';
 import 'trix';
@@ -85,8 +84,7 @@ Rails.start();
 ActiveStorage.start();
 
 govukFrontend.initAll();
-window.$ = $;
-initMojFrontEnd();
+mojFrontend.initAll();
 initTrixURLNormalizer();
 
 // Make links in message content open in new tabs

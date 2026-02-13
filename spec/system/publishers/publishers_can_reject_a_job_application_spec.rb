@@ -34,7 +34,9 @@ RSpec.describe "Publishers can reject a job application" do
       end
 
       it "continues when items have been selected" do
-        first(".govuk-checkboxes__item").click
+        within "tbody" do
+          first("label").click
+        end
         click_on "Send rejection messages"
         #  wait for page to load
         find("span", text: "Send rejection messages")

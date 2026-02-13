@@ -14,7 +14,7 @@
           - table.with_head do |head|
             - head.with_row do |row|
               - if @form.present?
-                - row.with_cell(html_attributes: { id: "multi_select_#{@tab_name}" })
+                - row.with_cell(html_attributes: { id: "id_all_#{@tab_name}-select-all" })
               - @displayed_fields.each do |field|
                 - row.with_cell(text: t("tabs.headers.#{field}"))
 
