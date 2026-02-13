@@ -3,6 +3,7 @@
 # rubocop:disable Rails/ApplicationMailer
 # This code is hard to auto-test - and was actually
 # never used and so should probably be deleted
+# :nocov:
 class AmazonSesMailer < ActionMailer::Base
   include MailerAnalyticsEvents
 
@@ -33,4 +34,5 @@ class AmazonSesMailer < ActionMailer::Base
 
   attr_reader :to
 end
+# :nocov:
 # rubocop:enable Rails/ApplicationMailer
