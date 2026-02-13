@@ -205,12 +205,18 @@ jobs:
         if: github.event_name == 'pull_request'
         run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"review\"]}" >> $GITHUB_ENV
 
-      - name: Scan ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }} image
+      - name: setup snyk
+        uses: snyk/actions/setup@master
+        id: snyk
+        with:
+          snyk-version: v1.1297.3
+
+      - name: snyk scan
+        shell: bash
+        env:
+          SNYK_TOKEN: ${{ env.SNYK_TOKEN }}
         run: |
-          docker run -t -e "SNYK_TOKEN=${{ env.SNYK_TOKEN }}" \
-            -v "/var/run/docker.sock:/var/run/docker.sock" \
-            -v "$GITHUB_WORKSPACE:/project"  \
-            snyk/snyk-cli:docker test --docker ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }} --file=Dockerfile --fail-on=all
+          snyk container test ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }} --file=Dockerfile --fail-on=all
 
       - name: Push ${{ env.DOCKER_REPOSITORY }} images
         if: ${{ success() }}
