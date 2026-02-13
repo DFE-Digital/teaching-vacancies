@@ -172,22 +172,6 @@ data "aws_iam_policy_document" "deployments_role_policy" {
     resources = ["arn:aws:s3:::${data.aws_caller_identity.current.account_id}-${local.service_abbreviation}-attachment-images-logos-*"]
   }
 
-  # DB backups in S3
-  statement {
-    sid     = "ManageDatabaseBackupsS3Files"
-    actions = ["s3:GetObject", "s3:GetObjectAcl", "s3:PutObject"]
-    resources = [
-      "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/full/*",
-      "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/sanitised/*"
-    ]
-  }
-
-  statement {
-    sid       = "ManageDatabaseBackupsS3Bucket"
-    actions   = ["s3:GetBucketAcl", "s3:GetBucketLocation", "s3:ListBucket", "s3:PutBucketAcl"]
-    resources = ["arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}"]
-  }
-
   # Offline site in S3
   statement {
     sid       = "ManageOfflineSiteS3Files"
@@ -214,22 +198,8 @@ data "aws_iam_policy_document" "deny_sensitive_data_in_s3" {
     ]
     effect = "Deny"
     resources = [
-      "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/full/*",
       "arn:aws:s3:::${data.aws_s3_bucket.terraform_state.bucket}/production/*"
     ]
-  }
-  statement {
-    actions   = ["s3:ListBucket"]
-    effect    = "Deny"
-    resources = ["arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}"]
-    condition {
-      test     = "StringEquals"
-      variable = "s3:prefix"
-
-      values = [
-        "full/"
-      ]
-    }
   }
 }
 
