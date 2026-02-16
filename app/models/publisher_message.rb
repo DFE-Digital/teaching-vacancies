@@ -3,7 +3,7 @@
 class PublisherMessage < Message
   belongs_to :sender, class_name: "Publisher"
 
-  validate :publisher_can_send_message
+  validate :publisher_can_send_message, on: :create
 
   after_create :notify_jobseeker
 
