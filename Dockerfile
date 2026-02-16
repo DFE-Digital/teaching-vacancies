@@ -37,6 +37,8 @@ COPY . .
 
 ENV DOCUMENTS_S3_BUCKET=throwaway_value
 ENV SCHOOLS_IMAGES_LOGOS_S3_BUCKET=throwaway_value
+ENV DOCUMENTS_AZURE_STORAGE_ACCESS_KEY=throwaway_value
+ENV IMAGES_LOGOS_AZURE_STORAGE_ACCESS_KEY=throwaway_value
 
 RUN --mount=type=secret,id=master_key,env=RAILS_MASTER_KEY RAILS_ENV=production SECRET_KEY_BASE=required-to-run-but-not-used RAILS_SERVE_STATIC_FILES=1 bundle exec rake assets:precompile
 
