@@ -4,6 +4,7 @@ class JobseekerMessage < Message
   belongs_to :sender, class_name: "Jobseeker"
 
   validate :jobseeker_can_send_message, on: :create
+
   after_create :notify_publisher
   after_save :update_conversation_unread_status
 
