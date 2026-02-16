@@ -138,7 +138,7 @@ locals {
     yamldecode(data.aws_ssm_parameter.app_env_api_key_google.value)
   )
   app_env_secrets = yamldecode(data.aws_ssm_parameter.app_env_secrets.value)
-  app_env_documents_bucket_credentials = {
+  app_env_documents_s3_bucket_credentials = {
     DOCUMENTS_S3_BUCKET         = local.documents_s3_bucket_name
     DOCUMENTS_ACCESS_KEY_ID     = aws_iam_access_key.documents_s3_bucket_access_key.id
     DOCUMENTS_ACCESS_KEY_SECRET = aws_iam_access_key.documents_s3_bucket_access_key.secret
@@ -148,12 +148,22 @@ locals {
     SCHOOLS_IMAGES_LOGOS_ACCESS_KEY_ID     = aws_iam_access_key.schools_images_logos_s3_bucket_access_key.id
     SCHOOLS_IMAGES_LOGOS_ACCESS_KEY_SECRET = aws_iam_access_key.schools_images_logos_s3_bucket_access_key.secret
   }
+  app_env_documents_azure_storage_credentials = {
+    DOCUMENTS_AZURE_STORAGE_ACCOUNT_NAME = module.documents_azure_storage.name
+    DOCUMENTS_AZURE_STORAGE_ACCESS_KEY   = module.documents_azure_storage.primary_access_key
+  }
+  app_env_images_logos_azure_storage_credentials = {
+    IMAGES_LOGOS_AZURE_STORAGE_ACCOUNT_NAME = module.images_logos_azure_storage.name
+    IMAGES_LOGOS_AZURE_STORAGE_ACCESS_KEY   = module.images_logos_azure_storage.primary_access_key
+  }
   app_env_domain = { "DOMAIN" = "teaching-vacancies-${var.environment}.london.cloudapps.digital" }
   app_environment = merge(
     local.app_env_api_keys,
     local.app_env_secrets,
-    local.app_env_documents_bucket_credentials,
+    local.app_env_documents_s3_bucket_credentials,
     local.app_env_schools_images_logos_s3_bucket_credentials,
+    local.app_env_documents_azure_storage_credentials,
+    local.app_env_images_logos_azure_storage_credentials,
     local.app_env_domain,
     var.app_env_values #Because of merge order, if present, the value of DOMAIN in .tfvars.json will overwrite app_env_domain
   )

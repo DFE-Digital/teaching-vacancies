@@ -11,3 +11,15 @@ amazon_s3_images_and_logos:
   secret_access_key: <%= ENV["SCHOOLS_IMAGES_LOGOS_ACCESS_KEY_SECRET"] %>
   bucket: <%= ENV["SCHOOLS_IMAGES_LOGOS_S3_BUCKET"] %>
   region: eu-west-2
+
+azure_storage_documents:
+  service: AzureBlob
+  storage_account_name: <%= ENV["DOCUMENTS_AZURE_STORAGE_ACCOUNT_NAME"] %>
+  storage_access_key: <%= ENV["DOCUMENTS_AZURE_STORAGE_ACCESS_KEY"] %>
+  container: documents
+
+azure_storage_images_and_logos:
+  service: AzureBlob
+  storage_account_name: <%= ENV["IMAGES_LOGOS_AZURE_STORAGE_ACCOUNT_NAME"] %>
+  storage_access_key: <%= ENV["IMAGES_LOGOS_AZURE_STORAGE_ACCESS_KEY"] %>
+  container: images-logos

@@ -154,6 +154,9 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
+    azure-blob (0.8.0)
+      cgi
+      rexml
     backport (1.2.0)
     base64 (0.3.0)
     bcrypt (3.1.21)
@@ -988,6 +991,7 @@ DEPENDENCIES
   aws-sdk-ssm
   axe-core-capybara
   axe-core-rspec
+  azure-blob
   better_errors
   binding_of_caller
   brakeman
@@ -1150,6 +1154,7 @@ CHECKSUMS
   axe-core-capybara (4.11.1) sha256=5d374e6e08b1831520e2a24ca5d2158865b8ab86346060131bf773f7f9fd1449
   axe-core-rspec (4.11.1) sha256=dc6c0e166405cd3a28c4a0937f6521ee5b511c12c0ca1627144a1ee7d5014aec
   axiom-types (0.1.1) sha256=c1ff113f3de516fa195b2db7e0a9a95fd1b08475a502ff660d04507a09980383
+  azure-blob (0.8.0) sha256=5c8d50e5c8b4fa9228f6a8d6bf003aba9f33d03c15f525235adeca8ad7879c10
   backport (1.2.0) sha256=912c7dfdd9ee4625d013ddfccb6205c3f92da69a8990f65c440e40f5b2fc7f75
   base64 (0.3.0) sha256=27337aeabad6ffae05c265c450490628ef3ebd4b67be58257393227588f5a97b
   bcrypt (3.1.21) sha256=5964613d750a42c7ee5dc61f7b9336fb6caca429ba4ac9f2011609946e4a2dcf
