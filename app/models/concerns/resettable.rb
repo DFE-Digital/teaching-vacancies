@@ -2,6 +2,8 @@ module Resettable
   extend ActiveSupport::Concern
 
   included do
+    # expired vacancies often have fields that no longer validate, so
+    # performing this on a before_save hook (during backfills) can be problematic
     before_save :reset_dependent_fields, if: -> { (published? && !expired?) || draft? }
   end
 

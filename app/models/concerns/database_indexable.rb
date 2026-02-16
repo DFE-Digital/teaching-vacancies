@@ -2,7 +2,9 @@ module DatabaseIndexable
   extend ActiveSupport::Concern
 
   included do
-    before_save :update_searchable_content, if: -> { published? && !expired? }
+    # before_save :update_searchable_content, if: -> { published? && !expired? }
+    # during backfills, only update this for live vacancies
+    before_save :update_searchable_content, unless: -> { expired? }
 
     # Performs a full "reindex" on all live and pending vacancies (to be run when weightings for
     # searchable_content have been changed)
