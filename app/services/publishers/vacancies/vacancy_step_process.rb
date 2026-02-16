@@ -34,25 +34,21 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
 
   def application_process_steps
     # if the user enters a contact email that doesn't belong to a publisher in our service we want to make them confirm it.
-    core_steps = %i[contact_details confirm_contact_details]
     early_steps = vacancy.published? ? [] : %i[applying_for_the_job]
 
-    if vacancy.enable_job_applications
-      early_steps + %i[anonymise_applications] + core_steps
-    else
-      first_steps = early_steps + %i[how_to_receive_applications]
-      # receive_applications may not be present (yet) as it is asked in how_to_receive_applications
-      if vacancy.receive_applications.present?
-        last_steps = if vacancy.uploaded_form?
-                       %i[anonymise_applications] + core_steps
-                     else
-                       core_steps
-                     end
-        first_steps + [APPLICATION_METHOD_TO_STEP.fetch(vacancy.receive_applications.to_sym)] + last_steps
-      else
-        first_steps + core_steps
-      end
-    end
+    start_steps = if vacancy.enable_job_applications
+                    early_steps + %i[anonymise_applications]
+                  else
+                    first_steps = early_steps + %i[how_to_receive_applications]
+                    # receive_applications may not be present (yet) as it is asked in how_to_receive_applications
+                    if vacancy.receive_applications.present?
+                      last_steps = vacancy.uploaded_form? ? %i[anonymise_applications] : []
+                      first_steps + [APPLICATION_METHOD_TO_STEP.fetch(vacancy.receive_applications.to_sym)] + last_steps
+                    else
+                      first_steps
+                    end
+                  end
+    start_steps + %i[contact_details confirm_contact_details]
   end
 
   def about_the_role_steps

@@ -65,13 +65,14 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
           href: organisation_job_build_path(vacancy.id, :application_form, "back_to_#{action_name}": "true"),
           visually_hidden_text: t("jobs.document_name")
 
-  - summary_list.with_row(html_attributes: { id: "anonymise_applications" }) do |row|
-    - row.with_key
-      = t("jobs.anonymise_applications")
-    - row.with_value
-      = vacancy.anonymise_applications? ? "Yes" : "No"
-    - row.with_action text: t("buttons.change"),
-      href: organisation_job_build_path(vacancy.id, :anonymise_applications, "back_to_#{action_name}": "true")
+  - if vacancy.allow_job_applications?
+    - summary_list.with_row(html_attributes: { id: "anonymise_applications" }) do |row|
+      - row.with_key
+        = t("jobs.anonymise_applications")
+      - row.with_value
+        = vacancy.anonymise_applications? ? "Yes" : "No"
+      - row.with_action text: t("buttons.change"),
+        href: organisation_job_build_path(vacancy.id, :anonymise_applications, "back_to_#{action_name}": "true")
 
   - unless vacancy.contact_email.nil?
     - summary_list.with_row(html_attributes: { id: "contact_email" }) do |row|
