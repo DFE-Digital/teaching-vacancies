@@ -1,0 +1,59 @@
+- title = "#{@api_client.name} - Conflict Attempts"
+- content_for :page_title_prefix, title
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: support_users_publisher_ats_api_client_path(@api_client)
+
+h1.govuk-heading-l = title
+
+.govuk-body
+  p
+    | This page shows all vacancy creation attempts that resulted in conflict errors because a vacancy with the same details already exists in the system.
+
+= govuk_summary_card(title: "Summary") do |card|
+  - card.with_summary_list do |summary_list|
+    - summary_list.with_row do |row|
+      - row.with_key text: "Total conflicts"
+      - row.with_value text: @total_conflicts
+    - summary_list.with_row do |row|
+      - row.with_key text: "Total attempts"
+      - row.with_value text: @total_attempts
+
+- if @conflict_attempts.any?
+  table.govuk-table
+    thead.govuk-table__head
+      tr.govuk-table__row
+        th.govuk-table__header Vacancy ID
+        th.govuk-table__header Vacancy Title
+        th.govuk-table__header Publication Method
+        th.govuk-table__header Publisher
+        th.govuk-table__header Conflict Type
+        th.govuk-table__header Created At
+        th.govuk-table__header Attempts
+        th.govuk-table__header First Attempt
+        th.govuk-table__header Last Attempt
+    tbody.govuk-table__body
+      - @conflict_attempts.each do |conflict_attempt|
+        tr.govuk-table__row
+          td.govuk-table__cell = conflict_attempt.conflicting_vacancy.id
+          td.govuk-table__cell
+            = link_to conflict_attempt.conflicting_vacancy.job_title, job_path(conflict_attempt.conflicting_vacancy), class: "govuk-link"
+          td.govuk-table__cell
+            - if conflict_attempt.conflicting_vacancy_publisher_type == "api_client"
+              | API Client
+            - else
+              | Manual
+          td.govuk-table__cell = conflict_attempt.conflicting_vacancy_publisher_name
+          td.govuk-table__cell
+            - if conflict_attempt.conflict_type == "external_reference"
+              | External reference
+            - else
+              | Duplicate content
+          td.govuk-table__cell = conflict_attempt.conflicting_vacancy.created_at.to_fs
+          td.govuk-table__cell = conflict_attempt.attempts_count
+          td.govuk-table__cell = conflict_attempt.first_attempted_at.to_fs
+          td.govuk-table__cell = conflict_attempt.last_attempted_at.to_fs
+
+  = govuk_pagination(pagy: @pagy)
+- else
+  p.govuk-body No conflict attempts recorded for this API client.
