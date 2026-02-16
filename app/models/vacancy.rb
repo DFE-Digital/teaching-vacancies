@@ -97,6 +97,7 @@ class Vacancy < ApplicationRecord
   has_many :job_applications, dependent: :destroy
   has_one :equal_opportunities_report, dependent: :destroy
   has_many :organisation_vacancies, dependent: :destroy
+  has_many :vacancy_conflict_attempts, foreign_key: :conflicting_vacancy_id, dependent: :destroy
   has_many :organisations,
            through: :organisation_vacancies,
            dependent: :destroy,

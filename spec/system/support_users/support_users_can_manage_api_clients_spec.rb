@@ -38,6 +38,26 @@ RSpec.describe "Support users can manage API clients" do
         expect(page).to have_content("API key rotated successfully")
         expect(api_client.reload.api_key).not_to eq(old_api_key)
       end
+
+      it "can view conflict attempts" do
+        vacancy = create(:vacancy, :published, job_title: "Test Job")
+        create(:vacancy_conflict_attempt,
+               publisher_ats_api_client: api_client,
+               conflicting_vacancy: vacancy,
+               conflict_type: "external_reference",
+               attempts_count: 3,
+               first_attempted_at: 2.days.ago,
+               last_attempted_at: 1.day.ago)
+
+        click_on api_client_name
+        expect(page).to have_css("h1", text: api_client_name)
+        click_on "View conflict attempts"
+
+        expect(page).to have_css("h1", text: "#{api_client_name} - Conflict Attempts")
+        expect(page).to have_content("Test Job")
+        expect(page).to have_content("External Reference")
+        expect(page).to have_content("3")
+      end
     end
 
     it "can add an API client" do

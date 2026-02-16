@@ -12,6 +12,7 @@ module Publishers
             vacancy.save!
             { status: :ok }
           elsif (conflict = vacancy.find_conflicting_vacancy)
+            track_conflict_attempt(vacancy, conflict)
             conflict_response(conflict, vacancy.errors[:base].first || vacancy.errors[:external_reference].first)
           else
             validation_error_response(vacancy)
@@ -19,6 +20,24 @@ module Publishers
         end
 
         private
+
+        def track_conflict_attempt(vacancy, conflicting_vacancy)
+          return unless vacancy.publisher_ats_api_client.present?
+
+          conflict_type = if vacancy.find_external_reference_conflict_vacancy == conflicting_vacancy
+                            "external_reference"
+                          else
+                            "duplicate_content"
+                          end
+
+          VacancyConflictAttempt.track_attempt!(
+            publisher_ats_api_client: vacancy.publisher_ats_api_client,
+            conflicting_vacancy: conflicting_vacancy,
+            conflict_type: conflict_type,
+          )
+        rescue StandardError => e
+          Rails.logger.error("Failed to track conflict attempt: #{e.message}")
+        end
 
         def sanitised_params(params)
           organisations = fetch_organisations(params[:schools])

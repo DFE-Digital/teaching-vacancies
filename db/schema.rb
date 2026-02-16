@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_01_22_161523) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_13_092708) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -930,6 +930,21 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_22_161523) do
     t.index ["vacancy_id"], name: "index_vacancy_analytics_on_vacancy_id", unique: true
   end
 
+  create_table "vacancy_conflict_attempts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "publisher_ats_api_client_id", null: false
+    t.uuid "conflicting_vacancy_id", null: false
+    t.integer "attempts_count", default: 1, null: false
+    t.string "conflict_type", null: false
+    t.datetime "first_attempted_at", null: false
+    t.datetime "last_attempted_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conflicting_vacancy_id"], name: "index_vacancy_conflict_attempts_on_conflicting_vacancy_id"
+    t.index ["publisher_ats_api_client_id", "conflicting_vacancy_id"], name: "idx_conflict_attempts_on_client_and_vacancy", unique: true
+    t.index ["publisher_ats_api_client_id", "last_attempted_at"], name: "idx_conflict_attempts_on_client_and_last_attempt"
+    t.index ["publisher_ats_api_client_id"], name: "index_vacancy_conflict_attempts_on_publisher_ats_api_client_id"
+  end
+
   create_table "versions", force: :cascade do |t|
     t.string "item_type", null: false
     t.uuid "item_id", null: false
@@ -1000,4 +1015,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_22_161523) do
   add_foreign_key "vacancies", "publisher_ats_api_clients"
   add_foreign_key "vacancies", "publishers"
   add_foreign_key "vacancy_analytics", "vacancies"
+  add_foreign_key "vacancy_conflict_attempts", "publisher_ats_api_clients", on_delete: :restrict
+  add_foreign_key "vacancy_conflict_attempts", "vacancies", column: "conflicting_vacancy_id", on_delete: :restrict
 end

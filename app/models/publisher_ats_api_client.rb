@@ -1,5 +1,6 @@
 class PublisherAtsApiClient < ApplicationRecord
   has_many :vacancies, dependent: :destroy
+  has_many :vacancy_conflict_attempts, dependent: :destroy
 
   before_validation :generate_api_key, on: :create
 
