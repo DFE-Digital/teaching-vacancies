@@ -78,7 +78,7 @@ RSpec.describe "organisations/show", type: :view do
     end
 
     it "displays the organisation's description" do
-      expect(show_view).to have_content(organisation.description)
+      expect(show_view).to have_content(organisation.description.to_plain_text)
     end
 
     it "displays the organisation's safeguarding information" do

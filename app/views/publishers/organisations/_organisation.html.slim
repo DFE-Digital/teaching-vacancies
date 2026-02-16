@@ -44,7 +44,7 @@
   - summary_list.with_row(html_attributes: { id: "description" }) do |row|
     - row.with_key text: t("publishers.organisations.organisation.description.label.#{organisation.school? ? :school : :organisation}")
     - row.with_value do
-      = required_profile_info(value: truncate(organisation.description, length: 130), missing_prompt: t("publishers.organisations.organisation.description.missing_prompt.#{organisation.school? ? :school : :organisation}"))
+      = required_profile_info(value: truncate(organisation.description.to_plain_text, length: 130), missing_prompt: t("publishers.organisations.organisation.description.missing_prompt.#{organisation.school? ? :school : :organisation}"))
     - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_description_path(organisation), classes: "govuk-link--no-visited-state", visually_hidden_text: t("publishers.organisations.organisation.description.label.#{organisation.school? ? :school : :organisation}")
 
   - summary_list.with_row(html_attributes: { id: "safeguarding_information" }) do |row|
