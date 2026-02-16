@@ -298,6 +298,7 @@ Rails.application.routes.draw do
     resources :publisher_ats_api_clients do
       get :confirm_rotate_key, on: :member
       post :rotate_key, on: :member
+      resources :conflict_attempts, only: [:index], controller: "publisher_ats_api_clients/conflict_attempts"
     end
   end
 
