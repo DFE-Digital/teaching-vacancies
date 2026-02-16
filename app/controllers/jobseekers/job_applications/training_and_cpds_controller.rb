@@ -26,9 +26,7 @@ class Jobseekers::JobApplications::TrainingAndCpdsController < Jobseekers::BaseC
       @training_and_cpd.update!(training_and_cpd_form_params)
       redirect_to back_path
     else
-      # :nocov:
       render :edit
-      # :nocov:
     end
   end
 

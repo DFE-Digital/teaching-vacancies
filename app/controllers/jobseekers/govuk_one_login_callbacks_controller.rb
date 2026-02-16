@@ -98,6 +98,7 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
       stored_location.include?("/apply") # Signed-in from an apply link on vacancy with uploaded form.
   end
 
+  # These 2 functions are really tricky to write automated tests for
   # :nocov:
   def trigger_jobseeker_changed_govuk_one_login_id_event(jobseeker, previous_id)
     event = DfE::Analytics::Event.new
@@ -113,9 +114,7 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
 
     DfE::Analytics::SendEvents.do([event])
   end
-  # :nocov:
 
-  # :nocov:
   def trigger_jobseeker_changed_govuk_one_login_email_event(jobseeker, previous_email)
     event = DfE::Analytics::Event.new
       .with_type(:jobseeker_changed_govuk_one_login_email)

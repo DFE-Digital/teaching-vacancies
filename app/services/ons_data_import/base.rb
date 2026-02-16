@@ -102,6 +102,7 @@ class OnsDataImport::Base
       ].join("&")
 
       response = HTTParty.get("#{ARCGIS_BASE_URL}#{api_name}/FeatureServer/0/query?#{params}")
+      # really hard to auto-test this, as it doesn't normally happen
       # :nocov:
       raise "Unexpected ArcGIS response: #{response.code}" unless response.success?
       # :nocov:
