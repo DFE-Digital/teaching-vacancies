@@ -4,14 +4,14 @@
  # the hardcoded versions below when they have been updated in the alpine ruby image.
  # To find the current version of each package in the alpine image, search here:
  # https://pkgs.alpinelinux.org/packages?name=&branch=v3.23
-ARG PROD_PACKAGES="imagemagick libpng openssl expat=2.7.4-r0 libjpeg libxml2 libxslt libpq tzdata shared-mime-info postgresql16 vips-poppler vips-magick proj-dev"
+ARG PROD_PACKAGES="imagemagick libpng openssl expat=2.7.4-r0 libjpeg libxml2 libxslt libpq tzdata shared-mime-info postgresql18=18.2-r0 vips-poppler vips-magick proj-dev"
 
 FROM ruby:3.4.7-alpine3.23 AS builder
 
 WORKDIR /app
 
 ARG PROD_PACKAGES
-ENV DEV_PACKAGES="gcc libc-dev make yaml-dev yarn postgresql16-dev build-base git"
+ENV DEV_PACKAGES="gcc libc-dev make yaml-dev yarn postgresql18-dev=18.2-r0 build-base git"
 RUN apk add --no-cache $PROD_PACKAGES $DEV_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
