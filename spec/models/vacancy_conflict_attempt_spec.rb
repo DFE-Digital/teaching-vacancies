@@ -21,13 +21,13 @@ RSpec.describe VacancyConflictAttempt do
 
     context "when creating a new conflict attempt" do
       it "creates a new record with correct attributes" do
-        expect do
+        expect {
           described_class.track_attempt!(
             publisher_ats_api_client: api_client,
             conflicting_vacancy: vacancy,
             conflict_type: "external_reference",
           )
-        end.to change(described_class, :count).by(1)
+        }.to change(described_class, :count).by(1)
 
         conflict_attempt = described_class.last
         expect(conflict_attempt.publisher_ats_api_client).to eq(api_client)
@@ -52,13 +52,13 @@ RSpec.describe VacancyConflictAttempt do
       end
 
       it "increments the attempts_count and updates last_attempted_at" do
-        expect do
+        expect {
           described_class.track_attempt!(
             publisher_ats_api_client: api_client,
             conflicting_vacancy: vacancy,
             conflict_type: "external_reference",
           )
-        end.not_to change(described_class, :count)
+        }.not_to change(described_class, :count)
 
         existing_attempt.reload
         expect(existing_attempt.attempts_count).to eq(2)
@@ -144,14 +144,15 @@ RSpec.describe VacancyConflictAttempt do
     end
 
     describe ".for_client" do
-      let(:api_client1) { create(:publisher_ats_api_client) }
-      let(:api_client2) { create(:publisher_ats_api_client) }
+      let(:target_api_client) { create(:publisher_ats_api_client) }
+      let(:other_api_client) { create(:publisher_ats_api_client) }
 
-      let!(:attempt1) { create(:vacancy_conflict_attempt, publisher_ats_api_client: api_client1) }
-      let!(:attempt2) { create(:vacancy_conflict_attempt, publisher_ats_api_client: api_client2) }
+      let!(:target_attempt) { create(:vacancy_conflict_attempt, publisher_ats_api_client: target_api_client) }
+      let!(:other_attempt) { create(:vacancy_conflict_attempt, publisher_ats_api_client: other_api_client) }
 
       it "returns only attempts for the specified client" do
-        expect(described_class.for_client(api_client1.id)).to eq([attempt1])
+        expect(described_class.for_client(target_api_client.id)).to eq([target_attempt])
+        expect(described_class.for_client(target_api_client.id)).not_to include(other_attempt)
       end
     end
   end
