@@ -1,7 +1,7 @@
 class Publishers::Vacancies::VacancyStepProcess
   delegate :current_step, :previous_step, :next_step, :current_step_group_number, :total_step_groups, to: :@process
 
-  attr_reader :vacancy
+  attr_reader :vacancy, :organisation
 
   def initialize(current_step, vacancy:, organisation:)
     @vacancy = vacancy
