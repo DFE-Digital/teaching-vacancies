@@ -87,12 +87,12 @@ class Vacancy < ApplicationRecord
     valid_file_types: %i[PDF DOC DOCX],
   }.freeze
 
-  has_many_attached :supporting_documents, service: :amazon_s3_documents
+  has_many_attached :supporting_documents, service: :mirror_documents
 
   validates :supporting_documents, content_type: DOCUMENT_CONTENT_TYPES,
                                    size: { less_than: DOCUMENT_FILE_SIZE_LIMIT }, virus_free: true, if: -> { include_additional_documents }
 
-  has_one_attached :application_form, service: :amazon_s3_documents
+  has_one_attached :application_form, service: :mirror_documents
 
   has_many :saved_jobs, dependent: :destroy
   has_many :saved_by, through: :saved_jobs, source: :jobseeker
