@@ -101,10 +101,10 @@ module OrganisationsHelper
 
   def missing_profile_information_notification(prompt)
     content_tag(:div, class: %i[govuk-inset-text govuk-inset-text--dark-blue inset-text--narrow-border]) do
-      [
+      safe_join([
         content_tag(:p, prompt, class: %i[govuk-inset-text--header]),
         content_tag(:p, t("publishers.organisations.organisation.not_provided")),
-      ].join.html_safe
+      ])
     end
   end
 

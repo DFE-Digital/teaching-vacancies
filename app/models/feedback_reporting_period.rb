@@ -32,7 +32,7 @@ class FeedbackReportingPeriod
   end
 
   def to_s
-    "#{@from.strftime('%F')} -> #{@to.strftime('%F')}"
+    "#{@from.strftime('%F')} to #{@to.strftime('%F')}"
   end
 
   def date_range
