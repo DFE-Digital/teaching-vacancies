@@ -623,3 +623,13 @@ shared:
     - overseas_checks
     - created_at
     - updated_at
+  :vacancy_conflict_attempts:
+    - id
+    - publisher_ats_api_client_id
+    - conflicting_vacancy_id
+    - attempts_count
+    - conflict_type
+    - first_attempted_at
+    - last_attempted_at
+    - created_at
+    - updated_at
