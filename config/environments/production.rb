@@ -5,7 +5,7 @@ Rails.application.configure do
 
   # The application uses multiple services for storing files. This sets up a default value which gets overridden
   # in every specific use case.
-  config.active_storage.service = :amazon_s3_documents
+  config.active_storage.service = :mirror_documents
 
   # Configure the domains permitted to access coordinates API
   config.allowed_cors_origin = proc { "https://#{DOMAIN}" }

@@ -14,6 +14,14 @@ azure_storage_images_and_logos:
   service: Disk
   root: <%= Rails.root.join("tmp/storage") %>
 
+mirror_documents:
+  service: Disk
+  root: <%= Rails.root.join("tmp/storage") %>
+
+mirror_images_and_logos:
+  service: Disk
+  root: <%= Rails.root.join("tmp/storage") %>
+
 local:
   service: Disk
   root: <%= Rails.root.join("storage") %>

@@ -23,3 +23,15 @@ azure_storage_images_and_logos:
   storage_account_name: <%= ENV["IMAGES_LOGOS_AZURE_STORAGE_ACCOUNT_NAME"] %>
   storage_access_key: <%= ENV["IMAGES_LOGOS_AZURE_STORAGE_ACCESS_KEY"] %>
   container: images-logos
+
+mirror_documents:
+  service: Mirror
+  primary: amazon_s3_documents
+  mirrors:
+    - azure_storage_documents
+
+mirror_images_and_logos:
+  service: Mirror
+  primary: amazon_s3_images_and_logos
+  mirrors:
+    - azure_storage_images_and_logos
