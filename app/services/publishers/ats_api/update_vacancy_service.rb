@@ -30,13 +30,13 @@ module Publishers
                             "duplicate_content"
                           end
 
-          VacancyConflictAttempt.track_attempt!(
-            publisher_ats_api_client: vacancy.publisher_ats_api_client,
-            conflicting_vacancy: conflicting_vacancy,
-            conflict_type: conflict_type,
-          )
-        rescue StandardError => e
-          Rails.logger.error("Failed to track conflict attempt: #{e.message}")
+          fail_safe do
+            VacancyConflictAttempt.track_attempt!(
+              publisher_ats_api_client: vacancy.publisher_ats_api_client,
+              conflicting_vacancy: conflicting_vacancy,
+              conflict_type: conflict_type,
+            )
+          end
         end
 
         def sanitised_params(params)
