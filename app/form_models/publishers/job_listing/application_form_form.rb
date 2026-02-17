@@ -20,6 +20,6 @@ class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::Vaca
     return if application_form.present?
 
     # See commit message for 1aa28cce3239c42b1af23d61ae08add3e8c51e5e for context
-    errors.add(:application_form, :blank) if vacancy.application_form&.blank? || application_form_staged_for_replacement
+    errors.add(:application_form, :blank) if vacancy.application_form.blank? || application_form_staged_for_replacement
   end
 end

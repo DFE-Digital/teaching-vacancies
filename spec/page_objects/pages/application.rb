@@ -27,6 +27,7 @@ module PageObjects
         publisher_pay_package: "Publisher::PayPackagePage",
         publisher_application_form: "Publisher::ApplicationFormPage",
         publisher_important_dates: "Publisher::ImportantDatesPage",
+        publisher_expiry_date_time: "Publisher::ExpiryDateTimePage",
         publisher_contact_details: "Publisher::ContactDetailsPage",
         publisher_anonymise_applications: "Publisher::AnonymiseApplicationsPage",
         publisher_confirm_contact_details: "Publisher::ConfirmContactDetailsPage",

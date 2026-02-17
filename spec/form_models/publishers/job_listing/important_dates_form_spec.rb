@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
-  subject { described_class.new(params, vacancy) }
+  subject { described_class.new(params) }
 
   let(:vacancy) { build_stubbed(:vacancy, publish_on: publish_on) }
 
@@ -43,10 +43,6 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
       expect(subject).not_to be_valid
       expect(subject.errors.of_kind?(:publish_on_day, :inclusion)).to be true
     end
-
-    it "is not included in the parameters to save" do
-      expect(subject.params_to_save).not_to have_key(:publish_on)
-    end
   end
 
   describe "publish_on" do
@@ -57,28 +53,12 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
         params["publish_on(3i)"] = ""
       end
 
-      context "when vacancy is published and publish_on is on or before today" do
-        let(:vacancy) { build_stubbed(:vacancy, :past_publish) }
-
-        it "is valid" do
-          expect(subject).to be_valid
-        end
-
-        it "is not included in the parameters to save" do
-          expect(subject.params_to_save).not_to have_key(:publish_on)
-        end
-      end
-
       context "when vacancy is published and publish_on is in the future" do
         let(:vacancy) { build_stubbed(:vacancy, publish_on: Date.current + 1.day) }
 
         it "is invalid" do
           expect(subject).to be_invalid
           expect(subject.errors.of_kind?(:publish_on, :blank)).to be true
-        end
-
-        it "is not included in the parameters to save" do
-          expect(subject.params_to_save).not_to have_key(:publish_on)
         end
       end
 
@@ -88,10 +68,6 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
         it "is invalid" do
           expect(subject).to be_invalid
           expect(subject.errors.of_kind?(:publish_on, :blank)).to be true
-        end
-
-        it "is not included in the parameters to save" do
-          expect(subject.params_to_save).not_to have_key(:publish_on)
         end
       end
     end
@@ -99,28 +75,12 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
     context "when date is incomplete" do
       before { params["publish_on(2i)"] = "" }
 
-      context "when vacancy is published and publish_on is on or before today" do
-        let(:vacancy) { build_stubbed(:vacancy, :past_publish) }
-
-        it "is valid" do
-          expect(subject).to be_valid
-        end
-
-        it "is not included in the parameters to save" do
-          expect(subject.params_to_save).not_to have_key(:publish_on)
-        end
-      end
-
       context "when vacancy is published and publish_on is in the future" do
         let(:vacancy) { build_stubbed(:vacancy, publish_on: Date.current + 1.day) }
 
         it "is invalid" do
           expect(subject).to be_invalid
           expect(subject.errors.of_kind?(:publish_on, :invalid)).to be true
-        end
-
-        it "is not included in the parameters to save" do
-          expect(subject.params_to_save).not_to have_key(:publish_on)
         end
       end
 
@@ -130,10 +90,6 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
         it "is invalid" do
           expect(subject).to be_invalid
           expect(subject.errors.of_kind?(:publish_on, :invalid)).to be true
-        end
-
-        it "is not included in the parameters to save" do
-          expect(subject.params_to_save).not_to have_key(:publish_on)
         end
       end
     end
@@ -141,18 +97,6 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
     context "when date is invalid" do
       before { params["publish_on(2i)"] = "100" }
 
-      context "when vacancy is published and publish_on is on or before today" do
-        let(:vacancy) { build_stubbed(:vacancy, :past_publish) }
-
-        it "is valid" do
-          expect(subject).to be_valid
-        end
-
-        it "is not included in the parameters to save" do
-          expect(subject.params_to_save).not_to have_key(:publish_on)
-        end
-      end
-
       context "when vacancy is published and publish_on is in the future" do
         let(:vacancy) { build_stubbed(:vacancy, publish_on: Date.current + 1.day) }
 
@@ -160,10 +104,6 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
           expect(subject).to be_invalid
           expect(subject.errors.of_kind?(:publish_on, :invalid)).to be true
         end
-
-        it "is not included in the parameters to save" do
-          expect(subject.params_to_save).not_to have_key(:publish_on)
-        end
       end
 
       context "when vacancy is not published" do
@@ -173,27 +113,11 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
           expect(subject).to be_invalid
           expect(subject.errors.of_kind?(:publish_on, :invalid)).to be true
         end
-
-        it "is not included in the parameters to save" do
-          expect(subject.params_to_save).not_to have_key(:publish_on)
-        end
       end
     end
 
     context "when date is not in the future" do
       let(:publish_on) { 1.year.ago.to_date }
-
-      context "when vacancy is published" do
-        let(:vacancy) { build_stubbed(:vacancy) }
-
-        it "is valid" do
-          expect(subject).to be_valid
-        end
-
-        it "is not included in the parameters to save" do
-          expect(subject.params_to_save).not_to have_key(:publish_on)
-        end
-      end
 
       context "when vacancy is not published" do
         let(:vacancy) { build_stubbed(:draft_vacancy) }
@@ -201,11 +125,6 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
         it "is invalid" do
           expect(subject).to be_invalid
           expect(subject.errors.of_kind?(:publish_on, :on_or_after)).to be true
-        end
-
-        it "is included in the parameters to save" do
-          expect(subject.params_to_save).to have_key(:publish_on)
-          expect(subject.params_to_save[:publish_on]).to eq(publish_on)
         end
       end
     end
@@ -216,11 +135,6 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
       it "is invalid" do
         expect(subject).to be_invalid
         expect(subject.errors.of_kind?(:publish_on, :on_or_before)).to be true
-      end
-
-      it "is included in the parameters to save" do
-        expect(subject.params_to_save).to have_key(:publish_on)
-        expect(subject.params_to_save[:publish_on]).to eq(publish_on)
       end
     end
   end
