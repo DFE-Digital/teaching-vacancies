@@ -62,6 +62,11 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
           .permit(:actual_salary, :benefits, :benefits_details, :salary, :pay_scale, :hourly_rate, salary_types: [])
   end
 
+  def expiry_date_time_params(params)
+    params.require(:publishers_job_listing_expiry_date_time_form)
+          .permit(:expires_at, :expiry_time)
+  end
+
   def important_dates_params(params)
     params.require(:publishers_job_listing_important_dates_form)
           .permit(:publish_on, :publish_on_day, :expires_at, :expiry_time)
