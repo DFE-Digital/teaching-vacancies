@@ -2,7 +2,7 @@ class SupportUsers::PublisherAtsApiClients::ConflictAttemptsController < Support
   def index
     @api_client = PublisherAtsApiClient.find(params[:publisher_ats_api_client_id])
     conflict_attempts = @api_client.vacancy_conflict_attempts
-                                   .includes(conflicting_vacancy: [:organisations, :publisher_ats_api_client])
+                                   .includes(conflicting_vacancy: %i[organisations publisher_ats_api_client])
                                    .ordered_by_latest
 
     @pagy, @conflict_attempts = pagy(conflict_attempts, items: 25)
