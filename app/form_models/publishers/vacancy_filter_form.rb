@@ -3,7 +3,7 @@ class Publishers::VacancyFilterForm
 
   attr_accessor :organisation_ids, :job_roles
 
-  def initialize(params = {})
+  def initialize(organisation_ids: []. job_roles: [])
     @organisation_ids = params[:organisation_ids] || []
     @job_roles = params[:job_roles] || []
   end
