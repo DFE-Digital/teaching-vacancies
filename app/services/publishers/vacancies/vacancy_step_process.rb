@@ -1,15 +1,17 @@
-class Publishers::Vacancies::VacancyStepProcess < StepProcess
-  attr_reader :vacancy, :organisation
+class Publishers::Vacancies::VacancyStepProcess
+  delegate :current_step, :previous_step, :next_step, :current_step_group_number, :total_step_groups, to: :@process
+
+  attr_reader :vacancy
 
   def initialize(current_step, vacancy:, organisation:)
     @vacancy = vacancy
     @organisation = organisation
 
-    super(current_step, {
-      job_details: job_details_steps,
-      about_the_role: about_the_role_steps,
+    @process = StepProcess.new(current_step, {
+      job_details: job_details_steps(organisation, vacancy),
+      about_the_role: about_the_role_steps(vacancy),
       important_dates: %i[important_dates],
-      application_process: application_process_steps,
+      application_process: application_process_steps(vacancy),
       review: %i[review],
     })
   end
@@ -26,14 +28,28 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
 
   def next_invalid_step
     # Due to subjects being an optional step (no validations) it needs to be handled differently
-    return :subjects if next_incomplete_step_subjects?
+    if next_incomplete_step_subjects?
+      :subjects
+    else
+      validatable_steps.detect { |step| step_form(step).invalid? }
+    end
+  end
 
-    validatable_steps.detect { |step| step_form(step).invalid? }
+  def steps_list
+    @process.steps
+  end
+
+  def steps_list_for(section)
+    @process.step_groups.fetch(section)
+  end
+
+  def first_step_for_group(section)
+    steps_list_for(section).first
   end
 
   private
 
-  def job_details_steps
+  def job_details_steps(organisation, vacancy)
     first = if organisation.school?
               %i[job_title job_role]
             else
@@ -49,7 +65,7 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
     first + phases + stages + last
   end
 
-  def application_process_steps
+  def application_process_steps(vacancy)
     # if the user enters a contact email that doesn't belong to a publisher in our service we want to make them confirm it.
     early_steps = vacancy.published? ? [] : %i[applying_for_the_job]
 
@@ -68,7 +84,7 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
     start_steps + %i[contact_details confirm_contact_details]
   end
 
-  def about_the_role_steps
+  def about_the_role_steps(vacancy)
     first_steps = %i[about_the_role include_additional_documents]
     last_steps = %i[school_visits visa_sponsorship]
     if vacancy.include_additional_documents
@@ -79,18 +95,19 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
   end
 
   def next_incomplete_step_subjects?
-    return false unless @vacancy.allow_subjects?
-    return false if @vacancy.completed_steps.include?("subjects")
-
-    @vacancy.completed_steps.last == if @vacancy.allow_key_stages?
-                                       "key_stages"
-                                     else
-                                       "job_role"
-                                     end
+    if @vacancy.allow_subjects? && @vacancy.completed_steps.exclude?("subjects")
+      @vacancy.completed_steps.last == if @vacancy.allow_key_stages?
+                                         "key_stages"
+                                       elsif @vacancy.allow_phase_to_be_set?
+                                         "education_phases"
+                                       else
+                                         "job_role"
+                                       end
+    end
   end
 
   def validatable_steps
-    steps - %i[subjects review]
+    @process.steps - %i[subjects review]
   end
 
   def step_form(step_name)

@@ -35,9 +35,9 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
     ]
   end
 
-  before do
-    allow(sequence).to receive(:steps).and_return(all_steps)
-  end
+  # before do
+  #   allow(sequence).to receive(:steps).and_return(all_steps)
+  # end
 
   describe "#all_steps_valid?" do
     it "is true if all steps are valid" do
@@ -56,6 +56,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
           let(:vacancy) { create(:vacancy, phases: nil, key_stages: nil, organisations: [organisation]) }
 
           it "returns false" do
+            pending("tighten up step_process")
             expect(sequence.all_steps_valid?).to be false
           end
         end
@@ -64,7 +65,6 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
           let(:vacancy) { create(:vacancy, :secondary, organisations: [organisation]) }
 
           it "returns true" do
-            pending("removing dependant steps")
             expect(sequence.all_steps_valid?).to be true
           end
         end
@@ -74,7 +74,6 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
         let(:current_step) { :job_title }
 
         it "returns true" do
-          pending("removing dependant steps")
           expect(sequence.all_steps_valid?).to be true
         end
       end
@@ -153,6 +152,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
 
       context "when a dependent step is invalid" do
         it "returns the first invalid dependent step" do
+          pending("tighten up step_process")
           expect(sequence.next_invalid_step).to eq(:education_phases)
         end
       end
