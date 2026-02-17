@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :vacancy_conflict_attempt do
-    association :publisher_ats_api_client
-    association :conflicting_vacancy, factory: :vacancy
+    publisher_ats_api_client
+    conflicting_vacancy factory: %i[vacancy]
     conflict_type { "external_reference" }
     attempts_count { 1 }
     first_attempted_at { Time.current }
