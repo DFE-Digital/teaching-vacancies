@@ -262,6 +262,11 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       conflict_attempt.reload
       expect(conflict_attempt.attempts_count).to eq(2)
     end
+
+    it "does not track the conflict when vacancy has no publisher_ats_api_client" do
+      params_without_client = params.merge(publisher_ats_api_client_id: nil)
+      expect { described_class.call(vacancy, params_without_client) }.not_to change(VacancyConflictAttempt, :count)
+    end
   end
 
   context "when a deleted vacancy with the same external reference exists" do
