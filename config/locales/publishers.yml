@@ -678,6 +678,7 @@ en:
         contract_type: Contract type
         contract_information: Contract information
         pay_package: Salary and allowances
+        expiry_date_time: Publish and closing dates
         important_dates: Publish and closing dates
         start_date: Job start date
         application_process: Application process

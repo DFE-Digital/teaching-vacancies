@@ -44,9 +44,9 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   private
 
   def organisation_type
-    if vacancy&.central_office?
+    if vacancy.central_office?
       "trust"
-    elsif vacancy&.organisations&.many?
+    elsif vacancy.organisations.many?
       "schools"
     else
       "school"

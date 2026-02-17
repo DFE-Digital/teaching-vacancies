@@ -8,7 +8,7 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
     super(current_step, {
       job_details: job_details_steps,
       about_the_role: about_the_role_steps,
-      important_dates: %i[important_dates],
+      important_dates: vacancy.disable_editing_publish_on? ? %i[expiry_date_time] : %i[important_dates],
       application_process: application_process_steps,
       review: %i[review],
     })

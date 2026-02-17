@@ -126,11 +126,11 @@ RSpec.describe "Creating a vacancy" do
         expect(publisher_important_dates_page).to be_displayed
         expect(publisher_important_dates_page.errors.map(&:text)).to contain_exactly(
           I18n.t("important_dates_errors.publish_on_day.inclusion"),
-          I18n.t("important_dates_errors.expires_at.blank"),
-          I18n.t("important_dates_errors.expiry_time.inclusion"),
+          I18n.t("expiry_date_time_errors.expires_at.blank"),
+          I18n.t("expiry_date_time_errors.expiry_time.inclusion"),
         )
         publisher_important_dates_page.fill_in_and_submit_form(publish_on: vacancy.publish_on, expires_at: Time.zone.yesterday)
-        expect(publisher_important_dates_page.errors.map(&:text)).to contain_exactly(I18n.t("important_dates_errors.expires_at.after"))
+        expect(publisher_important_dates_page.errors.map(&:text)).to contain_exactly(I18n.t("expiry_date_time_errors.expires_at.after"))
         publisher_important_dates_page.fill_in_and_submit_form(publish_on: vacancy.publish_on, expires_at: vacancy.expires_at)
 
         expect(publisher_applying_for_the_job_page).to be_displayed

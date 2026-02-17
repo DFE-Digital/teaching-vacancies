@@ -10,7 +10,7 @@ class Publishers::JobListing::VacancyForm < BaseForm
   end
 
   def params_to_save
-    params
+    @params
   end
 
   # Some forms may cause some previously completed steps in the Vacancy to be marked as incomplete again after updating
