@@ -22,7 +22,7 @@ module Publishers
         private
 
         def track_conflict_attempt(vacancy, conflicting_vacancy)
-          return unless vacancy.publisher_ats_api_client.present?
+          return if vacancy.publisher_ats_api_client.blank?
 
           conflict_type = if vacancy.find_external_reference_conflict_vacancy == conflicting_vacancy
                             "external_reference"

@@ -12,25 +12,17 @@ class VacancyConflictAttempt < ApplicationRecord
 
   def self.track_attempt!(publisher_ats_api_client:, conflicting_vacancy:, conflict_type:)
     now = Time.current
-
     record = find_or_initialize_by(
       publisher_ats_api_client_id: publisher_ats_api_client.id,
       conflicting_vacancy_id: conflicting_vacancy.id,
     )
 
-    if record.new_record?
-      record.assign_attributes(
-        conflict_type: conflict_type,
-        attempts_count: 1,
-        first_attempted_at: now,
-        last_attempted_at: now,
-      )
-    else
-      record.assign_attributes(
-        attempts_count: record.attempts_count + 1,
-        last_attempted_at: now,
-      )
-    end
+    record.assign_attributes(
+      conflict_type: conflict_type,
+      attempts_count: record.new_record? ? 1 : record.attempts_count + 1,
+      first_attempted_at: record.new_record? ? now : record.first_attempted_at,
+      last_attempted_at: now,
+    )
 
     record.save!
     record

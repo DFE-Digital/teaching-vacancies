@@ -5,14 +5,12 @@ module Publishers
 
       class << self
         def call(params)
-          p "SERVICE CALLED"
           vacancy = PublishedVacancy.new(sanitised_params(params))
 
           if vacancy.valid?
             vacancy.save!
             success_response(vacancy)
           elsif (conflict = vacancy.find_conflicting_vacancy)
-            p "FOUND CONFLICT"
             track_conflict_attempt(vacancy, conflict)
             conflict_response(conflict, vacancy.errors[:base].first || vacancy.errors[:external_reference].first)
           else
@@ -23,7 +21,7 @@ module Publishers
         private
 
         def track_conflict_attempt(vacancy, conflicting_vacancy)
-          return unless vacancy.publisher_ats_api_client.present?
+          return if vacancy.publisher_ats_api_client.blank?
 
           conflict_type = if vacancy.find_external_reference_conflict_vacancy == conflicting_vacancy
                             "external_reference"
