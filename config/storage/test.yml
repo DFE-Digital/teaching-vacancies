@@ -6,6 +6,14 @@ amazon_s3_images_and_logos:
   service: Disk
   root: <%= Rails.root.join("tmp/storage") %>
 
+azure_storage_documents:
+  service: Disk
+  root: <%= Rails.root.join("tmp/storage") %>
+
+azure_storage_images_and_logos:
+  service: Disk
+  root: <%= Rails.root.join("tmp/storage") %>
+
 test:
   service: Disk
   root: <%= Rails.root.join("tmp/storage") %>
