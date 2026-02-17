@@ -6,6 +6,7 @@ class VacancyConflictAttempt < ApplicationRecord
   validates :attempts_count, presence: true, numericality: { greater_than: 0 }
   validates :first_attempted_at, presence: true
   validates :last_attempted_at, presence: true
+  validates :conflicting_vacancy_id, uniqueness: { scope: :publisher_ats_api_client_id }
 
   scope :ordered_by_latest, -> { order(last_attempted_at: :desc) }
   scope :for_client, ->(client_id) { where(publisher_ats_api_client_id: client_id) }
