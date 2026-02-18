@@ -69,7 +69,7 @@ RSpec.describe "Documents" do
       end
 
       context "when all steps are valid" do
-        before { allow_any_instance_of(Publishers::Vacancies::WizardBaseController).to receive(:all_steps_valid?).and_return(true) }
+        before { allow_any_instance_of(Publishers::Vacancies::VacancyStepProcess).to receive(:all_steps_valid?).and_return(true) }
 
         it "redirects to the show page" do
           expect(request).to redirect_to(organisation_job_path(vacancy.id))
@@ -86,8 +86,8 @@ RSpec.describe "Documents" do
 
       context "when all steps are not valid" do
         before do
-          allow_any_instance_of(Publishers::Vacancies::WizardBaseController).to receive(:all_steps_valid?).and_return(false)
-          allow_any_instance_of(Publishers::Vacancies::WizardBaseController).to receive(:next_invalid_step).and_return(:school_visits)
+          allow_any_instance_of(Publishers::Vacancies::VacancyStepProcess).to receive(:all_steps_valid?).and_return(false)
+          allow_any_instance_of(Publishers::Vacancies::VacancyStepProcess).to receive(:next_invalid_step).and_return(:school_visits)
         end
 
         it "redirects to the next invalid step" do
@@ -143,8 +143,8 @@ RSpec.describe "Documents" do
         end
 
         before do
-          allow_any_instance_of(Publishers::Vacancies::WizardBaseController).to receive(:all_steps_valid?).and_return(false)
-          allow_any_instance_of(Publishers::Vacancies::WizardBaseController).to receive(:next_invalid_step).and_return(:school_visits)
+          allow_any_instance_of(Publishers::Vacancies::VacancyStepProcess).to receive(:all_steps_valid?).and_return(false)
+          allow_any_instance_of(Publishers::Vacancies::VacancyStepProcess).to receive(:next_invalid_step).and_return(:school_visits)
         end
 
         it "replaces the old file with the new file" do
