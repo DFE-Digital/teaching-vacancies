@@ -33,11 +33,11 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
   end
 
   def application_process_steps
-    steps = []
-
-    unless vacancy.published?
-      steps += %i[applying_for_the_job]
-    end
+    steps = if vacancy.published?
+              []
+            else
+              %i[applying_for_the_job]
+            end
 
     if vacancy.enable_job_applications
       steps += %i[anonymise_applications]
