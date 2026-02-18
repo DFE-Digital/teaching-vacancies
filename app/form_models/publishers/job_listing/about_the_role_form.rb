@@ -1,7 +1,7 @@
 class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::VacancyForm
   include ActiveModel::Attributes
 
-  validates :ect_status, inclusion: { in: Vacancy.ect_statuses.keys }, if: -> { vacancy.job_roles&.include?("teacher") }
+  validates :ect_status, inclusion: { in: Vacancy.ect_statuses.keys }, if: -> { vacancy&.job_roles&.include?("teacher") }
   validate :skills_and_experience_presence
   validate :school_offer_presence
   validates :further_details_provided, inclusion: { in: [true, false] }
