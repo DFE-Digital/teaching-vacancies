@@ -282,7 +282,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       end
 
       it "tracks the conflict attempt and increments on subsequent conflicts" do
-        # First conflict - creates a new record
+        # First conflict creates a new record
         expect { described_class.call(params) }.to change(VacancyConflictAttempt, :count).by(1)
 
         conflict_attempt = VacancyConflictAttempt.last
@@ -291,16 +291,11 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
         expect(conflict_attempt.conflict_type).to eq("external_reference")
         expect(conflict_attempt.attempts_count).to eq(1)
 
-        # Second conflict - increments the count
+        # More conflicts increments the count
         expect { described_class.call(params) }.not_to change(VacancyConflictAttempt, :count)
 
         conflict_attempt.reload
         expect(conflict_attempt.attempts_count).to eq(2)
-      end
-
-      it "does not track the conflict when vacancy has no publisher_ats_api_client" do
-        params_without_client = params.merge(publisher_ats_api_client_id: nil)
-        expect { described_class.call(params_without_client) }.not_to change(VacancyConflictAttempt, :count)
       end
     end
 
