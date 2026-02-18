@@ -124,7 +124,7 @@ class Gias::ImportTrusts
   def trust_data(row)
     {
       uid: row["Group UID"],
-      name: row["Group Name"].titlecase,
+      name: row["Group Name"].downcase.titlecase, # Downcase needs to be done to avoid parts of words like "ECT" "CONNECT" being interpreted as an acronym and turning into "Conn ECT"
       address: row["Group Locality"],
       county: row["Group County"],
       group_type: row["Group Type"],
