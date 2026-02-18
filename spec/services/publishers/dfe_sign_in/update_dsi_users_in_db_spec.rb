@@ -3,7 +3,6 @@ require "rails_helper"
 RSpec.describe Publishers::DfeSignIn::UpdateUsersInDb do
   let(:test_file_1_path) { Rails.root.join("spec/fixtures/dfe_sign_in_service_users_response_page_1.json") }
   let(:test_file_2_path) { Rails.root.join("spec/fixtures/dfe_sign_in_service_users_response_page_2.json") }
-  let(:update_dfe_sign_in_users) { described_class.new }
 
   describe "#convert_to_user" do
     it "updates the users database with correct emails and URNs/UIDs" do
@@ -15,8 +14,8 @@ RSpec.describe Publishers::DfeSignIn::UpdateUsersInDb do
       create(:school_group, uid: "444444")
 
       expect {
-        JSON.parse(File.read(test_file_1_path)).fetch("users").each { |u| update_dfe_sign_in_users.convert_to_user(u) }
-        JSON.parse(File.read(test_file_2_path)).fetch("users").each { |u| update_dfe_sign_in_users.convert_to_user(u) }
+        JSON.parse(File.read(test_file_1_path)).fetch("users").each { |u| described_class.convert_to_user(u) }
+        JSON.parse(File.read(test_file_2_path)).fetch("users").each { |u| described_class.convert_to_user(u) }
       }.to change { Publisher.all.size }.by(3)
 
       user_with_one_school = Publisher.find_by!(email: "foo@education.gov.uk")
