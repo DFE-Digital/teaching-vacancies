@@ -7,7 +7,6 @@ class SupportUsers::PublisherAtsApiClients::ConflictAttemptsController < Support
 
     @pagy, @conflict_attempts = pagy(conflict_attempts, items: 25)
 
-    # Calculate total attempts across all conflicts
     @total_attempts = @api_client.vacancy_conflict_attempts.sum(:attempts_count)
     @total_conflicts = @api_client.vacancy_conflict_attempts.count
   end
