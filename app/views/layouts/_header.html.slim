@@ -13,7 +13,7 @@
   - else
     = header.with_navigation_item text: t("nav.sign_in"), href: page_path("sign-in")
 
-= govuk_service_navigation(service_name: t("app.title")) do |navigation|
+= govuk_service_navigation(service_name: t("app.title"), navigation_id: "tv-service-navigation") do |navigation|
   - if publisher_signed_in?
     - navigation.with_navigation_item text: t("nav.manage_jobs"), href: organisation_jobs_with_type_path, active: manage_jobs_active?
     - navigation.with_navigation_item text: t("nav.messages"), href: publishers_candidate_messages_path
