@@ -3,7 +3,7 @@ order: 107
 title: Return to England after teaching overseas
 meta_description: Find out how to get support to return to England after teaching outside the UK and bring your skills and experience back to an English classroom.
 date_posted: 06/12/2023
-date_updated: 14/08/2024
+date_updated: 18/02/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/return-to-england-after-teaching-overseas.jpg"
 ---
@@ -23,7 +23,7 @@ Even where QTS is not a legal requirement, many schools use it to assess the qua
 
 ### If you trained in the UK
 If you completed your teacher training in England, you should already have QTS. 
-You can check this with the [Teaching Regulation Agency](https://teacherservices.education.gov.uk/SelfService/Login).
+You can check this with the [Teaching Regulation Agency](https://www.gov.uk/guidance/access-your-teaching-qualifications).
 
 ### If you do not have QTS
 If you trained as a teacher or have gained teaching experience outside the UK, you can [learn more about the best route to QTS for your circumstances](https://www.gov.uk/government/publications/apply-for-qualified-teacher-status-qts-if-you-teach-outside-the-uk/routes-to-qualified-teacher-status-qts-for-teachers-and-those-with-teaching-experience-outside-the-uk).
@@ -32,7 +32,7 @@ If you trained as a teacher or have gained teaching experience outside the UK, y
 Find out:
 
 * how to [sign up for a dedicated adviser](https://getintoteaching.education.gov.uk/teacher-training-adviser/sign_up/identity) for one-to-one support with returning to teach in England
-* what the Department for Education is doing to [reduce teachers’ workload](https://www.gov.uk/guidance/school-workload-reduction-toolkit), [manage pupil behaviour](https://behaviourhubs.co.uk/) and [support wellbeing](https://www.gov.uk/guidance/education-staff-wellbeing-charter)
+* what the Department for Education is doing to [reduce teachers’ workload](https://www.gov.uk/guidance/school-workload-reduction-toolkit), [manage pupil behaviour](https://www.gov.uk/government/collections/improving-behaviour-in-schools) and [support wellbeing](https://www.gov.uk/guidance/education-staff-wellbeing-charter)
 * how teaching fosters diversity and inclusion with networks including [WomenEd](https://womened.com/), [BAMEed](https://www.bameednetwork.com/), [LGBTed](https://lgbted.uk/) and [DisabilityEd](https://twitter.com/disability_ed)
 
 ## Before you apply for teaching jobs in England
