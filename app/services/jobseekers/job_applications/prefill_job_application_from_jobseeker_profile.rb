@@ -6,6 +6,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile
 
   def call
     copy_personal_info
+    copy_job_preferences(jobseeker_profile.job_preferences) if jobseeker_profile.job_preferences.present?
     copy_associations(jobseeker_profile.qualifications)
     copy_associations(jobseeker_profile.employments)
     copy_associations(jobseeker_profile.training_and_cpds)
@@ -29,8 +30,13 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile
       qts_age_range_and_subject: jobseeker_profile.qts_age_range_and_subject,
       teacher_reference_number: jobseeker_profile.teacher_reference_number,
       has_right_to_work_in_uk: jobseeker_profile.personal_details&.has_right_to_work_in_uk?,
-      working_patterns: jobseeker_profile.job_preferences&.working_patterns,
-      working_pattern_details: jobseeker_profile.job_preferences&.working_pattern_details,
+    )
+  end
+
+  def copy_job_preferences(job_preferences)
+    new_job_application.assign_attributes(
+      working_patterns: job_preferences.working_patterns.select { |wp| JobApplication.working_patterns.key?(wp.to_sym) },
+      working_pattern_details: job_preferences.working_pattern_details,
     )
   end
 

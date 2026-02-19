@@ -126,7 +126,7 @@ Jobseeker.find_each do |jobseeker|
                       qualifications: FactoryBot.build_list(:qualification, 1, job_application: nil),
                       employments: FactoryBot.build_list(:employment, 1, :jobseeker_profile_employment),
                       jobseeker: jobseeker) do |jobseeker_profile|
-      FactoryBot.create(:job_preferences, jobseeker_profile: jobseeker_profile) do |job_preferences|
+      FactoryBot.create(:job_preferences, :for_seed_data, jobseeker_profile: jobseeker_profile) do |job_preferences|
         FactoryBot.create(:job_preferences_location, job_preferences:, name: location_preference_names.sample)
       end
     end
