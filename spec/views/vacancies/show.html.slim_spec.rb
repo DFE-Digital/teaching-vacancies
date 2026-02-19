@@ -39,8 +39,8 @@ RSpec.describe "vacancies/show" do
   end
 
   describe "personal statement help" do
-    context "when vacancy is ect_suitable" do
-      let(:vacancy) { create(:vacancy, ect_status: :ect_suitable) }
+    context "when vacancy is ect_suitable but does not have enable_job_applications" do
+      let(:vacancy) { create(:vacancy, ect_status: :ect_suitable, enable_job_applications: false) }
 
       it "renders the personal statement help section" do
         expect(rendered).to have_css(".sidebar-info-box")
@@ -48,8 +48,26 @@ RSpec.describe "vacancies/show" do
       end
     end
 
-    context "when vacancy is not ect_suitable" do
-      let(:vacancy) { create(:vacancy, ect_status: :ect_unsuitable) }
+    context "when vacancy has enable_job_applications but is not ect_suitable" do
+      let(:vacancy) { create(:vacancy, ect_status: :ect_unsuitable, enable_job_applications: true) }
+
+      it "renders the personal statement help section" do
+        expect(rendered).to have_css(".sidebar-info-box")
+        expect(rendered).to have_content(I18n.t("jobs.personal_statement_help.heading"))
+      end
+    end
+
+    context "when vacancy is ect_suitable and has enable_job_applications" do
+      let(:vacancy) { create(:vacancy, ect_status: :ect_suitable, enable_job_applications: true) }
+
+      it "renders the personal statement help section" do
+        expect(rendered).to have_css(".sidebar-info-box")
+        expect(rendered).to have_content(I18n.t("jobs.personal_statement_help.heading"))
+      end
+    end
+
+    context "when vacancy is not ect_suitable and does not have enable_job_applications" do
+      let(:vacancy) { create(:vacancy, ect_status: :ect_unsuitable, enable_job_applications: false) }
 
       it "does not render the personal statement help section" do
         expect(rendered).to have_no_css(".sidebar-info-box")
