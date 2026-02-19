@@ -2,11 +2,10 @@ class Publishers::Vacancies::JobApplications::MessagesController < Publishers::V
   before_action :set_job_application
 
   def create
-    message_form = Publishers::JobApplication::MessagesForm.new(message_form_params)
+    conversation = find_or_create_conversation
+    @message = conversation.publisher_messages.build(message_form_params)
 
-    if message_form.valid?
-      conversation = find_or_create_conversation
-      PublisherMessage.create!(content: message_form.content, sender: current_publisher, conversation: conversation)
+    if @message.save
       redirect_to messages_organisation_job_job_application_path(@vacancy.id, @job_application.id), success: t(".success")
     else
       @tab = "messages"
@@ -18,7 +17,6 @@ class Publishers::Vacancies::JobApplications::MessagesController < Publishers::V
                   else
                     []
                   end
-      @message_form = message_form
 
       render "publishers/vacancies/job_applications/messages", status: :unprocessable_entity
     end
@@ -32,6 +30,6 @@ class Publishers::Vacancies::JobApplications::MessagesController < Publishers::V
   end
 
   def message_form_params
-    params[:publishers_job_application_messages_form].permit(:content)
+    params.expect(publisher_message: %i[content]).merge(sender: current_publisher)
   end
 end

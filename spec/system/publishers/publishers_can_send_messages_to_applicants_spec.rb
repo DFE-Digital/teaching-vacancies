@@ -65,7 +65,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
         end
 
         message_content = "Hi John, I hope you're well. Just a quick reminder to complete your declaration form."
-        fill_in_trix_editor "publishers_job_application_messages_form_content", with: message_content
+        fill_in_trix_editor "publisher_message_content", with: message_content
 
         click_button "Send message"
 
@@ -110,7 +110,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
         click_link "Send message to candidate"
 
         new_message_content = "This is a follow-up message."
-        fill_in_trix_editor "publishers_job_application_messages_form_content", with: new_message_content
+        fill_in_trix_editor "publisher_message_content", with: new_message_content
 
         click_button "Send message"
         # wait for page load
@@ -147,6 +147,8 @@ RSpec.describe "Publishers can send messages to job applicants" do
 
       after { logout }
 
+      let(:jobseeker_reply) { Faker::ChuckNorris.fact }
+
       it "passes accessibility checks", :a11y do
         expect(page).to be_axe_clean
       end
@@ -169,8 +171,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
           expect(page).to have_link("Please enter your message")
         end
 
-        jobseeker_reply = "Thank you for your message. I look forward to hearing from you."
-        fill_in_trix_editor "publishers_job_application_messages_form_content", with: jobseeker_reply
+        fill_in_trix_editor "jobseeker_message_content", with: jobseeker_reply
 
         click_button "Send message"
 
@@ -184,13 +185,12 @@ RSpec.describe "Publishers can send messages to job applicants" do
 
       it "allows messages to be sent while javascript is disabled", js: false do
         click_link "Send message to hiring staff"
-        jobseeker_message = "This still work?"
-        fill_in "Message", with: jobseeker_message
+        fill_in "Message", with: jobseeker_reply
 
         click_button "Send message"
         expect(page).to have_text("Message sent successfully")
         message_cards = all(".govuk-summary-card")
-        expect(message_cards.first).to have_text(jobseeker_message)
+        expect(message_cards.first).to have_text(jobseeker_reply)
       end
     end
 

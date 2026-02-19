@@ -82,6 +82,9 @@ Message:
   type:
     NullConstraintChecker:
       enabled: false
+  sender_id:
+    NullConstraintChecker:
+      enabled: false # The validation is done on sender not sender_id
 
 # STI Message classes - sender_id can point to different tables (Jobseeker or Publisher)
 # so traditional foreign key constraints don't apply

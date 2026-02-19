@@ -1,16 +1,25 @@
 require "rails_helper"
 
 RSpec.describe JobseekerMessage do
-  let(:job_application) { instance_double(JobApplication) }
-  let(:conversation) { create(:conversation) }
-  let(:jobseeker) { create(:jobseeker) }
-
-  before do
-    allow(conversation).to receive(:job_application).and_return(job_application)
-  end
+  let(:conversation) { build(:conversation) }
+  let(:jobseeker) { build(:jobseeker) }
 
   describe "validations" do
+    context "without a sender" do
+      let(:message)  { build(:jobseeker_message, conversation: conversation, sender: nil) }
+
+      it "has a strict validation" do
+        expect { message.valid? }.to raise_error(ActiveModel::StrictValidationFailed, "Sender is mandatory")
+      end
+    end
+
     describe "#jobseeker_can_send_message" do
+      before do
+        allow(conversation).to receive(:job_application).and_return(job_application)
+      end
+
+      let(:job_application) { instance_double(JobApplication) }
+
       context "when jobseeker can send message" do
         before do
           allow(job_application).to receive(:can_jobseeker_send_message?).and_return(true)

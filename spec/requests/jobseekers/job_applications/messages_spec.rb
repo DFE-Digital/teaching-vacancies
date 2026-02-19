@@ -12,7 +12,7 @@ RSpec.describe "Jobseekers::JobApplications::Messages" do
   describe "POST /jobseekers/job_applications/:job_application_id/messages" do
     let(:message_params) do
       {
-        publishers_job_application_messages_form: { content: "Test message content" },
+        jobseeker_message: { content: "Test message content" },
       }
     end
 
@@ -36,7 +36,7 @@ RSpec.describe "Jobseekers::JobApplications::Messages" do
       context "with blank message content" do
         let(:message_params) do
           {
-            publishers_job_application_messages_form: { content: "" },
+            jobseeker_message: { content: "" },
           }
         end
 
@@ -47,7 +47,7 @@ RSpec.describe "Jobseekers::JobApplications::Messages" do
 
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response).to render_template("jobseekers/job_applications/show")
-          expect(assigns(:message_form).errors[:content]).to include("Please enter your message")
+          expect(assigns(:message).errors[:content]).to include("Please enter your message")
           expect(assigns(:messages)).to eq([])
         end
 
@@ -61,7 +61,7 @@ RSpec.describe "Jobseekers::JobApplications::Messages" do
 
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response).to render_template("jobseekers/job_applications/show")
-            expect(assigns(:message_form).errors[:content]).to include("Please enter your message")
+            expect(assigns(:message).errors[:content]).to include("Please enter your message")
             expect(assigns(:messages)).to include(existing_message)
           end
         end

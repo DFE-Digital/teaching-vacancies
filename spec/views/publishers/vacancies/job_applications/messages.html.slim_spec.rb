@@ -7,18 +7,13 @@ RSpec.describe "publishers/vacancies/job_applications/messages.html.slim" do
   let(:job_application) { create(:job_application, :submitted, vacancy: vacancy, status: "interviewing") }
   let(:messages) { [] }
 
-  let(:message_form) do
-    instance_double(Publishers::JobApplication::MessagesForm,
-                    model_name: instance_double(ActiveModel::Name, param_key: "publishers_job_application_messages_form"),
-                    to_key: nil,
-                    persisted?: false,
-                    errors: instance_double(ActiveModel::Errors, empty?: true, any?: false),
-                    content: "")
+  let(:message) do
+    build_stubbed(:publisher_message, content: "")
   end
 
   before do
     assign(:show_form, "true")
-    assign(:message_form, message_form)
+    assign(:message, message)
     assign(:vacancy, vacancy)
     assign(:job_application, job_application)
     assign(:messages, messages)

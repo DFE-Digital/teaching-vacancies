@@ -3,11 +3,10 @@ class Jobseekers::JobApplications::MessagesController < Jobseekers::JobApplicati
   helper_method :vacancy
 
   def create
-    message_form = Publishers::JobApplication::MessagesForm.new(message_form_params)
+    conversation = find_or_create_conversation
+    @message = conversation.jobseeker_messages.build(message_form_params)
 
-    if message_form.valid?
-      conversation = find_or_create_conversation
-      JobseekerMessage.create!(content: message_form.content, sender: current_jobseeker, conversation: conversation)
+    if @message.save
       redirect_to jobseekers_job_application_path(@job_application, tab: "messages"), success: t("publishers.vacancies.job_applications.messages.create.success")
     else
       @tab = "messages"
@@ -15,7 +14,6 @@ class Jobseekers::JobApplications::MessagesController < Jobseekers::JobApplicati
 
       conversation = @job_application.conversations.first
       @messages = conversation.messages.order(created_at: :desc)
-      @message_form = message_form
 
       render "jobseekers/job_applications/show", status: :unprocessable_entity
     end
@@ -24,7 +22,7 @@ class Jobseekers::JobApplications::MessagesController < Jobseekers::JobApplicati
   private
 
   def message_form_params
-    params[:publishers_job_application_messages_form].permit(:content)
+    params.fetch(:jobseeker_message, {}).permit(:content).merge(sender: current_jobseeker)
   end
 
   def set_job_application
