@@ -35,6 +35,9 @@ tech lead to do that and also [complete the other onboarding steps](documentatio
 * [Secrets detection](/documentation/development/tooling/secrets-detection.md)
 * [Devcontainer](/documentation/development/tooling/devcontainer.md)
 
+#### Agreed Practices
+* [Development practices agreed by our dev team](/documentation/development/agreed-practices.md)
+
 ### Operations
 
 #### Infrastructure
