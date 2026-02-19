@@ -54,6 +54,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
       visit publishers_jobseeker_profiles_path
       # wait for page load
       find(".search-results")
+      find("footer")
     end
 
     after { logout }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_01_22_161523) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_06_104902) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -436,6 +436,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_22_161523) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["publisher_preference_id"], name: "index_local_authority_publisher_schools_publisher_preference_id"
+    t.index ["school_id"], name: "index_local_authority_publisher_schools_on_school_id"
   end
 
   create_table "location_polygons", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -516,6 +517,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_22_161523) do
     t.uuid "publisher_preference_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["organisation_id"], name: "index_organisation_publisher_preferences_on_organisation_id"
     t.index ["publisher_preference_id"], name: "index_organisation_publisher_preferences_publisher_preference_i"
   end
 
@@ -945,7 +947,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_22_161523) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "alert_runs", "subscriptions"
   add_foreign_key "batchable_job_applications", "job_application_batches"
-  add_foreign_key "batchable_job_applications", "job_applications"
+  add_foreign_key "batchable_job_applications", "job_applications", on_delete: :nullify
   add_foreign_key "conversations", "job_applications"
   add_foreign_key "employments", "job_applications"
   add_foreign_key "employments", "jobseeker_profiles"
@@ -964,7 +966,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_22_161523) do
   add_foreign_key "jobseeker_profile_excluded_organisations", "jobseeker_profiles"
   add_foreign_key "jobseeker_profile_excluded_organisations", "organisations"
   add_foreign_key "jobseeker_profiles", "jobseekers"
-  add_foreign_key "local_authority_publisher_schools", "organisations", column: "school_id"
+  add_foreign_key "local_authority_publisher_schools", "organisations", column: "school_id", on_delete: :nullify
   add_foreign_key "local_authority_publisher_schools", "publisher_preferences"
   add_foreign_key "message_templates", "publishers"
   add_foreign_key "messages", "conversations"

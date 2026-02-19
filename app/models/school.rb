@@ -1,5 +1,5 @@
 class School < Organisation
-  has_many :school_group_memberships
+  has_many :school_group_memberships, dependent: :destroy
   has_many :school_groups, through: :school_group_memberships
 
   scope :not_excluded, -> { where.not(detailed_school_type: EXCLUDED_DETAILED_SCHOOL_TYPES) }

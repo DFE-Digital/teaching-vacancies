@@ -20,6 +20,24 @@ RSpec.describe Publisher do
     end
   end
 
+  describe "#destroy" do
+    let(:publisher) { create(:publisher, vacancies: build_list(:vacancy, 1)) }
+
+    it "cant be destroyed" do
+      expect(publisher.destroy).to be(false)
+    end
+
+    describe "after destroy" do
+      before do
+        publisher.destroy
+      end
+
+      it "has errors" do
+        expect(publisher.errors.full_messages).to eq(["Cannot delete record because dependent vacancies exist"])
+      end
+    end
+  end
+
   describe "#accessible_organisations" do
     subject(:accessible_organisations) { publisher.accessible_organisations(current_organisation) }
 

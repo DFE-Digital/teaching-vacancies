@@ -71,8 +71,10 @@ class Vacancy < ApplicationRecord
   enum :extension_reason, { no_applications: 0, didnt_find_right_candidate: 1, other_extension_reason: 2 }
   enum :religion_type, { no_religion: 0, other_religion: 1, catholic: 2 }
 
+  # either both these 2 items are present, or the third one is.
   belongs_to :publisher, optional: true
   belongs_to :publisher_organisation, class_name: "Organisation", optional: true
+
   belongs_to :publisher_ats_api_client, optional: true
 
   DOCUMENT_FILE_SIZE_LIMIT = 20.megabytes
