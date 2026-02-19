@@ -44,7 +44,6 @@ RSpec.describe "Support users can manage API clients" do
         create(:vacancy_conflict_attempt,
                publisher_ats_api_client: api_client,
                conflicting_vacancy: vacancy,
-               conflict_type: "external_reference",
                attempts_count: 3,
                first_attempted_at: 2.days.ago,
                last_attempted_at: 1.day.ago)
@@ -55,7 +54,6 @@ RSpec.describe "Support users can manage API clients" do
 
         expect(page).to have_css("h1", text: "#{api_client_name} - Conflict Attempts")
         expect(page).to have_content("Test Job")
-        expect(page).to have_content("External reference")
         expect(page).to have_content("3")
       end
     end

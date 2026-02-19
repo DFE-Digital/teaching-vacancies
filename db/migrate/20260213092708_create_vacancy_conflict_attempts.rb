@@ -5,7 +5,6 @@ class CreateVacancyConflictAttempts < ActiveRecord::Migration[8.0]
         t.references :publisher_ats_api_client, null: false, type: :uuid, index: false, foreign_key: true
         t.references :conflicting_vacancy, null: false, type: :uuid, foreign_key: { to_table: :vacancies }
         t.integer :attempts_count, null: false, default: 1
-        t.string :conflict_type, null: false
         t.datetime :first_attempted_at, null: false
         t.datetime :last_attempted_at, null: false
 

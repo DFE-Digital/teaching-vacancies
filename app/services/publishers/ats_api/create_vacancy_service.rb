@@ -21,17 +21,12 @@ module Publishers
         private
 
         def track_conflict_attempt(vacancy, conflicting_vacancy)
-          conflict_type = if vacancy.find_external_reference_conflict_vacancy == conflicting_vacancy
-                            "external_reference"
-                          else
-                            "duplicate_content"
-                          end
+          return if vacancy.find_external_reference_conflict_vacancy == conflicting_vacancy
 
           fail_safe do
             VacancyConflictAttempt.track_attempt!(
               publisher_ats_api_client: vacancy.publisher_ats_api_client,
               conflicting_vacancy: conflicting_vacancy,
-              conflict_type: conflict_type,
             )
           end
         end
