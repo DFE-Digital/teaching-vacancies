@@ -27,7 +27,6 @@ h1.govuk-heading-l = title
         th.govuk-table__header Vacancy Title
         th.govuk-table__header Publication Method
         th.govuk-table__header Publisher
-        th.govuk-table__header Conflict Type
         th.govuk-table__header Created At
         th.govuk-table__header Attempts
         th.govuk-table__header First Attempt
@@ -44,11 +43,6 @@ h1.govuk-heading-l = title
             - else
               | Manual
           td.govuk-table__cell = conflict_attempt.conflicting_vacancy_publisher_name
-          td.govuk-table__cell
-            - if conflict_attempt.conflict_type == "external_reference"
-              | External reference
-            - else
-              | Duplicate content
           td.govuk-table__cell = conflict_attempt.conflicting_vacancy.created_at.to_fs
           td.govuk-table__cell = conflict_attempt.attempts_count
           td.govuk-table__cell = conflict_attempt.first_attempted_at.to_fs
