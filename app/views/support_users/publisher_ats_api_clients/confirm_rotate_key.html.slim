@@ -1,0 +1,39 @@
+- title = "Confirm API key rotation"
+- content_for :page_title_prefix, title
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: support_users_publisher_ats_api_client_path(@api_client)
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = title
+
+    .govuk-warning-text
+      span.govuk-warning-text__icon aria-hidden="true" !
+      strong.govuk-warning-text__text
+        span.govuk-visually-hidden Warning
+        | This action will immediately revoke the current API key
+
+    p.govuk-body
+      | Rotating the API key for
+      strong<>= @api_client.name
+      | will immediately invalidate their current key and generate a new one.
+
+    p.govuk-body
+      strong This means:
+
+    ul.govuk-list.govuk-list--bullet
+      li The client will immediately lose access to the API
+      li All current API requests using the old key will fail
+      li You will need to contact the client and provide them with the new API key
+      li They will need to update their system with the new key before they can continue managing vacancies
+
+    = govuk_summary_list do |summary_list|
+      - summary_list.with_row do |row|
+        - row.with_key text: "Current API key"
+        - row.with_value text: @api_client.api_key
+
+    = form_with url: rotate_key_support_users_publisher_ats_api_client_path(@api_client), method: :post do |f|
+      .govuk-button-group
+        = f.govuk_submit "Confirm and rotate API key", warning: true
+        = link_to "Cancel", support_users_publisher_ats_api_client_path(@api_client), class: "govuk-link"
