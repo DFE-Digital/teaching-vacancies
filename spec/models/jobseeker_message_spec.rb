@@ -6,7 +6,8 @@ RSpec.describe JobseekerMessage do
 
   describe "validations" do
     context "without a sender" do
-      let(:message)  { build(:jobseeker_message, conversation: conversation, sender: nil) }
+      let(:job_application) { build(:job_application) }
+      let(:message) { build(:jobseeker_message, conversation: conversation, sender: nil) }
 
       it "has a strict validation" do
         expect { message.valid? }.to raise_error(ActiveModel::StrictValidationFailed, "Sender is mandatory")
