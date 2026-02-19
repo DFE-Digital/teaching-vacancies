@@ -21,7 +21,7 @@ class Publishers::VacancyFormSequence < FormSequence
 
   def validatable_steps
     if @vacancy.published?
-      dependent_steps
+      dependent_steps.intersection @step_process.steps
     else
       super
     end
