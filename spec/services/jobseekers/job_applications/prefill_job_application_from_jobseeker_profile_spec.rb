@@ -3,7 +3,11 @@ require "rails_helper"
 RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile do
   let(:jobseeker) { create(:jobseeker) }
   let(:new_vacancy) { create(:vacancy) }
-  let!(:jobseeker_profile) { create(:jobseeker_profile, :completed, jobseeker: jobseeker) }
+  let!(:jobseeker_profile) do
+    create(:jobseeker_profile, :completed,
+           jobseeker: jobseeker,
+           job_preferences: build(:job_preferences, working_patterns: build_stubbed(:job_preferences).working_patterns + %w[term_time flexible]))
+  end
   let(:new_job_application) { jobseeker.job_applications.create(vacancy: new_vacancy) }
 
   subject { described_class.new(jobseeker, new_job_application).call }
@@ -18,6 +22,10 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerPr
 
     expect(subject.qualifications.map { |qualification| qualification.slice(*attributes_to_copy) })
       .to eq(jobseeker_profile.qualifications.map { |qualification| qualification.slice(*attributes_to_copy) })
+  end
+
+  it "removes legacy working patterns" do
+    expect(subject.working_patterns).to eq(%w[full_time part_time job_share])
   end
 
   it "adds qualifications to in progress steps" do
