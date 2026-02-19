@@ -2,7 +2,6 @@ class VacancyConflictAttempt < ApplicationRecord
   belongs_to :publisher_ats_api_client
   belongs_to :conflicting_vacancy, class_name: "Vacancy"
 
-  validates :conflict_type, presence: true, inclusion: { in: %w[external_reference duplicate_content] }
   validates :attempts_count, presence: true, numericality: { greater_than: 0 }
   validates :first_attempted_at, presence: true
   validates :last_attempted_at, presence: true
@@ -11,7 +10,7 @@ class VacancyConflictAttempt < ApplicationRecord
   scope :ordered_by_latest, -> { order(last_attempted_at: :desc) }
   scope :for_client, ->(client_id) { where(publisher_ats_api_client_id: client_id) }
 
-  def self.track_attempt!(publisher_ats_api_client:, conflicting_vacancy:, conflict_type:)
+  def self.track_attempt!(publisher_ats_api_client:, conflicting_vacancy:)
     now = Time.current
     record = find_or_initialize_by(
       publisher_ats_api_client_id: publisher_ats_api_client.id,
@@ -19,7 +18,6 @@ class VacancyConflictAttempt < ApplicationRecord
     )
 
     record.assign_attributes(
-      conflict_type: conflict_type,
       attempts_count: record.new_record? ? 1 : record.attempts_count + 1,
       first_attempted_at: record.new_record? ? now : record.first_attempted_at,
       last_attempted_at: now,
