@@ -11,6 +11,11 @@ send_peak_times_email_reminder_november:
   class: 'SendPeakTimesEmailReminderJob'
   queue: default
 
+delete_old_vacancy_conflict_attempts:
+  cron: '0 3 30 9 *' # "At 03:00 on 30th of September."
+  class: 'DeleteOldVacancyConflictAttemptsJob'
+  queue: low
+
 #
 # MONTHLY CRON JOBS
 #

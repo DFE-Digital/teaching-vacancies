@@ -11,6 +11,7 @@ module Publishers
             vacancy.save!
             success_response(vacancy)
           elsif (conflict = vacancy.find_conflicting_vacancy)
+            track_conflict_attempt(vacancy, conflict)
             conflict_response(conflict, vacancy.errors[:base].first || vacancy.errors[:external_reference].first)
           else
             validation_error_response(vacancy)
@@ -18,6 +19,22 @@ module Publishers
         end
 
         private
+
+        def track_conflict_attempt(vacancy, conflicting_vacancy)
+          conflict_type = if vacancy.find_external_reference_conflict_vacancy == conflicting_vacancy
+                            "external_reference"
+                          else
+                            "duplicate_content"
+                          end
+
+          fail_safe do
+            VacancyConflictAttempt.track_attempt!(
+              publisher_ats_api_client: vacancy.publisher_ats_api_client,
+              conflicting_vacancy: conflicting_vacancy,
+              conflict_type: conflict_type,
+            )
+          end
+        end
 
         def sanitised_params(params)
           organisations = fetch_organisations(params[:schools])
