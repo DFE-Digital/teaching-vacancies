@@ -16,11 +16,11 @@
 
     p.govuk-body
       | Rotating the API key for
-      strong<>= @api_client.name
+      strong<> = @api_client.name
       | will immediately invalidate their current key and generate a new one.
 
     p.govuk-body
-      strong This means:
+      | This means:
 
     ul.govuk-list.govuk-list--bullet
       li The client will immediately lose access to the API
