@@ -6,8 +6,6 @@ module Publishers
       include ActiveRecord::AttributeAssignment
       include DateAttributeAssignment
 
-      attr_writer :completed_steps
-
       attr_accessor :expiry_time, :publish_on
       attr_reader :expires_at
 
