@@ -296,6 +296,7 @@ Rails.application.routes.draw do
     end
 
     resources :publisher_ats_api_clients do
+      get :confirm_rotate_key, on: :member
       post :rotate_key, on: :member
     end
   end
