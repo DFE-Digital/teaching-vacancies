@@ -59,7 +59,7 @@ Rails.application.configure do
   # Raise an error when encountering deprecated behaviour
   config.active_support.deprecation = :raise
 
-  # (dont) Raise an error on page load if there are pending migrations.
+  # (don't) Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = false
 
   # Highlight code that triggered database queries in logs.
@@ -70,6 +70,12 @@ Rails.application.configure do
 
   # Highlight code that enqueued background job in logs.
   config.active_job.verbose_enqueue_logs = true
+
+  # Highlight code that triggered redirect in logs.
+  config.action_dispatch.verbose_redirect_logs = true
+
+  # Suppress logger output for asset requests.
+  config.assets.quiet = true
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true

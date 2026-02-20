@@ -13,29 +13,31 @@ GEM
   remote: https://rubygems.org/
   specs:
     Ascii85 (1.1.1)
-    actioncable (8.0.4)
-      actionpack (= 8.0.4)
-      activesupport (= 8.0.4)
+    action_text-trix (2.1.16)
+      railties
+    actioncable (8.1.0)
+      actionpack (= 8.1.0)
+      activesupport (= 8.1.0)
       nio4r (~> 2.0)
       websocket-driver (>= 0.6.1)
       zeitwerk (~> 2.6)
-    actionmailbox (8.0.4)
-      actionpack (= 8.0.4)
-      activejob (= 8.0.4)
-      activerecord (= 8.0.4)
-      activestorage (= 8.0.4)
-      activesupport (= 8.0.4)
+    actionmailbox (8.1.0)
+      actionpack (= 8.1.0)
+      activejob (= 8.1.0)
+      activerecord (= 8.1.0)
+      activestorage (= 8.1.0)
+      activesupport (= 8.1.0)
       mail (>= 2.8.0)
-    actionmailer (8.0.4)
-      actionpack (= 8.0.4)
-      actionview (= 8.0.4)
-      activejob (= 8.0.4)
-      activesupport (= 8.0.4)
+    actionmailer (8.1.0)
+      actionpack (= 8.1.0)
+      actionview (= 8.1.0)
+      activejob (= 8.1.0)
+      activesupport (= 8.1.0)
       mail (>= 2.8.0)
       rails-dom-testing (~> 2.2)
-    actionpack (8.0.4)
-      actionview (= 8.0.4)
-      activesupport (= 8.0.4)
+    actionpack (8.1.0)
+      actionview (= 8.1.0)
+      activesupport (= 8.1.0)
       nokogiri (>= 1.8.5)
       rack (>= 2.2.4)
       rack-session (>= 1.0.1)
@@ -45,15 +47,16 @@ GEM
       useragent (~> 0.16)
     actionpack-action_caching (1.2.2)
       actionpack (>= 4.0.0)
-    actiontext (8.0.4)
-      actionpack (= 8.0.4)
-      activerecord (= 8.0.4)
-      activestorage (= 8.0.4)
-      activesupport (= 8.0.4)
+    actiontext (8.1.0)
+      action_text-trix (~> 2.1.15)
+      actionpack (= 8.1.0)
+      activerecord (= 8.1.0)
+      activestorage (= 8.1.0)
+      activesupport (= 8.1.0)
       globalid (>= 0.6.0)
       nokogiri (>= 1.8.5)
-    actionview (8.0.4)
-      activesupport (= 8.0.4)
+    actionview (8.1.0)
+      activesupport (= 8.1.0)
       builder (~> 3.1)
       erubi (~> 1.11)
       rails-dom-testing (~> 2.2)
@@ -64,44 +67,44 @@ GEM
       activestorage (>= 6.1.4)
       activesupport (>= 6.1.4)
       marcel (>= 1.0.3)
-    activejob (8.0.4)
-      activesupport (= 8.0.4)
+    activejob (8.1.0)
+      activesupport (= 8.1.0)
       globalid (>= 0.3.6)
-    activemodel (8.0.4)
-      activesupport (= 8.0.4)
+    activemodel (8.1.0)
+      activesupport (= 8.1.0)
     activemodel-serializers-xml (1.0.3)
       activemodel (>= 5.0.0.a)
       activesupport (>= 5.0.0.a)
       builder (~> 3.1)
-    activerecord (8.0.4)
-      activemodel (= 8.0.4)
-      activesupport (= 8.0.4)
+    activerecord (8.1.0)
+      activemodel (= 8.1.0)
+      activesupport (= 8.1.0)
       timeout (>= 0.4.0)
     activerecord-import (2.2.0)
       activerecord (>= 4.2)
-    activerecord-postgis-adapter (11.0.0)
-      activerecord (~> 8.0.0)
-      rgeo-activerecord (~> 8.0.0)
+    activerecord-postgis-adapter (11.1.1)
+      activerecord (~> 8.1.0)
+      rgeo-activerecord (~> 8.1.0)
     activerecord-session_store (2.2.0)
       actionpack (>= 7.0)
       activerecord (>= 7.0)
       cgi (>= 0.3.6)
       rack (>= 2.0.8, < 4)
       railties (>= 7.0)
-    activestorage (8.0.4)
-      actionpack (= 8.0.4)
-      activejob (= 8.0.4)
-      activerecord (= 8.0.4)
-      activesupport (= 8.0.4)
+    activestorage (8.1.0)
+      actionpack (= 8.1.0)
+      activejob (= 8.1.0)
+      activerecord (= 8.1.0)
+      activesupport (= 8.1.0)
       marcel (~> 1.0)
-    activesupport (8.0.4)
+    activesupport (8.1.0)
       base64
-      benchmark (>= 0.3)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.3.1)
       connection_pool (>= 2.2.5)
       drb
       i18n (>= 1.6, < 2)
+      json
       logger (>= 1.4.2)
       minitest (>= 5.1)
       securerandom (>= 0.3)
@@ -387,8 +390,9 @@ GEM
     inflection (1.0.0)
     io-console (0.8.2)
     ipaddr (1.2.8)
-    irb (1.16.0)
+    irb (1.17.0)
       pp (>= 0.6.0)
+      prism (>= 1.3.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     jaro_winkler (1.6.1)
@@ -610,20 +614,20 @@ GEM
     rackup (1.0.1)
       rack (< 3)
       webrick
-    rails (8.0.4)
-      actioncable (= 8.0.4)
-      actionmailbox (= 8.0.4)
-      actionmailer (= 8.0.4)
-      actionpack (= 8.0.4)
-      actiontext (= 8.0.4)
-      actionview (= 8.0.4)
-      activejob (= 8.0.4)
-      activemodel (= 8.0.4)
-      activerecord (= 8.0.4)
-      activestorage (= 8.0.4)
-      activesupport (= 8.0.4)
+    rails (8.1.0)
+      actioncable (= 8.1.0)
+      actionmailbox (= 8.1.0)
+      actionmailer (= 8.1.0)
+      actionpack (= 8.1.0)
+      actiontext (= 8.1.0)
+      actionview (= 8.1.0)
+      activejob (= 8.1.0)
+      activemodel (= 8.1.0)
+      activerecord (= 8.1.0)
+      activestorage (= 8.1.0)
+      activesupport (= 8.1.0)
       bundler (>= 1.15.0)
-      railties (= 8.0.4)
+      railties (= 8.1.0)
     rails-controller-testing (1.0.5)
       actionpack (>= 5.0.1.rc1)
       actionview (>= 5.0.1.rc1)
@@ -639,9 +643,9 @@ GEM
       rack
       railties (>= 5.1)
       semantic_logger (~> 4.16)
-    railties (8.0.4)
-      actionpack (= 8.0.4)
-      activesupport (= 8.0.4)
+    railties (8.1.0)
+      actionpack (= 8.1.0)
+      activesupport (= 8.1.0)
       irb (~> 1.13)
       rackup (>= 1.0.0)
       rake (>= 12.2)
@@ -683,8 +687,8 @@ GEM
       nokogiri
     rexml (3.4.4)
     rgeo (3.0.1)
-    rgeo-activerecord (8.0.0)
-      activerecord (>= 7.0)
+    rgeo-activerecord (8.1.0)
+      activerecord (>= 8.1, < 8.2)
       rgeo (>= 3.0)
     rgeo-geojson (2.2.0)
       multi_json (~> 1.15)
@@ -968,19 +972,19 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
-  actionmailer (< 8.1)
-  actionpack (< 8.1)
+  actionmailer (= 8.1.0)
+  actionpack (= 8.1.0)
   actionpack-action_caching
-  actiontext (< 8.1)
+  actiontext (= 8.1.0)
   active_storage_validations
-  activejob (< 8.1)
-  activemodel (< 8.1)
-  activerecord (< 8.1)
+  activejob (= 8.1.0)
+  activemodel (= 8.1.0)
+  activerecord (= 8.1.0)
   activerecord-import
   activerecord-postgis-adapter (>= 10.0.1)
   activerecord-session_store
-  activestorage (< 8.1)
-  activesupport (< 8.1)
+  activestorage (= 8.1.0)
+  activesupport (= 8.1.0)
   addressable
   amazing_print
   array_enum
@@ -1064,10 +1068,10 @@ DEPENDENCIES
   rack-cors
   rack-mini-profiler
   rack_session_access
-  rails (< 8.1)
+  rails (= 8.1.0)
   rails-controller-testing
   rails_semantic_logger
-  railties (< 8.1)
+  railties (= 8.1.0)
   recaptcha
   redis
   redis-client
@@ -1115,23 +1119,24 @@ DEPENDENCIES
 
 CHECKSUMS
   Ascii85 (1.1.1) sha256=73d760d093bf997e88c2a4d0bfe4328e838e0799915aee6b3162836c5267c2b0
-  actioncable (8.0.4) sha256=aadb2bf2977b666cfeaa7dee66fd50e147559f78a8d55f6169e913502475e09f
-  actionmailbox (8.0.4) sha256=ed0b634a502fb63d1ba01ae025772e9d0261b7ba12e66389c736fcf4635cd80f
-  actionmailer (8.0.4) sha256=3b9270d8e19f0afb534b11c52f439937dc30028adcbbae2b244f3383ce75de4b
-  actionpack (8.0.4) sha256=0364c7582f32c8f404725fa30d3f6853f834c5f4964afd4a072b848c8a23cddb
+  action_text-trix (2.1.16) sha256=f645a2c21821b8449fd1d6770708f4031c91a2eedf9ef476e9be93c64e703a8a
+  actioncable (8.1.0) sha256=336d5868db5629d2071ddc6b4e654f9c0af94117ccebee884f45035232ffd8b9
+  actionmailbox (8.1.0) sha256=96cd0c4ec02ba54f117ac31df0a1c607f5b45bcfd8474d6ae068a38615f73b72
+  actionmailer (8.1.0) sha256=e79d607c0b99ba384b535e4cbe1927351c409999cfc1a3214d2b3fcf06b36cb1
+  actionpack (8.1.0) sha256=f837989d31e5ab3a71f4db2ec8e197891558c5b763d12c5f1c1dfc5911df0a61
   actionpack-action_caching (1.2.2) sha256=2da245520de40dda6b9bed2151dfed1e68644cf22ca23239966d62d834faaaaf
-  actiontext (8.0.4) sha256=40b3970268ac29b865685456b2586df5052d068fd0cb04acb2291e737cea2340
-  actionview (8.0.4) sha256=5bd3c41ee7a59e14cf062bb5e4ee53c9a253d12fc13c8754cae368012e1a1648
+  actiontext (8.1.0) sha256=64bc719fcbe5fecfa7c45cf289c0d87d41be924e98883433c2e6352d3a142277
+  actionview (8.1.0) sha256=b7e8770a5aacd389a3c04916d29609a53459447fcbf747150437136d44c1d1f3
   active_storage_validations (3.0.3) sha256=b5be3c8b553a37c885f3ca4de7a63c5a1602987441ee92c89f57d7a2bae7f8c3
-  activejob (8.0.4) sha256=cbc8a85d0e168cb90a5629c8a36fe2d08ba840103d3aed3eee0c7beb784fccce
-  activemodel (8.0.4) sha256=8f4e4fac3cd104b1bf30419c3745206f6f724c0e2902a939b4113f4c90730dfd
+  activejob (8.1.0) sha256=61214bc2d04486e2c7918e3903d9db2a738adf3b8c8a7240303d515d99a94c59
+  activemodel (8.1.0) sha256=43aa66565a601483e6c614d02cb2090168c91a803ddb954e2b0ef24d22de745e
   activemodel-serializers-xml (1.0.3) sha256=fa1b16305e7254cc58a59c68833e3c0a593a59c8ab95d3be5aaea7cd9416c397
-  activerecord (8.0.4) sha256=bda32c171799e5ca5460447d3b7272ed14447244e2497abf2107f87fc44cbf32
+  activerecord (8.1.0) sha256=cacfc779cc551444543ebc6021831676c185da336979606e7478d03a18d23288
   activerecord-import (2.2.0) sha256=f8ca99b196e50775723d1f1d192c379f656378dc9f5628240992a0d78807fa4b
-  activerecord-postgis-adapter (11.0.0) sha256=1c81eac4fb02905a10fe444be9723afeb2ffbf3b69619e90167c7cab6648b71b
+  activerecord-postgis-adapter (11.1.1) sha256=ae2b9bd88c9ed7bfd21583bf233345cd0f1cd58d3ef96d78d001470f944fbac2
   activerecord-session_store (2.2.0) sha256=65918054573683bf4f87af89e765e1fece14c9d71cfac1f11abe4687c96e2743
-  activestorage (8.0.4) sha256=47f312962fc898c1669f20cf7448d19668a5547f4a5f64e59a837d9d3f64a043
-  activesupport (8.0.4) sha256=894a3a6c7733b5fae5a7df3acd76c4b563f38687df8a04fa3cbd25360f3fe95a
+  activestorage (8.1.0) sha256=15cca5966bb39fed926ebb5bd03ec2cacf8ca3fe2de84fb50faa31ba317ab2ac
+  activesupport (8.1.0) sha256=d4adf40725be7bbc2a16936a6cf41b175a46ba0c5ccdb703ea4ed7c8801e070a
   addressable (2.8.8) sha256=7c13b8f9536cf6364c03b9d417c19986019e28f7c00ac8132da4eb0fe393b057
   aes_key_wrap (1.1.0) sha256=b935f4756b37375895db45669e79dfcdc0f7901e12d4e08974d5540c8e0776a5
   afm (0.2.2) sha256=c83e698e759ab0063331ff84ca39c4673b03318f4ddcbe8e90177dd01e4c721a
@@ -1250,7 +1255,7 @@ CHECKSUMS
   inflection (1.0.0) sha256=ceba9b26fc28b9af82e33e822d28f78a4312af75687efec81d5ef1062498d355
   io-console (0.8.2) sha256=d6e3ae7a7cc7574f4b8893b4fca2162e57a825b223a177b7afa236c5ef9814cc
   ipaddr (1.2.8) sha256=082f6f69fdd3ff4a19ecb720f08148b89206b9da50ed9caf8d1cd7c4302a537e
-  irb (1.16.0) sha256=2abe56c9ac947cdcb2f150572904ba798c1e93c890c256f8429981a7675b0806
+  irb (1.17.0) sha256=168c4ddb93d8a361a045c41d92b2952c7a118fa73f23fe14e55609eb7a863aae
   jaro_winkler (1.6.1) sha256=c056b61bbf7f1fc0151bde7c8f589a2d666d42d0cdb889395b9b73b328e1b393
   jbuilder (2.14.1) sha256=4eb26376ff60ef100cb4fd6fd7533cd271f9998327e86adf20fd8c0e69fabb42
   jmespath (1.6.2) sha256=238d774a58723d6c090494c8879b5e9918c19485f7e840f2c1c7532cf84ebcb1
@@ -1348,12 +1353,12 @@ CHECKSUMS
   rack-test (2.2.0) sha256=005a36692c306ac0b4a9350355ee080fd09ddef1148a5f8b2ac636c720f5c463
   rack_session_access (0.2.0) sha256=03eb98f2027429ccbbeb18556006dfb6d928b0557ad3770783b8e2f368198d6b
   rackup (1.0.1) sha256=ba86604a28989fe1043bff20d819b360944ca08156406812dca6742b24b3c249
-  rails (8.0.4) sha256=364494a32d2dc3f9d5c135d036ce47e7776684bc6add73f1037ac2b1007962db
+  rails (8.1.0) sha256=85b8bd4568523e455d9651d36ac385d1be7073e88441aa4d902915db8c0f33f0
   rails-controller-testing (1.0.5) sha256=741448db59366073e86fc965ba403f881c636b79a2c39a48d0486f2607182e94
   rails-dom-testing (2.3.0) sha256=8acc7953a7b911ca44588bf08737bc16719f431a1cc3091a292bca7317925c1d
   rails-html-sanitizer (1.6.2) sha256=35fce2ca8242da8775c83b6ba9c1bcaad6751d9eb73c1abaa8403475ab89a560
   rails_semantic_logger (4.19.0) sha256=e75e562c68a32abb6a8615940afd7d40c082cff786b8d7b50ff1f7462eff3c16
-  railties (8.0.4) sha256=8203d853dcffab4abcdd05c193f101676a92068075464694790f6d8f72d5cb47
+  railties (8.1.0) sha256=f930b9a9057070bd413a8f285d5b38bac4d1a0aa3306031a2320689c51f41f91
   rainbow (3.1.1) sha256=039491aa3a89f42efa1d6dec2fc4e62ede96eb6acd95e52f1ad581182b79bc6a
   rake (13.3.1) sha256=8c9e89d09f66a26a01264e7e3480ec0607f0c497a861ef16063604b1b08eb19c
   rb-fsevent (0.11.2) sha256=43900b972e7301d6570f64b850a5aa67833ee7d87b458ee92805d56b7318aefe
@@ -1373,7 +1378,7 @@ CHECKSUMS
   reverse_markdown (3.0.2) sha256=818ebb92ce39dbb1a291690dd1ec9a6d62530d4725296b17e9c8f668f9a5b8af
   rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
   rgeo (3.0.1) sha256=5e9962a78116d4d7a39fddd917d2b6b1463c52993e4da800ec1792a9617fddd5
-  rgeo-activerecord (8.0.0) sha256=c8a22f8dc568b875a734b5288d1dbad12ff846cd63a9a2e6b09decaac4ff3094
+  rgeo-activerecord (8.1.0) sha256=2a7aeab7eae2f2c41e8a8af7d008e8a23d8e6b2e5854e9ed701cf37b993f59a1
   rgeo-geojson (2.2.0) sha256=ceed2ce1bd4c43efe9fcc494c6fec8708ec1438073425e5805d2c27fb671b210
   rgeo-proj4 (4.0.0) sha256=91b110abc3c8d65b5d471a030278a3a6b4282bc9bf2ea2af44b6ea797b788dda
   rouge (4.2.0) sha256=60dd666b3a223467dc72f5b7384764dfd7ad4e50b0df9eff072be58123506eba
