@@ -13,6 +13,7 @@
 #
 wget --auth-no-challenge -q --user=$2 --password=$3 $1/sitemap.xml -O - \
   | fgrep loc \
+  | fgrep -v teaching-jobs \
   | sed s'/    <loc>//' \
   | sed s'/<\/loc>//' \
   | wget -nv -np -w 0.1 --spider -H -r -l1 -i - --user=$2 --password=$3 \
