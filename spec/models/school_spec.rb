@@ -39,6 +39,70 @@ RSpec.describe School do
     end
   end
 
+  describe "#catholic_school?" do
+    subject { build(:school, gias_data: gias_data) }
+
+    context "when the religious character is Catholic" do
+      let(:gias_data) { { "ReligiousCharacter (name)" => "Catholic" } }
+
+      it "returns true" do
+        expect(subject.catholic_school?).to be true
+      end
+    end
+
+    context "when the religious character is Roman Catholic" do
+      let(:gias_data) { { "ReligiousCharacter (name)" => "Roman Catholic" } }
+
+      it "returns true" do
+        expect(subject.catholic_school?).to be true
+      end
+    end
+
+    context "when the school has no religious character" do
+      let(:gias_data) { { "ReligiousCharacter (name)" => "Does not apply" } }
+
+      it "returns false" do
+        expect(subject.catholic_school?).to be false
+      end
+    end
+
+    context "when the school has no gias_data" do
+      let(:gias_data) { nil }
+
+      it "returns false" do
+        expect(subject.catholic_school?).to be false
+      end
+    end
+  end
+
+  describe "#ats_interstitial_variant" do
+    subject { build(:school, gias_data: gias_data) }
+
+    context "when catholic_school? is true" do
+      let(:gias_data) { { "ReligiousCharacter (name)" => "Catholic" } }
+
+      it "returns catholic" do
+        expect(subject.ats_interstitial_variant).to eq("catholic")
+      end
+    end
+
+    context "when faith_school? is true but not catholic" do
+      let(:gias_data) { { "ReligiousCharacter (name)" => "Church of England" } }
+
+      it "returns other_faith" do
+        expect(subject.ats_interstitial_variant).to eq("other_faith")
+      end
+    end
+
+    context "when the school has no faith" do
+      let(:gias_data) { { "ReligiousCharacter (name)" => "Does not apply" } }
+
+      it "returns non_faith" do
+        expect(subject.ats_interstitial_variant).to eq("non_faith")
+      end
+    end
+  end
+
   describe "#urn" do
     it "must be unique" do
       create(:school, urn: "12345")

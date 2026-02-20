@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :publisher do
     accepted_terms_at { Date.current - 5.months }
-    acknowledged_candidate_profiles_interstitial { true }
+    acknowledged_ats_and_religious_form_interstitial { true }
     dismissed_new_features_page_at { Time.now }
     email { Faker::Internet.email(domain: "contoso.com") }
     family_name { Faker::Name.last_name.delete("'") }
