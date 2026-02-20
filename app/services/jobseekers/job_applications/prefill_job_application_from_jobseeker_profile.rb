@@ -34,6 +34,9 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile
   end
 
   def copy_job_preferences(job_preferences)
+    # JobPreference working patterns are stored as strings, but JobApplication working_patterns are stored as
+    # mapped integers. This is defensive code to stop crashes if/when these 2 items get out of alignment
+    # (which has happened recently with the retirement of 'flexible' and 'term_time' options)
     new_job_application.assign_attributes(
       working_patterns: job_preferences.working_patterns.select { |wp| JobApplication.working_patterns.key?(wp.to_sym) },
       working_pattern_details: job_preferences.working_pattern_details,
