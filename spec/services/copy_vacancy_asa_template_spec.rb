@@ -76,7 +76,7 @@ RSpec.describe CopyVacancyAsaTemplate do
       end
 
       it "has adds documents to completed steps" do
-        expect(result.completed_steps).to match_array(steps_without_dates + %w[documents important_dates start_date])
+        expect(result.completed_steps).to match_array(steps_without_dates + %w[documents expiry_date_time start_date])
       end
     end
 
