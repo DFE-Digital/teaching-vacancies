@@ -30,8 +30,12 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
+      # Shallow clone for speed; fetch origin/main separately for undercover diff
       - name: Checkout code
         uses: actions/checkout@v5
+      # Fetch full history for undercover to compare against origin/main.
+      - name: Fetch origin/main for coverage diff
+        run: git fetch --no-tags origin main
 
       - name: Prepare application environment
         uses: ./.github/actions/prepare-app-env
