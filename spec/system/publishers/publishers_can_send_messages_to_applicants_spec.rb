@@ -203,6 +203,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
         visit messages_organisation_job_job_application_path(vacancy.id, job_application.id)
 
         find_by_id("messages-list")
+        find("footer")
       end
 
       after { logout }
