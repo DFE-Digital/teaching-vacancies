@@ -9,6 +9,8 @@ jobs:
   link_check:
     name: Check Links on QA
     environment: qa
+    permissions:
+      contents: read
     env:
       RAILS_ENV: test
     runs-on: ubuntu-latest
