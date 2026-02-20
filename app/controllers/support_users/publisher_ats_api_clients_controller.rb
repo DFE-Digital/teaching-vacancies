@@ -22,6 +22,10 @@ class SupportUsers::PublisherAtsApiClientsController < SupportUsers::BaseControl
     end
   end
 
+  def confirm_rotate_key
+    @api_client = PublisherAtsApiClient.find(params[:id])
+  end
+
   def rotate_key
     @api_client = PublisherAtsApiClient.find(params[:id])
     @api_client.rotate_api_key!
