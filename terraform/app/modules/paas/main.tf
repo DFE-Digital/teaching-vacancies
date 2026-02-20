@@ -60,6 +60,14 @@ data "aws_iam_policy_document" "documents_s3_bucket_policy_document" {
     resources = ["${aws_s3_bucket.documents_s3_bucket.arn}/*"]
     effect    = "Allow"
   }
+
+  statement {
+    actions = [
+      "s3:ListBucket"
+    ]
+    resources = ["${aws_s3_bucket.documents_s3_bucket.arn}"]
+    effect    = "Allow"
+  }
 }
 
 data "aws_iam_policy_document" "schools_images_logos_s3_bucket_policy_document" {
@@ -70,6 +78,14 @@ data "aws_iam_policy_document" "schools_images_logos_s3_bucket_policy_document" 
       "s3:DeleteObject"
     ]
     resources = ["${aws_s3_bucket.schools_images_logos_s3_bucket.arn}/*"]
+    effect    = "Allow"
+  }
+
+  statement {
+    actions = [
+      "s3:ListBucket"
+    ]
+    resources = ["${aws_s3_bucket.schools_images_logos_s3_bucket.arn}"]
     effect    = "Allow"
   }
 }
