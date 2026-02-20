@@ -21,7 +21,7 @@ runs:
     - name: set environment (scheduled test)
       shell: bash
       if: ${{ inputs.event_name == 'schedule' }}
-      run: echo "AKS_ENVIRONMENT=production" >> $GITHUB_ENV
+      run: echo "AKS_ENVIRONMENT=qa" >> $GITHUB_ENV
 
     - name: set environment
       shell: bash
