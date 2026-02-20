@@ -1,0 +1,29 @@
+name: Accessibility Tests
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 * * * *' # Run every Sunday at 3am
+
+jobs:
+  link_check:
+    name: Check Links on QA
+    environment: qa
+    permissions:
+      contents: read
+    env:
+      RAILS_ENV: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Prepare application environment
+        uses: ./.github/actions/prepare-app-env
+        with:
+          skip-ruby: true
+          skip-node: true
+
+      - name: Run deployment link check
+        shell: bash
+        run:  ./check_broken_links.sh "https://qa.teaching-vacancies.service.gov.uk" "${{ secrets.HTTP_BASIC_USER }}" "${{ secrets.HTTP_BASIC_PASSWORD }}"
