@@ -233,7 +233,6 @@ shared:
   location_polygons:
     - id
     - name
-    - location_type
     - area
     - centroid
     - uk_area

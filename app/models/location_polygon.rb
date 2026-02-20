@@ -11,6 +11,10 @@ class LocationPolygon < ApplicationRecord
 
   validates :name, presence: true
 
+  # This field is still set in the SQL to build these objects, but it is completely
+  # ignored in the rest of the codebase.
+  self.ignored_columns += [:location_type]
+
   # Scope that expands any polygons returned by subsequent scopes by the provided radius
   # by overriding the `area` attribute with a buffered version of itself
   scope :buffered, ->(radius_in_miles) { select("*, ST_Buffer(area, #{convert_miles_to_metres(radius_in_miles || 0)}) AS area") }

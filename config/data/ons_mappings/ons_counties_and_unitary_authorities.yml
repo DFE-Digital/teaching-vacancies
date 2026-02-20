@@ -88,7 +88,7 @@
 "Milton Keynes": cities
 "Newcastle upon Tyne": cities
 "Newham": other
-"Norfolk": cities
+"Norfolk": counties
 "North East Lincolnshire": other
 "North Lincolnshire": other
 "North Somerset": other
@@ -154,5 +154,5 @@
 "Wirral": other
 "Wokingham": cities
 "Wolverhampton": cities
-"Worcestershire": cities
+"Worcestershire": counties
 "York": cities

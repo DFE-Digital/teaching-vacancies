@@ -8,9 +8,6 @@
     name: name
     value_before_type_cast: basildon
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: cities
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2024-11-28 16:34:24.733500000 Z
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -29,9 +26,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: name
     value_before_type_cast: liverpool
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: cities
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2024-11-28 16:34:27.936331000 Z
