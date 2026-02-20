@@ -70,7 +70,7 @@ jobs:
       with:
         parameterPairs: "/teaching-vacancies/github_action/infra/slack_webhook = SLACK_WEBHOOK"
 
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
       name: Checkout Code
 
     - uses: google-github-actions/auth@v3
