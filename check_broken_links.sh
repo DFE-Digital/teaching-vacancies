@@ -14,6 +14,7 @@
 wget --auth-no-challenge -q --user=$2 --password=$3 $1/sitemap.xml -O - \
   | fgrep loc \
   | fgrep -v teaching-jobs \
+  | fgrep -v teacher-jobs \
   | fgrep -v "/jobs/" \
   | sed s'/    <loc>//' \
   | sed s'/<\/loc>//' \
