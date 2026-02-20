@@ -11,10 +11,12 @@
 #
 # we need -P option, otherwise lots of empty directories get created
 #
+# teaching-jobs-in- filters out the location landing pages
+# -teacher-jobs filters out the subject landing pages
 wget --auth-no-challenge -q --user=$2 --password=$3 $1/sitemap.xml -O - \
   | fgrep loc \
-  | fgrep -v teaching-jobs \
-  | fgrep -v teacher-jobs \
+  | fgrep -v teaching-jobs-in- \
+  | fgrep -v "\-teacher-jobs" \
   | fgrep -v "/jobs/" \
   | sed s'/    <loc>//' \
   | sed s'/<\/loc>//' \
@@ -22,5 +24,4 @@ wget --auth-no-challenge -q --user=$2 --password=$3 $1/sitemap.xml -O - \
   -P /tmp/spider \
   --auth-no-challenge \
   --no-relative \
-  --domains="gov.uk" \
   --exclude-domains="signin.education.gov.uk,get-information-schools.service.gov.uk,ofsted.gov.uk,nationalarchives.gov.uk"
