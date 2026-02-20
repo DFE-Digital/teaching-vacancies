@@ -1,13 +1,8 @@
 @import 'base';
+@import 'sidebar-info-box';
 
 .timeline-component {
-  background-color: govuk-colour('light-grey');
-  margin-bottom: govuk-spacing(5);
-  padding: govuk-spacing(6);
-
-  @include govuk-media-query($until: tablet) {
-    margin-top: govuk-spacing(5);
-  }
+  @include sidebar-info-box-styles;
 
   ul.timeline-component__items {
     list-style-type: none;
