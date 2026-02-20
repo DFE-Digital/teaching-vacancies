@@ -27,7 +27,7 @@ RSpec.describe "Publishers can view candidate messages" do
       before do
         visit publishers_candidate_messages_path
         # wait for page load
-        find("input#archive_action")
+        find("form[action='/publishers/candidate_messages/toggle_archive']")
       end
 
       it "passes accessibility checks", :a11y do
