@@ -31,14 +31,10 @@ module Publishers::DfeSignIn
           user.organisations << organisation if organisation
         elsif uid
           organisation = Organisation.find_by(uid: uid)
-          # :nocov:
-          user.organisation_publishers.find_or_create_by(organisation_id: organisation.id) if organisation
-          # :nocov:
+          user.organisations << organisation if organisation
         elsif la_code
           organisation = Organisation.find_by(local_authority_code: la_code)
-          # :nocov:
-          user.organisation_publishers.find_or_create_by(organisation_id: organisation.id) if organisation
-          # :nocov:
+          user.organisations << organisation if organisation
         end
       end
     end
