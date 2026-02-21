@@ -36,7 +36,7 @@ RSpec.describe "Jobseekers can add job preferences to their profile" do
         click_on "Save and continue"
 
         check "Part time"
-        fill_in "job-preferences-working-pattern-details-field", with: "I am only available before 1pm."
+        fill_in "jobseekers-profiles-working-patterns-form-working-pattern-details-field", with: "I am only available before 1pm."
         click_on "Save and continue"
 
         fill_in "Location", with: "London"

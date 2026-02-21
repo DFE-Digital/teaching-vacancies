@@ -1,12 +1,12 @@
 - content_for :page_title_prefix, "Job preferences: education phase"
 - content_for :breadcrumbs do
-  = govuk_back_link text: t("buttons.back"), href: back_url
+  = govuk_back_link text: t("buttons.back"), href: previous_wizard_path
 
-= form_for(@step, url: { action: :update }, as: :job_preferences) do |f|
+= form_for(@form, url: wizard_path(step), method: :patch) do |f|
   = f.govuk_error_summary
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      = f.govuk_collection_check_boxes :phases, @step.options, :first, :last, legend: { text: "Education phase", size: "l" }, caption: { text: "Job preferences", size: "l" }
+      = f.govuk_collection_check_boxes :phases, @form.options, :first, :last, legend: { text: "Education phase", size: "l" }, caption: { text: "Job preferences", size: "l" }
       = f.govuk_submit "Save and continue"
       p = f.link_to "Cancel", escape_path

@@ -1,22 +1,58 @@
 require "multistep/controller"
 
 module Jobseekers::Profiles
-  class JobPreferencesController < Jobseekers::ProfilesController
-    include Multistep::Controller
+  class JobPreferencesController < Jobseekers::BaseController
+    include Wicked::Wizard
 
-    multistep_form Jobseekers::JobPreferencesForm, key: :job_preferences
-    escape_path { jobseekers_profile_path }
+    FORMS = {
+      roles: RolesForm,
+      phases: PhasesForm,
+      key_stages: KeyStagesForm,
+      subjects: SubjectsForm,
+      working_patterns: WorkingPatternsForm,
+      locations: LocationsForm,
+    }.freeze
 
-    on_completed(:locations) do |form|
-      redirect_to action: :edit_location if form.add_location
-      form.add_location = nil
+    steps :roles, :phases, :key_stages, :subjects, :working_patterns, :locations
+
+    helper_method :escape_path
+
+    before_action :set_model, only: %i[show update]
+
+    def show
+      @form = form_class.new
+      skip_step if @form.skip?(@model)
+      render_wizard
     end
 
-    before_action :force_location_added, if: -> { current_step == :locations }
-
-    def start
-      redirect_to action: :edit, step: all_steps.first
+    def update
+      @form = form_class.new(params.expect(form_key => form_class.fields))
+      if @form.valid?
+        @model.update!(@form.params_to_save)
+        redirect_to next_wizard_path
+      else
+        render step
+      end
     end
+
+    # include Multistep::Controller
+    #
+    # multistep_form Jobseekers::JobPreferencesForm, key: :job_preferences
+    # escape_path { jobseekers_profile_path }
+    def escape_path
+      jobseekers_profile_path
+    end
+    #
+    # on_completed(:locations) do |form|
+    #   redirect_to action: :edit_location if form.add_location
+    #   form.add_location = nil
+    # end
+    #
+    # before_action :force_location_added, if: -> { current_step == :locations }
+    #
+    # def start
+    #   redirect_to action: :edit, step: all_steps.first
+    # end
 
     def edit_location
       setup_location_view
@@ -69,6 +105,18 @@ module Jobseekers::Profiles
     def review; end
 
     private
+
+    def form_class
+      FORMS.fetch(step)
+    end
+
+    def form_key
+      ActiveModel::Naming.param_key(form_class)
+    end
+
+    def set_model
+      @model = current_jobseeker.jobseeker_profile.job_preferences || current_jobseeker.jobseeker_profile.build_job_preferences
+    end
 
     def setup_location_view
       @escape_path = @back_url = { action: :edit, step: :locations } if form.locations.any?

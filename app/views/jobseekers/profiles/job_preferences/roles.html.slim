@@ -1,8 +1,8 @@
 - content_for :page_title_prefix, "Job preferences: roles"
 - content_for :breadcrumbs do
-  = govuk_back_link text: t("buttons.back"), href: back_url, html_attributes: { "aria-label" => "Back navigation" }
+  = govuk_back_link text: t("buttons.back"), href: previous_wizard_path, html_attributes: { "aria-label" => "Back navigation" }
 
-= form_for @step, url: { action: :update }, as: :job_preferences do |f|
+= form_for @form, url: wizard_path(step), method: :patch do |f|
   = f.govuk_error_summary
 
   .govuk-grid-row
@@ -21,7 +21,7 @@
         legend.govuk-fieldset__legend.govuk-fieldset__legend--m
           h2.govuk-fieldset__heading = t("jobs.filters.support_job_roles")
 
-      = f.govuk_collection_check_boxes :roles, @step.teaching_job_roles_options, :first, :last, legend: -> { teaching_legend }
-      = f.govuk_collection_check_boxes :roles, @step.support_job_roles_options, :first, :last, legend: -> { support_legend }
+      = f.govuk_collection_check_boxes :roles, @form.teaching_job_roles_options, :first, :last, legend: -> { teaching_legend }
+      = f.govuk_collection_check_boxes :roles, @form.support_job_roles_options, :first, :last, legend: -> { support_legend }
       = f.govuk_submit "Save and continue"
       p = f.link_to "Cancel", escape_path

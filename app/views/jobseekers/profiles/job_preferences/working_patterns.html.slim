@@ -1,13 +1,13 @@
 - content_for :page_title_prefix, "Job preferences: phases"
 - content_for :breadcrumbs do
-  = govuk_back_link text: t("buttons.back"), href: back_url
+  = govuk_back_link text: t("buttons.back"), href: previous_wizard_path
 
-= form_for(@step, url: { action: :update }, as: :job_preferences) do |f|
+= form_for(@form,url: wizard_path(step), method: :patch) do |f|
   = f.govuk_error_summary
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      = f.govuk_collection_check_boxes :working_patterns, @step.options, :first, :last, legend: { tag: "h1", size: "l", text: "Working patterns" }, caption: { text: "Job preferences", size: "l" }, hint: { text: t(".hint") }
+      = f.govuk_collection_check_boxes :working_patterns, @form.options, :first, :last, legend: { tag: "h1", size: "l", text: "Working patterns" }, caption: { text: "Job preferences", size: "l" }, hint: { text: t(".hint") }
       = f.govuk_text_area :working_pattern_details, label: { text: t(".working_pattern_details.label"), size: "s" }, hint: { text: t(".working_pattern_details.hint") }, max_words: 50
       = f.govuk_submit "Save and continue"
       p = f.link_to "Cancel", escape_path

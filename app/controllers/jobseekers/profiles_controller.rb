@@ -20,7 +20,7 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
       display_summary: ->(profile) { profile.job_preferences&.completed_steps.present? },
       key: "job_preferences",
       link_text: "Add job preferences",
-      page_path: -> { jobseekers_job_preferences_path },
+      page_path: -> { jobseekers_job_preference_path(Wicked::FIRST_STEP) },
     },
     {
       title: "Professional status",
