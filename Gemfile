@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "3.4.7"
+ruby "4.0.1"
 
 RAILS_VERSION = "< 8.1".freeze
 gem "actionmailer", RAILS_VERSION
@@ -76,8 +76,9 @@ gem "rails", RAILS_VERSION # Explicitly declare rails so we can do a "bundle upd
 gem "rails_semantic_logger"
 gem "recaptcha"
 gem "redis"
-gem "rgeo-geojson"
-gem "rgeo-proj4"
+gem "rgeo", "~> 3.1"
+gem "rgeo-geojson", github: "rgeo/rgeo-geojson", branch: "master"
+gem "rgeo-proj4", github: "rgeo/rgeo-proj4", branch: "master"
 gem "rswag-api"
 gem "rswag-ui"
 gem "ruby-limiter"

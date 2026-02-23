@@ -9,6 +9,23 @@ GIT
       multi_xml (~> 0.6.0)
       request_store_rails (~> 2)
 
+GIT
+  remote: https://github.com/rgeo/rgeo-geojson.git
+  revision: 5081f68f100aafd9654fe81923628522f28591b1
+  branch: master
+  specs:
+    rgeo-geojson (2.2.0)
+      multi_json (~> 1.15)
+      rgeo (>= 1.0.0)
+
+GIT
+  remote: https://github.com/rgeo/rgeo-proj4.git
+  revision: f33049cbc79a626a2541cf888c99e753b0486d35
+  branch: master
+  specs:
+    rgeo-proj4 (4.0.0)
+      rgeo (~> 3.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -259,8 +276,8 @@ GEM
       logger
     faraday-follow_redirects (0.5.0)
       faraday (>= 1, < 3)
-    faraday-multipart (1.0.4)
-      multipart-post (~> 2)
+    faraday-multipart (1.2.0)
+      multipart-post (~> 2.0)
     faraday-net_http (3.4.2)
       net-http (~> 0.5)
     fastimage (2.4.0)
@@ -683,15 +700,10 @@ GEM
     reverse_markdown (3.0.2)
       nokogiri
     rexml (3.4.4)
-    rgeo (3.0.1)
+    rgeo (3.1.0)
     rgeo-activerecord (8.0.0)
       activerecord (>= 7.0)
       rgeo (>= 3.0)
-    rgeo-geojson (2.2.0)
-      multi_json (~> 1.15)
-      rgeo (>= 1.0.0)
-    rgeo-proj4 (4.0.0)
-      rgeo (~> 3.0.0)
     rouge (4.2.0)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
@@ -964,6 +976,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-23
+  arm64-darwin-25
   x86_64-darwin-23
   x86_64-darwin-24
   x86_64-linux
@@ -1073,8 +1086,9 @@ DEPENDENCIES
   recaptcha
   redis
   redis-client
-  rgeo-geojson
-  rgeo-proj4
+  rgeo (~> 3.1)
+  rgeo-geojson!
+  rgeo-proj4!
   rspec-rails
   rswag-api
   rswag-specs
@@ -1205,7 +1219,7 @@ CHECKSUMS
   faker (3.6.0) sha256=4ce80bf91c8d09bbfff4c5596690bf862d60eac420f86737ca8ce12a54dc464a
   faraday (2.14.1) sha256=a43cceedc1e39d188f4d2cdd360a8aaa6a11da0c407052e426ba8d3fb42ef61c
   faraday-follow_redirects (0.5.0) sha256=5cde93c894b30943a5d2b93c2fe9284216a6b756f7af406a1e55f211d97d10ad
-  faraday-multipart (1.0.4) sha256=9012021ab57790f7d712f590b48d5f948b19b43cfa11ca83e6459f06090b0725
+  faraday-multipart (1.2.0) sha256=7d89a949693714176f612323ca13746a2ded204031a6ba528adee788694ef757
   faraday-net_http (3.4.2) sha256=f147758260d3526939bf57ecf911682f94926a3666502e24c69992765875906c
   fastimage (2.4.0) sha256=5fce375e27d3bdbb46c18dbca6ba9af29d3304801ae1eb995771c4796c5ac7e8
   ferrum (0.17.1) sha256=51d591120fc593e5a13b5d9d6474389f5145bb92a91e36eab147b5d096c8cbe7
@@ -1374,10 +1388,10 @@ CHECKSUMS
   retriable (3.1.2) sha256=0a5a5d0ca4ba61a76fb31a17ab8f7f80281beb040c329d34dfc137a1398688e0
   reverse_markdown (3.0.2) sha256=818ebb92ce39dbb1a291690dd1ec9a6d62530d4725296b17e9c8f668f9a5b8af
   rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
-  rgeo (3.0.1) sha256=5e9962a78116d4d7a39fddd917d2b6b1463c52993e4da800ec1792a9617fddd5
+  rgeo (3.1.0) sha256=89c1804894b35acf65891e1f24e15bbf2fbd972d4183e63c444bb97c1ccaf5d5
   rgeo-activerecord (8.0.0) sha256=c8a22f8dc568b875a734b5288d1dbad12ff846cd63a9a2e6b09decaac4ff3094
-  rgeo-geojson (2.2.0) sha256=ceed2ce1bd4c43efe9fcc494c6fec8708ec1438073425e5805d2c27fb671b210
-  rgeo-proj4 (4.0.0) sha256=91b110abc3c8d65b5d471a030278a3a6b4282bc9bf2ea2af44b6ea797b788dda
+  rgeo-geojson (2.2.0)
+  rgeo-proj4 (4.0.0)
   rouge (4.2.0) sha256=60dd666b3a223467dc72f5b7384764dfd7ad4e50b0df9eff072be58123506eba
   rspec (3.13.0) sha256=d490914ac1d5a5a64a0e1400c1d54ddd2a501324d703b8cfe83f458337bab993
   rspec-core (3.13.5) sha256=ab3f682897c6131c67f9a17cfee5022a597f283aebe654d329a565f9937a4fa3
@@ -1472,7 +1486,7 @@ CHECKSUMS
   zendesk_api (3.1.1) sha256=f85b646263729fee8dc3c47f02bb3caaf26f1650a094299dee46c063e26e7216
 
 RUBY VERSION
-   ruby 3.4.7p58
+  ruby 4.0.1p0
 
 BUNDLED WITH
-   2.7.1
+  4.0.6
