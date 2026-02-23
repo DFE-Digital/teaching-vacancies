@@ -62,7 +62,7 @@ These 2 examples show the difference between a strong example and one that needs
 This example is very general, not tailored to the school and does not give hiring staff a clear picture of skills, experience or any outcomes achieved.
 
 #### Example 2 
-"I am keen to apply for teaching role at [School name here], where the emphasis on high expectations and inclusive practice reflects my own values."
+"I am keen to apply for the teaching role at [School name here], where the emphasis on high expectations and inclusive practice reflects my own values."
 
 In my current role, I introduced a behaviour strategy that reduced low level disruption and improved pupil engagement, showing my commitment to the teachers' standards on managing behaviour and promoting good progress".
 
