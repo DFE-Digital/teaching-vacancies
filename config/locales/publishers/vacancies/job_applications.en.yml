@@ -178,6 +178,10 @@ en:
             this_referee_will_not_provide_a_reference: >-
               This referee will not provide a reference for this candidate.
               You will need to request a new referee from this candidate.
+            created_collecting_outside: >-
+              You're collecting this reference outside of Teaching Vacancies. When you receive the reference, you can select 'Mark as received' to track progress.
+            created_collect_on_service: >-
+              If you want to collect this reference using Teaching Vacancies, use the link underneath the 'Referee details' table.
             once_the_reference_is_received: >-
               Once the reference is received you will be able to view it on this page.
               If you do not receive the reference within one week, you will be able to send a reminder.

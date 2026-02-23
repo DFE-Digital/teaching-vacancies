@@ -12,9 +12,13 @@
     .govuk-body
       = govuk_tag(text: t("reference_requests.#{status}.status"), colour: t("reference_requests.#{status}.colour"))
 
-    .govuk-body = t(".once_the_reference_is_received")
+    - if status == "created"
+      .govuk-body = t(".created_collecting_outside")
+      .govuk-body = t(".created_collect_on_service")
+    - elsif status == "pending"
+      .govuk-body = t(".once_the_reference_is_received")
 
-    .govuk-body = t(".more_urgent")
+      .govuk-body = t(".more_urgent")
 
     .govuk-button-group
       - if @reference_request.can_send_reminder?

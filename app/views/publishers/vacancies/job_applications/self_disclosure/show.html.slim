@@ -14,7 +14,10 @@
     .govuk-body
       = govuk_tag(text: t("reference_requests.#{disclosure_status}.status"), colour: t("reference_requests.#{disclosure_status}.colour"))
 
-    - unless @self_disclosure.request.has_been_received?
+    - if @self_disclosure.request.manual?
+      .govuk-body = t(".created_collecting_outside")
+      .govuk-body = t(".created_collect_on_service")
+    - elsif !@self_disclosure.request.has_been_received?
       .govuk-body = t(".pending_line_1")
       .govuk-body = t(".pending_line_1")
 
