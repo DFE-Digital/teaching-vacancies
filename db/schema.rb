@@ -936,7 +936,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_13_092708) do
     t.uuid "publisher_ats_api_client_id", null: false
     t.uuid "conflicting_vacancy_id", null: false
     t.integer "attempts_count", default: 1, null: false
-    t.string "conflict_type", null: false
     t.datetime "first_attempted_at", null: false
     t.datetime "last_attempted_at", null: false
     t.datetime "created_at", null: false
