@@ -379,7 +379,7 @@ en:
           August 2025 to September 2025) it will be counted for both academic years. This data resets each academic year.
         this_may_include: >-
           This may include data from people who have withdrawn their applications.
-          This is to ensure the anonymity of applications who submit equal opportunities information.
+          This is to ensure that any equal opportunities data provided in applications is anonymised.
         title: Statistics dashboard
     temp_login:
       check_your_email:
@@ -723,7 +723,7 @@ en:
         show:
           application_data: Application data
           draft_vacancy: Once you have published the vacancy you will be able to see how many jobseekers are viewing and saving this job.
-          explanation: This is to ensure the anonymity of applicants who submit equal opportunities information.
+          explanation: This is to ensure that any equal opportunities data provided in applications is anonymised.
           intro: This may include data from candidates who have withdrawn their applications.
           listing_data: Listing data
           job_source: Job listing source
