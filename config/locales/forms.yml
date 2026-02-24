@@ -228,6 +228,8 @@ en:
         contact_details: Contact details
       publishers_job_listing_documents_form:
         documents: You can only upload PDF or DOCX files under 20MB, You can upload multiple files at the same time.
+      publishers_job_listing_documents_confirmation_form:
+        upload_additional_document: Jobseekers can only upload one file when applying. If an application form is required, only include additional documents here that do not need to be submitted as part of their application.
       publishers_job_listing_feedback_form:
         email: >-
           We'll only use this to tell you about opportunities to take part in user research that helps us improve
@@ -240,7 +242,7 @@ en:
           website: You’ll need to provide a link to the website.
           uploaded_form: You’ll need to upload an application form. You will receive an email when an applicant has uploaded and submitted their completed application form.
       publishers_job_listing_include_additional_documents_form:
-        include_additional_documents: For example, a job description or person specification
+        include_additional_documents: Jobseekers can only upload one file when applying. If an application form is required, only include additional documents here that do not need to be submitted as part of their application.
       publishers_job_listing_pay_package_form:
         benefits: For example, special educational needs (SEN) or teaching and learning responsibility (TLR) payments
         pay_scale: For example, ‘M1 to M2’
