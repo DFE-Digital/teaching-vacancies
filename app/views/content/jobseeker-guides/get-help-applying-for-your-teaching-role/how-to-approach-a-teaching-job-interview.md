@@ -3,7 +3,7 @@ order: 300
 title: How to approach a teaching job interview
 meta_description: Practical advice and top tips for preparing for a teaching job interview, including how to confirm attendance, answer questions, deliver a lesson and ask the panel questions.
 date_posted: 22/01/2024
-date_updated: 20/02/2026
+date_updated: 24/02/2026
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-approach-your-teaching-job-interview.jpg"
 ---
@@ -36,7 +36,7 @@ Interview styles vary across schools – some may be formal while others may be 
 
 Prepare answers to likely questions and try to do a mock interview with a friend or colleague. Saying your answers out loud is really different to practising in your head. 
 
-You can never predict all of the questions, but schools might ask:
+You may be asked questions like:
 
 * why do you want to work in our school?
 * what are your strongest qualities and why? 
@@ -69,13 +69,13 @@ You’ll likely be asked to teach a lesson as part of your interview.
 
 Read advice from experienced school leaders on how to best [prepare for a teaching interview lesson](https://teaching-vacancies.service.gov.uk/jobseeker-guides/get-help-applying-for-your-teaching-role/prepare-for-a-teaching-job-interview-lesson).
 
-Interview lessons are not about being perfect. Schools are often looking at:  
+Interview lessons are not about being perfect. Schools are often looking at how you:  
 
-* how you engage pupils 
+* engage pupils 
 * manage time and behaviour 
 * adapt your teaching 
 * check understanding 
-* how well your lesson is planned.  
+* plan your lessons
 
 Showing flexibility and reflection can help you ace a teaching interview. 
 
