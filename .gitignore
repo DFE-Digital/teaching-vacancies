@@ -22,6 +22,12 @@
 yarn-debug.log*
 .yarn-integrity
 
+# Yarn 4 (Berry)
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+
 .byebug_history
 
 # Ignore generated test coverage folder
