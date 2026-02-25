@@ -18,7 +18,11 @@
 # www.stem.org.uk seems to refuse Github access to robots.txt
 # www.iop.org homepage reports as missing from github
 # womened.com homepage reports as missing from github
+# services.signin.education.gov.uk doesn't provide robots.txt
+# nationalarchives.gov.uk seems to bring in a lot of noise
 #
+download_dir=$(mktemp -d)
+trap 'rm -rf "$download_dir"; exit' ERR EXIT  # HUP INT TERM
 wget --auth-no-challenge -q --user=$2 --password=$3 $1/sitemap.xml -O - \
   | fgrep loc \
   | fgrep -v teaching-jobs-in- \
@@ -26,8 +30,9 @@ wget --auth-no-challenge -q --user=$2 --password=$3 $1/sitemap.xml -O - \
   | fgrep -v "/jobs/" \
   | sed s'/    <loc>//' \
   | sed s'/<\/loc>//' \
-  | wget -nv -np -w 0.2 --spider -H -r -l1 -i - --user=$2 --password=$3 \
-  -P /tmp/spider \
+  | wget -nv -np -w 0.2 -H -r -t5 -l1 -i - --user=$2 --password=$3 \
+  -P $download_dir \
+  --spider \
   --auth-no-challenge \
   --no-relative \
-  --exclude-domains="womened.com,www.iop.org,www.stem.org.uk,get-information-schools.service.gov.uk"
+  --exclude-domains="womened.com,www.iop.org,www.stem.org.uk,get-information-schools.service.gov.uk,services.signin.education.gov.uk,nationalarchives.gov.uk"

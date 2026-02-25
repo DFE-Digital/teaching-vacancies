@@ -33,7 +33,7 @@ jobs:
   swagger-gen:
     name: Generate and Cache swagger docs
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     env:
       RAILS_ENV: test
