@@ -13,6 +13,9 @@
 #
 # teaching-jobs-in- filters out the location landing pages
 # -teacher-jobs filters out the subject landing pages
+#
+# www.stem.org.uk seems to refuse Github access to robots.txt
+#
 wget --auth-no-challenge -q --user=$2 --password=$3 $1/sitemap.xml -O - \
   | fgrep loc \
   | fgrep -v teaching-jobs-in- \
@@ -24,4 +27,4 @@ wget --auth-no-challenge -q --user=$2 --password=$3 $1/sitemap.xml -O - \
   -P /tmp/spider \
   --auth-no-challenge \
   --no-relative \
-  --exclude-domains="signin.education.gov.uk,get-information-schools.service.gov.uk,ofsted.gov.uk,nationalarchives.gov.uk"
+  --exclude-domains="stem.org.uk,signin.education.gov.uk,get-information-schools.service.gov.uk,ofsted.gov.uk,nationalarchives.gov.uk"
