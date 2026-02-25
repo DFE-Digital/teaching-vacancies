@@ -22,6 +22,8 @@
 # nationalarchives.gov.uk seems to bring in a lot of noise
 #
 download_dir=$(mktemp -d)
+# make sure script cleans up after itself
+# from https://stackoverflow.com/questions/10982911/creating-temporary-files-in-bash
 trap 'rm -rf "$download_dir"; exit' ERR EXIT  # HUP INT TERM
 wget --auth-no-challenge -q --user=$2 --password=$3 $1/sitemap.xml -O - \
   | fgrep loc \
