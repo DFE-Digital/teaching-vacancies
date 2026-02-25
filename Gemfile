@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "3.4.7"
+ruby "3.4.8"
 
 RAILS_VERSION = "< 8.1".freeze
 gem "actionmailer", RAILS_VERSION
