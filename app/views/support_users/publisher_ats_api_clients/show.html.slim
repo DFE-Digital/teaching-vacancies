@@ -6,7 +6,7 @@
 
 h1.govuk-heading-l = title
 
-= link_to "Rotate ATS API key", rotate_key_support_users_publisher_ats_api_client_path(@api_client), method: :post, class: "govuk-button govuk-button--secondary"
+= link_to "Rotate ATS API key", confirm_rotate_key_support_users_publisher_ats_api_client_path(@api_client), class: "govuk-button govuk-button--secondary"
 
 = govuk_summary_card(title: title) do |card|
   - card.with_summary_list do |summary_list|

@@ -35,6 +35,12 @@ RSpec.describe "Support users can manage API clients" do
         expect(page).to have_css("h1", text: api_client_name)
         click_on "Rotate ATS API key"
 
+        expect(page).to have_css("h1", text: "Confirm API key rotation")
+        expect(page).to have_content("This action will immediately revoke the current API key")
+        expect(page).to have_content(old_api_key)
+
+        click_on "Confirm and rotate API key"
+
         expect(page).to have_content("API key rotated successfully")
         expect(api_client.reload.api_key).not_to eq(old_api_key)
       end
