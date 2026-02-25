@@ -509,6 +509,40 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             { "errors" => ["job_title: can't be blank", "salary: Enter full-time salary"] },
           )
         end
+
+        context "when the school has an excluded detailed_school_type", document: false do
+          let(:excluded_school) { create(:school, detailed_school_type: "Other independent school") }
+          let(:school_urns) { [excluded_school.urn] }
+          let(:vacancy) do
+            {
+              vacancy: {
+                external_advert_url: source.external_advert_url,
+                expires_at: source.expires_at,
+                job_title: source.job_title,
+                job_advert: source.job_advert,
+                salary: source.salary,
+                visa_sponsorship_available: source.visa_sponsorship_available,
+                external_reference: source.external_reference,
+                is_job_share: source.is_job_share,
+                job_roles: source.job_roles,
+                working_patterns: source.working_patterns,
+                contract_type: source.contract_type,
+                phases: source.phases,
+                schools: {
+                  school_urns: school_urns,
+                },
+              },
+            }
+          end
+
+          it "returns an error indicating the school type is not eligible" do |example|
+            submit_request(example.metadata)
+            assert_response_matches_metadata(example.metadata)
+            expect(response.parsed_body).to eq(
+              { "errors" => ["School type 'Other independent school' is not eligible to post vacancies"] },
+            )
+          end
+        end
       end
 
       response(500, "A server-side issue occurred while creating the vacancy.") do

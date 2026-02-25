@@ -323,6 +323,18 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       end
     end
 
+    context "when the school has an excluded detailed_school_type" do
+      let(:excluded_school) { create(:school, detailed_school_type: "Other independent school") }
+      let(:school_urns) { { school_urns: [excluded_school.urn] } }
+
+      it "raises InvalidOrganisationError with appropriate message" do
+        expect { create_vacancy_service }.to raise_error(
+          Publishers::AtsApi::OrganisationFetcher::InvalidOrganisationError,
+          "School type 'Other independent school' is not eligible to post vacancies",
+        )
+      end
+    end
+
     context "when the vacancy is missing mandatory fields" do
       let(:job_title) { nil }
       let(:job_advert) { nil }

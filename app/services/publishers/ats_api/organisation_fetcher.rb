@@ -34,11 +34,22 @@ module Publishers
         if no_valid_organisations?(trust, schools, school_urns)
           raise InvalidOrganisationError, "No valid organisations found"
         end
+
+        validate_school_types!(schools)
       end
 
       def no_valid_organisations?(trust, schools, school_urns)
         (schools.blank? && trust.blank?) ||
           (trust.present? && school_urns.present? && schools.blank?)
+      end
+
+      def validate_school_types!(schools)
+        return if schools.blank?
+
+        excluded_school = schools.find { |school| school.detailed_school_type.in?(::Organisation::OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES) }
+        if excluded_school
+          raise InvalidOrganisationError, "School type '#{excluded_school.detailed_school_type}' is not eligible to post vacancies"
+        end
       end
     end
   end
