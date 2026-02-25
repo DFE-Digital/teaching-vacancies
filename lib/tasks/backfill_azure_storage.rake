@@ -44,8 +44,6 @@ task backfill_azure_storage: :environment do
 
   puts "Found #{mirror_count} blob(s) to mirror"
 
-  # This is actually test covered. (checked manually both branches of the condition are hit by the test suite).
-  # :nocov:
   if mirror_count.positive?
     mirror_blobs.find_each do |blob|
       blob.mirror_later
@@ -54,7 +52,6 @@ task backfill_azure_storage: :environment do
 
     puts "  ✓ Queued #{total_mirrored} blob(s) for mirroring"
   end
-  # :nocov:
 
   puts "\n#{'=' * 80}"
   puts "Backfill complete!"
