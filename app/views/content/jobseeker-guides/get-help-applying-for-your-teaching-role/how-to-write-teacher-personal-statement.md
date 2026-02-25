@@ -26,7 +26,7 @@ It can be tricky to know where to start with your personal statement.
 Artificial intelligence (AI) tools can help you generate ideas and structure your writing, but it's important not to rely on them too heavily. Schools want to see your skills, experience and personality in your own words.
 
 ## Using the personal statement builder
-You can use the (personal statement builder)[https://personalstatementbuilder.co.uk/] if the job you're applying for is either:
+You can use the [personal statement builder](https://personalstatementbuilder.co.uk/) if the job you're applying for is either:
 
 * eligible for quick apply
 * suitable for early career teachers
