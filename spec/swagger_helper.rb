@@ -186,7 +186,7 @@ RSpec.configure do |config|
                         description: "When providing only a trust UID, the vacancy will be associated with the trust central office.",
                       },
                     ],
-                    description: "Specifies which school(s) or trust the vacancy belongs to.",
+                    description: "Specifies which school(s) or trust the vacancy belongs to. Note: Schools with the following detailed school types are not eligible to post vacancies: Further education, Other independent school, Miscellaneous, Special post 16 institution, Other independent special school, Higher education institutions, Welsh establishment. Attempting to create a vacancy for these school types will result in a 422 validation error.",
                   },
                   job_roles: {
                     type: :array,
@@ -635,6 +635,7 @@ RSpec.configure do |config|
               errors: [
                 "job_title: can't be blank",
                 "salary: Enter full-time salary",
+                "School type 'Other independent school' is not eligible to post vacancies",
               ],
             },
             description: "Returned when submitted data fails validation",
