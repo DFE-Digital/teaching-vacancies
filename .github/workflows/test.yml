@@ -9,7 +9,7 @@ jobs:
   backend-tests:
     name: Run RSpec Tests in parallel
 
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
