@@ -101,10 +101,10 @@ Set yourself apart by showing how your hobbies and achievements could contribute
 You could include:
 
 * sports and fitness – coaching a football team, starting a new club, or leading a morning fitness session
-*	creative arts – supporting the school choir, directing a play or running an arts workshop
-*	science, technology, engineering and mathematics (STEM) activities – starting a coding club, organising a science fair or robotics competition
-*	pastoral support – mentoring pupils, helping with assemblies, or supporting wellbeing initiatives 
-*	community engagement – coordinating charity events, cultural celebrations or workshops with parents
+* creative arts – supporting the school choir, directing a play or running an arts workshop
+* science, technology, engineering and mathematics (STEM) activities – starting a coding club, organising a science fair or robotics competition
+* pastoral support – mentoring pupils, helping with assemblies, or supporting wellbeing initiatives
+* community engagement – coordinating charity events, cultural celebrations or workshops with parents
 
 ## If you're returning to teaching after a break
 If you're thinking about returning to teaching or have previously trained to teach in the UK, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers).
