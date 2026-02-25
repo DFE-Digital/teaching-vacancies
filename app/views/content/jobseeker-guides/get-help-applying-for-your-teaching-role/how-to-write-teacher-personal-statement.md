@@ -3,7 +3,7 @@ order: 100
 title: How to write a teacher personal statement
 meta_description: Expert guidance on writing a personal statement for a teaching job. Discover tips, advice and examples to support your application here.
 date_posted: 15/03/2022
-date_updated: 11/02/2026
+date_updated: 25/02/2026
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-write-your-teacher-training-personal-statement.jpg"
 ---
@@ -26,7 +26,7 @@ It can be tricky to know where to start with your personal statement.
 Artificial intelligence (AI) tools can help you generate ideas and structure your writing, but it's important not to rely on them too heavily. Schools want to see your skills, experience and personality in your own words.
 
 ## Using the personal statement builder
-You can use the personal statement builder if the job you're applying for is:
+You can use the (personal statement builder)[https://personalstatementbuilder.co.uk/] if the job you're applying for is either:
 
 * eligible for quick apply
 * suitable for early career teachers
