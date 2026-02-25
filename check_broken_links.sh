@@ -10,7 +10,7 @@
 # signin.education.co.uk and friends don't respond to robots.txt
 #
 # we need -P option, otherwise lots of empty directories get created
-# -w specifies a wait between pages of 0.2 seconds
+# decided to specify a rate limit rather than a delay (-w) between pages
 #
 # teaching-jobs-in- filters out the location landing pages
 # -teacher-jobs filters out the subject landing pages
@@ -32,9 +32,11 @@ wget --auth-no-challenge -q --user=$2 --password=$3 $1/sitemap.xml -O - \
   | fgrep -v "/jobs/" \
   | sed s'/    <loc>//' \
   | sed s'/<\/loc>//' \
-  | wget -nv -np -w 0.2 -H -r -t5 -l1 -i - --user=$2 --password=$3 \
+  | wget -nv -np -H -r -t5 -l1 -i - --user=$2 --password=$3 \
   -P $download_dir \
   --spider \
+  --limit-rate=200k \
+  --exclude-directories="assets" \
   --auth-no-challenge \
   --no-relative \
   --exclude-domains="womened.com,www.iop.org,www.stem.org.uk,get-information-schools.service.gov.uk,services.signin.education.gov.uk,nationalarchives.gov.uk"
