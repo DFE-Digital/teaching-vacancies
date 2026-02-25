@@ -30,12 +30,11 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
-      # Shallow clone for speed; fetch origin/main separately for undercover diff
+      # Need depth 0 for undercover to work properly. Yes, we tried otherwise.
       - name: Checkout code
         uses: actions/checkout@v5
-
-      - name: Fetch origin/main for coverage diff
-        run: git fetch --no-tags --depth=1 origin main
+        with:
+          fetch-depth: 0
 
       - name: Prepare application environment
         uses: ./.github/actions/prepare-app-env
