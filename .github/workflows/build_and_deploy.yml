@@ -323,7 +323,8 @@ jobs:
       if: steps.smoke-test.conclusion != 'success'
       run: exit 1
 
-    - name: Trigger Broken Link action
+    - name: Check broken links on review app only
+      if: github.event_name == 'pull_request'
       id: check-broken-links
       uses: ./.github/actions/check-broken-links/
       with:
