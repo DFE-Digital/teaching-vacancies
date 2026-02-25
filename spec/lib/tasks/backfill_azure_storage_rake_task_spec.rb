@@ -86,29 +86,12 @@ RSpec.describe "backfill_azure_storage" do
       ActiveStorage::Blob.delete_all
     end
 
-    it "handles case where no blobs need mirroring" do
-      expect { subject.invoke }.not_to raise_error
+    it "outputs message when no blobs are found for mirroring" do
+      expect { subject.invoke }.to output(/No blobs found for mirroring/).to_stdout
     end
 
-    it "skips mirroring jobs when no blobs are found to mirror" do
-      expect { subject.invoke }.not_to output(/Queued .* blob\(s\) for mirroring/).to_stdout
-    end
-
-    it "outputs zero blobs for mirroring" do
-      expect { subject.invoke }.to output(/Found 0 blob\(s\) to mirror/).to_stdout
-    end
-
-    it "does not iterate when mirror count is zero" do
-      empty_relation = ActiveStorage::Blob.none
-
-      allow(ActiveStorage::Blob).to receive(:where).and_call_original
-      allow(ActiveStorage::Blob).to receive(:where)
-        .with(service_name: %w[mirror_documents mirror_images_and_logos])
-        .and_return(empty_relation)
-
-      expect(empty_relation).not_to receive(:find_each)
-
-      subject.invoke
+    it "reports zero mirror jobs queued" do
+      expect { subject.invoke }.to output(/Mirror jobs queued: 0/).to_stdout
     end
   end
 

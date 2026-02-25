@@ -23,15 +23,13 @@ task backfill_azure_storage: :environment do
 
     if count.zero?
       puts "  No blobs found for service '#{old_service}'"
-      next
+    else
+      puts "  Found #{count} blob(s) to migrate"
+      # Update service names in batches
+      updated_count = blobs.update_all(service_name: new_service)
+      total_updated += updated_count
+      puts "  ✓ Updated #{updated_count} blob(s) to use '#{new_service}'"
     end
-
-    puts "  Found #{count} blob(s) to migrate"
-
-    # Update service names in batches
-    updated_count = blobs.update_all(service_name: new_service)
-    total_updated += updated_count
-    puts "  ✓ Updated #{updated_count} blob(s) to use '#{new_service}'"
   end
 
   # Now trigger mirroring for all blobs using mirror services
@@ -42,15 +40,17 @@ task backfill_azure_storage: :environment do
   mirror_blobs = ActiveStorage::Blob.where(service_name: mirror_services)
   mirror_count = mirror_blobs.count
 
-  puts "Found #{mirror_count} blob(s) to mirror"
-
   if mirror_count.positive?
+    puts "Found #{mirror_count} blob(s) to mirror"
+
     mirror_blobs.find_each do |blob|
       blob.mirror_later
       total_mirrored += 1
     end
 
     puts "  ✓ Queued #{total_mirrored} blob(s) for mirroring"
+  else
+    puts "  No blobs found for mirroring"
   end
 
   puts "\n#{'=' * 80}"
