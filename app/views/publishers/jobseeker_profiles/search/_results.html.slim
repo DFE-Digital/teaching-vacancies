@@ -17,16 +17,16 @@
         - if (preferences = jobseeker_profile.job_preferences).present?
           - summary_list.with_row do |row|
             - row.with_key text: t("publishers.jobseeker_profiles.preferred_roles", count: preferences.roles.count), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
-            - row.with_value text: jobseeker_profile.job_preferences.roles.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{role}") }.join(", "), classes: "govuk-body-s govuk-!-padding-bottom-0"
+            - row.with_value text: preferences.roles.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{role}") }.join(", "), classes: "govuk-body-s govuk-!-padding-bottom-0"
 
           - summary_list.with_row do |row|
             - row.with_key text: t("publishers.jobseeker_profiles.preferred_key_stages", count: preferences.key_stages.count), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
-            - row.with_value text: jobseeker_profile.all_key_stages, classes: "govuk-body-s govuk-!-padding-bottom-0"
+            - row.with_value text: preferences.key_stages.map(&:humanize).join(", "), classes: "govuk-body-s govuk-!-padding-bottom-0"
 
           - summary_list.with_row do |row|
             - row.with_key text: t("publishers.jobseeker_profiles.preferred_working_patterns", count: preferences.working_patterns.count), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
-            - row.with_value text: jobseeker_profile.job_preferences.all_working_patterns, classes: "govuk-body-s govuk-!-padding-bottom-0"
+            - row.with_value text: preferences.all_working_patterns, classes: "govuk-body-s govuk-!-padding-bottom-0"
 
           - summary_list.with_row do |row|
             - row.with_key text: t("publishers.jobseeker_profiles.preferred_subjects", count: preferences.subjects.count), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
-            - row.with_value text: jobseeker_profile.job_preferences.all_subjects, classes: "govuk-body-s govuk-!-padding-bottom-0"
+            - row.with_value text: preferences.all_subjects, classes: "govuk-body-s govuk-!-padding-bottom-0"

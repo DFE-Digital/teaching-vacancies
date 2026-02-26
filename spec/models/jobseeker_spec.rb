@@ -44,7 +44,7 @@ RSpec.describe Jobseeker do
   describe "update_subscription_emails" do
     let(:jobseeker) { create(:jobseeker) }
     let!(:subscription) { create(:subscription, email: jobseeker.email) }
-    let(:new_email_address) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
+    let(:new_email_address) { Faker::Internet.unique.email(domain: TEST_EMAIL_DOMAIN) }
 
     it "updates the email address of every subscription associated with their previous email address" do
       expect {

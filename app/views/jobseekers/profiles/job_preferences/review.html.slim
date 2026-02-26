@@ -2,8 +2,6 @@
 - content_for :breadcrumbs do
   = govuk_back_link text: t("buttons.back"), href: jobseekers_profile_path
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    h1.govuk-heading-l Job preferences
-    = render partial: "jobseekers/profiles/job_preferences/summary"
-    = govuk_button_link_to "Return to profile", jobseekers_profile_path
+h1.govuk-heading-l Job preferences
+= render "jobseekers/profiles/job_preferences/summary", profile: @profile
+= govuk_button_link_to "Return to profile", jobseekers_profile_path
