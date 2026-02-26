@@ -24,7 +24,7 @@ RUN bundle install --no-binstubs --retry=5 --jobs=4 --no-cache
 
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn/releases ./.yarn/releases
-RUN yarn install --check-files
+RUN node .yarn/releases/yarn-4.12.0.cjs install --check-files
 
 COPY . .
 
