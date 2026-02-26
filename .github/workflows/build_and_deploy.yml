@@ -33,7 +33,7 @@ jobs:
   swagger-gen:
     name: Generate and Cache swagger docs
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     env:
       RAILS_ENV: test
@@ -329,6 +329,16 @@ jobs:
       with:
         message: |
           Review app deployed to <https://teaching-vacancies-${{ env.ENVIRONMENT }}.test.teacherservices.cloud> on AKS
+
+    - name: Check broken links on review app only
+      if: github.event_name == 'pull_request'
+      id: check-broken-links
+      uses: ./.github/actions/check-broken-links/
+      with:
+        aks_environment: ${{ env.ENVIRONMENT }}
+        event_name: ${{ github.event_name }}
+        http_basic_user: ${{ secrets.HTTP_BASIC_USER }}
+        http_basic_password: ${{ secrets.HTTP_BASIC_PASSWORD }}
 
     - name: Send job status message to twd_tv_dev channel
       if: failure()

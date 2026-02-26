@@ -1,0 +1,38 @@
+name: check-broken-links action
+description: check broken links application
+
+inputs:
+  aks_environment:
+    description: Environment
+    required: true
+  event_name:
+    description: type of event that triggred the test
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v6
+
+    - name: Prepare application environment
+      uses: ./.github/actions/prepare-app-env
+
+    - name: set environment (scheduled test)
+      shell: bash
+      if: ${{ inputs.event_name == 'schedule' }}
+      run: echo "AKS_ENVIRONMENT=qa" >> $GITHUB_ENV
+
+    - name: set environment
+      shell: bash
+      if: ${{ inputs.event_name != 'schedule' }}
+      run: |
+        echo "AKS_ENVIRONMENT=${{ inputs.aks_environment }}" >> $GITHUB_ENV
+
+    - name: Run deployment link check
+      shell: bash
+      run:  ./check_broken_links.sh "https://teaching-vacancies-${{ inputs.aks_environment }}.test.teacherservices.cloud" "${{ inputs.http_basic_user }}" "${{ inputs.http_basic_password }}"
+
+    - name: print environment
+      shell: bash
+      run: echo ${{ env.AKS_ENVIRONMENT}}
