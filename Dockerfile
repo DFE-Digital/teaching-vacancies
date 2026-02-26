@@ -24,7 +24,10 @@ RUN bundle install --no-binstubs --retry=5 --jobs=4 --no-cache
 
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn/releases ./.yarn/releases
-RUN corepack enable && node .yarn/releases/yarn-4.12.0.cjs install
+RUN node .yarn/releases/yarn-4.12.0.cjs install
+RUN echo '#!/bin/sh' > /usr/local/bin/yarn && \
+    echo 'node /app/.yarn/releases/yarn-4.12.0.cjs "$@"' >> /usr/local/bin/yarn && \
+    chmod +x /usr/local/bin/yarn
 
 COPY . .
 
