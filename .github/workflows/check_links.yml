@@ -1,4 +1,4 @@
-name: Accessibility Tests
+name: Check Broken Links on QA
 
 on:
   workflow_dispatch:
