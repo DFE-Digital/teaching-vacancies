@@ -22,7 +22,7 @@ module Publishers
         private
 
         def track_conflict_attempt(vacancy, conflicting_vacancy)
-          return if vacancy.find_external_reference_conflict_vacancy == conflicting_vacancy
+          return if vacancy.errors[:external_reference].any?
 
           fail_safe do
             VacancyConflictAttempt.track_attempt!(
