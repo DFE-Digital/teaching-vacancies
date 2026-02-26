@@ -4,7 +4,7 @@ namespace :vacancies do
     out_of_scope_vacancies = PublishedVacancy.kept
                                              .joins(:organisations)
                                              .where(organisations: {
-                                               detailed_school_type: Organisation::OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES
+                                               detailed_school_type: Organisation::OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES,
                                              })
                                              .distinct
 
