@@ -4,11 +4,11 @@ RSpec.describe "vacancies:discard_out_of_scope" do
   include_context "rake"
 
   let(:task_path) { "lib/tasks/discard_out_of_scope_vacancies" }
-  let(:in_scope_school) { create(:school, detailed_school_type: "Academy sponsor led") }
-  let!(:in_scope_vacancy) { create(:vacancy, organisations: [in_scope_school]) }
 
   # rubocop:disable RSpec/NamedSubject
   it "trashes vacancies from out-of-scope schools" do
+    in_scope_school = create(:school, detailed_school_type: "Academy sponsor led")
+    in_scope_vacancy = create(:vacancy, organisations: [in_scope_school])
     out_of_scope_school = create(:school, detailed_school_type: "Other independent school")
     further_education_school = create(:school, detailed_school_type: "Further education")
     higher_education_school = create(:school, detailed_school_type: "Higher education institutions")
