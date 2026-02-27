@@ -59,7 +59,7 @@ runs:
     - name: Pin Terraform version
       uses: hashicorp/setup-terraform@v2
       with:
-        terraform_version: 1.5.1
+        terraform_version: 1.14.5
 
     - name: Set environment variables for review
       if: startsWith( inputs.environment, 'review')
