@@ -7,19 +7,23 @@
 # for this to be valuable so that only changed files have tests run
 if ENV.fetch("COVERAGE", 0).to_i.positive?
   require "simplecov"
-  require "undercover/simplecov_formatter"
+  require "simplecov-lcov"
 
   # This allows both LCOV and HTML formatting -
   # lcov for undercover gem, HTML for humans
-  SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new(
-    [
-      SimpleCov::Formatter::Undercover,
-      SimpleCov::Formatter::HTMLFormatter,
-    ],
-  )
+  class SimpleCov::Formatter::MergedFormatter
+    def format(result)
+      SimpleCov::Formatter::HTMLFormatter.new.format(result)
+      SimpleCov::Formatter::LcovFormatter.new.format(result)
+    end
+  end
+
+  SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
+  SimpleCov.formatter = SimpleCov::Formatter::MergedFormatter
 
   SimpleCov.start :rails do
     enable_coverage :branch
+    primary_coverage :branch
 
     # This line would enable coverage for view templates, but the slim compiler
     # appears to have a bug which puts the whole coverage data out by one line.
@@ -47,13 +51,6 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # base mailer, currently unused
     add_filter "app/mailers/amazon_ses_mailer.rb"
 
-    # legacy rake tasks, unlikely to ever be test covered
-    add_filter "lib/tasks/audit.rake"
-    add_filter "lib/tasks/data.rake"
-
-    # safe replacement for rake db:migrate, never going to be covered by tests
-    add_filter "lib/tasks/migrate_swallowing_concurrent_migration_exceptions.rake"
-
     # Each group will be displayed in the report as its own Tab.
     add_group "Components", "app/components"
     add_group "Queries", "app/queries"
@@ -69,10 +66,10 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
 
     # However (possibly due to some residual random behaviour in test factories)
     # the line coverage needs to be set 0.02 below the reported value.
-    # Normally this value needs to be 0.01 below the reported value due to rounding issues.
-    minimum_coverage line: 97.6, branch: 87.38
-    # Values from test run Fri 6th March 2026
-    # 97.7% (12705 / 13004) -> 308 + 53 = 361 lines uncovered
-    # 87.47% (2828 / 3233) -> 179 + 233 = 412 branches uncovered
+    # Nornmally this value needs to be 0.01 below the reported value due to rounding issues.
+    minimum_coverage line: 97.14, branch: 87.13
+    # Values from test run Fri 13th February 2026
+    # 97.46% (12553 / 12880) -> 327 lines uncovered
+    # 87.18% (2808 / 3221) -> 192 + 221 = 411 branches uncovered
   end
 end

@@ -3,20 +3,18 @@
 - content_for :breadcrumbs do
   = govuk_back_link text: t("buttons.back"), href: back_url, html_attributes: { "aria-label" => "Back navigation" }
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_for @step, url: { action: :update }, method: :post, as: :personal_details_form do |f|
-      = f.govuk_error_summary
+= form_for @form, url: wizard_path(step, back_to_review: params[:back_to_review]), method: :patch do |f|
+  = f.govuk_error_summary
 
-      = f.govuk_radio_buttons_fieldset :phone_number_provided, legend: { text: t(".heading"), tag: "h1", size: "l" }, caption: { text: t(".caption"), size: "l" } do
-        = f.govuk_radio_button :phone_number_provided, "true", link_errors: true do
-          = f.govuk_text_field :phone_number,
-            label: { class: "govuk-label govuk-label--s" },
-            autocomplete: "tel"
+  = f.govuk_radio_buttons_fieldset :phone_number_provided, legend: { text: t(".heading"), tag: "h1", size: "l" }, caption: { text: t(".caption"), size: "l" } do
+    = f.govuk_radio_button :phone_number_provided, "true", link_errors: true do
+      = f.govuk_text_field :phone_number,
+        label: { class: "govuk-label govuk-label--s" },
+        autocomplete: "tel"
 
-        = f.govuk_radio_button :phone_number_provided, "false"
+    = f.govuk_radio_button :phone_number_provided, "false"
 
-      = f.govuk_submit t("buttons.save_and_continue"), class: "govuk-!-margin-bottom-5"
+  = f.govuk_submit t("buttons.save_and_continue"), class: "govuk-!-margin-bottom-5"
 
-    .govuk-button-group
-      = govuk_link_to t("buttons.cancel"), jobseekers_profile_path
+.govuk-button-group
+  = govuk_link_to t("buttons.cancel"), jobseekers_profile_path
