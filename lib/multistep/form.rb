@@ -26,11 +26,11 @@ module Multistep
       current_step = completed_steps.keys.last&.to_sym if current_step.nil?
       return steps.keys.first if current_step.nil?
 
-      current_step = current_step.to_sym
+      current_step = current_step.to_s
       raise "Step not completed: #{current_step}" unless completed_steps.key?(current_step)
 
       completed_steps.to_a[0..completed_steps.keys.index(current_step)].each do |step, status|
-        return step if status == :invalidated || (status == :skipped && !steps[step].skip?)
+        return step if status == :invalidated || (status == :skipped && !steps[step.to_sym].skip?)
       end
 
       return unless (next_step = steps.keys[steps.keys.index(current_step.to_sym) + 1])
@@ -41,8 +41,8 @@ module Multistep
     # rubocop:enable Metrics/AbcSize
 
     def previous_step(current_step:)
-      completed = completed_steps.keys + [next_step].compact
-      current_index = completed.index(current_step.to_sym)
+      completed = completed_steps.keys + [next_step.to_s].compact
+      current_index = completed.index(current_step.to_s)
 
       raise "Step not completed: #{current_step}" unless current_index
       return unless current_index.positive?
@@ -53,14 +53,15 @@ module Multistep
       previous_step(current_step: previous)
     end
 
+    # rubocop:disable Metrics/AbcSize
     def complete_step!(step, status = :completed)
-      step = step.to_sym
+      step = step.to_s
       completed_steps[step] = status
       return unless status == :completed
 
       completed_steps.keys[(completed_steps.keys.index(step) + 1)..].each do |completed_step|
-        completed_steps[completed_step] = :invalidated if steps[completed_step].invalidate?
-        completed_steps[completed_step] = :skipped if steps[completed_step].skip?
+        completed_steps[completed_step] = :invalidated if steps[completed_step.to_sym].invalidate?
+        completed_steps[completed_step] = :skipped if steps[completed_step.to_sym].skip?
       end
 
       next_step = self.next_step(current_step: step, include_skipped: true)
@@ -71,6 +72,7 @@ module Multistep
 
       clear_changes_information
     end
+    # rubocop:enable Metrics/AbcSize
 
     def completed?(step = nil)
       return next_step.nil? unless step
