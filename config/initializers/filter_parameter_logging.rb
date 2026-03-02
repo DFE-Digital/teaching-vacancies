@@ -103,6 +103,7 @@ Rails.application.config.filter_parameters += %i[
   unable_to_undertake_reason
 ] + [
   /^age$/i,
+  /args.*email/i,
 ]
 
 Rails.application.config.filter_parameters += MAILER_SANITIZED_PARAMS
