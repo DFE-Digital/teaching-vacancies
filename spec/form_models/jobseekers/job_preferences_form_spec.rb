@@ -2,20 +2,38 @@ require "rails_helper"
 
 RSpec.describe Jobseekers::JobPreferencesForm, type: :model do
   subject(:multistep) { described_class.new initial_attributes }
+
   let(:initial_attributes) { {} }
+
+  describe "#delegated_attributes" do
+    it "has the steps inverted" do
+      expect(described_class.delegated_attributes.symbolize_keys)
+        .to eq({ roles: :roles,
+                 phases: :phases,
+                 key_stages: :key_stages,
+                 subjects: :subjects,
+                 working_patterns: :working_patterns,
+                 working_pattern_details: :working_patterns,
+                 add_location: :locations,
+                 locations: :locations })
+    end
+  end
 
   describe "`roles` step" do
     subject(:step) { multistep.steps[:roles] }
+
     it { is_expected.to validate_presence_of :roles }
   end
 
   describe "`phases` step" do
     subject(:step) { multistep.steps[:phases] }
+
     it { is_expected.to validate_presence_of :phases }
   end
 
   describe "`key_stages` step" do
     subject(:step) { multistep.steps[:key_stages] }
+
     it { is_expected.to validate_presence_of :key_stages }
 
     describe "#options" do
@@ -61,6 +79,7 @@ RSpec.describe Jobseekers::JobPreferencesForm, type: :model do
 
   describe "`subjects` step" do
     subject(:step) { multistep.steps[:subjects] }
+
     it { is_expected.not_to validate_presence_of :subjects }
 
     describe "#skip?" do
@@ -72,7 +91,7 @@ RSpec.describe Jobseekers::JobPreferencesForm, type: :model do
         end
       end
 
-      context "when user selected any of ks3+ stages" do
+      context "when user does not select any of ks3+ stages" do
         let(:initial_attributes) { { key_stages: %w[ks1 ks2], subjects: %w[history art] } }
 
         it "the subjects step is skipped and subject list is cleared" do
@@ -85,6 +104,7 @@ RSpec.describe Jobseekers::JobPreferencesForm, type: :model do
 
   describe "`working_patterns` step" do
     subject(:step) { multistep.steps[:working_patterns] }
+
     it { is_expected.to validate_presence_of :working_patterns }
 
     describe "#working_pattern_details_does_not_exceed_maximum_words" do

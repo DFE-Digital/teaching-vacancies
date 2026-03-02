@@ -21,7 +21,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 11 Feb 2026 09:36:29 GMT
+      - Thu, 26 Feb 2026 14:43:16 GMT
       Pragma:
       - no-cache
       Expires:
@@ -47,7 +47,7 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       Server-Timing:
-      - gfet4t7; dur=15
+      - gfet4t7; dur=71
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
@@ -84,7 +84,7 @@ http_interactions:
         \              }\n            }\n         },\n         \"place_id\" : \"ChIJ2_UmUkxNekgRqmv-BDgUvtk\",\n
         \        \"types\" : \n         [\n            \"locality\",\n            \"political\"\n
         \        ]\n      }\n   ],\n   \"status\" : \"OK\"\n}"
-  recorded_at: Wed, 11 Feb 2026 09:36:29 GMT
+  recorded_at: Thu, 26 Feb 2026 14:43:16 GMT
 - request:
     method: get
     uri: https://maps.googleapis.com/maps/api/geocode/json?address=Manchester&components=country:gb&key=<GOOGLE_LOCATION_SEARCH_API_KEY>&language=en&sensor=false
@@ -106,7 +106,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 11 Feb 2026 09:36:29 GMT
+      - Thu, 26 Feb 2026 14:43:17 GMT
       Pragma:
       - no-cache
       Expires:
@@ -132,7 +132,7 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       Server-Timing:
-      - gfet4t7; dur=11
+      - gfet4t7; dur=86
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
@@ -169,5 +169,5 @@ http_interactions:
         \              }\n            }\n         },\n         \"place_id\" : \"ChIJ2_UmUkxNekgRqmv-BDgUvtk\",\n
         \        \"types\" : \n         [\n            \"locality\",\n            \"political\"\n
         \        ]\n      }\n   ],\n   \"status\" : \"OK\"\n}"
-  recorded_at: Wed, 11 Feb 2026 09:36:30 GMT
+  recorded_at: Thu, 26 Feb 2026 14:43:17 GMT
 recorded_with: VCR 6.4.0

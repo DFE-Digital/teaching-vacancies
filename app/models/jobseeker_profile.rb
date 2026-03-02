@@ -12,9 +12,6 @@ class JobseekerProfile < ApplicationRecord
   has_many :excluded_organisations, through: :organisation_exclusions, source: :organisation
   has_many :professional_body_memberships, dependent: :destroy
 
-  delegate :all_roles, to: :job_preferences
-  delegate :all_key_stages, to: :job_preferences
-  delegate :all_working_patterns, to: :job_preferences
   delegate :first_name, :last_name, to: :personal_details, allow_nil: true
   delegate :email, to: :jobseeker
 

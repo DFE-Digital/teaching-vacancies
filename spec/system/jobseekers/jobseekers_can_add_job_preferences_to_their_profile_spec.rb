@@ -21,10 +21,14 @@ RSpec.describe "Jobseekers can add job preferences to their profile" do
         expect(page).to be_axe_clean
       end
 
-      it "allows jobseekers to add job preferences", :a11y do
+      it "passes a11y on job prefeences page", :a11y do
         click_on "Add job preferences"
 
         expect(page).to be_axe_clean
+      end
+
+      it "allows jobseekers to add job preferences" do
+        click_on "Add job preferences"
 
         check "Headteacher"
         click_on "Save and continue"
@@ -36,6 +40,7 @@ RSpec.describe "Jobseekers can add job preferences to their profile" do
         click_on "Save and continue"
 
         check "Part time"
+
         fill_in "job-preferences-working-pattern-details-field", with: "I am only available before 1pm."
         click_on "Save and continue"
 
@@ -46,13 +51,15 @@ RSpec.describe "Jobseekers can add job preferences to their profile" do
         choose "No"
         click_on "Save and continue"
 
-        expect_page_to_have_values(role: "Headteacher", phase: "All through school", key_stage: "I'm not looking for a teaching job", working_patterns: "Part time", working_pattern_details: "I am only available before 1pm.", location: "London", location_radius: "1 mile")
+        expect_page_to_have_values(role: "Headteacher", phase: "All through school", key_stage: "I'm not looking for a teaching job",
+                                   working_patterns: "Part time", working_pattern_details: "I am only available before 1pm.", location: "London", location_radius: "1 mile")
 
         click_on "Return to profile"
 
         expect(page).to have_current_path(jobseekers_profile_path)
 
-        expect_page_to_have_values(role: "Headteacher", phase: "All through school", key_stage: "I'm not looking for a teaching job", working_patterns: "Part time", working_pattern_details: "I am only available before 1pm.", location: "London", location_radius: "1 mile")
+        expect_page_to_have_values(role: "Headteacher", phase: "All through school", key_stage: "I'm not looking for a teaching job",
+                                   working_patterns: "Part time", working_pattern_details: "I am only available before 1pm.", location: "London", location_radius: "1 mile")
       end
     end
 
@@ -85,7 +92,7 @@ RSpec.describe "Jobseekers can add job preferences to their profile" do
     end
   end
 
-  def expect_page_to_have_values(role:, phase:, key_stage:, working_patterns:, location:, location_radius:, working_pattern_details: nil)
+  def expect_page_to_have_values(role:, phase:, key_stage:, working_patterns:, location:, location_radius:, working_pattern_details:)
     expect(page).to have_css(".govuk-summary-list__key", text: "Role")
     expect(page).to have_css(".govuk-summary-list__value", text: role)
 

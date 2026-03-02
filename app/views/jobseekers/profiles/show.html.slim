@@ -34,7 +34,7 @@ p = t(".page_description")
     = section[:title]
 
   - if section.fetch(:display_summary).call(@profile)
-    = render(partial: "jobseekers/profiles/#{section[:key]}/summary", locals: { profile: @profile, section: })
+    = render(partial: "jobseekers/profiles/#{section[:key]}/summary", locals: { profile: @profile })
   - else
     p = govuk_link_to section[:link_text], instance_exec(&section[:page_path])
 

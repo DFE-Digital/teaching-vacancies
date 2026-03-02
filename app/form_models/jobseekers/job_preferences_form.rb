@@ -4,10 +4,22 @@ module Jobseekers
   class JobPreferencesForm < BaseForm
     include Multistep::Form
 
-    ROLES = %i[teacher head_of_year_or_phase head_of_department_or_curriculum assistant_headteacher deputy_headteacher
-               headteacher teaching_assistant higher_level_teaching_assistant education_support
-               sendco administration_hr_data_and_finance catering_cleaning_and_site_management it_support
-               pastoral_health_and_welfare other_leadership other_support].freeze
+    ROLES = %i[teacher
+               head_of_year_or_phase
+               head_of_department_or_curriculum
+               assistant_headteacher
+               deputy_headteacher
+               headteacher
+               teaching_assistant
+               higher_level_teaching_assistant
+               education_support
+               sendco
+               administration_hr_data_and_finance
+               catering_cleaning_and_site_management
+               it_support
+               pastoral_health_and_welfare
+               other_leadership
+               other_support].freeze
     WORKING_PATTERNS = %i[full_time part_time job_share].freeze
 
     def self.from_record(record)
@@ -57,7 +69,8 @@ module Jobseekers
       validates :key_stages, presence: true
 
       def options(phases: multistep.phases)
-        options = School::PHASE_TO_KEY_STAGES_MAPPINGS.values_at(*phases.map(&:to_sym)).flatten.uniq
+        options = School::PHASE_TO_KEY_STAGES_MAPPINGS
+                    .values_at(*phases.map(&:to_sym)).flatten.uniq
                                                       .to_h { |opt| [opt.to_s, I18n.t("helpers.label.jobseekers_job_preferences_form.key_stages_options.#{opt}")] }
         options.merge({ "non_teaching" => "I'm not looking for a teaching job" })
       end
@@ -145,10 +158,6 @@ module Jobseekers
 
       validates :location, presence: true, within_united_kingdom: true
       validates :radius, presence: true
-
-      def radius_options
-        [0, 1, 5, 10, 15, 20, 25, 50, 100, 200].map { |radius| [radius, I18n.t("jobs.search.number_of_miles", count: radius)] }
-      end
     end
 
     class DeleteLocationForm
