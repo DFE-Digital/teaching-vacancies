@@ -33,8 +33,10 @@ module "application_configuration" {
     },
     local.app_env_api_keys,
     local.app_env_secrets,
-    local.app_env_documents_bucket_credentials,
-    local.app_env_schools_images_logos_s3_bucket_credentials
+    local.app_env_documents_s3_bucket_credentials,
+    local.app_env_schools_images_logos_s3_bucket_credentials,
+    local.app_env_documents_azure_storage_credentials,
+    local.app_env_images_logos_azure_storage_credentials
   )
 }
 

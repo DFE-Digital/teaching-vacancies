@@ -24,6 +24,7 @@ gem "active_storage_validations"
 gem "addressable"
 gem "array_enum"
 gem "aws-sdk-s3"
+gem "azure-blob", require: false
 gem "business_time"
 gem "chartkick"
 gem "devise"
