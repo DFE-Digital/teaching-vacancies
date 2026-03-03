@@ -5,9 +5,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
   let(:organisation) { vacancy.organisations.first }
   let(:publisher) { create(:publisher, accepted_terms_at: 1.day.ago) }
 
-  before do
-    login_publisher(publisher: publisher, organisation: organisation)
-  end
+  before { login_publisher(publisher: publisher, organisation: organisation) }
 
   after { logout }
 
