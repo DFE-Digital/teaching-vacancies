@@ -6,7 +6,7 @@
  # https://pkgs.alpinelinux.org/packages?name=&branch=v3.23
 ARG PROD_PACKAGES="imagemagick libpng libjpeg libxml2 libxslt libpq tzdata shared-mime-info postgresql18 vips-poppler vips-magick proj-dev"
 
-FROM ruby:3.4.8-alpine3.23 AS builder
+FROM ruby:4.0.1-alpine3.23 AS builder
 
 WORKDIR /app
 
@@ -15,7 +15,7 @@ ENV DEV_PACKAGES="gcc libc-dev make yaml-dev yarn postgresql18-dev=18.2-r0 build
 RUN apk add --no-cache $PROD_PACKAGES $DEV_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
-RUN gem install bundler:2.7.1 --no-document
+RUN gem install bundler:4.0.7 --no-document
 
 
 COPY Gemfile* ./
@@ -52,7 +52,7 @@ RUN rm -rf node_modules log tmp yarn.lock && \
 
 
 # this stage reduces the image size.
-FROM ruby:3.4.8-alpine3.23 AS production
+FROM ruby:4.0.1-alpine3.23 AS production
 
 RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
 WORKDIR /app
