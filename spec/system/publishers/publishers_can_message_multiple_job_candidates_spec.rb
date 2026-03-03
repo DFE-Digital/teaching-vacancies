@@ -33,7 +33,7 @@ RSpec.describe "Publishers can message multiple job candidates" do
         first(".govuk-checkboxes__item").click
         click_on "Send a message"
         #  wait for page to load
-        find("span", text: "Send messages")
+        find(".trix-content")
 
         click_on "Send message without template"
         fill_in_trix_editor "publisher_message_content", with: Faker::ChuckNorris.fact
