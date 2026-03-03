@@ -1100,7 +1100,7 @@ DEPENDENCIES
   sidekiq-cron
   sidekiq-limit_fetch
   simplecov
-  simplecov-lcov (< 0.10)
+  simplecov-lcov
   site_prism
   skylight
   slim-rails
