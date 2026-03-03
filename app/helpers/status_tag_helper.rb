@@ -12,7 +12,7 @@ module StatusTagHelper
   def vacancy_draft_status(organisation, vacancy, section)
     step_process = Publishers::Vacancies::VacancyStepProcess.new(:review, organisation: organisation, vacancy: vacancy)
 
-    active_steps = step_process.step_groups[section]
+    active_steps = step_process.steps_list_for(section)
     completed_steps = vacancy.completed_steps.map(&:to_sym).intersection(active_steps)
     if active_steps - completed_steps == []
       :completed

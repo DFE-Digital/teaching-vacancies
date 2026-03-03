@@ -1,6 +1,4 @@
 class BaseForm
-  attr_accessor :skip_after_validation_big_query_callback
-
   IMAGE_VALIDATION_OPTIONS = {
     file_type: :image,
     content_types_allowed: %w[image/jpeg image/png].freeze,
@@ -13,7 +11,7 @@ class BaseForm
   include ActiveModel::Model
   include ActiveModel::Validations::Callbacks
 
-  after_validation :send_errors_to_big_query, unless: :skip_after_validation_big_query_callback
+  after_validation :send_errors_to_big_query
 
   def send_errors_to_big_query
     return if errors.none?
