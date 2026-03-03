@@ -4,7 +4,7 @@
  # the hardcoded versions below when they have been updated in the alpine ruby image.
  # To find the current version of each package in the alpine image, search here:
  # https://pkgs.alpinelinux.org/packages?name=&branch=v3.23
-ARG PROD_PACKAGES="imagemagick libpng libjpeg libxml2 libxslt libpq tzdata shared-mime-info postgresql18 vips-poppler vips-magick proj-dev"
+ARG PROD_PACKAGES="imagemagick=7.1.2.15-r0 libpng libjpeg libxml2 libxslt libpq tzdata shared-mime-info postgresql18 vips-poppler vips-magick proj-dev"
 
 FROM ruby:3.4.8-alpine3.23 AS builder
 
