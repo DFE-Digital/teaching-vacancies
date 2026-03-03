@@ -154,6 +154,7 @@ group :test do
   gem "mock_redis"
   gem "rack_session_access"
   gem "redis-client"
+  gem "rspec-retry"
   gem "selenium-webdriver"
   gem "shoulda-matchers"
   gem "simplecov", require: false
