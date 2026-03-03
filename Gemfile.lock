@@ -1053,6 +1053,7 @@ DEPENDENCIES
   omniauth-rails_csrf_protection (~> 2.0)
   omniauth_openid_connect
   online_migrations
+  ostruct
   pagy (~> 9.4)
   paper_trail
   paper_trail-globalid

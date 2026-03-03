@@ -63,6 +63,7 @@ gem "omniauth"
 gem "omniauth_openid_connect"
 gem "omniauth-rails_csrf_protection", "~> 2.0"
 gem "online_migrations"
+gem "ostruct"
 gem "pagy", "~> 9.4" # Omit the patch segment to avoid breaking changes
 gem "paper_trail"
 gem "paper_trail-globalid"
