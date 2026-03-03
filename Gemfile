@@ -1,7 +1,5 @@
 source "https://rubygems.org"
 
-ruby "3.4.8"
-
 RAILS_VERSION = "< 8.1".freeze
 gem "actionmailer", RAILS_VERSION
 gem "actionpack", RAILS_VERSION
@@ -151,11 +149,10 @@ group :test do
   gem "mock_redis"
   gem "rack_session_access"
   gem "redis-client"
+  gem "rspec-retry"
   gem "selenium-webdriver"
   gem "shoulda-matchers"
   gem "simplecov", require: false
-  # Lcov 0.9 breaks undercover's LCov parser
-  gem "simplecov-lcov", "< 0.10", require: false
   gem "site_prism"
   gem "uri-query_params"
   gem "vcr"
