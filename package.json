@@ -13,10 +13,10 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.23",
-    "@ministryofjustice/frontend": "^8.0.0",
+    "@ministryofjustice/frontend": "^8.0.1",
     "@rails/actiontext": "^8.1.200",
     "@rails/activestorage": "^8.1.200",
-    "@sentry/browser": "10.39.0",
+    "@sentry/browser": "10.40.0",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^3.0.1",
     "axios": "^1.13.5",
