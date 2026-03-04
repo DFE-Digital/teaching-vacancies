@@ -82,5 +82,6 @@
       "<rootDir>/app/assets/javascript/lib/polyfill/*"
     ],
     "testEnvironment": "jest-environment-jsdom"
-  }
+  },
+  "packageManager": "yarn@4.12.0"
 }
