@@ -17,8 +17,6 @@ module Jobseekers
                other_leadership
                other_support].freeze
 
-    WORKING_PATTERNS = %w[full_time part_time job_share].freeze
-
     STEPS = { roles: [:roles],
               phases: [:phases],
               key_stages: [:key_stages],
@@ -37,6 +35,8 @@ module Jobseekers
       end
     end
 
+    WORKING_PATTERNS = %w[full_time part_time job_share].freeze
+
     class ProfilesForm < ::BaseForm
       include ActiveModel::Model
       include ActiveModel::Attributes
@@ -53,6 +53,11 @@ module Jobseekers
     end
 
     class RolesForm < ProfilesForm
+      attribute :roles, array: true, default: []
+
+      validates :roles, presence: true
+      validate :validate_roles
+
       class << self
         def fields
           [{ roles: [] }]
@@ -62,11 +67,6 @@ module Jobseekers
       def params_to_save
         { roles: roles.compact_blank }
       end
-
-      attribute :roles, array: true, default: []
-
-      validates :roles, presence: true
-      validate :validate_roles
 
       def teaching_job_roles_options
         Vacancy::TEACHING_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.#{option}")] }
@@ -84,6 +84,9 @@ module Jobseekers
     end
 
     class PhasesForm < ProfilesForm
+      attribute :phases, array: true, default: []
+      validates :phases, presence: true
+
       class << self
         def fields
           [{ phases: [] }]
@@ -94,9 +97,6 @@ module Jobseekers
         { phases: phases }
       end
 
-      attribute :phases, array: true, default: []
-      validates :phases, presence: true
-
       def options
         School::READABLE_PHASE_MAPPINGS.values.uniq.compact
                                        .to_h { |opt| [opt.to_s, I18n.t("jobs.education_phase_options.#{opt}")] }
@@ -104,6 +104,9 @@ module Jobseekers
     end
 
     class KeyStagesForm < ProfilesForm
+      attribute :key_stages, array: true, default: []
+      validates :key_stages, presence: true
+
       class << self
         def fields
           [{ key_stages: [] }]
@@ -113,9 +116,6 @@ module Jobseekers
       def params_to_save
         { key_stages: key_stages }
       end
-
-      attribute :key_stages, array: true, default: []
-      validates :key_stages, presence: true
     end
 
     class SubjectsForm < ProfilesForm
@@ -140,6 +140,12 @@ module Jobseekers
     end
 
     class WorkingPatternsForm < ProfilesForm
+      attribute :working_patterns, array: true
+      attribute :working_pattern_details
+
+      validates :working_patterns, presence: true
+      validates :working_pattern_details_words, length: { maximum: 50 }, if: -> { working_pattern_details.present? }
+
       class << self
         def fields
           [{ working_patterns: [] }, :working_pattern_details]
@@ -152,12 +158,6 @@ module Jobseekers
           working_pattern_details: working_pattern_details,
         }
       end
-
-      attribute :working_patterns, array: true
-      attribute :working_pattern_details
-
-      validates :working_patterns, presence: true
-      validates :working_pattern_details_words, length: { maximum: 50 }, if: -> { working_pattern_details.present? }
 
       def options
         WORKING_PATTERNS.index_with { |opt| I18n.t("helpers.label.publishers_job_listing_contract_information_form.working_patterns_options.#{opt}") }

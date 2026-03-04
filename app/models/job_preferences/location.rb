@@ -9,9 +9,8 @@ class JobPreferences < ApplicationRecord
 
     validates :name, presence: true, within_united_kingdom: true
     validates :radius, presence: true
-    validates :uk_area, presence: true
 
-    before_validation :set_area, if: -> { name.present? }
+    before_save :set_area, if: -> { name.present? }
 
     scope :containing, ->(point) { where("ST_Within(ST_GeomFromEWKT(?), area::geometry)", "SRID=4326;#{point.as_text}") }
 
