@@ -1,8 +1,8 @@
 - content_for :page_title_prefix, "Job preferences: locations"
 - content_for :breadcrumbs do
-  = govuk_back_link text: t("buttons.back"), href: previous_wizard_path, html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
+  = govuk_back_link text: t("buttons.back"), href: jobseekers_job_preferences_step_path(:working_patterns), html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
 
-= form_for @form, as: :job_preferences, url: { action: :update } do |f|
+= form_for @form, url: add_new_jobseekers_job_preferences_locations_path, method: :post do |f|
   = f.govuk_error_summary
 
   h1.govuk-heading-l
@@ -14,12 +14,12 @@
       h2.govuk-fieldset__heading = t("helpers.legend.jobseekers_profile_location_preferences.another_location")
 
   = govuk_summary_list(classes: "locations-summary-list") do |summary_list|
-    = @form.locations.each.with_index do |(id, location), index|
+    = @form.locations.each.with_index do |location, index|
       - summary_list.with_row do |row|
         - row.with_key text: "Location #{index + 1}"
-        - row.with_value text: "#{location[:location]} (#{t 'jobs.search.number_of_miles', count: location[:radius].to_i})"
-        - row.with_action(text: t("buttons.change"), href: { action: :update_location, id: id })
-        - row.with_action(text: t("buttons.delete"), href: { action: :delete_location, id: id })
+        - row.with_value text: "#{location[:name]} (#{t 'jobs.search.number_of_miles', count: location[:radius].to_i})"
+        - row.with_action(text: t("buttons.change"), href: edit_jobseekers_job_preferences_location_path(location.id))
+        - row.with_action(text: t("buttons.delete"), href: delete_location_jobseekers_job_preferences_location_path(location.id))
 
   = f.hidden_field :add_location, value: ""
   = f.govuk_radio_buttons_fieldset(:add_location, legend: -> { another_location_legend }) do
