@@ -147,4 +147,38 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
       expect(page).to_not have_content(school2_draft_vacancy.job_title)
     end
   end
+
+  context "when attempting to access unauthorised organisations via URL params" do
+    let(:organisation) { trust }
+    let(:unauthorised_school) { create(:school, name: "Unauthorised School") }
+    let!(:unauthorised_vacancy) { create(:vacancy, organisations: [unauthorised_school], job_title: "Unauthorised Job") }
+
+    scenario "it prevents access to vacancies from unauthorised organisations" do
+      visit organisation_jobs_with_type_path(organisation_ids: [school1.id, unauthorised_school.id])
+
+      # Should see the authorized school's vacancy
+      expect(page).to have_content(school1_vacancy.job_title)
+
+      # Should NOT see the unauthorised school's vacancy
+      expect(page).to_not have_content(unauthorised_vacancy.job_title)
+
+      expect(page).to have_css(".filters-component__remove-tags__tag", count: 1)
+      expect(page).to have_content("Happy Rainbows School")
+      expect(page).to_not have_content("Unauthorised School")
+    end
+  end
+
+  context "when filtering by job roles" do
+    let(:organisation) { trust }
+    let!(:teacher_vacancy) { create(:vacancy, job_roles: %w[teacher], organisations: [trust], job_title: "Teacher Position") }
+    let!(:headteacher_vacancy) { create(:vacancy, job_roles: %w[headteacher], organisations: [trust], job_title: "Headteacher Position") }
+
+    scenario "it filters vacancies by selected job role" do
+      visit organisation_jobs_with_type_path(job_roles: %w[teacher])
+
+      expect(page).to have_content(teacher_vacancy.job_title)
+      expect(page).to_not have_content(headteacher_vacancy.job_title)
+      expect(page).to have_css(".filters-component__remove-tags__tag", count: 1)
+    end
+  end
 end

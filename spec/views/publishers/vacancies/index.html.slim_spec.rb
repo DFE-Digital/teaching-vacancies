@@ -15,7 +15,8 @@ RSpec.describe "publishers/vacancies/index" do
     assign :sort, Publishers::VacancySort.new(organisation, :live)
     assign :publisher_preference, build_stubbed(:publisher_preference, organisation: organisation)
     assign :selected_organisation_ids, []
-    assign :filter_form, Publishers::VacancyFilterForm.new(organisation_ids: [])
+    assign :selected_job_roles, []
+    assign :filter_form, Publishers::VacancyFilterForm.new(organisation_ids: [], job_roles: [])
     render
   end
 

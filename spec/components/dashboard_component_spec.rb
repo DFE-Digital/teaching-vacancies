@@ -7,7 +7,8 @@ RSpec.describe DashboardComponent, type: :component do
   let(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: organisation) }
 
   let(:selected_organisation_ids) { [] }
-  let(:filter_form) { Publishers::VacancyFilterForm.new(organisation_ids: selected_organisation_ids) }
+  let(:selected_job_roles) { [] }
+  let(:filter_form) { Publishers::VacancyFilterForm.new(organisation_ids: selected_organisation_ids, job_roles: selected_job_roles) }
 
   subject do
     described_class.new(
@@ -15,6 +16,7 @@ RSpec.describe DashboardComponent, type: :component do
       publisher_preference: publisher_preference, vacancies: vacancies,
       count: vacancies.count, vacancy_types: %i[live draft pending expired awaiting_feedback],
       selected_organisation_ids: selected_organisation_ids,
+      selected_job_roles: selected_job_roles,
       filter_form: filter_form
     )
   end
