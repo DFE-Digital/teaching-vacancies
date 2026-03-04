@@ -75,4 +75,4 @@ RUN mkdir -p /app/tmp /app/log
 RUN chown -hR appuser:appgroup /app/tmp /app/log
 USER 10001
 EXPOSE 3000
-CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions && bundle exec rails s
+CMD bundle exec rails db:prepare:ignore_concurrent_migration_exceptions && bundle exec rails s
