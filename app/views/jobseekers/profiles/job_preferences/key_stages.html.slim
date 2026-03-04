@@ -1,42 +1,36 @@
 - content_for :page_title_prefix, "Job preferences: phases"
 - content_for :breadcrumbs do
-  = govuk_back_link text: t("buttons.back"), href: back_url
+  = govuk_back_link text: t("buttons.back"), href: previous_wizard_path
 
-= form_for(@step, url: { action: :update }, as: :job_preferences) do |f|
+= form_for(@form, url: wizard_path(step, back_to_review: params[:back_to_review]), method: :patch) do |f|
   = f.govuk_error_summary
 
-  = f.govuk_check_boxes_fieldset :key_stages, legend: { text: "Key stages", size: "l" }, caption: { text: "Job preferences", size: "l" } do
+  / have to put 'multiple: false' here in the fieldset to stop it adding an empty value
+  = f.govuk_check_boxes_fieldset :key_stages, multiple: false, legend: { text: "Key stages", size: "l" }, caption: { text: "Job preferences", size: "l" } do
     = f.govuk_check_box :key_stages,
       "early_years",
-      label: { text: "Early years (ages 0 to 5)" },
       link_errors: true
 
     = f.govuk_check_box :key_stages,
-      "ks1",
-      label: { text: "Key stage 1 (ages 5 to 7)" }
+      "ks1"
 
     = f.govuk_check_box :key_stages,
-      "ks2",
-      label: { text: "Key stage 2 (ages 7 to 11)" }
+      "ks2"
 
     = f.govuk_check_box :key_stages,
-      "ks3",
-      label: { text: "Key stage 3 (ages 11 to 14)" }
+      "ks3"
 
     = f.govuk_check_box :key_stages,
-      "ks4",
-      label: { text: "Key stage 4 (ages 14 to 16)" }
+      "ks4"
 
     = f.govuk_check_box :key_stages,
-      "ks5",
-      label: { text: "Key stage 5 (ages 16 to 18)" }
+      "ks5"
 
     = f.govuk_check_box_divider
 
     = f.govuk_check_box :key_stages,
       "non_teaching",
-      exclusive: true,
-      label: { text: "I'm not looking for a teaching job" }
+      exclusive: true
 
   = f.govuk_submit "Save and continue"
   p = f.link_to "Cancel", escape_path
