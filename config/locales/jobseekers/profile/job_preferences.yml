@@ -4,27 +4,27 @@ en:
       hint: Teaching Vacancies advertises school roles in England. Enter a UK city, county or postcode to set up a job alert for roles near you.
     errors:
       models:
-        jobseekers/job_preferences_form/role:
+        jobseekers/job_preferences_form/roles_form:
           attributes:
             roles:
               blank: Select the roles you are interested in to continue
 
-        jobseekers/job_preferences_form/phase:
+        jobseekers/job_preferences_form/phases_form:
           attributes:
             phases:
               blank: Select the education phases you are interested in to continue
 
-        jobseekers/job_preferences_form/key_stage:
+        jobseekers/job_preferences_form/key_stages_form:
           attributes:
             key_stages:
               blank: Select the key stages you are interested in to continue
 
-        jobseekers/job_preferences_form/working_pattern:
+        jobseekers/job_preferences_form/working_patterns_form:
           attributes:
             working_patterns:
               blank: Select the working patterns you are interested in to continue
-            working_pattern_details:
-              length: Working pattern details must be 50 words or less
+            working_pattern_details_words:
+              too_long: Working pattern details must be 50 words or less
 
         jobseekers/job_preferences_form/location_form:
           attributes:
@@ -33,13 +33,25 @@ en:
             radius:
               blank: Select a search radius
 
-        jobseekers/job_preferences_form/location:
+        jobseekers/profiles/locations_form:
           attributes:
             add_location:
               blank: Select yes if you want to add another location
+  activerecord:
+    errors:
+      models:
+        job_preferences/location:
+          attributes:
+            name:
+              blank: Enter a city, county or postcode in the UK
+            radius:
+              blank: Select a search radius
+
   helpers:
+    optional_field_html: "%{label} (optional<span class='govuk-visually-hidden'> field</span>)"
+
     label:
-      jobseekers_job_preferences_form:
+      jobseekers_job_preferences_form_roles_form:
         role_options:
           education_support: Learning support or cover supervisor
           head_of_year_or_phase: Head of year or phase
@@ -57,6 +69,7 @@ en:
           pastoral_health_and_welfare: Pastoral, health and welfare
           other_leadership: Other leadership roles
           other_support: Other support roles
+      jobseekers_job_preferences_form_key_stages_form:
         key_stages_options:
           early_years: Early years (ages 0 to 5)
           ks1: Key stage 1 (ages 5 to 7)
@@ -64,3 +77,7 @@ en:
           ks3: Key stage 3 (ages 11 to 14)
           ks4: Key stage 4 (ages 14 to 16)
           ks5: Key stage 5 (ages 16 to 18)
+          non_teaching: I'm not looking for a teaching job
+    legend:
+      jobseekers_profile_location_preferences:
+        another_location: Do you want to add another location?
