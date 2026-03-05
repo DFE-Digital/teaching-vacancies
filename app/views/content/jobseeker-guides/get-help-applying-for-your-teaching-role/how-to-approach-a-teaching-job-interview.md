@@ -22,7 +22,7 @@ The school may require you to bring evidence of your:
 
 * identity, such as your passport or driving license
 * residency or working rights
-* exam qualifications, such as exam certificates or transcripts - if you do not have these to hand, you can [access your teaching qualifications](https://www.gov.uk/guidance/access-your-teaching-qualifications) if you obtained these in England
+* exam qualifications, such as exam certificates or transcripts — if you do not have these to hand, you can [access your teaching qualifications](https://www.gov.uk/guidance/access-your-teaching-qualifications) if you obtained these in England
 
 These will be used for standard safeguarding checks.
 
@@ -44,6 +44,8 @@ You can never predict all of the questions, but schools might ask:
 * tell us about a recent lesson and why it went well
 
 You may be assessed against the [teachers’ standards](https://www.gov.uk/government/publications/teachers-standards) so you might want to prepare clear, strong examples to show how you have met each standard. 
+
+It can also be useful to think about examples related to behaviour management, special educational needs (SEN) support, and working with colleagues or parents. 
 
 Take your time answering a question and ask for clarification if needed. 
 
