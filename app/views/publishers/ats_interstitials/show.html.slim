@@ -1,0 +1,30 @@
+- scope = "ats_interstitials.#{@variant}"
+- content_for :page_title_prefix, t("ats_interstitials.shared.page_title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl = t("ats_interstitials.shared.page_title")
+    p.govuk-body = t("ats_interstitials.shared.intro")
+
+    h2.govuk-heading-m = t("ats_interstitials.shared.ats_list_header")
+    ul.govuk-list.govuk-list--bullet
+      - t("ats_interstitials.shared.ats_points").each do |item|
+        li = item
+
+    - if I18n.exists?("#{scope}.faith_paragraph")
+      p.govuk-body = t("#{scope}.faith_paragraph")
+
+    - if I18n.exists?("#{scope}.faith_intro")
+      p.govuk-body = t("#{scope}.faith_intro")
+
+    - if I18n.exists?("#{scope}.faith_points")
+      ul.govuk-list.govuk-list--bullet
+        - t("#{scope}.faith_points").each do |item|
+          li = item
+
+    p.govuk-body
+      = govuk_link_to t("ats_interstitials.shared.guidance_link_text"),
+        post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "accepting-job-applications-on-teaching-vacancies")
+
+    .govuk-button-group
+      = govuk_button_to "Continue", publishers_ats_interstitial_path, method: :patch, id: "acknowledge-interstitial-button"

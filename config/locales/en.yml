@@ -400,17 +400,32 @@ en:
       show_count: Applications (%{count})
     statistics: Statistics
 
-  candidate_profiles_interstitials:
-    page_title: You can now view candidate profiles and invite them to apply to jobs
-    intro: A candidate's profile includes their job preferences, experience and qualifications.
-    list_header: "These candidates have specified:"
-    page_description_items:
-      - "that they're able to travel to your school"
-      - "that they're interested in an education phase that matches your school"
-    outro: You'll also be notified about any new candidate profiles that match your job listings.
-    button_text: View candidate profiles
-    skip_text: Skip to job listings
-
+  ats_interstitials:
+      shared:
+        page_title: "You can now use our Applicant Tracking System (ATS)"
+        intro: "We have launched our Applicant Tracking System (ATS). This means that when you use our Keeping Children Safe in Education (KCSIE) compliant application form, you can manage applications from the beginning to the end of the hiring process."
+        ats_list_header: "Using our ATS, you can:"
+        ats_points:
+          - "update multiple applications at once"
+          - "communicate with jobseekers"
+          - "keep track of interviews"
+          - "record notes on progress for colleagues"
+        guidance_link_text: "Read our How to accept job applications guidance to find out more."
+      catholic:
+        faith_paragraph: "You now also have the option to use our Catholic Education Service (CES) approved online application form."
+        faith_intro: "The form asks applicants about their:"
+        faith_points:
+          - "religion"
+          - "place of worship"
+          - "baptism"
+          - "religious referees"
+      other_faith:
+        faith_paragraph: "We offer a version of the form that asks applicants questions about religion. When you use this form, it gives applicants an opportunity to tell you:"
+        faith_points:
+          - "if they have a religious denomination or faith"
+          - "how they will meet your school’s ethos and aims"
+          - "their religious reference details"
+          - "their place of worship"
   candidate_profiles_banner:
     intro: 'Candidate profiles are a new feature that allows schools to contact you about relevant jobs. With a profile you can:'
     summary_list:
