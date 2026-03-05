@@ -38,7 +38,7 @@ You can never predict all of the questions, but schools might ask:
 
 * why do you want to work in our school?
 * what are your strongest qualities and why? 
-* what areas do you need to improve on? (Think professionally, not a personality trait)
+* in your professional life, what areas do you think you need to improve on?
 * how do you adapt your teaching to ensure all pupils make progress?
 * what would you do if a child told you something that concerned you?
 * tell us about a recent lesson and why it went well
