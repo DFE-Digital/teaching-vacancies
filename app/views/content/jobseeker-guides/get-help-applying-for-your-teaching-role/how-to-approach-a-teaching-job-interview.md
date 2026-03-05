@@ -1,7 +1,7 @@
 ---
 order: 300
 title: How to approach a teaching job interview
-Practical advice and top tips for preparing for a teaching job interview, including how to confirm attendance, answer questions, deliver a lesson and ask the panel questions. 
+meta_description: Practical advice and top tips for preparing for a teaching job interview, including how to confirm attendance, answer questions, deliver a lesson and ask the panel questions. 
 date_posted: 22/01/2024
 date_updated: 05/03/2025
 category_tags: apply
