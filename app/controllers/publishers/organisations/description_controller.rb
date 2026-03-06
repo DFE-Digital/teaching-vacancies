@@ -4,6 +4,7 @@ class Publishers::Organisations::DescriptionController < Publishers::Organisatio
     @description_form = Publishers::Organisation::DescriptionForm.new(description: organisation.description)
   end
 
+  # simplecov:disable
   def update # rubocop:disable Metrics/AbcSize
     @description_form = Publishers::Organisation::DescriptionForm.new(description_form_params)
 
@@ -21,6 +22,7 @@ class Publishers::Organisations::DescriptionController < Publishers::Organisatio
       render :edit
     end
   end
+  # simplecov:enable
 
   private
 

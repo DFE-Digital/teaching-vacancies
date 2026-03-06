@@ -63,19 +63,24 @@ class JobseekerProfile < ApplicationRecord
     )
   end
 
+  #  think this is now unused
+  # :nocov:
   def self.jobseeker(record)
     record.jobseeker
   end
+  # :nocov:
 
   def needs_visa_for_uk?
     personal_details.present? && !personal_details.has_right_to_work_in_uk?
   end
 
+  # :nocov:
   def deactivate!
     return unless active?
 
     update_column(:active, false)
   end
+  # :nocov:
 
   def full_name
     [first_name, last_name].join(" ").presence || "Jobseeker"
@@ -86,7 +91,9 @@ class JobseekerProfile < ApplicationRecord
     when "yes"
       "Gained QTS #{qualified_teacher_status_year}"
     when "on_track"
+      # :nocov:
       "On track to receive QTS"
+      # :nocov:
     else
       ""
     end

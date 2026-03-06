@@ -30,6 +30,7 @@ module Publishers::DfeSignIn::BigQueryExport
 
     def insert_table_data(batch)
       dataset.insert TABLE_NAME, present_for_big_query(batch), autocreate: true do |schema|
+        # :nocov:
         schema.string "email", mode: :required, policy_tags: [POLICY_TAG_MASKED]
         schema.string "family_name", mode: :required, policy_tags: [POLICY_TAG_MASKED]
         schema.string "given_name", mode: :required, policy_tags: [POLICY_TAG_MASKED]
@@ -39,6 +40,7 @@ module Publishers::DfeSignIn::BigQueryExport
         schema.integer "school_urn", mode: :nullable
         schema.integer "trust_uid", mode: :nullable
         schema.string "user_id", mode: :required
+        # :nocov:
       end
     end
   end

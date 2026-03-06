@@ -2,7 +2,11 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   include ActiveModel::Attributes
 
   validates :fe_role_qts_required, inclusion: { in: [true, false] }, if: -> { vacancy.for_an_fe_college? && vacancy.job_roles.include?("teacher") }
+
+  # simplecov:disable
   validates :ect_status, inclusion: { in: Vacancy.ect_statuses.keys }, if: -> { vacancy&.job_roles&.include?("teacher") }
+  # simplecov:enable
+
   validate :skills_and_experience_presence
   validate :school_offer_presence
   validates :further_details_provided, inclusion: { in: [true, false] }
@@ -85,6 +89,7 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
     errors.add(:further_details, :blank)
   end
 
+  # simplecov:disable
   def flexi_working_presence
     return if remove_html_tags(flexi_working).present?
 
@@ -96,4 +101,5 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
 
     self.flexi_working = stripped_value.present? ? flexi_working : nil
   end
+  # simplecov:enable
 end

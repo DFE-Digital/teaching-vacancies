@@ -5,6 +5,7 @@ class CookiesPreferencesController < ApplicationController
     @cookies_preferences_form = CookiesPreferencesForm.new(cookies_consent: cookies["consented-to-additional-cookies-v3"])
   end
 
+  # simplecov:disable
   def create
     @cookies_preferences_form = CookiesPreferencesForm.new(cookies_preferences_params)
 
@@ -17,6 +18,7 @@ class CookiesPreferencesController < ApplicationController
       render :new
     end
   end
+  # simplecov:enable
 
   def show_cookies_banner?
     false

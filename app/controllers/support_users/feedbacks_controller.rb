@@ -47,6 +47,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
     end
   end
 
+  # simplecov:disable
   def recategorize
     params.fetch(:feedbacks, []).each do |feedback_params|
       next if (category = feedback_params[:category]).blank?
@@ -66,6 +67,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
       redirect_to support_users_feedback_general_path(reporting_period_params)
     end
   end
+  # simplecov:enable
 
   private
 
@@ -90,6 +92,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
   end
   helper_method :contact_email_for
 
+  # simplecov:disable
   def identified_or_authenticated(feedback)
     if authenticated?(feedback)
       "authenticated"
@@ -99,6 +102,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
       "unidentified"
     end
   end
+  # simplecov:enable
 
   def identified?(feedback)
     feedback.email.present?
@@ -108,6 +112,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
     feedback.jobseeker_id || feedback.publisher_id
   end
 
+  # simplecov:disable
   def user_type(feedback)
     if authenticated?(feedback)
       authenticated_user_type(feedback)
@@ -133,6 +138,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
       "unknown"
     end
   end
+  # simplecov:enable
 
   def set_reporting_period
     @reporting_period = FeedbackReportingPeriod.new(

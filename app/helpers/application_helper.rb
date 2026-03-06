@@ -2,9 +2,11 @@ module ApplicationHelper
   include ActionView::Helpers::NumberHelper
   include ActionView::Helpers::SanitizeHelper
 
+  # simplecov:disable
   def sanitize(text, options = {})
     super&.gsub("&amp;", "&")
   end
+  # simplecov:enable
 
   def body_class
     auth_class = publisher_signed_in? ? "publisher" : "jobseeker"

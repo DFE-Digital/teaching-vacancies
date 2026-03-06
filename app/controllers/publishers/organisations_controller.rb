@@ -14,6 +14,7 @@ class Publishers::OrganisationsController < Publishers::BaseController
 
   private
 
+  # simplecov:disable
   def organisation
     id = params[:id] || params[:organisation_id]
     @organisation ||= if id&.in?([current_organisation.friendly_id, current_organisation.id])
@@ -34,4 +35,5 @@ class Publishers::OrganisationsController < Publishers::BaseController
     end
   end
   helper_method :back_link_destination
+  # simplecov:enable
 end

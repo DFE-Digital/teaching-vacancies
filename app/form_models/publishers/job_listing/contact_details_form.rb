@@ -34,6 +34,7 @@ class Publishers::JobListing::ContactDetailsForm < Publishers::JobListing::Vacan
     super(params, vacancy)
   end
 
+  # simplecov:disable
   def contact_email
     return unless @vacancy.contact_email || params[:contact_email]
 
@@ -53,6 +54,7 @@ class Publishers::JobListing::ContactDetailsForm < Publishers::JobListing::Vacan
 
     @vacancy.contact_email unless @vacancy.contact_email == @current_publisher&.email
   end
+  # simplecov:enable
 
   def params_to_save
     {

@@ -57,8 +57,6 @@ class SchoolSearchForm < OrganisationSearchForm
 
   class << self
     def strong_params_args
-      return @strong_params_args if defined? @strong_params_args
-
       arrays, regular = new.attributes.partition { |_, v| v.is_a?(Array) }
       regular.map!(&:first).map!(&:to_sym)
       arrays = arrays.to_h.transform_values { [] }.transform_keys(&:to_sym)

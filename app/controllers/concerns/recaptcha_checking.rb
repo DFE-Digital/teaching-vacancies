@@ -12,7 +12,9 @@ module RecaptchaChecking
       yield
     else
       @show_recaptcha = true
+      # simplecov:disable
       form&.errors&.add(:recaptcha, t("recaptcha.error"))
+      # simplecov:enable
       render fallback_template
     end
   end

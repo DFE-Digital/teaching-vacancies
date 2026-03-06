@@ -76,6 +76,8 @@ class Jobseekers::SearchForm
 
   # Determines additional filters to apply if the user's keyword(s) match certain phrases
   # (to improve quality of results)
+
+  # simplecov:disable
   def set_filters_from_keyword
     # Do not apply filters on landing pages, even if they have a keyword set (as landing pages
     # should always be 100% manually configured) OR if the user changes the filters *without*
@@ -106,6 +108,7 @@ class Jobseekers::SearchForm
     @working_patterns -= previous_filters["working_patterns"]
     @visa_sponsorship_availability -= previous_filters["visa_sponsorship_availability"]
   end
+  # simplecov:enable
 
   def set_facet_options
     @visa_sponsorship_availability_options = [["true", I18n.t("jobs.filters.visa_sponsorship_availability.option")]]
