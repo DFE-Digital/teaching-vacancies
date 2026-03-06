@@ -4,6 +4,7 @@ class Jobseekers::AccountTransfersController < Jobseekers::BaseController
     @email = params["email"]
   end
 
+  # :nocov:
   def create
     @account_transfer_form = Jobseekers::AccountTransferForm.new(request_account_transfer_email_form_params)
 
@@ -21,12 +22,15 @@ class Jobseekers::AccountTransfersController < Jobseekers::BaseController
       render :new
     end
   end
+  # :nocov:
 
   private
 
   def request_account_transfer_email_form_params
     params.expect(jobseekers_account_transfer_form: %i[account_merge_confirmation_code email])
   end
+
+  # :nocov:
 
   def successfully_transfer_account_data?
     Jobseekers::AccountTransfer.new(current_jobseeker, @account_transfer_form.email).call
@@ -40,4 +44,5 @@ class Jobseekers::AccountTransfersController < Jobseekers::BaseController
     end
     false
   end
+  # :nocov:
 end

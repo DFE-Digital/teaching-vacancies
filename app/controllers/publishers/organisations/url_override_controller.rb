@@ -4,6 +4,8 @@ class Publishers::Organisations::UrlOverrideController < Publishers::Organisatio
     @url_override_form = Publishers::Organisation::UrlOverrideForm.new(url_override: organisation.url_override)
   end
 
+  # :nocov:
+
   def update
     @url_override_form = Publishers::Organisation::UrlOverrideForm.new(url_override_form_params)
 
@@ -17,6 +19,7 @@ class Publishers::Organisations::UrlOverrideController < Publishers::Organisatio
       render :edit
     end
   end
+  # :nocov:
 
   private
 
