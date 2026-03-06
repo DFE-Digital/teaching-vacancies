@@ -19,7 +19,6 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
   )
 
   SimpleCov.start :rails do
-    # add_filter(/^\/spec\//)
     enable_coverage :branch
 
     # This line would enable coverage for view templates, but the slim compiler
