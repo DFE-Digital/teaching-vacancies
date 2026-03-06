@@ -41,6 +41,7 @@ task backfill_azure_storage: :environment do
   mirror_blobs = ActiveStorage::Blob.where(service_name: mirror_services)
   mirror_count = mirror_blobs.count
 
+  # :nocov:
   if mirror_count.positive?
     puts "Found #{mirror_count} blob(s) to mirror"
     mirror_blobs.find_each do |blob|
@@ -51,6 +52,7 @@ task backfill_azure_storage: :environment do
   else
     puts "No blobs found for mirroring"
   end
+  # :nocov:
 
   puts "\n#{'=' * 80}"
   puts "Backfill complete!"

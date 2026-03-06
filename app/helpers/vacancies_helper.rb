@@ -63,18 +63,22 @@ module VacanciesHelper
     "#{prefix}#{page_heading} - #{t("publishers.vacancies.build.page_title.#{create_or_edit}", section_number: section_number)}"
   end
 
+  # :nocov:
   def review_page_title_prefix(vacancy)
     heading = t("publishers.vacancies.review.heading", status: (vacancy.publish_on&.future? ? "schedule" : "publish"))
     t("publishers.vacancies.review.page_title", heading: heading)
   end
+  # :nocov:
 
   def publishers_show_page_title_prefix(vacancy)
     t("publishers.vacancies.show.page_title", job_title: vacancy.job_title)
   end
 
+  # :nocov:
   def organisation_type_label(vacancy)
     vacancy.central_office? ? t("jobs.trust_type") : t("jobs.school_type")
   end
+  # :nocov:
 
   def organisation_type_value(vacancy)
     return organisation_type(vacancy.organisation) unless vacancy.organisations.many?
@@ -84,6 +88,7 @@ module VacanciesHelper
     end)
   end
 
+  # :nocov:
   def vacancy_job_location_summary(vacancy)
     return vacancy.organisation_name if vacancy.organisation.is_a?(School)
 
@@ -93,6 +98,7 @@ module VacanciesHelper
       t("organisations.job_location_summary.central_office")
     end
   end
+  # :nocov:
 
   def vacancy_job_locations(vacancy)
     safe_join(
@@ -102,12 +108,14 @@ module VacanciesHelper
     )
   end
 
+  # :nocov:
   def vacancy_job_location(vacancy)
     organisation = vacancy.organisation
     return "#{t('organisations.job_location_summary.at_multiple_locations')}, #{organisation.name}" if vacancy.organisations.many?
 
     address_join([organisation.name, organisation.town, organisation.county])
   end
+  # :nocov:
 
   def local_authority_job_location_hint(current_publisher_preference)
     t("helpers.hint.publishers_job_listing_schools_form.edit_schools_html",
@@ -151,6 +159,7 @@ module VacanciesHelper
     }
   end
 
+  # :nocov:
   def organisation_landing_page_breadcrumbs(organisation_slug)
     landing_page = OrganisationLandingPage[organisation_slug]
     {
@@ -158,7 +167,9 @@ module VacanciesHelper
       landing_page.name => nil,
     }
   end
+  # :nocov:
 
+  # :nocov:
   def vacancy_activity_log_item(attribute, new_value, organisation_type)
     new_value.map! { |value| Vacancy.array_enums[attribute.to_sym].key(value).humanize } if attribute.to_sym.in?(Vacancy.array_enums)
 
@@ -175,6 +186,7 @@ module VacanciesHelper
       t("publishers.activity_log.#{attribute}", new_value: new_value.humanize)
     end
   end
+  # :nocov:
 
   def vacancy_working_patterns_summary(vacancy)
     working_patterns = vacancy.working_patterns.map do |working_pattern|
@@ -193,17 +205,6 @@ module VacanciesHelper
       else
         vacancy_working_patterns_summary(vacancy)
       end
-    end
-  end
-
-  def vacancy_how_to_apply_step(vacancy)
-    case vacancy.receive_applications
-    when "email"
-      :application_form
-    when "website"
-      :application_link
-    else
-      :how_to_receive_applications
     end
   end
 

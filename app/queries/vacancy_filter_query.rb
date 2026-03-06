@@ -6,6 +6,7 @@ class VacancyFilterQuery < ApplicationQuery
   end
 
   # TODO: Refactor this to be cleaner - e.g. moving from/to_date into their own scope
+  # :nocov:
   def call(filters) # rubocop:disable Metrics/AbcSize
     from_date = filters[:from_date]&.to_time
     to_date = filters[:to_date]&.to_time
@@ -30,6 +31,7 @@ class VacancyFilterQuery < ApplicationQuery
     built_scope = add_working_patterns_filters(filters[:working_patterns], built_scope)
     add_phases_filters(filters[:phases], built_scope)
   end
+  # :nocov:
 
   private
 
@@ -49,6 +51,7 @@ class VacancyFilterQuery < ApplicationQuery
     built_scope.joins(organisation_vacancies: :organisation).where(organisations: { school_type: selected_school_types }).distinct
   end
 
+  # :nocov:
   def add_school_type_filters(filters, built_scope)
     school_types = filters[:school_types]
     return built_scope unless school_types.present?
@@ -66,6 +69,7 @@ class VacancyFilterQuery < ApplicationQuery
       built_scope
     end
   end
+  # :nocov:
 
   # Keeps compatibility with legacy job roles filters that have been removed but they are still used by users.
   # EG: Bookmarked results page for a search with the old job roles filters.

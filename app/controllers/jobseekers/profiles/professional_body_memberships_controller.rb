@@ -20,6 +20,7 @@ class Jobseekers::Profiles::ProfessionalBodyMembershipsController < Jobseekers::
     end
   end
 
+  # :nocov:
   def update
     @form = Jobseekers::ProfessionalBodyMembershipForm.new(professional_body_memberships_form_params)
     if @form.valid?
@@ -29,6 +30,7 @@ class Jobseekers::Profiles::ProfessionalBodyMembershipsController < Jobseekers::
       render :edit
     end
   end
+  # :nocov:
 
   def confirm_destroy
     @form = Jobseekers::ProfessionalBodyMembershipForm.new

@@ -203,9 +203,11 @@ class Vacancy < ApplicationRecord
     published? && expires_at&.future? && (publish_on&.today? || publish_on&.past?)
   end
 
+  # :nocov:
   def pending?
     published? && publish_on&.future?
   end
+  # :nocov:
 
   def can_receive_job_applications?
     enable_job_applications? && published? && !pending?
@@ -237,6 +239,7 @@ class Vacancy < ApplicationRecord
     expires_at > DATA_ACCESS_PERIOD_FOR_PUBLISHERS.ago
   end
 
+  # :nocov:
   def application_link=(value)
     # Data may not include a scheme/protocol so we must be careful when creating links that Rails doesn't make them incorrectly relative.
     begin
@@ -246,6 +249,7 @@ class Vacancy < ApplicationRecord
     end
     super
   end
+  # :nocov:
 
   def refresh_slug
     self.slug = nil

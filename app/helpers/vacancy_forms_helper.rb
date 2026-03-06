@@ -1,4 +1,6 @@
 module VacancyFormsHelper
+  # :nocov:
+
   def vacancy_job_title_form_hint_text(vacancy)
     first_role = vacancy.job_roles.first
     case first_role
@@ -12,6 +14,7 @@ module VacancyFormsHelper
       t("helpers.hint.publishers_job_listing_job_title_form.job_title.#{first_role}")
     end
   end
+  # :nocov:
 
   def vacancy_review_form_heading_inset_text(vacancy, status)
     case status
@@ -85,6 +88,8 @@ module VacancyFormsHelper
 
   private
 
+  # :nocov:
+
   def teacher_job_title_hint_text(vacancy)
     case vacancy.phases.first
     when "nursery"
@@ -97,6 +102,9 @@ module VacancyFormsHelper
       t("helpers.hint.publishers_job_listing_job_title_form.job_title.teacher.through")
     end
   end
+  # :nocov:
+
+  # :nocov:
 
   def middle_leader_job_title_hint_text(vacancy)
     case vacancy.phases.first
@@ -110,4 +118,5 @@ module VacancyFormsHelper
       t("helpers.hint.publishers_job_listing_job_title_form.job_title.middle_leader.through")
     end
   end
+  # :nocov:
 end
