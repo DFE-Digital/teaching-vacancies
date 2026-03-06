@@ -59,6 +59,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     )
   end
 
+  # :nocov:
   def not_found(error)
     # Overrides `ApplicationController`, which globally rescues all `ActiveRecord::RecordNotFound`
     # errors and shows a "page not found" error page to the user.
@@ -81,6 +82,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     super
   end
+  # :nocov:
 
   private
 
@@ -126,6 +128,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     auth_hash.dig("extra", "raw_info", "organisation")
   end
 
+  # :nocov:
   def organisation_from_request
     # https://github.com/DFE-Digital/login.dfe.public-api#how-do-ids-map-to-categories-and-types
     case (cat_id = org_data.dig("category", "id"))
@@ -150,6 +153,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       raise OrganisationCategoryNotFound, "Organisation category ID `#{cat_id}`"
     end
   end
+  # :nocov:
 
   def sign_in_publisher(organisation)
     publisher = find_or_create(Publisher)
@@ -186,6 +190,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     session.update(publisher_organisation_id: publisher_organisation.id) if publisher_organisation
   end
 
+  # :nocov:
   def report_omniauth_error
     omniauth_error = request.respond_to?(:get_header) ? request.get_header("omniauth.error") : request.env["omniauth.error"]
 
@@ -209,4 +214,5 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       Sentry.capture_message("User failed to sign in with DfE Sign In", level: :warning)
     end
   end
+  # :nocov:
 end

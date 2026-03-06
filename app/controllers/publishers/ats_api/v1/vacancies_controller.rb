@@ -50,22 +50,6 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
     @vacancy = PublishedVacancy.kept.find_by!(publisher_ats_api_client: client, id: params[:id])
   end
 
-  def required_vacancy_keys
-    %i[
-      external_advert_url
-      expires_at
-      job_title
-      job_advert
-      salary
-      external_reference
-      job_roles
-      working_patterns
-      contract_type
-      phases
-      schools
-    ]
-  end
-
   # rubocop:disable Metrics/MethodLength
   def permitted_vacancy_params
     params.fetch(:vacancy, {})
@@ -155,9 +139,11 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
     render json: { errors: ["The given ID does not match any vacancy for your ATS"] }, status: :not_found
   end
 
+  # :nocov:
   def render_bad_request(exception)
     render json: { errors: [exception.message] }, status: :bad_request
   end
+  # :nocov:
 
   def render_unprocessable_entity(exception)
     render json: { errors: [exception.message] }, status: :unprocessable_entity

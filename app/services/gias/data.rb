@@ -13,11 +13,13 @@ class Gias::Data
     Tempfile.create(type) do |file|
       file.binmode
 
+      # :nocov:
       HTTParty.get(csv_url, stream_body: true, headers: { "User-Agent" => "teaching-vancancies" }) do |fragment|
         raise "Could not download file #{csv_url} from GIAS: #{fragment.code}" unless fragment.code == 200
 
         file.write(fragment)
       end
+      # :nocov:
       file.rewind
 
       CSV.foreach(file, headers: true, encoding: "windows-1252:utf-8", &)

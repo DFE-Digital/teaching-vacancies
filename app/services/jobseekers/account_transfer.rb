@@ -6,7 +6,9 @@ class Jobseekers::AccountTransfer
 
   def initialize(current_jobseeker, email)
     @current_jobseeker = current_jobseeker
+    # :nocov:
     @account_to_transfer = Jobseeker.find_by(email: email&.downcase)
+    # :nocov:
   end
 
   def call

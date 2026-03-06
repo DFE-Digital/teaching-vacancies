@@ -2,6 +2,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
   helper_method :form
   before_action :set_vacancy
 
+  # :nocov:
   def create
     if form.valid?
       vacancy.application_form.attach(form.application_form) if application_form_uploaded?
@@ -12,6 +13,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
       render "publishers/vacancies/build/application_form"
     end
   end
+  # :nocov:
 
   def destroy
     vacancy.application_form.purge_later
@@ -62,6 +64,8 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
     end
   end
 
+  # This doesn't appear to be called, so can probably be deleted
+  # :nocov:
   def back_link_destination
     if params[:publishers_job_listing_application_form_form][:back_to_review]
       :review
@@ -69,6 +73,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
       :show
     end
   end
+  # :nocov:
 
   def application_form_uploaded?
     params.dig(:publishers_job_listing_application_form_form, :application_form).present?

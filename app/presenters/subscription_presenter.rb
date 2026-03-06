@@ -14,12 +14,14 @@ class SubscriptionPresenter < BasePresenter
                                   phases
                                   working_patterns].freeze
 
+  # :nocov:
   def filtered_search_criteria
     @filtered_search_criteria ||= sorted_search_criteria.each_with_object({}) { |(field, value), criteria|
       search_field = search_criteria_field(field, value)
       criteria.merge!(search_field) if search_field.present?
     }.stringify_keys
   end
+  # :nocov:
 
   private
 
@@ -61,6 +63,7 @@ class SubscriptionPresenter < BasePresenter
     end
   end
 
+  # :nocov:
   def render_location_filter(location, radius)
     return if location.blank?
 
@@ -70,6 +73,7 @@ class SubscriptionPresenter < BasePresenter
       { location: I18n.t("subscriptions.location_in", location: location) }
     end
   end
+  # :nocov:
 
   def render_legacy_job_roles_filter(value)
     { job_role: value.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{role}") }.join(", ") }

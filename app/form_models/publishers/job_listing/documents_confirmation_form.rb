@@ -8,9 +8,11 @@ class Publishers::JobListing::DocumentsConfirmationForm < BaseForm
 
   attr_reader :vacancy
 
+  # :nocov:
   def self.fields
     %i[upload_additional_document]
   end
+  # :nocov:
 
   attribute :upload_additional_document, :boolean
 

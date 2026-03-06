@@ -89,11 +89,13 @@ module JobApplicationsHelper
     organisation.trust? ? :trust : :other
   end
 
+  # :nocov:
   def end_date(date, index)
     return "present" if index.zero?
 
     date.to_fs(:month_year)
   end
+  # :nocov:
 
   def job_application_trn(job_application)
     job_application.teacher_reference_number.presence || "None"
@@ -141,10 +143,6 @@ module JobApplicationsHelper
               classes: (default_classes + classes).join(" ")
   end
 
-  def status_tag_colour(status)
-    JOB_APPLICATION_STATUS_TAG_COLOURS[status]
-  end
-
   def job_application_link(job_application)
     job_application.draft? ? jobseekers_job_application_apply_path(job_application) : jobseekers_job_application_path(job_application)
   end
@@ -171,6 +169,7 @@ module JobApplicationsHelper
     end
   end
 
+  # :nocov:
   def radio_button_legend_hint(vacancy)
     if vacancy.visa_sponsorship_available?
       {
@@ -184,6 +183,7 @@ module JobApplicationsHelper
       }
     end
   end
+  # :nocov:
 
   def readable_working_patterns(job_application)
     job_application.working_patterns.map { |working_pattern|

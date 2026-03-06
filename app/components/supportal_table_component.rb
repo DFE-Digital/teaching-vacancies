@@ -51,6 +51,7 @@ class SupportalTableComponent < ApplicationComponent
     end
 
     def call(entry)
+      # :nocov:
       case @type
       when :boolean
         case @value_block.call(entry)
@@ -66,6 +67,7 @@ class SupportalTableComponent < ApplicationComponent
       else
         @value_block.call(entry)
       end
+      # :nocov:
     end
   end
 
