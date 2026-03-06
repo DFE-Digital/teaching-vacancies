@@ -1053,6 +1053,7 @@ DEPENDENCIES
   omniauth-rails_csrf_protection (~> 2.0)
   omniauth_openid_connect
   online_migrations
+  ostruct
   pagy (~> 9.4)
   paper_trail
   paper_trail-globalid
@@ -1476,9 +1477,6 @@ CHECKSUMS
   yard-solargraph (0.1.0) sha256=a19a4619c942181a618fb9458970a9d2534cf7fda69fc43949629a7948a5930e
   zeitwerk (2.7.5) sha256=d8da92128c09ea6ec62c949011b00ed4a20242b255293dd66bf41545398f73dd
   zendesk_api (3.1.1) sha256=f85b646263729fee8dc3c47f02bb3caaf26f1650a094299dee46c063e26e7216
-
-RUBY VERSION
-  ruby 3.4.8
 
 BUNDLED WITH
   4.0.7

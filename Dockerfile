@@ -6,7 +6,7 @@
  # https://pkgs.alpinelinux.org/packages?name=&branch=v3.23
 ARG PROD_PACKAGES="imagemagick=7.1.2.15-r0 libpng libjpeg libxml2 libxslt libpq tzdata shared-mime-info postgresql18 vips-poppler vips-magick proj-dev"
 
-FROM ruby:3.4.8-alpine3.23 AS builder
+FROM ruby:4.0.1-alpine3.23 AS builder
 
 WORKDIR /app
 
@@ -52,7 +52,7 @@ RUN rm -rf node_modules log tmp yarn.lock && \
 
 
 # this stage reduces the image size.
-FROM ruby:3.4.8-alpine3.23 AS production
+FROM ruby:4.0.1-alpine3.23 AS production
 
 RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
 WORKDIR /app
