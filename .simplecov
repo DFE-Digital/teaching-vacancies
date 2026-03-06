@@ -27,8 +27,8 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
   #
   # SimpleCov.formatter = SimpleCov::Formatter::MergedFormatter
 
-  SimpleCov.start do
-    add_filter(/^\/spec\//)
+  SimpleCov.start :rails do
+    # add_filter(/^\/spec\//)
     enable_coverage :branch
     # primary_coverage :branch
 
@@ -74,7 +74,7 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # However (possibly due to some residual random behaviour in test factories)
     # the line coverage needs to be set 0.02 below the reported value.
     # Nornmally this value needs to be 0.01 below the reported value due to rounding issues.
-    minimum_coverage line: 97.42, branch: 87.18
+    minimum_coverage line: 97.46, branch: 87.28
     # Values from test run Wed 4th March 2026
     # 97.43% (12677 / 13011) -> 334 lines uncovered
     # 87.19% (2812 / 3225) -> 188 + 225 = 413 branches uncovered
