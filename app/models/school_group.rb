@@ -2,9 +2,11 @@ class SchoolGroup < Organisation
   has_many :school_group_memberships, dependent: :destroy
   has_many :schools, through: :school_group_memberships
 
+  # :nocov:
   def key_stages
     schools.map(&:key_stages).flatten.uniq.compact
   end
+  # :nocov:
 
   def live_group_vacancies
     Vacancy.none

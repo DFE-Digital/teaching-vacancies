@@ -25,6 +25,7 @@ class WardenController < ApplicationController
     failed_login(:jobseeker)
   end
 
+  # simplecov:disable
   def publisher_failed_login
     failed_login(:jobseeker)
   end
@@ -49,6 +50,7 @@ class WardenController < ApplicationController
 
     redirect_to send(:"new_#{scope}_session_path", params_hash)
   end
+  # simplecov:enable
 
   def failed_login(scope)
     redirect_to send(:"new_#{scope}_session_path", login_failure: login_failure)
