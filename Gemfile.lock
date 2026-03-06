@@ -1053,6 +1053,7 @@ DEPENDENCIES
   omniauth-rails_csrf_protection (~> 2.0)
   omniauth_openid_connect
   online_migrations
+  ostruct
   pagy (~> 9.4)
   paper_trail
   paper_trail-globalid
@@ -1478,7 +1479,7 @@ CHECKSUMS
   zendesk_api (3.1.1) sha256=f85b646263729fee8dc3c47f02bb3caaf26f1650a094299dee46c063e26e7216
 
 RUBY VERSION
-  ruby 3.4.8
+  ruby 4.0.1
 
 BUNDLED WITH
   4.0.7
