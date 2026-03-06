@@ -24,7 +24,7 @@
     "classlist-polyfill": "^1.2.0",
     "core-js": "^3.48.0",
     "dfe-frontend": "^2.0.1",
-    "dompurify": "^3.3.1",
+    "dompurify": "^3.3.2",
     "govuk-frontend": "^5.14.0",
     "leaflet": "^1.9.4",
     "leaflet-gesture-handling": "^1.2.2",
