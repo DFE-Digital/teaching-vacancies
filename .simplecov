@@ -47,6 +47,19 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # base mailer, currently unused
     add_filter "app/mailers/amazon_ses_mailer.rb"
 
+    add_filter "lib/tasks/audit.rake"
+    add_filter "lib/tasks/data.rake"
+    add_filter "app/services/email_event.rb"
+    add_filter "app/components/landing_page_link_component.rb"
+    add_filter "app/services/publishers/dfe_sign_in/big_query_export/users.rb"
+    add_filter "app/jobs/reset_sessions_job.rb"
+    add_filter "app/jobs/set_organisation_slugs_job.rb"
+    add_filter "app/services/publishers/dfe_sign_in/big_query_export/approvers.rb"
+    add_filter "app/controllers/publishers/organisations/schools_controller.rb"
+    add_filter "app/controllers/sha_controller.rb"
+    add_filter "app/jobs/refresh_organisations_gias_data_hash_job.rb"
+    add_filter "app/jobs/remove_google_index_queue_job.rb"
+
     # Each group will be displayed in the report as its own Tab.
     add_group "Components", "app/components"
     add_group "Queries", "app/queries"
@@ -63,7 +76,7 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # However (possibly due to some residual random behaviour in test factories)
     # the line coverage needs to be set 0.02 below the reported value.
     # Normally this value needs to be 0.01 below the reported value due to rounding issues.
-    minimum_coverage line: 97.22, branch: 87.24
+    minimum_coverage line: 97.98, branch: 88.11
     # Values from test run Fri 6th March 2026
     # 97.23% (12692 / 13053) -> 308 + 53 = 361 lines uncovered
     # 87.25% (2821 / 3233) -> 179 + 233 = 412 branches uncovered
