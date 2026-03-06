@@ -99,7 +99,7 @@ jobs:
     - name: Terraform pin version
       uses: hashicorp/setup-terraform@v3
       with:
-        terraform_version: 1.5.1
+        terraform_version: 1.14.5
 
     - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
       with:
