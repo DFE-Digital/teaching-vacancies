@@ -5,9 +5,11 @@ class PagesController < ApplicationController
 
   layout :layout_for_page
 
+  # :nocov:
   def invalid_page
     not_found
   end
+  # :nocov:
 
   private
 

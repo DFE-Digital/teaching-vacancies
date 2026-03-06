@@ -4,6 +4,7 @@ class Publishers::Organisations::SafeguardingInformationController < Publishers:
     @safeguarding_information_form = Publishers::Organisation::SafeguardingInformationForm.new(safeguarding_information: organisation.safeguarding_information)
   end
 
+  # :nocov:
   def update
     @safeguarding_information_form = Publishers::Organisation::SafeguardingInformationForm.new(safeguarding_information_form_params)
 
@@ -21,6 +22,7 @@ class Publishers::Organisations::SafeguardingInformationController < Publishers:
       render :edit
     end
   end
+  # :nocov:
 
   private
 

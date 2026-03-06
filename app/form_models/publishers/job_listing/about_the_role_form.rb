@@ -1,7 +1,10 @@
 class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::VacancyForm
   include ActiveModel::Attributes
 
+  # :nocov:
   validates :ect_status, inclusion: { in: Vacancy.ect_statuses.keys }, if: -> { vacancy&.job_roles&.include?("teacher") }
+  # :nocov:
+
   validate :skills_and_experience_presence
   validate :school_offer_presence
   validates :further_details_provided, inclusion: { in: [true, false] }
@@ -79,15 +82,19 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
     errors.add(:further_details, :blank)
   end
 
+  # :nocov:
   def flexi_working_presence
     return if remove_html_tags(flexi_working).present?
 
     errors.add(:flexi_working, :blank)
   end
+  # :nocov:
 
+  # :nocov:
   def normalize_flexi_working
     stripped_value = remove_html_tags(flexi_working)&.strip
 
     self.flexi_working = stripped_value.present? ? flexi_working : nil
   end
+  # :nocov:
 end

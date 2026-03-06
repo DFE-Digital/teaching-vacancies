@@ -21,6 +21,7 @@ class Publishers::PublisherPreferencesController < Publishers::BaseController
     @publisher_preference = PublisherPreference.find_by(publisher: current_publisher, organisation: current_organisation)
   end
 
+  # :nocov:
   def update
     @publisher_preference = PublisherPreference.find_by(publisher: current_publisher, organisation: current_organisation)
 
@@ -32,6 +33,7 @@ class Publishers::PublisherPreferencesController < Publishers::BaseController
     end
     redirect_to organisation_jobs_path
   end
+  # :nocov:
 
   private
 

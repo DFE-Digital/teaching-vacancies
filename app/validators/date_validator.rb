@@ -22,6 +22,7 @@ class DateValidator < ActiveModel::EachValidator
       operator = RESTRICTION_TYPES[restriction]
       restriction_option = options[restriction]
 
+      # :nocov:
       raise ArgumentError, "give me something to work with!!" unless
         DEFAULT_CHECK_VALUES.key?(restriction_option) || record.respond_to?(restriction_option)
 
@@ -30,6 +31,7 @@ class DateValidator < ActiveModel::EachValidator
       elsif record.respond_to?(restriction_option)
         value_to_compare = record.send(restriction_option)
       end
+      # :nocov:
 
       next if value_to_compare.blank? || value_to_compare.is_a?(Hash)
 

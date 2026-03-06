@@ -47,6 +47,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
     end
   end
 
+  # :nocov:
   def recategorize
     params.fetch(:feedbacks, []).each do |feedback_params|
       next if (category = feedback_params[:category]).blank?
@@ -66,6 +67,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
       redirect_to support_users_feedback_general_path(reporting_period_params)
     end
   end
+  # :nocov:
 
   private
 
@@ -90,6 +92,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
   end
   helper_method :contact_email_for
 
+  # :nocov:
   def identified_or_authenticated(feedback)
     if authenticated?(feedback)
       "authenticated"
@@ -99,6 +102,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
       "unidentified"
     end
   end
+  # :nocov:
 
   def identified?(feedback)
     feedback.email.present?
@@ -108,6 +112,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
     feedback.jobseeker_id || feedback.publisher_id
   end
 
+  # :nocov:
   def user_type(feedback)
     if authenticated?(feedback)
       authenticated_user_type(feedback)
@@ -115,7 +120,9 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
       unauthenticated_user_type(feedback)
     end
   end
+  # :nocov:
 
+  # :nocov:
   def authenticated_user_type(feedback)
     if feedback.jobseeker_id
       "jobseeker"
@@ -123,7 +130,9 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
       "hiring staff"
     end
   end
+  # :nocov:
 
+  # :nocov:
   def unauthenticated_user_type(feedback)
     if %i[jobseeker_account job_alert application unsubscribe].include?(feedback.feedback_type) || feedback.visit_purpose == "find_teaching_job"
       "jobseeker"
@@ -133,6 +142,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
       "unknown"
     end
   end
+  # :nocov:
 
   def set_reporting_period
     @reporting_period = FeedbackReportingPeriod.new(

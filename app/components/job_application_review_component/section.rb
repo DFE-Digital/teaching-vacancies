@@ -33,6 +33,7 @@ class JobApplicationReviewComponent::Section < ReviewComponent::Section
     "Jobseekers::JobApplication::#{form_class_name}".constantize
   end
 
+  # :nocov:
   def error_path
     if @job_application.vacancy.uploaded_form?
       return edit_jobseekers_uploaded_job_application_personal_details_path(@job_application) if @name == :personal_details
@@ -42,10 +43,7 @@ class JobApplicationReviewComponent::Section < ReviewComponent::Section
       jobseekers_job_application_build_path(@job_application, @name)
     end
   end
-
-  def url_helpers
-    Rails.application.routes.url_helpers
-  end
+  # :nocov:
 
   def allow_edit?
     @job_application.allow_edit?

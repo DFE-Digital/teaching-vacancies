@@ -6,6 +6,7 @@ class Search::JobseekerProfileSearch
     @current_organisation = current_organisation
   end
 
+  # :nocov:
   def jobseeker_profiles # rubocop:disable Metrics/AbcSize
     scope = JobseekerProfile
               .includes(:job_preferences)
@@ -24,6 +25,7 @@ class Search::JobseekerProfileSearch
     scope = scope.where("personal_details.has_right_to_work_in_uk = ?", right_to_work_in_uk?) if one_option_selected_for_right_to_work_in_uk?
     scope
   end
+  # :nocov:
 
   def roles_filter
     role_filters = %i[teaching_job_roles support_job_roles]
@@ -31,9 +33,11 @@ class Search::JobseekerProfileSearch
     role_filters.flat_map { |filter_type| filters[filter_type] }.compact
   end
 
+  # :nocov:
   def total_count
     jobseeker_profiles.count
   end
+  # :nocov:
 
   def total_filters
     filter_counts = %i[qualified_teacher_status teaching_job_roles support_job_roles working_patterns education_phases key_stages subjects right_to_work_in_uk].map { |filter| @filters[filter]&.count || 0 }

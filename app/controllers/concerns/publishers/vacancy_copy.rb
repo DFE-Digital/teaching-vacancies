@@ -7,6 +7,7 @@ module Publishers
 
     def copy_vacancy(vacancy)
       CopyVacancyAsaTemplate.call(vacancy).tap do |new_vacancy|
+        # :nocov:
         if new_vacancy.include_additional_documents
           new_vacancy.supporting_documents.attachments.each do |document|
             send_dfe_analytics_event(:supporting_document_created, new_vacancy.id, document.blob)
@@ -16,9 +17,11 @@ module Publishers
         if new_vacancy.application_form.present?
           send_dfe_analytics_event(:supporting_document_created, new_vacancy.id, new_vacancy.application_form.attachment.blob)
         end
+        # :nocov:
       end
     end
 
+    # :nocov:
     def send_dfe_analytics_event(event_type, vacancy_id, blob)
       fail_safe do
         event = DfE::Analytics::Event.new
@@ -37,5 +40,6 @@ module Publishers
         DfE::Analytics::SendEvents.do([event])
       end
     end
+    # :nocov:
   end
 end

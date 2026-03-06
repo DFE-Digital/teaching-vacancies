@@ -54,7 +54,6 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
       title: "Your personal statement",
       display_summary: ->(profile) { profile.about_you.present? },
       key: "about_you",
-      condition: -> { profile.about_you.present? },
       link_text: "Add details about you",
       page_path: -> { edit_jobseekers_profile_about_you_path },
       partial: "jobseekers/profiles/about_you/summary",
@@ -93,7 +92,10 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
 
   def set_profile
     @profile = JobseekerProfile.prepare(jobseeker: current_jobseeker) do
+      # There is no 'yield' in ProfileSection#prepare any more - this used to display an 'imported' message
+      # :nocov:
       flash.now[:success] = t("jobseekers.profiles.show.imported")
+      # :nocov:
     end
   end
 end

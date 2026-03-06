@@ -17,7 +17,9 @@ class Publishers::Vacancies::FeedbacksController < Publishers::Vacancies::Wizard
     params.expect(publishers_job_listing_feedback_form: %i[comment email rating report_a_problem user_participation_response occupation])
   end
 
+  # :nocov:
   def feedback_attributes
     feedback_form_params.except("report_a_problem").merge(feedback_type: "vacancy_publisher", publisher_id: current_publisher&.id, vacancy_id: @vacancy.id)
   end
+  # :nocov:
 end

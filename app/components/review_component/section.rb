@@ -46,20 +46,4 @@ class ReviewComponent::Section < ApplicationComponent
   def default_classes
     %w[review-component__section]
   end
-
-  def heading_text
-    raise "Not implemented"
-  end
-
-  def build_list
-    raise "Not implemented"
-  end
-
-  def constantize_form(_form_class_name)
-    raise "Not implemented"
-  end
-
-  def error_path
-    raise "Not implemented"
-  end
 end

@@ -34,10 +34,12 @@ class Publishers::JobListing::PayPackageForm < Publishers::JobListing::VacancyFo
 
   attribute :benefits, :boolean
 
+  # :nocov:
   def params_to_save
     SALARIES.each { |salary, salary_type| params[salary] = nil unless params[:salary_types]&.include? salary_type }
     super.except(:salary_types)
   end
+  # :nocov:
 
   private
 

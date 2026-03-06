@@ -24,6 +24,12 @@ RSpec.describe DestroyInactiveAccountsJob do
       expect(JobApplication.count).to eq 0
       expect(SavedJob.count).to eq 0
     end
+
+    context "when disabled", :disable_expensive_jobs do
+      it "does nothing" do
+        expect(Jobseeker.count).to eq 1
+      end
+    end
   end
 
   context "with active jobseeker" do
