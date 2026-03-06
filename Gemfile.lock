@@ -831,7 +831,6 @@ GEM
       simplecov-html (~> 0.11)
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.13.2)
-    simplecov-lcov (0.9.0)
     simplecov_json_formatter (0.1.4)
     site_prism (5.1.1)
       addressable (~> 2.8, >= 2.8.4)
@@ -1100,7 +1099,6 @@ DEPENDENCIES
   sidekiq-cron
   sidekiq-limit_fetch
   simplecov
-  simplecov-lcov (< 0.10)
   site_prism
   skylight
   slim-rails
@@ -1426,7 +1424,6 @@ CHECKSUMS
   signet (0.21.0) sha256=d617e9fbf24928280d39dcfefba9a0372d1c38187ffffd0a9283957a10a8cd5b
   simplecov (0.22.0) sha256=fe2622c7834ff23b98066bb0a854284b2729a569ac659f82621fc22ef36213a5
   simplecov-html (0.13.2) sha256=bd0b8e54e7c2d7685927e8d6286466359b6f16b18cb0df47b508e8d73c777246
-  simplecov-lcov (0.9.0) sha256=7a77a31e200a595ed4b0249493056efd0c920601f53d2ef135ca34ee796346cd
   simplecov_json_formatter (0.1.4) sha256=529418fbe8de1713ac2b2d612aa3daa56d316975d307244399fa4838c601b428
   site_prism (5.1.1) sha256=9f89c8911dbc1c94e6eaf0b850eca034c71cfce0bc6f2304d982b15a64af5891
   site_prism-all_there (3.0.7) sha256=87b344fba06ddd8a21569b66558ab549226991b3c5a5076bfd2561950c5e6473
