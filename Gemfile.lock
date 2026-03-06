@@ -717,6 +717,8 @@ GEM
       rspec-expectations (~> 3.13)
       rspec-mocks (~> 3.13)
       rspec-support (~> 3.13)
+    rspec-retry (0.6.2)
+      rspec-core (> 3.3)
     rspec-support (3.13.7)
     rswag-api (2.17.0)
       activesupport (>= 5.2, < 8.2)
@@ -831,7 +833,6 @@ GEM
       simplecov-html (~> 0.11)
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.13.2)
-    simplecov-lcov (0.9.0)
     simplecov_json_formatter (0.1.4)
     site_prism (5.1.1)
       addressable (~> 2.8, >= 2.8.4)
@@ -1081,6 +1082,7 @@ DEPENDENCIES
   rgeo-geojson
   rgeo-proj4
   rspec-rails
+  rspec-retry
   rswag-api
   rswag-specs
   rswag-ui
@@ -1100,7 +1102,6 @@ DEPENDENCIES
   sidekiq-cron
   sidekiq-limit_fetch
   simplecov
-  simplecov-lcov (< 0.10)
   site_prism
   skylight
   slim-rails
@@ -1390,6 +1391,7 @@ CHECKSUMS
   rspec-expectations (3.13.5) sha256=33a4d3a1d95060aea4c94e9f237030a8f9eae5615e9bd85718fe3a09e4b58836
   rspec-mocks (3.13.8) sha256=086ad3d3d17533f4237643de0b5c42f04b66348c28bf6b9c2d3f4a3b01af1d47
   rspec-rails (8.0.3) sha256=b0a440e7a10700317d898a014852e26660867298c4076dbc3baa99c768b79dc1
+  rspec-retry (0.6.2) sha256=6101ba23a38809811ae3484acde4ab481c54d846ac66d5037ccb40131a60d858
   rspec-support (3.13.7) sha256=0640e5570872aafefd79867901deeeeb40b0c9875a36b983d85f54fb7381c47c
   rswag-api (2.17.0) sha256=728b336b65168ab8ab6024b0e5d267b485c22ccdeb9dfbfb6ec3bac423545a13
   rswag-specs (2.17.0) sha256=a3b2bdf6df89f8741fe4a4ee47ceb1e77dc13e1c96bbe07352117d6e61afa9e3
@@ -1426,7 +1428,6 @@ CHECKSUMS
   signet (0.21.0) sha256=d617e9fbf24928280d39dcfefba9a0372d1c38187ffffd0a9283957a10a8cd5b
   simplecov (0.22.0) sha256=fe2622c7834ff23b98066bb0a854284b2729a569ac659f82621fc22ef36213a5
   simplecov-html (0.13.2) sha256=bd0b8e54e7c2d7685927e8d6286466359b6f16b18cb0df47b508e8d73c777246
-  simplecov-lcov (0.9.0) sha256=7a77a31e200a595ed4b0249493056efd0c920601f53d2ef135ca34ee796346cd
   simplecov_json_formatter (0.1.4) sha256=529418fbe8de1713ac2b2d612aa3daa56d316975d307244399fa4838c601b428
   site_prism (5.1.1) sha256=9f89c8911dbc1c94e6eaf0b850eca034c71cfce0bc6f2304d982b15a64af5891
   site_prism-all_there (3.0.7) sha256=87b344fba06ddd8a21569b66558ab549226991b3c5a5076bfd2561950c5e6473
@@ -1476,9 +1477,6 @@ CHECKSUMS
   yard-solargraph (0.1.0) sha256=a19a4619c942181a618fb9458970a9d2534cf7fda69fc43949629a7948a5930e
   zeitwerk (2.7.5) sha256=d8da92128c09ea6ec62c949011b00ed4a20242b255293dd66bf41545398f73dd
   zendesk_api (3.1.1) sha256=f85b646263729fee8dc3c47f02bb3caaf26f1650a094299dee46c063e26e7216
-
-RUBY VERSION
-  ruby 3.4.8
 
 BUNDLED WITH
   4.0.7
