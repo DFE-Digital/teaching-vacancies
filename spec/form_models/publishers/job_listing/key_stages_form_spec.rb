@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobListing::KeyStagesForm, type: :model do
-  subject { described_class.new(params, vacancy) }
+  subject { described_class.load_from_params(params, vacancy) }
 
   let(:vacancy) { build_stubbed(:vacancy, :secondary) }
   let(:params) { { key_stages: key_stages } }

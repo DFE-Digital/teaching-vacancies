@@ -76,10 +76,10 @@ RSpec.describe "Publishers can edit a vacancy" do
     end
 
     describe "#important_dates" do
-      def edit_date(date_type, date)
-        fill_in "publishers_job_listing_important_dates_form[#{date_type}(3i)]", with: date&.day.presence || ""
-        fill_in "publishers_job_listing_important_dates_form[#{date_type}(2i)]", with: date&.month.presence || ""
-        fill_in "publishers_job_listing_important_dates_form[#{date_type}(1i)]", with: date&.year.presence || ""
+      def edit_date(form_name, date_type, date)
+        fill_in "publishers_job_listing_#{form_name}_form[#{date_type}(3i)]", with: date&.day.presence || ""
+        fill_in "publishers_job_listing_#{form_name}_form[#{date_type}(2i)]", with: date&.month.presence || ""
+        fill_in "publishers_job_listing_#{form_name}_form[#{date_type}(1i)]", with: date&.year.presence || ""
         click_on I18n.t("buttons.save_and_continue")
       end
 
@@ -89,18 +89,18 @@ RSpec.describe "Publishers can edit a vacancy" do
         end
 
         scenario "can not be edited when validation fails" do
-          expect(publisher_important_dates_page).to be_displayed
+          expect(publisher_expiry_date_time_page).to be_displayed
 
-          edit_date("expires_at", nil)
+          edit_date("expiry_date_time", "expires_at", nil)
 
-          expect(publisher_important_dates_page.errors.map(&:text)).to eq([I18n.t("important_dates_errors.expires_at.blank")])
+          expect(publisher_expiry_date_time_page.errors.map(&:text)).to eq([I18n.t("expiry_date_time_errors.expires_at.blank")])
         end
 
         scenario "can be successfully edited" do
-          expect(publisher_important_dates_page).to be_displayed
+          expect(publisher_expiry_date_time_page).to be_displayed
 
           expiry_date = Date.current + 1.week
-          edit_date("expires_at", expiry_date)
+          edit_date("expiry_date_time", "expires_at", expiry_date)
 
           expect(publisher_vacancy_page).to be_displayed
           expect(vacancy.reload.expires_at.to_date).to eq(expiry_date)
@@ -117,8 +117,7 @@ RSpec.describe "Publishers can edit a vacancy" do
           end
 
           it "renders the publication date as text and does not allow editing" do
-            expect(publisher_important_dates_page).to be_displayed
-            expect(publisher_important_dates_page).not_to have_change_publish_day_field
+            expect(publisher_expiry_date_time_page).to be_displayed
           end
         end
 
@@ -134,7 +133,7 @@ RSpec.describe "Publishers can edit a vacancy" do
             expect(publisher_important_dates_page).to be_displayed
             expect(publisher_important_dates_page).to have_change_publish_day_field
 
-            edit_date("publish_on", publish_on)
+            edit_date("important_dates", "publish_on", publish_on)
 
             expect(publisher_vacancy_page).to be_displayed
             expect(vacancy.reload.publish_on).to eq(publish_on)
