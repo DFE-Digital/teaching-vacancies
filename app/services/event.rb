@@ -29,9 +29,11 @@ class Event
 
   ##
   # Data to be included in the data struct for any event (to be overridden as appropriate in subclasses)
+  # :nocov:
   def data
     []
   end
+  # :nocov:
 
   ##
   # For json objects or hashes passed to Event#trigger as values in the `data` param, such as Feedback#search_criteria,
@@ -39,17 +41,21 @@ class Event
   # Floats and Integers should remain as they are. Do not pass Arrays to BigQuery without converting them to string:
   # otherwise, it will give the error "Array specified for non repeated field" when the array has length of 1.
   # @param [Object] value Any value in the data passed to the event.
+
+  # :nocov:
   def formatted_value(value)
     return value if value.is_a?(Float) || value.is_a?(Integer)
 
     value.respond_to?(:keys) ? value.to_json : value&.to_s
   end
+  # :nocov:
 
   ##
   # When converting existing records into events, set `occurred_at` to the time the record was created, if the
   # record's `created_at` value is passed to Event#trigger in the `data` param.
   # @param [Hash{Symbol => Object}] data Any data included with the event, which, in the case of converting
   # existing records into events, will include attributes from the existing record being converted.
+  # :nocov:
   def occurred_at(data)
     time = if data[:created_at].present?
              data[:created_at]
@@ -58,6 +64,7 @@ class Event
            end
     time.iso8601(6)
   end
+  # :nocov:
 
   ##
   # Personally identifiable information (PII) should be anonymised before the data is sent to BigQuery

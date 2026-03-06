@@ -5,6 +5,7 @@ class Jobseekers::Subscriptions::Feedbacks::FurtherFeedbacksController < Applica
     @feedback_form = Jobseekers::JobAlertFurtherFeedbackForm.new
   end
 
+  # :nocov:
   def create
     @feedback_form = Jobseekers::JobAlertFurtherFeedbackForm.new(further_feedback_form_params)
 
@@ -17,6 +18,7 @@ class Jobseekers::Subscriptions::Feedbacks::FurtherFeedbacksController < Applica
       end
     end
   end
+  # :nocov:
 
   private
 

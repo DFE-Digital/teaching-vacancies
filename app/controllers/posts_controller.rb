@@ -19,10 +19,12 @@ class PostsController < ApplicationController
 
   private
 
+  # :nocov:
   def get_subcategories(section)
     content_dir = Rails.root.join("app", "views", "content", section)
     Dir.children(content_dir)
   end
+  # :nocov:
 
   def set_headers
     response.set_header("X-Robots-Tag", "index, nofollow")

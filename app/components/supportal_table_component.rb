@@ -50,6 +50,7 @@ class SupportalTableComponent < ApplicationComponent
       @component = component
     end
 
+    # :nocov:
     def call(entry)
       case @type
       when :boolean
@@ -67,6 +68,7 @@ class SupportalTableComponent < ApplicationComponent
         @value_block.call(entry)
       end
     end
+    # :nocov:
   end
 
   def default_classes

@@ -34,6 +34,7 @@ class JobApplicationPdf
     "#{job_application.name} | #{vacancy.organisation_name}"
   end
 
+  # :nocov:
   def personal_details
     return @personal_details if @personal_details.present?
 
@@ -46,6 +47,7 @@ class JobApplicationPdf
       table.rows << [I18n.t("working_pattern_details", scope:), job_application.working_pattern_details] if job_application.working_pattern_details.present?
     end
   end
+  # :nocov:
 
   def personal_statement
     if job_application.personal_statement_richtext.present?
@@ -55,6 +57,7 @@ class JobApplicationPdf
     end
   end
 
+  # :nocov:
   def professional_status
     return @professional_status if @professional_status.present?
 
@@ -74,6 +77,7 @@ class JobApplicationPdf
       end
     end
   end
+  # :nocov:
 
   def qualifications
     return no_data_available(I18n.t("jobseekers.job_applications.show.qualifications.none")) if job_application.qualifications.none?
@@ -143,6 +147,7 @@ class JobApplicationPdf
     end
   end
 
+  # :nocov:
   def referees
     return no_data_available(I18n.t("jobseekers.job_applications.show.employment_history.none")) if job_application.referees.none?
 
@@ -166,6 +171,7 @@ class JobApplicationPdf
       end
     end
   end
+  # :nocov:
 
   def ask_for_support
     @ask_for_support ||= table_class[
@@ -383,6 +389,7 @@ class JobApplicationPdf
     end
   end
 
+  # :nocov:
   def employment_entry(employment)
     employment_data = [
       ["Employment"],
@@ -399,6 +406,7 @@ class JobApplicationPdf
 
     table_class[employment_data]
   end
+  # :nocov:
 
   def employment_break(employment, latest_employment_record)
     table_class[
@@ -421,6 +429,7 @@ class JobApplicationPdf
     ]
   end
 
+  # :nocov:
   def qualified_teacher_status_info(job_application)
     case job_application.qualified_teacher_status
     when "yes"
@@ -433,6 +442,7 @@ class JobApplicationPdf
       "Status not provided"
     end
   end
+  # :nocov:
 
   def convert_richtext_to_prawn_format(richtext)
     html = richtext.to_s

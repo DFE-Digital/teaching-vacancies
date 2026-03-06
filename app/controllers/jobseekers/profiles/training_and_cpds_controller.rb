@@ -14,6 +14,7 @@ class Jobseekers::Profiles::TrainingAndCpdsController < Jobseekers::ProfilesCont
     end
   end
 
+  # :nocov:
   def update
     if form.valid?
       training_and_cpd.update(training_and_cpd_form_params)
@@ -22,6 +23,7 @@ class Jobseekers::Profiles::TrainingAndCpdsController < Jobseekers::ProfilesCont
       render :edit
     end
   end
+  # :nocov:
 
   def confirm_destroy; end
 

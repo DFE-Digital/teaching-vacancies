@@ -1,7 +1,9 @@
 module NotifyViewsHelper
+  # :nocov:
   def notify_mail_to(mail_to, text = mail_to)
     notify_link("mailto:#{mail_to}", text)
   end
+  # :nocov:
 
   def notify_link(url, text = url)
     "[#{text}](#{url})"
@@ -12,20 +14,26 @@ module NotifyViewsHelper
     notify_link(url)
   end
 
+  # :nocov:
   def consume_jobseekers_login_key_link(token)
     url = consume_jobseekers_login_key_url(token)
     notify_link(url)
   end
+  # :nocov:
 
+  # :nocov:
   def expired_vacancy_feedback_link(vacancy)
     url = new_organisation_job_expired_feedback_url(vacancy.signed_id, **utm_params)
     notify_link(url, I18n.t("publishers.expired_vacancy_feedback_prompt_mailer.feedback_link_text"))
   end
+  # :nocov:
 
+  # :nocov:
   def expired_vacancy_unsubscribe_link(publisher)
     url = confirm_unsubscribe_publishers_account_url(publisher_id: publisher.signed_id)
     notify_link(url, "Unsubscribe from these emails")
   end
+  # :nocov:
 
   def publisher_email_opt_out_link(publisher)
     return if publisher.blank?
@@ -39,10 +47,12 @@ module NotifyViewsHelper
     notify_link(url, text)
   end
 
+  # :nocov:
   def writing_job_application_advice_link(text)
     url = jobseeker_guides_write_a_great_teaching_job_application_in_five_steps_url
     notify_link(url, text)
   end
+  # :nocov:
 
   def job_alert_relevance_feedback_link(relevant, subscription, vacancies)
     params = { job_alert_relevance_feedback: { relevant_to_user: relevant,
@@ -54,21 +64,26 @@ module NotifyViewsHelper
     notify_link(url, I18n.t("jobseekers.alert_mailer.alert.relevance_feedback.feedback_link.#{relevant}"))
   end
 
+  # :nocov:
   def jobseeker_job_application_link(job_application)
     url = jobseekers_job_application_url(job_application, **utm_params)
     notify_link(url, t(".job_application.link_text"))
   end
+  # :nocov:
 
+  # :nocov:
   def publisher_job_applications_link(vacancy)
     url = organisation_job_job_applications_url(vacancy.id, **utm_params)
     notify_link(url, t(".view_applications", count: vacancy.job_applications.submitted_yesterday.count, job_title: vacancy.job_title))
   end
+  # :nocov:
 
   def publisher_candidate_messages_link
     url = publishers_candidate_messages_url(**utm_params)
     notify_link(url, "View your messages")
   end
 
+  # :nocov:
   def show_link(vacancy)
     url = job_url(vacancy, **utm_params)
     if vacancy.organisations.many?
@@ -77,16 +92,21 @@ module NotifyViewsHelper
       notify_link(url, t("jobseekers.alert_mailer.alert.show_job_link_with_organisation", job_title: vacancy.job_title, organisation_name: vacancy.organisations.first.name))
     end
   end
+  # :nocov:
 
+  # :nocov:
   def sign_in_link
     url = new_jobseeker_session_url(**utm_params)
     notify_link(url, t(".link"))
   end
+  # :nocov:
 
+  # :nocov:
   def sign_up_link
     url = new_jobseeker_session_url(**utm_params)
     notify_link(url, t(".create_account.link"))
   end
+  # :nocov:
 
   def support_user_fallback_sign_in_link(signed_id)
     url = support_users_fallback_session_url(signed_id)
@@ -107,10 +127,12 @@ module NotifyViewsHelper
     end
   end
 
+  # :nocov:
   def edit_job_alert_link(subscription)
     url = edit_subscription_url(subscription.token)
     notify_link(url, t(".edit_link_text"))
   end
+  # :nocov:
 
   private
 

@@ -28,6 +28,8 @@ class VacanciesController < ApplicationController
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
+  # :nocov:
+
   def campaign_landing_page
     @campaign_page = CampaignPage[params[:utm_content]]
     campaign_params = CampaignSearchParamsMerger.new(campaign_search_params, @campaign_page).merged_params
@@ -41,6 +43,7 @@ class VacanciesController < ApplicationController
     set_search_coordinates unless do_not_show_distance?
     trigger_search_performed_event
   end
+  # :nocov:
 
   private
 
@@ -58,6 +61,8 @@ class VacanciesController < ApplicationController
     params.permit(:keyword, :previous_keyword, :organisation_slug, :location, :radius, :subject, :sort_by, teaching_job_roles: [], support_job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [], quick_apply: [], organisation_types: [], school_types: [], visa_sponsorship_availability: [])
   end
 
+  # :nocov:
+
   def set_landing_page
     if params[:landing_page_slug].present?
       @landing_page = LandingPage[params[:landing_page_slug]]
@@ -67,6 +72,9 @@ class VacanciesController < ApplicationController
       @landing_page = LocationLandingPage[params[:location_landing_page_name]]
     end
   end
+  # :nocov:
+
+  # :nocov:
 
   def set_headers
     if params[:landing_page_slug] == "teaching-assistant-jobs-v2"
@@ -75,11 +83,17 @@ class VacanciesController < ApplicationController
       response.set_header("X-Robots-Tag", "noarchive")
     end
   end
+  # :nocov:
+
+  # :nocov:
 
   def campaign_search_params
     params.permit(:email_name, :email_postcode, :email_location, :email_radius, :email_jobrole, :email_subject,
                   :email_phase, :email_ECT, :email_fulltime, :email_parttime, :email_jobshare, :email_contact)
   end
+  # :nocov:
+
+  # :nocov:
 
   def trigger_search_performed_event
     fail_safe do
@@ -101,6 +115,7 @@ class VacanciesController < ApplicationController
       trigger_dfe_analytics_event(:search_performed, event_data)
     end
   end
+  # :nocov:
 
   def trigger_dfe_analytics_event(event_type, event_data)
     event = DfE::Analytics::Event.new

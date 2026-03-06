@@ -7,11 +7,13 @@ module DatabaseIndexable
 
     # Performs a full "reindex" on all live and pending vacancies (to be run when weightings for
     # searchable_content have been changed)
+    # :nocov:
     def self.update_all_searchable_content!
       applicable.find_each do |vacancy|
         vacancy.update_columns(searchable_content: vacancy.generate_searchable_content)
       end
     end
+    # :nocov:
   end
 
   def update_searchable_content

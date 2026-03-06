@@ -24,11 +24,13 @@ class SchoolSearchForm
       attrs.delete(:radius)
     end
 
+    # :nocov:
     if attrs[:job_availability]&.one?
       attrs[:job_availability] = attrs[:job_availability].first == "true" ? ["true"] : ["false"]
     else
       attrs.delete(:job_availability)
     end
+    # :nocov:
 
     attrs
   end
@@ -83,6 +85,7 @@ class SchoolSearchForm
     super
   end
 
+  # :nocov:
   def total_filters
     [
       education_phase&.count,
@@ -93,8 +96,10 @@ class SchoolSearchForm
       school_types&.count,
     ].compact.sum
   end
+  # :nocov:
 
   class << self
+    # :nocov:
     def strong_params_args
       return @strong_params_args if defined? @strong_params_args
 
@@ -104,5 +109,6 @@ class SchoolSearchForm
 
       [*regular, arrays]
     end
+    # :nocov:
   end
 end

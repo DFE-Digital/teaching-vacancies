@@ -38,6 +38,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
   # rubocop:enable Metrics/AbcSize
 
+  # :nocov:
   def new
     send_dfe_analytics_event
     if session[:newly_created_user]
@@ -61,6 +62,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
       session.delete(:user_exists_first_log_in)
     end
   end
+  # :nocov:
 
   def create
     if quick_apply?

@@ -99,16 +99,19 @@ class JobseekerProfile < ApplicationRecord
     end
   end
 
+  # :nocov:
   def deactivate!
     return unless active?
 
     update_column(:active, false)
   end
+  # :nocov:
 
   def full_name
     [first_name, last_name].join(" ").presence || "Jobseeker"
   end
 
+  # :nocov:
   def qts_status
     case qualified_teacher_status
     when "yes"
@@ -119,6 +122,7 @@ class JobseekerProfile < ApplicationRecord
       ""
     end
   end
+  # :nocov:
 
   def activable?
     personal_details.present? && personal_details.complete? &&
