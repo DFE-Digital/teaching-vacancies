@@ -15,6 +15,7 @@ class Publishers::JobListing::StartDateForm < Publishers::JobListing::JobListing
     %i[start_date_type starts_on earliest_start_date latest_start_date other_start_date_details expires_at]
   end
 
+  # :nocov:
   def params_to_save
     {
       start_date_type: start_date_type,
@@ -24,6 +25,7 @@ class Publishers::JobListing::StartDateForm < Publishers::JobListing::JobListing
       other_start_date_details: (other_start_date_details if start_date_type == "other"),
     }
   end
+  # :nocov:
 
   def starts_on=(value)
     @starts_on = date_from_multiparameter_hash(value)

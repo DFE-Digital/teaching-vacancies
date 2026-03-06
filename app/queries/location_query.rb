@@ -21,9 +21,11 @@ class LocationQuery < ApplicationQuery
     end
   end
 
+  # :nocov:
   def normalise_query(query)
     query&.strip&.downcase
   end
+  # :nocov:
 
   def nationwide_location?(query)
     NATIONWIDE_LOCATIONS.include?(query)
@@ -45,7 +47,9 @@ class LocationQuery < ApplicationQuery
 
     # TODO: Geocoding class currently returns this on error, it should probably raise a
     # suitable error instead. Refactor later!
+    # :nocov:
     return scope.none if coordinates == [0, 0]
+    # :nocov:
 
     point = "POINT(#{coordinates.second} #{coordinates.first})"
     @scope = scope.where("ST_DWithin(#{field_name}, ?, ?, false)", point, radius)

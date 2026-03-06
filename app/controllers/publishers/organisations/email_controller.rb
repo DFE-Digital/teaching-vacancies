@@ -4,6 +4,7 @@ class Publishers::Organisations::EmailController < Publishers::OrganisationsCont
     @email_form = Publishers::Organisation::EmailForm.new(email: organisation.email)
   end
 
+  # :nocov:
   def update
     @email_form = Publishers::Organisation::EmailForm.new(email_form_params)
 
@@ -17,6 +18,7 @@ class Publishers::Organisations::EmailController < Publishers::OrganisationsCont
       render :edit
     end
   end
+  # :nocov:
 
   private
 

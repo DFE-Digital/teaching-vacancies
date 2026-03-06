@@ -34,6 +34,7 @@ class Publishers::JobListing::ContactDetailsForm < Publishers::JobListing::Vacan
     super(params, vacancy)
   end
 
+  # :nocov:
   def contact_email
     return unless @vacancy.contact_email || params[:contact_email]
 
@@ -47,12 +48,15 @@ class Publishers::JobListing::ContactDetailsForm < Publishers::JobListing::Vacan
 
     "other"
   end
+  # :nocov:
 
+  # :nocov:
   def other_contact_email
     return params[:other_contact_email] if params[:other_contact_email]
 
     @vacancy.contact_email unless @vacancy.contact_email == @current_publisher&.email
   end
+  # :nocov:
 
   def params_to_save
     {

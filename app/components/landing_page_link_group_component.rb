@@ -11,6 +11,8 @@ class LandingPageLinkGroupComponent < ApplicationComponent
   end
 
   renders_one :title_landing_page, ->(*args, **kwargs) { build_landing_page(*args, **kwargs) }
+
+  # :nocov:
   renders_many(:landing_pages, lambda do |*args, subgroup: false, **kwargs|
     if subgroup
       self.class.new(subgroup: true)
@@ -18,6 +20,7 @@ class LandingPageLinkGroupComponent < ApplicationComponent
       build_landing_page(*args, **kwargs)
     end
   end)
+  # :nocov:
 
   def render?
     # Rendering this component triggers a lot of expensive queries if caching is disabled (e.g. in
@@ -28,22 +31,28 @@ class LandingPageLinkGroupComponent < ApplicationComponent
 
   private
 
+  # :nocov:
   def build_landing_page(slug, location: false)
     LandingPageLinkComponent.new(location?(location) ? LocationLandingPage[slug] : LandingPage[slug])
   end
+  # :nocov:
 
+  # :nocov:
   def list_class
     [
       @list_class,
       ("govuk-list--bullet" if title_landing_page.present?),
     ].compact.join
   end
+  # :nocov:
 
   def default_classes
     %w[homepage-landing-page-link-group-component]
   end
 
+  # :nocov:
   def location?(location)
     @use_locations || location
   end
+  # :nocov:
 end

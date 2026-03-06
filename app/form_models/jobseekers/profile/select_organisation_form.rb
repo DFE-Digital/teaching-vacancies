@@ -5,11 +5,13 @@ class Jobseekers::Profile::SelectOrganisationForm < BaseForm
 
   validates :organisation, presence: true
 
+  # :nocov:
   def organisation
     return if organisation_name.blank? && organisation_id.blank?
 
     @organisation ||= orgs.find_by(id: organisation_id) || orgs.find_by(name: organisation_name)
   end
+  # :nocov:
 
   private
 

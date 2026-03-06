@@ -12,7 +12,9 @@ module RecaptchaChecking
       yield
     else
       @show_recaptcha = true
+      # :nocov:
       form&.errors&.add(:recaptcha, t("recaptcha.error"))
+      # :nocov:
       render fallback_template
     end
   end

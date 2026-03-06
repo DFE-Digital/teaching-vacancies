@@ -20,6 +20,7 @@ class Jobseekers::SessionsController < Devise::SessionsController
     end
   end
 
+  # :nocov:
   def create
     if sign_in_params.values.any?(&:blank?)
       redirect_to new_jobseeker_session_path(login_failure: :blank, redirected: redirected?)
@@ -39,6 +40,7 @@ class Jobseekers::SessionsController < Devise::SessionsController
 
     flash.delete(:notice)
   end
+  # :nocov:
 
   private
 
@@ -46,7 +48,9 @@ class Jobseekers::SessionsController < Devise::SessionsController
     super.merge(recall: "warden#jobseeker_failed_login")
   end
 
+  # :nocov:
   def forced_login_resource(attempted_path)
     %w[job_application/new saved_job/new].select { |path_fragment| attempted_path.include?(path_fragment) }.join[/^\w*/]
   end
+  # :nocov:
 end

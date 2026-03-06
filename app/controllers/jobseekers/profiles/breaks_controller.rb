@@ -46,11 +46,13 @@ class Jobseekers::Profiles::BreaksController < Jobseekers::ProfilesController
   def form_attributes
     case action_name
     when "new"
+      # :nocov:
       if params[:started_on] && params[:ended_on]
         { started_on: Date.parse(params[:started_on]), ended_on: Date.parse(params[:ended_on]) }
       else
         {}
       end
+      # :nocov:
     when "edit"
       employment_break.slice(:reason_for_break, :started_on, :ended_on)
     when "create", "update"

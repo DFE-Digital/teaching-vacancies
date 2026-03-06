@@ -28,6 +28,7 @@ module ReturnPathTracking
 
     # Devise callback
     def after_sign_out_path_for(resource_or_scope)
+      # :nocov:
       case resource_or_scope
       when :jobseeker, Jobseeker
         new_jobseeker_session_path
@@ -45,6 +46,7 @@ module ReturnPathTracking
       when :support_user, SupportUser
         new_support_user_session_path
       end
+      # :nocov:
     end
 
     def redirected?

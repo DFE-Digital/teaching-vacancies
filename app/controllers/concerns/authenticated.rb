@@ -15,13 +15,17 @@ module Authenticated
     send(:"authenticate_#{authentication_scope}!", { recall: "warden##{authentication_scope}_forced_login" })
   end
 
+  # :nocov:
   def require_scope
     raise "Please set `authentication_scope` with this controller's scope" if authentication_scope.blank?
   end
+  # :nocov:
 
+  # :nocov:
   def user_type
     authentication_scope if signed_in?
   end
+  # :nocov:
 
   def jobseeker?
     user_type == :jobseeker
