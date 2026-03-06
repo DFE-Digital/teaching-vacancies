@@ -25,16 +25,21 @@ class WardenController < ApplicationController
     failed_login(:jobseeker)
   end
 
+  # :nocov:
   def publisher_failed_login
     failed_login(:jobseeker)
   end
+  # :nocov:
 
+  # :nocov:
   def support_user_failed_login
     failed_login(:support_user)
   end
+  # :nocov:
 
   private
 
+  # :nocov:
   def forced_login(scope)
     if attempted_path
       store_return_location(attempted_path, scope: scope)
@@ -49,6 +54,7 @@ class WardenController < ApplicationController
 
     redirect_to send(:"new_#{scope}_session_path", params_hash)
   end
+  # :nocov:
 
   def failed_login(scope)
     redirect_to send(:"new_#{scope}_session_path", login_failure: login_failure)

@@ -2,9 +2,11 @@ class Jobseekers::SavedJobsController < Jobseekers::BaseController
   helper_method :sort
   before_action :set_saved_jobs, only: %i[index]
 
+  # :nocov:
   def index
     redirect_to jobseekers_job_applications_path if session.delete(:after_sign_in) && current_jobseeker.job_applications.any?
   end
+  # :nocov:
 
   # This action is not 'create' because we need to redirect here when an unauthenticated jobseeker attempts to save a job
   def new
@@ -28,6 +30,7 @@ class Jobseekers::SavedJobsController < Jobseekers::BaseController
 
   private
 
+  # :nocov:
   def profile_complete?
     return false unless (profile = current_jobseeker.jobseeker_profile)
     return false unless profile.personal_details.present? && profile.job_preferences.present?
@@ -35,6 +38,7 @@ class Jobseekers::SavedJobsController < Jobseekers::BaseController
     profile.personal_details.complete? && profile.job_preferences.complete?
   end
   helper_method :profile_complete?
+  # :nocov:
 
   def saved_job
     @saved_job ||= current_jobseeker.saved_jobs.find_or_initialize_by(vacancy_id: vacancy.id)

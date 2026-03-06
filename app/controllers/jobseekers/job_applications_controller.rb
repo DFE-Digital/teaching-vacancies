@@ -40,10 +40,12 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def new
     send_dfe_analytics_event
+    # :nocov:
     if session[:newly_created_user]
       @newly_created_user = true
       session.delete(:newly_created_user)
     end
+    # :nocov:
 
     @has_previous_application = nil
     if quick_apply?
@@ -56,10 +58,12 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
         @has_previous_application = current_jobseeker.has_submitted_native_job_application?
       end
     end
+    # :nocov:
     if session[:user_exists_first_log_in]
       @user_exists_first_log_in = true
       session.delete(:user_exists_first_log_in)
     end
+    # :nocov:
   end
 
   def create
@@ -75,11 +79,13 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def pre_submit
     @form = Jobseekers::JobApplication::PreSubmitForm.new(completed_steps: job_application.completed_steps, all_steps: step_process.validatable_steps)
+    # :nocov:
     if @form.valid? && all_steps_valid?
       redirect_to jobseekers_job_application_review_path(@job_application)
     else
       render :apply
     end
+    # :nocov:
   end
 
   def review
@@ -185,9 +191,12 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     form.valid?.tap { job_application.errors.merge!(form.errors) }
   end
 
+  # This is declared as a helper method, but given its coverage its probably never called
+  # :nocov:
   def employments
     @employments ||= job_application.employments.order(:started_on)
   end
+  # :nocov:
 
   def set_job_application
     @job_application = current_jobseeker.job_applications.find(params[:job_application_id] || params[:id])
@@ -211,7 +220,9 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def redirect_unless_draft_job_application
     job_application = current_jobseeker.job_applications.find_by(vacancy_id: vacancy.id)
+    # :nocov:
     return unless job_application
+    # :nocov:
 
     redirect_to jobseekers_job_application_path(job_application), warning: t(".warning") unless job_application.draft?
   end

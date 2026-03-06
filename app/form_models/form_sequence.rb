@@ -19,10 +19,6 @@ class FormSequence
     @step_names - not_validatable_steps
   end
 
-  def not_validatable_steps
-    []
-  end
-
   def validate_step(step_name)
     step_form_class = File.join(@form_prefix, "#{step_name}_form").camelize.constantize
 

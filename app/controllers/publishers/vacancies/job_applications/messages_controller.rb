@@ -11,12 +11,7 @@ class Publishers::Vacancies::JobApplications::MessagesController < Publishers::V
       @tab = "messages"
       @show_form = "true"
 
-      conversation = @job_application.conversations.first
-      @messages = if conversation&.messages
-                    conversation.messages.order(created_at: :desc)
-                  else
-                    []
-                  end
+      @messages = conversation.messages.order(created_at: :desc)
 
       render "publishers/vacancies/job_applications/messages", status: :unprocessable_entity
     end

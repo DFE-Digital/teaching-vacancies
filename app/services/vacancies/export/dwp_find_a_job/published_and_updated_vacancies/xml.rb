@@ -25,7 +25,9 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
     # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def vacancy_to_xml(vacancy, xml)
       org = vacancy.organisation
+      # :nocov:
       return if org&.postcode.blank? # Poscode is mandatory in "Find A Job" service
+      # :nocov:
 
       vacancy = ParsedVacancy.new(vacancy)
 

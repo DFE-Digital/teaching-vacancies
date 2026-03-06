@@ -16,7 +16,7 @@ RSpec.describe "Publishers can preview a vacancy" do
 
     it "passes a11y", :a11y do
       # wait for page load
-      expect(page).to have_content(vacancy.job_title)
+      expect(page).to have_content vacancy.job_title
       expect(page).to be_axe_clean
     end
 

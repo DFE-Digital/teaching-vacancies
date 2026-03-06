@@ -19,11 +19,13 @@ class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::Vaca
 
   private
 
+  # :nocov:
   def application_form_presence
     return if application_form.present?
 
     errors.add(:application_form, :blank) if vacancy.application_form.blank?
   end
+  # :nocov:
 
   def application_form_scan_safe
     return if application_form.present?

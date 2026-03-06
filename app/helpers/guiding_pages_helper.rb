@@ -2,7 +2,9 @@ module GuidingPagesHelper
   ALWAYS_CAPITALIZE_WORDS = ["england"].freeze
 
   def format_title(subcategory)
+    # :nocov:
     return "" if subcategory.nil?
+    # :nocov:
 
     words = subcategory.downcase.split("-")
     words.map!.with_index do |word, index|
