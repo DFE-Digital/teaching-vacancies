@@ -148,204 +148,204 @@ FactoryBot.define do
         rejected_at: options.rejected_at,
       )
     end
-  end
 
-  trait :for_seed_data do
-    create_details { true }
-    disability { %w[no prefer_not_to_say yes].sample }
-    age { %w[under_twenty_five twenty_five_to_twenty_nine thirty_to_thirty_nine forty_to_forty_nine fifty_to_fifty_nine sixty_and_over prefer_not_to_say].sample }
-    gender { %w[man other prefer_not_to_say woman].sample }
-    gender_description { Faker::Gender.type }
-    orientation { %w[bisexual gay_or_lesbian heterosexual other prefer_not_to_say].sample }
-    orientation_description { Faker::Lorem.sentence }
-    ethnicity { %w[asian black mixed other prefer_not_to_say white].sample }
-    ethnicity_description { Faker::Lorem.sentence }
-    religion { %w[buddhist christian hindu jewish muslim none other prefer_not_to_say sikh].sample }
-    religion_description { Faker::Religion::Bible.character }
-    national_insurance_number { ["QQ 12 34 56 C", nil].sample }
-  end
-
-  trait :status_draft do
-    transient do
-      create_details { false }
-      status { :draft }
+    trait :for_seed_data do
+      create_details { true }
+      disability { %w[no prefer_not_to_say yes].sample }
+      age { %w[under_twenty_five twenty_five_to_twenty_nine thirty_to_thirty_nine forty_to_forty_nine fifty_to_fifty_nine sixty_and_over prefer_not_to_say].sample }
+      gender { %w[man other prefer_not_to_say woman].sample }
+      gender_description { Faker::Gender.type }
+      orientation { %w[bisexual gay_or_lesbian heterosexual other prefer_not_to_say].sample }
+      orientation_description { Faker::Lorem.sentence }
+      ethnicity { %w[asian black mixed other prefer_not_to_say white].sample }
+      ethnicity_description { Faker::Lorem.sentence }
+      religion { %w[buddhist christian hindu jewish muslim none other prefer_not_to_say sikh].sample }
+      religion_description { Faker::Religion::Bible.character }
+      national_insurance_number { ["QQ 12 34 56 C", nil].sample }
     end
 
-    # Personal details
-    first_name { "" }
-    last_name { "" }
-    previous_names { "" }
-    street_address { "" }
-    city { "" }
-    postcode { "" }
-    country { "" }
-    phone_number { "" }
-    teacher_reference_number { "" }
-    national_insurance_number { "" }
+    trait :status_draft do
+      transient do
+        create_details { false }
+        status { :draft }
+      end
 
-    # Professional statement
-    qualified_teacher_status { "" }
-    qualified_teacher_status_year { "" }
-    is_statutory_induction_complete { nil }
+      # Personal details
+      first_name { "" }
+      last_name { "" }
+      previous_names { "" }
+      street_address { "" }
+      city { "" }
+      postcode { "" }
+      country { "" }
+      phone_number { "" }
+      teacher_reference_number { "" }
+      national_insurance_number { "" }
 
-    # Personal statement
-    personal_statement_richtext { "" }
+      # Professional statement
+      qualified_teacher_status { "" }
+      qualified_teacher_status_year { "" }
+      is_statutory_induction_complete { nil }
 
-    # Equal opportunities
-    disability { "" }
-    gender { "" }
-    gender_description { "" }
-    orientation { "" }
-    orientation_description { "" }
-    ethnicity { "" }
-    ethnicity_description { "" }
-    religion { "" }
-    religion_description { "" }
+      # Personal statement
+      personal_statement_richtext { "" }
 
-    # Ask for support
-    is_support_needed { nil }
-    support_needed_details { "" }
+      # Equal opportunities
+      disability { "" }
+      gender { "" }
+      gender_description { "" }
+      orientation { "" }
+      orientation_description { "" }
+      ethnicity { "" }
+      ethnicity_description { "" }
+      religion { "" }
+      religion_description { "" }
 
-    # Declarations
-    has_close_relationships { nil }
-    close_relationships_details { "" }
-    has_safeguarding_issue { nil }
-    safeguarding_issue_details { "" }
-    has_right_to_work_in_uk { nil }
+      # Ask for support
+      is_support_needed { nil }
+      support_needed_details { "" }
 
-    completed_steps { [] }
-  end
+      # Declarations
+      has_close_relationships { nil }
+      close_relationships_details { "" }
+      has_safeguarding_issue { nil }
+      safeguarding_issue_details { "" }
+      has_right_to_work_in_uk { nil }
 
-  trait :status_submitted do
-    transient do
-      submitted_at { 4.days.ago }
-      status { :submitted }
-    end
-  end
-
-  trait :status_reviewed do
-    transient do
-      submitted_at { 4.days.ago }
-      reviewed_at { 3.days.ago }
-      status { :reviewed }
-    end
-  end
-
-  trait :status_shortlisted do
-    transient do
-      submitted_at { 4.days.ago }
-      shortlisted_at { 3.days.ago }
-      status { :shortlisted }
+      completed_steps { [] }
     end
 
-    further_instructions { Faker::Lorem.paragraph(sentence_count: 2) }
-  end
-
-  trait :status_unsuccessful do
-    transient do
-      submitted_at { 4.days.ago }
-      unsuccessful_at { 3.days.ago }
-      status { :unsuccessful }
+    trait :status_submitted do
+      transient do
+        submitted_at { 4.days.ago }
+        status { :submitted }
+      end
     end
 
-    rejection_reasons { Faker::Lorem.paragraph(sentence_count: 1) }
-  end
-
-  trait :status_rejected do
-    transient do
-      submitted_at { 4.days.ago }
-      unsuccessful_at { 3.days.ago }
-      rejected_at { 2.days.ago }
-      status { :rejected }
+    trait :status_reviewed do
+      transient do
+        submitted_at { 4.days.ago }
+        reviewed_at { 3.days.ago }
+        status { :reviewed }
+      end
     end
 
-    rejection_reasons { Faker::Lorem.paragraph(sentence_count: 1) }
-  end
+    trait :status_shortlisted do
+      transient do
+        submitted_at { 4.days.ago }
+        shortlisted_at { 3.days.ago }
+        status { :shortlisted }
+      end
 
-  trait :status_withdrawn do
-    transient do
-      submitted_at { 4.days.ago }
-      withdrawn_at { 2.days.ago }
-      status { :withdrawn }
-    end
-  end
-
-  trait :status_interviewing do
-    transient do
-      submitted_at { 4.days.ago }
-      shortlisted_at { 3.days.ago }
-      interviewing_at { 2.days.ago }
-      status { :interviewing }
-    end
-  end
-
-  trait :status_interviewing_with_pre_checks do
-    transient do
-      submitted_at { 4.days.ago }
-      interviewing_at { 2.days.ago }
-      status { :interviewing }
-      create_self_disclosure { true }
-      create_references { true }
-    end
-  end
-
-  trait :status_unsuccessful_interview do
-    transient do
-      status { :unsuccessful_interview }
-      submitted_at { 4.days.ago }
-      interviewing_at { 2.days.ago }
-      unsuccessful_interview_at { 1.day.ago }
-      create_self_disclosure { true }
-      create_references { true }
+      further_instructions { Faker::Lorem.paragraph(sentence_count: 2) }
     end
 
-    interview_feedback_received_at { Time.zone.now }
-    interview_feedback_received { true }
-  end
+    trait :status_unsuccessful do
+      transient do
+        submitted_at { 4.days.ago }
+        unsuccessful_at { 3.days.ago }
+        status { :unsuccessful }
+      end
 
-  trait :status_offered do
-    transient do
-      status { :offered }
-      submitted_at { 4.days.ago }
-      shortlisted_at { 3.days.ago }
-      interviewing_at { 2.days.ago }
-      offered_at { 1.day.ago }
-      create_self_disclosure { true }
-      create_references { true }
+      rejection_reasons { Faker::Lorem.paragraph(sentence_count: 1) }
     end
-  end
 
-  trait :status_declined do
-    transient do
-      status { :declined }
-      submitted_at { 5.days.ago }
-      shortlisted_at { 4.days.ago }
-      interviewing_at { 2.days.ago }
-      offered_at { 1.day.ago }
-      declined_at { Time.zone.now }
-      create_self_disclosure { true }
-      create_references { true }
+    trait :status_rejected do
+      transient do
+        submitted_at { 4.days.ago }
+        unsuccessful_at { 3.days.ago }
+        rejected_at { 2.days.ago }
+        status { :rejected }
+      end
+
+      rejection_reasons { Faker::Lorem.paragraph(sentence_count: 1) }
     end
-  end
 
-  trait :with_baptism_certificate do
-    following_religion { true }
-    religious_reference_type { :baptism_certificate }
-    baptism_certificate do
-      Rack::Test::UploadedFile.new(
-        Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"),
-        "application/pdf",
-      )
+    trait :status_withdrawn do
+      transient do
+        submitted_at { 4.days.ago }
+        withdrawn_at { 2.days.ago }
+        status { :withdrawn }
+      end
     end
-  end
 
-  trait :with_religious_referee do
-    following_religion { true }
-    religious_reference_type { :religious_referee }
-    religious_referee_name { Faker::Name.name }
-    religious_referee_address { Faker::Address.full_address }
-    religious_referee_role { "Priest" }
-    religious_referee_email { Faker::Internet.email(domain: "contoso.com") }
-    religious_referee_phone { Faker::PhoneNumber.phone_number }
+    trait :status_interviewing do
+      transient do
+        submitted_at { 4.days.ago }
+        shortlisted_at { 3.days.ago }
+        interviewing_at { 2.days.ago }
+        status { :interviewing }
+      end
+    end
+
+    trait :status_interviewing_with_pre_checks do
+      transient do
+        submitted_at { 4.days.ago }
+        interviewing_at { 2.days.ago }
+        status { :interviewing }
+        create_self_disclosure { true }
+        create_references { true }
+      end
+    end
+
+    trait :status_unsuccessful_interview do
+      transient do
+        status { :unsuccessful_interview }
+        submitted_at { 4.days.ago }
+        interviewing_at { 2.days.ago }
+        unsuccessful_interview_at { 1.day.ago }
+        create_self_disclosure { true }
+        create_references { true }
+      end
+
+      interview_feedback_received_at { Time.zone.now }
+      interview_feedback_received { true }
+    end
+
+    trait :status_offered do
+      transient do
+        status { :offered }
+        submitted_at { 4.days.ago }
+        shortlisted_at { 3.days.ago }
+        interviewing_at { 2.days.ago }
+        offered_at { 1.day.ago }
+        create_self_disclosure { true }
+        create_references { true }
+      end
+    end
+
+    trait :status_declined do
+      transient do
+        status { :declined }
+        submitted_at { 5.days.ago }
+        shortlisted_at { 4.days.ago }
+        interviewing_at { 2.days.ago }
+        offered_at { 1.day.ago }
+        declined_at { Time.zone.now }
+        create_self_disclosure { true }
+        create_references { true }
+      end
+    end
+
+    trait :with_baptism_certificate do
+      following_religion { true }
+      religious_reference_type { :baptism_certificate }
+      baptism_certificate do
+        Rack::Test::UploadedFile.new(
+          Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"),
+          "application/pdf",
+        )
+      end
+    end
+
+    trait :with_religious_referee do
+      following_religion { true }
+      religious_reference_type { :religious_referee }
+      religious_referee_name { Faker::Name.name }
+      religious_referee_address { Faker::Address.full_address }
+      religious_referee_role { "Priest" }
+      religious_referee_email { Faker::Internet.email(domain: "contoso.com") }
+      religious_referee_phone { Faker::PhoneNumber.phone_number }
+    end
   end
 end
