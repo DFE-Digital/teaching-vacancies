@@ -1,7 +1,5 @@
 source "https://rubygems.org"
 
-ruby "4.0.1"
-
 RAILS_VERSION = "< 8.1".freeze
 gem "actionmailer", RAILS_VERSION
 gem "actionpack", RAILS_VERSION
