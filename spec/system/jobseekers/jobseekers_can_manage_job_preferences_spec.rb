@@ -100,23 +100,23 @@ RSpec.describe "Jobseekers can manage their job preferences", :geocode do
 
     check "Full time"
     click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(jobseekers_job_preferences_step_path(:location), ignore_query: true)
+    expect(page).to have_current_path(new_jobseekers_job_preferences_location_path, ignore_query: true)
     within "h1" do
       expect(page).to have_content("Location")
     end
 
     click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(jobseekers_job_preferences_step_path(:location), ignore_query: true)
+    expect(page).to have_current_path(jobseekers_job_preferences_locations_path, ignore_query: true)
     expect(page).to have_css("h2", text: "There is a problem")
 
     fill_in "Location", with: "London"
     click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(jobseekers_job_preferences_step_path(:location), ignore_query: true)
+    expect(page).to have_current_path(jobseekers_job_preferences_locations_path, ignore_query: true)
     expect(page).to have_css("h2", text: "There is a problem")
 
     choose "1 mile"
     click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(jobseekers_job_preferences_step_path(:locations), ignore_query: true)
+    expect(page).to have_current_path(jobseekers_job_preferences_locations_path, ignore_query: true)
     within "h1" do
       expect(page).to have_content("Locations")
     end
@@ -136,7 +136,7 @@ RSpec.describe "Jobseekers can manage their job preferences", :geocode do
     fill_in "Location", with: "Birmingham"
     choose "5 miles"
     click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(jobseekers_job_preferences_step_path(:locations), ignore_query: true)
+    expect(page).to have_current_path(jobseekers_job_preferences_locations_path, ignore_query: true)
     within "h1" do
       expect(page).to have_content("Locations")
     end
@@ -148,7 +148,7 @@ RSpec.describe "Jobseekers can manage their job preferences", :geocode do
     end
     click_on "Delete this location"
 
-    expect(page).to have_current_path(jobseekers_job_preferences_step_path(:location), ignore_query: true)
+    expect(page).to have_current_path(new_jobseekers_job_preferences_location_path, ignore_query: true)
     expect(page).to have_content("Location deleted")
     within "h1" do
       expect(page).to have_content("Location")
@@ -163,7 +163,7 @@ RSpec.describe "Jobseekers can manage their job preferences", :geocode do
     fill_in "Location", with: "London"
     choose "1 mile"
     click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(jobseekers_job_preferences_step_path(:locations), ignore_query: true)
+    expect(page).to have_current_path(jobseekers_job_preferences_locations_path, ignore_query: true)
     within "h1" do
       expect(page).to have_content("Locations")
     end
@@ -175,7 +175,7 @@ RSpec.describe "Jobseekers can manage their job preferences", :geocode do
 
     choose "Yes"
     click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(jobseekers_job_preferences_step_path(:location), ignore_query: true)
+    expect(page).to have_current_path(new_jobseekers_job_preferences_location_path, ignore_query: true)
     within "h1" do
       expect(page).to have_content("Location")
     end
@@ -183,7 +183,7 @@ RSpec.describe "Jobseekers can manage their job preferences", :geocode do
     fill_in "Location", with: "Manchester"
     choose "10 miles"
     click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(jobseekers_job_preferences_step_path(:locations), ignore_query: true)
+    expect(page).to have_current_path(jobseekers_job_preferences_locations_path, ignore_query: true)
     within "h1" do
       expect(page).to have_content("Locations")
     end
@@ -242,13 +242,13 @@ RSpec.describe "Jobseekers can manage their job preferences", :geocode do
 
       check "Full time"
       click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:location), ignore_query: true)
+      expect(page).to have_current_path(new_jobseekers_job_preferences_location_path, ignore_query: true)
       expect(page).to have_css("h1", text: "Job preferencesLocation")
 
       fill_in "Location", with: "Manchester"
       choose "10 miles"
       click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:locations), ignore_query: true)
+      expect(page).to have_current_path(jobseekers_job_preferences_locations_path, ignore_query: true)
       expect(page).to have_css("h1", text: "Job preferencesLocations")
       expect(page).to have_content("Manchester (10 miles)")
       expect(page).to have_css("h2", text: "Do you want to add another location?")

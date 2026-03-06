@@ -1,15 +1,17 @@
 ruby:
+  model = profile.job_preferences
+  multistep = Jobseekers::JobPreferencesForm.from_record(model)
   attributes = {
     roles: {
-      map_values: ->(value, step) { step.options[value] },
+      map_values: ->(value) { I18n.t("helpers.label.jobseekers_job_preferences_form_roles_form.role_options.#{value}") },
       join_with: ", ",
     },
     phases: {
-      map_values: ->(value, step) { step.options[value] },
+      map_values: ->(value) { I18n.t("jobs.education_phase_options.#{value}") },
       join_with: ", ",
     },
     key_stages: {
-      map_values: ->(value, step) { step.options[value] },
+      map_values: ->(value) { I18n.t("helpers.label.jobseekers_job_preferences_form_key_stages_form.key_stages_options.#{value}") },
       join_with: ", ",
     },
     subjects: {
@@ -17,28 +19,28 @@ ruby:
       blank: "No subject preference chosen",
     },
     working_patterns: {
-      map_values: ->(value, step) { step.options[value] },
+      map_values: ->(value) { I18n.t("helpers.label.publishers_job_listing_contract_information_form.working_patterns_options.#{value}") },
       join_with: ", ",
     },
     working_pattern_details: {
-      if: ->(form) { form.working_pattern_details.present? },
+      if: ->(model) { model.working_pattern_details.present? },
     },
     locations: {
-      if: ->(form) { form.locations.any? },
-      map_values: ->((_, value), _) { "#{value[:location]} (#{t('jobs.search.number_of_miles', count: value[:radius].to_i)})" },
+      if: ->(model) { model.locations.any? },
+      map_values: ->(value) { "#{value.name} (#{t('jobs.search.number_of_miles', count: value.radius.to_i)})" },
       join_with: "</br>",
     },
   }
 
 = govuk_summary_list do |summary_list|
   - attributes.each do |attribute, options|
-    - step_name = multistep.class.delegated_attributes.fetch(attribute.to_s)
-    - condition = options[:if] || ->(form) { form.completed?(step_name) }
-    - next unless condition.call(multistep)
-    - value = multistep.public_send(attribute)
+    - step_name = multistep.class.delegated_attributes.fetch(attribute)
+    - condition = options[:if] || ->(preferences) { preferences.completed_steps[step_name.to_s]&.to_sym == :completed }
+    - next unless condition.call(model)
+    - value = model.public_send(attribute)
     - count = value.is_a?(Array) ? value.count : 1
     - if options[:map_values] || options[:join_with]
-      - value = value.map { |elem| options[:map_values].call(elem, multistep.steps[step_name]) } if options[:map_values]
+      - value = value.map { |elem| options[:map_values].call(elem) } if options[:map_values]
       - value = value.join(options[:join_with].html_safe).html_safe
 
     - summary_list.with_row do |row|

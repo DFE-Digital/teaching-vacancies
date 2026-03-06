@@ -26,12 +26,8 @@ RSpec.describe WithinUnitedKingdomValidator do
   context "when location is not within the United Kingdom" do
     let(:geocoding) { instance_double(Geocoding, uk_coordinates?: false) }
 
-    it "is not valid" do
-      expect(dummy).not_to be_valid
-    end
-
     it "adds an error message" do
-      dummy.valid?
+      expect(dummy).not_to be_valid
       expect(dummy.errors[:location])
         .to include(I18n.t("activemodel.errors.models.jobseekers/job_preferences_form/location_form.attributes.location.blank"))
     end
