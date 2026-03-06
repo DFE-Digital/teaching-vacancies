@@ -12,6 +12,7 @@ module Publishers
             vacancy.save!
             { status: :ok }
           elsif (conflict = vacancy.find_conflicting_vacancy)
+            track_conflict_attempt(vacancy, conflict)
             conflict_response(conflict, vacancy.errors[:base].first || vacancy.errors[:external_reference].first)
           else
             validation_error_response(vacancy)
@@ -19,6 +20,17 @@ module Publishers
         end
 
         private
+
+        def track_conflict_attempt(vacancy, conflicting_vacancy)
+          return if vacancy.errors[:external_reference].any?
+
+          fail_safe do
+            VacancyConflictAttempt.track_attempt!(
+              publisher_ats_api_client: vacancy.publisher_ats_api_client,
+              conflicting_vacancy: conflicting_vacancy,
+            )
+          end
+        end
 
         def sanitised_params(params)
           organisations = fetch_organisations(params[:schools])
