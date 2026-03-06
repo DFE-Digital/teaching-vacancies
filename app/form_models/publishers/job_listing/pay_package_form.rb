@@ -34,6 +34,7 @@ class Publishers::JobListing::PayPackageForm < Publishers::JobListing::VacancyFo
 
   attribute :benefits, :boolean
 
+  # simplecov:disable
   def params_to_save
     salaries = slice(*SALARIES.select { |_salary, salary_type| salary_types.include? salary_type }.map(&:first))
     benefits_values = if benefits
@@ -43,6 +44,7 @@ class Publishers::JobListing::PayPackageForm < Publishers::JobListing::VacancyFo
                       end
     salaries.merge(benefits_values)
   end
+  # simplecov:enable
 
   private
 

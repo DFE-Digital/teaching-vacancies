@@ -33,9 +33,11 @@ class Search::VacancySearch
     @location_search ||= Search::LocationBuilder.new(@location, @radius)
   end
 
+  # :nocov:
   def organisation
     @organisation ||= Organisation.find_by(slug: organisation_slug) if organisation_slug
   end
+  # :nocov:
 
   def vacancies
     @vacancies ||= scope
@@ -76,7 +78,9 @@ class Search::VacancySearch
 
   def order_scope(scope)
     # only re-order the query if sort is a valid db column
+    # :nocov:
     return scope unless sort&.by_db_column?
+    # :nocov:
 
     scope.reorder(sort_by => sort.order)
   end

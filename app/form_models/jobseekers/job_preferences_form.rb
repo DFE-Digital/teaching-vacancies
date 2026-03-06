@@ -66,14 +66,6 @@ module Jobseekers
       def params_to_save
         { roles: roles }
       end
-
-      def teaching_job_roles_options
-        Vacancy::TEACHING_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.#{option}")] }
-      end
-
-      def support_job_roles_options
-        Vacancy::SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.support_job_role_options.#{option}")] }
-      end
     end
 
     class PhasesForm < ProfilesForm

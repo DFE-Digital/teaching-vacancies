@@ -55,10 +55,6 @@ module Publishers
           ChangeEmailAddressForm
         end
 
-        def reference_received_class
-          MarkReferenceAsReceivedForm
-        end
-
         def param_key(form_class)
           ActiveModel::Naming.param_key(form_class)
         end

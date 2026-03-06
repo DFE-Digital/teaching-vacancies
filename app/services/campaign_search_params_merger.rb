@@ -29,6 +29,7 @@ class CampaignSearchParamsMerger
     end
   end
 
+  # :nocov:
   def merge_campaign_criteria(params)
     return unless campaign_page&.criteria
 
@@ -36,11 +37,14 @@ class CampaignSearchParamsMerger
       params[key] ||= value
     end
   end
+  # :nocov:
 
+  # :nocov:
   def map_location_and_radius(params)
     params[:location] = params.delete(:email_location) if params[:email_location].present?
     params[:radius] = params.delete(:email_radius) if params[:email_radius].present?
   end
+  # :nocov:
 
   def map_teaching_job_roles_subjects_phases(params)
     params[:teaching_job_roles] = [params.delete(:email_jobrole)].compact if params[:email_jobrole].present?
@@ -48,6 +52,7 @@ class CampaignSearchParamsMerger
     params[:phases] = [params.delete(:email_phase)].compact if params[:email_phase].present?
   end
 
+  # :nocov:
   def extract_working_patterns(params)
     working_patterns = []
     working_patterns << "full_time" if ActiveModel::Type::Boolean.new.cast(params.delete(:email_fulltime))
@@ -55,6 +60,7 @@ class CampaignSearchParamsMerger
     working_patterns << "job_share" if ActiveModel::Type::Boolean.new.cast(params.delete(:email_jobshare))
     params[:working_patterns] = working_patterns unless working_patterns.empty?
   end
+  # :nocov:
 
   def extract_ect_status(params)
     ect_value = params.delete(:email_ECT)

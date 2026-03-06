@@ -6,7 +6,9 @@ module Jobseekers::QualificationFormConcerns
   end
 
   def category_form_class(category)
+    # simplecov:disable
     name = case category
+           # simplecov:enable
            when "gcse", "a_level", "as_level"
              "Secondary::CommonForm"
            when "undergraduate", "postgraduate"

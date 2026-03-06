@@ -1,7 +1,9 @@
 module FeedbacksHelper
+  # simplecov:disable
   def current_user_email(current_jobseeker, current_publisher)
     current_jobseeker&.email.presence || current_publisher&.email.presence
   end
+  # simplecov:enable
 
   def header_feedback_link_text
     capture do

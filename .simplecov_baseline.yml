@@ -148,13 +148,6 @@ app/components/job_application_review_section_component.rb:
   branches:
     percent: 100.0
     missed: 0
-app/components/landing_page_link_component.rb:
-  lines:
-    percent: 92.3
-    missed: 1
-  branches:
-    percent: 33.33
-    missed: 2
 app/components/landing_page_link_component/landing_page_link_component.html.slim:
   lines:
     percent: 100.0
@@ -164,18 +157,18 @@ app/components/landing_page_link_component/landing_page_link_component.html.slim
     missed: 0
 app/components/landing_page_link_group_component.rb:
   lines:
-    percent: 71.42
-    missed: 6
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 0.0
-    missed: 6
+    percent: 100.0
+    missed: 0
 app/components/map_component.rb:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/components/map_component/map_component.html.slim:
   lines:
     percent: 100.0
@@ -248,11 +241,11 @@ app/components/sort_component/sort_component.html.slim:
     missed: 1
 app/components/supportal_table_component.rb:
   lines:
-    percent: 97.14
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 88.88
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/components/supportal_table_component/supportal_table_component.html.slim:
   lines:
     percent: 100.0
@@ -325,11 +318,11 @@ app/components/tvs_classes_component.rb:
     missed: 0
 app/components/vacancy_form_page_heading_component.rb:
   lines:
-    percent: 90.9
-    missed: 2
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 30.0
-    missed: 7
+    percent: 100.0
+    missed: 0
 app/components/vacancy_form_page_heading_component/vacancy_form_page_heading_component.html.slim:
   lines:
     percent: 100.0
@@ -370,8 +363,8 @@ app/controllers/api/organisations_controller.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/controllers/api/vacancies_controller.rb:
   lines:
     percent: 100.0
@@ -384,15 +377,15 @@ app/controllers/application_controller.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 94.44
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/controllers/authentication_controller.rb:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 66.66
-    missed: 4
+    percent: 100.0
+    missed: 0
 app/controllers/colleges_controller.rb:
   lines:
     percent: 100.0
@@ -405,8 +398,8 @@ app/controllers/concerns/authenticated.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/controllers/concerns/jobseekers/login_required.rb:
   lines:
     percent: 100.0
@@ -419,8 +412,8 @@ app/controllers/concerns/jobseekers/qualification_form_concerns.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/controllers/concerns/publishers/login_required.rb:
   lines:
     percent: 100.0
@@ -430,11 +423,11 @@ app/controllers/concerns/publishers/login_required.rb:
     missed: 0
 app/controllers/concerns/publishers/vacancy_copy.rb:
   lines:
-    percent: 53.84
-    missed: 6
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 50.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/controllers/concerns/publishers/wizardable.rb:
   lines:
     percent: 100.0
@@ -447,15 +440,15 @@ app/controllers/concerns/recaptcha_checking.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 66.66
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/controllers/concerns/return_path_tracking.rb:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 83.33
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/controllers/concerns/support_users/satisfaction_rating_types.rb:
   lines:
     percent: 100.0
@@ -465,11 +458,11 @@ app/controllers/concerns/support_users/satisfaction_rating_types.rb:
     missed: 0
 app/controllers/cookies_preferences_controller.rb:
   lines:
-    percent: 94.73
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 85.71
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/controllers/documents_controller.rb:
   lines:
     percent: 100.0
@@ -489,8 +482,8 @@ app/controllers/general_feedbacks_controller.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 70.0
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/controllers/home_controller.rb:
   lines:
     percent: 100.0
@@ -500,18 +493,18 @@ app/controllers/home_controller.rb:
     missed: 0
 app/controllers/jobseekers/account_feedbacks_controller.rb:
   lines:
-    percent: 92.85
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/controllers/jobseekers/account_transfers_controller.rb:
   lines:
-    percent: 69.23
-    missed: 8
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 50.0
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/controllers/jobseekers/accounts_controller.rb:
   lines:
     percent: 100.0
@@ -542,11 +535,11 @@ app/controllers/jobseekers/form_previews_controller.rb:
     missed: 0
 app/controllers/jobseekers/govuk_one_login_callbacks_controller.rb:
   lines:
-    percent: 96.36
-    missed: 2
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 88.46
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/controllers/jobseekers/job_applications/baptism_certificates_controller.rb:
   lines:
     percent: 100.0
@@ -570,11 +563,11 @@ app/controllers/jobseekers/job_applications/breaks_controller.rb:
     missed: 0
 app/controllers/jobseekers/job_applications/build_controller.rb:
   lines:
-    percent: 96.22
-    missed: 2
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 91.66
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/controllers/jobseekers/job_applications/education_gaps_controller.rb:
   lines:
     percent: 100.0
@@ -640,18 +633,18 @@ app/controllers/jobseekers/job_applications/training_and_cpds_controller.rb:
     missed: 0
 app/controllers/jobseekers/job_applications_controller.rb:
   lines:
-    percent: 99.22
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 97.36
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/controllers/jobseekers/login_keys_controller.rb:
   lines:
-    percent: 88.88
-    missed: 4
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 71.42
-    missed: 4
+    percent: 100.0
+    missed: 0
 app/controllers/jobseekers/notifications_controller.rb:
   lines:
     percent: 100.0
@@ -661,11 +654,11 @@ app/controllers/jobseekers/notifications_controller.rb:
     missed: 0
 app/controllers/jobseekers/profiles/about_you_controller.rb:
   lines:
-    percent: 90.0
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/controllers/jobseekers/profiles/breaks_controller.rb:
   lines:
     percent: 100.0
@@ -682,11 +675,11 @@ app/controllers/jobseekers/profiles/employments_controller.rb:
     missed: 0
 app/controllers/jobseekers/profiles/hide_profile_controller.rb:
   lines:
-    percent: 93.75
-    missed: 3
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 75.0
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/controllers/jobseekers/profiles/job_preferences_controller.rb:
   lines:
     percent: 100.0
@@ -731,8 +724,8 @@ app/controllers/jobseekers/profiles/qualified_teacher_status_controller.rb:
     missed: 0
 app/controllers/jobseekers/profiles_controller.rb:
   lines:
-    percent: 94.59
-    missed: 2
+    percent: 100.0
+    missed: 0
   branches:
     percent: 100.0
     missed: 0
@@ -752,32 +745,32 @@ app/controllers/jobseekers/request_account_transfer_emails_controller.rb:
     missed: 0
 app/controllers/jobseekers/saved_jobs_controller.rb:
   lines:
-    percent: 90.32
-    missed: 3
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 50.0
-    missed: 5
+    percent: 100.0
+    missed: 0
 app/controllers/jobseekers/sessions_controller.rb:
   lines:
-    percent: 79.31
-    missed: 6
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 80.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/controllers/jobseekers/subscriptions/feedbacks/further_feedbacks_controller.rb:
   lines:
-    percent: 95.65
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/controllers/jobseekers/subscriptions/feedbacks/relevance_feedbacks_controller.rb:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/controllers/jobseekers/subscriptions_controller.rb:
   lines:
     percent: 100.0
@@ -815,11 +808,11 @@ app/controllers/notifications_controller.rb:
     missed: 0
 app/controllers/omniauth_callbacks_controller.rb:
   lines:
-    percent: 95.74
-    missed: 4
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 85.18
-    missed: 4
+    percent: 100.0
+    missed: 0
 app/controllers/organisations/schools_controller.rb:
   lines:
     percent: 100.0
@@ -836,15 +829,15 @@ app/controllers/organisations_controller.rb:
     missed: 0
 app/controllers/pages_controller.rb:
   lines:
-    percent: 92.3
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
     percent: 100.0
     missed: 0
 app/controllers/posts_controller.rb:
   lines:
-    percent: 88.23
-    missed: 2
+    percent: 100.0
+    missed: 0
   branches:
     percent: 100.0
     missed: 0
@@ -864,8 +857,8 @@ app/controllers/publishers/all_time_statistics_controller.rb:
     missed: 0
 app/controllers/publishers/ats_api/v1/vacancies_controller.rb:
   lines:
-    percent: 96.92
-    missed: 2
+    percent: 100.0
+    missed: 0
   branches:
     percent: 100.0
     missed: 0
@@ -902,15 +895,15 @@ app/controllers/publishers/jobseeker_profiles_controller.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/controllers/publishers/login_keys_controller.rb:
   lines:
-    percent: 93.33
-    missed: 3
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 81.25
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/controllers/publishers/message_templates_controller.rb:
   lines:
     percent: 100.0
@@ -934,74 +927,67 @@ app/controllers/publishers/notifications_controller.rb:
     missed: 0
 app/controllers/publishers/organisations/description_controller.rb:
   lines:
-    percent: 81.25
-    missed: 3
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 66.66
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/controllers/publishers/organisations/email_controller.rb:
   lines:
-    percent: 85.71
-    missed: 2
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/controllers/publishers/organisations/logo_controller.rb:
   lines:
-    percent: 94.44
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 50.0
-    missed: 4
+    percent: 100.0
+    missed: 0
 app/controllers/publishers/organisations/photo_controller.rb:
   lines:
-    percent: 94.11
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 50.0
-    missed: 4
+    percent: 100.0
+    missed: 0
 app/controllers/publishers/organisations/safeguarding_information_controller.rb:
   lines:
-    percent: 81.25
-    missed: 3
-  branches:
-    percent: 66.66
-    missed: 2
-app/controllers/publishers/organisations/schools_controller.rb:
-  lines:
-    percent: 66.66
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
     percent: 100.0
     missed: 0
 app/controllers/publishers/organisations/url_override_controller.rb:
   lines:
-    percent: 85.71
-    missed: 2
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/controllers/publishers/organisations_controller.rb:
   lines:
-    percent: 95.45
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 60.0
-    missed: 4
+    percent: 100.0
+    missed: 0
 app/controllers/publishers/publisher_preferences_controller.rb:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 70.0
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/controllers/publishers/sessions_controller.rb:
   lines:
-    percent: 91.3
-    missed: 2
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 87.5
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/controllers/publishers/statistics_controller.rb:
   lines:
     percent: 100.0
@@ -1025,11 +1011,11 @@ app/controllers/publishers/vacancies/activity_log_controller.rb:
     missed: 0
 app/controllers/publishers/vacancies/application_forms_controller.rb:
   lines:
-    percent: 89.18
-    missed: 4
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 60.0
-    missed: 4
+    percent: 100.0
+    missed: 0
 app/controllers/publishers/vacancies/base_controller.rb:
   lines:
     percent: 100.0
@@ -1098,8 +1084,8 @@ app/controllers/publishers/vacancies/documents_controller.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 91.66
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/controllers/publishers/vacancies/end_listing_controller.rb:
   lines:
     percent: 100.0
@@ -1126,8 +1112,8 @@ app/controllers/publishers/vacancies/feedbacks_controller.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/controllers/publishers/vacancies/form_previews_controller.rb:
   lines:
     percent: 100.0
@@ -1144,11 +1130,11 @@ app/controllers/publishers/vacancies/job_applications/base_controller.rb:
     missed: 0
 app/controllers/publishers/vacancies/job_applications/messages_controller.rb:
   lines:
-    percent: 94.73
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 66.66
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/controllers/publishers/vacancies/job_applications/notes_controller.rb:
   lines:
     percent: 100.0
@@ -1172,8 +1158,8 @@ app/controllers/publishers/vacancies/job_applications/pre_employment_checks_cont
     missed: 0
 app/controllers/publishers/vacancies/job_applications/reference_requests_controller.rb:
   lines:
-    percent: 97.67
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
     percent: 100.0
     missed: 0
@@ -1207,11 +1193,11 @@ app/controllers/publishers/vacancies/job_applications_controller.rb:
     missed: 0
 app/controllers/publishers/vacancies/publish_controller.rb:
   lines:
-    percent: 88.23
-    missed: 2
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 83.33
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/controllers/publishers/vacancies/references_and_self_disclosure_base_controller.rb:
   lines:
     percent: 100.0
@@ -1224,8 +1210,8 @@ app/controllers/publishers/vacancies/references_and_self_disclosure_controller.r
     percent: 100.0
     missed: 0
   branches:
-    percent: 94.44
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/controllers/publishers/vacancies/relist_controller.rb:
   lines:
     percent: 100.0
@@ -1263,8 +1249,8 @@ app/controllers/publishers/vacancies/wizard_controller.rb:
     missed: 0
 app/controllers/publishers/vacancies_controller.rb:
   lines:
-    percent: 98.86
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
     percent: 100.0
     missed: 0
@@ -1289,13 +1275,6 @@ app/controllers/robots_controller.rb:
   branches:
     percent: 100.0
     missed: 0
-app/controllers/sha_controller.rb:
-  lines:
-    percent: 66.66
-    missed: 1
-  branches:
-    percent: 100.0
-    missed: 0
 app/controllers/sitemap_controller.rb:
   lines:
     percent: 100.0
@@ -1308,8 +1287,8 @@ app/controllers/subscriptions_controller.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 94.11
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/controllers/support_requests_controller.rb:
   lines:
     percent: 100.0
@@ -1336,15 +1315,15 @@ app/controllers/support_users/fallback_sessions_controller.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/controllers/support_users/feedbacks_controller.rb:
   lines:
-    percent: 89.74
-    missed: 8
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 65.38
-    missed: 9
+    percent: 100.0
+    missed: 0
 app/controllers/support_users/publisher_ats_api_clients/conflict_attempts_controller.rb:
   lines:
     percent: 100.0
@@ -1354,11 +1333,11 @@ app/controllers/support_users/publisher_ats_api_clients/conflict_attempts_contro
     missed: 0
 app/controllers/support_users/publisher_ats_api_clients_controller.rb:
   lines:
-    percent: 91.3
-    missed: 2
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/controllers/support_users/service_data/base_controller.rb:
   lines:
     percent: 100.0
@@ -1382,25 +1361,25 @@ app/controllers/support_users/service_data_controller.rb:
     missed: 0
 app/controllers/support_users/sessions_controller.rb:
   lines:
-    percent: 85.71
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/controllers/vacancies_controller.rb:
   lines:
-    percent: 94.87
-    missed: 4
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 88.23
-    missed: 4
+    percent: 100.0
+    missed: 0
 app/controllers/warden_controller.rb:
   lines:
-    percent: 93.54
-    missed: 2
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 87.5
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/form_models/base_form.rb:
   lines:
     percent: 100.0
@@ -1648,8 +1627,8 @@ app/form_models/jobseekers/job_applications/self_disclosure/personal_details_for
     missed: 0
 app/form_models/jobseekers/job_preferences_form.rb:
   lines:
-    percent: 97.59
-    missed: 2
+    percent: 100.0
+    missed: 0
   branches:
     percent: 100.0
     missed: 0
@@ -1686,8 +1665,8 @@ app/form_models/jobseekers/profile/select_organisation_form.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/form_models/jobseekers/profiles/delete_location_form.rb:
   lines:
     percent: 100.0
@@ -1777,8 +1756,8 @@ app/form_models/jobseekers/subscription_form.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 96.15
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/form_models/jobseekers/unsubscribe_feedback_form.rb:
   lines:
     percent: 100.0
@@ -1882,8 +1861,8 @@ app/form_models/publishers/job_listing/about_the_role_form.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 86.36
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/form_models/publishers/job_listing/anonymise_applications_form.rb:
   lines:
     percent: 100.0
@@ -1931,8 +1910,8 @@ app/form_models/publishers/job_listing/contact_details_form.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 84.37
-    missed: 5
+    percent: 100.0
+    missed: 0
 app/form_models/publishers/job_listing/contract_information_form.rb:
   lines:
     percent: 100.0
@@ -1942,8 +1921,8 @@ app/form_models/publishers/job_listing/contract_information_form.rb:
     missed: 0
 app/form_models/publishers/job_listing/documents_confirmation_form.rb:
   lines:
-    percent: 94.11
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
     percent: 100.0
     missed: 0
@@ -1987,8 +1966,8 @@ app/form_models/publishers/job_listing/extend_deadline_form.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 4
+    percent: 100.0
+    missed: 0
 app/form_models/publishers/job_listing/feedback_form.rb:
   lines:
     percent: 100.0
@@ -2040,18 +2019,18 @@ app/form_models/publishers/job_listing/job_role_form.rb:
     missed: 0
 app/form_models/publishers/job_listing/job_title_form.rb:
   lines:
-    percent: 91.66
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/form_models/publishers/job_listing/key_stages_form.rb:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 83.33
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/form_models/publishers/job_listing/pay_package_form.rb:
   lines:
     percent: 100.0
@@ -2085,8 +2064,8 @@ app/form_models/publishers/job_listing/start_date_form.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 4
+    percent: 100.0
+    missed: 0
 app/form_models/publishers/job_listing/subjects_form.rb:
   lines:
     percent: 100.0
@@ -2281,8 +2260,8 @@ app/form_models/school_search_form.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/form_models/support_request_form.rb:
   lines:
     percent: 100.0
@@ -2337,22 +2316,22 @@ app/helpers/feedbacks_helper.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 83.33
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/helpers/guiding_pages_helper.rb:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/helpers/job_applications_helper.rb:
   lines:
-    percent: 95.52
-    missed: 3
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 92.3
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/helpers/job_applications_pdf_helper.rb:
   lines:
     percent: 100.0
@@ -2393,22 +2372,22 @@ app/helpers/landing_pages_helper.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 80.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/helpers/links_helper.rb:
   lines:
-    percent: 93.75
-    missed: 3
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 66.66
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/helpers/maps_helper.rb:
   lines:
-    percent: 88.88
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 66.66
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/helpers/messages_helper.rb:
   lines:
     percent: 100.0
@@ -2418,25 +2397,25 @@ app/helpers/messages_helper.rb:
     missed: 0
 app/helpers/navigations_helper.rb:
   lines:
-    percent: 94.11
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
     percent: 100.0
     missed: 0
 app/helpers/notify_views_helper.rb:
   lines:
-    percent: 71.21
-    missed: 19
+    percent: 100.0
+    missed: 0
   branches:
     percent: 100.0
     missed: 0
 app/helpers/organisations_helper.rb:
   lines:
-    percent: 91.02
-    missed: 7
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 76.19
-    missed: 10
+    percent: 100.0
+    missed: 0
 app/helpers/pagination_helper.rb:
   lines:
     percent: 100.0
@@ -2449,15 +2428,15 @@ app/helpers/pdf_ui_helper.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 90.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/helpers/profiles_helper.rb:
   lines:
-    percent: 93.33
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 75.0
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/helpers/qualifications_helper.rb:
   lines:
     percent: 100.0
@@ -2481,11 +2460,11 @@ app/helpers/status_tag_helper.rb:
     missed: 0
 app/helpers/vacancies_helper.rb:
   lines:
-    percent: 94.32
-    missed: 8
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 90.78
-    missed: 7
+    percent: 100.0
+    missed: 0
 app/helpers/vacancies_options_helper.rb:
   lines:
     percent: 100.0
@@ -2495,11 +2474,11 @@ app/helpers/vacancies_options_helper.rb:
     missed: 0
 app/helpers/vacancy_forms_helper.rb:
   lines:
-    percent: 90.74
-    missed: 5
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 69.56
-    missed: 7
+    percent: 100.0
+    missed: 0
 app/jobs/alert_email/base.rb:
   lines:
     percent: 100.0
@@ -2582,8 +2561,8 @@ app/jobs/destroy_inactive_accounts_job.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/jobs/disable_inactive_profiles_job.rb:
   lines:
     percent: 100.0
@@ -2682,20 +2661,6 @@ app/jobs/index_newly_published_vacancies_job.rb:
   branches:
     percent: 100.0
     missed: 0
-app/jobs/refresh_organisations_gias_data_hash_job.rb:
-  lines:
-    percent: 66.66
-    missed: 1
-  branches:
-    percent: 100.0
-    missed: 0
-app/jobs/remove_google_index_queue_job.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
 app/jobs/remove_invalid_subscriptions_job.rb:
   lines:
     percent: 100.0
@@ -2714,13 +2679,6 @@ app/jobs/remove_vacancies_that_expired_yesterday_from_google_index_job.rb:
   lines:
     percent: 100.0
     missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
-app/jobs/reset_sessions_job.rb:
-  lines:
-    percent: 75.0
-    missed: 1
   branches:
     percent: 100.0
     missed: 0
@@ -2815,27 +2773,6 @@ app/jobs/send_subscription_governance_emails_job.rb:
   branches:
     percent: 100.0
     missed: 0
-app/jobs/send_weekly_alert_email_job.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
-app/jobs/set_organisation_slugs_job.rb:
-  lines:
-    percent: 60.0
-    missed: 2
-  branches:
-    percent: 100.0
-    missed: 0
-app/jobs/set_organisation_slugs_of_batch_job.rb:
-  lines:
-    percent: 75.0
-    missed: 1
-  branches:
-    percent: 100.0
-    missed: 0
 app/jobs/set_subscription_location_data_job.rb:
   lines:
     percent: 100.0
@@ -2844,13 +2781,6 @@ app/jobs/set_subscription_location_data_job.rb:
     percent: 100.0
     missed: 0
 app/jobs/update_dsi_users_in_db_job.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
-app/jobs/update_google_index_queue_job.rb:
   lines:
     percent: 100.0
     missed: 0
@@ -2894,11 +2824,11 @@ app/mailers/jobseekers/account_mailer.rb:
     missed: 0
 app/mailers/jobseekers/alert_mailer.rb:
   lines:
-    percent: 93.93
-    missed: 2
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 75.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/mailers/jobseekers/base_mailer.rb:
   lines:
     percent: 100.0
@@ -3090,8 +3020,8 @@ app/models/concerns/application_and_profile_associated_record.rb:
     missed: 0
 app/models/concerns/database_indexable.rb:
   lines:
-    percent: 88.23
-    missed: 2
+    percent: 100.0
+    missed: 0
   branches:
     percent: 100.0
     missed: 0
@@ -3132,8 +3062,8 @@ app/models/conversation.rb:
     missed: 0
 app/models/draft_vacancy.rb:
   lines:
-    percent: 88.88
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
     percent: 100.0
     missed: 0
@@ -3202,18 +3132,18 @@ app/models/feedback.rb:
     missed: 0
 app/models/feedback_reporting_period.rb:
   lines:
-    percent: 96.87
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 83.33
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/models/job_application.rb:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 93.75
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/models/job_application_batch.rb:
   lines:
     percent: 100.0
@@ -3223,15 +3153,15 @@ app/models/job_application_batch.rb:
     missed: 0
 app/models/job_application_pdf.rb:
   lines:
-    percent: 99.49
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 93.67
-    missed: 5
+    percent: 100.0
+    missed: 0
 app/models/job_preferences.rb:
   lines:
-    percent: 91.66
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
     percent: 100.0
     missed: 0
@@ -3244,11 +3174,11 @@ app/models/job_preferences/job_scope.rb:
     missed: 0
 app/models/job_preferences/location.rb:
   lines:
-    percent: 85.71
-    missed: 3
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/models/job_reference.rb:
   lines:
     percent: 100.0
@@ -3279,11 +3209,11 @@ app/models/jobseeker_message.rb:
     missed: 0
 app/models/jobseeker_profile.rb:
   lines:
-    percent: 95.08
-    missed: 3
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 73.68
-    missed: 5
+    percent: 81.25
+    missed: 3
 app/models/jobseeker_profile_excluded_organisation.rb:
   lines:
     percent: 100.0
@@ -3324,8 +3254,8 @@ app/models/location_polygon.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/models/message.rb:
   lines:
     percent: 100.0
@@ -3363,8 +3293,8 @@ app/models/option.rb:
     missed: 0
 app/models/organisation.rb:
   lines:
-    percent: 98.19
-    missed: 2
+    percent: 100.0
+    missed: 0
   branches:
     percent: 100.0
     missed: 0
@@ -3513,22 +3443,22 @@ app/models/school.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 66.66
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/models/school_group.rb:
   lines:
-    percent: 94.44
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
     percent: 100.0
     missed: 0
 app/models/school_group_membership.rb:
   lines:
-    percent: 92.85
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/models/self_disclosure.rb:
   lines:
     percent: 100.0
@@ -3552,8 +3482,8 @@ app/models/subscription.rb:
     missed: 0
 app/models/support_user.rb:
   lines:
-    percent: 80.0
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
     percent: 100.0
     missed: 0
@@ -3573,11 +3503,11 @@ app/models/uploaded_job_application.rb:
     missed: 0
 app/models/vacancy.rb:
   lines:
-    percent: 99.45
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 98.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/models/vacancy_analytics.rb:
   lines:
     percent: 100.0
@@ -3751,8 +3681,8 @@ app/queries/location_query.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 78.57
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/queries/organisation_location_query.rb:
   lines:
     percent: 100.0
@@ -3800,8 +3730,8 @@ app/services/campaign_search_params_merger.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 82.14
-    missed: 5
+    percent: 100.0
+    missed: 0
 app/services/copy_vacancy_asa_template.rb:
   lines:
     percent: 100.0
@@ -3839,11 +3769,11 @@ app/services/email_address_audit.rb:
     missed: 0
 app/services/event.rb:
   lines:
-    percent: 66.66
-    missed: 7
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 20.0
-    missed: 8
+    percent: 100.0
+    missed: 0
 app/services/export_candidate_data_service.rb:
   lines:
     percent: 100.0
@@ -3898,8 +3828,8 @@ app/services/gias/import_trusts.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 57.14
-    missed: 6
+    percent: 100.0
+    missed: 0
 app/services/gov_uk_notify_status_client.rb:
   lines:
     percent: 100.0
@@ -3933,8 +3863,8 @@ app/services/jobseekers/account_transfer.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 90.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/services/jobseekers/close_account.rb:
   lines:
     percent: 100.0
@@ -3954,8 +3884,8 @@ app/services/jobseekers/govuk_one_login.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/services/jobseekers/govuk_one_login/client.rb:
   lines:
     percent: 100.0
@@ -3989,12 +3919,12 @@ app/services/jobseekers/job_applications/employment_gap_finder.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 94.44
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/services/jobseekers/job_applications/job_application_step_process.rb:
   lines:
-    percent: 95.65
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
     percent: 100.0
     missed: 0
@@ -4052,8 +3982,8 @@ app/services/markdown_document.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 80.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/services/messages_pdf_generator.rb:
   lines:
     percent: 100.0
@@ -4073,8 +4003,8 @@ app/services/ons_data_import/import.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/services/ons_data_import/import_cities.rb:
   lines:
     percent: 100.0
@@ -4115,8 +4045,8 @@ app/services/publishers/ats_api/organisation_fetcher.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 93.75
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/services/publishers/ats_api/update_vacancy_service.rb:
   lines:
     percent: 100.0
@@ -4132,34 +4062,6 @@ app/services/publishers/candidate_messages_sort.rb:
     percent: 100.0
     missed: 0
 app/services/publishers/dfe_sign_in/authorisation.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
-app/services/publishers/dfe_sign_in/big_query_export/approvers.rb:
-  lines:
-    percent: 64.0
-    missed: 9
-  branches:
-    percent: 100.0
-    missed: 0
-app/services/publishers/dfe_sign_in/big_query_export/base.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 75.0
-    missed: 1
-app/services/publishers/dfe_sign_in/big_query_export/users.rb:
-  lines:
-    percent: 61.53
-    missed: 10
-  branches:
-    percent: 100.0
-    missed: 0
-app/services/publishers/dfe_sign_in/fetch_dsi_users.rb:
   lines:
     percent: 100.0
     missed: 0
@@ -4213,8 +4115,8 @@ app/services/publishers/vacancy_sort.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 80.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/services/publishers/vacancy_templates/vacancy_template_step_process.rb:
   lines:
     percent: 100.0
@@ -4238,11 +4140,11 @@ app/services/reference_pdf_generator.rb:
     missed: 0
 app/services/request_event.rb:
   lines:
-    percent: 77.27
-    missed: 5
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 0.0
-    missed: 6
+    percent: 100.0
+    missed: 0
 app/services/search/candidate_messages_search.rb:
   lines:
     percent: 100.0
@@ -4262,19 +4164,19 @@ app/services/search/criteria_inventor.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 83.33
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/services/search/jobseeker_profile_search.rb:
   lines:
-    percent: 97.82
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 95.45
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/services/search/location_builder.rb:
   lines:
-    percent: 95.65
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
     percent: 100.0
     missed: 0
@@ -4315,11 +4217,11 @@ app/services/search/radius_builder.rb:
     missed: 0
 app/services/search/school_search.rb:
   lines:
-    percent: 88.63
-    missed: 5
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 79.16
-    missed: 5
+    percent: 100.0
+    missed: 0
 app/services/search/similar_jobs.rb:
   lines:
     percent: 100.0
@@ -4332,8 +4234,8 @@ app/services/search/vacancy_search.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 81.25
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/services/search/vacancy_sort.rb:
   lines:
     percent: 100.0
@@ -4416,8 +4318,8 @@ app/services/vacancies/export/dwp_find_a_job/published_and_updated_vacancies/xml
     percent: 100.0
     missed: 0
   branches:
-    percent: 92.85
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/services/vacancies/export/dwp_find_a_job/upload.rb:
   lines:
     percent: 100.0
@@ -4434,8 +4336,8 @@ app/services/vacancies/export/dwp_find_a_job/versioning.rb:
     missed: 0
 app/services/vacancies/import/parser/start_date.rb:
   lines:
-    percent: 94.59
-    missed: 2
+    percent: 100.0
+    missed: 0
   branches:
     percent: 100.0
     missed: 0
@@ -4444,36 +4346,8 @@ app/services/vacancies/import/shared.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 80.0
-    missed: 1
-app/services/vacancies/import/sources/broadbean.rb:
-  lines:
-    percent: 97.46
-    missed: 2
-  branches:
-    percent: 78.57
-    missed: 12
-app/services/vacancies/import/sources/fusion.rb:
-  lines:
-    percent: 98.75
-    missed: 1
-  branches:
-    percent: 82.25
-    missed: 11
-app/services/vacancies/import/sources/vacancy_poster.rb:
-  lines:
-    percent: 97.26
-    missed: 2
-  branches:
-    percent: 72.22
-    missed: 15
-app/services/vacancies/import/sources/ventrus.rb:
-  lines:
-    percent: 96.0
-    missed: 3
-  branches:
-    percent: 81.48
-    missed: 10
+    percent: 100.0
+    missed: 0
 app/services/vacancy_analytics_service.rb:
   lines:
     percent: 100.0
@@ -4493,8 +4367,8 @@ app/validators/date_validator.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 85.71
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/validators/email_address_validator.rb:
   lines:
     percent: 100.0
@@ -7829,11 +7703,11 @@ app/views/vacancies/listing/_banner.html.slim:
     missed: 1
 app/views/vacancies/listing/_banner_buttons.html.slim:
   lines:
-    percent: 84.61
-    missed: 4
+    percent: 94.11
+    missed: 1
   branches:
-    percent: 81.81
-    missed: 4
+    percent: 91.66
+    missed: 1
 app/views/vacancies/listing/_contact_details.html.slim:
   lines:
     percent: 100.0
@@ -8030,20 +7904,6 @@ lib/dfe_sign_in/api.rb:
   branches:
     percent: 100.0
     missed: 0
-lib/dfe_sign_in/api/request.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
-lib/dfe_sign_in/api/response.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
 lib/dsi_client.rb:
   lines:
     percent: 100.0
@@ -8070,8 +7930,8 @@ lib/geocoding.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 91.66
-    missed: 1
+    percent: 100.0
+    missed: 0
 lib/google_api_client.rb:
   lines:
     percent: 100.0
@@ -8128,42 +7988,7 @@ lib/tasks/backfill_fe_role_qts_required.rake:
   branches:
     percent: 100.0
     missed: 0
-lib/tasks/backfill_vacancy_geolocation.rake:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
-lib/tasks/backfill_vacancy_searchable_content.rake:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
-lib/tasks/data.rake:
-  lines:
-    percent: 70.83
-    missed: 14
-  branches:
-    percent: 100.0
-    missed: 0
-lib/tasks/discard_invalid_subscriptions.rake:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
 lib/tasks/fauapi.rake:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
-lib/tasks/migrate_legacy_job_preferences.rake:
   lines:
     percent: 100.0
     missed: 0

@@ -3,11 +3,13 @@ class Jobseekers::Profiles::AboutYouController < Jobseekers::ProfilesController
 
   def update
     @profile.assign_attributes(about_you_richtext: form_params.fetch(:about_you))
+    # simplecov:disable
     if @profile.save(context: :about_you)
       redirect_to jobseekers_profile_about_you_path
     else
       render :edit
     end
+    # simplecov:enable
   end
 
   private

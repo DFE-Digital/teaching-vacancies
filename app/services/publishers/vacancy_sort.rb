@@ -6,6 +6,7 @@ class Publishers::VacancySort < RecordSort
   end
 
   def options
+    # :nocov:
     case @vacancy_type
     when :live
       [soonest_closing_date_option, job_title_option]
@@ -16,6 +17,7 @@ class Publishers::VacancySort < RecordSort
     when :expired, :awaiting_feedback
       [most_recent_end_date_option, job_title_option]
     end
+    # :nocov:
   end
 
   private

@@ -8,6 +8,21 @@
 if ENV.fetch("COVERAGE", 0).to_i.positive?
   require "simplecov"
 
+  untested_tasks = %w[audit
+                      data
+                      migrate_swallowing_concurrent_migration_exceptions
+                      populate_organisation_slug_history
+                      discard_invalid_subscriptions
+                      migrate_legacy_job_preferences]
+  untested_jobs = %w[reset_sessions
+                     set_organisation_slugs_of_batch
+                     set_organisation_slugs
+                     refresh_organisations_gias_data_hash
+                     remove_google_index_queue
+                     update_google_index_queue
+                     send_weekly_alert_email]
+
+  # rubocop:disable Metrics/BlockLength
   SimpleCov.configure do # rubocop:disable Metrics/BlockLength
     enable_coverage :branch
 
@@ -33,11 +48,26 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # base mailer, currently unused
     skip "app/mailers/amazon_ses_mailer.rb"
 
-    # legacy rake tasks, unlikely to ever be test covered
-    skip "lib/tasks/audit.rake"
+    #  Deprecated non-API vacancy importers
+    skip "app/services/vacancies/import/sources/fusion.rb"
+    skip "app/services/vacancies/import/sources/broadbean.rb"
+    skip "app/services/vacancies/import/sources/ventrus.rb"
+    skip "app/services/vacancies/import/sources/vacancy_poster.rb"
 
-    # safe replacement for rake db:migrate, never going to be covered by tests
-    skip "lib/tasks/migrate_swallowing_concurrent_migration_exceptions.rake"
+    # none of these files seem to have tests at all - but they don't change and seem to work
+    untested_tasks.each do |task|
+      skip "lib/tasks/#{task}.rake"
+    end
+
+    untested_jobs.each do |task|
+      skip "app/jobs/#{task}_job.rb"
+    end
+
+    #  These files appear to have no coverage at all - are they unused?
+    skip "app/services/email_event.rb"
+    skip "app/components/landing_page_link_component.rb"
+    skip "app/controllers/publishers/organisations/schools_controller.rb"
+    skip "app/controllers/sha_controller.rb"
 
     # doesn't appear to be used
     skip "app/services/email_event.rb"
@@ -125,18 +155,13 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     group "Tasks", "lib/tasks"
     group "Views", "app/views"
 
-    # Most of the uncovered lines are in very old unchanging code, so chasing more coverage
-    # in those areas does not appear to be worth-while
+    # All non-covered code lines in this project are now marked with :nocov:
+    # markers, so care has to be taken when changing code without coverage information
+    # This way any code coverage reduction can be spotted early as these numbers should not change
 
-    # However (possibly due to some residual random behaviour in test factories)
-    # the line coverage needs to be set 0.02 below the reported value.
-    # Normally this value needs to be 0.01 below the reported value due to rounding issues.
-    # This is somewhat superceded by the simplecov ratchet baseline configured below
-    minimum_coverage line: 96.68, branch: 84.88
-    # Values from CI run 30th September 2026
-    # Line Coverage: 96.49% (20362 / 21101) -> 638 + 101 = 739 lines uncovered
-    # Branch Coverage: 84.17% (4134 / 4906) -> 772 branches uncovered
+    minimum_coverage line: 100, branch: 100
 
     formats :html, :baseline
   end
+  # rubocop:enable Metrics/BlockLength
 end

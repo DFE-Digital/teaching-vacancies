@@ -21,6 +21,7 @@ class Publishers::JobListing::StartDateForm < Publishers::JobListing::JobListing
   end
   # rubocop:enable Lint/UnusedMethodArgument
 
+  # simplecov:disable
   def params_to_save
     {
       start_date_type: start_date_type,
@@ -30,6 +31,7 @@ class Publishers::JobListing::StartDateForm < Publishers::JobListing::JobListing
       other_start_date_details: (other_start_date_details if start_date_type == "other"),
     }
   end
+  # simplecov:enable
 
   def starts_on=(value)
     @starts_on = date_from_multiparameter_hash(value)

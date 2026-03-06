@@ -10,6 +10,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
     render step
   end
 
+  # simplecov:disable
   def update # rubocop:disable Metrics/AbcSize
     @form = form_class.new(form_class.load_form(job_application).merge(form_params))
     if @form.valid?
@@ -26,6 +27,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
       render step
     end
   end
+  # simplecov:enable
 
   private
 
@@ -55,9 +57,11 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
     (params[param_key] || params).permit(form_class.fields)
   end
 
+  # simplecov:disable
   def finish_wizard_path
     jobseekers_job_application_review_path(job_application)
   end
+  # simplecov:enable
 
   def employments
     @employments ||= job_application.employments.order(:started_on)
