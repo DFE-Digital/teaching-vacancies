@@ -5,13 +5,18 @@ module AbTestable
     helper_method :ab_variant_for, :current_ab_variants, :current_variant?, :current_variant_container_name
   end
 
+  # :nocov:
+
   def current_variant?(name_of_test, variant_name)
     ab_variant_for(name_of_test) == variant_name
   end
+  # :nocov:
 
+  # :nocov:
   def current_variant_container_name(name_of_test)
     "ab-test__#{name_of_test}--#{ab_variant_for(name_of_test)}"
   end
+  # :nocov:
 
   private
 
