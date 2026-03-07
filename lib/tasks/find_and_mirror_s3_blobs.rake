@@ -34,17 +34,14 @@ task find_and_mirror_s3_blobs: :environment do
 
       service_total_found += batch_count
       # This is covered by the test suite, but SimpleCov doesn't detect the object from the block to be the same as the one from the test.
-      # :nocov:
       unmirored_in_batch.each do |blob|
         blob.mirror_later
         service_total_queued += 1
       end
-      # :nocov:
       puts "✓ Queued #{batch_count} blob(s) from batch #{batch_num}"
     end
 
     # Both branches are reached by tests. No idea why SimpleCov thinks the "else" is not reached.
-    # :nocov:
     if service_total_found.zero?
       puts "No unmirored blobs found on service '#{s3_service}'"
     else
@@ -52,7 +49,6 @@ task find_and_mirror_s3_blobs: :environment do
       total_found += service_total_found
       total_queued += service_total_queued
     end
-    # :nocov:
   end
 
   puts "=" * 80
