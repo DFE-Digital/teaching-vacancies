@@ -13,16 +13,15 @@ RSpec.describe "populate_organisation_slug_history" do
   # rubocop:disable RSpec/NamedSubject
   it "creates friendly_id_slugs for all organisations with slugs" do
     expect {
-      subject.invoke
+      subject.execute
     }.to change { FriendlyId::Slug.where(sluggable_type: "Organisation").count }.by(2)
   end
 
   it "does not create duplicates when run multiple times" do
-    subject.invoke
+    subject.execute
     initial_count = FriendlyId::Slug.where(sluggable_type: "Organisation").count
 
-    subject.reenable
-    subject.invoke
+    subject.execute
 
     expect(FriendlyId::Slug.where(sluggable_type: "Organisation").count).to eq(initial_count)
   end
