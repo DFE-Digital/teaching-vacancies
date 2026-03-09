@@ -3,7 +3,7 @@ require "rake"
 
 # rubocop:disable RSpec/ContextWording
 RSpec.shared_context "rake" do
-  subject         { rake[task_name] }
+  subject { rake[task_name] }
 
   let(:rake)      { Rake::Application.new }
   let(:task_name) { self.class.top_level_description }
@@ -25,5 +25,5 @@ RSpec.shared_context "rake" do
     subject.reenable
   end
   # rubocop:enable RSpec/NamedSubject
-  end
+end
 # rubocop:enable RSpec/ContextWording
