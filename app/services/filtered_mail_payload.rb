@@ -23,10 +23,10 @@ class FilteredMailPayload
       h[:date]               = @parameter_filter.filter_param("mailer.date", date)
       h[:duration]           = @parameter_filter.filter_param("mailer.duration", @event.duration.round(2)) if log_duration?
 
-      # Serialise args to ensure ActiveRecord objects are converted to hashes before filtering otherwise filtering won't work.
       serialised_args = @event.payload[:args]&.map do |arg|
         arg.is_a?(ApplicationRecord) ? arg.attributes : arg
       end
+
       h[:args] = @parameter_filter.filter_param("mailer.args", serialised_args)
     end
   end
