@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "backfill_vacancy_geolocation" do
-  include_context "rake"
-
   let(:school) { create(:school) }
   let(:trust) { create(:trust) }
 
