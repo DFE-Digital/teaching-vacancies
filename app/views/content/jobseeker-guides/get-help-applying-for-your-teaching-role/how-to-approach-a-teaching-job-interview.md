@@ -32,7 +32,7 @@ You may also choose to bring a small professional portfolio, such as lesson plan
 Plan how you will get to the interview in advance. Do you know the best train to catch, or where the car park is? Think about your appearance too; be comfortable but consider professional clothing to create a positive first impression. 
 
 ## 4. Prepare answers to common interview questions
-Interview styles vary across schools – some may be formal while others may be more conversational. Study the school’s website to get a sense of what the school is like. 
+Interview styles vary across schools — some may be formal while others may be more conversational. Study the school’s website to get a sense of what the school is like. 
 
 Prepare answers to likely questions and try to do a mock interview with a friend or colleague. Saying your answers out loud is really different to practising in your head. 
 
@@ -59,15 +59,15 @@ Many interview questions ask you to describe how you have handled real life situ
 
 A useful approach is the STAR method: 
 
-* situation – briefly set the context 
-* task – explain what you needed to do 
-* action – describe what you did and why 
-* result – explain the outcome and what you learned 
+* **situation** — briefly set the context 
+* **task** — explain what you needed to do 
+* **action** — describe what you did and why 
+* **result** — explain the outcome and what you learned 
 
 ## 5. Prepare for a teaching interview lesson
 You’ll likely be asked to teach a lesson as part of your interview. 
 
-Read advice from experienced school leaders on how to best [prepare for a teaching interview lesson](https://teaching-vacancies.service.gov.uk/jobseeker-guides/get-help-applying-for-your-teaching-role/prepare-for-a-teaching-job-interview-lesson).
+Read advice from experienced school leaders on how best to [prepare for a teaching interview lesson](https://teaching-vacancies.service.gov.uk/jobseeker-guides/get-help-applying-for-your-teaching-role/prepare-for-a-teaching-job-interview-lesson).
 
 Interview lessons are not about being perfect. Schools are often looking at how you:  
 
@@ -102,7 +102,7 @@ If you are not offered the role:
 
 If you are offered the role:  
 
-* take time to consider if the role is the right fit for you before accepting it – verbally accepting an offer is legally binding, so changing your mind later may breach contract terms 
+* take time to consider if the role is the right fit for you before accepting it — verbally accepting an offer is legally binding, so changing your mind later may breach contract terms 
 * confirm your decision in writing if you decide to accept 
 * expect to receive a written contract within 2 months of starting your new role – this should be signed by both parties as a formality 
 
