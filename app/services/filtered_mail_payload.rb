@@ -27,7 +27,13 @@ class FilteredMailPayload
       serialised_args = @event.payload[:args]&.map do |arg|
         arg.is_a?(ApplicationRecord) ? arg.attributes : arg
       end
+
+      # DEBUG: Log args before and after filtering
+      Rails.logger.info("=== ARGS DEBUG (with serialization fix) ===")
+      Rails.logger.info("Args before filtering: #{serialised_args.inspect}")
       h[:args] = @parameter_filter.filter_param("mailer.args", serialised_args)
+      Rails.logger.info("Args after filtering: #{h[:args].inspect}")
+      Rails.logger.info("===========================================")
     end
   end
 
