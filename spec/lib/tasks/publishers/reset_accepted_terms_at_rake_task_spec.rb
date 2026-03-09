@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "publishers:reset_accepted_terms_at" do
-  include_context "rake"
-
   let(:task_path) { "lib/tasks/data" }
   let!(:publisher_with_accepted_terms) { create(:publisher, accepted_terms_at: 1.month.ago) }
   let!(:publisher_with_recent_accepted_terms) { create(:publisher, accepted_terms_at: 1.day.ago) }

@@ -2,8 +2,6 @@ require "rails_helper"
 
 # rubocop:disable RSpec/NamedSubject
 RSpec.describe "db:prepare:ignore_concurrent_migration_exceptions" do
-  include_context "rake"
-
   let(:task_path) { "lib/tasks/migrate_swallowing_concurrent_migration_exceptions" }
 
   before do
