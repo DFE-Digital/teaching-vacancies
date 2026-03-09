@@ -22,7 +22,7 @@ class FilteredMailPayload
       h[:cc]                 = @parameter_filter.filter_param("mailer.cc", @event.payload[:cc])
       h[:date]               = @parameter_filter.filter_param("mailer.date", date)
       h[:duration]           = @parameter_filter.filter_param("mailer.duration", @event.duration.round(2)) if log_duration?
-      h[:args]               = @parameter_filter.filter(@event.payload[:args])
+      h[:args]               = @parameter_filter.filter(args: @event.payload[:args])[:args]
     end
   end
 
