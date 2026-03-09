@@ -2,8 +2,6 @@ require "rails_helper"
 
 # rubocop:disable RSpec/NamedSubject
 RSpec.describe "backfill_azure_storage" do
-  include_context "rake"
-
   let!(:document1_blob) do
     ActiveStorage::Blob.create!(
       key: "document1",

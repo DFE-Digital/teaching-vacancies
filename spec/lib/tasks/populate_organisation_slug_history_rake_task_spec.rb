@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "populate_organisation_slug_history" do
-  include_context "rake"
-
   before do
     create(:school)
     create(:school_group)
