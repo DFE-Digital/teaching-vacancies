@@ -22,7 +22,13 @@ class FilteredMailPayload
       h[:cc]                 = @parameter_filter.filter_param("mailer.cc", @event.payload[:cc])
       h[:date]               = @parameter_filter.filter_param("mailer.date", date)
       h[:duration]           = @parameter_filter.filter_param("mailer.duration", @event.duration.round(2)) if log_duration?
-      h[:args]               = @parameter_filter.filter(args: @event.payload[:args])[:args]
+
+      # DEBUG: Log args before and after filtering
+      Rails.logger.info("=== ARGS DEBUG (filter_param) ===")
+      Rails.logger.info("Args before: #{@event.payload[:args].inspect}")
+      h[:args] = @parameter_filter.filter_param("mailer.args", @event.payload[:args])
+      Rails.logger.info("Args after filter_param: #{h[:args].inspect}")
+      Rails.logger.info("==================================")
     end
   end
 
