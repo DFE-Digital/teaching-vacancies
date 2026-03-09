@@ -35,10 +35,6 @@ RSpec.describe "find_and_mirror_s3_blobs" do
     allow(ActiveStorage::Blob).to receive(:where).with(service_name: "azure_storage_images_and_logos").and_return(azure_relation_with_keys(azure_image_keys))
   end
 
-  after do
-    subject.reenable
-  end
-
   describe "with S3 blobs but no Azure blobs" do
     let!(:document_first) do
       ActiveStorage::Blob.create!(
