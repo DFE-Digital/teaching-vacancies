@@ -1,7 +1,17 @@
 require "rails_helper"
 
 RSpec.describe FilteredMailPayload do
-  let(:formatter) { double("formatter", mailer: "TestMailer", action: "test_action", date: "2026-03-09", log_duration?: true) }
+  subject { described_class.new(formatter, event) }
+
+  let(:formatter) do
+    instance_double(
+      RailsSemanticLogger::ActionMailer::LogSubscriber::EventFormatter,
+      mailer: "TestMailer",
+      action: "test_action",
+      date: "2026-03-09",
+      log_duration?: true,
+    )
+  end
 
   let(:subscription) do
     create(:subscription,
@@ -24,15 +34,13 @@ RSpec.describe FilteredMailPayload do
   end
 
   let(:event) do
-    double(
-      "event",
+    instance_double(
+      ActiveSupport::Notifications::Event,
       name: "deliver.action_mailer",
       duration: 45.67,
       payload: event_payload,
     )
   end
-
-  subject { described_class.new(formatter, event) }
 
   describe "#filtered_payload" do
     let(:result) { subject.filtered_payload }
@@ -44,7 +52,7 @@ RSpec.describe FilteredMailPayload do
       expect(result[:to]).to eq("[FILTERED]")
       expect(result[:message_id]).to eq("[FILTERED]")
       expect(result[:from]).to eq(["noreply@example.com"])
-      expect(result[:perform_deliveries]).to eq(true)
+      expect(result[:perform_deliveries]).to be(true)
       expect(result[:duration]).to eq(45.67)
     end
 
