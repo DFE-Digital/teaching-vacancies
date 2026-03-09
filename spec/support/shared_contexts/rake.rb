@@ -19,5 +19,11 @@ RSpec.shared_context "rake" do
 
     Rake::Task.define_task(:environment)
   end
-end
+
+  # rubocop:disable RSpec/NamedSubject
+  after do
+    subject.reenable
+  end
+  # rubocop:enable RSpec/NamedSubject
+  end
 # rubocop:enable RSpec/ContextWording

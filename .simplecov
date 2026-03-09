@@ -31,6 +31,9 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
   SimpleCov.start :rails do
     enable_coverage :branch
 
+    # according to https://github.com/simplecov-ruby/simplecov this must be set
+    command_name "features" + ENV.fetch('TEST_ENV_NUMBER', '')
+
     # This line would enable coverage for view templates, but the slim compiler
     # appears to have a bug which puts the whole coverage data out by one line.
     # enable_coverage_for_eval
