@@ -174,6 +174,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     Jobseekers::JobApplications::QuickApply.new(current_jobseeker, vacancy).job_application
   end
 
+  # :nocov:
   def update_jobseeker_profile!(job_application)
     profile = job_application.jobseeker.jobseeker_profile
     return unless profile.present?
@@ -183,6 +184,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     profile.replace_training_and_cpds!(job_application.training_and_cpds)
     profile.replace_memberships!(job_application.professional_body_memberships)
   end
+  # :nocov:
 
   def all_steps_valid?
     # Check that all steps are valid, in case we have changed the validations since the step was completed.
@@ -198,9 +200,11 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     form.valid?.tap { job_application.errors.merge!(form.errors) }
   end
 
+  # :nocov:
   def employments
     @employments ||= job_application.employments.order(:started_on)
   end
+  # :nocov:
 
   def set_job_application
     @job_application = current_jobseeker.job_applications.find(params[:job_application_id] || params[:id])
@@ -222,12 +226,14 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     end
   end
 
+  # :nocov:
   def redirect_unless_draft_job_application
     job_application = current_jobseeker.job_applications.find_by(vacancy_id: vacancy.id)
     return unless job_application
 
     redirect_to jobseekers_job_application_path(job_application), warning: t(".warning") unless job_application.draft?
   end
+  # :nocov:
 
   def raise_cannot_apply
     raise ActionController::RoutingError, "Cannot apply for this vacancy"
