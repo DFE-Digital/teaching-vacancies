@@ -47,6 +47,13 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # base mailer, currently unused
     add_filter "app/mailers/amazon_ses_mailer.rb"
 
+    # legacy rake tasks, unlikely to ever be test covered
+    add_filter "lib/tasks/audit.rake"
+    add_filter "lib/tasks/data.rake"
+
+    # safe replacement for rake db:migrate, never going to be covered by tests
+    add_filter "lib/tasks/migrate_swallowing_concurrent_migration_exceptions.rake"
+
     # Each group will be displayed in the report as its own Tab.
     add_group "Components", "app/components"
     add_group "Queries", "app/queries"
@@ -62,10 +69,10 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
 
     # However (possibly due to some residual random behaviour in test factories)
     # the line coverage needs to be set 0.02 below the reported value.
-    # Nornmally this value needs to be 0.01 below the reported value due to rounding issues.
-    minimum_coverage line: 97.22, branch: 87.23
-    # Values from test run Wed 4th March 2026
-    # 97.43% (12677 / 13011) -> 334 lines uncovered
-    # 87.19% (2812 / 3225) -> 188 + 225 = 413 branches uncovered
+    # Normally this value needs to be 0.01 below the reported value due to rounding issues.
+    minimum_coverage line: 97.6, branch: 87.38
+    # Values from test run Fri 6th March 2026
+    # 97.7% (12705 / 13004) -> 308 + 53 = 361 lines uncovered
+    # 87.47% (2828 / 3233) -> 179 + 233 = 412 branches uncovered
   end
 end
