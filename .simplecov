@@ -22,7 +22,7 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     enable_coverage :branch
 
     # according to https://github.com/simplecov-ruby/simplecov this must be set
-    command_name "features" + ENV.fetch('TEST_ENV_NUMBER', '')
+    command_name "features#{ENV.fetch('TEST_ENV_NUMBER', '')}"
 
     # This line would enable coverage for view templates, but the slim compiler
     # appears to have a bug which puts the whole coverage data out by one line.
@@ -73,9 +73,9 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # However (possibly due to some residual random behaviour in test factories)
     # the line coverage needs to be set 0.02 below the reported value.
     # Normally this value needs to be 0.01 below the reported value due to rounding issues.
-    minimum_coverage line: 97.6, branch: 87.38
+    minimum_coverage line: 97.67, branch: 87.45
     # Values from test run Fri 6th March 2026
-    # 97.7% (12705 / 13004) -> 308 + 53 = 361 lines uncovered
-    # 87.47% (2828 / 3233) -> 179 + 233 = 412 branches uncovered
+    # 97.69% (12698 / 12998) -> 302 - 2 = 300 lines uncovered
+    # 87.47% (2826 / 3231) -> 174 + 231 = 405 branches uncovered
   end
 end
