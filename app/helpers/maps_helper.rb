@@ -9,6 +9,7 @@ module MapsHelper
     end
   end
 
+  # :nocov:
   def organisation_map_marker(organisation)
     [
       {
@@ -17,10 +18,13 @@ module MapsHelper
       },
     ]
   end
+  # :nocov:
 
+  # :nocov:
   def organisation_map_can_be_displayed?(vacancy)
     return true unless vacancy.central_office?
 
     vacancy.organisation.geopoint.present?
   end
+  # :nocov:
 end

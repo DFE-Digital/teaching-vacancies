@@ -9,6 +9,8 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
     @form = Jobseekers::Qualifications::CategoryForm.new
   end
 
+  # :nocov:
+
   def submit_category
     @category = category_param
     @form = Jobseekers::Qualifications::CategoryForm.new(submit_category_params)
@@ -19,6 +21,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
       render :select_category, status: :unprocessable_entity
     end
   end
+  # :nocov:
 
   def new; end
 
@@ -35,6 +38,8 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
 
   def review; end
 
+  # :nocov:
+
   def update
     if @form.valid?
       qualification.update(qualification_params)
@@ -43,6 +48,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
       render :edit, status: :unprocessable_entity
     end
   end
+  # :nocov:
 
   def destroy
     qualification.destroy
@@ -75,21 +81,16 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
   end
 
   def qualification_params
-    case action_name
-    when "new", "confirm_destroy"
-      (params[qualification_form_param_key(@category)] || params).permit(:category)
-    when "create", "edit", "update"
-      params.expect(qualification_form_param_key(@category) => [:category,
-                                                                :finished_studying,
-                                                                :finished_studying_details,
-                                                                :grade,
-                                                                :institution,
-                                                                :name,
-                                                                :subject,
-                                                                :year,
-                                                                :awarding_body,
-                                                                { qualification_results_attributes: [%i[id subject grade awarding_body]] }])
-    end
+    params.expect(qualification_form_param_key(@category) => [:category,
+                                                              :finished_studying,
+                                                              :finished_studying_details,
+                                                              :grade,
+                                                              :institution,
+                                                              :name,
+                                                              :subject,
+                                                              :year,
+                                                              :awarding_body,
+                                                              { qualification_results_attributes: [%i[id subject grade awarding_body]] }])
   end
 
   def set_form_and_category

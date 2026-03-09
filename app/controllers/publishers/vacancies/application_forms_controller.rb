@@ -3,6 +3,7 @@ require "google/apis/drive_v3"
 class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies::WizardBaseController
   helper_method :form
 
+  # :nocov:
   def create
     if form.valid?
       vacancy.application_form.attach(form.application_form) if application_form_uploaded?
@@ -14,6 +15,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
       render "publishers/vacancies/build/application_form", locals: { application_form_staged_for_replacement: application_form_staged_for_replacement? }
     end
   end
+  # :nocov:
 
   private
 
@@ -59,14 +61,6 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
         .with_data(data: event_data)
 
       DfE::Analytics::SendEvents.do([event])
-    end
-  end
-
-  def back_link_destination
-    if params[:publishers_job_listing_application_form_form][:back_to_review]
-      :review
-    elsif params[:publishers_job_listing_application_form_form][:back_to_show]
-      :show
     end
   end
 

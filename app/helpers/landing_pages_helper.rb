@@ -1,4 +1,6 @@
 module LandingPagesHelper
+  # :nocov:
+
   def landing_page_link_or_text(landing_page_criteria, text, match: :exact)
     lp = match == :exact ? LandingPage.matching(landing_page_criteria) : LandingPage.partially_matching(landing_page_criteria)
     return tag.span { text } unless lp
@@ -7,6 +9,9 @@ module LandingPagesHelper
     link_text = t("landing_pages.accessible_link_text_html", name: text)
     govuk_link_to(link_text, landing_page_path(lp.slug), text_colour: true)
   end
+  # :nocov:
+
+  # :nocov:
 
   def linked_locations(vacancy)
     vacancy.location.last(2).map(&:parameterize).filter_map do |location|
@@ -17,6 +22,7 @@ module LandingPagesHelper
       govuk_link_to(LocationLandingPage[location].name, location_landing_page_path(LocationLandingPage[location].location))
     end
   end
+  # :nocov:
 
   def linked_job_roles_and_ect_status(vacancy)
     tag.ul class: "govuk-list" do

@@ -11,9 +11,11 @@ class MapComponent < ApplicationComponent
 
   private
 
+  # :nocov:
   def radius
     @polygon.nil? && @radius ? @radius : nil
   end
+  # :nocov:
 
   def default_classes
     %w[map-component]

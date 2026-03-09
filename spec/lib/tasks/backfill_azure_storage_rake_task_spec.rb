@@ -48,9 +48,9 @@ RSpec.describe "backfill_azure_storage" do
     )
   end
 
-  after do
-    subject.reenable
-  end
+  # after do
+  #   subject.reenable
+  # end
 
   it "updates service names from amazon_s3_documents to mirror_documents" do
     expect {

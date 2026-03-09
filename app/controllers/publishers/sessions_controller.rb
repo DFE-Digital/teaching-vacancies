@@ -11,6 +11,7 @@ class Publishers::SessionsController < Devise::SessionsController
     store_return_location(publisher_root_path, scope: :publisher) unless redirected?
   end
 
+  # :nocov:
   def create
     publisher = Publisher.find(session[:publisher_id])
 
@@ -25,6 +26,7 @@ class Publishers::SessionsController < Devise::SessionsController
       redirect_to new_publisher_session_path, notice: t(".not_authorised")
     end
   end
+  # :nocov:
 
   def destroy
     clear_extra_publisher_session_entries

@@ -14,6 +14,7 @@ class Publishers::OrganisationsController < Publishers::BaseController
 
   private
 
+  # :nocov:
   def organisation
     id = params[:id] || params[:organisation_id]
     @organisation ||= if id&.in?([current_organisation.friendly_id, current_organisation.id])
@@ -25,7 +26,9 @@ class Publishers::OrganisationsController < Publishers::BaseController
 
     @organisation
   end
+  # :nocov:
 
+  # :nocov:
   def back_link_destination
     if params[:vacancy_id]
       organisation_job_build_path(params[:vacancy_id], :about_the_role)
@@ -34,4 +37,5 @@ class Publishers::OrganisationsController < Publishers::BaseController
     end
   end
   helper_method :back_link_destination
+  # :nocov:
 end

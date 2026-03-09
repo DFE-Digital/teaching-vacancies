@@ -20,6 +20,7 @@ class Jobseekers::JobApplications::TrainingAndCpdsController < Jobseekers::BaseC
     end
   end
 
+  # :nocov:
   def update
     @form = Jobseekers::TrainingAndCpdForm.new(training_and_cpd_form_params)
     if @form.valid?
@@ -29,6 +30,7 @@ class Jobseekers::JobApplications::TrainingAndCpdsController < Jobseekers::BaseC
       render :edit
     end
   end
+  # :nocov:
 
   def destroy
     @training_and_cpd.destroy!

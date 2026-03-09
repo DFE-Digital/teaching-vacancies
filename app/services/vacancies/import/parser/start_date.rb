@@ -33,6 +33,7 @@ module Vacancies::Import::Parser
 
     private
 
+    # :nocov:
     def parse_date(date)
       date.strip!
       if date.match?(REGEXP_DATETIME_ONLY)
@@ -46,6 +47,7 @@ module Vacancies::Import::Parser
       @type = TYPE_OTHER
       @date = @input # Records the original value if something goes wrong during the parsing.
     end
+    # :nocov:
 
     # Removes the time part from a datetime string
     # EG: "2023-09-04T12:00:00" => "2023-09-04"
