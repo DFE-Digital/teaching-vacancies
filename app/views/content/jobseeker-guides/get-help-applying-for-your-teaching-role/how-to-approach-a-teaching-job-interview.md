@@ -3,7 +3,7 @@ order: 300
 title: How to approach a teaching job interview
 meta_description: Practical advice and top tips for preparing for a teaching job interview, including how to confirm attendance, answer questions, deliver a lesson and ask the panel questions. 
 date_posted: 22/01/2024
-date_updated: 05/03/2025
+date_updated: 10/03/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-approach-your-teaching-job-interview.jpg"
 ---
@@ -96,14 +96,14 @@ You may also want to ask about professional development, support in the first te
 ## 8. After your interview
 If you are not offered the role: 
 
-* read through any feedback you receive from the hiring manager - this can help you succeed in your next interview 
+* read through any feedback you receive from the hiring manager — this can help you succeed in your next interview 
 * ask the hiring manager for feedback if they do not offer to provide it 
-* remember that securing an interview shows you are a strong candidate – you are likely to be shortlisted again 
+* remember that securing an interview shows you are a strong candidate — you are likely to be shortlisted again 
 
 If you are offered the role:  
 
 * take time to consider if the role is the right fit for you before accepting it — verbally accepting an offer is legally binding, so changing your mind later may breach contract terms 
 * confirm your decision in writing if you decide to accept 
-* expect to receive a written contract within 2 months of starting your new role – this should be signed by both parties as a formality 
+* expect to receive a written contract within 2 months of starting your new role — this should be signed by both parties as a formality 
 
 <a href="https://teaching-vacancies.service.gov.uk/subscriptions/new" class="govuk-button">Get jobs sent to you</a>
