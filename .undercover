@@ -1,1 +1,1 @@
--c origin/main
+-c origin/main -f '*.rb'

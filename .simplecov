@@ -52,6 +52,8 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     add_filter "lib/tasks/data.rake"
 
     # ignore all rake tasks as they cause test coverage instability
+    # This io complemented with a line in .undercover to only load .rb files
+    # rather than .rn and .rake
     add_filter Regexp.new(".rake$")
 
     # safe replacement for rake db:migrate, never going to be covered by tests
