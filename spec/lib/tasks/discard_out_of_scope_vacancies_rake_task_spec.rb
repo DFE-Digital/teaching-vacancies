@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "vacancies:discard_out_of_scope" do
-  include_context "rake"
-
   let(:task_path) { "lib/tasks/discard_out_of_scope_vacancies" }
 
   # rubocop:disable RSpec/NamedSubject
@@ -18,7 +16,7 @@ RSpec.describe "vacancies:discard_out_of_scope" do
     higher_ed_vacancy = create(:vacancy, organisations: [higher_education_school])
 
     expect {
-      subject.invoke
+      subject.execute
     }.to change { PublishedVacancy.kept.count }.by(-3)
 
     expect(out_of_scope_vacancy.reload).to be_discarded

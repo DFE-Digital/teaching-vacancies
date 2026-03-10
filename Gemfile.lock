@@ -256,6 +256,9 @@ GEM
       railties (>= 6.1.0)
     faker (3.6.0)
       i18n (>= 1.8.11, < 2)
+    fantaskspec (1.2.0)
+      rake (>= 10.0)
+      rspec (~> 3.4)
     faraday (2.14.1)
       faraday-net_http (>= 2.0, < 3.5)
       json
@@ -1012,6 +1015,7 @@ DEPENDENCIES
   draper
   factory_bot_rails
   faker
+  fantaskspec
   fastimage
   friendly_id
   front_matter_parser
@@ -1206,6 +1210,7 @@ CHECKSUMS
   factory_bot (6.5.5) sha256=ce59295daee1b4704dab8a2fee6816f513d467c6aa3bc587860767d74a66efbe
   factory_bot_rails (6.5.1) sha256=d3cc4851eae4dea8a665ec4a4516895045e710554d2b5ac9e68b94d351bc6d68
   faker (3.6.0) sha256=4ce80bf91c8d09bbfff4c5596690bf862d60eac420f86737ca8ce12a54dc464a
+  fantaskspec (1.2.0) sha256=4465cf17f2e52eddccf1cd43d790c5cf80b170082f605f8f85a14ae401e3be79
   faraday (2.14.1) sha256=a43cceedc1e39d188f4d2cdd360a8aaa6a11da0c407052e426ba8d3fb42ef61c
   faraday-follow_redirects (0.5.0) sha256=5cde93c894b30943a5d2b93c2fe9284216a6b756f7af406a1e55f211d97d10ad
   faraday-multipart (1.2.0) sha256=7d89a949693714176f612323ca13746a2ded204031a6ba528adee788694ef757

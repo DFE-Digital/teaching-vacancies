@@ -80,8 +80,13 @@ Rails.root.glob("spec/page_objects/**/*.rb").each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
 
+Rails.application.load_tasks
+
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
+
+  # do the same for rake tasks
+  config.infer_rake_task_specs_from_file_location!
 
   config.filter_rails_from_backtrace!
 

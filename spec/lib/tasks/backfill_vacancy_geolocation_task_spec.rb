@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "backfill_vacancy_geolocation" do
-  include_context "rake"
-
   let(:school) { create(:school) }
   let(:trust) { create(:trust) }
 
@@ -16,7 +14,7 @@ RSpec.describe "backfill_vacancy_geolocation" do
   # rubocop:disable RSpec/NamedSubject
   it "backfills the geolocation field" do
     expect {
-      subject.invoke
+      subject.execute
     }.to change { Vacancy.where(geolocation: nil).count }.by(-1)
   end
   # rubocop:enable RSpec/NamedSubject

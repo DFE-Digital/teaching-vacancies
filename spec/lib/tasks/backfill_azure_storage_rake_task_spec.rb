@@ -2,8 +2,6 @@ require "rails_helper"
 
 # rubocop:disable RSpec/NamedSubject
 RSpec.describe "backfill_azure_storage" do
-  include_context "rake"
-
   let!(:document1_blob) do
     ActiveStorage::Blob.create!(
       key: "document1",
@@ -48,26 +46,22 @@ RSpec.describe "backfill_azure_storage" do
     )
   end
 
-  after do
-    subject.reenable
-  end
-
   it "updates service names from amazon_s3_documents to mirror_documents" do
     expect {
-      expect { subject.invoke }.to output.to_stdout
+      expect { subject.execute }.to output.to_stdout
     }.to change { ActiveStorage::Blob.where(service_name: "amazon_s3_documents").count }.from(2).to(0)
       .and change { ActiveStorage::Blob.where(service_name: "mirror_documents").count }.from(1).to(3)
   end
 
   it "updates service names from amazon_s3_images_and_logos to mirror_images_and_logos" do
     expect {
-      expect { subject.invoke }.to output.to_stdout
+      expect { subject.execute }.to output.to_stdout
     }.to change { ActiveStorage::Blob.where(service_name: "amazon_s3_images_and_logos").count }.from(1).to(0)
       .and change { ActiveStorage::Blob.where(service_name: "mirror_images_and_logos").count }.from(0).to(1)
   end
 
   it "outputs how many blobs are going to be migrated for each service" do
-    expect { subject.invoke }
+    expect { subject.execute }
       .to output(/Found 2 blob\(s\) to migrate.*Found 1 blob\(s\) to migrate/m)
       .to_stdout
   end
@@ -81,7 +75,7 @@ RSpec.describe "backfill_azure_storage" do
     end
     # rubocop:enable RSpec/AnyInstance
 
-    expect { subject.invoke }.to output(/Queued 4 blob\(s\) for mirroring/).to_stdout
+    expect { subject.execute }.to output(/Queued 4 blob\(s\) for mirroring/).to_stdout
     expect([document1_blob, document2_blob, logo1_blob, already_migrated_document_blob]).to all(have_received(:mirror_later))
   end
 
@@ -92,13 +86,13 @@ RSpec.describe "backfill_azure_storage" do
 
     it "skips migration for that service" do
       expect {
-        expect { subject.invoke }.to output.to_stdout
+        expect { subject.execute }.to output.to_stdout
       }.to change { ActiveStorage::Blob.where(service_name: "amazon_s3_documents").count }.from(2).to(0)
         .and change { ActiveStorage::Blob.where(service_name: "mirror_documents").count }.from(1).to(3)
     end
 
     it "outputs message when no blobs found" do
-      expect { subject.invoke }.to output(/No blobs found for service 'amazon_s3_images_and_logos'/).to_stdout
+      expect { subject.execute }.to output(/No blobs found for service 'amazon_s3_images_and_logos'/).to_stdout
     end
   end
 
@@ -108,11 +102,11 @@ RSpec.describe "backfill_azure_storage" do
     end
 
     it "outputs message when no blobs are found for mirroring" do
-      expect { subject.invoke }.to output(/No blobs found for mirroring/).to_stdout
+      expect { subject.execute }.to output(/No blobs found for mirroring/).to_stdout
     end
 
     it "reports zero mirror jobs queued" do
-      expect { subject.invoke }.to output(/Mirror jobs queued: 0/).to_stdout
+      expect { subject.execute }.to output(/Mirror jobs queued: 0/).to_stdout
     end
   end
 
@@ -123,7 +117,7 @@ RSpec.describe "backfill_azure_storage" do
 
     it "migrates only the images and logos service" do
       expect {
-        expect { subject.invoke }.to output.to_stdout
+        expect { subject.execute }.to output.to_stdout
       }.to change { ActiveStorage::Blob.where(service_name: "amazon_s3_images_and_logos").count }.from(1).to(0)
         .and change { ActiveStorage::Blob.where(service_name: "mirror_images_and_logos").count }.from(0).to(1)
     end

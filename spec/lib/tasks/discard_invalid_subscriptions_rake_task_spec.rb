@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "discard_invalid_subscriptions" do
-  include_context "rake"
-
   before do
     create(:subscription)
     build(:subscription, email: "invalid").save!(validate: false)
@@ -11,7 +9,7 @@ RSpec.describe "discard_invalid_subscriptions" do
   # rubocop:disable RSpec/NamedSubject
   it "marks the invalid subscription as discarded" do
     expect {
-      subject.invoke
+      subject.execute
     }.to change { Subscription.kept.count }.by(-1)
   end
   # rubocop:enable RSpec/NamedSubject

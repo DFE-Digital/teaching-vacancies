@@ -2,12 +2,10 @@ require "rails_helper"
 
 # rubocop:disable RSpec/NamedSubject
 RSpec.describe "find_and_mirror_s3_blobs" do
-  include_context "rake"
-
   def invoke_task
     original_stdout = $stdout
     $stdout = StringIO.new
-    subject.invoke
+    subject.execute
   ensure
     $stdout = original_stdout
   end
