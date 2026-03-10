@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe "publishers/vacancies/index" do
   let(:organisation) { build_stubbed(:school, name: "Salisbury School") }
   let(:publisher) { build_stubbed(:publisher) }
+  let(:vacancy) { build_stubbed(:vacancy) }
 
   before do
     allow(view).to receive(:current_organisation).and_return(organisation)
@@ -10,8 +11,8 @@ RSpec.describe "publishers/vacancies/index" do
     assign :organisation, organisation
     assign :selected_type, :live
     assign :vacancy_types, []
-    assign :vacancies, []
-    assign :count, 0
+    assign :vacancies, [vacancy]
+    assign :count, 1
     assign :sort, Publishers::VacancySort.new(organisation, :live)
     assign :publisher_preference, build_stubbed(:publisher_preference, organisation: organisation)
     assign :selected_organisation_ids, []
@@ -21,6 +22,10 @@ RSpec.describe "publishers/vacancies/index" do
   end
 
   after { sign_out publisher }
+
+  it "has a copy link" do
+    expect(rendered).to have_link("#{I18n.t('buttons.copy_listing')} for #{vacancy.job_title}")
+  end
 
   it "has the school name on the page" do
     expect(rendered).to have_content("Salisbury School")

@@ -1,0 +1,8 @@
+- content_for :page_title_prefix, publishers_show_page_title_prefix(@vacancy)
+
+= form_for @form, url: organisation_job_copy_path(@vacancy.id), method: :post do |f|
+  = f.govuk_error_summary
+
+  = f.govuk_text_field :name, required: true
+
+  = render "publishers/vacancies/vacancy_form_partials/submit", f: f, vacancy: @vacancy

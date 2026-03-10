@@ -1,4 +1,6 @@
-class VacancyPresenter < BasePresenter
+class VacancyDecorator < Draper::Decorator
+  delegate_all
+
   include ActionView::Helpers::TextHelper
 
   HTML_STRIP_REGEX = %r{(&nbsp;|<div>|</div>|<!--block-->)+}
@@ -45,7 +47,7 @@ class VacancyPresenter < BasePresenter
   end
 
   def readable_ect_status
-    return unless model.ect_status.present?
+    return if model.ect_status.blank?
 
     I18n.t("helpers.label.publishers_job_listing_about_the_role_form.ect_status_options.#{model.ect_status}")
   end
@@ -61,7 +63,7 @@ class VacancyPresenter < BasePresenter
   end
 
   def contract_type_with_duration
-    return nil unless model.contract_type.present?
+    return nil if model.contract_type.blank?
 
     return I18n.t("publishers.vacancies.build.contract_type.#{model.contract_type}") if model.fixed_term_contract_duration.blank?
 
@@ -77,7 +79,7 @@ class VacancyPresenter < BasePresenter
       if organisation.is_a?(SchoolGroup)
         organisation.name
       else
-        organisation.school_groups.map(&:name).reject(&:blank?)
+        organisation.school_groups.map(&:name).compact_blank
       end
     }.flatten.uniq
   end
@@ -87,7 +89,7 @@ class VacancyPresenter < BasePresenter
       if organisation.is_a?(SchoolGroup)
         organisation.group_type
       else
-        organisation.school_groups.map(&:group_type).reject(&:blank?)
+        organisation.school_groups.map(&:group_type).compact_blank
       end
     }.flatten.uniq
   end

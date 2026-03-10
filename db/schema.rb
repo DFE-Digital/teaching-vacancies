@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_06_104902) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_11_075848) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -930,6 +930,12 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_06_104902) do
     t.datetime "updated_at", null: false
     t.index ["referrer_counts"], name: "index_vacancy_analytics_on_referrer_counts", using: :gin
     t.index ["vacancy_id"], name: "index_vacancy_analytics_on_vacancy_id", unique: true
+  end
+
+  create_table "vacancy_templates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "versions", force: :cascade do |t|

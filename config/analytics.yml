@@ -429,6 +429,11 @@ shared:
     - recaptcha_score
     - unsubscribed_at
     - deletion_warning_email_sent_at
+  vacancy_templates:
+    - id
+    - name
+    - created_at
+    - updated_at
   vacancies:
     - id
     - job_title

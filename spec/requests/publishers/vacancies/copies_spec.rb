@@ -17,7 +17,7 @@ RSpec.describe "copy" do
     let(:vacancy) { create(:vacancy, :with_uploaded_application_form, :with_supporting_documents, organisations: [organisation]) }
 
     it "sends analytics events", :dfe_analytics do
-      post organisation_job_copy_path(vacancy.id)
+      post organisation_job_copy_path(vacancy.id), params: { copy_vacancy_form: { name: "name" } }
 
       expect(:supporting_document_created).to have_been_enqueued_as_analytics_event
     end

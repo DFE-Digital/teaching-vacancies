@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "publishers/vacancies/review" do
   let(:school) { build_stubbed(:school) }
   let(:vacancy) { build_stubbed(:vacancy, publish_on: publish_date) }
-  let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
+  let(:vacancy_presenter) { vacancy.decorate }
   let(:step_process) { Publishers::Vacancies::VacancyStepProcess.new(:review, vacancy: vacancy, organisation: school) }
 
   before do

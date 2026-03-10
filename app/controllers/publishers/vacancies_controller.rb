@@ -1,4 +1,6 @@
 class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseController
+  before_action :set_vacancy, except: %i[index]
+
   before_action :invent_job_alert_search_criteria, only: %i[show preview]
   before_action :redirect_to_new_features_reminder, only: %i[create]
 
@@ -11,7 +13,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
   def start; end
 
   def show
-    @vacancy = VacancyPresenter.new(vacancy)
+    @vacancy = vacancy.decorate
     @next_invalid_step = next_invalid_step
     @current_organisation = current_organisation
     @step_process = step_process
@@ -60,7 +62,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
   end
 
   def review
-    @vacancy = VacancyPresenter.new(vacancy)
+    @vacancy = vacancy.decorate
   end
 
   def destroy
@@ -71,7 +73,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
   def preview
     redirect_to organisation_job_path(vacancy.id) unless all_steps_valid?
 
-    @vacancy = VacancyPresenter.new(vacancy)
+    @vacancy = vacancy.decorate
   end
 
   def convert_to_draft
@@ -82,7 +84,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
   def summary
     return redirect_to organisation_job_path(vacancy.id) unless vacancy.published?
 
-    @vacancy = VacancyPresenter.new(vacancy)
+    @vacancy = vacancy.decorate
     @feedback_form = Publishers::JobListing::FeedbackForm.new
   end
 

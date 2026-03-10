@@ -130,12 +130,13 @@ RSpec.shared_examples "a fields that outputs the correct HTML" do |field|
   end
 end
 
-RSpec.describe VacancyPresenter do
-  subject { described_class.new(vacancy) }
-
+RSpec.describe VacancyDecorator do
   let(:vacancy) { build_stubbed(:vacancy) }
+  let(:decorated) { vacancy.decorate }
 
   describe "#benefits_details" do
+    subject { decorated }
+
     it_behaves_like "a fields that outputs the correct HTML", :benefits_details
   end
 
@@ -144,14 +145,15 @@ RSpec.describe VacancyPresenter do
       let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time], is_job_share: true) }
 
       it "returns working patterns" do
-        expect(subject.readable_working_patterns).to eq("Full time, part time (Can be done as a job share)")
+        expect(decorated.readable_working_patterns).to eq("Full time, part time (Can be done as a job share)")
       end
     end
 
     context "when is_job_share == false" do
       let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time], is_job_share: false) }
+
       it "returns working patterns" do
-        expect(subject.readable_working_patterns).to eq("Full time, part time")
+        expect(decorated.readable_working_patterns).to eq("Full time, part time")
       end
     end
   end
@@ -162,14 +164,14 @@ RSpec.describe VacancyPresenter do
     let(:vacancy) { build_stubbed(:vacancy, working_patterns:, working_patterns_details:, is_job_share: false) }
 
     it "returns the working with details" do
-      expect(subject.readable_working_patterns_with_details).to eq("Full time, part time: Some details")
+      expect(decorated.readable_working_patterns_with_details).to eq("Full time, part time: Some details")
     end
 
     context "when there is no details" do
       let(:working_patterns_details) { "" }
 
       it "returns the working patterns" do
-        expect(subject.readable_working_patterns_with_details).to eq("Full time, part time")
+        expect(decorated.readable_working_patterns_with_details).to eq("Full time, part time")
       end
     end
   end
@@ -179,7 +181,7 @@ RSpec.describe VacancyPresenter do
       let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time], fixed_term_contract_duration: nil) }
 
       it "returns an array containing FULL_TIME" do
-        expect(subject.working_patterns_for_job_schema).to eq %w[FULL_TIME]
+        expect(decorated.working_patterns_for_job_schema).to eq %w[FULL_TIME]
       end
     end
 
@@ -187,7 +189,7 @@ RSpec.describe VacancyPresenter do
       let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[part_time], fixed_term_contract_duration: nil) }
 
       it "returns an array containing PART_TIME" do
-        expect(subject.working_patterns_for_job_schema).to eq %w[PART_TIME]
+        expect(decorated.working_patterns_for_job_schema).to eq %w[PART_TIME]
       end
     end
   end
@@ -205,7 +207,7 @@ RSpec.describe VacancyPresenter do
       let(:is_parental_leave_cover) { nil }
 
       it "returns Permanent" do
-        expect(subject.contract_type_with_duration).to eq "Permanent"
+        expect(decorated.contract_type_with_duration).to eq "Permanent"
       end
     end
 
@@ -217,7 +219,7 @@ RSpec.describe VacancyPresenter do
         let(:is_parental_leave_cover) { false }
 
         it "returns Fixed term (duration)" do
-          expect(subject.contract_type_with_duration).to eq "Fixed term - 6 months"
+          expect(decorated.contract_type_with_duration).to eq "Fixed term - 6 months"
         end
       end
 
@@ -225,7 +227,7 @@ RSpec.describe VacancyPresenter do
         let(:is_parental_leave_cover) { true }
 
         it "returns Fixed term (duration)" do
-          expect(subject.contract_type_with_duration).to eq "Fixed term - 6 months - Maternity or parental leave cover"
+          expect(decorated.contract_type_with_duration).to eq "Fixed term - 6 months - Maternity or parental leave cover"
         end
       end
     end
@@ -235,14 +237,14 @@ RSpec.describe VacancyPresenter do
     let(:vacancy) { build_stubbed(:vacancy, subjects: %w[Acrobatics Tapestry]) }
 
     it "joins them correctly" do
-      expect(subject.readable_subjects).to eq("Acrobatics, Tapestry")
+      expect(decorated.readable_subjects).to eq("Acrobatics, Tapestry")
     end
 
     context "when there are no subjects" do
       let(:vacancy) { build_stubbed(:vacancy, subjects: []) }
 
       it "returns empty string" do
-        expect(subject.readable_subjects).to be_blank
+        expect(decorated.readable_subjects).to be_blank
       end
     end
   end
@@ -251,14 +253,14 @@ RSpec.describe VacancyPresenter do
     let(:vacancy) { build_stubbed(:vacancy, key_stages: %w[ks1 early_years]) }
 
     it "joins them correctly" do
-      expect(subject.readable_key_stages).to eq("Key stage 1, Early years")
+      expect(decorated.readable_key_stages).to eq("Key stage 1, Early years")
     end
 
     context "when there are no subjects" do
       let(:vacancy) { build_stubbed(:vacancy, key_stages: []) }
 
       it "returns empty string" do
-        expect(subject.readable_key_stages).to be_blank
+        expect(decorated.readable_key_stages).to be_blank
       end
     end
   end
@@ -279,7 +281,7 @@ RSpec.describe VacancyPresenter do
       let(:publisher_organisation) { trust }
 
       it "returns the names of all of the school groups the job is associated with" do
-        expect(subject.school_group_names).to eq([trust.name])
+        expect(decorated.school_group_names).to eq([trust.name])
       end
     end
 
@@ -295,7 +297,7 @@ RSpec.describe VacancyPresenter do
       let(:publisher_organisation) { school }
 
       it "returns the name of the local authority the school is within" do
-        expect(subject.school_group_names).to eq([local_authority.name])
+        expect(decorated.school_group_names).to eq([local_authority.name])
       end
     end
 
@@ -312,7 +314,7 @@ RSpec.describe VacancyPresenter do
       let(:publisher_organisation) { trust }
 
       it "returns the names of all of the school groups the vacancy is associated with" do
-        expect(subject.school_group_names).to eq([trust.name, local_authority.name])
+        expect(decorated.school_group_names).to eq([trust.name, local_authority.name])
       end
     end
   end
@@ -333,7 +335,7 @@ RSpec.describe VacancyPresenter do
       let(:publisher_organisation) { trust }
 
       it "returns the names of all of the school groups the vacancy is associated with" do
-        expect(subject.school_group_types).to eq([trust.group_type])
+        expect(decorated.school_group_types).to eq([trust.group_type])
       end
     end
 
@@ -349,7 +351,7 @@ RSpec.describe VacancyPresenter do
       let(:publisher_organisation) { school }
 
       it "returns the name of the local authority the school is within" do
-        expect(subject.school_group_types).to eq([local_authority.group_type])
+        expect(decorated.school_group_types).to eq([local_authority.group_type])
       end
     end
 
@@ -366,7 +368,7 @@ RSpec.describe VacancyPresenter do
       let(:publisher_organisation) { trust }
 
       it "returns the names of all of the school groups the vacancy is associated with" do
-        expect(subject.school_group_types).to eq([trust.group_type, local_authority.group_type])
+        expect(decorated.school_group_types).to eq([trust.group_type, local_authority.group_type])
       end
     end
 
@@ -383,7 +385,7 @@ RSpec.describe VacancyPresenter do
       let(:publisher_organisation) { school }
 
       it "returns an empty array" do
-        expect(subject.school_group_types).to eq([])
+        expect(decorated.school_group_types).to eq([])
       end
     end
   end
@@ -401,7 +403,7 @@ RSpec.describe VacancyPresenter do
     let(:publisher) { build_stubbed(:publisher) }
 
     it "returns the religious character of each school" do
-      expect(subject.religious_character).to eq([school.religious_character])
+      expect(decorated.religious_character).to eq([school.religious_character])
     end
 
     context "when the vacancy isn't associated with any schools" do
@@ -410,7 +412,7 @@ RSpec.describe VacancyPresenter do
       let(:publisher_organisation) { trust }
 
       it "returns an empty array" do
-        expect(subject.religious_character).to eq([])
+        expect(decorated.religious_character).to eq([])
       end
     end
   end
