@@ -7,23 +7,19 @@
 # for this to be valuable so that only changed files have tests run
 if ENV.fetch("COVERAGE", 0).to_i.positive?
   require "simplecov"
-  require "simplecov-lcov"
+  require "undercover/simplecov_formatter"
 
   # This allows both LCOV and HTML formatting -
   # lcov for undercover gem, HTML for humans
-  class SimpleCov::Formatter::MergedFormatter
-    def format(result)
-      SimpleCov::Formatter::HTMLFormatter.new.format(result)
-      SimpleCov::Formatter::LcovFormatter.new.format(result)
-    end
-  end
-
-  SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
-  SimpleCov.formatter = SimpleCov::Formatter::MergedFormatter
+  SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new(
+    [
+      SimpleCov::Formatter::Undercover,
+      SimpleCov::Formatter::HTMLFormatter,
+    ],
+    )
 
   SimpleCov.start :rails do
     enable_coverage :branch
-    primary_coverage :branch
 
     # This line would enable coverage for view templates, but the slim compiler
     # appears to have a bug which puts the whole coverage data out by one line.
@@ -50,6 +46,13 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
 
     # base mailer, currently unused
     add_filter "app/mailers/amazon_ses_mailer.rb"
+
+    # legacy rake tasks, unlikely to ever be test covered
+    add_filter "lib/tasks/audit.rake"
+    add_filter "lib/tasks/data.rake"
+
+    # safe replacement for rake db:migrate, never going to be covered by tests
+    add_filter "lib/tasks/migrate_swallowing_concurrent_migration_exceptions.rake"
 
     # Each group will be displayed in the report as its own Tab.
     add_group "Components", "app/components"
