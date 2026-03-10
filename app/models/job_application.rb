@@ -141,7 +141,7 @@ class JobApplication < ApplicationRecord
 
   validates :email_address, email_address: true, if: -> { email_address_changed? } # Allows data created prior to validation to still be valid
 
-  has_one_attached :baptism_certificate, service: :mirror_documents
+  has_one_attached :baptism_certificate, service: :azure_storage_documents
 
   validate :status_transition, if: -> { status_changed? }
 
