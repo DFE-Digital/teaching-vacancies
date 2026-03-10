@@ -11,7 +11,7 @@ RSpec.describe "migrate_legacy_job_preferences" do
   before do
     create(:job_preferences)
     create(:job_preferences, working_patterns: nil)
-    subject.invoke
+    subject.execute
   end
   # rubocop:enable RSpec/NamedSubject
 

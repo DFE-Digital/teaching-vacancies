@@ -16,7 +16,7 @@ RSpec.describe "backfill_vacancy_searchable_content" do
   # rubocop:disable RSpec/NamedSubject
   it "backfills the searchable_content field" do
     expect {
-      subject.invoke
+      subject.execute
     }.to change { Vacancy.where(searchable_content: nil).count }.by(-1)
   end
   # rubocop:enable RSpec/NamedSubject

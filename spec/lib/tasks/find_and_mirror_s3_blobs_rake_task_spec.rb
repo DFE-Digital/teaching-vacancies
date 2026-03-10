@@ -1,13 +1,14 @@
 require "rails_helper"
 
 # rubocop:disable RSpec/NamedSubject
+# rubocop:disable RSpec/ExpectOutput
 RSpec.describe "find_and_mirror_s3_blobs" do
   include_context "rake"
 
-  def invoke_task
+  around do |test|
     original_stdout = $stdout
     $stdout = StringIO.new
-    subject.invoke
+    test.run
   ensure
     $stdout = original_stdout
   end
@@ -33,10 +34,6 @@ RSpec.describe "find_and_mirror_s3_blobs" do
     allow(ActiveStorage::Blob).to receive(:where).with(service_name: "amazon_s3_images_and_logos").and_return(relation_with_batches(*s3_images))
     allow(ActiveStorage::Blob).to receive(:where).with(service_name: "azure_storage_documents").and_return(azure_relation_with_keys(azure_document_keys))
     allow(ActiveStorage::Blob).to receive(:where).with(service_name: "azure_storage_images_and_logos").and_return(azure_relation_with_keys(azure_image_keys))
-  end
-
-  after do
-    subject.reenable
   end
 
   describe "with S3 blobs but no Azure blobs" do
@@ -94,7 +91,7 @@ RSpec.describe "find_and_mirror_s3_blobs" do
       expect(logo_first).to receive(:mirror_later).once
       expect(logo_second).to receive(:mirror_later).once
 
-      invoke_task
+      subject.execute
     end
   end
 
@@ -117,7 +114,7 @@ RSpec.describe "find_and_mirror_s3_blobs" do
     it "queues one mirror job" do
       expect(unmirored_document).to receive(:mirror_later).once
 
-      invoke_task
+      subject.execute
     end
   end
 
@@ -129,7 +126,7 @@ RSpec.describe "find_and_mirror_s3_blobs" do
     it "does not queue any mirror jobs" do
       expect(ActiveStorage::Blob).not_to receive(:find)
 
-      invoke_task
+      subject.execute
     end
   end
 
@@ -152,7 +149,7 @@ RSpec.describe "find_and_mirror_s3_blobs" do
     it "queues the document blob for mirroring" do
       expect(document_blob).to receive(:mirror_later).once
 
-      invoke_task
+      subject.execute
     end
   end
 
@@ -175,7 +172,7 @@ RSpec.describe "find_and_mirror_s3_blobs" do
     it "queues the image blob for mirroring" do
       expect(logo_blob).to receive(:mirror_later).once
 
-      invoke_task
+      subject.execute
     end
   end
 
@@ -198,8 +195,9 @@ RSpec.describe "find_and_mirror_s3_blobs" do
     it "does not queue mirror jobs for that batch" do
       expect(already_synced_document).not_to receive(:mirror_later)
 
-      invoke_task
+      subject.execute
     end
   end
 end
+# rubocop:enable RSpec/ExpectOutput
 # rubocop:enable RSpec/NamedSubject
