@@ -104,7 +104,7 @@ resource "aws_iam_user_policy_attachment" "attachment_images_logos" {
 
 # Azure Storage Account for Documents
 module "documents_azure_storage" {
-  source = "git::https://github.com/DFE-Digital/terraform-modules.git//aks/storage_account?ref=stable"
+  source = "../../vendor/modules/aks//aks/storage_account"
 
   name                  = "doc"
   environment           = var.environment
@@ -135,7 +135,7 @@ module "documents_azure_storage" {
 
 # Azure Storage Account for School Images/Logos
 module "images_logos_azure_storage" {
-  source = "git::https://github.com/DFE-Digital/terraform-modules.git//aks/storage_account?ref=stable"
+  source = "../../vendor/modules/aks//aks/storage_account"
 
   name                  = "img"
   environment           = var.environment
