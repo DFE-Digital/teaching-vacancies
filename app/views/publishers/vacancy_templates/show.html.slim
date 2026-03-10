@@ -1,0 +1,57 @@
+- content_for :page_title_prefix, t(".page_title", name: @template.name)
+
+span.govuk-caption-l = t(".caption")
+h1.govuk-heading-xl = @template.name
+
+= govuk_summary_list do |summary_list|
+  - summary_list.with_row do |row|
+    - row.with_key do
+      h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("publishers.vacancy_templates.show.template_details")
+
+  = render "name", summary_list: summary_list, template: @template
+  = render "job_role", summary_list: summary_list, template: @template
+  - if @template.allow_key_stages? && @template.key_stages.any?
+    = render "key_stages", summary_list: summary_list, template: @template
+  - if @template.allow_subjects?
+    = render "subjects", summary_list: summary_list, template: @template
+  - if @template.contract_type.present?
+    = render "contract_type", summary_list: summary_list, template: @template
+  - if @template.working_patterns.any?
+    = render "working_patterns", summary_list: summary_list, template: @template
+  - if @template.salary_types.any?
+    = render "salary_details", summary_list: summary_list, template: @template
+
+= govuk_summary_list(html_attributes: { id: "about_the_role" }) do |summary_list|
+  - summary_list.with_row do |row|
+    - row.with_key do
+      h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("publishers.vacancy_templates.show.about_the_role")
+
+  - if @template.job_roles.include?("teacher") && !@template.ect_status.nil?
+    = render "ect_suitable", summary_list: summary_list, template: @template
+  - if @template.skills_and_experience.present?
+    = render "skills_and_experience", summary_list: summary_list, template: @template
+  - if @template.school_offer.present?
+    = render "school_offer", summary_list: summary_list, template: @template
+  - if @template.flexi_working.present?
+    = render "flexi_working", summary_list: summary_list, template: @template
+  = render "further_details", summary_list: summary_list, template: @template
+  - unless @template.school_visits.nil?
+    = render "school_visits", summary_list: summary_list, template: @template
+  - unless @template.visa_sponsorship_available.nil?
+    = render "visa_sponsorship", summary_list: summary_list, template: @template
+
+= govuk_summary_list(html_attributes: { id: "application_process" }) do |summary_list|
+  - summary_list.with_row do |row|
+    - row.with_key do
+      h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("publishers.vacancy_templates.show.application_process")
+
+  = render "application_form_type", summary_list: summary_list, template: @template
+
+  / we ask these questions seperately, so its possible to have an empty link here
+  - if @template.website? && @template.application_link.present?
+    = render "website", summary_list: summary_list, template: @template
+  - elsif @template.uploaded_form?
+    = render "uploaded_form", summary_list: summary_list, template: @template
+
+  - if @template.allow_job_applications?
+    = render "anonymise_applications", summary_list: summary_list, template: @template

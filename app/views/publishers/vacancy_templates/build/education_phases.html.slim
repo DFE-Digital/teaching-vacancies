@@ -1,0 +1,8 @@
+= form_for @form, url: wizard_path, method: :patch do |f|
+  = f.govuk_error_summary
+
+  = f.govuk_collection_check_boxes :phases, Vacancy.phases.keys, :to_s, :to_s, include_hidden: false, legend: { tag: "h1", size: "l" }
+
+  .govuk-button-group
+    = f.govuk_submit t("buttons.save_and_continue")
+    = f.govuk_submit t("buttons.save_and_finish_later"), name: "save_and_finish_later", value: "true", secondary: true

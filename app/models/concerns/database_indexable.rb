@@ -23,6 +23,7 @@ module DatabaseIndexable
     # For now, this configuration mirrors the current Algolia ranking as closely as possible
     # `job_title` and `subject` are used for ranking (and weighted with 'A' here, the other
     # searchable fields get the lowest possible 'D' weight)
+    decorated = decorate
     Search::Postgres::TsvectorGenerator.new(
       a: [unique_words(job_title), subjects],
       d: [
@@ -30,10 +31,10 @@ module DatabaseIndexable
         vacancy_readable_job_roles(self),
         vacancy_readable_key_stages(self),
         organisation_name,
-        school_group_names,
-        school_group_types,
+        decorated.school_group_names,
+        decorated.school_group_types,
         vacancy_readable_working_patterns(self),
-        religious_character,
+        decorated.religious_character,
         organisations.map { |org| org.school_type&.singularize }.reject(&:blank?).uniq,
         organisations.map(&:detailed_school_type).reject(&:blank?).uniq,
         organisations.map(&:name),
@@ -41,7 +42,7 @@ module DatabaseIndexable
         organisations.map(&:local_authority_within).reject(&:blank?).uniq,
         organisations.map(&:county).reject(&:blank?).uniq,
         organisations.map(&:region).reject(&:blank?).uniq,
-        vacancy_readable_visa_sponsorship_availability(self),
+        decorated.readable_visa_sponsorship_availability,
       ],
     ).tsvector
   end

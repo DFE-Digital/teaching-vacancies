@@ -1,0 +1,10 @@
+= form_for @form, url: wizard_path, method: :patch do |f|
+  = f.govuk_error_summary
+
+  = f.govuk_radio_buttons_fieldset :school_visits, legend: { tag: "h1", size: "l" } do
+    = f.govuk_radio_button :school_visits, "true", link_errors: true
+    = f.govuk_radio_button :school_visits, "false"
+
+  .govuk-button-group
+    = f.govuk_submit t("buttons.save_and_continue")
+    = f.govuk_submit t("buttons.save_and_finish_later"), name: "save_and_finish_later", value: "true", secondary: true

@@ -21,6 +21,8 @@ module Referees
 
     steps(*FORMS.keys)
 
+    rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
     def show
       if step != Wicked::FINISH_STEP
         if @reference.can_give_reference == false

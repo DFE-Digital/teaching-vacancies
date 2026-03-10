@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_13_092708) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_11_075848) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -943,6 +943,43 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_13_092708) do
     t.index ["conflicting_vacancy_id"], name: "index_vacancy_conflict_attempts_on_conflicting_vacancy_id"
     t.index ["publisher_ats_api_client_id", "conflicting_vacancy_id"], name: "idx_conflict_attempts_on_client_and_vacancy", unique: true
     t.index ["publisher_ats_api_client_id", "last_attempted_at"], name: "idx_conflict_attempts_on_client_and_last_attempt"
+  end
+
+  create_table "vacancy_templates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "job_roles", array: true
+    t.integer "phases", array: true
+    t.integer "key_stages", array: true
+    t.string "subjects", array: true
+    t.integer "contract_type"
+    t.string "fixed_term_contract_duration"
+    t.boolean "is_parental_leave_cover"
+    t.integer "working_patterns", array: true
+    t.text "working_patterns_details"
+    t.boolean "is_job_share"
+    t.string "actual_salary"
+    t.string "salary"
+    t.string "pay_scale"
+    t.string "hourly_rate"
+    t.boolean "benefits"
+    t.text "benefits_details"
+    t.boolean "enable_job_applications"
+    t.integer "ect_status"
+    t.text "full_time_details"
+    t.text "part_time_details"
+    t.integer "receive_applications"
+    t.boolean "school_visits"
+    t.string "skills_and_experience"
+    t.string "school_offer"
+    t.boolean "further_details_provided"
+    t.string "further_details"
+    t.boolean "visa_sponsorship_available"
+    t.string "flexi_working"
+    t.integer "religion_type"
+    t.boolean "flexi_working_details_provided"
+    t.boolean "anonymise_applications"
   end
 
   create_table "versions", force: :cascade do |t|

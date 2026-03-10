@@ -1,6 +1,8 @@
 class Jobseekers::JobApplications::RefereesController < Jobseekers::BaseController
   helper_method :back_path, :job_application, :referee
 
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
   def new
     @form = Jobseekers::JobApplication::Details::RefereeForm.new
   end

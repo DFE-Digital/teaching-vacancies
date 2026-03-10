@@ -1,6 +1,8 @@
 class Publishers::Vacancies::EndListingController < Publishers::Vacancies::BaseController
   before_action :set_vacancy
 
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
   def show
     @form = Publishers::JobListing::EndListingForm.new
   end

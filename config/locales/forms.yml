@@ -39,6 +39,7 @@ en:
     confirm_email_opt_out: Opt out
     confirm_unsubscribe: Unsubscribe
     continue: Continue
+    save_as_template: Save as template
     continue_to_account: Continue to your account
     continue_to_dsi: Continue to DfE Sign-in
     copy_expired_listing: Copy
@@ -46,6 +47,7 @@ en:
     copy_url: Copy URL
     create_account: Create an account
     create_job: Create a job listing
+    create_template: Create a template
     delete: Delete
     delete_hidden_text_html: Delete <span class='govuk-visually-hidden'>%{hidden_text}</span>
     delete_application: Delete application

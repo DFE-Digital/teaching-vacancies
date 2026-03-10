@@ -11,6 +11,8 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   helper_method :employments, :job_application, :qualification_form_param_key, :vacancy
 
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
   # rubocop:disable Metrics/AbcSize
   def index
     # only show applications from the last 12 months to avoid cluttering up the display

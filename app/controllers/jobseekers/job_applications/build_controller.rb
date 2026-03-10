@@ -5,6 +5,8 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
 
   helper_method :back_path, :employments, :job_application, :qualification_form_param_key, :redirect_to_review?, :vacancy
 
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
   def show
     @form = form_class.new(form_class.load_form(job_application))
     render step

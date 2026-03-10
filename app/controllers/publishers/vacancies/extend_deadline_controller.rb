@@ -1,4 +1,6 @@
 class Publishers::Vacancies::ExtendDeadlineController < Publishers::Vacancies::BaseController
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
   def show
     @form = Publishers::JobListing::ExtendDeadlineForm.new(
       start_date_type: vacancy.start_date_type,

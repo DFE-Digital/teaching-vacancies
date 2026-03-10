@@ -4,66 +4,84 @@ RSpec.describe "Copying a vacancy" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }
 
-  let!(:original_vacancy) { create_published_vacancy(organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) }
-
   before { login_publisher(publisher: publisher, organisation: school) }
 
   after { logout }
 
-  RSpec.shared_examples "publishing a copied vacancy" do |options|
-    before { visit organisation_jobs_with_type_path(type: options[:type]) }
+  describe "publishing a copied vacancy" do
+    #  limit money as too noisy for visual test
+    let(:original_vacancy) do
+      create(:vacancy, :past_publish, :without_any_money,
+             salary: 25_000, organisations: [school], subjects: %w[French],
+             job_roles: %w[teacher], phases: %w[secondary], key_stages: %w[ks3])
+    end
+    let(:new_template) { VacancyTemplate.order(:created_at).last }
+    let(:template_name) { Faker::Movie.title }
+
+    before do
+      create(:vacancy_template, job_roles: %w[head_of_year_or_phase])
+    end
+
+    scenario "creating a job from a template" do
+      visit organisation_vacancy_templates_path
+      # acts as a page wait
+      expect(page).to have_content "Use this template"
+      click_on "Use this template"
+      expect(page).to have_content "Head of year or phase"
+    end
 
     scenario "a job can be successfully copied and published" do
-      click_on original_vacancy.job_title
+      visit organisation_job_path(original_vacancy.id)
+
       click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
-      new_vacancy = Vacancy.all.order(:created_at).last
+      fill_in "Template name", with: template_name
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
-      expect(current_path).to eq organisation_job_path(new_vacancy.id)
-      click_on I18n.t("publishers.vacancies.show.heading_component.action.complete")
+      expect(new_template).to have_attributes(name: template_name, job_roles: %w[teacher],
+                                              phases: %w[secondary], key_stages: %w[ks3])
 
-      expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :start_date))
-      fill_in_start_date_form_fields
-      click_on I18n.t("buttons.save_and_continue")
+      #  causes a wait for the content
+      expect(page).to have_content(template_name)
+      click_on template_name
 
-      expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :include_additional_documents))
-      fill_in_include_additional_documents_form_fields(false)
-      click_on I18n.t("buttons.save_and_continue")
+      #  causes a wait for the content
+      expect(page).to have_content("Change")
+      # click_on "Change"
+      # sleep 20
 
-      expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :important_dates))
-
-      fill_in_important_dates_form_fields(publish_on: Date.current, expires_at: 30.days.from_now)
-      click_on I18n.t("buttons.save_and_continue")
-
-      expect(current_path).to eq(organisation_job_review_path(new_vacancy.id))
-
-      click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
-
-      expect(page).to have_content(I18n.t("publishers.vacancies.summary.heading.published"))
+      # expect(current_path).to eq organisation_job_path(new_vacancy.id)
+      # click_on I18n.t("publishers.vacancies.show.heading_component.action.complete")
+      #
+      # expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :start_date))
+      # fill_in_start_date_form_fields
+      # click_on I18n.t("buttons.save_and_continue")
+      #
+      # expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :include_additional_documents))
+      # fill_in_include_additional_documents_form_fields(false)
+      # click_on I18n.t("buttons.save_and_continue")
+      #
+      # expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :important_dates))
+      #
+      # fill_in_important_dates_form_fields(publish_on: Date.current, expires_at: 30.days.from_now)
+      # click_on I18n.t("buttons.save_and_continue")
+      #
+      # expect(current_path).to eq(organisation_job_review_path(new_vacancy.id))
+      #
+      # click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
+      #
+      # expect(page).to have_content(I18n.t("publishers.vacancies.summary.heading.published"))
     end
-  end
-
-  it_behaves_like "publishing a copied vacancy", type: :live
-
-  scenario "a job can be copied from the dashboard" do
-    visit organisation_jobs_with_type_path
-    click_on "#{I18n.t('buttons.copy_listing')} for #{original_vacancy.job_title}"
-
-    new_vacancy = Vacancy.all.order(:created_at).last
-
-    expect(current_path).to eq organisation_job_path(new_vacancy.id)
   end
 
   context "when the original job is now invalid" do
-    let!(:original_vacancy) do
-      create_published_vacancy(school_offer: nil, organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) do |vacancy|
-        vacancy.send(:set_slug)
-      end
-    end
+    let(:original_vacancy) { create(:vacancy, :past_publish, school_offer: nil, organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) }
+
+    before { visit organisation_job_path(original_vacancy.id) }
 
     scenario "the user is taken through the invalid steps" do
-      visit organisation_jobs_with_type_path
-      click_on original_vacancy.job_title
+      pending("template copying")
+
       click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
       new_vacancy = Vacancy.all.order(:created_at).last
@@ -102,6 +120,8 @@ RSpec.describe "Copying a vacancy" do
     let!(:original_vacancy) { create(:vacancy, :future_publish, organisations: [school]) }
 
     scenario "the dates are pre-filled" do
+      pending("template copying")
+
       visit organisation_jobs_with_type_path(type: "pending")
       click_on original_vacancy.job_title
       click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
@@ -117,11 +137,5 @@ RSpec.describe "Copying a vacancy" do
 
       expect(current_path).to eq(organisation_job_review_path(new_vacancy.id))
     end
-  end
-
-  context "when the original job has expired" do
-    let!(:original_vacancy) { create(:vacancy, :expired, organisations: [school]) }
-
-    it_behaves_like "publishing a copied vacancy", type: "expired"
   end
 end

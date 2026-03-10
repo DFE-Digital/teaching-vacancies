@@ -1,4 +1,6 @@
 class Publishers::OrganisationsController < Publishers::BaseController
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
   def show
     organisation
   end

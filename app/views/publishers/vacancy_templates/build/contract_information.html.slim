@@ -1,0 +1,32 @@
+= form_for @form, url: wizard_path, method: :patch do |f|
+  = f.govuk_error_summary
+
+  = f.govuk_radio_buttons_fieldset :contract_type, legend: { size: "m", tag: "h2" } do
+    = f.govuk_radio_button :contract_type, :permanent, link_errors: true
+
+    = f.govuk_radio_button :contract_type, :fixed_term do
+      = f.govuk_radio_buttons_fieldset :is_parental_leave_cover, inline: true do
+        = f.govuk_radio_button :is_parental_leave_cover, "true", label: { text: "Yes" }
+        = f.govuk_radio_button :is_parental_leave_cover, "false", label: { text: "No" }
+      = f.govuk_text_field :fixed_term_contract_duration, label: { size: "s" }
+
+    = f.govuk_radio_button :contract_type, :casual
+
+  = f.govuk_collection_check_boxes(:working_patterns,
+    Vacancy::WORKING_PATTERNS,
+    :to_s,
+    :to_s,
+    include_hidden: false,
+    legend: { size: "m" })
+
+  = f.govuk_radio_buttons_fieldset :is_job_share, inline: true do
+    = f.govuk_radio_button :is_job_share, "true", label: { text: "Yes" }
+    = f.govuk_radio_button :is_job_share, "false", label: { text: "No" }
+
+  = f.govuk_text_area(:working_patterns_details,
+    label: { class: ["govuk-label", "govuk-!-font-weight-bold"] },
+    max_words: @form.class::WORKING_PATTERNS_DETAILS_MAX_WORDS)
+
+  .govuk-button-group
+    = f.govuk_submit t("buttons.save_and_continue")
+    = f.govuk_submit t("buttons.save_and_finish_later"), name: "save_and_finish_later", value: "true", secondary: true

@@ -22,7 +22,7 @@ Geocoder::DEFAULT_LOCATION = "TE5 T1NG".freeze
 # https://stackoverflow.com/questions/1368163/is-there-a-standard-domain-for-testing-throwaway-email
 TEST_EMAIL_DOMAIN = "contoso.com".freeze
 
-Capybara.server = :puma, { Silent: true, Threads: "0:1" }
+Capybara.server = :puma, { Silent: false }
 
 require "capybara/cuprite"
 Capybara.register_driver(:cuprite_headless) do |app|

@@ -76,7 +76,7 @@ module VacancyFormsHelper
   end
 
   def vacancy_copy_action_link(vacancy)
-    govuk_link_to(t("publishers.vacancies.show.heading_component.action.copy"), organisation_job_copy_path(vacancy.id), class: "govuk-!-margin-bottom-0", method: :post)
+    govuk_link_to(t("publishers.vacancies.show.heading_component.action.copy"), new_organisation_job_copy_path(vacancy.id), class: "govuk-!-margin-bottom-0")
   end
 
   def vacancy_delete_action_link(vacancy)

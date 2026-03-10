@@ -1,4 +1,6 @@
 class Jobseekers::Subscriptions::Feedbacks::RelevanceFeedbacksController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
   def submit_feedback
     partially_completed_feedback = Feedback.create(relevance_feedback_params)
 

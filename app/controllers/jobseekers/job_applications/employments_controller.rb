@@ -3,6 +3,8 @@ class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseContr
 
   before_action :set_employment, only: %i[edit update destroy]
 
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
   def new
     @employment = job_application.employments.job.build
   end

@@ -1,0 +1,33 @@
+= form_for @form, url: wizard_path, method: :patch do |f|
+  = f.govuk_error_summary
+
+  = f.govuk_radio_buttons_fieldset :application_form_type, legend: nil do
+    p.govuk-body = t("publishers.vacancies.build.applying_for_the_job.using_application_form_html", link: govuk_link_to(t("publishers.vacancies.build.applying_for_the_job.kcsie_guidance"), kcsie_link))
+
+    p.govuk-body = t("publishers.vacancies.build.applying_for_the_job.reason_for_our_form")
+    p.govuk-body = t("publishers.vacancies.build.applying_for_the_job.no_information_required")
+
+    = f.govuk_radio_button :application_form_type, :no_religion,
+      label: -> { t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.no_religion_html", tag: govuk_tag(text: t("publishers.vacancies.build.applying_for_the_job.kcsie_compliant"), colour: "green")) },
+      link_errors: true,
+      hint: -> { open_in_new_tab_link_to(t("publishers.vacancies.build.applying_for_the_job.preview_online_application_form"), organisation_job_form_preview_path(@template.id, :plain)) }
+
+    - if @faith_school
+      = f.govuk_radio_button :application_form_type, :catholic,
+        label: -> { t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.catholic_html", tag: govuk_tag(text: t("publishers.vacancies.build.applying_for_the_job.kcsie_compliant"), colour: "green")) },
+        hint: -> do
+          p = open_in_new_tab_link_to(t("publishers.vacancies.build.applying_for_the_job.preview_catholic_application_form"), organisation_job_form_preview_path(@template.id, :catholic))
+
+      = f.govuk_radio_button :application_form_type, :other_religion,
+        label: -> { t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.other_religion_html", tag: govuk_tag(text: t("publishers.vacancies.build.applying_for_the_job.kcsie_compliant"), colour: "green")) },
+        hint: -> do
+          = t("helpers.hint.publishers_job_listing_applying_for_the_job_form.application_form_type_options.other_religion")
+          p = open_in_new_tab_link_to(t("publishers.vacancies.build.applying_for_the_job.preview_religious_application_form"), organisation_job_form_preview_path(@template.id, :religious))
+
+    = f.govuk_radio_divider
+
+    = f.govuk_radio_button :application_form_type, :other
+
+  .govuk-button-group
+    = f.govuk_submit t("buttons.save_and_continue")
+    = f.govuk_submit t("buttons.save_and_finish_later"), name: "save_and_finish_later", value: "true", secondary: true

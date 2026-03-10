@@ -1,0 +1,9 @@
+= form_for @form, url: wizard_path, method: :patch do |f|
+  = f.govuk_error_summary
+
+  = f.govuk_collection_check_boxes :job_roles, teaching_job_roles_options, :first, :last, legend: { text: t("jobs.filters.teaching_job_roles"), size: "s", tag: "h2" }, include_hidden: false
+  = f.govuk_collection_check_boxes :job_roles, support_job_roles_options, :first, :last, legend: { text: t("jobs.filters.support_job_roles"), size: "s", tag: "h2" }, include_hidden: false
+
+  .govuk-button-group
+    = f.govuk_submit t("buttons.save_and_continue")
+    = f.govuk_submit t("buttons.save_and_finish_later"), name: "save_and_finish_later", value: "true", secondary: true

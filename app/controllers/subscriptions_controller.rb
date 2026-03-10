@@ -6,6 +6,8 @@ class SubscriptionsController < ApplicationController
 
   before_action :trigger_create_job_alert_clicked_event, only: :new, if: -> { vacancy_id.present? }
 
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
   def new
     @point_coordinates = params[:coordinates_present] == "true"
     @ect_job_alert = params[:ect_job_alert]

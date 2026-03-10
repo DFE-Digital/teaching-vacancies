@@ -45,14 +45,20 @@ class Vacancy < ApplicationRecord
   LEGACY_WORKING_PATTERNS = %w[job_share].freeze
   WORKING_PATTERNS = %w[full_time part_time].freeze
 
-  array_enum key_stages: { early_years: 0, ks1: 1, ks2: 2, ks3: 3, ks4: 4, ks5: 5 }
-  array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
+  KEY_STAGES = { early_years: 0, ks1: 1, ks2: 2, ks3: 3, ks4: 4, ks5: 5 }.freeze
+  array_enum key_stages: KEY_STAGES
+  WORKING_PATTERNS_ENUM = { full_time: 0, part_time: 100, job_share: 101 }.freeze
+  array_enum working_patterns: WORKING_PATTERNS_ENUM
   # middle(2) removed and converted to primary/secondary to avoid missing middle school roles in primary/secondary filters
-  array_enum phases: { nursery: 0, primary: 1, secondary: 3, sixth_form_or_college: 4, through: 5 }
+  PHASES = { nursery: 0, primary: 1, secondary: 3, sixth_form_or_college: 4, through: 5 }.freeze
+  array_enum phases: PHASES
   array_enum job_roles: JOB_ROLES
   # removed parental_leave_cover: 2 from contract types. No instances in DB.
-  enum :contract_type, { permanent: 0, fixed_term: 1, casual: 3 }
-  enum :ect_status, { ect_suitable: 0, ect_unsuitable: 1 }
+  CONTRACT_TYPES = { permanent: 0, fixed_term: 1, casual: 3 }.freeze
+  enum :contract_type, CONTRACT_TYPES
+
+  ECT_STATUSES = { ect_suitable: 0, ect_unsuitable: 1 }.freeze
+  enum :ect_status, ECT_STATUSES
   enum :hired_status, { hired_tvs: 0, hired_other_free: 1, hired_paid: 2, hired_no_listing: 3, not_filled_ongoing: 4, not_filled_not_looking: 5, hired_dont_know: 6 }
   enum :listed_elsewhere, { listed_paid: 0, listed_free: 1, listed_mix: 2, not_listed: 3, listed_dont_know: 4 }
   enum :start_date_type, { specific_date: 0, date_range: 1, other: 2, undefined: 3, asap: 4 }
@@ -62,7 +68,8 @@ class Vacancy < ApplicationRecord
   enum :receive_applications, { email: 0, website: 1, uploaded_form: 2 }
 
   enum :extension_reason, { no_applications: 0, didnt_find_right_candidate: 1, other_extension_reason: 2 }
-  enum :religion_type, { no_religion: 0, other_religion: 1, catholic: 2 }
+  RELIGION_TYPES = { no_religion: 0, other_religion: 1, catholic: 2 }.freeze
+  enum :religion_type, RELIGION_TYPES
 
   # either both these 2 items are present, or the third one is.
   belongs_to :publisher, optional: true

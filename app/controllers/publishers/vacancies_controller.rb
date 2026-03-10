@@ -1,4 +1,6 @@
 class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseController
+  before_action :set_vacancy, except: %i[index start create]
+
   before_action :invent_job_alert_search_criteria, only: %i[show preview]
   before_action :redirect_to_new_features_reminder, only: %i[create]
 
@@ -7,6 +9,8 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
   before_action :redirect_to_show_publisher_profile_incomplete, only: %i[index], if: -> { signing_in? }, unless: -> { current_organisation.profile_complete? }
 
   helper_method :vacancy_statistics_form
+
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   def start; end
 

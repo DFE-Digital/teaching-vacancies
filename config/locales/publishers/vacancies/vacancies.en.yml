@@ -1,0 +1,30 @@
+en:
+  helpers:
+    label:
+      publishers_vacancies_copy_vacancy_form:
+        name: Template name
+      vacancy_template:
+        name: Template name
+    legend:
+      publishers_job_listing_visa_sponsorship_form:
+        visa_sponsorship_available: Visa sponsorship
+  publishers:
+    vacancies:
+      copy:
+        new:
+          caption: Create a template
+          heading: Job template
+          para1: To create a template, we'll ask you to provide information that you would for a job listing.
+          para2: If you do not have all the information you need to complete the template, select 'Save and finish later' on any page to make changes later.
+    vacancy_templates:
+      index:
+        saved_date: "Saved date: %{date}"
+        use_template: Use this template
+      show:
+        page_title: Template %{name}
+        template_details: Template details
+        about_the_role: About the role
+        application_process: Application process
+        template_name: Template name
+        job_role: Job role
+        caption: Template

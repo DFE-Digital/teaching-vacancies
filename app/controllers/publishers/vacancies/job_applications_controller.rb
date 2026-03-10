@@ -16,6 +16,8 @@ module Publishers
       before_action :set_job_application, only: %i[show download pre_interview_checks messages download_messages pre_employment_checks]
       before_action :set_job_applications, only: %i[index tag update_tag offer]
 
+      rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
       def index
         @form = Publishers::JobApplication::TagForm.new
       end

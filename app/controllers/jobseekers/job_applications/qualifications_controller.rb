@@ -5,6 +5,8 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
 
   before_action :set_qualification, only: %i[edit update destroy]
 
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
   def select_category
     @form = Jobseekers::Qualifications::CategoryForm.new
   end
