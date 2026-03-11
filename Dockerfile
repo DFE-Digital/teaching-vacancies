@@ -23,7 +23,7 @@ RUN bundle config set --local without 'development test'
 RUN bundle install --no-binstubs --retry=5 --jobs=4 --no-cache
 
 COPY package.json yarn.lock ./
-RUN corepack enable && yarn install
+RUN npm install -g corepack && corepack enable && yarn install
 
 COPY . .
 
