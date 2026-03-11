@@ -8,7 +8,7 @@ module Jobseekers
     private
 
     def mark_notification_as_read_if_present
-      return unless params[:notification_id].present?
+      return if params[:notification_id].blank?
 
       notification = current_jobseeker.notifications.find_by(id: params[:notification_id])
       notification&.mark_as_read!

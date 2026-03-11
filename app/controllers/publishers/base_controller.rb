@@ -21,8 +21,8 @@ module Publishers
     private
 
     def mark_notification_as_read_if_present
-      return unless params[:notification_id].present?
-      return unless current_publisher.present?
+      return if params[:notification_id].blank?
+      return if current_publisher.blank?
 
       notification = current_publisher.notifications.find_by(id: params[:notification_id])
       notification&.mark_as_read!
