@@ -204,7 +204,11 @@ Rails.application.routes.draw do
     resource :request_account_transfer_email, only: %i[new create]
     resource :account_transfer, only: %i[new create]
 
-    resources :notifications, only: %i[index]
+    resources :notifications, only: %i[index] do
+      collection do
+        patch :mark_all_as_read
+      end
+    end
   end
 
   devise_for :publishers, controllers: {
@@ -242,7 +246,11 @@ Rails.application.routes.draw do
         get :equal_opportunities
       end
     end
-    resources :notifications, only: %i[index]
+    resources :notifications, only: %i[index] do
+      collection do
+        patch :mark_all_as_read
+      end
+    end
     resources :publisher_preferences, only: %i[new create edit update]
     resources :organisations, only: %i[show] do
       resource :description, only: %i[edit update], controller: "organisations/description"

@@ -2,7 +2,8 @@ class NotificationsController < ApplicationController
   NOTIFICATIONS_PER_PAGE = 30
 
   before_action :load_notifications
-  after_action :mark_notifications_as_read
+
+  helper_method :mark_all_as_read_notifications_path
 
   def index
     @unread_count = @raw_notifications.unread.count
@@ -17,7 +18,7 @@ class NotificationsController < ApplicationController
                                           .newest_first
   end
 
-  def mark_notifications_as_read
-    @notifications.mark_as_read
+  def mark_all_as_read_notifications_path(options = {})
+    raise NotImplementedError, "Subclasses must implement mark_all_as_read_notifications_path"
   end
 end

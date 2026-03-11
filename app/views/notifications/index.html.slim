@@ -12,8 +12,11 @@
       #notifications-results
         .govuk-grid-row
           .govuk-grid-column-full
-            .govuk-body.float-right
-              = pagy_stats(@pagy, type: "notification")
+            div class="govuk-!-margin-bottom-4"
+              - if @notifications.unread.any?
+                = link_to t(".mark_all_as_read"), mark_all_as_read_notifications_path(page: params[:page]), method: :patch, class: "govuk-link float-left"
+              span.float-right
+                = pagy_stats(@pagy, type: "notification")
 
         = render partial: "notification", collection: @notifications, as: :notification
 
