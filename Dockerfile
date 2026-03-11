@@ -22,12 +22,8 @@ COPY Gemfile* ./
 RUN bundle config set --local without 'development test'
 RUN bundle install --no-binstubs --retry=5 --jobs=4 --no-cache
 
-COPY package.json yarn.lock .yarnrc.yml ./
-COPY .yarn/releases ./.yarn/releases
-RUN node .yarn/releases/yarn-4.12.0.cjs install
-RUN echo '#!/bin/sh' > /usr/local/bin/yarn && \
-    echo 'node /app/.yarn/releases/yarn-4.12.0.cjs "$@"' >> /usr/local/bin/yarn && \
-    chmod +x /usr/local/bin/yarn
+COPY package.json yarn.lock ./
+RUN corepack enable && yarn install
 
 COPY . .
 

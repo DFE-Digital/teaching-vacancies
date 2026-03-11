@@ -37,9 +37,9 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
 
-    - name: Install yarn
+    - name: Enable Corepack
       if: ${{ inputs.skip-node == 'false' }}
-      run: npm install yarn -g
+      run: corepack enable
       shell: bash
 
     - name: Yarn cache

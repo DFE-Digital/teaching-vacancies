@@ -22,11 +22,8 @@
 yarn-debug.log*
 .yarn-integrity
 
-# Yarn 4 (Berry)
-.yarn/cache
-.yarn/unplugged
-.yarn/build-state.yml
-.yarn/install-state.gz
+# Yarn 4 (Berry) - using Corepack, ignore entire .yarn directory
+.yarn
 
 .byebug_history
 
