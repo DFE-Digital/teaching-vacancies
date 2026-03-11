@@ -7129,7 +7129,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-scss@npm:^4.0.6":
+"postcss-scss@npm:^4.0.6, postcss-scss@npm:^4.0.9":
   version: 4.0.9
   resolution: "postcss-scss@npm:4.0.9"
   peerDependencies:
@@ -8172,6 +8172,7 @@ __metadata:
     lodash: "npm:^4.17.23"
     moment: "npm:^2.30.1"
     postcss: "npm:^8.5.8"
+    postcss-scss: "npm:^4.0.9"
     rails-ujs: "npm:^5.2.8"
     sass: "npm:^1.97.3"
     stylelint: "npm:^15.11.0"
