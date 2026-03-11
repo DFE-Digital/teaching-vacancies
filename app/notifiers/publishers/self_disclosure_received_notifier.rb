@@ -28,7 +28,11 @@ class Publishers::SelfDisclosureReceivedNotifier < ApplicationNotifier
 
     def disclosure_link
       govuk_link_to t("notifications.publishers/self_disclosure_received_notification.disclosure_received"),
-                    organisation_job_job_application_self_disclosure_path(job_application.vacancy.id, job_application.id),
+                    organisation_job_job_application_self_disclosure_path(
+                      job_application.vacancy.id,
+                      job_application.id,
+                      notification_id: id,
+                    ),
                     class: "govuk-link--no-visited-state"
     end
 

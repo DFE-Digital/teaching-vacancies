@@ -29,7 +29,12 @@ class Publishers::ReferenceReceivedNotifier < ApplicationNotifier
 
     def reference_link
       govuk_link_to t("notifications.publishers/reference_received_notification.reference_received"),
-                    organisation_job_job_application_reference_request_path(job_application.vacancy.id, job_application.id, event.record.reference_request),
+                    organisation_job_job_application_reference_request_path(
+                      job_application.vacancy.id,
+                      job_application.id,
+                      event.record.reference_request,
+                      notification_id: id,
+                    ),
                     class: "govuk-link--no-visited-state"
     end
 
