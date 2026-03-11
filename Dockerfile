@@ -22,7 +22,7 @@ COPY Gemfile* ./
 RUN bundle config set --local without 'development test'
 RUN bundle install --no-binstubs --retry=5 --jobs=4 --no-cache
 
-COPY package.json yarn.lock ./
+COPY package.json yarn.lock .yarnrc.yml ./
 RUN npm install -g corepack && corepack enable && yarn install
 
 COPY . .
