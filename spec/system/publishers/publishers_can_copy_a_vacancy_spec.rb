@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.xdescribe "Copying a vacancy" do
+RSpec.describe "Copying a vacancy" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }
 
@@ -14,12 +14,12 @@ RSpec.xdescribe "Copying a vacancy" do
 
     before { visit organisation_job_path(original_vacancy.id) }
 
-    scenario "a job can be successfully copied and published", :js do
+    scenario "a job can be successfully copied and published" do
+      pending("template copying")
+
       click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
       # new_vacancy = Vacancy.all.order(:created_at).last
-
-      # sleep 30
       expect(current_path).to eq organisation_job_path(new_vacancy.id)
       click_on I18n.t("publishers.vacancies.show.heading_component.action.complete")
 
@@ -50,6 +50,8 @@ RSpec.xdescribe "Copying a vacancy" do
     before { visit organisation_job_path(original_vacancy.id) }
 
     scenario "the user is taken through the invalid steps" do
+      pending("template copying")
+
       click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
       new_vacancy = Vacancy.all.order(:created_at).last
@@ -88,6 +90,8 @@ RSpec.xdescribe "Copying a vacancy" do
     let!(:original_vacancy) { create(:vacancy, :future_publish, organisations: [school]) }
 
     scenario "the dates are pre-filled" do
+      pending("template copying")
+
       visit organisation_jobs_with_type_path(type: "pending")
       click_on original_vacancy.job_title
       click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
