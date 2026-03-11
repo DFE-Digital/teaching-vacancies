@@ -936,6 +936,42 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_11_075848) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "benefits_details"
+    t.string "contact_email"
+    t.integer "working_patterns", array: true
+    t.string "salary"
+    t.string "subjects", array: true
+    t.integer "job_roles", array: true
+    t.string "contact_number"
+    t.integer "contract_type"
+    t.string "fixed_term_contract_duration"
+    t.boolean "enable_job_applications"
+    t.string "actual_salary"
+    t.text "working_patterns_details"
+    t.integer "key_stages", array: true
+    t.string "parental_leave_cover_contract_duration"
+    t.integer "ect_status"
+    t.string "pay_scale"
+    t.boolean "benefits"
+    t.text "full_time_details"
+    t.text "part_time_details"
+    t.integer "phases", array: true
+    t.integer "receive_applications"
+    t.string "application_email"
+    t.boolean "school_visits"
+    t.string "skills_and_experience"
+    t.string "school_offer"
+    t.boolean "further_details_provided"
+    t.string "further_details"
+    t.boolean "include_additional_documents"
+    t.boolean "visa_sponsorship_available"
+    t.boolean "is_parental_leave_cover"
+    t.string "hourly_rate"
+    t.boolean "is_job_share"
+    t.string "flexi_working"
+    t.integer "religion_type"
+    t.boolean "flexi_working_details_provided"
+    t.boolean "anonymise_applications", default: false
   end
 
   create_table "versions", force: :cascade do |t|
