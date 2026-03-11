@@ -34,9 +34,6 @@ COPY . .
 # configuring it using the ENV variables we provide in storage.yml. However, at this point, these ENV vars have not been loaded,
 # causing the error. Below we define two throaway ENV vars to prevent the error from being thrown. These are then later overwritten,
 # when all of the ENV vars are loaded.
-
-ENV DOCUMENTS_S3_BUCKET=throwaway_value
-ENV SCHOOLS_IMAGES_LOGOS_S3_BUCKET=throwaway_value
 ENV DOCUMENTS_AZURE_STORAGE_ACCESS_KEY=throwaway_value
 ENV IMAGES_LOGOS_AZURE_STORAGE_ACCESS_KEY=throwaway_value
 

@@ -1,11 +1,3 @@
-amazon_s3_documents:
-  service: Disk
-  root: <%= Rails.root.join("tmp/storage") %>
-
-amazon_s3_images_and_logos:
-  service: Disk
-  root: <%= Rails.root.join("tmp/storage") %>
-
 azure_storage_documents:
   service: Disk
   root: <%= Rails.root.join("tmp/storage") %>
@@ -14,15 +6,6 @@ azure_storage_images_and_logos:
   service: Disk
   root: <%= Rails.root.join("tmp/storage") %>
 
-mirror_documents:
-  service: Disk
-  root: <%= Rails.root.join("tmp/storage") %>
-
-mirror_images_and_logos:
-  service: Disk
-  root: <%= Rails.root.join("tmp/storage") %>
-
 test:
   service: Disk
   root: <%= Rails.root.join("tmp/storage") %>
-
