@@ -1,5 +1,5 @@
 class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseController
-  before_action :set_vacancy, except: %i[index]
+  before_action :set_vacancy, except: %i[index start]
 
   before_action :invent_job_alert_search_criteria, only: %i[show preview]
   before_action :redirect_to_new_features_reminder, only: %i[create]
