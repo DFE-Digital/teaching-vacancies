@@ -55,6 +55,10 @@ class JobseekerProfile < ApplicationRecord
   end
 
   def self.prepare_associations(record)
+    # FIX: Persist the parent record first so it has a UUID for the nested
+    # child associations to use when their own `prepare` methods call `.save!`
+    record.save! if record.new_record?
+
     record.assign_attributes(
       job_preferences: JobPreferences.prepare(jobseeker_profile: record),
       personal_details: PersonalDetails.prepare(jobseeker_profile: record),
