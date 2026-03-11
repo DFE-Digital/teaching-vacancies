@@ -4,7 +4,7 @@ RSpec.describe "Publisher notifications" do
   let(:publisher) { create(:publisher, accepted_terms_at: 1.day.ago) }
   let(:organisation) { build(:school) }
   let(:vacancy) { create(:vacancy, organisations: [organisation]) }
-  let(:job_application) { create(:job_application, vacancy: vacancy) }
+  let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
 
   describe "GET #index" do
     context "when signed in" do
@@ -30,6 +30,7 @@ RSpec.describe "Publisher notifications" do
       before do
         Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application).deliver(publisher)
         allow_any_instance_of(Publishers::NotificationsController).to receive(:current_organisation).and_return(organisation)
+        allow_any_instance_of(Publishers::Vacancies::JobApplications::BaseController).to receive(:current_organisation).and_return(organisation)
         sign_in(publisher, scope: :publisher)
       end
 

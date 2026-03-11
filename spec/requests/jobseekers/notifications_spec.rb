@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Jobseeker notifications" do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy) }
-  let(:job_application) { create(:job_application, jobseeker:, vacancy:) }
+  let(:job_application) { create(:job_application, :status_submitted, jobseeker:, vacancy:) }
   let(:conversation) { create(:conversation, job_application:) }
 
   describe "GET #index" do
