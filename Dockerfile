@@ -11,7 +11,7 @@ FROM ruby:4.0.1-alpine3.23 AS builder
 WORKDIR /app
 
 ARG PROD_PACKAGES
-ENV DEV_PACKAGES="gcc libc-dev make yaml-dev nodejs postgresql18-dev build-base git"
+ENV DEV_PACKAGES="gcc libc-dev make yaml-dev nodejs npm postgresql18-dev=18.2-r0 build-base git"
 RUN apk add --no-cache $PROD_PACKAGES $DEV_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
