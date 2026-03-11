@@ -14,12 +14,11 @@ RSpec.describe "Copying a vacancy" do
 
     before { visit organisation_job_path(original_vacancy.id) }
 
-    scenario "a job can be successfully copied and published" do
-      pending("template copying")
-
+    scenario "a job can be successfully copied and published", :js do
       click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
       # new_vacancy = Vacancy.all.order(:created_at).last
+      sleep 20
       expect(current_path).to eq organisation_job_path(new_vacancy.id)
       click_on I18n.t("publishers.vacancies.show.heading_component.action.complete")
 

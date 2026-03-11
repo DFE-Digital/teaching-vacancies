@@ -1,8 +1,14 @@
 - content_for :page_title_prefix, publishers_show_page_title_prefix(@vacancy)
 
+span.govuk-caption-l = t(".caption")
+h1.govuk-heading-xl = t(".heading")
+
+p.govuk-body = t(".para1")
+p.govuk-body = t(".para2")
+
 = form_for @form, url: organisation_job_copy_path(@vacancy.id), method: :post do |f|
   = f.govuk_error_summary
 
-  = f.govuk_text_field :name, required: true
+  = f.govuk_text_field :name, required: true, label: { size: "l" }, width: "two-thirds"
 
-  = render "publishers/vacancies/vacancy_form_partials/submit", f: f, vacancy: @vacancy
+  = f.govuk_submit t("buttons.save_as_template")
