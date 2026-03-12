@@ -361,4 +361,17 @@ RSpec.describe Subscription do
       end
     end
   end
+
+  describe ".discard_invalid" do
+    before do
+      create(:subscription)
+      build(:subscription, email: "invalid").save!(validate: false)
+    end
+
+    it "marks the invalid subscription as discarded" do
+      expect {
+        described_class.discard_invalid
+      }.to change { Subscription.kept.count }.by(-1)
+    end
+  end
 end

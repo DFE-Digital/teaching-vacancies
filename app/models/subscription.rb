@@ -92,6 +92,10 @@ class Subscription < ApplicationRecord
     save!
   end
 
+  def self.discard_invalid
+    find_each.reject(&:valid?).each(&:discard!)
+  end
+
   private
 
   # A subscription with location area has a polygon area seat buffered by radius, no geopoint.
