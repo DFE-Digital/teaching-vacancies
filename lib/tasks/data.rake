@@ -78,6 +78,13 @@ namespace :backfills do
   end
 end
 
+namespace :job_preferences do
+  desc "Migrate legacy working patterns"
+  task migrate_legacy_working_patterns: :environment do
+    JobPreferences.migrate_legacy_working_patterns
+  end
+end
+
 namespace :subscriptions do
   desc "Discard subscriptions that fail validation (probably due to invalid email address)"
   task discard_invalid: :environment do
