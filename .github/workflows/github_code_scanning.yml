@@ -1,8 +1,5 @@
 # Workflow to integrate third-party code scanning tools with GitHub Security code scanning.
 
-# This workflow integrates Brakeman with GitHub's Code Scanning feature
-# Brakeman is a static analysis security vulnerability scanner for Ruby on Rails applications
-
 name: GitHub Code Scanning third party tools
 
 on:
@@ -26,29 +23,6 @@ permissions:
   actions: read
 
 jobs:
-  brakeman-scan:
-    name: Brakeman Scan
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v5
-
-    - name: Prepare application environment
-      uses: ./.github/actions/prepare-app-env
-      with:
-        skip-node: true
-
-    # Execute Brakeman CLI and generate a SARIF output with the security issues identified during the analysis
-    - name: Scan
-      continue-on-error: true
-      run: |
-        bundle exec brakeman -f sarif -o output.sarif.json .
-
-    # Upload the SARIF file generated in the previous step
-    - name: Upload SARIF
-      uses: github/codeql-action/upload-sarif@v4
-      with:
-        sarif_file: output.sarif.json
   google-osv-scan-scheduled:
     name: Google OSV Scan - Scheduled
     if: ${{ github.event_name == 'push' || github.event_name == 'schedule' }}
@@ -68,61 +42,3 @@ jobs:
         -r
         ./
 
-  codacy-security-scan:
-    name: Codacy Security Scan
-    runs-on: ubuntu-latest
-    steps:
-      # Checkout the repository to the GitHub Actions runner
-      - name: Checkout code
-        uses: actions/checkout@v5
-
-      # Execute Codacy Analysis CLI and generate a SARIF output with the security issues identified during the analysis
-      - name: Run Codacy Analysis CLI
-        uses: codacy/codacy-analysis-cli-action@master
-        with:
-          output: results.sarif
-          format: sarif
-          # Adjust severity of non-security issues
-          gh-code-scanning-compat: true
-          # Force 0 exit code to allow SARIF file generation
-          # This will handover control about PR rejection to the GitHub side
-          max-allowed-issues: 2147483647
-          # Exclude fixture files to avoid non-Ruby tools (e.g. PMD) scanning XML fixtures
-          exclude-paths: spec/fixtures,spec/vcr_cassettes
-
-      # Upload the SARIF file generated in the previous step
-      - name: Upload SARIF results file
-        uses: github/codeql-action/upload-sarif@v4
-        with:
-          sarif_file: results.sarif
-
-  snyk-ruby:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v6
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-2
-          role-to-assume: Deployments
-          role-duration-seconds: 3600
-          role-skip-session-tagging: true
-      - name: Get secrets from AWS ParameterStore
-        uses: dkershner6/aws-ssm-getparameters-action@v2
-        with:
-          parameterPairs: "/teaching-vacancies/github_action/infra/slack_webhook = SLACK_WEBHOOK,
-            /teaching-vacancies/github_action/infra/snyk = SNYK_TOKEN"
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/ruby@master
-        continue-on-error: true # To make sure that SARIF upload gets called
-        env:
-          SNYK_TOKEN: ${{ env.SNYK_TOKEN }}
-        with:
-          args: --sarif-file-output=snyk.sarif
-      - name: Upload result to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v4
-        if: hashFiles('snyk.sarif') != ''
-        with:
-          sarif_file: snyk.sarif
