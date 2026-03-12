@@ -15,7 +15,7 @@ class Organisation < ApplicationRecord
   has_one_attached :logo, service: :azure_storage_images_and_logos
   has_one_attached :photo, service: :azure_storage_images_and_logos
 
-  has_many :organisation_vacancies, dependent: :destroy
+  has_many :organisation_vacancies, dependent: :restrict_with_error
   has_many :vacancies, through: :organisation_vacancies
   has_many :publisher_vacancies, class_name: "Vacancy", foreign_key: :publisher_organisation_id, dependent: :destroy
 
