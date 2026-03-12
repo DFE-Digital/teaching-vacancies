@@ -1,5 +1,6 @@
 module DatabaseIndexable
   extend ActiveSupport::Concern
+  include VacanciesHelper
 
   included do
     # during backfills, only update this for live vacancies
@@ -32,7 +33,7 @@ module DatabaseIndexable
         organisation_name,
         decorated.school_group_names,
         decorated.school_group_types,
-        decorated.readable_working_patterns,
+        vacancy_readable_working_patterns(self),
         decorated.religious_character,
         organisations.map { |org| org.school_type&.singularize }.reject(&:blank?).uniq,
         organisations.map(&:detailed_school_type).reject(&:blank?).uniq,

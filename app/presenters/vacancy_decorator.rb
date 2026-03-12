@@ -9,24 +9,6 @@ class VacancyDecorator < Draper::Decorator
     simple_format(fix_bullet_points(model.benefits_details)) if model.benefits_details.present?
   end
 
-  def readable_working_patterns
-    working_patterns = model.working_patterns.map { |working_pattern|
-      Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
-    }.join(", ").capitalize
-
-    return working_patterns unless is_job_share
-
-    "#{working_patterns} (Can be done as a job share)"
-  end
-
-  def readable_working_patterns_with_details
-    if model.working_patterns_details.present?
-      "#{readable_working_patterns}: #{model.working_patterns_details}"
-    else
-      readable_working_patterns
-    end
-  end
-
   def working_patterns_for_job_schema
     [
       ("FULL_TIME" if model.working_patterns.include? "full_time"),
@@ -60,18 +42,6 @@ class VacancyDecorator < Draper::Decorator
 
   def readable_subjects
     model.subjects&.join(", ")
-  end
-
-  def contract_type_with_duration
-    return nil if model.contract_type.blank?
-
-    return I18n.t("publishers.vacancies.build.contract_type.#{model.contract_type}") if model.fixed_term_contract_duration.blank?
-
-    if is_parental_leave_cover
-      [I18n.t("publishers.vacancies.build.contract_type.#{model.contract_type}"),  model.fixed_term_contract_duration, I18n.t("publishers.vacancies.build.contract_type.parental_leave")].compact.join(" - ")
-    else
-      [I18n.t("publishers.vacancies.build.contract_type.#{model.contract_type}"),  model.fixed_term_contract_duration].compact.join(" - ")
-    end
   end
 
   def school_group_names

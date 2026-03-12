@@ -15,3 +15,8 @@ en:
       index:
         saved_date: "Saved date: %{date}"
         use_template: Use this template
+      show:
+        page_title: Template %{name}
+        template_details: Template details
+        template_name: Template name
+        template: Template

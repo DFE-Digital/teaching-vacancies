@@ -1,0 +1,12 @@
+- content_for :page_title_prefix, t(".page_title", name: @template.name)
+
+h2.govuk-heading-l = t(".template")
+
+= govuk_summary_list do |summary_list|
+  - summary_list.with_row do |row|
+    - row.with_key do
+      h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("publishers.vacancy_templates.show.template_details")
+  - summary_list.with_row do |row|
+    - row.with_key do
+      = t("publishers.vacancy_templates.show.template_name")
+    - row.with_value text: @template.name

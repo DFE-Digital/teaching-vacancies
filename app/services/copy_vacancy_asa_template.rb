@@ -1,5 +1,5 @@
 class CopyVacancyAsaTemplate
-  IGNORED_ATTRIBUTES = %i[
+  IGNORED_ATTRIBUTES = %w[
     id
     job_title
     slug
@@ -43,8 +43,9 @@ class CopyVacancyAsaTemplate
   # via a controller
   class << self
     def call(vacancy, name)
-      new_template = VacancyTemplate.new(vacancy.attributes.symbolize_keys
-                                                .except(*IGNORED_ATTRIBUTES).merge(name: name))
+      new_template = VacancyTemplate.new(vacancy.attributes
+                                                .except(*(IGNORED_ATTRIBUTES + %w[job_roles]))
+                                                .merge(name: name, job_roles: vacancy.job_roles))
       # new_template.application_form.attach(vacancy.application_form.blob) if vacancy.application_form.attachments&.any?
 
       # if vacancy.supporting_documents.attachments.any?

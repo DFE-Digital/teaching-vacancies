@@ -25,6 +25,10 @@ RSpec.describe "Copying a vacancy" do
       click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
       expect(new_template).to have_attributes(name: template_name)
+
+      #  causes a wait for the content
+      expect(page).to have_content(template_name)
+      click_on template_name
       sleep 30
 
       # expect(current_path).to eq organisation_job_path(new_vacancy.id)

@@ -7,6 +7,7 @@ class Vacancy < ApplicationRecord
 
   include DatabaseIndexable
   include Resettable
+  include VacancyChecks
 
   include Discard::Model
 
@@ -58,8 +59,11 @@ class Vacancy < ApplicationRecord
   array_enum phases: { nursery: 0, primary: 1, secondary: 3, sixth_form_or_college: 4, through: 5 }
   array_enum job_roles: JOB_ROLES
   # removed parental_leave_cover: 2 from contract types. No instances in DB.
-  enum :contract_type, { permanent: 0, fixed_term: 1, casual: 3 }
-  enum :ect_status, { ect_suitable: 0, ect_unsuitable: 1 }
+  CONTRACT_TYPES = { permanent: 0, fixed_term: 1, casual: 3 }.freeze
+  enum :contract_type, CONTRACT_TYPES
+
+  ECT_STATUSES = { ect_suitable: 0, ect_unsuitable: 1 }.freeze
+  enum :ect_status, ECT_STATUSES
   enum :hired_status, { hired_tvs: 0, hired_other_free: 1, hired_paid: 2, hired_no_listing: 3, not_filled_ongoing: 4, not_filled_not_looking: 5, hired_dont_know: 6 }
   enum :listed_elsewhere, { listed_paid: 0, listed_free: 1, listed_mix: 2, not_listed: 3, listed_dont_know: 4 }
   enum :start_date_type, { specific_date: 0, date_range: 1, other: 2, undefined: 3, asap: 4 }
@@ -211,22 +215,10 @@ class Vacancy < ApplicationRecord
     enable_job_applications? && published? && !pending?
   end
 
-  def allow_key_stages?
-    allowed_phases = %w[primary secondary through]
-    allowed_roles = %w[teacher headteacher deputy_headteacher assistant_headteacher
-                       head_of_year_or_phase head_of_department_or_curriculum teaching_assistant]
-
-    phases.intersect?(allowed_phases) && job_roles.intersect?(allowed_roles)
-  end
-
   def allow_phase_to_be_set?
     school_phases = organisations.schools.filter_map(&:phase).uniq
 
     !(school_phases.intersect? SCHOOL_PHASES_MATCHING_VACANCY_PHASES)
-  end
-
-  def allow_subjects?
-    phases.any? { |phase| phase.in? %w[secondary sixth_form_or_college through] }
   end
 
   def key_stages_for_phases

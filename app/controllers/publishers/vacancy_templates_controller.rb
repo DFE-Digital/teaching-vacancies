@@ -9,5 +9,9 @@ module Publishers
       @templates = VacancyTemplate.all
       @count = @templates.count
     end
+
+    def show
+      @template = VacancyTemplate.find(params[:id])
+    end
   end
 end

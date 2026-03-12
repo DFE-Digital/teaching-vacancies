@@ -15,7 +15,7 @@ en:
         with_count: Awaiting feedback (%{count})
       saved_job_templates:
         tab_heading: Saved job templates
-        with_count: Job templates (%{count})
+        with_count: Saved job templates (%{count})
       draft:
         tab_heading: Draft jobs
         with_count: Draft jobs (%{count})
