@@ -44,6 +44,12 @@ RSpec.describe "Publisher notifications" do
           }.to change { notification.reload.read_at }.from(nil).to(Time.current)
         end
       end
+
+      it "does not error when notification_id is invalid" do
+        expect {
+          get organisation_job_job_application_path(vacancy.id, job_application.id, notification_id: "invalid-id")
+        }.not_to raise_error
+      end
     end
 
     context "when marking all notifications on current page as read" do

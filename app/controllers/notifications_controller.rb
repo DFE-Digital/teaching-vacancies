@@ -18,7 +18,9 @@ class NotificationsController < ApplicationController
                                           .newest_first
   end
 
+  # :nocov:
   def mark_all_as_read_notifications_path(options = {})
     raise NotImplementedError, "Subclasses must implement mark_all_as_read_notifications_path"
   end
+  # :nocov:
 end

@@ -52,6 +52,12 @@ RSpec.describe "Jobseeker notifications" do
           }.to change { notification.reload.read_at }.from(nil).to(Time.current)
         end
       end
+
+      it "does not error when notification_id is invalid" do
+        expect {
+          get jobseekers_job_application_path(job_application, tab: "messages", notification_id: "invalid-id")
+        }.not_to raise_error
+      end
     end
 
     context "when marking all notifications on current page as read" do
