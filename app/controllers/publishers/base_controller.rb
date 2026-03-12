@@ -22,12 +22,9 @@ module Publishers
 
     def mark_notification_as_read_if_present
       return if params[:notification_id].blank?
-      return if current_publisher.blank?
 
       notification = current_publisher.notifications.find_by(id: params[:notification_id])
-      notification&.mark_as_read!
-    rescue StandardError => e
-      Rails.logger.error("Failed to mark notification as read: #{e.message}")
+      notification&.mark_as_read
     end
   end
 end
