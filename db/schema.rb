@@ -967,11 +967,11 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_11_075848) do
     t.boolean "visa_sponsorship_available"
     t.boolean "is_parental_leave_cover"
     t.string "hourly_rate"
-    t.boolean "is_job_share"
+    t.boolean "is_job_share", default: false, null: false
     t.string "flexi_working"
     t.integer "religion_type"
     t.boolean "flexi_working_details_provided"
-    t.boolean "anonymise_applications", default: false
+    t.boolean "anonymise_applications"
   end
 
   create_table "versions", force: :cascade do |t|

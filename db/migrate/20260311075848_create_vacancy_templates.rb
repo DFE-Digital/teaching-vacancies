@@ -1,7 +1,8 @@
 class CreateVacancyTemplates < ActiveRecord::Migration[8.0]
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/BlockLength
+  # rubocop:disable Rails/ThreeStateBooleanColumn
   def change
-    # create_table :vacancy_templates, id: :uuid, &:timestamps
-    # create_table :vacancy_templates, id: :uuid, default: -> { "gen_random_uuid()" } do |t|
     create_table :vacancy_templates, id: :uuid do |t|
       t.string :name
       t.timestamps
@@ -69,10 +70,13 @@ class CreateVacancyTemplates < ActiveRecord::Migration[8.0]
       t.boolean "flexi_working_details_provided"
       # t.datetime "discarded_at"
       # t.string "type", null: false
-      t.boolean "anonymise_applications", default: false
+      t.boolean "anonymise_applications"
       # t.index ["contact_email"], name: "index_vacancies_on_contact_email"
       # t.index ["publisher_id"], name: "index_vacancies_on_publisher_id"
       # t.index ["publisher_organisation_id"], name: "index_vacancies_on_publisher_organisation_id"
     end
   end
+  # rubocop:enable Rails/ThreeStateBooleanColumn
+  # rubocop:enable Metrics/BlockLength
+  # rubocop:enable Metrics/AbcSize
 end
