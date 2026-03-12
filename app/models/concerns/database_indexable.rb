@@ -1,6 +1,6 @@
 module DatabaseIndexable
   extend ActiveSupport::Concern
-  include VacanciesHelper
+  include ReadableVacancyHelper
 
   included do
     # during backfills, only update this for live vacancies
@@ -28,8 +28,8 @@ module DatabaseIndexable
       a: [unique_words(job_title), subjects],
       d: [
         phases.map(&:humanize),
-        decorated.readable_job_roles,
-        decorated.readable_key_stages,
+        vacancy_readable_job_roles(self),
+        vacancy_readable_key_stages(self),
         organisation_name,
         decorated.school_group_names,
         decorated.school_group_types,

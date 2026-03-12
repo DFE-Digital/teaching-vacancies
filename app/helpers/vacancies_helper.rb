@@ -220,36 +220,6 @@ module VacanciesHelper
     end
   end
 
-  def vacancy_readable_working_patterns(model)
-    working_patterns = model.working_patterns.map { |working_pattern|
-      Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
-    }.join(", ").capitalize
-
-    return working_patterns unless model.is_job_share
-
-    "#{working_patterns} (Can be done as a job share)"
-  end
-
-  def vacancy_readable_working_patterns_with_details(model)
-    if model.working_patterns_details.present?
-      "#{vacancy_readable_working_patterns(model)}: #{model.working_patterns_details}"
-    else
-      vacancy_readable_working_patterns(model)
-    end
-  end
-
-  def vacancy_contract_type_with_duration(model)
-    return nil if model.contract_type.blank?
-
-    return I18n.t("publishers.vacancies.build.contract_type.#{model.contract_type}") if model.fixed_term_contract_duration.blank?
-
-    if is_parental_leave_cover
-      [I18n.t("publishers.vacancies.build.contract_type.#{model.contract_type}"),  model.fixed_term_contract_duration, I18n.t("publishers.vacancies.build.contract_type.parental_leave")].compact.join(" - ")
-    else
-      [I18n.t("publishers.vacancies.build.contract_type.#{model.contract_type}"),  model.fixed_term_contract_duration].compact.join(" - ")
-    end
-  end
-
   private
 
   def request_referrer

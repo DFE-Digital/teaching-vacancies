@@ -53,10 +53,13 @@ class Vacancy < ApplicationRecord
   LEGACY_WORKING_PATTERNS = %w[job_share].freeze
   WORKING_PATTERNS = %w[full_time part_time].freeze
 
-  array_enum key_stages: { early_years: 0, ks1: 1, ks2: 2, ks3: 3, ks4: 4, ks5: 5 }
-  array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
+  KEY_STAGES = { early_years: 0, ks1: 1, ks2: 2, ks3: 3, ks4: 4, ks5: 5 }.freeze
+  array_enum key_stages: KEY_STAGES
+  WORKING_PATTERNS_ENUM = { full_time: 0, part_time: 100, job_share: 101 }.freeze
+  array_enum working_patterns: WORKING_PATTERNS_ENUM
   # middle(2) removed and converted to primary/secondary to avoid missing middle school roles in primary/secondary filters
-  array_enum phases: { nursery: 0, primary: 1, secondary: 3, sixth_form_or_college: 4, through: 5 }
+  PHASES = { nursery: 0, primary: 1, secondary: 3, sixth_form_or_college: 4, through: 5 }.freeze
+  array_enum phases: PHASES
   array_enum job_roles: JOB_ROLES
   # removed parental_leave_cover: 2 from contract types. No instances in DB.
   CONTRACT_TYPES = { permanent: 0, fixed_term: 1, casual: 3 }.freeze
@@ -250,15 +253,6 @@ class Vacancy < ApplicationRecord
 
   def publish_equal_opportunities_report?
     job_applications.after_submission.count >= EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD
-  end
-
-  def salary_types
-    [
-      salary.present? ? "full_time" : nil,
-      actual_salary.present? ? "part_time" : nil,
-      pay_scale.present? ? "pay_scale" : nil,
-      hourly_rate.present? ? "hourly_rate" : nil,
-    ]
   end
 
   def distance_in_miles_to(search_coordinates)

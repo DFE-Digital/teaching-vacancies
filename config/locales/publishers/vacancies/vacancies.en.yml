@@ -18,5 +18,7 @@ en:
       show:
         page_title: Template %{name}
         template_details: Template details
+        about_the_role: About the role
         template_name: Template name
-        template: Template
+        job_role: Job role
+        caption: Template

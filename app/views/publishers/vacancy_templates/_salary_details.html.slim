@@ -1,0 +1,24 @@
+- summary_list.with_row(html_attributes: { id: "salary" }) do |row|
+  - row.with_key
+    h2.govuk-heading-s = t("jobs.salary_details")
+  - row.with_value
+    ul.govuk-list.govuk-list--spaced
+      - if template.salary?
+        li
+          div => "#{t('jobs.annual_salary')}:"
+          = template.salary
+      - if template.actual_salary?
+        li
+          div => "#{t('jobs.actual_salary')}:"
+          = template.actual_salary
+      - if template.pay_scale?
+        li
+          div => "#{t('jobs.pay_scale')}:"
+          = template.pay_scale
+      - if template.hourly_rate?
+        li
+          div => "#{t('jobs.hourly_rate')}:"
+          = template.hourly_rate
+  - row.with_action text: t("buttons.change"),
+    href: organisation_vacancy_template_build_path(template, :pay_package, "back_to_#{action_name}": "true"),
+    visually_hidden_text: t("jobs.salary_details")

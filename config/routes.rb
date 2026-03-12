@@ -396,6 +396,7 @@ Rails.application.routes.draw do
       member do
         get :use_template
       end
+      resources :build, only: %i[show update], controller: "publishers/vacancy_templates/build"
     end
     resources :jobs, only: %i[create destroy show], controller: "publishers/vacancies" do
       resources :build, only: %i[show update], controller: "publishers/vacancies/build"

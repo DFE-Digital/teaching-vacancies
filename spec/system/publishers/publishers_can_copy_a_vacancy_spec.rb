@@ -9,9 +9,14 @@ RSpec.describe "Copying a vacancy" do
   after { logout }
 
   describe "publishing a copied vacancy" do
-    let(:original_vacancy) { create(:vacancy, :past_publish, organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) }
+    #  limit money as too noisy for visual test
+    let(:original_vacancy) do
+      create(:vacancy, :past_publish, :without_any_money,
+             salary: 25_000, organisations: [school], subjects: %w[French],
+             job_roles: %w[teacher], phases: %w[secondary], key_stages: %w[ks3])
+    end
     let(:new_template) { VacancyTemplate.order(:created_at).last }
-    let(:template_name) { Faker::Adjective.negative }
+    let(:template_name) { Faker::Movie.title }
 
     before do
       create(:vacancy_template)
@@ -24,12 +29,18 @@ RSpec.describe "Copying a vacancy" do
       fill_in "Template name", with: template_name
       click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
-      expect(new_template).to have_attributes(name: template_name)
+      expect(new_template).to have_attributes(name: template_name, job_roles: %w[teacher],
+                                              phases: %w[secondary], key_stages: %w[ks3])
 
       #  causes a wait for the content
       expect(page).to have_content(template_name)
       click_on template_name
-      sleep 30
+
+      #  causes a wait for the content
+      expect(page).to have_content("Change")
+      sleep 20
+      # click_on "Change"
+      # sleep 20
 
       # expect(current_path).to eq organisation_job_path(new_vacancy.id)
       # click_on I18n.t("publishers.vacancies.show.heading_component.action.complete")

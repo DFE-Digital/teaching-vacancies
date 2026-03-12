@@ -1,0 +1,8 @@
+- summary_list.with_row(html_attributes: { id: "contract_type" }) do |row|
+  - row.with_key
+    = t("jobs.contract_type")
+  - row.with_value
+    = vacancy_contract_type_with_duration(template)
+  - row.with_action text: t("buttons.change"),
+    href: organisation_vacancy_template_build_path(template, :contract_information, "back_to_#{action_name}": "true"),
+    visually_hidden_text: t("jobs.contract_type")

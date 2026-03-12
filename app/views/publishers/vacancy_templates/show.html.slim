@@ -1,12 +1,36 @@
 - content_for :page_title_prefix, t(".page_title", name: @template.name)
 
-h2.govuk-heading-l = t(".template")
+span.govuk-caption-l = t(".caption")
+h1.govuk-heading-xl = @template.name
 
 = govuk_summary_list do |summary_list|
   - summary_list.with_row do |row|
     - row.with_key do
       h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("publishers.vacancy_templates.show.template_details")
+
+  = render "name", summary_list: summary_list, template: @template
+  = render "job_role", summary_list: summary_list, template: @template
+  - if @template.allow_key_stages? && @template.key_stages.any?
+    = render "key_stages", summary_list: summary_list, template: @template
+  - if @template.allow_subjects?
+    = render "subjects", summary_list: summary_list, template: @template
+  - if @template.contract_type.present?
+    = render "contract_type", summary_list: summary_list, template: @template
+  - if @template.working_patterns.any?
+    = render "working_patterns", summary_list: summary_list, template: @template
+  - if @template.salary_types.any?
+    = render "salary_details", summary_list: summary_list, template: @template
+
+= govuk_summary_list(html_attributes: { id: "about_the_role" }) do |summary_list|
   - summary_list.with_row do |row|
     - row.with_key do
-      = t("publishers.vacancy_templates.show.template_name")
-    - row.with_value text: @template.name
+      h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("publishers.vacancy_templates.show.about_the_role")
+
+  - if @template.job_roles.include?("teacher") && !@template.ect_status.nil?
+    = render "ect_suitable", summary_list: summary_list, template: @template
+  - if @template.skills_and_experience.present?
+    = render "skills_and_experience", summary_list: summary_list, template: @template
+  - if @template.school_offer.present?
+    = render "school_offer", summary_list: summary_list, template: @template
+  - if @template.flexi_working.present?
+    = render "flexi_working", summary_list: summary_list, template: @template

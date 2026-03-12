@@ -17,4 +17,13 @@ module VacancyChecks
   def allow_subjects?
     phases.any? { |phase| phase.in? %w[secondary sixth_form_or_college through] }
   end
+
+  def salary_types
+    [
+      salary.present? ? "full_time" : nil,
+      actual_salary.present? ? "part_time" : nil,
+      pay_scale.present? ? "pay_scale" : nil,
+      hourly_rate.present? ? "hourly_rate" : nil,
+    ]
+  end
 end
