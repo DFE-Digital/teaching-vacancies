@@ -392,7 +392,11 @@ Rails.application.routes.draw do
     end
     get "/jobs/start", to: "publishers/vacancies#start"
 
-    resources :vacancy_templates, only: %i[index], controller: "publishers/vacancy_templates"
+    resources :vacancy_templates, only: %i[index show], controller: "publishers/vacancy_templates" do
+      member do
+        get :use_template
+      end
+    end
     resources :jobs, only: %i[create destroy show], controller: "publishers/vacancies" do
       resources :build, only: %i[show update], controller: "publishers/vacancies/build"
       resources :wizard, only: %i[show update], controller: "publishers/vacancies/wizard"

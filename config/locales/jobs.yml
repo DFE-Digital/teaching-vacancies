@@ -13,6 +13,9 @@ en:
       awaiting_feedback:
         tab_heading: Jobs awaiting feedback
         with_count: Awaiting feedback (%{count})
+      saved_job_templates:
+        tab_heading: Saved job templates
+        with_count: Job templates (%{count})
       draft:
         tab_heading: Draft jobs
         with_count: Draft jobs (%{count})

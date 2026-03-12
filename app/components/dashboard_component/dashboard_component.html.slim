@@ -15,6 +15,7 @@
   = tabs html_attributes: { "aria-label": "Tabs navigation for vacancy types" } do |tabs|
     - @vacancy_types.each do |vacancy_type|
       - tabs.with_navigation_item text: t("jobs.dashboard.#{vacancy_type}.tab_heading"), link: organisation_jobs_with_type_path(vacancy_type), active: selected_type == vacancy_type
+    - tabs.with_navigation_item text: t("jobs.dashboard.saved_job_templates.tab_heading"), link: organisation_vacancy_templates_path, active: false
 
   .govuk-grid-row class="govuk-!-margin-bottom-7"
     - if @vacancies.many?

@@ -1,2 +1,38 @@
-- @templates.each do |t|
-  = t.name
+.govuk-grid-row
+  .govuk-grid-column-three-quarters
+    .help-guide--mobile.help-guide--border-bottom
+      h2.govuk-heading-m = t("jobs.dashboard.how_to_accept_job_applications_guide.title")
+      = govuk_link_to(t("jobs.dashboard.how_to_accept_job_applications_guide.link_text"),
+        post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "accepting-job-applications-on-teaching-vacancies"),
+        class: "govuk-link--no-visited-state")
+      | .
+    span.govuk-caption-l = current_organisation.name
+    h1.govuk-heading-l = t("jobs.dashboard.saved_job_templates.with_count", count: @count)
+  .govuk-grid-column-one-quarter
+    = govuk_link_to t("buttons.create_job"), organisation_jobs_start_path, class: "float-right govuk-button"
+
+= tabs html_attributes: { "aria-label": "Tabs navigation for vacancy types" } do |tabs|
+  - @vacancy_types.each do |vacancy_type|
+    - tabs.with_navigation_item text: t("jobs.dashboard.#{vacancy_type}.tab_heading"), link: organisation_jobs_with_type_path(vacancy_type), active: false
+  - tabs.with_navigation_item text: t("jobs.dashboard.saved_job_templates.tab_heading"), link: organisation_vacancy_templates_path, active: true
+
+.govuk-grid-row
+  - grid_column_class = current_organisation.school_group? ? "govuk-grid-column-two-thirds-at-desktop" : "govuk-grid-column-three-quarters"
+  div class=grid_column_class
+    = govuk_summary_list do |summary_list|
+      - @templates.each do |template|
+        - summary_list.with_row do |row|
+          - row.with_key do
+            = govuk_link_to(template.name, organisation_vacancy_template_path(template))
+          - row.with_value do
+            = t("publishers.vacancy_templates.index.saved_date", date: template.updated_at.to_date.to_fs(:day_month_year))
+          - row.with_action(text: t("publishers.vacancy_templates.index.use_template"), href: use_template_organisation_vacancy_template_path(template))
+
+  - unless current_organisation.school_group?
+    .govuk-grid-column-one-quarter
+      .help-guide--desktop
+        h2.govuk-heading-m = t("jobs.dashboard.how_to_accept_job_applications_guide.title")
+        = govuk_link_to(t("jobs.dashboard.how_to_accept_job_applications_guide.link_text"),
+          post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "accepting-job-applications-on-teaching-vacancies"),
+          class: "govuk-link--no-visited-state")
+        | .

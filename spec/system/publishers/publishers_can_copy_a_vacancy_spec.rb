@@ -13,15 +13,19 @@ RSpec.describe "Copying a vacancy" do
     let(:new_template) { VacancyTemplate.order(:created_at).last }
     let(:template_name) { Faker::Adjective.negative }
 
-    before { visit organisation_job_path(original_vacancy.id) }
+    before do
+      create(:vacancy_template)
+      visit organisation_job_path(original_vacancy.id)
+    end
 
-    scenario "a job can be successfully copied and published" do
+    scenario "a job can be successfully copied and published", :js do
       click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
       fill_in "Template name", with: template_name
       click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
       expect(new_template).to have_attributes(name: template_name)
+      sleep 30
 
       # expect(current_path).to eq organisation_job_path(new_vacancy.id)
       # click_on I18n.t("publishers.vacancies.show.heading_component.action.complete")
