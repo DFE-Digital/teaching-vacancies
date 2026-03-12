@@ -22,16 +22,16 @@ module Publishers
                                      .with_request_details(request)
                                      .with_response_details(response)
                                      .with_user(current_publisher)
-                                     # if new_vacancy.application_form.present?
-                                     #   send_dfe_analytics_event(:supporting_document_created, new_vacancy.id, new_vacancy.application_form.attachment.blob)
-                                     # end
+                  # if new_vacancy.application_form.present?
+                  #   send_dfe_analytics_event(:supporting_document_created, new_vacancy.id, new_vacancy.application_form.attachment.blob)
+                  # end
                   .with_data(data: {
-                                       vacancy_id: vacancy_id,
-                                       document_type: "supporting_document",
-                                       name: blob.filename,
-                                       size: blob.byte_size,
-                                       content_type: blob.content_type,
-                                     })
+                    vacancy_id: vacancy_id,
+                    document_type: "supporting_document",
+                    name: blob.filename,
+                    size: blob.byte_size,
+                    content_type: blob.content_type,
+                  })
 
         DfE::Analytics::SendEvents.do([event])
       end
