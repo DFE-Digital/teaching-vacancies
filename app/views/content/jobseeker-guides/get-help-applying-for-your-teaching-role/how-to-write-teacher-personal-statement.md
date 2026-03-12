@@ -47,9 +47,9 @@ You may want to include examples that show you meet the [teachers’ standards](
 ## Show how you meet the job description
 Share examples that show how you meet the criteria in the job description. 
 
-Focus on meeting the essential criteria but include examples for the desirable criteria, if you’re able to. 
+Focus on meeting the essential criteria but include examples for the desirable criteria, if you’re able to. Explain each example clearly and highlight its impact on pupil outcomes. 
 
-Explain each example clearly and highlight its impact on pupil outcomes. 
+These examples can also help if you're invited to interview. Read our guidance on [how to approach a teaching job interview](https://teaching-vacancies.service.gov.uk/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-approach-a-teaching-job-interview?) to help you prepare.  
 
 If you're a returning teacher, you can share how your time away from the classroom has also added to your skills and experience. [Find out more about returning to teaching](https://teaching-vacancies.service.gov.uk/jobseeker-guides/return-to-teaching-in-england).
 
