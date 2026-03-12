@@ -69,12 +69,12 @@ end
 namespace :backfills do
   desc "Backfill vacancy geolocation"
   task vacancy_geolocation: :environment do
-    Backfills::VacancyGeolocation.call
+    Vacancy.backfill_missing_geolocations
   end
 
   desc "Backfill vacancy searchable content"
   task vacancy_searchable_content: :environment do
-    Backfills::VacancySearchableContent.call
+    Vacancy.backfill_missing_searchable_content
   end
 end
 

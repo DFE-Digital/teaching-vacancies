@@ -892,4 +892,54 @@ RSpec.describe Vacancy do
       end
     end
   end
+
+  describe ".backfill_missing_geolocations" do
+    context "when there are vacancies without geolocation" do
+      let!(:vacancy) { create(:vacancy) }
+      let!(:another_vacancy) { create(:vacancy) }
+
+      before do
+        vacancy.update_column(:geolocation, nil)
+        another_vacancy.update_column(:geolocation, nil)
+      end
+
+      it "populates geolocation for vacancies missing it" do
+        expect { described_class.backfill_missing_geolocations }.to change { vacancy.reload.geolocation }.from(nil)
+                                                                 .and change { another_vacancy.reload.geolocation }.from(nil)
+      end
+    end
+
+    context "when a vacancy already has a geolocation" do
+      let!(:vacancy) { create(:vacancy) }
+
+      it "does not modify it" do
+        expect { described_class.backfill_missing_geolocations }.not_to(change { vacancy.reload.geolocation })
+      end
+    end
+  end
+
+  describe ".backfill_missing_searchable_content" do
+    context "when there are vacancies without searchable_content" do
+      let!(:vacancy) { create(:vacancy) }
+      let!(:another_vacancy) { create(:vacancy) }
+
+      before do
+        vacancy.update_column(:searchable_content, nil)
+        another_vacancy.update_column(:searchable_content, nil)
+      end
+
+      it "populates searchable_content for vacancies missing it" do
+        expect { described_class.backfill_missing_searchable_content }.to change { vacancy.reload.searchable_content }.from(nil)
+                                                                      .and change { another_vacancy.reload.searchable_content }.from(nil)
+      end
+    end
+
+    context "when a vacancy already has searchable_content" do
+      let!(:vacancy) { create(:vacancy) }
+
+      it "does not change it" do
+        expect { described_class.backfill_missing_searchable_content }.not_to(change { vacancy.reload.searchable_content })
+      end
+    end
+  end
 end

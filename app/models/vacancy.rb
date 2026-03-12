@@ -297,6 +297,19 @@ class Vacancy < ApplicationRecord
     Publisher.find_by(email: contact_email).present?
   end
 
+  def self.backfill_missing_geolocations
+    where(geolocation: nil).find_each do |v|
+      v.send(:refresh_geolocation)
+      v.save!(touch: false, validate: false)
+    end
+  end
+
+  def self.backfill_missing_searchable_content
+    where(searchable_content: nil).find_each do |v|
+      v.save!(touch: false, validate: false)
+    end
+  end
+
   private
 
   def update_conversation_searchable_content
