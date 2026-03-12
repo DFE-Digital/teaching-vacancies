@@ -66,6 +66,18 @@ namespace :ons do
   end
 end
 
+namespace :backfills do
+  desc "Backfill vacancy geolocation"
+  task vacancy_geolocation: :environment do
+    Backfills::VacancyGeolocation.call
+  end
+
+  desc "Backfill vacancy searchable content"
+  task vacancy_searchable_content: :environment do
+    Backfills::VacancySearchableContent.call
+  end
+end
+
 namespace :publishers do
   desc "Reset 'New features' attributes so all publishers are shown 'New features' page"
   task reset_new_features_attributes: :environment do
