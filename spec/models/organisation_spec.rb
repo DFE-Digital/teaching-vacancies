@@ -254,7 +254,8 @@ RSpec.describe Organisation do
       end
 
       it "adds an error to the organisation" do
-        organisation.destroy
+        result = organisation.destroy
+        expect(result).to be false
         expect(organisation.errors[:base]).to include("Cannot delete record because dependent organisation vacancies exist")
       end
     end
