@@ -1,0 +1,13 @@
+en:
+  helpers:
+    label:
+      publishers_vacancies_copy_vacancy_form:
+        name: Template name
+  publishers:
+    vacancies:
+      copy:
+        new:
+          caption: Create a template
+          heading: Job template
+          para1: To create a template, we'll ask you to provide information that you would for a job listing.
+          para2: If you do not have all the information you need to complete the template, select 'Save and finish later' on any page to make changes later.

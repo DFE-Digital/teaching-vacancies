@@ -52,7 +52,7 @@ class Api::MarkersController < Api::ApplicationController
       { label: t("jobs.actual_salary"), value: vacancy.actual_salary },
       { label: t("jobs.pay_scale"), value: vacancy.pay_scale },
       { label: t("jobs.school_type"), value: organisation_type(organisation) },
-      { label: t("jobs.working_patterns"), value: VacancyPresenter.new(vacancy).readable_working_patterns_with_details },
+      { label: t("jobs.working_patterns"), value: vacancy.decorate.readable_working_patterns_with_details },
       { label: t("jobs.expires_at"), value: format_time_to_datetime_at(vacancy.expires_at) },
     ].select { |d| d[:value].present? }
   end

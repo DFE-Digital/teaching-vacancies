@@ -2,6 +2,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   include Wicked::Wizard
   include OrganisationsHelper
 
+  before_action :set_vacancy
+
   before_action :set_steps
   before_action :setup_wizard
 

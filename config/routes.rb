@@ -392,6 +392,7 @@ Rails.application.routes.draw do
     end
     get "/jobs/start", to: "publishers/vacancies#start"
 
+    resources :vacancy_templates, only: %i[index], controller: "publishers/vacancy_templates"
     resources :jobs, only: %i[create destroy show], controller: "publishers/vacancies" do
       resources :build, only: %i[show update], controller: "publishers/vacancies/build"
       resources :wizard, only: %i[show update], controller: "publishers/vacancies/wizard"
@@ -415,7 +416,7 @@ Rails.application.routes.draw do
         get :submitted
       end
       resource :statistics, only: %i[show update], controller: "publishers/vacancies/statistics"
-      resource :copy, only: %i[create], controller: "publishers/vacancies/copy"
+      resource :copy, only: %i[new create], controller: "publishers/vacancies/copy"
       resource :relist, only: %i[create edit update], controller: "publishers/vacancies/relist"
       resource :end_listing, only: %i[show update], controller: "publishers/vacancies/end_listing"
       resource :extend_deadline, only: %i[show update], controller: "publishers/vacancies/extend_deadline"

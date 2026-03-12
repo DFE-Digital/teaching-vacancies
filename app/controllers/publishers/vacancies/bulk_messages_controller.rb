@@ -1,6 +1,7 @@
 module Publishers
   module Vacancies
     class BulkMessagesController < BaseController
+      before_action :set_vacancy
       before_action :set_job_applications
 
       include Wicked::Wizard

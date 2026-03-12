@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "publishers/vacancies/show" do
   let(:school) { build_stubbed(:school, phase: :secondary) }
-  let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
+  let(:vacancy_presenter) { vacancy.decorate }
   let(:blank_application_text) { t("buttons.download_blank_application") }
 
   before do

@@ -16,7 +16,7 @@ class Jobseekers::AlertMailer < Jobseekers::BaseMailer
 
     @vacancies = PublishedVacancy.where(id: vacancy_ids)
                    .order(:expires_at)
-                   .map { |vacancy| VacancyPresenter.new(vacancy) }
+                   .map(&:decorate)
 
     send_email(to: subscription.email,
                subject: I18n.t("jobseekers.alert_mailer.alert.subject",

@@ -429,6 +429,47 @@ shared:
     - recaptcha_score
     - unsubscribed_at
     - deletion_warning_email_sent_at
+  vacancy_templates:
+    - id
+    - name
+    - created_at
+    - updated_at
+    - benefits_details
+    - contact_email
+    - working_patterns
+    - salary
+    - subjects
+    - job_roles
+    - contact_number
+    - contract_type
+    - fixed_term_contract_duration
+    - enable_job_applications
+    - actual_salary
+    - working_patterns_details
+    - key_stages
+    - parental_leave_cover_contract_duration
+    - ect_status
+    - pay_scale
+    - benefits
+    - full_time_details
+    - part_time_details
+    - phases
+    - receive_applications
+    - application_email
+    - school_visits
+    - skills_and_experience
+    - school_offer
+    - further_details_provided
+    - further_details
+    - include_additional_documents
+    - visa_sponsorship_available
+    - is_parental_leave_cover
+    - hourly_rate
+    - is_job_share
+    - flexi_working
+    - religion_type
+    - flexi_working_details_provided
+    - anonymise_applications
   vacancies:
     - id
     - job_title
