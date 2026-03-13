@@ -16,7 +16,7 @@ RSpec.describe "publishers/organisations/preview" do
     end
 
     it "displays the organisation's description" do
-      expect(rendered).to have_content(organisation.description)
+      expect(rendered).to have_content(organisation.description.to_plain_text)
     end
 
     it "displays the organisation's safeguarding information" do
@@ -48,7 +48,7 @@ RSpec.describe "publishers/organisations/preview" do
     end
 
     it "displays the organisation's description" do
-      expect(rendered).to have_content(organisation.description)
+      expect(rendered).to have_content(organisation.description.to_plain_text)
     end
 
     it "displays the organisation's safeguarding information" do
@@ -82,7 +82,7 @@ RSpec.describe "publishers/organisations/preview" do
       end
 
       it "displays the organisation's description" do
-        expect(rendered).to have_content(school_one.description)
+        expect(rendered).to have_content(school_one.description.to_plain_text)
       end
 
       it "displays the organisation's safeguarding information" do
