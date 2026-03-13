@@ -19,7 +19,9 @@ class Publishers::JobApplicationReceivedNotifier < Noticed::Event
     private
 
     def application_link
-      govuk_link_to "an application", organisation_job_job_application_path(vacancy.id, job_application.id), class: "govuk-link--no-visited-state"
+      govuk_link_to "an application",
+                    organisation_job_job_application_path(vacancy.id, job_application.id, notification_id: id),
+                    class: "govuk-link--no-visited-state"
     end
 
     def job_application

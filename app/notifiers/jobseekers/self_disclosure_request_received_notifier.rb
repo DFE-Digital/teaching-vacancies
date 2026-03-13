@@ -30,7 +30,11 @@ module Jobseekers
 
       def disclosure_link
         govuk_link_to t("notifications.jobseekers/self_disclosure_request_received_notification.disclosure_received"),
-                      jobseekers_job_application_self_disclosure_path(job_application, Wicked::FIRST_STEP),
+                      jobseekers_job_application_self_disclosure_path(
+                        job_application,
+                        Wicked::FIRST_STEP,
+                        notification_id: id,
+                      ),
                       class: "govuk-link--no-visited-state"
       end
 

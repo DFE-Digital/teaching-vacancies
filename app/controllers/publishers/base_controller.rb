@@ -2,6 +2,7 @@ module Publishers
   class Publishers::BaseController < ApplicationController
     include LoginRequired
 
+    before_action :mark_notification_as_read_if_present
     before_action :check_terms_and_conditions
     before_action :check_ats_interstitial_acknowledged
 
@@ -15,6 +16,15 @@ module Publishers
       return if current_publisher.nil? || current_publisher.acknowledged_ats_and_religious_form_interstitial?
 
       redirect_to publishers_ats_interstitial_path
+    end
+
+    private
+
+    def mark_notification_as_read_if_present
+      return if params[:notification_id].blank?
+
+      notification = current_publisher.notifications.find_by(id: params[:notification_id])
+      notification&.mark_as_read
     end
   end
 end
