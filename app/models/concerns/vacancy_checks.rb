@@ -26,4 +26,8 @@ module VacancyChecks
       hourly_rate.present? ? "hourly_rate" : nil,
     ]
   end
+
+  def allow_job_applications?
+    enable_job_applications? || uploaded_form?
+  end
 end

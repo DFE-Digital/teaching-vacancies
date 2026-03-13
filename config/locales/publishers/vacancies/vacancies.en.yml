@@ -19,6 +19,7 @@ en:
         page_title: Template %{name}
         template_details: Template details
         about_the_role: About the role
+        application_process: Application process
         template_name: Template name
         job_role: Job role
         caption: Template

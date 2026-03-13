@@ -76,7 +76,8 @@ class Vacancy < ApplicationRecord
   enum :receive_applications, { email: 0, website: 1, uploaded_form: 2 }
 
   enum :extension_reason, { no_applications: 0, didnt_find_right_candidate: 1, other_extension_reason: 2 }
-  enum :religion_type, { no_religion: 0, other_religion: 1, catholic: 2 }
+  RELIGION_TYPES = { no_religion: 0, other_religion: 1, catholic: 2 }.freeze
+  enum :religion_type, RELIGION_TYPES
 
   # either both these 2 items are present, or the third one is.
   belongs_to :publisher, optional: true
@@ -266,10 +267,6 @@ class Vacancy < ApplicationRecord
 
   def teaching_or_middle_leader_role?
     job_roles.intersect?(TEACHING_JOB_ROLES)
-  end
-
-  def allow_job_applications?
-    enable_job_applications? || uploaded_form?
   end
 
   def create_job_application_for(jobseeker)

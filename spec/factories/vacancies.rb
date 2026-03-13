@@ -47,7 +47,7 @@ FactoryBot.define do
     contact_number { "01234 123456" }
     contract_type { :permanent }
     further_details_provided { true }
-    further_details { Faker::Lorem.sentence(word_count: factory_rand(50..300)) }
+    further_details { Faker::Lorem.sentence(word_count: factory_rand(5..30)) }
     expires_at { expiry_date.change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
     include_additional_documents { false }
