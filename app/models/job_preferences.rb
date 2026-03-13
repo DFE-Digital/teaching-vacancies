@@ -19,11 +19,8 @@ class JobPreferences < ApplicationRecord
   end
 
   def complete?
-    to_multistep.completed?
-  end
-
-  def to_multistep
-    Jobseekers::JobPreferencesForm.from_record(self)
+    steps = completed_steps.symbolize_keys
+    %i[roles phases key_stages subjects working_patterns locations].all? { |step| steps.include?(step) && steps[step].to_sym.in?(%i[completed skipped]) }
   end
 
   def key_stages_for_phases

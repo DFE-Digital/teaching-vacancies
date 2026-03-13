@@ -1,9 +1,5 @@
-require_dependency "multistep/form"
-
 module Jobseekers
-  class JobPreferencesForm < BaseForm
-    include Multistep::Form
-
+  class JobPreferencesForm
     ROLES = %i[teacher
                head_of_year_or_phase
                head_of_department_or_curriculum
@@ -20,20 +16,57 @@ module Jobseekers
                pastoral_health_and_welfare
                other_leadership
                other_support].freeze
-    WORKING_PATTERNS = %i[full_time part_time job_share].freeze
 
-    def self.from_record(record)
-      new(
-        **record.attributes.slice(*attribute_names.without("locations")),
-        locations: record.locations.to_h { |l| [l.id, { location: l.name, radius: l.radius }] },
-      )
+    STEPS = { roles: [:roles],
+              phases: [:phases],
+              key_stages: [:key_stages],
+              subjects: [:subjects],
+              working_patterns: %i[working_patterns working_pattern_details],
+              locations: [:locations] }.freeze
+
+    class << self
+      def from_record(record)
+        new(record)
+      end
+
+      # TODO: - simplify view so this method can be deleted
+      def delegated_attributes
+        STEPS.invert.map { |kl, v| kl.map { |k| { k => v } }.reduce(&:merge) }.reduce(&:merge)
+      end
     end
 
-    step :roles do
-      attribute :roles, array: true
+    WORKING_PATTERNS = %w[full_time part_time job_share].freeze
+
+    class ProfilesForm < ::BaseForm
+      include ActiveModel::Model
+      include ActiveModel::Attributes
+
+      class << self
+        def field_names
+          fields.map { |f| f.is_a?(Hash) ? f.keys.first : f }
+        end
+      end
+
+      def skip?(_model)
+        false
+      end
+    end
+
+    class RolesForm < ProfilesForm
+      attribute :roles, array: true, default: []
 
       validates :roles, presence: true
       validate :validate_roles
+
+      class << self
+        def fields
+          [{ roles: [] }]
+        end
+      end
+
+      def params_to_save
+        { roles: roles.compact_blank }
+      end
 
       def teaching_job_roles_options
         Vacancy::TEACHING_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.#{option}")] }
@@ -43,10 +76,6 @@ module Jobseekers
         Vacancy::SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.support_job_role_options.#{option}")] }
       end
 
-      def options
-        ROLES.to_h { |opt| [opt.to_s, I18n.t("helpers.label.jobseekers_job_preferences_form.role_options.#{opt}")] }
-      end
-
       def validate_roles
         return if (roles - ROLES.map(&:to_s)).empty?
 
@@ -54,124 +83,114 @@ module Jobseekers
       end
     end
 
-    step :phases do
-      attribute :phases, array: true
+    class PhasesForm < ProfilesForm
+      attribute :phases, array: true, default: []
       validates :phases, presence: true
+
+      class << self
+        def fields
+          [{ phases: [] }]
+        end
+      end
+
+      def params_to_save
+        { phases: phases }
+      end
 
       def options
         School::READABLE_PHASE_MAPPINGS.values.uniq.compact
-          .to_h { |opt| [opt.to_s, I18n.t("jobs.education_phase_options.#{opt}")] }
+                                       .to_h { |opt| [opt.to_s, I18n.t("jobs.education_phase_options.#{opt}")] }
       end
     end
 
-    step :key_stages do
-      attribute :key_stages, array: true
+    class KeyStagesForm < ProfilesForm
+      attribute :key_stages, array: true, default: []
       validates :key_stages, presence: true
 
-      def options(phases: multistep.phases)
-        options = School::PHASE_TO_KEY_STAGES_MAPPINGS
-                    .values_at(*phases.map(&:to_sym)).flatten.uniq
-                                                      .to_h { |opt| [opt.to_s, I18n.t("helpers.label.jobseekers_job_preferences_form.key_stages_options.#{opt}")] }
-        options.merge({ "non_teaching" => "I'm not looking for a teaching job" })
+      class << self
+        def fields
+          [{ key_stages: [] }]
+        end
       end
 
-      def invalidate?
-        return false unless multistep.phases_changed?
-
-        options_before, options_after = multistep.changes[:phases].map { |phases| options(phases: phases).keys }
-        self.key_stages = key_stages & options_after
-
-        any_new_option = (options_after - options_before).any?
-        any_new_option || key_stages.blank?
+      def params_to_save
+        { key_stages: key_stages }
       end
     end
 
-    step :subjects do
+    class SubjectsForm < ProfilesForm
+      class << self
+        def fields
+          [{ subjects: [] }]
+        end
+      end
+
+      def params_to_save
+        { subjects: subjects }
+      end
+
       attribute :subjects, array: true
 
-      def skip?
-        return false if multistep.key_stages.intersect?(%w[ks3 ks4 ks5])
+      def skip?(model)
+        return false if model.key_stages.intersect?(%w[ks3 ks4 ks5])
 
         self.subjects = []
         true
       end
     end
 
-    step :working_patterns do
+    class WorkingPatternsForm < ProfilesForm
       attribute :working_patterns, array: true
       attribute :working_pattern_details
+
       validates :working_patterns, presence: true
-      validate :working_pattern_details_does_not_exceed_maximum_words
+      validates :working_pattern_details_words, length: { maximum: 50 }, if: -> { working_pattern_details.present? }
 
-      def options
-        WORKING_PATTERNS.to_h { |opt| [opt.to_s, I18n.t("helpers.label.publishers_job_listing_contract_information_form.working_patterns_options.#{opt}")] }
-      end
-
-      def working_pattern_details_does_not_exceed_maximum_words
-        if multistep.number_of_words_exceeds_permitted_length?(50, working_pattern_details)
-          errors.add(:working_pattern_details, :length)
+      class << self
+        def fields
+          [{ working_patterns: [] }, :working_pattern_details]
         end
       end
-    end
 
-    step :locations do
-      attribute :locations, default: {}
-      attribute :add_location, :boolean
-      validates :add_location, inclusion: { in: [true, false], message: :blank }
-    end
-
-    attribute :builder_completed, :boolean, default: false
-
-    def build_location_form(id)
-      return if id.present? && !locations[id]
-
-      attrs = id ? locations[id] : {}
-      LocationForm.new(attrs)
-    end
-
-    def update_location(id, attributes)
-      id ||= SecureRandom.uuid
-      (locations[id] ||= {}).merge!(attributes.symbolize_keys)
-    end
-
-    def complete_step!(*args)
-      super
-
-      self.builder_completed = true if completed?
-    end
-
-    def locations=(values)
-      super(values.transform_values(&:symbolize_keys))
-    end
-
-    def next_step(current_step: nil, **)
-      return next_step if current_step && builder_completed
-
-      super
-    end
-
-    class LocationForm
-      include FormObject
-
-      attribute :location
-      attribute :radius
-
-      validates :location, presence: true, within_united_kingdom: true
-      validates :radius, presence: true
-    end
-
-    class DeleteLocationForm
-      include FormObject
-
-      attribute :action
-      validates :action, inclusion: { in: %w[edit delete], message: :blank }
-
-      def options
+      def params_to_save
         {
-          "edit" => "No, change the location",
-          "delete" => "Yes, delete this location and turn off my profile",
+          working_patterns: working_patterns,
+          working_pattern_details: working_pattern_details,
         }
       end
+
+      def options
+        WORKING_PATTERNS.index_with { |opt| I18n.t("helpers.label.publishers_job_listing_contract_information_form.working_patterns_options.#{opt}") }
+      end
+
+      private
+
+      def working_pattern_details_words
+        working_pattern_details.scan(/\w+/)
+      end
     end
+
+    def initialize(record)
+      @job_preferences = record
+    end
+
+    def next_invalid_step
+      FORMS.drop_while { |step, form_class|
+        if step == :subjects
+          @job_preferences.completed_steps.symbolize_keys.include?(:subjects)
+        else
+          form_class.new(@job_preferences.slice(STEPS.fetch(step))).valid?
+        end
+      }.first.first
+    end
+
+    FORMS = {
+      roles: RolesForm,
+      phases: PhasesForm,
+      key_stages: KeyStagesForm,
+      subjects: SubjectsForm,
+      working_patterns: WorkingPatternsForm,
+      locations: Jobseekers::Profiles::LocationsForm,
+    }.freeze
   end
 end
