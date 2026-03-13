@@ -13,7 +13,7 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
       display_summary: ->(profile) { profile.personal_details&.completed_steps.present? },
       key: "personal_details",
       link_text: "Add personal details",
-      page_path: -> { personal_details_jobseekers_profile_path },
+      page_path: -> { jobseekers_profile_personal_details_step_path(Wicked::FIRST_STEP) },
     },
     {
       title: "Job preferences",
