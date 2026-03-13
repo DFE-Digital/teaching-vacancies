@@ -54,15 +54,13 @@ module "cloudwatch" {
 }
 
 module "paas" {
-  source                                       = "./modules/paas"
-  environment                                  = var.environment
-  app_docker_image                             = var.app_docker_image
-  app_env_values                               = local.app_env_values
-  parameter_store_environment                  = var.parameter_store_environment
-  service_name                                 = local.service_name
-  service_abbreviation                         = local.service_abbreviation
-  documents_s3_bucket_force_destroy            = var.documents_s3_bucket_force_destroy
-  schools_images_logos_s3_bucket_force_destroy = var.schools_images_logos_s3_bucket_force_destroy
+  source                      = "./modules/paas"
+  environment                 = var.environment
+  app_docker_image            = var.app_docker_image
+  app_env_values              = local.app_env_values
+  parameter_store_environment = var.parameter_store_environment
+  service_name                = local.service_name
+  service_abbreviation        = local.service_abbreviation
   # AKS
   namespace                           = var.namespace
   azure_resource_prefix               = var.azure_resource_prefix
