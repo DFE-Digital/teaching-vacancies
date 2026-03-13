@@ -86,6 +86,13 @@ class PublishedVacancy < Vacancy
              .find_by(email: contact_email)
   end
 
+  def self.discard_out_of_scope
+    kept.joins(:organisations)
+        .where(organisations: { detailed_school_type: Organisation::OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES })
+        .distinct
+        .find_each(&:trash!)
+  end
+
   private
 
   def remove_google_index
