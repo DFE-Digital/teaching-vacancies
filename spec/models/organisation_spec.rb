@@ -243,4 +243,21 @@ RSpec.describe Organisation do
       end
     end
   end
+
+  describe "deletion restrictions" do
+    context "when organisation has vacancies" do
+      let(:organisation) { create(:school) }
+      let!(:vacancy) { create(:vacancy, organisations: [organisation]) }
+
+      it "prevents deletion" do
+        expect { organisation.destroy }.not_to change(Organisation, :count)
+      end
+
+      it "adds an error to the organisation" do
+        result = organisation.destroy
+        expect(result).to be false
+        expect(organisation.errors[:base]).to include("Cannot delete record because dependent organisation vacancies exist")
+      end
+    end
+  end
 end
