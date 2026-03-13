@@ -19,17 +19,18 @@ class Publishers::JobListing::ContactDetailsForm < Publishers::JobListing::Vacan
       FIELDS + %i[contact_number_provided]
     end
 
+    # sometimes this is called out-of-band (e.g. copy) where we don't know current_publisher
     def load_from_model(vacancy, current_publisher:)
-      new(vacancy.slice(*fields), vacancy, current_publisher)
+      new(vacancy.slice(*fields), vacancy, current_publisher&.email)
     end
 
     def load_from_params(form_params, vacancy, current_publisher:)
-      new(form_params, vacancy, current_publisher)
+      new(form_params, vacancy, current_publisher.email)
     end
   end
 
-  def initialize(params, vacancy, current_publisher)
-    @current_publisher = current_publisher
+  def initialize(params, vacancy, current_publisher_email)
+    @current_publisher_email = current_publisher_email
 
     super(params, vacancy)
   end
@@ -38,12 +39,14 @@ class Publishers::JobListing::ContactDetailsForm < Publishers::JobListing::Vacan
     return unless @vacancy.contact_email || params[:contact_email]
 
     if params[:contact_email].present?
-      return params[:contact_email] if params[:contact_email] == @current_publisher&.email
+      return params[:contact_email] if params[:contact_email] == @current_publisher_email
 
       return "other"
     end
 
-    return @current_publisher&.email if @vacancy.contact_email == @current_publisher&.email
+    # :nocov:
+    return @current_publisher_email if @vacancy.contact_email == @current_publisher_email
+    # :nocov:
 
     "other"
   end
@@ -51,7 +54,7 @@ class Publishers::JobListing::ContactDetailsForm < Publishers::JobListing::Vacan
   def other_contact_email
     return params[:other_contact_email] if params[:other_contact_email]
 
-    @vacancy.contact_email unless @vacancy.contact_email == @current_publisher&.email
+    @vacancy.contact_email unless @vacancy.contact_email == @current_publisher_email
   end
 
   def params_to_save

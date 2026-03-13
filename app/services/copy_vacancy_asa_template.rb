@@ -24,7 +24,7 @@ class CopyVacancyAsaTemplate
 
       if vacancy.publish_on&.past?
         reset_date_fields(new_vacancy)
-        new_vacancy.completed_steps -= %w[start_date important_dates]
+        new_vacancy.completed_steps -= %w[start_date expiry_date_time]
       end
 
       new_vacancy.tap do |v|
