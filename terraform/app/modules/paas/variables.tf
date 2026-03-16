@@ -11,15 +11,6 @@ variable "parameter_store_environment" {
   default = "dev"
 }
 
-
-variable "documents_s3_bucket_force_destroy" {
-  default = false
-}
-
-variable "schools_images_logos_s3_bucket_force_destroy" {
-  default = false
-}
-
 variable "service_name" {
 }
 
@@ -47,6 +38,7 @@ variable "azure_enable_backup_storage" {
   default     = true
   description = "Create storage account for database backup"
 }
+
 variable "enable_monitoring" {
   description = "Enable monitoring and alerting"
   default     = false
@@ -138,16 +130,6 @@ locals {
     yamldecode(data.aws_ssm_parameter.app_env_api_key_google.value)
   )
   app_env_secrets = yamldecode(data.aws_ssm_parameter.app_env_secrets.value)
-  app_env_documents_s3_bucket_credentials = {
-    DOCUMENTS_S3_BUCKET         = local.documents_s3_bucket_name
-    DOCUMENTS_ACCESS_KEY_ID     = aws_iam_access_key.documents_s3_bucket_access_key.id
-    DOCUMENTS_ACCESS_KEY_SECRET = aws_iam_access_key.documents_s3_bucket_access_key.secret
-  }
-  app_env_schools_images_logos_s3_bucket_credentials = {
-    SCHOOLS_IMAGES_LOGOS_S3_BUCKET         = local.schools_images_logos_s3_bucket_name
-    SCHOOLS_IMAGES_LOGOS_ACCESS_KEY_ID     = aws_iam_access_key.schools_images_logos_s3_bucket_access_key.id
-    SCHOOLS_IMAGES_LOGOS_ACCESS_KEY_SECRET = aws_iam_access_key.schools_images_logos_s3_bucket_access_key.secret
-  }
   app_env_documents_azure_storage_credentials = {
     DOCUMENTS_AZURE_STORAGE_ACCOUNT_NAME = module.documents_azure_storage.name
     DOCUMENTS_AZURE_STORAGE_ACCESS_KEY   = module.documents_azure_storage.primary_access_key
@@ -160,20 +142,15 @@ locals {
   app_environment = merge(
     local.app_env_api_keys,
     local.app_env_secrets,
-    local.app_env_documents_s3_bucket_credentials,
-    local.app_env_schools_images_logos_s3_bucket_credentials,
     local.app_env_documents_azure_storage_credentials,
     local.app_env_images_logos_azure_storage_credentials,
     local.app_env_domain,
     var.app_env_values #Because of merge order, if present, the value of DOMAIN in .tfvars.json will overwrite app_env_domain
   )
 
-  # S3 bucket name uses abbreviation so we don't run into 63 character bucket name limit
-  documents_s3_bucket_name            = "${data.aws_caller_identity.current.account_id}-${var.service_abbreviation}-attachments-documents-${var.environment}"
-  schools_images_logos_s3_bucket_name = "${data.aws_caller_identity.current.account_id}-${var.service_abbreviation}-attachments-images-logos-${var.environment}"
-  web_app_name                        = "${var.service_name}-${var.environment}"
-  worker_app_start_command            = "bundle exec sidekiq -C config/sidekiq.yml"
-  worker_app_name                     = "${var.service_name}-worker-${var.environment}"
+  web_app_name             = "${var.service_name}-${var.environment}"
+  worker_app_name          = "${var.service_name}-worker-${var.environment}"
+  worker_app_start_command = "bundle exec sidekiq -C config/sidekiq.yml"
 
   postgres_extensions = { enable_extensions = ["btree_gist", "pgcrypto", "fuzzystrmatch", "pg_trgm", "postgis"] }
 
