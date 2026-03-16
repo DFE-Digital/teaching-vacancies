@@ -60,6 +60,25 @@ RSpec.describe "Documents" do
         expect(request).to render_template(:new)
       end
     end
+
+    context "when the document is already attached (duplicate submission)" do
+      let(:file) { fixture_file_upload("blank_job_spec.pdf", "application/pdf") }
+      let(:request) do
+        post organisation_job_documents_path(vacancy.id), params: {
+          publishers_job_listing_documents_form: { supporting_documents: [file] },
+        }
+      end
+
+      before do
+        allow_any_instance_of(ActiveStorage::Attached::Many).to receive(:attach).and_raise(
+          ActiveRecord::RecordNotUnique.new("duplicate key value violates unique constraint"),
+        )
+      end
+
+      it "handles the duplicate gracefully and renders the index page" do
+        expect(request).to render_template(:index)
+      end
+    end
   end
 
   describe "POST #upload" do

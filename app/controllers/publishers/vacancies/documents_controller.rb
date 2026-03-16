@@ -6,7 +6,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::Wizard
   def create
     @documents_form = Publishers::JobListing::DocumentsForm.new(documents_form_params, vacancy)
     if @documents_form.valid?
-      if @documents_form.supporting_documents.reject { |document| vacancy.supporting_documents.attach(document) }.any?
+      if @documents_form.supporting_documents.reject { |document| attach_document(document) }.any?
         vacancy.errors.each do |error|
           @documents_form.errors.add error.attribute, error.message
         end
@@ -46,6 +46,14 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::Wizard
 
   def step
     :documents
+  end
+
+  def attach_document(document)
+    vacancy.supporting_documents.attach(document)
+  rescue ActiveRecord::RecordNotUnique
+    # Document already attached (e.g., due to double-click or page refresh)
+    # This is fine - the user's intent is fulfilled
+    true
   end
 
   def documents_form
