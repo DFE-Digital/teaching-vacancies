@@ -25,6 +25,11 @@ en:
         one: "<span class='govuk-!-font-weight-bold'>%{count}</span> job found at <span class='govuk-!-font-weight-bold'>%{organisation}</span>"
         other: "<span class='govuk-!-font-weight-bold'>%{count}</span> jobs found at <span class='govuk-!-font-weight-bold'>%{organisation}</span>"
       meta_description: "Find school and teaching jobs at %{organisation} with Teaching Vacancies. Search for roles and set up email alerts for the latest jobs near you."
+
+    _job_role_location:
+      title: "%{job_role} Jobs in %{location}"
+      heading: "%{count} %{job_role} jobs in %{location}"
+      meta_description: "Find %{job_role} jobs in %{location} with Teaching Vacancies. Search for roles and set up email alerts for the latest %{job_role} jobs near you."
     ##
     # Content for "static" (non-location) landing pages
     #   Every key is a landing page slug and must exist in `config/landing_pages.yml`

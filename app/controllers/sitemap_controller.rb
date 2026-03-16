@@ -10,6 +10,8 @@ class SitemapController < ApplicationController
 
       add_location_landing_pages(sitemap)
 
+      add_job_role_location_landing_pages(sitemap)
+
       STATIC_PAGES.each { |static_page| sitemap.add page_path(static_page), period: "weekly" }
 
       add_all_posts(sitemap)
@@ -36,6 +38,15 @@ class SitemapController < ApplicationController
   def add_location_landing_pages(sitemap)
     (ALL_IMPORTED_LOCATIONS + REDIRECTED_LOCATION_LANDING_PAGES.values - REDIRECTED_LOCATION_LANDING_PAGES.keys).map(&:parameterize).uniq.each do |location|
       sitemap.add location_landing_page_path(location.parameterize), period: "hourly"
+    end
+  end
+
+  def add_job_role_location_landing_pages(sitemap)
+    Vacancy::JOB_ROLES.each_key do |job_role|
+      LocationPolygon.find_each do |location|
+        location_slug = location.name.parameterize
+        sitemap.add job_role_location_landing_page_path(job_role, location_slug), period: "daily"
+      end
     end
   end
 
