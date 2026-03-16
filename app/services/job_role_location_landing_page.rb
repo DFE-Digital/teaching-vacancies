@@ -17,7 +17,7 @@ class JobRoleLocationLandingPage < LandingPage
   def initialize(job_role, location)
     @job_role = job_role
     @location = location
-    @criteria = build_criteria
+    super(slug, build_criteria)
   end
 
   def slug

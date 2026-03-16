@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe JobRoleLocationLandingPage do
-  subject { described_class["teacher", "birmingham"] }
+  subject(:landing_page) { described_class["teacher", "birmingham"] }
 
   let(:search) { instance_double(Search::VacancySearch, total_count: 42) }
 
@@ -10,7 +10,7 @@ RSpec.describe JobRoleLocationLandingPage do
 
     allow(Search::VacancySearch)
       .to receive(:new)
-      .with(hash_including(teaching_job_roles: ["teacher"], location: "Birmingham"))
+      .with(hash_including(teaching_job_roles: %w[teacher], location: "Birmingham"))
       .and_return(search)
   end
 
@@ -40,14 +40,14 @@ RSpec.describe JobRoleLocationLandingPage do
 
   describe ".[]" do
     it "returns a landing page instance when both job role and location exist" do
-      expect(subject.job_role).to eq("teacher")
-      expect(subject.location).to eq("birmingham")
-      expect(subject.criteria).to eq({ teaching_job_roles: ["teacher"], location: "Birmingham" })
+      expect(landing_page.job_role).to eq("teacher")
+      expect(landing_page.location).to eq("birmingham")
+      expect(landing_page.criteria).to eq({ teaching_job_roles: %w[teacher], location: "Birmingham" })
     end
 
     it "sets support_job_roles for support roles" do
       page = described_class["teaching-assistant", "birmingham"]
-      expect(page.criteria).to eq({ support_job_roles: ["teaching_assistant"], location: "Birmingham" })
+      expect(page.criteria).to eq({ support_job_roles: %w[teaching_assistant], location: "Birmingham" })
     end
 
     it "raises an error if job role or location doesn't exist" do
@@ -58,13 +58,13 @@ RSpec.describe JobRoleLocationLandingPage do
 
   describe "#slug" do
     it "returns the correct slug format" do
-      expect(subject.slug).to eq("teacher-jobs-in-birmingham")
+      expect(landing_page.slug).to eq("teacher-jobs-in-birmingham")
     end
   end
 
   describe "#location_name" do
     it "returns the titleized location name" do
-      expect(subject.location_name).to eq("Birmingham")
+      expect(landing_page.location_name).to eq("Birmingham")
     end
 
     it "handles mapped locations" do
@@ -82,21 +82,21 @@ RSpec.describe JobRoleLocationLandingPage do
 
   describe "#job_role_name" do
     it "returns the translated job role name" do
-      expect(subject.job_role_name).to eq(I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.teacher"))
+      expect(landing_page.job_role_name).to eq(I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.teacher"))
     end
   end
 
   describe "#count" do
     it "performs a search and returns its total count" do
-      expect(subject.count).to eq(42)
+      expect(landing_page.count).to eq(42)
     end
   end
 
   describe "i18n methods" do
     let(:job_role_name) { I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.teacher") }
 
-    specify { expect(subject.heading).to eq(I18n.t("landing_pages._job_role_location.heading", location: "Birmingham", job_role: job_role_name.downcase, count: "<span class=\"govuk-!-font-weight-bold\">42</span>")) }
-    specify { expect(subject.meta_description).to eq(I18n.t("landing_pages._job_role_location.meta_description", location: "Birmingham", job_role: job_role_name.downcase)) }
-    specify { expect(subject.title).to eq(I18n.t("landing_pages._job_role_location.title", location: "Birmingham", job_role: job_role_name)) }
+    specify { expect(landing_page.heading).to eq(I18n.t("landing_pages._job_role_location.heading", location: "Birmingham", job_role: job_role_name.downcase, count: "<span class=\"govuk-!-font-weight-bold\">42</span>")) }
+    specify { expect(landing_page.meta_description).to eq(I18n.t("landing_pages._job_role_location.meta_description", location: "Birmingham", job_role: job_role_name.downcase)) }
+    specify { expect(landing_page.title).to eq(I18n.t("landing_pages._job_role_location.title", location: "Birmingham", job_role: job_role_name)) }
   end
 end
