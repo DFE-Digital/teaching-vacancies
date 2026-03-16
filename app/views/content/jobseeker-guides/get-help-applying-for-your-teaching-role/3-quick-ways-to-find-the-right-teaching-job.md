@@ -31,6 +31,6 @@ Use our online application form to quickly apply for jobs.
 
 We'll save your details so you won’t have to spend time filling in new applications every time, where quick apply is available. 
 
-If you’re invited to interview, read [How to approach a teaching job interview](https://teaching-vacancies.service.gov.uk/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-approach-a-teaching-job-interview?) to help you prepare. 
+If you’re invited to interview, read [how to approach a teaching job interview](https://teaching-vacancies.service.gov.uk/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-approach-a-teaching-job-interview?) to help you prepare. 
 
 <a href="https://teaching-vacancies.service.gov.uk/jobseekers/sign-in" class="govuk-button">Create a Teaching Vacancies account now</a>
