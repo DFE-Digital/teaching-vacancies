@@ -43,7 +43,9 @@ class JobRoleLocationLandingPage < LandingPage
 
     if Vacancy::TEACHING_JOB_ROLES.include?(job_role)
       criteria[:teaching_job_roles] = [job_role]
-    elsif Vacancy::SUPPORT_JOB_ROLES.include?(job_role)
+    end
+
+    if Vacancy::SUPPORT_JOB_ROLES.include?(job_role)
       criteria[:support_job_roles] = [job_role]
     end
 
