@@ -1,6 +1,51 @@
 # frozen_string_literal: true
 
 class VacancyTemplate < ApplicationRecord
+  IGNORED_ATTRIBUTES = %w[
+    id
+    job_title
+    slug
+    job_advert
+    starts_on
+    publish_on
+    application_link
+    listed_elsewhere
+    hired_status
+    stats_updated_at
+    publisher_id
+    expires_at
+    about_school
+    job_location
+    readable_job_location
+    publisher_organisation_id
+    starts_asap
+    completed_steps
+    geolocation
+    readable_phases
+    searchable_content
+    google_index_removed
+    expired_vacancy_feedback_email_sent_at
+    external_source
+    external_reference
+    external_advert_url
+    start_date_type
+    earliest_start_date
+    latest_start_date
+    other_start_date_details
+    contact_number_provided
+    extension_reason
+    other_extension_reason_details
+    publisher_ats_api_client_id
+    discarded_at
+    type
+    uk_geolocation
+    contact_email
+    application_email
+    contact_number
+    parental_leave_cover_contract_duration
+    include_additional_documents
+  ].freeze
+
   extend ArrayEnum
   include VacancyChecks
 

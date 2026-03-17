@@ -1,6 +1,8 @@
 class Publishers::Vacancies::RelistController < Publishers::Vacancies::WizardBaseController
   include Publishers::VacancyCopy
 
+  before_action :set_vacancy
+
   def create
     @vacancy = copy_vacancy(vacancy)
 
