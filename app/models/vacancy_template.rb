@@ -16,4 +16,12 @@ class VacancyTemplate < ApplicationRecord
   enum :receive_applications, { website: 1, uploaded_form: 2 }
 
   enum :religion_type, Vacancy::RELIGION_TYPES
+
+  def central_office?
+    false
+  end
+
+  def for_multiple_organisations?
+    false
+  end
 end
