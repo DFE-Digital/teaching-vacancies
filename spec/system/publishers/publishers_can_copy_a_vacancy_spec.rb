@@ -14,6 +14,7 @@ RSpec.describe "Copying a vacancy" do
     end
 
     let(:new_template) { VacancyTemplate.order(:created_at).last }
+    let(:new_draft_vacancy) { DraftVacancy.order(:created_at).last }
     let(:template_name) { Faker::Movie.title }
 
     it "allows the publisher to create a job template", :js do
@@ -89,12 +90,11 @@ RSpec.describe "Copying a vacancy" do
       # acts as a page wait
       expect(page).to have_content "Use this template"
       click_on "Use this template"
-      sleep 50
+      expect(page).to have_current_path(organisation_job_build_path(new_draft_vacancy.id, :job_title))
     end
   end
 
   describe "publishing a copied vacancy" do
-    #  limit money as too noisy for visual test
     let(:original_vacancy) do
       create(:vacancy, :past_publish, :without_any_money,
              salary: 25_000, organisations: [school], subjects: %w[French],
@@ -107,15 +107,7 @@ RSpec.describe "Copying a vacancy" do
       create(:vacancy_template, job_roles: %w[head_of_year_or_phase])
     end
 
-    scenario "creating a job from a template" do
-      visit organisation_vacancy_templates_path
-      # acts as a page wait
-      expect(page).to have_content "Use this template"
-      click_on "Use this template"
-      expect(page).to have_content "Head of year or phase"
-    end
-
-    scenario "a job can be successfully copied and published" do
+    scenario "a job can be successfully copied and published", :js do
       visit organisation_job_path(original_vacancy.id)
 
       click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
@@ -132,8 +124,11 @@ RSpec.describe "Copying a vacancy" do
 
       #  causes a wait for the content
       expect(page).to have_content("Change")
-      # click_on "Change"
-      # sleep 20
+      sleep 50
+      within "#job_role" do
+        click_on "Change"
+      end
+      sleep 50
 
       # expect(current_path).to eq organisation_job_path(new_vacancy.id)
       # click_on I18n.t("publishers.vacancies.show.heading_component.action.complete")

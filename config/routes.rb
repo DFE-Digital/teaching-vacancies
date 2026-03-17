@@ -405,9 +405,9 @@ Rails.application.routes.draw do
     get "/jobs/start", to: "publishers/vacancies#start"
 
     resources :vacancy_templates, only: %i[index show new create], controller: "publishers/vacancy_templates" do
-      member do
-        get :use_template
-      end
+      # member do
+      #   get :use_template
+      # end
       resources :build, only: %i[show update], controller: "publishers/vacancy_templates/build"
     end
     resources :jobs, only: %i[create destroy show], controller: "publishers/vacancies" do
@@ -418,6 +418,9 @@ Rails.application.routes.draw do
       end
       resource :application_forms, only: %i[create destroy], controller: "publishers/vacancies/application_forms"
 
+      collection do
+        post :use_template
+      end
       get :confirm_destroy
       get :convert_to_draft
       get :preview

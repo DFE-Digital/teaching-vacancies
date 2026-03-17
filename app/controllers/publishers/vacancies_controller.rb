@@ -1,5 +1,5 @@
 class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseController
-  before_action :set_vacancy, except: %i[index start create]
+  before_action :set_vacancy, except: %i[index start create use_template]
 
   before_action :invent_job_alert_search_criteria, only: %i[show preview]
   before_action :redirect_to_new_features_reminder, only: %i[create]
@@ -65,6 +65,18 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
 
   def review
     @vacancy = vacancy.decorate
+  end
+
+  def use_template
+    template = VacancyTemplate.find params[:vacancy_template_id]
+    @vacancy = DraftVacancy.create!(template.attributes.symbolize_keys.except(:id, :name, :job_roles,
+                                                                              :phases, :key_stages, :working_patterns)
+                                            .merge(organisations: [current_organisation],
+                                                   job_roles: template.job_roles,
+                                                   working_patterns: template.working_patterns,
+                                                   key_stages: template.key_stages,
+                                                   phases: template.phases))
+    redirect_to organisation_job_build_path(@vacancy.id, next_invalid_step)
   end
 
   def destroy

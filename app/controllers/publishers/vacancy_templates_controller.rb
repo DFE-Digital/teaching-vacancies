@@ -2,7 +2,7 @@
 
 module Publishers
   class VacancyTemplatesController < Publishers::BaseController
-    before_action :load_template, only: %i[show use_template]
+    before_action :load_template, only: %i[show]
 
     def index
       @vacancy_types = %i[live draft pending expired awaiting_feedback]
@@ -21,17 +21,6 @@ module Publishers
     def create
       template = VacancyTemplate.create! template_params
       redirect_to organisation_vacancy_template_build_path(template, Wicked::FIRST_STEP)
-    end
-
-    def use_template
-      vacancy = DraftVacancy.create!(@template.attributes.symbolize_keys.except(:id, :name, :job_roles,
-                                                                                :phases, :key_stages, :working_patterns)
-                                              .merge(organisations: [current_organisation],
-                                                     job_roles: @template.job_roles,
-                                                     working_patterns: @template.working_patterns,
-                                                     key_stages: @template.key_stages,
-                                                     phases: @template.phases))
-      redirect_to organisation_job_review_path(vacancy.id)
     end
 
     private

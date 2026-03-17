@@ -24,7 +24,7 @@ RSpec.describe "publishers/vacancies/index" do
   after { sign_out publisher }
 
   it "has a copy link" do
-    expect(rendered).to have_link("#{I18n.t('buttons.copy_listing')} for #{vacancy.job_title}")
+    expect(rendered).to have_link("#{I18n.t('buttons.save_as_template')} for #{vacancy.job_title}")
   end
 
   it "has the school name on the page" do
