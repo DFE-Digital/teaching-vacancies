@@ -39,8 +39,6 @@ RSpec.describe VacancyTemplate do
                            external_source
                            geolocation
                            other_start_date_details
-                           parental_leave_cover_contract_duration
-                           google_index_removed
                            hired_status
                            include_additional_documents
                            job_location

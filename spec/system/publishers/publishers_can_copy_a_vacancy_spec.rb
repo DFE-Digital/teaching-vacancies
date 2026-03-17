@@ -8,6 +8,91 @@ RSpec.describe "Copying a vacancy" do
 
   after { logout }
 
+  describe "creating a template from scratch" do
+    before do
+      visit organisation_jobs_with_type_path
+    end
+
+    let(:new_template) { VacancyTemplate.order(:created_at).last }
+    let(:template_name) { Faker::Movie.title }
+
+    it "allows the publisher to create a job template", :js do
+      # acts as a page wait
+      expect(page).to have_content "Create a template"
+      click_on "Create a template"
+
+      # acts as a page wait
+      expect(page).to have_content "Template name"
+      expect(page).to have_current_path(new_organisation_vacancy_template_path)
+
+      fill_in "Template name", with: template_name
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
+
+      check "Teaching assistant"
+      click_on I18n.t("buttons.save_and_continue")
+
+      expect(page).to have_content "Nursery"
+      check "Primary school"
+      check "Secondary school"
+      click_on I18n.t("buttons.save_and_continue")
+
+      expect(page).to have_content "Key stages"
+      check "Key stage 1"
+      click_on I18n.t("buttons.save_and_continue")
+
+      expect(page).to have_content "Accounting"
+      check "Biology"
+      click_on I18n.t("buttons.save_and_continue")
+
+      expect(page).to have_content "Contract type"
+      choose "Permanent"
+      check "Full time"
+      job_share_label = "publishers-job-listing-contract-information-form-is-job-share-false-field"
+      find("label[for=#{job_share_label}]").click
+      click_on I18n.t("buttons.save_and_continue")
+
+      expect(page).to have_content "Salary details"
+      choose "No"
+      # TODO: - this seems to not insist on a pay rate
+      click_on I18n.t("buttons.save_and_continue")
+
+      expect(page).to have_content "What skills and experience are you"
+      fill_in("publishers-job-listing-about-the-role-form-skills-and-experience-field", with: Faker::Lorem.sentence)
+      fill_in("publishers-job-listing-about-the-role-form-school-offer-field", with: Faker::Lorem.sentence)
+      within ".flexi_working_details_provided" do
+        choose "No"
+      end
+      within ".further-details-provided-radios" do
+        choose "No"
+      end
+      click_on I18n.t("buttons.save_and_continue")
+
+      expect(page).to have_content "school visits"
+      choose "Yes"
+      click_on I18n.t("buttons.save_and_continue")
+
+      expect(page).to have_content "sponsorship"
+      choose "Yes"
+      click_on I18n.t("buttons.save_and_continue")
+
+      choose "Use other application form"
+      click_on I18n.t("buttons.save_and_continue")
+
+      expect(page).to have_content "How do you want candidates to apply"
+      choose "By visiting a different website"
+      click_on I18n.t("buttons.save_and_continue")
+
+      expect(page).to have_content "How would you like to view your applications"
+      choose "Anonymously"
+      click_on I18n.t("buttons.save_and_continue")
+      expect(page).to have_current_path(organisation_vacancy_templates_path)
+      # acts as a page wait
+      expect(page).to have_content "Use this template"
+      click_on "Use this template"
+      sleep 50
+    end
+  end
+
   describe "publishing a copied vacancy" do
     #  limit money as too noisy for visual test
     let(:original_vacancy) do
