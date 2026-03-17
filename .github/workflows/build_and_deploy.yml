@@ -1,3 +1,4 @@
+#TEST
 name: Build and deploy
 
 on:
