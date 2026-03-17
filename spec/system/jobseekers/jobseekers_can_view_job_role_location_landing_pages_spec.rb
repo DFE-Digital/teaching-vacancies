@@ -8,7 +8,7 @@ RSpec.describe "Jobseekers can view job role + location landing pages" do
   end
 
   context "when visiting a teaching job role + location landing page" do
-    it "correctly displays filters and titles for teacher" do
+    it "correctly displays filters and titles" do
       visit "/teacher-jobs-in-birmingham"
 
       expect(page).to have_checked_field("Teacher")

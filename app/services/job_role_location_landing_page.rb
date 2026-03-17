@@ -4,7 +4,6 @@ class JobRoleLocationLandingPage < LandingPage
   def self.exists?(job_role, location)
     normalized_job_role = job_role.downcase.tr("-", "_")
 
-    # Check if job role exists and location polygon exists
     Vacancy::JOB_ROLES.key?(normalized_job_role) && LocationPolygon.contain?(location.titleize)
   end
 

@@ -19,12 +19,9 @@ RSpec.describe JobRoleLocationLandingPage do
       expect(described_class.exists?("teacher", "birmingham")).to be(true)
     end
 
-    it "handles case-insensitive job role" do
+    it "handles case-insensitive job role and location" do
       expect(described_class.exists?("Teacher", "birmingham")).to be(true)
       expect(described_class.exists?("TEACHER", "birmingham")).to be(true)
-    end
-
-    it "handles case-insensitive location" do
       expect(described_class.exists?("teacher", "Birmingham")).to be(true)
       expect(described_class.exists?("teacher", "BIRMINGHAM")).to be(true)
     end
