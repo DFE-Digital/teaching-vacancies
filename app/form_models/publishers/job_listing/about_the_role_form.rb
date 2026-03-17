@@ -3,7 +3,7 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
 
   validates :ect_status, inclusion: { in: Vacancy.ect_statuses.keys }, if: -> { vacancy&.job_roles&.include?("teacher") }
   validate :skills_and_experience_presence
-  validates :school_offer_with_tags_removed, presence: true, message: -> { I18n.t("about_the_role_errors.school_offer.blank", organisation: organisation_type) }
+  validate :school_offer_presence
   validates :further_details_provided, inclusion: { in: [true, false] }
   validate :further_details_presence, if: -> { further_details_provided }
   validates :flexi_working_details_provided, inclusion: { in: [true, false] }
@@ -61,15 +61,11 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
 
   private
 
-  def school_offer_with_tags_removed
-    remove_html_tags(school_offer)
-  end
+  def school_offer_presence
+    return if remove_html_tags(school_offer).present?
 
-  # def school_offer_presence
-  #   return if remove_html_tags(school_offer).present?
-  #
-  #   errors.add(:school_offer, :blank)
-  # end
+    errors.add(:school_offer, :blank, organisation: organisation_type)
+  end
 
   def skills_and_experience_presence
     return if remove_html_tags(skills_and_experience).present?

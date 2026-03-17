@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
-  subject { described_class.new(params, vacancy) }
+  subject { described_class.load_from_params(params, vacancy, current_publisher: nil) }
 
   let(:job_roles) { %w[teacher] }
   let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles:) }
@@ -75,12 +75,10 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
       let(:params) { { school_offer: nil } }
 
       it "fails validation" do
-        # expect(subject.errors.added?(*error)).to be true
         expect(subject).not_to be_valid
       end
 
       it "has the correct error message" do
-        pending("offer error message")
         expect(subject.errors.messages[:school_offer]).to include(I18n.t("about_the_role_errors.school_offer.blank", organisation: "school"))
       end
     end
@@ -89,12 +87,10 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
       let(:params) { { school_offer: "<editor-content><ul><li><br></li></ul></editor-content>" } }
 
       it "fails validation" do
-        # expect(subject.errors.added?(*error)).to be true
         expect(subject).not_to be_valid
       end
 
       it "has the correct error message" do
-        pending("offer error message")
         expect(subject.errors.messages[:school_offer]).to include(I18n.t("about_the_role_errors.school_offer.blank", organisation: "school"))
       end
     end
