@@ -33,6 +33,8 @@ gem "discard", "~> 1.4"
 gem "draper"
 gem "factory_bot_rails"
 gem "faker"
+# more uk-friendly fakes available
+gem "ffaker"
 gem "friendly_id"
 gem "front_matter_parser"
 gem "geocoder"

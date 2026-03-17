@@ -85,3 +85,9 @@ PublisherMessage:
   sender:
     ForeignKeyChecker:
       enabled: false
+
+# uk_area is always set by a before_save callback
+JobPreferences::Location:
+  uk_area:
+    NullConstraintChecker:
+      enabled: false

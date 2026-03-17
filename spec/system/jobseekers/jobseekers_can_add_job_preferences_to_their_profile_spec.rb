@@ -40,8 +40,7 @@ RSpec.describe "Jobseekers can add job preferences to their profile" do
         click_on "Save and continue"
 
         check "Part time"
-
-        fill_in "job-preferences-working-pattern-details-field", with: "I am only available before 1pm."
+        fill_in "jobseekers-job-preferences-form-working-patterns-form-working-pattern-details-field", with: "I am only available before 1pm."
         click_on "Save and continue"
 
         fill_in "Location", with: "London"
@@ -76,7 +75,7 @@ RSpec.describe "Jobseekers can add job preferences to their profile" do
 
         expect(page).to be_axe_clean
 
-        fill_in "job-preferences-working-pattern-details-field", with: "On second thoughts, I can only work Wednesdays"
+        fill_in "jobseekers-job-preferences-form-working-patterns-form-working-pattern-details-field", with: "On second thoughts, I can only work Wednesdays"
         click_on "Save and continue"
 
         expect(page).to have_css(".govuk-summary-list__key", text: "Working pattern details")
