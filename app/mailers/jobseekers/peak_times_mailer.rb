@@ -54,8 +54,6 @@ class Jobseekers::PeakTimesMailer < Jobseekers::BaseMailer
     case current_month
     when "november"
       "november_reminder"
-    when "march"
-      "march_reminder"
     else
       "may_reminder"
     end
