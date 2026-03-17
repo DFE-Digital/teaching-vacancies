@@ -3,7 +3,7 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
 
   validates :ect_status, inclusion: { in: Vacancy.ect_statuses.keys }, if: -> { vacancy&.job_roles&.include?("teacher") }
   validate :skills_and_experience_presence
-  validates :school_offer_with_tags_removed, presence: true
+  validates :school_offer_with_tags_removed, presence: true, message: -> { I18n.t("about_the_role_errors.school_offer.blank", organisation: organisation_type) }
   validates :further_details_provided, inclusion: { in: [true, false] }
   validate :further_details_presence, if: -> { further_details_provided }
   validates :flexi_working_details_provided, inclusion: { in: [true, false] }
@@ -17,6 +17,8 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   attribute :further_details_provided, :boolean
   attribute :further_details
 
+  attr_accessor :organisation_type
+
   class << self
     def fields
       %i[flexi_working_details_provided
@@ -26,6 +28,22 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
          flexi_working
          further_details_provided
          further_details]
+    end
+
+    def load_from_params(form_params, vacancy, current_publisher:)
+      super(form_params.merge(organisation_type: organisation_type(vacancy)), vacancy, current_publisher: current_publisher)
+    end
+
+    private
+
+    def organisation_type(vacancy)
+      if vacancy.central_office?
+        "trust"
+      elsif vacancy.organisations.many?
+        "schools"
+      else
+        "school"
+      end
     end
   end
 
@@ -42,16 +60,6 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   end
 
   private
-
-  # def organisation_type
-  #   if vacancy&.central_office?
-  #     "trust"
-  #   elsif vacancy&.organisations&.many?
-  #     "schools"
-  #   else
-  #     "school"
-  #   end
-  # end
 
   def school_offer_with_tags_removed
     remove_html_tags(school_offer)
