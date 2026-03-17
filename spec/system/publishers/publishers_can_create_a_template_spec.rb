@@ -16,7 +16,7 @@ RSpec.describe "Creating and using templates" do
     let(:new_template) { VacancyTemplate.order(:created_at).last }
     let(:template_name) { Faker::Movie.title }
 
-    it "allows the publisher to create a job template", :js do
+    it "allows the publisher to create a job template" do
       # acts as a page wait
       expect(page).to have_content "Create a template"
       click_on "Create a template"
@@ -85,7 +85,10 @@ RSpec.describe "Creating and using templates" do
       expect(page).to have_content "How would you like to view your applications"
       choose "Anonymously"
       click_on I18n.t("buttons.save_and_continue")
-      sleep 15
+      expect(page).to have_current_path(organisation_vacancy_templates_path)
+      # acts as a page wait
+      expect(page).to have_content "Use this template"
+      click_on "Use this template"
     end
   end
 

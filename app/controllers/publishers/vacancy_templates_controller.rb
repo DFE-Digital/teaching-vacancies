@@ -24,9 +24,13 @@ module Publishers
     end
 
     def use_template
-      vacancy = DraftVacancy.create!(@template.attributes.symbolize_keys.except(:id, :name, :job_roles)
+      vacancy = DraftVacancy.create!(@template.attributes.symbolize_keys.except(:id, :name, :job_roles,
+                                                                                :phases, :key_stages, :working_patterns)
                                               .merge(organisations: [current_organisation],
-                                                     job_roles: @template.job_roles))
+                                                     job_roles: @template.job_roles,
+                                                     working_patterns: @template.working_patterns,
+                                                     key_stages: @template.key_stages,
+                                                     phases: @template.phases))
       redirect_to organisation_job_review_path(vacancy.id)
     end
 
