@@ -30,13 +30,23 @@ RSpec.describe "Jobseekers can manage their personal details" do
         expect(page).to be_axe_clean
       end
 
-      context "when on the phone number screen" do
+      context "with an error" do
         before do
-          fill_in "personal_details_form[first_name]", with: first_name
-          fill_in "personal_details_form[last_name]", with: last_name
+          click_on I18n.t("buttons.save_and_continue")
+        end
+
+        it "displays an error" do
+          expect(page).to have_content("There is a problem")
+        end
+      end
+
+      describe "phone number screen" do
+        before do
+          fill_in "jobseekers_profiles_personal_details_form_names_form[first_name]", with: first_name
+          fill_in "jobseekers_profiles_personal_details_form_names_form[last_name]", with: last_name
           click_on I18n.t("buttons.save_and_continue")
           # wait for page to load
-          find("label[for='personal-details-form-phone-number-provided-true-field']")
+          find("label[for='jobseekers-profiles-personal-details-form-phone-number-form-phone-number-provided-true-field']")
         end
 
         it "passes a11y", :a11y do
@@ -51,7 +61,7 @@ RSpec.describe "Jobseekers can manage their personal details" do
         context "when asking for visa sponsorship" do
           before do
             choose "Yes"
-            fill_in "personal_details_form[phone_number]", with: phone_number
+            fill_in "jobseekers_profiles_personal_details_form_phone_number_form[phone_number]", with: phone_number
             click_on I18n.t("buttons.save_and_continue")
           end
 
@@ -92,6 +102,7 @@ RSpec.describe "Jobseekers can manage their personal details" do
           phone_number_provided: true,
           phone_number: old_phone_number,
           completed_steps: completed_steps,
+          has_right_to_work_in_uk: right_to_work,
         )
 
         visit jobseekers_profile_path
@@ -99,14 +110,16 @@ RSpec.describe "Jobseekers can manage their personal details" do
 
       context "without a work completed step" do
         let(:completed_steps) { { "name" => "completed", "phone_number" => "completed" } }
+        let(:right_to_work) { nil }
 
         it "has an edit link" do
-          expect(page).to have_link("Complete personal details", href: edit_personal_details_jobseekers_profile_path(:work))
+          expect(page).to have_link("Complete personal details", href: jobseekers_profile_personal_details_step_path(:work))
         end
       end
 
       context "with a work completed step" do
         let(:completed_steps) { { "name" => "completed", "phone_number" => "completed", "work" => "completed" } }
+        let(:right_to_work) { true }
 
         it "allows the jobseeker to edit their profile" do
           row = page.find(".govuk-summary-list__key", text: "Name").find(:xpath, "..")
@@ -115,12 +128,14 @@ RSpec.describe "Jobseekers can manage their personal details" do
             click_link "Change"
           end
 
-          fill_in "personal_details_form[first_name]", with: new_first_name
-          fill_in "personal_details_form[last_name]", with: new_last_name
+          fill_in "jobseekers_profiles_personal_details_form_names_form[first_name]", with: new_first_name
+          fill_in "jobseekers_profiles_personal_details_form_names_form[last_name]", with: new_last_name
           click_on I18n.t("buttons.save_and_continue")
 
-          choose "No"
-          click_on I18n.t("buttons.save_and_continue")
+          phone_row = page.find(".govuk-summary-list__key", text: "Phone number").find(:xpath, "..")
+          within(phone_row) do
+            click_link "Change"
+          end
 
           choose "No"
           click_on I18n.t("buttons.save_and_continue")
