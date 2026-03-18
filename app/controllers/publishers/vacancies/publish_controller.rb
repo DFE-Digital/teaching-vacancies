@@ -1,5 +1,7 @@
 class Publishers::Vacancies::PublishController < Publishers::Vacancies::WizardBaseController
   # rubocop:disable Metrics/AbcSize
+  before_action :set_vacancy
+
   def create
     if vacancy.published?
       redirect_to organisation_job_path(vacancy.id), notice: t("messages.jobs.already_published")

@@ -1,0 +1,26 @@
+= form_for @form, url: wizard_path, method: :patch do |f|
+  = f.govuk_error_summary
+
+  - if params["back_to_#{action_name}"]
+    = f.hidden_field "back_to_#{action_name}", value: "true"
+
+  = f.govuk_fieldset legend: { text: t("publishers.vacancies.steps.subjects"), tag: "h1", size: "l" } do
+
+    label for="publishers-job-listing-job-details-form-subject-search"
+      span.govuk-visually-hidden | Subject filter
+
+    div class="govuk-!-margin-bottom-6"
+      = searchable_collection(collection: f.govuk_collection_check_boxes(:subjects,
+        SUBJECT_OPTIONS,
+        :first,
+        :first,
+        :last,
+        legend: nil,
+        include_hidden: false,
+        hint: nil,
+        classes: "checkbox-label__bold"),
+        collection_count: SUBJECT_OPTIONS.count,
+        options: { border: true },
+        text: { aria_label: "search subjects" })
+
+  = render "button_group", f: f

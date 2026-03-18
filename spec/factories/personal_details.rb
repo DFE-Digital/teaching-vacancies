@@ -1,8 +1,7 @@
 FactoryBot.define do
   factory :personal_details do
-    # first name sometimes resolves to 'Al' which is too short for a negative test
-    first_name { "#{Faker::Name.initials}#{Faker::Name.first_name}" }
-    last_name { Faker::Name.last_name.delete("'") }
+    first_name { FFaker::Name.first_name }
+    last_name { FFaker::Name.html_safe_last_name }
     has_right_to_work_in_uk { true }
     jobseeker_profile
 

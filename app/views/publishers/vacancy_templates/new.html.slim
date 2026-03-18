@@ -1,0 +1,12 @@
+span.govuk-caption-l = t("publishers.vacancies.copy.new.caption")
+h1.govuk-heading-xl = t("publishers.vacancies.copy.new.heading")
+
+p.govuk-body = t("publishers.vacancies.copy.new.para1")
+p.govuk-body = t("publishers.vacancies.copy.new.para2")
+
+= form_for @template, url: organisation_vacancy_templates_path, method: :post do |f|
+  = f.govuk_error_summary
+
+  = f.govuk_text_field :name, required: true, label: { size: "l" }, width: "two-thirds"
+
+  = f.govuk_submit t("buttons.save_as_template")

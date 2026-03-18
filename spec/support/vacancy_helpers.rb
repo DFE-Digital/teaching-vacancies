@@ -113,12 +113,12 @@ module VacancyHelpers
     choose I18n.t("helpers.label.publishers_job_listing_visa_sponsorship_form.visa_sponsorship_available_options.#{vacancy.visa_sponsorship_available}")
   end
 
-  def fill_in_contact_details_form_fields(vacancy)
+  def fill_in_contact_details_form_fields(contact_email:, contact_number: nil)
     choose I18n.t("helpers.label.publishers_job_listing_contact_details_form.contact_email_options.other")
-    fill_in "publishers_job_listing_contact_details_form[other_contact_email]", with: vacancy.contact_email
+    fill_in "publishers_job_listing_contact_details_form[other_contact_email]", with: contact_email
 
-    choose I18n.t("helpers.label.publishers_job_listing_contact_details_form.contact_number_provided_options.#{vacancy.contact_number_provided}")
-    fill_in "publishers_job_listing_contact_details_form[contact_number]", with: vacancy.contact_number
+    choose I18n.t("helpers.label.publishers_job_listing_contact_details_form.contact_number_provided_options.#{contact_number.present?}")
+    fill_in "publishers_job_listing_contact_details_form[contact_number]", with: contact_number if contact_number.present?
   end
 
   def fill_in_about_the_role_form_fields(vacancy)

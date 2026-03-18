@@ -2,8 +2,8 @@ FactoryBot.define do
   ofsted_ratings = ["Outstanding", "Good", "Requires Improvement", "Inadequate"].freeze
 
   factory :school do
-    address { Faker::Address.street_name.delete("'") }
-    county { Faker::Address.state_abbr }
+    address { FFaker::AddressUK.street_name }
+    county { FFaker::AddressUK.county }
     description { Faker::Lorem.paragraph(sentence_count: 1) }
     email { Faker::Internet.email(domain: "contoso.com") }
     establishment_status { "Open" }
@@ -35,7 +35,7 @@ FactoryBot.define do
     safeguarding_information { Faker::Lorem.paragraph(sentence_count: 1) }
     sequence(:slug) { |n| "#{name.parameterize}-#{n}" }
     school_type { "LA maintained school" }
-    postcode { Faker::Address.postcode }
+    postcode { FFaker::AddressUK.postcode }
     town { Faker::Address.city.delete("'") }
     # URN is validated unique for a school
     sequence(:urn) { |n| n + 100_000 }

@@ -1,6 +1,6 @@
 = tag.div(**html_attributes) do
   .govuk-grid-row
-    .govuk-grid-column-three-quarters
+    .govuk-grid-column-one-half
       .help-guide--mobile.help-guide--border-bottom
         h2.govuk-heading-m = t("jobs.dashboard.how_to_accept_job_applications_guide.title")
         = govuk_link_to(t("jobs.dashboard.how_to_accept_job_applications_guide.link_text"),
@@ -9,12 +9,15 @@
         | .
       span.govuk-caption-l = @organisation.name
       h1.govuk-heading-l = t("jobs.dashboard.#{@selected_type}.with_count", count: @count)
-    .govuk-grid-column-one-quarter
-      = govuk_link_to t("buttons.create_job"), organisation_jobs_start_path, class: "float-right govuk-button"
+    .govuk-grid-column-one-half
+      .govuk-button-group.float-right
+        = govuk_link_to t("buttons.create_job"), organisation_jobs_start_path, class: "govuk-button"
+        = govuk_link_to t("buttons.create_template"), new_organisation_vacancy_template_path, class: "govuk-button govuk-button--secondary"
 
   = tabs html_attributes: { "aria-label": "Tabs navigation for vacancy types" } do |tabs|
     - @vacancy_types.each do |vacancy_type|
       - tabs.with_navigation_item text: t("jobs.dashboard.#{vacancy_type}.tab_heading"), link: organisation_jobs_with_type_path(vacancy_type), active: selected_type == vacancy_type
+    - tabs.with_navigation_item text: t("jobs.dashboard.saved_job_templates.tab_heading"), link: organisation_vacancy_templates_path, active: false
 
   .govuk-grid-row class="govuk-!-margin-bottom-7"
     - if @vacancies.many?
@@ -144,15 +147,13 @@
                                href: organisation_job_relist_path(vacancy.id),
                                visually_hidden_text: "for #{vacancy.job_title}",
                                html_attributes: { "data-method": "post" })
-                  - row.with_action(text: t("buttons.copy_expired_listing"),
-                               href: organisation_job_copy_path(vacancy.id),
-                               visually_hidden_text: "for #{vacancy.job_title}",
-                               html_attributes: { "data-method": "post" })
+                  - row.with_action(text: t("buttons.save_as_template"),
+                               href: new_organisation_job_copy_path(vacancy.id),
+                               visually_hidden_text: "for #{vacancy.job_title}")
                 - else
-                  - row.with_action(text: t("buttons.copy_listing"),
-                               href: organisation_job_copy_path(vacancy.id),
-                               visually_hidden_text: "for #{vacancy.job_title}",
-                               html_attributes: { "data-method": "post" })
+                  - row.with_action(text: t("buttons.save_as_template"),
+                               href: new_organisation_job_copy_path(vacancy.id),
+                               visually_hidden_text: "for #{vacancy.job_title}")
 
     - unless @organisation.school_group?
       .govuk-grid-column-one-quarter

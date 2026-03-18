@@ -1,0 +1,5 @@
+.govuk-button-group
+  = f.govuk_submit t("buttons.save_and_continue")
+  = f.govuk_submit t("buttons.save_and_finish_later"), name: "save_and_finish_later", value: "true", secondary: true
+
+= govuk_link_to(t("buttons.cancel"), organisation_vacancy_templates_path, class: "govuk-link--no-visited-state govuk-body-m")

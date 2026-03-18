@@ -13,6 +13,7 @@ class PublishedVacancy < Vacancy
   validate :enable_job_applications_cannot_be_changed_once_listed, if: -> { persisted? && live? && enable_job_applications_changed? }
 
   validates :publish_on, presence: true
+  validates :organisations, presence: true
 
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at, if: -> { listed_elsewhere_changed? && hired_status_changed? }
 

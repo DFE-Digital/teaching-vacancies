@@ -2,21 +2,23 @@ class Publishers::JobListing::JobRoleForm < Publishers::JobListing::JobListingFo
   validates :job_roles, presence: { message: "At least one job role is required" }
   validate :job_roles_inclusion, if: -> { job_roles.present? }
 
-  def self.fields
-    %i[job_roles]
+  FIELDS = %i[job_roles].freeze
+  attr_accessor(*FIELDS)
+
+  class << self
+    # rubocop:disable Lint/UnusedMethodArgument
+    def load_from_model(vacancy, current_publisher:)
+      new(vacancy.slice(*FIELDS))
+    end
+    # rubocop:enable Lint/UnusedMethodArgument
+
+    def fields
+      { job_roles: [] }
+    end
   end
-  attr_accessor(*fields)
 
   def params_to_save
     { job_roles: job_roles }
-  end
-
-  def teaching_job_roles_options
-    Vacancy::TEACHING_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.#{option}")] }
-  end
-
-  def support_job_roles_options
-    Vacancy::SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.support_job_role_options.#{option}")] }
   end
 
   def job_roles_inclusion

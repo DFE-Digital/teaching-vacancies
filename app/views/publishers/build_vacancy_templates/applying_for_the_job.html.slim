@@ -1,0 +1,27 @@
+= form_for @form, url: wizard_path, method: :patch do |f|
+  = f.govuk_error_summary
+
+  - if params["back_to_#{action_name}"]
+    = f.hidden_field "back_to_#{action_name}", value: "true"
+
+  = f.govuk_radio_buttons_fieldset :application_form_type, legend: { text: t("publishers.vacancies.steps.applying_for_the_job"), tag: "h1", size: "l" } do
+    p.govuk-body = t("publishers.vacancies.build.applying_for_the_job.using_application_form_html", link: govuk_link_to(t("publishers.vacancies.build.applying_for_the_job.kcsie_guidance"), kcsie_link))
+
+    p.govuk-body = t("publishers.vacancies.build.applying_for_the_job.reason_for_our_form")
+    p.govuk-body = t("publishers.vacancies.build.applying_for_the_job.no_information_required")
+
+    = f.govuk_radio_button :application_form_type, :no_religion,
+      label: -> { t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.no_religion_html", tag: govuk_tag(text: t("publishers.vacancies.build.applying_for_the_job.kcsie_compliant"), colour: "green")) },
+      link_errors: true
+
+    - if @faith_school
+      = f.govuk_radio_button :application_form_type, :catholic,
+        label: -> { t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.catholic_html", tag: govuk_tag(text: t("publishers.vacancies.build.applying_for_the_job.kcsie_compliant"), colour: "green")) }
+
+      = f.govuk_radio_button :application_form_type, :other_religion, label: -> { t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.other_religion_html", tag: govuk_tag(text: t("publishers.vacancies.build.applying_for_the_job.kcsie_compliant"), colour: "green")) }
+
+    = f.govuk_radio_divider
+
+    = f.govuk_radio_button :application_form_type, :other
+
+  = render "button_group", f: f

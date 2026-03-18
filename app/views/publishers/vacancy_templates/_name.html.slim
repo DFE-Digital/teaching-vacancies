@@ -1,0 +1,5 @@
+- summary_list.with_row(html_attributes: { id: "name" }) do |row|
+  - row.with_key do
+    = t("publishers.vacancy_templates.show.template_name")
+  - row.with_value text: template.name
+  - row.with_action text: t("buttons.change"), href: edit_organisation_vacancy_template_path(template)
