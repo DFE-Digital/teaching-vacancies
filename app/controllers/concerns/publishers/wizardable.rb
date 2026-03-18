@@ -8,6 +8,10 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
     pay_package: %i[salary_types],
   }.freeze
 
+  def form_params
+    send(:"#{step}_params", params)
+  end
+
   private
 
   def job_location_params(params)

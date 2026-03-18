@@ -15,7 +15,7 @@ end
 json.openapi "3.0.0"
 
 json.data @vacancies.each do |vacancy|
-  json.partial! "show", vacancy: VacancyPresenter.new(vacancy)
+  json.partial! "show", vacancy: vacancy
 end
 
 json.links do

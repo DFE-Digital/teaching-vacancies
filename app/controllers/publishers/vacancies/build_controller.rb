@@ -43,10 +43,6 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
     "publishers/job_listing/#{step}_form".camelize.constantize
   end
 
-  def form_params
-    send(:"#{step}_params", params)
-  end
-
   def set_school_options
     return unless step == :job_location && current_organisation.school_group?
 

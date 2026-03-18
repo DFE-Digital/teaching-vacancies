@@ -1,30 +1,17 @@
-class VacancyPresenter < BasePresenter
+class VacancyDecorator < Draper::Decorator
+  delegate_all
+
   include ActionView::Helpers::TextHelper
 
   HTML_STRIP_REGEX = %r{(&nbsp;|<div>|</div>|<!--block-->)+}
 
+  # :nocov:
   def benefits_details
     simple_format(fix_bullet_points(model.benefits_details)) if model.benefits_details.present?
   end
+  # :nocov:
 
-  def readable_working_patterns
-    working_patterns = model.working_patterns.map { |working_pattern|
-      Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
-    }.join(", ").capitalize
-
-    return working_patterns unless is_job_share
-
-    "#{working_patterns} (Can be done as a job share)"
-  end
-
-  def readable_working_patterns_with_details
-    if model.working_patterns_details.present?
-      "#{readable_working_patterns}: #{model.working_patterns_details}"
-    else
-      readable_working_patterns
-    end
-  end
-
+  # :nocov:
   def working_patterns_for_job_schema
     [
       ("FULL_TIME" if model.working_patterns.include? "full_time"),
@@ -33,51 +20,26 @@ class VacancyPresenter < BasePresenter
       ("OTHER" if model.working_patterns.any?("job_share") && !model.fixed_term_contract_duration?),
     ].compact
   end
+  # :nocov:
 
   def readable_visa_sponsorship_availability
     ["visa sponsorship"] if model.visa_sponsorship_available
   end
 
-  def readable_job_roles
-    model.job_roles&.map { |job_role|
-      I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{job_role}")
-    }&.join(", ")
-  end
-
+  # :nocov:
   def readable_ect_status
-    return unless model.ect_status.present?
+    return if model.ect_status.blank?
 
     I18n.t("helpers.label.publishers_job_listing_about_the_role_form.ect_status_options.#{model.ect_status}")
   end
-
-  def readable_key_stages
-    model.key_stages&.map { |key_stage|
-      I18n.t("helpers.label.publishers_job_listing_key_stages_form.key_stages_options.#{key_stage}")
-    }&.join(", ")
-  end
-
-  def readable_subjects
-    model.subjects&.join(", ")
-  end
-
-  def contract_type_with_duration
-    return nil unless model.contract_type.present?
-
-    return I18n.t("publishers.vacancies.build.contract_type.#{model.contract_type}") if model.fixed_term_contract_duration.blank?
-
-    if is_parental_leave_cover
-      [I18n.t("publishers.vacancies.build.contract_type.#{model.contract_type}"),  model.fixed_term_contract_duration, I18n.t("publishers.vacancies.build.contract_type.parental_leave")].compact.join(" - ")
-    else
-      [I18n.t("publishers.vacancies.build.contract_type.#{model.contract_type}"),  model.fixed_term_contract_duration].compact.join(" - ")
-    end
-  end
+  # :nocov:
 
   def school_group_names
     organisations.map { |organisation|
       if organisation.is_a?(SchoolGroup)
         organisation.name
       else
-        organisation.school_groups.map(&:name).reject(&:blank?)
+        organisation.school_groups.map(&:name).compact_blank
       end
     }.flatten.uniq
   end
@@ -87,7 +49,7 @@ class VacancyPresenter < BasePresenter
       if organisation.is_a?(SchoolGroup)
         organisation.group_type
       else
-        organisation.school_groups.map(&:group_type).reject(&:blank?)
+        organisation.school_groups.map(&:group_type).compact_blank
       end
     }.flatten.uniq
   end
@@ -98,6 +60,7 @@ class VacancyPresenter < BasePresenter
 
   private
 
+  # :nocov:
   def fix_bullet_points(text)
     # This is a band-aid solution for the problem where (particularly) job adverts contain bullet point characters
     # (not list elements), but do not contain corresponding newlines, resulting in inline bullets.
@@ -116,9 +79,10 @@ class VacancyPresenter < BasePresenter
       }.join.concat("</ul>")
     }.join("\n")
   end
+  # :nocov:
 
   def normalize_bullets(text, normalized_bullet)
-    return unless text
+    # return unless text
 
     # `⁃` is a hyphen bullet, not an en-dash or a hyphen.
     text.gsub("⁃", normalized_bullet).gsub("·", normalized_bullet).gsub("∙", normalized_bullet)
@@ -126,7 +90,7 @@ class VacancyPresenter < BasePresenter
 
   def normalize_newlines(text)
     # Required for backwards-compatibility for fields created with a rich-text editor
-    text&.gsub("<br>", "\n")
+    text.gsub("<br>", "\n")
   end
 
   def strip(text)

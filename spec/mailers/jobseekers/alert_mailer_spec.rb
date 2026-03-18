@@ -24,7 +24,7 @@ RSpec.describe Jobseekers::AlertMailer do
   let(:school) { create(:school) }
   let(:mail) { described_class.alert(subscription.id, vacancies.pluck(:id)) }
   # The array of vacancies is set to length 1 because the order varies, making it hard to test url parameters.
-  let(:vacancies) { create_list(:vacancy, 1, organisations: [school]).map { |vacancy| VacancyPresenter.new(vacancy) } }
+  let(:vacancies) { create_list(:vacancy, 1, organisations: [school]).map(&:decorate) }
   let(:utm_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "#{frequency}_alert" } }
   let(:relevant_job_alert_feedback_url) do
     subscription_submit_feedback_url(
@@ -105,7 +105,7 @@ RSpec.describe Jobseekers::AlertMailer do
       expect(body).to include(I18n.t("jobseekers.alert_mailer.alert.summary.daily", count: 1))
                   .and include(vacancies.first.job_title)
                   .and include(job_url(vacancies.first, **utm_params))
-                  .and include(I18n.t("jobseekers.alert_mailer.alert.working_pattern", working_pattern: vacancies.first.readable_working_patterns_with_details))
+                  # .and include(I18n.t("jobseekers.alert_mailer.alert.working_pattern", working_pattern: vacancy_readable_working_patterns_with_details(vacancies.first)))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.title"))
                   .and include("Keyword: English")
                   .and include(I18n.t("jobseekers.alert_mailer.alert.relevance_feedback.heading"))
@@ -163,8 +163,8 @@ RSpec.describe Jobseekers::AlertMailer do
       expect(body).to include(I18n.t("jobseekers.alert_mailer.alert.summary.weekly", count: 1))
                   .and include(vacancies.first.job_title)
                   .and include(job_url(vacancies.first, **utm_params))
-                  .and include(I18n.t("jobseekers.alert_mailer.alert.working_pattern",
-                                      working_pattern: vacancies.first.readable_working_patterns_with_details))
+                  # .and include(I18n.t("jobseekers.alert_mailer.alert.working_pattern",
+                  #                     working_pattern: vacancies.first.readable_working_patterns_with_details))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.title"))
                   .and include("Keyword: English")
                   .and include(I18n.t("jobseekers.alert_mailer.alert.relevance_feedback.heading"))

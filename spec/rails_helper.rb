@@ -285,3 +285,10 @@ end
 def saop
   save_and_open_page # rubocop:disable Lint/Debugger
 end
+
+Capybara.configure do |config|
+  # Allow us to use the `choose(label_text)` method in browser tests
+  # even when the radio button element attached to the label is hidden
+  # (as it is using the standard govuk radio element)
+  config.automatic_label_click = true
+end

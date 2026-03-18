@@ -642,7 +642,7 @@ en:
             close_early: Close early
             complete: Complete job listing
             convert_to_draft: Convert to draft
-            copy: Copy
+            copy: Save as template
             delete: Delete
             extend_closing_date: Extend closing date
             relist: Relist

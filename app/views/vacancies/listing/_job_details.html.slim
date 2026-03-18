@@ -16,24 +16,24 @@ section#job-details class="govuk-!-margin-bottom-5"
       - summary_list.with_row do |row|
         - row.with_key do
           h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.key_stage", count: vacancy.key_stages.count)
-        - row.with_value text: vacancy.readable_key_stages
+        - row.with_value text: vacancy_readable_key_stages(vacancy)
 
     - if vacancy.allow_subjects? && vacancy.subjects&.any?
       - summary_list.with_row do |row|
         - row.with_key do
           h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.subjects", count: vacancy.subjects.count)
-        - row.with_value text: vacancy.readable_subjects
+        - row.with_value text: vacancy_readable_subjects(vacancy)
 
     - summary_list.with_row do |row|
       - row.with_key do
         h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.working_patterns")
-      - row.with_value text: vacancy.readable_working_patterns_with_details
+      - row.with_value text: vacancy_readable_working_patterns_with_details(vacancy)
 
     - if vacancy.contract_type
       - summary_list.with_row do |row|
         - row.with_key do
           h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.contract_type")
-        - row.with_value text: vacancy.contract_type_with_duration
+        - row.with_value text: vacancy_contract_type_with_duration(vacancy)
 
     - if vacancy.salary?
       - summary_list.with_row do |row|

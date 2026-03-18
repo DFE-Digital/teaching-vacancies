@@ -8,7 +8,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.with_key
         = t("jobs.ect_status")
       - row.with_value
-        = vacancy.ect_status == "ect_suitable" ? "Yes" : "No"
+        = vacancy.readable_ect_status
       - row.with_action text: t("buttons.change"),
                   href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                   visually_hidden_text: t("jobs.ect_status")
@@ -31,7 +31,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         .editor-rendered-content == vacancy.school_offer
       - row.with_action text: t("buttons.change"),
                   href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
-                  visually_hidden_text: t("jobs.school_offer.publisher", organisation: vacancy.organisation.type.downcase)
+                  visually_hidden_text: t("jobs.school_offer.publisher")
 
   - if vacancy.flexi_working.present?
     - summary_list.with_row(html_attributes: { id: "flexi_working" }) do |row|

@@ -5,14 +5,15 @@ class Api::VacanciesController < Api::ApplicationController
   MAX_API_RESULTS_PER_PAGE = 100
 
   def index
-    @pagy, @vacancies = pagy(vacancies, limit: MAX_API_RESULTS_PER_PAGE, overflow: :empty_page)
+    @pagy, vacancy_list = pagy(vacancies, limit: MAX_API_RESULTS_PER_PAGE, overflow: :empty_page)
 
+    @vacancies = vacancy_list.decorate
     respond_to(&:json)
   end
 
   def show
     vacancy = PublishedVacancy.listed.friendly.find(params[:id])
-    @vacancy = VacancyPresenter.new(vacancy)
+    @vacancy = vacancy.decorate
   end
 
   private
