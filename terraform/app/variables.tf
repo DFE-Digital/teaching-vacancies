@@ -52,7 +52,7 @@ variable "parameter_store_environment" {
 }
 
 variable "aks_web_app_start_command" {
-  default = ["/bin/sh", "-c", "bundle exec rake db:migrate:ignore_concurrent_migration_exceptions && rails s"]
+  default = ["/bin/sh", "-c", "bundle exec rake db:prepare:ignore_concurrent_migration_exceptions && rails s"]
 }
 
 # Statuscake
