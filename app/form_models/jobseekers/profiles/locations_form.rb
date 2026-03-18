@@ -15,6 +15,10 @@ module Jobseekers
       attribute :locations, default: []
       attribute :add_location, :boolean
       validates :add_location, inclusion: { in: [true, false], message: :blank }
+
+      def skip?(_model)
+        false
+      end
     end
   end
 end
