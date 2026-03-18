@@ -43,7 +43,7 @@ module DatabaseIndexable
         organisations.map(&:region).reject(&:blank?).uniq,
         vacancy_readable_visa_sponsorship_availability(self),
       ],
-      ).tsvector
+    ).tsvector
   end
 
   private
