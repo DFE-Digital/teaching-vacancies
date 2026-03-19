@@ -117,12 +117,16 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system) do
     driven_by :rack_test
-    Capybara.default_host = "http://#{ENV.fetch('DOMAIN', 'localhost:3000')}"
 
     if ENV["SELENIUM_HUB_URL"]
-      Capybara.app_host = "http://#{IPSocket.getaddress(Socket.gethostname)}:3000"
+      test_env_number = ENV.fetch("TEST_ENV_NUMBER", "1").to_i
+      server_port = 3000 + test_env_number
+      Capybara.default_host = "http://#{ENV.fetch('DOMAIN', "#{IPSocket.getaddress(Socket.gethostname)}:#{server_port}")}"
+      Capybara.app_host = "http://#{IPSocket.getaddress(Socket.gethostname)}:#{server_port}"
       Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
-      Capybara.server_port = 3000
+      Capybara.server_port = server_port
+    else
+      Capybara.default_host = "http://#{ENV.fetch('DOMAIN', 'localhost:3000')}"
     end
   end
 
