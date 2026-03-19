@@ -88,6 +88,13 @@ Install Yarn via [Corepack](https://nodejs.org/api/corepack.html). You'll need t
 corepack enable
 ```
 
+If `corepack enable` fails with "command not found", install it via npm first:
+
+```bash
+npm install -g corepack
+corepack enable
+```
+
 Then install dependencies:
 
 ```bash
