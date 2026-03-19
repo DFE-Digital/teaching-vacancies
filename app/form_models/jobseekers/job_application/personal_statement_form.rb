@@ -31,7 +31,7 @@ module Jobseekers
 
       def word_count_within_limit
         text = personal_statement_richtext.is_a?(ActionText::RichText) ? personal_statement_richtext.to_plain_text : personal_statement_richtext.to_s
-        word_count = text.strip.split(/\s+/).count { |element| !element.blank? }
+        word_count = text.strip.split(/\s+/).count(&:present?)
         return if word_count <= 1500
 
         errors.add(:personal_statement_richtext, :too_long, count: word_count)

@@ -23,7 +23,7 @@ RSpec.describe Jobseekers::JobApplication::PersonalStatementForm, type: :model d
       it "adds an error" do
         form = described_class.new(
           personal_statement_section_completed: true,
-          personal_statement_richtext:  ActionText::RichText.new(body: "word " * 1501),
+          personal_statement_richtext: ActionText::RichText.new(body: "word " * 1501),
         )
 
         expect(form).not_to be_valid
