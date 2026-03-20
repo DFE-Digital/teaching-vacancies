@@ -2,5 +2,5 @@ dl.govuk-summary-list
   - vacancy.supporting_documents.each_with_index do |document, index|
     .govuk-summary-list__row
       dt.govuk-summary-list__key = "File #{index + 1}"
-      dd.govuk-summary-list__value == govuk_link_to("#{document.filename}  (#{number_to_human_size(document.byte_size)})", document, download: "true")
+      dd.govuk-summary-list__value == file_download_link_or_status(document)
       dd.govuk-summary-list__actions = remove_document_link(document, vacancy)
