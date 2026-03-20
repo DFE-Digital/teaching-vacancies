@@ -1,6 +1,45 @@
 require "rails_helper"
 
 RSpec.describe JobseekerProfile, type: :model do
+  describe ".prepare_associations" do
+    context "when the record is already persisted" do
+      let(:profile) { create(:jobseeker_profile) }
+
+      it "does not save the record again" do
+        expect(profile).not_to receive(:save!)
+
+        described_class.prepare_associations(profile)
+      end
+
+      it "assigns job_preferences and personal_details" do
+        described_class.prepare_associations(profile)
+
+        expect(profile.job_preferences).to be_present
+        expect(profile.personal_details).to be_present
+      end
+    end
+
+    context "when the record is new (not persisted)" do
+      let(:jobseeker) { create(:jobseeker) }
+      let(:profile) { build(:jobseeker_profile, jobseeker: jobseeker) }
+
+      it "saves the record before creating associations" do
+        expect(profile).not_to be_persisted
+
+        described_class.prepare_associations(profile)
+
+        expect(profile).to be_persisted
+      end
+
+      it "assigns job_preferences and personal_details" do
+        described_class.prepare_associations(profile)
+
+        expect(profile.job_preferences).to be_present
+        expect(profile.personal_details).to be_present
+      end
+    end
+  end
+
   describe ".prepare(jobseeker:)" do
     subject(:profile) { described_class.prepare(jobseeker:) }
     let(:jobseeker) { create(:jobseeker) }
@@ -68,6 +107,10 @@ RSpec.describe JobseekerProfile, type: :model do
 
       it "still creates a job preferences record" do
         expect(profile.job_preferences).to be_present
+      end
+
+      it "correctly associates job_preferences with the profile" do
+        expect(profile.job_preferences.jobseeker_profile_id).to eq(profile.id)
       end
     end
   end
