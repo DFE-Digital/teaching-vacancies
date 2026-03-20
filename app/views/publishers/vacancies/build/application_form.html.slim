@@ -28,7 +28,7 @@ div data-controller="upload-documents" data-upload-documents-inactive-value=vaca
       h2.govuk-heading-m = "Upload application form"
       dl.govuk-summary-list
         .govuk-summary-list__row
-          dt.govuk-summary-list__value == govuk_link_to("#{vacancy.application_form.filename}  (#{number_to_human_size(vacancy.application_form.byte_size)})", vacancy.application_form, download: "true")
+          dt.govuk-summary-list__value == file_download_link_or_status(vacancy.application_form.blob)
           dd.govuk-summary-list__actions = remove_application_form_link
 
     = render "publishers/vacancies/vacancy_form_partials/submit", f: f
