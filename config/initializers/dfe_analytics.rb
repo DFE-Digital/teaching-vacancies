@@ -1,14 +1,14 @@
 DfE::Analytics.configure do |config|
   # only enable analytics in review apps/qa/prod or tests where :dfe_analytics tag is present
-  config.enable_analytics = proc { !Rails.env.local? || ENV["ENABLE_DFE_ANALYTICS"] == "true" }
+  config.enable_analytics = -> { !Rails.env.local? || ENV["ENABLE_DFE_ANALYTICS"] == "true" }
   # Whether to log events instead of sending them to BigQuery.
-  #
-  config.log_only = false
+
+  config.log_only = -> { Rails.env.local? && ENV["ENABLE_DFE_ANALYTICS"] != "true" }
 
   config.excluded_paths = ["/check"]
 
   # Whether to use ActiveJob or dispatch events immediately.
-  #
+  # we have tests that assert 'has been enqueued' so changing this is test/dev is problematic
   config.async = true
 
   # Which ActiveJob queue to put events on
@@ -32,7 +32,7 @@ DfE::Analytics.configure do |config|
   #
   config.bigquery_api_json_key = ENV.fetch("BIG_QUERY_API_JSON_KEY", nil)
 
-  # Period while DFE Analytics will be set in maintenance mode and the events won'tbe sent to BigQuery.
+  # Period while DFE Analytics will be set in maintenance mode and the events won't be sent to BigQuery.
   # Any event generated during this period will be re-enqueued to be sent later.
   #
   config.bigquery_maintenance_window = "01-08-2024 18:00..01-08-2024 18:30"

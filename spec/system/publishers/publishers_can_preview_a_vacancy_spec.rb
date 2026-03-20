@@ -12,12 +12,11 @@ RSpec.describe "Publishers can preview a vacancy" do
   context "when reviewing a draft vacancy" do
     before do
       visit organisation_job_preview_path(vacancy.id)
-      # wait for page load
-      find("span.govuk-caption-l")
-      find("footer")
     end
 
     it "passes a11y", :a11y do
+      # wait for page load
+      expect(page).to have_content(vacancy.job_title)
       expect(page).to be_axe_clean
     end
 

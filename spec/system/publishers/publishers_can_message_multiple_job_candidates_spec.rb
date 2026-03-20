@@ -84,6 +84,7 @@ RSpec.describe "Publishers can message multiple job candidates" do
       end
 
       scenario "updating template", :js do
+        expect(page).to have_content "Edit template"
         click_on "Edit template"
         fill_in_trix_editor "message_template_content", with: " "
         click_on "Save template"
@@ -96,7 +97,9 @@ RSpec.describe "Publishers can message multiple job candidates" do
       end
 
       scenario "creating a new template", :js do
+        expect(page).to have_content "Create new template"
         click_on "Create new template"
+        expect(page).to have_content "Save template"
         click_on "Save template"
         expect(page).to have_content "Enter a template name"
 
