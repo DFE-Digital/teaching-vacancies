@@ -149,7 +149,6 @@ RSpec.describe "Creating a vacancy" do
         publisher_how_to_receive_applications_page.fill_in_and_submit_form("uploaded_form")
 
         expect(publisher_application_form_page).to be_displayed
-        allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(instance_double(Publishers::DocumentVirusCheck, safe?: true))
         page.attach_file("publishers_job_listing_application_form_form[application_form]", Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"))
         click_on I18n.t("buttons.save_and_continue")
 

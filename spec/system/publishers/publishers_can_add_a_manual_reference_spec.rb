@@ -60,7 +60,6 @@ RSpec.describe "Publishers can add a manual reference" do
 
   context "with uploaded reference", :js, :versioning do
     before do
-      allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(instance_double(Publishers::DocumentVirusCheck, safe?: true))
       choose "Upload a reference"
     end
 
