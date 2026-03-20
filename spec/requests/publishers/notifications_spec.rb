@@ -74,22 +74,20 @@ RSpec.describe "Publisher notifications" do
 
       context "when notifications span more than one page" do
         before do
-          # Create 28 notifications because we show 30 per page and want them to be across 2 pages to test this (and we already have 3)
-          28.times do
-            Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application).deliver(publisher)
-          end
+          # Change notifications per page to 2 so we can test pagination with 3 existing notifications
+          stub_const("NotificationsController::NOTIFICATIONS_PER_PAGE", 2)
         end
 
         it "only marks notifications on the current page as read" do
-          # Page 1 has 30 notifications (NOTIFICATIONS_PER_PAGE), so marking all on page 1 should leave 1 unread (on page 2)
+          # Marking all as read on page 1 should leave 1 unread (on page 2)
           patch mark_all_as_read_publishers_notifications_path
           expect(publisher.notifications.unread.count).to eq(1)
         end
 
         it "only marks notifications on page 2 as read when on page 2" do
-          # Page 2 has 1 notification, so marking all on page 2 should leave 30 unread (on page 1)
+          # Marking all as read on page 2 should leave 2 unread (on page 1)
           patch mark_all_as_read_publishers_notifications_path(page: 2)
-          expect(publisher.notifications.unread.count).to eq(30)
+          expect(publisher.notifications.unread.count).to eq(2)
         end
       end
     end
