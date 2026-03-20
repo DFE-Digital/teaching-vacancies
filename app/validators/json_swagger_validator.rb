@@ -2,6 +2,9 @@
 
 require "json-schema"
 
+#  silence deprecation warning
+JSON::Validator.use_multi_json = false
+
 # Uses the swagger file to load the JSON schema for an API endpoint,
 # thus helping to enforce input schema validation on API clients
 class JsonSwaggerValidator
