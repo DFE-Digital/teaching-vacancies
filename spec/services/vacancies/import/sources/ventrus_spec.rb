@@ -179,7 +179,7 @@ RSpec.describe Vacancies::Import::Sources::Ventrus do
         end
       end
 
-      %w[learning_support other_support science_technician].each do |role|
+      %w[learning_support other_teaching_support other_support science_technician].each do |role|
         context "when the source role is '#{role}'" do
           let(:job_roles) { [role] }
 
@@ -216,6 +216,14 @@ RSpec.describe Vacancies::Import::Sources::Ventrus do
 
         it "maps the phase to '[through]' in the vacancy" do
           expect(vacancy.phases).to eq(["through"])
+        end
+      end
+
+      context "when the phase is middle" do
+        let(:phase) { "middle" }
+
+        it "maps to phases for the school" do
+          expect(vacancy.phases).to eq(%w[primary secondary])
         end
       end
     end

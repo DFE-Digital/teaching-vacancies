@@ -96,11 +96,13 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
         end
       end
 
-      context "when the source role is 'learning_support'" do
-        let(:source_roles) { %w[learning_support] }
+      %w[learning_support other_teaching_support].each do |role|
+        context "when the source role is '#{role}'" do
+          let(:source_roles) { [role] }
 
-        it "maps the source role to 'other_support' in the vacancy" do
-          expect(vacancy.job_roles).to eq(%w[other_support])
+          it "maps the source role to 'other_support' in the vacancy" do
+            expect(vacancy.job_roles).to eq(%w[other_support])
+          end
         end
       end
 

@@ -239,7 +239,7 @@ RSpec.describe Vacancies::Import::Sources::Broadbean do
         end
       end
 
-      %w[learning_support other_support science_technician].each do |role|
+      %w[learning_support other_teaching_support other_support science_technician].each do |role|
         context "when the source role is '#{role}'" do
           let(:job_roles) { [role] }
 
