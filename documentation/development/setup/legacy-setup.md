@@ -82,6 +82,21 @@ Install the version of Bundler that created the lockfile if prompted to do so.
 
 #### Install Javascript dependency libraries
 
+Install Yarn via [Corepack](https://nodejs.org/api/corepack.html). You'll need to enable Corepack first:
+
+```bash
+corepack enable
+```
+
+If `corepack enable` fails with "command not found", install it via npm first:
+
+```bash
+npm install -g corepack
+corepack enable
+```
+
+Then install dependencies:
+
 ```bash
 yarn
 ```

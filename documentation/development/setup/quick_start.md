@@ -58,6 +58,11 @@ debugging browser-based tests (with the JS flag set true)
   >
   > Following convention, a `bin/dev` script is provided that uses Foreman to run all the tasks
   > needed for the application.
+  >
+  > **Note:** If working outside the devcontainer, you'll need to enable Corepack for Yarn 4:
+  > ```bash
+  > corepack enable
+  > ```
 </details>
 
 ---
