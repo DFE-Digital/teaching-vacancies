@@ -160,7 +160,7 @@ class Vacancy < ApplicationRecord
 
   after_save :update_conversation_searchable_content, if: -> { saved_change_to_job_title? }
 
-  self.ignored_columns += %i[parental_leave_cover_contract_duration google_index_removed]
+  self.ignored_columns += %i[parental_leave_cover_contract_duration google_index_removed full_time_details part_time_details]
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[8:00 9:00 12:00 15:00 23:59].freeze
