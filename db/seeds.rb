@@ -23,11 +23,9 @@ osmaston_cofe = School.find_by!(urn: "112847")
 
 # Team users
 users = [
-  { email: "ade.aina@education.gov.uk", family_name: "Aina", given_name: "Ade" },
   { email: "alex.lee@education.gov.uk", family_name: "Lee", given_name: "Alex" },
   { email: "alice.fitzgibbon@education.gov.uk", family_name: "Fitzgibbon", given_name: "Alice" },
   { email: "alisa.ali@education.gov.uk", family_name: "Ali", given_name: "Alisa" },
-  { email: "chloe.ewens@education.gov.uk", family_name: "Ewens", given_name: "Chloe" },
   { email: "christopher.weston@education.gov.uk", family_name: "Weston", given_name: "Christopher" },
   { email: "david.thacker@education.gov.uk", family_name: "Thacker", given_name: "David" },
   { email: "fisal.yusuf@education.gov.uk", family_name: "Yusuf", given_name: "Fisal" },
