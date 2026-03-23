@@ -3,7 +3,6 @@ require "rails_helper"
 RSpec.describe "Jobseekers can view job role + location landing pages" do
   before do
     create(:location_polygon, name: "birmingham")
-    create(:location_polygon, name: "manchester")
     create(:location_polygon, name: "stoke-on-trent")
   end
 
@@ -36,7 +35,7 @@ RSpec.describe "Jobseekers can view job role + location landing pages" do
     end
   end
 
-  context "when location has a multi word the name" do
+  context "when location has a multi word name" do
     scenario "handles locations correctly" do
       visit "/teacher-jobs-in-stoke-on-trent"
 
