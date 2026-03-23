@@ -14,7 +14,7 @@ RUN apt update -yq \
 
 # Set up dependencies
 RUN apt update && apt install -y nodejs postgresql-client redis-tools less vim sudo shared-mime-info man-db chromium libproj-dev
-RUN npm install -g yarn
+RUN npm install -g corepack && corepack enable
 
 # Install Terraform
 RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/$TERRAFORM_VERSION/terraform_${TERRAFORM_VERSION}_linux_$(dpkg --print-architecture).zip \
