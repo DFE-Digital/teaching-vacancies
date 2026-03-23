@@ -93,8 +93,28 @@ RSpec.describe Jobseekers::PeakTimesMailer do
       end
     end
 
+    context "when it's March" do
+      before { travel_to Time.zone.local(2026, 3, 15, 9, 0, 0) }
+
+      let(:jobseeker) { create(:jobseeker) }
+      let(:expected_url) { "https://teaching-vacancies.service.gov.uk/jobs?utm_source=notify&utm_medium=email&utm_campaign=peak_email&utm_content=march_2026" }
+      let(:unsubscribe_link) { Rails.application.routes.url_helpers.edit_jobseekers_account_email_preferences_url }
+
+      it "sends to jobseeker's email" do
+        expect(mail.to).to contain_exactly(jobseeker.email)
+      end
+
+      it "includes campaign_url in personalisation" do
+        expect(mail.personalisation[:campaign_url]).to eq(expected_url)
+      end
+
+      it "includes unsubscribe_link in personalisation" do
+        expect(mail.personalisation[:unsubscribe_link]).to eq(unsubscribe_link)
+      end
+    end
+
     context "when it's a different month (fallback behavior)" do
-      before { travel_to Time.zone.local(2025, 3, 15, 9, 0, 0) }
+      before { travel_to Time.zone.local(2025, 1, 15, 9, 0, 0) }
 
       let(:jobseeker) { create(:jobseeker, :with_personal_details) }
       let(:first_name) { jobseeker.jobseeker_profile.personal_details.first_name }
