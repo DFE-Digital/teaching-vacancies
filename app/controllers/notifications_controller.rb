@@ -2,11 +2,18 @@ class NotificationsController < ApplicationController
   NOTIFICATIONS_PER_PAGE = 30
 
   before_action :load_notifications
-  after_action :mark_notifications_as_read
+
+  helper_method :mark_all_as_read_notifications_path
 
   def index
     @unread_count = @raw_notifications.unread.count
     @pagy, @notifications = pagy(@raw_notifications, limit: NOTIFICATIONS_PER_PAGE)
+  end
+
+  def mark_all_as_read
+    @pagy, @notifications = pagy(@raw_notifications, limit: NOTIFICATIONS_PER_PAGE)
+    @notifications.mark_as_read
+    redirect_to path_for_notifications_list
   end
 
   private
@@ -17,7 +24,13 @@ class NotificationsController < ApplicationController
                                           .newest_first
   end
 
-  def mark_notifications_as_read
-    @notifications.mark_as_read
+  # :nocov:
+  def mark_all_as_read_notifications_path(options = {})
+    raise NotImplementedError, "Subclasses must implement mark_all_as_read_notifications_path"
   end
+
+  def path_for_notifications_list
+    raise NotImplementedError, "Subclasses must implement path_for_notifications_list"
+  end
+  # :nocov:
 end

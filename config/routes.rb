@@ -130,12 +130,9 @@ Rails.application.routes.draw do
         get :review, on: :collection, to: "profiles/employments#review"
       end
       resource :qualified_teacher_status, only: %i[edit update show], controller: "profiles/qualified_teacher_status"
-      resources :personal_details_steps, only: %i[show update], controller: "profiles/personal_details", path: "personal-details" do
-        collection do
-          get "review"
-        end
-      end
-
+      get "personal-details", to: "profiles/personal_details#start"
+      get "personal-details/:step", to: "profiles/personal_details#edit", as: :edit_personal_details
+      post "personal-details/:step", to: "profiles/personal_details#update"
       resources :qualifications, only: %i[new create edit update destroy], controller: "profiles/qualifications" do
         get :review, on: :collection, to: "profiles/qualifications#review"
         collection do
@@ -176,25 +173,17 @@ Rails.application.routes.draw do
       post "toggle", to: "profiles#toggle"
     end
 
-    resources :job_preferences_steps, only: %i[show update], controller: "profiles/job_preferences", path: "profile/job-preferences" do
-      collection do
-        get "review", action: :review
-      end
-
+    scope controller: "profiles/job_preferences", path: "profile/job-preferences" do
+      get "review", action: :review, as: nil
       get "location(/:id)", action: :edit_location, as: nil
       post "location(/:id)", action: :update_location, as: nil
 
       get "location/:id/delete", action: :delete_location, as: nil
       post "location/:id/delete", action: :process_delete_location, as: nil
-    end
 
-    resources :job_preferences_locations, only: %i[index new create edit update destroy], controller: "profiles/job_preferences_locations" do
-      member do
-        get "delete_location"
-      end
-      collection do
-        post "add_new"
-      end
+      get "", action: :start, as: :job_preferences
+      get ":step", action: :edit, as: :job_preferences_step
+      post ":step", action: :update, as: nil
     end
 
     resources :saved_jobs, only: %i[index]
@@ -215,7 +204,11 @@ Rails.application.routes.draw do
     resource :request_account_transfer_email, only: %i[new create]
     resource :account_transfer, only: %i[new create]
 
-    resources :notifications, only: %i[index]
+    resources :notifications, only: %i[index] do
+      collection do
+        patch :mark_all_as_read
+      end
+    end
   end
 
   devise_for :publishers, controllers: {
@@ -253,7 +246,11 @@ Rails.application.routes.draw do
         get :equal_opportunities
       end
     end
-    resources :notifications, only: %i[index]
+    resources :notifications, only: %i[index] do
+      collection do
+        patch :mark_all_as_read
+      end
+    end
     resources :publisher_preferences, only: %i[new create edit update]
     resources :organisations, only: %i[show] do
       resource :description, only: %i[edit update], controller: "organisations/description"
@@ -310,7 +307,6 @@ Rails.application.routes.draw do
     resources :publisher_ats_api_clients do
       get :confirm_rotate_key, on: :member
       post :rotate_key, on: :member
-      resources :conflict_attempts, only: [:index], controller: "publisher_ats_api_clients/conflict_attempts"
     end
   end
 

@@ -50,6 +50,7 @@ en:
       disclosure_received: self-disclosure form request
     index:
       heading: Notifications
+      mark_all_as_read: Mark all notifications on this page as read
       no_notifications: You have no notifications.
       skip_link: Skip to notifications
       title:

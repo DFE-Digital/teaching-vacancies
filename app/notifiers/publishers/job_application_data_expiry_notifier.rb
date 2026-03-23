@@ -29,7 +29,9 @@ class Publishers::JobApplicationDataExpiryNotifier < Noticed::Event
     end
 
     def vacancy_applications_link
-      govuk_link_to vacancy.job_title, organisation_job_job_applications_path(vacancy.id), class: "govuk-link--no-visited-state"
+      govuk_link_to vacancy.job_title,
+                    organisation_job_job_applications_path(vacancy.id, notification_id: id),
+                    class: "govuk-link--no-visited-state"
     end
   end
 end
