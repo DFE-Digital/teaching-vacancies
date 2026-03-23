@@ -28,7 +28,7 @@ gem "azure-blob", require: false
 gem "business_time"
 gem "chartkick"
 gem "devise"
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.14"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.15"
 gem "discard", "~> 1.4"
 gem "draper"
 gem "factory_bot_rails"
