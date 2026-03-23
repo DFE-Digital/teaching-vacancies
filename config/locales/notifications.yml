@@ -56,6 +56,18 @@ en:
         zero: No unread notifications
         one: 1 unread notification
         other: "%{count} unread notifications"
+    publishers/malicious_file_detected_notification:
+      message_html: A file you uploaded (%{filename}) has been removed because it contained malware
+    publishers/file_scan_error_notification:
+      message_html: There was an error scanning a file you uploaded (%{filename}) — please remove it and re-upload
+    publishers/malicious_file_detected_notification:
+      message_html: A file you uploaded (%{filename}) has been removed because it contained malware
+    publishers/file_scan_error_notification:
+      message_html: There was an error scanning a file you uploaded (%{filename}) — please remove it and re-upload
+    jobseekers/malicious_file_detected_notification:
+      message_html: A file you uploaded (%{filename}) has been removed because it contained malware
+    jobseekers/file_scan_error_notification:
+      message_html: There was an error scanning a file you uploaded (%{filename}) — please remove it and re-upload
     publishers/message_received_notification:
       message_html: "%{candidate_name} has sent you %{link} about the %{job_title} role"
     jobseekers/message_received_notification:
