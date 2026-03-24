@@ -27,10 +27,6 @@ RSpec.describe "Documents" do
       }
     end
 
-    before do
-      allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
-    end
-
     context "when the form is valid" do
       it "triggers an event", :dfe_analytics do
         request

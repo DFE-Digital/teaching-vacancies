@@ -22,8 +22,6 @@ RSpec.describe "Publishers can add additional documents to a vacancy" do
   end
 
   scenario "can add an additional documents to a vacancy" do
-    allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(instance_double(Publishers::DocumentVirusCheck, safe?: true))
-
     # Publisher can add a first additional document
     publisher_include_additional_documents_page.include_documents_yes.click
     click_on I18n.t("buttons.save_and_continue")

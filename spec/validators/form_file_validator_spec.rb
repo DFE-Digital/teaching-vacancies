@@ -15,10 +15,7 @@ end
 
 RSpec.describe FormFileValidator do
   describe "#validate_each" do
-    let(:document_virus_check) { instance_double(Publishers::DocumentVirusCheck, safe?: true) }
-
     before do
-      allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(document_virus_check)
       allow_any_instance_of(described_class).to receive(:validating_files_after_form_submission?).and_return(true)
     end
 
@@ -53,19 +50,6 @@ RSpec.describe FormFileValidator do
         let(:uploaded_document) { fixture_file_upload("blank_image.png", "image/png") }
 
         before { form_with_documents.valid? }
-
-        it "adds an error to the form object for the documents field" do
-          expect(form_with_documents.errors.full_messages_for(:supporting_documents)).to include(error_message)
-        end
-      end
-
-      context "when the document virus check determines the file as being unsafe" do
-        let(:error_message) { I18n.t("jobs.file_virus_error_message", filename: uploaded_document.original_filename) }
-
-        before do
-          allow(document_virus_check).to receive(:safe?).and_return(false)
-          form_with_documents.valid?
-        end
 
         it "adds an error to the form object for the documents field" do
           expect(form_with_documents.errors.full_messages_for(:supporting_documents)).to include(error_message)
