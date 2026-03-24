@@ -15,7 +15,7 @@ class ActiveStorage::BlobsController < ActiveStorage::BaseController
 
   def verify_blob_scan_status
     unless @blob.malware_scan_clean?
-      redirect_to root_path, alert: "This file is not available for download."
+      redirect_to root_path, alert: t("active_storage.blobs.file_unavailable")
     end
   end
 end
