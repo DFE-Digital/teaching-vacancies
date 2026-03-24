@@ -3,7 +3,7 @@ order: 500
 title: 3 quick ways to find the right teaching job for you
 meta_description: Congratulations, you’ve been invited to an interview for a teaching job! What’s next? We’ve spoken to experienced teachers to get their top tips for success including how to prepare answers to interview questions.
 date_posted: 07/05/2024
-date_updated: 20/06/2024
+date_updated: 12/03/2026
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role.jpg"
 ---
@@ -30,5 +30,7 @@ Schools can then reach out to you if they think you’re a good fit for their ro
 Use our online application form to quickly apply for jobs.
 
 We'll save your details so you won’t have to spend time filling in new applications every time, where quick apply is available. 
+
+If you’re invited to interview, read [how to approach a teaching job interview](https://teaching-vacancies.service.gov.uk/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-approach-a-teaching-job-interview?) to help you prepare. 
 
 <a href="https://teaching-vacancies.service.gov.uk/jobseekers/sign-in" class="govuk-button">Create a Teaching Vacancies account now</a>
