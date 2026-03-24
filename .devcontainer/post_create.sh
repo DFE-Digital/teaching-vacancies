@@ -19,7 +19,7 @@ log 'Install optional devcontainer Ruby dependencies'
 gem install solargraph
 
 log 'Install Javascript dependencies'
-yarn install
+COREPACK_ENABLE_DOWNLOAD_PROMPT=0 yarn install
 
 log 'Ensure `tmp` folder has a `.keep` file'
 # (this is present on the host, but the container uses a volume for the `tmp` directory,

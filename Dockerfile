@@ -11,7 +11,7 @@ FROM ruby:4.0.1-alpine3.23 AS builder
 WORKDIR /app
 
 ARG PROD_PACKAGES
-ENV DEV_PACKAGES="gcc libc-dev make yaml-dev yarn postgresql18-dev build-base git"
+ENV DEV_PACKAGES="gcc libc-dev make yaml-dev nodejs npm postgresql18-dev build-base git"
 RUN apk add --no-cache $PROD_PACKAGES $DEV_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
@@ -22,8 +22,8 @@ COPY Gemfile* ./
 RUN bundle config set --local without 'development test'
 RUN bundle install --no-binstubs --retry=5 --jobs=4 --no-cache
 
-COPY package.json yarn.lock ./
-RUN yarn install --check-files
+COPY package.json yarn.lock .yarnrc.yml ./
+RUN npm install -g corepack && corepack enable && yarn install
 
 COPY . .
 
