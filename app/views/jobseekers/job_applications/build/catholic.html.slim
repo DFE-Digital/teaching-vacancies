@@ -32,15 +32,8 @@ p.govuk-body = t(".non_catholics_apply")
           = f.govuk_text_field :religious_referee_phone, label: { size: "s" }
         = f.govuk_radio_button :religious_reference_type, :baptism_certificate do
           - if f.object.baptism_certificate.respond_to?(:attached?) && f.object.baptism_certificate.attached? # If form validations fail, the file is a tempfile that doesn't respond to ActiveStorage methods.
-            dl.govuk-summary-list
-              .govuk-summary-list__row
-                dt.govuk-summary-list__key Baptism certificate
-                dd.govuk-summary-list__value
-                  = govuk_link_to("#{f.object.baptism_certificate.filename} (#{number_to_human_size(f.object.baptism_certificate.byte_size)})", f.object.baptism_certificate, download: "true")
-                dd.govuk-summary-list__actions
-                  = govuk_link_to jobseekers_job_application_baptism_certificate_path(job_application), method: :delete do
-                    span aria-hidden="true" = t("buttons.delete")
-                    span.govuk-visually-hidden  baptism certificate
+            p.govuk-body
+              = file_download_link_or_status(f.object.baptism_certificate.blob)
           = f.govuk_file_field :baptism_certificate,
             label: { size: "s" },
             javascript: true,
