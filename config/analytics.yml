@@ -17,6 +17,7 @@ shared:
     - byte_size
     - checksum
     - created_at
+    - malware_scan_result
   employments:
     - id
     - employment_type
