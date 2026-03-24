@@ -68,7 +68,7 @@ class Vacancies::Import::Sources::VacancyPoster
       working_patterns: working_patterns_for(item),
       contract_type: contract_type_for(item),
       is_parental_leave_cover: parental_leave_cover_for?(item),
-      phases: phase_for(item),
+      phases: phases_for(item, schools.first),
       visa_sponsorship_available: false,
       is_job_share: job_share_for?(item),
     }.merge(organisation_fields(schools))
@@ -137,17 +137,24 @@ class Vacancies::Import::Sources::VacancyPoster
                .gsub("assistant_headteacher_principal", "assistant_headteacher")
                .gsub("headteacher_principal", "headteacher")
                .gsub(/head_of_year_or_phase|head_of_year/, "head_of_year_or_phase")
-               .gsub(/learning_support|other_support|science_technician/, "education_support")
+               .gsub(/learning_support|science_technician/, "education_support")
+               .gsub("other_teaching_support", "other_support")
                .gsub(/\s+/, ""))
   end
 
-  def phase_for(item)
+  def phases_for(item, school)
     return if item["phase"].blank?
 
-    item["phase"].strip
-    .parameterize(separator: "_")
-    .gsub("through_school", "through")
-    .gsub(/16-19|16_19/, "sixth_form_or_college")
+    phase = item["phase"].strip
+                 .parameterize(separator: "_")
+                 .gsub("through_school", "through")
+                 .gsub(/16-19|16_19/, "sixth_form_or_college")
+
+    if phase == "middle"
+      map_middle_school_phase school.phase
+    else
+      [phase]
+    end
   end
 
   def contract_type_for(item)

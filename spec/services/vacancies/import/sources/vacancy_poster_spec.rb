@@ -185,13 +185,29 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
         end
       end
 
-      %w[learning_support other_support science_technician].each do |role|
+      %w[learning_support science_technician].each do |role|
         context "when the source role is '#{role}'" do
           let(:job_role) { role }
 
           it "maps the source role to '[education_support]' in the vacancy" do
             expect(vacancy.job_roles).to eq(%w[education_support])
           end
+        end
+      end
+
+      context "when the source role is 'other_teaching_support'" do
+        let(:job_role) { "other_teaching_support" }
+
+        it "maps the source role to '[other_support]' in the vacancy" do
+          expect(vacancy.job_roles).to eq(%w[other_support])
+        end
+      end
+
+      context "when the source role is 'other_support'" do
+        let(:job_role) { "other_support" }
+
+        it "keeps it as '[other_support]' in the vacancy" do
+          expect(vacancy.job_roles).to eq(%w[other_support])
         end
       end
     end
@@ -214,6 +230,14 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
 
         it "maps the phase to '[through]' in the vacancy" do
           expect(vacancy.phases).to eq(%w[through])
+        end
+      end
+
+      context "when the phase is middle" do
+        let(:phase) { "middle" }
+
+        it "maps to phases for the school" do
+          expect(vacancy.phases).to eq(%w[primary secondary])
         end
       end
     end
