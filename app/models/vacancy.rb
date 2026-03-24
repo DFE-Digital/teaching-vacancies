@@ -90,7 +90,7 @@ class Vacancy < ApplicationRecord
   has_many_attached :supporting_documents, service: :azure_storage_documents
 
   validates :supporting_documents, content_type: DOCUMENT_CONTENT_TYPES,
-                                   size: { less_than: DOCUMENT_FILE_SIZE_LIMIT }, virus_free: true, if: -> { include_additional_documents }
+                                   size: { less_than: DOCUMENT_FILE_SIZE_LIMIT }, if: -> { include_additional_documents }
 
   has_one_attached :application_form, service: :azure_storage_documents
 

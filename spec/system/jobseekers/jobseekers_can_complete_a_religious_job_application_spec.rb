@@ -138,7 +138,6 @@ RSpec.describe "Jobseekers can complete a religious job application" do
             before do
               page.attach_file("jobseekers-job-application-catholic-form-baptism-certificate-field", Rails.root.join("spec/fixtures/files/blank_baptism_cert.pdf"))
 
-              allow_any_instance_of(FormFileValidator).to receive(:virus_free?).and_return(true)
               click_on I18n.t("buttons.save_and_continue")
             end
 
