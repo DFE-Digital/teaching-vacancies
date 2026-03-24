@@ -47,9 +47,9 @@ You may want to include examples that show you meet the [teachers’ standards](
 ## Show how you meet the job description
 Share examples that show how you meet the criteria in the job description. 
 
-Focus on meeting the essential criteria but include examples for the desirable criteria, if you’re able to. 
+Focus on meeting the essential criteria but include examples for the desirable criteria, if you’re able to. Explain each example clearly and highlight its impact on pupil outcomes. 
 
-Explain each example clearly and highlight its impact on pupil outcomes. 
+These examples can also help if you're invited to interview. Read our guidance on [how to approach a teaching job interview](https://teaching-vacancies.service.gov.uk/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-approach-a-teaching-job-interview?) to help you prepare.  
 
 If you're a returning teacher, you can share how your time away from the classroom has also added to your skills and experience. [Find out more about returning to teaching](https://teaching-vacancies.service.gov.uk/jobseeker-guides/return-to-teaching-in-england).
 
@@ -62,9 +62,9 @@ These 2 examples show the difference between a strong example and one that needs
 This example is very general, not tailored to the school and does not give hiring staff a clear picture of skills, experience or any outcomes achieved.
 
 #### Example 2 
-"I am keen to apply for the teaching role at [School name here], where the emphasis on high expectations and inclusive practice reflects my own values."
+"I am keen to apply for the teaching role at [School name here], where the emphasis on high expectations and inclusive practice reflects my own values.
 
-In my current role, I introduced a behaviour strategy that reduced low level disruption and improved pupil engagement, showing my commitment to the teachers' standards on managing behaviour and promoting good progress".
+"In my current role, I introduced a behaviour strategy that reduced low level disruption and improved pupil engagement, showing my commitment to the teachers' standards on managing behaviour and promoting good progress."
 
 This example is much better – it's tailored to the school and includes a specific example from practice. It shows what the applicant did, and how it links to the teachers' standards.
 
