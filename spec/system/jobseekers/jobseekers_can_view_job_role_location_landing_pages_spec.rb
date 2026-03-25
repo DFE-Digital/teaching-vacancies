@@ -8,7 +8,7 @@ RSpec.describe "Jobseekers can view job role + location landing pages" do
       expect(page).to have_checked_field("SENDCo")
       location_field = page.find("input[name='location']", visible: :all)
       expect(location_field.value).to eq("London")
-      expect(page).to have_title("SENDCo Jobs in London")
+      expect(page).to have_title("SENDCo (special educational needs and disabilities coordinator) Jobs in London")
     end
   end
 
