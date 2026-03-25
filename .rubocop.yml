@@ -1,3 +1,6 @@
+require:
+  - ./lib/rubocop/cop/custom/rake_task_invoke
+
 inherit_mode:
   merge:
     - Exclude
@@ -197,3 +200,8 @@ Metrics/PerceivedComplexity:
   Max: 18 # Default 8
   Exclude:
     - "spec/**/*"
+
+Custom/RakeTaskInvoke:
+  Enabled: true
+  Include:
+    - "spec/lib/tasks/**/*_spec.rb"

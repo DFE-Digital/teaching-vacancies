@@ -13,7 +13,7 @@ RSpec.describe "db:prepare:ignore_concurrent_migration_exceptions" do
   it "invokes db:prepare" do
     allow(Rake::Task["db:prepare"]).to receive(:invoke)
 
-    subject.invoke
+    subject.execute
 
     expect(Rake::Task["db:prepare"]).to have_received(:invoke)
   end
@@ -21,7 +21,7 @@ RSpec.describe "db:prepare:ignore_concurrent_migration_exceptions" do
   it "swallows ActiveRecord::ConcurrentMigrationError" do
     allow(Rake::Task["db:prepare"]).to receive(:invoke).and_raise(ActiveRecord::ConcurrentMigrationError)
 
-    expect { subject.invoke }.not_to raise_error
+    expect { subject.execute }.not_to raise_error
   end
 end
 # rubocop:enable RSpec/NamedSubject
