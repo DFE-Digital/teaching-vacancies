@@ -100,7 +100,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
     @review_form = Jobseekers::JobApplication::ReviewForm.new(review_form_params)
     if @review_form.valid? && all_steps_valid?
-      update_jobseeker_profile!(job_application) if @review_form.update_profile
       job_application.submit!
       redirect_to jobseekers_job_application_post_submit_path job_application
     else
@@ -172,16 +171,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     Jobseekers::JobApplications::QuickApply.new(current_jobseeker, vacancy).job_application
   end
 
-  def update_jobseeker_profile!(job_application)
-    profile = job_application.jobseeker.jobseeker_profile
-    return unless profile.present?
-
-    profile.replace_qualifications!(job_application.qualifications)
-    profile.replace_employments!(job_application.employments)
-    profile.replace_training_and_cpds!(job_application.training_and_cpds)
-    profile.replace_memberships!(job_application.professional_body_memberships)
-  end
-
   def all_steps_valid?
     # Check that all steps are valid, in case we have changed the validations since the step was completed.
     # NB: Only validates top-level step forms. Does not validate individual qualifications, employments, or references.
@@ -232,7 +221,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def review_form_params
-    params.expect(jobseekers_job_application_review_form: [:confirm_data_accurate, :confirm_data_usage, { update_profile: [] }])
+    params.expect(jobseekers_job_application_review_form: [:confirm_data_accurate, :confirm_data_usage])
           .merge(completed_steps: job_application.completed_steps, all_steps: step_process.validatable_steps)
   end
 
@@ -271,7 +260,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def quick_apply?
-    previous_application? || profile.present?
+    previous_application?
   end
 end
 # rubocop:enable Metrics/ClassLength
