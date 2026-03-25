@@ -59,6 +59,14 @@ RSpec.describe RuboCop::Cop::Custom::RakeTaskInvoke do
     end
   end
 
+  context "when calling invoke without a receiver" do
+    it "does not register an offense" do
+      expect_no_offenses(<<~RUBY)
+        invoke
+      RUBY
+    end
+  end
+
   context "when calling .execute" do
     it "does not register an offense" do
       expect_no_offenses(<<~RUBY)
