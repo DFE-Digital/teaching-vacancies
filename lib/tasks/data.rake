@@ -66,6 +66,39 @@ namespace :ons do
   end
 end
 
+namespace :backfills do
+  desc "Backfill vacancy geolocation"
+  task vacancy_geolocation: :environment do
+    Vacancy.backfill_missing_geolocations
+  end
+
+  desc "Backfill vacancy searchable content"
+  task vacancy_searchable_content: :environment do
+    Vacancy.backfill_missing_searchable_content
+  end
+end
+
+namespace :job_preferences do
+  desc "Migrate legacy working patterns"
+  task migrate_legacy_working_patterns: :environment do
+    JobPreferences.migrate_legacy_working_patterns
+  end
+end
+
+namespace :subscriptions do
+  desc "Discard subscriptions that fail validation (probably due to invalid email address)"
+  task discard_invalid: :environment do
+    Subscription.discard_invalid
+  end
+end
+
+namespace :vacancies do
+  desc "Trash published vacancies from out-of-scope schools"
+  task discard_out_of_scope: :environment do
+    PublishedVacancy.discard_out_of_scope
+  end
+end
+
 namespace :publishers do
   desc "Reset 'New features' attributes so all publishers are shown 'New features' page"
   task reset_new_features_attributes: :environment do

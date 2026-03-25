@@ -26,4 +26,16 @@ class JobPreferences < ApplicationRecord
   def key_stages_for_phases
     phases.map { |phase| Vacancy::PHASES_TO_KEY_STAGES_MAPPINGS[phase.to_sym] }.flatten.uniq.sort
   end
+
+  def self.migrate_legacy_working_patterns
+    where.not(working_patterns: nil).find_each do |jp|
+      if jp.working_patterns.include?("term_time")
+        jp.assign_attributes(working_patterns: (jp.working_patterns - %w[term_time] + %w[full_time]).uniq)
+      end
+      if jp.working_patterns.include?("flexible")
+        jp.assign_attributes(working_patterns: (jp.working_patterns - %w[flexible] + %w[part_time]).uniq)
+      end
+      jp.save!(validate: false, touch: false)
+    end
+  end
 end
