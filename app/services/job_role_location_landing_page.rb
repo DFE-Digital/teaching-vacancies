@@ -42,17 +42,15 @@ class JobRoleLocationLandingPage < LandingPage
   private
 
   def build_criteria
-    criteria = { location: location_name }
+    { location: location_name }.tap do |criteria|
+      if Vacancy::TEACHING_JOB_ROLES.include?(job_role)
+        criteria[:teaching_job_roles] = [job_role]
+      end
 
-    if Vacancy::TEACHING_JOB_ROLES.include?(job_role)
-      criteria[:teaching_job_roles] = [job_role]
+      if Vacancy::SUPPORT_JOB_ROLES.include?(job_role)
+        criteria[:support_job_roles] = [job_role]
+      end
     end
-
-    if Vacancy::SUPPORT_JOB_ROLES.include?(job_role)
-      criteria[:support_job_roles] = [job_role]
-    end
-
-    criteria
   end
 
   def cache_key
