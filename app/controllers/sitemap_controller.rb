@@ -42,11 +42,8 @@ class SitemapController < ApplicationController
   end
 
   def add_job_role_location_landing_pages(sitemap)
-    Vacancy::JOB_ROLES.each_key do |job_role|
-      LocationPolygon.find_each do |location|
-        location_slug = location.name.parameterize
-        sitemap.add job_role_location_landing_page_path(job_role, location_slug), period: "daily"
-      end
+    JobRoleLocationLandingPage::TARGETED_PAGES.each do |job_role, location|
+      sitemap.add job_role_location_landing_page_path(job_role.tr("_", "-"), location), period: "daily"
     end
   end
 

@@ -1,10 +1,14 @@
 class JobRoleLocationLandingPage < LandingPage
   attr_reader :job_role, :location
 
+  # Targeted roles and locations recommended by SEO agency
+  TARGETED_JOB_ROLES = %w[sendco teaching_assistant assistant_headteacher head_of_year_or_phase].freeze
+  TARGETED_LOCATIONS = %w[london manchester bristol birmingham nottingham].freeze
+  TARGETED_PAGES = TARGETED_JOB_ROLES.product(TARGETED_LOCATIONS).freeze
+
   def self.exists?(job_role, location)
     normalized_job_role = job_role.downcase.tr("-", "_")
-
-    Vacancy::JOB_ROLES.key?(normalized_job_role) && LocationPolygon.contain?(location.titleize)
+    TARGETED_PAGES.include?([normalized_job_role, location.downcase])
   end
 
   def self.[](job_role, location)
