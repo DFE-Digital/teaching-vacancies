@@ -78,7 +78,7 @@ class Vacancy < ApplicationRecord
   belongs_to :publisher_ats_api_client, optional: true
 
   DOCUMENT_FILE_SIZE_LIMIT = 20.megabytes
-  DOCUMENT_CONTENT_TYPES = %w[application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document].freeze
+  DOCUMENT_CONTENT_TYPES = %w[application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document text/plain].freeze
 
   DOCUMENT_VALIDATION_OPTIONS = {
     file_type: :document,
