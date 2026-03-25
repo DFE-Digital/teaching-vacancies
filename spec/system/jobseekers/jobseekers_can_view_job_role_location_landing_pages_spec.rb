@@ -1,26 +1,14 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can view job role + location landing pages" do
-  before do
-    create(:location_polygon, name: "birmingham")
-    create(:location_polygon, name: "stoke-on-trent")
-  end
-
   context "when visiting a teaching job role + location landing page" do
     it "correctly displays filters and titles" do
-      visit "/teacher-jobs-in-birmingham"
+      visit "/sendco-jobs-in-london"
 
-      expect(page).to have_checked_field("Teacher")
+      expect(page).to have_checked_field("SENDCo")
       location_field = page.find("input[name='location']", visible: :all)
-      expect(location_field.value).to eq("Birmingham")
-      expect(page).to have_title("Teacher Jobs in Birmingham")
-
-      visit "/headteacher-jobs-in-birmingham"
-
-      expect(page).to have_checked_field("Headteacher")
-      location_field = page.find("input[name='location']", visible: :all)
-      expect(location_field.value).to eq("Birmingham")
-      expect(page).to have_title("Headteacher Jobs in Birmingham")
+      expect(location_field.value).to eq("London")
+      expect(page).to have_title("SENDCo Jobs in London")
     end
   end
 
@@ -35,24 +23,21 @@ RSpec.describe "Jobseekers can view job role + location landing pages" do
     end
   end
 
-  context "when location has a multi word name" do
-    scenario "handles locations correctly" do
-      visit "/teacher-jobs-in-stoke-on-trent"
-
-      location_field = page.find("input[name='location']", visible: :all)
-      expect(location_field.value).to eq("Stoke On Trent")
-    end
-  end
-
-  context "when job role or location doesn't exist" do
-    scenario "returns 404 when job role doesn't exist" do
-      visit "/footballer-jobs-in-birmingham"
+  context "when job role or location is not in the targeted list" do
+    scenario "returns 404 for a valid job role not in the targeted list" do
+      visit "/teacher-jobs-in-london"
 
       expect(page).to have_http_status(:not_found)
     end
 
-    scenario "returns 404 when location doesn't exist" do
-      visit "/teacher-jobs-in-xxxxx"
+    scenario "returns 404 for a valid location not in the targeted list" do
+      visit "/teaching-assistant-jobs-in-leeds"
+
+      expect(page).to have_http_status(:not_found)
+    end
+
+    scenario "returns 404 for a completely unknown combo" do
+      visit "/footballer-jobs-in-birmingham"
 
       expect(page).to have_http_status(:not_found)
     end
