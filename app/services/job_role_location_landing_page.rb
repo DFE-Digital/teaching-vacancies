@@ -24,7 +24,7 @@ class JobRoleLocationLandingPage < LandingPage
   end
 
   def slug
-    "#{job_role}-jobs-in-#{location}"
+    "#{job_role.tr('_', '-')}-jobs-in-#{location}"
   end
 
   def location_name

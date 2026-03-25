@@ -1,85 +1,85 @@
 require "rails_helper"
 
 RSpec.describe JobRoleLocationLandingPage do
-  subject(:landing_page) { described_class["teacher", "birmingham"] }
+  subject(:landing_page) { described_class["teaching-assistant", "london"] }
 
   let(:search) { instance_double(Search::VacancySearch, total_count: 42) }
 
   before do
-    create(:location_polygon, name: "birmingham")
-
     allow(Search::VacancySearch)
       .to receive(:new)
-      .with(hash_including(teaching_job_roles: %w[teacher], location: "Birmingham"))
+      .with(hash_including(support_job_roles: %w[teaching_assistant], location: "London"))
       .and_return(search)
   end
 
   describe ".exists?" do
-    it "returns true when both job role exists and location polygon exists" do
-      expect(described_class.exists?("teacher", "birmingham")).to be(true)
+    it "returns true for a targeted job role and location combo" do
+      expect(described_class.exists?("teaching-assistant", "london")).to be(true)
     end
 
     it "handles case-insensitive job role and location" do
-      expect(described_class.exists?("Teacher", "birmingham")).to be(true)
-      expect(described_class.exists?("TEACHER", "birmingham")).to be(true)
-      expect(described_class.exists?("teacher", "Birmingham")).to be(true)
-      expect(described_class.exists?("teacher", "BIRMINGHAM")).to be(true)
+      expect(described_class.exists?("Teaching-Assistant", "london")).to be(true)
+      expect(described_class.exists?("TEACHING-ASSISTANT", "london")).to be(true)
+      expect(described_class.exists?("teaching-assistant", "London")).to be(true)
+      expect(described_class.exists?("teaching-assistant", "LONDON")).to be(true)
     end
 
-    it "returns false when job role doesn't exist" do
-      expect(described_class.exists?("doctor", "birmingham")).to be(false)
+    it "returns false for a valid job role not in the targeted list" do
+      expect(described_class.exists?("teacher", "london")).to be(false)
     end
 
-    it "returns false when location polygon doesn't exist" do
-      expect(described_class.exists?("teacher", "hizzingford")).to be(false)
+    it "returns false for a valid location not in the targeted list" do
+      expect(described_class.exists?("teaching-assistant", "leeds")).to be(false)
+    end
+
+    it "returns false for a combo that does not exist in the targeted list" do
+      expect(described_class.exists?("doctor", "hizzingford")).to be(false)
     end
   end
 
   describe ".[]" do
-    it "returns a landing page instance when both job role and location exist" do
-      expect(landing_page.job_role).to eq("teacher")
-      expect(landing_page.location).to eq("birmingham")
-      expect(landing_page.criteria).to eq({ teaching_job_roles: %w[teacher], location: "Birmingham" })
+    it "returns a landing page instance for a targeted combo" do
+      expect(landing_page.job_role).to eq("teaching_assistant")
+      expect(landing_page.location).to eq("london")
+      expect(landing_page.criteria).to eq({ support_job_roles: %w[teaching_assistant], location: "London" })
     end
 
-    it "sets support_job_roles for support roles" do
-      page = described_class["teaching-assistant", "birmingham"]
-      expect(page.criteria).to eq({ support_job_roles: %w[teaching_assistant], location: "Birmingham" })
+    it "sets teaching_job_roles for teaching roles" do
+      allow(Search::VacancySearch)
+        .to receive(:new)
+        .with(hash_including(teaching_job_roles: %w[sendco], location: "London"))
+        .and_return(search)
+
+      page = described_class["sendco", "london"]
+      expect(page.criteria).to eq({ teaching_job_roles: %w[sendco], location: "London" })
     end
 
-    it "raises an error if job role or location doesn't exist" do
-      expect { described_class["wizard", "birmingham"] }
-        .to raise_error("No such job role + location landing page: 'wizard' + 'birmingham'")
+    it "raises an error if the combo is not in the targeted list" do
+      expect { described_class["teacher", "london"] }
+        .to raise_error("No such job role + location landing page: 'teacher' + 'london'")
     end
   end
 
   describe "#slug" do
     it "returns the correct slug format" do
-      expect(landing_page.slug).to eq("teacher-jobs-in-birmingham")
+      expect(landing_page.slug).to eq("teaching-assistant-jobs-in-london")
     end
   end
 
   describe "#location_name" do
     it "returns the titleized location name" do
-      expect(landing_page.location_name).to eq("Birmingham")
+      expect(landing_page.location_name).to eq("London")
     end
 
     it "handles mapped locations" do
-      stub_const("MAPPED_LOCATIONS", { "brum" => "birmingham" })
-      page = described_class["teacher", "brum"]
-      expect(page.location_name).to eq("Birmingham")
-    end
-
-    it "handles 'and' in location names" do
-      create(:location_polygon, name: "bath and north east somerset")
-      page = described_class["teacher", "bath-and-north-east-somerset"]
-      expect(page.location_name).to eq("Bath and North East Somerset")
+      stub_const("MAPPED_LOCATIONS", { "london" => "Greater London" })
+      expect(landing_page.location_name).to eq("Greater London")
     end
   end
 
   describe "#job_role_name" do
     it "returns the translated job role name" do
-      expect(landing_page.job_role_name).to eq(I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.teacher"))
+      expect(landing_page.job_role_name).to eq(I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.teaching_assistant"))
     end
   end
 
@@ -90,10 +90,10 @@ RSpec.describe JobRoleLocationLandingPage do
   end
 
   describe "i18n methods" do
-    let(:job_role_name) { I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.teacher") }
+    let(:job_role_name) { I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.teaching_assistant") }
 
-    specify { expect(landing_page.heading).to eq(I18n.t("landing_pages._job_role_location.heading", location: "Birmingham", job_role: job_role_name.downcase, count: "<span class=\"govuk-!-font-weight-bold\">42</span>")) }
-    specify { expect(landing_page.meta_description).to eq(I18n.t("landing_pages._job_role_location.meta_description", location: "Birmingham", job_role: job_role_name.downcase)) }
-    specify { expect(landing_page.title).to eq(I18n.t("landing_pages._job_role_location.title", location: "Birmingham", job_role: job_role_name)) }
+    specify { expect(landing_page.heading).to eq(I18n.t("landing_pages._job_role_location.heading", location: "London", job_role: job_role_name.downcase, count: "<span class=\"govuk-!-font-weight-bold\">42</span>")) }
+    specify { expect(landing_page.meta_description).to eq(I18n.t("landing_pages._job_role_location.meta_description", location: "London", job_role: job_role_name.downcase)) }
+    specify { expect(landing_page.title).to eq(I18n.t("landing_pages._job_role_location.title", location: "London", job_role: job_role_name)) }
   end
 end
