@@ -5,7 +5,7 @@ module ProfileSection
     def prepare(**, &block)
       find_or_initialize_by(**).tap do |record|
         if record.new_record?
-          # do not populated from draft applications as they make be incomplete and invalid.
+          # do not populate from draft applications as they make be incomplete and invalid.
           if (previously_submitted_application = jobseeker(record).job_applications.after_submission.last)
             copy_attributes(record, previously_submitted_application)
 
