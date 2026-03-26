@@ -155,7 +155,7 @@ RSpec.configure do |config|
     driven_by :rack_test
 
     if ENV["SELENIUM_HUB_URL"]
-      test_env_number = ENV.fetch("TEST_ENV_NUMBER", "1").to_i
+      test_env_number = ENV.fetch("TEST_ENV_NUMBER", "1").then { |n| n.empty? ? 1 : n.to_i }
       server_port = 3000 + test_env_number
       Capybara.default_host = "http://#{ENV.fetch('DOMAIN', "#{IPSocket.getaddress(Socket.gethostname)}:#{server_port}")}"
       Capybara.app_host = "http://#{IPSocket.getaddress(Socket.gethostname)}:#{server_port}"
