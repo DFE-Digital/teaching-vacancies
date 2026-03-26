@@ -40,7 +40,9 @@ module Jobseekers
       private
 
       def message_link
-        govuk_link_to "a message", jobseekers_job_application_path(job_application, tab: "messages"), class: "govuk-link--no-visited-state"
+        govuk_link_to "a message",
+                      jobseekers_job_application_path(job_application, tab: "messages", notification_id: id),
+                      class: "govuk-link--no-visited-state"
       end
 
       def job_application

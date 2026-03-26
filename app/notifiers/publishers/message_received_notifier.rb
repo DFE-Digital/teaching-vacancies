@@ -24,10 +24,13 @@ class Publishers::MessageReceivedNotifier < Noticed::Event
     private
 
     def message_link
-      govuk_link_to "a message", messages_organisation_job_job_application_path(
-        job_application.vacancy.id,
-        job_application.id,
-      ), class: "govuk-link--no-visited-state"
+      govuk_link_to "a message",
+                    messages_organisation_job_job_application_path(
+                      job_application.vacancy.id,
+                      job_application.id,
+                      notification_id: id,
+                    ),
+                    class: "govuk-link--no-visited-state"
     end
 
     def job_application
