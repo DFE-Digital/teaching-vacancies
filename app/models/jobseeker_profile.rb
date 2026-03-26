@@ -101,5 +101,4 @@ class JobseekerProfile < ApplicationRecord
   def current_or_most_recent_employment
     employments.job.find_by(is_current_role: true) || employments.job.order(started_on: :desc).first
   end
-
 end
