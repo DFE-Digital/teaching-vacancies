@@ -39,10 +39,7 @@ RSpec.describe "Sitemap" do
     end
 
     it "includes job role + location landing pages in the sitemap" do
-      create(:location_polygon, name: "birmingham")
-      get sitemap_path(format: :xml)
-
-      expect(xml).to include(job_role_location_landing_page_path("teacher", "birmingham"))
+      expect(xml).to include(job_role_location_landing_page_path("teaching-assistant", "london"))
     end
 
     it "includes static pages in the sitemap" do
