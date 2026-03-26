@@ -22,5 +22,4 @@ RSpec.describe "Jobseekers can view job role + location landing pages" do
       expect(page).to have_title("Teaching assistant Jobs in Birmingham")
     end
   end
-
 end

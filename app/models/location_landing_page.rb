@@ -16,7 +16,7 @@ class LocationLandingPage < LandingPage
 
   def initialize(location)
     @location = location
-    @criteria = { location: name }
+    super(location, { location: name })
   end
 
   def name
