@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "csv"
+
 module Publishers
   class AllTimeStatisticsController < StatisticsController
     def index

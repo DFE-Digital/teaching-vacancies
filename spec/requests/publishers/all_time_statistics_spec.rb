@@ -1,4 +1,5 @@
 require "rails_helper"
+require "csv"
 
 RSpec.describe "Publisher all-time statistics" do
   let(:school) { create(:school) }
