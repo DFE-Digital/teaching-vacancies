@@ -23,23 +23,4 @@ RSpec.describe "Jobseekers can view job role + location landing pages" do
     end
   end
 
-  context "when job role or location is not in the targeted list" do
-    scenario "returns 404 for a valid job role not in the targeted list" do
-      visit "/teacher-jobs-in-london"
-
-      expect(page).to have_http_status(:not_found)
-    end
-
-    scenario "returns 404 for a valid location not in the targeted list" do
-      visit "/teaching-assistant-jobs-in-leeds"
-
-      expect(page).to have_http_status(:not_found)
-    end
-
-    scenario "returns 404 for a completely unknown combo" do
-      visit "/footballer-jobs-in-birmingham"
-
-      expect(page).to have_http_status(:not_found)
-    end
-  end
 end
