@@ -2,7 +2,7 @@ class VacancyAnalyticsService
   REDIS_KEY_PREFIX = "vacancy_referrer_stats".freeze
 
   # :TODO - Redis 5.x doesn't support Redis.current
-  # Howevere rails cache does have increment/decrement methods
+  # However Rails cache does have increment/decrement methods
   # but no obvious way of scanning for matching keys.
   # Consider converting to a set of low-priority jobs
   # only run on the quarter hour?
