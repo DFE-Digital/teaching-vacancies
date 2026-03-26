@@ -173,6 +173,10 @@ RSpec.describe "Documents" do
       end
 
       context "when a replacement application form has not been provided" do
+        let(:hidden_field) do
+          "<input value=\"true\" autocomplete=\"off\" type=\"hidden\" name=\"publishers_job_listing_application_form_form[application_form_staged_for_replacement]\" " \
+          "id=\"publishers_job_listing_application_form_form_application_form_staged_for_replacement\" />"
+        end
         let(:error_message) { I18n.t("activemodel.errors.models.publishers/job_listing/application_form_form.attributes.application_form.blank") }
         let(:request) do
           post organisation_job_application_forms_path(vacancy.id), params: {
@@ -197,9 +201,7 @@ RSpec.describe "Documents" do
         it "adds the application_form_staged_for_replacement hidden field to the form" do
           request
 
-          expect(response.parsed_body.css("input#publishers_job_listing_application_form_form_application_form_staged_for_replacement")
-                         .first.attributes.symbolize_keys.except(:id, :name).transform_values(&:value))
-            .to eq(value: "true", type: "hidden")
+          expect(response.body).to include(hidden_field)
         end
       end
     end
