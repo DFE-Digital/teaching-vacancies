@@ -115,7 +115,7 @@ jobs:
       run: ./bin/delete-state-file ${{env.PR_NUMBER}}
 
     - name: Post sticky pull request comment
-      uses: marocchino/sticky-pull-request-comment@v2
+      uses: marocchino/sticky-pull-request-comment@v3
       with:
         message: |
           Review app <${{ env.LINK_TO_APP }}> was successfully deleted
