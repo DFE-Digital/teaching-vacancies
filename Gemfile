@@ -30,6 +30,7 @@ gem "aws-sdk-s3"
 gem "azure-blob", require: false
 gem "business_time"
 gem "chartkick"
+gem "connection_pool", "<3"
 gem "devise"
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.16.0"
 gem "discard", "~> 2.0"
