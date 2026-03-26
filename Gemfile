@@ -17,7 +17,6 @@ gem "jsbundling-rails"
 gem "propshaft"
 gem "railties", RAILS_VERSION
 
-# gem "active_model_serializers"
 gem "activerecord-import"
 gem "activerecord-postgis-adapter", ">= 10.0.1"
 gem "activerecord-session_store"
