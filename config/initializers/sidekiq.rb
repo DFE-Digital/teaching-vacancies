@@ -16,10 +16,10 @@ Sidekiq.configure_client do |config|
   config.redis = { url: Rails.configuration.redis_queue_url, network_timeout: 5, size: config[:concurrency] + 5 }
 end
 
-# schedule_file = "config/schedule.yml"
-#
-# if File.exist?(schedule_file) && Sidekiq.server?
-#   Rails.application.config.after_initialize do
-#     Sidekiq::Cron::Job.load_from_hash! YAML.load_file(schedule_file)
-#   end
-# end
+schedule_file = "config/schedule.yml"
+
+if File.exist?(schedule_file) && Sidekiq.server?
+  Rails.application.config.after_initialize do
+    Sidekiq::Cron::Job.load_from_hash! YAML.load_file(schedule_file)
+  end
+end
