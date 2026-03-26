@@ -1,0 +1,44 @@
+# docker-compose.local.yml
+#
+# Personal devcontainer overrides — git-ignored, never committed.
+# Customise freely. Rebuild the devcontainer to apply changes.
+#
+# See docker-compose.yml for the base configuration.
+
+services:
+  app:
+    # Uncomment to set the number of parallel test processes.
+    # Increase for faster test runs (up to half your CPU core count).
+    # Must match SE_NODE_MAX_SESSIONS in selenium-chrome below.
+    # environment:
+    #   PARALLEL_TEST_PROCESSORS: "8"
+
+    # Uncomment to mount your vscode config into the container:
+    # volumes:
+    #   - type: bind
+    #     source: ${HOME}/.vscode
+    #     target: /home/teaching-vacancies/.vscode
+
+  selenium-chrome:
+    # Uncomment to set the number of concurrent browser sessions.
+    # Must match PARALLEL_TEST_PROCESSORS above.
+    # Each session requires ~512MB shared memory (shm_size).
+    # environment:
+    #   SE_NODE_MAX_SESSIONS: "8"
+
+    # Uncomment to override the shared memory size (default: 256m from docker-compose.yml).
+    # Chrome uses /dev/shm for rendering; too little causes tab crashes and flaky tests.
+    # Ideal value: ~512m per concurrent session (SE_NODE_MAX_SESSIONS).
+    #   - 4 sessions (default) → 2g
+    #   - 8 sessions           → 4g
+    # Reduce if your machine is RAM-constrained and you see low memory pressure but no tab crashes.
+    # Increase if you see "out of memory" tab crashes or tests failing with renderer errors.
+    # shm_size: 2g
+
+    # Uncomment to set a memory limit on the container.
+    # Selenium is quite memory-hungry, especially with multiple sessions.
+    # What can lead to system running out of memory during parallel test runs.
+    # Setting a memory limit on the container can help prevent this,
+    # but it may also cause Selenium to crash if it exceeds the limit.
+    # Adjust as needed based on your system's resources and test requirements.
+    mem_limit: 4g

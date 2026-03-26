@@ -1,6 +1,7 @@
 {
   "name": "DfE Teaching Vacancies",
-  "dockerComposeFile": "docker-compose.yml",
+  "initializeCommand": "test -f .devcontainer/docker-compose.local.yml || cp .devcontainer/docker-compose.local.yml.example .devcontainer/docker-compose.local.yml",
+  "dockerComposeFile": ["docker-compose.yml", "docker-compose.local.yml"],
   "service": "app",
   "workspaceFolder": "/workspace",
   "remoteEnv": {
