@@ -64,7 +64,6 @@ RSpec.describe JobseekerProfile, type: :model do
         expect(profile.qualified_teacher_status).to be_nil
         expect(profile.personal_details.first_name).to be_nil
         expect(profile.personal_details.last_name).to be_nil
-        expect(profile.personal_details.phone_number).to be_nil
       end
 
       it "creates a job preferences record" do

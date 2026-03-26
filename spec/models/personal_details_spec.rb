@@ -26,7 +26,6 @@ RSpec.describe PersonalDetails do
       it "does not use details from draft application" do
         expect(personal_details.first_name).to be_nil
         expect(personal_details.last_name).to be_nil
-        expect(personal_details.phone_number).to be_nil
         expect(personal_details.has_right_to_work_in_uk).to be_nil
       end
 

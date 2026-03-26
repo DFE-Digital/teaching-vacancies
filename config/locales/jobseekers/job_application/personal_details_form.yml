@@ -98,12 +98,6 @@ en:
         change_email_link_text: change your email address
         first_name: First name
         last_name: Last name
-      jobseekers_profiles_personal_details_form_phone_number_form:
-        phone_number: Phone number
-        phone_number_provided: Do you want to provide a phone number?
-        phone_number_provided_options:
-          false: "No"
-          true: "Yes"
 
       jobseekers_job_application_personal_details_form:
         city: Town or city

@@ -3,8 +3,6 @@ ruby:
   form = Jobseekers::Profiles::PersonalDetailsForm.from_record(model)
 
   attributes = {
-                 phone_number_provided: { map_values: ->(value) { value.nil? ? "" : t("helpers.label.jobseekers_profiles_personal_details_form_phone_number_form.phone_number_provided_options.#{value}") } },
-                 phone_number: nil,
                  has_right_to_work_in_uk: { map_values: ->(value) { value.nil? ? "" : t("jobseekers.profiles.personal_details.work.options.#{value}") } },
                }
 
