@@ -7,7 +7,7 @@ return if Rails.env.test?
 # Redis concurrency must be plus 5 https://github.com/mperham/sidekiq/wiki/Using-Redis#complete-control
 Sidekiq.configure_server do |config|
   # config[:concurrency] = options.fetch(:concurrency)
-  config.logger.level = Logger::WARN
+  config.logger.level = Logger::DEBUG
   # config.redis = { url: Rails.configuration.redis_queue_url, network_timeout: 5, size: config[:concurrency] + 5 }
   config.redis = { url: Rails.configuration.redis_queue_url, network_timeout: 5 }
 end
