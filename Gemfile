@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby "4.0.1"
 
-RAILS_VERSION = "< 8.1".freeze
+RAILS_VERSION = "< 8.2".freeze
 gem "actionmailer", RAILS_VERSION
 gem "actionpack", RAILS_VERSION
 gem "actionpack-action_caching"
@@ -27,6 +27,7 @@ gem "aws-sdk-s3"
 gem "azure-blob", require: false
 gem "business_time"
 gem "chartkick"
+gem "connection_pool", "<3"
 gem "devise"
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.15"
 gem "discard", "~> 1.4"
@@ -79,7 +80,7 @@ gem "rack-cors"
 gem "rails", RAILS_VERSION # Explicitly declare rails so we can do a "bundle update rails" when needed.
 gem "rails_semantic_logger"
 gem "recaptcha"
-gem "redis"
+gem "redis", "< 5"
 gem "rgeo-geojson"
 gem "rgeo-proj4"
 gem "rswag-api"
@@ -90,8 +91,8 @@ gem "sanitize"
 gem "sentry-rails"
 gem "sentry-ruby"
 gem "sentry-sidekiq"
-# TODO: Pinned to <7 until compatible with sidekiq-cron
-gem "sidekiq", "<7"
+# Pinned to <8 until we can upgrade our Redis instance on Azure
+gem "sidekiq", "<8"
 gem "sidekiq-cron"
 gem "sidekiq-limit_fetch"
 gem "skylight"
@@ -99,7 +100,6 @@ gem "slim-rails"
 gem "turbo-rails"
 gem "validate_url"
 gem "valid_email2"
-# this upgrade creates 848 test failures
 gem "view_component", "~> 4.1.1"
 gem "wicked"
 gem "xml-sitemap"
