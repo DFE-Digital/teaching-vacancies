@@ -153,16 +153,26 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system) do
     driven_by :rack_test
+    Capybara.default_host = "http://#{ENV.fetch('DOMAIN', 'localhost:3000')}"
 
     if ENV["SELENIUM_HUB_URL"]
       test_env_number = ENV.fetch("TEST_ENV_NUMBER", "1").then { |n| n.empty? ? 1 : n.to_i }
       server_port = 3000 + test_env_number
-      Capybara.default_host = "http://#{ENV.fetch('DOMAIN', "#{IPSocket.getaddress(Socket.gethostname)}:#{server_port}")}"
-      Capybara.app_host = "http://#{IPSocket.getaddress(Socket.gethostname)}:#{server_port}"
-      Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
+      container_ip = IPSocket.getaddress(Socket.gethostname)
+      Capybara.app_host = "http://#{container_ip}:#{server_port}"
+      Capybara.server_host = container_ip
       Capybara.server_port = server_port
-    else
-      Capybara.default_host = "http://#{ENV.fetch('DOMAIN', 'localhost:3000')}"
+      url_options = { host: container_ip, port: server_port, protocol: "http" }
+      ActionMailer::Base.default_url_options = url_options
+      Rails.application.routes.default_url_options = url_options
+    end
+  end
+
+  config.after(:each, type: :system) do
+    if ENV["SELENIUM_HUB_URL"]
+      original = Rails.configuration.action_mailer.default_url_options
+      ActionMailer::Base.default_url_options = original
+      Rails.application.routes.default_url_options = original
     end
   end
 
