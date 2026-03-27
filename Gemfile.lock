@@ -811,10 +811,12 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (7.0.1)
       activesupport (>= 7.1)
-    sidekiq (6.5.12)
-      connection_pool (>= 2.2.5, < 3)
-      rack (~> 2.0)
-      redis (>= 4.5.0, < 5)
+    sidekiq (7.3.10)
+      base64
+      connection_pool (>= 2.3.0, < 3)
+      logger
+      rack (>= 2.2.4, < 3.3)
+      redis-client (>= 0.23.0, < 1)
     sidekiq-cron (2.3.1)
       cronex (>= 0.13.0)
       fugit (~> 1.8, >= 1.11.1)
@@ -1097,7 +1099,7 @@ DEPENDENCIES
   sentry-ruby
   sentry-sidekiq
   shoulda-matchers
-  sidekiq (< 7)
+  sidekiq (> 6, < 8)
   sidekiq-cron
   sidekiq-limit_fetch
   simplecov
@@ -1421,7 +1423,7 @@ CHECKSUMS
   sentry-sidekiq (6.4.1) sha256=214082c26487cf2df315d41f45001584ebb8039c77f5a07090284b0deff934df
   shellany (0.0.1) sha256=0e127a9132698766d7e752e82cdac8250b6adbd09e6c0a7fbbb6f61964fedee7
   shoulda-matchers (7.0.1) sha256=b4bfd8744c10e0a36c8ac1a687f921ee7e25ed529e50488d61b79a8688749c77
-  sidekiq (6.5.12) sha256=b4f93b2204c42220d0b526a7b8e0c49b5f9da82c1ce1a05d2baf1e8f744c197f
+  sidekiq (7.3.10) sha256=781eb4f65ef36042534ad73d72f211283afb7fee82eec786ada4ed1972ef8e3c
   sidekiq-cron (2.3.1) sha256=96ab3da372289a30dc744c1daa2ae2e85960b2444a6f6ed68df1ff7882c44aac
   sidekiq-limit_fetch (4.4.1) sha256=7d242fb5d1db89c4f14ca9bb445718cf548280ecdd3814eaef5d601d94fa8b27
   signet (0.21.0) sha256=d617e9fbf24928280d39dcfefba9a0372d1c38187ffffd0a9283957a10a8cd5b
