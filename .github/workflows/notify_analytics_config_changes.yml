@@ -1,0 +1,96 @@
+# This workflow alerts the team's performance analyst whenever a merged PR includes
+# changes to the analytics configuration files. These files govern which data fields
+# are exported to BigQuery and which are anonymised — unannounced changes can silently
+# break downstream data pipelines and dashboards, so early visibility is critical.
+#
+# Notifications are sent via a Microsoft Teams incoming webhook, configured through
+# Microsoft Workflows (Power Automate). The webhook delivers a summary card to the
+# analyst's Teams channel with a direct link to the PR diff.
+#
+# To redirect notifications to a different person or channel:
+#   1. Create a new incoming webhook in the target Teams channel via Workflows.
+#   2. Update the ANALYTICS_CHANGES_TEAMS_WEBHOOK secret in this repository's
+#      GitHub Actions secrets (Settings > Secrets and variables > Actions).
+name: Notify analytics config changes
+
+on:
+  workflow_dispatch: {}
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+    paths:
+      - "config/analytics.yml"
+      - "config/analytics_pii.yml"
+      - "config/analytics_hidden_pii.yml"
+      - "config/analytics_custom_events.yml"
+      - "config/analytics_blocklist.yml"
+
+jobs:
+  notify:
+    name: Send Teams notification
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 2
+
+      - name: Identify changed analytics files
+        id: changed_files
+        run: |
+          FILES=$(git diff --name-only HEAD^ HEAD -- \
+            config/analytics.yml \
+            config/analytics_pii.yml \
+            config/analytics_hidden_pii.yml \
+            config/analytics_custom_events.yml \
+            config/analytics_blocklist.yml \
+            | sed 's/^/- /' \
+            | tr '\n' '\\n')
+          echo "list=$FILES" >> "$GITHUB_OUTPUT"
+
+      - name: Send Microsoft Teams notification
+        env:
+          TEAMS_WEBHOOK: ${{ secrets.ANALYTICS_CHANGES_TEAMS_WEBHOOK }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          MERGED_BY: ${{ github.event.pull_request.merged_by.login }}
+          CHANGED_FILES: ${{ steps.changed_files.outputs.list }}
+        run: |
+          PAYLOAD=$(jq -n \
+            --arg pr_number "$PR_NUMBER" \
+            --arg pr_title "$PR_TITLE" \
+            --arg pr_url "${PR_URL}/files" \
+            --arg pr_author "$PR_AUTHOR" \
+            --arg merged_by "$MERGED_BY" \
+            --arg changed_files "$CHANGED_FILES" \
+            '{
+              "@type": "MessageCard",
+              "@context": "https://schema.org/extensions",
+              "summary": ("Teaching Vacancies: Analytics config changed — PR #" + $pr_number),
+              "themeColor": "0078D7",
+              "title": ("Teaching Vacancies: Analytics config changed — PR #" + $pr_number),
+              "sections": [
+                {
+                  "activityTitle": $pr_title,
+                  "activitySubtitle": ("Opened by @" + $pr_author + " · Merged by @" + $merged_by),
+                  "facts": [
+                    {"name": "Changed files", "value": $changed_files}
+                  ],
+                  "markdown": true
+                }
+              ],
+              "potentialAction": [
+                {
+                  "@type": "OpenUri",
+                  "name": "View diff",
+                  "targets": [{"os": "default", "uri": $pr_url}]
+                }
+              ]
+            }')
+
+          curl --fail -H "Content-Type: application/json" -d "$PAYLOAD" "$TEAMS_WEBHOOK"
