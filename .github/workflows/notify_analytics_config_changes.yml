@@ -27,6 +27,9 @@ on:
       - "config/analytics_custom_events.yml"
       - "config/analytics_blocklist.yml"
 
+permissions:
+  contents: read
+
 jobs:
   notify:
     name: Send Teams notification
