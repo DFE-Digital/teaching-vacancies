@@ -51,7 +51,6 @@ RSpec.describe PersonalDetails do
           expect(personal_details.completed_steps).to be_empty
         end
       end
-
     end
   end
 end
