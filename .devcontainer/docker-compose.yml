@@ -20,7 +20,8 @@ services:
     environment:
       # Rails
       DATABASE_URL: postgis://postgres:postgres@db
-      REDIS_URL: redis://redis:6379
+      REDIS_URL: redis://redis:6379/1
+      REDIS_QUEUE_URL: redis://redis:6379/0
       # Painless `psql` connection
       PGHOST: db
       PGUSER: postgres

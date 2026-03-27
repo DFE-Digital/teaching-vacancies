@@ -26,6 +26,7 @@ module "application_configuration" {
   )
   secret_variables = merge({
     REDIS_URL                                    = module.redis-cache.url
+    REDIS_QUEUE_URL                              = module.redis-queue.url
     DATABASE_URL                                 = module.postgres.url
     GOOGLE_CLOUD_CREDENTIALS                     = var.enable_dfe_analytics_federated_auth ? module.dfe_analytics[0].google_cloud_credentials : null
     AZURE_STORAGE_DOCUMENTS_CONNECTION_STRING    = module.documents_azure_storage.primary_connection_string

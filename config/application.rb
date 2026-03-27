@@ -108,10 +108,8 @@ module TeachingVacancies
       config.redis_queue_url = vcap_services.named_service_url(:redis, "queue")
       config.redis_cache_url = vcap_services.named_service_url(:redis, "cache")
     else
-      redis_url = ENV.fetch("REDIS_URL", "redis://localhost:6379")
-
-      config.redis_queue_url = "#{redis_url}/0"
-      config.redis_cache_url = "#{redis_url}/1"
+      config.redis_queue_url = ENV.fetch("REDIS_QUEUE_URL", "redis://localhost:6379/0")
+      config.redis_cache_url = ENV.fetch("REDIS_URL", "redis://localhost:6379/1")
     end
 
     config.app_role = ActiveSupport::StringInquirer.new(ENV.fetch("APP_ROLE", "unknown"))
