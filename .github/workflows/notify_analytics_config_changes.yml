@@ -40,15 +40,32 @@ jobs:
       - name: Identify changed analytics files
         id: changed_files
         run: |
-          FILES=$(git diff --name-only HEAD^ HEAD -- \
-            config/analytics.yml \
-            config/analytics_pii.yml \
-            config/analytics_hidden_pii.yml \
-            config/analytics_custom_events.yml \
-            config/analytics_blocklist.yml \
-            | sed 's/^/- /' \
-            | tr '\n' '\\n')
-          echo "list=$FILES" >> "$GITHUB_OUTPUT"
+          {
+            echo "list<<EOF"
+            git diff --name-only HEAD^ HEAD -- \
+              config/analytics.yml \
+              config/analytics_pii.yml \
+              config/analytics_hidden_pii.yml \
+              config/analytics_custom_events.yml \
+              config/analytics_blocklist.yml \
+              | sed 's/^/- /'
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Get diff of changed analytics files
+        id: diff
+        run: |
+          {
+            echo "content<<EOF"
+            git diff HEAD^ HEAD -- \
+              config/analytics.yml \
+              config/analytics_pii.yml \
+              config/analytics_hidden_pii.yml \
+              config/analytics_custom_events.yml \
+              config/analytics_blocklist.yml \
+              | head -c 2000
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Send Microsoft Teams notification
         env:
@@ -59,6 +76,7 @@ jobs:
           PR_AUTHOR: ${{ github.event.pull_request.user.login }}
           MERGED_BY: ${{ github.event.pull_request.merged_by.login }}
           CHANGED_FILES: ${{ steps.changed_files.outputs.list }}
+          DIFF: ${{ steps.diff.outputs.content }}
         run: |
           PAYLOAD=$(jq -n \
             --arg pr_number "$PR_NUMBER" \
@@ -67,6 +85,7 @@ jobs:
             --arg pr_author "$PR_AUTHOR" \
             --arg merged_by "$MERGED_BY" \
             --arg changed_files "$CHANGED_FILES" \
+            --arg diff "$DIFF" \
             '{
               "@type": "MessageCard",
               "@context": "https://schema.org/extensions",
@@ -80,6 +99,11 @@ jobs:
                   "facts": [
                     {"name": "Changed files", "value": $changed_files}
                   ],
+                  "markdown": true
+                },
+                {
+                  "title": "Diff",
+                  "text": ("```\n" + $diff + "\n```"),
                   "markdown": true
                 }
               ],
