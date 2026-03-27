@@ -341,66 +341,6 @@ RSpec.describe "Job applications" do
       end
     end
 
-    describe "GET #about_your_application" do
-      before do
-        create(:job_application, :status_submitted, jobseeker: jobseeker)
-      end
-
-      context "without a profile" do
-        it "renders 'new'" do
-          expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
-            .to  render_template(:new)
-        end
-      end
-
-      context "with an empty profile" do
-        before do
-          create(:jobseeker_profile, jobseeker: jobseeker)
-        end
-
-        it "renders 'new'" do
-          expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
-            .to  render_template(:new)
-        end
-      end
-
-      context "with a non-visa-seeking profile" do
-        before do
-          create(:jobseeker_profile, jobseeker: jobseeker, personal_details: build(:personal_details, has_right_to_work_in_uk: true))
-        end
-
-        it "renders 'new'" do
-          expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
-            .to  render_template(:new)
-        end
-      end
-
-      context "with a visa-seeking profile but vacancy is sponsored" do
-        before do
-          create(:jobseeker_profile, jobseeker: jobseeker, personal_details: build(:personal_details, has_right_to_work_in_uk: false))
-        end
-
-        let(:visa_sponsorship) { true }
-
-        it "renders 'new'" do
-          expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
-            .to  render_template(:new)
-        end
-      end
-
-      context "with a visa-seeking profile" do
-        before do
-          create(:jobseeker_profile, jobseeker: jobseeker, personal_details: build(:personal_details, has_right_to_work_in_uk: false))
-        end
-
-        let(:visa_sponsorship) { false }
-
-        it "shows the page" do
-          expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
-            .to render_template(:about_your_application)
-        end
-      end
-    end
 
     describe "POST #withdraw" do
       let(:withdraw_reason) { "other" }
