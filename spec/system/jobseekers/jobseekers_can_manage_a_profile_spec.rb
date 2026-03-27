@@ -215,7 +215,6 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
           expect(page).to have_current_path(review_jobseekers_profile_work_history_index_path, ignore_query: true)
         end
       end
-
     end
   end
 
