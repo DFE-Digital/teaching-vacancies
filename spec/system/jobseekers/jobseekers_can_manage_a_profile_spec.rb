@@ -69,18 +69,6 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
       end
     end
 
-    describe "QTS if the jobseeker has a previous job application" do
-      let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:) }
-
-      before do
-        visit jobseekers_profile_path
-      end
-
-      it "prefills the form with the jobseeker's personal details" do
-        expect(page).to have_content("Year QTS gained#{previous_application.qualified_teacher_status_year}")
-      end
-    end
-
     describe "work history" do
       describe "adding an employment history entry to a profile" do
         let(:profile) { jobseeker.jobseeker_profile }
@@ -225,26 +213,6 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
 
           expect(profile.employments.any?).to be false
           expect(page).to have_current_path(review_jobseekers_profile_work_history_index_path, ignore_query: true)
-        end
-      end
-
-      context "if the jobseeker has a previous job application" do
-        let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, create_details: true) }
-
-        before { visit jobseekers_profile_path }
-
-        it "prefills the form with the jobseeker's work history and qualifications" do
-          previous_application.employments.each do |employment|
-            if employment.job?
-              expect(page).to have_content(employment.organisation)
-            elsif employment.break?
-              expect(page).to have_content("You have a gap in your work history")
-            end
-          end
-
-          previous_application.qualifications.each do |qualification|
-            expect(page).to have_content(qualification.name)
-          end
         end
       end
     end

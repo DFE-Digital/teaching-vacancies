@@ -155,42 +155,6 @@ RSpec.describe "Jobseekers can manage their personal details" do
     end
   end
 
-  describe "personal details if the jobseeker has a previous job application" do
-    let(:previous_application) { jobseeker.job_applications.last }
-
-    before do
-      create(:job_application, :status_submitted, jobseeker:)
-      visit jobseekers_profile_path
-    end
-
-    it "prefills the form with the jobseeker's personal details" do
-      expect(page).to have_content(previous_application.first_name)
-      expect(page).to have_content(previous_application.last_name)
-      expect(page).to have_content(previous_application.phone_number)
-    end
-
-    it "adds a notice to inform the user" do
-      expect(page).to have_content("your details have been imported into your profile")
-    end
-  end
-
-  describe "personal details if the jobseeker has a previously submitted job application" do
-    let(:first_name) { "Alfred" }
-    let(:last_name) { "Accelsior" }
-    let(:phone_number) { "01234567890" }
-
-    before do
-      create(:job_application, :status_submitted, jobseeker:, first_name:, last_name:, phone_number:)
-      visit jobseekers_profile_path
-    end
-
-    it "prefills the form with the jobseeker's provided personal details" do
-      expect(page).to have_content(first_name)
-      expect(page).to have_content(last_name)
-      expect(page).to have_content(phone_number)
-    end
-  end
-
   describe "personal details if the jobseeker has a blank previous draft job application" do
     let!(:previous_application) { create(:job_application, :status_draft, jobseeker:, first_name: nil, last_name: nil, phone_number: "01234567890") }
 

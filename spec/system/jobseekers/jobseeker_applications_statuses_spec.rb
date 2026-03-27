@@ -32,7 +32,7 @@ RSpec.describe "Jobseekers applications statuses" do
 
         click_button "Start application"
         # wait for page load
-        find(".govuk-notification-banner")
+        find_by_id("personal_details")
 
         expect(page).to be_axe_clean
 

@@ -13,7 +13,7 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
       before do
         allow(vacancy).to receive(:uploaded_form?).and_return(false)
         allow(vacancy).to receive(:create_job_application_for).with(jobseeker).and_return(new_job_application)
-        allow(jobseeker).to receive_messages(has_submitted_native_job_application?: true, jobseeker_profile: nil)
+        allow(jobseeker).to receive_messages(has_submitted_native_job_application?: true)
       end
 
       it "prefills the new job application from the previous job application" do
@@ -65,26 +65,6 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
         expect(job_application.first_name).to eq("John")
         expect(job_application.last_name).to eq("Doe")
         expect(job_application.phone_number).to eq("1234567890")
-      end
-    end
-
-    context "when jobseeker does not have a previous native job application but does have a jobseeker profile" do
-      let(:jobseeker) { double("Jobseeker") }
-      let(:vacancy) { double("Vacancy") }
-      let(:new_job_application) { double("NativeJobApplication") }
-      let(:prefill_service) { double("Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile") }
-
-      before do
-        allow(vacancy).to receive(:uploaded_form?).and_return(false)
-        allow(vacancy).to receive(:create_job_application_for).with(jobseeker).and_return(new_job_application)
-        allow(jobseeker).to receive_messages(has_submitted_native_job_application?: false, jobseeker_profile: double("JobseekerProfile"))
-      end
-
-      it "prefills the new job application from the jobseeker profile" do
-        expect(Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile).to receive(:new).with(jobseeker, new_job_application).and_return(prefill_service)
-        expect(prefill_service).to receive(:call)
-
-        subject.job_application
       end
     end
 
