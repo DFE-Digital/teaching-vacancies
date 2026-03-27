@@ -55,8 +55,7 @@ module Jobseekers
     class RolesForm < ProfilesForm
       attribute :roles, array: true, default: []
 
-      validates :roles, presence: true
-      validate :validate_roles
+      validates :roles, presence: true, length: { maximum: 4 }
 
       class << self
         def fields
@@ -65,7 +64,7 @@ module Jobseekers
       end
 
       def params_to_save
-        { roles: roles.compact_blank }
+        { roles: roles }
       end
 
       def teaching_job_roles_options
@@ -74,12 +73,6 @@ module Jobseekers
 
       def support_job_roles_options
         Vacancy::SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.support_job_role_options.#{option}")] }
-      end
-
-      def validate_roles
-        return if (roles - ROLES.map(&:to_s)).empty?
-
-        errors.add(:roles, :invalid)
       end
     end
 
@@ -105,7 +98,7 @@ module Jobseekers
 
     class KeyStagesForm < ProfilesForm
       attribute :key_stages, array: true, default: []
-      validates :key_stages, presence: true
+      validates :key_stages, presence: true, length: { maximum: 3 }
 
       class << self
         def fields

@@ -5,6 +5,7 @@
 = form_for @form, url: wizard_path(step, back_to_review: params[:back_to_review]), method: :patch do |f|
   = f.govuk_error_summary
 
-  = f.govuk_collection_check_boxes(:subjects, SUBJECT_OPTIONS, :first, :first, :last, legend: { size: "l", text: "Subjects (optional)" }, caption: { text: "Job preferences", size: "l" })
+  = f.govuk_collection_check_boxes(:subjects, SUBJECT_OPTIONS, :first, :first, :last,
+    include_hidden: false, legend: { size: "l", text: "Subjects (optional)" }, caption: { text: "Job preferences", size: "l" })
   = f.govuk_submit "Save and continue"
   p = f.link_to "Cancel", escape_path
