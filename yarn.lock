@@ -4976,10 +4976,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"govuk-frontend@npm:^5.14.0, govuk-frontend@npm:^5.3.1":
+"govuk-frontend@npm:^5.3.1":
   version: 5.14.0
   resolution: "govuk-frontend@npm:5.14.0"
   checksum: 10c0/dcb1116003bb4a8ff167434bb30a779d6deafecb10687d044d5c560c0a7ff2053b8666000831c18ad3bcf4aa310678bf3c0cc40d734570b2b81c44853ddd388a
+  languageName: node
+  linkType: hard
+
+"govuk-frontend@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "govuk-frontend@npm:6.1.0"
+  checksum: 10c0/543a8c6b1d709ec938e396fa3be923171637ab9b724f03618fa1bdc52023b6aa27fb42932b9e81df3fc134b0473442d42478dbf3e4b18e2bae00dbfe95363e96
   languageName: node
   linkType: hard
 
@@ -8085,7 +8092,7 @@ __metadata:
     eslint: "npm:^8.57.1"
     eslint-config-airbnb-base: "npm:^15.0.0"
     eslint-plugin-import: "npm:^2.32.0"
-    govuk-frontend: "npm:^5.14.0"
+    govuk-frontend: "npm:^6.1.0"
     jest: "npm:^30.3.0"
     jest-environment-jsdom: "npm:30.3.0"
     jsdom: "npm:^29.0.0"
