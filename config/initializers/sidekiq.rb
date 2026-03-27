@@ -8,6 +8,7 @@ return if Rails.env.test?
 Sidekiq.configure_server do |config|
   # config.merge!(options)
   # config.logger.level = Logger::WARN
+  config.logger.level = Logger::DEBUG
   # config.redis = { url: Rails.configuration.redis_queue_url, network_timeout: 5, size: config.options[:concurrency] + 5 }
   config.redis = { url: Rails.configuration.redis_queue_url, network_timeout: 5 }
 end
@@ -15,6 +16,7 @@ end
 Sidekiq.configure_client do |config|
   # config.merge!(options)
   # config.redis = { url: Rails.configuration.redis_queue_url, network_timeout: 5, size: config.options[:concurrency] + 5 }
+  config.logger.level = Logger::DEBUG
   config.redis = { url: Rails.configuration.redis_queue_url, network_timeout: 5 }
 end
 
