@@ -341,7 +341,6 @@ RSpec.describe "Job applications" do
       end
     end
 
-
     describe "POST #withdraw" do
       let(:withdraw_reason) { "other" }
       let(:origin) { "" }
