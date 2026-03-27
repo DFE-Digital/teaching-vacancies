@@ -123,6 +123,7 @@ RSpec.describe "Publishers can view candidate messages" do
       end
 
       it "passes accessibility checks", :a11y do
+        expect(page).to have_content("Inbox (0)")
         expect(page).to be_axe_clean
       end
 
