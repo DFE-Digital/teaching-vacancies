@@ -14,12 +14,9 @@
 name: Notify analytics config changes
 
 on:
-  workflow_dispatch: {}
-  pull_request:
-    types:
-      - closed
+  push:
     branches:
-      - main
+      - add-notifications-of-analytics-changes-to-perf-analyst-to-teams
     paths:
       - "config/analytics.yml"
       - "config/analytics_pii.yml"
@@ -33,7 +30,6 @@ permissions:
 jobs:
   notify:
     name: Send Teams notification
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
 
     steps:

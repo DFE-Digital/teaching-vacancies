@@ -628,3 +628,4 @@ shared:
     - last_attempted_at
     - created_at
     - updated_at
+
