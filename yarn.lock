@@ -8191,7 +8191,7 @@ __metadata:
     stylelint-config-sass-guidelines: "npm:^10.0.0"
     stylelint-config-standard: "npm:^34.0.0"
     tough-cookie: "npm:^6.0.1"
-    trix: "npm:^2.1.17"
+    trix: "npm:^2.1.18"
     yaml: "npm:^2.8.2"
   languageName: unknown
   linkType: soft
@@ -8328,12 +8328,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"trix@npm:^2.1.17":
-  version: 2.1.17
-  resolution: "trix@npm:2.1.17"
+"trix@npm:^2.1.18":
+  version: 2.1.18
+  resolution: "trix@npm:2.1.18"
   dependencies:
     dompurify: "npm:^3.2.5"
-  checksum: 10c0/0a8b9bdb1df8e0a587ea7bc2d73f74e801ed1bccb913e7cd1cdf3e34ff767dfcd7b65e5549c7e3dcf7d2ab9e592ad3ddfd3b7052af798f3f95ae9de8ce299c62
+  checksum: 10c0/1e6e4c6e993943e2bcfff36dee9a0ca652f2799a19e14f89278e9fa08b84fa96682928cda6c911ddf700208cb37f7b8483248d8eed0422887a588c2663bf22cf
   languageName: node
   linkType: hard
 
