@@ -3,7 +3,7 @@ require "rails_helper"
 # This spec relies on a fake landing page set up in the test section of `config/landing_pages.yml`
 # and the translation file.
 RSpec.describe LandingPage do
-  subject { described_class["part-time-potions-and-sorcery-teacher-jobs"] }
+  subject(:landing_page) { described_class["part-time-potions-and-sorcery-teacher-jobs"] }
 
   let(:search) { instance_double(Search::VacancySearch, total_count: 42) }
 
@@ -76,21 +76,21 @@ RSpec.describe LandingPage do
 
   describe "#count" do
     it "performs a search and returns its total count" do
-      expect(subject.count).to eq(42)
+      expect(landing_page.count).to eq(42)
     end
   end
 
   describe "i18n methods" do
-    specify { expect(subject.heading).to eq("<span class=\"govuk-!-font-weight-bold\">42</span> amazing jobs APPLY NOW") }
-    specify { expect(subject.meta_description).to eq("Lorem ipsum dolor sit jobs, vacancies adipiscing elit.") }
-    specify { expect(subject.name).to eq("Potions and Sorcery") }
-    specify { expect(subject.title).to eq("Spiffy Part Time Potions and Sorcery Jobs") }
-    specify { expect(subject.banner_title).to eq("Spiffy Part Time Potions and Sorcery Jobs") }
+    specify { expect(landing_page.heading).to eq("<span class=\"govuk-!-font-weight-bold\">42</span> amazing jobs APPLY NOW") }
+    specify { expect(landing_page.meta_description).to eq("Lorem ipsum dolor sit jobs, vacancies adipiscing elit.") }
+    specify { expect(landing_page.name).to eq("Potions and Sorcery") }
+    specify { expect(landing_page.title).to eq("Spiffy Part Time Potions and Sorcery Jobs") }
+    specify { expect(landing_page.banner_title).to eq("Spiffy Part Time Potions and Sorcery Jobs") }
   end
 
   describe "has_banner_image?" do
     it "returns true if the landing page has a banner image" do
-      expect(subject.has_banner_image?).to be(true)
+      expect(landing_page.has_banner_image?).to be(true)
     end
   end
 end

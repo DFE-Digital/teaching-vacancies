@@ -15,7 +15,7 @@ class OrganisationLandingPage < LandingPage
 
   def initialize(organisation)
     @name = organisation.name
-    @criteria = { organisation_slug: organisation.slug }
+    super(organisation.slug, { organisation_slug: organisation.slug })
   end
 
   private

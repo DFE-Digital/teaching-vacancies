@@ -38,6 +38,10 @@ RSpec.describe "Sitemap" do
       expect(xml).to include(location_landing_page_path(ALL_IMPORTED_LOCATIONS.first))
     end
 
+    it "includes job role + location landing pages in the sitemap" do
+      expect(xml).to include(job_role_location_landing_page_path("teaching-assistant", "london"))
+    end
+
     it "includes static pages in the sitemap" do
       expect(xml).to include(page_path("terms-and-conditions"))
       expect(xml).to include(page_path("accessibility"))

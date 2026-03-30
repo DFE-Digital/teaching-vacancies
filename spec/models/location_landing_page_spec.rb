@@ -1,15 +1,10 @@
 require "rails_helper"
 
 RSpec.describe LocationLandingPage do
-  subject { described_class["narnia"] }
+  subject(:landing_page) { described_class["narnia"] }
 
   before do
     stub_const("ALL_IMPORTED_LOCATIONS", %w[narnia])
-  end
-
-  let(:search) { instance_double(Search::VacancySearch, total_count: 34) }
-
-  before do
     create(:location_polygon, name: "narnia")
 
     allow(Search::VacancySearch)
@@ -17,6 +12,8 @@ RSpec.describe LocationLandingPage do
       .with(hash_including(location: "Narnia"))
       .and_return(search)
   end
+
+  let(:search) { instance_double(Search::VacancySearch, total_count: 34) }
 
   describe ".exists?" do
     it "returns whether a landing page exists for the given location name" do
@@ -40,14 +37,14 @@ RSpec.describe LocationLandingPage do
 
   describe "#count" do
     it "performs a search and returns its total count" do
-      expect(subject.count).to eq(34)
+      expect(landing_page.count).to eq(34)
     end
   end
 
   describe "i18n methods" do
-    specify { expect(subject.heading).to eq(I18n.t("landing_pages._location.heading", location: "Narnia", count: "<span class=\"govuk-!-font-weight-bold\">34</span>")) }
-    specify { expect(subject.meta_description).to eq(I18n.t("landing_pages._location.meta_description", location: "Narnia")) }
-    specify { expect(subject.name).to eq("Narnia") }
-    specify { expect(subject.title).to eq(I18n.t("landing_pages._location.title", location: "Narnia")) }
+    specify { expect(landing_page.heading).to eq(I18n.t("landing_pages._location.heading", location: "Narnia", count: "<span class=\"govuk-!-font-weight-bold\">34</span>")) }
+    specify { expect(landing_page.meta_description).to eq(I18n.t("landing_pages._location.meta_description", location: "Narnia")) }
+    specify { expect(landing_page.name).to eq("Narnia") }
+    specify { expect(landing_page.title).to eq(I18n.t("landing_pages._location.title", location: "Narnia")) }
   end
 end
