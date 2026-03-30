@@ -33,8 +33,6 @@ RSpec.describe "Publishers can manage candidate messages" do
       create(:jobseeker_message, conversation: school_published_conversation, sender: jobseeker)
 
       visit current_path
-      # wait for page load
-      find("form[action='/publishers/candidate_messages/toggle_archive']")
     end
 
     context "with the trust user" do
