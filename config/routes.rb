@@ -141,10 +141,6 @@ Rails.application.routes.draw do
         end
         get :confirm_destroy
       end
-      resources :training_and_cpds, only: %i[new create edit update destroy], controller: "profiles/training_and_cpds" do
-        get :review, on: :collection, to: "profiles/training_and_cpds#review"
-        get :confirm_destroy
-      end
       resources :professional_body_memberships, only: %i[new create edit update destroy], controller: "profiles/professional_body_memberships" do
         get :review, on: :collection, to: "profiles/professional_body_memberships#review"
         get :confirm_destroy

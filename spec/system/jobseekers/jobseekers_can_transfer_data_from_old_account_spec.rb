@@ -139,7 +139,6 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
     expect(page).not_to have_content profile.last_name
     expect(page).not_to have_content profile.qualifications.first.name
     expect(page).not_to have_content profile.employments.first.organisation
-    expect(page).not_to have_content profile.training_and_cpds.first.name
 
     visit jobseekers_job_applications_path
 
@@ -160,7 +159,6 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
     expect(page).to have_content profile.last_name
     expect(page).to have_content profile.qualifications.first.name
     expect(page).to have_content profile.employments.first.organisation
-    expect(page).to have_content profile.training_and_cpds.first.name
 
     visit jobseekers_job_applications_path
 

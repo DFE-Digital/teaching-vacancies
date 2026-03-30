@@ -8,7 +8,6 @@ RSpec.describe "publishers/jobseeker_profiles/show" do
                   personal_details: build(:personal_details),
                   qualifications: [build_stubbed(:qualification)],
                   employments: [build_stubbed(:employment)],
-                  training_and_cpds: [build_stubbed(:training_and_cpd)],
                   professional_body_memberships: [build_stubbed(:professional_body_membership)],
                   job_preferences: build_stubbed(:job_preferences, roles: %w[ teacher
                                                                               headteacher
@@ -54,10 +53,6 @@ RSpec.describe "publishers/jobseeker_profiles/show" do
     )
     expect(rendered).to have_content(jobseeker_profile.employments.first.subjects)
     expect(rendered).to have_no_content("Location")
-    expect(rendered).to have_content(jobseeker_profile.training_and_cpds.first.name)
-    expect(rendered).to have_content(jobseeker_profile.training_and_cpds.first.provider)
-    expect(rendered).to have_content(jobseeker_profile.training_and_cpds.first.grade)
-    expect(rendered).to have_content(jobseeker_profile.training_and_cpds.first.year_awarded)
     expect(rendered).to have_content(jobseeker_profile.job_preferences.working_pattern_details)
     expect(rendered).to have_content(jobseeker_profile.professional_body_memberships.first.name)
     expect(rendered).to have_content(jobseeker_profile.professional_body_memberships.first.membership_type)
