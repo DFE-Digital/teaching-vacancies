@@ -251,6 +251,8 @@ RSpec.describe JobApplicationPdf do
     describe "#qualifications" do
       subject(:qualifications) { datasource.qualifications }
 
+      let(:qual_subject) { Faker::Educator.subject }
+
       context "when no qualifications present" do
         it "returns no data available message" do
           expect(qualifications).to eq([[I18n.t("jobseekers.job_applications.show.qualifications.none"), nil]])
@@ -258,20 +260,42 @@ RSpec.describe JobApplicationPdf do
       end
 
       context "when qualifications present" do
-        let(:quals) { build_stubbed_list(:qualification, 1, category: "undergraduate") }
+        let(:quals) { build_stubbed_list(:qualification, 1, category: "undergraduate", institution: place, subject: qual_subject, grade: grade) }
+        let(:place) { Faker::Educator.university }
+        let(:grade) { "Honours" }
 
         it "returns qualification data" do
-          expect(qualifications.first.first).to eq(I18n.t("helpers.label.jobseekers_qualifications_category_form.category_options.undergraduate"))
+          expect(qualifications.map { |x, y| [x, y.first.rows] })
+            .to eq([
+              [I18n.t("helpers.label.jobseekers_qualifications_category_form.category_options.undergraduate"),
+               [
+                 ["Qualification Name:", "Undergraduate degree"],
+                 ["Subject:", qual_subject],
+                 ["Institution:", place],
+                 ["Grade:", grade],
+                 ["Date completed:", "December 2020"],
+               ]],
+            ])
         end
       end
 
       context "when secondary qualifications present" do
+        let(:place) { Faker::Educator.secondary_school }
         let(:quals) { build_stubbed_list(:qualification, 1, category: "gcse", qualification_results: [result]) }
-        let(:result) { build_stubbed(:qualification_result) }
+        let(:result) { build_stubbed(:qualification_result, subject: qual_subject, grade: "A", awarding_body: place) }
 
         it "formats secondary qualifications correctly" do
-          expect(qualifications.first.last.first.first).to include("Secondary Qualification")
-          expect(qualifications.first.last.first).to include(["Subject:", result.subject])
+          expect(qualifications.map { |x, y| [x, y.first.rows] })
+            .to eq([
+              ["GCSEs",
+               [
+                 ["Secondary Qualification"],
+                 ["Subject:", qual_subject],
+                 ["Grade:", "A"],
+                 ["Awarding Body:", place],
+                 ["Date completed:", "December 2020"],
+               ]],
+            ])
         end
       end
 
