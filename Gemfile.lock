@@ -833,9 +833,11 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.13.2)
     simplecov_json_formatter (0.1.4)
-    site_prism (5.2)
+    site_prism (6.0)
       addressable (~> 2.8, >= 2.8.4)
-      capybara (~> 3.34)
+      base64 (~> 0.3.0)
+      capybara (~> 3.37)
+      logger (~> 1.7)
       site_prism-all_there (> 3, < 5)
     site_prism-all_there (3.0.8)
     skylight (7.1.0)
@@ -1428,7 +1430,7 @@ CHECKSUMS
   simplecov (0.22.0) sha256=fe2622c7834ff23b98066bb0a854284b2729a569ac659f82621fc22ef36213a5
   simplecov-html (0.13.2) sha256=bd0b8e54e7c2d7685927e8d6286466359b6f16b18cb0df47b508e8d73c777246
   simplecov_json_formatter (0.1.4) sha256=529418fbe8de1713ac2b2d612aa3daa56d316975d307244399fa4838c601b428
-  site_prism (5.2) sha256=2d8716d6a559e45402cfd11e2425f5944a0a7f49839361803dd99f195640a2ce
+  site_prism (6.0) sha256=620e06cc0c4dba66554d3a89c8fd49d121b0cb97905198db1bd590c3ddaec3e4
   site_prism-all_there (3.0.8) sha256=ce18c10abef29fca1e625d8e962096cba3906fef88a1e4e2fa5bb7cc5bc12720
   skylight (7.1.0) sha256=f2cde8336c3a3a7ecdfa9973a4bb86badd7c69e8f8328c0b26150a0da0d206d6
   slim (5.2.1) sha256=72351dff7e2ff20e2d5c393cfc385bb9142cef5db059141628fd7163ac3c13e7
