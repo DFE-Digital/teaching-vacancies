@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_13_092708) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_30_082849) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -868,8 +868,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_13_092708) do
     t.geography "geolocation", limit: {srid: 4326, type: "geometry", geographic: true}
     t.string "readable_phases", default: [], array: true
     t.tsvector "searchable_content"
-    t.boolean "google_index_removed", default: false
-    t.string "parental_leave_cover_contract_duration"
     t.datetime "expired_vacancy_feedback_email_sent_at", precision: nil
     t.string "external_source"
     t.string "external_reference"
@@ -877,8 +875,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_13_092708) do
     t.integer "ect_status"
     t.string "pay_scale"
     t.boolean "benefits"
-    t.text "full_time_details"
-    t.text "part_time_details"
     t.integer "phases", array: true
     t.integer "start_date_type"
     t.date "earliest_start_date"
