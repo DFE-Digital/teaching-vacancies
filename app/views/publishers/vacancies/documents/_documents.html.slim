@@ -6,6 +6,6 @@ dl.govuk-summary-list
         - if document.blob.malware_scan_clean?
           == file_download_link_or_status(document)
         - else
-          = document.filename
-          == file_scan_status_tag(document.blob)
+          div = document.filename
+          div == file_scan_status_tag(document.blob)
       dd.govuk-summary-list__actions = remove_document_link(document, vacancy)
