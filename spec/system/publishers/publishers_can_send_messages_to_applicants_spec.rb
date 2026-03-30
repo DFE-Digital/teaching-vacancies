@@ -210,6 +210,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
       after { logout }
 
       it "passes accessibility checks", :a11y do
+        expect(page).to have_text("Hello from publisher")
         expect(page).to be_axe_clean
       end
 

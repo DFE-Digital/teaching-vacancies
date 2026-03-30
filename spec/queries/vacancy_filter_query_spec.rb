@@ -7,54 +7,102 @@ RSpec.describe VacancyFilterQuery do
     create(:vacancy, :trashed, :secondary, working_patterns: %w[part_time full_time], subjects: %w[English Spanish], ect_status: "ect_suitable")
   end
 
-  let(:academies) { create(:school, name: "Academy1", school_type: "Academies") }
-  let(:academy) { create(:school, name: "Academy2", school_type: "Academy") }
-  let(:free_school) { create(:school, name: "Freeschool1", school_type: "Free schools") }
-  let(:free_schools) { create(:school, name: "Freeschool2", school_type: "Free school") }
-  let(:local_authority_school) { create(:school, name: "local authority", school_type: "Local authority maintained schools") }
-  let(:special_school1) { create(:school, name: "Community special school", detailed_school_type: "Community special school") }
-  let(:special_school2) { create(:school, name: "Foundation special school", detailed_school_type: "Foundation special school") }
-  let(:special_school3) { create(:school, name: "Non-maintained special school", detailed_school_type: "Non-maintained special school") }
-  let(:special_school4) { create(:school, name: "Academy special converter", detailed_school_type: "Academy special converter") }
-  let(:special_school5) { create(:school, name: "Academy special sponsor led", detailed_school_type: "Academy special sponsor led") }
-  let(:special_school6) { create(:school, name: "Non-maintained special school", detailed_school_type: "Free schools special") }
-  let(:faith_school) { create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "anything" }) }
-  let(:faith_school2) { create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "somethingelse" }) }
-  let(:non_faith_school1) { create(:school, name: "nonfaith1", gias_data: { "ReligiousCharacter (name)" => "" }) }
-  let(:non_faith_school2) { create(:school, name: "nonfaith2", gias_data: { "ReligiousCharacter (name)" => "Does not apply" }) }
-  let(:non_faith_school3) { create(:school, name: "nonfaith3", gias_data: { "ReligiousCharacter (name)" => "None" }) }
+  let(:vacancy1) { Vacancy.find_by!(job_title: "Vacancy 1") }
+  let(:vacancy2) { Vacancy.find_by!(job_title: "Vacancy 2FR") }
+  let(:vacancy3) { Vacancy.find_by!(job_title: "Vacancy 3") }
+  let(:vacancy4) { Vacancy.find_by!(job_title: "Vacancy 4FR") }
+  let(:vacancy5) { Vacancy.find_by!(job_title: "Vacancy 5") }
+  let(:vacancy6) { Vacancy.find_by!(job_title: "Vacancy 6FR") }
+  let(:vacancy7) { Vacancy.find_by!(job_title: "Vacancy 7FR") }
+  let(:vacancy8) { Vacancy.find_by!(job_title: "Vacancy 8FR") }
+  let(:vacancy9) { Vacancy.find_by!(job_title: "Vacancy 9FR") }
+  let(:teaching_assistant_vacancy) { Vacancy.find_by!(job_title: "Vacancy 10FR") }
+  let(:hlta_vacancy) { Vacancy.find_by!(job_title: "Vacancy 11FR") }
+  let(:education_support_vacancy) { Vacancy.find_by!(job_title: "Vacancy 12FR") }
+  let(:sendco_vacancy) { Vacancy.find_by!(job_title: "Vacancy 13FR") }
+  let(:administration_hr_data_and_finance_vacancy) { Vacancy.find_by!(job_title: "Vacancy 15FR") }
+  let(:it_support_vacancy) { Vacancy.find_by!(job_title: "Vacancy 16FR") }
+  let(:pastoral_health_and_welfare_vacancy) { Vacancy.find_by!(job_title: "Vacancy 17FR") }
+  let(:other_leadership_vacancy) { Vacancy.find_by!(job_title: "Vacancy 18FR") }
+  let(:other_support_vacancy) { Vacancy.find_by!(job_title: "Vacancy 19FR") }
+  let(:catering_cleaning_and_site_management_vacancy) { Vacancy.find_by!(job_title: "Vacancy 191FR") }
+  let(:special_vacancy1) { Vacancy.find_by!(job_title: "Vacancy 7S") }
+  let(:special_vacancy2) { Vacancy.find_by!(job_title: "Vacancy 8S") }
+  let(:special_vacancy3) { Vacancy.find_by!(job_title: "Vacancy 9S") }
+  let(:special_vacancy4) { Vacancy.find_by!(job_title: "Vacancy 10S") }
+  let(:special_vacancy5) { Vacancy.find_by!(job_title: "Vacancy 11S") }
+  let(:special_vacancy6) { Vacancy.find_by!(job_title: "Vacancy 12S") }
+  let(:faith_vacancy) { Vacancy.find_by!(job_title: "Vacancy 13F") }
+  let(:non_faith_vacancy1) {  Vacancy.find_by!(job_title: "Vacancy 14") }
+  let(:non_faith_vacancy2) {  Vacancy.find_by!(job_title: "Vacancy 15-NFV2") }
+  let(:non_faith_vacancy3) {  Vacancy.find_by!(job_title: "Vacancy 14-NFV3") }
 
-  # Subjects are ignored when phases are primary-only
-  let!(:vacancy1) { create(:vacancy, :secondary, job_title: "Vacancy 1", subjects: %w[English Spanish], working_patterns: %w[part_time full_time], ect_status: "ect_suitable", organisations: [academy], enable_job_applications: true, visa_sponsorship_available: true) }
-  let!(:vacancy2) { create(:vacancy, job_title: "Vacancy 2", subjects: %w[English Spanish], phases: %w[sixth_form_or_college], ect_status: "ect_unsuitable", organisations: [free_school], enable_job_applications: true) }
-  let!(:vacancy3) { create(:vacancy, job_title: "Vacancy 3", phases: %w[primary], job_roles: ["sendco"], organisations: [local_authority_school], enable_job_applications: true) }
-  let!(:vacancy4) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 4", phases: %w[primary]) }
-  let!(:vacancy5) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 5", phases: %w[primary], job_roles: ["head_of_year_or_phase"], organisations: [academies]) }
-  let!(:vacancy6) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 6", phases: %w[primary], job_roles: ["head_of_department_or_curriculum"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:vacancy7) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 7", phases: %w[primary], job_roles: ["headteacher"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:vacancy8) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 8", phases: %w[primary], job_roles: ["assistant_headteacher"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:vacancy9) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 9", phases: %w[primary], job_roles: ["deputy_headteacher"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:teaching_assistant_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 10", phases: %w[primary], job_roles: ["teaching_assistant"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:hlta_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 11", phases: %w[primary], job_roles: ["higher_level_teaching_assistant"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:education_support_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 12", phases: %w[primary], job_roles: ["education_support"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:sendco_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 13", phases: %w[primary], job_roles: ["sendco"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:administration_hr_data_and_finance_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 15", phases: %w[primary], job_roles: ["administration_hr_data_and_finance"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:it_support_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 16", phases: %w[primary], job_roles: ["it_support"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:pastoral_health_and_welfare_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 17", phases: %w[primary], job_roles: ["pastoral_health_and_welfare"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:other_leadership_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 18", phases: %w[primary], job_roles: ["other_leadership"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:other_support_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 19", phases: %w[primary], job_roles: ["other_support"], publisher_organisation: free_school, organisations: [free_school, free_schools], expires_at: 2.days.from_now) }
-  let!(:catering_cleaning_and_site_management_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 19", phases: %w[primary], job_roles: ["catering_cleaning_and_site_management"], publisher_organisation: free_school, organisations: [free_school, free_schools], expires_at: 1.day.from_now) }
+  # rubocop:disable RSpec/BeforeAfterAll
+  before(:all) do
+    Vacancy.transaction do
+      academy = create(:school, name: "Academy2", school_type: "Academy")
+      # Subjects are ignored when phases are primary-only
+      create(:vacancy, :secondary, job_title: "Vacancy 1", subjects: %w[English Spanish], working_patterns: %w[part_time full_time], ect_status: "ect_suitable", organisations: [academy], enable_job_applications: true, visa_sponsorship_available: true)
 
-  let!(:special_vacancy1) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 7", phases: %w[primary], organisations: [special_school1]) }
-  let!(:special_vacancy2) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 8", phases: %w[primary], organisations: [special_school2]) }
-  let!(:special_vacancy3) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 9", phases: %w[primary], organisations: [special_school3]) }
-  let!(:special_vacancy4) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 10", phases: %w[primary], organisations: [special_school4]) }
-  let!(:special_vacancy5) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 11", phases: %w[primary], organisations: [special_school5]) }
-  let!(:special_vacancy6) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 12", phases: %w[primary], organisations: [special_school6]) }
-  let!(:faith_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 13", phases: %w[primary], publisher_organisation: faith_school, organisations: [faith_school, faith_school2]) }
-  let!(:non_faith_vacancy1) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 14", phases: %w[primary], organisations: [non_faith_school1]) }
-  let!(:non_faith_vacancy2) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 15", phases: %w[primary], organisations: [non_faith_school2]) }
-  let!(:non_faith_vacancy3) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 14", phases: %w[primary], organisations: [non_faith_school3], visa_sponsorship_available: true) }
+      local_authority_school = create(:school, name: "local authority", school_type: "Local authority maintained schools")
+      create(:vacancy, job_title: "Vacancy 3", phases: %w[primary], job_roles: ["sendco"], organisations: [local_authority_school], enable_job_applications: true)
+
+      non_faith_school1 = create(:school, name: "nonfaith1", gias_data: { "ReligiousCharacter (name)" => "" })
+      non_faith_school2 = create(:school, name: "nonfaith2", gias_data: { "ReligiousCharacter (name)" => "Does not apply" })
+      non_faith_school3 = create(:school, name: "nonfaith3", gias_data: { "ReligiousCharacter (name)" => "None" })
+
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 14", phases: %w[primary], organisations: [non_faith_school1])
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 15-NFV2", phases: %w[primary], organisations: [non_faith_school2])
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 14-NFV3", phases: %w[primary], organisations: [non_faith_school3], visa_sponsorship_available: true)
+
+      special_school1 = create(:school, name: "Community special school", detailed_school_type: "Community special school")
+      special_school2 = create(:school, name: "Foundation special school", detailed_school_type: "Foundation special school")
+      special_school3 = create(:school, name: "Non-maintained special school", detailed_school_type: "Non-maintained special school")
+      special_school4 = create(:school, name: "Academy special converter", detailed_school_type: "Academy special converter")
+      special_school5 = create(:school, name: "Academy special sponsor led", detailed_school_type: "Academy special sponsor led")
+      special_school6 = create(:school, name: "Non-maintained special school", detailed_school_type: "Free schools special")
+
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 7S", phases: %w[primary], organisations: [special_school1])
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 8S", phases: %w[primary], organisations: [special_school2])
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 9S", phases: %w[primary], organisations: [special_school3])
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 10S", phases: %w[primary], organisations: [special_school4])
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 11S", phases: %w[primary], organisations: [special_school5])
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 12S", phases: %w[primary], organisations: [special_school6])
+
+      academies = create(:school, name: "Academy1", school_type: "Academies")
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 5", phases: %w[primary], job_roles: ["head_of_year_or_phase"], organisations: [academies])
+
+      faith_school = create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "anything" })
+      faith_school2 = create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "somethingelse" })
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 13F", phases: %w[primary], publisher_organisation: faith_school, organisations: [faith_school, faith_school2])
+
+      free_school = create(:school, name: "Freeschool1", school_type: "Free schools")
+      free_schools = create(:school, name: "Freeschool2", school_type: "Free school")
+
+      create(:vacancy, job_title: "Vacancy 2FR", subjects: %w[English Spanish], phases: %w[sixth_form_or_college], ect_status: "ect_unsuitable", organisations: [free_school], enable_job_applications: true)
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 4FR", phases: %w[primary])
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 6FR", phases: %w[primary], job_roles: ["head_of_department_or_curriculum"], publisher_organisation: free_school, organisations: [free_school, free_schools])
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 7FR", phases: %w[primary], job_roles: ["headteacher"], publisher_organisation: free_school, organisations: [free_school, free_schools])
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 8FR", phases: %w[primary], job_roles: ["assistant_headteacher"], publisher_organisation: free_school, organisations: [free_school, free_schools])
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 9FR", phases: %w[primary], job_roles: ["deputy_headteacher"], publisher_organisation: free_school, organisations: [free_school, free_schools])
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 10FR", phases: %w[primary], job_roles: ["teaching_assistant"], publisher_organisation: free_school, organisations: [free_school, free_schools])
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 11FR", phases: %w[primary], job_roles: ["higher_level_teaching_assistant"], publisher_organisation: free_school, organisations: [free_school, free_schools])
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 12FR", phases: %w[primary], job_roles: ["education_support"], publisher_organisation: free_school, organisations: [free_school, free_schools])
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 13FR", phases: %w[primary], job_roles: ["sendco"], publisher_organisation: free_school, organisations: [free_school, free_schools])
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 15FR", phases: %w[primary], job_roles: ["administration_hr_data_and_finance"], publisher_organisation: free_school, organisations: [free_school, free_schools])
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 16FR", phases: %w[primary], job_roles: ["it_support"], publisher_organisation: free_school, organisations: [free_school, free_schools])
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 17FR", phases: %w[primary], job_roles: ["pastoral_health_and_welfare"], publisher_organisation: free_school, organisations: [free_school, free_schools])
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 18FR", phases: %w[primary], job_roles: ["other_leadership"], publisher_organisation: free_school, organisations: [free_school, free_schools])
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 19FR", phases: %w[primary], job_roles: ["other_support"], publisher_organisation: free_school, organisations: [free_school, free_schools], expires_at: 2.days.from_now)
+      create(:vacancy, :no_tv_applications, job_title: "Vacancy 191FR", phases: %w[primary], job_roles: ["catering_cleaning_and_site_management"], publisher_organisation: free_school, organisations: [free_school, free_schools], expires_at: 1.day.from_now)
+    end
+  end
+
+  after(:all) do
+    Vacancy.destroy_all
+    School.destroy_all
+  end
+  # rubocop:enable RSpec/BeforeAfterAll
 
   describe "#call" do
     context "with english spanish" do
@@ -170,8 +218,8 @@ RSpec.describe VacancyFilterQuery do
 
     describe "working patterns search" do
       before do
-        create(:vacancy, slug: "pt1", organisations: [free_school], is_job_share: false, working_patterns: %w[part_time])
-        create(:vacancy, slug: "ft1", organisations: [free_school], is_job_share: true, working_patterns: %w[full_time])
+        create(:vacancy, slug: "pt1", is_job_share: false, working_patterns: %w[part_time])
+        create(:vacancy, slug: "ft1", is_job_share: true, working_patterns: %w[full_time])
       end
 
       context "with job share filter" do

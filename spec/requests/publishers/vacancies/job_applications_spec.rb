@@ -380,7 +380,7 @@ RSpec.describe "Job applications" do
       end
 
       context "when date is valid" do
-        let(:offer_date) { Date.current }
+        let(:offer_date) { (Time.zone.today + 12.hours) }
         let(:form_params) do
           { origin:, status:, job_applications: }.merge(
             "offered_at(1i)" => offer_date.year,
@@ -397,7 +397,7 @@ RSpec.describe "Job applications" do
 
         it "update date" do
           expect { post(offer_organisation_job_job_applications_path(vacancy.id), params:) }
-            .to change { job_application.reload.offered_at }.from(nil).to(offer_date)
+            .to change { job_application.reload.offered_at&.to_date }.from(nil).to(offer_date.to_date)
         end
       end
 
@@ -440,7 +440,7 @@ RSpec.describe "Job applications" do
     end
 
     describe "feedback form" do
-      let(:feedback_date) { Date.current }
+      let(:feedback_date) { Time.zone.today + 12.hours }
       let(:origin) { "interviewing" }
       let(:params) do
         {
@@ -468,7 +468,7 @@ RSpec.describe "Job applications" do
 
         it "update date" do
           expect { post(offer_organisation_job_job_applications_path(vacancy.id), params:) }
-            .to change { job_application.reload.interview_feedback_received_at }.from(nil).to(feedback_date)
+            .to change { job_application.reload.interview_feedback_received_at&.to_date }.from(nil).to(feedback_date.to_date)
         end
       end
 
