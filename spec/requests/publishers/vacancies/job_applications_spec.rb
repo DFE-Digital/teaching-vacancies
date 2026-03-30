@@ -440,7 +440,7 @@ RSpec.describe "Job applications" do
     end
 
     describe "feedback form" do
-      let(:feedback_date) { Time.zone.today + 12.hours}
+      let(:feedback_date) { Time.zone.today + 12.hours }
       let(:origin) { "interviewing" }
       let(:params) do
         {
