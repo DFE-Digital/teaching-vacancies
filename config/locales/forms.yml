@@ -190,7 +190,7 @@ en:
           We'll only use this to tell you about opportunities to take part in user research that is relevant to you.
       jobseekers_qualifications_category_form:
         category_options:
-          postgraduate: For example, A PGCE, master’s or PhD.
+          postgraduate: For example, a PGCE, master’s or PhD.
           other: For example, BTECs, diplomas or qualifications from outside of the UK.
 
       publishers_organisation_form:
@@ -711,6 +711,8 @@ en:
       jobseekers_unsubscribe_feedback_form:
         reason: Why do you want to unsubscribe from this alert?
         user_participation_response: Would you like to participate in our research?
+      jobseekers_qualifications_category_form:
+        category: Enter your highest level of qualification.
 
       publishers_job_listing_about_the_role_form:
         ect_status: Is this role suitable for an early career teacher (ECT)?
