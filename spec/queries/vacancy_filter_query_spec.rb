@@ -101,6 +101,7 @@ RSpec.describe VacancyFilterQuery do
   after(:all) do
     Vacancy.destroy_all
     School.destroy_all
+    Publisher.destroy_all
   end
   # rubocop:enable RSpec/BeforeAfterAll
 
