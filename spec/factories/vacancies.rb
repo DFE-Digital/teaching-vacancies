@@ -47,7 +47,7 @@ FactoryBot.define do
     contact_number { "01234 123456" }
     contract_type { :permanent }
     further_details_provided { true }
-    further_details { Faker::Lorem.sentence(word_count: factory_rand(50..300)) }
+    further_details { Faker::Lorem.sentence(word_count: factory_rand(5..30)) }
     expires_at { expiry_date.change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
     include_additional_documents { false }
@@ -59,9 +59,9 @@ FactoryBot.define do
     publish_on { Date.current }
     salary { factory_sample(salaries) }
     hourly_rate { "£25 per hour" }
-    school_offer { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
+    school_offer { Faker::Lorem.sentence(word_count: factory_rand(10..20)) }
     school_visits { true }
-    skills_and_experience { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
+    skills_and_experience { Faker::Lorem.sentence(word_count: factory_rand(10..30)) }
     start_date_type { "specific_date" }
     starts_on { 1.year.from_now.to_date }
     subjects { [] }
@@ -72,7 +72,7 @@ FactoryBot.define do
     organisations { build_list(:school, 1) }
     is_job_share { false }
     flexi_working_details_provided { true }
-    flexi_working { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
+    flexi_working { Faker::Lorem.sentence(word_count: factory_rand(5..10)) }
 
     after(:create) do |vacancy, _evaluator|
       if vacancy.publisher.present?

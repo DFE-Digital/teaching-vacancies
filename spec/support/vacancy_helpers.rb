@@ -1,4 +1,6 @@
 module VacancyHelpers
+  include ReadableVacancyHelper
+
   def change_job_locations(_vacancy, organisations)
     click_review_page_change_link(section: "job_details", row: "job_location")
     fill_in_job_location_form_fields(organisations)
@@ -63,16 +65,16 @@ module VacancyHelpers
     fill_in "publishers_job_listing_pay_package_form[benefits_details]", with: vacancy.benefits_details
   end
 
-  def fill_in_important_dates_form_fields(vacancy)
+  def fill_in_important_dates_form_fields(publish_on:, expires_at:)
     choose I18n.t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.another_day")
 
-    fill_in "publishers_job_listing_important_dates_form[publish_on(3i)]", with: vacancy.publish_on.day
-    fill_in "publishers_job_listing_important_dates_form[publish_on(2i)]", with: vacancy.publish_on.month
-    fill_in "publishers_job_listing_important_dates_form[publish_on(1i)]", with: vacancy.publish_on.year
+    fill_in "publishers_job_listing_important_dates_form[publish_on(3i)]", with: publish_on.day
+    fill_in "publishers_job_listing_important_dates_form[publish_on(2i)]", with: publish_on.month
+    fill_in "publishers_job_listing_important_dates_form[publish_on(1i)]", with: publish_on.year
 
-    fill_in "publishers_job_listing_important_dates_form[expires_at(3i)]", with: vacancy.expires_at.day
-    fill_in "publishers_job_listing_important_dates_form[expires_at(2i)]", with: vacancy.expires_at.month
-    fill_in "publishers_job_listing_important_dates_form[expires_at(1i)]", with: vacancy.expires_at.year
+    fill_in "publishers_job_listing_important_dates_form[expires_at(3i)]", with: expires_at.day
+    fill_in "publishers_job_listing_important_dates_form[expires_at(2i)]", with: expires_at.month
+    fill_in "publishers_job_listing_important_dates_form[expires_at(1i)]", with: expires_at.year
 
     choose "9am", name: "publishers_job_listing_important_dates_form[expiry_time]"
   end
@@ -143,7 +145,7 @@ module VacancyHelpers
   end
 
   def verify_vacancy_show_page_details(vacancy)
-    vacancy = VacancyPresenter.new(vacancy)
+    vacancy = vacancy.decorate
     expect(page).to have_content(vacancy.job_title)
     readable_job_roles = vacancy.job_roles.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{role}") }
     readable_job_roles.each do |role|
@@ -153,8 +155,8 @@ module VacancyHelpers
     expect(page).to have_content(sponsorship_text)
     vacancy.subjects.each { |subject| expect(page).to have_content subject }
 
-    expect(page).to have_content(vacancy.readable_working_patterns)
-    expect(page).to have_content(vacancy.contract_type_with_duration)
+    expect(page).to have_content(vacancy_readable_working_patterns(vacancy))
+    expect(page).to have_content(vacancy_contract_type_with_duration(vacancy))
 
     expect(page).to have_content(vacancy.salary)
     expect(page.html).to include(vacancy.benefits_details) if vacancy.benefits?
@@ -228,59 +230,5 @@ module VacancyHelpers
         expect(page).not_to have_content("Actual salary")
       end
     end
-  end
-
-  def fill_in_forms_until_applying_for(vacancy, created_vacancy_id)
-    expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 1, total: 4))
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :job_title), ignore_query: true)
-
-    fill_in_job_title_form_fields(vacancy.job_title)
-    click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :job_role), ignore_query: true)
-
-    fill_in_job_role_form_fields(vacancy.job_roles.first)
-    click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :key_stages), ignore_query: true)
-
-    fill_in_key_stages_form_fields(vacancy.key_stages_for_phases)
-    click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :subjects), ignore_query: true)
-
-    fill_in_subjects_form_fields(vacancy.subjects)
-    click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :contract_information), ignore_query: true)
-
-    publisher_contract_information_page.fill_in_and_submit_form(vacancy)
-    click_on I18n.t("buttons.save_and_continue")
-
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :start_date), ignore_query: true)
-    fill_in_start_date_form_fields(vacancy.starts_on)
-    click_on I18n.t("buttons.save_and_continue")
-
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :pay_package), ignore_query: true)
-    fill_in_pay_package_form_fields(vacancy)
-    click_on I18n.t("buttons.save_and_continue")
-
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :about_the_role), ignore_query: true)
-    fill_in_about_the_role_form_fields(vacancy)
-    click_on I18n.t("buttons.save_and_continue")
-
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :include_additional_documents), ignore_query: true)
-    fill_in_include_additional_documents_form_fields(vacancy.include_additional_documents)
-    click_on I18n.t("buttons.save_and_continue")
-
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :school_visits), ignore_query: true)
-    fill_in_school_visits_form_fields(vacancy)
-    click_on I18n.t("buttons.save_and_continue")
-
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :visa_sponsorship), ignore_query: true)
-    fill_in_visa_sponsorship_form_fields(vacancy)
-    click_on I18n.t("buttons.save_and_continue")
-
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :important_dates), ignore_query: true)
-    fill_in_important_dates_form_fields(vacancy)
-    click_on I18n.t("buttons.save_and_continue")
-
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :applying_for_the_job), ignore_query: true)
   end
 end

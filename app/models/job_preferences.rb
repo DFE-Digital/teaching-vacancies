@@ -1,5 +1,6 @@
 class JobPreferences < ApplicationRecord
   include ProfileSection
+  include KeyStagesChecks
 
   belongs_to :jobseeker_profile
   has_many :locations, dependent: :destroy
@@ -21,9 +22,5 @@ class JobPreferences < ApplicationRecord
   def complete?
     steps = completed_steps.symbolize_keys
     %i[roles phases key_stages subjects working_patterns locations].all? { |step| steps.include?(step) && steps[step].to_sym.in?(%i[completed skipped]) }
-  end
-
-  def key_stages_for_phases
-    phases.map { |phase| Vacancy::PHASES_TO_KEY_STAGES_MAPPINGS[phase.to_sym] }.flatten.uniq.sort
   end
 end

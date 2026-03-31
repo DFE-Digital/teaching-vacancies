@@ -23,6 +23,7 @@ RSpec.describe "Publishers can add notes to a job application" do
       end
 
       it "passes a11y", :a11y do
+        expect(page).to have_content(note.content)
         expect(page).to be_axe_clean
       end
 

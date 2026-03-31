@@ -25,7 +25,7 @@ class VacanciesController < ApplicationController
     @job_application = current_jobseeker&.job_applications&.find_by(vacancy: vacancy)
     @invented_job_alert_search_criteria = Search::CriteriaInventor.new(vacancy).criteria
     @similar_jobs = Search::SimilarJobs.new(vacancy).similar_jobs
-    @vacancy = VacancyPresenter.new(vacancy)
+    @vacancy = vacancy.decorate
   end
 
   def campaign_landing_page
