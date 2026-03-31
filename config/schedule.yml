@@ -205,7 +205,3 @@ aggregate_vacancy_referrer_stats:
   class: AggregateVacancyReferrerStatsJob
   queue: low
 
-check_pending_malware_scans:
-  cron: "*/10 * * * *" # Every 10 minutes
-  class: CheckPendingMalwareScansJob
-  queue: default

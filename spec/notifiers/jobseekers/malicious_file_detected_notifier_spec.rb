@@ -12,7 +12,7 @@ RSpec.describe Jobseekers::MaliciousFileDetectedNotifier do
 
     it "returns the correct message including the filename" do
       expect(jobseeker.notifications.last.message).to include("malicious.pdf")
-      expect(jobseeker.notifications.last.message).to include("removed because it contained malware")
+      expect(jobseeker.notifications.last.message).to include("automatically removed")
     end
   end
 
