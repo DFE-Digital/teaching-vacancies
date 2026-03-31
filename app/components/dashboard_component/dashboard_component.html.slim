@@ -136,7 +136,7 @@
                     dt = "#{t('jobs.manage.draft.time_updated')}:"
                     dd = format_date(vacancy.updated_at.to_date)
                 - if vacancy.external?
-                  p.govuk-body-xs.external-notice
+                  p.govuk-body-s.external-notice
                     = t("jobs.manage.external_notice")
               - unless vacancy.external? || vacancy.draft?
                 - if vacancy.expired?
