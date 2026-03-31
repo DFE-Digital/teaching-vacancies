@@ -84,7 +84,7 @@ class Vacancy < ApplicationRecord
     file_type: :document,
     content_types_allowed: DOCUMENT_CONTENT_TYPES,
     file_size_limit: DOCUMENT_FILE_SIZE_LIMIT,
-    valid_file_types: %i[PDF DOC DOCX],
+    valid_file_types: %i[PDF DOC DOCX TXT],
   }.freeze
 
   has_many_attached :supporting_documents, service: :azure_storage_documents

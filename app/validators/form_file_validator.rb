@@ -36,7 +36,7 @@ class FormFileValidator < ActiveModel::EachValidator
   end
 
   def valid_file_type?(record, attribute, value)
-    content_type = MimeMagic.by_magic(value.tempfile)&.type
+    content_type = MimeMagic.by_magic(value.tempfile)&.type || value.content_type
     return true if options[:content_types_allowed].include?(content_type)
 
     Rails.logger.warn("Attempted to upload '#{value.original_filename}' with forbidden file type '#{content_type}'")
