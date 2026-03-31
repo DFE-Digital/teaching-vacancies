@@ -4,21 +4,21 @@
 .message-header--sender {
   background-color: govuk-colour('blue');
   color: govuk-colour('white');
-  
+
   .govuk-summary-card__title {
     color: govuk-colour('white');
   }
 }
 
 .message-header--recipient {
-  background-color: govuk-colour('light-grey');
+  background-color: govuk-colour('black', $variant: 'tint-95');
   color: govuk-colour('black');
 }
 
 // Unread message styling - light grey background and bold text
 .message--unread {
-  background-color: govuk-colour('light-grey');
-  
+  background-color: govuk-colour('black', $variant: 'tint-95');
+
   // Make all text within unread messages bold
   .govuk-summary-card__title,
   .govuk-summary-card__content,
@@ -29,6 +29,6 @@
 
 // Unread conversation styling for table rows
 .conversation--unread {
-  background-color: govuk-colour('light-grey');
+  background-color: govuk-colour('black', $variant: 'tint-95');
   font-weight: bold;
 }

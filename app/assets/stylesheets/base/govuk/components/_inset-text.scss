@@ -11,10 +11,10 @@
   }
 
   &--blue {
-    border-left-color: govuk-colour('light-blue');
+    border-left-color: govuk-colour('blue', $variant: 'tint-25');
 
     .govuk-inset-text--header {
-      color: govuk-colour('light-blue');
+      color: govuk-colour('blue', $variant: 'tint-25');
     }
   }
 

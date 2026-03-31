@@ -32,7 +32,7 @@
   }
 
   &--pentest {
-    @include striped-banner(govuk-colour('dark-grey'), 5);
+    @include striped-banner(govuk-colour('black', $variant: 'tint-25'), 5);
     color: govuk-colour('white');
   }
 
@@ -41,7 +41,7 @@
   }
 
   &--user-testing {
-    @include striped-banner(govuk-colour('turquoise'), 10);
+    @include striped-banner(govuk-colour('teal', $variant: 'primary'), 10);
     color: govuk-colour('white');
   }
 }

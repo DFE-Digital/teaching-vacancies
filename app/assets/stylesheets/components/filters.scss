@@ -1,7 +1,7 @@
 @import 'base';
 
 .filters-component {
-  background-color: govuk-colour('light-grey');
+  background-color: govuk-colour('black', $variant: 'tint-95');
   padding: $govuk-gutter-half;
 
   &:focus {
@@ -117,7 +117,7 @@
     }
 
     &__group {
-      border-bottom: 1px solid govuk-colour('mid-grey');
+      border-bottom: 1px solid govuk-colour('black', $variant: 'tint-80');
       margin-bottom: govuk-spacing(4);
       padding-bottom: govuk-spacing(2);
 

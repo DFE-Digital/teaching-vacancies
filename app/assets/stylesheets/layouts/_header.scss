@@ -34,7 +34,7 @@
 }
 
 .sub-navigation {
-  background-color: govuk-colour('light-grey');
+  background-color: govuk-colour('black', $variant: 'tint-95');
 
   .tabs-component {
     border-bottom: 0;

@@ -82,12 +82,12 @@
 }
 
 .grey-border-box {
-  border: govuk-spacing(1) solid govuk-colour('mid-grey');
+  border: govuk-spacing(1) solid govuk-colour('black', $variant: 'tint-80');
   margin-bottom: govuk-spacing(5);
   padding: govuk-spacing(5);
 
   &--thin {
-    border: 1px solid govuk-colour('mid-grey');
+    border: 1px solid govuk-colour('black', $variant: 'tint-80');
     margin-bottom: govuk-spacing(5);
     padding: govuk-spacing(3);
   }

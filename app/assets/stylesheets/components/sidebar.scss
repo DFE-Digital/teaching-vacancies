@@ -17,7 +17,7 @@
     animation-name: fadeIn;
     animation-timing-function: ease-in;
     border: 1px solid $govuk-border-colour;
-    box-shadow: 1px 1px 2px govuk-colour('mid-grey');
+    box-shadow: 1px 1px 2px govuk-colour('black', $variant: 'tint-80');
     display: none;
     max-height: 300px;
     opacity: 1;

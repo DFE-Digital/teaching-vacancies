@@ -2,7 +2,7 @@
 
 .cookies-banner-component {
   @include govuk-responsive-padding(0, 'bottom');
-  background-color: govuk-colour('light-grey');
+  background-color: govuk-colour('black', $variant: 'tint-95');
   bottom: 0;
   padding-top: 0;
   width: 100%;

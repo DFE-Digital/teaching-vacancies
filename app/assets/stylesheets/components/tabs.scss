@@ -56,7 +56,7 @@
 
       &[aria-current] {
         &::before {
-          background-color: govuk-colour('light-blue');
+          background-color: govuk-colour('blue', $variant: 'tint-25');
           bottom: 0;
           content: '';
           display: block;

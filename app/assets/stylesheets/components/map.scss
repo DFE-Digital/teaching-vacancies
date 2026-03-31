@@ -5,7 +5,7 @@
 }
 
 .leaflet-bar a:focus {
-  outline: 6px solid #d4351c; 
+  outline: 6px solid #d4351c;
 }
 
 .js-enabled {
@@ -31,7 +31,7 @@
         }
 
         &__cluster {
-          background-color: govuk-colour('light-blue');
+          background-color: govuk-colour('blue', $variant: 'tint-25');
           border: 2px solid $govuk-input-border-colour;
           border-radius: 50%;
 
@@ -52,7 +52,7 @@
           }
 
           &--large {
-            background-color: govuk-colour('dark-blue');
+            background-color: govuk-colour('blue', $variant: 'shade-50');
           }
         }
 
