@@ -107,6 +107,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
         create(:qualification,
                category: "a_level",
                institution: "John Mason School",
+               grade: "",
                job_application: nil,
                jobseeker_profile: profile)
       end
@@ -131,6 +132,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
       it "has an 'add another subject' link" do
         create(:qualification,
                category: "gcse",
+               grade: "",
                results_count: 1,
                job_application: nil,
                jobseeker_profile_id: profile.id)
