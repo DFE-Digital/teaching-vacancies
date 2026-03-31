@@ -50,7 +50,7 @@ en:
       jobseekers_profile_employment_form:
         is_current_role_options:
           "true": I currently work here
-        job_title: Role
+        job_title: Job title
         main_duties: Main duties
         reason_for_leaving: Reason for leaving role
         organisation: Name of school or employer

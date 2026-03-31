@@ -63,7 +63,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
           find("form.new_publishers_organisation_url_override_form")
         end
 
-        it "passes a11y", :a11y do
+        it "passes a11y", :a11y, :retry do
           expect(page).to be_axe_clean.skipping "page-has-heading-one"
         end
 

@@ -17,11 +17,11 @@ module JobseekerHelpers
     choose I18n.t("helpers.label.jobseekers_job_application_ask_for_support_form.ask_for_support_section_completed_options.true")
   end
 
-  def fill_in_current_role(form:, start_month: "07", start_year: "2020")
+  def fill_in_current_role(form:, start_month: "07", start_year: "2020", reason_for_leaving: nil, main_duties: nil)
     fill_in I18n.t("helpers.label.#{form}.organisation"), with: "Super School"
     fill_in I18n.t("helpers.label.#{form}.job_title"), with: "The Best Teacher"
-    fill_in I18n.t("helpers.label.#{form}.main_duties"), with: "Goals and that"
-    fill_in I18n.t("helpers.label.#{form}.reason_for_leaving"), with: "I hate it there"
+    fill_in I18n.t("helpers.label.#{form}.main_duties"), with: main_duties if main_duties.present?
+    fill_in I18n.t("helpers.label.#{form}.reason_for_leaving"), with: reason_for_leaving if reason_for_leaving.present?
 
     if I18n.exists?("helpers.label.#{form}.subjects_html")
       fill_in "Subjects and key stages taught (optional field)", with: "English KS1"

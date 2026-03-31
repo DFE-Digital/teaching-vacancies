@@ -19,7 +19,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
       click_on I18n.t("buttons.add_work_history")
       expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :employment_history))
       validates_step_complete(button: I18n.t("buttons.save_employment"))
-      fill_in_current_role(form: "jobseekers_job_application_details_employment_form")
+      fill_in_current_role(form: "jobseekers_job_application_details_employment_form", reason_for_leaving: Faker::ChuckNorris.fact, main_duties: Faker::Fantasy::Tolkien.poem)
 
       click_on I18n.t("buttons.save_employment")
 

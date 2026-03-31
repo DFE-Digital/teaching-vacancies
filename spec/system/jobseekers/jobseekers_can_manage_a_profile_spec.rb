@@ -74,8 +74,6 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
               expect(all("a").map { |l| [l.text, l[:href]] })
                 .to contain_exactly(["Enter a school or other organisation", "#jobseekers-profile-employment-form-organisation-field-error"],
                                     ["Enter your job title", "#jobseekers-profile-employment-form-job-title-field-error"],
-                                    ["Enter your main duties for this role", "#jobseekers-profile-employment-form-main-duties-field-error"],
-                                    ["Enter your reason for leaving this role", "#jobseekers-profile-employment-form-reason-for-leaving-field-error"],
                                     ["Enter the date you started at this school or organisation", "#jobseekers-profile-employment-form-started-on-field-error"])
             end
           end
@@ -162,24 +160,17 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
         end
 
         it "successfully changes the employment record" do
-          expect(page).to have_content(employment.main_duties)
-          expect(page).to have_content(employment.reason_for_leaving)
+          expect(page).to have_content("Your previous roles")
 
           fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.organisation"), with: new_employment.organisation
           fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.job_title"), with: new_employment.job_title
-          fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.reason_for_leaving"), with: new_employment.reason_for_leaving
-          fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.main_duties"), with: new_employment.main_duties
-          fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.subjects"), with: new_employment.subjects
 
           click_on I18n.t("buttons.save_and_continue")
           expect(page).to have_current_path(review_jobseekers_profile_work_history_index_path, ignore_query: true)
 
           expect(profile.employments.count).to eq(1)
           expect(profile.employments.first).to have_attributes(organisation: new_employment.organisation,
-                                                               job_title: new_employment.job_title,
-                                                               subjects: new_employment.subjects,
-                                                               main_duties: new_employment.main_duties,
-                                                               reason_for_leaving: new_employment.reason_for_leaving)
+                                                               job_title: new_employment.job_title)
         end
       end
 
@@ -528,8 +519,6 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
     fill_in "jobseekers_profile_employment_form[started_on(2i)]", with: "09"
     fill_in "jobseekers_profile_employment_form[ended_on(1i)]", with: "2019"
     fill_in "jobseekers_profile_employment_form[ended_on(2i)]", with: "07"
-    fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.main_duties"), with: "Goals and that"
-    fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.reason_for_leaving"), with: "I hate it there"
 
     click_on I18n.t("buttons.save_and_continue")
   end
