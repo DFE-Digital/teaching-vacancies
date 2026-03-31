@@ -13,7 +13,7 @@ RSpec.describe Publishers::MaliciousFileDetectedNotifier do
 
     it "returns the correct message including the filename" do
       expect(publisher.notifications.last.message).to include("malicious.pdf")
-      expect(publisher.notifications.last.message).to include("removed because it contained malware")
+      expect(publisher.notifications.last.message).to include("automatically removed")
     end
   end
 
