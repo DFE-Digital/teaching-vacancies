@@ -29,7 +29,7 @@
       position: relative;
 
       &::before {
-        background-color: $govuk-brand-colour;
+        background-color: govuk-functional-colour(brand);
         content: '';
         height: 130%;
         left: 0;
@@ -42,7 +42,7 @@
         line-height: 1.31579;
 
         &::before {
-          background-color: $govuk-brand-colour;
+          background-color: govuk-functional-colour(brand);
           content: '';
           height: 5px;
           left: 0;

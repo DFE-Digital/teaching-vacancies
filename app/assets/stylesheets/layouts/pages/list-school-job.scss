@@ -2,7 +2,7 @@
   .list-school-job {
     &__header {
       @include full-width-mast;
-      background-color: $govuk-brand-colour;
+      background-color: govuk-functional-colour(brand);
       padding-bottom: govuk-spacing(4);
       padding-top: govuk-spacing(4);
 
@@ -34,7 +34,7 @@
 
           .govuk-button {
             background-color: govuk-colour('white');
-            color: $govuk-brand-colour;
+            color: govuk-functional-colour(brand);
 
             &:hover {
               background-color: govuk-colour('black', $variant: 'tint-95');
@@ -48,7 +48,7 @@
           margin-bottom: 0;
 
           &:focus {
-            color: $govuk-focus-text-colour;
+            color: govuk-functional-colour(focus-text);
           }
         }
 

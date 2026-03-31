@@ -4,7 +4,7 @@
 $_current-link-border-width: govuk-spacing(1);
 
 .x-govuk-secondary-navigation {
-  border-bottom: 1px solid $govuk-border-colour;
+  border-bottom: 1px solid govuk-functional-colour(border);
 }
 
 .x-govuk-secondary-navigation__link {
@@ -36,7 +36,7 @@ $_current-link-border-width: govuk-spacing(1);
 }
 
 .x-govuk-secondary-navigation__list-item {
-  border: 0 solid $govuk-link-colour;
+  border: 0 solid govuk-functional-colour(link);
   margin: govuk-spacing(2) 0;
   position: relative;
 

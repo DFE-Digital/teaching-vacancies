@@ -2,8 +2,8 @@
 
 .card-component {
   @include govuk-font(16);
-  border-bottom: 1px solid $govuk-border-colour;
-  color: $govuk-secondary-text-colour;
+  border-bottom: 1px solid govuk-functional-colour(border);
+  color: govuk-functional-colour(secondary-text);
   display: flex;
   padding: govuk-spacing(4) 0 0;
 
@@ -58,7 +58,7 @@
       }
 
       &::after {
-        border-right: 1px solid $govuk-border-colour;
+        border-right: 1px solid govuk-functional-colour(border);
         content: ' ';
       }
 

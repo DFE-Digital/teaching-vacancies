@@ -1,6 +1,6 @@
 .govuk-select {
   &.govuk-input--error {
-    border: 4px solid $govuk-error-colour;
+    border: 4px solid govuk-functional-colour(error);
   }
 }
 

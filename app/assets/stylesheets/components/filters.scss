@@ -5,7 +5,7 @@
   padding: $govuk-gutter-half;
 
   &:focus {
-    outline: $govuk-focus-width solid $govuk-focus-colour;
+    outline: $govuk-focus-width solid govuk-functional-colour(focus);
   }
 
   &__heading {
@@ -65,7 +65,7 @@
 
       &__tag {
         background-color: govuk-colour('white');
-        border: 1px solid $govuk-input-border-colour;
+        border: 1px solid govuk-functional-colour(input-border);
         border-radius: govuk-spacing(1);
         cursor: pointer;
         display: grid;
@@ -86,7 +86,7 @@
         }
 
         &:focus {
-          outline: $govuk-focus-width solid $govuk-focus-colour;
+          outline: $govuk-focus-width solid govuk-functional-colour(focus);
         }
 
         &.icon--left {
@@ -95,7 +95,7 @@
         }
 
         .fa-times {
-          color: $govuk-link-colour;
+          color: govuk-functional-colour(link);
           font-size: 80%;
           margin: 0 govuk-spacing(1);
         }

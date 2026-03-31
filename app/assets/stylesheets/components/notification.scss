@@ -3,7 +3,7 @@
 .notification {
   @include govuk-font(16);
 
-  border-bottom: solid 1px $govuk-border-colour;
+  border-bottom: solid 1px govuk-functional-colour(border);
   display: flex;
   flex-basis: 75%;
   flex-direction: row;
@@ -38,7 +38,7 @@
   }
 
   &__timestamp {
-    color: $govuk-secondary-text-colour;
+    color: govuk-functional-colour(secondary-text);
     flex-basis: 20%;
     text-align: right;
 

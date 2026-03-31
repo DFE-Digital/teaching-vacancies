@@ -1,6 +1,6 @@
 .search-results {
   &__item {
-    border-bottom: 1px solid $govuk-border-colour;
+    border-bottom: 1px solid govuk-functional-colour(border);
     padding-top: govuk-spacing(3);
     padding-bottom: govuk-spacing(3);
 

@@ -1,5 +1,5 @@
 .govuk-header {
-  border-bottom: govuk-spacing(2) solid $govuk-brand-colour;
+  border-bottom: govuk-spacing(2) solid govuk-functional-colour(brand);
 
   @include govuk-media-query($from: desktop) {
     &__container {

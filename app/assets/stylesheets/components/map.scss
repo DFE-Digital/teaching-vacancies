@@ -16,7 +16,7 @@
       position: relative;
 
       .map-component__map {
-        border: 1px solid $govuk-border-colour;
+        border: 1px solid govuk-functional-colour(border);
         height: 400px;
         margin-bottom: govuk-spacing(4);
 
@@ -32,11 +32,11 @@
 
         &__cluster {
           background-color: govuk-colour('blue', $variant: 'tint-25');
-          border: 2px solid $govuk-input-border-colour;
+          border: 2px solid govuk-functional-colour(input-border);
           border-radius: 50%;
 
           &:focus {
-            outline: $govuk-focus-width solid $govuk-focus-colour;
+            outline: $govuk-focus-width solid govuk-functional-colour(focus);
           }
 
           span {

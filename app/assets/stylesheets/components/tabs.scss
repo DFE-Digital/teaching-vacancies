@@ -8,7 +8,7 @@
   }
 
   @include govuk-media-query ($from: desktop) {
-    border-bottom: 1px solid $govuk-border-colour;
+    border-bottom: 1px solid govuk-functional-colour(border);
     margin-bottom: govuk-spacing(7);
   }
 
@@ -16,11 +16,11 @@
     text-decoration: none;
 
     &:visited {
-      color: $govuk-link-colour;
+      color: govuk-functional-colour(link);
     }
 
     &:focus {
-      color: $govuk-focus-text-colour;
+      color: govuk-functional-colour(focus-text);
     }
   }
 

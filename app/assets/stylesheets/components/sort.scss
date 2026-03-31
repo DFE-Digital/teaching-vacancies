@@ -19,7 +19,7 @@
     display: inline-block;
 
     &:not(:last-child)::after {
-      border-right: 1px solid $govuk-border-colour;
+      border-right: 1px solid govuk-functional-colour(border);
       content: '';
       display: inline-block;
       height: 1.2em;
@@ -30,7 +30,7 @@
     }
 
     .govuk-link:visited {
-      color: $govuk-link-colour;
+      color: govuk-functional-colour(link);
     }
   }
 }

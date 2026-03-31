@@ -27,7 +27,7 @@
 
       &:focus {
         @include govuk-media-query($until: desktop) {
-          outline: $govuk-focus-width solid $govuk-focus-colour;
+          outline: $govuk-focus-width solid govuk-functional-colour(focus);
         }
       }
 
