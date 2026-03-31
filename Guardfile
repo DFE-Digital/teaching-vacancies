@@ -97,7 +97,7 @@ guard :rspec, rspec_options do
   end
 end
 
-guard :rubocop, cli: ["-A"], all_on_start: false do
+guard :rubocop, cli: ["-A", "--no-parallel"], all_on_start: false do
   watch(%r{.+\.rb$})
   watch(%r{(?:.+/)?\.rubocop(?:_todo)?\.yml$}) { |m| File.dirname(m[0]) }
 end

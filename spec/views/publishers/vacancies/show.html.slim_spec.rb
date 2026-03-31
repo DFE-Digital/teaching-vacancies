@@ -1,8 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "publishers/vacancies/show" do
+  include ReadableVacancyHelper
+
   let(:school) { build_stubbed(:school, phase: :secondary) }
-  let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
+  let(:vacancy_presenter) { vacancy.decorate }
   let(:blank_application_text) { t("buttons.download_blank_application") }
 
   before do
@@ -30,11 +32,11 @@ RSpec.describe "publishers/vacancies/show" do
         expect(rendered).to have_content("#{organisation.name}, #{full_address(organisation)}")
       end
 
-      expect(rendered).to have_content(vacancy_presenter.readable_job_roles)
+      expect(rendered).to have_content(vacancy_readable_job_roles(vacancy))
       expect(rendered).to have_content(vacancy.job_title)
-      expect(rendered).to have_content(vacancy_presenter.readable_key_stages)
-      expect(rendered).to have_content(vacancy_presenter.readable_subjects)
-      expect(rendered).to have_content(vacancy_presenter.contract_type_with_duration)
+      expect(rendered).to have_content(vacancy_readable_key_stages(vacancy))
+      expect(rendered).to have_content(vacancy_readable_subjects(vacancy))
+      expect(rendered).to have_content(vacancy_contract_type_with_duration(vacancy))
 
       vacancy.working_patterns.each do |working_pattern|
         expect(rendered).to have_content(/#{working_pattern.humanize}/i)

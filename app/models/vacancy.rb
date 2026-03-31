@@ -7,6 +7,7 @@ class Vacancy < ApplicationRecord
 
   include DatabaseIndexable
   include Resettable
+  include VacancyChecks
 
   include Discard::Model
 
@@ -18,14 +19,6 @@ class Vacancy < ApplicationRecord
     job_roles job_title key_stages personal_statement_guidance salary school_visits subjects starts_on
     working_patterns
   ].freeze
-
-  PHASES_TO_KEY_STAGES_MAPPINGS = {
-    nursery: %i[early_years],
-    primary: %i[early_years ks1 ks2],
-    secondary: %i[ks3 ks4 ks5],
-    sixth_form_or_college: %i[ks5],
-    through: %i[early_years ks1 ks2 ks3 ks4 ks5],
-  }.freeze
 
   JOB_ROLES = { "teacher" => 0, "headteacher" => 1, "deputy_headteacher" => 2, "assistant_headteacher" => 3,
                 "head_of_year_or_phase" => 4, "head_of_department_or_curriculum" => 5, "teaching_assistant" => 6,
@@ -214,26 +207,10 @@ class Vacancy < ApplicationRecord
     enable_job_applications? && published? && !pending?
   end
 
-  def allow_key_stages?
-    allowed_phases = %w[primary secondary through]
-    allowed_roles = %w[teacher headteacher deputy_headteacher assistant_headteacher
-                       head_of_year_or_phase head_of_department_or_curriculum teaching_assistant]
-
-    phases.intersect?(allowed_phases) && job_roles.intersect?(allowed_roles)
-  end
-
   def allow_phase_to_be_set?
     school_phases = organisations.schools.filter_map(&:phase).uniq
 
     !(school_phases.intersect? SCHOOL_PHASES_MATCHING_VACANCY_PHASES)
-  end
-
-  def allow_subjects?
-    phases.any? { |phase| phase.in? %w[secondary sixth_form_or_college through] }
-  end
-
-  def key_stages_for_phases
-    phases.map { |phase| PHASES_TO_KEY_STAGES_MAPPINGS[phase.to_sym] }.flatten.uniq.sort
   end
 
   def within_data_access_period?
@@ -263,15 +240,6 @@ class Vacancy < ApplicationRecord
     job_applications.after_submission.count >= EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD
   end
 
-  def salary_types
-    [
-      salary.present? ? "full_time" : nil,
-      actual_salary.present? ? "part_time" : nil,
-      pay_scale.present? ? "pay_scale" : nil,
-      hourly_rate.present? ? "hourly_rate" : nil,
-    ]
-  end
-
   def distance_in_miles_to(search_coordinates)
     if geolocation.is_a? RGeo::Geographic::SphericalMultiPointImpl
       # if there are multiple geolocations then return the distance to the nearest one to the given search location
@@ -283,10 +251,6 @@ class Vacancy < ApplicationRecord
 
   def teaching_or_middle_leader_role?
     job_roles.intersect?(TEACHING_JOB_ROLES)
-  end
-
-  def allow_job_applications?
-    enable_job_applications? || uploaded_form?
   end
 
   def create_job_application_for(jobseeker)

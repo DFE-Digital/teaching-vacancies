@@ -1,5 +1,6 @@
 module DatabaseIndexable
   extend ActiveSupport::Concern
+  include ReadableVacancyHelper
 
   included do
     # during backfills, only update this for live vacancies
@@ -26,13 +27,13 @@ module DatabaseIndexable
       a: [unique_words(job_title), subjects],
       d: [
         phases.map(&:humanize),
-        VacancyPresenter.new(self).readable_job_roles,
-        VacancyPresenter.new(self).readable_key_stages,
+        vacancy_readable_job_roles(self),
+        vacancy_readable_key_stages(self),
         organisation_name,
-        VacancyPresenter.new(self).school_group_names,
-        VacancyPresenter.new(self).school_group_types,
-        VacancyPresenter.new(self).readable_working_patterns,
-        VacancyPresenter.new(self).religious_character,
+        school_group_names,
+        school_group_types,
+        vacancy_readable_working_patterns(self),
+        religious_character,
         organisations.map { |org| org.school_type&.singularize }.reject(&:blank?).uniq,
         organisations.map(&:detailed_school_type).reject(&:blank?).uniq,
         organisations.map(&:name),
@@ -40,7 +41,7 @@ module DatabaseIndexable
         organisations.map(&:local_authority_within).reject(&:blank?).uniq,
         organisations.map(&:county).reject(&:blank?).uniq,
         organisations.map(&:region).reject(&:blank?).uniq,
-        VacancyPresenter.new(self).readable_visa_sponsorship_availability,
+        vacancy_readable_visa_sponsorship_availability(self),
       ],
     ).tsvector
   end

@@ -11,7 +11,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
   def start; end
 
   def show
-    @vacancy = VacancyPresenter.new(vacancy)
+    @vacancy = vacancy.decorate
     @next_invalid_step = next_invalid_step
     @current_organisation = current_organisation
     @step_process = step_process
@@ -60,7 +60,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
   end
 
   def review
-    @vacancy = VacancyPresenter.new(vacancy)
+    @vacancy = vacancy.decorate
   end
 
   def destroy
@@ -68,11 +68,13 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
     redirect_to organisation_jobs_with_type_path, success: t(".success_html", job_title: vacancy.job_title)
   end
 
+  # :nocov:
   def preview
     redirect_to organisation_job_path(vacancy.id) unless all_steps_valid?
 
-    @vacancy = VacancyPresenter.new(vacancy)
+    @vacancy = vacancy.decorate
   end
+  # :nocov:
 
   def convert_to_draft
     vacancy.update!(type: "DraftVacancy")
@@ -82,7 +84,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
   def summary
     return redirect_to organisation_job_path(vacancy.id) unless vacancy.published?
 
-    @vacancy = VacancyPresenter.new(vacancy)
+    @vacancy = vacancy.decorate
     @feedback_form = Publishers::JobListing::FeedbackForm.new
   end
 

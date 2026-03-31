@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Copying a vacancy" do
   let(:publisher) { create(:publisher) }
-  let(:school) { create(:school, safeguarding_information: nil) }
+  let(:school) { create(:school) }
 
   let!(:original_vacancy) { create_published_vacancy(organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) }
 
@@ -32,10 +32,7 @@ RSpec.describe "Copying a vacancy" do
 
       expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :important_dates))
 
-      new_vacancy.publish_on = Date.current
-      new_vacancy.expires_at = 30.days.from_now
-
-      fill_in_important_dates_form_fields(new_vacancy)
+      fill_in_important_dates_form_fields(publish_on: Date.current, expires_at: 30.days.from_now)
       click_on I18n.t("buttons.save_and_continue")
 
       expect(current_path).to eq(organisation_job_review_path(new_vacancy.id))
@@ -90,9 +87,7 @@ RSpec.describe "Copying a vacancy" do
 
       expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :important_dates))
 
-      new_vacancy.publish_on = Date.current
-      new_vacancy.expires_at = 30.days.from_now
-      fill_in_important_dates_form_fields(new_vacancy)
+      fill_in_important_dates_form_fields(publish_on: Date.current, expires_at: 30.days.from_now)
       click_on I18n.t("buttons.save_and_continue")
 
       expect(current_path).to eq(organisation_job_review_path(new_vacancy.id))

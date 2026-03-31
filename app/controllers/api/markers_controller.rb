@@ -2,6 +2,7 @@ class Api::MarkersController < Api::ApplicationController
   include VacanciesHelper
   include OrganisationsHelper
   include DatesHelper
+  include ReadableVacancyHelper
 
   before_action :verify_json_request, only: %i[show]
   before_action :check_valid_params, only: %i[show]
@@ -52,7 +53,7 @@ class Api::MarkersController < Api::ApplicationController
       { label: t("jobs.actual_salary"), value: vacancy.actual_salary },
       { label: t("jobs.pay_scale"), value: vacancy.pay_scale },
       { label: t("jobs.school_type"), value: organisation_type(organisation) },
-      { label: t("jobs.working_patterns"), value: VacancyPresenter.new(vacancy).readable_working_patterns_with_details },
+      { label: t("jobs.working_patterns"), value: vacancy_readable_working_patterns_with_details(vacancy) },
       { label: t("jobs.expires_at"), value: format_time_to_datetime_at(vacancy.expires_at) },
     ].select { |d| d[:value].present? }
   end
