@@ -12,7 +12,7 @@ RSpec.describe "Publishers can view their notifications" do
 
   after { logout }
 
-  context "when the notification was created outside the data access period", :js do
+  context "when the notification was created outside the data access period" do
     before do
       travel_to 2.years.ago do
         Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
