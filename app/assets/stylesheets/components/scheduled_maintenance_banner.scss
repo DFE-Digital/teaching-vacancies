@@ -3,7 +3,7 @@
 .scheduled-maintenance-banner-component {
   @include govuk-font(16);
 
-  background-color: $govuk-brand-colour;
+  background-color: govuk-functional-colour(brand);
   background-size: govuk-spacing(9) govuk-spacing(9);
 
   padding: govuk-spacing(2);
@@ -11,7 +11,7 @@
 
   .govuk-tag {
     background-color: govuk-colour('white');
-    color: govuk-shade($govuk-brand-colour, 25);
+    color: govuk-colour('blue', $variant: 'shade-25');
 
     margin-right: govuk-spacing(2);
   }
