@@ -57,14 +57,10 @@ en:
         zero: No unread notifications
         one: 1 unread notification
         other: "%{count} unread notifications"
-    publishers/malicious_file_detected_notification:
-      message_html: A file you uploaded (%{filename}) contained a suspected virus and has been automatically removed. Please upload a replacement file.
-    publishers/file_scan_error_notification:
-      message_html: There was an error scanning a file you uploaded (%{filename}). Please remove it and upload a replacement file.
-    jobseekers/malicious_file_detected_notification:
-      message_html: A file you uploaded (%{filename}) contained a suspected virus and has been automatically removed. Please upload a replacement file.
-    jobseekers/file_scan_error_notification:
-      message_html: There was an error scanning a file you uploaded (%{filename}). Please remove it and upload a replacement file.
+    publishers/malware_scan_notification:
+      message_html: A file you uploaded (%{filename}) could not be verified as safe and has been automatically removed. You may need to re-upload it. If you have already done so, no further action is needed.
+    jobseekers/malware_scan_notification:
+      message_html: A file you uploaded (%{filename}) could not be verified as safe and has been automatically removed. You may need to re-upload it. If you have already done so, no further action is needed.
     publishers/message_received_notification:
       message_html: "%{candidate_name} has sent you %{link} about the %{job_title} role"
     jobseekers/message_received_notification:

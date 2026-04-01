@@ -16,7 +16,7 @@ div data-controller="upload-documents" data-upload-documents-inactive-value=vaca
       = f.govuk_file_field :application_form,
         javascript: true,
         label: { size: "m" },
-          accept: ".doc, .docx, .pdf",
+          accept: ".doc, .docx, .pdf, .txt",
           enctype: "multipart/form-data"
     - else
       h2.govuk-heading-m = "Upload application form"
