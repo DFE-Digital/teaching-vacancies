@@ -20,8 +20,8 @@ RSpec.describe "Jobseekers can prefill applications" do
       let(:referee) { create(:referee, job_title: "Reference4Testing") }
       let(:employment1) { create(:employment) }
       let(:employment2) { create(:employment) }
-      let(:qualification1) { create(:qualification) }
-      let(:qualification2) { create(:qualification) }
+      let(:qualification1) { build(:qualification, :with_random_category) }
+      let(:qualification2) { build(:qualification, :with_random_category) }
       let(:training) { build(:training_and_cpd) }
       let(:professional_body_membership) { build(:professional_body_membership) }
       let!(:previous_application) do

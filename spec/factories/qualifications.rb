@@ -12,16 +12,10 @@ FactoryBot.define do
       results_count { 5 }
     end
 
-    category { factory_sample(Qualification.categories.keys) }
-    finished_studying { undergraduate? || postgraduate? || other? ? true : nil }
-    finished_studying_details { finished_studying == false ? "Stopped due to illness" : "" }
-    grade do
-      if finished_studying?
-        undergraduate? || postgraduate? ? "Honours" : "Distinction"
-      else
-        ""
-      end
-    end
+    category { :undergraduate }
+    finished_studying { true  }
+    grade { "Honours" }
+
     institution { secondary? ? Faker::Educator.secondary_school : Faker::Educator.university }
     name { other? ? Faker::Educator.degree : "" }
     subject { undergraduate? || postgraduate? || other? ? Faker::Educator.subject : "" }
@@ -29,6 +23,19 @@ FactoryBot.define do
     month { finished_studying == false ? nil : 12 }
 
     job_application
+
+    trait :with_random_category do
+      category { factory_sample(Qualification.categories.keys) }
+      finished_studying { undergraduate? || postgraduate? || other? ? true : nil }
+      finished_studying_details { finished_studying == false ? "Stopped due to illness" : "" }
+      grade do
+        if finished_studying?
+          undergraduate? || postgraduate? ? "Honours" : "Distinction"
+        else
+          ""
+        end
+      end
+    end
 
     trait :for_seed_data do
       finished_studying { undergraduate? || postgraduate? || other? ? Faker::Boolean.boolean : nil }
