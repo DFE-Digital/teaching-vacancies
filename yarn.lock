@@ -2418,23 +2418,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rails/actiontext@npm:^8.1.200":
-  version: 8.1.200
-  resolution: "@rails/actiontext@npm:8.1.200"
+"@rails/actiontext@npm:^8.1.300":
+  version: 8.1.300
+  resolution: "@rails/actiontext@npm:8.1.300"
   dependencies:
     "@rails/activestorage": "npm:>= 8.1.0-alpha"
   peerDependencies:
     trix: ^2.0.0
-  checksum: 10c0/f85fe68ba12c3cb2bfe9a8cd7d0a06b4d5c9b532a4d945f428578363d6a84ad31d4be9fb7bc0ec1000a7576a3b47998b6c69f8e28db2200caeae070238604874
+  checksum: 10c0/0be7c3d183a995310aea2e54c958dbe5dc39283b0314c53385edf2f5743bae93e3fc3f826d10af0470f54e21dbd87087cf550d9621639e63a0c69173b95fe588
   languageName: node
   linkType: hard
 
-"@rails/activestorage@npm:>= 8.1.0-alpha, @rails/activestorage@npm:^8.1.200":
+"@rails/activestorage@npm:>= 8.1.0-alpha":
   version: 8.1.200
   resolution: "@rails/activestorage@npm:8.1.200"
   dependencies:
     spark-md5: "npm:^3.0.1"
   checksum: 10c0/5aa48f8f801e5c87b5984dabf5af1a74be1217127458ec113de46263d6fc81137471249573c09b471f332fe84dec11b54d0dd1cca29d0c33e53c28024e5ac044
+  languageName: node
+  linkType: hard
+
+"@rails/activestorage@npm:^8.1.300":
+  version: 8.1.300
+  resolution: "@rails/activestorage@npm:8.1.300"
+  dependencies:
+    spark-md5: "npm:^3.0.1"
+  checksum: 10c0/eacb07a0bccc98c4586cc34d933e481dd8c0c6c3be155816ea5bd8c1e805c78f4bbb8ad65920760888d881a3aa0d2dd9036b50299cc3d1036ce6b4571387a1fa
   languageName: node
   linkType: hard
 
@@ -2445,61 +2454,61 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry-internal/browser-utils@npm:10.44.0":
-  version: 10.44.0
-  resolution: "@sentry-internal/browser-utils@npm:10.44.0"
+"@sentry-internal/browser-utils@npm:10.45.0":
+  version: 10.45.0
+  resolution: "@sentry-internal/browser-utils@npm:10.45.0"
   dependencies:
-    "@sentry/core": "npm:10.44.0"
-  checksum: 10c0/ff37de998ae7547d682af39060f360b8f8bb24b12071329e023128f184fe6c9a9767ea73140ffdf950ba9e8446b2eb7d386c0f0df04841837f89aa572ca08230
+    "@sentry/core": "npm:10.45.0"
+  checksum: 10c0/911ebcb570bc9ed47959ee225edf5d76472c422d86ec22273f55222b8a391c320da1e9cfddb5786423f85682c7ca7c970107b825eb885947d6940b9bd993304d
   languageName: node
   linkType: hard
 
-"@sentry-internal/feedback@npm:10.44.0":
-  version: 10.44.0
-  resolution: "@sentry-internal/feedback@npm:10.44.0"
+"@sentry-internal/feedback@npm:10.45.0":
+  version: 10.45.0
+  resolution: "@sentry-internal/feedback@npm:10.45.0"
   dependencies:
-    "@sentry/core": "npm:10.44.0"
-  checksum: 10c0/f75471b23d3f989a5d04da708e3f3d158cbffa393a54f88739dc26a100b830cb7831724b9a30004ad6a116dd046b7709d0e356be68fcad00675745aea78bb1ce
+    "@sentry/core": "npm:10.45.0"
+  checksum: 10c0/d50d6ac5fad8f13a1e31e9173365dc56bc6777485d49e8b0d634b3b889574c2489b24b2e0d5194950dcbcbe25bca9f0474373722a6a4b0a70f19dc23021ebdb4
   languageName: node
   linkType: hard
 
-"@sentry-internal/replay-canvas@npm:10.44.0":
-  version: 10.44.0
-  resolution: "@sentry-internal/replay-canvas@npm:10.44.0"
+"@sentry-internal/replay-canvas@npm:10.45.0":
+  version: 10.45.0
+  resolution: "@sentry-internal/replay-canvas@npm:10.45.0"
   dependencies:
-    "@sentry-internal/replay": "npm:10.44.0"
-    "@sentry/core": "npm:10.44.0"
-  checksum: 10c0/efc3e607f799b88399960246a44e99aab4ad701dbc11f18b1aaff5a615015aca42c2ec881edbe2e198aeb6034d436b1acbbbd04bcadacb146fcecd245381c608
+    "@sentry-internal/replay": "npm:10.45.0"
+    "@sentry/core": "npm:10.45.0"
+  checksum: 10c0/8ecd11be0f1eb113d6b79a352ebc9e7cf204f847c8bac4b61fe09b24cfb7c1219bd2a52345a69ce0a16e5876a64543cd0b7a85c7f851195a69d959c61278c153
   languageName: node
   linkType: hard
 
-"@sentry-internal/replay@npm:10.44.0":
-  version: 10.44.0
-  resolution: "@sentry-internal/replay@npm:10.44.0"
+"@sentry-internal/replay@npm:10.45.0":
+  version: 10.45.0
+  resolution: "@sentry-internal/replay@npm:10.45.0"
   dependencies:
-    "@sentry-internal/browser-utils": "npm:10.44.0"
-    "@sentry/core": "npm:10.44.0"
-  checksum: 10c0/334e653d247e1399d06d3754cd0b495519d64afc4228d7266696d23b06fb091f0b4e69624562b41edd7a2b4941e7f31a7b9e728bfcf8f790ebfd68baaa8624d0
+    "@sentry-internal/browser-utils": "npm:10.45.0"
+    "@sentry/core": "npm:10.45.0"
+  checksum: 10c0/da1a251fd51b14b1d6061e3080e4933728d3b1b7e9f1745202abac42e80661272f54b7f8011fbab2d2df414a342bd4b0dbb889b3dce8e33069a50aff36bf9413
   languageName: node
   linkType: hard
 
-"@sentry/browser@npm:10.44.0":
-  version: 10.44.0
-  resolution: "@sentry/browser@npm:10.44.0"
+"@sentry/browser@npm:10.45.0":
+  version: 10.45.0
+  resolution: "@sentry/browser@npm:10.45.0"
   dependencies:
-    "@sentry-internal/browser-utils": "npm:10.44.0"
-    "@sentry-internal/feedback": "npm:10.44.0"
-    "@sentry-internal/replay": "npm:10.44.0"
-    "@sentry-internal/replay-canvas": "npm:10.44.0"
-    "@sentry/core": "npm:10.44.0"
-  checksum: 10c0/b7e21c6d909b46620641a53f34f2446e3994ae310b01ba3611de1e5a88a73836eec39bbb1ef2bcdc8231338517dac8f6847dd595c2603b095c6ace71c98becb8
+    "@sentry-internal/browser-utils": "npm:10.45.0"
+    "@sentry-internal/feedback": "npm:10.45.0"
+    "@sentry-internal/replay": "npm:10.45.0"
+    "@sentry-internal/replay-canvas": "npm:10.45.0"
+    "@sentry/core": "npm:10.45.0"
+  checksum: 10c0/1014dae3e036983eb4f8f7ae29ffe998cbc1f22f0ae6bf8d170718efe1dbe3a78bfcd839fe02f7e63063b237886d569ba85baa3d4a433a05123489475a7c371c
   languageName: node
   linkType: hard
 
-"@sentry/core@npm:10.44.0":
-  version: 10.44.0
-  resolution: "@sentry/core@npm:10.44.0"
-  checksum: 10c0/4f15182a42ce97544285622b0216a9f9bea0faf9c0b3b5aaaaaec9ee47940e045e35e4a73cbde7c5fead4fb3570a2859274d91a66ffb56e655f20e61753f7fb1
+"@sentry/core@npm:10.45.0":
+  version: 10.45.0
+  resolution: "@sentry/core@npm:10.45.0"
+  checksum: 10c0/ee84882df0615857fc716a5d126b93293d0171fc215bd5a8180263fe096b4f375af53e274597db9016ba36edb2e5b519c7b046809fdc9c36f27677381e08fe5f
   languageName: node
   linkType: hard
 
@@ -8156,9 +8165,9 @@ __metadata:
     "@hotwired/stimulus": "npm:^3.2.2"
     "@hotwired/turbo-rails": "npm:^8.0.23"
     "@ministryofjustice/frontend": "npm:^8.0.1"
-    "@rails/actiontext": "npm:^8.1.200"
-    "@rails/activestorage": "npm:^8.1.200"
-    "@sentry/browser": "npm:10.44.0"
+    "@rails/actiontext": "npm:^8.1.300"
+    "@rails/activestorage": "npm:^8.1.300"
+    "@sentry/browser": "npm:10.45.0"
     "@stimulus/polyfills": "npm:^2.0.0"
     accessible-autocomplete: "npm:^3.0.1"
     axios: "npm:^1.13.6"
@@ -8192,7 +8201,7 @@ __metadata:
     stylelint-config-standard: "npm:^34.0.0"
     tough-cookie: "npm:^6.0.1"
     trix: "npm:^2.1.18"
-    yaml: "npm:^2.8.2"
+    yaml: "npm:^2.8.3"
   languageName: unknown
   linkType: soft
 
@@ -8912,12 +8921,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yaml@npm:^2.8.2":
-  version: 2.8.2
-  resolution: "yaml@npm:2.8.2"
+"yaml@npm:^2.8.3":
+  version: 2.8.3
+  resolution: "yaml@npm:2.8.3"
   bin:
     yaml: bin.mjs
-  checksum: 10c0/703e4dc1e34b324aa66876d63618dcacb9ed49f7e7fe9b70f1e703645be8d640f68ab84f12b86df8ac960bac37acf5513e115de7c970940617ce0343c8c9cd96
+  checksum: 10c0/ddff0e11c1b467728d7eb4633db61c5f5de3d8e9373cf84d08fb0cdee03e1f58f02b9f1c51a4a8a865751695addbd465a77f73f1079be91fe5493b29c305fd77
   languageName: node
   linkType: hard
 
