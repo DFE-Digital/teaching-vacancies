@@ -31,6 +31,10 @@
     }
   }
 
+  &__navigation-item--active a {
+    font-weight: 700;
+  }
+
   &__link {
     @include govuk-font($size: 16);
     @include govuk-link-style-inverse;

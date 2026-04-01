@@ -3,7 +3,7 @@
     nav.govuk-header__navigation aria-label="Top Menu"
       ul.govuk-header__navigation-list
         - if publisher_signed_in?
-          li.govuk-header__navigation-item
+          li class="govuk-header__navigation-item#{" govuk-header__navigation-item--active" if schools_in_your_trust_active?}"
             = link_to t("nav.organisation_profile", name: current_organisation.name),
                       publishers_organisation_path(current_organisation),
                       class: "govuk-header__link"
@@ -12,7 +12,7 @@
                       class: "govuk-header__link",
                       method: :delete
         - elsif jobseeker_signed_in?
-          li.govuk-header__navigation-item
+          li class="govuk-header__navigation-item#{" govuk-header__navigation-item--active" if your_account_active?}"
             = link_to t("nav.your_account"), jobseekers_account_path,
                       class: "govuk-header__link"
           li.govuk-header__navigation-item
