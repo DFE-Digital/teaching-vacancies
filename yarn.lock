@@ -7975,12 +7975,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-config-recommended@npm:^13.0.0":
-  version: 13.0.0
-  resolution: "stylelint-config-recommended@npm:13.0.0"
+"stylelint-config-recommended@npm:^18.0.0":
+  version: 18.0.0
+  resolution: "stylelint-config-recommended@npm:18.0.0"
   peerDependencies:
-    stylelint: ^15.10.0
-  checksum: 10c0/80420a1ab616e8637b66223f88c597388990d9991cd6a28b8372049b83329d893412f83029bb253a82b52387e497b62e042bc898064a2f22574b0d8921f01dd2
+    stylelint: ^17.0.0
+  checksum: 10c0/c7f8ff45c76ec23f4c8c0438894726976fd5e872c59d489f959b728d9879bba20dbf0040cd29ad3bbc00eb32befd95f5b6ca150002bb8aea74b0797bc42ccc17
   languageName: node
   linkType: hard
 
@@ -7997,14 +7997,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-config-standard@npm:^34.0.0":
-  version: 34.0.0
-  resolution: "stylelint-config-standard@npm:34.0.0"
+"stylelint-config-standard@npm:^40.0.0":
+  version: 40.0.0
+  resolution: "stylelint-config-standard@npm:40.0.0"
   dependencies:
-    stylelint-config-recommended: "npm:^13.0.0"
+    stylelint-config-recommended: "npm:^18.0.0"
   peerDependencies:
-    stylelint: ^15.10.0
-  checksum: 10c0/2494468af2359490b6ebb9723d9653f9e31db3a0772b8d9f0e081018b0079ef84ae6f90dcf94c879a3c374f299e334941e3dcff1afb603c2284d3103085b71fb
+    stylelint: ^17.0.0
+  checksum: 10c0/d8942552d53a3afda59b64d0c49503bb626fe5cef39a9e8c9583fcd60869f21431125ef4480ff27a59f7f2cf0da8af810d377129ef1d670ddc5def4defe2880c
   languageName: node
   linkType: hard
 
@@ -8198,7 +8198,7 @@ __metadata:
     sass: "npm:^1.98.0"
     stylelint: "npm:^15.11.0"
     stylelint-config-sass-guidelines: "npm:^10.0.0"
-    stylelint-config-standard: "npm:^34.0.0"
+    stylelint-config-standard: "npm:^40.0.0"
     tough-cookie: "npm:^6.0.1"
     trix: "npm:^2.1.18"
     yaml: "npm:^2.8.3"
