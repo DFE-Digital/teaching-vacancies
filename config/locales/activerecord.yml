@@ -242,7 +242,7 @@ en:
       blank: Select the email address to receive applications
       invalid: Enter a valid email address in the correct format, like name@example.com
     application_form:
-      blank: Select application form
+      blank: Select application form. We may have removed a previously uploaded file if it could not be verified as safe.
     other_application_email:
       blank: Enter an email address
       invalid: Enter a valid email address in the correct format, like name@example.com

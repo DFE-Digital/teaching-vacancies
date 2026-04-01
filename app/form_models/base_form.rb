@@ -6,7 +6,7 @@ class BaseForm
     valid_file_types: %i[JPG JPEG PNG].freeze,
   }.freeze
 
-  VALID_DOCUMENT_TYPES = %i[PDF DOC DOCX].freeze
+  VALID_DOCUMENT_TYPES = %i[PDF DOC DOCX TXT].freeze
 
   include ActiveModel::Model
   include ActiveModel::Validations::Callbacks

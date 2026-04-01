@@ -26,7 +26,7 @@ en:
             baptism_address:
               blank: Enter the address of the baptism
             baptism_certificate:
-              blank: Upload your baptism certificate
+              blank: Upload your baptism certificate. We may have removed a previously uploaded file if it could not be verified as safe.
             baptism_date:
               blank: Enter the baptism date
               invalid: Enter a valid baptism date

@@ -57,7 +57,7 @@ en:
             upload_application_form_section_completed:
               inclusion: Select yes if you have completed this section
             application_form:
-              blank: Select the completed job application form
+              blank: Select the completed job application form. We may have removed a previously uploaded file if it could not be verified as safe.
 
         jobseekers/profiles/personal_details_form/names_form:
           attributes:
