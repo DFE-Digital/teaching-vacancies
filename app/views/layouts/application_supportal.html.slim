@@ -12,7 +12,7 @@ html.govuk-template.app-html-class lang="en"
     = render EnvironmentBannerComponent.new
     = govuk_header(homepage_url: support_user_root_path) do |header|
       - header.with_product_name(name: t("app.support_title"))
-      div.govuk-header__content
+      .govuk-header__content
         nav.govuk-header__navigation aria-label="Top Menu"
           ul.govuk-header__navigation-list
             li.govuk-header__navigation-item
