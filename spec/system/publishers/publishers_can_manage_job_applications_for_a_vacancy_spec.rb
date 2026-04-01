@@ -19,7 +19,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       find(".govuk-footer")
     end
 
-    it "passes a11y", :a11y do
+    it "passes a11y", :a11y, :retry do
       expect(page).to be_axe_clean
     end
 

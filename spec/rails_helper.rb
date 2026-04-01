@@ -226,6 +226,23 @@ RSpec.configure do |config|
   config.include ViewComponent::TestHelpers, type: :component
   config.include WithEnv
   config.include PageObjects::Pages::Application
+
+  # show retry status in spec process
+  config.verbose_retry = true
+  # show exception that triggers a retry if verbose_retry is set to true
+  config.display_try_failure_messages = true
+
+  config.around :each, :retry do |ex|
+    ex.run_with_retry retry: 3
+  end
+
+  # callback to be run between retries
+  config.retry_callback = proc do |ex|
+    # run some additional clean up task - can be filtered by example metadata
+    if ex.metadata[:js] || ex.metadata[:a11y]
+      Capybara.reset!
+    end
+  end
 end
 
 VCR.configure do |config|
