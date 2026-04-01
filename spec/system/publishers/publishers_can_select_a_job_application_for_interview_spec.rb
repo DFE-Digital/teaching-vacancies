@@ -141,7 +141,7 @@ RSpec.describe "Publishers can select a job application for interview", :perform
             publisher_ats_pre_interview_checks_page.reference_links.first.click
           end
 
-          scenario "accepting an out of band reference", :js do
+          scenario "accepting an out of band reference" do
             expect(publisher_ats_reference_request_page).to be_displayed
             click_on "Mark as received"
 

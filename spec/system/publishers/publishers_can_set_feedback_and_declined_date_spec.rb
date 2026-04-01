@@ -7,10 +7,10 @@ RSpec.describe "Publisher can set feedback and declined dates" do
 
   before { job_application }
 
-  context "when candidate declines offer", :js do
+  context "when candidate declines offer" do
     let(:job_application) { create(:job_application, :status_declined, vacancy:, offered_at: 3.days.ago, declined_at: nil) }
 
-    scenario "add declined date from tab offered" do
+    scenario "add declined date from tab offered", :js do
       run_with_publisher(publisher) do
         publisher_ats_applications_page.load(vacancy_id: vacancy.id)
         expect(publisher_ats_applications_page.job_title).to have_text(vacancy.job_title)
@@ -33,10 +33,10 @@ RSpec.describe "Publisher can set feedback and declined dates" do
     end
   end
 
-  context "when candidate has an offer", :js do
+  context "when candidate has an offer" do
     let(:job_application) { create(:job_application, :status_offered, vacancy:, offered_at: nil) }
 
-    scenario "add offer date from tab offered" do
+    scenario "add offer date from tab offered", :js do
       run_with_publisher(publisher) do
         publisher_ats_applications_page.load(vacancy_id: vacancy.id)
         expect(publisher_ats_applications_page.job_title).to have_text(vacancy.job_title)
@@ -59,10 +59,10 @@ RSpec.describe "Publisher can set feedback and declined dates" do
     end
   end
 
-  context "when candidate interview is unsuccessful", :js do
+  context "when candidate interview is unsuccessful" do
     let(:job_application) { create(:job_application, :status_unsuccessful_interview, vacancy:, interview_feedback_received_at: nil) }
 
-    scenario "add declined date from tab offered" do
+    scenario "add declined date from tab offered", :js do
       run_with_publisher(publisher) do
         publisher_ats_applications_page.load(vacancy_id: vacancy.id)
         expect(publisher_ats_applications_page.job_title).to have_text(vacancy.job_title)

@@ -37,19 +37,18 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
     end
   end
 
-  describe "through vacancy applications page actions", :js do
+  describe "through vacancy applications page actions" do
     %i[alan charlie etha hanane said yun britany].each do |first_name|
       let(first_name) { create(:job_application, :status_submitted, vacancy:, first_name:) }
     end
-    let(:job_applications) { [alan, charlie, etha, hanane, said, yun, britany] }
+    let!(:job_applications) { [alan, charlie, etha, hanane, said, yun, britany] }
     let(:current_page) { publisher_ats_applications_page }
 
     before do
-      job_applications
       publisher_ats_applications_page.load(vacancy_id: vacancy.id)
     end
 
-    it "progress job applications" do
+    it "progress job applications", :js do
       expect(current_page.job_title).to have_text(vacancy.job_title)
 
       # navigation

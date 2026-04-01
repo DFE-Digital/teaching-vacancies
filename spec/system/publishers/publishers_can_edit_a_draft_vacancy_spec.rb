@@ -36,16 +36,17 @@ RSpec.describe "Publishers can edit a draft vacancy" do
           find("a").click
         end
         click_on I18n.t("buttons.save_and_continue")
-        # wait for page load
-        find("form.new_publishers_job_listing_job_role_form")
-        find("footer")
       end
 
       it "passes a11y", :a11y do
+        # wait for page load
+        expect(page).to have_content("What type of job is this?")
         expect(page).to be_axe_clean
       end
 
       it "can edit a draft", :a11y do
+        # wait for page load
+        expect(page).to have_content("What type of job is this?")
         fill_in_job_role_form_fields("teaching_assistant")
         click_on I18n.t("buttons.save_and_continue")
 

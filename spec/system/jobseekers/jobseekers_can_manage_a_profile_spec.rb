@@ -112,7 +112,7 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
           end
         end
 
-        it "associates an 'employment' with their jobseeker profile", :js do
+        it "associates an 'employment' with their jobseeker profile" do
           expect { add_jobseeker_profile_employment }.to change { profile.employments.count }.by(1)
         end
 

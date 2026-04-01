@@ -15,7 +15,7 @@ RSpec.describe "Publishers can select multiple candidates for interview", :perfo
   after { logout }
 
   # needs JS driver to prevent tests seeing multiple tabs at once
-  context "when selecting multiple candidates", :js do
+  context "when selecting multiple candidates" do
     let(:vacancy) { create(:vacancy, :catholic, :expired, organisations: [school], publisher: publisher) }
     let!(:job_application) do
       create(:job_application, :status_submitted,
@@ -41,7 +41,7 @@ RSpec.describe "Publishers can select multiple candidates for interview", :perfo
     context "when someone needs contacting" do
       let(:contact_referee) { true }
 
-      it "shows the contact references form" do
+      it "shows the contact references form", :js do
         click_on "Save and continue"
         choose "Yes"
         click_on "Save and continue"
@@ -52,7 +52,7 @@ RSpec.describe "Publishers can select multiple candidates for interview", :perfo
     context "when no-one needs contacting" do
       let(:contact_referee) { false }
 
-      it "does not show the contact references form" do
+      it "does not show the contact references form", :js do
         click_on "Save and continue"
         choose "Yes"
         click_on "Save and continue"

@@ -57,7 +57,7 @@ RSpec.describe "Jobseekers can give account feedback" do
       expect(page).to be_axe_clean.skipping "aria-allowed-attr"
     end
 
-    it "updates the opt out field and adds a feedback record", :js do
+    it "updates the opt out field and adds a feedback record" do
       choose I18n.t("helpers.label.jobseekers_email_preferences_form.email_opt_out_options.true")
       click_button I18n.t("buttons.save_changes")
       within ".govuk-list.govuk-error-summary__list" do
