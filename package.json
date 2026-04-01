@@ -14,9 +14,9 @@
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.23",
     "@ministryofjustice/frontend": "^8.0.1",
-    "@rails/actiontext": "^8.1.200",
-    "@rails/activestorage": "^8.1.200",
-    "@sentry/browser": "10.44.0",
+    "@rails/actiontext": "^8.1.300",
+    "@rails/activestorage": "^8.1.300",
+    "@sentry/browser": "10.45.0",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^3.0.1",
     "axios": "^1.13.6",
@@ -54,7 +54,7 @@
     "stylelint": "^15.11.0",
     "stylelint-config-sass-guidelines": "^10.0.0",
     "stylelint-config-standard": "^34.0.0",
-    "yaml": "^2.8.2"
+    "yaml": "^2.8.3"
   },
   "scripts": {
     "build": "node esbuild.config.js",
