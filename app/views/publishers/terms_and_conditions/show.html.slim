@@ -13,7 +13,7 @@
           li = item
 
       = f.govuk_check_boxes_fieldset :terms,
-        legend: { text: t("terms_and_conditions.please_accept"), size: "m" } do
+        legend: { text: t("terms_and_conditions.please_accept"), size: "m", tag: "h2" } do
 
         = f.govuk_check_box :terms,
           true,
