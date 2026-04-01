@@ -446,9 +446,9 @@ en:
     intro_link_text: terms and conditions
     schools_section_html: 'Of particular importance is the section %{link} which includes:'
     schools_section_link_text: ‘terms and conditions for schools, trusts and local authorities’
-    label: I agree to all of the terms and conditions of the Teaching Vacancies service.
+    label: I agree to all of the Teaching Vacancies service terms and conditions.
     page_title: Terms and conditions
-    please_accept: Please accept the terms and conditions
+    please_accept: Accept the terms and conditions
     read_html: >-
       Read our <a href='/pages/terms-and-conditions' class='govuk-link' target='blank'>terms and conditions</a>
     summary_list:
