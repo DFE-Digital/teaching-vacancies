@@ -364,6 +364,7 @@ class JobApplicationPdf
     table_class[
       [
         ["Qualification Name:", qualification.name],
+        ["Subject:", qualification.subject],
         ["Institution:", qualification.institution],
         ["Grade:", qualification.grade],
         ["Date completed:", qualification.award_date],
