@@ -3,23 +3,28 @@
 - content_for :breadcrumbs do
   = govuk_back_link text: t("buttons.back"), href: jobseekers_profile_path
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_for form, url: jobseekers_profile_about_you_path, method: "patch" do |f|
-      = f.govuk_error_summary
+= form_for @profile, url: jobseekers_profile_about_you_path, method: "patch" do |f|
+  = f.govuk_error_summary
 
-      = f.govuk_fieldset legend: { text: t(".page_title"), tag: "h1", size: "l" } do
+  = f.govuk_fieldset legend: { text: t(".page_title"), tag: "h1", size: "l" } do
 
-        p = t(".page_description")
-        p = t(".items_explanation")
+    p = t(".page_description")
+    p = t(".items_explanation")
 
-        ul.govuk-list.govuk-list--bullet
-          - t(".page_description_items").each do |item|
-            li.govuk-list-item = item
+    ul.govuk-list.govuk-list--bullet
+      - t(".page_description_items").each do |item|
+        li.govuk-list-item = item
 
-        = f.govuk_text_area :about_you, label: { size: "s" }, max_words: 1000, rows: 11
+    = tag.div data: { controller: "word-counter", word_counter_max_words_value: "1500" }
+      .govuk-form-group
+        = f.rich_text_area :about_you, aria: { label: t("helpers.label.jobseekers_profile_about_you_form.about_you") }, data: { word_counter_target: "editor" }
+        noscript
+          = f.govuk_text_area :about_you, label: { size: "s" }, max_words: 1500, rows: 11
 
-        = f.govuk_submit t("buttons.save_and_continue")
+      div class="govuk-hint govuk-!-margin-bottom-6"
+        = tag.span data: { word_counter_target: "counter" }
 
-    .govuk-button-group
-      = govuk_link_to t("buttons.cancel"), jobseekers_profile_path
+    = f.govuk_submit t("buttons.save_and_continue")
+
+.govuk-button-group
+  = govuk_link_to t("buttons.cancel"), jobseekers_profile_path

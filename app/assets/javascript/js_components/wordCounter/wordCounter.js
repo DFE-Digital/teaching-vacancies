@@ -30,7 +30,8 @@ export default class extends Controller {
     const text = editor.getDocument().toString().trim();
     if (text.length === 0) return 0;
 
-    const words = text.split(/\s+/).filter((word) => word.length > 0);
+    // '-' allows one-way street to be one word
+    const words = text.split(/(\w|-)+/);
     return words.length;
   }
 

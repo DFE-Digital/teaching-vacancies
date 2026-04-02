@@ -872,23 +872,23 @@ en:
           You must complete your personal details, job preferences, professional status, qualifications and work history before you turn on your profile
       about_you:
         edit:
-          page_title: About You
+          page_title: Your personal statement
           page_description: Describe your relevant skills, knowledge and experience. This will help schools see if you'd be a good fit for their role.
           items_explanation: "If you're a teacher, this may include information about:"
           page_description_items:
             - "working with pupils"
             - "your teaching style and classroom management"
             - "your knowledge of the curriculum"
-            - "your understanding of safeguarding and student wellbeing"
+            - "your understanding of safeguarding and pupil wellbeing"
             - "any extra training you’ve done"
             - "additional responsibilities you’ve taken on in school"
             - "experience in special educational needs and disability (SEND)"
             - "any relevant interests or extra-curricular activities"
         show:
-          page_title: About You
-          summary_title: About You
+          page_title: Your personal statement
+          summary_title: Your personal statemwent
         summary:
-          about_you_title: About You
+          about_you_title: Your personal statement
       training_and_cpds:
         new:
           <<: *training_shared
@@ -963,7 +963,7 @@ en:
         update:
           success: One role has been changed
       summary:
-        about: About
+        about: Your personal statement
         contact_details: Contact details
         job_preferences: Job preferences
         key_stages:

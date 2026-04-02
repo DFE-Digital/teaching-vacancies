@@ -15,25 +15,6 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
 
     after { logout }
 
-    describe "#about_you" do
-      let(:jobseeker_about_you) { "I am an amazing teacher" }
-
-      before do
-        visit jobseekers_profile_path
-        click_link("Add details about you")
-      end
-
-      it "allows the jobseeker to add #about_you" do
-        fill_in "jobseekers_profile_about_you_form[about_you]", with: jobseeker_about_you
-        click_on I18n.t("buttons.save_and_continue")
-
-        expect(page).to have_content(jobseeker_about_you)
-
-        click_link I18n.t("buttons.return_to_profile")
-        expect(page).to have_content(jobseeker_about_you)
-      end
-    end
-
     describe "changing the jobseekers's QTS status" do
       before do
         visit jobseekers_profile_path

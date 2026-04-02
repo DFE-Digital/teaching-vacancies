@@ -58,7 +58,7 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
       page_path: -> { new_jobseekers_profile_work_history_path },
     },
     {
-      title: "About you",
+      title: "Your personal statement",
       display_summary: ->(profile) { profile.about_you.present? },
       key: "about_you",
       condition: -> { profile.about_you.present? },

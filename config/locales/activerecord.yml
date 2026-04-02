@@ -580,8 +580,9 @@ en:
         jobseekers/profile/about_you_form:
           attributes:
             about_you:
-              blank: Enter your about you details
-              length: About you must be 1000 words or less
+              blank: Enter your personal statement
+            about_you_words:
+              too_long: Personal statement must be %{count} words or less
         jobseekers/training_and_cpd_form:
           attributes:
             name:
