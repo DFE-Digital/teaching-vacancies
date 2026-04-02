@@ -1,3 +1,5 @@
+require "csv"
+
 class Gias::Data
   GIAS_BASE_URL = "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/".freeze
 

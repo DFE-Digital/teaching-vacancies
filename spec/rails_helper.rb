@@ -30,18 +30,43 @@ Capybara.register_driver(:cuprite_headless) do |app|
   Capybara::Cuprite::Driver.new(app,
                                 headless: true,
                                 process_timeout: 30,
-                                window_size: [1400, 1400],
+                                window_size: [1280, 800],
                                 browser_options: {
                                   "no-sandbox": nil,
                                   "disable-gpu": nil,
-                                  "window-size": "1400,1400",
+                                  "disable-dev-shm-usage": nil,
+                                  "disable-extensions": nil,
+                                  "disable-background-networking": nil,
+                                  "disable-default-apps": nil,
+                                  # Limit renderer subprocess count — the main driver of Chrome's
+                                  # high process/memory footprint in parallel test runs.
+                                  # site-per-process (Site Isolation) spawns a renderer per cross-origin
+                                  # frame; disabling it collapses those into one renderer per session.
+                                  # renderer-process-limit caps any remaining renderer processes to 1.
+                                  "disable-features": "site-per-process,VizDisplayCompositor",
+                                  "renderer-process-limit": "1",
+                                  # Cap V8 heap: initial prevents eager allocation; max prevents unbounded growth.
+                                  "js-flags": "--max_old_space_size=256 --initial_old_space_size=32",
+                                  "window-size": "1280,800",
                                   headless: "new",
                                   "ozone-platform": "none",
                                 })
 end
 
 Capybara.register_driver :chrome_headless do |app|
-  options = Selenium::WebDriver::Chrome::Options.new(args: %w[no-sandbox headless disable-gpu window-size=1400,1400])
+  options = Selenium::WebDriver::Chrome::Options.new(args: [
+    "no-sandbox",
+    "headless",
+    "disable-gpu",
+    "window-size=1280,800",
+    "disable-dev-shm-usage",
+    "disable-extensions",
+    "disable-background-networking",
+    "disable-default-apps",
+    "disable-features=site-per-process,VizDisplayCompositor",
+    "renderer-process-limit=1",
+    "js-flags=--max_old_space_size=256 --initial_old_space_size=32",
+  ])
 
   if ENV["SELENIUM_HUB_URL"]
     Capybara::Selenium::Driver.new(app, browser: :remote, url: ENV.fetch("SELENIUM_HUB_URL", nil), options:)
@@ -51,7 +76,18 @@ Capybara.register_driver :chrome_headless do |app|
 end
 
 Capybara.register_driver :chrome do |app|
-  options = Selenium::WebDriver::Chrome::Options.new(args: %w[no-sandbox disable-gpu window-size=1400,1800])
+  options = Selenium::WebDriver::Chrome::Options.new(args: [
+    "no-sandbox",
+    "disable-gpu",
+    "window-size=1280,800",
+    "disable-dev-shm-usage",
+    "disable-extensions",
+    "disable-background-networking",
+    "disable-default-apps",
+    "disable-features=site-per-process,VizDisplayCompositor",
+    "renderer-process-limit=1",
+    "js-flags=--max_old_space_size=256 --initial_old_space_size=32",
+  ])
 
   if ENV["SELENIUM_HUB_URL"]
     Capybara::Selenium::Driver.new(app, browser: :remote, url: ENV.fetch("SELENIUM_HUB_URL", nil), options:)
@@ -117,16 +153,26 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system) do
     driven_by :rack_test
+    Capybara.default_host = "http://#{ENV.fetch('DOMAIN', 'localhost:3000')}"
 
     if ENV["SELENIUM_HUB_URL"]
-      test_env_number = ENV.fetch("TEST_ENV_NUMBER", "1").to_i
+      test_env_number = ENV.fetch("TEST_ENV_NUMBER", "1").then { |n| n.empty? ? 1 : n.to_i }
       server_port = 3000 + test_env_number
-      Capybara.default_host = "http://#{ENV.fetch('DOMAIN', "#{IPSocket.getaddress(Socket.gethostname)}:#{server_port}")}"
-      Capybara.app_host = "http://#{IPSocket.getaddress(Socket.gethostname)}:#{server_port}"
-      Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
+      container_ip = IPSocket.getaddress(Socket.gethostname)
+      Capybara.app_host = "http://#{container_ip}:#{server_port}"
+      Capybara.server_host = container_ip
       Capybara.server_port = server_port
-    else
-      Capybara.default_host = "http://#{ENV.fetch('DOMAIN', 'localhost:3000')}"
+      url_options = { host: container_ip, port: server_port, protocol: "http" }
+      ActionMailer::Base.default_url_options = url_options
+      Rails.application.routes.default_url_options = url_options
+    end
+  end
+
+  config.after(:each, type: :system) do
+    if ENV["SELENIUM_HUB_URL"]
+      original = Rails.configuration.action_mailer.default_url_options
+      ActionMailer::Base.default_url_options = original
+      Rails.application.routes.default_url_options = original
     end
   end
 

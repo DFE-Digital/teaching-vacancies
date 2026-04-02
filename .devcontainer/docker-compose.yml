@@ -26,6 +26,8 @@ services:
       PGUSER: postgres
       # Set up Selenium to use remote Chrome
       SELENIUM_HUB_URL: http://selenium-chrome:4444/wd/hub
+      # Parallel testing
+      PARALLEL_TEST_PROCESSORS: "4"
     depends_on:
       - db
       - redis
@@ -53,6 +55,16 @@ services:
   selenium-chrome:
     image: selenium/standalone-chrome:latest
     shm_size: 2G
+    # Selenium is quite memory-hungry, especially with multiple sessions. What can lead to system running out of memory during parallel test runs.
+    # Setting a memory limit on the container can help prevent this, but it may also cause Selenium to crash if it exceeds the limit. Adjust as needed based on your system's resources and test requirements.
+    mem_limit: 4g
+    environment:
+      SE_NODE_SESSION_TIMEOUT: 120
+      # Set the number of parallel Selenium sessions.
+      # Ideally they should match the number of parallel test processors.
+      SE_NODE_MAX_SESSIONS: "4"
+      # Limit Selenium server JVM heap
+      SE_JAVA_OPTS: "-Xmx256m"
     ports:
       - "7900:7900"
 
