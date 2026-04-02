@@ -7,7 +7,6 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
     # when a file is already attached and no new file is uploaded, skip form validation and proceed
     # we don't want to submit the form again with the same file and attach the same file again
     if !application_form_uploaded? && vacancy.application_form.attached?
-      update_vacancy
       return redirect_to_next_step
     end
 
