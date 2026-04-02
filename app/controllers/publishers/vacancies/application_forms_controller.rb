@@ -4,10 +4,15 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
   helper_method :form
 
   def create
-    if form.valid?
-      vacancy.application_form.attach(form.application_form) if application_form_uploaded?
+    if !application_form_uploaded? && vacancy.application_form.attached?
       update_vacancy
-      send_dfe_analytics_event if application_form_uploaded?
+      return redirect_to_next_step
+    end
+
+    if form.valid?
+      vacancy.application_form.attach(form.application_form)
+      update_vacancy
+      send_dfe_analytics_event
       redirect_to_next_step
     else
       render "publishers/vacancies/build/application_form"
@@ -16,9 +21,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
 
   def destroy
     vacancy.application_form.purge
-    redirect_to organisation_job_build_path(vacancy.id, :application_form,
-                                            back_to_review: params[:back_to_review],
-                                            back_to_show: params[:back_to_show])
+    redirect_to organisation_job_build_path(vacancy.id, :application_form)
   end
 
   private
@@ -32,7 +35,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
   end
 
   def application_form_params
-    params.fetch(:publishers_job_listing_application_form_form, {}).permit(:application_form).merge(completed_steps: completed_steps)
+    params.expect(publishers_job_listing_application_form_form: %i[application_form]).merge(completed_steps: completed_steps)
   end
 
   def update_vacancy
