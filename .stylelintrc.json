@@ -19,7 +19,7 @@
                 "severity": "warning"
             }
         ],
-        "scss/at-import-no-partial-leading-underscore": [
+        "scss/load-no-partial-leading-underscore": [
             true,
             {
                 "severity": "warning"
@@ -45,6 +45,6 @@
         ],
         "selector-max-id": [
             1
-        ]    
+        ]
     }
 }
