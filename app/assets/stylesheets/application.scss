@@ -1,8 +1,8 @@
 $govuk-global-styles: true;
 $govuk-new-link-styles: true;
-$govuk-assets-path: "/";
+$govuk-assets-path: '/';
 
-@forward "@ministryofjustice/frontend/moj/all";
+@forward '@ministryofjustice/frontend/moj/all';
 
 // External dependencioes
 @import 'accessible-autocomplete/dist/accessible-autocomplete.min';
@@ -13,7 +13,7 @@ $govuk-assets-path: "/";
 @import 'leaflet-gesture-handling/dist/leaflet-gesture-handling';
 
 //@import "@x-govuk/govuk-prototype-components/src/x-govuk/components/secondary-navigation";
-@import "secondary-navigation";
+@import 'secondary-navigation';
 
 @import 'base/global';
 @import 'base/guide_card';

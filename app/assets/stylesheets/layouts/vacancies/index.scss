@@ -45,7 +45,8 @@
     @include govuk-media-query($from: tablet) {
       margin-bottom: govuk-spacing(4);
 
-      .autocomplete, .govuk-form-group {
+      .autocomplete,
+      .govuk-form-group {
         margin-bottom: 20px;
       }
 
