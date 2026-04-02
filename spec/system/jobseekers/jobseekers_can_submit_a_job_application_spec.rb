@@ -112,7 +112,6 @@ RSpec.describe "Jobseekers can submit a job application" do
       end
 
       it "shows the uploaded file with a delete link" do
-        expect(page).to have_content "WOWOW"
         expect(page).to have_content(uploaded_job_application.application_form.filename.to_s)
         expect(page).to have_link(I18n.t("buttons.delete"))
       end
