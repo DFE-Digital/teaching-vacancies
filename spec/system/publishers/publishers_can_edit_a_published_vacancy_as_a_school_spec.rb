@@ -150,21 +150,27 @@ RSpec.describe "Publishers can edit a vacancy" do
         publisher_vacancy_page.change_application_form_link.click
       end
 
-      scenario "replacing an application form" do
+      scenario "deleting an application form" do
         expect(publisher_application_form_page).to be_displayed
+        expect(page).to have_content(vacancy.application_form.filename.to_s)
 
         click_on I18n.t("jobs.upload_documents_table.actions.delete")
 
         expect(current_path).to eq(organisation_job_build_path(vacancy.id, :application_form))
-        expect(page.has_field?("publishers_job_listing_application_form_form_application_form_staged_for_replacement", type: :hidden, with: "true")).to be true
+        expect(vacancy.reload.application_form.attached?).to be false
+        expect(page).not_to have_content(vacancy.application_form.filename.to_s)
+      end
 
-        old_file_id = vacancy.application_form.id
+      scenario "replacing an application form" do
+        click_on I18n.t("jobs.upload_documents_table.actions.delete")
+
+        expect(current_path).to eq(organisation_job_build_path(vacancy.id, :application_form))
 
         allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(instance_double(Publishers::DocumentVirusCheck, safe?: true))
         page.attach_file("publishers_job_listing_application_form_form[application_form]", Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"))
         click_on I18n.t("buttons.save_and_continue")
 
-        expect(vacancy.reload.application_form.id).not_to eq(old_file_id)
+        expect(vacancy.reload.application_form.filename.to_s).to eq("blank_job_spec.pdf")
       end
     end
 

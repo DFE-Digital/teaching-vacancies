@@ -156,6 +156,25 @@ RSpec.describe "Jobseekers can complete a religious job application" do
               click_on I18n.t("jobseekers.job_applications.post_submit.next_step.view_applications")
               expect(page).to have_content(vacancy.job_title)
             end
+
+            context "when navigating back to the catholic step" do
+              before do
+                visit jobseekers_job_application_build_path(job_application, :catholic)
+                find("label[for='jobseekers-job-application-catholic-form-following-religion-true-field']").click
+                find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-baptism-certificate-field']").click
+              end
+
+              it "shows the uploaded file with a delete link" do
+                expect(page).to have_content("blank_baptism_cert.pdf")
+                expect(page).to have_link(I18n.t("buttons.delete"))
+              end
+
+              it "deletes the file when delete is clicked" do
+                click_on I18n.t("buttons.delete")
+                expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :catholic))
+                expect(job_application.reload.baptism_certificate.attached?).to be false
+              end
+            end
           end
         end
 

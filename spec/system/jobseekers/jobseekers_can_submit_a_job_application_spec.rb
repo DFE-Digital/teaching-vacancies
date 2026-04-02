@@ -106,6 +106,25 @@ RSpec.describe "Jobseekers can submit a job application" do
       end
     end
 
+    context "when viewing the upload application form step" do
+      before do
+        visit edit_jobseekers_uploaded_job_application_upload_application_form_path(uploaded_job_application)
+      end
+
+      it "shows the uploaded file with a delete link" do
+        expect(page).to have_content "WOWOW"
+        expect(page).to have_content(uploaded_job_application.application_form.filename.to_s)
+        expect(page).to have_link(I18n.t("buttons.delete"))
+      end
+
+      it "deletes the file when delete is clicked" do
+        click_on I18n.t("buttons.delete")
+        expect(page).to have_current_path(edit_jobseekers_uploaded_job_application_upload_application_form_path(uploaded_job_application))
+        expect(page).not_to have_content(uploaded_job_application.application_form.filename.to_s)
+        expect(uploaded_job_application.reload.application_form.attached?).to be false
+      end
+    end
+
     context "when the application is incomplete" do
       let(:uploaded_job_application) { create(:uploaded_job_application, :status_draft, jobseeker:, vacancy:) }
 
