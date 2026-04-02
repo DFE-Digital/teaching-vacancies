@@ -12,13 +12,7 @@ div data-controller="upload-documents" data-upload-documents-inactive-value=vaca
     - if params["back_to_#{action_name}"]
       = f.hidden_field "back_to_#{action_name}", value: "true"
 
-    / See commit message for 1aa28cce3239c42b1af23d61ae08add3e8c51e5e for context
-    - if params[:application_form_staged_for_replacement] || local_assigns[:application_form_staged_for_replacement]
-      = f.hidden_field "application_form_staged_for_replacement", value: "true"
-    - else
-      = f.hidden_field "application_form_staged_for_replacement", value: "false"
-
-    - if vacancy.application_form.blank? || (params[:application_form_staged_for_replacement].present? || local_assigns[:application_form_staged_for_replacement])
+    - if vacancy.application_form.blank?
       = f.govuk_file_field :application_form,
         javascript: true,
         label: { size: "m" },
