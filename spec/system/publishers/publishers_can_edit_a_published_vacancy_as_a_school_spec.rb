@@ -152,13 +152,14 @@ RSpec.describe "Publishers can edit a vacancy" do
 
       scenario "deleting an application form" do
         expect(publisher_application_form_page).to be_displayed
-        expect(page).to have_content(vacancy.application_form.filename.to_s)
+        filename = vacancy.application_form.filename.to_s
+        expect(page).to have_content(filename)
 
         click_on I18n.t("jobs.upload_documents_table.actions.delete")
 
         expect(current_path).to eq(organisation_job_build_path(vacancy.id, :application_form))
         expect(vacancy.reload.application_form.attached?).to be false
-        expect(page).not_to have_content(vacancy.application_form.filename.to_s)
+        expect(page).not_to have_content(filename)
       end
 
       scenario "replacing an application form" do

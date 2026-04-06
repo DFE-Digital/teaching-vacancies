@@ -5,14 +5,6 @@ class Jobseekers::UploadedJobApplications::UploadApplicationFormsController < Jo
     @form = Jobseekers::UploadedJobApplication::UploadApplicationFormForm.new
   end
 
-  def destroy
-    # calling purge rather than purge_later to avoid potential confusing UX where user clicks delete and get returned 
-    # to the page before the file is deleted and still sees the file they tried to delete
-    @job_application.application_form.purge
-    @job_application.update!(completed_steps: @job_application.completed_steps - %w[upload_application_form])
-    redirect_to edit_jobseekers_uploaded_job_application_upload_application_form_path(@job_application)
-  end
-
   def update
     @form = Jobseekers::UploadedJobApplication::UploadApplicationFormForm.new(form_params)
     if @form.valid?
@@ -24,6 +16,14 @@ class Jobseekers::UploadedJobApplications::UploadApplicationFormsController < Jo
     else
       render :edit
     end
+  end
+
+  def destroy
+    # calling purge rather than purge_later to avoid potential confusing UX where user clicks delete and get returned
+    # to the page before the file is deleted and still sees the file they tried to delete
+    @job_application.application_form.purge
+    @job_application.update!(completed_steps: @job_application.completed_steps - %w[upload_application_form])
+    redirect_to edit_jobseekers_uploaded_job_application_upload_application_form_path(@job_application)
   end
 
   private
