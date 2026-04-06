@@ -83,12 +83,13 @@ Rails.application.routes.draw do
 
     resources :uploaded_job_applications, only: [] do
       resource :personal_details, only: %i[edit update], module: :uploaded_job_applications
-      resource :upload_application_form, only: %i[edit update], module: :uploaded_job_applications
+      resource :upload_application_form, only: %i[edit update destroy], module: :uploaded_job_applications
     end
 
     resources :job_applications, only: %i[index show destroy] do
       resources :form_previews, only: %i[show]
       resources :build, only: %i[show update], controller: "job_applications/build"
+      resource :baptism_certificate, only: %i[destroy], controller: "job_applications/baptism_certificates"
       resources :employments, only: %i[new create edit update destroy], controller: "job_applications/employments"
       resources :breaks, only: %i[new create edit update destroy], controller: "job_applications/breaks" do
         get :confirm_destroy

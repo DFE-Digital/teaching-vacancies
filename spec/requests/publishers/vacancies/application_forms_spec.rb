@@ -127,82 +127,25 @@ RSpec.describe "Documents" do
       end
     end
 
-    context "when an application form has been staged for replacement" do
-      context "when a replacement application form has been provided" do
-        let(:vacancy) { create(:vacancy, :with_uploaded_application_form, enable_job_applications: false, receive_applications: "email", organisations: [organisation]) }
-        let(:old_file) { vacancy.application_form }
-        let(:replacement_file) { fixture_file_upload("blank_job_spec.pdf") }
-        let(:request) do
-          post organisation_job_application_forms_path(vacancy.id), params: {
-            publishers_job_listing_application_form_form: {
-              application_form: replacement_file,
-              application_email: "test@example.com",
-              application_form_staged_for_replacement: true,
-            },
-          }
-        end
-
-        before do
-          allow_any_instance_of(Publishers::Vacancies::WizardBaseController).to receive(:all_steps_valid?).and_return(false)
-          allow_any_instance_of(Publishers::Vacancies::WizardBaseController).to receive(:next_invalid_step).and_return(:school_visits)
-        end
-
-        it "replaces the old file with the new file" do
-          old_file_id = vacancy.application_form.id
-
-          request
-
-          expect(vacancy.reload.application_form.id).not_to eq(old_file_id)
-        end
-
-        it "sends a supporting_document_replaced event", :dfe_analytics do
-          request
-
-          expect(:supporting_document_replaced).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
-            with_data: { vacancy_id: vacancy.id,
-                         document_type: "application_form",
-                         name: "blank_job_spec.pdf",
-                         size: vacancy.application_form.byte_size,
-                         content_type: "application/pdf" },
-          )
-        end
-
-        it "redirects to the next step" do
-          expect(request).to redirect_to(organisation_job_build_path(vacancy.id, :school_visits))
-        end
+    context "when a file is already attached and no new file is uploaded" do
+      let(:vacancy) { create(:vacancy, :with_uploaded_application_form, enable_job_applications: false, receive_applications: "email", organisations: [organisation]) }
+      let(:request) do
+        post organisation_job_application_forms_path(vacancy.id), params: {}
       end
 
-      context "when a replacement application form has not been provided" do
-        let(:hidden_field) do
-          "<input value=\"true\" autocomplete=\"off\" type=\"hidden\" name=\"publishers_job_listing_application_form_form[application_form_staged_for_replacement]\" " \
-          "id=\"publishers_job_listing_application_form_form_application_form_staged_for_replacement\" />"
-        end
-        let(:error_message) { I18n.t("activemodel.errors.models.publishers/job_listing/application_form_form.attributes.application_form.blank") }
-        let(:request) do
-          post organisation_job_application_forms_path(vacancy.id), params: {
-            publishers_job_listing_application_form_form: {
-              application_form: nil,
-              application_email: "test@example.com",
-              application_form_staged_for_replacement: true,
-            },
-          }
-        end
+      before do
+        allow_any_instance_of(Publishers::Vacancies::WizardBaseController).to receive(:all_steps_valid?).and_return(false)
+        allow_any_instance_of(Publishers::Vacancies::WizardBaseController).to receive(:next_invalid_step).and_return(:school_visits)
+      end
 
-        it "fails validation" do
-          expect(request).to render_template("publishers/vacancies/build/application_form")
-        end
+      it "does not change the attached file" do
+        existing_file_id = vacancy.application_form.id
+        request
+        expect(vacancy.reload.application_form.id).to eq(existing_file_id)
+      end
 
-        it "displays an error message" do
-          request
-
-          expect(response.body).to include(error_message)
-        end
-
-        it "adds the application_form_staged_for_replacement hidden field to the form" do
-          request
-
-          expect(response.body).to include(hidden_field)
-        end
+      it "redirects to the next step" do
+        expect(request).to redirect_to(organisation_job_build_path(vacancy.id, :school_visits))
       end
     end
 
