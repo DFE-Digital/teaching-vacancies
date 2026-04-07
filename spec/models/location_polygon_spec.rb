@@ -79,7 +79,7 @@ RSpec.describe LocationPolygon do
   end
 
   describe "#buffered_geometry_area" do
-    let!(:polygon) { create(:location_polygon) }
+    let_it_be(:polygon) { create(:location_polygon) }
 
     it "returns a buffered geometry for the polygon with the expected SRID (4326)" do
       buffered = polygon.buffered_geometry_area(1000)

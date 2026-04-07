@@ -314,7 +314,7 @@ RSpec.describe "Subscriptions" do
     end
 
     context "when the location is changed from a location with geopoint to a location with a polygon" do
-      let!(:subscription) do
+      let_it_be(:subscription) do
         create(:subscription, :with_some_criteria, :with_geopoint_location, frequency: :daily)
       end
       let(:params) { super().merge(location: "London") }
@@ -332,7 +332,7 @@ RSpec.describe "Subscriptions" do
   end
 
   describe "DELETE #destroy" do
-    let!(:subscription) { create(:subscription, frequency: :daily) }
+    let_it_be(:subscription) { create(:subscription, frequency: :daily) }
 
     subject { delete subscription_path(subscription.token) }
 
@@ -354,7 +354,7 @@ RSpec.describe "Subscriptions" do
   end
 
   describe "GET #keep" do
-    let!(:subscription) do
+    let_it_be(:subscription) do
       create(:subscription, frequency: :daily).tap do |s|
         s.update_column(:deletion_warning_email_sent_at, 2.weeks.ago)
         s.update_column(:updated_at, 13.months.ago)

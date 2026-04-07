@@ -28,12 +28,11 @@ RSpec.describe VacancyLocationQuery do
 
     context "when given a location that resolves to a LocationPolygon" do
       let(:location) { "Leeds" }
-      let(:radius) { 42 }
-
-      let!(:location_polygon) { create(:location_polygon, name: "leeds") }
-
       let(:join_scope) { double("join scope") }
       let(:where_scope) { double("where scope") }
+      let(:radius) { 42 }
+
+      let_it_be(:location_polygon) { create(:location_polygon, name: "leeds") }
 
       before do
         expect(default_scope).to receive(:joins).with(

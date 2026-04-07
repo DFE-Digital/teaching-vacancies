@@ -97,7 +97,7 @@ RSpec.describe Jobseeker do
   end
 
   describe ".find_from_govuk_one_login" do
-    let!(:jobseeker) { create(:jobseeker) }
+    let_it_be(:jobseeker) { create(:jobseeker) }
 
     it "finds the jobseeker by their govuk_one_login_id" do
       expect(described_class.find_from_govuk_one_login(
@@ -107,7 +107,7 @@ RSpec.describe Jobseeker do
     end
 
     context "when the jobseeker does not have a govuk_one_login_id" do
-      let!(:jobseeker) { create(:jobseeker, govuk_one_login_id: nil) }
+      let_it_be(:jobseeker) { create(:jobseeker, govuk_one_login_id: nil) }
 
       it "finds the jobseeker by their email" do
         expect(described_class.find_from_govuk_one_login(id: nil, email: jobseeker.email)).to eq(jobseeker)
@@ -115,7 +115,7 @@ RSpec.describe Jobseeker do
     end
 
     context "when the jobseeker has a different govuk_one_login_id but the provided email matches" do
-      let!(:jobseeker) { create(:jobseeker, govuk_one_login_id: "id") }
+      let_it_be(:jobseeker) { create(:jobseeker, govuk_one_login_id: "id") }
 
       it "finds the jobseeker by their email" do
         expect(described_class.find_from_govuk_one_login(id: nil, email: jobseeker.email)).to eq(jobseeker)
@@ -144,7 +144,7 @@ RSpec.describe Jobseeker do
   end
 
   describe "update_email_from_govuk_one_login!" do
-    let!(:jobseeker) { create(:jobseeker) }
+    let_it_be(:jobseeker, reload: true) { create(:jobseeker) }
 
     it "returns false if not given a new email" do
       expect(jobseeker.update_email_from_govuk_one_login!(nil)).to be(false)
@@ -173,7 +173,7 @@ RSpec.describe Jobseeker do
     end
 
     context "when a legacy jobseeker with the new email address already exists" do
-      let!(:legacy_jobseeker) { create(:jobseeker, govuk_one_login_id: nil) }
+      let_it_be(:legacy_jobseeker) { create(:jobseeker, govuk_one_login_id: nil) }
       let(:job_application) { create(:job_application, jobseeker: legacy_jobseeker) }
       let(:profile) do
         create(:jobseeker_profile, :with_qualifications, :with_employment_history, jobseeker: legacy_jobseeker)

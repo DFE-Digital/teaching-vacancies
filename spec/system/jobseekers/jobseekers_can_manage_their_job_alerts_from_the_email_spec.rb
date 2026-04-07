@@ -28,7 +28,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the email" do
       end
 
       context "when jobseeker has an account" do
-        let!(:jobseeker) { create(:jobseeker) }
+        let_it_be(:jobseeker) { create(:jobseeker) }
 
         context "when jobseeker is signed in" do
           let(:jobseeker_signed_in?) { true }

@@ -2,12 +2,13 @@ require "rails_helper"
 
 RSpec.describe Vacancies::Import::Sources::Broadbean do
   let(:response_body) { file_fixture("vacancy_sources/broadbean.xml").read }
+  let!(:school_group) { create(:school_group, name: "E-ACT", uid: "12345", schools: schools) }
+  let(:schools) { [school1] }
   let(:response) { double("BroadbeanHttpResponse", success?: true, body: response_body) }
 
   let!(:school1) { create(:school, name: "Test School", urn: "111111", phase: :primary, created_at: 1.week.ago) }
-  let!(:out_of_scope_school) { create(:school, name: "Out of scope", urn: "999999", detailed_school_type: "Other independent school") }
-  let!(:school_group) { create(:school_group, name: "E-ACT", uid: "12345", schools: schools) }
-  let(:schools) { [school1] }
+
+  let_it_be(:out_of_scope_school) { create(:school, name: "Out of scope", urn: "999999", detailed_school_type: "Other independent school") }
 
   describe "enumeration" do
     let(:vacancy) { subject.first }

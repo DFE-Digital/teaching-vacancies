@@ -306,15 +306,15 @@ RSpec.describe Vacancy do
         create(:vacancy, :expires_tomorrow)
       end
 
-      let!(:yesterday) { create(:vacancy, :expired_yesterday) }
+      let_it_be(:yesterday) { create(:vacancy, :expired_yesterday) }
       it "retrieves published and unpublished vacancies that have an expires_at of yesterday" do
         expect(PublishedVacancy.expired_yesterday).to eq([yesterday])
       end
     end
 
     context "with expiring vacancies" do
-      let!(:expired_earlier_today) { create(:vacancy, expires_at: 5.hour.ago) }
-      let!(:expires_later_today) { create(:vacancy, expires_at: 1.hour.from_now) }
+      let_it_be(:expired_earlier_today) { create(:vacancy, expires_at: 5.hour.ago) }
+      let_it_be(:expires_later_today) { create(:vacancy, expires_at: 1.hour.from_now) }
 
       describe "#applicable" do
         it "finds current vacancies" do
@@ -328,7 +328,7 @@ RSpec.describe Vacancy do
       end
 
       describe "#expires_within_data_access_period" do
-        let!(:expired_years_ago) { create(:vacancy, expires_at: 2.years.ago) }
+        let_it_be(:expired_years_ago) { create(:vacancy, expires_at: 2.years.ago) }
 
         it "retrieves vacancies that expired not more than one year ago" do
           expect(PublishedVacancy.expires_within_data_access_period).to_not include(expired_years_ago)
@@ -620,9 +620,9 @@ RSpec.describe Vacancy do
   end
 
   describe "#external?" do
-    let!(:ats_api_client_vacancy) { create(:vacancy, :external, job_title: "v1", external_source: nil) }
-    let!(:external_source_vacancy) { create(:vacancy, :external, job_title: "v2", publisher_ats_api_client: nil) }
-    let!(:internal_vacancy) { create(:vacancy, job_title: "v3", external_source: nil, publisher_ats_api_client: nil) }
+    let_it_be(:ats_api_client_vacancy) { create(:vacancy, :external, job_title: "v1", external_source: nil) }
+    let_it_be(:external_source_vacancy) { create(:vacancy, :external, job_title: "v2", publisher_ats_api_client: nil) }
+    let_it_be(:internal_vacancy) { create(:vacancy, job_title: "v3", external_source: nil, publisher_ats_api_client: nil) }
 
     it "is external when external_source is present" do
       expect(ats_api_client_vacancy.external?).to be true

@@ -11,7 +11,7 @@ RSpec.describe SendDailyAlertEmailJob do
         create(:vacancy, :published_slugged, publish_on: Date.yesterday)
       end
 
-      let!(:subscription) { create(:daily_subscription) }
+      let_it_be(:subscription) { create(:daily_subscription) }
 
       it "sends an email" do
         expect(Jobseekers::AlertMailer).to receive(:alert).with(subscription.id, PublishedVacancy.pluck(:id)) { mail }
@@ -71,7 +71,7 @@ RSpec.describe SendDailyAlertEmailJob do
     end
 
     context "with no vacancies" do
-      let!(:subscription) { create(:subscription, frequency: :daily) }
+      let_it_be(:subscription) { create(:subscription, frequency: :daily) }
 
       it "does not send an email or create a run" do
         expect(Jobseekers::AlertMailer).to_not receive(:alert)

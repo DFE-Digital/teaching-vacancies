@@ -3,7 +3,7 @@ require "swagger_helper"
 # rubocop:disable RSpec/VariableName
 # rubocop:disable RSpec/ScatteredSetup
 RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
-  let!(:client) { create(:publisher_ats_api_client) }
+  let_it_be(:client) { create(:publisher_ats_api_client) }
   let(:"X-Api-Key") { client.api_key }
 
   path "/ats-api/v1/vacancies" do
@@ -114,7 +114,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         schema "$ref" => "#/components/schemas/create_vacancy_response"
 
         let(:source) { build(:vacancy, :external) }
-        let!(:school1) { create(:school, name: "Test School", urn: "111111", phase: :primary) }
+        let_it_be(:school1) { create(:school, name: "Test School", urn: "111111", phase: :primary) }
         let(:schools) { [school1] }
         let(:organisation_ids) do
           {
@@ -224,7 +224,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           end
 
           describe "with multiple schools" do
-            let!(:school2) { create(:school, name: "Test School 2", urn: "222222", phase: :primary) }
+            let_it_be(:school2) { create(:school, name: "Test School 2", urn: "222222", phase: :primary) }
             let(:schools) { [school1, school2] }
 
             it "links the vacancy to multiple schools" do |example|
@@ -256,11 +256,10 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
                 school_urns: schools.map(&:urn),
               }
             end
-
-            let!(:school2) { create(:school, name: "Test School 2", urn: "222222", phase: :primary) }
             let(:schools) { [school1, school2] }
-
             let(:school_group) { create(:trust, uid: "12345", schools: schools) }
+
+            let_it_be(:school2) { create(:school, name: "Test School 2", urn: "222222", phase: :primary) }
 
             it "links the vacancy to the trusts schools" do |example|
               submit_request(example.metadata)
@@ -592,7 +591,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
     parameter name: "id", in: :path, type: :string, description: "The id of the vacancy"
 
     let(:original_publish_on) { Time.zone.today.strftime("%Y-%m-%d") }
-    let!(:trust) { create(:trust) }
+    let_it_be(:trust) { create(:trust) }
     let!(:school) { create(:school, school_groups: [trust]) }
     let!(:original_vacancy) do
       create(:vacancy,

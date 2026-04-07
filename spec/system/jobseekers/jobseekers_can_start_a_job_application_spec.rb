@@ -8,7 +8,7 @@ RSpec.describe "Jobseekers can start or continue a job application" do
 
   context "when the jobseeker has not applied to the job before" do
     context "when the jobseeker has an account" do
-      let!(:jobseeker) { create(:jobseeker) }
+      let_it_be(:jobseeker) { create(:jobseeker) }
 
       context "when the jobseeker is signed in and clicks 'apply' on the job page" do
         before do
@@ -58,7 +58,7 @@ RSpec.describe "Jobseekers can start or continue a job application" do
   end
 
   context "when the jobseeker has a draft application for the job" do
-    let!(:jobseeker) { create(:jobseeker) }
+    let_it_be(:jobseeker) { create(:jobseeker) }
     let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
     context "when the jobseeker is signed in and clicks 'continue application' on the job page" do
@@ -97,7 +97,7 @@ RSpec.describe "Jobseekers can start or continue a job application" do
   end
 
   context "when the jobseeker has a submitted application for the job" do
-    let!(:jobseeker) { create(:jobseeker) }
+    let_it_be(:jobseeker) { create(:jobseeker) }
     let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
     context "when the jobseeker is signed in and clicks 'view application' on the job page" do

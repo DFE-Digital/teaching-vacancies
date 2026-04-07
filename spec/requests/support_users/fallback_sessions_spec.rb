@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Fallback sign in for support users" do
-  let!(:support_user) { create(:support_user, email: "test@example.com") }
+  let_it_be(:support_user) { create(:support_user, email: "test@example.com") }
 
   context "when authentication fallback is disabled" do
     before do

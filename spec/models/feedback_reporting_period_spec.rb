@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe FeedbackReportingPeriod do
-  let!(:oldest_feedback) { create(:feedback, created_at: "2022-01-09") }
-  let!(:newest_feedback) { create(:feedback, created_at: "2022-03-23") }
+  let_it_be(:oldest_feedback) { create(:feedback, created_at: "2022-01-09") }
+  let_it_be(:newest_feedback) { create(:feedback, created_at: "2022-03-23") }
 
   describe ".all" do
     subject(:all_periods) { described_class.all }

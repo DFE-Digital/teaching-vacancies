@@ -885,6 +885,7 @@ GEM
       faraday (~> 2.0)
       faraday-follow_redirects
     temple (0.10.4)
+    test-prof (1.6.1)
     thor (1.5.0)
     thread_safe (0.3.6)
     tilt (2.7.0)
@@ -1111,6 +1112,7 @@ DEPENDENCIES
   slim-rails
   slim_lint
   solargraph
+  test-prof
   turbo-rails
   tzinfo-data
   undercover
@@ -1444,6 +1446,7 @@ CHECKSUMS
   stringio (3.2.0) sha256=c37cb2e58b4ffbd33fe5cd948c05934af997b36e0b6ca6fdf43afa234cf222e1
   swd (2.0.3) sha256=4cdbe2a4246c19f093fce22e967ec3ebdd4657d37673672e621bf0c7eb770655
   temple (0.10.4) sha256=b7a1e94b6f09038ab0b6e4fe0126996055da2c38bec53a8a336f075748fff72c
+  test-prof (1.6.1) sha256=0332d9c39a7c118ed942b2db582f055d9f24964d150004ec6b964d2fa262499e
   thor (1.5.0) sha256=e3a9e55fe857e44859ce104a84675ab6e8cd59c650a49106a05f55f136425e73
   thread_safe (0.3.6) sha256=9ed7072821b51c57e8d6b7011a8e282e25aeea3a4065eab326e43f66f063b05a
   tilt (2.7.0) sha256=0d5b9ba69f6a36490c64b0eee9f6e9aad517e20dcc848800a06eb116f08c6ab3

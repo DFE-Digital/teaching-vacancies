@@ -27,7 +27,7 @@ RSpec.describe "Feedback supportal section" do
     [time.to_date.beginning_of_month, time.to_date.end_of_month].map(&:to_s).join(" to ")
   end
 
-  let!(:job_alert_feedback) do
+  let_it_be(:job_alert_feedback) do
     create(
       :feedback,
       feedback_type: :job_alert,
@@ -37,7 +37,7 @@ RSpec.describe "Feedback supportal section" do
     )
   end
 
-  let!(:other_feedback) do
+  let_it_be(:other_feedback) do
     create(
       :feedback,
       feedback_type: :general,
@@ -50,7 +50,7 @@ RSpec.describe "Feedback supportal section" do
     )
   end
 
-  let!(:old_general_feedback) do
+  let_it_be(:old_general_feedback) do
     create(
       :feedback,
       feedback_type: :general,
@@ -64,7 +64,7 @@ RSpec.describe "Feedback supportal section" do
     )
   end
 
-  let!(:old_job_alert_feedback) do
+  let_it_be(:old_job_alert_feedback) do
     create(
       :feedback,
       feedback_type: :job_alert,
@@ -335,7 +335,7 @@ RSpec.describe "Feedback supportal section" do
   end
 
   describe "Reporting periods" do
-    let!(:old_job_alert_feedback) do
+    let_it_be(:old_job_alert_feedback) do
       create(
         :feedback,
         feedback_type: :job_alert,
@@ -344,7 +344,7 @@ RSpec.describe "Feedback supportal section" do
       )
     end
 
-    let!(:older_job_alert_feedback) do
+    let_it_be(:older_job_alert_feedback) do
       create(
         :feedback,
         feedback_type: :job_alert,
@@ -353,7 +353,7 @@ RSpec.describe "Feedback supportal section" do
       )
     end
 
-    let!(:old_other_feedback) do
+    let_it_be(:old_other_feedback) do
       create(
         :feedback,
         feedback_type: :general,
@@ -362,7 +362,7 @@ RSpec.describe "Feedback supportal section" do
       )
     end
 
-    let!(:older_other_feedback) do
+    let_it_be(:older_other_feedback) do
       create(
         :feedback,
         feedback_type: :general,

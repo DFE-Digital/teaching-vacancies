@@ -13,10 +13,11 @@ RSpec.describe Search::LocationBuilder do
   subject { described_class.new(location, radius) }
 
   let(:point_location) { "SW1A 1AA" }
+  let(:radius_builder) { instance_double(Search::RadiusBuilder, radius: 1000, polygon: location_polygon) }
   let(:radius) { 10 }
   let(:expected_radius) { 1000 }
-  let!(:location_polygon) { create(:location_polygon, name: "london") }
-  let(:radius_builder) { instance_double(Search::RadiusBuilder, radius: 1000, polygon: location_polygon) }
+
+  let_it_be(:location_polygon) { create(:location_polygon, name: "london") }
 
   before do
     allow(Search::RadiusBuilder).to receive(:new).with(location, radius).and_return(radius_builder)

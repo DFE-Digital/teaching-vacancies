@@ -66,7 +66,7 @@ RSpec.describe Search::JobseekerProfileSearch, :geocode do
   end
 
   context "when using other jobseeker profile filters" do
-    let!(:organisation) { create(:school, geopoint: RGeo::Geographic.spherical_factory(srid: 4326).point(-0.1084749, 51.5542907)) }
+    let_it_be(:organisation) { create(:school, geopoint: RGeo::Geographic.spherical_factory(srid: 4326).point(-0.1084749, 51.5542907)) }
 
     let(:location_preference) { { name: "N7 7DD", radius: 2 } }
     let(:control_jobseeker_profile) { create(:jobseeker_profile, **control_profile_attrs) }
@@ -123,6 +123,7 @@ RSpec.describe Search::JobseekerProfileSearch, :geocode do
 
     describe "job_preferences roles", :vcr do
       let(:filters) { { current_organisation: organisation, qualified_teacher_status: [], teaching_job_roles: [], support_job_roles: %w[other_support], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
+      let(:teacher_job_preferences) { create(:job_preferences, roles: %w[teacher], jobseeker_profile: teacher_jobseeker_profile) }
       let!(:cleaning_staff_jobseeker_profile) { create(:jobseeker_profile, :with_personal_details, qualified_teacher_status: "no", job_preferences: cleaning_staff_job_preferences) }
       let(:cleaning_staff_job_preferences) { create(:job_preferences, roles: %w[catering_cleaning_and_site_management other_support], working_patterns: %w[full_time], locations: [cleaning_staff_location_preference_containing_school]) }
       let(:cleaning_staff_location_preference_containing_school) { create(:job_preferences_location, name: "London", radius: 100) }
@@ -131,8 +132,7 @@ RSpec.describe Search::JobseekerProfileSearch, :geocode do
       let(:control_job_preferences_attrs) { { roles: %w[leader] } }
       let(:control_profile_attrs) { {} }
 
-      let!(:teacher_jobseeker_profile) { create(:jobseeker_profile) }
-      let(:teacher_job_preferences) { create(:job_preferences, roles: %w[teacher], jobseeker_profile: teacher_jobseeker_profile) }
+      let_it_be(:teacher_jobseeker_profile) { create(:jobseeker_profile) }
 
       before do
         create(:job_preferences_location, **location_preference, job_preferences: teacher_job_preferences)

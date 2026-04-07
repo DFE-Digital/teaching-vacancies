@@ -9,7 +9,7 @@ RSpec.describe Publisher do
   it { is_expected.to have_many(:notifications) }
 
   describe "#vacancies_with_job_applications_submitted_yesterday" do
-    let!(:publisher) { create(:publisher) }
+    let_it_be(:publisher) { create(:publisher) }
     let!(:vacancy1) { create(:vacancy, publisher: publisher) }
     let!(:vacancy2) { create(:vacancy, publisher: publisher) }
     let!(:job_application1) { create(:job_application, :status_submitted, vacancy: vacancy1, submitted_at: 1.day.ago) }

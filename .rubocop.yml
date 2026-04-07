@@ -1,5 +1,6 @@
 require:
   - ./lib/rubocop/cop/custom/rake_task_invoke
+  - ./lib/rubocop/cop/custom/prefer_let_it_be
 
 inherit_mode:
   merge:
@@ -205,3 +206,8 @@ Custom/RakeTaskInvoke:
   Enabled: true
   Include:
     - "spec/lib/tasks/**/*_spec.rb"
+
+Custom/PreferLetItBe:
+  Enabled: true
+  Include:
+    - "spec/**/*_spec.rb"

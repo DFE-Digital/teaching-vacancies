@@ -2,11 +2,11 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: true do
   let(:location) { "London" }
-  let!(:location_polygon) { create(:location_polygon, name: "london") }
-
   let(:search_with_polygons?) { false }
   let(:jobseeker_signed_in?) { false }
   let(:jobseeker) { build_stubbed(:jobseeker) }
+
+  let_it_be(:location_polygon) { create(:location_polygon, name: "london") }
 
   describe "recaptcha" do
     context "when recaptcha V3 check fails" do
@@ -38,7 +38,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
     after { logout if jobseeker_signed_in? }
 
     context "when jobseeker has an account" do
-      let!(:jobseeker) { create(:jobseeker) }
+      let_it_be(:jobseeker) { create(:jobseeker) }
 
       context "when jobseeker is signed in" do
         let(:jobseeker_signed_in?) { true }

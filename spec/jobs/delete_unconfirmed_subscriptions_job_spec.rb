@@ -2,23 +2,23 @@ require "rails_helper"
 
 RSpec.describe DeleteUnconfirmedSubscriptionsJob do
   describe "#perform" do
-    let!(:subscription_to_delete) do
+    let_it_be(:subscription_to_delete) do
       create(:subscription, frequency: :daily).tap do |s|
         s.update_column(:deletion_warning_email_sent_at, 2.months.ago)
       end
     end
 
-    let!(:recently_warned_subscription) do
+    let_it_be(:recently_warned_subscription) do
       create(:subscription, frequency: :daily).tap do |s|
         s.update_column(:deletion_warning_email_sent_at, 2.weeks.ago)
       end
     end
 
-    let!(:unwarned_subscription) do
+    let_it_be(:unwarned_subscription) do
       create(:subscription, frequency: :daily)
     end
 
-    let!(:already_unsubscribed) do
+    let_it_be(:already_unsubscribed) do
       create(:subscription, frequency: :daily).tap do |s|
         s.update_column(:deletion_warning_email_sent_at, 2.months.ago)
         s.discard

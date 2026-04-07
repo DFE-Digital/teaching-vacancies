@@ -2,8 +2,15 @@ require "rails_helper"
 
 RSpec.describe JobPreferences::JobScope do
   let(:original_scope) { PublishedVacancy.live }
+  let(:job_preferences) do
+    build_stubbed(:job_preferences,
+                  roles: %w[teacher teaching_assistant head_of_year_or_phase headteacher],
+                  phases: %w[primary secondary],
+                  working_patterns: %w[part_time full_time],
+                  key_stages: %w[ks1 ks2])
+  end
 
-  let!(:vacancy1) do
+  let_it_be(:vacancy1) do
     create(:vacancy,
            job_roles: ["teacher"],
            phases: %w[primary secondary],
@@ -12,7 +19,7 @@ RSpec.describe JobPreferences::JobScope do
            working_patterns: %w[part_time])
   end
 
-  let!(:vacancy2) do
+  let_it_be(:vacancy2) do
     create(:vacancy,
            job_roles: ["teaching_assistant"],
            phases: %w[primary secondary],
@@ -21,7 +28,7 @@ RSpec.describe JobPreferences::JobScope do
            working_patterns: %w[part_time])
   end
 
-  let!(:vacancy3) do
+  let_it_be(:vacancy3) do
     create(:vacancy,
            job_roles: ["headteacher"],
            phases: %w[primary],
@@ -30,21 +37,13 @@ RSpec.describe JobPreferences::JobScope do
            working_patterns: %w[full_time])
   end
 
-  let!(:vacancy4) do
+  let_it_be(:vacancy4) do
     create(:vacancy,
            job_roles: ["head_of_year_or_phase"],
            phases: %w[secondary],
            key_stages: %w[ks1 ks2],
            subjects: %w[Mathematics French Spanish],
            working_patterns: %w[part_time full_time])
-  end
-
-  let(:job_preferences) do
-    build_stubbed(:job_preferences,
-                  roles: %w[teacher teaching_assistant head_of_year_or_phase headteacher],
-                  phases: %w[primary secondary],
-                  working_patterns: %w[part_time full_time],
-                  key_stages: %w[ks1 ks2])
   end
 
   subject(:job_scope) { described_class.new(original_scope, job_preferences) }

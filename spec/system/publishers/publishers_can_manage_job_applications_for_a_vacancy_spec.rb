@@ -41,7 +41,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
     %i[alan charlie etha hanane said yun britany].each do |first_name|
       let(first_name) { create(:job_application, :status_submitted, vacancy:, first_name:) }
     end
-    let!(:job_applications) { [alan, charlie, etha, hanane, said, yun, britany] }
+    let!(:job_applications) { [alan, charlie, etha, hanane, said, yun, britany] } # rubocop:disable Custom/PreferLetItBe
     let(:current_page) { publisher_ats_applications_page }
 
     before do

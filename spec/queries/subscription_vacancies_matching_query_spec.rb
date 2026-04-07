@@ -11,9 +11,9 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
     describe "job roles matching" do
       let(:subscription) { create(:daily_subscription, teaching_job_roles: subscription_teaching_job_roles) }
 
-      let!(:headteacher_job) { create(:vacancy, :published_slugged, :secondary, job_title: "Headteacher job", job_roles: %w[headteacher], working_patterns: %w[full_time]) }
-      let!(:it_support_job) { create(:vacancy, :published_slugged, :secondary, job_title: "IT Support job", job_roles: %w[it_support], working_patterns: %w[full_time]) }
-      let!(:teacher_and_other_support_job) do
+      let_it_be(:headteacher_job) { create(:vacancy, :published_slugged, :secondary, job_title: "Headteacher job", job_roles: %w[headteacher], working_patterns: %w[full_time]) }
+      let_it_be(:it_support_job) { create(:vacancy, :published_slugged, :secondary, job_title: "IT Support job", job_roles: %w[it_support], working_patterns: %w[full_time]) }
+      let_it_be(:teacher_and_other_support_job) do
         create(:vacancy, :published_slugged, :secondary, job_title: "Teacher and other support job", job_roles: %w[teacher other_support], working_patterns: %w[full_time])
       end
 
@@ -94,11 +94,11 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
     describe "visa sponsorship matching" do
       let(:subscription) { create(:daily_subscription, visa_sponsorship_availability: true) }
 
-      let!(:visa_sponsorship_job) do
+      let_it_be(:visa_sponsorship_job) do
         create(:vacancy, :published_slugged, job_title: "Visa sponsorship job", visa_sponsorship_available: true)
       end
 
-      let!(:non_visa_sponsorship_job) do
+      let_it_be(:non_visa_sponsorship_job) do
         create(:vacancy, :published_slugged, job_title: "Non-visa sponsorship job", visa_sponsorship_available: false)
       end
 
@@ -120,8 +120,8 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
     describe "ECT status matching" do
       let(:subscription) { create(:daily_subscription, ect_status: ect_status) }
 
-      let!(:ect_job) { create(:vacancy, :published_slugged, job_title: "ECT job", ect_status: "ect_suitable") }
-      let!(:non_ect_job) { create(:vacancy, :published_slugged, job_title: "Non-ECT job", ect_status: "ect_unsuitable") }
+      let_it_be(:ect_job) { create(:vacancy, :published_slugged, job_title: "ECT job", ect_status: "ect_suitable") }
+      let_it_be(:non_ect_job) { create(:vacancy, :published_slugged, job_title: "Non-ECT job", ect_status: "ect_unsuitable") }
 
       context "when the subscription filters for suitability for Early Career Teachers" do
         let(:subscription) { create(:daily_subscription, ect_statuses: %w[ect_suitable]) }
@@ -143,8 +143,8 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
     describe "newly qualified teacher matching" do
       let(:subscription) { create(:daily_subscription, newly_qualified_teacher: newly_qualified_teacher) }
 
-      let!(:ect_suitable_job) { create(:vacancy, :published_slugged, job_title: "ECT suitable job", ect_status: "ect_suitable") }
-      let!(:ect_unsuitable_job) { create(:vacancy, :published_slugged, job_title: "ECT unsuitable job", ect_status: "ect_unsuitable") }
+      let_it_be(:ect_suitable_job) { create(:vacancy, :published_slugged, job_title: "ECT suitable job", ect_status: "ect_suitable") }
+      let_it_be(:ect_unsuitable_job) { create(:vacancy, :published_slugged, job_title: "ECT unsuitable job", ect_status: "ect_unsuitable") }
 
       context "when the subscription filters for newly qualified teachers" do
         let(:newly_qualified_teacher) { "true" }
@@ -174,10 +174,10 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
     describe "subjects matching" do
       let(:subscription) { create(:daily_subscription, subjects: subscription_subjects) }
 
-      let!(:french_job) { create(:vacancy, :published_slugged, :secondary, job_title: "French job", subjects: %w[French]) }
-      let!(:german_job) { create(:vacancy, :published_slugged, :secondary, job_title: "German job", subjects: %w[German]) }
-      let!(:maths_and_english_job) { create(:vacancy, :published_slugged, :secondary, job_title: "Maths and English job", subjects: %w[Maths English]) }
-      let!(:no_subject_job) { create(:vacancy, :published_slugged, :secondary, job_title: "No subject job", subjects: nil) }
+      let_it_be(:french_job) { create(:vacancy, :published_slugged, :secondary, job_title: "French job", subjects: %w[French]) }
+      let_it_be(:german_job) { create(:vacancy, :published_slugged, :secondary, job_title: "German job", subjects: %w[German]) }
+      let_it_be(:maths_and_english_job) { create(:vacancy, :published_slugged, :secondary, job_title: "Maths and English job", subjects: %w[Maths English]) }
+      let_it_be(:no_subject_job) { create(:vacancy, :published_slugged, :secondary, job_title: "No subject job", subjects: nil) }
 
       context "with a single subject in the subscription filter" do
         let(:subscription_subjects) { %w[French] }
@@ -232,10 +232,10 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
     describe "phases matching" do
       let(:subscription) { create(:daily_subscription, phases: subscription_phases) }
 
-      let!(:primary_job) { create(:vacancy, :published_slugged, job_title: "Primary job", phases: %w[primary]) }
-      let!(:secondary_job) { create(:vacancy, :published_slugged, job_title: "Secondary job", phases: %w[secondary]) }
-      let!(:primary_and_secondary_job) { create(:vacancy, :published_slugged, job_title: "Primary and Secondary job", phases: %w[primary secondary]) }
-      let!(:nursery_job) { create(:vacancy, :published_slugged, job_title: "Nursery job", phases: %w[nursery]) }
+      let_it_be(:primary_job) { create(:vacancy, :published_slugged, job_title: "Primary job", phases: %w[primary]) }
+      let_it_be(:secondary_job) { create(:vacancy, :published_slugged, job_title: "Secondary job", phases: %w[secondary]) }
+      let_it_be(:primary_and_secondary_job) { create(:vacancy, :published_slugged, job_title: "Primary and Secondary job", phases: %w[primary secondary]) }
+      let_it_be(:nursery_job) { create(:vacancy, :published_slugged, job_title: "Nursery job", phases: %w[nursery]) }
 
       context "with a single phase in the subscription filter" do
         let(:subscription_phases) { %w[primary] }
@@ -274,10 +274,10 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
     describe "working patterns matching" do
       let(:subscription) { create(:daily_subscription, working_patterns: subscription_working_patterns) }
 
-      let!(:full_time_job) { create(:vacancy, :published_slugged, job_title: "Full time job", working_patterns: %w[full_time]) }
-      let!(:part_time_job) { create(:vacancy, :published_slugged, job_title: "Part time job", working_patterns: %w[part_time]) }
-      let!(:full_and_part_time_job) { create(:vacancy, :published_slugged, job_title: "Full and Part time job", working_patterns: %w[full_time part_time]) }
-      let!(:job_share_job) { create(:vacancy, :published_slugged, job_title: "Job share job", is_job_share: true, working_patterns: %w[part_time]) }
+      let_it_be(:full_time_job) { create(:vacancy, :published_slugged, job_title: "Full time job", working_patterns: %w[full_time]) }
+      let_it_be(:part_time_job) { create(:vacancy, :published_slugged, job_title: "Part time job", working_patterns: %w[part_time]) }
+      let_it_be(:full_and_part_time_job) { create(:vacancy, :published_slugged, job_title: "Full and Part time job", working_patterns: %w[full_time part_time]) }
+      let_it_be(:job_share_job) { create(:vacancy, :published_slugged, job_title: "Job share job", is_job_share: true, working_patterns: %w[part_time]) }
 
       context "with a single working pattern in the subscription filter" do
         let(:subscription_working_patterns) { %w[full_time] }
@@ -367,8 +367,8 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
     describe "keyword matching" do
       let(:subscription) { create(:daily_subscription, keyword: keyword) }
 
-      let!(:really_nice_job) { create(:vacancy, :published_slugged, :secondary, job_title: "This is a Really Nice job", job_roles: %w[headteacher], working_patterns: %w[full_time]) }
-      let!(:nice_job) { create(:vacancy, :published_slugged, :secondary, job_title: "This is a nice job", job_roles: %w[headteacher], working_patterns: %w[full_time]) }
+      let_it_be(:really_nice_job) { create(:vacancy, :published_slugged, :secondary, job_title: "This is a Really Nice job", job_roles: %w[headteacher], working_patterns: %w[full_time]) }
+      let_it_be(:nice_job) { create(:vacancy, :published_slugged, :secondary, job_title: "This is a nice job", job_roles: %w[headteacher], working_patterns: %w[full_time]) }
 
       before do
         create(:vacancy, :published_slugged, :secondary, job_title: "This is a job", job_roles: %w[headteacher], working_patterns: %w[full_time])
@@ -586,7 +586,7 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
         )
       end
 
-      let!(:matching_job) do
+      let_it_be(:matching_job) do
         create(:vacancy, :published_slugged, :secondary, job_title: "This is a nice French teacher job", job_roles: %w[teacher], subjects: %w[French], working_patterns: %w[full_time])
       end
 
@@ -606,9 +606,9 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
     describe "limiting and ordering results" do
       let(:subscription) { create(:daily_subscription, keyword: "Job") }
 
-      let!(:new_job) { create(:vacancy, :published_slugged, job_title: "New Job", publish_on: 3.days.ago) }
-      let!(:newer_job) { create(:vacancy, :published_slugged, job_title: "Newer Job", publish_on: 2.days.ago) }
-      let!(:older_job) { create(:vacancy, :published_slugged, job_title: "Older Job", publish_on: 4.days.ago) }
+      let_it_be(:new_job) { create(:vacancy, :published_slugged, job_title: "New Job", publish_on: 3.days.ago) }
+      let_it_be(:newer_job) { create(:vacancy, :published_slugged, job_title: "Newer Job", publish_on: 2.days.ago) }
+      let_it_be(:older_job) { create(:vacancy, :published_slugged, job_title: "Older Job", publish_on: 4.days.ago) }
 
       context "when a limit is specified" do
         let(:limit) { 2 }

@@ -4,8 +4,8 @@ RSpec.describe "Sitemap" do
   describe "GET /sitemap.xml" do
     subject(:xml) { response.body }
 
-    let!(:live_vacancy) { create(:vacancy, :live) }
-    let!(:expired_vacancy) { create(:vacancy, :expired) }
+    let_it_be(:live_vacancy) { create(:vacancy, :live) }
+    let_it_be(:expired_vacancy) { create(:vacancy, :expired) }
 
     before do
       allow(Rails.application.config).to receive(:landing_pages).and_return({ "maths-teacher" => {} })

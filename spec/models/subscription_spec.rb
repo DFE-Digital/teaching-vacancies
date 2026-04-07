@@ -118,8 +118,8 @@ RSpec.describe Subscription do
     let(:scope) { PublishedVacancy.all }
 
     context "when multiple vacancies match the subscription criteria" do
-      let!(:first_vacancy) { create(:vacancy, job_title: "Maths Teacher") }
-      let!(:second_vacancy) { create(:vacancy, job_title: "Science Teacher") }
+      let_it_be(:first_vacancy) { create(:vacancy, job_title: "Maths Teacher") }
+      let_it_be(:second_vacancy) { create(:vacancy, job_title: "Science Teacher") }
 
       before do
         subscription.search_criteria["keyword"] = "Teacher"
@@ -140,7 +140,7 @@ RSpec.describe Subscription do
     end
 
     context "when a single vacancy matches the subscription criteria" do
-      let!(:matching_vacancy) { create(:vacancy, job_title: "Maths Teacher") }
+      let_it_be(:matching_vacancy) { create(:vacancy, job_title: "Maths Teacher") }
 
       before do
         subscription.search_criteria["keyword"] = "Maths"

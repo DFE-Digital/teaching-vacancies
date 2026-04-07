@@ -196,7 +196,7 @@ RSpec.describe JobseekerProfile, type: :model do
   end
 
   describe "#current_or_most_recent_employment" do
-    let!(:profile) { create(:jobseeker_profile) }
+    let_it_be(:profile) { create(:jobseeker_profile) }
 
     context "when there are no employments" do
       it "returns nil" do

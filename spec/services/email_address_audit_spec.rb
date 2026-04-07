@@ -17,7 +17,7 @@ RSpec.describe EmailAddressAudit do
     ]
   end
 
-  let!(:invalid_records) do
+  let_it_be(:invalid_records) do
     [
       create_invalid_record(:feedback, email: "test@example"),
       create_invalid_record(:job_application, email_address: "test@example"),

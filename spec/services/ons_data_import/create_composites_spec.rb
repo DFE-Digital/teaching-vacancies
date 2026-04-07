@@ -1,12 +1,12 @@
 require "rails_helper"
 
 RSpec.describe OnsDataImport::CreateComposites do
-  let!(:somewhereshire) do
+  let_it_be(:somewhereshire) do
     create(:location_polygon, name: "somewhereshire",
                               area: "POLYGON((0 0, 0 1, 1 1, 1 0, 0 0))",
                               uk_area: GeoFactories::FACTORY_27700.parse_wkt("POLYGON((0 0, 0 1, 1 1, 1 0, 0 0))"))
   end
-  let!(:elsewhereshire) do
+  let_it_be(:elsewhereshire) do
     create(:location_polygon, name: "elsewhereshire",
                               area: "POLYGON((0 0, 0 -1, -1 -1, -1 0, 0 0))",
                               uk_area: GeoFactories::FACTORY_27700.parse_wkt("POLYGON((0 0, 0 -1, -1 -1, -1 0, 0 0))"))

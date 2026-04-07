@@ -5,17 +5,16 @@ RSpec.describe Gias::ImportTrusts do
 
   describe "#call" do
     let(:todays_date) { Time.current.strftime("%Y%m%d") }
+    let(:trust1) { SchoolGroup.find_by(uid: "2044") }
+    let(:trust2) { SchoolGroup.find_by(uid: "2070") }
     let(:groups_csv) { File.read(groups_file_path) }
     let(:groups_file_path) { Rails.root.join("spec/fixtures/example_groups_data.csv") }
     let(:links_csv) { File.read(links_file_path) }
     let(:links_file_path) { Rails.root.join("spec/fixtures/example_links_data.csv") }
 
-    let!(:school1) { create(:academy, urn: "100000") }
-    let!(:school2) { create(:academy, urn: "100001") }
-    let!(:school3) { create(:academy, urn: "100002") }
-
-    let(:trust1) { SchoolGroup.find_by(uid: "2044") }
-    let(:trust2) { SchoolGroup.find_by(uid: "2070") }
+    let_it_be(:school1) { create(:academy, urn: "100000") }
+    let_it_be(:school2) { create(:academy, urn: "100001") }
+    let_it_be(:school3) { create(:academy, urn: "100002") }
 
     before do
       stub_request(

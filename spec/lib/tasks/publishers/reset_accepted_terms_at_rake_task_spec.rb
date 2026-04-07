@@ -4,9 +4,10 @@ RSpec.describe "publishers:reset_accepted_terms_at" do
   include_context "rake"
 
   let(:task_path) { "lib/tasks/data" }
-  let!(:publisher_with_accepted_terms) { create(:publisher, accepted_terms_at: 1.month.ago) }
-  let!(:publisher_with_recent_accepted_terms) { create(:publisher, accepted_terms_at: 1.day.ago) }
-  let!(:publisher_without_accepted_terms) { create(:publisher, accepted_terms_at: nil) }
+
+  let_it_be(:publisher_with_accepted_terms) { create(:publisher, accepted_terms_at: 1.month.ago) }
+  let_it_be(:publisher_with_recent_accepted_terms) { create(:publisher, accepted_terms_at: 1.day.ago) }
+  let_it_be(:publisher_without_accepted_terms) { create(:publisher, accepted_terms_at: nil) }
 
   # rubocop:disable RSpec/NamedSubject
   it "sets all publishers accepted_terms_at to nil" do

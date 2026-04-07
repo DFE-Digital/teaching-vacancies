@@ -57,7 +57,7 @@ RSpec.describe "Publisher authentication" do
     end
 
     context "with valid credentials that match a school" do
-      let!(:organisation) { create(:school, :with_image, urn: "110627") }
+      let_it_be(:organisation) { create(:school, :with_image, urn: "110627") }
 
       before do
         stub_publisher_authentication_step email: dsi_email_address
@@ -101,7 +101,8 @@ RSpec.describe "Publisher authentication" do
 
     context "with DSI data including a school group (trust or local authority) that the school belongs to" do
       let!(:publisher) { Publisher.find_by(oid: user_oid) }
-      let!(:school) { create(:school, :profile_incomplete, urn: "246757") }
+
+      let_it_be(:school) { create(:school, :profile_incomplete, urn: "246757") }
 
       before do
         publisher.update! organisations: [school, school_group]

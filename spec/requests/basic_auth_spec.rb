@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "HTTP Basic Auth exclusions" do
-  let!(:api_client) { create(:publisher_ats_api_client) }
+  let_it_be(:api_client) { create(:publisher_ats_api_client) }
 
   before do
     # Stub ENV to simulate review app credentials being set

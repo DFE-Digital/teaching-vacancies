@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe DeleteOldVacancyConflictAttemptsJob do
-  let!(:recent_conflict) { create(:vacancy_conflict_attempt, created_at: 6.months.ago) }
-  let!(:old_conflict) { create(:vacancy_conflict_attempt, created_at: 14.months.ago) }
+  let_it_be(:recent_conflict) { create(:vacancy_conflict_attempt, created_at: 6.months.ago) }
+  let_it_be(:old_conflict) { create(:vacancy_conflict_attempt, created_at: 14.months.ago) }
 
   before do
     described_class.perform_now

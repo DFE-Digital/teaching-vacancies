@@ -4,22 +4,22 @@ RSpec.describe SendSubscriptionGovernanceEmailsJob do
   let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
 
   describe "#perform" do
-    let!(:old_subscription) { create(:subscription, frequency: :daily) }
+    let_it_be(:old_subscription) { create(:subscription, frequency: :daily) }
 
-    let!(:recent_subscription) do
+    let_it_be(:recent_subscription) do
       create(:subscription, frequency: :daily).tap do |s|
         s.update_column(:updated_at, 6.months.ago)
       end
     end
 
-    let!(:already_warned_subscription) do
+    let_it_be(:already_warned_subscription) do
       create(:subscription, frequency: :daily).tap do |s|
         s.update_columns(created_at: 13.months.ago, updated_at: 13.months.ago)
         s.update_column(:deletion_warning_email_sent_at, 2.weeks.ago)
       end
     end
 
-    let!(:unsubscribed_subscription) do
+    let_it_be(:unsubscribed_subscription) do
       create(:subscription, frequency: :daily).tap do |s|
         s.update_columns(created_at: 13.months.ago, updated_at: 13.months.ago)
         s.discard
