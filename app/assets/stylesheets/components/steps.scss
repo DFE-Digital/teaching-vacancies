@@ -15,7 +15,7 @@
     padding: 0;
 
     &::after {
-      border-bottom: 2px solid $govuk-border-colour;
+      border-bottom: 2px solid govuk-functional-colour(border);
       content: '';
       display: block;
       height: 2px;
@@ -41,7 +41,7 @@
 
       &::before {
         background-color: govuk-colour('white');
-        border: 2px solid $govuk-border-colour;
+        border: 2px solid govuk-functional-colour(border);
         border-radius: 50%;
         content: counter(steps-counter);
         height: govuk-spacing(5);
@@ -52,7 +52,7 @@
     }
 
     &::after {
-      background: $govuk-border-colour;
+      background: govuk-functional-colour(border);
       content: '';
       height: 100%;
       left: 14px;
@@ -62,7 +62,7 @@
     }
 
     &::before {
-      border-top: 1px solid govuk-colour('light-grey');
+      border-top: 1px solid govuk-colour('black', $variant: 'tint-95');
       content: '';
       left: govuk-spacing(7);
       position: absolute;
@@ -96,7 +96,7 @@
       padding-bottom: govuk-spacing(2);
 
       &::after {
-        border-bottom: 2px solid $govuk-border-colour;
+        border-bottom: 2px solid govuk-functional-colour(border);
         bottom: govuk-spacing(2);
         height: calc(100% - 44px);
       }

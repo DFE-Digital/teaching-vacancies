@@ -34,11 +34,11 @@
     .autocomplete__option--focused,
     .autocomplete__option:hover {
       background-color: #c2dff4;
-      border-color: $govuk-border-colour;
+      border-color: govuk-functional-colour(border);
     }
 
     .autocomplete__option {
-      color: $govuk-text-colour;
+      color: govuk-functional-colour(text);
     }
   }
 }

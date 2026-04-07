@@ -1,17 +1,35 @@
-= govuk_header(navigation_label: "Top Menu", full_width_border: true) do |header|
-  - if publisher_signed_in?
-    = header.with_navigation_item text: t("nav.organisation_profile", name: current_organisation.name),
-                             href: publishers_organisation_path(current_organisation),
-                             active: schools_in_your_trust_active?
-    = header.with_navigation_item text: t("nav.sign_out"), href: destroy_publisher_session_path, options: { method: :delete }
-  - elsif jobseeker_signed_in?
-    = header.with_navigation_item text: t("nav.your_account"), href: jobseekers_account_path, active: your_account_active?
-    = header.with_navigation_item text: t("nav.sign_out"), href: jobseeker_logout_uri.to_s
-  - elsif support_user_signed_in?
-    = header.with_navigation_item text: t("nav.support_user_dashboard"), href: support_user_root_path, active: current_page?(support_user_root_path)
-    = header.with_navigation_item text: t("nav.sign_out"), href: destroy_support_user_session_path, options: { method: :delete }
-  - else
-    = header.with_navigation_item text: t("nav.sign_in"), href: page_path("sign-in")
+= govuk_header(full_width_border: true, homepage_url: root_path) do
+  .govuk-header__content
+    nav.govuk-header__navigation aria-label="Top Menu"
+      ul.govuk-header__navigation-list
+        - if publisher_signed_in?
+          li class="govuk-header__navigation-item#{" govuk-header__navigation-item--active" if schools_in_your_trust_active?}"
+            = link_to t("nav.organisation_profile", name: current_organisation.name),
+                      publishers_organisation_path(current_organisation),
+                      class: "govuk-header__link"
+          li.govuk-header__navigation-item
+            = link_to t("nav.sign_out"), destroy_publisher_session_path,
+                      class: "govuk-header__link",
+                      method: :delete
+        - elsif jobseeker_signed_in?
+          li class="govuk-header__navigation-item#{" govuk-header__navigation-item--active" if your_account_active?}"
+            = link_to t("nav.your_account"), jobseekers_account_path,
+                      class: "govuk-header__link"
+          li.govuk-header__navigation-item
+            = link_to t("nav.sign_out"), jobseeker_logout_uri.to_s,
+                      class: "govuk-header__link"
+        - elsif support_user_signed_in?
+          li.govuk-header__navigation-item
+            = link_to t("nav.support_user_dashboard"), support_user_root_path,
+                      class: "govuk-header__link"
+          li.govuk-header__navigation-item
+            = link_to t("nav.sign_out"), destroy_support_user_session_path,
+                      class: "govuk-header__link",
+                      method: :delete
+        - else
+          li.govuk-header__navigation-item
+            = link_to t("nav.sign_in"), page_path("sign-in"),
+                      class: "govuk-header__link"
 
 = govuk_service_navigation(service_name: t("app.title"), navigation_id: "tv-service-navigation") do |navigation|
   - if publisher_signed_in?

@@ -2,7 +2,7 @@
   color: govuk-colour('white');
 
   @include govuk-media-query($until: tablet) {
-    background: url('/TVS-logo.png') no-repeat 100% 10px/120px auto govuk-colour('dark-blue');
+    background: url('/TVS-logo.png') no-repeat 100% 10px/120px auto govuk-functional-colour('brand');
     padding: govuk-spacing(4);
 
     h1 {
@@ -16,7 +16,7 @@
   }
 
   @include govuk-media-query($from: tablet) {
-    background: url('/TVS-logo.png') no-repeat 100% 10px/150px auto govuk-colour('dark-blue');
+    background: url('/TVS-logo.png') no-repeat 100% 10px/150px auto govuk-functional-colour('brand');
     padding: govuk-spacing(6);
 
     h1 {

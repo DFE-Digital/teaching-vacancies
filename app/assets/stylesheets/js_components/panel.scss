@@ -19,7 +19,7 @@
     }
 
     &__content {
-      background-color: govuk-colour('light-grey');
+      background-color: govuk-colour('black', $variant: 'tint-95');
       overflow: hidden;
       @include govuk-media-query($until: desktop) {
         display: none;
@@ -27,7 +27,7 @@
 
       &:focus {
         @include govuk-media-query($until: desktop) {
-          outline: $govuk-focus-width solid $govuk-focus-colour;
+          outline: $govuk-focus-width solid govuk-functional-colour(focus);
         }
       }
 
@@ -35,7 +35,7 @@
         display: block;
 
         @include govuk-media-query($until: desktop) {
-          border: 1px solid govuk-colour('mid-grey');
+          border: 1px solid govuk-colour('black', $variant: 'tint-80');
           bottom: 5px;
           max-width: 320px;
           overflow-y: scroll;

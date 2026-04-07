@@ -16,8 +16,8 @@
     animation-iteration-count: 1;
     animation-name: fadeIn;
     animation-timing-function: ease-in;
-    border: 1px solid $govuk-border-colour;
-    box-shadow: 1px 1px 2px govuk-colour('mid-grey');
+    border: 1px solid govuk-functional-colour(border);
+    box-shadow: 1px 1px 2px govuk-colour('black', $variant: 'tint-80');
     display: none;
     max-height: 300px;
     opacity: 1;
@@ -29,7 +29,7 @@
     }
 
     &:focus {
-      outline: $govuk-focus-width solid $govuk-focus-colour;
+      outline: $govuk-focus-width solid govuk-functional-colour(focus);
     }
 
     &--visible {
@@ -59,7 +59,7 @@
       top: 8px;
 
       &:focus {
-        outline: $govuk-focus-width solid $govuk-focus-colour;
+        outline: $govuk-focus-width solid govuk-functional-colour(focus);
       }
     }
 

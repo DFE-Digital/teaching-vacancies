@@ -16,7 +16,7 @@
 
   &--border {
     .govuk-form-group {
-      border-bottom: 1px solid $govuk-border-colour;
+      border-bottom: 1px solid govuk-functional-colour(border);
     }
   }
 

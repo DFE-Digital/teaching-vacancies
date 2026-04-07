@@ -1,6 +1,6 @@
 .govuk-info-summary {
   @extend .govuk-error-summary;
-  border-color: $govuk-link-colour;
+  border-color: govuk-functional-colour(link);
   margin-bottom: govuk-spacing(5);
   padding: govuk-spacing(3);
 }
@@ -24,7 +24,7 @@
 
 .govuk-success-summary {
   @extend .govuk-error-summary;
-  border-color: $govuk-success-colour;
+  border-color: govuk-functional-colour(success);
 }
 
 .govuk-success-summary__dismiss-link {

@@ -2,11 +2,11 @@
 
 .empty-section-component {
   @include govuk-font(19);
-  @include govuk-text-colour;
+  color: govuk-functional-colour(text);
   @include govuk-responsive-padding(5);
 
-  background-color: rgba($color: govuk-colour('light-grey'), $alpha: 0.5);
-  border: 5px dashed $govuk-border-colour;
+  background-color: rgba($color: govuk-colour('black', $variant: 'tint-95'), $alpha: 0.5);
+  border: 5px dashed govuk-functional-colour(border);
   margin-bottom: govuk-spacing(5);
   margin-top: govuk-spacing(2);
 }

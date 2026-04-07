@@ -1,5 +1,5 @@
 .govuk-header {
-  border-bottom: govuk-spacing(2) solid $govuk-brand-colour;
+  border-bottom: govuk-spacing(2) solid govuk-functional-colour(brand);
 
   @include govuk-media-query($from: desktop) {
     &__container {
@@ -18,7 +18,37 @@
   }
 
   &__navigation-list {
-    @extend .govuk-header__navigation--end;
+    display: flex;
+    flex-wrap: wrap;
+    gap: govuk-spacing(2) govuk-spacing(4);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    @include govuk-media-query($from: desktop) {
+      justify-content: flex-end;
+      padding: govuk-spacing(1) 0;
+    }
+  }
+
+  &__navigation-item--active a {
+    font-weight: 700;
+  }
+
+  &__link {
+    @include govuk-font($size: 16);
+    @include govuk-link-style-inverse;
+
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline 3px;
+    }
+  }
+
+  &__homepage-link {
+    font-size: 30px;
+    line-height: 1;
   }
 
   &__navigation {
@@ -34,7 +64,7 @@
 }
 
 .sub-navigation {
-  background-color: govuk-colour('light-grey');
+  background-color: govuk-colour('black', $variant: 'tint-95');
 
   .tabs-component {
     border-bottom: 0;

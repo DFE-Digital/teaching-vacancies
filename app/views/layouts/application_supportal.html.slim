@@ -1,5 +1,5 @@
 doctype html
-html.govuk-template.govuk-template--rebranded.app-html-class lang="en"
+html.govuk-template.app-html-class lang="en"
   head
     title #{content_for :page_title_prefix} - #{t("app.support_title")}
     = stylesheet_link_tag "application", media: "all"
@@ -12,8 +12,16 @@ html.govuk-template.govuk-template--rebranded.app-html-class lang="en"
     = render EnvironmentBannerComponent.new
     = govuk_header(homepage_url: support_user_root_path) do |header|
       - header.with_product_name(name: t("app.support_title"))
-      - header.with_navigation_item(text: t("nav.support_user_return_to_service"), href: root_path)
-      - header.with_navigation_item(text: t("nav.sign_out"), href: destroy_support_user_session_path, options: { method: :delete }) if support_user_signed_in?
+      .govuk-header__content
+        nav.govuk-header__navigation aria-label="Top Menu"
+          ul.govuk-header__navigation-list
+            li.govuk-header__navigation-item
+              = link_to t("nav.support_user_return_to_service"), root_path, class: "govuk-header__link"
+            - if support_user_signed_in?
+              li.govuk-header__navigation-item
+                = link_to t("nav.sign_out"), destroy_support_user_session_path,
+                          class: "govuk-header__link",
+                          method: :delete
     div class="govuk-width-container"
       = content_for :breadcrumbs
       = render "layouts/flash_messages"

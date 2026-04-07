@@ -57,18 +57,18 @@
       }
 
       &:focus {
-        background-color: $govuk-focus-colour;
-        box-shadow: 0 -2px $govuk-focus-colour, 0 4px $govuk-focus-text-colour;
-        color: $govuk-focus-text-colour;
+        background-color: govuk-functional-colour(focus);
+        box-shadow: 0 -2px govuk-functional-colour(focus), 0 4px govuk-functional-colour(focus-text);
+        color: govuk-functional-colour(focus-text);
         outline: none;
         position: relative;
         z-index: 2;
       }
 
       &--selected {
-        background-color: $govuk-focus-colour;
-        box-shadow: 0 -2px $govuk-focus-colour, 0 4px $govuk-focus-text-colour;
-        color: $govuk-focus-text-colour;
+        background-color: govuk-functional-colour(focus);
+        box-shadow: 0 -2px govuk-functional-colour(focus), 0 4px govuk-functional-colour(focus-text);
+        color: govuk-functional-colour(focus-text);
         outline: none;
         position: relative;
         z-index: 2;

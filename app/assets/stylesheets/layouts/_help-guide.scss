@@ -1,10 +1,10 @@
 .help-guide {
   &--border-bottom {
-    border-bottom: 1px solid $govuk-border-colour;
+    border-bottom: 1px solid govuk-functional-colour(border);
   }
 
   &--desktop {
-    background-color: govuk-colour('light-grey');
+    background-color: govuk-colour('black', $variant: 'tint-95');
     padding: govuk-spacing(3);
 
     @include govuk-media-query($until: desktop) {

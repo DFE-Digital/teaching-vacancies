@@ -5,19 +5,19 @@
 }
 
 .inset-text--error {
-  border-color: $govuk-error-colour;
+  border-color: govuk-functional-colour(error);
   border-left-width: $govuk-border-width;
 
   .govuk-heading-s {
-    color: $govuk-error-colour;
+    color: govuk-functional-colour(error);
   }
 
   .govuk-link {
     @include govuk-typography-weight-bold($important: true);
-    color: $govuk-error-colour;
+    color: govuk-functional-colour(error);
 
     &:focus {
-      color: $govuk-focus-text-colour;
+      color: govuk-functional-colour(focus-text);
     }
   }
 }

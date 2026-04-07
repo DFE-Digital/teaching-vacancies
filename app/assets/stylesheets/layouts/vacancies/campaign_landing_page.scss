@@ -2,7 +2,7 @@
   @import '../shared/search-results';
 
   .custom-banner-background {
-    background-color: govuk-colour('light-grey');
+    background-color: govuk-colour('black', $variant: 'tint-95');
     width: 100vw;
     position: relative;
     margin-left: calc(-50vw + 50%);
