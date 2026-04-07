@@ -10,7 +10,7 @@
     .govuk-heading-s {
       background-color: govuk-colour('light-grey');
       margin-bottom: 0;
-      padding: govuk-spacing(1) govuk-spacing(3) govuk-spacing(2) govuk-spacing(3);
+      padding: govuk-spacing(1) govuk-spacing(3) govuk-spacing(2);
     }
   }
 
@@ -39,7 +39,7 @@
   }
 
   &__actions {
-    padding: 0 govuk-spacing(3) govuk-spacing(3) govuk-spacing(3);
+    padding: 0 govuk-spacing(3) govuk-spacing(3);
 
     .border-container {
       border-top: 1px solid $govuk-border-colour;

@@ -121,9 +121,9 @@
       margin-bottom: govuk-spacing(4);
       padding-bottom: govuk-spacing(2);
 
-        h3.govuk-fieldset__legend {
-          margin-bottom: govuk-spacing(3);
-        }
+      h3.govuk-fieldset__legend {
+        margin-bottom: govuk-spacing(3);
+      }
 
       .govuk-details {
         margin-bottom: govuk-spacing(0);
@@ -181,16 +181,16 @@
 }
 
 .filters-list {
-    ul {
-        list-style-type: none;
-        margin-bottom: govuk-spacing(2);
-        margin-top: govuk-spacing(1);
-        padding-left: 0;
+  ul {
+    list-style-type: none;
+    margin-bottom: govuk-spacing(2);
+    margin-top: govuk-spacing(1);
+    padding-left: 0;
 
-        li {
-            display: inline-block;
-            margin-right: govuk-spacing(2);
-        }
-
+    li {
+      display: inline-block;
+      margin-right: govuk-spacing(2);
     }
+
+  }
 }
