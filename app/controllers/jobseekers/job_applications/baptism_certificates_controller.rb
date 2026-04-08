@@ -4,9 +4,7 @@ class Jobseekers::JobApplications::BaptismCertificatesController < Jobseekers::J
   before_action :set_job_application
 
   def destroy
-    # calling purge rather than purge_later to avoid potential confusing UX where user clicks delete and get returned
-    # to the page before the file is deleted and still sees the file they tried to delete
-    job_application.baptism_certificate.purge
+    job_application.baptism_certificate.purge_later
     redirect_to jobseekers_job_application_build_path(job_application, :catholic)
   end
 

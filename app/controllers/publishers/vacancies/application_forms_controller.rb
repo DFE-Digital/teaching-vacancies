@@ -21,9 +21,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
   end
 
   def destroy
-    # calling purge rather than purge_later to avoid potential confusing UX where user clicks delete and get returned
-    # to the page before the file is deleted and still sees the file they tried to delete
-    vacancy.application_form.purge
+    vacancy.application_form.purge_later
     redirect_to organisation_job_build_path(vacancy.id, :application_form)
   end
 
