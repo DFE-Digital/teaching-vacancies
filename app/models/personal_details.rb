@@ -9,19 +9,6 @@ class PersonalDetails < ApplicationRecord
 
   validates :jobseeker_profile, uniqueness: true
 
-  def self.attributes_to_copy
-    %w[
-      first_name
-      last_name
-      phone_number
-      has_right_to_work_in_uk
-    ]
-  end
-
-  def self.before_save_on_prepare(record)
-    record.phone_number_provided = record.phone_number.present?
-  end
-
   def self.complete_steps(record)
     if record.first_name.present? && record.last_name.present?
       record.completed_steps["name"] = :completed

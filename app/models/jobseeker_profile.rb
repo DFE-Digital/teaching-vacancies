@@ -44,16 +44,6 @@ class JobseekerProfile < ApplicationRecord
     end
   end
 
-  def self.copy_attributes(record, previous_application)
-    record.assign_attributes(
-      employments: previous_application.employments.map(&:duplicate),
-      qualifications: previous_application.qualifications.map(&:duplicate),
-      qualified_teacher_status_year: previous_application.qualified_teacher_status_year,
-      qualified_teacher_status: previous_application.qualified_teacher_status,
-      qts_age_range_and_subject: previous_application.qts_age_range_and_subject,
-    )
-  end
-
   def self.prepare_associations(record)
     # FIX: Persist the parent record first so it has a UUID for the nested
     # child associations to use when their own `prepare` methods call `.save!`
@@ -71,36 +61,6 @@ class JobseekerProfile < ApplicationRecord
 
   def needs_visa_for_uk?
     personal_details.present? && !personal_details.has_right_to_work_in_uk?
-  end
-
-  def replace_qualifications!(new_qualifications)
-    transaction do
-      qualifications.destroy_all
-      duplicate_and_save(new_qualifications)
-    end
-  end
-
-  # need to avoid validation, as it changed around March 2024
-  # and some employment records may now be invalid
-  def replace_employments!(new_employments)
-    transaction do
-      employments.destroy_all
-      duplicate_and_save(new_employments)
-    end
-  end
-
-  def replace_training_and_cpds!(new_training_and_cpds)
-    transaction do
-      training_and_cpds.destroy_all
-      duplicate_and_save(new_training_and_cpds)
-    end
-  end
-
-  def replace_memberships!(new_records)
-    transaction do
-      professional_body_memberships.destroy_all
-      duplicate_and_save(new_records)
-    end
   end
 
   def deactivate!
@@ -140,14 +100,5 @@ class JobseekerProfile < ApplicationRecord
 
   def current_or_most_recent_employment
     employments.job.find_by(is_current_role: true) || employments.job.order(started_on: :desc).first
-  end
-
-  private
-
-  def duplicate_and_save(records)
-    records.map(&:duplicate).each do |record|
-      record.assign_attributes(jobseeker_profile: self)
-      record.save!(validate: false)
-    end
   end
 end
