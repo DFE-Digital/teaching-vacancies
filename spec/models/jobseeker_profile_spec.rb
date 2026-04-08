@@ -11,11 +11,10 @@ RSpec.describe JobseekerProfile, type: :model do
         described_class.prepare_associations(profile)
       end
 
-      it "assigns job_preferences and personal_details" do
+      it "assigns job_preferences" do
         described_class.prepare_associations(profile)
 
         expect(profile.job_preferences).to be_present
-        expect(profile.personal_details).to be_present
       end
     end
 
@@ -31,11 +30,10 @@ RSpec.describe JobseekerProfile, type: :model do
         expect(profile).to be_persisted
       end
 
-      it "assigns job_preferences and personal_details" do
+      it "assigns job_preferences" do
         described_class.prepare_associations(profile)
 
         expect(profile.job_preferences).to be_present
-        expect(profile.personal_details).to be_present
       end
     end
   end
@@ -52,38 +50,7 @@ RSpec.describe JobseekerProfile, type: :model do
       end
     end
 
-    context "when the jobseeker has a previous draft application" do
-      before do
-        create(:job_application, :status_draft, jobseeker:, first_name: "karl", last_name: "karlssen", phone_number: "01234567899", has_right_to_work_in_uk: true)
-      end
-
-      it "does not use the details from the draft application" do
-        expect(profile.employments).to be_empty
-        expect(profile.qualifications).to be_empty
-        expect(profile.qualified_teacher_status_year).to be_nil
-        expect(profile.qualified_teacher_status).to be_nil
-        expect(profile.personal_details.first_name).to be_nil
-        expect(profile.personal_details.last_name).to be_nil
-      end
-
-      it "creates a job preferences record" do
-        expect(profile.job_preferences).to be_present
-        expect(profile.job_preferences).to be_persisted
-      end
-    end
-
     context "when the jobseeker has no previous application" do
-      it "does not use the details from the previous application" do
-        expect(profile.employments).to be_empty
-        expect(profile.qualifications).to be_empty
-        expect(profile.qualified_teacher_status_year).to be_nil
-        expect(profile.qualified_teacher_status).to be_nil
-      end
-
-      it "still creates a personal details record" do
-        expect(profile.personal_details).to be_present
-      end
-
       it "still creates a job preferences record" do
         expect(profile.job_preferences).to be_present
       end
@@ -194,12 +161,6 @@ RSpec.describe JobseekerProfile, type: :model do
 
     context "without personal details" do
       let(:personal_details) { nil }
-
-      it { is_expected.to be false }
-    end
-
-    context "with incomplete personal details" do
-      let(:personal_details) { build_stubbed(:personal_details, :not_started) }
 
       it { is_expected.to be false }
     end

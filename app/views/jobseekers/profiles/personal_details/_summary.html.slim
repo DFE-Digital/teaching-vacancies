@@ -3,14 +3,14 @@ ruby:
   form = Jobseekers::Profiles::PersonalDetailsForm.from_record(model)
 
   attributes = {
-                 has_right_to_work_in_uk: { map_values: ->(value) { value.nil? ? "" : t("jobseekers.profiles.personal_details.work.options.#{value}") } },
+                 has_right_to_work_in_uk: { map_values: ->(value) { value.nil? ? "" : t("jobseekers.profiles.personal_details.edit.work.options.#{value}") } },
                }
 
   summary = govuk_summary_list(html_attributes: { id: "personal_details" }) do |summary_list|
     summary_list.with_row do |row|
       row.with_key text: "Name"
       row.with_value text: "#{model.first_name} #{model.last_name}"
-      row.with_action(text: t("buttons.change"), href: jobseekers_profile_personal_details_step_path("name", back_to_review: true), visually_hidden_text: " name")
+      row.with_action(text: t("buttons.change"), href: edit_jobseekers_profile_personal_details_path(back_to_review: true), visually_hidden_text: " name")
     end
 
     attributes.each do |attribute, options|
@@ -24,25 +24,25 @@ ruby:
       summary_list.with_row do |row|
         row.with_key text: t("jobseekers.profiles.personal_details.summary.#{attribute}")
         row.with_value text: value
-        row.with_action(text: t("buttons.change"), href: jobseekers_profile_personal_details_step_path(step_name, back_to_review: true), visually_hidden_text: attribute.to_s.humanize)
+        row.with_action(text: t("buttons.change"), href: edit_jobseekers_profile_personal_details_path(back_to_review: true), visually_hidden_text: attribute.to_s.humanize)
       end
     end
 
     summary_list.with_row do |row|
       row.with_key text: t("jobseekers.profiles.personal_details.summary.email")
       row.with_value text: (current_jobseeker.email +
-                       govuk_inset_text(text: t("helpers.label.jobseekers_profiles_personal_details_form_names_form.change_email_html",
-                                              link: govuk_link_to(t("helpers.label.jobseekers_profiles_personal_details_form_names_form.change_email_link_text"),
+                       govuk_inset_text(text: t("helpers.label.personal_details.change_email_html",
+                                              link: govuk_link_to(t("helpers.label.personal_details.change_email_link_text"),
                                                     jobseekers_account_path)),
                                         classes: "govuk-!-margin-top-3")).html_safe
     end
   end
 
-- if model.complete?
+- if model.present?
   = summary
 - else
   .govuk-inset-text.govuk-inset-text--incomplete
     = summary
     p.govuk-body-m.govuk-inset-text--header
       strong = t("jobseekers.profiles.personal_details.incomplete_message")
-    = govuk_link_to t("buttons.complete_personal_details"), jobseekers_profile_personal_details_step_path(form.next_invalid_step), class: "govuk-button"
+    = govuk_link_to t("buttons.complete_personal_details"), edit_jobseekers_profile_personal_details_path, class: "govuk-button"

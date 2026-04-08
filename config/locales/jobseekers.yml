@@ -789,10 +789,39 @@ en:
           page_title: Preview your profile
       personal_details:
         incomplete_message: You must complete your personal details before you turn on your profile.
-        name:
+        edit:
           caption: Personal details
-          heading: Name
-          page_title: Name
+          heading: Name and visa sponsorship
+          page_title: Name and visa sponsorship
+          visa: Do you need Skilled Worker visa sponsorship?
+          learn_more:
+            other_routes_to_qts: other routes to QTS
+            qualifications_and_experience: the qualifications and experience you’ll need
+            visas: visas and immigration
+          may_be_able_to_apply_for_qts:
+            text: You may be able to apply for QTS – %{link}.
+            link: check your eligibility (link opens in new tab)
+          work:
+            options:
+              false: "Yes, I will need to apply for a visa giving me the right to work in the UK"
+              true: "No, I already have the right to work in the UK"
+            hint:
+              text: If you're a non-UK citizen you will need a visa or immigration status which allows you to work in England. If you're looking for a teaching job, you can learn more about %{link}
+              link: teaching in England as a non-UK citizen (opens in new tab).
+              no_visa:
+                text: You can %{link}
+                link: find out what visa you need if you're a non-UK citizen (link opens in new tab).
+            warning:
+              text: This role cannot offer visa sponsorship.
+              paragraph_1: It is unlikely you will be considered for this job as it is not offering Skilled Worker visa sponsorship to non-UK citizens.
+              paragraph_2:
+                text: Learn more about %{link}
+                link: teaching in England as a non-UK citizen (opens in new tab).
+              search_for_jobs: Search for other jobs
+          schools_cannot_give_advice:
+            text: "Schools cannot give you advice about becoming a teacher in England. However, you can visit %{link} to learn more about:"
+            link: Teach in England if you trained overseas (link opens in new tab)
+          unlikely_unless_have_qts: You are unlikely to be given a teaching job in England unless you have qualified teacher status.
         phone_number:
           caption: Personal details
           heading: Do you want to provide a phone number?
@@ -807,36 +836,6 @@ en:
           phone_number: Phone number
           phone_number_provided: Do you want to provide a phone number?
           has_right_to_work_in_uk: Do you need Skilled Worker visa sponsorship?
-        work:
-          caption: Personal details
-          hint:
-            text: If you're a non-UK citizen you will need a visa or immigration status which allows you to work in England. If you're looking for a teaching job, you can learn more about %{link}
-            link: teaching in England as a non-UK citizen (opens in new tab).
-            no_visa:
-              text: You can %{link}
-              link: find out what visa you need if you're a non-UK citizen (link opens in new tab).
-          warning:
-            text: This role cannot offer visa sponsorship.
-            paragraph_1: It is unlikely you will be considered for this job as it is not offering Skilled Worker visa sponsorship to non-UK citizens.
-            paragraph_2:
-              text: Learn more about %{link}
-              link: teaching in England as a non-UK citizen (opens in new tab).
-            search_for_jobs: Search for other jobs
-          learn_more:
-            other_routes_to_qts: other routes to QTS
-            qualifications_and_experience: the qualifications and experience you’ll need
-            visas: visas and immigration
-          may_be_able_to_apply_for_qts:
-            text: You may be able to apply for QTS – %{link}.
-            link: check your eligibility (link opens in new tab)
-          options:
-            false: "Yes, I will need to apply for a visa giving me the right to work in the UK"
-            true: "No, I already have the right to work in the UK"
-          page_title: Do you need Skilled Worker visa sponsorship?
-          schools_cannot_give_advice:
-            text: "Schools cannot give you advice about becoming a teacher in England. However, you can visit %{link} to learn more about:"
-            link: Teach in England if you trained overseas (link opens in new tab)
-          unlikely_unless_have_qts: You are unlikely to be given a teaching job in England unless you have qualified teacher status.
       show:
         active: Active
         activate_profile_text: >-

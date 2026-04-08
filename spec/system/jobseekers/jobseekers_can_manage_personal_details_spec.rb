@@ -2,11 +2,9 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can manage their personal details" do
   let(:jobseeker) { create(:jobseeker) }
-  let(:bexleyheath) { %w[0.14606549011864176 51.457814649098104] }
   let(:organisation) do
     create(:school,
-           publishers: [build(:publisher)],
-           geopoint: RGeo::Geographic.spherical_factory(srid: 4326).point(*bexleyheath))
+           publishers: [build(:publisher)])
   end
   let(:publisher) { organisation.publishers.first }
 
@@ -39,34 +37,24 @@ RSpec.describe "Jobseekers can manage their personal details" do
         end
       end
 
-      describe "phone number screen" do
-        before do
-          fill_in "jobseekers_profiles_personal_details_form_names_form[first_name]", with: first_name
-          fill_in "jobseekers_profiles_personal_details_form_names_form[last_name]", with: last_name
+      describe "personal details screen" do
+        it "passes a11y", :a11y do
+          expect(page).to have_content("Do you need Skilled Worker visa sponsorship?")
+          expect(page).to be_axe_clean
+        end
+
+        it "allows the jobseeker to fill in their personal details" do
+          expect(page).to have_content("Do you need Skilled Worker visa sponsorship?")
+          fill_in "personal_details[first_name]", with: first_name
+          fill_in "personal_details[last_name]", with: last_name
+          choose "Yes"
           click_on I18n.t("buttons.save_and_continue")
+
+          click_on I18n.t("buttons.return_to_profile")
+
+          expect(page).to have_content("#{first_name} #{last_name}")
+          expect(page).to have_content("Yes, I will need to apply for a visa giving me the right to work in the UK")
         end
-
-        context "when asking for visa sponsorship" do
-          it "passes a11y", :a11y do
-            expect(page).to have_content("Do you need Skilled Worker visa sponsorship?")
-            expect(page).to be_axe_clean
-          end
-
-          it "allows the jobseeker to fill in their personal details" do
-            expect(page).to have_content("Do you need Skilled Worker visa sponsorship?")
-            choose "Yes"
-            click_on I18n.t("buttons.save_and_continue")
-
-            click_on I18n.t("buttons.return_to_profile")
-
-            expect(page).to have_content("#{first_name} #{last_name}")
-            expect(page).to have_content("Yes, I will need to apply for a visa giving me the right to work in the UK")
-          end
-        end
-      end
-
-      it "does not display a notice to inform the user about prefilling" do
-        expect(page).to have_no_content("your details have been imported into your profile")
       end
     end
 
@@ -80,24 +68,13 @@ RSpec.describe "Jobseekers can manage their personal details" do
         profile.personal_details.update!(
           first_name: "Frodo",
           last_name: "Baggins",
-          completed_steps: completed_steps,
           has_right_to_work_in_uk: right_to_work,
         )
 
         visit jobseekers_profile_path
       end
 
-      context "without a work completed step" do
-        let(:completed_steps) { { "name" => "completed", "phone_number" => "completed" } }
-        let(:right_to_work) { nil }
-
-        it "has an edit link" do
-          expect(page).to have_link("Complete personal details", href: jobseekers_profile_personal_details_step_path(:work))
-        end
-      end
-
       context "with a work completed step" do
-        let(:completed_steps) { { "name" => "completed", "work" => "completed" } }
         let(:right_to_work) { true }
 
         it "allows the jobseeker to edit their profile" do
@@ -107,8 +84,8 @@ RSpec.describe "Jobseekers can manage their personal details" do
             click_link "Change"
           end
 
-          fill_in "jobseekers_profiles_personal_details_form_names_form[first_name]", with: new_first_name
-          fill_in "jobseekers_profiles_personal_details_form_names_form[last_name]", with: new_last_name
+          fill_in "personal_details[first_name]", with: new_first_name
+          fill_in "personal_details[last_name]", with: new_last_name
           click_on I18n.t("buttons.save_and_continue")
 
           expect(page).to have_content("#{new_first_name} #{new_last_name}")

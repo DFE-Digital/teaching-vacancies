@@ -1,0 +1,28 @@
+- content_for :page_title_prefix, t(".page_title")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: escape_path, html_attributes: { "aria-label" => "Back navigation" }
+
+= form_for @personal_details_record, url: jobseekers_profile_personal_details_path(back_to_review: params[:back_to_review]), method: :patch do |f|
+  = f.govuk_error_summary
+
+  = f.govuk_fieldset legend: { text: t(".heading"), tag: "h1", size: "l" }, caption: { text: t(".caption"), size: "l" } do
+    = f.govuk_text_field :first_name,
+      label: { size: "m" },
+      autocomplete: "given-name"
+
+    = f.govuk_text_field :last_name,
+      label: { size: "m" },
+      autocomplete: "family-name"
+
+  = f.govuk_radio_buttons_fieldset :has_right_to_work_in_uk,
+    legend: { text: t(".visa"), tag: "h2" },
+    hint: { text: t(".work.hint.text", link: govuk_link_to(t(".work.hint.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers/visas-for-non-uk-teachers", target: "_blank")).html_safe } do
+
+    = f.govuk_radio_button :has_right_to_work_in_uk, "true", label: { text: t(".work.options.true") }, link_errors: true
+    = f.govuk_radio_button :has_right_to_work_in_uk, "false", label: { text: t(".work.options.false") }
+
+  .govuk-button-group
+    = f.govuk_submit t("buttons.save_and_continue"), class: "govuk-!-margin-bottom-5"
+
+    = govuk_link_to t("buttons.cancel"), jobseekers_profile_path

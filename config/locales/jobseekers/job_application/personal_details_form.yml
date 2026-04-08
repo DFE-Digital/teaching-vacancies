@@ -92,7 +92,7 @@ en:
       jobseekers_uploaded_job_application_upload_application_form_form:
         upload_application_form_section_completed: Have you completed this section?
     label:
-      jobseekers_profiles_personal_details_form_names_form:
+      personal_details:
         email: Email
         change_email_html: Select to %{link}
         change_email_link_text: change your email address

@@ -510,7 +510,6 @@ shared:
     - jobseeker_profile_id
     - first_name
     - last_name
-    - completed_steps
     - created_at
     - has_right_to_work_in_uk
     - updated_at
