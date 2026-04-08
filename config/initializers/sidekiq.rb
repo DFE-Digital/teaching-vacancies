@@ -8,12 +8,12 @@ options = {
 Sidekiq.configure_server do |config|
   config.merge!(options)
   config.logger.level = Logger::WARN
-  config.redis = { url: Rails.configuration.redis_queue_url, network_timeout: 5, size: config[:concurrency] + 5 }
+  config.redis = { url: Rails.configuration.redis_queue_url, network_timeout: 5, size: config.options[:concurrency] + 5 }
 end
 
 Sidekiq.configure_client do |config|
   config.merge!(options)
-  config.redis = { url: Rails.configuration.redis_queue_url, network_timeout: 5, size: config[:concurrency] + 5 }
+  config.redis = { url: Rails.configuration.redis_queue_url, network_timeout: 5, size: config.options[:concurrency] + 5 }
 end
 
 schedule_file = "config/schedule.yml"
