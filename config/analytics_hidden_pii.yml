@@ -87,7 +87,6 @@ shared:
     - jobseeker_profile_id
     - first_name
     - last_name
-    - phone_number
   self_disclosures:
     - name
     - previous_names

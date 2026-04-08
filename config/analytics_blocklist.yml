@@ -55,7 +55,6 @@
   :personal_details:
   - first_name_ciphertext
   - last_name_ciphertext
-  - phone_number_ciphertext
   :notes:
   - id
   - content
