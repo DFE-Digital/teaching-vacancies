@@ -23,38 +23,30 @@ RSpec.describe "Jobseekers can manage their personal details" do
         click_link("Add personal details")
       end
 
-      it "passes a11y", :a11y do
-        expect(page).to be_axe_clean
-      end
-
       context "with an error" do
-        before do
-          click_on I18n.t("buttons.save_and_continue")
-        end
-
         it "displays an error" do
+          expect(page).to have_content("Do you need Skilled Worker visa sponsorship?")
+          click_on I18n.t("buttons.save_and_continue")
           expect(page).to have_content("There is a problem")
         end
       end
 
-      describe "personal details screen" do
-        it "passes a11y", :a11y do
-          expect(page).to have_content("Do you need Skilled Worker visa sponsorship?")
-          expect(page).to be_axe_clean
-        end
+      it "passes a11y", :a11y do
+        expect(page).to have_content("Do you need Skilled Worker visa sponsorship?")
+        expect(page).to be_axe_clean
+      end
 
-        it "allows the jobseeker to fill in their personal details" do
-          expect(page).to have_content("Do you need Skilled Worker visa sponsorship?")
-          fill_in "personal_details[first_name]", with: first_name
-          fill_in "personal_details[last_name]", with: last_name
-          choose "Yes"
-          click_on I18n.t("buttons.save_and_continue")
+      it "allows the jobseeker to fill in their personal details" do
+        expect(page).to have_content("Do you need Skilled Worker visa sponsorship?")
+        fill_in "personal_details[first_name]", with: first_name
+        fill_in "personal_details[last_name]", with: last_name
+        choose "Yes"
+        click_on I18n.t("buttons.save_and_continue")
 
-          click_on I18n.t("buttons.return_to_profile")
+        click_on I18n.t("buttons.return_to_profile")
 
-          expect(page).to have_content("#{first_name} #{last_name}")
-          expect(page).to have_content("Yes, I will need to apply for a visa giving me the right to work in the UK")
-        end
+        expect(page).to have_content("#{first_name} #{last_name}")
+        expect(page).to have_content("Yes, I will need to apply for a visa giving me the right to work in the UK")
       end
     end
 

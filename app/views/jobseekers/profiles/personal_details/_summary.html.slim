@@ -1,6 +1,5 @@
 ruby:
   model = profile.personal_details
-  form = Jobseekers::Profiles::PersonalDetailsForm.from_record(model)
 
   attributes = {
                  has_right_to_work_in_uk: { map_values: ->(value) { value.nil? ? "" : t("jobseekers.profiles.personal_details.edit.work.options.#{value}") } },
@@ -14,7 +13,6 @@ ruby:
     end
 
     attributes.each do |attribute, options|
-      step_name = form.class.delegated_attributes[attribute]
       value = model.public_send(attribute)
 
       if options && options[:map_values]
