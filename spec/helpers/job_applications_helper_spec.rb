@@ -7,6 +7,28 @@ RSpec.describe JobApplicationsHelper do
     it { is_expected.to match_array(JobApplication.statuses.except(:draft).keys) }
   end
 
+  describe "#radio_button_legend_hint" do
+    context "with visa sponsorship" do
+      let(:vacancy) { build_stubbed(:vacancy, visa_sponsorship_available: true) }
+
+      it "has good translations" do
+        expect(radio_button_legend_hint(vacancy).transform_values { |t| I18n.t(t) })
+          .to eq(text: "If you're a non-UK citizen you will need a visa or immigration status which allows you to work in England. If you're looking for a teaching job, you can learn more about %{link}",
+                 link: "teaching in England as a non-UK citizen (opens in new tab).")
+      end
+    end
+
+    context "without visa sponsorship" do
+      let(:vacancy) { build_stubbed(:vacancy, visa_sponsorship_available: false) }
+
+      it "has good translations" do
+        expect(radio_button_legend_hint(vacancy).transform_values { |t| I18n.t(t) })
+          .to eq(text: "You can %{link}",
+                 link: "find out what visa you need if you're a non-UK citizen (link opens in new tab).")
+      end
+    end
+  end
+
   describe "#tab_name" do
     subject { helper.tab_name(status) }
 
