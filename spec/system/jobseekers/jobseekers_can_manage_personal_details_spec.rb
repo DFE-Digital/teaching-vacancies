@@ -43,8 +43,6 @@ RSpec.describe "Jobseekers can manage their personal details" do
         choose "Yes"
         click_on I18n.t("buttons.save_and_continue")
 
-        click_on I18n.t("buttons.return_to_profile")
-
         expect(page).to have_content("#{first_name} #{last_name}")
         expect(page).to have_content("Yes, I will need to apply for a visa giving me the right to work in the UK")
       end
