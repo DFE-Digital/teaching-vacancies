@@ -49,12 +49,6 @@ module Publishers
           redirect_to organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id)
         end
 
-        def reference_form
-          @reference_request.reference_form.purge_later
-          redirect_to organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id),
-                      success: t(".success")
-        end
-
         private
 
         def email_form_class

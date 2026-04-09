@@ -78,10 +78,10 @@ RSpec.describe "Publishers can add a manual reference" do
       expect(page).to have_content("Uploaded reference")
       expect(page).to have_content("blank_job_spec.pdf")
 
-      click_on "Delete uploaded reference"
-      expect(page).to have_content("Reference document deleted successfully")
-      expect(page).to have_no_content("Uploaded reference")
-      expect(ReferenceRequest.last.reference_form.attached?).to be false
+      click_on "Delete reference"
+      expect(page).to have_current_path(pre_interview_checks_organisation_job_job_application_path(vacancy.id, job_application.id))
+      expect(page).to have_content("Reference deleted successfully")
+      expect(page).to have_no_content(referee_name)
     end
   end
 end

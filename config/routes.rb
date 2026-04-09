@@ -449,7 +449,6 @@ Rails.application.routes.draw do
             patch :mark_as_received
             patch :mark_as_complete
             patch :send_reminder_email
-            delete :reference_form
           end
         end
         get :download
@@ -462,7 +461,7 @@ Rails.application.routes.draw do
           get :pre_employment_checks
         end
         resource :religious_reference, only: %i[edit update], controller: "publishers/vacancies/job_applications/religious_references"
-        resources :references, only: %i[new create], controller: "publishers/vacancies/job_applications/references"
+        resources :references, only: %i[new create destroy], controller: "publishers/vacancies/job_applications/references"
         resource :online_checks, only: %i[edit update], controller: "publishers/vacancies/job_applications/online_checks"
         resource :pre_employment_check_set, only: %i[update], controller: "publishers/vacancies/job_applications/pre_employment_checks"
         member do
