@@ -1,6 +1,6 @@
 module Jobseekers::Profiles
   class PersonalDetailsController < Jobseekers::BaseController
-    helper_method :escape_path, :back_url
+    helper_method :escape_path
 
     before_action :set_personal_details_record
 
@@ -8,7 +8,7 @@ module Jobseekers::Profiles
 
     def update
       if @personal_details_record.update(personal_details_params)
-        redirect_to review_jobseekers_profile_personal_details_path
+        redirect_to jobseekers_profile_path
       else
         render "edit"
       end

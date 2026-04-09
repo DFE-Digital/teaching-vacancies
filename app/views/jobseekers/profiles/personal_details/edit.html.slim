@@ -3,7 +3,7 @@
 - content_for :breadcrumbs do
   = govuk_back_link text: t("buttons.back"), href: escape_path, html_attributes: { "aria-label" => "Back navigation" }
 
-= form_for @personal_details_record, url: jobseekers_profile_personal_details_path(back_to_review: params[:back_to_review]), method: :patch do |f|
+= form_for @personal_details_record, url: jobseekers_profile_personal_details_path, method: :patch do |f|
   = f.govuk_error_summary
 
   = f.govuk_fieldset legend: { text: t(".heading"), tag: "h1", size: "l" }, caption: { text: t(".caption"), size: "l" } do
