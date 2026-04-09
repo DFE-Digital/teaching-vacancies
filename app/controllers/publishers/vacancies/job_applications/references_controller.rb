@@ -11,12 +11,6 @@ module Publishers
           @referee = RefereeForm.new
         end
 
-        def destroy
-          @job_application.referees.find(params[:id]).destroy
-          redirect_to pre_interview_checks_organisation_job_job_application_path(@vacancy.id, @job_application),
-                      success: t(".success")
-        end
-
         def create
           @note = @job_application.notes.build
           @referee = RefereeForm.new(referee_form_params)
@@ -26,6 +20,12 @@ module Publishers
           else
             render "new"
           end
+        end
+
+        def destroy
+          @job_application.referees.find(params[:id]).destroy!
+          redirect_to pre_interview_checks_organisation_job_job_application_path(@vacancy.id, @job_application),
+                      success: t(".success")
         end
 
         private
