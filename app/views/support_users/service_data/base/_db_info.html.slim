@@ -2,7 +2,7 @@
   = render DetailComponent.new title: local_assigns[:title] do |detail|
     - detail.with_body do
       = govuk_summary_list do |summary_list|
-        - local_assigns[:object].attributes.keys.each do |column_name|
+        - local_assigns[:object].attributes.each_key do |column_name|
           - next if column_name.match?(/password|token/) || column_name.ends_with?("_ciphertext")
           - summary_list.with_row do |row|
             - row.with_key text: column_name.humanize
