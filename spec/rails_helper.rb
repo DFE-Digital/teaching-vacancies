@@ -30,7 +30,7 @@ Capybara.register_driver(:cuprite_headless) do |app|
   Capybara::Cuprite::Driver.new(app,
                                 headless: true,
                                 process_timeout: 30,
-                                window_size: [1280, 800],
+                                window_size: [800, 1280],
                                 browser_options: {
                                   "no-sandbox": nil,
                                   "disable-gpu": nil,
@@ -47,7 +47,7 @@ Capybara.register_driver(:cuprite_headless) do |app|
                                   "renderer-process-limit": "1",
                                   # Cap V8 heap: initial prevents eager allocation; max prevents unbounded growth.
                                   "js-flags": "--max_old_space_size=256 --initial_old_space_size=32",
-                                  "window-size": "1280,800",
+                                  # "window-size": "800, 1280",
                                   headless: "new",
                                   "ozone-platform": "none",
                                 })
