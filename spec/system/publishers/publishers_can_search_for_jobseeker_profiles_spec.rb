@@ -1,12 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
-  let(:publisher) { create(:publisher, organisations: [organisation]) }
-  let(:organisation) { create(:school, geopoint: "POINT (-0.108267 51.506438)") }
-  let(:school_oxford) { create(:school, name: "Oxford", geopoint: "POINT (-0.108267 51.506438)") }
-  let(:school_cambridge) { create(:school, name: "Cambridge", geopoint: "POINT (-0.108267 51.506438)") }
-  let(:trust_publisher) { create(:publisher, organisations: [trust]) }
-  let(:trust) { create(:trust, schools: [school_oxford, school_cambridge], geopoint: "POINT (-0.108267 51.506438)") }
   let(:roles) do
     %w[ teacher
         headteacher
@@ -48,18 +42,20 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
   let(:teaching_assistant_job_preferences) { create(:job_preferences, roles: %w[teaching_assistant higher_level_teaching_assistant], working_patterns: %w[full_time], locations: [teaching_assistant_preference_containing_school]) }
   let(:teaching_assistant_preference_containing_school) { create(:job_preferences_location, name: "London", radius: 100) }
 
-  describe "Visiting the publisher's jobseeker profiles start page" do
-    before do
-      login_publisher(publisher:, organisation:)
-      visit publishers_jobseeker_profiles_path
-      # wait for page load
-      find(".search-results")
-      find("footer")
-    end
+  before do
+    login_publisher(publisher:, organisation:)
+    visit publishers_jobseeker_profiles_path
+  end
 
-    after { logout }
+  after { logout }
+
+  describe "Visiting the publisher's jobseeker profiles start page" do
+    let(:organisation) { create(:school, geopoint: "POINT (-0.108267 51.506438)") }
+    let(:publisher) { create(:publisher, organisations: [organisation]) }
 
     it "passes a11y", :a11y do
+      # wait for page load
+      expect(page).to have_content "Learning support or cover supervisor"
       expect(page).to be_axe_clean
     end
 
@@ -200,15 +196,18 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         expect(page).to have_link(href: publishers_jobseeker_profile_path(teaching_assistant_jobseeker_profile))
       end
     end
+
+    it "shows text explaining that the candidates are willing to travel to the school" do
+      expect(page).to have_selector("p", text: "These candidates are willing to travel to a location that’s near to your school.")
+    end
   end
 
   context "when organisation is a trust" do
-    before do
-      login_publisher(publisher: trust_publisher, organisation: trust)
-      visit publishers_jobseeker_profiles_path
-    end
-
-    after { logout }
+    let(:publisher) { create(:publisher, organisations: [trust]) }
+    let(:organisation) { trust }
+    let(:school_oxford) { create(:school, name: "Oxford", geopoint: "POINT (-0.108267 51.506438)") }
+    let(:school_cambridge) { create(:school, name: "Cambridge", geopoint: "POINT (-0.108267 51.506438)") }
+    let(:trust) { create(:trust, schools: [school_oxford, school_cambridge], geopoint: "POINT (-0.108267 51.506438)") }
 
     context "when no locations are selected in the filters" do
       it "shows text explaining that the candidates are willing travel to one of more of the locations" do
@@ -237,19 +236,6 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         end
         expect(page).to have_selector("p", text: "These candidates are willing to travel to at least one of your selected school locations.")
       end
-    end
-  end
-
-  context "when organisation is not a trust" do
-    before do
-      login_publisher(publisher:, organisation:)
-      visit publishers_jobseeker_profiles_path
-    end
-
-    after { logout }
-
-    it "shows text explaining that the candidates are willing to travel to the school" do
-      expect(page).to have_selector("p", text: "These candidates are willing to travel to a location that’s near to your school.")
     end
   end
 end

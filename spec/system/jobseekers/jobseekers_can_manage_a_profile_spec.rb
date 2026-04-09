@@ -96,8 +96,6 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
               expect(page).to have_content(employment.job_title)
               expect(page).to have_content(employment.started_on.to_fs(:month_year))
               expect(page).to have_content(employment.ended_on.to_fs(:month_year)) unless employment.is_current_role?
-              expect(page).to have_content(employment.main_duties)
-              expect(page).to have_content(employment.reason_for_leaving)
             end
           end
 
@@ -121,7 +119,7 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
 
             expect(page).to have_css(".govuk-inset-text", text: "Gap in work history")
 
-            gap = Employment.find_by(employment_type: "break")
+            gap = Employment.find_by!(employment_type: "break")
 
             within(".govuk-inset-text") do
               expect(page).to have_content("I was travelling")

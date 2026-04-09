@@ -7,7 +7,7 @@ RSpec.describe "publishers/jobseeker_profiles/show" do
     build_stubbed(:jobseeker_profile, :with_location_preferences,
                   personal_details: build(:personal_details),
                   qualifications: [build_stubbed(:qualification)],
-                  employments: [build_stubbed(:employment)],
+                  employments: [employment],
                   professional_body_memberships: [build_stubbed(:professional_body_membership)],
                   job_preferences: build_stubbed(:job_preferences, roles: %w[ teacher
                                                                               headteacher
@@ -51,7 +51,7 @@ RSpec.describe "publishers/jobseeker_profiles/show" do
         "Pastoral, health and welfare, Other leadership roles, " \
         "Other support roles, Senior leader, Middle leader",
     )
-    expect(rendered).to have_content(jobseeker_profile.employments.first.subjects)
+    expect(rendered).to have_content("almost 3 years")
     expect(rendered).to have_no_content("Location")
     expect(rendered).to have_content(jobseeker_profile.job_preferences.working_pattern_details)
     expect(rendered).to have_content(jobseeker_profile.professional_body_memberships.first.name)
