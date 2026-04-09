@@ -147,7 +147,7 @@ jobs:
           fail-on-cache-miss: true
 
       - name: Build and push docker image from builder target
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         with:
@@ -167,7 +167,7 @@ jobs:
           target: builder
 
       - name: Build and push docker image from production target
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         with:
