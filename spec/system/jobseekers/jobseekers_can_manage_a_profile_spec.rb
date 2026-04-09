@@ -150,7 +150,7 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
 
       describe "changing an existing employment history entry" do
         let(:profile) { create(:jobseeker_profile, jobseeker:) }
-        let(:employment) { create(:employment, :jobseeker_profile_employment, jobseeker_profile: profile) }
+        let(:employment) { create(:profile_employment, jobseeker_profile: profile) }
         let(:new_employment) { build(:employment, organisation: "NASA", job_title: "Chief ET locator", reason_for_leaving: "Relocating") }
 
         before do
@@ -174,7 +174,7 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
 
       describe "deleting an employment history entry" do
         let!(:profile) { create(:jobseeker_profile, jobseeker:) }
-        let!(:employment) { create(:employment, :jobseeker_profile_employment, jobseeker_profile_id: profile.id) }
+        let!(:employment) { create(:profile_employment, jobseeker_profile_id: profile.id) }
 
         it "deletes the employment record" do
           visit review_jobseekers_profile_work_history_index_path
@@ -223,7 +223,7 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
       let!(:profile) do
         create(:jobseeker_profile, :with_personal_details,
                :with_qualifications,
-               employments: build_list(:employment, 1, :current_role, job_application: nil),
+               employments: build_list(:profile_employment, 1, :current_role),
                job_preferences:,
                jobseeker:,
                active: false)

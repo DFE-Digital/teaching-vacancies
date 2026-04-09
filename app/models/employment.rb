@@ -1,5 +1,5 @@
 class Employment < ApplicationRecord
-  include ApplicationAndProfileAssociatedRecord
+  belongs_to :job_application
 
   has_encrypted :organisation, :job_title, :main_duties
 
@@ -9,10 +9,18 @@ class Employment < ApplicationRecord
 
   # KSIE dictates that we need a reason_for_leaving even for current role
   validates :organisation, :job_title, presence: true, if: -> { job? }
-  validates :reason_for_leaving, :main_duties, presence: true, if: -> { job? && job_application.present? }
+  validates :reason_for_leaving, :main_duties, presence: true, if: -> { job? }
 
   validates :started_on, date: { before: :today }, if: -> { job? }
 
   validates :ended_on, date: { before: :today, on_or_after: :started_on }, unless: -> { is_current_role? }, if: -> { job? }
   validates :ended_on, absence: true, if: -> { job? && is_current_role? }
+
+  def duplicate
+    # dup does a shallow copy, but although it "doesn't copy associations" according to the
+    # docs, it *does* copy parent associations so we remove these
+    dup.tap do |record|
+      record.assign_attributes(job_application: nil)
+    end
+  end
 end
