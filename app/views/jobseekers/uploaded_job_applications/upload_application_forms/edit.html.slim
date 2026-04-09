@@ -7,13 +7,24 @@
     = form_for @form, url: jobseekers_uploaded_job_application_upload_application_form_path(@job_application.id), method: :patch do |f|
       = f.govuk_error_summary
 
-      = f.govuk_file_field :application_form,
-        label: { text: "Upload application form", tag: "h1", size: "l" },
-        hint: { text: t("helpers.hint.publishers_job_listing_application_form_form.application_form") },
-        accept: ".doc, .docx, .pdf",
-        multiple: false,
-        include_hidden: false,
-        enctype: "multipart/form-data"
+      - if @job_application.application_form.attached?
+        dl.govuk-summary-list
+          .govuk-summary-list__row
+            dt.govuk-summary-list__key Uploaded file
+            dd.govuk-summary-list__value
+              = govuk_link_to("#{@job_application.application_form.filename} (#{number_to_human_size(@job_application.application_form.byte_size)})", @job_application.application_form, download: "true")
+            dd.govuk-summary-list__actions
+              = govuk_link_to jobseekers_uploaded_job_application_upload_application_form_path(@job_application), method: :delete do
+                = t("buttons.delete")
+                span.govuk-visually-hidden  uploaded application form
+      - else
+        = f.govuk_file_field :application_form,
+          label: { text: "Upload application form", tag: "h1", size: "l" },
+          hint: { text: t("helpers.hint.publishers_job_listing_application_form_form.application_form") },
+          accept: ".doc, .docx, .pdf",
+          multiple: false,
+          include_hidden: false,
+          enctype: "multipart/form-data"
 
       = f.govuk_collection_radio_buttons :upload_application_form_section_completed, %w[true false], :to_s
 

@@ -2,7 +2,7 @@ class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::Vaca
   validate :application_form_presence
   validates :application_form, form_file: Vacancy::DOCUMENT_VALIDATION_OPTIONS
 
-  attr_accessor(:application_form, :application_form_staged_for_replacement)
+  attr_accessor :application_form
 
   def params_to_save
     {
@@ -19,7 +19,6 @@ class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::Vaca
   def application_form_presence
     return if application_form.present?
 
-    # See commit message for 1aa28cce3239c42b1af23d61ae08add3e8c51e5e for context
-    errors.add(:application_form, :blank) if vacancy.application_form&.blank? || application_form_staged_for_replacement
+    errors.add(:application_form, :blank) if vacancy.application_form.blank?
   end
 end

@@ -4,15 +4,25 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
   helper_method :form
 
   def create
+    # when a file is already attached and no new file is uploaded, skip form validation and proceed
+    # we don't want to submit the form again with the same file and attach the same file again
+    if !application_form_uploaded? && vacancy.application_form.attached?
+      return redirect_to_next_step
+    end
+
     if form.valid?
-      vacancy.application_form.attach(form.application_form) if application_form_uploaded?
+      vacancy.application_form.attach(form.application_form)
       update_vacancy
-      send_dfe_analytics_event if application_form_uploaded?
+      send_dfe_analytics_event
       redirect_to_next_step
     else
-      # See commit message for 1aa28cce3239c42b1af23d61ae08add3e8c51e5e for context
-      render "publishers/vacancies/build/application_form", locals: { application_form_staged_for_replacement: application_form_staged_for_replacement? }
+      render "publishers/vacancies/build/application_form"
     end
+  end
+
+  def destroy
+    vacancy.application_form.purge_later
+    redirect_to organisation_job_build_path(vacancy.id, :application_form)
   end
 
   private
@@ -26,8 +36,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
   end
 
   def application_form_params
-    params.expect(publishers_job_listing_application_form_form: %i[application_form application_form_staged_for_replacement])
-          .merge(completed_steps: completed_steps)
+    params.fetch(:publishers_job_listing_application_form_form, {}).permit(:application_form).merge(completed_steps: completed_steps)
   end
 
   def update_vacancy
@@ -36,8 +45,6 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
   end
 
   def event_type
-    return :supporting_document_replaced if application_form_staged_for_replacement?
-
     :supporting_document_created
   end
 
@@ -70,11 +77,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
     end
   end
 
-  def application_form_staged_for_replacement?
-    params[:publishers_job_listing_application_form_form][:application_form_staged_for_replacement].present?
-  end
-
   def application_form_uploaded?
-    params[:publishers_job_listing_application_form_form][:application_form].present?
+    params.dig(:publishers_job_listing_application_form_form, :application_form).present?
   end
 end
