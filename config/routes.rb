@@ -449,6 +449,7 @@ Rails.application.routes.draw do
             patch :mark_as_received
             patch :mark_as_complete
             patch :send_reminder_email
+            delete :reference_form
           end
         end
         get :download

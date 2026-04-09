@@ -51,6 +51,12 @@
           - row.with_key(text: key)
           - row.with_value(text: value)
 
+    - if @reference_request.reference_form.attached?
+      h2.govuk-heading-m = t(".uploaded_reference.heading")
+      p.govuk-body
+        = govuk_link_to "#{@reference_request.reference_form.filename} (#{number_to_human_size(@reference_request.reference_form.byte_size)})", @reference_request.reference_form
+      = govuk_link_to t(".uploaded_reference.delete"), reference_form_organisation_job_job_application_reference_request_path(@vacancy.id, @job_application.id, @reference_request.id), method: :delete, class: "govuk-link govuk-link--no-visited-state"
+
     - if @reference_request.sent?
       - if @job_reference.complete?
         - if @job_reference.can_give_reference?

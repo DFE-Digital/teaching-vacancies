@@ -165,7 +165,12 @@ en:
           edit:
             caption: Update referee information
             heading: What is the correct email address for %{name}?
+          reference_form:
+            success: Reference document deleted successfully
           show:
+            uploaded_reference:
+              heading: Uploaded reference
+              delete: Delete uploaded reference
             print: Download reference
             how_would_you_rate: How would you rate %{name}?
             page_title: Reference

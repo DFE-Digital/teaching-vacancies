@@ -20,6 +20,25 @@ RSpec.describe "Job applications reference request" do
 
   after { sign_out(publisher) }
 
+  describe "DELETE #reference_form" do
+    context "when a reference form is attached" do
+      before do
+        reference_request.reference_form.attach(
+          io: Rails.root.join("spec/fixtures/files/blank_job_spec.pdf").open,
+          filename: "reference.pdf",
+          content_type: "application/pdf",
+        )
+      end
+
+      it "purges the reference form and redirects to the show page" do
+        delete reference_form_organisation_job_job_application_reference_request_path(vacancy.id, job_application.id, reference_request.id)
+
+        expect(reference_request.reload.reference_form).not_to be_attached
+        expect(response).to redirect_to(organisation_job_job_application_reference_request_path(vacancy.id, job_application.id, reference_request.id))
+      end
+    end
+  end
+
   describe "GET #show" do
     context "when request format is pdf" do
       it "returns the pdf file" do
