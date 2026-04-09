@@ -17,6 +17,11 @@ RSpec.describe "Publishers can accept terms and conditions" do
         expect(page).to have_content(I18n.t("terms_and_conditions.please_accept"))
       end
 
+      it "is accessible", :a11y do
+        visit publishers_terms_and_conditions_path
+        expect(page).to be_axe_clean
+      end
+
       scenario "they can accept the terms and conditions" do
         visit publishers_terms_and_conditions_path
 

@@ -26,12 +26,11 @@ RSpec.describe "Publishers can view candidate messages" do
     context "when on the inbox tab" do
       before do
         visit publishers_candidate_messages_path
-        # wait for page load
-        find("form[action='/publishers/candidate_messages/toggle_archive']")
-        find("footer")
       end
 
       it "passes accessibility checks", :a11y do
+        # wait for page load
+        expect(page).to have_content("Inbox (1)")
         expect(page).to be_axe_clean
       end
 

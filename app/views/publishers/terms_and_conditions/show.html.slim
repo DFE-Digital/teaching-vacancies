@@ -7,13 +7,12 @@
 
       h1.govuk-heading-xl = t("terms_and_conditions.page_title")
       p = t("terms_and_conditions.intro_html", link: govuk_link_to(t("terms_and_conditions.intro_link_text"), page_path("terms-and-conditions")))
-      p = t("terms_and_conditions.schools_section_html", link: govuk_link_to(t("terms_and_conditions.schools_section_link_text"), page_path("terms-and-conditions", anchor: "terms-and-conditions-for-schools-trusts-and-local-authorities-las")))
       ul.govuk-list.govuk-list--bullet
         - t("terms_and_conditions.summary_list").each do |item|
           li = item
 
       = f.govuk_check_boxes_fieldset :terms,
-        legend: { text: t("terms_and_conditions.please_accept"), size: "m" } do
+        legend: { text: t("terms_and_conditions.please_accept"), size: "m", tag: "h2" } do
 
         = f.govuk_check_box :terms,
           true,
