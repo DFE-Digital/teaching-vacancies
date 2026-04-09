@@ -160,6 +160,9 @@ RSpec.describe "Publishers can edit a vacancy" do
         expect(current_path).to eq(organisation_job_build_path(vacancy.id, :application_form))
         expect(vacancy.reload.application_form.attached?).to be false
         expect(page).not_to have_content(filename)
+
+        click_on I18n.t("buttons.save_and_continue")
+        expect(publisher_application_form_page.errors.map(&:text)).to eq(["Select application form"])
       end
 
       scenario "replacing an application form" do
@@ -172,6 +175,11 @@ RSpec.describe "Publishers can edit a vacancy" do
         click_on I18n.t("buttons.save_and_continue")
 
         expect(vacancy.reload.application_form.filename.to_s).to eq("blank_job_spec.pdf")
+      end
+
+      scenario "not changing the application form" do
+        click_on I18n.t("buttons.save_and_continue")
+        expect(publisher_vacancy_page).to be_displayed
       end
     end
 

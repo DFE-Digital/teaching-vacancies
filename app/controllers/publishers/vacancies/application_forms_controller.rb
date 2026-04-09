@@ -36,7 +36,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
   end
 
   def application_form_params
-    params.expect(publishers_job_listing_application_form_form: %i[application_form]).merge(completed_steps: completed_steps)
+    params.fetch(:publishers_job_listing_application_form_form, {}).permit(:application_form).merge(completed_steps: completed_steps)
   end
 
   def update_vacancy
