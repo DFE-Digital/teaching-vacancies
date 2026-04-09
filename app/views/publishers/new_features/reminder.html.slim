@@ -1,15 +1,13 @@
 - content_for :page_title_prefix, t(".page_title")
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    h1.govuk-heading-m
-      = t("jobs.create_a_job_title", organisation: current_organisation.name)
-    h2.govuk-heading-l class="govuk-!-margin-top-7"
-      = t(".page_title")
-    p.govuk-body
-      = t(".content")
-    p.govuk-body
-      = govuk_link_to(t(".how_applications_work_link"), post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "accepting-job-applications-on-teaching-vacancies"), class: "govuk-body", target: "_blank", rel: "noreferrer noopener")
-    p.govuk-body
-      = t(".find_a_job_service_info", link: open_in_new_tab_link_to(t(".link_text"), "https://www.gov.uk/find-a-job")).html_safe
-    = govuk_button_to t("buttons.reminder_continue"), organisation_jobs_path, class: "govuk-!-margin-top-8"
+h1.govuk-heading-l
+  = t("jobs.create_a_job_title", organisation: current_organisation.name)
+h2.govuk-heading-m class="govuk-!-margin-top-7"
+  = t(".page_title")
+p.govuk-body
+  = t(".content")
+p.govuk-body
+  = govuk_link_to(t(".how_applications_work_link"), post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "accepting-job-applications-on-teaching-vacancies"), class: "govuk-body", target: "_blank", rel: "noreferrer noopener")
+p.govuk-body
+  = t(".find_a_job_service_info", link: open_in_new_tab_link_to(t(".link_text"), "https://www.gov.uk/find-a-job")).html_safe
+= govuk_button_to t("buttons.reminder_continue"), organisation_jobs_path, class: "govuk-!-margin-top-8"
