@@ -79,7 +79,7 @@ Capybara.register_driver :chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new(args: [
     "no-sandbox",
     "disable-gpu",
-    "window-size=1280,800",
+    "window-size=1400,1800",
     "disable-dev-shm-usage",
     "disable-extensions",
     "disable-background-networking",

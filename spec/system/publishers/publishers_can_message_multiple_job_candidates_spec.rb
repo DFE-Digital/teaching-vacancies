@@ -33,14 +33,14 @@ RSpec.describe "Publishers can message multiple job candidates" do
         first(".govuk-checkboxes__item").click
         click_on "Send a message"
         #  wait for page to load
-        find(".trix-content")
+        expect(page).to have_content "Send message without template"
 
         click_on "Send message without template"
         fill_in_trix_editor "publisher_message_content", with: Faker::ChuckNorris.fact
         click_on "Send message"
 
         # have to use url matching to include the anchor in the path
-        expect(page).to have_current_path(Regexp.new("#{expected_path}$"), url: true)
+        expect(page).to have_current_path(/#{expected_path}$/, url: true)
       end
     end
 
