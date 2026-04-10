@@ -54,10 +54,11 @@ RSpec.describe "check job application after status transition" do
     end
   end
 
-  describe "view state: draft", :js do
+  describe "view state: draft" do
     let(:status) { "draft" }
 
-    it "jobseeker can view draft while publisher cannot" do
+    # JS needed so that all tabs are not visible
+    it "jobseeker can view draft while publisher cannot", :js do
       run_with_jobseeker(jobseeker) do
         jobseeker_applications_page.load
 
@@ -69,20 +70,17 @@ RSpec.describe "check job application after status transition" do
       end
 
       run_with_publisher(publisher) do
-        publisher_ats_applications_page.load(vacancy_id: vacancy.id)
+        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :submitted)
 
-        #
-        # check tab new
-        #
-        publisher_ats_applications_page.select_tab(:tab_submitted)
         expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(0)
       end
     end
   end
 
-  describe "transition: submitted to unsuccessful", :js do
+  describe "transition: submitted to unsuccessful" do
     let(:status) { "submitted" }
 
+    # JS needed so that all tabs are not visible
     it "allows the publisher to reject a submitted job application and the jobseeker to see it as unsuccessful afterwards", :js do
       run_with_jobseeker(jobseeker) do
         #
@@ -100,9 +98,8 @@ RSpec.describe "check job application after status transition" do
       end
 
       run_with_publisher(publisher) do
-        publisher_ats_applications_page.load(vacancy_id: vacancy.id)
+        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :submitted)
 
-        publisher_ats_applications_page.select_tab(:tab_submitted)
         expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
 
         display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
@@ -114,7 +111,7 @@ RSpec.describe "check job application after status transition" do
 
         expect(publisher_ats_applications_page.tab_panel.job_applications).to be_empty
 
-        publisher_ats_applications_page.select_tab(:tab_unsuccessful)
+        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :unsuccessful)
 
         display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
         expect(display_status).to have_text("not progressing")
@@ -137,14 +134,14 @@ RSpec.describe "check job application after status transition" do
     end
   end
 
-  describe "transition: submitted to shortlisted", :js do
+  describe "transition: submitted to shortlisted" do
     let(:status) { "submitted" }
 
-    it "allows the publisher to shortlist a submitted job application and the jobseeker to see it as shortlisted afterwards" do
+    # JS needed so that all tabs are not visible
+    it "allows the publisher to shortlist a submitted job application and the jobseeker to see it as shortlisted afterwards", :js do
       run_with_publisher(publisher) do
-        publisher_ats_applications_page.load(vacancy_id: vacancy.id)
+        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :submitted)
 
-        publisher_ats_applications_page.select_tab(:tab_submitted)
         expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
 
         display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
@@ -156,7 +153,7 @@ RSpec.describe "check job application after status transition" do
 
         expect(publisher_ats_applications_page.tab_panel.job_applications).to be_empty
 
-        publisher_ats_applications_page.select_tab(:tab_shortlisted)
+        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :shortlisted)
 
         display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
         expect(display_status).to have_text("shortlisted")
@@ -179,10 +176,11 @@ RSpec.describe "check job application after status transition" do
     end
   end
 
-  describe "transition: shortlisted to interviewing", :js do
+  describe "transition: shortlisted to interviewing" do
     let(:status) { "shortlisted" }
 
-    it "allows the publisher to set a shortlisted job application as interviewing and the jobseeker to see it as interviewing afterwards" do
+    # JS needed so that all tabs are not visible
+    it "allows the publisher to set a shortlisted job application as interviewing and the jobseeker to see it as interviewing afterwards", :js do
       run_with_jobseeker(jobseeker) do
         #
         # jobseeker views all its applications
@@ -199,9 +197,8 @@ RSpec.describe "check job application after status transition" do
       end
 
       run_with_publisher(publisher) do
-        publisher_ats_applications_page.load(vacancy_id: vacancy.id)
+        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :shortlisted)
 
-        publisher_ats_applications_page.select_tab(:tab_shortlisted)
         expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
 
         display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
@@ -251,10 +248,11 @@ RSpec.describe "check job application after status transition" do
     end
   end
 
-  describe "transition: interviewing to offered", :js do
+  describe "transition: interviewing to offered" do
     let(:status) { "interviewing" }
 
-    it "jobseeker and publisher can view job application" do
+    # JS needed so that all tabs are not visible
+    scenario "jobseeker and publisher can view job application", :js do
       run_with_jobseeker(jobseeker) do
         #
         # jobseeker views all its applications
@@ -271,12 +269,8 @@ RSpec.describe "check job application after status transition" do
       end
 
       run_with_publisher(publisher) do
-        publisher_ats_applications_page.load(vacancy_id: vacancy.id)
+        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :interviewing)
 
-        #
-        # check interviewing tab
-        #
-        publisher_ats_applications_page.select_tab(:tab_interviewing)
         expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
 
         display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
@@ -286,13 +280,10 @@ RSpec.describe "check job application after status transition" do
           tag_page.select_and_submit("offered", &:one_day_ago)
         end
 
-        publisher_ats_applications_page.select_tab(:tab_interviewing)
+        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :interviewing)
         expect(publisher_ats_applications_page.tab_panel.job_applications).to be_empty
 
-        #
-        # display offered tab
-        #
-        publisher_ats_applications_page.select_tab(:tab_offered)
+        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :offered)
 
         display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
         expect(display_status).to have_text("offered")
@@ -325,7 +316,8 @@ RSpec.describe "check job application after status transition" do
   describe "transition: interviewing to unsuccessful_interview" do
     let(:status) { "interviewing" }
 
-    it "jobseeker and publisher can view job application", :js do
+    # JS needed so that all tabs are not visible
+    scenario "jobseeker and publisher can view job application", :js do
       run_with_jobseeker(jobseeker) do
         #
         # jobseeker views all its applications
@@ -342,9 +334,7 @@ RSpec.describe "check job application after status transition" do
       end
 
       run_with_publisher(publisher) do
-        publisher_ats_applications_page.load(vacancy_id: vacancy.id)
-
-        publisher_ats_applications_page.select_tab(:tab_interviewing)
+        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :interviewing)
         expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
 
         display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
@@ -354,7 +344,7 @@ RSpec.describe "check job application after status transition" do
           tag_page.select_and_submit("unsuccessful_interview", &:today)
         end
 
-        publisher_ats_applications_page.select_tab(:tab_interviewing)
+        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :interviewing)
 
         expect(job_application.reload.status).to eq("unsuccessful_interview")
         expect(publisher_ats_applications_page.tab_panel.job_applications.first.name).to have_text(job_application.name)
@@ -377,10 +367,11 @@ RSpec.describe "check job application after status transition" do
     end
   end
 
-  describe "transition: offered to declined", :js, :versioning do
+  describe "transition: offered to declined", :versioning do
     let(:status) { "offered" }
 
-    it "jobseeker and publisher can view job application" do
+    # JS needed so that all tabs are not visible
+    it "jobseeker and publisher can view job application", :js do
       run_with_jobseeker(jobseeker) do
         #
         # jobseeker views all its applications
@@ -395,9 +386,8 @@ RSpec.describe "check job application after status transition" do
       end
 
       run_with_publisher(publisher) do
-        publisher_ats_applications_page.load(vacancy_id: vacancy.id)
+        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :offered)
 
-        publisher_ats_applications_page.select_tab(:tab_offered)
         expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
 
         display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
@@ -405,7 +395,7 @@ RSpec.describe "check job application after status transition" do
 
         publisher_ats_applications_page.decline_offer(job_application, &:today)
 
-        publisher_ats_applications_page.select_tab(:tab_offered)
+        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :offered)
         expect(publisher_ats_applications_page.tab_panel.declined_job_applications.count).to eq(1)
       end
 

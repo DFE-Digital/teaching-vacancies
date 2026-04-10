@@ -42,7 +42,9 @@ module PageObjects
         end
 
         class JobApplicationsPage < CommonPage
-          set_url "/organisation/jobs/{vacancy_id}/job_applications"
+          # This seems to be the only way to stop rubocop 'fixing' the interpolation
+          ANCHOR_PARAM = "{anchor}"
+          set_url "/organisation/jobs/{vacancy_id}/job_applications##{ANCHOR_PARAM}"
 
           element :job_title, "h1"
           elements :tabs, ".govuk-tabs__tab"
@@ -51,10 +53,6 @@ module PageObjects
 
           def get_tab(tab_id)
             tabs.detect { |tab| tab["id"] == tab_id.to_s }
-          end
-
-          def select_tab(tab_id)
-            get_tab(tab_id).click
           end
 
           def selected_tab
