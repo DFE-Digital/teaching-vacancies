@@ -25,35 +25,32 @@ TEST_EMAIL_DOMAIN = "contoso.com".freeze
 Capybara.server = :puma, { Silent: true, Threads: "0:1" }
 
 require "capybara/cuprite"
-
-CUPRITE_BROWSER_OPTIONS = {
-  "no-sandbox": nil,
-  "disable-gpu": nil,
-  "disable-dev-shm-usage": nil,
-  "disable-extensions": nil,
-  "disable-background-networking": nil,
-  "disable-default-apps": nil,
-  # Limit renderer subprocess count — the main driver of Chrome's
-  # high process/memory footprint in parallel test runs.
-  # site-per-process (Site Isolation) spawns a renderer per cross-origin
-  # frame; disabling it collapses those into one renderer per session.
-  # renderer-process-limit caps any remaining renderer processes to 1.
-  "disable-features": "site-per-process,VizDisplayCompositor",
-  "renderer-process-limit": "1",
-  # Cap V8 heap: initial prevents eager allocation; max prevents unbounded growth.
-  "js-flags": "--max_old_space_size=256 --initial_old_space_size=32",
-  # "window-size": "800, 1280",
-  headless: "new",
-  "ozone-platform": "none",
-}.freeze
-
 Capybara.register_driver(:cuprite_headless) do |app|
   # The extra browser_options are required to run Cuprite within a devcontainer
   Capybara::Cuprite::Driver.new(app,
                                 headless: true,
                                 process_timeout: 30,
-                                window_size: [1400, 1800],
-                                browser_options: CUPRITE_BROWSER_OPTIONS)
+                                window_size: [1280, 800],
+                                browser_options: {
+                                  "no-sandbox": nil,
+                                  "disable-gpu": nil,
+                                  "disable-dev-shm-usage": nil,
+                                  "disable-extensions": nil,
+                                  "disable-background-networking": nil,
+                                  "disable-default-apps": nil,
+                                  # Limit renderer subprocess count — the main driver of Chrome's
+                                  # high process/memory footprint in parallel test runs.
+                                  # site-per-process (Site Isolation) spawns a renderer per cross-origin
+                                  # frame; disabling it collapses those into one renderer per session.
+                                  # renderer-process-limit caps any remaining renderer processes to 1.
+                                  "disable-features": "site-per-process,VizDisplayCompositor",
+                                  "renderer-process-limit": "1",
+                                  # Cap V8 heap: initial prevents eager allocation; max prevents unbounded growth.
+                                  "js-flags": "--max_old_space_size=256 --initial_old_space_size=32",
+                                  "window-size": "1280,800",
+                                  headless: "new",
+                                  "ozone-platform": "none",
+                                })
 end
 
 Capybara.register_driver :chrome_headless do |app|
@@ -100,9 +97,7 @@ Capybara.register_driver :chrome do |app|
 end
 
 Capybara.register_driver(:cuprite_full) do |app|
-  Capybara::Cuprite::Driver.new(app, headless: false, process_timeout: 45,
-                                     window_size: [1400, 1800],
-                                     browser_options: CUPRITE_BROWSER_OPTIONS)
+  Capybara::Cuprite::Driver.new(app, headless: false, process_timeout: 45, window_size: [1400, 1800])
 end
 Capybara.javascript_driver = :cuprite_headless
 Capybara.server = :puma, { Silent: true, Threads: "0:1" }
@@ -131,7 +126,7 @@ RSpec.configure do |config|
   config.before do
     allow(Google::Cloud::Bigquery).to receive(:new).and_return(
       double("BigQuery", dataset: double("BigQuery dataset", table: double.as_null_object)),
-    )
+      )
 
     stub_request(:get, %r{maps.googleapis.com/maps/api/place/autocomplete}).to_return(status: 200, body: '{"predictions": []}', headers: {})
   end
