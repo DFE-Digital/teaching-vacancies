@@ -15,7 +15,7 @@
 - if @tab == "messages"
   = render "jobseekers/job_applications/messages", job_application: job_application, vacancy: vacancy, current_user: current_user, messages: @messages
 - else
-  = job_application_review(job_application, allow_edit: local_assigns[:allow_edit]) do |r|
+  = job_application_review(job_application) do |r|
     - render "jobseekers/job_applications/job_application_review_sections", r: r, jobseeker: current_jobseeker
     - r.with_above do
       - unless vacancy.uploaded_form?

@@ -2,17 +2,15 @@ class JobApplicationReviewComponent::Section < ReviewComponent::Section
   include JobApplicationsHelper
   include VacanciesHelper
 
-  def initialize(job_application, name:, id: nil, allow_edit: nil, forms: [], classes: [], html_attributes: {})
+  def initialize(job_application, name:, forms: [], classes: [], html_attributes: {})
     super(
       job_application,
       forms: forms,
       name: name,
-      id: id,
       classes: classes,
       html_attributes: html_attributes
     )
 
-    @allow_edit = allow_edit
     @job_application = job_application
   end
 
@@ -50,8 +48,6 @@ class JobApplicationReviewComponent::Section < ReviewComponent::Section
   end
 
   def allow_edit?
-    return @allow_edit unless @allow_edit.nil?
-
     @job_application.allow_edit?
   end
 end
