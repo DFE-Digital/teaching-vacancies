@@ -91,7 +91,7 @@ en:
       complete_link_text: Complete your %{organisation_type} profile
       heading: Complete your %{organisation_type} profile
       hint: The details stored in your %{organisation_type} profile are included in your job listings.
-      skip_to_link_text: Skip to job listings
+      skip_to_link_text: Continue to job listings
     job_listing_process_changed_published_banner:
       heading_html: "%{contact_support_link} if you need to change the instructions about how to apply or write a personal statement."
     job_listing_process_changed_draft_banner:
