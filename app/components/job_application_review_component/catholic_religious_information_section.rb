@@ -1,5 +1,5 @@
 class JobApplicationReviewComponent::CatholicReligiousInformationSection < JobApplicationReviewComponent::Section
-  def initialize(job_application, name:)
-    super(job_application, forms: %w[CatholicForm], name: name)
+  def initialize(job_application)
+    super(job_application, :catholic, forms: %w[CatholicForm])
   end
 end

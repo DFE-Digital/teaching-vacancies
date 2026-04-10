@@ -2,7 +2,7 @@ class JobApplicationReviewComponent::Section < ReviewComponent::Section
   include JobApplicationsHelper
   include VacanciesHelper
 
-  def initialize(job_application, name:, forms: [], classes: [], html_attributes: {})
+  def initialize(job_application, name, forms: [], classes: [], html_attributes: {})
     super(
       job_application,
       forms: forms,

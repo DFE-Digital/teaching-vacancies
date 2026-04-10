@@ -1,20 +1,20 @@
 - if vacancy.uploaded_form?
-  = render "jobseekers/job_applications/uploaded_job_applications/review/personal_details", r: r, job_application: job_application
-  = render "jobseekers/job_applications/uploaded_job_applications/review/upload_application_form", r: r, job_application: job_application
+  = render "jobseekers/job_applications/uploaded_job_applications/review/personal_details", job_application: job_application
+  = render "jobseekers/job_applications/uploaded_job_applications/review/upload_application_form", job_application: job_application
 - else
-  = render "jobseekers/job_applications/review/personal_details", r: r, job_application: job_application
-  = render "jobseekers/job_applications/review/professional_status", r: r, job_application: job_application
-  = render "jobseekers/job_applications/review/qualifications", r: r, job_application: job_application
-  = render "jobseekers/job_applications/review/training_and_cpds", r: r, job_application: job_application
-  = render "jobseekers/job_applications/review/professional_body_memberships", r: r, job_application: job_application
-  = render "jobseekers/job_applications/review/employment_history", r: r, job_application: job_application
-  = render "jobseekers/job_applications/review/personal_statement", r: r, job_application: job_application
+  = render "jobseekers/job_applications/review/personal_details", job_application: job_application
+  = render "jobseekers/job_applications/review/professional_status", job_application: job_application
+  = render "jobseekers/job_applications/review/qualifications", job_application: job_application
+  = render "jobseekers/job_applications/review/training_and_cpds", job_application: job_application
+  = render "jobseekers/job_applications/review/professional_body_memberships", job_application: job_application
+  = render "jobseekers/job_applications/review/employment_history", job_application: job_application
+  = render "jobseekers/job_applications/review/personal_statement", job_application: job_application
   - if job_application.vacancy.catholic?
-    = render "jobseekers/job_applications/review/catholic_religious_information", r: r, job_application: job_application
+    = render "jobseekers/job_applications/review/catholic_religious_information", job_application: job_application
   - elsif job_application.vacancy.other_religion?
-    = render "jobseekers/job_applications/review/non_catholic_religious_information", r: r, job_application: job_application
-  = render "jobseekers/job_applications/review/references", r: r, job_application: job_application
+    = render "jobseekers/job_applications/review/non_catholic_religious_information", job_application: job_application
+  = render "jobseekers/job_applications/review/references", job_application: job_application
   - if jobseeker_signed_in?
-    = render "jobseekers/job_applications/review/equal_opportunities", r: r
-  = render "jobseekers/job_applications/review/ask_for_support", r: r, job_application: job_application
-  = render "jobseekers/job_applications/review/declarations", r: r, job_application: job_application
+    = render "jobseekers/job_applications/review/equal_opportunities", job_application: job_application
+  = render "jobseekers/job_applications/review/ask_for_support", job_application: job_application
+  = render "jobseekers/job_applications/review/declarations", job_application: job_application
