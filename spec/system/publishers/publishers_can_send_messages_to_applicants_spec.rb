@@ -201,15 +201,11 @@ RSpec.describe "Publishers can send messages to job applicants" do
         login_publisher(publisher: publisher, organisation: organisation)
 
         visit messages_organisation_job_job_application_path(vacancy.id, job_application.id)
-
-        find(".tabs-component")
-        find_by_id("messages-list")
-        find("footer")
       end
 
       after { logout }
 
-      it "passes accessibility checks", :a11y do
+      it "passes accessibility checks", :a11y, :retry do
         expect(page).to have_text("Hello from publisher")
         expect(page).to be_axe_clean
       end

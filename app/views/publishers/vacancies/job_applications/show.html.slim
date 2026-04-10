@@ -12,10 +12,8 @@
       - elsif !@job_application.terminal_status?
         = govuk_button_link_to t("buttons.update_application_status"), tag_organisation_job_job_applications_path(@vacancy.id, params: { publishers_job_application_tag_form: { origin: tab_name(@job_application.status), job_applications: [@job_application.id] } }), class: "govuk-button--secondary"
 
-= job_application_review(@job_application) do |r|
-  - render "jobseekers/job_applications/job_application_review_sections", r: r, job_application: @job_application, vacancy: @vacancy
-  - r.with_above do
-
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
     .with_anchor-link-list class="govuk-!-display-none-print"
       - title = @vacancy.uploaded_form? ? nil : t("jobseekers.job_applications.show.application_sections")
       = navigation_list(title: title) do |navigation|
@@ -36,5 +34,8 @@
     - if @job_application.hide_personal_details?
       p.govuk-hint = t("app.anonymous_applications.keep_hidden")
 
-  - r.with_sidebar do
+    ul.govuk-list.review-component__sections
+      = render "jobseekers/job_applications/job_application_review_sections", job_application: @job_application, vacancy: @vacancy
+
+  .govuk-grid-column-one-third
     = job_application_notes(job_application: @job_application, vacancy: @vacancy, note: @note)
