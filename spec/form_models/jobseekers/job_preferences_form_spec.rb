@@ -23,7 +23,7 @@ RSpec.describe Jobseekers::JobPreferencesForm, type: :model do
   end
 
   describe "validations on key stages form" do
-    let(:key_stages) { Jobseekers::JobPreferencesForm::KeyStagesForm.new(key_stages: %w[a b c d]) }
+    let(:key_stages) { Jobseekers::JobPreferencesForm::KeyStagesForm.new(key_stages: %w[ks1 ks2 ks3 ks4]) }
 
     it "has a custom error for too many roles" do
       expect(key_stages).not_to be_valid
