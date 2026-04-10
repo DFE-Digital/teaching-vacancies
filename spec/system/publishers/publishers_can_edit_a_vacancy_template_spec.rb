@@ -22,8 +22,8 @@ RSpec.describe "Editing a vacancy template" do
     }.to change(VacancyTemplate, :count).by(-1)
   end
 
-  describe "accessibility of change pages", :a11y do
-    it "can have its name edited from the template show page" do
+  describe "accessibility of change pages" do
+    it "can have its name edited from the template show page", :a11y do
       expect(page).to have_content "Change"
 
       within "#name" do
@@ -40,7 +40,7 @@ RSpec.describe "Editing a vacancy template" do
       expect(template.reload).to have_attributes(name: template_name)
     end
 
-    it "can have its role edited" do
+    it "can have its role edited", :a11y do
       expect(page).to have_content "Change"
 
       within "#job_role" do
@@ -57,7 +57,7 @@ RSpec.describe "Editing a vacancy template" do
       expect(template.reload).to have_attributes(job_roles: %w[teacher headteacher])
     end
 
-    it "can have its key_stages edited" do
+    it "can have its key_stages edited", :a11y do
       expect(page).to have_content "Change"
 
       within "#key_stages" do
@@ -74,7 +74,7 @@ RSpec.describe "Editing a vacancy template" do
       expect(template.reload).to have_attributes(key_stages: %w[ks1 ks2])
     end
 
-    it "can have its contract type edited" do
+    it "can have its contract type edited", :a11y do
       expect(page).to have_content "Change"
 
       within "#contract_type" do
@@ -92,7 +92,7 @@ RSpec.describe "Editing a vacancy template" do
       expect(template.reload).to have_attributes(contract_type: "permanent")
     end
 
-    it "can have its salary edited" do
+    it "can have its salary edited", :a11y do
       expect(page).to have_content "Change"
 
       within "#salary" do
@@ -113,7 +113,7 @@ RSpec.describe "Editing a vacancy template" do
       expect(template.reload).to have_attributes(pay_scale: "M1 to M2")
     end
 
-    it "can have its ect status edited" do
+    it "has an accessible ECT page", :a11y do
       expect(page).to have_content "Change"
 
       within "#ect_status" do
@@ -123,6 +123,16 @@ RSpec.describe "Editing a vacancy template" do
       expect(page).to have_content "Is this role suitable for an early career teacher"
       #  https://github.com/alphagov/govuk-frontend/issues/979
       expect(page).to be_axe_clean.skipping "aria-allowed-attr"
+    end
+
+    it "can have its ect status edited" do
+      expect(page).to have_content "Change"
+
+      within "#ect_status" do
+        click_on "Change"
+      end
+
+      expect(page).to have_content "Is this role suitable for an early career teacher"
 
       within ".ect-status-radios" do
         choose "No"
@@ -133,7 +143,7 @@ RSpec.describe "Editing a vacancy template" do
       expect(template.reload).to have_attributes(ect_status: "ect_unsuitable")
     end
 
-    it "can have its school visits edited" do
+    it "can have its school visits edited", :a11y do
       expect(page).to have_content "Change"
 
       within "#school_visits" do
@@ -150,7 +160,7 @@ RSpec.describe "Editing a vacancy template" do
       expect(template.reload).to have_attributes(school_visits: true)
     end
 
-    it "can have its visa_sponsorship_available edited" do
+    it "can have its visa_sponsorship_available edited", :a11y do
       expect(page).to have_content "Change"
 
       within "#visa_sponsorship_available" do
@@ -167,7 +177,7 @@ RSpec.describe "Editing a vacancy template" do
       expect(template.reload).to have_attributes(visa_sponsorship_available: true)
     end
 
-    it "can have its application type edited" do
+    it "can have its application type edited", :a11y do
       expect(page).to have_content "Change"
 
       within "#enable_job_applications" do
