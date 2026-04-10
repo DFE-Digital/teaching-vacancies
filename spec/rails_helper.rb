@@ -126,7 +126,7 @@ RSpec.configure do |config|
   config.before do
     allow(Google::Cloud::Bigquery).to receive(:new).and_return(
       double("BigQuery", dataset: double("BigQuery dataset", table: double.as_null_object)),
-      )
+    )
 
     stub_request(:get, %r{maps.googleapis.com/maps/api/place/autocomplete}).to_return(status: 200, body: '{"predictions": []}', headers: {})
   end
