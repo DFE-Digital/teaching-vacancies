@@ -11,8 +11,6 @@ module ComponentsHelper
     navigation_list: "NavigationListComponent",
     editor: "EditorComponent",
     review_section: "JobApplicationReviewComponent::Section",
-    catholic_review_section: "JobApplicationReviewComponent::CatholicReligiousInformationSection",
-    non_catholic_review_section: "JobApplicationReviewComponent::NonCatholicReligiousInformationSection",
     searchable_collection: "SearchableCollectionComponent",
     supportal_table: "SupportalTableComponent",
     tabs: "TabsComponent",
