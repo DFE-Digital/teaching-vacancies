@@ -99,7 +99,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     raise ActionController::RoutingError, "Cannot submit non-draft application" unless job_application.draft?
 
     @review_form = Jobseekers::JobApplication::ReviewForm.new(review_form_params)
-    if !uploaded_application_form_clean?
+    if !uploaded_files_scanned_and_safe?
       @review_form.errors.add(:base, t("messages.jobseekers.job_applications.files_not_scanned"))
       render :review
     elsif @review_form.valid? && all_steps_valid?
@@ -180,11 +180,16 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     step_process.validatable_steps.all? { |step| step_valid?(step) }
   end
 
-  def uploaded_application_form_clean?
-    return true unless job_application.is_a?(UploadedJobApplication)
-    return true unless job_application.application_form.attached?
+  def uploaded_files_scanned_and_safe?
+    if job_application.is_a?(UploadedJobApplication)
+      return true unless job_application.application_form.attached?
 
-    job_application.application_form.blob.malware_scan_clean?
+      job_application.application_form.blob.malware_scan_clean?
+    else
+      return true unless job_application.baptism_certificate.attached?
+
+      job_application.baptism_certificate.blob.malware_scan_clean?
+    end
   end
 
   def step_valid?(step)

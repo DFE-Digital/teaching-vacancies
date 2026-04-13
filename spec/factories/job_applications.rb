@@ -336,6 +336,10 @@ FactoryBot.define do
           "application/pdf",
         )
       end
+
+      after(:create) do |job_application|
+        job_application.baptism_certificate.blob.malware_scan_clean!
+      end
     end
 
     trait :with_religious_referee do

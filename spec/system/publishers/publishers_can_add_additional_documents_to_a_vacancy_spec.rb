@@ -50,7 +50,14 @@ RSpec.describe "Publishers can add additional documents to a vacancy" do
     expect(current_path).to eq(organisation_job_review_path(vacancy.id))
     expect(page).to have_content(vacancy.job_roles.first.humanize)
 
-    # Can publish the job listing
+    # Cannot publish if supporting documents have been flagged as unsafe
+    vacancy.reload.supporting_documents.first.blob.malware_scan_malicious!
+    click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
+    expect(current_path).to eq(organisation_job_path(vacancy.id))
+    expect(page).to have_content(I18n.t("messages.jobs.files_not_scanned"))
+
+    # Can publish once documents are marked clean
+    vacancy.reload.supporting_documents.each { |doc| doc.blob.malware_scan_clean! }
     click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
     expect(current_path).to eq(organisation_job_summary_path(vacancy.id))
   end

@@ -25,6 +25,7 @@ RSpec.describe FormFileValidator do
 
       context "when the document is valid" do
         before do
+          allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
           form_with_documents.valid?
         end
 
@@ -54,6 +55,47 @@ RSpec.describe FormFileValidator do
         it "adds an error to the form object for the documents field" do
           expect(form_with_documents.errors.full_messages_for(:supporting_documents)).to include(error_message)
         end
+      end
+
+      context "when the file contains a virus" do
+        before do
+          allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: false))
+          form_with_documents.valid?
+        end
+
+        it "adds an error to the form object for the documents field" do
+          expect(form_with_documents.errors.full_messages_for(:supporting_documents)).to include(
+            I18n.t("jobs.file_virus_error_message", filename: uploaded_document.original_filename),
+          )
+        end
+      end
+    end
+
+    context "when skip_google_drive_virus_check is true" do
+      let(:form_class) do
+        Class.new do
+          include ActiveModel::Model
+          validates :supporting_documents, form_file: {
+            file_type: :document,
+            content_types_allowed: %w[application/pdf].freeze,
+            file_size_limit: 5.megabytes,
+            valid_file_types: %i[PDF],
+            skip_google_drive_virus_check: true,
+          }.freeze
+          attr_accessor :supporting_documents
+        end
+      end
+      let(:uploaded_document) { fixture_file_upload("blank_job_spec.pdf", "application/pdf") }
+      let(:form) { form_class.new(supporting_documents: [uploaded_document]) }
+
+      it "does not call the Google Drive virus check" do
+        expect(Publishers::DocumentVirusCheck).not_to receive(:new)
+        form.valid?
+      end
+
+      it "does not add any errors to the form object" do
+        form.valid?
+        expect(form.errors).to be_blank
       end
     end
   end
