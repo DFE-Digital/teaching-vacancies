@@ -131,11 +131,7 @@ Rails.application.routes.draw do
         get :review, on: :collection, to: "profiles/employments#review"
       end
       resource :qualified_teacher_status, only: %i[edit update show], controller: "profiles/qualified_teacher_status"
-      resources :personal_details_steps, only: %i[show update], controller: "profiles/personal_details", path: "personal-details" do
-        collection do
-          get "review"
-        end
-      end
+      resource :personal_details, only: %i[edit update], controller: "profiles/personal_details", path: "personal-details"
 
       resources :qualifications, only: %i[new create edit update destroy], controller: "profiles/qualifications" do
         get :review, on: :collection, to: "profiles/qualifications#review"

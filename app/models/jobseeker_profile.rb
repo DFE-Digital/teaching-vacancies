@@ -51,7 +51,6 @@ class JobseekerProfile < ApplicationRecord
 
     record.assign_attributes(
       job_preferences: JobPreferences.prepare(jobseeker_profile: record),
-      personal_details: PersonalDetails.prepare(jobseeker_profile: record),
     )
   end
 
@@ -85,7 +84,7 @@ class JobseekerProfile < ApplicationRecord
   end
 
   def activable?
-    personal_details.present? && personal_details.complete? &&
+    personal_details.present? &&
       job_preferences.present? && job_preferences.complete? &&
       qualified_teacher_status.present? && unexplained_employment_gaps.none? && qualifications.any?
   end

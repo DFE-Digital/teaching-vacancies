@@ -92,18 +92,12 @@ en:
       jobseekers_uploaded_job_application_upload_application_form_form:
         upload_application_form_section_completed: Have you completed this section?
     label:
-      jobseekers_profiles_personal_details_form_names_form:
+      personal_details:
         email: Email
         change_email_html: Select to %{link}
         change_email_link_text: change your email address
         first_name: First name
         last_name: Last name
-      jobseekers_profiles_personal_details_form_phone_number_form:
-        phone_number: Phone number
-        phone_number_provided: Do you want to provide a phone number?
-        phone_number_provided_options:
-          false: "No"
-          true: "Yes"
 
       jobseekers_job_application_personal_details_form:
         city: Town or city

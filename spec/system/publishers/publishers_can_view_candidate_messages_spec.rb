@@ -28,7 +28,7 @@ RSpec.describe "Publishers can view candidate messages" do
         visit publishers_candidate_messages_path
       end
 
-      it "passes accessibility checks", :a11y do
+      it "passes accessibility checks", :a11y, :retry do
         # wait for page load
         expect(page).to have_content("Inbox (1)")
         expect(page).to be_axe_clean

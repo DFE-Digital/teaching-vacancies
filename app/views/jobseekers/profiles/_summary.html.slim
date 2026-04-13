@@ -41,10 +41,6 @@ dl.govuk-summary-list
   .govuk-summary-list__row
     dt.govuk-summary-list__key == t(".email_address")
     dd.govuk-summary-list__value = profile.email
-  - if (phone_number = profile.personal_details&.phone_number).present?
-    .govuk-summary-list__row
-      dt.govuk-summary-list__key == t(".phone_number")
-      dd.govuk-summary-list__value = phone_number
 
 - if profile.employments.any?
   h2.govuk-heading-m = t(".work_history")

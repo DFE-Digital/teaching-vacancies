@@ -167,20 +167,20 @@ module JobApplicationsHelper
 
   def visa_sponsorship_needed_answer(job_application)
     unless job_application.has_right_to_work_in_uk.nil?
-      I18n.t("jobseekers.profiles.personal_details.work.options.#{job_application.has_right_to_work_in_uk}")
+      I18n.t("jobseekers.profiles.personal_details.edit.work.options.#{job_application.has_right_to_work_in_uk}")
     end
   end
 
   def radio_button_legend_hint(vacancy)
     if vacancy.visa_sponsorship_available?
       {
-        text: "jobseekers.profiles.personal_details.work.hint.text",
-        link: "jobseekers.profiles.personal_details.work.hint.link",
+        text: "jobseekers.profiles.personal_details.edit.work.hint.text",
+        link: "jobseekers.profiles.personal_details.edit.work.hint.link",
       }
     else
       {
-        text: "jobseekers.profiles.personal_details.work.hint.no_visa.text",
-        link: "jobseekers.profiles.personal_details.work.hint.no_visa.link",
+        text: "jobseekers.profiles.personal_details.edit.work.hint.no_visa.text",
+        link: "jobseekers.profiles.personal_details.edit.work.hint.no_visa.link",
       }
     end
   end

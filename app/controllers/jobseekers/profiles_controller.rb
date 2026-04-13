@@ -10,10 +10,10 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
   SECTIONS = [
     {
       title: "Personal details",
-      display_summary: ->(profile) { profile.personal_details&.completed_steps.present? },
+      display_summary: ->(profile) { profile.personal_details.present? },
       key: "personal_details",
       link_text: "Add personal details",
-      page_path: -> { jobseekers_profile_personal_details_step_path(Wicked::FIRST_STEP) },
+      page_path: -> { edit_jobseekers_profile_personal_details_path },
     },
     {
       title: "Job preferences",
