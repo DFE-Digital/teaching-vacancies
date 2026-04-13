@@ -72,12 +72,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
            else
              {}
            end
-    @vacancy = DraftVacancy.create!(template.attributes.symbolize_keys.except(:id, :name, :job_roles, :organisation_id,
-                                                                              :phases, :key_stages, :working_patterns)
-                                            .merge(job_roles: template.job_roles,
-                                                   working_patterns: template.working_patterns,
-                                                   key_stages: template.key_stages,
-                                                   phases: template.phases).merge(orgs))
+    @vacancy = DraftVacancy.create!(template.vacancy_attributes.merge(orgs))
     redirect_to organisation_job_build_path(@vacancy.id, next_invalid_step)
   end
 
