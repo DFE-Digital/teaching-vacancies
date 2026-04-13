@@ -229,6 +229,10 @@ FactoryBot.define do
           "application/pdf",
         )
       end
+
+      after(:create) do |vacancy|
+        vacancy.application_form.blob.malware_scan_clean!
+      end
     end
 
     trait :catholic do

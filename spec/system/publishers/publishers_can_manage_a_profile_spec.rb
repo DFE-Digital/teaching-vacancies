@@ -320,6 +320,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
     let(:image_file_name) { "blank_image.png" }
 
     before do
+      allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
       click_link I18n.t("nav.organisation_profile", name: organisation.name)
     end
 
@@ -369,6 +370,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
     let(:image_file_name) { "blank_image.png" }
 
     before do
+      allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
       click_link I18n.t("nav.organisation_profile", name: organisation.name)
     end
 
