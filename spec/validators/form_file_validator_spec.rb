@@ -75,6 +75,7 @@ RSpec.describe FormFileValidator do
       let(:form_class) do
         Class.new do
           include ActiveModel::Model
+
           validates :supporting_documents, form_file: {
             file_type: :document,
             content_types_allowed: %w[application/pdf].freeze,
