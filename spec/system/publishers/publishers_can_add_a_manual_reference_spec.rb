@@ -15,6 +15,7 @@ RSpec.describe "Publishers can add a manual reference" do
 
   before do
     login_publisher(publisher: publisher, organisation: organisation)
+    allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
     publisher_ats_pre_interview_checks_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
     click_on "Add a reference"
   end

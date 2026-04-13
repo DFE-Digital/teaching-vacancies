@@ -147,10 +147,16 @@ RSpec.describe "Jobseekers can complete a religious job application" do
               expect(page).to have_content("blank_baptism_cert.pdf")
             end
 
-            it "can submit application" do
+            it "can submit application, but not if the baptism certificate has been flagged as unsafe" do
               complete_from_references_page
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
+              # mark baptism certificate as failing azure virus scan
+              job_application.baptism_certificate.blob.malware_scan_malicious!
+              click_on I18n.t("buttons.submit_application")
+              expect(page).to have_content(I18n.t("messages.jobseekers.job_applications.files_not_scanned"))
+              # mark baptism certificate as passing azure virus scan
+              job_application.baptism_certificate.blob.malware_scan_clean!
               click_on I18n.t("buttons.submit_application")
               click_on I18n.t("jobseekers.job_applications.post_submit.next_step.view_applications")
               expect(page).to have_content(vacancy.job_title)
