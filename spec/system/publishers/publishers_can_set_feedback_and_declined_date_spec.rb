@@ -5,84 +5,76 @@ RSpec.describe "Publisher can set feedback and declined dates" do
   let(:organisations) { publisher.organisations }
   let(:vacancy) { create(:vacancy, organisations:) }
 
-  before { job_application }
+  before { login_publisher(publisher: publisher) }
+  after { logout }
 
   context "when candidate declines offer" do
-    let(:job_application) { create(:job_application, :status_declined, vacancy:, offered_at: 3.days.ago, declined_at: nil) }
+    let!(:job_application) { create(:job_application, :status_declined, vacancy:, offered_at: 3.days.ago, declined_at: nil) }
 
+    # JS needed so that all tabs are not visible
     scenario "add declined date from tab offered", :js do
-      run_with_publisher(publisher) do
-        publisher_ats_applications_page.load(vacancy_id: vacancy.id)
-        expect(publisher_ats_applications_page.job_title).to have_text(vacancy.job_title)
+      publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :offered)
+      expect(publisher_ats_applications_page.job_title).to have_text(vacancy.job_title)
 
-        publisher_ats_applications_page.select_tab(:tab_offered)
+      expect(publisher_ats_applications_page.tab_panel.job_applications.first.declined_at).to have_link("Add decline date", href: tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: :offered, job_applications: [job_application.id] }, tag_action: "declined" }))
 
-        expect(publisher_ats_applications_page.tab_panel.job_applications.first.declined_at).to have_link("Add decline date", href: tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: :offered, job_applications: [job_application.id] }, tag_action: "declined" }))
+      publisher_ats_applications_page.tab_panel.job_applications.first.declined_at.click_on("Add decline date")
 
-        publisher_ats_applications_page.tab_panel.job_applications.first.declined_at.click_on("Add decline date")
+      # Form page
+      expect(publisher_ats_job_decline_date_page).to be_displayed(vacancy_id: vacancy.id)
+      decline_date = 2.days.ago
+      publisher_ats_job_decline_date_page.set_date(decline_date)
+      publisher_ats_job_decline_date_page.btn_continue.click
 
-        # Form page
-        expect(publisher_ats_job_decline_date_page).to be_displayed(vacancy_id: vacancy.id)
-        decline_date = 2.days.ago
-        publisher_ats_job_decline_date_page.set_date(decline_date)
-        publisher_ats_job_decline_date_page.btn_continue.click
-
-        expect(publisher_ats_applications_page).to be_displayed(vacancy_id: vacancy.id)
-        expect(publisher_ats_applications_page.tab_panel.job_applications.first.declined_at).to have_text(decline_date.to_fs(:day_month_year))
-      end
+      expect(publisher_ats_applications_page).to be_displayed(vacancy_id: vacancy.id)
+      expect(publisher_ats_applications_page.tab_panel.job_applications.first.declined_at).to have_text(decline_date.to_fs(:day_month_year))
     end
   end
 
   context "when candidate has an offer" do
-    let(:job_application) { create(:job_application, :status_offered, vacancy:, offered_at: nil) }
+    let!(:job_application) { create(:job_application, :status_offered, vacancy:, offered_at: nil) }
 
+    # JS needed so that all tabs are not visible
     scenario "add offer date from tab offered", :js do
-      run_with_publisher(publisher) do
-        publisher_ats_applications_page.load(vacancy_id: vacancy.id)
-        expect(publisher_ats_applications_page.job_title).to have_text(vacancy.job_title)
+      publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :offered)
+      expect(publisher_ats_applications_page.job_title).to have_text(vacancy.job_title)
 
-        publisher_ats_applications_page.select_tab(:tab_offered)
+      expect(publisher_ats_applications_page.tab_panel.job_applications.first.offered_at).to have_link("Add job offer date", href: tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: :offered, job_applications: [job_application.id] }, tag_action: "offered" }))
 
-        expect(publisher_ats_applications_page.tab_panel.job_applications.first.offered_at).to have_link("Add job offer date", href: tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: :offered, job_applications: [job_application.id] }, tag_action: "offered" }))
+      publisher_ats_applications_page.tab_panel.job_applications.first.offered_at.click_on("Add job offer date")
 
-        publisher_ats_applications_page.tab_panel.job_applications.first.offered_at.click_on("Add job offer date")
+      # Form page
+      expect(publisher_ats_job_offer_date_page).to be_displayed(vacancy_id: vacancy.id)
+      offer_date = 2.days.ago
+      publisher_ats_job_offer_date_page.set_date(offer_date)
+      publisher_ats_job_offer_date_page.btn_continue.click
 
-        # Form page
-        expect(publisher_ats_job_offer_date_page).to be_displayed(vacancy_id: vacancy.id)
-        offer_date = 2.days.ago
-        publisher_ats_job_offer_date_page.set_date(offer_date)
-        publisher_ats_job_offer_date_page.btn_continue.click
-
-        expect(publisher_ats_applications_page).to be_displayed(vacancy_id: vacancy.id)
-        expect(publisher_ats_applications_page.tab_panel.job_applications.first.offered_at).to have_text(offer_date.to_fs(:day_month_year))
-      end
+      expect(publisher_ats_applications_page).to be_displayed(vacancy_id: vacancy.id)
+      expect(publisher_ats_applications_page.tab_panel.job_applications.first.offered_at).to have_text(offer_date.to_fs(:day_month_year))
     end
   end
 
   context "when candidate interview is unsuccessful" do
-    let(:job_application) { create(:job_application, :status_unsuccessful_interview, vacancy:, interview_feedback_received_at: nil) }
+    let!(:job_application) { create(:job_application, :status_unsuccessful_interview, vacancy:, interview_feedback_received_at: nil) }
 
-    scenario "add declined date from tab offered", :js do
-      run_with_publisher(publisher) do
-        publisher_ats_applications_page.load(vacancy_id: vacancy.id)
-        expect(publisher_ats_applications_page.job_title).to have_text(vacancy.job_title)
+    # JS needed so that all tabs are not visible
+    scenario "add declined date from tab interviewing", :js do
+      publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :interviewing)
+      expect(publisher_ats_applications_page.job_title).to have_text(vacancy.job_title)
 
-        publisher_ats_applications_page.select_tab(:tab_interviewing)
+      expect(publisher_ats_applications_page.tab_panel.job_applications.first.interview_feedback_received_at).to have_link("Add feedback date", href: tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: :interviewing, job_applications: [job_application.id] }, tag_action: "unsuccessful_interview" }))
 
-        expect(publisher_ats_applications_page.tab_panel.job_applications.first.interview_feedback_received_at).to have_link("Add feedback date", href: tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: :interviewing, job_applications: [job_application.id] }, tag_action: "unsuccessful_interview" }))
+      publisher_ats_applications_page.tab_panel.job_applications.first.interview_feedback_received_at.click_on("Add feedback date")
 
-        publisher_ats_applications_page.tab_panel.job_applications.first.interview_feedback_received_at.click_on("Add feedback date")
+      # Form page
+      expect(publisher_ats_job_feedback_date_page).to be_displayed(vacancy_id: vacancy.id)
+      feedback_date = 2.days.ago
+      publisher_ats_job_feedback_date_page.interview_feedback_received_yes.click
+      publisher_ats_job_feedback_date_page.set_date(feedback_date)
+      publisher_ats_job_feedback_date_page.btn_continue.click
 
-        # Form page
-        expect(publisher_ats_job_feedback_date_page).to be_displayed(vacancy_id: vacancy.id)
-        feedback_date = 2.days.ago
-        publisher_ats_job_feedback_date_page.interview_feedback_received_yes.click
-        publisher_ats_job_feedback_date_page.set_date(feedback_date)
-        publisher_ats_job_feedback_date_page.btn_continue.click
-
-        expect(publisher_ats_applications_page).to be_displayed(vacancy_id: vacancy.id)
-        expect(publisher_ats_applications_page.tab_panel.job_applications.first.interview_feedback_received_at).to have_text(feedback_date.to_fs(:day_month_year))
-      end
+      expect(publisher_ats_applications_page).to be_displayed(vacancy_id: vacancy.id)
+      expect(publisher_ats_applications_page.tab_panel.job_applications.first.interview_feedback_received_at).to have_text(feedback_date.to_fs(:day_month_year))
     end
   end
 end

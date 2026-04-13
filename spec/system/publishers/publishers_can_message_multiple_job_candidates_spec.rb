@@ -23,8 +23,7 @@ RSpec.describe "Publishers can message multiple job candidates" do
     context "when on interviewing tab" do
       before do
         create_list(:job_application, 1, :status_interviewing, vacancy: vacancy)
-        visit organisation_job_job_applications_path(vacancy.id)
-        publisher_ats_applications_page.select_tab(:tab_interviewing)
+        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :interviewing)
       end
 
       let(:expected_path) { organisation_job_job_applications_path(vacancy.id, anchor: :interviewing) }
@@ -44,11 +43,9 @@ RSpec.describe "Publishers can message multiple job candidates" do
       end
     end
 
-    # need JS driver for 'select_tab' method
-    describe "message flow", :js do
+    describe "message flow" do
       before do
-        visit organisation_job_job_applications_path(vacancy.id)
-        publisher_ats_applications_page.select_tab(:tab_shortlisted)
+        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :shortlisted)
       end
 
       let(:batch_email) { JobApplicationBatch.order(:created_at).last }

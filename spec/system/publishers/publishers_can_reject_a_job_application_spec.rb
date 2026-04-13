@@ -20,10 +20,9 @@ RSpec.describe "Publishers can reject a job application" do
       create_list(:job_application, 3, :status_unsuccessful, vacancy: vacancy)
     end
 
-    describe "whole rejection flow", :js do
+    describe "whole rejection flow" do
       before do
-        visit organisation_job_job_applications_path(vacancy.id)
-        publisher_ats_applications_page.select_tab(:tab_unsuccessful)
+        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :unsuccessful)
       end
 
       let(:batch_email) { JobApplicationBatch.order(:created_at).last }
@@ -96,12 +95,12 @@ RSpec.describe "Publishers can reject a job application" do
         expect(all("tr.govuk-table__row.application-unsuccessful").size).to eq(1)
       end
 
-      describe "rejecting applications", :js do
+      describe "rejecting applications" do
         before do
           click_on message_template.name
         end
 
-        it "handles the rejection email process", :perform_enqueued do
+        it "handles the rejection email process", :js, :perform_enqueued do
           click_on "Send message"
 
           #  wait for page to load

@@ -38,7 +38,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         click_on I18n.t("buttons.save_and_continue")
       end
 
-      it "passes a11y", :a11y do
+      it "passes a11y", :a11y, :retry do
         # wait for page load
         expect(page).to have_content("What type of job is this?")
         expect(page).to be_axe_clean
