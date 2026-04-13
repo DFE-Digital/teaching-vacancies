@@ -16,7 +16,7 @@ en:
             relationship:
               blank: Referee relationship can't be blank
             reference_document:
-              blank: You must upload a file. We may have removed a previously uploaded file if it could not be verified as safe.
+              blank: You must upload a file
   helpers:
     legend:
       publishers_vacancies_job_applications_referee_form:

@@ -8,6 +8,11 @@ class Jobseekers::UploadedJobApplications::UploadApplicationFormsController < Jo
   def update
     # Skip validation if no new file is submitted, but one is already attached
     if !form_params[:application_form] && @job_application.application_form.attached?
+      @form = Jobseekers::UploadedJobApplication::UploadApplicationFormForm.new(
+        form_params.to_h.merge(application_form: @job_application.application_form),
+      )
+      return render :edit if @form.invalid?
+
       @job_application.update!(update_params)
       return redirect_to jobseekers_job_application_apply_path(@job_application)
     end

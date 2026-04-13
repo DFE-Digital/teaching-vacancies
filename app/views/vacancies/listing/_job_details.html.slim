@@ -108,11 +108,8 @@ section#job-details class="govuk-!-margin-bottom-5"
     - elsif vacancy.receive_applications == "email"
       p.govuk-body = t("jobs.apply_via_email_html", email: application_email_link(vacancy))
       p.govuk-body = t("jobseekers.job_applications.no_cvs")
-      - if current_jobseeker.present?
-        - if vacancy.application_form.blob.malware_scan_clean?
-          = govuk_button_link_to t("buttons.download_application_form", size: number_to_human_size(vacancy.application_form.byte_size)), job_document_path(vacancy, vacancy.application_form.id)
-        - else
-          p.govuk-body = file_download_link_or_status(vacancy.application_form.blob)
+      - if current_jobseeker.present? && vacancy.application_form.blob.malware_scan_clean?
+        = govuk_button_link_to t("buttons.download_application_form", size: number_to_human_size(vacancy.application_form.byte_size)), job_document_path(vacancy, vacancy.application_form.id)
       - else
         = govuk_button_link_to t("buttons.sign_in_to_download"), new_jobseeker_session_path(redirected: true)
 
@@ -128,8 +125,6 @@ section#job-details class="govuk-!-margin-bottom-5"
         br
         - if vacancy.application_form.blob.malware_scan_clean?
           = govuk_button_link_to t("buttons.download_application_form", size: number_to_human_size(vacancy.application_form.byte_size)), job_document_path(vacancy, vacancy.application_form.id), class: "govuk-button--secondary"
-        - else
-          p.govuk-body = file_download_link_or_status(vacancy.application_form.blob)
       - elsif vacancy.application_link.present?
         p.govuk-body = t("jobseekers.job_applications.no_cvs")
         = apply_link(vacancy, class: "govuk-!-margin-bottom-5")
@@ -137,8 +132,6 @@ section#job-details class="govuk-!-margin-bottom-5"
         p.govuk-body = t("jobseekers.job_applications.no_cvs")
         - if vacancy.application_form.blob.malware_scan_clean?
           = govuk_button_link_to t("buttons.download_application_form", size: number_to_human_size(vacancy.application_form.byte_size)), job_document_path(vacancy, vacancy.application_form.id)
-        - else
-          p.govuk-body = file_download_link_or_status(vacancy.application_form.blob)
   - else
     = govuk_inset_text text: t("jobs.expired_listing.notification"), classes: "govuk-!-font-weight-bold"
 
