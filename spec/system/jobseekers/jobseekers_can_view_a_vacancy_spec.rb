@@ -48,7 +48,7 @@ RSpec.describe "Viewing a single published vacancy" do
         page.driver.header("Referer", referrer_url)
         visit job_path(vacancy)
       end
-      expect(Redis.current.get(redis_key).to_i).to be > 0
+      expect(mock_redis.get(redis_key).to_i).to be > 0
     end
 
     context "when the publish_on date is in the future" do
