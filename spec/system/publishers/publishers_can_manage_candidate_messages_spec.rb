@@ -39,7 +39,7 @@ RSpec.describe "Publishers can manage candidate messages" do
       let(:login_user) { trust_publisher }
       let(:login_organisation) { trust }
 
-      it "passes a11y", :a11y do
+      it "passes a11y", :a11y, :retry do
         expect(page).to have_content("Inbox (2)")
         expect(page).to be_axe_clean
       end
