@@ -29,6 +29,8 @@ class Organisation < ApplicationRecord
   has_many :jobseeker_profile_exclusions, class_name: "JobseekerProfileExcludedOrganisation", dependent: :destroy
   has_many :hidden_jobseeker_profiles, through: :jobseeker_profile_exclusions, source: :jobseeker_profile
 
+  has_many :vacancy_templates, dependent: :destroy
+
   scope :not_closed, -> { where.not(establishment_status: "Closed") }
   scope :schools, -> { where(type: "School") }
   scope :school_groups, -> { where(type: "SchoolGroup") }

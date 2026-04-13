@@ -422,7 +422,7 @@ RSpec.describe "Creating a vacancy" do
     publisher_anonymise_applications_page.standard_option.click
     click_on "Save and continue"
 
-    fill_in_contact_details_form_fields(vacancy)
+    fill_in_contact_details_form_fields(contact_email: vacancy.contact_email, contact_number: vacancy.contact_number)
     click_on I18n.t("buttons.save_and_continue")
     publisher_confirm_contact_details_page.fill_in_and_submit_form
   end

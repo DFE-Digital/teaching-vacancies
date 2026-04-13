@@ -54,11 +54,15 @@ RSpec.describe "Publishers can message multiple job candidates" do
       let(:batch_email) { JobApplicationBatch.order(:created_at).last }
 
       it "asks the user to pick at least one item" do
+        expect(page).to have_content "Update application status"
+
         click_on "Send a message"
         expect(page).to have_content "You must select at least one job application"
       end
 
       it "continues when items have been selected" do
+        expect(page).to have_content "Update application status"
+        # select first candidate
         within "tbody" do
           first("label").click
         end

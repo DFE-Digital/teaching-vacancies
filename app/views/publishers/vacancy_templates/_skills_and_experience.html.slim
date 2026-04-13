@@ -1,0 +1,8 @@
+- summary_list.with_row(html_attributes: { id: "skills_and_experience" }) do |row|
+  - row.with_key
+    = t("jobs.skills_and_experience.publisher")
+  - row.with_value
+    .editor-rendered-content == template.skills_and_experience
+  - row.with_action text: t("buttons.change"),
+    href: organisation_vacancy_template_build_path(template, :about_the_role, "back_to_#{action_name}": "true"),
+    visually_hidden_text: t("jobs.skills_and_experience.publisher")

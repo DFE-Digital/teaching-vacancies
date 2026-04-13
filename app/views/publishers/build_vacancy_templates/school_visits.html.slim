@@ -1,0 +1,11 @@
+= form_for @form, url: wizard_path, method: :patch do |f|
+  = f.govuk_error_summary
+
+  - if params["back_to_#{action_name}"]
+    = f.hidden_field "back_to_#{action_name}", value: "true"
+
+  = f.govuk_radio_buttons_fieldset :school_visits, legend: { tag: "h1", size: "l" } do
+    = f.govuk_radio_button :school_visits, "true", link_errors: true
+    = f.govuk_radio_button :school_visits, "false"
+
+  = render "button_group", f: f

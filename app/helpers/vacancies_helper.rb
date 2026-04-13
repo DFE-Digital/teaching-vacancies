@@ -25,6 +25,14 @@ module VacanciesHelper
     end
   end
 
+  def teaching_job_roles_options
+    Vacancy::TEACHING_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.#{option}")] }
+  end
+
+  def support_job_roles_options
+    Vacancy::SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.support_job_role_options.#{option}")] }
+  end
+
   def vacancy_tag(state)
     govuk_tag(text: t("publishers.vacancies.show.heading_component.status_tag.#{state}"), html_attributes: { class: "vertical-align-middle govuk-!-margin-left-1" }, colour: TAG_COLOURS.fetch(state))
   end

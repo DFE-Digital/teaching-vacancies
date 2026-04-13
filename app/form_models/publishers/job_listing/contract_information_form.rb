@@ -15,8 +15,18 @@ class Publishers::JobListing::ContractInformationForm < Publishers::JobListing::
 
   WORKING_PATTERNS_DETAILS_MAX_WORDS = 75
 
-  def self.fields
-    %i[contract_type fixed_term_contract_duration is_parental_leave_cover working_patterns working_patterns_details is_job_share]
+  FIELDS = %i[contract_type fixed_term_contract_duration is_parental_leave_cover working_patterns working_patterns_details is_job_share].freeze
+
+  class << self
+    # rubocop:disable Lint/UnusedMethodArgument
+    def load_from_model(vacancy, current_publisher:)
+      new(vacancy.slice(*FIELDS))
+    end
+    # rubocop:enable Lint/UnusedMethodArgument
+
+    def fields
+      [:working_patterns_details, :is_job_share, :contract_type, :fixed_term_contract_duration, :is_parental_leave_cover, { working_patterns: [] }]
+    end
   end
 
   def params_to_save

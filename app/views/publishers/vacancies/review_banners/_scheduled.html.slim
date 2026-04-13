@@ -1,7 +1,6 @@
-= govuk_inset_text do
-  = vacancy_review_form_heading_inset_text(vacancy, "scheduled")
-  .govuk-button-group class="govuk-!-margin-top-4"
-    = vacancy_preview_action_link(vacancy)
-    = vacancy_copy_action_link(vacancy)
-    = vacancy_delete_action_link(vacancy)
-    = vacancy_convert_to_draft_action_link(vacancy)
+= vacancy_review_form_heading_inset_text(vacancy, "scheduled")
+.govuk-button-group class="govuk-!-margin-top-4"
+  = vacancy_preview_action_link(vacancy)
+  = vacancy_delete_action_link(vacancy)
+  = vacancy_convert_to_draft_action_link(vacancy)
+  = vacancy_copy_action_link(vacancy)

@@ -19,8 +19,16 @@ class Publishers::JobListing::PayPackageForm < Publishers::JobListing::VacancyFo
 
   FIELDS = %i[actual_salary salary pay_scale benefits_details salary_types hourly_rate].freeze
 
-  def self.fields
-    FIELDS + %i[benefits]
+  class << self
+    # rubocop:disable Lint/UnusedMethodArgument
+    def load_from_model(vacancy, current_publisher:)
+      new(vacancy.slice(*FIELDS + %i[benefits]))
+    end
+    # rubocop:enable Lint/UnusedMethodArgument
+
+    def fields
+      [:actual_salary, :benefits, :benefits_details, :salary, :pay_scale, :hourly_rate, { salary_types: [] }]
+    end
   end
   attr_accessor(*FIELDS)
 

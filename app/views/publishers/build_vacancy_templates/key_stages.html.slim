@@ -1,0 +1,9 @@
+= form_for @form, url: wizard_path, method: :patch do |f|
+  = f.govuk_error_summary
+
+  - if params["back_to_#{action_name}"]
+    = f.hidden_field "back_to_#{action_name}", value: "true"
+
+  = f.govuk_collection_check_boxes :key_stages, @template.key_stages_for_phases, :to_s, :to_s, include_hidden: false, legend: { tag: "h1", size: "l" }
+
+  = render "button_group", f: f

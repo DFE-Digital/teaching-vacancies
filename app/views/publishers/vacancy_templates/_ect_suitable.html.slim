@@ -1,0 +1,8 @@
+- summary_list.with_row(html_attributes: { id: "ect_status" }) do |row|
+  - row.with_key
+    = t("jobs.ect_status")
+  - row.with_value
+    = template.ect_status == "ect_suitable" ? "Yes" : "No"
+  - row.with_action text: t("buttons.change"),
+    href: organisation_vacancy_template_build_path(template, :about_the_role, "back_to_#{action_name}": "true"),
+    visually_hidden_text: t("jobs.ect_status")

@@ -941,6 +941,43 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_30_082849) do
     t.index ["publisher_ats_api_client_id", "last_attempted_at"], name: "idx_conflict_attempts_on_client_and_last_attempt"
   end
 
+  create_table "vacancy_templates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "organisation_id", null: false
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "job_roles", array: true
+    t.integer "phases", array: true
+    t.integer "key_stages", array: true
+    t.string "subjects", array: true
+    t.integer "contract_type"
+    t.string "fixed_term_contract_duration"
+    t.boolean "is_parental_leave_cover"
+    t.integer "working_patterns", array: true
+    t.text "working_patterns_details"
+    t.boolean "is_job_share"
+    t.string "actual_salary"
+    t.string "salary"
+    t.string "pay_scale"
+    t.string "hourly_rate"
+    t.boolean "benefits"
+    t.text "benefits_details"
+    t.integer "ect_status"
+    t.string "skills_and_experience"
+    t.string "school_offer"
+    t.boolean "flexi_working_details_provided"
+    t.string "flexi_working"
+    t.boolean "further_details_provided"
+    t.string "further_details"
+    t.boolean "school_visits"
+    t.boolean "visa_sponsorship_available"
+    t.boolean "enable_job_applications"
+    t.integer "receive_applications"
+    t.integer "religion_type"
+    t.boolean "anonymise_applications"
+    t.index ["organisation_id"], name: "index_vacancy_templates_on_organisation_id"
+  end
+
   create_table "versions", force: :cascade do |t|
     t.string "item_type", null: false
     t.uuid "item_id", null: false
@@ -1013,4 +1050,5 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_30_082849) do
   add_foreign_key "vacancy_analytics", "vacancies"
   add_foreign_key "vacancy_conflict_attempts", "publisher_ats_api_clients"
   add_foreign_key "vacancy_conflict_attempts", "vacancies", column: "conflicting_vacancy_id"
+  add_foreign_key "vacancy_templates", "organisations"
 end
