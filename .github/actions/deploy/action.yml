@@ -17,6 +17,9 @@ inputs:
   aws-secret-access-key:
     description: AWS-KEY
     required: true
+  aws-account-id:
+    description: AWS Account ID for role assumption
+    required: true
   azure-client-id:
     description: Azure service principal or managed identity client ID when using OIDC
     required: true
@@ -36,12 +39,12 @@ runs:
       name: Checkout Code
 
     - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v4
+      uses: aws-actions/configure-aws-credentials@v6
       with:
         aws-access-key-id: ${{ inputs.aws-access-key-id }}
         aws-secret-access-key: ${{ inputs.aws-secret-access-key }}
         aws-region: eu-west-2
-        role-to-assume: Deployments
+        role-to-assume: arn:aws:iam::${{ inputs.AWS_ACCOUNT_ID }}:role/Deployments
         role-duration-seconds: 3600
         role-skip-session-tagging: true
 
