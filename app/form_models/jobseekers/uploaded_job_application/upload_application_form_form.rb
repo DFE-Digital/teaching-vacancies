@@ -5,7 +5,7 @@ module Jobseekers
       include ActiveModel::Attributes
       include Jobseekers::JobApplication::CompletedFormAttribute
 
-      validates :application_form, form_file: Vacancy::DOCUMENT_VALIDATION_OPTIONS
+      validates :application_form, form_file: Vacancy::DOCUMENT_VALIDATION_OPTIONS.merge(skip_google_drive_virus_check: true)
       validates :application_form, presence: true, if: -> { upload_application_form_section_completed }
 
       completed_attribute(:upload_application_form)
