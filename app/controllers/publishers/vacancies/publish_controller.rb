@@ -5,7 +5,7 @@ class Publishers::Vacancies::PublishController < Publishers::Vacancies::WizardBa
   def create
     if vacancy.published?
       redirect_to organisation_job_path(vacancy.id), notice: t("messages.jobs.already_published")
-    elsif !uploaded_files_clean?
+    elsif !uploaded_files_scanned_and_safe?
       redirect_to organisation_job_path(vacancy.id), alert: t("messages.jobs.files_not_scanned")
     elsif all_steps_valid? && PublishVacancy.new(vacancy, current_publisher, current_organisation).call
       update_google_index(vacancy) if PublishedVacancy.find(vacancy.id).live?
@@ -26,7 +26,7 @@ class Publishers::Vacancies::PublishController < Publishers::Vacancies::WizardBa
 
   private
 
-  def uploaded_files_clean?
+  def uploaded_files_scanned_and_safe?
     blobs = []
     blobs << vacancy.application_form.blob if vacancy.application_form.attached?
     blobs += vacancy.supporting_documents.map(&:blob) if vacancy.supporting_documents.attached?
