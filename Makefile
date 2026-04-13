@@ -255,6 +255,97 @@ logs: get-cluster-credentials
 	$(if $(env), , $(error Missing <env>. Usage: "make <env> logs"))
 	kubectl -n $(azure_namespace) logs -f deployment/teaching-vacancies-$(env)
 
+##@ Postgres upgrade commands
+
+composed-postgres-variables:
+	$(eval POSTGRES_SERVER_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-pg)
+	$(eval POSTGRES_RESOURCE_GROUP=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg)
+
+# make qa enable-pglogs
+.PHONY: enable-pglogs
+enable-pglogs: set-azure-account composed-postgres-variables ## Enable postgres server logs
+	$(if $(env), , $(error Missing <env>. Usage: "make <env> enable-pglogs"))
+	az postgres flexible-server parameter set \
+		--resource-group $(POSTGRES_RESOURCE_GROUP) \
+		--server-name $(POSTGRES_SERVER_NAME) \
+		--name log_checkpoints --value on
+	az postgres flexible-server parameter set \
+		--resource-group $(POSTGRES_RESOURCE_GROUP) \
+		--server-name $(POSTGRES_SERVER_NAME) \
+		--name log_connections --value on
+	az postgres flexible-server parameter set \
+		--resource-group $(POSTGRES_RESOURCE_GROUP) \
+		--server-name $(POSTGRES_SERVER_NAME) \
+		--name log_disconnections --value on
+	az postgres flexible-server parameter set \
+		--resource-group $(POSTGRES_RESOURCE_GROUP) \
+		--server-name $(POSTGRES_SERVER_NAME) \
+		--name log_duration --value on
+
+# make qa disable-pglogs
+.PHONY: disable-pglogs
+disable-pglogs: set-azure-account composed-postgres-variables ## Disable postgres server logs
+	$(if $(env), , $(error Missing <env>. Usage: "make <env> disable-pglogs"))
+	az postgres flexible-server parameter set \
+		--resource-group $(POSTGRES_RESOURCE_GROUP) \
+		--server-name $(POSTGRES_SERVER_NAME) \
+		--name log_checkpoints --value off
+	az postgres flexible-server parameter set \
+		--resource-group $(POSTGRES_RESOURCE_GROUP) \
+		--server-name $(POSTGRES_SERVER_NAME) \
+		--name log_connections --value off
+	az postgres flexible-server parameter set \
+		--resource-group $(POSTGRES_RESOURCE_GROUP) \
+		--server-name $(POSTGRES_SERVER_NAME) \
+		--name log_disconnections --value off
+	az postgres flexible-server parameter set \
+		--resource-group $(POSTGRES_RESOURCE_GROUP) \
+		--server-name $(POSTGRES_SERVER_NAME) \
+		--name log_duration --value off
+
+# make qa list-pglogs
+.PHONY: list-pglogs
+list-pglogs: set-azure-account composed-postgres-variables ## List postgres server logs
+	$(if $(env), , $(error Missing <env>. Usage: "make <env> list-pglogs"))
+	az postgres flexible-server server-logs list \
+		--resource-group $(POSTGRES_RESOURCE_GROUP) \
+		--server-name $(POSTGRES_SERVER_NAME) \
+		--output table
+
+# make qa download-pglogs LOG_NAME=postgresql-2024-08-01_120000.log
+.PHONY: download-pglogs
+download-pglogs: set-azure-account composed-postgres-variables ## Download a postgres server log file
+	$(if $(env), , $(error Missing <env>. Usage: "make <env> download-pglogs LOG_NAME=<log-file-name>"))
+	$(if $(LOG_NAME), , $(error Missing LOG_NAME. Usage: "make <env> download-pglogs LOG_NAME=<log-file-name>"))
+	az postgres flexible-server server-logs download \
+		--resource-group $(POSTGRES_RESOURCE_GROUP) \
+		--server-name $(POSTGRES_SERVER_NAME) \
+		--name $(LOG_NAME)
+
+##@ Kubernetes scaling commands
+
+# make qa show-service
+.PHONY: show-service
+show-service: get-cluster-credentials ## Show current deployment replica counts
+	$(if $(env), , $(error Missing <env>. Usage: "make <env> show-service"))
+	@echo "=== Deployment status for $(env) ==="
+	kubectl -n $(azure_namespace) get deployment teaching-vacancies-$(env) -o=jsonpath='{.metadata.name}: {.spec.replicas} replicas{"\n"}'
+	kubectl -n $(azure_namespace) get deployment teaching-vacancies-worker-$(env) -o=jsonpath='{.metadata.name}: {.spec.replicas} replicas{"\n"}'
+
+# make qa scale-app REPLICAS=0
+.PHONY: scale-app
+scale-app: get-cluster-credentials ## Scale the web app deployment
+	$(if $(env), , $(error Missing <env>. Usage: "make <env> scale-app REPLICAS=<n>"))
+	$(if $(REPLICAS), , $(error Missing REPLICAS. Usage: "make <env> scale-app REPLICAS=<n>"))
+	kubectl -n $(azure_namespace) scale deployment/teaching-vacancies-$(env) --replicas=$(REPLICAS)
+
+# make qa scale-worker REPLICAS=0
+.PHONY: scale-worker
+scale-worker: get-cluster-credentials ## Scale the worker deployment
+	$(if $(env), , $(error Missing <env>. Usage: "make <env> scale-worker REPLICAS=<n>"))
+	$(if $(REPLICAS), , $(error Missing REPLICAS. Usage: "make <env> scale-worker REPLICAS=<n>"))
+	kubectl -n $(azure_namespace) scale deployment/teaching-vacancies-worker-$(env) --replicas=$(REPLICAS)
+
 ##@ Help
 
 .PHONY: help
