@@ -49,43 +49,34 @@ RSpec.describe "Jobseekers can manage their personal details" do
     end
 
     context "when editing a profile that has already been completed" do
-      let(:profile) { create(:jobseeker_profile, :with_personal_details, jobseeker:) }
-
       let(:new_first_name) { "Samwise" }
       let(:new_last_name) { "Gamgee" }
 
       before do
-        profile.personal_details.update!(
-          first_name: "Frodo",
-          last_name: "Baggins",
-          has_right_to_work_in_uk: right_to_work,
-        )
-
+        create(:jobseeker_profile,
+               personal_details: build(:personal_details, first_name: Faker::Fantasy::Tolkien.character,
+                                                          last_name: Faker::Fantasy::Tolkien.race), jobseeker:)
         visit jobseekers_profile_path
       end
 
-      context "with a work completed step" do
-        let(:right_to_work) { true }
+      it "allows the jobseeker to edit their profile" do
+        row = page.find(".govuk-summary-list__key", text: "Name").find(:xpath, "..")
 
-        it "allows the jobseeker to edit their profile" do
-          row = page.find(".govuk-summary-list__key", text: "Name").find(:xpath, "..")
-
-          within(row) do
-            click_link "Change"
-          end
-
-          fill_in "personal_details[first_name]", with: new_first_name
-          fill_in "personal_details[last_name]", with: new_last_name
-          click_on I18n.t("buttons.save_and_continue")
-
-          expect(page).to have_content("#{new_first_name} #{new_last_name}")
-          expect(page).to have_content("No, I already have the right to work in the UK")
+        within(row) do
+          click_link "Change"
         end
 
-        it "can be previewed" do
-          within "#top_links" do
-            click_on "Preview profile"
-          end
+        fill_in "personal_details[first_name]", with: new_first_name
+        fill_in "personal_details[last_name]", with: new_last_name
+        click_on I18n.t("buttons.save_and_continue")
+
+        expect(page).to have_content("#{new_first_name} #{new_last_name}")
+        expect(page).to have_content("No, I already have the right to work in the UK")
+      end
+
+      it "can be previewed" do
+        within "#top_links" do
+          click_on "Preview profile"
         end
       end
     end
