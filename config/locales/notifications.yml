@@ -12,6 +12,7 @@ en:
             body_html: <span class="govuk-!-font-weight-bold">Your job listing is incomplete. %{link}</span>
             link: Finish job listing.
       already_published: This job has already been published
+      files_not_scanned: This job listing cannot be published because one or more uploaded files have not yet been scanned for malware, or have been flagged as unsafe. Please check your uploaded files and try again.
       draft_saved_html: <span class="govuk-!-font-weight-bold">Draft saved</span> for %{job_title}
       feedback:
         success_html: <h2 class="govuk-heading-m">Feedback sent</h2>
@@ -31,6 +32,7 @@ en:
           submitted: You have already applied for %{job_title}.
         saved: Your job application was saved
         draft_deleted: Your draft application for %{job_title} has been deleted
+        files_not_scanned: Your application cannot be submitted because your uploaded application form has not yet been scanned for malware, or has been flagged as unsafe. Please check your uploaded file and try again.
     subscriptions:
       created: Email subscription created successfully.
 

@@ -16,6 +16,7 @@ RSpec.describe "Updating an organisation logo" do
   before do
     sign_in(publisher, scope: :publisher)
     allow_any_instance_of(ApplicationController).to receive(:current_organisation).and_return(organisation)
+    allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
   end
 
   after { sign_out(publisher) }

@@ -1,5 +1,3 @@
-require "google/apis/drive_v3"
-
 class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies::WizardBaseController
   helper_method :form
   before_action :set_vacancy

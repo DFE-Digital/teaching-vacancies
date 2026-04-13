@@ -1,6 +1,6 @@
 class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::VacancyForm
   validate :application_form_presence
-  validates :application_form, form_file: Vacancy::DOCUMENT_VALIDATION_OPTIONS
+  validates :application_form, form_file: Vacancy::DOCUMENT_VALIDATION_OPTIONS.merge(skip_google_drive_virus_check: true)
 
   attr_accessor :application_form
 

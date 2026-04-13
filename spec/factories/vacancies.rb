@@ -215,6 +215,10 @@ FactoryBot.define do
           ),
         ]
       end
+
+      after(:create) do |vacancy|
+        vacancy.supporting_documents.each { |doc| doc.blob.malware_scan_clean! }
+      end
     end
 
     trait :with_application_form do
@@ -244,6 +248,10 @@ FactoryBot.define do
           Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"),
           "application/pdf",
         )
+      end
+
+      after(:create) do |vacancy|
+        vacancy.application_form.blob.malware_scan_clean!
       end
     end
 
