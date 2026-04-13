@@ -59,10 +59,6 @@ en:
         zero: No unread notifications
         one: 1 unread notification
         other: "%{count} unread notifications"
-    publishers/malware_scan_notification:
-      message_html: A file you uploaded (%{filename}) could not be verified as safe and has been automatically removed. You may need to re-upload it. If you have already done so, no further action is needed.
-    jobseekers/malware_scan_notification:
-      message_html: A file you uploaded (%{filename}) could not be verified as safe and has been automatically removed. You may need to re-upload it. If you have already done so, no further action is needed.
     publishers/message_received_notification:
       message_html: "%{candidate_name} has sent you %{link} about the %{job_title} role"
     jobseekers/message_received_notification:
