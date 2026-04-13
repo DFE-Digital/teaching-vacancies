@@ -1081,7 +1081,7 @@ DEPENDENCIES
   rails_semantic_logger
   railties (< 8.1)
   recaptcha
-  redis
+  redis (< 5)
   redis-client
   rgeo-geojson
   rgeo-proj4
