@@ -5,6 +5,8 @@ class Publishers::Vacancies::PublishController < Publishers::Vacancies::WizardBa
   def create
     if vacancy.published?
       redirect_to organisation_job_path(vacancy.id), notice: t("messages.jobs.already_published")
+    elsif !uploaded_files_clean?
+      redirect_to organisation_job_path(vacancy.id), alert: t("messages.jobs.files_not_scanned")
     elsif all_steps_valid? && PublishVacancy.new(vacancy, current_publisher, current_organisation).call
       update_google_index(vacancy) if PublishedVacancy.find(vacancy.id).live?
 
@@ -21,4 +23,13 @@ class Publishers::Vacancies::PublishController < Publishers::Vacancies::WizardBa
     end
   end
   # rubocop:enable Metrics/AbcSize
+
+  private
+
+  def uploaded_files_clean?
+    blobs = []
+    blobs << vacancy.application_form.blob if vacancy.application_form.attached?
+    blobs += vacancy.supporting_documents.map(&:blob) if vacancy.supporting_documents.attached?
+    blobs.all?(&:malware_scan_clean?)
+  end
 end
