@@ -79,8 +79,7 @@ gem "rack-cors"
 gem "rails", RAILS_VERSION # Explicitly declare rails so we can do a "bundle update rails" when needed.
 gem "rails_semantic_logger"
 gem "recaptcha"
-#  we're using Redis.current which was removed in Redis 5.0
-gem "redis", "< 5"
+gem "redis"
 gem "rgeo-geojson"
 gem "rgeo-proj4"
 gem "rswag-api"
