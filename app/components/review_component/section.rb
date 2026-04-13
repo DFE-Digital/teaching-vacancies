@@ -20,13 +20,12 @@ class ReviewComponent::Section < ApplicationComponent
 
   attr_reader :rows
 
-  def initialize(record, name:, id: nil, forms: [], **)
+  def initialize(record, name:, forms: [], **)
     super(**)
 
     forms << "#{name.to_s.camelize}Form" if forms.empty?
 
     @forms = forms.map { |f| constantize_form(f) }
-    @id = id || name
     @name = name
     @record = record
     @rows = []
@@ -43,8 +42,6 @@ class ReviewComponent::Section < ApplicationComponent
   def before_render
     with_field_div_sets(@forms.map { |f| { form: f } })
   end
-
-  attr_reader :id
 
   def default_classes
     %w[review-component__section]
@@ -64,9 +61,5 @@ class ReviewComponent::Section < ApplicationComponent
 
   def error_path
     raise "Not implemented"
-  end
-
-  def allow_edit?
-    true
   end
 end

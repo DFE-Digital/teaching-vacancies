@@ -7,12 +7,10 @@ RSpec.describe JobApplicationReviewComponent::Section, type: :component do
   let(:kwargs) do
     {
       name: name,
-      id: id,
     }
   end
 
   let(:job_application) { create(:job_application, :draft) }
-  let(:id) { nil }
   let(:name) { :personal_details }
 
   it_behaves_like ReviewComponent::Section

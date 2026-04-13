@@ -2,7 +2,7 @@ li
   - field_div_sets.each do |field_div_set|
     = field_div_set
 
-  = tag.div(id: id, **html_attributes) do
+  = tag.div(id: @name, **html_attributes) do
     .review-component__section__body
       = govuk_summary_card(title: heading_text) do |card|
         - card.with_action { edit_link }

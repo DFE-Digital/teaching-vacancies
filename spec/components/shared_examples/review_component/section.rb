@@ -6,13 +6,4 @@ RSpec.shared_examples ReviewComponent::Section do
     render_inline(component)
     expect(page).to have_css("div##{name}")
   end
-
-  context "if an ID is provided" do
-    let(:id) { "some-id" }
-
-    it "uses the given ID" do
-      render_inline(component)
-      expect(page).to have_css("div#some-id")
-    end
-  end
 end

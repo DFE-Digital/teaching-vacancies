@@ -10,16 +10,13 @@ class JobApplicationReviewComponent < ApplicationComponent
     case section_name
     when :catholic
       CatholicReligiousInformationSection.new(@job_application,
-                                              name: section_name,
-                                              allow_edit: @allow_edit)
+                                              name: section_name)
     when :non_catholic
       NonCatholicReligiousInformationSection.new(@job_application,
-                                                 name: section_name,
-                                                 allow_edit: @allow_edit)
+                                                 name: section_name)
     else
       Section.new(
         @job_application,
-        allow_edit: @allow_edit,
         name: section_name,
         **kwargs,
       )
@@ -28,13 +25,12 @@ class JobApplicationReviewComponent < ApplicationComponent
 
   attr_reader :job_application
 
-  def initialize(job_application, show_sidebar: true, allow_edit: nil, classes: [], html_attributes: {})
+  def initialize(job_application, show_sidebar: true, classes: [], html_attributes: {})
     super(
       classes: classes,
       html_attributes: html_attributes,
     )
 
-    @allow_edit = allow_edit
     @job_application = job_application
     @show_sidebar = show_sidebar
   end
