@@ -24,7 +24,7 @@
         = f.govuk_file_field :application_form,
           label: { text: "Upload application form", tag: "h1", size: "l" },
           hint: { text: t("helpers.hint.publishers_job_listing_application_form_form.application_form") },
-          accept: ".doc, .docx, .pdf",
+          accept: ".doc, .docx, .pdf, .txt",
           multiple: false,
           include_hidden: false,
           enctype: "multipart/form-data"
