@@ -13,7 +13,7 @@ class Publishers::Vacancies::PublishController < Publishers::Vacancies::WizardBa
           t("jobs.file_unsafe_error_message", filename: blob.filename)
         end
       end
-      redirect_to organisation_job_review_path(vacancy.id), alert: messages.join(". ")
+      redirect_to organisation_job_review_path(vacancy.id), error: messages.join(". ")
     elsif all_steps_valid? && PublishVacancy.new(vacancy, current_publisher, current_organisation).call
       update_google_index(vacancy) if PublishedVacancy.find(vacancy.id).live?
 
