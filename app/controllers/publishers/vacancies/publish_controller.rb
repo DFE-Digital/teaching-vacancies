@@ -5,8 +5,15 @@ class Publishers::Vacancies::PublishController < Publishers::Vacancies::WizardBa
   def create
     if vacancy.published?
       redirect_to organisation_job_path(vacancy.id), notice: t("messages.jobs.already_published")
-    elsif !uploaded_files_scanned_and_safe?
-      redirect_to organisation_job_path(vacancy.id), alert: t("messages.jobs.files_not_scanned")
+    elsif (not_safe_blobs = uploaded_files_not_safe).any?
+      messages = not_safe_blobs.map do |blob|
+        if blob.malware_scan_pending?
+          t("jobs.file_pending_scan_message", filename: blob.filename)
+        else
+          t("jobs.file_unsafe_error_message", filename: blob.filename)
+        end
+      end
+      redirect_to organisation_job_review_path(vacancy.id), alert: messages.join(". ")
     elsif all_steps_valid? && PublishVacancy.new(vacancy, current_publisher, current_organisation).call
       update_google_index(vacancy) if PublishedVacancy.find(vacancy.id).live?
 
@@ -26,10 +33,10 @@ class Publishers::Vacancies::PublishController < Publishers::Vacancies::WizardBa
 
   private
 
-  def uploaded_files_scanned_and_safe?
+  def uploaded_files_not_safe
     blobs = []
     blobs << vacancy.application_form.blob if vacancy.application_form.attached?
     blobs += vacancy.supporting_documents.map(&:blob) if vacancy.supporting_documents.attached?
-    blobs.all?(&:malware_scan_clean?)
+    blobs.reject(&:malware_scan_clean?)
   end
 end
