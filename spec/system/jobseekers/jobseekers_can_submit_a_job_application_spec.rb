@@ -97,7 +97,7 @@ RSpec.describe "Jobseekers can submit a job application" do
         # mark application form as failing azure virus scan
         uploaded_job_application.application_form.blob.malware_scan_malicious!
         click_on I18n.t("buttons.submit_application")
-        expect(page).to have_content(I18n.t("messages.jobseekers.job_applications.files_not_scanned"))
+        expect(page).to have_content(I18n.t("jobs.file_unsafe_error_message", filename: uploaded_job_application.application_form.filename))
         # mark application form as passing azure virus scan
         uploaded_job_application.application_form.blob.malware_scan_clean!
         expect { perform_enqueued_jobs { click_on I18n.t("buttons.submit_application") } }
