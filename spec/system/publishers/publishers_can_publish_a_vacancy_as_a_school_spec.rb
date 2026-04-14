@@ -174,12 +174,11 @@ RSpec.describe "Creating a vacancy" do
         # Cannot publish if application form has been flagged as unsafe
         created_vacancy.application_form.blob.malware_scan_malicious!
         click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
-        expect(page).to have_current_path(organisation_job_path(created_vacancy.id), ignore_query: true)
-        expect(page).to have_content(I18n.t("messages.jobs.files_not_scanned"))
+        expect(page).to have_current_path(organisation_job_review_path(created_vacancy.id), ignore_query: true)
+        expect(page).to have_content(I18n.t("jobs.file_unsafe_error_message", filename: created_vacancy.application_form.filename))
 
         # Can publish once the file is marked clean
         created_vacancy.application_form.blob.malware_scan_clean!
-        visit organisation_job_review_path(created_vacancy.id)
         click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
         expect(page).to have_current_path(organisation_job_summary_path(created_vacancy.id), ignore_query: true)
       end
