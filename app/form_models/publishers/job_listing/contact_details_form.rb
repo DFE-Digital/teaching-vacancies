@@ -44,7 +44,7 @@ class Publishers::JobListing::ContactDetailsForm < Publishers::JobListing::Vacan
       return "other"
     end
 
-    return @current_publisher&.email if @vacancy.contact_email == @current_publisher_email
+    return @current_publisher_email if @vacancy.contact_email == @current_publisher_email
 
     "other"
   end
