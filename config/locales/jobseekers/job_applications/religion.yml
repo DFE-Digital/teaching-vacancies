@@ -27,7 +27,7 @@ en:
               blank: Enter the address of the baptism
             baptism_certificate:
               blank: Upload your baptism certificate
-              unsafe_file: This file has been flagged as unsafe. Please delete it and upload a different file
+              unsafe_file: '%{filename} has been flagged as unsafe. Please delete it and upload a different file'
             baptism_date:
               blank: Enter the baptism date
               invalid: Enter a valid baptism date
