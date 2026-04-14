@@ -99,10 +99,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     raise ActionController::RoutingError, "Cannot submit non-draft application" unless job_application.draft?
 
     @review_form = Jobseekers::JobApplication::ReviewForm.new(review_form_params)
-    if !uploaded_files_scanned_and_safe?
-      @review_form.errors.add(:base, t("messages.jobseekers.job_applications.files_not_scanned"))
-      render :review
-    elsif @review_form.valid? && all_steps_valid?
+    if @review_form.valid? && all_steps_valid?
       job_application.submit!
       redirect_to jobseekers_job_application_post_submit_path job_application
     else
@@ -180,17 +177,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     step_process.validatable_steps.all? { |step| step_valid?(step) }
   end
 
-  def uploaded_files_scanned_and_safe?
-    if job_application.is_a?(UploadedJobApplication)
-      return true unless job_application.application_form.attached?
-
-      job_application.application_form.blob.malware_scan_clean?
-    else
-      return true unless job_application.baptism_certificate.attached?
-
-      job_application.baptism_certificate.blob.malware_scan_clean?
-    end
-  end
 
   def step_valid?(step)
     form_class = step_process.form_class_for(step)
@@ -237,7 +223,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def review_form_params
     params.expect(jobseekers_job_application_review_form: %i[confirm_data_accurate confirm_data_usage])
-          .merge(completed_steps: job_application.completed_steps, all_steps: step_process.validatable_steps)
+          .merge(completed_steps: job_application.completed_steps, all_steps: step_process.validatable_steps, job_application: job_application)
   end
 
   def withdraw_form_params
