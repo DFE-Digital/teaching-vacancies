@@ -28,6 +28,6 @@ class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::Vaca
     return unless vacancy.application_form.attached?
 
     blob = vacancy.application_form.blob
-    errors.add(:application_form, :unsafe_file) if blob.malware_scan_malicious? || blob.malware_scan_scan_error?
+    errors.add(:application_form, :unsafe_file, filename: blob.filename) if blob.malware_scan_malicious? || blob.malware_scan_scan_error?
   end
 end

@@ -58,7 +58,7 @@ en:
               inclusion: Select yes if you have completed this section
             application_form:
               blank: Select the completed job application form
-              unsafe_file: This file has been flagged as unsafe. Please delete it and upload a different file
+              unsafe_file: '%{filename} has been flagged as unsafe. Please delete it and upload a different file'
 
         jobseekers/profiles/personal_details_form/names_form:
           attributes:
