@@ -318,9 +318,10 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
   describe "changing the organisation's logo" do
     let(:organisation) { create(:school) }
     let(:image_file_name) { "blank_image.png" }
+    let(:document_virus_check) { instance_double(Publishers::DocumentVirusCheck, safe?: true) }
 
     before do
-      allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
+      allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(document_virus_check)
       click_link I18n.t("nav.organisation_profile", name: organisation.name)
     end
 
@@ -344,8 +345,10 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
   describe "deleting the organisation's logo" do
     let(:organisation) { create(:school, :with_image) }
     let(:image_file_name) { "blank_image.png" }
+    let(:document_virus_check) { instance_double(Publishers::DocumentVirusCheck, safe?: true) }
 
     before do
+      allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(document_virus_check)
       click_link I18n.t("nav.organisation_profile", name: organisation.name)
     end
 
@@ -368,9 +371,10 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
   describe "changing the organisation's photo" do
     let(:organisation) { create(:school) }
     let(:image_file_name) { "blank_image.png" }
+    let(:document_virus_check) { instance_double(Publishers::DocumentVirusCheck, safe?: true) }
 
     before do
-      allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
+      allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(document_virus_check)
       click_link I18n.t("nav.organisation_profile", name: organisation.name)
     end
 
@@ -394,8 +398,10 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
   describe "deleting the organisation's photo" do
     let(:organisation) { create(:school, :with_image) }
     let(:image_file_name) { "blank_image.png" }
+    let(:document_virus_check) { instance_double(Publishers::DocumentVirusCheck, safe?: true) }
 
     before do
+      allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(document_virus_check)
       click_link I18n.t("nav.organisation_profile", name: organisation.name)
     end
 
