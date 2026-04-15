@@ -1,19 +1,14 @@
 # frozen_string_literal: true
 
-# Override ActiveStorage's BlobsController to add malware scan checks
+# Override ActiveStorage's BlobsController to prevent downloading files that have not been confirmed clean by the antivirus scan
 class ActiveStorage::BlobsController < ActiveStorage::BaseController
   include ActiveStorage::SetBlob
 
-  before_action :verify_blob_scan_status
-
-  def show
-    expires_in ActiveStorage.service_urls_expire_in
-    redirect_to @blob.url(disposition: params[:disposition])
-  end
+  before_action :redirect_unless_blob_safe, only: :show
 
   private
 
-  def verify_blob_scan_status
+  def redirect_unless_blob_safe
     unless @blob.malware_scan_clean?
       redirect_to root_path, alert: t("active_storage.blobs.file_unavailable")
     end

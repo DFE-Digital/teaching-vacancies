@@ -33,6 +33,8 @@ class Publishers::Vacancies::PublishController < Publishers::Vacancies::WizardBa
 
   private
 
+  # Pending files are allowed to progress through the wizard steps but blocked here at publish time.
+  # This covers files still awaiting their antivirus scan result as well as malicious/errored ones.
   def uploaded_files_not_safe
     blobs = []
     blobs << vacancy.application_form.blob if vacancy.application_form.attached?

@@ -2,7 +2,9 @@ class Publishers::JobListing::DocumentsConfirmationForm < BaseForm
   include ActiveModel::Attributes
 
   validates :upload_additional_document, inclusion: { in: [true, false] }
-  validate :existing_supporting_documents_scan_safe
+  # Files awaiting an antivirus scan are allowed to progress through the wizard steps so publishers can continue building their vacancy.
+  # Pending files are blocked at publish time in the publish controller.
+  validate :additional_documents_scan_safe
 
   attr_reader :vacancy
 
@@ -19,9 +21,7 @@ class Publishers::JobListing::DocumentsConfirmationForm < BaseForm
 
   private
 
-  def existing_supporting_documents_scan_safe
-    return unless vacancy
-
+  def additional_documents_scan_safe
     vacancy.supporting_documents.each do |doc|
       blob = doc.blob
       if blob.malware_scan_malicious? || blob.malware_scan_scan_error?
