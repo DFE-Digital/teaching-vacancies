@@ -6,6 +6,9 @@ module Jobseekers
       validates_acceptance_of :confirm_data_accurate, :confirm_data_usage,
                               acceptance: true,
                               if: :all_steps_completed?
+      # Files that are still awaiting an antivirus scan are allowed to progress through the wizard steps so the jobseeker can complete
+      # the rest of their application while the scan runs. The uploaded_file_scan_safe is in this form
+      # to ensure that the jobseeker cannot submit their application before the scan has run.
       validate :uploaded_file_scan_safe
 
       private

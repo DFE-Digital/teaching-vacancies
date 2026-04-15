@@ -7,7 +7,9 @@ module Jobseekers
 
       validates :application_form, form_file: Vacancy::DOCUMENT_VALIDATION_OPTIONS.merge(skip_google_drive_virus_check: true)
       validates :application_form, presence: true, if: -> { upload_application_form_section_completed }
-      validate :existing_application_form_scan_safe
+      # Files awaiting an antivirus scan are allowed to progress through the wizard steps so jobseekers can complete other steps.
+      # Pending files are blocked at submit time in the review form.
+      validate :application_form_scan_safe
 
       completed_attribute(:upload_application_form)
 
@@ -21,7 +23,7 @@ module Jobseekers
 
       private
 
-      def existing_application_form_scan_safe
+      def application_form_scan_safe
         return unless application_form.respond_to?(:blob)
 
         blob = application_form.blob
