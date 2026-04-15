@@ -12,18 +12,18 @@ FactoryBot.define do
     geopoint { "POINT(-1 51.5)" }
     gias_data do
       {
-        CloseDate: nil,
-        HeadFirstName: Faker::Name.first_name,
-        HeadLastName: Faker::Name.last_name.delete("'"),
-        HeadPreferredJobTitle: Faker::Name.prefix.delete("."),
-        DateOfLastInspectionVisit: Faker::Date.between(from: 999.days.ago, to: 5.days.ago),
-        NumberOfPupils: Faker::Number.number(digits: 3),
-        "OfstedRating (name)": factory_sample(ofsted_ratings),
-        OpenDate: Faker::Date.between(from: 10_000.days.ago, to: 1000.days.ago),
-        SchoolCapacity: Faker::Number.number(digits: 4),
-        TelephoneNum: Faker::Number.number(digits: 11).to_s,
-        "Trusts (name)": "#{Faker::Company.name.delete("'")} Trust",
-        "TypeOfEstablishment (code)": "02",
+        # CloseDate: nil,
+        # HeadFirstName: Faker::Name.first_name,
+        # HeadLastName: Faker::Name.last_name.delete("'"),
+        # HeadPreferredJobTitle: Faker::Name.prefix.delete("."),
+        # DateOfLastInspectionVisit: Faker::Date.between(from: 999.days.ago, to: 5.days.ago),
+        # NumberOfPupils: Faker::Number.number(digits: 3),
+        # "OfstedRating (name)": factory_sample(ofsted_ratings),
+        # OpenDate: Faker::Date.between(from: 10_000.days.ago, to: 1000.days.ago),
+        # SchoolCapacity: Faker::Number.number(digits: 4),
+        # TelephoneNum: Faker::Number.number(digits: 11).to_s,
+        # "Trusts (name)": "#{Faker::Company.name.delete("'")} Trust",
+        # "TypeOfEstablishment (code)": "02",
       }
     end
     detailed_school_type { "Voluntary aided school" }

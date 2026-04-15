@@ -44,7 +44,7 @@ RSpec.describe VacancyFilterQuery do
       # Subjects are ignored when phases are primary-only
       create(:vacancy, :secondary, job_title: "Vacancy 1", subjects: %w[English Spanish], working_patterns: %w[part_time full_time], ect_status: "ect_suitable", organisations: [academy], enable_job_applications: true, visa_sponsorship_available: true)
 
-      local_authority_school = create(:school, name: "local authority", school_type: "Local authority maintained schools")
+      local_authority_school = create(:school, name: "local authority", school_type: "Local authority maintained school")
       create(:vacancy, job_title: "Vacancy 3", phases: %w[primary], job_roles: ["sendco"], organisations: [local_authority_school], enable_job_applications: true)
 
       non_faith_school1 = create(:school, name: "nonfaith1", gias_data: { "ReligiousCharacter (name)" => "" })

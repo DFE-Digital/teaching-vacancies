@@ -108,7 +108,7 @@
     value_before_type_cast: Foundation special school
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: school_type
-    value_before_type_cast: Special schools
+    value_before_type_cast: Special school
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: local_authority_code
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -257,7 +257,7 @@
     value_before_type_cast: Academy alternative provision converter
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: school_type
-    value_before_type_cast: Academies
+    value_before_type_cast: Academy
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: local_authority_code
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -408,7 +408,7 @@
     value_before_type_cast: Academy converter
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: school_type
-    value_before_type_cast: Academies
+    value_before_type_cast: Academy
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: local_authority_code
   - !ruby/object:ActiveModel::Attribute::FromDatabase

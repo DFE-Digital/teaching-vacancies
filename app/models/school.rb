@@ -2,7 +2,7 @@ class School < Organisation
   has_many :school_group_memberships, dependent: :destroy
   has_many :school_groups, through: :school_group_memberships
 
-  scope :not_excluded, -> { where.not(detailed_school_type: EXCLUDED_DETAILED_SCHOOL_TYPES) }
+  scope :not_excluded, -> { kept.where.not(detailed_school_type: EXCLUDED_DETAILED_SCHOOL_TYPES) }
 
   validates :urn, uniqueness: true
 
@@ -11,6 +11,7 @@ class School < Organisation
   FREE_SCHOOL_TYPE = "Free Schools".freeze
   INDEPENDENT_SCHOOL_TYPE = "Independent schools".freeze
   VALID_SCHOOL_TYPES = [LA_SCHOOL_TYPE, INDEPENDENT_SCHOOL_TYPE, "Special schools", "Universities", ACADEMY_TYPE, FREE_SCHOOL_TYPE, "Welsh schools", "Other types", "Colleges", "Online provider"].freeze
+  EXCLUDED_SCHOOL_TYPES = ["Universities", "Welsh schools", "Online providers"].freeze
 
   # This is direct from GIAS (with plurals removed via singularize)
   validates :school_type, inclusion: { in: VALID_SCHOOL_TYPES }
@@ -50,6 +51,10 @@ class School < Organisation
     sixth_form_or_college: %i[ks5],
     through: %i[early_years ks1 ks2 ks3 ks4 ks5],
   }.freeze
+
+  def excluded?
+    !kept? || detailed_school_type.in?(EXCLUDED_DETAILED_SCHOOL_TYPES)
+  end
 
   def religious_character
     return if !respond_to?(:gias_data) || gias_data.nil?
