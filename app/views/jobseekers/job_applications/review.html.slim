@@ -10,7 +10,7 @@
         p.govuk-body = t(".deadline_passed")
 
     - if @review_form.errors.any?
-      = govuk_error_summary(@review_form)
+      = render "shared/error_messages", model: @review_form
     - else
       = render "shared/error_messages", model: @job_application, presenter: ErrorSummaryPresenter.new(@job_application.errors)
 
