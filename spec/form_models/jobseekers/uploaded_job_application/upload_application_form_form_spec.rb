@@ -10,8 +10,7 @@ RSpec.describe Jobseekers::UploadedJobApplication::UploadApplicationFormForm, ty
 
     context "when the blob is malicious" do
       before do
-        allow(blob).to receive(:malware_scan_malicious?).and_return(true)
-        allow(blob).to receive(:malware_scan_scan_error?).and_return(false)
+        allow(blob).to receive_messages(malware_scan_malicious?: true, malware_scan_scan_error?: false)
       end
 
       it "adds an unsafe_file error" do
@@ -22,8 +21,7 @@ RSpec.describe Jobseekers::UploadedJobApplication::UploadApplicationFormForm, ty
 
     context "when the blob has a scan error" do
       before do
-        allow(blob).to receive(:malware_scan_malicious?).and_return(false)
-        allow(blob).to receive(:malware_scan_scan_error?).and_return(true)
+        allow(blob).to receive_messages(malware_scan_malicious?: false, malware_scan_scan_error?: true)
       end
 
       it "adds an unsafe_file error" do
@@ -34,8 +32,7 @@ RSpec.describe Jobseekers::UploadedJobApplication::UploadApplicationFormForm, ty
 
     context "when the blob is clean" do
       before do
-        allow(blob).to receive(:malware_scan_malicious?).and_return(false)
-        allow(blob).to receive(:malware_scan_scan_error?).and_return(false)
+        allow(blob).to receive_messages(malware_scan_malicious?: false, malware_scan_scan_error?: false)
       end
 
       it "does not add an unsafe_file error" do
