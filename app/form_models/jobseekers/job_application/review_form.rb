@@ -16,7 +16,7 @@ module Jobseekers
       def uploaded_file_scan_safe
         return unless job_application
 
-        blob = if job_application.class.name == "UploadedJobApplication"
+        blob = if job_application.instance_of?(::UploadedJobApplication)
                  return unless job_application.application_form.attached?
 
                  job_application.application_form.blob
