@@ -143,6 +143,14 @@ RSpec.describe "Documents" do
       it "redirects to the next step" do
         expect(request).to redirect_to(organisation_job_build_path(vacancy.id, :school_visits))
       end
+
+      context "when the existing blob is malicious" do
+        before { vacancy.application_form.blob.malware_scan_malicious! }
+
+        it "renders the application form step" do
+          expect(request).to render_template("publishers/vacancies/build/application_form")
+        end
+      end
     end
 
     context "MIME type inspection" do

@@ -179,6 +179,16 @@ RSpec.describe "Documents" do
           expect(request).to redirect_to(organisation_job_path(vacancy.id))
         end
       end
+
+      context "when a supporting document has been flagged as unsafe" do
+        let(:upload_additional_document) { "false" }
+
+        before { vacancy.supporting_documents.first.blob.malware_scan_malicious! }
+
+        it "renders the documents index page with an error" do
+          expect(request).to render_template(:index)
+        end
+      end
     end
 
     context "when upload_additional_document is true" do
