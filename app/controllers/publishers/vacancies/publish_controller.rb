@@ -1,5 +1,5 @@
 class Publishers::Vacancies::PublishController < Publishers::Vacancies::WizardBaseController
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   before_action :set_vacancy
 
   def create
@@ -29,7 +29,7 @@ class Publishers::Vacancies::PublishController < Publishers::Vacancies::WizardBa
       redirect_to organisation_job_path(vacancy.id)
     end
   end
-  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   private
 

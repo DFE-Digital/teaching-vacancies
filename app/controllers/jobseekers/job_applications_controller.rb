@@ -177,7 +177,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     step_process.validatable_steps.all? { |step| step_valid?(step) }
   end
 
-
   def step_valid?(step)
     form_class = step_process.form_class_for(step)
     attributes = form_class.load_form(job_application)

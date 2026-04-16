@@ -4,7 +4,7 @@
 class ActiveStorage::BlobsController < ActiveStorage::BaseController
   include ActiveStorage::SetBlob
 
-  before_action :redirect_unless_blob_safe, only: :show
+  before_action :redirect_unless_blob_safe, only: :show # rubocop:disable Rails/LexicallyScopedActionFilter
 
   private
 
