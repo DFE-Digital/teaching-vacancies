@@ -4,14 +4,11 @@ require "rails_helper"
 
 RSpec.describe Jobseekers::UploadedJobApplication::UploadApplicationFormForm, type: :model do
   describe "application_form_scan_safe" do
-    let(:blob) { instance_double(ActiveStorage::Blob, filename: "application_form.pdf") }
-    let(:attachment) { double(blob: blob) }
-    let(:form) { described_class.new(application_form: attachment) }
+    let(:job_application) { create(:uploaded_job_application, :with_uploaded_application_form) }
+    let(:form) { described_class.new(application_form: job_application.application_form) }
 
     context "when the blob is malicious" do
-      before do
-        allow(blob).to receive_messages(malware_scan_malicious?: true, malware_scan_scan_error?: false)
-      end
+      before { job_application.application_form.blob.malware_scan_malicious! }
 
       it "adds an unsafe_file error" do
         form.valid?
@@ -20,9 +17,7 @@ RSpec.describe Jobseekers::UploadedJobApplication::UploadApplicationFormForm, ty
     end
 
     context "when the blob has a scan error" do
-      before do
-        allow(blob).to receive_messages(malware_scan_malicious?: false, malware_scan_scan_error?: true)
-      end
+      before { job_application.application_form.blob.malware_scan_scan_error! }
 
       it "adds an unsafe_file error" do
         form.valid?
@@ -31,10 +26,6 @@ RSpec.describe Jobseekers::UploadedJobApplication::UploadApplicationFormForm, ty
     end
 
     context "when the blob is clean" do
-      before do
-        allow(blob).to receive_messages(malware_scan_malicious?: false, malware_scan_scan_error?: false)
-      end
-
       it "does not add an unsafe_file error" do
         form.valid?
         expect(form.errors.of_kind?(:application_form, :unsafe_file)).to be false
