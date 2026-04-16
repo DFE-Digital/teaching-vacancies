@@ -17,16 +17,12 @@ module Jobseekers
         return unless job_application
 
         blob = if job_application.instance_of?(::UploadedJobApplication)
-                 return unless job_application.application_form.attached?
-
-                 job_application.application_form.blob
-               else
-                 return unless job_application.baptism_certificate.attached?
-
+                 job_application.application_form.blob if job_application.application_form.attached?
+               elsif job_application.baptism_certificate.attached?
                  job_application.baptism_certificate.blob
                end
 
-        return if blob.malware_scan_clean?
+        return if blob.nil? || blob.malware_scan_clean?
 
         message = if blob.malware_scan_pending?
                     I18n.t("jobs.file_pending_scan_message", filename: blob.filename)

@@ -74,22 +74,9 @@ RSpec.describe FormFileValidator do
     end
 
     context "when skip_google_drive_virus_check is true" do
-      let(:form_class) do
-        Class.new do
-          include ActiveModel::Model
-
-          validates :supporting_documents, form_file: {
-            file_type: :document,
-            content_types_allowed: %w[application/pdf].freeze,
-            file_size_limit: 5.megabytes,
-            valid_file_types: %i[PDF],
-            skip_google_drive_virus_check: true,
-          }.freeze
-          attr_accessor :supporting_documents
-        end
-      end
+      let(:vacancy) { build_stubbed(:vacancy) }
       let(:uploaded_document) { fixture_file_upload("blank_job_spec.pdf", "application/pdf") }
-      let(:form) { form_class.new(supporting_documents: [uploaded_document]) }
+      let(:form) { Publishers::JobListing::ApplicationFormForm.new({ application_form: uploaded_document }, vacancy) }
 
       it "does not call the Google Drive virus check" do
         expect(Publishers::DocumentVirusCheck).not_to receive(:new)
