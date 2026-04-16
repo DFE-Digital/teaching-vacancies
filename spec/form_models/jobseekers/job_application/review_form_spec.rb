@@ -49,7 +49,7 @@ RSpec.describe Jobseekers::JobApplication::ReviewForm, type: :model do
       before { job_application.application_form.blob.malware_scan_pending! }
 
       it "is invalid and shows a pending message" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.messages_for(:base)).to include(
           I18n.t("jobs.file_pending_scan_message", filename: job_application.application_form.filename),
         )
@@ -60,7 +60,7 @@ RSpec.describe Jobseekers::JobApplication::ReviewForm, type: :model do
       before { job_application.application_form.blob.malware_scan_malicious! }
 
       it "is invalid and shows an unsafe message" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.messages_for(:base)).to include(
           I18n.t("jobs.file_unsafe_error_message", filename: job_application.application_form.filename),
         )
