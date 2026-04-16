@@ -128,8 +128,16 @@ RSpec.configure do |config|
                   expires_at: {
                     type: :string,
                     format: :datetime,
-                    example: "2030-03-13T15:30:00Z",
-                    description: "The end datetime of the vacancy. Must be after the start date.",
+                    example: "2030-03-13T15:30:00",
+                    description: "The end datetime of the vacancy in <a href='https://en.wikipedia.org/wiki/ISO_8601'>ISO 8601</a> format." \
+                                 "<br>Must be after the start date." \
+                                 "<br>Main example without timezone designator (recommended):" \
+                                 "<ul><li>2030-03-13T15:30:00</li>" \
+                                 "<li>When using this format, the datetime is assumed to be in the local timezone for the given date.</li></ul>" \
+                                 "Examples with explicit timezone:" \
+                                 "<ul><li>UTC (Z): 2030-03-13T15:30:00Z</li>" \
+                                 "<li>Offset: 2030-03-13T15:30:00+01:00</li>" \
+                                 "<li>When providing a timezone, ensure your client sends the correct offset for the target UK date (GMT or BST)</li></ul>",
                   },
                   schools: {
                     oneOf: [
@@ -343,8 +351,8 @@ RSpec.configure do |config|
               expires_at: {
                 type: :string,
                 format: :datetime,
-                example: "2025-03-13T15:30:00Z",
-                description: "The end datetime of the vacancy. Must be after the start date.",
+                example: "2025-03-13T15:30:00",
+                description: 'The end datetime of the vacancy in <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> format',
               },
               job_title: {
                 type: :string,
