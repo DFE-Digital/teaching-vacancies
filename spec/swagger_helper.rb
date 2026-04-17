@@ -128,16 +128,17 @@ RSpec.configure do |config|
                   expires_at: {
                     type: :string,
                     format: :datetime,
-                    example: "2030-03-13T15:30:00",
+                    example: "2026-04-13T15:30:00",
                     description: "The end datetime of the vacancy in <a href='https://en.wikipedia.org/wiki/ISO_8601'>ISO 8601</a> format." \
                                  "<br>Must be after the start date." \
                                  "<br>Main example without timezone designator (recommended):" \
-                                 "<ul><li>2030-03-13T15:30:00</li>" \
-                                 "<li>When using this format, the datetime is assumed to be in the local timezone for the given date.</li></ul>" \
-                                 "Examples with explicit timezone:" \
-                                 "<ul><li>UTC (Z): 2030-03-13T15:30:00Z</li>" \
-                                 "<li>Offset: 2030-03-13T15:30:00+01:00</li>" \
-                                 "<li>When providing a timezone, ensure your client sends the correct offset for the target UK date (GMT or BST)</li></ul>",
+                                 "<ul><li>2026-04-13T15:30:00</li>" \
+                                 "<li>When using this format, the datetime is interpreted in UK time (Europe/London) for the given date, with GMT/BST applied automatically as appropriate.</li></ul>" \
+                                 "Examples with explicit timezone resulting in the same point in time:" \
+                                 "<ul><li>UTC (Z): 2026-04-13T14:30:00Z</li>" \
+                                 "<ul><li>UTC: 2026-04-13T14:30:00+00:00</li>" \
+                                 "<li>Offset: 2026-04-13T15:30:00+01:00</li>" \
+                                 "<li>When providing a timezone, ensure to use the correct offset for the target UK date (GMT or BST)</li></ul>",
                   },
                   schools: {
                     oneOf: [
@@ -242,7 +243,7 @@ RSpec.configure do |config|
                   publish_on: {
                     type: :string,
                     format: :date,
-                    example: "2025-01-01",
+                    example: "2026-04-01",
                     description: "The date on which the vacancy should be published. Defaults to the current date.",
                   },
                   benefits_details: {
@@ -252,7 +253,7 @@ RSpec.configure do |config|
                   },
                   starts_on: {
                     type: :string,
-                    example: "12th May",
+                    example: "12th September",
                     description: "The start date (or approximate start timeframe) of the job.",
                   },
                   visa_sponsorship_available: {
@@ -345,14 +346,14 @@ RSpec.configure do |config|
               publish_on: {
                 type: :string,
                 format: :date,
-                example: "2025-01-01",
+                example: "2026-04-01",
                 description: "The date on which the vacancy should be published. Defaults to the current date.",
               },
               expires_at: {
                 type: :string,
                 format: :datetime,
-                example: "2025-03-13T15:30:00",
-                description: 'The end datetime of the vacancy in <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> format',
+                example: "2026-04-17T09:00:00.000+01:00",
+                description: 'The end datetime of the vacancy in <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> format, including a timezone offset',
               },
               job_title: {
                 type: :string,
