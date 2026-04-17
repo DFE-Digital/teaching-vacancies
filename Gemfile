@@ -90,7 +90,7 @@ gem "sanitize"
 gem "sentry-rails"
 gem "sentry-ruby"
 gem "sentry-sidekiq"
-# sidekiq 7 needs Redis 6.2.x which isn't available on Azure (yet)
+# TODO: Pinned to <7 until compatible with sidekiq-cron
 gem "sidekiq", "<7"
 gem "sidekiq-cron"
 gem "sidekiq-limit_fetch"
