@@ -48,7 +48,8 @@ RSpec.describe VacancyTemplate do
     end
   end
 
-  describe "resetting before save" do
+  # This test fails unless vacancy_template overrides reset_application_link to be an empty method
+  describe "check that uploaded_form template types can be saved" do
     let(:template) { build(:vacancy_template, organisation: build(:school), enable_job_applications: false, receive_applications: "uploaded_form") }
 
     it "can be saved" do
