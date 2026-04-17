@@ -1,5 +1,99 @@
 require "rails_helper"
 
+# V1 API contract — frozen enum values.
+# These MUST NOT change once V1 is published. If the Vacancy model values change,
+# add a mapping layer in the service rather than updating these constants.
+# When mapping becomes untenable, create V2 of the API.
+V1_JOB_ROLES = %w[
+  teacher
+  headteacher
+  deputy_headteacher
+  assistant_headteacher
+  head_of_year_or_phase
+  head_of_department_or_curriculum
+  teaching_assistant
+  higher_level_teaching_assistant
+  education_support
+  sendco
+  administration_hr_data_and_finance
+  catering_cleaning_and_site_management
+  it_support
+  pastoral_health_and_welfare
+  other_leadership
+  other_support
+].freeze
+
+V1_CONTRACT_TYPES = %w[
+  permanent
+  fixed_term
+  casual
+].freeze
+
+V1_WORKING_PATTERNS = %w[
+  full_time
+  part_time
+].freeze
+
+V1_PHASES = %w[
+  nursery
+  primary
+  secondary
+  sixth_form_or_college
+  through
+].freeze
+
+V1_KEY_STAGES = %w[
+  early_years
+  ks1
+  ks2
+  ks3
+  ks4
+  ks5
+].freeze
+
+V1_SUBJECTS = [
+  "Accounting",
+  "Art and design",
+  "Biology",
+  "Business studies",
+  "Chemistry",
+  "Citizenship",
+  "Classics",
+  "Computing",
+  "Dance",
+  "Design and technology",
+  "Drama",
+  "Economics",
+  "Engineering",
+  "English",
+  "Food technology",
+  "French",
+  "Geography",
+  "German",
+  "Health and social care",
+  "History",
+  "Humanities",
+  "ICT",
+  "Languages",
+  "Law",
+  "Mandarin",
+  "Mathematics",
+  "Media studies",
+  "Music",
+  "Philosophy",
+  "Physical education",
+  "Physics",
+  "Politics",
+  "PSHE",
+  "Psychology",
+  "Religious education",
+  "Science",
+  "Social sciences",
+  "Sociology",
+  "Spanish",
+  "Statistics",
+].freeze
+
 RSpec.configure do |config|
   # Specify a root folder where Swagger JSON files are generated
   config.openapi_root = Rails.root.join("swagger").to_s
@@ -202,14 +296,14 @@ RSpec.configure do |config|
                     minItems: 1,
                     items: {
                       type: :string,
-                      enum: Vacancy.job_roles.keys,
+                      enum: V1_JOB_ROLES,
                       description: "A job role identifier representing a specific responsibility or position.",
                     },
                     description: "An array of one or more roles that best represent the nature and level of responsibility of the vacancy.",
                   },
                   contract_type: {
                     type: :string,
-                    enum: Vacancy.contract_types.keys,
+                    enum: V1_CONTRACT_TYPES,
                     example: "permanent",
                     description: "Specifies the type of employment contract associated with the vacancy.",
                   },
@@ -218,7 +312,7 @@ RSpec.configure do |config|
                     minItems: 1,
                     items: {
                       type: :string,
-                      enum: Vacancy::WORKING_PATTERNS,
+                      enum: V1_WORKING_PATTERNS,
                       description: "Indicates the expected working hours or schedule for the role.",
                     },
                     example: %w[full_time],
@@ -229,7 +323,7 @@ RSpec.configure do |config|
                     minItems: 1,
                     items: {
                       type: :string,
-                      enum: Vacancy.phases.keys,
+                      enum: V1_PHASES,
                       description: "Indicates the stage of education the vacancy relates to.",
                     },
                     example: %w[secondary],
@@ -276,7 +370,7 @@ RSpec.configure do |config|
                     minItems: 0,
                     items: {
                       type: :string,
-                      enum: Vacancy.key_stages.keys,
+                      enum: V1_KEY_STAGES,
                       description: "Indicates the key stage that the role is relevant to.",
                     },
                     example: %w[ks1 ks2],
@@ -287,7 +381,7 @@ RSpec.configure do |config|
                     minItems: 0,
                     items: {
                       type: :string,
-                      enum: SUBJECT_OPTIONS.map(&:first), # List of available subjects in the service (from subjects.yml)
+                      enum: V1_SUBJECTS,
                       description: "Describes the subject or area of learning the role focuses on.",
                     },
                     example: %w[Mathematics Science],
@@ -423,7 +517,7 @@ RSpec.configure do |config|
                 minItems: 1,
                 items: {
                   type: :string,
-                  enum: Vacancy.job_roles.keys,
+                  enum: V1_JOB_ROLES,
                   description: "A job role identifier representing a specific responsibility or position.",
                 },
                 description: "An array of one or more roles that best represent the nature and level of responsibility of the vacancy.",
@@ -438,7 +532,7 @@ RSpec.configure do |config|
                 minItems: 1,
                 items: {
                   type: :string,
-                  enum: Vacancy::WORKING_PATTERNS,
+                  enum: V1_WORKING_PATTERNS,
                   description: "Indicates the expected working hours or schedule for the role.",
                 },
                 example: %w[full_time],
@@ -446,7 +540,7 @@ RSpec.configure do |config|
               },
               contract_type: {
                 type: :string,
-                enum: Vacancy.contract_types.keys,
+                enum: V1_CONTRACT_TYPES,
                 example: "permanent",
                 description: "Specifies the type of employment contract associated with the vacancy.",
               },
@@ -455,7 +549,7 @@ RSpec.configure do |config|
                 minItems: 1,
                 items: {
                   type: :string,
-                  enum: Vacancy.phases.keys,
+                  enum: V1_PHASES,
                   description: "Indicates the stage of education the vacancy relates to.",
                 },
                 example: %w[secondary],
@@ -466,7 +560,7 @@ RSpec.configure do |config|
                 minItems: 0,
                 items: {
                   type: :string,
-                  enum: Vacancy.key_stages.keys,
+                  enum: V1_KEY_STAGES,
                   description: "Indicates the key stage that the role is relevant to.",
                 },
                 example: %w[ks1 ks2],
@@ -477,7 +571,7 @@ RSpec.configure do |config|
                 minItems: 0,
                 items: {
                   type: :string,
-                  enum: SUBJECT_OPTIONS.map(&:first), # List of available subjects in the service (from subjects.yml)
+                  enum: V1_SUBJECTS,
                   description: "Describes the subject or area of learning the role focuses on.",
                 },
                 description: "An array of one or more subject areas that the vacancy involves.",
