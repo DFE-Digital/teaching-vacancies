@@ -47,4 +47,14 @@ RSpec.describe VacancyTemplate do
                            other_extension_reason_details])
     end
   end
+
+  describe "resetting before save" do
+    let(:template) { build(:vacancy_template, organisation: build(:school), enable_job_applications: false, receive_applications: "uploaded_form") }
+
+    it "can be saved" do
+      expect(template).to be_valid
+      expect(template.errors.messages).to be_empty
+      expect(template.save).to be(true)
+    end
+  end
 end
