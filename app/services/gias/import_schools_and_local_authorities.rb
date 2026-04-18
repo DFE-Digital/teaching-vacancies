@@ -10,17 +10,20 @@ class Gias::ImportSchoolsAndLocalAuthorities
     reset_data
   end
 
+  class ImportFailure < StandardError
+  end
+
   def call
     log_benchmark("Importing schools and local authorities") do
-      Gias::Data.new(SCHOOLS_AND_LOCAL_AUTHORITIES_CSV).each_with_index do |row, index|
-        local_authorities.add(group_data(row))
-        schools.push(school_data(row))
-        memberships.push(membership_data(row))
-
-        import_batch if (index % BATCH_SIZE).zero?
+      import_errors = Gias::Data.new(SCHOOLS_AND_LOCAL_AUTHORITIES_CSV).each_slice(BATCH_SIZE).flat_map do |group|
+        group.each do |row|
+          local_authorities.add(group_data(row))
+          schools.push(school_data(row))
+          memberships.push(membership_data(row))
+        end
+        import_batch
       end
-
-      import_batch
+      raise ImportFailure, import_errors.map(&:errors) if import_errors.any?
     end
   end
 
@@ -35,11 +38,12 @@ class Gias::ImportSchoolsAndLocalAuthorities
   end
 
   def import_batch
-    import_local_authorities if local_authorities.any?
-    import_schools if schools.any?
-    import_memberships if memberships.any?
-
-    reset_data
+    failures = import_local_authorities.failed_instances +
+      import_schools.failed_instances +
+      import_memberships.failed_instances
+    failures.tap do
+      reset_data
+    end
   end
 
   def import_local_authorities
@@ -59,7 +63,6 @@ class Gias::ImportSchoolsAndLocalAuthorities
         conflict_target: [:urn],
         columns: schools.first.keys,
       },
-      batch_size: 1000,
     )
   end
 
