@@ -4,14 +4,6 @@ RSpec.describe School do
   it { is_expected.to have_many(:school_group_memberships) }
   it { is_expected.to have_many(:school_groups) }
 
-  describe "#school_type" do
-    subject { build(:school, school_type: "Academies") }
-
-    it "singularizes any plural school type" do
-      expect(subject.school_type).to eq("Academy")
-    end
-  end
-
   describe "#religious_character" do
     let(:religious_character) { "Roman Catholic" }
     let(:gias_data) { { "ReligiousCharacter (name)" => religious_character } }

@@ -34,7 +34,7 @@ FactoryBot.define do
     region { "South-East England" }
     safeguarding_information { Faker::Lorem.paragraph(sentence_count: 1) }
     sequence(:slug) { |n| "#{name.parameterize}-#{n}" }
-    school_type { "LA maintained school" }
+    school_type { School::INDEPENDENT_SCHOOL_TYPE }
     postcode { FFaker::AddressUK.postcode }
     town { Faker::Address.city.delete("'") }
     # URN is validated unique for a school
@@ -101,7 +101,11 @@ FactoryBot.define do
     end
   end
 
+  trait :free_school do
+    school_type { School::FREE_SCHOOL_TYPE }
+  end
+
   factory :academy, parent: :school do
-    school_type { "Academy" }
+    school_type { School::ACADEMY_TYPE }
   end
 end
