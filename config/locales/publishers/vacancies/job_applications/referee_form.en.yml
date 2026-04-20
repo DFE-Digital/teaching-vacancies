@@ -10,7 +10,7 @@ en:
               blank: Referee job title can't be blank
             email:
               blank: Referee email can't be blank
-              email: Referee email must be of the form example@example.com
+              invalid: Enter a valid email address in the correct format, like name@example.com
             organisation:
               blank: Referee organisation can't be blank
             relationship:
