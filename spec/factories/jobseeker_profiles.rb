@@ -45,7 +45,6 @@ FactoryBot.define do
       qualifications { build_list(:qualification, 1, :with_random_category, job_application: nil, jobseeker_profile: instance) }
       employments { build_list(:employment, 1, :current_role, job_application: nil, jobseeker_profile: instance) }
       training_and_cpds { build_list(:training_and_cpd, 1, job_application: nil, jobseeker_profile: instance) }
-      professional_body_memberships { build_list(:professional_body_membership, 1, job_application: nil, jobseeker_profile: instance) }
     end
   end
 end
