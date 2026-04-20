@@ -204,6 +204,133 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
         end
       end
 
+      describe "'expires_at'" do
+        let(:raw_expires_at_query) { Arel.sql("to_char(expires_at, 'YYYY-MM-DD HH24:MI:SS')") }
+
+        context "when parsing equivalent representations during British Summer Time (BST)" do
+          # All inputs below represent the same instant: 9am UK local time (Thursday, 23 April 2026 during BST).
+          # They differ only in timezone notation; the app must parse each correctly and store the same instant.
+          before { travel_to(Time.zone.parse("2026-04-22T10:00:00")) }
+
+          let(:expected_local_iso8601) { "2026-04-23T09:00:00+01:00" }
+          let(:expected_utc_iso8601) { "2026-04-23T08:00:00Z" }
+          let(:expected_db_timestamp) { "2026-04-23 08:00:00" }
+
+          [
+            { input: "2026-04-23T08:00:00Z", desc: "UTC notation (Z suffix)" },
+            { input: "2026-04-23T08:00:00+00:00", desc: "explicit UTC offset" },
+            { input: "2026-04-23T09:00:00", desc: "naive local time (no timezone)" },
+            { input: "2026-04-23T09:00:00+01:00", desc: "explicit UK BST offset" },
+          ].each_with_index do |spec, index|
+            context "when expires_at is '#{spec[:input]}' (#{spec[:desc]})" do
+              let(:vacancy_params) do
+                params.merge(
+                  expires_at: spec[:input],
+                  external_reference: "new-ref-iso-#{index}",
+                  job_title: "A job title iso #{index}",
+                )
+              end
+
+              it "persists the same instant: 9am UK time (08:00 UTC) regardless of input format" do
+                response = described_class.call(vacancy_params)
+                vacancy = PublishedVacancy.find(response[:json][:id])
+                db_expires_at = Vacancy.where(id: vacancy.id).pick(raw_expires_at_query)
+
+                expect(db_expires_at).to eq(expected_db_timestamp)
+                expect(vacancy.expires_at.iso8601).to eq(expected_local_iso8601)
+                expect(vacancy.expires_at.utc.iso8601).to eq(expected_utc_iso8601)
+              end
+            end
+          end
+        end
+
+        context "when parsing equivalent representations during Greenwich Mean Time (GMT)" do
+          # All inputs below represent the same instant: 9am UK local time (Tuesday, 20 January 2026 during GMT).
+          # During GMT, local UK time is UTC+00:00, so local and UTC clock times match.
+          before { travel_to(Time.zone.parse("2026-01-15T10:00:00")) }
+
+          let(:expected_local_iso8601) { "2026-01-20T09:00:00+00:00" }
+          let(:expected_utc_iso8601) { "2026-01-20T09:00:00Z" }
+          let(:expected_db_timestamp) { "2026-01-20 09:00:00" }
+
+          [
+            { input: "2026-01-20T09:00:00Z", desc: "UTC notation (Z suffix)" },
+            { input: "2026-01-20T09:00:00+00:00", desc: "explicit UTC offset" },
+            { input: "2026-01-20T09:00:00", desc: "naive local time (no timezone)" },
+          ].each_with_index do |spec, index|
+            context "when expires_at is '#{spec[:input]}' (#{spec[:desc]})" do
+              let(:vacancy_params) do
+                params.merge(
+                  expires_at: spec[:input],
+                  external_reference: "new-ref-iso-gmt-#{index}",
+                  job_title: "A job title iso gmt #{index}",
+                )
+              end
+
+              it "persists the same instant: 9am UK time (09:00 UTC) regardless of input format" do
+                response = described_class.call(vacancy_params)
+                vacancy = PublishedVacancy.find(response[:json][:id])
+                db_expires_at = Vacancy.where(id: vacancy.id).pick(raw_expires_at_query)
+
+                expect(db_expires_at).to eq(expected_db_timestamp)
+                expect(vacancy.expires_at.iso8601).to eq(expected_local_iso8601)
+                expect(vacancy.expires_at.utc.iso8601).to eq(expected_utc_iso8601)
+              end
+            end
+          end
+        end
+
+        context "with Daylight Saving Time (DST) transitions" do
+          context "when created before BST with naive datetime expiring after BST starts" do
+            # This verifies cross-boundary parsing from a GMT date into a BST target date.
+            # For April 10, 09:00 local UK time is 08:00 UTC, and Rails stores that instant.
+            before { travel_to(Time.zone.parse("2026-03-15T10:00:00")) }
+
+            let(:vacancy_params) do
+              params.merge(
+                expires_at: "2026-04-10T09:00:00",
+                external_reference: "new-ref-dst-pre",
+                job_title: "A job title dst pre",
+              )
+            end
+
+            it "stores the April BST instant correctly even when submitted before BST begins" do
+              response = described_class.call(vacancy_params)
+              vacancy = PublishedVacancy.find(response[:json][:id])
+              db_expires_at = Vacancy.where(id: vacancy.id).pick(raw_expires_at_query)
+
+              expect(db_expires_at).to eq("2026-04-10 08:00:00")
+              expect(vacancy.expires_at.iso8601).to eq("2026-04-10T09:00:00+01:00")
+              expect(vacancy.expires_at.utc.iso8601).to eq("2026-04-10T08:00:00Z")
+            end
+          end
+
+          context "when created during BST expiring after clocks go back to Greenwich Mean Time (GMT) in autumn" do
+            # This verifies that a BST date expiring after the autumn DST transition is stored correctly.
+            # For November 15, 09:00 local UK time is 09:00 UTC, and Rails stores that instant.
+            before { travel_to(Time.zone.parse("2026-08-01T10:00:00")) }
+
+            let(:vacancy_params) do
+              params.merge(
+                expires_at: "2026-11-15T09:00:00",
+                external_reference: "new-ref-dst-post",
+                job_title: "A job title dst post",
+              )
+            end
+
+            it "stores the November date correctly even when submitted during BST" do
+              response = described_class.call(vacancy_params)
+              vacancy = PublishedVacancy.find(response[:json][:id])
+              db_expires_at = Vacancy.where(id: vacancy.id).pick(raw_expires_at_query)
+
+              expect(db_expires_at).to eq("2026-11-15 09:00:00")
+              expect(vacancy.expires_at.iso8601).to eq("2026-11-15T09:00:00+00:00")
+              expect(vacancy.expires_at.utc.iso8601).to eq("2026-11-15T09:00:00Z")
+            end
+          end
+        end
+      end
+
       context "when the vacancy belongs to a school" do
         it "creates a vacancy with the correct organisation" do
           create_vacancy_service
