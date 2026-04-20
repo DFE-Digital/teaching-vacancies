@@ -47,4 +47,15 @@ RSpec.describe VacancyTemplate do
                            other_extension_reason_details])
     end
   end
+
+  # This test fails unless vacancy_template overrides reset_application_link to be an empty method
+  describe "check that uploaded_form template types can be saved" do
+    let(:template) { build(:vacancy_template, organisation: build(:school), enable_job_applications: false, receive_applications: "uploaded_form") }
+
+    it "can be saved" do
+      expect(template).to be_valid
+      expect(template.errors.messages).to be_empty
+      expect(template.save).to be(true)
+    end
+  end
 end

@@ -84,6 +84,7 @@ class VacancyTemplate < ApplicationRecord
   def reset_documents; end
   def reset_contact_number; end
   def reset_application_email; end
+  def reset_application_link; end
 
   def vacancy_attributes
     attributes.symbolize_keys.except(:id, :name, :job_roles, :organisation_id,
