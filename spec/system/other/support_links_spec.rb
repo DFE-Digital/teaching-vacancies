@@ -17,9 +17,7 @@ RSpec.describe "A visitor to the website can access the support links" do
   end
 
   scenario "the accessibility statement" do
-    click_on "Accessibility"
-
-    expect(page).to have_content(/Accessibility statement/i)
+    expect(page).to have_link("Accessibility", href: "https://accessibility-statements.education.gov.uk/s/75")
   end
 
   scenario "the savings methodology" do
