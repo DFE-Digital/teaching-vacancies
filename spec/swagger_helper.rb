@@ -1,9 +1,10 @@
 require "rails_helper"
 
 # V1 API contract — frozen enum values.
-# These MUST NOT change once V1 is published. If the Vacancy model values change,
-# add a mapping layer in the service rather than updating these constants.
-# When mapping becomes untenable, create V2 of the API.
+# Additive updates are allowed when new Vacancy model values need to be exposed in V1.
+# Existing published V1 values must not be removed, renamed, or repurposed without an
+# explicit compatibility decision: add a mapping layer in the service, or create V2 of
+# the API if mapping becomes untenable.
 V1_JOB_ROLES = %w[
   teacher
   headteacher
