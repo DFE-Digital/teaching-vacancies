@@ -37,13 +37,6 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
       page_path: -> { select_category_jobseekers_profile_qualifications_path },
     },
     {
-      title: "Professional Body Memberships",
-      display_summary: ->(profile) { profile.professional_body_memberships.present? },
-      key: "professional_body_memberships",
-      link_text: "Add membership",
-      page_path: -> { new_jobseekers_profile_professional_body_membership_path },
-    },
-    {
       title: "Work history",
       display_summary: ->(profile) { profile.employments.any? },
       key: "employments",
