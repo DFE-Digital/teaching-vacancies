@@ -23,13 +23,11 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
       context "when applying filters" do
         before do
           visit organisation_jobs_with_type_path(:live)
-          # wait for page load
-          find(".dashboard-component")
-          find("select[name='sort_by']")
-          find("footer")
         end
 
         it "passes a11y", :a11y do
+          # wait for page load
+          expect(page).to have_content(school_group_vacancy.job_title)
           expect(page).to be_axe_clean
         end
 
