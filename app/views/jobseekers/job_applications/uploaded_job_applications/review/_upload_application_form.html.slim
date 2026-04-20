@@ -1,4 +1,5 @@
-- r.with_section :upload_application_form do |s|
-  - s.with_row do |row|
-    - row.with_key text: "Uploaded application form"
-    - row.with_value text: job_application.application_form.filename.to_s
+= review_section(job_application, :upload_application_form) do
+  = govuk_summary_list do |summary_list|
+    - summary_list.with_row do |row|
+      - row.with_key text: "Uploaded application form"
+      - row.with_value text: job_application.application_form.filename.to_s

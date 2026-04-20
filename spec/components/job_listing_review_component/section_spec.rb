@@ -3,11 +3,9 @@ require "rails_helper"
 RSpec.describe JobApplicationReviewComponent::Section, type: :component do
   subject(:component) { described_class.new(*args, **kwargs) }
 
-  let(:args) { [job_application] }
+  let(:args) { [job_application, name] }
   let(:kwargs) do
-    {
-      name: name,
-    }
+    {}
   end
 
   let(:job_application) { create(:job_application, :draft) }
@@ -26,7 +24,6 @@ RSpec.describe JobApplicationReviewComponent::Section, type: :component do
   context "when forms are provided" do
     let(:kwargs) do
       {
-        name: :personal_details,
         forms: %w[
           DeclarationsForm
           ProfessionalStatusForm
@@ -70,13 +67,11 @@ RSpec.describe JobApplicationReviewComponent::Section, type: :component do
   end
 
   describe "#error_path" do
-    let(:kwargs) { { name: section_name } }
-
     context "when the job application is an uploaded job application" do
       let(:job_application) { create(:uploaded_job_application) }
 
       context "and the section name is :personal_details" do
-        let(:section_name) { :personal_details }
+        let(:name) { :personal_details }
 
         it "returns the correct edit path" do
           render_inline(component)
@@ -87,7 +82,7 @@ RSpec.describe JobApplicationReviewComponent::Section, type: :component do
       end
 
       context "and the section name is :upload_application_form" do
-        let(:section_name) { :upload_application_form }
+        let(:name) { :upload_application_form }
 
         it "returns the correct edit path" do
           render_inline(component)
@@ -100,12 +95,12 @@ RSpec.describe JobApplicationReviewComponent::Section, type: :component do
 
     context "when the job application is a standard application and persisted" do
       let(:job_application) { create(:job_application) }
-      let(:section_name) { :personal_details }
+      let(:name) { :personal_details }
 
       it "returns the standard build path" do
         render_inline(component)
         expect(component.send(:error_path)).to eq(
-          Rails.application.routes.url_helpers.jobseekers_job_application_build_path(job_application, section_name),
+          Rails.application.routes.url_helpers.jobseekers_job_application_build_path(job_application, name),
         )
       end
     end
@@ -117,7 +112,7 @@ RSpec.describe JobApplicationReviewComponent::Section, type: :component do
         end
       end
 
-      let(:section_name) { :personal_details }
+      let(:name) { :personal_details }
 
       it "returns nil" do
         render_inline(component)

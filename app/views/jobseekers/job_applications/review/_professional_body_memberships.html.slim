@@ -1,4 +1,4 @@
-- r.with_section :professional_body_memberships
+= review_section(job_application, :professional_body_memberships) do
   - if job_application.professional_body_memberships.none?
     - if jobseeker_signed_in?
       p.govuk-body = t("jobseekers.job_applications.show.professional_body_memberships.none")
