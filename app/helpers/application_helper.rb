@@ -30,7 +30,7 @@ module ApplicationHelper
       { text: "Cookies", href: cookies_preferences_path },
       { text: "Privacy policy", href: "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers", attr: { target: "_blank" } },
       { text: "Terms and conditions", href: page_path("terms-and-conditions") },
-      { text: "Accessibility", href: page_path("accessibility") },
+      { text: "Accessibility", href: "https://accessibility-statements.education.gov.uk/s/75" },
       { text: "Savings methodology", href: page_path("savings-methodology") },
       { text: "Vision statement", href: page_path("vision-statement") },
     ]
