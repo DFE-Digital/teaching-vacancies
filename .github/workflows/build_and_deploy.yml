@@ -224,7 +224,7 @@ jobs:
 
       - name: Notify twd_tv_dev channel on build workflow failure
         if: failure()
-        uses: rtCamp/action-slack-notify@v2.3.3
+        uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: twd_tv_dev
           SLACK_USERNAME: CI Deployment
@@ -298,7 +298,7 @@ jobs:
 
     - name: Notify twd_tv_dev channel on ${{ env.ENVIRONMENT }} deployment failure
       if: steps.deploy_app_to_env.conclusion != 'success'
-      uses: rtCamp/action-slack-notify@v2.3.3
+      uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment
@@ -332,7 +332,7 @@ jobs:
 
     - name: Send job status message to twd_tv_dev channel
       if: failure()
-      uses: rtCamp/action-slack-notify@v2.3.3
+      uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment
@@ -381,7 +381,7 @@ jobs:
 
       - name: Send job status message to twd_tv_dev channel
         if: always()
-        uses: rtCamp/action-slack-notify@v2.3.3
+        uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: twd_tv_dev
           SLACK_USERNAME: CI Deployment
