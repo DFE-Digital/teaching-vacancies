@@ -8,7 +8,7 @@ RSpec.describe FixMyNewTermExpiresAt do
 
   # Convenience helpers
   let(:bst_start_utc) { Time.utc(2026, 3, 29, 1, 0, 0) }
-  let(:cutoff_utc) { Time.utc(2026, 4, 21, 9, 50, 0) }
+  let(:cutoff_utc) { Time.utc(2026, 4, 21, 9, 56, 0) }
   let(:bst_end_utc) { Time.utc(2026, 10, 25, 1, 0, 0) }
 
   # Within the created_at window
