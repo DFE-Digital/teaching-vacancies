@@ -5,7 +5,9 @@ class Publishers::Vacancies::PublishController < Publishers::Vacancies::WizardBa
   def create
     if vacancy.published?
       redirect_to organisation_job_path(vacancy.id), notice: t("messages.jobs.already_published")
-    elsif (not_safe_blobs = uploaded_files_not_safe).any?
+    elsif (not_safe_blobs = vacancy.unsafe_blobs).any?
+      # Pending files are allowed to progress through the wizard steps but blocked here at publish time.
+      # This covers files still awaiting their antivirus scan result as well as malicious/errored ones.
       messages = not_safe_blobs.map do |blob|
         if blob.malware_scan_pending?
           t("jobs.file_pending_scan_message", filename: blob.filename)
@@ -30,15 +32,4 @@ class Publishers::Vacancies::PublishController < Publishers::Vacancies::WizardBa
     end
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
-
-  private
-
-  # Pending files are allowed to progress through the wizard steps but blocked here at publish time.
-  # This covers files still awaiting their antivirus scan result as well as malicious/errored ones.
-  def uploaded_files_not_safe
-    blobs = []
-    blobs << vacancy.application_form.blob if vacancy.application_form.attached?
-    blobs += vacancy.supporting_documents.map(&:blob) if vacancy.supporting_documents.attached?
-    blobs.reject(&:malware_scan_clean?)
-  end
 end

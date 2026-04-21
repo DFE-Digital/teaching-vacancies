@@ -272,6 +272,13 @@ class Vacancy < ApplicationRecord
     Publisher.find_by(email: contact_email).present?
   end
 
+  def unsafe_blobs
+    blobs = []
+    blobs << application_form.blob if application_form.attached?
+    blobs += supporting_documents.map(&:blob) if supporting_documents.attached?
+    blobs.reject(&:malware_scan_clean?)
+  end
+
   private
 
   def update_conversation_searchable_content
