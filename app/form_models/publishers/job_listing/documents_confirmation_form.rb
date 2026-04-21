@@ -14,7 +14,7 @@ class Publishers::JobListing::DocumentsConfirmationForm < BaseForm
 
   attribute :upload_additional_document, :boolean
 
-  def initialize(params = {}, vacancy = nil)
+  def initialize(params, vacancy)
     @vacancy = vacancy
     super(params)
   end
