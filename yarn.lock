@@ -1453,6 +1453,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@csstools/css-syntax-patches-for-csstree@npm:^1.1.2":
+  version: 1.1.3
+  resolution: "@csstools/css-syntax-patches-for-csstree@npm:1.1.3"
+  peerDependencies:
+    css-tree: ^3.2.1
+  peerDependenciesMeta:
+    css-tree:
+      optional: true
+  checksum: 10c0/3b8a686710a46bb460f9d560d52ce0de315828e6d452002b692013e95fbf53669d7a71e28c9b6b1333fa9f37f058fad93e5db3b8516444907713cb9aad299ce1
+  languageName: node
+  linkType: hard
+
 "@csstools/css-tokenizer@npm:^3.0.3":
   version: 3.0.4
   resolution: "@csstools/css-tokenizer@npm:3.0.4"
@@ -2543,61 +2555,61 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry-internal/browser-utils@npm:10.47.0":
-  version: 10.47.0
-  resolution: "@sentry-internal/browser-utils@npm:10.47.0"
+"@sentry-internal/browser-utils@npm:10.48.0":
+  version: 10.48.0
+  resolution: "@sentry-internal/browser-utils@npm:10.48.0"
   dependencies:
-    "@sentry/core": "npm:10.47.0"
-  checksum: 10c0/f358e82d5a1a6c5e37ca38700c942fc0a8f2b1e3ef9df2d3f46ea51ef40aaad623347b4fd5f9b81547b000a46c7b405ee234a9a574846300e500d41facb2c13d
+    "@sentry/core": "npm:10.48.0"
+  checksum: 10c0/56e84a9906c08baa82be4b5011215fd29f54e437808049c542d5f5abe06c1730bf5887689588b1e8d70af899b2ec525b36f865aa68528882e2926d3689fea67c
   languageName: node
   linkType: hard
 
-"@sentry-internal/feedback@npm:10.47.0":
-  version: 10.47.0
-  resolution: "@sentry-internal/feedback@npm:10.47.0"
+"@sentry-internal/feedback@npm:10.48.0":
+  version: 10.48.0
+  resolution: "@sentry-internal/feedback@npm:10.48.0"
   dependencies:
-    "@sentry/core": "npm:10.47.0"
-  checksum: 10c0/e83d0193e0c9f926741bd2c2ece6a8909bdf4f3b5b14ae21378d9ecf6f9e83c5c6f8700135f0438a0790e3929b1496d87457ad35c1bea02c14f07e0c2312b2ce
+    "@sentry/core": "npm:10.48.0"
+  checksum: 10c0/af51c4257b49aea034d3fa442f019137e6d9633f70895b593db972ae89770cb74a82519d7541ad3f6010b9a9f1faec2bbd9bb50b7f67c3c9262ef258c7905ecf
   languageName: node
   linkType: hard
 
-"@sentry-internal/replay-canvas@npm:10.47.0":
-  version: 10.47.0
-  resolution: "@sentry-internal/replay-canvas@npm:10.47.0"
+"@sentry-internal/replay-canvas@npm:10.48.0":
+  version: 10.48.0
+  resolution: "@sentry-internal/replay-canvas@npm:10.48.0"
   dependencies:
-    "@sentry-internal/replay": "npm:10.47.0"
-    "@sentry/core": "npm:10.47.0"
-  checksum: 10c0/484c7d013358c1869e6c1fbf94548f2d306c9f990cb62eff9b3d0eac9bb7a948c4e4a037d0c6d93564390b3a06513391e19ffee98f0661ee6162d83fb5cc8dd9
+    "@sentry-internal/replay": "npm:10.48.0"
+    "@sentry/core": "npm:10.48.0"
+  checksum: 10c0/ac1c27be3deba277cc3aaffc625f07c357bc9d6694cdc0187aefabd5edd9f31d939790d40e1cfd99f9f062e5d871d20fe3b9911df23be83c33106371d2ddf7aa
   languageName: node
   linkType: hard
 
-"@sentry-internal/replay@npm:10.47.0":
-  version: 10.47.0
-  resolution: "@sentry-internal/replay@npm:10.47.0"
+"@sentry-internal/replay@npm:10.48.0":
+  version: 10.48.0
+  resolution: "@sentry-internal/replay@npm:10.48.0"
   dependencies:
-    "@sentry-internal/browser-utils": "npm:10.47.0"
-    "@sentry/core": "npm:10.47.0"
-  checksum: 10c0/1801dd781691a3e8825e75850d566b380d30df74fdf23440d20f7d03970be1198e76e9ca2688b7ff27a2919c910837706d2b8ed5e1faa103e3cd15a7693ec314
+    "@sentry-internal/browser-utils": "npm:10.48.0"
+    "@sentry/core": "npm:10.48.0"
+  checksum: 10c0/d2d72222c1373b264b05cc4cba4178d73c465066a0227c6b950ecb734dbc889509d5a40e055534d5663c4b54087f586147c4553b62ea5ab3e604f476414c7ee5
   languageName: node
   linkType: hard
 
-"@sentry/browser@npm:10.47.0":
-  version: 10.47.0
-  resolution: "@sentry/browser@npm:10.47.0"
+"@sentry/browser@npm:10.48.0":
+  version: 10.48.0
+  resolution: "@sentry/browser@npm:10.48.0"
   dependencies:
-    "@sentry-internal/browser-utils": "npm:10.47.0"
-    "@sentry-internal/feedback": "npm:10.47.0"
-    "@sentry-internal/replay": "npm:10.47.0"
-    "@sentry-internal/replay-canvas": "npm:10.47.0"
-    "@sentry/core": "npm:10.47.0"
-  checksum: 10c0/c4b9c3c94343e09a41006784d191dca3f4042fb3725051526eeae2dd097b61fb635ad82a833a95c2d2b633d76c75b98541a9c078876d9c5719bbcd230332bc62
+    "@sentry-internal/browser-utils": "npm:10.48.0"
+    "@sentry-internal/feedback": "npm:10.48.0"
+    "@sentry-internal/replay": "npm:10.48.0"
+    "@sentry-internal/replay-canvas": "npm:10.48.0"
+    "@sentry/core": "npm:10.48.0"
+  checksum: 10c0/5229a311d8da750adafb88f8e140129bc0f215625ac8b6fd2ea56c579ce8237e16b08d3c9d85b014c0e9ab497c9f294a12591943fac066ede5235f2d6a981051
   languageName: node
   linkType: hard
 
-"@sentry/core@npm:10.47.0":
-  version: 10.47.0
-  resolution: "@sentry/core@npm:10.47.0"
-  checksum: 10c0/985dd751d26c3bbfd14ba491489ee0d38d7a4570b70538d36580d408c3171116a86883d18a7ddd6741455737fb72016786ff666dcea1ab95572257fc1e7f242b
+"@sentry/core@npm:10.48.0":
+  version: 10.48.0
+  resolution: "@sentry/core@npm:10.48.0"
+  checksum: 10c0/e5c380ffa2dad1d803d9634f8343c42e9ad7768936ff97b7bbc5322e26457ba2024fc95c027c3cb2be33d6e8442b899a8f317ef20230355564f22c03d6002e34
   languageName: node
   linkType: hard
 
@@ -5035,10 +5047,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globals@npm:^17.4.0":
-  version: 17.4.0
-  resolution: "globals@npm:17.4.0"
-  checksum: 10c0/2be9e8c2b9035836f13d420b22f0247a328db82967d3bebfc01126d888ed609305f06c05895914e969653af5c6ba35fd7a0920f3e6c869afa60666c810630feb
+"globals@npm:^17.5.0":
+  version: 17.5.0
+  resolution: "globals@npm:17.5.0"
+  checksum: 10c0/92828102ed2f5637907725f0478038bed02fc83e9fc89300bb753639ba7c022b6c02576fc772117302b431b204591db1f2fa909d26f3f0a9852cc856a941df3f
   languageName: node
   linkType: hard
 
@@ -5052,7 +5064,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globby@npm:^16.1.1":
+"globby@npm:^16.2.0":
   version: 16.2.0
   resolution: "globby@npm:16.2.0"
   dependencies:
@@ -8020,13 +8032,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint@npm:^17.1.0":
-  version: 17.6.0
-  resolution: "stylelint@npm:17.6.0"
+"stylelint@npm:^17.7.0":
+  version: 17.8.0
+  resolution: "stylelint@npm:17.8.0"
   dependencies:
     "@csstools/css-calc": "npm:^3.1.1"
     "@csstools/css-parser-algorithms": "npm:^4.0.0"
-    "@csstools/css-syntax-patches-for-csstree": "npm:^1.1.1"
+    "@csstools/css-syntax-patches-for-csstree": "npm:^1.1.2"
     "@csstools/css-tokenizer": "npm:^4.0.0"
     "@csstools/media-query-list-parser": "npm:^5.0.0"
     "@csstools/selector-resolve-nested": "npm:^4.0.0"
@@ -8040,7 +8052,7 @@ __metadata:
     fastest-levenshtein: "npm:^1.0.16"
     file-entry-cache: "npm:^11.1.2"
     global-modules: "npm:^2.0.0"
-    globby: "npm:^16.1.1"
+    globby: "npm:^16.2.0"
     globjoin: "npm:^0.1.4"
     html-tags: "npm:^5.1.0"
     ignore: "npm:^7.0.5"
@@ -8051,7 +8063,7 @@ __metadata:
     micromatch: "npm:^4.0.8"
     normalize-path: "npm:^3.0.0"
     picocolors: "npm:^1.1.1"
-    postcss: "npm:^8.5.8"
+    postcss: "npm:^8.5.9"
     postcss-safe-parser: "npm:^7.0.1"
     postcss-selector-parser: "npm:^7.1.1"
     postcss-value-parser: "npm:^4.2.0"
@@ -8062,7 +8074,7 @@ __metadata:
     write-file-atomic: "npm:^7.0.1"
   bin:
     stylelint: bin/stylelint.mjs
-  checksum: 10c0/831aa281a4723f3fab3c653fae7bfc13e97458ea04d7eb3991ebd7fc3b1e4fefba24f920abb518390782ed9810b96f5652767f99a2ab537c4f6b14ea10846bc1
+  checksum: 10c0/de822c902944ed094afabb48802e5659ef479e7707cc0a789e11e833fff5d54fb7a82b83052df83882f77de00190c109dbacd0b2d87157857c3ed626eb0fb4d5
   languageName: node
   linkType: hard
 
@@ -8170,7 +8182,7 @@ __metadata:
     "@ministryofjustice/frontend": "npm:^9.0.0"
     "@rails/actiontext": "npm:^8.1.300"
     "@rails/activestorage": "npm:^8.1.300"
-    "@sentry/browser": "npm:10.47.0"
+    "@sentry/browser": "npm:10.48.0"
     "@stimulus/polyfills": "npm:^2.0.0"
     accessible-autocomplete: "npm:^3.0.1"
     axios: "npm:^1.15.0"
@@ -8186,7 +8198,7 @@ __metadata:
     eslint: "npm:^10.1.0"
     eslint-config-airbnb-base: "npm:^15.0.0"
     eslint-plugin-import: "npm:^2.32.0"
-    globals: "npm:^17.4.0"
+    globals: "npm:^17.5.0"
     govuk-frontend: "npm:^6.1.0"
     jest: "npm:^30.3.0"
     jest-environment-jsdom: "npm:30.3.0"
@@ -8200,7 +8212,7 @@ __metadata:
     postcss-scss: "npm:^4.0.9"
     rails-ujs: "npm:^5.2.8"
     sass: "npm:^1.99.0"
-    stylelint: "npm:^17.1.0"
+    stylelint: "npm:^17.7.0"
     stylelint-config-sass-guidelines: "npm:^13.0.0"
     stylelint-config-standard: "npm:^40.0.0"
     tough-cookie: "npm:^6.0.1"
