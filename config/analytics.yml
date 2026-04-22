@@ -587,7 +587,6 @@ shared:
     - membership_number
     - year_membership_obtained
     - exam_taken
-    - jobseeker_profile_id
     - job_application_id
   :self_disclosure_requests:
     - id
