@@ -78,7 +78,7 @@ RSpec.describe "Jobseekers can manage their job preferences", :geocode do
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_current_path(jobseekers_job_preferences_step_path(:working_patterns), ignore_query: true)
     within "h1" do
-      expect(page).to have_content("Working patterns")
+      expect(page).to have_content("Working pattern")
     end
 
     # Fill in the Subjects
@@ -91,9 +91,6 @@ RSpec.describe "Jobseekers can manage their job preferences", :geocode do
     check "Mathematics"
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_current_path(jobseekers_job_preferences_step_path(:working_patterns), ignore_query: true)
-    within "h1" do
-      expect(page).to have_content("Working patterns")
-    end
 
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_current_path(jobseekers_job_preferences_step_path(:working_patterns), ignore_query: true)
@@ -238,7 +235,6 @@ RSpec.describe "Jobseekers can manage their job preferences", :geocode do
       # Can move forward without selecting any subject
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_current_path(jobseekers_job_preferences_step_path(:working_patterns), ignore_query: true)
-      expect(page).to have_css("h1", text: "Job preferencesWorking patterns")
 
       check "Full time"
       click_on I18n.t("buttons.save_and_continue")

@@ -1,11 +1,11 @@
-- content_for :page_title_prefix, "Job preferences: phases"
+- content_for :page_title_prefix, "Job preferences: working pattern"
 - content_for :breadcrumbs do
   = govuk_back_link text: t("buttons.back"), href: previous_wizard_path
 
 = form_for(@form, url: wizard_path(step, back_to_review: params[:back_to_review]), method: :patch) do |f|
   = f.govuk_error_summary
 
-  = f.govuk_collection_check_boxes :working_patterns, @form.options, :first, :last, include_hidden: false, legend: { tag: "h1", size: "l", text: "Working patterns" }, caption: { text: "Job preferences", size: "l" }, hint: { text: t(".hint") }
+  = f.govuk_collection_check_boxes :working_patterns, @form.options, :first, :last, include_hidden: false, legend: { tag: "h1", size: "l" }, caption: { text: "Job preferences", size: "l" }
   = f.govuk_text_area :working_pattern_details, label: { text: t(".working_pattern_details.label"), size: "s" }, hint: { text: t(".working_pattern_details.hint") }, max_words: 50
   = f.govuk_submit "Save and continue"
   p = f.link_to "Cancel", escape_path

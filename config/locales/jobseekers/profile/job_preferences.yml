@@ -1,13 +1,14 @@
 en:
   activemodel:
     location:
-      hint: Teaching Vacancies advertises school roles in England. Enter a UK city, county or postcode to set up a job alert for roles near you.
+      hint: Type 'England' below to view all school roles, or enter a specific city, county or postcode to narrow your location search..
     errors:
       models:
         jobseekers/job_preferences_form/roles_form:
           attributes:
             roles:
               blank: Select the roles you are interested in to continue
+              too_long: You can only select a maximum of %{count} roles
 
         jobseekers/job_preferences_form/phases_form:
           attributes:
@@ -18,6 +19,7 @@ en:
           attributes:
             key_stages:
               blank: Select the key stages you are interested in to continue
+              too_long: You can only select a maximum of %{count} key stages
 
         jobseekers/job_preferences_form/working_patterns_form:
           attributes:
@@ -81,3 +83,47 @@ en:
     legend:
       jobseekers_profile_location_preferences:
         another_location: Do you want to add another location?
+      jobseekers_job_preferences_form_working_patterns_form:
+        working_patterns: Working pattern
+    hint:
+      jobseekers_job_preferences_form_key_stages_form:
+        key_stages: You can select up to 3 key stages
+      jobseekers_job_preferences_form_working_patterns_form:
+        working_patterns: |
+          Some schools may be open to part-time applicants even if a position is advertised as full time.
+
+          Provide your preference so that you can discuss your options with the school.
+
+          Select all that apply to you.
+
+  jobseekers:
+    profiles:
+      job_preferences:
+        roles:
+          caption: Select all that apply to set up your profile, with a maximum of 4
+        working_patterns:
+          working_pattern_details:
+            label: Provide more details about your working pattern preference (optional)
+            hint: For example, if you're looking for a role that's 2 days a week, or Monday to Wednesday.
+        summary:
+          key_stages:
+            one: Key stage
+            other: Key stages
+          locations:
+            one: Location
+            other: Locations
+          phases:
+            one: Education phase
+            other: Education phases
+          roles:
+            one: Role
+            other: Roles
+          working_patterns:
+            one: Working pattern
+            other: Working patterns
+          working_pattern_details:
+            one: Working pattern details
+          subjects:
+            one: Subject
+            other: Subjects
+
