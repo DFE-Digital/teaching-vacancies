@@ -13,7 +13,7 @@ class Gias::Data
     Tempfile.create(type) do |file|
       file.binmode
 
-      HTTParty.get(csv_url, stream_body: true) do |fragment|
+      HTTParty.get(csv_url, stream_body: true, headers: { "User-Agent" => "teaching-vancancies" }) do |fragment|
         raise "Could not download file #{csv_url} from GIAS: #{fragment.code}" unless fragment.code == 200
 
         file.write(fragment)
