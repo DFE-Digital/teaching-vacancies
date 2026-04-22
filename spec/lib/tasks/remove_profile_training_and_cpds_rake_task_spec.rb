@@ -6,7 +6,7 @@ RSpec.describe "jobseekers:remove_profile_training_and_cpds" do
   subject(:task) { rake[task_name] }
 
   let(:task_name) { "jobseekers:remove_profile_training_and_cpds" }
-  let(:task_path) { "lib/tasks/jobseekers" }
+  let(:task_path) { "lib/tasks/remove_profile_training_and_cpds" }
 
   let!(:profile_training_and_cpd) { create(:training_and_cpd, jobseeker_profile: create(:jobseeker_profile)) }
   let!(:job_application_training_and_cpd) { create(:training_and_cpd, job_application: create(:job_application)) }
