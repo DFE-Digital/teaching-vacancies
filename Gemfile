@@ -21,9 +21,10 @@ gem "activerecord-import"
 gem "activerecord-postgis-adapter", ">= 10.0.1"
 gem "activerecord-session_store"
 gem "active_storage_validations"
-gem "addressable"
+# gem "addressable"
 gem "array_enum"
 gem "aws-sdk-s3"
+#  used during assets:precompile
 gem "azure-blob", require: false
 gem "business_time"
 gem "chartkick"
@@ -31,47 +32,74 @@ gem "devise"
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.15"
 gem "discard", "~> 1.4"
 gem "draper"
+# we populate seeds from factory bot in review apps
+# These could be moved into test scope
 gem "factory_bot_rails"
 gem "faker"
 # more uk-friendly fakes available
 gem "ffaker"
+
+# slugs for vacancies
 gem "friendly_id"
+# guidance pages content
 gem "front_matter_parser"
+# postcode and location distance calculations
 gem "geocoder"
+# These 2 can be removed when we complete move to Azure attachment checking
 gem "google-apis-drive_v3"
 gem "google-apis-indexing_v3"
-gem "google-cloud-bigquery"
+
+# gem "google-cloud-bigquery"
 gem "govuk-components", "6.1.0"
 gem "govuk_design_system_formbuilder", "~> 6.1.0"
+#  used for job statistics by month, quarter year etc
 gem "groupdate"
+#  guidance pages
 gem "high_voltage"
+# HTTP client for downloading GIAS data
 gem "httparty"
 # needed for processing of message attachments
 gem "image_processing"
-gem "ipaddr"
+# gem "ipaddr"
+# API JSON building
 gem "jbuilder"
+# ATS client schema checks
 gem "json-schema"
-gem "jwt"
+
+# gem "jwt"
+# guidance pages support
 gem "kramdown"
+# encyrption
 gem "lockbox"
+# sending emails for GOV UK notify
 gem "mail-notify"
+# for marking MS office files with a MIME type
 gem "mimemagic"
+# convert uploaded images to correct sizes
 gem "mini_magick"
 gem "mutex_m"
+# DWP integration
 gem "net-sftp"
-gem "nokogiri"
+# gem "nokogiri"
+# in-application notifications
 gem "noticed", ">= 2.5"
+#  authentication with DFE Login
 gem "omniauth"
 gem "omniauth_openid_connect"
 gem "omniauth-rails_csrf_protection", "~> 2.0"
+# safer migrations on live databases with large tables
 gem "online_migrations"
 gem "ostruct"
+# pagination of large data sets
 gem "pagy", "~> 9.4" # Omit the patch segment to avoid breaking changes
+# track changes to a vacancy over time
 gem "paper_trail"
 gem "paper_trail-globalid"
+# search keyword parsing into filters
 gem "parslet"
 gem "pg"
 gem "pg_search"
+# PDF table support
 gem "prawn-table"
 gem "puma"
 gem "rack-attack"
@@ -79,30 +107,33 @@ gem "rack-cors"
 gem "rails", RAILS_VERSION # Explicitly declare rails so we can do a "bundle update rails" when needed.
 gem "rails_semantic_logger"
 gem "recaptcha"
-gem "redis"
+# gem "redis"
 gem "rgeo-geojson"
 gem "rgeo-proj4"
 gem "rswag-api"
 gem "rswag-ui"
+# more limiting of Govuk Notify API requests
 gem "ruby-limiter"
+# needed to make zipfiles - often in sidekiq jobs
 gem "rubyzip"
-gem "sanitize"
+# gem "sanitize"
 gem "sentry-rails"
 gem "sentry-ruby"
 gem "sentry-sidekiq"
 # sidekiq 7 needs Redis 6.2.x which isn't available on Azure (yet)
 gem "sidekiq", "<7"
 gem "sidekiq-cron"
+# throttle sidekiq requests to avoid overwhelming the Govuk Notify API
 gem "sidekiq-limit_fetch"
-gem "skylight"
+# gem "skylight"
 gem "slim-rails"
 gem "turbo-rails"
-gem "validate_url"
+# gem "validate_url"
 gem "valid_email2"
-# this upgrade creates 848 test failures
 gem "view_component", "~> 4.6.0"
 gem "wicked"
 gem "xml-sitemap"
+# Zendesk support integration
 gem "zendesk_api"
 
 group :development do
