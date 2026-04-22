@@ -27,6 +27,10 @@ RSpec.describe FixMyNewTermExpiresAt do
   end
 
   describe "#call" do
+    around do |example|
+      travel_to(Time.utc(2026, 4, 22, 9, 0, 0)) { example.run }
+    end
+
     context "with a vacancy in the full window with expires_at inside BST" do
       it "reduces expires_at by 1 hour" do
         vacancy = vacancy_for(ats_client, created_at: created_in_window, expires_at: expires_in_bst)
