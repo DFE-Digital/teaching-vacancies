@@ -57,7 +57,7 @@ RSpec.describe FixMyNewTermExpiresAt do
       end
     end
 
-    context "with a vacancy created at or after the cutoff (10:50 BST / 09:50 UTC on 21 Apr)" do
+    context "with a vacancy created at or after the cutoff (10:56 BST / 09:56 UTC on 21 Apr)" do
       it "does not change expires_at when created exactly at cutoff" do
         # The cutoff_utc is the exclusive upper bound, so vacancies created at that exact second are excluded
         vacancy = vacancy_for(ats_client, created_at: cutoff_utc, expires_at: expires_in_bst)
