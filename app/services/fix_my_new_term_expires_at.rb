@@ -13,10 +13,6 @@ class FixMyNewTermExpiresAt
   ATS_CLIENT_NAME = "MyNewTerm".freeze
 
   def self.call
-    new.call
-  end
-
-  def call
     client = PublisherAtsApiClient.find_by!(name: ATS_CLIENT_NAME)
 
     vacancies = client.vacancies
