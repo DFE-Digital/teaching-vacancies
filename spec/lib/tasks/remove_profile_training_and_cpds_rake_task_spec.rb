@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "jobseekers:remove_profile_training_and_cpds" do
-  include_context "rake"
-
   subject(:task) { rake[task_name] }
+
+  include_context "rake"
 
   let(:task_name) { "jobseekers:remove_profile_training_and_cpds" }
   let(:task_path) { "lib/tasks/remove_profile_training_and_cpds" }
