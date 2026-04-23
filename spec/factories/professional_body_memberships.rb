@@ -6,7 +6,6 @@ FactoryBot.define do
     year_membership_obtained { "2020" }
     exam_taken { true }
 
-    jobseeker_profile { nil }
     job_application { nil }
   end
 end

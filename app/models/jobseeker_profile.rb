@@ -10,7 +10,6 @@ class JobseekerProfile < ApplicationRecord
   has_many :training_and_cpds, dependent: :destroy
   has_many :organisation_exclusions, class_name: "JobseekerProfileExcludedOrganisation", dependent: :destroy
   has_many :excluded_organisations, through: :organisation_exclusions, source: :organisation
-  has_many :professional_body_memberships, dependent: :destroy
 
   delegate :first_name, :last_name, to: :personal_details, allow_nil: true
   delegate :email, to: :jobseeker
