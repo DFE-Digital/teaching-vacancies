@@ -44,7 +44,7 @@ jobs:
         echo "PARAMETER_STORE_ENVIRONMENT=${PARAMETER_STORE_ENVIRONMENT}" >> $GITHUB_ENV
 
     - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
+      uses: ruby/setup-ruby@v1.302.0
 
     - name: Download fetch_config.rb
       shell: bash
