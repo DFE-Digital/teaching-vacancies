@@ -104,7 +104,7 @@
     value_before_type_cast: Academy sponsor led
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: school_type
-    value_before_type_cast: Academy
+    value_before_type_cast: Academies
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: local_authority_code
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -256,7 +256,7 @@
     value_before_type_cast: Community school
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: school_type
-    value_before_type_cast: Local authority maintained school
+    value_before_type_cast: Local authority maintained schools
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: local_authority_code
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -406,7 +406,7 @@
     value_before_type_cast: Community school
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: school_type
-    value_before_type_cast: Local authority maintained school
+    value_before_type_cast: Local authority maintained schools
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: local_authority_code
   - !ruby/object:ActiveModel::Attribute::FromDatabase

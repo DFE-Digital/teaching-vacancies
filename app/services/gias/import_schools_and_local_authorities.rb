@@ -16,9 +16,10 @@ class Gias::ImportSchoolsAndLocalAuthorities
       uk_colleges = CSV.read(Rails.root.join("config/data/colleges.csv"), headers: true).index_by { |r| r.fetch("UKPRN").to_i }.transform_values(&:to_h)
 
       log_benchmark("Importing schools and local authorities") do
-        Gias::Data.new(SCHOOLS_AND_LOCAL_AUTHORITIES_CSV).each_slice(BATCH_SIZE) do |group|
+        import_errors = Gias::Data.new(SCHOOLS_AND_LOCAL_AUTHORITIES_CSV).each_slice(BATCH_SIZE).flat_map do |group|
           import_group uk_colleges, group
         end
+        raise ImportFailure, import_errors.map(&:errors) if import_errors.any?
       end
     end
 
@@ -41,16 +42,15 @@ class Gias::ImportSchoolsAndLocalAuthorities
         end
         memberships.push(membership_data(row))
       end
-      import_local_authorities(local_authorities) if local_authorities.any?
-      import_schools(schools) if schools.any?
-      import_memberships(local_authorities, schools, memberships) if memberships.any?
-      discarded.each { |school_row| School.find_by!(urn: school_row.fetch(:urn)).discard }
+      import_batch(local_authorities, schools, memberships).tap do
+        discarded.each { |school_row| School.find_by!(urn: school_row.fetch(:urn)).discard }
+      end
     end
 
-    def import_batch
-      import_local_authorities.failed_instances +
-        import_schools.failed_instances +
-        import_memberships.failed_instances
+    def import_batch(local_authorities, schools, memberships)
+      import_local_authorities(local_authorities).failed_instances +
+        import_schools(schools).failed_instances +
+        import_memberships(local_authorities, schools, memberships).failed_instances
     end
 
     def import_local_authorities(local_authorities)

@@ -51,7 +51,7 @@
     value_before_type_cast: '{"URN":"104921","LA (code)":"343","LA (name)":"Sefton","EstablishmentNumber":"3343","EstablishmentName":"St
       Luke''s Halsall Church of England Primary School","TypeOfEstablishment (code)":"02","TypeOfEstablishment
       (name)":"Voluntary aided school","EstablishmentTypeGroup (code)":"4","EstablishmentTypeGroup
-      (name)":"Local authority maintained schools","EstablishmentStatus (code)":"1","EstablishmentStatus
+      (name)":"Local authority maintained schoolss","EstablishmentStatus (code)":"1","EstablishmentStatus
       (name)":"Open","ReasonEstablishmentOpened (code)":"00","ReasonEstablishmentOpened
       (name)":"Not applicable","OpenDate":"","ReasonEstablishmentClosed (code)":"00","ReasonEstablishmentClosed
       (name)":"Not applicable","CloseDate":"","PhaseOfEducation (code)":"2","PhaseOfEducation
@@ -106,7 +106,7 @@
     value_before_type_cast: Voluntary aided school
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: school_type
-    value_before_type_cast: Local authority maintained school
+    value_before_type_cast: Local authority maintained schools
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: local_authority_code
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -262,7 +262,7 @@
     value_before_type_cast: Community special school
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: school_type
-    value_before_type_cast: Special school
+    value_before_type_cast: Special schools
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: local_authority_code
   - !ruby/object:ActiveModel::Attribute::FromDatabase
