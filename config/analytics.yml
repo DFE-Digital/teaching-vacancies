@@ -556,7 +556,6 @@ shared:
     - year_awarded
     - created_at
     - updated_at
-    - jobseeker_profile_id
     - job_application_id
     - course_length
   :noticed_notifications:

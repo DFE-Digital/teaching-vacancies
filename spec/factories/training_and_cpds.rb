@@ -6,7 +6,6 @@ FactoryBot.define do
     year_awarded { "2020" }
     course_length { "1 year" }
 
-    jobseeker_profile { nil }
     job_application { nil }
   end
 end
