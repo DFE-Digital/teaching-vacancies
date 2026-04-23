@@ -102,7 +102,7 @@ jobs:
           role-skip-session-tagging: true
 
       - name: Get secrets from AWS ParameterStore
-        uses: dkershner6/aws-ssm-getparameters-action@v2
+        uses: dkershner6/aws-ssm-getparameters-action@4fcb4872421f387a6c43058473acc1b22443fe13 # Pinned at v2.0.3
         with:
           parameterPairs: "/teaching-vacancies/github_action/infra/slack_webhook = SLACK_WEBHOOK,
             /teaching-vacancies/github_action/infra/snyk = SNYK_TOKEN"
@@ -206,7 +206,8 @@ jobs:
         run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"review\"]}" >> $GITHUB_ENV
 
       - name: setup snyk
-        uses: snyk/actions/setup@master
+        uses: snyk/actions/setup@9adf32b1121593767fc3c057af55b55db032dc04 # Pinned at 1.0.0
+
         id: snyk
         with:
           snyk-version: v1.1297.3
@@ -224,7 +225,7 @@ jobs:
 
       - name: Notify twd_tv_dev channel on build workflow failure
         if: failure()
-        uses: rtCamp/action-slack-notify@v2.3.3
+        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # Pinned at 2.3.3
         env:
           SLACK_CHANNEL: twd_tv_dev
           SLACK_USERNAME: CI Deployment
@@ -261,7 +262,7 @@ jobs:
         role-skip-session-tagging: true
 
     - name: Get secrets from AWS ParameterStore
-      uses: dkershner6/aws-ssm-getparameters-action@v2
+      uses: dkershner6/aws-ssm-getparameters-action@4fcb4872421f387a6c43058473acc1b22443fe13 # Pinned at v2.0.3
       with:
         parameterPairs: "/teaching-vacancies/github_action/infra/slack_webhook = SLACK_WEBHOOK"
 
@@ -298,7 +299,7 @@ jobs:
 
     - name: Notify twd_tv_dev channel on ${{ env.ENVIRONMENT }} deployment failure
       if: steps.deploy_app_to_env.conclusion != 'success'
-      uses: rtCamp/action-slack-notify@v2.3.3
+      uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # Pinned at 2.3.3
       env:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment
@@ -325,14 +326,14 @@ jobs:
 
     - name: Post sticky pull request comment
       if: github.event_name == 'pull_request'
-      uses: marocchino/sticky-pull-request-comment@v3
+      uses: marocchino/sticky-pull-request-comment@0ea0beb66eb9baf113663a64ec522f60e49231c0 # Pinned at v3.0.4
       with:
         message: |
           Review app deployed to <https://teaching-vacancies-${{ env.ENVIRONMENT }}.test.teacherservices.cloud> on AKS
 
     - name: Send job status message to twd_tv_dev channel
       if: failure()
-      uses: rtCamp/action-slack-notify@v2.3.3
+      uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # Pinned at 2.3.3
       env:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment
@@ -369,7 +370,7 @@ jobs:
           role-skip-session-tagging: true
 
       - name: Get secrets from AWS ParameterStore
-        uses: dkershner6/aws-ssm-getparameters-action@v2
+        uses: dkershner6/aws-ssm-getparameters-action@4fcb4872421f387a6c43058473acc1b22443fe13 # Pinned at v2.0.3
         with:
           parameterPairs: "/teaching-vacancies/github_action/infra/slack_webhook = SLACK_WEBHOOK"
 
@@ -381,7 +382,7 @@ jobs:
 
       - name: Send job status message to twd_tv_dev channel
         if: always()
-        uses: rtCamp/action-slack-notify@v2.3.3
+        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # Pinned at 2.3.3
         env:
           SLACK_CHANNEL: twd_tv_dev
           SLACK_USERNAME: CI Deployment

@@ -53,7 +53,7 @@ jobs:
 
       - name: Get secrets from AWS ParameterStore
         if: failure()
-        uses: dkershner6/aws-ssm-getparameters-action@v2
+        uses: dkershner6/aws-ssm-getparameters-action@4fcb4872421f387a6c43058473acc1b22443fe13 # Pinned at v2.0.3
         with:
           parameterPairs: "/teaching-vacancies/github_action/infra/slack_webhook = SLACK_WEBHOOK"
 
@@ -64,7 +64,7 @@ jobs:
 
       - name: Notify twd_tv_dev channel on Pa11y test failures
         if: failure()
-        uses: rtCamp/action-slack-notify@v2.3.3
+        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # Pinned at v2.3.3
         env:
           SLACK_CHANNEL: twd_tv_dev
           SLACK_USERNAME: CI Accessiblity Tests
@@ -103,7 +103,7 @@ jobs:
           role-skip-session-tagging: true
 
       - name: Get secrets from AWS ParameterStore
-        uses: dkershner6/aws-ssm-getparameters-action@v2
+        uses: dkershner6/aws-ssm-getparameters-action@4fcb4872421f387a6c43058473acc1b22443fe13 # Pinned at v2.0.3
         with:
           parameterPairs: "/teaching-vacancies/github_action/infra/slack_webhook = SLACK_WEBHOOK"
 
@@ -120,7 +120,7 @@ jobs:
 
       - name: Audit URLs using Lighthouse
         id: LHCIAction
-        uses: treosh/lighthouse-ci-action@v12
+        uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # Pinned at v12.6.2
         with:
           urls: |
             $INDEX_URL
@@ -137,7 +137,7 @@ jobs:
           echo "SCHOOLS_RESULT=$(echo '${{steps.LHCIAction.outputs.links}}' | jq 'nth(2; .[])' | tr -d '"')" >> $GITHUB_ENV
 
       - name: Notify twd_tv_dev channel on Lighthouse results
-        uses: rtCamp/action-slack-notify@v2.3.3
+        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # Pinned at 2.3.3
         env:
           SLACK_CHANNEL: twd_tv_dev
           SLACK_USERNAME: CI Accessiblity Tests
