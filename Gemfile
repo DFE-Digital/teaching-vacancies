@@ -93,6 +93,7 @@ gem "paper_trail-globalid"
 # search keyword parsing into filters
 gem "parslet"
 gem "pg"
+#  vector searches in postgres used for vacancy search weightings
 gem "pg_search"
 # PDF table support
 gem "prawn-table"
@@ -102,8 +103,10 @@ gem "rack-cors"
 gem "rails", RAILS_VERSION # Explicitly declare rails so we can do a "bundle update rails" when needed.
 gem "rails_semantic_logger"
 gem "recaptcha"
+# Geographic point conversions
 gem "rgeo-geojson"
 gem "rgeo-proj4"
+# open API docs for external client integrations
 gem "rswag-api"
 gem "rswag-ui"
 # more limiting of Govuk Notify API requests
@@ -175,7 +178,6 @@ group :test do
   gem "fastimage"
   gem "mock_redis"
   gem "rack_session_access"
-  gem "redis-client"
   # maintained fork of rspec-retry
   gem "rspec-rebound"
   gem "selenium-webdriver"
