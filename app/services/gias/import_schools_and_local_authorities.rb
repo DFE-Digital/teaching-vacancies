@@ -46,26 +46,12 @@ class Gias::ImportSchoolsAndLocalAuthorities
       import_memberships(local_authorities, schools, memberships) if memberships.any?
       discarded.each { |school_row| School.find_by!(urn: school_row.fetch(:urn)).discard }
     end
-  end
 
-  private
-
-  attr_reader :local_authorities, :schools, :memberships
-
-  def reset_data
-    @local_authorities = Set.new # LAs are provided with every school so we can discard duplicates
-    @schools = []
-    @memberships = []
-  end
-
-  def import_batch
-    failures = import_local_authorities.failed_instances +
-      import_schools.failed_instances +
-      import_memberships.failed_instances
-    failures.tap do
-      reset_data
+    def import_batch
+      import_local_authorities.failed_instances +
+        import_schools.failed_instances +
+        import_memberships.failed_instances
     end
-  end
 
     def import_local_authorities(local_authorities)
       import = SchoolGroup.import(
@@ -78,15 +64,15 @@ class Gias::ImportSchoolsAndLocalAuthorities
       raise "Import failed" if import.failed_instances.any?
     end
 
-  def import_schools
-    School.import(
-      schools,
-      on_duplicate_key_update: {
-        conflict_target: [:urn],
-        columns: schools.first.keys,
-      },
-    )
-  end
+    def import_schools
+      School.import(
+        schools,
+        on_duplicate_key_update: {
+          conflict_target: [:urn],
+          columns: schools.first.keys,
+        },
+      )
+    end
 
     def import_memberships(local_authorities, schools, memberships)
       school_ids = School.where(urn: schools.map { |s| s[:urn] }).pluck(:urn, :id).to_h
@@ -94,29 +80,28 @@ class Gias::ImportSchoolsAndLocalAuthorities
         local_authority_code: local_authorities.map { |la| la[:local_authority_code] },
       ).pluck(:local_authority_code, :id).to_h
 
-      # school_group_memberships = memberships.map do |m|
-      #   {
-      #     school_id: school_ids.fetch(m.fetch(:urn)),
-      #     school_group_id: group_ids.fetch(m.fetch(:local_authority_code)),
-      #     do_not_delete: true,
-      #   }
-      # end
       school_group_memberships = memberships.map do |m|
         {
-          school_id: school_ids[m[:urn]],
-          school_group_id: group_ids[m[:local_authority_code]],
+          school_id: school_ids.fetch(m.fetch(:urn)),
+          school_group_id: group_ids.fetch(m.fetch(:local_authority_code)),
           do_not_delete: true,
         }
       end
+      # school_group_memberships = memberships.map do |m|
+      #   {
+      #     school_id: school_ids[m[:urn]],
+      #     school_group_id: group_ids[m[:local_authority_code]],
+      #     do_not_delete: true,
+      #   }
+      # end
 
-      import = SchoolGroupMembership.import(
+      SchoolGroupMembership.import(
         school_group_memberships,
         on_duplicate_key_update: {
           conflict_target: %i[school_id school_group_id],
           columns: school_group_memberships.first.keys,
         },
       )
-      raise ImportFailure, import.failed_instances.map(&:errors) if import.failed_instances.any?
     end
 
     def group_data(row)
