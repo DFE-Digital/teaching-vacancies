@@ -21,7 +21,6 @@ gem "activerecord-import"
 gem "activerecord-postgis-adapter", ">= 10.0.1"
 gem "activerecord-session_store"
 gem "active_storage_validations"
-# gem "addressable"
 gem "array_enum"
 gem "aws-sdk-s3"
 #  used during assets:precompile
@@ -49,7 +48,6 @@ gem "geocoder"
 gem "google-apis-drive_v3"
 gem "google-apis-indexing_v3"
 
-# gem "google-cloud-bigquery"
 gem "govuk-components", "6.1.0"
 gem "govuk_design_system_formbuilder", "~> 6.1.0"
 #  used for job statistics by month, quarter year etc
@@ -60,13 +58,11 @@ gem "high_voltage"
 gem "httparty"
 # needed for processing of message attachments
 gem "image_processing"
-# gem "ipaddr"
 # API JSON building
 gem "jbuilder"
 # ATS client schema checks
 gem "json-schema"
 
-# gem "jwt"
 # guidance pages support
 gem "kramdown"
 # encyrption
@@ -80,7 +76,6 @@ gem "mini_magick"
 gem "mutex_m"
 # DWP integration
 gem "net-sftp"
-# gem "nokogiri"
 # in-application notifications
 gem "noticed", ">= 2.5"
 #  authentication with DFE Login
@@ -107,7 +102,6 @@ gem "rack-cors"
 gem "rails", RAILS_VERSION # Explicitly declare rails so we can do a "bundle update rails" when needed.
 gem "rails_semantic_logger"
 gem "recaptcha"
-# gem "redis"
 gem "rgeo-geojson"
 gem "rgeo-proj4"
 gem "rswag-api"
@@ -116,7 +110,6 @@ gem "rswag-ui"
 gem "ruby-limiter"
 # needed to make zipfiles - often in sidekiq jobs
 gem "rubyzip"
-# gem "sanitize"
 gem "sentry-rails"
 gem "sentry-ruby"
 gem "sentry-sidekiq"
@@ -125,10 +118,8 @@ gem "sidekiq", "<7"
 gem "sidekiq-cron"
 # throttle sidekiq requests to avoid overwhelming the Govuk Notify API
 gem "sidekiq-limit_fetch"
-# gem "skylight"
 gem "slim-rails"
 gem "turbo-rails"
-# gem "validate_url"
 gem "valid_email2"
 gem "view_component", "~> 4.6.0"
 gem "wicked"
