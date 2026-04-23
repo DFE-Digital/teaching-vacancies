@@ -12,14 +12,7 @@ class Jobseekers::Profiles::AboutYouController < Jobseekers::ProfilesController
 
   private
 
-  # def form_class
-  #   Jobseekers::Profile::AboutYouForm
-  # end
-
-  # the new version doesn't allow empty submissions
-  # rubocop:disable Rails/StrongParametersExpect
   def form_params
-    params.permit(jobseeker_profile: :about_you).require(:jobseeker_profile)
+    params.expect(jobseeker_profile: :about_you)
   end
-  # rubocop:enable Rails/StrongParametersExpect
 end
