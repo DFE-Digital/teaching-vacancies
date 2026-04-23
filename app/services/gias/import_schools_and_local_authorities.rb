@@ -64,12 +64,12 @@ class Gias::ImportSchoolsAndLocalAuthorities
       raise "Import failed" if import.failed_instances.any?
     end
 
-    def import_schools
+    def import_schools(schools)
       School.import(
         schools,
         on_duplicate_key_update: {
           conflict_target: [:urn],
-          columns: schools.first.keys,
+          columns: schools.first.keys - [:uk_prn],
         },
       )
     end

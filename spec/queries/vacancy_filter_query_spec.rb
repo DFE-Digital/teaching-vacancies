@@ -234,7 +234,7 @@ RSpec.describe VacancyFilterQuery do
       context "with part time filter" do
         let(:filters) { { working_patterns: %w[part_time] } }
 
-        xit "returns pt jobs" do
+        it "returns pt jobs" do
           expect(subject.map(&:slug)).to contain_exactly("vacancy-1", "pt1")
         end
       end
@@ -242,7 +242,7 @@ RSpec.describe VacancyFilterQuery do
       context "with part time full time filter" do
         let(:filters) { { working_patterns: %w[part_time full_time] } }
 
-        xit "returns many jobs" do
+        it "returns many jobs" do
           expect(subject.count).to eq(31)
         end
       end
