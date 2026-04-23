@@ -8,18 +8,18 @@ FactoryBot.define do
     county { Faker::Address.state_abbr }
     description { Faker::Lorem.paragraph(sentence_count: 1) }
     email { Faker::Internet.email(domain: "contoso.com") }
-    gias_data do
-      {
-        "Group UID": uid,
-        "Group Name": name,
-        "Group Type": "Trust type",
-        "Group Postcode": postcode,
-        "Group Type (code)": "06",
-        "Group Locality": address,
-        "Group Town": town,
-        "Group County": county,
-      }
-    end
+    # gias_data do
+    #   {
+    #     "Group UID": uid,
+    #     "Group Name": name,
+    #     "Group Type": "Trust type",
+    #     "Group Postcode": postcode,
+    #     "Group Type (code)": "06",
+    #     "Group Locality": address,
+    #     "Group Town": town,
+    #     "Group County": county,
+    #   }
+    # end
     group_type { "Multi-academy trust" }
     name { "#{Faker::Company.name.delete("'")} Trust" }
     postcode { Faker::Address.postcode }

@@ -37,14 +37,15 @@ class Gias::ImportSchoolsAndLocalAuthorities
     @memberships = []
   end
 
+  # sum doesn't work on arrays the same way it works on Integers
+  # rubocop:disable Performance/Sum
   def import_batch
-    failures = import_local_authorities.failed_instances +
-      import_schools.failed_instances +
-      import_memberships.failed_instances
-    failures.tap do
-      reset_data
-    end
+    [import_local_authorities,
+     import_schools,
+     import_memberships].map(&:failed_instances)
+                        .reduce(:+).tap { reset_data }
   end
+  # rubocop:enable Performance/Sum
 
   def import_local_authorities
     SchoolGroup.import(
@@ -94,7 +95,7 @@ class Gias::ImportSchoolsAndLocalAuthorities
       local_authority_code: row["LA (code)"],
       name: row["LA (name)"],
       group_type: "local_authority",
-      gias_data: row.to_h.slice("LA (code)", "LA (name)"),
+      # gias_data: row.to_h.slice("LA (code)", "LA (name)"),
     }
   end
 
@@ -117,7 +118,9 @@ class Gias::ImportSchoolsAndLocalAuthorities
       town: row["Town"],
       phase: row["PhaseOfEducation (code)"].to_i,
       url: Addressable::URI.heuristic_parse(row["SchoolWebsite"]).to_s,
-      gias_data: row.to_h,
+      religious_character: row.fetch("ReligiousCharacter (name)").presence || "None",
+      number_of_pupils: row.fetch("NumberOfPupils"),
+      school_capacity: row.fetch("SchoolCapacity"),
     }.merge(school_location_data(row)).transform_values(&:presence)
   end
 

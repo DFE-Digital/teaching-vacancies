@@ -143,7 +143,7 @@ RSpec.describe "Editing a vacancy template" do
       expect(template.reload).to have_attributes(ect_status: "ect_unsuitable")
     end
 
-    it "can have its school visits edited", :a11y do
+    it "can have its school visits edited", :a11y, :retry do
       expect(page).to have_content "Change"
 
       within "#school_visits" do

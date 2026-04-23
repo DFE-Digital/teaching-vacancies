@@ -160,7 +160,9 @@
   - last_sign_in_ip
   - current_sign_in_ip
   :organisations:
-  - gias_data_hash
+  - religious_character
+  - number_of_pupils
+  - school_capacity
   - slug
   - searchable_content
   :vacancy_analytics:

@@ -12,8 +12,63 @@ class School < Organisation
   INDEPENDENT_SCHOOL_TYPE = "Independent schools".freeze
   VALID_SCHOOL_TYPES = [LA_SCHOOL_TYPE, INDEPENDENT_SCHOOL_TYPE, "Special schools", "Universities", ACADEMY_TYPE, FREE_SCHOOL_TYPE, "Welsh schools", "Other types", "Colleges", "Online provider"].freeze
 
-  # This is direct from GIAS (with plurals removed via singularize)
+  # This is direct from GIAS
   validates :school_type, inclusion: { in: VALID_SCHOOL_TYPES }
+
+  CHRISTIAN_RELIGIOUS_TYPES = ["Anglican",
+                               "United Reformed Church",
+                               "Christian",
+                               "Greek Orthodox",
+                               "Anglican/Evangelical",
+                               "Anglican/Church of England",
+                               "Christian/Evangelical",
+                               "Christian/Methodist",
+                               "Christian/non-denominational",
+                               "Protestant/Evangelical",
+                               "Methodist/Church of England",
+                               "Protestant",
+                               "Reformed Baptist",
+                               "Christian Science",
+                               "Church of England",
+                               "Plymouth Brethren Christian Church",
+                               "Church of England/Methodist/United Reform Church/Baptist",
+                               "Moravian",
+                               "Quaker",
+                               "Methodist",
+                               "Free Church",
+                               "Church of England/Free Church",
+                               "Church of England/Evangelical",
+                               "Church of England/United Reformed Church",
+                               "Anglican/Christian",
+                               "Inter- / non- denominational",
+                               "Seventh Day Adventist",
+                               "Church of England/Christian",
+                               "Church of England/Methodist",
+                               "Congregational Church"].freeze
+
+  CATHOLIC_RELIGIOUS_TYPES = ["Roman Catholic",
+                              "Catholic",
+                              "Roman Catholic/Anglican",
+                              "Roman Catholic/Church of England",
+                              "Church of England/Roman Catholic"].freeze
+
+  OTHER_RELIGIOUS_TYPES = [
+    "Jewish",
+    "Orthodox Jewish",
+    "Charadi Jewish",
+    "Islam",
+    "Muslim",
+    "Sunni Deobandi",
+    "Buddhist",
+    "Sikh",
+    "Hindu",
+    "Multi-faith",
+  ].freeze
+
+  validates :religious_character, inclusion: {
+    in: NON_FAITH_RELIGIOUS_CHARACTER_TYPES + CHRISTIAN_RELIGIOUS_TYPES + CATHOLIC_RELIGIOUS_TYPES + OTHER_RELIGIOUS_TYPES,
+    allow_nil: false,
+  }
 
   EXCLUDED_DETAILED_SCHOOL_TYPES = [
     "Further education",
@@ -51,12 +106,12 @@ class School < Organisation
     through: %i[early_years ks1 ks2 ks3 ks4 ks5],
   }.freeze
 
-  def religious_character
-    return if !respond_to?(:gias_data) || gias_data.nil?
-    return if ["None", "Does not apply"].include?(gias_data["ReligiousCharacter (name)"])
-
-    gias_data["ReligiousCharacter (name)"]
-  end
+  # def religious_character
+  #   return if !respond_to?(:gias_data) || gias_data.nil?
+  #   return if ["None", "Does not apply"].include?(gias_data["ReligiousCharacter (name)"])
+  #
+  #   gias_data["ReligiousCharacter (name)"]
+  # end
 
   def live_group_vacancies
     if part_of_a_trust?
@@ -71,11 +126,11 @@ class School < Organisation
   end
 
   def faith_school?
-    religious_character.present?
+    NON_FAITH_RELIGIOUS_CHARACTER_TYPES.exclude? religious_character
   end
 
   def catholic_school?
-    religious_character&.include?("Catholic") || false
+    religious_character.in? CATHOLIC_RELIGIOUS_TYPES
   end
 
   def key_stages

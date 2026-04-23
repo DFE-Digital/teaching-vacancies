@@ -260,7 +260,6 @@ shared:
     - address3
     - geopoint
     - uk_geopoint
-    - gias_data
     - created_at
     - updated_at
     - url_override

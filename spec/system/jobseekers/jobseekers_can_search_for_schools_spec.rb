@@ -112,10 +112,10 @@ RSpec.describe "Searching on the schools page" do
   end
 
   context "when filtering by school type" do
-    let(:faith_school) { create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "anything" }) }
-    let(:non_faith_school1) { create(:school, name: "nonfaith1", gias_data: { "ReligiousCharacter (name)" => "" }) }
-    let(:non_faith_school2) { create(:school, name: "nonfaith2", gias_data: { "ReligiousCharacter (name)" => "Does not apply" }) }
-    let(:non_faith_school3) { create(:school, name: "nonfaith3", gias_data: { "ReligiousCharacter (name)" => "None" }) }
+    let(:faith_school) { create(:school, name: "Religious", religious_character: "Christian") }
+    let(:non_faith_school1) { create(:school, name: "nonfaith1", religious_character: "None") }
+    let(:non_faith_school2) { create(:school, name: "nonfaith2", religious_character: "Does not apply") }
+    let(:non_faith_school3) { create(:school, name: "nonfaith3", religious_character: "None") }
     let(:special_school2) { create(:school, name: "Foundation special school", detailed_school_type: "Foundation special school") }
     let(:special_school3) { create(:school, name: "Non-maintained special school", detailed_school_type: "Non-maintained special school") }
     let(:special_school4) { create(:school, name: "Academy special converter", detailed_school_type: "Academy special converter") }

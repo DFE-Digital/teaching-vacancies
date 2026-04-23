@@ -22,10 +22,10 @@
       - row.with_key text: t("publishers.organisations.organisation.school_age.label")
       - row.with_value text: age_range(organisation)
 
-    - if (text = number_of_pupils(organisation))
+    - if organisation.number_of_pupils.present?
       - summary_list.with_row do |row|
         - row.with_key text: t("publishers.organisations.organisation.size.label")
-        - row.with_value text: text
+        - row.with_value text: number_of_pupils(organisation)
 
   - summary_list.with_row(html_attributes: { id: "email" }) do |row|
     - row.with_key text: t("publishers.organisations.organisation.email.label")
