@@ -85,7 +85,7 @@ runs:
         echo "CONFIRM_PRODUCTION=${CONFIRM_PRODUCTION}" >> $GITHUB_ENV
 
     - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
+      uses: ruby/setup-ruby@v1.302.0
 
     - name: Download fetch_config.rb
       shell: bash
