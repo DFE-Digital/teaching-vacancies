@@ -54,22 +54,22 @@ class Gias::ImportSchoolsAndLocalAuthorities
     end
 
     def import_local_authorities(local_authorities)
-      import = SchoolGroup.import(
+      SchoolGroup.import(
         local_authorities.to_a,
         on_duplicate_key_update: {
           conflict_target: [:local_authority_code],
           columns: local_authorities.first.keys,
         },
       )
-      raise "Import failed" if import.failed_instances.any?
     end
 
     def import_schools(schools)
+      imported_schools = schools.map { |s| s.except(:uk_prn, :religious_character).merge(discarded_at: nil) }
       School.import(
-        schools,
+        imported_schools,
         on_duplicate_key_update: {
           conflict_target: [:urn],
-          columns: schools.first.keys - [:uk_prn],
+          columns: imported_schools.first.keys,
         },
       )
     end
@@ -80,20 +80,20 @@ class Gias::ImportSchoolsAndLocalAuthorities
         local_authority_code: local_authorities.map { |la| la[:local_authority_code] },
       ).pluck(:local_authority_code, :id).to_h
 
-      school_group_memberships = memberships.map do |m|
-        {
-          school_id: school_ids.fetch(m.fetch(:urn)),
-          school_group_id: group_ids.fetch(m.fetch(:local_authority_code)),
-          do_not_delete: true,
-        }
-      end
       # school_group_memberships = memberships.map do |m|
       #   {
-      #     school_id: school_ids[m[:urn]],
-      #     school_group_id: group_ids[m[:local_authority_code]],
+      #     school_id: school_ids.fetch(m.fetch(:urn)),
+      #     school_group_id: group_ids.fetch(m.fetch(:local_authority_code)),
       #     do_not_delete: true,
       #   }
       # end
+      school_group_memberships = memberships.map do |m|
+        {
+          school_id: school_ids[m[:urn]],
+          school_group_id: group_ids[m[:local_authority_code]],
+          do_not_delete: true,
+        }
+      end
 
       SchoolGroupMembership.import(
         school_group_memberships,
