@@ -1,5 +1,5 @@
 ---
-order: 200
+order: 100
 title: How to create job listings and accept applications
 meta_description: How to create job listings and accept applications
 date_posted: 12/07/2024
