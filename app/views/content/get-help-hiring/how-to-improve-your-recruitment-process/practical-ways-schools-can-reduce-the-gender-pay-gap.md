@@ -4,10 +4,10 @@ title: Practical ways schools can reduce the gender pay gap
 meta_description: Vivienne Porritt, co-founder of WomenEd and former headteacher, shares practical ways schools can improve recruitment and help reduce the gender pay gap.
 date_posted: 24/04/2026
 category_tags: how-to
-card-image: "/content-assets/get-help-hiring/how-to-improve-your-recruitment-process/practical-ways-schools-can-reduce-the-gender-pay-gap.png"
+card-image: "/content-assets/get-help-hiring/how-to-improve-your-recruitment-process/practical-ways-schools-can-reduce-the-gender-pay-gap.jpg"
 ---
 
-![Teacher smiling while teaching students.](/content-assets/get-help-hiring/how-to-improve-your-recruitment-process/practical-ways-schools-can-reduce-the-gender-pay-gap.png)
+![Teacher smiling while teaching students.](/content-assets/get-help-hiring/how-to-improve-your-recruitment-process/practical-ways-schools-can-reduce-the-gender-pay-gap.jpg)
 
 **Vivienne Porritt, co-founder of WomenEd, vice president of the Chartered College of Teaching and former headteacher, shares some practical ways schools can improve recruitment and help reduce the gender pay gap.**
 
