@@ -65,7 +65,6 @@ jobs:
           service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
           message: |
             Pa11y accessibility tests failed against QA environment
-            See: <${{ env.LINK_TO_RUN }}|Workflow run>
 
   lighthouse:
     name: Lighthouse tests
@@ -131,6 +130,6 @@ jobs:
           service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
           message: |
             LightHouse accessibility and performance tests ran against the  QA environment
-            <${{ env.INDEX_RESULT }}|Index page results>
-            <${{ env.JOBS_RESULT }}|Jobs page results>
-            <${{ env.SCHOOLS_RESULT }}|Schools page results>
+            Index page results - ${{ env.INDEX_RESULT }}
+            Jobs page results - ${{ env.JOBS_RESULT }}
+            Schools page results> - ${{ env.SCHOOLS_RESULT }}

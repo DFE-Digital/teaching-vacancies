@@ -98,5 +98,4 @@ jobs:
           title: Build failure on Rebuild cache workflow
           service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
           message: |
-            Build failure on branch ${{env.GIT_BRANCH}} <!channel>
-            See: <${{ env.LINK_TO_RUN }}|Workflow run>
+            Build failure on branch ${{env.GIT_BRANCH}}

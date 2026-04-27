@@ -230,8 +230,7 @@ jobs:
           title: Build failure
           service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
           message: |
-            Build failure on branch ${{env.GIT_BRANCH}} <!channel>
-            See: <${{ env.LINK_TO_RUN }}|Workflow run>
+            Build failure on branch ${{env.GIT_BRANCH}}
 
   deploy:
     name: Deploy app
@@ -297,7 +296,7 @@ jobs:
         title: Deployment failure
         service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
         message: |
-          'Deployment of Docker image ${{ env.DOCKER_IMAGE_TAG }} to ${{ env.ENVIRONMENT }} - unsuccessful <!channel>'
+          Deployment of Docker image ${{ env.DOCKER_IMAGE_TAG }} to ${{ env.ENVIRONMENT }} - unsuccessful
 
     - name: Exit whole workflow if ${{ env.ENVIRONMENT }} deployment was not successful
       if: steps.deploy_app_to_env.conclusion != 'success'
@@ -332,7 +331,6 @@ jobs:
         service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
         message: |
           Deployment of Docker image ${{ env.DOCKER_IMAGE_TAG }} to ${{matrix.environment}} - ${{ job.status }}
-          See: <${{ env.LINK_TO_RUN }}|Workflow run>
 
   post_deployment:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -374,4 +372,3 @@ jobs:
           service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
           message: |
             Deployment of Docker tag ${{ env.DOCKER_IMAGE_TAG }} - ${{ job.status }}
-            See: <${{ env.LINK_TO_RUN }}|Workflow run>

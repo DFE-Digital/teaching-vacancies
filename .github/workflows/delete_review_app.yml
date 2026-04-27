@@ -124,5 +124,5 @@ jobs:
         service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
         message: |
           Failed deletion of review app PR ${{env.PR_NUMBER}}
-          See: <${{ env.LINK_TO_RUN }}|Workflow run> - <${{ env.LINK_TO_PR }}|Pull request> - <${{ env.LINK_TO_APP }}|Review app>
-          <!channel>
+          Pull Requst: ${{ env.LINK_TO_PR }}
+          Review app: ${{ env.LINK_TO_APP }}

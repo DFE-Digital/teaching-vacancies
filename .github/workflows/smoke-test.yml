@@ -30,4 +30,4 @@ jobs:
           title: Smoke test failed
           service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
           message: |
-            Smoke test failure in ${{ env.AKS_ENVIRONMENT}} environment <!channel>
+            Smoke test failure in ${{ env.AKS_ENVIRONMENT}} environment
