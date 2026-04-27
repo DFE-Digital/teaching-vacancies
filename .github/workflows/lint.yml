@@ -28,9 +28,7 @@ jobs:
           title: Test Notification
           service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
           message: |
-            Test on branch ${{env.GIT_BRANCH}}
-            See1: <${{ env.LINK_TO_RUN }}|Workflow run>
-            See2: ${{ env.LINK_TO_RUN }}|Workflow run
+            Test
 
   backend-lint:
     name: Run backend linting checks
