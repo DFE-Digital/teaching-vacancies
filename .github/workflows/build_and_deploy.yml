@@ -222,6 +222,18 @@ jobs:
         if: ${{ success() }}
         run: docker image push --all-tags ${{ env.DOCKER_REPOSITORY }}
 
+      # Test Notifications
+      - name: Test Notify teams channel
+        uses: DFE-Digital/github-actions/send-to-teams-channel@master
+        with:
+          teams-webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          title: Build failure
+          service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
+          message: |
+            Test Build on branch ${{env.GIT_BRANCH}}
+            See1: <${{ env.LINK_TO_RUN }}|Workflow run>
+            See2: ${{ env.LINK_TO_RUN }}|Workflow run
+
       - name: Notify teams channel failure
         if: failure()
         uses: DFE-Digital/github-actions/send-to-teams-channel@master
