@@ -25,10 +25,12 @@ jobs:
         uses: DFE-Digital/github-actions/send-to-teams-channel@master
         with:
           teams-webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
-          title: Test Notification
+          status: good
+          title: Test Notification - Ignore
           service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
           message: |
-            Test
+            Test on branch ${{env.GITHUB_REF_NAME}}
+            MD1: [Workflow run](${{ env.LINK_TO_RUN }})
 
   backend-lint:
     name: Run backend linting checks
