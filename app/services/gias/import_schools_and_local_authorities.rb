@@ -23,7 +23,7 @@ class Gias::ImportSchoolsAndLocalAuthorities
         end
         import_batch
       end
-      raise ImportFailure, import_errors.map(&:errors) if import_errors.any?
+      raise(ImportFailure, import_errors.map { |x| x.errors.full_messages }) if import_errors.any?
     end
   end
 
