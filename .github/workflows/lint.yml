@@ -7,6 +7,31 @@ on:
       - '!main'
 
 jobs:
+  test-notifications-job:
+    name: Running Test Notifications
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set test environment variables
+        run: |
+          echo "LINK_TO_RUN=https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> $GITHUB_ENV
+
+      # Test Notifications
+      - name: Test Notify teams channel
+        uses: DFE-Digital/github-actions/send-to-teams-channel@master
+        with:
+          teams-webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          title: Test Notification
+          service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
+          message: |
+            Test on branch ${{env.GIT_BRANCH}}
+            See1: <${{ env.LINK_TO_RUN }}|Workflow run>
+            See2: ${{ env.LINK_TO_RUN }}|Workflow run
+
   backend-lint:
     name: Run backend linting checks
 
