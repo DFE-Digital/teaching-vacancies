@@ -27,6 +27,17 @@ module "documents_azure_storage" {
   ]
 
   create_encryption_scope = false
+
+  # CORS rules for Rails Direct Uploads (browser to storage)
+  cors_rules = [
+    {
+      allowed_headers    = ["Content-Type", "Content-MD5", "Content-Disposition", "x-ms-blob-content-disposition", "x-ms-blob-type"]
+      allowed_methods    = ["PUT"]
+      allowed_origins    = var.azure_storage_cors_allowed_origins
+      exposed_headers    = []
+      max_age_in_seconds = 3600
+    }
+  ]
 }
 
 # Azure Storage Account for School Images/Logos

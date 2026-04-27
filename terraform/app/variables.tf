@@ -186,6 +186,11 @@ variable "azure_storage_blob_delete_after_days" {
   description = "Auto-delete blobs after X days (0 to disable)"
 }
 
+variable "azure_storage_cors_allowed_origins" {
+  default     = []
+  description = "Allowed origins (URLs) for Cross Origin Resource Sharing (CORS) rule"
+}
+
 locals {
   app_env_values             = yamldecode(file("${path.module}/../workspace-variables/${var.app_environment}_app_env.yml"))
   infra_secrets              = yamldecode(data.aws_ssm_parameter.infra_secrets.value)

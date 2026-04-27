@@ -122,6 +122,11 @@ variable "azure_storage_blob_delete_after_days" {
   description = "Auto-delete blobs after X days (0 to disable)"
 }
 
+variable "azure_storage_cors_allowed_origins" {
+  default     = []
+  description = "Allowed origins (URLs) for Cross Origin Resource Sharing (CORS) rule"
+}
+
 locals {
   postgres_ssl_mode = var.enable_postgres_ssl ? "require" : "disable"
 
