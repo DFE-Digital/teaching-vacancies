@@ -297,7 +297,7 @@ jobs:
         title: Deployment failure
         service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
         message: |
-          'Deployment of Docker image ${{ env.DOCKER_IMAGE_TAG }} to ${{ env.ENVIRONMENT }} - unsuccessful <!channel>'
+          Deployment of Docker image ${{ env.DOCKER_IMAGE_TAG }} to ${{ env.ENVIRONMENT }} - unsuccessful
 
     - name: Exit whole workflow if ${{ env.ENVIRONMENT }} deployment was not successful
       if: steps.deploy_app_to_env.conclusion != 'success'
