@@ -1,12 +1,16 @@
 require "rails_helper"
 
 RSpec.describe Employment do
-  let(:employment) { described_class.new(params.merge(job_application: build(:job_application))) }
+  let(:employment) { described_class.new(params.merge(employment_type: :job, job_application: build(:job_application))) }
   let(:params) { {} }
 
-  it { is_expected.to validate_presence_of(:organisation) }
-  it { is_expected.to validate_presence_of(:job_title) }
-  it { is_expected.to validate_presence_of(:main_duties) }
+  describe "validations" do
+    subject { employment }
+
+    it { is_expected.to validate_presence_of(:organisation) }
+    it { is_expected.to validate_presence_of(:job_title) }
+    it { is_expected.to validate_presence_of(:main_duties) }
+  end
 
   describe "#duplicate" do
     subject(:duplicate) { employment.duplicate }
@@ -34,10 +38,6 @@ RSpec.describe Employment do
 
     it "does not copy job application associations" do
       expect(duplicate.job_application).to be_nil
-    end
-
-    it "does not copy jobseeker profile associations" do
-      expect(duplicate.jobseeker_profile).to be_nil
     end
   end
 

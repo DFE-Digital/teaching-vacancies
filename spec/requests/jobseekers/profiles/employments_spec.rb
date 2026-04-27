@@ -10,9 +10,7 @@ RSpec.describe "Jobseeker profile employments" do
   let(:current_role) { "true" }
   let(:ended_on_month) { "01" }
   let(:ended_on_year) { "2002" }
-  let(:main_duties) { "Scoring goals" }
   let(:days) { { "started_on(3i)": "1", "ended_on(3i)": "1" } }
-  let(:reason_for_leaving) { "relocating" }
   let(:params) do
     {
       jobseekers_profile_employment_form: {
@@ -21,8 +19,6 @@ RSpec.describe "Jobseeker profile employments" do
         "started_on(2i)": started_on_month,
         "started_on(1i)": started_on_year,
         is_current_role: current_role,
-        main_duties: main_duties,
-        reason_for_leaving: reason_for_leaving,
       }.merge(days),
     }
   end
@@ -39,7 +35,7 @@ RSpec.describe "Jobseeker profile employments" do
 
   describe "GET #edit" do
     let(:profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
-    let!(:employment) { create(:employment, :jobseeker_profile_employment, jobseeker_profile: profile) }
+    let!(:employment) { create(:profile_employment, jobseeker_profile: profile) }
 
     it "renders the edit page" do
       expect(get(edit_jobseekers_profile_work_history_path(employment))).to render_template(:edit)
@@ -71,7 +67,7 @@ RSpec.describe "Jobseeker profile employments" do
   end
 
   describe "PATCH #update" do
-    let!(:employment) { create(:employment, :jobseeker_profile_employment, organisation: previous_organisation, jobseeker_profile: profile) }
+    let!(:employment) { create(:profile_employment, organisation: previous_organisation, jobseeker_profile: profile) }
     let(:previous_organisation) { "Test organisation" }
     let(:organisation) { "Arsenal" }
 
@@ -97,7 +93,7 @@ RSpec.describe "Jobseeker profile employments" do
   end
 
   describe "DELETE #destroy" do
-    let!(:employment) { create(:employment, :jobseeker_profile_employment, jobseeker_profile_id: profile.id) }
+    let!(:employment) { create(:profile_employment, jobseeker_profile_id: profile.id) }
 
     it "destroys the employment and redirects to the review page" do
       expect { delete jobseekers_profile_work_history_path(employment) }

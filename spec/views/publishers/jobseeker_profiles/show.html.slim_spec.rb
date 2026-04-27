@@ -2,12 +2,12 @@ require "rails_helper"
 
 RSpec.describe "publishers/jobseeker_profiles/show" do
   let(:organisation) { build_stubbed(:school) }
-  let(:employment) { build_stubbed(:employment) }
+  let(:employment) { build_stubbed(:profile_employment) }
   let(:jobseeker_profile) do
     build_stubbed(:jobseeker_profile, :with_location_preferences,
                   personal_details: build(:personal_details),
                   qualifications: [build_stubbed(:qualification)],
-                  employments: [build_stubbed(:employment)],
+                  employments: [employment],
                   professional_body_memberships: [build_stubbed(:professional_body_membership)],
                   job_preferences: build_stubbed(:job_preferences, roles: %w[ teacher
                                                                               headteacher
@@ -51,7 +51,7 @@ RSpec.describe "publishers/jobseeker_profiles/show" do
         "Pastoral, health and welfare, Other leadership roles, " \
         "Other support roles, Senior leader, Middle leader",
     )
-    expect(rendered).to have_content(jobseeker_profile.employments.first.subjects)
+    expect(rendered).to have_content("almost 3 years")
     expect(rendered).to have_no_content("Location")
     expect(rendered).to have_content(jobseeker_profile.job_preferences.working_pattern_details)
     expect(rendered).to have_content(jobseeker_profile.professional_body_memberships.first.name)
@@ -65,8 +65,8 @@ RSpec.describe "publishers/jobseeker_profiles/show" do
   end
 
   context "when jobseeker has a current role" do
-    let(:current_employment) { create(:employment, :jobseeker_profile_employment, job_title: "Mathematics Teacher", is_current_role: true, started_on: 1.year.ago, ended_on: nil) }
-    let(:previous_employment) { create(:employment, :jobseeker_profile_employment, job_title: "Science Teacher", is_current_role: false, started_on: 3.years.ago, ended_on: 2.years.ago) }
+    let(:current_employment) { create(:profile_employment, job_title: "Mathematics Teacher", is_current_role: true, started_on: 1.year.ago, ended_on: nil) }
+    let(:previous_employment) { create(:profile_employment, job_title: "Science Teacher", is_current_role: false, started_on: 3.years.ago, ended_on: 2.years.ago) }
     let(:jobseeker_profile) do
       create(:jobseeker_profile, :with_personal_details,
              employments: [current_employment, previous_employment],
@@ -81,7 +81,7 @@ RSpec.describe "publishers/jobseeker_profiles/show" do
   end
 
   context "when jobseeker has a previous role but no current role" do
-    let(:previous_employment) { create(:employment, :jobseeker_profile_employment, job_title: "Science Teacher", is_current_role: false, started_on: 2.years.ago, ended_on: 1.year.ago) }
+    let(:previous_employment) { create(:profile_employment, job_title: "Science Teacher", is_current_role: false, started_on: 2.years.ago, ended_on: 1.year.ago) }
     let(:jobseeker_profile) do
       create(:jobseeker_profile, :with_personal_details,
              employments: [previous_employment],

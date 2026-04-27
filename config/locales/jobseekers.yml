@@ -915,14 +915,15 @@ en:
         edit:
           caption: Work history
           page_title: Edit a role — Profile
-          title: Role
+          title: Your previous roles
+          hint: In this section, provide your previous work experience. If you have had more than one role at the same employer, add each role seperately.
         destroy:
           success: One role has been deleted
         new:
           caption: Work history
           page_title: Add a role — Profile
-          title: Role
-          hint_text: "If you've had more than 1 role at the same employer, add each role separately."
+          title: Your previous roles
+          hint_text: In this section, provide your previous work experience. If you have had more than one role at the same employer, add each role seperately.
         review:
           add_role_button_text: Add role
           return_to_profile: Return to profile

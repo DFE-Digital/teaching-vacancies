@@ -91,3 +91,14 @@ JobPreferences::Location:
   uk_area:
     NullConstraintChecker:
       enabled: false
+
+# Employment and ProfileEmployment share the same table
+# so foreign key integrity cannot be maintained at DB leve;
+Employment:
+  job_application:
+    ColumnPresenceChecker:
+      enabled: false
+ProfileEmployment:
+  jobseeker_profile:
+    ColumnPresenceChecker:
+      enabled: false

@@ -90,8 +90,6 @@ RSpec.describe "Service Data supportal section" do
       expect(page).to have_row("Employment type", employment.employment_type)
       expect(page).to have_row("Organisation", employment.organisation)
       expect(page).to have_row("Job title", employment.job_title)
-      expect(page).to have_row("Main duties", employment.main_duties)
-      expect(page).to have_row("Reason for leaving", employment.reason_for_leaving)
     end
   end
 

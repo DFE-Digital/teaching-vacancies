@@ -5,7 +5,7 @@ class JobseekerProfile < ApplicationRecord
 
   has_one :personal_details, dependent: :destroy
   has_one :job_preferences, dependent: :destroy
-  has_many :employments, dependent: :destroy
+  has_many :employments, class_name: "ProfileEmployment", dependent: :destroy
   has_many :qualifications, dependent: :destroy
   has_many :training_and_cpds, dependent: :destroy
   has_many :organisation_exclusions, class_name: "JobseekerProfileExcludedOrganisation", dependent: :destroy
