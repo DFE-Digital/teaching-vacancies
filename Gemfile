@@ -112,7 +112,7 @@ group :development do
   gem "binding_of_caller"
   gem "listen"
   gem "rubocop-factory_bot", require: false
-  gem "rubocop-govuk", require: false
+  gem "rubocop-govuk", "> 5.2.0", require: false
   gem "rubocop-performance", require: false
   gem "rubocop-rspec_rails", require: false
   gem "solargraph"
