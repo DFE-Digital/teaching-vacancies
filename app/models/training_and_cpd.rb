@@ -1,5 +1,5 @@
 class TrainingAndCpd < ApplicationRecord
-  self.ignored_columns += ["jobseeker_profile_id"]
+  self.ignored_columns += %w[jobseeker_profile_id]
 
   include ApplicationAndProfileAssociatedRecord
 end
