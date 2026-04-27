@@ -1,7 +1,5 @@
 class TrainingAndCpd < ApplicationRecord
-  belongs_to :job_application
+  self.ignored_columns += ["jobseeker_profile_id"]
 
-  def duplicate
-    dup.tap { |record| record.job_application = nil }
-  end
+  include ApplicationAndProfileAssociatedRecord
 end

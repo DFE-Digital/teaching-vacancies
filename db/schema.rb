@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_30_082849) do
+ActiveRecord::Schema[8.0].define(version: 2026_04_27_081918) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -1043,7 +1043,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_30_082849) do
   add_foreign_key "self_disclosure_requests", "job_applications"
   add_foreign_key "self_disclosures", "self_disclosure_requests"
   add_foreign_key "training_and_cpds", "job_applications"
-  add_foreign_key "training_and_cpds", "jobseeker_profiles"
   add_foreign_key "vacancies", "organisations", column: "publisher_organisation_id"
   add_foreign_key "vacancies", "publisher_ats_api_clients"
   add_foreign_key "vacancies", "publishers"
