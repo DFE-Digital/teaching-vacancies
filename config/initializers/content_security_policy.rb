@@ -28,7 +28,8 @@ Rails.application.configure do
                        "https://snap.licdn.com",
                        "https://px.ads.linkedin.com",
                        "https://www.recaptcha.net",
-                       "https://*.s3.eu-west-2.amazonaws.com"
+                       "https://*.s3.eu-west-2.amazonaws.com",
+                       "https://#{ENV.fetch('DOCUMENTS_AZURE_STORAGE_ACCOUNT_NAME', '*')}.blob.core.windows.net" # Needed for ActiveStorage Direct Uploads
 
     policy.font_src    :self,
                        :data,
