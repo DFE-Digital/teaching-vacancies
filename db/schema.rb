@@ -826,10 +826,9 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_27_081918) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "jobseeker_profile_id"
-    t.uuid "job_application_id"
+    t.uuid "job_application_id", null: false
     t.string "course_length"
     t.index ["job_application_id"], name: "index_training_and_cpds_on_job_application_id"
-    t.index ["jobseeker_profile_id"], name: "index_training_and_cpds_on_jobseeker_profile_id"
   end
 
   create_table "vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
