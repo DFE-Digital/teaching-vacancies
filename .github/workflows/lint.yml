@@ -30,7 +30,10 @@ jobs:
           service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
           message: |
             Test on branch ${{env.GITHUB_REF_NAME}}
+            Test on branch ${{ Github.ref_name}}
             MD1: [Workflow run](${{ env.LINK_TO_RUN }})
+            Ln1: ${{ env.LINK_TO_RUN }}
+            ${{ env.LINK_TO_RUN }}
 
   backend-lint:
     name: Run backend linting checks
