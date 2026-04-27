@@ -378,7 +378,7 @@ en:
           other: Some other reason
 
       jobseekers_profile_about_you_form:
-        about_you: About you
+        about_you: Your personal statement
       jobseekers_qualifications_category_form:
         <<: *jobseekers_qualifications_shared_labels
         category_options:

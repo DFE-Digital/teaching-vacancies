@@ -31,7 +31,16 @@ class JobseekerProfile < ApplicationRecord
 
   has_encrypted :teacher_reference_number
 
+  has_rich_text :about_you_richtext
+
+  validates :about_you_richtext, presence: true, on: :about_you
+  validates :about_you_words, length: { maximum: 1500 }, if: -> { about_you_richtext.present? }, on: :about_you
+
   validates :jobseeker, uniqueness: true
+
+  def about_you
+    about_you_richtext.presence || self[:about_you]
+  end
 
   before_save do |profile|
     unless profile.qualified_teacher_status == "yes"
@@ -99,5 +108,12 @@ class JobseekerProfile < ApplicationRecord
 
   def current_or_most_recent_employment
     employments.job.find_by(is_current_role: true) || employments.job.order(started_on: :desc).first
+  end
+
+  private
+
+  def about_you_words
+    # '-' allows one-way street to be one word
+    about_you_richtext.to_plain_text.scan(/(\w|-)+/)
   end
 end

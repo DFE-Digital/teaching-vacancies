@@ -1,6 +1,30 @@
 require "rails_helper"
 
 RSpec.describe JobseekerProfile, type: :model do
+  context "with about_you context" do
+    describe "about_you" do
+      subject { build(:jobseeker_profile, about_you_richtext: about_you_content).save(context: :about_you) }
+
+      context "with 1500 words" do
+        let(:about_you_content) { Faker::Lorem.sentence(word_count: 1500) }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "with 1501 words" do
+        let(:about_you_content) { Faker::Lorem.sentence(word_count: 1501) }
+
+        it { is_expected.to be(false) }
+      end
+
+      context "when blank" do
+        let(:about_you_content) { "" }
+
+        it { is_expected.to be(false) }
+      end
+    end
+  end
+
   describe ".prepare_associations" do
     context "when the record is already persisted" do
       let(:profile) { create(:jobseeker_profile) }
