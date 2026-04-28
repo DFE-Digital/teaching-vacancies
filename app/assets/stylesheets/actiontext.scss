@@ -41,6 +41,7 @@ trix-toolbar .trix-button:focus {
 }
 
 /* Hide unwanted toolbar buttons - keep only bold, italic, link, bullet points, undo/redo */
+trix-toolbar .trix-button--icon-attach,
 trix-toolbar .trix-button--icon-strike,
 trix-toolbar .trix-button--icon-heading-1,
 trix-toolbar .trix-button--icon-quote,
@@ -99,8 +100,7 @@ trix-editor {
   min-height: 350px;
 }
 
-/* Hide attachment and link buttons only on personal statement form */
-.personal-statement-form trix-toolbar .trix-button--icon-attach,
+/* Hide link buttons on personal statement form */
 .personal-statement-form trix-toolbar .trix-button--icon-link {
   display: none !important;
 }
