@@ -51,12 +51,6 @@ jobs:
           role-duration-seconds: 3600
           role-skip-session-tagging: true
 
-      - name: Get secrets from AWS ParameterStore
-        if: failure()
-        uses: dkershner6/aws-ssm-getparameters-action@4fcb4872421f387a6c43058473acc1b22443fe13 # Pinned at v2.0.3
-        with:
-          parameterPairs: "/teaching-vacancies/github_action/infra/slack_webhook = SLACK_WEBHOOK"
-
       - name: Set environment variables from build output
         if: failure()
         run: |
@@ -64,16 +58,13 @@ jobs:
 
       - name: Notify twd_tv_dev channel on Pa11y test failures
         if: failure()
-        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # Pinned at v2.3.3
-        env:
-          SLACK_CHANNEL: twd_tv_dev
-          SLACK_USERNAME: CI Accessiblity Tests
-          SLACK_TITLE: Pa11y tests failures
-          SLACK_MESSAGE: |
+        uses: DFE-Digital/github-actions/send-to-teams-channel@master
+        with:
+          teams-webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          title: Pa11y tests failures
+          service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
+          message: |
             Pa11y accessibility tests failed against QA environment
-            See: <${{ env.LINK_TO_RUN }}|Workflow run>
-          SLACK_WEBHOOK: ${{env.SLACK_WEBHOOK}}
-          SLACK_COLOR: failure
 
   lighthouse:
     name: Lighthouse tests
@@ -101,11 +92,6 @@ jobs:
           role-to-assume: Deployments
           role-duration-seconds: 3600
           role-skip-session-tagging: true
-
-      - name: Get secrets from AWS ParameterStore
-        uses: dkershner6/aws-ssm-getparameters-action@4fcb4872421f387a6c43058473acc1b22443fe13 # Pinned at v2.0.3
-        with:
-          parameterPairs: "/teaching-vacancies/github_action/infra/slack_webhook = SLACK_WEBHOOK"
 
       - name: Set lighthouse config values
         run: |
@@ -137,15 +123,13 @@ jobs:
           echo "SCHOOLS_RESULT=$(echo '${{steps.LHCIAction.outputs.links}}' | jq 'nth(2; .[])' | tr -d '"')" >> $GITHUB_ENV
 
       - name: Notify twd_tv_dev channel on Lighthouse results
-        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # Pinned at 2.3.3
-        env:
-          SLACK_CHANNEL: twd_tv_dev
-          SLACK_USERNAME: CI Accessiblity Tests
-          SLACK_TITLE: LightHouse tests results
-          SLACK_MESSAGE: |
+        uses: DFE-Digital/github-actions/send-to-teams-channel@master
+        with:
+          teams-webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          title: LightHouse tests results
+          service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
+          message: |
             LightHouse accessibility and performance tests ran against the  QA environment
-            <${{ env.INDEX_RESULT }}|Index page results>
-            <${{ env.JOBS_RESULT }}|Jobs page results>
-            <${{ env.SCHOOLS_RESULT }}|Schools page results>
-          SLACK_WEBHOOK: ${{ env.SLACK_WEBHOOK }}
-          SLACK_COLOR: good
+            Index page results - ${{ env.INDEX_RESULT }}
+            Jobs page results - ${{ env.JOBS_RESULT }}
+            Schools page results> - ${{ env.SCHOOLS_RESULT }}

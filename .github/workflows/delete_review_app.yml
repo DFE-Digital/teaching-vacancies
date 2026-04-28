@@ -65,11 +65,6 @@ jobs:
         role-duration-seconds: 3600
         role-skip-session-tagging: true
 
-    - name: Get secrets from AWS ParameterStore
-      uses: dkershner6/aws-ssm-getparameters-action@4fcb4872421f387a6c43058473acc1b22443fe13 # Pinned at v2.0.3
-      with:
-        parameterPairs: "/teaching-vacancies/github_action/infra/slack_webhook = SLACK_WEBHOOK"
-
     - uses: actions/checkout@v6
       name: Checkout Code
 
@@ -122,15 +117,12 @@ jobs:
 
     - name: Send failure message to twd_tv_dev channel
       if: failure()
-      uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # Pinned at 2.3.3
-      env:
-        SLACK_CHANNEL: twd_tv_dev
-        SLACK_USERNAME: CI Deployment
-        SLACK_ICON_EMOJI: ':cry:'
-        SLACK_TITLE: Delete review app failure
-        SLACK_MESSAGE: |
+      uses: DFE-Digital/github-actions/send-to-teams-channel@master
+      with:
+        teams-webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+        title: Delete review app failure
+        service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
+        message: |
           Failed deletion of review app PR ${{env.PR_NUMBER}}
-          See: <${{ env.LINK_TO_RUN }}|Workflow run> - <${{ env.LINK_TO_PR }}|Pull request> - <${{ env.LINK_TO_APP }}|Review app>
-          <!channel>
-        SLACK_WEBHOOK: ${{env.SLACK_WEBHOOK}}
-        SLACK_COLOR: ${{ job.status }}
+          Pull Requst: ${{ env.LINK_TO_PR }}
+          Review app: ${{ env.LINK_TO_APP }}
