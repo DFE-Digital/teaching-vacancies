@@ -15,15 +15,9 @@ module Jobseekers
 
       def uploaded_file_scan_safe
         return unless job_application
+        return if job_application.uploaded_file_scan_safe?
 
-        blob = if job_application.instance_of?(::UploadedJobApplication)
-                 job_application.application_form.blob if job_application.application_form.attached?
-               elsif job_application.baptism_certificate.attached?
-                 job_application.baptism_certificate.blob
-               end
-
-        return if blob.nil? || blob.malware_scan_clean?
-
+        blob = job_application.uploaded_file
         message = if blob.malware_scan_pending?
                     I18n.t("jobs.file_pending_scan_message", filename: blob.filename)
                   else
