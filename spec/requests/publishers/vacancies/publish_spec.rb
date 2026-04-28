@@ -20,7 +20,9 @@ RSpec.describe "Publish" do
   let(:request) { post organisation_job_publish_path(vacancy.id) }
 
   before do
+    # rubocop:disable RSpec/AnyInstance
     allow_any_instance_of(Publishers::BaseController).to receive(:current_organisation).and_return(organisation)
+    # rubocop:enable RSpec/AnyInstance
     sign_in(publisher, scope: :publisher)
   end
 
