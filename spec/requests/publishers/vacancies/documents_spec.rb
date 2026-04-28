@@ -183,7 +183,7 @@ RSpec.describe "Documents" do
       context "when a supporting document has been flagged as unsafe" do
         let(:upload_additional_document) { "false" }
 
-        before { vacancy.supporting_documents.first.blob.malware_scan_malicious! }
+        before { vacancy.supporting_documents.first.blob.update!(metadata: { "malware_scan_result" => "malicious" }) }
 
         it "renders the documents index page with an error" do
           expect(request).to render_template(:index)

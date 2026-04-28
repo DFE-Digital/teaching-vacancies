@@ -152,11 +152,11 @@ RSpec.describe "Jobseekers can complete a religious job application" do
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
               # mark baptism certificate as failing azure virus scan
-              job_application.baptism_certificate.blob.malware_scan_malicious!
+              job_application.baptism_certificate.blob.update!(metadata: { "malware_scan_result" => "malicious" })
               click_on I18n.t("buttons.submit_application")
               expect(page).to have_content(I18n.t("jobs.file_unsafe_error_message", filename: job_application.baptism_certificate.filename))
               # mark baptism certificate as passing azure virus scan
-              job_application.baptism_certificate.blob.malware_scan_clean!
+              job_application.baptism_certificate.blob.update!(metadata: { "malware_scan_result" => "clean" })
               click_on I18n.t("buttons.submit_application")
               click_on I18n.t("jobseekers.job_applications.post_submit.next_step.view_applications")
               expect(page).to have_content(vacancy.job_title)

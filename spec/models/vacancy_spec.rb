@@ -913,7 +913,7 @@ RSpec.describe Vacancy do
     context "when the application form is pending" do
       let(:vacancy) { create(:vacancy, :with_application_form) }
 
-      before { vacancy.application_form.blob.update_column(:malware_scan_result, ActiveStorage::Blob.malware_scan_results[:pending]) }
+      before { vacancy.application_form.blob.update_columns(metadata: {}) }
 
       it "includes the application form blob" do
         expect(vacancy.unsafe_blobs).to contain_exactly(vacancy.application_form.blob)
@@ -923,7 +923,7 @@ RSpec.describe Vacancy do
     context "when a supporting document is malicious" do
       let(:vacancy) { create(:vacancy, :with_supporting_documents) }
 
-      before { vacancy.supporting_documents.first.blob.malware_scan_malicious! }
+      before { vacancy.supporting_documents.first.blob.update!(metadata: { "malware_scan_result" => "malicious" }) }
 
       it "includes the malicious blob" do
         expect(vacancy.unsafe_blobs).to contain_exactly(vacancy.supporting_documents.first.blob)
@@ -933,7 +933,7 @@ RSpec.describe Vacancy do
     context "when multiple files have mixed scan results" do
       let(:vacancy) { create(:vacancy, :with_application_form, :with_supporting_documents) }
 
-      before { vacancy.application_form.blob.malware_scan_scan_error! }
+      before { vacancy.application_form.blob.update!(metadata: { "malware_scan_result" => "scan_error" }) }
 
       it "returns only the unsafe blobs" do
         expect(vacancy.unsafe_blobs).to contain_exactly(vacancy.application_form.blob)

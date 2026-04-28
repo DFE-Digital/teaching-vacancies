@@ -12,7 +12,7 @@ RSpec.describe "Upload application forms" do
   describe "PATCH #update" do
     context "when no new file is submitted but one is already attached and the existing file is malicious" do
       before do
-        job_application.application_form.blob.malware_scan_malicious!
+        job_application.application_form.blob.update!(metadata: { "malware_scan_result" => "malicious" })
       end
 
       it "renders the edit template" do
