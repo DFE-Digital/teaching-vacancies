@@ -100,8 +100,9 @@ trix-editor {
   min-height: 350px;
 }
 
-/* Hide link buttons on personal statement form */
-.personal-statement-form trix-toolbar .trix-button--icon-link {
+/* Hide link buttons on job application personal statement and profile about you (personal statement) forms */
+.personal-statement-form trix-toolbar .trix-button--icon-link,
+.about-you-form trix-toolbar .trix-button--icon-link {
   display: none !important;
 }
 
