@@ -50,7 +50,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_27_103037) do
     t.bigint "byte_size", null: false
     t.string "checksum"
     t.datetime "created_at", precision: nil, null: false
-    t.integer "malware_scan_result", default: 0, null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
