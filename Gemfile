@@ -21,6 +21,8 @@ gem "activerecord-import"
 gem "activerecord-postgis-adapter", ">= 10.0.1"
 gem "activerecord-session_store"
 gem "active_storage_validations"
+# Use Addressable::URI.heuristic_parse to parse string-based URLs
+gem "addressable"
 gem "array_enum"
 gem "aws-sdk-s3"
 #  used during assets:precompile
@@ -47,7 +49,8 @@ gem "geocoder"
 # These 2 can be removed when we complete move to Azure attachment checking
 gem "google-apis-drive_v3"
 gem "google-apis-indexing_v3"
-
+# Only used for DFE Analytics - but sometimes we need to pin the version manually
+gem "google-cloud-bigquery"
 gem "govuk-components", "6.1.0"
 gem "govuk_design_system_formbuilder", "~> 6.1.0"
 #  used for job statistics by month, quarter year etc
@@ -89,6 +92,7 @@ gem "ostruct"
 gem "pagy", "~> 9.4" # Omit the patch segment to avoid breaking changes
 # track changes to a vacancy over time
 gem "paper_trail"
+# https://github.com/ankit1910/paper_trail-globalid - adds 'actor' to paper_trail
 gem "paper_trail-globalid"
 # search keyword parsing into filters
 gem "parslet"
@@ -121,8 +125,13 @@ gem "sidekiq", "<7"
 gem "sidekiq-cron"
 # throttle sidekiq requests to avoid overwhelming the Govuk Notify API
 gem "sidekiq-limit_fetch"
+# Skylight performance monitoring https://www.skylight.io/login
+gem "skylight"
 gem "slim-rails"
 gem "turbo-rails"
+# Used to validate the web link for external 'website' applications
+gem "validate_url"
+# Used to validate email addresses
 gem "valid_email2"
 gem "view_component", "~> 4.6.0"
 gem "wicked"
