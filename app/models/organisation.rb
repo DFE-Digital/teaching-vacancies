@@ -9,7 +9,7 @@ class Organisation < ApplicationRecord
   has_rich_text :description
 
   SPECIAL_SCHOOL_TYPES = ["Community special school", "Foundation special school", "Non-maintained special school", "Academy special converter", "Academy special sponsor led", "Free schools special"].freeze
-  NON_FAITH_RELIGIOUS_CHARACTER_TYPES = ["", "None", "Does not apply", "null"].freeze
+  NON_FAITH_RELIGIOUS_CHARACTER_TYPES = ["None", "Does not apply"].freeze
   OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES = ["Further education", "Other independent school", "Miscellaneous", "Special post 16 institution", "Other independent special school", "Higher education institutions", "Welsh establishment"].freeze
 
   friendly_id :slug_candidates, use: %i[slugged history]
@@ -53,7 +53,7 @@ class Organisation < ApplicationRecord
 
   scope :visible_to_jobseekers, -> { schools.not_closed.not_out_of_scope.or(Organisation.trusts).registered_for_service }
 
-  scope :only_faith_schools, -> { where.not("gias_data ->> 'ReligiousCharacter (name)' IN (?)", NON_FAITH_RELIGIOUS_CHARACTER_TYPES) }
+  scope :only_faith_schools, -> { where.not(religious_character: NON_FAITH_RELIGIOUS_CHARACTER_TYPES) }
 
   # This can safely ignore the 'extra' LA mappings as it is always called with a scope which excludes LAs in the first place
   scope :with_live_vacancies, lambda {
@@ -68,7 +68,7 @@ class Organisation < ApplicationRecord
 
   validates :email, email_address: true, if: -> { email_changed? } # Allows data created prior to validation to still be valid
 
-  alias_attribute :data, :gias_data
+  # alias_attribute :data, :gias_data
 
   enum :phase, {
     not_applicable: 0,
@@ -80,6 +80,8 @@ class Organisation < ApplicationRecord
     sixth_form_or_college: 6,
     through: 7,
   }
+
+  self.ignored_columns += %i[gias_data gias_data_hash]
 
   def live_group_vacancies
     Vacancy.none
@@ -134,13 +136,6 @@ class Organisation < ApplicationRecord
 
   def trust_or_la?
     trust? || local_authority?
-  end
-
-  def refresh_gias_data_hash
-    computed_hash = gias_data.presence && Digest::SHA256.hexdigest(gias_data.to_s)
-    return if gias_data_hash == computed_hash
-
-    update(gias_data_hash: computed_hash)
   end
 
   def has_ofsted_report?

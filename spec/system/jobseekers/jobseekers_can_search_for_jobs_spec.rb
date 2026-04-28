@@ -327,11 +327,11 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
     let(:special_school4) { create(:school, name: "Academy special converter", detailed_school_type: "Academy special converter", geopoint: "POINT(-0.019501 51.504949)") }
     let(:special_school5) { create(:school, name: "Academy special sponsor led", detailed_school_type: "Academy special sponsor led", geopoint: "POINT(-0.019501 51.504949)") }
     let(:special_school6) { create(:school, name: "Non-maintained special school", detailed_school_type: "Free schools special", geopoint: "POINT(-0.019501 51.504949)") }
-    let(:faith_school) { create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "anything" }, geopoint: "POINT(-0.019501 51.504949)") }
-    let(:faith_school2) { create(:school, name: "ABCDEF", gias_data: { "ReligiousCharacter (name)" => "somethingelse" }, geopoint: "POINT(-0.019501 51.504949)") }
-    let(:non_faith_school1) { create(:school, name: "nonfaith1", gias_data: { "ReligiousCharacter (name)" => "" }, geopoint: "POINT(-0.019501 51.504949)") }
-    let(:non_faith_school2) { create(:school, name: "nonfaith2", gias_data: { "ReligiousCharacter (name)" => "Does not apply" }, geopoint: "POINT(-0.019501 51.504949)") }
-    let(:non_faith_school3) { create(:school, name: "nonfaith3", gias_data: { "ReligiousCharacter (name)" => "None" }, geopoint: "POINT(-0.019501 51.504949)") }
+    let(:faith_school) { create(:school, name: "Religious", religious_character: "Christian", geopoint: "POINT(-0.019501 51.504949)") }
+    let(:faith_school2) { create(:school, name: "ABCDEF", religious_character: "Christian", geopoint: "POINT(-0.019501 51.504949)") }
+    let(:non_faith_school1) { create(:school, name: "nonfaith1", religious_character: "None", geopoint: "POINT(-0.019501 51.504949)") }
+    let(:non_faith_school2) { create(:school, name: "nonfaith2", religious_character: "Does not apply", geopoint: "POINT(-0.019501 51.504949)") }
+    let(:non_faith_school3) { create(:school, name: "nonfaith3", religious_character: "None", geopoint: "POINT(-0.019501 51.504949)") }
 
     let!(:special_job1) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "AAAA", subjects: [], organisations: [special_school1]) }
     let!(:special_job2) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "BBBB", subjects: [], organisations: [special_school2]) }

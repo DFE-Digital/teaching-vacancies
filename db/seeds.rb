@@ -131,7 +131,7 @@ Jobseeker.find_each do |jobseeker|
     FactoryBot.create(:jobseeker_profile, :with_personal_details,
                       active: true,
                       qualifications: FactoryBot.build_list(:qualification, 1, :for_seed_data, job_application: nil),
-                      employments: FactoryBot.build_list(:employment, 1, :for_seed_data, :jobseeker_profile_employment),
+                      employments: FactoryBot.build_list(:profile_employment, 1, :for_seed_data),
                       jobseeker: jobseeker) do |jobseeker_profile|
       FactoryBot.create(:job_preferences, :for_seed_data, jobseeker_profile: jobseeker_profile) do |job_preferences|
         FactoryBot.create(:job_preferences_location, job_preferences:, name: location_preference_names.sample)

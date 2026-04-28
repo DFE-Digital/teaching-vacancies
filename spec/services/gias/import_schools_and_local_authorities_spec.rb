@@ -47,7 +47,6 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
     it "stores the expected attributes and geolocation" do
       subject.call
       expect(example_school).not_to be_blank
-      expect(example_school.gias_data).not_to be_blank
       expect(example_school.address3).to be_nil
       expect(example_school.county).to be_nil
       expect(example_school.detailed_school_type).to eq("Voluntary aided school")
@@ -85,9 +84,14 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
         ).to_return(body:
                         "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
                           "EstablishmentTypeGroup (name)," \
+                          "ReligiousCharacter (name)," \
+                          "NumberOfPupils," \
+                          "SchoolCapacity," \
+                          "TrustSchoolFlag (code)," \
+                          "Trusts (code)," \
                           "TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street," \
                           "Town,Postcode\n" \
-                          "100000,St John\x92s School,999,Independent schools,999,ZZZ,http://test.com,?,?,?")
+                          "100000,St John\x92s School,999,Independent schools,None,42,56,5,6756,999,ZZZ,http://test.com,?,?,?")
       end
 
       it "converts the file to UTF-8" do
@@ -104,9 +108,14 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
         ).to_return(body:
                         "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
                           "EstablishmentTypeGroup (name)," \
+                          "ReligiousCharacter (name)," \
+                          "NumberOfPupils," \
+                          "SchoolCapacity," \
+                          "TrustSchoolFlag (code)," \
+                            "Trusts (code)," \
                           "TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street," \
                           "Town,Postcode\n" \
-                          "100000,St John\x92s School,999,Invalid school type,999,ZZZ,http://test.com,?,?,?")
+                          "100000,St John\x92s School,999,Invalid school type,None,42,56,5,7656,999,ZZZ,http://test.com,?,?,?")
       end
 
       it "doesnt import" do
@@ -122,9 +131,14 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
         ).to_return(body:
                         "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
                           "EstablishmentTypeGroup (name)," \
+                          "ReligiousCharacter (name)," \
+                          "NumberOfPupils," \
+                          "SchoolCapacity," \
+                          "TrustSchoolFlag (code)," \
+                            "Trusts (code)," \
                           "TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street," \
                           "Town,Postcode\n" \
-                          "100000,St John\x92s School,999,Independent schools,999,ZZZ,test.com,?,?,?")
+                          "100000,St John\x92s School,999,Independent schools,None,42,56,5,75665,999,ZZZ,test.com,?,?,?")
         subject.call
         expect(example_school.url).to eq("http://test.com")
       end
@@ -136,9 +150,14 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
         ).to_return(body:
                         "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
                           "EstablishmentTypeGroup (name)," \
+                          "ReligiousCharacter (name)," \
+                          "NumberOfPupils," \
+                          "SchoolCapacity," \
+                          "TrustSchoolFlag (code)," \
+                            "Trusts (code)," \
                           "TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street," \
                           "Town,Postcode\n" \
-                          "100000,St John\x92s School,999,Independent schools,999,ZZZ,,?,?,?")
+                          "100000,St John\x92s School,999,Independent schools,None,42,56,5,7675,999,ZZZ,,?,?,?")
         subject.call
         expect(example_school.url).to be_nil
       end

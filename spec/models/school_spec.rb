@@ -4,38 +4,11 @@ RSpec.describe School do
   it { is_expected.to have_many(:school_group_memberships) }
   it { is_expected.to have_many(:school_groups) }
 
-  describe "#religious_character" do
-    let(:religious_character) { "Roman Catholic" }
-    let(:gias_data) { { "ReligiousCharacter (name)" => religious_character } }
-
-    subject { build(:school, gias_data: gias_data) }
-
-    it "returns religious character" do
-      expect(subject.religious_character).to eq "Roman Catholic"
-    end
-
-    context "when the school has no religious character" do
-      let(:religious_character) { "Does not apply" }
-
-      it "returns nil" do
-        expect(subject.religious_character).to eq nil
-      end
-    end
-
-    context "when the school has no gias_data" do
-      let(:gias_data) { nil }
-
-      it "returns nil" do
-        expect(subject.religious_character).to eq nil
-      end
-    end
-  end
-
   describe "#catholic_school?" do
-    subject { build(:school, gias_data: gias_data) }
+    subject { build(:school, religious_character: religious_character) }
 
     context "when the religious character is Catholic" do
-      let(:gias_data) { { "ReligiousCharacter (name)" => "Catholic" } }
+      let(:religious_character) { "Catholic" }
 
       it "returns true" do
         expect(subject.catholic_school?).to be true
@@ -43,7 +16,7 @@ RSpec.describe School do
     end
 
     context "when the religious character is Roman Catholic" do
-      let(:gias_data) { { "ReligiousCharacter (name)" => "Roman Catholic" } }
+      let(:religious_character) { "Roman Catholic" }
 
       it "returns true" do
         expect(subject.catholic_school?).to be true
@@ -51,15 +24,7 @@ RSpec.describe School do
     end
 
     context "when the school has no religious character" do
-      let(:gias_data) { { "ReligiousCharacter (name)" => "Does not apply" } }
-
-      it "returns false" do
-        expect(subject.catholic_school?).to be false
-      end
-    end
-
-    context "when the school has no gias_data" do
-      let(:gias_data) { nil }
+      let(:religious_character) { "Does not apply" }
 
       it "returns false" do
         expect(subject.catholic_school?).to be false
@@ -68,10 +33,10 @@ RSpec.describe School do
   end
 
   describe "#ats_interstitial_variant" do
-    subject { build(:school, gias_data: gias_data) }
+    subject { build(:school, religious_character: religious_character) }
 
     context "when catholic_school? is true" do
-      let(:gias_data) { { "ReligiousCharacter (name)" => "Catholic" } }
+      let(:religious_character) { "Catholic" }
 
       it "returns catholic" do
         expect(subject.ats_interstitial_variant).to eq("catholic")
@@ -79,7 +44,7 @@ RSpec.describe School do
     end
 
     context "when faith_school? is true but not catholic" do
-      let(:gias_data) { { "ReligiousCharacter (name)" => "Church of England" } }
+      let(:religious_character) { "Church of England" }
 
       it "returns other_faith" do
         expect(subject.ats_interstitial_variant).to eq("other_faith")
@@ -87,7 +52,7 @@ RSpec.describe School do
     end
 
     context "when the school has no faith" do
-      let(:gias_data) { { "ReligiousCharacter (name)" => "Does not apply" } }
+      let(:religious_character) { "Does not apply" }
 
       it "returns non_faith" do
         expect(subject.ats_interstitial_variant).to eq("non_faith")

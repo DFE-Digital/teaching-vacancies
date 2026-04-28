@@ -46,7 +46,6 @@ RSpec.describe Gias::ImportTrusts do
     it "stores the expected attributes" do
       subject.call
       expect(trust1).not_to be_blank
-      expect(trust1.gias_data).not_to be_blank
       expect(trust1.name).to eq("Abbey Academies Trust")
       expect(trust1.group_type).to eq("Multi-academy trust")
       expect(trust1.address).to eq("Abbey Road")
