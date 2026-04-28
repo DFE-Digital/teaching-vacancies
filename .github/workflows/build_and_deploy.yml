@@ -104,7 +104,7 @@ jobs:
       - name: Get secrets from AWS ParameterStore
         uses: dkershner6/aws-ssm-getparameters-action@4fcb4872421f387a6c43058473acc1b22443fe13 # Pinned at v2.0.3
         with:
-          parameterPairs: /teaching-vacancies/github_action/infra/snyk = SNYK_TOKEN"
+          parameterPairs: "/teaching-vacancies/github_action/infra/snyk = SNYK_TOKEN"
 
       - name: Set environment variables (Push)
         if: github.event_name == 'push'
