@@ -21,6 +21,13 @@ st_anthony = School.find_by!(urn: "151965")
 # Church of England school
 osmaston_cofe = School.find_by!(urn: "112847")
 
+# academy special converter
+oakwoods = School.find_by!(urn: "139468")
+# community special school
+northcott = School.find_by!(urn: "118138")
+# Special free school
+martinbacon = School.find_by!(urn: "147661")
+
 # Team users
 users = [
   { email: "alex.lee@education.gov.uk", family_name: "Lee", given_name: "Alex" },
@@ -48,6 +55,9 @@ schools = [bexleyheath_school,
            southampton_la.schools.detect { |s| s.phase != "not_applicable" && s.phase.exclude?("middle") },
            abraham_moss,
            st_anthony,
+           oakwoods,
+           northcott,
+           martinbacon,
            osmaston_cofe]
 
 user_emails = users.map { |u| u.fetch(:email) }
@@ -65,14 +75,14 @@ end
 
 schools.each do |school|
   attrs = { organisations: [school],
-            phases: [school.phase],
+            phases: (school.phase == "not_applicable" ? %w[secondary] : [school.phase]),
             publisher_organisation: school,
             publisher: Publisher.all.sample }
-  3.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+  2.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
   FactoryBot.create(:vacancy, :for_seed_data, :no_tv_applications, **attrs)
-  2.times { FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs) }
+  FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs)
   FactoryBot.create(:draft_vacancy, :for_seed_data, **attrs)
-  2.times { FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false) }
+  FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false)
 end
 
 # Vacancies at Weydon trust central office
@@ -121,7 +131,7 @@ Jobseeker.find_each do |jobseeker|
     FactoryBot.create(:jobseeker_profile, :with_personal_details,
                       active: true,
                       qualifications: FactoryBot.build_list(:qualification, 1, :for_seed_data, job_application: nil),
-                      employments: FactoryBot.build_list(:employment, 1, :for_seed_data, :jobseeker_profile_employment),
+                      employments: FactoryBot.build_list(:profile_employment, 1, :for_seed_data),
                       jobseeker: jobseeker) do |jobseeker_profile|
       FactoryBot.create(:job_preferences, :for_seed_data, jobseeker_profile: jobseeker_profile) do |job_preferences|
         FactoryBot.create(:job_preferences_location, job_preferences:, name: location_preference_names.sample)
