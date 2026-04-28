@@ -79,6 +79,9 @@ gem "mini_magick"
 gem "mutex_m"
 # DWP integration
 gem "net-sftp"
+# used for making XMl site map and parsing import sources
+# is a current dependency of rails, but might not continue that way
+gem "nokogiri"
 # in-application notifications
 gem "noticed", ">= 2.5"
 #  authentication with DFE Login
