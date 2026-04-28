@@ -3,7 +3,7 @@ raise "Aborting seeds - running in production with existing vacancies" if Rails.
 require "faker"
 require "factory_bot_rails"
 
-Gias::ImportSchoolsAndLocalAuthorities.new.call
+Gias::ImportSchoolsAndLocalAuthorities.call
 Gias::ImportTrusts.new.call
 
 ImportPolygonDataJob.perform_now
@@ -20,6 +20,13 @@ aston_maths = School.find_by!(urn: "151725")
 st_anthony = School.find_by!(urn: "151965")
 # Church of England school
 osmaston_cofe = School.find_by!(urn: "112847")
+
+# academy special converter
+oakwoods = School.find_by!(urn: "139468")
+# community special school
+northcott = School.find_by!(urn: "118138")
+# Special free school
+martinbacon = School.find_by!(urn: "147661")
 
 # Team users
 users = [
@@ -48,6 +55,9 @@ schools = [bexleyheath_school,
            southampton_la.schools.detect { |s| s.phase != "not_applicable" && s.phase.exclude?("middle") },
            abraham_moss,
            st_anthony,
+           oakwoods,
+           northcott,
+           martinbacon,
            osmaston_cofe]
 
 user_emails = users.map { |u| u.fetch(:email) }
@@ -65,14 +75,14 @@ end
 
 schools.each do |school|
   attrs = { organisations: [school],
-            phases: [school.phase],
+            phases: (school.phase == "not_applicable" ? %w[secondary] : [school.phase]),
             publisher_organisation: school,
             publisher: Publisher.all.sample }
-  3.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+  2.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
   FactoryBot.create(:vacancy, :for_seed_data, :no_tv_applications, **attrs)
-  2.times { FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs) }
+  FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs)
   FactoryBot.create(:draft_vacancy, :for_seed_data, **attrs)
-  2.times { FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false) }
+  FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false)
 end
 
 # Vacancies at Weydon trust central office

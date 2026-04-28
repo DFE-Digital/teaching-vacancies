@@ -116,12 +116,21 @@ Rails.root.glob("spec/page_objects/**/*.rb").each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
 
+ALLOWED_HOSTS = [].freeze
+
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   config.filter_rails_from_backtrace!
 
   config.use_transactional_fixtures = true
+
+  WebMock.disable_net_connect!(allow_localhost: true, allow: ALLOWED_HOSTS)
+  config.around(:each, :vcr) do |example|
+    WebMock.allow_net_connect!
+    example.run
+    WebMock.disable_net_connect!(allow_localhost: true, allow: ALLOWED_HOSTS)
+  end
 
   config.before do
     allow(Google::Cloud::Bigquery).to receive(:new).and_return(
@@ -296,7 +305,8 @@ VCR.configure do |config|
   config.hook_into :webmock
   config.configure_rspec_metadata!
   config.ignore_localhost = true
-  config.ignore_hosts "ea-edubase-api-prod.azurewebsites.net", "selenium-chrome"
+  # config.ignore_hosts "ea-edubase-api-prod.azurewebsites.net", "selenium-chrome"
+  config.ignore_hosts "selenium-chrome"
   config.ignore_hosts IPSocket.getaddress(Socket.gethostname) if ENV.fetch("DEVCONTAINER", nil) == "true"
 
   # defaults to method and URI

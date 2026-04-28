@@ -271,6 +271,7 @@ shared:
     - group_type
     - local_authority_within
     - establishment_status
+    - discarded_at
   organisation_publisher_preferences:
     - id
     - organisation_id

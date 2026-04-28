@@ -6,6 +6,8 @@ class Organisation < ApplicationRecord
   include PgSearch::Model
   extend FriendlyId
 
+  include Discard::Model
+
   has_rich_text :description
 
   SPECIAL_SCHOOL_TYPES = ["Community special school", "Foundation special school", "Non-maintained special school", "Academy special converter", "Academy special sponsor led", "Free schools special"].freeze
