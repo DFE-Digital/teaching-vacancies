@@ -33,7 +33,7 @@ RSpec.describe Publishers::JobListing::ApplicationFormForm, type: :model do
     context "when the existing blob is malicious" do
       let(:vacancy) { create(:vacancy, :with_uploaded_application_form) }
 
-      before { vacancy.application_form.blob.malware_scan_malicious! }
+      before { vacancy.application_form.blob.update!(metadata: { "malware_scan_result" => "malicious" }) }
 
       it "is invalid" do
         expect(subject).to be_invalid
@@ -44,7 +44,7 @@ RSpec.describe Publishers::JobListing::ApplicationFormForm, type: :model do
     context "when the existing blob has a scan error" do
       let(:vacancy) { create(:vacancy, :with_uploaded_application_form) }
 
-      before { vacancy.application_form.blob.malware_scan_scan_error! }
+      before { vacancy.application_form.blob.update!(metadata: { "malware_scan_result" => "scan_error" }) }
 
       it "is invalid" do
         expect(subject).to be_invalid
