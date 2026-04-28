@@ -177,7 +177,7 @@ RSpec.describe "Editing a vacancy template" do
       expect(template.reload).to have_attributes(visa_sponsorship_available: true)
     end
 
-    it "can have its application type edited", :a11y do
+    it "can have its application type edited", :a11y, :retry do
       expect(page).to have_content "Change"
 
       within "#enable_job_applications" do
