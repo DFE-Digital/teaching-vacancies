@@ -138,13 +138,6 @@ class Organisation < ApplicationRecord
     trust? || local_authority?
   end
 
-  # def refresh_gias_data_hash
-  #   computed_hash = gias_data.presence && Digest::SHA256.hexdigest(gias_data.to_s)
-  #   return if gias_data_hash == computed_hash
-  #
-  #   update(gias_data_hash: computed_hash)
-  # end
-
   def has_ofsted_report?
     urn.present?
   end

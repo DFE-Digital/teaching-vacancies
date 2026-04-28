@@ -175,11 +175,6 @@ import_organisation_data:
   class: 'ImportOrganisationDataJob'
   queue: low
 
-refresh_organisations_gias_data_hash:
-  cron: '0 23 * * *' # "At 23:00."
-  class: 'RefreshOrganisationsGiasDataHashJob'
-  queue: low
-
 index_newly_published_vacancies:
   cron: '01 00 * * *' # "At 00:01."
   class: 'IndexNewlyPublishedVacanciesJob'

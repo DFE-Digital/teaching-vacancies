@@ -106,13 +106,6 @@ class School < Organisation
     through: %i[early_years ks1 ks2 ks3 ks4 ks5],
   }.freeze
 
-  # def religious_character
-  #   return if !respond_to?(:gias_data) || gias_data.nil?
-  #   return if ["None", "Does not apply"].include?(gias_data["ReligiousCharacter (name)"])
-  #
-  #   gias_data["ReligiousCharacter (name)"]
-  # end
-
   def live_group_vacancies
     if part_of_a_trust?
       org_ids = [trust.id] + trust.schools.pluck(:id)

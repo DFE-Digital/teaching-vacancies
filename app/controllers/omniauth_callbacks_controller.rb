@@ -108,9 +108,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       # contained within the trust and use that instead
       uid = auth_hash.dig("extra", "raw_info", "organisation", "uid")
       contained_school = School.find_by(
-        "gias_data->>'TrustSchoolFlag (code)' = ? AND gias_data->>'Trusts (code)' = ?",
-        "5", # "Supported by a single-academy trust"
-        uid,
+        trust_school_flag_code: 5, # "Supported by a single-academy trust"
+        trusts_code: uid,
       )
 
       contained_school || raise("Could not find a school contained in SAT (UID #{uid})")

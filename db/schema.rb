@@ -576,6 +576,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_23_141519) do
     t.string "religious_character"
     t.integer "number_of_pupils"
     t.integer "school_capacity"
+    t.integer "trust_school_flag_code"
+    t.integer "trusts_code"
     t.index ["geopoint"], name: "index_organisations_on_geopoint", using: :gist
     t.index ["local_authority_code"], name: "index_organisations_on_local_authority_code", unique: true
     t.index ["searchable_content"], name: "index_organisations_on_searchable_content", using: :gin

@@ -162,6 +162,8 @@
   :organisations:
   - religious_character
   - number_of_pupils
+  - trust_school_flag_code
+  - trusts_code
   - school_capacity
   - slug
   - searchable_content
