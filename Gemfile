@@ -68,6 +68,9 @@ gem "jbuilder"
 # ATS client schema checks
 gem "json-schema"
 
+# used for DFE Signin support
+# implicitly brought in by big_query as transitive dependency
+gem "jwt"
 # guidance pages support
 gem "kramdown"
 # encyrption
