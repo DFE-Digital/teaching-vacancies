@@ -498,4 +498,16 @@ RSpec.describe JobApplication do
         .with(job_application)
     end
   end
+
+  describe "#uploaded_file" do
+    it "returns nil by default" do
+      expect(create(:job_application).uploaded_file).to be_nil
+    end
+  end
+
+  describe "#uploaded_file_scan_safe?" do
+    it "returns true when there is no uploaded file" do
+      expect(create(:job_application).uploaded_file_scan_safe?).to be true
+    end
+  end
 end
