@@ -51,7 +51,7 @@ FactoryBot.define do
           filename: "application_form.pdf",
           content_type: "application/pdf",
         )
-        uploaded_job_application.application_form.blob.malware_scan_clean!
+        uploaded_job_application.application_form.blob.update!(metadata: uploaded_job_application.application_form.blob.metadata.merge("malware_scan_result" => "clean"))
       end
     end
   end

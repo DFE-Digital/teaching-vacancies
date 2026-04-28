@@ -8,7 +8,7 @@ RSpec.describe Jobseekers::UploadedJobApplication::UploadApplicationFormForm, ty
     let(:form) { described_class.new(application_form: job_application.application_form) }
 
     context "when the blob is malicious" do
-      before { job_application.application_form.blob.malware_scan_malicious! }
+      before { job_application.application_form.blob.update!(metadata: { "malware_scan_result" => "malicious" }) }
 
       it "adds an unsafe_file error" do
         form.valid?
@@ -17,7 +17,7 @@ RSpec.describe Jobseekers::UploadedJobApplication::UploadApplicationFormForm, ty
     end
 
     context "when the blob has a scan error" do
-      before { job_application.application_form.blob.malware_scan_scan_error! }
+      before { job_application.application_form.blob.update!(metadata: { "malware_scan_result" => "scan_error" }) }
 
       it "adds an unsafe_file error" do
         form.valid?

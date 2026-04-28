@@ -8,18 +8,18 @@ FactoryBot.define do
     checksum { Digest::MD5.base64digest("test content") }
     service_name { "azure_storage_documents" }
     key { SecureRandom.uuid }
-    malware_scan_result { :pending }
+    metadata { {} }
 
     trait :clean do
-      malware_scan_result { :clean }
+      metadata { { "malware_scan_result" => "clean" } }
     end
 
     trait :malicious do
-      malware_scan_result { :malicious }
+      metadata { { "malware_scan_result" => "malicious" } }
     end
 
     trait :scan_error do
-      malware_scan_result { :scan_error }
+      metadata { { "malware_scan_result" => "scan_error" } }
     end
   end
 end
