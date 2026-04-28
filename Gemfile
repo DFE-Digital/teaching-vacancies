@@ -61,6 +61,8 @@ gem "high_voltage"
 gem "httparty"
 # needed for processing of message attachments
 gem "image_processing"
+# startard library for creating IPAddresses. Used in production config
+gem "ipaddr"
 # API JSON building
 gem "jbuilder"
 # ATS client schema checks
