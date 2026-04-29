@@ -6,6 +6,6 @@ FactoryBot.define do
     year_awarded { "2020" }
     course_length { "1 year" }
 
-    association :job_application
+    job_application
   end
 end
