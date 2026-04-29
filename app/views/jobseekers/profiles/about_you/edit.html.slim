@@ -15,7 +15,7 @@
       - t(".page_description_items").each do |item|
         li.govuk-list-item = item
 
-    = tag.div data: { controller: "word-counter", word_counter_max_words_value: "1500" }
+    = tag.div class: "about-you-form", data: { controller: "word-counter", word_counter_max_words_value: "1500" }
       .govuk-form-group
         = f.rich_text_area :about_you, aria: { label: t("helpers.label.jobseekers_profile_about_you_form.about_you") }, data: { word_counter_target: "editor" }
         noscript
