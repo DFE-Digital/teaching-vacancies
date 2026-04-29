@@ -1,7 +1,7 @@
 # Front-end
 
 Our service runs with the following setup:
-- Rails 7.
+- Rails 8.
 - `jsbundling-rails` gem for building and transpiling JavaScript.
 - `cssbundling-rails` gem for building and transpiling CSS.
     - They both depend on:
