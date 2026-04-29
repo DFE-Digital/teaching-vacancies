@@ -1,12 +1,12 @@
  # Some packages are defined here with a hardcoded version to resolve vulnerabilities in the packages coming with
  # Alpine v3.23
- # TODO: Regularly check in the alpine ruby "3.4.8-alpine3.23" images for its latest upgraded packages so we can remove
+ # TODO: Regularly check in the alpine ruby "4.0.3-alpine3.23" images for its latest upgraded packages so we can remove
  # the hardcoded versions below when they have been updated in the alpine ruby image.
  # To find the current version of each package in the alpine image, search here:
  # https://pkgs.alpinelinux.org/packages?name=&branch=v3.23
 ARG PROD_PACKAGES="imagemagick=7.1.2.19-r0 zlib=1.3.2-r0 expat=2.7.5-r0 libpng libjpeg libxml2 libxslt libpq tzdata shared-mime-info postgresql18 vips-poppler vips-magick proj-dev"
 
-FROM ruby:4.0.1-alpine3.23 AS builder
+FROM ruby:4.0.3-alpine3.23 AS builder
 
 WORKDIR /app
 
@@ -49,7 +49,7 @@ RUN rm -rf node_modules log tmp yarn.lock && \
 
 
 # this stage reduces the image size.
-FROM ruby:4.0.1-alpine3.23 AS production
+FROM ruby:4.0.3-alpine3.23 AS production
 
 RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
 WORKDIR /app
