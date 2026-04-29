@@ -788,9 +788,6 @@ GEM
     ruby2_keywords (0.0.5)
     rubyzip (3.2.2)
     rugged (1.9.0)
-    sanitize (7.0.0)
-      crass (~> 1.0.2)
-      nokogiri (>= 1.16.8)
     securerandom (0.4.1)
     selenium-webdriver (4.43.0)
       base64 (~> 0.2)
@@ -1081,7 +1078,6 @@ DEPENDENCIES
   rails_semantic_logger
   railties (< 8.1)
   recaptcha
-  redis
   redis-client
   rgeo-geojson
   rgeo-proj4
@@ -1096,7 +1092,6 @@ DEPENDENCIES
   rubocop-rspec_rails
   ruby-limiter
   rubyzip
-  sanitize
   selenium-webdriver
   sentry-rails
   sentry-ruby
@@ -1418,7 +1413,6 @@ CHECKSUMS
   ruby2_keywords (0.0.5) sha256=ffd13740c573b7301cf7a2e61fc857b2a8e3d3aff32545d6f8300d8bae10e3ef
   rubyzip (3.2.2) sha256=c0ed99385f0625415c8f05bcae33fe649ed2952894a95ff8b08f26ca57ea5b3c
   rugged (1.9.0) sha256=7faaa912c5888d6e348d20fa31209b6409f1574346b1b80e309dbc7e8d63efac
-  sanitize (7.0.0) sha256=269d1b9d7326e69307723af5643ec032ff86ad616e72a3b36d301ac75a273984
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
   selenium-webdriver (4.43.0) sha256=a634377b964b701c6ac0a009ce3a08fa34ec1e1e7fe9a6d57e3088d14529a65c
   semantic_logger (4.18.0) sha256=b00e4480b63d844628ce383e80d564626fe2fdb525ecf378dbc4df7828dead8b
