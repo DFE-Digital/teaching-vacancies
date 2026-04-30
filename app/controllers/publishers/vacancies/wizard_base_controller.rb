@@ -5,24 +5,17 @@ module Publishers
     class WizardBaseController < BaseController
       include Publishers::Wizardable
 
-      delegate :all_steps_valid?, :next_invalid_step, to: :form_sequence
-
       private
 
-      helper_method :current_step, :step_process, :all_steps_valid?, :next_invalid_step, :back_path
+      helper_method :current_step, :step_process, :back_path
+
+      delegate :all_steps_valid?, to: :step_process
 
       def step_process
         Publishers::Vacancies::VacancyStepProcess.new(
           current_step || :review,
           vacancy: vacancy,
           organisation: current_organisation,
-        )
-      end
-
-      def form_sequence
-        @form_sequence ||= Publishers::VacancyFormSequence.new(
-          vacancy: vacancy,
-          step_process: step_process,
         )
       end
 
@@ -36,7 +29,7 @@ module Publishers
             redirect_to organisation_job_review_path(vacancy.id)
           end
         else
-          redirect_to organisation_job_build_path(vacancy.id, next_invalid_step)
+          redirect_to organisation_job_build_path(vacancy.id, step_process.next_invalid_step)
         end
       end
 
