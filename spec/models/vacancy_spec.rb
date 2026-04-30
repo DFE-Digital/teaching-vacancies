@@ -913,7 +913,7 @@ RSpec.describe Vacancy do
     context "when the application form is pending" do
       let(:vacancy) { create(:vacancy, :with_application_form) }
 
-      before { vacancy.application_form.blob.update_columns(metadata: {}) }
+      before { vacancy.application_form.blob.update_columns(malware_scan_result: ActiveStorage::Blob.malware_scan_results[:pending]) }
 
       it "includes the application form blob" do
         expect(vacancy.unsafe_blobs).to contain_exactly(vacancy.application_form.blob)

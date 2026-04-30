@@ -30,7 +30,7 @@ RSpec.describe "Publish" do
 
   describe "POST #create" do
     context "when a blob is pending scan" do
-      before { vacancy.application_form.blob.update_columns(malware_scan_result: nil) }
+      before { vacancy.application_form.blob.update_columns(malware_scan_result: ActiveStorage::Blob.malware_scan_results[:pending]) }
 
       it "redirects to the review page with a pending message" do
         expect(request).to redirect_to(organisation_job_review_path(vacancy.id))

@@ -51,7 +51,7 @@ RSpec.describe NativeJobApplication do
     context "when baptism_certificate blob is pending" do
       let(:job_application) { create(:job_application, :with_baptism_certificate) }
 
-      before { job_application.baptism_certificate.blob.update_columns(metadata: {}) }
+      before { job_application.baptism_certificate.blob.update_columns(malware_scan_result: ActiveStorage::Blob.malware_scan_results[:pending]) }
 
       it "returns false" do
         expect(job_application.uploaded_file_scan_safe?).to be false

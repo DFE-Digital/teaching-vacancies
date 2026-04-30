@@ -51,7 +51,7 @@ RSpec.describe UploadedJobApplication do
     context "when application_form blob is pending" do
       let(:job_application) { create(:uploaded_job_application, :with_uploaded_application_form) }
 
-      before { job_application.application_form.blob.update_columns(metadata: {}) }
+      before { job_application.application_form.blob.update_columns(malware_scan_result: ActiveStorage::Blob.malware_scan_results[:pending]) }
 
       it "returns false" do
         expect(job_application.uploaded_file_scan_safe?).to be false
