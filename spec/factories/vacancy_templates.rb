@@ -28,5 +28,10 @@ FactoryBot.define do
     trait :it_support do
       job_roles { %w[it_support] }
     end
+
+    trait :website do
+      enable_job_applications { false }
+      receive_applications { :website }
+    end
   end
 end
