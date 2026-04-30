@@ -74,7 +74,7 @@ jobs:
         workload_identity_provider: projects/689616473831/locations/global/workloadIdentityPools/teaching-vacancies/providers/teaching-vacancies
 
     - name: Set up Ruby
-      uses: ruby/setup-ruby@v1.302.0
+      uses: ruby/setup-ruby@v1.305.0
 
     - name: Download fetch_config.rb
       shell: bash
