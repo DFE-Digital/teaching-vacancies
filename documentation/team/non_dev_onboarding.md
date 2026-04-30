@@ -7,7 +7,8 @@ For developers onboarding, use [the following document](/documentation/team/deve
 
 ## Who should follow these steps
 
-**Any TV developer** should have enough permissions to do the following steps.
+Any **TV developer** should have enough permissions to do all the following steps.
+The team **Delivery Manager** can also action GovUK Notify and DfE Sign-in invitations.
 
 ## Service Seeds
 
@@ -28,19 +29,20 @@ Add the new member to the [GovUK Notify team DfE Teaching Vacancies](https://www
 
 New members will get access as hiring staff to the [Teaching Vacancies QA environment site](https://qa.teaching-vacancies.service.gov.uk/).
 
-To do so, a TV developer will sign-in to [DfE Sign-in test environment](https://test-interactions.signin.education.gov.uk) and invite the new team member to the following organisations as a hiring staff user:
+To do so, a TV developer/Delivery Manager will sign-in to [DfE Sign-in test environment](https://test-services.signin.education.gov.uk/approvals/users) and invite the new team member to the following organisations as a hiring staff user:
 
 * Bexleyheath Academy (school)
 * WEYDON MULTI ACADEMY TRUST (trust)
 * Southampton (local authority)
 * Weydon School (school)
+* Teaching Vacancies Support Team
 
 
 ### [Optional] Production Support user:
 
 The new team member may need access to the [Teaching Vacancies production support dashboard](https://teaching-vacancies.service.gov.uk/support-users), that provides access to the [production user feedback](https://teaching-vacancies.service.gov.uk/support-users/feedback/general).
 
-To provide it, a TV developer will sign-in to [DfE Sign-in production environment](https://services.signin.education.gov.uk/) and invite the new team member to Teaching Vacancies support team.
+To provide it, a TV developer/Delivery Manager will sign-in to [DfE Sign-in production environment](https://services.signin.education.gov.uk/approvals/users) and invite the new team member to Teaching Vacancies support team.
 
 
 ## [Optional] Github Codespaces access for content team members
