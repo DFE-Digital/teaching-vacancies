@@ -46,7 +46,7 @@ RSpec.describe Jobseekers::JobApplication::ReviewForm, type: :model do
     end
 
     context "when the application form blob is pending" do
-      before { job_application.application_form.blob.update!(metadata: {}) }
+      before { job_application.application_form.blob.update_columns(malware_scan_result: ActiveStorage::Blob.malware_scan_results[:pending]) }
 
       it "is invalid and shows a pending message" do
         expect(subject).not_to be_valid
