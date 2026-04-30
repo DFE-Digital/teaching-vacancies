@@ -1,7 +1,5 @@
 class DocumentsController < ApplicationController
   def show
-    return redirect_to job_path(vacancy), alert: t("active_storage.blobs.file_unavailable") unless file.blob.malware_scan_clean?
-
     send_custom_event
     redirect_to file, status: :moved_permanently
   end
