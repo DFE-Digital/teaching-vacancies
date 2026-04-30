@@ -23,6 +23,8 @@ FactoryBot.define do
 
     trait :secondary do
       phases { %w[secondary] }
+      key_stages { %w[ks3] }
+      subjects { factory_sample(SUBJECT_OPTIONS, 2).map(&:first).sort }
     end
 
     trait :it_support do

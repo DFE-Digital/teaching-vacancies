@@ -15,6 +15,6 @@ class Publishers::JobListing::SubjectsForm < Publishers::JobListing::JobListingF
   attr_accessor(*FIELDS)
 
   def params_to_save
-    { subjects: subjects }
+    { subjects: subjects.compact_blank }
   end
 end

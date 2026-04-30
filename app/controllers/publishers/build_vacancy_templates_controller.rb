@@ -22,7 +22,7 @@ module Publishers
     end
 
     def update
-      @form = form_class.load_from_params(params.fetch(form_key, {}).permit(form_class.fields), @template, current_publisher: current_publisher)
+      @form = form_class.load_from_params(form_params.permit(form_class.fields), @template, current_publisher: current_publisher)
 
       if @form.valid?
         @template.update!(@form.params_to_save)
@@ -48,8 +48,12 @@ module Publishers
       params["save_and_finish_later"] == "true"
     end
 
+    def form_params
+      params.fetch(form_key, {})
+    end
+
     def back_to_show?
-      params[form_key]["back_to_show"] == "true"
+      form_params["back_to_show"] == "true"
     end
 
     def form_key
