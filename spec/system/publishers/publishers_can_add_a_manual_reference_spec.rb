@@ -66,14 +66,22 @@ RSpec.describe "Publishers can add a manual reference" do
 
     let(:referee_name) { Faker::Name.name }
 
-    it "allows the publisher to add referee details" do
+    scenario "uploading and deleting a reference document" do
       fill_in "Referee name", with: referee_name
-
       page.attach_file("publishers-vacancies-job-applications-referee-form-reference-document-field", Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"))
       click_on "Save reference"
+
       expect(page).to have_current_path(pre_interview_checks_organisation_job_job_application_path(vacancy.id, job_application.id))
-      expect(created_referee.name).to eq(referee_name)
       expect(ReferenceRequest.last.slice(:marked_as_complete, :status).symbolize_keys).to eq(marked_as_complete: true, status: "received_off_service")
+
+      click_on referee_name
+      expect(page).to have_content("Uploaded reference")
+      expect(page).to have_content("blank_job_spec.pdf")
+
+      click_on "Delete reference"
+      expect(page).to have_current_path(pre_interview_checks_organisation_job_job_application_path(vacancy.id, job_application.id))
+      expect(page).to have_content("Reference deleted successfully")
+      expect(page).to have_no_content(referee_name)
     end
   end
 end

@@ -22,6 +22,12 @@ module Publishers
           end
         end
 
+        def destroy
+          @job_application.referees.find(params[:id]).destroy!
+          redirect_to pre_interview_checks_organisation_job_job_application_path(@vacancy.id, @job_application),
+                      success: t(".success")
+        end
+
         private
 
         def referee_form_params
