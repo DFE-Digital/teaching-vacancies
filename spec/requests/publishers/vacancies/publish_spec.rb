@@ -14,7 +14,7 @@ RSpec.describe "Publish" do
         filename: "application_form.pdf",
         content_type: "application/pdf",
       )
-      v.application_form.blob.update!(metadata: { "malware_scan_result" => "clean" })
+      v.application_form.blob.malware_scan_clean!
     end
   end
   let(:request) { post organisation_job_publish_path(vacancy.id) }
@@ -30,7 +30,7 @@ RSpec.describe "Publish" do
 
   describe "POST #create" do
     context "when a blob is pending scan" do
-      before { vacancy.application_form.blob.update_columns(metadata: {}) }
+      before { vacancy.application_form.blob.update_columns(malware_scan_result: nil) }
 
       it "redirects to the review page with a pending message" do
         expect(request).to redirect_to(organisation_job_review_path(vacancy.id))
@@ -39,7 +39,7 @@ RSpec.describe "Publish" do
     end
 
     context "when a blob is malicious" do
-      before { vacancy.application_form.blob.update!(metadata: { "malware_scan_result" => "malicious" }) }
+      before { vacancy.application_form.blob.malware_scan_malicious! }
 
       it "redirects to the review page with an unsafe message" do
         expect(request).to redirect_to(organisation_job_review_path(vacancy.id))

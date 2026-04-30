@@ -54,7 +54,7 @@ FactoryBot.define do
       end
 
       after(:create) do |uploaded_job_application|
-        uploaded_job_application.application_form.blob.update!(metadata: uploaded_job_application.application_form.blob.metadata.merge("malware_scan_result" => "clean"))
+        uploaded_job_application.application_form.blob.malware_scan_clean!
       end
     end
   end

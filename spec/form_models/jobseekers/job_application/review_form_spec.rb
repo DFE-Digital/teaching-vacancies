@@ -57,7 +57,7 @@ RSpec.describe Jobseekers::JobApplication::ReviewForm, type: :model do
     end
 
     context "when the application form blob is malicious" do
-      before { job_application.application_form.blob.update!(metadata: { "malware_scan_result" => "malicious" }) }
+      before { job_application.application_form.blob.malware_scan_malicious! }
 
       it "is invalid and shows an unsafe message" do
         expect(subject).not_to be_valid

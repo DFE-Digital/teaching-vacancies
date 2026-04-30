@@ -41,7 +41,7 @@ RSpec.describe NativeJobApplication do
     context "when baptism_certificate blob is malicious" do
       let(:job_application) { create(:job_application, :with_baptism_certificate) }
 
-      before { job_application.baptism_certificate.blob.update!(metadata: { "malware_scan_result" => "malicious" }) }
+      before { job_application.baptism_certificate.blob.malware_scan_malicious! }
 
       it "returns false" do
         expect(job_application.uploaded_file_scan_safe?).to be false

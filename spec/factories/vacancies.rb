@@ -217,7 +217,7 @@ FactoryBot.define do
       end
 
       after(:create) do |vacancy|
-        vacancy.supporting_documents.each { |doc| doc.blob.update!(metadata: doc.blob.metadata.merge("malware_scan_result" => "clean")) }
+        vacancy.supporting_documents.each { |doc| doc.blob.malware_scan_clean! }
       end
     end
 
@@ -232,7 +232,7 @@ FactoryBot.define do
       end
 
       after(:create) do |vacancy|
-        vacancy.application_form.blob.update!(metadata: vacancy.application_form.blob.metadata.merge("malware_scan_result" => "clean"))
+        vacancy.application_form.blob.malware_scan_clean!
       end
     end
 
@@ -255,7 +255,7 @@ FactoryBot.define do
       end
 
       after(:create) do |vacancy|
-        vacancy.application_form.blob.update!(metadata: vacancy.application_form.blob.metadata.merge("malware_scan_result" => "clean"))
+        vacancy.application_form.blob.malware_scan_clean!
       end
     end
 

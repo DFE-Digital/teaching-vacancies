@@ -923,7 +923,7 @@ RSpec.describe Vacancy do
     context "when a supporting document is malicious" do
       let(:vacancy) { create(:vacancy, :with_supporting_documents) }
 
-      before { vacancy.supporting_documents.first.blob.update!(metadata: { "malware_scan_result" => "malicious" }) }
+      before { vacancy.supporting_documents.first.blob.malware_scan_malicious! }
 
       it "includes the malicious blob" do
         expect(vacancy.unsafe_blobs).to contain_exactly(vacancy.supporting_documents.first.blob)
@@ -933,7 +933,7 @@ RSpec.describe Vacancy do
     context "when multiple files have mixed scan results" do
       let(:vacancy) { create(:vacancy, :with_application_form, :with_supporting_documents) }
 
-      before { vacancy.application_form.blob.update!(metadata: { "malware_scan_result" => "scan_error" }) }
+      before { vacancy.application_form.blob.malware_scan_scan_error! }
 
       it "returns only the unsafe blobs" do
         expect(vacancy.unsafe_blobs).to contain_exactly(vacancy.application_form.blob)

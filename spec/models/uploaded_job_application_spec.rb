@@ -41,7 +41,7 @@ RSpec.describe UploadedJobApplication do
     context "when application_form blob is malicious" do
       let(:job_application) { create(:uploaded_job_application, :with_uploaded_application_form) }
 
-      before { job_application.application_form.blob.update!(metadata: { "malware_scan_result" => "malicious" }) }
+      before { job_application.application_form.blob.malware_scan_malicious! }
 
       it "returns false" do
         expect(job_application.uploaded_file_scan_safe?).to be false
