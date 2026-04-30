@@ -66,10 +66,10 @@ RSpec.shared_examples "a successful search" do
 end
 
 RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
-  let(:academy1) { create(:school, school_type: "Academies", geopoint: "POINT(-0.1273 51.4994)") }
-  let(:academy2) { create(:school, school_type: "Academy") }
-  let(:free_school1) { create(:school, school_type: "Free schools") }
-  let(:free_school2) { create(:school, school_type: "Free school") }
+  let(:academy1) { create(:academy, geopoint: "POINT(-0.1273 51.4994)") }
+  let(:academy2) { create(:academy) }
+  let(:free_school1) { create(:school, :free_school) }
+  let(:free_school2) { create(:school, :free_school) }
   let(:local_authority_school1) { create(:school, school_type: "Local authority maintained schools") }
   let(:local_authority_school2) { create(:school, school_type: "Local authority maintained schools") }
   let(:school) { create(:school, geopoint: "POINT(-0.019501 51.504949)") }

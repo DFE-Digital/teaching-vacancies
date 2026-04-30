@@ -79,10 +79,10 @@ RSpec.describe "Searching on the schools page" do
   end
 
   context "when filtering by organisation type" do
-    let(:academy_school1) { create(:school, name: "Academy1", school_type: "Academies") }
-    let(:academy_school2) { create(:school, name: "Academy2", school_type: "Academy") }
-    let(:free_school1) { create(:school, name: "Free school 1", school_type: "Free schools") }
-    let(:free_school2) { create(:school, name: "Free school 1", school_type: "Free school") }
+    let(:academy_school1) { create(:academy, name: "Academy1") }
+    let(:academy_school2) { create(:academy, name: "Academy2") }
+    let(:free_school1) { create(:school, :free_school, name: "Free school 1") }
+    let(:free_school2) { create(:school, :free_school, name: "Free school 2") }
     let(:local_authority_school) { create(:school, name: "Local authority school 1", school_type: "Local authority maintained schools") }
 
     before do

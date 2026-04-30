@@ -6,6 +6,15 @@ class School < Organisation
 
   validates :urn, uniqueness: true
 
+  ACADEMY_TYPE = "Academies".freeze
+  LA_SCHOOL_TYPE = "Local authority maintained schools".freeze
+  FREE_SCHOOL_TYPE = "Free Schools".freeze
+  INDEPENDENT_SCHOOL_TYPE = "Independent schools".freeze
+  VALID_SCHOOL_TYPES = [LA_SCHOOL_TYPE, INDEPENDENT_SCHOOL_TYPE, "Special schools", "Universities", ACADEMY_TYPE, FREE_SCHOOL_TYPE, "Welsh schools", "Other types", "Colleges", "Online provider"].freeze
+
+  # This is direct from GIAS (with plurals removed via singularize)
+  validates :school_type, inclusion: { in: VALID_SCHOOL_TYPES }
+
   EXCLUDED_DETAILED_SCHOOL_TYPES = [
     "Further education",
     "Other independent school",
@@ -67,10 +76,6 @@ class School < Organisation
 
   def catholic_school?
     religious_character&.include?("Catholic") || false
-  end
-
-  def school_type
-    read_attribute(:school_type).singularize
   end
 
   def key_stages
