@@ -32,6 +32,17 @@ RSpec.describe "Documents" do
     let(:document) { vacancy.application_form }
 
     describe "GET #show" do
+      context "when the blob is not clean" do
+        before { document.blob.malware_scan_pending! }
+
+        it "redirects to the job path with an alert" do
+          get job_document_path(vacancy, document.id)
+
+          expect(response).to redirect_to(job_path(vacancy))
+          expect(flash[:alert]).to eq(I18n.t("active_storage.blobs.file_unavailable"))
+        end
+      end
+
       it "redirects to the document link, with a 301 status (in order to save it from being crawled)" do
         get job_document_path(vacancy, document.id)
 
