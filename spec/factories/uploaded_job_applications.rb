@@ -45,12 +45,15 @@ FactoryBot.define do
     end
 
     trait :with_uploaded_application_form do
-      after(:create) do |uploaded_job_application|
+      after(:build) do |uploaded_job_application|
         uploaded_job_application.application_form.attach(
           io: Rails.root.join("spec/fixtures/files/blank_baptism_cert.pdf").open,
           filename: "application_form.pdf",
           content_type: "application/pdf",
         )
+      end
+
+      after(:create) do |uploaded_job_application|
         uploaded_job_application.application_form.blob.update!(metadata: uploaded_job_application.application_form.blob.metadata.merge("malware_scan_result" => "clean"))
       end
     end
