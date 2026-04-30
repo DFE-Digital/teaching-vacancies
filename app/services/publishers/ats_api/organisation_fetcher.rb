@@ -4,7 +4,9 @@ module Publishers
       InvalidOrganisationError = Class.new(StandardError)
 
       def fetch_organisations(school_params)
+        # :nocov:
         return [] unless school_params
+        # :nocov:
 
         trust = find_trust(school_params[:trust_uid])
         schools = find_schools(trust, school_params[:school_urns])

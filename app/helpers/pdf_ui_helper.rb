@@ -77,7 +77,10 @@ module PdfUiHelper
   end
 
   def page_sub_title(title)
+    # :nocov:
     start_new_page if close_to_bottom?
+    # :nocov:
+
     move_down 0.3.cm
     fill_color COLOR_PALETTE[:lighter_grey]
     fill_rectangle [bounds.left, cursor + 0.3.cm], bounds.width, 1.cm

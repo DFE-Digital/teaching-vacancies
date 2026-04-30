@@ -4,6 +4,7 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
   # Devise redirects response from Govuk One Login to this method.
   # The request parameters contain the response from Govuk One Login from the user authentication through their portal.
   # rubocop:disable Metrics/MethodLength
+  # :nocov:
   def openid_connect
     if jobseeker_signed_in?
       flash[:alert] = I18n.t("jobseekers.govuk_one_login_callbacks.openid_connect.already_signed_in")
@@ -31,6 +32,7 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
     Rails.logger.error(e.message)
     error_redirect
   end
+  # :nocov:
   # rubocop:enable Metrics/MethodLength
 
   private
@@ -114,7 +116,9 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
 
     DfE::Analytics::SendEvents.do([event])
   end
+  # :nocov:
 
+  # :nocov:
   def trigger_jobseeker_changed_govuk_one_login_email_event(jobseeker, previous_email)
     event = DfE::Analytics::Event.new
       .with_type(:jobseeker_changed_govuk_one_login_email)

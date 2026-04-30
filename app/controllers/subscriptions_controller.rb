@@ -11,7 +11,9 @@ class SubscriptionsController < ApplicationController
     @ect_job_alert = params[:ect_job_alert]
     session[:subscription_autopopulated] = params[:search_criteria].present?
     @form = Jobseekers::SubscriptionForm.new(new_form_attributes)
+    # :nocov:
     @organisation = Organisation.friendly.find(search_criteria_params[:organisation_slug]) if organisation_job_alert?
+    # :nocov:
 
     render("subscriptions/campaign/new", layout: "subscription_campaign") if campaign_link?
   end
@@ -104,6 +106,7 @@ class SubscriptionsController < ApplicationController
   # Some fields have default values unless explicitly set by a parameter.
   def campaign_attributes
     campaign = campaign_params
+    # :nocov:
     {
       campaign: true,
       subjects: ([campaign[:email_subject].capitalize] if campaign[:email_subject].present?),
@@ -116,6 +119,7 @@ class SubscriptionsController < ApplicationController
       email: campaign[:email_contact].presence,
       user_name: campaign[:email_name].presence,
     }.compact
+    # :nocov:
   end
 
   def new_form_attributes

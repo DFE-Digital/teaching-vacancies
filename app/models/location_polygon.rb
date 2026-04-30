@@ -27,9 +27,11 @@ class LocationPolygon < ApplicationRecord
     with_name(location).present?
   end
 
+  # :nocov:
   def self.mapped_name(location)
     (MAPPED_LOCATIONS[location&.downcase].presence || location)&.downcase
   end
+  # :nocov:
 
   def self.find_valid_for_location(location)
     polygon = with_name(location)

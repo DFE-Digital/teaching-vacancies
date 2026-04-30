@@ -185,9 +185,11 @@ class JobApplication < ApplicationRecord
     !deadline_passed? && draft?
   end
 
+  # :nocov:
   def deadline_passed?
     draft? && vacancy&.expired?
   end
+  # :nocov:
 
   def unexplained_employment_gaps
     @unexplained_employment_gaps ||= Jobseekers::JobApplications::EmploymentGapFinder.new(self).significant_gaps

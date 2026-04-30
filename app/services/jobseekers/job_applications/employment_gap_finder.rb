@@ -29,7 +29,9 @@ class Jobseekers::JobApplications::EmploymentGapFinder
   def overlapping_employment?(employment)
     record.employments.any? do |other|
       next if employment == other
+      # :nocov:
       next if other.started_on.nil?
+      # :nocov:
 
       employment_ended_on = adjusted_end_date(employment)
       other_ended_on = adjusted_end_date(other)

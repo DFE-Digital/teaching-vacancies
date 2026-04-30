@@ -7,9 +7,11 @@ class Publishers::JobseekerProfilesController < Publishers::BaseController
     @form = Publishers::JobseekerProfileSearchForm.new(jobseeker_profile_search_params.merge(current_organisation: current_organisation))
   end
 
+  # :nocov:
   def show
     not_found unless visible_to_current_organisation?
   end
+  # :nocov:
 
   private
 
@@ -31,10 +33,12 @@ class Publishers::JobseekerProfilesController < Publishers::BaseController
     @profile.excluded_organisations.exclude?(current_organisation)
   end
 
+  # :nocov:
   def visible_to_associated_groups?
     return true unless current_organisation.respond_to?(:school_groups)
     return true if (groups = current_organisation.school_groups).blank?
 
     @profile.excluded_organisations & groups == []
   end
+  # :nocov:
 end

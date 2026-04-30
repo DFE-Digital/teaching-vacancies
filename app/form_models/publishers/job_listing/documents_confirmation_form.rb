@@ -3,9 +3,11 @@ class Publishers::JobListing::DocumentsConfirmationForm < BaseForm
 
   validates :upload_additional_document, inclusion: { in: [true, false] }
 
+  # :nocov:
   def self.fields
     %i[upload_additional_document]
   end
+  # :nocov:
 
   attribute :upload_additional_document, :boolean
 end

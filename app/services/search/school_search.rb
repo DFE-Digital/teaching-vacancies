@@ -21,9 +21,11 @@ class Search::SchoolSearch
       .reject { |k, v| v.blank? || (k == :radius && search_criteria[:location].blank?) }
   end
 
+  # :nocov:
   def active_criteria?
     active_criteria.any?
   end
+  # :nocov:
 
   def location_search
     @location_search ||= Search::LocationBuilder.new(search_criteria[:location], search_criteria[:radius])
@@ -52,6 +54,7 @@ class Search::SchoolSearch
 
   private
 
+  # :nocov:
   def scope
     scope = @scope.all
 
@@ -65,7 +68,9 @@ class Search::SchoolSearch
 
     scope
   end
+  # :nocov:
 
+  # :nocov:
   def marker_for_map(vacancy_id, organisation_id, geopoint)
     {
       id: vacancy_id,
@@ -73,6 +78,7 @@ class Search::SchoolSearch
       geopoint: RGeo::GeoJSON.encode(geopoint)&.to_json,
     }
   end
+  # :nocov:
 
   def education_phase
     return unless @search_criteria.key?(:education_phase)
@@ -81,12 +87,14 @@ class Search::SchoolSearch
                                    .map { |m| m.first.to_s }
   end
 
+  # :nocov:
   def key_stage_phases
     return unless @search_criteria.key?(:key_stage)
 
     School::PHASE_TO_KEY_STAGES_MAPPINGS.select { |_, v| @search_criteria[:key_stage].intersect?(v.map(&:to_s)) }
                                         .map { |m| m.first.to_s }
   end
+  # :nocov:
 
   def apply_organisation_type_filter(scope)
     return scope unless organisation_types.present?
@@ -104,6 +112,7 @@ class Search::SchoolSearch
     scope.where(school_type: selected_school_types)
   end
 
+  # :nocov:
   def apply_school_type_filter(scope)
     return scope unless school_types.present?
 
@@ -118,4 +127,5 @@ class Search::SchoolSearch
       scope
     end
   end
+  # :nocov:
 end

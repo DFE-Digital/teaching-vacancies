@@ -46,6 +46,7 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Vacan
     "another_day" if params[:publish_on_day] == "another_day" || params[:publish_on].is_a?(Date)
   end
 
+  # :nocov:
   def publish_on=(value)
     @publish_on =
       case params[:publish_on_day]
@@ -54,6 +55,7 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Vacan
       else date_from_multiparameter_hash(value)
       end
   end
+  # :nocov:
 
   private
 

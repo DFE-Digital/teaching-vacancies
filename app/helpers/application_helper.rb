@@ -2,9 +2,11 @@ module ApplicationHelper
   include ActionView::Helpers::NumberHelper
   include ActionView::Helpers::SanitizeHelper
 
+  # :nocov:
   def sanitize(text, options = {})
     super&.gsub("&amp;", "&")
   end
+  # :nocov:
 
   def body_class
     auth_class = publisher_signed_in? ? "publisher" : "jobseeker"

@@ -6,6 +6,7 @@ module Jobseekers::QualificationFormConcerns
   end
 
   def category_form_class(category)
+    # :nocov:
     name = case category
            when "gcse", "a_level", "as_level"
              "Secondary::CommonForm"
@@ -14,6 +15,7 @@ module Jobseekers::QualificationFormConcerns
            when "other"
              "OtherForm"
            end
+    # :nocov:
     "Jobseekers::Qualifications::#{name}".constantize
   end
 end

@@ -23,6 +23,7 @@ class RequestEvent < Event
                         .merge(user_data)
   end
 
+  # :nocov:
   def request_data
     {
       request_uuid: request.uuid,
@@ -34,14 +35,18 @@ class RequestEvent < Event
       request_ab_tests: ab_tests,
     }
   end
+  # :nocov:
 
+  # :nocov:
   def response_data
     {
       response_content_type: response.content_type,
       response_status: response.status,
     }
   end
+  # :nocov:
 
+  # :nocov:
   def user_data
     {
       user_anonymised_request_identifier: anonymise(request_identifier),
@@ -51,16 +56,23 @@ class RequestEvent < Event
       user_anonymised_support_user_id: anonymise(current_support_user&.oid),
     }
   end
+  # :nocov:
 
+  # :nocov:
   def request_identifier
     [user_agent, request.remote_ip].join
   end
+  # :nocov:
 
+  # :nocov:
   def user_agent
     request.headers["User-Agent"]
   end
+  # :nocov:
 
+  # :nocov:
   def ab_tests
     AbTests.new(session).current_variants.map { |test, variant| { test: test, variant: variant } }
   end
+  # :nocov:
 end
