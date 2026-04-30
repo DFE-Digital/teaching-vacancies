@@ -37,17 +37,17 @@ jobs:
 
     env:
       RAILS_ENV: test
-      DATABASE_URL: postgis://postgres:postgres@localhost:5432/tvs_test
+      DATABASE_URL: postgis://postgres:postgres@localhost:5437/tvs_test
       RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
     services:
       postgres:
-        image: postgis/postgis:14-3.5-alpine
+        image: postgis/postgis:17-3.5-alpine
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
         ports:
-          - 5432:5432
+          - 5437:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
