@@ -16,10 +16,6 @@ RSpec.describe "Documents" do
   after { sign_out(publisher) }
 
   describe "POST #create" do
-    before do
-      allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
-    end
-
     context "when the form is valid" do
       let(:request) do
         post organisation_job_documents_path(vacancy.id), params: {
@@ -83,7 +79,6 @@ RSpec.describe "Documents" do
 
   describe "POST #upload" do
     before do
-      allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: virus_free))
       post organisation_job_documents_path(vacancy.id), params: {
         publishers_job_listing_documents_form: { supporting_documents: [file] },
       }
@@ -91,7 +86,6 @@ RSpec.describe "Documents" do
 
     describe "MIME type inspection" do
       let(:valid_file_types) { "PDF, DOC or DOCX" }
-      let(:virus_free) { true }
 
       context "with a valid PDF file" do
         let(:file) { fixture_file_upload("blank_job_spec.pdf") }
@@ -125,15 +119,6 @@ RSpec.describe "Documents" do
         it "is rejected even if the file extension suggests it is valid" do
           expect(response.body).to include("has an invalid content type")
         end
-      end
-    end
-
-    context "with a virus" do
-      let(:virus_free) { false }
-      let(:file) { fixture_file_upload("blank_job_spec.pdf") }
-
-      it "is rejected" do
-        expect(response.body).to include("contains a virus")
       end
     end
   end
@@ -192,6 +177,16 @@ RSpec.describe "Documents" do
       context "when upload_additional_document is false" do
         it "redirects to the next step" do
           expect(request).to redirect_to(organisation_job_path(vacancy.id))
+        end
+      end
+
+      context "when a supporting document has been flagged as unsafe" do
+        let(:upload_additional_document) { "false" }
+
+        before { vacancy.supporting_documents.first.blob.update!(metadata: { "malware_scan_result" => "malicious" }) }
+
+        it "renders the documents index page with an error" do
+          expect(request).to render_template(:index)
         end
       end
     end

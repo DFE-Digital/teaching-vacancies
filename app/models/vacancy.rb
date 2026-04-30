@@ -78,19 +78,19 @@ class Vacancy < ApplicationRecord
   belongs_to :publisher_ats_api_client, optional: true
 
   DOCUMENT_FILE_SIZE_LIMIT = 20.megabytes
-  DOCUMENT_CONTENT_TYPES = %w[application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document].freeze
+  DOCUMENT_CONTENT_TYPES = %w[application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document text/plain].freeze
 
   DOCUMENT_VALIDATION_OPTIONS = {
     file_type: :document,
     content_types_allowed: DOCUMENT_CONTENT_TYPES,
     file_size_limit: DOCUMENT_FILE_SIZE_LIMIT,
-    valid_file_types: %i[PDF DOC DOCX],
+    valid_file_types: %i[PDF DOC DOCX TXT],
   }.freeze
 
   has_many_attached :supporting_documents, service: :azure_storage_documents
 
   validates :supporting_documents, content_type: DOCUMENT_CONTENT_TYPES,
-                                   size: { less_than: DOCUMENT_FILE_SIZE_LIMIT }, virus_free: true, if: -> { include_additional_documents }
+                                   size: { less_than: DOCUMENT_FILE_SIZE_LIMIT }, if: -> { include_additional_documents }
 
   has_one_attached :application_form, service: :azure_storage_documents
 
@@ -270,6 +270,13 @@ class Vacancy < ApplicationRecord
     return false unless contact_email
 
     Publisher.find_by(email: contact_email).present?
+  end
+
+  def unsafe_blobs
+    blobs = []
+    blobs << application_form.blob if application_form.attached?
+    blobs += supporting_documents.map(&:blob) if supporting_documents.attached?
+    blobs.reject(&:malware_scan_clean?)
   end
 
   private

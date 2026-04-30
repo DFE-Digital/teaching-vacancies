@@ -12,7 +12,10 @@
           .govuk-summary-list__row
             dt.govuk-summary-list__key Uploaded file
             dd.govuk-summary-list__value
-              = govuk_link_to("#{@job_application.application_form.filename} (#{number_to_human_size(@job_application.application_form.byte_size)})", @job_application.application_form, download: "true")
+              - if @job_application.application_form.blob.malware_scan_clean?
+                = govuk_link_to("#{@job_application.application_form.filename} (#{number_to_human_size(@job_application.application_form.byte_size)})", @job_application.application_form, download: "true")
+              - else
+                = @job_application.application_form.filename.to_s
             dd.govuk-summary-list__actions
               = govuk_link_to jobseekers_uploaded_job_application_upload_application_form_path(@job_application), method: :delete do
                 = t("buttons.delete")
@@ -21,7 +24,7 @@
         = f.govuk_file_field :application_form,
           label: { text: "Upload application form", tag: "h1", size: "l" },
           hint: { text: t("helpers.hint.publishers_job_listing_application_form_form.application_form") },
-          accept: ".doc, .docx, .pdf",
+          accept: ".doc, .docx, .pdf, .txt",
           multiple: false,
           include_hidden: false,
           enctype: "multipart/form-data"

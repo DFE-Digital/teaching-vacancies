@@ -27,10 +27,6 @@ RSpec.describe "Documents" do
       }
     end
 
-    before do
-      allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
-    end
-
     context "when the form is valid" do
       it "triggers an event", :dfe_analytics do
         request
@@ -146,6 +142,14 @@ RSpec.describe "Documents" do
 
       it "redirects to the next step" do
         expect(request).to redirect_to(organisation_job_build_path(vacancy.id, :school_visits))
+      end
+
+      context "when the existing blob is malicious" do
+        before { vacancy.application_form.blob.update!(metadata: { "malware_scan_result" => "malicious" }) }
+
+        it "renders the application form step" do
+          expect(request).to render_template("publishers/vacancies/build/application_form")
+        end
       end
     end
 

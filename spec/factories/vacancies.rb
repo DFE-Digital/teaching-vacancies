@@ -215,6 +215,10 @@ FactoryBot.define do
           ),
         ]
       end
+
+      after(:create) do |vacancy|
+        vacancy.supporting_documents.each { |doc| doc.blob.update!(metadata: doc.blob.metadata.merge("malware_scan_result" => "clean")) }
+      end
     end
 
     trait :with_application_form do
@@ -225,6 +229,10 @@ FactoryBot.define do
           Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"),
           "application/pdf",
         )
+      end
+
+      after(:create) do |vacancy|
+        vacancy.application_form.blob.update!(metadata: vacancy.application_form.blob.metadata.merge("malware_scan_result" => "clean"))
       end
     end
 
@@ -244,6 +252,10 @@ FactoryBot.define do
           Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"),
           "application/pdf",
         )
+      end
+
+      after(:create) do |vacancy|
+        vacancy.application_form.blob.update!(metadata: vacancy.application_form.blob.metadata.merge("malware_scan_result" => "clean"))
       end
     end
 

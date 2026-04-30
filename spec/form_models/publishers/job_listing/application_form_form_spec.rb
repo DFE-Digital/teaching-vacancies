@@ -26,4 +26,30 @@ RSpec.describe Publishers::JobListing::ApplicationFormForm, type: :model do
       end
     end
   end
+
+  describe "application_form_scan_safe" do
+    let(:params) { {} }
+
+    context "when the existing blob is malicious" do
+      let(:vacancy) { create(:vacancy, :with_uploaded_application_form) }
+
+      before { vacancy.application_form.blob.update!(metadata: { "malware_scan_result" => "malicious" }) }
+
+      it "is invalid" do
+        expect(subject).to be_invalid
+        expect(subject.errors.of_kind?(:application_form, :unsafe_file)).to be true
+      end
+    end
+
+    context "when the existing blob has a scan error" do
+      let(:vacancy) { create(:vacancy, :with_uploaded_application_form) }
+
+      before { vacancy.application_form.blob.update!(metadata: { "malware_scan_result" => "scan_error" }) }
+
+      it "is invalid" do
+        expect(subject).to be_invalid
+        expect(subject.errors.of_kind?(:application_form, :unsafe_file)).to be true
+      end
+    end
+  end
 end

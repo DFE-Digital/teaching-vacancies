@@ -16,13 +16,17 @@ div data-controller="upload-documents" data-upload-documents-inactive-value=vaca
       = f.govuk_file_field :application_form,
         javascript: true,
         label: { size: "m" },
-          accept: ".doc, .docx, .pdf",
+          accept: ".doc, .docx, .pdf, .txt",
           enctype: "multipart/form-data"
     - else
       h2.govuk-heading-m = "Upload application form"
       dl.govuk-summary-list
         .govuk-summary-list__row
-          dt.govuk-summary-list__value == govuk_link_to("#{vacancy.application_form.filename}  (#{number_to_human_size(vacancy.application_form.byte_size)})", vacancy.application_form, download: "true")
+          dt.govuk-summary-list__key = t("helpers.label.publishers_job_listing_application_form_form.application_form")
+          - if vacancy.application_form.blob.malware_scan_clean?
+            dd.govuk-summary-list__value == govuk_link_to("#{vacancy.application_form.filename}  (#{number_to_human_size(vacancy.application_form.byte_size)})", vacancy.application_form, download: "true")
+          - else
+            dd.govuk-summary-list__value = vacancy.application_form.filename.to_s
           dd.govuk-summary-list__actions = remove_application_form_link
 
     = render "publishers/vacancies/vacancy_form_partials/submit", f: f

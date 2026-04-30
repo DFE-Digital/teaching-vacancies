@@ -892,4 +892,52 @@ RSpec.describe Vacancy do
       end
     end
   end
+
+  describe "#unsafe_blobs" do
+    context "when no files are attached" do
+      let(:vacancy) { create(:vacancy) }
+
+      it "returns an empty array" do
+        expect(vacancy.unsafe_blobs).to be_empty
+      end
+    end
+
+    context "when all attached files are clean" do
+      let(:vacancy) { create(:vacancy, :with_application_form, :with_supporting_documents) }
+
+      it "returns an empty array" do
+        expect(vacancy.unsafe_blobs).to be_empty
+      end
+    end
+
+    context "when the application form is pending" do
+      let(:vacancy) { create(:vacancy, :with_application_form) }
+
+      before { vacancy.application_form.blob.update_columns(metadata: {}) }
+
+      it "includes the application form blob" do
+        expect(vacancy.unsafe_blobs).to contain_exactly(vacancy.application_form.blob)
+      end
+    end
+
+    context "when a supporting document is malicious" do
+      let(:vacancy) { create(:vacancy, :with_supporting_documents) }
+
+      before { vacancy.supporting_documents.first.blob.update!(metadata: { "malware_scan_result" => "malicious" }) }
+
+      it "includes the malicious blob" do
+        expect(vacancy.unsafe_blobs).to contain_exactly(vacancy.supporting_documents.first.blob)
+      end
+    end
+
+    context "when multiple files have mixed scan results" do
+      let(:vacancy) { create(:vacancy, :with_application_form, :with_supporting_documents) }
+
+      before { vacancy.application_form.blob.update!(metadata: { "malware_scan_result" => "scan_error" }) }
+
+      it "returns only the unsafe blobs" do
+        expect(vacancy.unsafe_blobs).to contain_exactly(vacancy.application_form.blob)
+      end
+    end
+  end
 end

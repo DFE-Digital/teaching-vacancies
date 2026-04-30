@@ -88,13 +88,18 @@ RSpec.describe "Jobseekers can submit a job application" do
     end
 
     context "when the application is complete" do
-      it "allows jobseekers to submit application and receive confirmation email" do
+      it "allows jobseekers to submit application and receive confirmation email, but not if the application form has been flagged as unsafe" do
         click_on I18n.t("buttons.submit_application")
         expect(page).to have_content("There is a problem")
 
         check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
         check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
-
+        # mark application form as failing azure virus scan
+        uploaded_job_application.application_form.blob.update!(metadata: { "malware_scan_result" => "malicious" })
+        click_on I18n.t("buttons.submit_application")
+        expect(page).to have_content(I18n.t("jobs.file_unsafe_error_message", filename: uploaded_job_application.application_form.filename))
+        # mark application form as passing azure virus scan
+        uploaded_job_application.application_form.blob.update!(metadata: { "malware_scan_result" => "clean" })
         expect { perform_enqueued_jobs { click_on I18n.t("buttons.submit_application") } }
           .to change { JobApplication.first.status }.from("draft").to("submitted")
           .and change { delivered_emails.count }.by(1)

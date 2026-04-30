@@ -149,7 +149,6 @@ RSpec.describe "Creating a vacancy" do
         publisher_how_to_receive_applications_page.fill_in_and_submit_form("uploaded_form")
 
         expect(publisher_application_form_page).to be_displayed
-        allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(instance_double(Publishers::DocumentVirusCheck, safe?: true))
         page.attach_file("publishers_job_listing_application_form_form[application_form]", Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"))
         click_on I18n.t("buttons.save_and_continue")
 
@@ -172,6 +171,14 @@ RSpec.describe "Creating a vacancy" do
 
         expect(page).to have_current_path(organisation_job_review_path(created_vacancy.id), ignore_query: true)
 
+        # Cannot publish if application form has been flagged as unsafe
+        created_vacancy.application_form.blob.update!(metadata: { "malware_scan_result" => "malicious" })
+        click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
+        expect(page).to have_current_path(organisation_job_review_path(created_vacancy.id), ignore_query: true)
+        expect(page).to have_content(I18n.t("jobs.file_unsafe_error_message", filename: created_vacancy.application_form.filename))
+
+        # Can publish once the file is marked clean
+        created_vacancy.application_form.blob.update!(metadata: { "malware_scan_result" => "clean" })
         click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
         expect(page).to have_current_path(organisation_job_summary_path(created_vacancy.id), ignore_query: true)
       end

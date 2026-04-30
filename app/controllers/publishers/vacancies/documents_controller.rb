@@ -1,5 +1,3 @@
-require "google/apis/drive_v3"
-
 class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::WizardBaseController
   helper_method :documents_form, :confirmation_form
   before_action :set_vacancy
@@ -68,7 +66,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::Wizard
   end
 
   def confirmation_form
-    @confirmation_form ||= Publishers::JobListing::DocumentsConfirmationForm.new(confirmation_form_params)
+    @confirmation_form ||= Publishers::JobListing::DocumentsConfirmationForm.new(confirmation_form_params, vacancy)
   end
 
   def confirmation_form_params

@@ -21,8 +21,6 @@ RSpec.describe "Publishers can add additional documents to a vacancy" do
   end
 
   scenario "can add an additional documents to a vacancy" do
-    allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(instance_double(Publishers::DocumentVirusCheck, safe?: true))
-
     # Publisher can add a first additional document
     publisher_include_additional_documents_page.include_documents_yes.click
     click_on I18n.t("buttons.save_and_continue")
@@ -51,7 +49,15 @@ RSpec.describe "Publishers can add additional documents to a vacancy" do
     expect(current_path).to eq(organisation_job_review_path(vacancy.id))
     expect(page).to have_content(vacancy.job_roles.first.humanize)
 
-    # Can publish the job listing
+    # Cannot publish if supporting documents have been flagged as unsafe
+    unsafe_doc = vacancy.reload.supporting_documents.first
+    unsafe_doc.blob.update!(metadata: { "malware_scan_result" => "malicious" })
+    click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
+    expect(current_path).to eq(organisation_job_review_path(vacancy.id))
+    expect(page).to have_content(I18n.t("jobs.file_unsafe_error_message", filename: unsafe_doc.filename))
+
+    # Can publish once documents are marked clean
+    vacancy.reload.supporting_documents.each { |doc| doc.blob.update!(metadata: { "malware_scan_result" => "clean" }) }
     click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
     expect(current_path).to eq(organisation_job_summary_path(vacancy.id))
   end

@@ -336,6 +336,10 @@ FactoryBot.define do
           "application/pdf",
         )
       end
+
+      after(:create) do |job_application|
+        job_application.baptism_certificate.blob.update!(metadata: job_application.baptism_certificate.blob.metadata.merge("malware_scan_result" => "clean"))
+      end
     end
 
     trait :with_religious_referee do

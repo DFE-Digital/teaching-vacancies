@@ -72,5 +72,21 @@ RSpec.describe FormFileValidator do
         end
       end
     end
+
+    context "when skip_google_drive_virus_check is true" do
+      let(:vacancy) { build_stubbed(:vacancy) }
+      let(:uploaded_document) { fixture_file_upload("blank_job_spec.pdf", "application/pdf") }
+      let(:form) { Publishers::JobListing::ApplicationFormForm.new({ application_form: uploaded_document }, vacancy) }
+
+      it "does not call the Google Drive virus check" do
+        expect(Publishers::DocumentVirusCheck).not_to receive(:new)
+        form.valid?
+      end
+
+      it "does not add any errors to the form object" do
+        form.valid?
+        expect(form.errors).to be_blank
+      end
+    end
   end
 end
