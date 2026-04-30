@@ -211,6 +211,10 @@ class Vacancy < ApplicationRecord
     published? && publish_on&.future?
   end
 
+  def accepting_applications?
+    enable_job_applications? && live?
+  end
+
   def can_receive_job_applications?
     enable_job_applications? && published? && !pending?
   end
