@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "backfill_about_you" do
-  include_context "rake"
-
   let!(:profile) { create(:jobseeker_profile, about_you: "Hello") }
 
   # rubocop:disable RSpec/NamedSubject

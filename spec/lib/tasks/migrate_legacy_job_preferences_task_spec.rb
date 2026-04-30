@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "migrate_legacy_job_preferences" do
-  include_context "rake"
-
   let!(:pref_a) { create(:job_preferences, working_patterns: %w[term_time flexible part_time]) }
   let!(:pref_b) { create(:job_preferences, working_patterns: %w[flexible full_time]) }
   let!(:pref_c) { create(:job_preferences, working_patterns: %w[term_time]) }

@@ -169,6 +169,7 @@ group :development, :test do
   gem "database_consistency", require: false
   gem "debug", ">= 1.0.0", require: false
   gem "dotenv-rails"
+  gem "fantaskspec"
   gem "guard-bundler", "~> 3.1", require: false
   gem "guard-rspec", require: false
   gem "guard-rubocop", "~> 1.5", require: false
