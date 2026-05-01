@@ -7,7 +7,7 @@ class Jobseekers::PeakTimesMailer < Jobseekers::BaseMailer
   def reminder(jobseeker_id)
     @jobseeker = Jobseeker.includes(jobseeker_profile: :personal_details).find_by(id: jobseeker_id)
 
-    if current_month == "march" || current_month == "may"
+    if %w[march may].include?(current_month)
       send_notify_template_email
     else
       send_standard_email
