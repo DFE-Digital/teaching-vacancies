@@ -20,37 +20,22 @@ RSpec.describe Jobseekers::PeakTimesMailer do
     end
 
     context "when it's May" do
-      before { travel_to Time.zone.local(2026, 5, 14, 3, 0, 0) }
+      before { travel_to Time.zone.local(2026, 5, 11, 11, 0, 0) }
 
+      let(:jobseeker) { create(:jobseeker) }
       let(:expected_url) { "https://teaching-vacancies.service.gov.uk/jobs?utm_source=notify&utm_medium=email&utm_campaign=peak_email&utm_content=may_2026" }
-      let(:expected_subject) { I18n.t("jobseekers.peak_times_mailer.may_reminder.subject") }
+      let(:unsubscribe_link) { Rails.application.routes.url_helpers.edit_jobseekers_account_email_preferences_url }
 
-      context "when jobseeker has personal details" do
-        let(:jobseeker) { create(:jobseeker, :with_personal_details) }
-
-        it_behaves_like "common email behaviors"
-
-        it "has May subject" do
-          expect(mail.subject).to eq(expected_subject)
-        end
-
-        it "includes May campaign URL" do
-          expect(mail.body).to include(expected_url)
-        end
+      it "sends to jobseeker's email" do
+        expect(mail.to).to contain_exactly(jobseeker.email)
       end
 
-      context "when jobseeker has no personal details" do
-        let(:jobseeker) { create(:jobseeker) }
+      it "includes campaign_url in personalisation" do
+        expect(mail.personalisation[:campaign_url]).to eq(expected_url)
+      end
 
-        it_behaves_like "common email behaviors"
-
-        it "has May subject" do
-          expect(mail.subject).to eq(expected_subject)
-        end
-
-        it "includes May campaign URL" do
-          expect(mail.body).to include(expected_url)
-        end
+      it "includes unsubscribe_link in personalisation" do
+        expect(mail.personalisation[:unsubscribe_link]).to eq(unsubscribe_link)
       end
     end
 

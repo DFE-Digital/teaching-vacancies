@@ -1,14 +1,14 @@
 class Jobseekers::PeakTimesMailer < Jobseekers::BaseMailer
   helper_method :jobseeker, :first_name, :campaign_url, :campaign_key
 
-  # Notify template ID for March peak times email
   MARCH_PEAK_TIMES_TEMPLATE_ID = "ebad6edf-99a5-4072-951f-f01c1178cdae".freeze
+  MAY_PEAK_TIMES_TEMPLATE_ID = "084ff736-1802-4409-87b3-2826ee04eac3".freeze
 
   def reminder(jobseeker_id)
     @jobseeker = Jobseeker.includes(jobseeker_profile: :personal_details).find_by(id: jobseeker_id)
 
-    if current_month == "march"
-      send_march_template_email
+    if current_month == "march" || current_month == "may"
+      send_notify_template_email
     else
       send_standard_email
     end
@@ -16,9 +16,10 @@ class Jobseekers::PeakTimesMailer < Jobseekers::BaseMailer
 
   private
 
-  def send_march_template_email
+  def send_notify_template_email
+    template_id = current_month == "march" ? MARCH_PEAK_TIMES_TEMPLATE_ID : MAY_PEAK_TIMES_TEMPLATE_ID
     template_mail(
-      MARCH_PEAK_TIMES_TEMPLATE_ID,
+      template_id,
       to: @jobseeker.email,
       personalisation: {
         campaign_url: campaign_url,
@@ -28,15 +29,11 @@ class Jobseekers::PeakTimesMailer < Jobseekers::BaseMailer
   end
 
   def send_standard_email
-    subject = if current_month == "may"
-                I18n.t("jobseekers.peak_times_mailer.#{campaign_key}.subject")
+    first_name = @jobseeker.jobseeker_profile&.personal_details&.first_name
+    subject = if first_name.present?
+                I18n.t("jobseekers.peak_times_mailer.#{campaign_key}.subject", first_name: first_name)
               else
-                first_name = @jobseeker.jobseeker_profile&.personal_details&.first_name
-                if first_name.present?
-                  I18n.t("jobseekers.peak_times_mailer.#{campaign_key}.subject", first_name: first_name)
-                else
-                  I18n.t("jobseekers.peak_times_mailer.#{campaign_key}.nameless_subject")
-                end
+                I18n.t("jobseekers.peak_times_mailer.#{campaign_key}.nameless_subject")
               end
     send_email(to: @jobseeker.email, subject:)
   end
