@@ -1,8 +1,8 @@
 class ProfileEmployment < EmploymentRecord
   belongs_to :jobseeker_profile
 
-  # Main duties needs to be present for Analytics puposes. But is irrelevant on this model.
-  # Read comment bellow for more details.
+  # Main duties needs to be present for Analytics purposes. But is irrelevant on this model.
+  # Read comment below for more details.
   has_encrypted :organisation, :job_title, :main_duties
 
   self.table_name = "employments"
