@@ -19,7 +19,7 @@ RSpec.describe "Publishers::Vacancies::CopyController" do
     let(:name) { Faker::CryptoCoin.coin_name }
 
     context "with a simple vacancy" do
-      let(:vacancy) { create(:vacancy, organisations: [organisation]) }
+      let(:vacancy) { create(:vacancy, :no_tv_applications, organisations: [organisation]) }
 
       it "copies a vacancy into a template" do
         expect {
