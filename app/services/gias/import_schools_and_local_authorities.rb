@@ -37,14 +37,15 @@ class Gias::ImportSchoolsAndLocalAuthorities
     @memberships = []
   end
 
+  # sum doesn't work on arrays the same way it works on Integers
+  # rubocop:disable Performance/Sum
   def import_batch
-    failures = import_local_authorities.failed_instances +
-      import_schools.failed_instances +
-      import_memberships.failed_instances
-    failures.tap do
-      reset_data
-    end
+    [import_local_authorities,
+     import_schools,
+     import_memberships].map(&:failed_instances)
+                        .reduce(:+).tap { reset_data }
   end
+  # rubocop:enable Performance/Sum
 
   def import_local_authorities
     SchoolGroup.import(
