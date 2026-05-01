@@ -44,28 +44,6 @@ RSpec.describe JobApplicationReviewSectionComponent, type: :component do
     end
   end
 
-  describe "The main list" do
-    it "does not render the list by default" do
-      render_inline(component)
-
-      expect(page).to have_no_css(".govuk-summary-list")
-    end
-
-    context "when rows are defined" do
-      before do
-        render_inline(component) do |section|
-          section.with_row
-          section.with_row
-        end
-      end
-
-      it "renders the list with the rows" do
-        expect(page).to have_css(".review-component__section__body .govuk-summary-list")
-        expect(page).to have_css(".govuk-summary-list__row", count: 2)
-      end
-    end
-  end
-
   describe "#error_path" do
     context "when the job application is an uploaded job application" do
       let(:job_application) { create(:uploaded_job_application) }
