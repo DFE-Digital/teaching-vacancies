@@ -17,6 +17,7 @@ RSpec.describe "Publishers::Vacancies::CopyController" do
 
   describe "POST #create" do
     let(:name) { Faker::CryptoCoin.coin_name }
+    let(:new_template) { VacancyTemplate.last }
 
     context "with a simple vacancy" do
       let(:vacancy) { create(:vacancy, :no_tv_applications, organisations: [organisation]) }
@@ -25,6 +26,7 @@ RSpec.describe "Publishers::Vacancies::CopyController" do
         expect {
           post organisation_job_copy_path(vacancy.id, params: { vacancy_template: { name: name } })
         }.to change(VacancyTemplate, :count).by(1)
+        expect(new_template).to have_attributes(name: name, receive_applications: "website")
       end
     end
 
@@ -35,7 +37,7 @@ RSpec.describe "Publishers::Vacancies::CopyController" do
         expect {
           post organisation_job_copy_path(vacancy.id, params: { vacancy_template: { name: name } })
         }.to change(VacancyTemplate, :count).by(1)
-        expect(VacancyTemplate.last).to have_attributes(name: name, receive_applications: nil)
+        expect(new_template).to have_attributes(name: name, receive_applications: nil)
       end
     end
   end
