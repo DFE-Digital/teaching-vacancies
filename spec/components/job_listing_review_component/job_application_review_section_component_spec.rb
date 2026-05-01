@@ -11,7 +11,10 @@ RSpec.describe JobApplicationReviewSectionComponent, type: :component do
   let(:job_application) { create(:job_application, :draft) }
   let(:name) { :personal_details }
 
-  it_behaves_like ReviewSectionComponent
+  it "uses the name as the ID by default" do
+    render_inline(component)
+    expect(page).to have_css("div##{name}")
+  end
 
   it "uses the section name to find the form by default" do
     render_inline(component)
