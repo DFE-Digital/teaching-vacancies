@@ -28,11 +28,15 @@ class Jobseekers::PeakTimesMailer < Jobseekers::BaseMailer
   end
 
   def send_standard_email
-    first_name = @jobseeker.jobseeker_profile&.personal_details&.first_name
-    subject = if first_name.present?
-                I18n.t("jobseekers.peak_times_mailer.#{campaign_key}.subject", first_name: first_name)
+    subject = if current_month == "may"
+                I18n.t("jobseekers.peak_times_mailer.#{campaign_key}.subject")
               else
-                I18n.t("jobseekers.peak_times_mailer.#{campaign_key}.nameless_subject")
+                first_name = @jobseeker.jobseeker_profile&.personal_details&.first_name
+                if first_name.present?
+                  I18n.t("jobseekers.peak_times_mailer.#{campaign_key}.subject", first_name: first_name)
+                else
+                  I18n.t("jobseekers.peak_times_mailer.#{campaign_key}.nameless_subject")
+                end
               end
     send_email(to: @jobseeker.email, subject:)
   end
@@ -40,7 +44,7 @@ class Jobseekers::PeakTimesMailer < Jobseekers::BaseMailer
   def campaign_url
     case current_month
     when "may"
-      "https://teaching-vacancies.service.gov.uk/?utm_source=Notify&utm_medium=email&utm_campaign=#{current_month}_peak_notify&utm_id=#{current_month}_peak_notify"
+      "https://teaching-vacancies.service.gov.uk/jobs?utm_source=notify&utm_medium=email&utm_campaign=peak_email&utm_content=may_2026"
     when "november"
       "https://teaching-vacancies.service.gov.uk/jobs?utm_source=notify&utm_medium=email&utm_campaign=notify_november_2025&utm_content=tuesday_2025"
     when "march"

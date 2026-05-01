@@ -1,7 +1,17 @@
+<% if campaign_key == "may_reminder" %>
+## <%= t("jobseekers.peak_times_mailer.#{campaign_key}.heading") %>
+
+<%= t("jobseekers.peak_times_mailer.#{campaign_key}.line_1") %>
+
+<%= t("jobseekers.peak_times_mailer.#{campaign_key}.cta", campaign_url:) %>
+
+<%= t("jobseekers.peak_times_mailer.#{campaign_key}.line_3") %>
+<% else %>
 <%= t("jobseekers.peak_times_mailer.#{campaign_key}.line_1") %>
 
 <%= t("jobseekers.peak_times_mailer.#{campaign_key}.line_2", campaign_url:) %>
 
 <%= t("jobseekers.peak_times_mailer.#{campaign_key}.line_3") %>
+<% end %>
 
 <%= t("jobseekers.peak_times_mailer.#{campaign_key}.unsubscribe", link: edit_jobseekers_account_email_preferences_url) %>

@@ -20,18 +20,17 @@ RSpec.describe Jobseekers::PeakTimesMailer do
     end
 
     context "when it's May" do
-      before { travel_to Time.zone.local(2025, 5, 14, 3, 0, 0) }
+      before { travel_to Time.zone.local(2026, 5, 14, 3, 0, 0) }
 
-      let(:expected_url) { "https://teaching-vacancies.service.gov.uk/?utm_source=Notify&utm_medium=email&utm_campaign=may_peak_notify&utm_id=may_peak_notify" }
+      let(:expected_url) { "https://teaching-vacancies.service.gov.uk/jobs?utm_source=notify&utm_medium=email&utm_campaign=peak_email&utm_content=may_2026" }
+      let(:expected_subject) { I18n.t("jobseekers.peak_times_mailer.may_reminder.subject") }
 
       context "when jobseeker has personal details" do
         let(:jobseeker) { create(:jobseeker, :with_personal_details) }
-        let(:first_name) { jobseeker.jobseeker_profile.personal_details.first_name }
 
         it_behaves_like "common email behaviors"
 
-        it "has May subject with jobseeker firstname" do
-          expected_subject = I18n.t("jobseekers.peak_times_mailer.may_reminder.subject", first_name: first_name)
+        it "has May subject" do
           expect(mail.subject).to eq(expected_subject)
         end
 
@@ -45,8 +44,7 @@ RSpec.describe Jobseekers::PeakTimesMailer do
 
         it_behaves_like "common email behaviors"
 
-        it "has May generic subject without firstname" do
-          expected_subject = I18n.t("jobseekers.peak_times_mailer.may_reminder.nameless_subject")
+        it "has May subject" do
           expect(mail.subject).to eq(expected_subject)
         end
 
@@ -117,10 +115,9 @@ RSpec.describe Jobseekers::PeakTimesMailer do
       before { travel_to Time.zone.local(2025, 1, 15, 9, 0, 0) }
 
       let(:jobseeker) { create(:jobseeker, :with_personal_details) }
-      let(:first_name) { jobseeker.jobseeker_profile.personal_details.first_name }
 
       it "falls back to May campaign content" do
-        expected_subject = I18n.t("jobseekers.peak_times_mailer.may_reminder.subject", first_name: first_name)
+        expected_subject = I18n.t("jobseekers.peak_times_mailer.may_reminder.subject")
         expect(mail.subject).to eq(expected_subject)
       end
 
