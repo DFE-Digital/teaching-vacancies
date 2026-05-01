@@ -36,26 +36,25 @@
       ul.govuk-list.review-component__sections
         = render "jobseekers/job_applications/job_application_review_sections", job_application: job_application, jobseeker: current_jobseeker
 
-    .govuk-grid-column-one-third
-      div class="govuk-!-display-none-print"
-        h2.govuk-heading-m = t("jobseekers.job_applications.show.timeline")
+    .govuk-grid-column-one-third class="govuk-!-display-none-print"
+      h2.govuk-heading-m = t("jobseekers.job_applications.show.timeline")
 
-        = render TimelineComponent.new do |timeline|
-          - if job_application.self_disclosure_request&.marked_as_complete?
-            - version = job_application.self_disclosure_request.versions.first
-            - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.self_disclosure_completed"),
-              value: format_time_to_datetime_at(version.created_at))
-          - if job_application.withdrawn_at?
-            - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.withdrawn"),
-              value: format_time_to_datetime_at(job_application.withdrawn_at))
-          - if job_application.unsuccessful_at?
-            - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.#{current_jobseeker.present? ? 'unsuccessful' : 'rejected'}"),
-              value: format_time_to_datetime_at(job_application.unsuccessful_at))
-          - if job_application.shortlisted_at?
-            - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.shortlisted"),
-              value: format_time_to_datetime_at(job_application.shortlisted_at))
-          - if job_application.reviewed_at?
-            - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.reviewed"),
-              value: format_time_to_datetime_at(job_application.reviewed_at))
-          - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.submitted"),
-            value: format_time_to_datetime_at(job_application.submitted_at))
+      = render TimelineComponent.new do |timeline|
+        - if job_application.self_disclosure_request&.marked_as_complete?
+          - version = job_application.self_disclosure_request.versions.first
+          - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.self_disclosure_completed"),
+            value: format_time_to_datetime_at(version.created_at))
+        - if job_application.withdrawn_at?
+          - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.withdrawn"),
+            value: format_time_to_datetime_at(job_application.withdrawn_at))
+        - if job_application.unsuccessful_at?
+          - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.#{current_jobseeker.present? ? 'unsuccessful' : 'rejected'}"),
+            value: format_time_to_datetime_at(job_application.unsuccessful_at))
+        - if job_application.shortlisted_at?
+          - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.shortlisted"),
+            value: format_time_to_datetime_at(job_application.shortlisted_at))
+        - if job_application.reviewed_at?
+          - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.reviewed"),
+            value: format_time_to_datetime_at(job_application.reviewed_at))
+        - timeline.with_item(key: t("jobseekers.job_applications.status_timestamps.submitted"),
+          value: format_time_to_datetime_at(job_application.submitted_at))
