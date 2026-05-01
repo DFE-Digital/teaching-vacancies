@@ -10,7 +10,7 @@ module ComponentsHelper
     map: "MapComponent",
     navigation_list: "NavigationListComponent",
     editor: "EditorComponent",
-    review_section: "JobApplicationReviewComponent::Section",
+    review_section: "JobApplicationReviewSectionComponent",
     searchable_collection: "SearchableCollectionComponent",
     supportal_table: "SupportalTableComponent",
     tabs: "TabsComponent",

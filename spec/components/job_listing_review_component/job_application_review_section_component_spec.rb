@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe JobApplicationReviewComponent::Section, type: :component do
+RSpec.describe JobApplicationReviewSectionComponent, type: :component do
   subject(:component) { described_class.new(*args, **kwargs) }
 
   let(:args) { [job_application, name] }
@@ -11,7 +11,7 @@ RSpec.describe JobApplicationReviewComponent::Section, type: :component do
   let(:job_application) { create(:job_application, :draft) }
   let(:name) { :personal_details }
 
-  it_behaves_like ReviewComponent::Section
+  it_behaves_like ReviewSectionComponent
 
   it "uses the section name to find the form by default" do
     render_inline(component)
@@ -48,7 +48,7 @@ RSpec.describe JobApplicationReviewComponent::Section, type: :component do
     it "does not render the list by default" do
       render_inline(component)
 
-      expect(page).not_to have_css(".govuk-summary-list")
+      expect(page).to have_no_css(".govuk-summary-list")
     end
 
     context "when rows are defined" do

@@ -1,6 +1,6 @@
 # This is an abstract class.
 # See JobApplicationReviewComponent::Section for specific implementation.
-class ReviewComponent::Section < ApplicationComponent
+class ReviewSectionComponent < ApplicationComponent
   include FormsHelper
   include StatusTagHelper
 

@@ -1,4 +1,4 @@
-class JobApplicationReviewComponent::Section < ReviewComponent::Section
+class JobApplicationReviewSectionComponent < ReviewSectionComponent
   include JobApplicationsHelper
   include VacanciesHelper
 

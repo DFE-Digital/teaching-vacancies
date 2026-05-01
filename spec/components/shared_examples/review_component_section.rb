@@ -1,4 +1,4 @@
-RSpec.shared_examples ReviewComponent::Section do
+RSpec.shared_examples ReviewSectionComponent do
   it_behaves_like "a component that accepts custom classes", uses_positional_args: true
   it_behaves_like "a component that accepts custom HTML attributes", uses_positional_args: true
 
