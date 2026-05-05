@@ -1,13 +1,17 @@
 class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications::BaseController
   include Jobseekers::QualificationFormConcerns
+  include Wicked::Wizard
 
   before_action :strip_empty_working_patterns_checkboxes, only: %i[update]
 
   helper_method :back_path, :employments, :job_application, :qualification_form_param_key, :redirect_to_review?, :vacancy
 
+  before_action :set_steps
+  before_action :setup_wizard
+
   def show
-    @form = form_class.new(form_class.load_form(job_application))
-    render step
+    @form = form_class.new(form_class.load_form(job_application)) if step != Wicked::FINISH_STEP
+    render_wizard
   end
 
   def update
@@ -17,20 +21,22 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
 
       if redirect_to_review?
         redirect_to jobseekers_job_application_review_path(job_application), success: t("messages.jobseekers.job_applications.saved")
-      elsif steps_complete?
-        redirect_to jobseekers_job_application_apply_path job_application
       else
-        redirect_to jobseekers_job_application_build_path(job_application, step_process.next_step(step))
+        redirect_to jobseekers_job_application_apply_path job_application
       end
     else
-      render step
+      render_wizard
     end
   end
 
   private
 
-  def steps_complete?
-    step_process.last_of_group?(step)
+  def set_steps
+    self.steps = step_process.steps
+  end
+
+  def finish_wizard_path
+    jobseekers_job_application_apply_path job_application
   end
 
   def back_path
@@ -41,10 +47,6 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
                    end
   end
 
-  def step
-    params[:id].to_sym
-  end
-
   def form_class
     step_process.form_class_for(step)
   end
@@ -53,10 +55,6 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
     param_key = ActiveModel::Naming.param_key(form_class)
 
     (params[param_key] || params).permit(form_class.fields)
-  end
-
-  def finish_wizard_path
-    jobseekers_job_application_review_path(job_application)
   end
 
   def employments
