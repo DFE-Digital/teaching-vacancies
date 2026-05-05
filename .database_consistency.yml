@@ -102,3 +102,9 @@ ProfileEmployment:
   jobseeker_profile:
     ColumnPresenceChecker:
       enabled: false
+
+# This now no longer points at 2 tables, but we can't remove the column yet
+ProfessionalBodyMembership:
+  job_application:
+    ColumnPresenceChecker:
+      enabled: false

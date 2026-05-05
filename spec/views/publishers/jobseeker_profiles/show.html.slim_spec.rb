@@ -8,7 +8,6 @@ RSpec.describe "publishers/jobseeker_profiles/show" do
                   personal_details: build(:personal_details),
                   qualifications: [build_stubbed(:qualification)],
                   employments: [employment],
-                  professional_body_memberships: [build_stubbed(:professional_body_membership)],
                   job_preferences: build_stubbed(:job_preferences, roles: %w[ teacher
                                                                               headteacher
                                                                               deputy_headteacher
@@ -54,10 +53,6 @@ RSpec.describe "publishers/jobseeker_profiles/show" do
     expect(rendered).to have_content("almost 3 years")
     expect(rendered).to have_no_content("Location")
     expect(rendered).to have_content(jobseeker_profile.job_preferences.working_pattern_details)
-    expect(rendered).to have_content(jobseeker_profile.professional_body_memberships.first.name)
-    expect(rendered).to have_content(jobseeker_profile.professional_body_memberships.first.membership_type)
-    expect(rendered).to have_content(jobseeker_profile.professional_body_memberships.first.membership_number)
-    expect(rendered).to have_content(jobseeker_profile.professional_body_memberships.first.year_membership_obtained)
   end
 
   scenario "A publisher can contact the jobseeker from their profile" do
