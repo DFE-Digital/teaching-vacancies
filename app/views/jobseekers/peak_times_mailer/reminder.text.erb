@@ -1,3 +1,6 @@
+<% if campaign_key == "may_reminder" %>
+## <%= t("jobseekers.peak_times_mailer.#{campaign_key}.heading") %>
+<% end %>
 <%= t("jobseekers.peak_times_mailer.#{campaign_key}.line_1") %>
 
 <%= t("jobseekers.peak_times_mailer.#{campaign_key}.line_2", campaign_url:) %>

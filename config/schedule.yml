@@ -7,7 +7,7 @@ send_peak_times_email_reminder_march:
   queue: default
 
 send_peak_times_email_reminder_may:
-  cron: '0 3 14 5 *' # "At 03:00 on 14 of May."
+  cron: '0 11 11 5 *' # "At 11:00 on 11 of May."
   class: 'SendPeakTimesEmailReminderJob'
   queue: default
 
