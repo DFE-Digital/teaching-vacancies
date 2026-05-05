@@ -40,7 +40,7 @@ RSpec.describe VacancyFilterQuery do
   # rubocop:disable RSpec/BeforeAfterAll
   before(:all) do
     Vacancy.transaction do
-      academy = create(:school, name: "Academy2", school_type: "Academy")
+      academy = create(:academy, name: "Academy2")
       # Subjects are ignored when phases are primary-only
       create(:vacancy, :secondary, job_title: "Vacancy 1", subjects: %w[English Spanish], working_patterns: %w[part_time full_time], ect_status: "ect_suitable", organisations: [academy], enable_job_applications: true, visa_sponsorship_available: true)
 
@@ -55,12 +55,12 @@ RSpec.describe VacancyFilterQuery do
       create(:vacancy, :no_tv_applications, job_title: "Vacancy 15-NFV2", phases: %w[primary], organisations: [non_faith_school2])
       create(:vacancy, :no_tv_applications, job_title: "Vacancy 14-NFV3", phases: %w[primary], organisations: [non_faith_school3], visa_sponsorship_available: true)
 
-      special_school1 = create(:school, name: "Community special school", detailed_school_type: "Community special school")
-      special_school2 = create(:school, name: "Foundation special school", detailed_school_type: "Foundation special school")
-      special_school3 = create(:school, name: "Non-maintained special school", detailed_school_type: "Non-maintained special school")
-      special_school4 = create(:school, name: "Academy special converter", detailed_school_type: "Academy special converter")
-      special_school5 = create(:school, name: "Academy special sponsor led", detailed_school_type: "Academy special sponsor led")
-      special_school6 = create(:school, name: "Non-maintained special school", detailed_school_type: "Free schools special")
+      special_school1 = create(:school, name: "Community special school", school_type: "Special schools", detailed_school_type: "Community special school")
+      special_school2 = create(:school, name: "Foundation special school", school_type: "Special schools", detailed_school_type: "Foundation special school")
+      special_school3 = create(:school, name: "Non-maintained special school", school_type: "Special schools", detailed_school_type: "Non-maintained special school")
+      special_school4 = create(:school, name: "Academy special converter", school_type: "Special schools", detailed_school_type: "Academy special converter")
+      special_school5 = create(:school, name: "Academy special sponsor led", school_type: "Special schools", detailed_school_type: "Academy special sponsor led")
+      special_school6 = create(:school, name: "Non-maintained special school", school_type: "Special schools", detailed_school_type: "Free schools special")
 
       create(:vacancy, :no_tv_applications, job_title: "Vacancy 7S", phases: %w[primary], organisations: [special_school1])
       create(:vacancy, :no_tv_applications, job_title: "Vacancy 8S", phases: %w[primary], organisations: [special_school2])
@@ -69,15 +69,15 @@ RSpec.describe VacancyFilterQuery do
       create(:vacancy, :no_tv_applications, job_title: "Vacancy 11S", phases: %w[primary], organisations: [special_school5])
       create(:vacancy, :no_tv_applications, job_title: "Vacancy 12S", phases: %w[primary], organisations: [special_school6])
 
-      academies = create(:school, name: "Academy1", school_type: "Academies")
+      academies = create(:academy, name: "Academy1")
       create(:vacancy, :no_tv_applications, job_title: "Vacancy 5", phases: %w[primary], job_roles: ["head_of_year_or_phase"], organisations: [academies])
 
       faith_school = create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "anything" })
       faith_school2 = create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "somethingelse" })
       create(:vacancy, :no_tv_applications, job_title: "Vacancy 13F", phases: %w[primary], publisher_organisation: faith_school, organisations: [faith_school, faith_school2])
 
-      free_school = create(:school, name: "Freeschool1", school_type: "Free schools")
-      free_schools = create(:school, name: "Freeschool2", school_type: "Free school")
+      free_school = create(:school, :free_school, name: "Freeschool1")
+      free_schools = create(:school, :free_school, name: "Freeschool2")
 
       create(:vacancy, job_title: "Vacancy 2FR", subjects: %w[English Spanish], phases: %w[sixth_form_or_college], ect_status: "ect_unsuitable", organisations: [free_school], enable_job_applications: true)
       create(:vacancy, :no_tv_applications, job_title: "Vacancy 4FR", phases: %w[primary])

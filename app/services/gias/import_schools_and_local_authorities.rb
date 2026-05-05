@@ -10,17 +10,20 @@ class Gias::ImportSchoolsAndLocalAuthorities
     reset_data
   end
 
+  class ImportFailure < StandardError
+  end
+
   def call
     log_benchmark("Importing schools and local authorities") do
-      Gias::Data.new(SCHOOLS_AND_LOCAL_AUTHORITIES_CSV).each_with_index do |row, index|
-        local_authorities.add(group_data(row))
-        schools.push(school_data(row))
-        memberships.push(membership_data(row))
-
-        import_batch if (index % BATCH_SIZE).zero?
+      import_errors = Gias::Data.new(SCHOOLS_AND_LOCAL_AUTHORITIES_CSV).each_slice(BATCH_SIZE).flat_map do |group|
+        group.each do |row|
+          local_authorities.add(group_data(row))
+          schools.push(school_data(row))
+          memberships.push(membership_data(row))
+        end
+        import_batch
       end
-
-      import_batch
+      raise(ImportFailure, import_errors.map { |x| x.errors.full_messages }) if import_errors.any?
     end
   end
 
@@ -34,13 +37,15 @@ class Gias::ImportSchoolsAndLocalAuthorities
     @memberships = []
   end
 
+  # sum doesn't work on arrays the same way it works on Integers
+  # rubocop:disable Performance/Sum
   def import_batch
-    import_local_authorities if local_authorities.any?
-    import_schools if schools.any?
-    import_memberships if memberships.any?
-
-    reset_data
+    [import_local_authorities,
+     import_schools,
+     import_memberships].map(&:failed_instances)
+                        .reduce(:+).tap { reset_data }
   end
+  # rubocop:enable Performance/Sum
 
   def import_local_authorities
     SchoolGroup.import(
@@ -59,7 +64,6 @@ class Gias::ImportSchoolsAndLocalAuthorities
         conflict_target: [:urn],
         columns: schools.first.keys,
       },
-      batch_size: 1000,
     )
   end
 

@@ -94,11 +94,11 @@ class Search::SchoolSearch
     selected_school_types = []
 
     if organisation_types.include?("Academy")
-      selected_school_types.push("Academy", "Academies", "Free schools", "Free school")
+      selected_school_types.push(School::ACADEMY_TYPE, School::FREE_SCHOOL_TYPE)
     end
 
     if organisation_types.include?("Local authority maintained schools")
-      selected_school_types << "Local authority maintained schools"
+      selected_school_types << School::LA_SCHOOL_TYPE
     end
 
     scope.where(school_type: selected_school_types)

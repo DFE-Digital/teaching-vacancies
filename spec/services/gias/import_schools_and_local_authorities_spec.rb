@@ -20,15 +20,15 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
     end
 
     it "creates Schools" do
-      expect { subject.call }.to change(School, :count).to eq(9)
+      expect { subject.call }.to change(School, :count).by 19
     end
 
     it "creates SchoolGroups" do
-      expect { subject.call }.to change(SchoolGroup, :count).to eq(2)
+      expect { subject.call }.to change(SchoolGroup, :count).by 11
     end
 
     it "creates SchoolGroupMemberships" do
-      expect { subject.call }.to change(SchoolGroupMembership, :count).to eq(9)
+      expect { subject.call }.to change(SchoolGroupMembership, :count).by 19
     end
 
     it "links the correct schools and local authorities" do
@@ -44,7 +44,7 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
       expect(local_authority2.schools).to include(School.find_by(urn: "100008"))
     end
 
-    it "stores the expected attributes" do
+    it "stores the expected attributes and geolocation" do
       subject.call
       expect(example_school).not_to be_blank
       expect(example_school.gias_data).not_to be_blank
@@ -57,16 +57,24 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
       expect(example_school.name).to eq("Sir John Cass's Foundation Primary School")
       expect(example_school.phase).to eq("primary")
       expect(example_school.region).to eq("London")
-      expect(example_school.school_type).to eq("LA maintained school")
+      expect(example_school.school_type).to eq("Local authority maintained schools")
       expect(example_school.url).to eq("http://www.sirjohncassprimary.org")
-    end
-
-    it "sets geolocation" do
-      subject.call
       expect(example_school.geopoint.lat).to be_within(0.0001).of(51.51396894535262)
       expect(example_school.geopoint.lon).to be_within(0.0001).of(-0.07751626505544208)
       expect(example_school.uk_geopoint.x).to be_within(0.0001).of(533_498)
       expect(example_school.uk_geopoint.y).to be_within(0.0001).of(181_201)
+    end
+
+    context "when importing over an invalid email address" do
+      let(:academy) { School.find_by!(urn: "105135") }
+
+      before do
+        build(:school, urn: "105135", name: "Old School", email: "nothing").save!(validate: false)
+      end
+
+      it "imports" do
+        expect { subject.call }.to change { academy.reload.name }.to "St Paul's Academy"
+      end
     end
 
     context "when the CSV contains smart-quotes using Windows 1252 encoding" do
@@ -75,15 +83,34 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
           :get,
           "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv",
         ).to_return(body:
-                    "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
-                    "TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street," \
-                    "Town,Postcode\n" \
-                    "100000,St John\x92s School,999,999,ZZZ,http://test.com,?,?,?")
+                        "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
+                          "EstablishmentTypeGroup (name)," \
+                          "TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street," \
+                          "Town,Postcode\n" \
+                          "100000,St John\x92s School,999,Independent schools,999,ZZZ,http://test.com,?,?,?")
       end
 
       it "converts the file to UTF-8" do
         subject.call
         expect(example_school.name).to eq("St John’s School")
+      end
+    end
+
+    context "when the CSV contains invalid type data" do
+      before do
+        stub_request(
+          :get,
+          "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv",
+        ).to_return(body:
+                        "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
+                          "EstablishmentTypeGroup (name)," \
+                          "TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street," \
+                          "Town,Postcode\n" \
+                          "100000,St John\x92s School,999,Invalid school type,999,ZZZ,http://test.com,?,?,?")
+      end
+
+      it "doesnt import" do
+        expect { subject.call }.to raise_error Gias::ImportSchoolsAndLocalAuthorities::ImportFailure
       end
     end
 
@@ -93,10 +120,11 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
           :get,
           "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv",
         ).to_return(body:
-                    "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
-                    "TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street," \
-                    "Town,Postcode\n" \
-                    "100000,St John\x92s School,999,999,ZZZ,test.com,?,?,?")
+                        "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
+                          "EstablishmentTypeGroup (name)," \
+                          "TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street," \
+                          "Town,Postcode\n" \
+                          "100000,St John\x92s School,999,Independent schools,999,ZZZ,test.com,?,?,?")
         subject.call
         expect(example_school.url).to eq("http://test.com")
       end
@@ -106,10 +134,11 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
           :get,
           "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv",
         ).to_return(body:
-                    "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
-                    "TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street," \
-                    "Town,Postcode\n" \
-                    "100000,St John\x92s School,999,999,ZZZ,,?,?,?")
+                        "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
+                          "EstablishmentTypeGroup (name)," \
+                          "TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street," \
+                          "Town,Postcode\n" \
+                          "100000,St John\x92s School,999,Independent schools,999,ZZZ,,?,?,?")
         subject.call
         expect(example_school.url).to be_nil
       end

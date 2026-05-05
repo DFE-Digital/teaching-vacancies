@@ -88,12 +88,12 @@ RSpec.describe Search::SchoolSearch do
         create(:school_group, schools: [academies, academy, free_school, free_schools, local_authority_school, other_school])
       end
 
-      let(:academies) { create(:school, name: "Academy1", school_type: "Academies") }
-      let(:academy) { create(:school, name: "Academy2", school_type: "Academy") }
-      let(:free_school) { create(:school, name: "Freeschool1", school_type: "Free school") }
-      let(:free_schools) { create(:school, name: "Freeschool2", school_type: "Free schools") }
+      let(:academies) { create(:academy, name: "Academy1") }
+      let(:academy) { create(:academy, name: "Academy2") }
+      let(:free_school) { create(:school, :free_school, name: "Freeschool1") }
+      let(:free_schools) { create(:school, :free_school, name: "Freeschool2") }
       let(:local_authority_school) { create(:school, name: "local authority", school_type: "Local authority maintained schools") }
-      let(:other_school) { create(:school, name: "local authority", school_type: "Something else") }
+      let(:other_school) { create(:school, name: "local authority", school_type: "Other types") }
 
       context "when organisation_types == ['Academy']" do
         let(:organisation_types) { ["Academy"] }
