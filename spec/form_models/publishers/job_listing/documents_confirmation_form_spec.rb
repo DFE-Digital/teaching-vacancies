@@ -29,6 +29,15 @@ RSpec.describe Publishers::JobListing::DocumentsConfirmationForm, type: :model d
       end
     end
 
+    context "when a supporting document blob scan is pending" do
+      before { vacancy.supporting_documents.first.blob.malware_scan_pending! }
+
+      it "does not add any errors" do
+        form.valid?
+        expect(form.errors[:base]).to be_empty
+      end
+    end
+
     context "when all supporting document blobs are clean" do
       before { vacancy.supporting_documents.each { |doc| doc.blob.malware_scan_clean! } }
 

@@ -51,5 +51,16 @@ RSpec.describe Publishers::JobListing::ApplicationFormForm, type: :model do
         expect(subject.errors.of_kind?(:application_form, :unsafe_file)).to be true
       end
     end
+
+    context "when the existing blob scan is pending" do
+      let(:vacancy) { create(:vacancy, :with_uploaded_application_form) }
+
+      before { vacancy.application_form.blob.malware_scan_pending! }
+
+      it "does not add an unsafe_file error" do
+        subject.valid?
+        expect(subject.errors.of_kind?(:application_form, :unsafe_file)).to be false
+      end
+    end
   end
 end

@@ -25,6 +25,15 @@ RSpec.describe Jobseekers::UploadedJobApplication::UploadApplicationFormForm, ty
       end
     end
 
+    context "when the blob scan is pending" do
+      before { job_application.application_form.blob.malware_scan_pending! }
+
+      it "does not add an unsafe_file error" do
+        form.valid?
+        expect(form.errors.of_kind?(:application_form, :unsafe_file)).to be false
+      end
+    end
+
     context "when the blob is clean" do
       it "does not add an unsafe_file error" do
         form.valid?
