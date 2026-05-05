@@ -3,8 +3,6 @@
 require "rails_helper"
 
 RSpec.describe "remove_profile_professional_memberships" do
-  include_context "rake"
-
   let(:trust) { create(:trust) }
   let(:vacancy) { create(:vacancy, organisations: [trust]) }
 
