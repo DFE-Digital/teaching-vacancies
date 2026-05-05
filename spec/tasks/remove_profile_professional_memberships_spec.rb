@@ -18,6 +18,7 @@ RSpec.describe "remove_profile_professional_memberships" do
     expect {
       subject.execute
     }.to change(ProfessionalBodyMembership, :count).by(-1)
+    expect(ProfessionalBodyMembership.all.filter_map(&:jobseeker_profile_id)).to eq([])
   end
   # rubocop:enable RSpec/NamedSubject
 end
