@@ -1,4 +1,4 @@
-- r.with_section :personal_statement
+= review_section(job_application, :personal_statement) do
   - if job_application.personal_statement_richtext.present?
     .govuk-body.review-component__section__body--border = job_application.personal_statement_richtext
   - else

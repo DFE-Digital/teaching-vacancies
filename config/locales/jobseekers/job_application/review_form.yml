@@ -19,8 +19,6 @@ en:
 
     label:
       jobseekers_job_application_review_form:
-        update_profile_options:
-          "1": Update my profile
         confirm_data_accurate_options:
           "1": I confirm that the above information is accurate and complete
         confirm_data_usage_options:

@@ -1,25 +1,26 @@
-- r.with_section :personal_details do |s|
-  - s.with_row do |row|
-    - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.first_name")
-    - row.with_value text: job_application.first_name
+= review_section(job_application, :personal_details) do
+  = govuk_summary_list do |summary_list|
+    - summary_list.with_row do |row|
+      - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.first_name")
+      - row.with_value text: job_application.first_name
 
-  - s.with_row do |row|
-    - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.last_name")
-    - row.with_value text: job_application.last_name
+    - summary_list.with_row do |row|
+      - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.last_name")
+      - row.with_value text: job_application.last_name
 
-  - s.with_row do |row|
-    - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.phone_number")
-    - row.with_value text: job_application.phone_number
+    - summary_list.with_row do |row|
+      - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.phone_number")
+      - row.with_value text: job_application.phone_number
 
-  - s.with_row do |row|
-    - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.email_address")
-    - row.with_value text: job_application.email_address
+    - summary_list.with_row do |row|
+      - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.email_address")
+      - row.with_value text: job_application.email_address
 
-  - s.with_row do |row|
-    - row.with_key text: t("helpers.legend.jobseekers_job_application_declarations_form.has_right_to_work_in_uk")
-    - row.with_value text: visa_sponsorship_needed_answer(job_application)
+    - summary_list.with_row do |row|
+      - row.with_key text: t("helpers.legend.jobseekers_job_application_declarations_form.has_right_to_work_in_uk")
+      - row.with_value text: visa_sponsorship_needed_answer(job_application)
 
-  - if job_application.teacher_reference_number.present?
-    - s.with_row do |row|
-      - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number_review")
-      - row.with_value text: job_application.teacher_reference_number
+    - if job_application.teacher_reference_number.present?
+      - summary_list.with_row do |row|
+        - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number_review")
+        - row.with_value text: job_application.teacher_reference_number
