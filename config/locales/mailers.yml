@@ -11,7 +11,7 @@ en:
         subject: Searching for your next school role?
         heading: Did you know?
         line_1: "Schools typically advertise more jobs than usual at this time of year, making May a great time to search for your next role on Teaching Vacancies."
-        cta: "[Start your search now](%{campaign_url})"
+        line_2: "[Start your search now](%{campaign_url})"
         line_3: To find the right role, remember to always check Teaching Vacancies.
         unsubscribe: "If you no longer wish to be on this mailing list, you can [opt out of these emails](%{link})."
       november_reminder:
