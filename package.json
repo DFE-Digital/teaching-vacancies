@@ -66,12 +66,7 @@
     "js:test": "jest",
     "js:test:coverage": "jest --coverage",
     "js:lint": "eslint ./app/assets/javascript",
-    "sass:lint": "yarn stylelint app/assets/stylesheets/**/*.scss -q",
-    "backstop:execute": "backstop $CMD --config='backstop/backstop.config.cjs'",
-    "visual:test:reference": "CMD=reference yarn run backstop:execute",
-    "visual:test:run": "CMD=test yarn run backstop:execute",
-    "visual:test:approve": "CMD=approve yarn run backstop:execute",
-    "postvisual:test:approve": "node backstop/lib/clean.js"
+    "sass:lint": "yarn stylelint app/assets/stylesheets/**/*.scss -q"
   },
   "babel": {
     "presets": [
