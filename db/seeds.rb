@@ -3,7 +3,7 @@ raise "Aborting seeds - running in production with existing vacancies" if Rails.
 require "faker"
 require "factory_bot_rails"
 
-Gias::ImportSchoolsAndLocalAuthorities.call
+Gias::ImportSchoolsAndLocalAuthorities.new.call
 Gias::ImportTrusts.new.call
 
 ImportPolygonDataJob.perform_now
