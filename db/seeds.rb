@@ -3,7 +3,7 @@ raise "Aborting seeds - running in production with existing vacancies" if Rails.
 require "faker"
 require "factory_bot_rails"
 
-Gias::ImportSchoolsAndLocalAuthorities.new.call
+Gias::ImportSchoolsAndLocalAuthorities.call
 Gias::ImportTrusts.new.call
 
 ImportPolygonDataJob.perform_now
@@ -27,6 +27,12 @@ oakwoods = School.find_by!(urn: "139468")
 northcott = School.find_by!(urn: "118138")
 # Special free school
 martinbacon = School.find_by!(urn: "147661")
+
+# Roman Catholic College
+loreto_college = School.find_by!(urn: "130503")
+
+#  Agricultural college
+oaklands_college = School.find_by!(urn: "130723")
 
 # Team users
 users = [
@@ -58,6 +64,8 @@ schools = [bexleyheath_school,
            oakwoods,
            northcott,
            martinbacon,
+           loreto_college,
+           oaklands_college,
            osmaston_cofe]
 
 user_emails = users.map { |u| u.fetch(:email) }
