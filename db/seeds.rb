@@ -34,6 +34,7 @@ users = [
   { email: "david.thacker@education.gov.uk", family_name: "Thacker", given_name: "David" },
   { email: "fisal.yusuf@education.gov.uk", family_name: "Yusuf", given_name: "Fisal" },
   { email: "joe.jeffrey@education.gov.uk", family_name: "Jeffrey", given_name: "Joe" },
+  { email: "jonathan.chambers@education.gov.uk", family_name: "Chambers", given_name: "Jonathan" },
   { email: "kyle.macpherson@education.gov.uk", family_name: "MacPherson", given_name: "Kyle" },
   { email: "marc.sardon@education.gov.uk", family_name: "Sardon", given_name: "Marc" },
   { email: "olu.amure@education.gov.uk", family_name: "Amure", given_name: "Olu" },
