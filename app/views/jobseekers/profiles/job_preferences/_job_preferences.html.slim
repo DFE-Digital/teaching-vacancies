@@ -28,7 +28,7 @@ ruby:
     locations: {
       if: ->(model) { model.locations.any? },
       map_values: ->(value) { "#{value.name} (#{t('jobs.search.number_of_miles', count: value.radius.to_i)})" },
-      join_with: "</br>",
+      join_with: tag.br,
     },
   }
 
@@ -41,7 +41,7 @@ ruby:
     - count = value.is_a?(Array) ? value.count : 1
     - if options[:map_values] || options[:join_with]
       - value = value.map { |elem| options[:map_values].call(elem) } if options[:map_values]
-      - value = value.join(options[:join_with].html_safe).html_safe
+      - value = safe_join(Array(value), options[:join_with])
 
     - summary_list.with_row do |row|
       - row.with_key text: t("jobseekers.profiles.job_preferences.summary.#{attribute}", count:)
