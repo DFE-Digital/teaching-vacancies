@@ -243,6 +243,7 @@ en:
       invalid: Enter a valid email address in the correct format, like name@example.com
     application_form:
       blank: Select application form
+      unsafe_file: '%{filename} has been flagged as unsafe. Please delete it and upload a different file'
     other_application_email:
       blank: Enter an email address
       invalid: Enter a valid email address in the correct format, like name@example.com

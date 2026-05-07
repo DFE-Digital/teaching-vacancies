@@ -35,7 +35,12 @@ module Jobseekers
         validates :baptism_date, date: { on_or_before: :today }
       end
 
-      validates :baptism_certificate, form_file: Vacancy::DOCUMENT_VALIDATION_OPTIONS, presence: true, if: -> { section_completed && following_religion && religious_reference_type == "baptism_certificate" }
+      with_options if: -> { section_completed && following_religion && religious_reference_type == "baptism_certificate" } do
+        validates :baptism_certificate, form_file: Vacancy::DOCUMENT_VALIDATION_OPTIONS.merge(skip_google_drive_virus_check: true), presence: true
+        # Files awaiting an antivirus scan are allowed to progress through the wizard steps so jobseekers can complete other steps.
+        # Pending files are blocked at submit time in the review form.
+        validate :baptism_certificate_scan_safe
+      end
 
       def baptism_date=(value)
         @baptism_date = date_from_multiparameter_hash(value)
@@ -43,6 +48,15 @@ module Jobseekers
 
       def section_completed
         catholic_section_completed
+      end
+
+      private
+
+      def baptism_certificate_scan_safe
+        return unless baptism_certificate.respond_to?(:blob)
+
+        blob = baptism_certificate.blob
+        errors.add(:baptism_certificate, :unsafe_file, filename: blob.filename) if blob.malware_scan_malicious? || blob.malware_scan_scan_error?
       end
     end
   end

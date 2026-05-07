@@ -32,6 +32,7 @@ RSpec.describe "Sidekiq configuration" do
       SetSubscriptionLocationDataJob
       MigratePersonalStatementJob
       UpdateSingleDSIUserInDbJob
+      FetchMalwareScanResultJob
     ]
   end
 

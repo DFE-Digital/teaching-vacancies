@@ -260,6 +260,8 @@ en:
     file_size_error_message: 'The selected file must be smaller than %{size_limit}'
     file_type_error_message: The selected file must be a %{valid_file_types} file
     file_virus_error_message: '%{filename} contains a virus'
+    file_pending_scan_message: '%{filename} has not yet been scanned for malware. Please try again shortly.'
+    file_unsafe_error_message: '%{filename} has been flagged as unsafe. Please delete it and upload a different file.'
 
     upload_documents_table:
       headers:

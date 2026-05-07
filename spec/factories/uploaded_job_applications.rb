@@ -52,6 +52,10 @@ FactoryBot.define do
           content_type: "application/pdf",
         )
       end
+
+      after(:create) do |uploaded_job_application|
+        uploaded_job_application.application_form.blob.malware_scan_clean!
+      end
     end
   end
 end

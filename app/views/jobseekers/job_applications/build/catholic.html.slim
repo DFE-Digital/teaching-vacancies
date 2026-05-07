@@ -36,7 +36,10 @@ p.govuk-body = t(".non_catholics_apply")
               .govuk-summary-list__row
                 dt.govuk-summary-list__key Baptism certificate
                 dd.govuk-summary-list__value
-                  = govuk_link_to("#{f.object.baptism_certificate.filename} (#{number_to_human_size(f.object.baptism_certificate.byte_size)})", f.object.baptism_certificate, download: "true")
+                  - if f.object.baptism_certificate.blob.malware_scan_clean?
+                    = govuk_link_to("#{f.object.baptism_certificate.filename} (#{number_to_human_size(f.object.baptism_certificate.byte_size)})", f.object.baptism_certificate, download: "true")
+                  - else
+                    = f.object.baptism_certificate.filename.to_s
                 dd.govuk-summary-list__actions
                   = govuk_link_to jobseekers_job_application_baptism_certificate_path(job_application), method: :delete do
                     span aria-hidden="true" = t("buttons.delete")

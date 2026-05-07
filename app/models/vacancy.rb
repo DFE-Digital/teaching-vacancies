@@ -90,7 +90,7 @@ class Vacancy < ApplicationRecord
   has_many_attached :supporting_documents, service: :azure_storage_documents
 
   validates :supporting_documents, content_type: DOCUMENT_CONTENT_TYPES,
-                                   size: { less_than: DOCUMENT_FILE_SIZE_LIMIT }, virus_free: true, if: -> { include_additional_documents }
+                                   size: { less_than: DOCUMENT_FILE_SIZE_LIMIT }, if: -> { include_additional_documents }
 
   has_one_attached :application_form, service: :azure_storage_documents
 
@@ -270,6 +270,13 @@ class Vacancy < ApplicationRecord
     return false unless contact_email
 
     Publisher.find_by(email: contact_email).present?
+  end
+
+  def unsafe_blobs
+    blobs = []
+    blobs << application_form.blob if application_form.attached?
+    blobs += supporting_documents.map(&:blob) if supporting_documents.attached?
+    blobs.reject(&:malware_scan_clean?)
   end
 
   private

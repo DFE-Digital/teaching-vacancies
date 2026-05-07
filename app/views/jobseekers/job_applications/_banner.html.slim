@@ -19,7 +19,7 @@
     - if job_application.draft?
       = govuk_button_link_to t("buttons.delete_application"), jobseekers_job_application_confirm_destroy_path(job_application), class: "govuk-button--warning govuk-!-margin-bottom-4 delete-application"
 
-      - if vacancy.application_form.present?
+      - if vacancy.application_form.present? && vacancy.application_form.blob.malware_scan_clean?
         = govuk_button_link_to t("buttons.download_application_form", size: number_to_human_size(vacancy.application_form.byte_size)), job_document_path(vacancy, vacancy.application_form.id), class: "vacancy-form"
 
     - if job_application.active_status?

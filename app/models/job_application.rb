@@ -165,6 +165,14 @@ class JobApplication < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  def uploaded_file
+    nil
+  end
+
+  def uploaded_file_scan_safe?
+    uploaded_file.nil? || uploaded_file.malware_scan_clean?
+  end
+
   def submit!
     submitted!
 
