@@ -61,6 +61,8 @@ en:
       message_html: "Your organisation photo for %{link} has been removed because it failed our security scan. Please upload a new photo."
     publishers/organisation_logo_malware_scan_notification:
       message_html: "Your organisation logo for %{link} has been removed because it failed our security scan. Please upload a new logo."
+    publishers/reference_document_malware_scan_notification:
+      message_html: "A reference document uploaded for %{candidate_name} (%{job_title}) has been removed because it failed our security scan. Visit %{link} to review the application."
     publishers/message_received_notification:
       message_html: "%{candidate_name} has sent you %{link} about the %{job_title} role"
     jobseekers/message_received_notification:

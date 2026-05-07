@@ -39,6 +39,7 @@ shared:
   - publisher_job_application_data_expiry
   - publisher_logo_removed
   - publisher_photo_removed
+  - publisher_reference_removed
   - publisher_messages_received
   - publisher_prompt_for_feedback
   - publisher_reference_received

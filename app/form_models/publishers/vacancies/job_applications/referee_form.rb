@@ -22,7 +22,7 @@ module Publishers
 
         attr_accessor :reference_document
 
-        validates :reference_document, presence: true, form_file: Vacancy::DOCUMENT_VALIDATION_OPTIONS, if: -> { uploaded_details }
+        validates :reference_document, presence: true, form_file: Vacancy::DOCUMENT_VALIDATION_OPTIONS.merge(skip_google_drive_virus_check: true), if: -> { uploaded_details }
 
         class << self
           def fields
