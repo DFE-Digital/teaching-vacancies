@@ -78,13 +78,13 @@ class Vacancy < ApplicationRecord
   belongs_to :publisher_ats_api_client, optional: true
 
   DOCUMENT_FILE_SIZE_LIMIT = 20.megabytes
-  DOCUMENT_CONTENT_TYPES = %w[application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document text/plain].freeze
+  DOCUMENT_CONTENT_TYPES = %w[application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document].freeze
 
   DOCUMENT_VALIDATION_OPTIONS = {
     file_type: :document,
     content_types_allowed: DOCUMENT_CONTENT_TYPES,
     file_size_limit: DOCUMENT_FILE_SIZE_LIMIT,
-    valid_file_types: %i[PDF DOC DOCX TXT],
+    valid_file_types: %i[PDF DOC DOCX],
   }.freeze
 
   has_many_attached :supporting_documents, service: :azure_storage_documents
