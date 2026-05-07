@@ -5,7 +5,7 @@ module Jobseekers
       include ActiveModel::Attributes
       include Jobseekers::JobApplication::CompletedFormAttribute
 
-      validates :application_form, form_file: Vacancy::DOCUMENT_VALIDATION_OPTIONS.merge(skip_google_drive_virus_check: true)
+      validates :application_form, form_file: Vacancy::DOCUMENT_VALIDATION_OPTIONS
       validates :application_form, presence: true, if: -> { upload_application_form_section_completed }
       # Files awaiting an antivirus scan are allowed to progress through the wizard steps so jobseekers can complete other steps.
       # Pending files are blocked at submit time in the review form.

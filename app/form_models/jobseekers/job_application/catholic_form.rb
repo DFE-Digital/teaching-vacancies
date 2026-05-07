@@ -36,7 +36,7 @@ module Jobseekers
       end
 
       with_options if: -> { section_completed && following_religion && religious_reference_type == "baptism_certificate" } do
-        validates :baptism_certificate, form_file: Vacancy::DOCUMENT_VALIDATION_OPTIONS.merge(skip_google_drive_virus_check: true), presence: true
+        validates :baptism_certificate, form_file: Vacancy::DOCUMENT_VALIDATION_OPTIONS, presence: true
         # Files awaiting an antivirus scan are allowed to progress through the wizard steps so jobseekers can complete other steps.
         # Pending files are blocked at submit time in the review form.
         validate :baptism_certificate_scan_safe
