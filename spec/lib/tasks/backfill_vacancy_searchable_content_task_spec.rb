@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "backfill_vacancy_searchable_content" do
-  include_context "rake"
-
   let(:school) { create(:school) }
 
   let(:school_vacancy) { create(:vacancy, organisations: [school]) }

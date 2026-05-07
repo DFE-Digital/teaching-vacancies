@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "vacancies:discard_out_of_scope" do
-  include_context "rake"
-
   let(:task_path) { "lib/tasks/discard_out_of_scope_vacancies" }
 
   # rubocop:disable RSpec/NamedSubject
