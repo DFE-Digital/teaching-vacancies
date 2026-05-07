@@ -57,6 +57,8 @@ en:
         zero: No unread notifications
         one: 1 unread notification
         other: "%{count} unread notifications"
+    publishers/organisation_photo_malware_scan_notification:
+      message_html: "Your organisation photo for %{link} has been removed because it failed our security scan. Please upload a new photo."
     publishers/message_received_notification:
       message_html: "%{candidate_name} has sent you %{link} about the %{job_title} role"
     jobseekers/message_received_notification:
