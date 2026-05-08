@@ -12,42 +12,43 @@ card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teachin
 
 Congratulations, you’ve been invited to an interview for a teaching job! What’s next? We’ve spoken to experienced teachers to get their top tips for success, including how to prepare answers to interview questions and what to expect during the teacher interview process. 
 
-If you need support returning to teaching after a break, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers).
+support is available. If you want to return to teaching in a primary or secondary school in England, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers). If you’re interested in teaching in further education, you can get support from an [FE adviser](https://www.teachinfurthereducation.education.gov.uk/talk-to-an-advisor). 
 
 ## 1. Confirm your attendance
 Make sure you accept the interview by email and reiterate your enthusiasm for the role. Make a note of any key staff names, who to ask for on your arrival, and what resources to bring with you. 
 
 ## 2. Prepare any documentation
-The school may require you to bring evidence of your:
+The school or college may require you to bring evidence of your:
 
 * identity, such as your passport or driving licence
 * residency or working rights
-* exam qualifications, such as exam certificates or transcripts — if you do not have these to hand, you can [access your teaching qualifications](https://www.gov.uk/guidance/access-your-teaching-qualifications) if you obtained these in England
+* exam qualifications, such as exam certificates or transcripts
+* any teaching qualifications that are relevant to the role
 
 These will be used for standard safeguarding checks.
 
-You may also choose to bring a small professional portfolio, such as lesson plans or anonymised examples of pupils’ work. This is optional, but it can help to refer to clear examples during your interview. 
+You may also choose to bring a small professional portfolio, such as lesson plans or anonymised examples of learners’ work. This is optional, but it can help to refer to clear examples during your interview. 
 
 ## 3. Think about your journey and appearance
 Plan how you will get to the interview in advance. Do you know the best train to catch, or where the car park is? Think about your appearance too; be comfortable but consider professional clothing to create a positive first impression. 
 
 ## 4. Prepare answers to common interview questions
-Interview styles vary across schools — some may be formal while others may be more conversational. Study the school’s website to get a sense of what the school is like. 
+Interview styles vary across schools and colleges — some may be formal while others may be more conversational. Study the school or college’s website to get a sense of what the setting is like. 
 
 Prepare answers to likely questions and try to do a mock interview with a friend or colleague. Saying your answers out loud is really different to practising in your head. 
 
 You may be asked questions like: 
 
-* why do you want to work in our school?
+* why do you want to work in our school or college?
 * what are your strongest qualities and why? 
 * in your professional life, what areas do you think you need to improve on?
-* how do you adapt your teaching to ensure all pupils make progress?
-* what would you do if a child told you something that concerned you?
-* tell us about a recent lesson and why it went well
+* how do you adapt your teaching to ensure all learners make progress?
+* what would you do if a learner told you something that concerned you?
+* tell us about a recent lesson or session and why it went well
 
-You may be assessed against the [teachers’ standards](https://www.gov.uk/government/publications/teachers-standards) so you might want to prepare clear, strong examples to show how you have met each standard. 
+You may be assessed against the expectations of the role, so prepare clear, strong examples showing how your skills, experience and teaching practice meet them.
 
-It can also be useful to think about examples related to behaviour management, special educational needs (SEN) support, and working with colleagues or parents. 
+It can also be useful to think about examples related to behaviour management, special educational needs (SEN) support, and working with colleagues, parents or carers. 
 
 Take your time answering a question and ask for clarification if needed. 
 
@@ -65,17 +66,17 @@ A useful approach is the STAR method:
 * **result** — explain the outcome and what you learned 
 
 ## 5. Prepare for a teaching interview lesson
-You’ll likely be asked to teach a lesson as part of your interview. 
+You may be asked to teach a lesson or deliver a micro-teach as part of your interview.
 
 Read advice from experienced school leaders on how best to [prepare for a teaching interview lesson](https://teaching-vacancies.service.gov.uk/jobseeker-guides/get-help-applying-for-your-teaching-role/prepare-for-a-teaching-job-interview-lesson).
 
-Interview lessons are not about being perfect. Schools are often looking at how you:  
+These activities are not about being perfect. Schools and colleges are often looking at how you:  
 
 * engage pupils 
 * manage time and behaviour 
 * adapt your teaching 
 * check understanding 
-* plan your lessons 
+* plan your lessons or sessions 
 
 Showing flexibility and reflection can help you ace a teaching interview. 
 
@@ -87,11 +88,11 @@ If you have not had any experience of dealing with a safeguarding issue yourself
 ## 7. Ask the panel questions
 This shows your interest and gives you the opportunity to inform your decision about the role. You could ask:
 
-* what do you like about your school?
-* what are their priorities for the School Improvement Plan (SIP)? How far have they been achieved? What are the biggest challenges?
+* what do you like about working here?
+* what are their priorities for improvement and what are the biggest challenges?
 * what support is there for teachers?
 
-You may also want to ask about professional development, support in the first term, or how the school supports staff wellbeing. 
+You may also want to ask about professional development, support in the first term, or how the school or college supports staff wellbeing. 
 
 ## 8. After your interview
 If you are not offered the role: 
