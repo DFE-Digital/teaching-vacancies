@@ -5,6 +5,9 @@ on:
     branches:
       - '**'
 
+permissions:
+  contents: read
+
 jobs:
   backend-tests:
     name: Run RSpec Tests in parallel

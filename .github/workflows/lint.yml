@@ -6,6 +6,9 @@ on:
       - '**'
       - '!main'
 
+permissions:
+  contents: read
+
 jobs:
   backend-lint:
     name: Run backend linting checks

@@ -12,6 +12,10 @@ concurrency: workflow-Build-and-deploy-main
 env:
  DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build:
     name: Build docker image
