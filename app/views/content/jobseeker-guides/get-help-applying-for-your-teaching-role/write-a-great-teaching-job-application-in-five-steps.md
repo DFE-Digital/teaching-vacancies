@@ -15,18 +15,18 @@ Make a great first impression and get an interview for the teaching job you want
 Make sure you have a professional email address. Something like FirstName.SecondName@example.com is a good bet. Avoid using a humorous or childish email address you might have had when you were younger. 
 
 ## 2. Add in all your jobs and include any breaks
-Schools need to know your complete work history for safeguarding purposes, so make sure to include any jobs you have had, even if they’re not relevant to teaching. This makes it easier for a school to get a clear picture of your background. Don’t worry if this will be your first job. Do include your education history, and any relevant volunteer experience, for example youth work, running a sports team, or teaching English as a foreign language. 
+Schools and colleges need to know your complete work history for safeguarding purposes, so make sure to include any jobs you have had, even if they’re not relevant to teaching. This makes it easier for a school or college to get a clear picture of your background. Don’t worry if this will be your first job. Do include your education history, and any relevant volunteer experience, for example youth work, running a sports team, or teaching English as a foreign language. 
 
 You should include any breaks too, such as time you took to travel or for caring responsibilities.
 
 ## 3. Mind the gaps
-Make it easy for schools to review your application by completing all of the sections. Don’t worry if you don’t have your teaching reference number (TRN) yet, but do include your current course and expected qualification date. 
+Make it easy for schools and colleges to review your application by completing all of the sections. Don’t worry if you don’t have your teaching reference number (TRN) yet, but do include your current course and expected qualification date. 
 
 ## 4. Check in with your referees
 Ideal referees are your current or most recent mentor, university tutor, or headteacher. It’s worth getting clear permission to use your referees so there are no surprises for anyone. Check which contact details they want you to use, ideally a specific email address, rather than a mailbox that may not be monitored. It would be a shame for a lost reference request to slow down or risk your application.
 
 ## 5. Write a great personal statement
-At the heart of your application form is your personal statement. [Find out how to write a personal statement](https://teaching-vacancies.service.gov.uk/jobseeker-guides/how-to-write-teacher-personal-statement) that gives you the best chance to get an interview, where you can show in person what a great candidate you are. The more you show how your skills and interests match the school’s ethos, the better.
+At the heart of your application form is your personal statement. [Find out how to write a personal statement](https://teaching-vacancies.service.gov.uk/jobseeker-guides/how-to-write-teacher-personal-statement) that gives you the best chance to get an interview, where you can show in person what a great candidate you are. The more you show how your skills and interests match the school and college’s ethos, the better.
 
 If you get an interview, read [how to approach a teaching job interview](https://teaching-vacancies.service.gov.uk/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-approach-a-teaching-job-interview?) to help you prepare. 
 
