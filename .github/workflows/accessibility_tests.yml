@@ -5,6 +5,9 @@ on:
   schedule:
     - cron: '0 3 * * 0' # Run every Sunday at 3am
 
+permissions:
+  contents: read
+
 jobs:
   pally:
     name: Pa11y accessibility tests
