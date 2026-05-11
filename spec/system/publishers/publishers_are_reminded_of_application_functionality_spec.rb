@@ -55,7 +55,7 @@ RSpec.describe "Application feature reminder" do
 
         click_on "Change", match: :first
 
-        expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_title))
+        expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :start_date))
       end
     end
   end

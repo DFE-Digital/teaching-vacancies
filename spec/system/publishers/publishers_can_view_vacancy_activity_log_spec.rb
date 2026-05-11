@@ -3,11 +3,8 @@ require "rails_helper"
 RSpec.describe "Publishers can view a vacancy's activity log", versioning: true do
   let(:publisher) { create(:publisher, organisations: [organisation]) }
   let(:organisation) { create(:school) }
-  let(:vacancy) { create(:vacancy, :secondary, contract_type: "permanent", subjects: old_subjects, organisations: [organisation]) }
-  let(:new_job_title) { "Demon headmaster wanted" }
-  let(:new_contract_type) { "fixed_term" }
-  let(:old_subjects) { %w[Mathematics Science] }
-  let(:new_subjects) { %w[Computing Dance] }
+  let(:vacancy) { create(:vacancy, :secondary, :live, organisations: [organisation]) }
+  let(:new_salary) { "£50,000 per year" }
 
   before do
     login_publisher(publisher: publisher, organisation: organisation)
@@ -17,28 +14,15 @@ RSpec.describe "Publishers can view a vacancy's activity log", versioning: true 
   after { logout }
 
   it "updates the activity log" do
-    click_review_page_change_link(section: "job_details", row: "subjects")
-    expect(current_path).to eq(organisation_job_build_path(vacancy.id, :subjects))
+    click_review_page_change_link(section: "job_details", row: "salary")
+    expect(current_path).to eq(organisation_job_build_path(vacancy.id, :pay_package))
 
-    old_subjects.each { |subject| uncheck subject }
-    new_subjects.each { |subject| check subject }
-
-    click_on I18n.t("buttons.save_and_continue")
-    click_review_page_change_link(section: "job_details", row: "working_patterns")
-    expect(current_path).to eq(organisation_job_build_path(vacancy.id, :contract_information))
-
-    choose I18n.t("helpers.label.publishers_job_listing_contract_information_form.contract_type_options.#{new_contract_type}")
-    within("#publishers-job-listing-contract-information-form-contract-type-fixed-term-conditional") do
-      choose "Yes"
-      fill_in I18n.t("helpers.label.publishers_job_listing_contract_information_form.fixed_term_contract_duration"), with: "6 months"
-    end
-
+    fill_in "publishers_job_listing_pay_package_form[salary]", with: new_salary
     click_on I18n.t("buttons.save_and_continue")
 
     click_on I18n.t("tabs.activity_log")
 
-    expect(page).to have_content(I18n.t("publishers.activity_log.subjects", new_value: new_subjects.to_sentence, count: new_subjects.count))
-    expect(page).to have_content(I18n.t("publishers.activity_log.contract_type", new_value: new_contract_type.humanize))
+    expect(page).to have_content(I18n.t("publishers.activity_log.salary", new_value: new_salary))
     expect(page).to have_content(publisher.papertrail_display_name)
     expect(page).to have_content(vacancy.versions.first.created_at)
   end
