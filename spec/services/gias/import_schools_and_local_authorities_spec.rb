@@ -47,7 +47,6 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
     it "stores the expected attributes and geolocation" do
       subject.call
       expect(example_school).not_to be_blank
-      expect(example_school.gias_data).not_to be_blank
       expect(example_school.address3).to be_nil
       expect(example_school.county).to be_nil
       expect(example_school.detailed_school_type).to eq("Voluntary aided school")

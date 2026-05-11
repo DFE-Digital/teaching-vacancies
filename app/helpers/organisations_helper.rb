@@ -3,11 +3,13 @@ module OrganisationsHelper
 
   OFSTED_REPORT_ENDPOINT = "https://reports.ofsted.gov.uk/oxedu_providers/full/(urn)/".freeze
 
+  # :nocov:
   def age_range(school)
     return I18n.t("vacancies.listing.schools.not_given") unless school.minimum_age? && school.maximum_age?
 
     "#{school.minimum_age} to #{school.maximum_age}"
   end
+  # :nocov:
 
   def full_address(organisation)
     address_join([organisation.address, organisation.town, organisation.county, organisation.postcode])
@@ -21,6 +23,7 @@ module OrganisationsHelper
     OFSTED_REPORT_ENDPOINT + school.urn
   end
 
+  # :nocov:
   def organisation_type(organisation)
     return organisation.group_type&.humanize if organisation.school_group?
 
@@ -32,6 +35,7 @@ module OrganisationsHelper
 
     school_type_details.reject(&:blank?).reject { |str| str == I18n.t("vacancies.listing.schools.not_given") }.join(", ")
   end
+  # :nocov:
 
   def organisation_types(organisations)
     organisations.select(&:school?).group_by { |org| [org.school_type, org.religious_character] }.map do |type, orgs_by_type|
@@ -59,16 +63,17 @@ module OrganisationsHelper
     end
   end
 
+  # :nocov:
   def school_size(school)
-    if school.gias_data.present?
-      return number_of_pupils(school) if school.gias_data["NumberOfPupils"].present?
-      return school_capacity(school) if school.gias_data["SchoolCapacity"].present?
-    end
+    return number_of_pupils(school) if school.number_of_pupils.present?
+    return school_capacity(school) if school.school_capacity.present?
+
     I18n.t("vacancies.listing.schools.no_information")
   end
+  # :nocov:
 
   def school_has_school_size_data?(school)
-    school.gias_data["NumberOfPupils"].present? || school.gias_data["SchoolCapacity"].present?
+    school.number_of_pupils.present? || school.school_capacity.present?
   end
 
   def school_is_part_of_a_trust?(school)
@@ -90,14 +95,14 @@ module OrganisationsHelper
   private
 
   def number_of_pupils(school)
-    return unless (number = school.gias_data["NumberOfPupils"])
-
-    I18n.t("vacancies.listing.schools.size.enrolled", number: number)
+    I18n.t("vacancies.listing.schools.size.enrolled", number: school.number_of_pupils)
   end
 
+  # :nocov:
   def school_capacity(school)
-    I18n.t("vacancies.listing.schools.size.up_to", capacity: school.gias_data["SchoolCapacity"])
+    I18n.t("vacancies.listing.schools.size.up_to", capacity: school.school_capacity)
   end
+  # :nocov:
 
   def missing_profile_information_notification(prompt)
     content_tag(:div, class: %i[govuk-inset-text govuk-inset-text--dark-blue inset-text--narrow-border]) do

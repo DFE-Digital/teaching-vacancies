@@ -99,7 +99,6 @@ class Gias::ImportSchoolsAndLocalAuthorities
       local_authority_code: row["LA (code)"],
       name: row["LA (name)"],
       group_type: "local_authority",
-      gias_data: row.to_h.slice("LA (code)", "LA (name)"),
     }
   end
 
@@ -127,7 +126,6 @@ class Gias::ImportSchoolsAndLocalAuthorities
       school_capacity: row.fetch("SchoolCapacity"),
       trust_school_flag_code: row.fetch("TrustSchoolFlag (code)"),
       trusts_code: row.fetch("Trusts (code)"),
-      gias_data: row.to_h,
     }.merge(school_location_data(row)).transform_values(&:presence)
   end
 
