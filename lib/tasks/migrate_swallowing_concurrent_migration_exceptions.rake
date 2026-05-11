@@ -15,5 +15,15 @@ namespace :db do
     rescue ActiveRecord::ConcurrentMigrationError
       # Do nothing
     end
+
+    desc "Run db:prepare for review apps, loading schema if app tables are missing"
+    task review: :environment do
+      unless ActiveRecord::Base.connection.table_exists?(:vacancies)
+        Rake::Task["db:schema:load"].invoke
+      end
+      Rake::Task["db:migrate"].invoke
+    rescue ActiveRecord::ConcurrentMigrationError
+      # Do nothing
+    end
   end
 end
