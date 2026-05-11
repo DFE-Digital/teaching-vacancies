@@ -6,6 +6,8 @@
 span.govuk-caption-l = t(".caption")
 h1.govuk-heading-l = t(".heading", status: (vacancy.publish_on&.future? ? "schedule" : "publish"))
 
+p.govuk-body = t(".hint")
+
 = render "publishers/vacancies/sections"
 
 p
