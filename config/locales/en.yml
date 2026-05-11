@@ -163,7 +163,7 @@ en:
           description: Apply for jobs you are interested in, and check the status of your applications.
         signed_out:
           create_account_html: or %{create_account_link}.
-          description_html: Save and apply for jobs in schools.
+          description_html: Save and apply for jobs in schools and colleges.
           link_text:
             create_account: create a jobseeker account
             sign_in: Jobseeker sign in
@@ -199,7 +199,7 @@ en:
 
     search:
       location_label: City, county or postcode
-      title_h1: Find teacher and school jobs near you
+      title_h1: Find school and college jobs near you
 
   pages:
     accessibility:
