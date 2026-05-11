@@ -691,15 +691,15 @@ GEM
     reverse_markdown (3.0.2)
       nokogiri
     rexml (3.4.4)
-    rgeo (3.0.1)
+    rgeo (3.1.0)
     rgeo-activerecord (8.0.0)
       activerecord (>= 7.0)
       rgeo (>= 3.0)
     rgeo-geojson (2.2.0)
       multi_json (~> 1.15)
       rgeo (>= 1.0.0)
-    rgeo-proj4 (4.0.0)
-      rgeo (~> 3.0.0)
+    rgeo-proj4 (5.0.0)
+      rgeo (~> 3.1.0)
     rouge (4.2.0)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
@@ -1387,10 +1387,10 @@ CHECKSUMS
   retriable (3.4.1) sha256=fb3f114b7d492121c158c01f3d5152b5a615c5b70d5877d0bc08c7ec3725c3bc
   reverse_markdown (3.0.2) sha256=818ebb92ce39dbb1a291690dd1ec9a6d62530d4725296b17e9c8f668f9a5b8af
   rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
-  rgeo (3.0.1) sha256=5e9962a78116d4d7a39fddd917d2b6b1463c52993e4da800ec1792a9617fddd5
+  rgeo (3.1.0) sha256=89c1804894b35acf65891e1f24e15bbf2fbd972d4183e63c444bb97c1ccaf5d5
   rgeo-activerecord (8.0.0) sha256=c8a22f8dc568b875a734b5288d1dbad12ff846cd63a9a2e6b09decaac4ff3094
   rgeo-geojson (2.2.0) sha256=ceed2ce1bd4c43efe9fcc494c6fec8708ec1438073425e5805d2c27fb671b210
-  rgeo-proj4 (4.0.0) sha256=91b110abc3c8d65b5d471a030278a3a6b4282bc9bf2ea2af44b6ea797b788dda
+  rgeo-proj4 (5.0.0) sha256=eb131bb3a34eb324af02fb78d8adff6adf2a63b36b707e237a28cef953edb7f6
   rouge (4.2.0) sha256=60dd666b3a223467dc72f5b7384764dfd7ad4e50b0df9eff072be58123506eba
   rspec (3.13.0) sha256=d490914ac1d5a5a64a0e1400c1d54ddd2a501324d703b8cfe83f458337bab993
   rspec-core (3.13.6) sha256=a8823c6411667b60a8bca135364351dda34cd55e44ff94c4be4633b37d828b2d
