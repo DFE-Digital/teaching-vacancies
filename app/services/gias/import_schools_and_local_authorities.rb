@@ -13,6 +13,10 @@ class Gias::ImportSchoolsAndLocalAuthorities
   class ImportFailure < StandardError
   end
 
+  # New GIAS team now have some data dictionary information available at
+  # https://dfedigital.atlassian.net/wiki/spaces/GTP/pages/6155337742/Data+Dictionary
+  # but it's not quite complete/definitive
+  # (e.g establishment status says open/closed/proposed when reality is 'open proposed to close' and 'proposed to open')
   def call
     log_benchmark("Importing schools and local authorities") do
       import_errors = Gias::Data.new(SCHOOLS_AND_LOCAL_AUTHORITIES_CSV).each_slice(BATCH_SIZE).flat_map do |group|
@@ -118,6 +122,11 @@ class Gias::ImportSchoolsAndLocalAuthorities
       town: row["Town"],
       phase: row["PhaseOfEducation (code)"].to_i,
       url: Addressable::URI.heuristic_parse(row["SchoolWebsite"]).to_s,
+      religious_character: row.fetch("ReligiousCharacter (name)").presence || "None",
+      number_of_pupils: row.fetch("NumberOfPupils"),
+      school_capacity: row.fetch("SchoolCapacity"),
+      trust_school_flag_code: row.fetch("TrustSchoolFlag (code)"),
+      trusts_code: row.fetch("Trusts (code)"),
       gias_data: row.to_h,
     }.merge(school_location_data(row)).transform_values(&:presence)
   end

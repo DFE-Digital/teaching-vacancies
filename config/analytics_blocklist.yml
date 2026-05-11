@@ -161,6 +161,11 @@
   - current_sign_in_ip
   :organisations:
   - gias_data_hash
+  - religious_character
+  - number_of_pupils
+  - trust_school_flag_code
+  - trusts_code
+  - school_capacity
   - slug
   - searchable_content
   :vacancy_analytics:
