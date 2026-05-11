@@ -3,7 +3,7 @@ order: 300
 title: How to approach a teaching job interview
 meta_description: Practical advice and top tips for preparing for a teaching job interview, including how to confirm attendance, answer questions, deliver a lesson and ask the panel questions. 
 date_posted: 22/01/2024
-date_updated: 10/03/2025
+date_updated: 11/05/2026
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-approach-your-teaching-job-interview.jpg"
 ---
@@ -12,7 +12,9 @@ card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teachin
 
 Congratulations, you’ve been invited to an interview for a teaching job! What’s next? We’ve spoken to experienced teachers to get their top tips for success, including how to prepare answers to interview questions and what to expect during the teacher interview process. 
 
-support is available. If you want to return to teaching in a primary or secondary school in England, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers). If you’re interested in teaching in further education, you can get support from an [FE adviser](https://www.teachinfurthereducation.education.gov.uk/talk-to-an-advisor). 
+If you want to return to teaching in a primary or secondary school in England after a break, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers). 
+
+If you’re interested in teaching in further education, you can get support from an [FE adviser](https://www.teachinfurthereducation.education.gov.uk/talk-to-an-advisor). 
 
 ## 1. Confirm your attendance
 Make sure you accept the interview by email and reiterate your enthusiasm for the role. Make a note of any key staff names, who to ask for on your arrival, and what resources to bring with you. 
