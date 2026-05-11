@@ -10,7 +10,7 @@ card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teachin
 
 ![Students in a science classroom with a teacher.](/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/prepare-for-your-teaching-interview-lesson.jpg)
 
-You may be asked to teach a short lesson as part of your interview. This helps the panel see how you plan and deliver a lesson, engage learners and check their understanding. In further education, this is often called a micro-teach. These tips from experienced teachers and lecturers can help you prepare.
+You may be asked to teach a short lesson or session as part of your interview. This helps the panel see how you plan and deliver a lesson, engage learners and check their understanding. In further education, this is often called a micro-teach. We’ve spoken to experienced teachers to get their top tips for success.
 
 If you need support returning to teaching after a break, support is available. If you want to return to teaching in a primary or secondary school in England, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers). 
 
