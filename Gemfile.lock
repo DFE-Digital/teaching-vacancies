@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: b8dd37585c87f52e2f107a70fe94afbd331c0788
-  tag: v1.15.15
+  revision: 48ab06eda0de9c4eb225b7c445f35580e89de266
+  tag: v1.15.16
   specs:
-    dfe-analytics (1.15.15)
+    dfe-analytics (1.16.16)
       google-cloud-bigquery (~> 1.38)
       httparty (~> 0.24)
       multi_xml (~> 0.6.0)
@@ -465,7 +465,7 @@ GEM
       drb (~> 2.0)
       prism (~> 1.5)
     mock_redis (0.48.1)
-    multi_json (1.21.0)
+    multi_json (1.21.1)
     multi_xml (0.6.0)
     multipart-post (2.4.1)
     mutex_m (0.3.0)
@@ -1198,7 +1198,7 @@ CHECKSUMS
   declarative (0.0.20) sha256=8021dd6cb17ab2b61233c56903d3f5a259c5cf43c80ff332d447d395b17d9ff9
   descendants_tracker (0.0.4) sha256=e9c41dd4cfbb85829a9301ea7e7c48c2a03b26f09319db230e6479ccdc780897
   devise (5.0.3) sha256=c4c065051cdc4ace11547b2b7f5c3c4c97d0f1269250f5fe90f614ff78f29546
-  dfe-analytics (1.15.15)
+  dfe-analytics (1.16.16)
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
   discard (1.4.0) sha256=6efcd2a53ddf96781f81b825d398f1c88ab88c0faa84e131bea6e16ef95d65d0
   docile (1.4.1) sha256=96159be799bfa73cdb721b840e9802126e4e03dfc26863db73647204c727f21e
@@ -1294,7 +1294,7 @@ CHECKSUMS
   mini_mime (1.1.5) sha256=8681b7e2e4215f2a159f9400b5816d85e9d8c6c6b491e96a12797e798f8bccef
   minitest (6.0.5) sha256=f007d7246bf4feea549502842cd7c6aba8851cdc9c90ba06de9c476c0d01155c
   mock_redis (0.48.1) sha256=0f3734e83a4534740b2bdd97c727fb81e7587bb05932a6b114fb69c232b217b3
-  multi_json (1.21.0) sha256=dd69761814cef4796b39780c1671bece27daad8ba8073f307162dcf5f1792428
+  multi_json (1.21.1) sha256=e6126a31808e3b4d19f483c775ceac34df190dffa62adfb63a165ee14ba68080
   multi_xml (0.6.0) sha256=d24393cf958adb226db884b976b007914a89c53ad88718e25679d7008823ad52
   multipart-post (2.4.1) sha256=9872d03a8e552020ca096adadbf5e3cb1cd1cdd6acd3c161136b8a5737cdb4a8
   mutex_m (0.3.0) sha256=cfcb04ac16b69c4813777022fdceda24e9f798e48092a2b817eb4c0a782b0751
