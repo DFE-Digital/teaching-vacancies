@@ -67,7 +67,7 @@ A useful approach is the STAR method:
 * **action** — describe what you did and why 
 * **result** — explain the outcome and what you learned 
 
-## 5. Prepare for a teaching interview lesson
+## 5. Prepare for a teaching interview lesson or micro-teach
 You may be asked to teach a lesson or deliver a micro-teach as part of your interview.
 
 Read advice from experienced school leaders on how best to [prepare for a teaching interview lesson](https://teaching-vacancies.service.gov.uk/jobseeker-guides/get-help-applying-for-your-teaching-role/prepare-for-a-teaching-job-interview-lesson).
