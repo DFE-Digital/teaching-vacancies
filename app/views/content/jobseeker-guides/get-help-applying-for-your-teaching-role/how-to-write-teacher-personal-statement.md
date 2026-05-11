@@ -62,7 +62,7 @@ These 2 examples show the difference between a strong example and one that needs
 This example is very general, not tailored to the school or college, and does not give hiring staff a clear picture of skills, experience or any outcomes achieved.
 
 #### Example 2 
-"I am keen to apply for the teaching role at [School or college name here], where the emphasis on high expectations and inclusive practice reflects my own values.
+"I am keen to apply for the teaching role at [school or college name here], where the emphasis on high expectations and inclusive practice reflects my own values.
 
 "In my current role, I introduced a behaviour strategy that reduced low level disruption and improved learner engagement, showing my commitment to the teachers' standards on managing behaviour and promoting good progress."
 
@@ -93,7 +93,7 @@ This shows schools and colleges that you:
 ## What are your skills and qualities?
 Schools and colleges are looking for great communicators, team players and relationship builders. Make sure you say how you create a positive learning environment, and consider skills like time management, organisation, and flexibility.
 
-Schools and colleges will also want to know how you overcome challenges.
+They will also want to know how you overcome challenges.
 
 ### How can you contribute to wider school life?
 Set yourself apart by showing how your hobbies and achievements could contribute to the wider school or college community.
