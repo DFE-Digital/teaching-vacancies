@@ -4,7 +4,7 @@ title: Arranging your references
 page_title: Arranging your references and portfolio as a returning teacher
 meta_description: Arrange your teaching references for job applications. Get guidance on teaching standard references and updating your teaching portfolio.
 date_posted: 17/02/2025
-date_updated: 16/07/2025
+date_updated: 11/05/2026
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/arrange-your-referees.png"
 ---
@@ -17,7 +17,7 @@ Further guidance can be found in [Part three (safer recruitment) of the statutor
  
 KCSIE is not specific about how many references are required. Schools are best placed to make this decision based on their individual needs and circumstances. 
  
-[Getting more school experience](/jobseeker-guides/return-to-teaching-in-england/find-classroom-experience) can help you get new referees. 
+[Getting more teaching experience](/jobseeker-guides/return-to-teaching-in-england/find-classroom-experience) can help you get new referees. 
  
 ## How to select your referees 
  
