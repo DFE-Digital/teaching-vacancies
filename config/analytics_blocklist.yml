@@ -161,6 +161,7 @@
   - current_sign_in_ip
   :organisations:
   - gias_data_hash
+  - religious_character
   - slug
   - searchable_content
   :vacancy_analytics:
