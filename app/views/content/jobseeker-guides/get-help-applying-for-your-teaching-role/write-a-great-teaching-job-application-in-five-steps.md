@@ -3,6 +3,7 @@ order: 200
 title: Write a great teaching job application in 5 steps
 meta_description: Make a great first impression and get an interview for the teaching job you want with this advice from experienced teaching staff. We’ve spoken to experienced teachers to get their top tips for success.
 date_posted: 16/01/2024
+date_updated: 11/05/2026
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/write-a-great-teaching-job-application-in-5-steps.jpg"
 ---
