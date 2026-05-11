@@ -138,15 +138,15 @@ GEM
       aws-sigv4 (~> 1.5)
     aws-sigv4 (1.12.1)
       aws-eventstream (~> 1, >= 1.0.2)
-    axe-core-api (4.11.2)
+    axe-core-api (4.11.3)
       dumb_delegator
       ostruct
       virtus
-    axe-core-capybara (4.11.2)
-      axe-core-api (= 4.11.2)
+    axe-core-capybara (4.11.3)
+      axe-core-api (= 4.11.3)
       dumb_delegator
-    axe-core-rspec (4.11.2)
-      axe-core-api (= 4.11.2)
+    axe-core-rspec (4.11.3)
+      axe-core-api (= 4.11.3)
       dumb_delegator
       ostruct
       virtus
@@ -304,7 +304,7 @@ GEM
       mini_mime (~> 1.1)
       representable (~> 3.0)
       retriable (~> 3.1)
-    google-apis-drive_v3 (0.80.0)
+    google-apis-drive_v3 (0.81.0)
       google-apis-core (>= 0.15.0, < 2.a)
     google-apis-indexing_v3 (0.18.0)
       google-apis-core (>= 0.15.0, < 2.a)
@@ -465,7 +465,7 @@ GEM
       drb (~> 2.0)
       prism (~> 1.5)
     mock_redis (0.48.1)
-    multi_json (1.21.0)
+    multi_json (1.21.1)
     multi_xml (0.6.0)
     multipart-post (2.4.1)
     mutex_m (0.3.0)
@@ -789,7 +789,7 @@ GEM
       ffi (~> 1.12)
       logger
     ruby2_keywords (0.0.5)
-    rubyzip (3.2.2)
+    rubyzip (3.3.0)
     rugged (1.9.0)
     securerandom (0.4.1)
     selenium-webdriver (4.43.0)
@@ -1158,9 +1158,9 @@ CHECKSUMS
   aws-sdk-s3 (1.220.0) sha256=237fda5e6ac7ecdd9c848e27187bfdc370edad5c5a141aeec389fb450fa28c7c
   aws-sdk-ssm (1.212.0) sha256=89137ce784f8e329d14672a1c4d7e8ca0cbe8082bb3120a4af87c71ffe0e7bda
   aws-sigv4 (1.12.1) sha256=6973ff95cb0fd0dc58ba26e90e9510a2219525d07620c8babeb70ef831826c00
-  axe-core-api (4.11.2) sha256=c05c342941e0c29f17b00268302457da9e7b644f753c8bbab274d0083319344f
-  axe-core-capybara (4.11.2) sha256=53384ddd7bf0efc1bc2c9335039a6873381120d906beffe029c5de2521f91f97
-  axe-core-rspec (4.11.2) sha256=50c5a5f1b4b991da6857c5df4d6645dfac285a84c7f7f904a6ef23e53f4895eb
+  axe-core-api (4.11.3) sha256=f5f6e802743644a50e2d8ef24c22aefbb6df49dd169024ff0144b47f37e652ba
+  axe-core-capybara (4.11.3) sha256=8e03f07ace2af0a492990cb374387e605bbd27ec0a834291a09833fbef86fbc9
+  axe-core-rspec (4.11.3) sha256=246c8d443517354e9a9962a10a8cc456bcef4c617516c0924b051a9af9d7da99
   axiom-types (0.1.1) sha256=c1ff113f3de516fa195b2db7e0a9a95fd1b08475a502ff660d04507a09980383
   azure-blob (0.8.0) sha256=5c8d50e5c8b4fa9228f6a8d6bf003aba9f33d03c15f525235adeca8ad7879c10
   backport (1.2.0) sha256=912c7dfdd9ee4625d013ddfccb6205c3f92da69a8990f65c440e40f5b2fc7f75
@@ -1234,7 +1234,7 @@ CHECKSUMS
   globalid (1.3.0) sha256=05c639ad6eb4594522a0b07983022f04aa7254626ab69445a0e493aa3786ff11
   google-apis-bigquery_v2 (0.101.0) sha256=865d697c1d9d6dfcf18be4765d3a650e5fe0c81b2060f1bab054a74f463a8b01
   google-apis-core (1.0.2) sha256=ba4579aaadc902d6cc7bc8db88f566ab00f5e31ea87ab41e9f9a032c470f2629
-  google-apis-drive_v3 (0.80.0) sha256=45e085d37e71f2506ac99ab0c197360a00ccd0f8d03907ab9ef71e322c4036c9
+  google-apis-drive_v3 (0.81.0) sha256=cc58043562491980d0c4e7111a1c5734629a63d67f8653e3c13f8729b975cfcc
   google-apis-indexing_v3 (0.18.0) sha256=456a8f0b1298c892b06c686fc196460dc822084a30315edefec3f4086ef1caf2
   google-cloud-bigquery (1.63.0) sha256=33c0257158451b1c0a240f3df4d2b597bfa250fd06b3efb5e9ec3785d7050aee
   google-cloud-core (1.8.0) sha256=e572edcbf189cfcab16590628a516cec3f4f63454b730e59f0b36575120281cf
@@ -1294,7 +1294,7 @@ CHECKSUMS
   mini_mime (1.1.5) sha256=8681b7e2e4215f2a159f9400b5816d85e9d8c6c6b491e96a12797e798f8bccef
   minitest (6.0.5) sha256=f007d7246bf4feea549502842cd7c6aba8851cdc9c90ba06de9c476c0d01155c
   mock_redis (0.48.1) sha256=0f3734e83a4534740b2bdd97c727fb81e7587bb05932a6b114fb69c232b217b3
-  multi_json (1.21.0) sha256=dd69761814cef4796b39780c1671bece27daad8ba8073f307162dcf5f1792428
+  multi_json (1.21.1) sha256=e6126a31808e3b4d19f483c775ceac34df190dffa62adfb63a165ee14ba68080
   multi_xml (0.6.0) sha256=d24393cf958adb226db884b976b007914a89c53ad88718e25679d7008823ad52
   multipart-post (2.4.1) sha256=9872d03a8e552020ca096adadbf5e3cb1cd1cdd6acd3c161136b8a5737cdb4a8
   mutex_m (0.3.0) sha256=cfcb04ac16b69c4813777022fdceda24e9f798e48092a2b817eb4c0a782b0751
@@ -1417,7 +1417,7 @@ CHECKSUMS
   ruby-rc4 (0.1.5) sha256=00cc40a39d20b53f5459e7ea006a92cf584e9bc275e2a6f7aa1515510e896c03
   ruby-vips (2.2.5) sha256=f3c547a172c36ba26b8614c809f5823bc6199623ec6204ec7c3bce29037f7758
   ruby2_keywords (0.0.5) sha256=ffd13740c573b7301cf7a2e61fc857b2a8e3d3aff32545d6f8300d8bae10e3ef
-  rubyzip (3.2.2) sha256=c0ed99385f0625415c8f05bcae33fe649ed2952894a95ff8b08f26ca57ea5b3c
+  rubyzip (3.3.0) sha256=a372fc67892a4f8c0bc8ec906b720353d8e48807a64b2e63adf99b1e3583a034
   rugged (1.9.0) sha256=7faaa912c5888d6e348d20fa31209b6409f1574346b1b80e309dbc7e8d63efac
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
   selenium-webdriver (4.43.0) sha256=a634377b964b701c6ac0a009ce3a08fa34ec1e1e7fe9a6d57e3088d14529a65c
