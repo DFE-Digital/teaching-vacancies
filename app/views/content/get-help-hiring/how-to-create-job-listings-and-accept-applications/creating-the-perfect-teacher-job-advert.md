@@ -8,7 +8,7 @@ category_tags: how-to
 card-image: "/content-assets/get-help-hiring/how-to-create-job-listings-and-accept-applications/how-to-create-the-perfect-teacher-job-advert.jpg"
 ---
 
-Demand for excellent teachers in schools is high, creating a job market where candidates can afford to be selective about where they apply. If you want to attract the right teachers to your job adverts, it’s essential to make them eye-catching and attractive.
+Demand for excellent teachers in schools and colleges is high, creating a job market where candidates can afford to be selective about where they apply. If you want to attract the right teachers to your job adverts, it’s essential to make them eye-catching and attractive.
 
 ## What are the different elements of a teacher job advert?
 
