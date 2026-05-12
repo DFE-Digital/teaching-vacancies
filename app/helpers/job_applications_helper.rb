@@ -95,6 +95,10 @@ module JobApplicationsHelper
     date.to_fs(:month_year)
   end
 
+  def job_application_trn_alteratives
+    [{ "apply" => 95 }, { "trn" => 5 }]
+  end
+
   def job_application_trn(job_application)
     job_application.teacher_reference_number.presence || "None"
   end

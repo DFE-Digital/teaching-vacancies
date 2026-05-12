@@ -21,6 +21,7 @@ jobs:
       DATABASE_URL: postgis://postgres:postgres@localhost:5432
       RAILS_ENV: test
       RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+      REDIS_CACHE_URL: redis://localhost:6379/1
 
     services:
       postgres:
@@ -31,6 +32,11 @@ jobs:
         ports:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      redis:
+        # Azure currenty runs redis 6.0
+        image: redis:6.0-alpine
+        ports:
+          - 6379:6379
 
     steps:
       # Need depth 0 for undercover to work properly. Yes, we tried otherwise.
