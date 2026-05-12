@@ -31,7 +31,6 @@ class RequestEvent < Event
       request_method: request.method,
       request_path: request.path,
       request_query: request.query_string,
-      request_ab_tests: ab_tests,
     }
   end
 
@@ -58,9 +57,5 @@ class RequestEvent < Event
 
   def user_agent
     request.headers["User-Agent"]
-  end
-
-  def ab_tests
-    AbTests.new(session).current_variants.map { |test, variant| { test: test, variant: variant } }
   end
 end

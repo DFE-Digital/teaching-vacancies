@@ -193,4 +193,25 @@ RSpec.describe "vacancies/show" do
       end
     end
   end
+
+  context "when a school has geocoding" do
+    let(:jobseeker) { nil }
+    let(:vacancy) { build_stubbed(:vacancy, organisations: [school]) }
+
+    let(:school) { build_stubbed(:school, geopoint: "POINT(51.4788757883318 0.0253328559417984)") }
+
+    it "displays a map" do
+      expect(rendered).to have_css("div#map")
+    end
+  end
+
+  context "when a school has no geocoding" do
+    let(:jobseeker) { nil }
+    let(:vacancy) { build_stubbed(:vacancy, organisations: [school]) }
+    let(:school) { build_stubbed(:school, geopoint: nil) }
+
+    it "does not display a map" do
+      expect(rendered).to have_no_css("div#map")
+    end
+  end
 end

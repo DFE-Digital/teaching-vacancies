@@ -104,7 +104,12 @@ section#job-details class="govuk-!-margin-bottom-5"
     - elsif vacancy.receive_applications == "website"
       p.govuk-body = t("jobs.apply_via_website")
       p.govuk-body = t("jobseekers.job_applications.no_cvs")
-      = apply_link(vacancy, class: "govuk-!-margin-bottom-5")
+      - ab_test(:trn_on_apply, *job_application_trn_alteratives) do |ab_test|
+        - if ab_test == "apply"
+          = apply_link(vacancy, class: "govuk-!-margin-bottom-5")
+        - else
+          = govuk_button_link_to t("jobs.view_advert.school"), trn_interstitial_jobseekers_job_job_application_path(vacancy.id)
+
     - elsif vacancy.receive_applications == "email"
       p.govuk-body = t("jobs.apply_via_email_html", email: application_email_link(vacancy))
       p.govuk-body = t("jobseekers.job_applications.no_cvs")
