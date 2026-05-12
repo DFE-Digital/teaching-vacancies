@@ -3,13 +3,14 @@ order: 400
 title: How to approve access for hiring staff
 meta_description: Organisation approvers are able to manage who has access to post jobs on the Teaching Vacancies service. Find out how to add, manage and remove users.
 date_posted: 20/04/2022
+date_updated: 12/05/2026
 category_tags: how-to
 card-image: "/content-assets/get-help-hiring/how-to-setup-your-account/how-to-approve-access-for-hiring-staff.jpg"
 ---
 
 Access to Teaching Vacancies is managed through [DfE Sign-in](https://services.signin.education.gov.uk/), which allows organisation administrators to manage various services provided by the Department for Education.
 
-If hiring staff from a school, multi-academy trust (MAT) or local authority (LA) need to post a job on Teaching Vacancies, they can only do so after being granted access by an approver at the relevant organisation.
+If hiring staff from a school, college, multi-academy trust (MAT) or local authority (LA) need to post a job on Teaching Vacancies, they can only do so after being granted access by an approver at the relevant organisation.
 
 This guidance is for account approvers who grant people access to accounts and services. If you require access rights and are looking to post jobs, [read our guidance on requesting access to organisations on Teaching Vacancies](https://teaching-vacancies.service.gov.uk/get-help-hiring/how-to-request-organisation-access).
 
@@ -18,10 +19,10 @@ The quickest way to enable hiring staff to post jobs on Teaching Vacancies is to
 
 From your DfE Sign-in dashboard, select the ‘manage users’ option. From here, you can invite a new user from the ‘related action’ list. Select the organisation the user needs to be added to from the list of organisations, then complete the 'invite user' form by entering their first name, last name and email address. 
 
-You can only add users to organisations for which you are an approver. This could be an individual school, or, if you have approver status for a MAT or LA, you can either grant access to:
+You can only add users to organisations for which you are an approver. This could be an individual school, college or, if you have approver status for a MAT or LA, you can either grant access to:
 
-* individual schools contained within the organisation
-* the whole organisation, allowing them to post jobs at any school
+* individual schools and colleges contained within the organisation
+* the whole organisation, allowing them to post jobs at any school or college
 
 Once you have selected the organisation, choose Teaching Vacancies from the list of available services, as well as any others they need.
 
