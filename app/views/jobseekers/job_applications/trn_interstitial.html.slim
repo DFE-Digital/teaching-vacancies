@@ -1,0 +1,8 @@
+= form_for @job_application, url: send_trn_jobseekers_job_job_application_path(vacancy.id), method: :post do |f|
+  = f.govuk_error_summary
+
+  = f.govuk_text_field :teacher_reference_number, class: "govuk-input--width-10", label: { text: t("helpers.label.jobseekers_profiles_qualified_teacher_status_form.teacher_reference_number"), size: "s" }, hint: -> { tag.p(t("helpers.hint.jobseekers_job_application_professional_status_form.teacher_reference_number", link: govuk_link_to(t("helpers.label.jobseekers_profiles_qualified_teacher_status_form.trn_link_text"), "https://find-a-lost-trn.education.gov.uk/start", target: "_blank")).html_safe) }
+
+  .govuk-button-group
+    = f.govuk_submit t("buttons.continue")
+    = govuk_button_link_to "Skip", vacancy.website? ? vacancy.application_link : new_jobseekers_job_job_application_path(vacancy.id), secondary: true

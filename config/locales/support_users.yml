@@ -11,6 +11,7 @@ en:
       service_data_link: View service data
       sidekiq_link: View Sidekiq dashboard
       jobs_link: View Mission Control Jobs dashboard
+      split_link: View Split (A/B Tests) dashboard
       api_clients_link: View ATS API clients
 
     fallback_sessions:
