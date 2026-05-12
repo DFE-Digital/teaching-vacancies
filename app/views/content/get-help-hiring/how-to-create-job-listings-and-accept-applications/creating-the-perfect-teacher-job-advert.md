@@ -3,7 +3,7 @@ order: 100
 title: How to create the perfect teacher job advert
 meta_description: Expert advice on what information to include when creating a job advert, from the job title all the way through to how to apply.
 date_posted: 18/03/2022
-date_updated: 14/04/2025
+date_updated: 12/05/2026
 category_tags: how-to
 card-image: "/content-assets/get-help-hiring/how-to-create-job-listings-and-accept-applications/how-to-create-the-perfect-teacher-job-advert.jpg"
 ---
@@ -38,7 +38,7 @@ Teacher salaries can be complicated compared to some other industries, so when l
  
  **Additional allowances** 
  
- Many schools offer teachers benefits beyond their monthly wages. This is your opportunity to list salary sacrifice schemes, cycle to work vouchers, tax-free childcare, and any other bonuses related to working at your school. You may also want to detail the training and career development opportunities you offer.
+Many schools and colleges offer teachers benefits beyond their monthly wages. This is your opportunity to list salary sacrifice schemes, cycle to work vouchers, tax-free childcare, and any other bonuses related to working at your school. You may also want to detail the training and career development opportunities you offer.
 
 However you decide to best describe the salary on offer using these fields, avoid referring to pay in a way that doesn’t make sense to people outside your organisation. Those you work with may understand the grades or bands you use, or acronyms such as MPS or UPS, but do not assume your candidates will. Make it easy for them by providing a straightforward numerical value.
 
@@ -51,15 +51,15 @@ If you choose to use the Teaching Vacancies application form, you’ll have the 
 
 Whichever one you choose, make sure it’s clear to the candidate exactly what you want them to do, and by when. By giving them guidance on what documents they need to submit and what to include in their personal statement, you’re more likely to receive information in a way you can easily manage.
 
-It’s also recommended to provide some basic information about the interview and selection process. Will candidates be able to visit the school? Will there be a single interview or a series? Will they be conducted by an individual or a panel? Are there any tests or presentations involved? Let candidates know exactly what to expect.
+It’s also recommended to provide some basic information about the interview and selection process. Will candidates be able to visit the school or college? Will there be a single interview or a series? Will they be conducted by an individual or a panel? Are there any tests or presentations involved? Let candidates know exactly what to expect.
 
-### School details
+### School or college details
 
 Jobseekers are just as interested in where they’ll be working and who they’ll be working with, as they are in what they’ll be doing.
 
-Beyond the basic address and contact information, we recommend providing a brief summary of the environment your school offers pupils and some of the values that you expect to see across the school community.
+Beyond the basic address and contact information, we recommend providing a brief summary of the environment your school or college offers students and some of the values that you expect to see across the school community.
 
-This is a chance to demonstrate what makes your school different from the rest, so think carefully about how you want to sell yourself and look to write a unique description tailored to the role you’re recruiting for, rather than copying and pasting something from your school’s website.
+This is a chance to demonstrate what makes your school or college different from the rest, so think carefully about how you want to sell yourself and look to write a unique description tailored to the role you’re recruiting for, rather than copying and pasting something from your school or college’s website.
 
 ## What should be included in a teacher job description?
 
