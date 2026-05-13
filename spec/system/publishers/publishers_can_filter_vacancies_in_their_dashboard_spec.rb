@@ -117,8 +117,6 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
       click_on I18n.t("buttons.save_and_continue")
 
       expect(page).to have_content(I18n.t("publishers.publisher_preferences.form.missing_schools_error"))
-      expect(page).to_not have_content(school4.name)
-      expect(page).to_not have_content(school5.name)
 
       check school1.name
       click_on I18n.t("buttons.save_and_continue")

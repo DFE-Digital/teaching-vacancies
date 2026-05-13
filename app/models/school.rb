@@ -29,8 +29,9 @@ class School < Organisation
   validates :detailed_school_type, presence: true
   validates :establishment_status, inclusion: { in: CLOSED_ESTABLISHMENT_STATUSES + OPEN_ESTABLISHMENT_STATUSES, allow_nil: false }
 
+  scope :colleges, -> { where(school_type: School::COLLEGE_SCHOOL_TYPE) }
+
   EXCLUDED_DETAILED_SCHOOL_TYPES = [
-    FE_DETAILED_SCHOOL_TYPE,
     "Other independent school",
     "Online provider",
     "British schools overseas",
