@@ -165,32 +165,6 @@ RSpec.describe Organisation do
     end
   end
 
-  describe "#refresh_gias_data_hash" do
-    subject { create(:school, gias_data: { foo: "bar" }, gias_data_hash: hash) }
-
-    let(:sha_256_hexdigest_for_foo_bar) { "e1d4f8c43b7b0393ffc10bf5959d52154d99abc9cb4b19f2f6b032d0b991e21e" }
-
-    context "when the gias_data has changed" do
-      let(:hash) { "Foo" }
-
-      it "recomputes the hash" do
-        expect { subject.refresh_gias_data_hash }
-          .to change { subject.gias_data_hash }
-          .from("Foo")
-          .to(sha_256_hexdigest_for_foo_bar)
-      end
-    end
-
-    context "when the gias_data has not changed" do
-      let(:hash) { sha_256_hexdigest_for_foo_bar }
-
-      it "does not change the hash" do
-        subject.refresh_gias_data_hash
-        expect(subject.gias_data_hash_previously_was).to be_nil
-      end
-    end
-  end
-
   describe ".visible_to_jobseekers" do
     let!(:publisher) { create(:publisher, organisations: [trust, open_school, closed_school, out_of_scope_school1, out_of_scope_school2, out_of_scope_school3, out_of_scope_school4, out_of_scope_school5, out_of_scope_school6, out_of_scope_school7]) }
     let!(:open_school) { create(:school, establishment_status: "Open", detailed_school_type: "Primary school") }

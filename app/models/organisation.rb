@@ -68,7 +68,7 @@ class Organisation < ApplicationRecord
 
   validates :email, email_address: true, if: -> { email_changed? } # Allows data created prior to validation to still be valid
 
-  alias_attribute :data, :gias_data
+  # alias_attribute :data, :gias_data
 
   enum :phase, {
     not_applicable: 0,
@@ -80,6 +80,8 @@ class Organisation < ApplicationRecord
     sixth_form_or_college: 6,
     through: 7,
   }
+
+  self.ignored_columns += %i[gias_data gias_data_hash]
 
   def live_group_vacancies
     Vacancy.none
@@ -134,13 +136,6 @@ class Organisation < ApplicationRecord
 
   def trust_or_la?
     trust? || local_authority?
-  end
-
-  def refresh_gias_data_hash
-    computed_hash = gias_data.presence && Digest::SHA256.hexdigest(gias_data.to_s)
-    return if gias_data_hash == computed_hash
-
-    update(gias_data_hash: computed_hash)
   end
 
   def has_ofsted_report?
