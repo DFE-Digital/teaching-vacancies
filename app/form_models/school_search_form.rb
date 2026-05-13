@@ -7,7 +7,6 @@ class SchoolSearchForm
   attribute :radius, :integer, default: 0
   attribute :education_phase, default: []
   attribute :key_stage, default: []
-  attribute :special_school, default: []
   attribute :job_availability, default: []
   attribute :organisation_types, default: []
   attribute :school_types, default: []
@@ -37,7 +36,6 @@ class SchoolSearchForm
     %i[
       education_phase
       key_stage
-      special_school
       job_availability
       organisation_types
       school_types
@@ -46,10 +44,6 @@ class SchoolSearchForm
 
   def filters
     to_h.delete_if { |k, _| filters_list.exclude?(k) }
-  end
-
-  def special_school_options
-    [["1", I18n.t("organisations.filters.special_school")]]
   end
 
   def education_phase_options
@@ -87,7 +81,6 @@ class SchoolSearchForm
     [
       education_phase&.count,
       key_stage&.count,
-      special_school&.count,
       job_availability&.count,
       organisation_types&.count,
       school_types&.count,

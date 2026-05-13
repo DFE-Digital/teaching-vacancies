@@ -10,5 +10,5 @@
         - options = f.public_send(:"#{key.to_s.singularize}_options")
         - selected_method = :last
         - value_method = :first
-        - remove_filter_link = { url_helper: :organisations_path, params: @school_search.active_criteria }
+        - remove_filter_link = { url_helper: :organisations_path, params: school_search.active_criteria }
         - component.with_group(legend:, key:, selected:, options:, value_method:, selected_method:, remove_filter_link:)
