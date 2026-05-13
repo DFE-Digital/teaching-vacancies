@@ -46,48 +46,8 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: address3
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: gias_data
-    value_before_type_cast: '{"URN":"139917","LA (code)":"881","LA (name)":"Essex","EstablishmentNumber":"2091","EstablishmentName":"St
-      Teresa''s Catholic Primary School, Basildon","TypeOfEstablishment (code)":"28","TypeOfEstablishment
-      (name)":"Academy sponsor led","EstablishmentTypeGroup (code)":"10","EstablishmentTypeGroup
-      (name)":"Academies","EstablishmentStatus (code)":"1","EstablishmentStatus (name)":"Open","ReasonEstablishmentOpened
-      (code)":"06","ReasonEstablishmentOpened (name)":"New Provision","OpenDate":"01-12-2013","ReasonEstablishmentClosed
-      (code)":"99","ReasonEstablishmentClosed (name)":"","CloseDate":"","PhaseOfEducation
-      (code)":"2","PhaseOfEducation (name)":"Primary","StatutoryLowAge":"3","StatutoryHighAge":"11","Boarders
-      (code)":"1","Boarders (name)":"No boarders","NurseryProvision (name)":"Has Nursery
-      Classes","OfficialSixthForm (code)":"2","OfficialSixthForm (name)":"Does not
-      have a sixth form","Gender (code)":"3","Gender (name)":"Mixed","ReligiousCharacter
-      (code)":"03","ReligiousCharacter (name)":"Roman Catholic","ReligiousEthos (name)":"Roman
-      Catholic","Diocese (code)":"RC04","Diocese (name)":"Diocese of Brentwood","AdmissionsPolicy
-      (code)":"0","AdmissionsPolicy (name)":"Not applicable","SchoolCapacity":"236","SpecialClasses
-      (code)":"0","SpecialClasses (name)":"Not applicable","CensusDate":"18-01-2024","NumberOfPupils":"235","NumberOfBoys":"102","NumberOfGirls":"133","PercentageFSM":"12.30","TrustSchoolFlag
-      (code)":"3","TrustSchoolFlag (name)":"Supported by a multi-academy trust","Trusts
-      (code)":"2893","Trusts (name)":"CHRISTUS CATHOLIC TRUST","SchoolSponsorFlag
-      (name)":"Linked to a sponsor","SchoolSponsors (name)":"Catholic Diocese of Brentwood","FederationFlag
-      (name)":"Not applicable","Federations (code)":"","Federations (name)":"","UKPRN":"10042438","FEHEIdentifier":"","FurtherEducationType
-      (name)":"Not applicable","OfstedLastInsp":"21-10-2021","OfstedSpecialMeasures
-      (code)":"0","OfstedSpecialMeasures (name)":"Not applicable","LastChangedDate":"30-09-2024","Street":"Elsenham
-      Crescent","Locality":"","Address3":"","Town":"Basildon","County (name)":"Essex","Postcode":"SS14
-      1UE","SchoolWebsite":"www.st-teresasrc.essex.sch.uk","TelephoneNum":"01268553502","HeadTitle
-      (name)":"Mr","HeadFirstName":"Jacques","HeadLastName":"Bottjer","HeadPreferredJobTitle":"Headteacher","BSOInspectorateName
-      (name)":"Not applicable","InspectorateReport":"","DateOfLastInspectionVisit":"","NextInspectionVisit":"","TeenMoth
-      (name)":"Not applicable","TeenMothPlaces":"","CCF (name)":"","SENPRU (name)":"Not
-      applicable","EBD (name)":"Not applicable","PlacesPRU":"","FTProv (name)":"","EdByOther
-      (name)":"","Section41Approved (name)":"Not applicable","SEN1 (name)":"","SEN2
-      (name)":"","SEN3 (name)":"","SEN4 (name)":"","SEN5 (name)":"","SEN6 (name)":"","SEN7
-      (name)":"","SEN8 (name)":"","SEN9 (name)":"","SEN10 (name)":"","SEN11 (name)":"","SEN12
-      (name)":"","SEN13 (name)":"","TypeOfResourcedProvision (name)":"","ResourcedProvisionOnRoll":"","ResourcedProvisionCapacity":"","SenUnitOnRoll":"","SenUnitCapacity":"","GOR
-      (code)":"G","GOR (name)":"East of England","DistrictAdministrative (code)":"E07000066","DistrictAdministrative
-      (name)":"Basildon","AdministrativeWard (code)":"E05004033","AdministrativeWard
-      (name)":"Vange","ParliamentaryConstituency (code)":"E14001077","ParliamentaryConstituency
-      (name)":"Basildon and Billericay","UrbanRural (code)":"C1","UrbanRural (name)":"(England/Wales)
-      Urban city and town","GSSLACode (name)":"E10000012","Easting":"572949","Northing":"188608","MSOA
-      (name)":"Basildon 022","LSOA (name)":"Basildon 022D","InspectorateName (name)":"","SENStat":"","SENNoStat":"","BoardingEstablishment
-      (name)":"","PropsName":"","PreviousLA (code)":"999","PreviousLA (name)":"","PreviousEstablishmentNumber":"","OfstedRating
-      (name)":"Good","Country (name)":"","UPRN":"10090454349","SiteName":"","QABName
-      (code)":"0","QABName (name)":"Not applicable","EstablishmentAccredited (code)":"0","EstablishmentAccredited
-      (name)":"Not applicable","QABReport":"","CHNumber":"","MSOA (code)":"E02004445","LSOA
-      (code)":"E01021326","FSM":"29","AccreditationExpiryDate":""}'
+    name: religious_character
+    value_before_type_cast: 'None'
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2024-11-28 16:28:24.401152000 Z
@@ -118,9 +78,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: geopoint
     value_before_type_cast: 0101000020E6100000EE69ECB108A0DF3F57A1B2BBEFC84940
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: gias_data_hash
-    value_before_type_cast: 953da3c0acd2b024bbc2bde43a3b16b5afe5c0bf0880b56f9ac296d104368f66
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: slug
     value_before_type_cast: st-teresa-s-catholic-primary-school-basildon
@@ -197,49 +154,8 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: address3
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: gias_data
-    value_before_type_cast: '{"URN":"114995","LA (code)":"881","LA (name)":"Essex","EstablishmentNumber":"2786","EstablishmentName":"Northlands
-      Primary School and Nursery","TypeOfEstablishment (code)":"01","TypeOfEstablishment
-      (name)":"Community school","EstablishmentTypeGroup (code)":"4","EstablishmentTypeGroup
-      (name)":"Local authority maintained schools","EstablishmentStatus (code)":"2","EstablishmentStatus
-      (name)":"Closed","ReasonEstablishmentOpened (code)":"00","ReasonEstablishmentOpened
-      (name)":"Not applicable","OpenDate":"","ReasonEstablishmentClosed (code)":"06","ReasonEstablishmentClosed
-      (name)":"For Academy","CloseDate":"31-08-2016","PhaseOfEducation (code)":"2","PhaseOfEducation
-      (name)":"Primary","StatutoryLowAge":"3","StatutoryHighAge":"11","Boarders (code)":"1","Boarders
-      (name)":"No boarders","NurseryProvision (name)":"Has Nursery Classes","OfficialSixthForm
-      (code)":"2","OfficialSixthForm (name)":"Does not have a sixth form","Gender
-      (code)":"3","Gender (name)":"Mixed","ReligiousCharacter (code)":"00","ReligiousCharacter
-      (name)":"Does not apply","ReligiousEthos (name)":"Does not apply","Diocese (code)":"0000","Diocese
-      (name)":"Not applicable","AdmissionsPolicy (code)":"0","AdmissionsPolicy (name)":"Not
-      applicable","SchoolCapacity":"525","SpecialClasses (code)":"2","SpecialClasses
-      (name)":"No Special Classes","CensusDate":"","NumberOfPupils":"","NumberOfBoys":"","NumberOfGirls":"","PercentageFSM":"","TrustSchoolFlag
-      (code)":"0","TrustSchoolFlag (name)":"Not applicable","Trusts (code)":"","Trusts
-      (name)":"","SchoolSponsorFlag (name)":"Not applicable","SchoolSponsors (name)":"","FederationFlag
-      (name)":"Not under a federation","Federations (code)":"","Federations (name)":"","UKPRN":"","FEHEIdentifier":"","FurtherEducationType
-      (name)":"Not applicable","OfstedLastInsp":"09-12-2011","OfstedSpecialMeasures
-      (code)":"0","OfstedSpecialMeasures (name)":"Not applicable","LastChangedDate":"15-10-2018","Street":"Winifred
-      Road","Locality":"Pitsea","Address3":"","Town":"Basildon","County (name)":"Essex","Postcode":"SS13
-      3JQ","SchoolWebsite":"","TelephoneNum":"","HeadTitle (name)":"Mrs","HeadFirstName":"Elizabeth","HeadLastName":"Young","HeadPreferredJobTitle":"Headteacher","BSOInspectorateName
-      (name)":"Not applicable","InspectorateReport":"","DateOfLastInspectionVisit":"","NextInspectionVisit":"","TeenMoth
-      (name)":"Not applicable","TeenMothPlaces":"","CCF (name)":"Not applicable","SENPRU
-      (name)":"Not applicable","EBD (name)":"Not applicable","PlacesPRU":"","FTProv
-      (name)":"","EdByOther (name)":"Not applicable","Section41Approved (name)":"Not
-      applicable","SEN1 (name)":"","SEN2 (name)":"","SEN3 (name)":"","SEN4 (name)":"","SEN5
-      (name)":"","SEN6 (name)":"","SEN7 (name)":"","SEN8 (name)":"","SEN9 (name)":"","SEN10
-      (name)":"","SEN11 (name)":"","SEN12 (name)":"","SEN13 (name)":"","TypeOfResourcedProvision
-      (name)":"","ResourcedProvisionOnRoll":"","ResourcedProvisionCapacity":"","SenUnitOnRoll":"","SenUnitCapacity":"","GOR
-      (code)":"G","GOR (name)":"East of England","DistrictAdministrative (code)":"E07000066","DistrictAdministrative
-      (name)":"Basildon","AdministrativeWard (code)":"E05004030","AdministrativeWard
-      (name)":"Pitsea North West","ParliamentaryConstituency (code)":"E14000933","ParliamentaryConstituency
-      (name)":"South Basildon and East Thurrock","UrbanRural (code)":"C1","UrbanRural
-      (name)":"(England/Wales) Urban city and town","GSSLACode (name)":"E10000012","Easting":"573767","Northing":"188755","MSOA
-      (name)":"Basildon 013","LSOA (name)":"Basildon 013D","InspectorateName (name)":"","SENStat":"","SENNoStat":"","BoardingEstablishment
-      (name)":"","PropsName":"","PreviousLA (code)":"915","PreviousLA (name)":"Pre
-      LGR (1998) Essex","PreviousEstablishmentNumber":"2786","OfstedRating (name)":"Good","Country
-      (name)":"","UPRN":"10090455041","SiteName":"","QABName (code)":"0","QABName
-      (name)":"Not applicable","EstablishmentAccredited (code)":"0","EstablishmentAccredited
-      (name)":"Not applicable","QABReport":"","CHNumber":"","MSOA (code)":"E02004436","LSOA
-      (code)":"E01021305","FSM":"","AccreditationExpiryDate":""}'
+    name: religious_character
+    value_before_type_cast: 'None'
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2024-11-28 16:26:00.104039000 Z
@@ -270,9 +186,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: geopoint
     value_before_type_cast: 0101000020E61000006C9F23333431E03F492F65C412C94940
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: gias_data_hash
-    value_before_type_cast: 4d92dd2801d8dc556c4abf57d159e2035606210bad9a4e46090ae71a5b1122fc
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: slug
     value_before_type_cast: northlands-primary-school-and-nursery
@@ -348,48 +261,8 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: address3
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: gias_data
-    value_before_type_cast: '{"URN":"114868","LA (code)":"881","LA (name)":"Essex","EstablishmentNumber":"2498","EstablishmentName":"Lincewood
-      Junior School","TypeOfEstablishment (code)":"01","TypeOfEstablishment (name)":"Community
-      school","EstablishmentTypeGroup (code)":"4","EstablishmentTypeGroup (name)":"Local
-      authority maintained schools","EstablishmentStatus (code)":"2","EstablishmentStatus
-      (name)":"Closed","ReasonEstablishmentOpened (code)":"00","ReasonEstablishmentOpened
-      (name)":"Not applicable","OpenDate":"","ReasonEstablishmentClosed (code)":"01","ReasonEstablishmentClosed
-      (name)":"Result of Amalgamation/Merger","CloseDate":"31-08-2003","PhaseOfEducation
-      (code)":"2","PhaseOfEducation (name)":"Primary","StatutoryLowAge":"7","StatutoryHighAge":"11","Boarders
-      (code)":"1","Boarders (name)":"No boarders","NurseryProvision (name)":"No Nursery
-      Classes","OfficialSixthForm (code)":"0","OfficialSixthForm (name)":"Not applicable","Gender
-      (code)":"3","Gender (name)":"Mixed","ReligiousCharacter (code)":"00","ReligiousCharacter
-      (name)":"Does not apply","ReligiousEthos (name)":"Does not apply","Diocese (code)":"0000","Diocese
-      (name)":"Not applicable","AdmissionsPolicy (code)":"0","AdmissionsPolicy (name)":"Not
-      applicable","SchoolCapacity":"","SpecialClasses (code)":"2","SpecialClasses
-      (name)":"No Special Classes","CensusDate":"","NumberOfPupils":"","NumberOfBoys":"","NumberOfGirls":"","PercentageFSM":"","TrustSchoolFlag
-      (code)":"0","TrustSchoolFlag (name)":"Not applicable","Trusts (code)":"","Trusts
-      (name)":"","SchoolSponsorFlag (name)":"Not applicable","SchoolSponsors (name)":"","FederationFlag
-      (name)":"Not under a federation","Federations (code)":"","Federations (name)":"","UKPRN":"","FEHEIdentifier":"","FurtherEducationType
-      (name)":"Not applicable","OfstedLastInsp":"","OfstedSpecialMeasures (code)":"0","OfstedSpecialMeasures
-      (name)":"Not applicable","LastChangedDate":"14-11-2018","Street":"Berry Lane","Locality":"Langdon
-      Hills","Address3":"","Town":"Basildon","County (name)":"Essex","Postcode":"SS16
-      6AZ","SchoolWebsite":"","TelephoneNum":"","HeadTitle (name)":"Mr","HeadFirstName":"T","HeadLastName":"Eastwell","HeadPreferredJobTitle":"Headteacher","BSOInspectorateName
-      (name)":"Not applicable","InspectorateReport":"","DateOfLastInspectionVisit":"","NextInspectionVisit":"","TeenMoth
-      (name)":"Not applicable","TeenMothPlaces":"","CCF (name)":"Not applicable","SENPRU
-      (name)":"Not applicable","EBD (name)":"Not applicable","PlacesPRU":"","FTProv
-      (name)":"","EdByOther (name)":"Not applicable","Section41Approved (name)":"Not
-      applicable","SEN1 (name)":"","SEN2 (name)":"","SEN3 (name)":"","SEN4 (name)":"","SEN5
-      (name)":"","SEN6 (name)":"","SEN7 (name)":"","SEN8 (name)":"","SEN9 (name)":"","SEN10
-      (name)":"","SEN11 (name)":"","SEN12 (name)":"","SEN13 (name)":"","TypeOfResourcedProvision
-      (name)":"","ResourcedProvisionOnRoll":"","ResourcedProvisionCapacity":"","SenUnitOnRoll":"","SenUnitCapacity":"","GOR
-      (code)":"G","GOR (name)":"East of England","DistrictAdministrative (code)":"E07000066","DistrictAdministrative
-      (name)":"Basildon","AdministrativeWard (code)":"E05004027","AdministrativeWard
-      (name)":"Langdon Hills","ParliamentaryConstituency (code)":"E14000933","ParliamentaryConstituency
-      (name)":"South Basildon and East Thurrock","UrbanRural (code)":"C1","UrbanRural
-      (name)":"(England/Wales) Urban city and town","GSSLACode (name)":"E10000012","Easting":"567772","Northing":"187477","MSOA
-      (name)":"Basildon 021","LSOA (name)":"Basildon 021C","InspectorateName (name)":"","SENStat":"","SENNoStat":"","BoardingEstablishment
-      (name)":"","PropsName":"","PreviousLA (code)":"915","PreviousLA (name)":"Pre
-      LGR (1998) Essex","PreviousEstablishmentNumber":"2498","OfstedRating (name)":"","Country
-      (name)":"","UPRN":"","SiteName":"","QABName (code)":"0","QABName (name)":"Not
-      applicable","EstablishmentAccredited (code)":"0","EstablishmentAccredited (name)":"Not
-      applicable","QABReport":"","CHNumber":"","MSOA (code)":"E02004444","LSOA (code)":"E01021282","FSM":"","AccreditationExpiryDate":""}'
+    name: religious_character
+    value_before_type_cast: 'None'
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2024-11-28 16:25:58.975507000 Z
@@ -420,9 +293,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: geopoint
     value_before_type_cast: 0101000020E6100000F3A8E30080D0DA3F57420906D6C74940
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: gias_data_hash
-    value_before_type_cast: 32e7571418abe718595b5bb84aa7bd301a4b8c17c7eaa3985789568959750d9d
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: slug
     value_before_type_cast: lincewood-junior-school

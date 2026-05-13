@@ -47,9 +47,9 @@ RSpec.describe VacancyFilterQuery do
       local_authority_school = create(:school, name: "local authority", school_type: "Local authority maintained schools")
       create(:vacancy, job_title: "Vacancy 3", phases: %w[primary], job_roles: ["sendco"], organisations: [local_authority_school], enable_job_applications: true)
 
-      non_faith_school1 = create(:school, name: "nonfaith1", gias_data: { "ReligiousCharacter (name)" => "" })
-      non_faith_school2 = create(:school, name: "nonfaith2", gias_data: { "ReligiousCharacter (name)" => "Does not apply" })
-      non_faith_school3 = create(:school, name: "nonfaith3", gias_data: { "ReligiousCharacter (name)" => "None" })
+      non_faith_school1 = create(:school, name: "nonfaith1", religious_character: "None")
+      non_faith_school2 = create(:school, name: "nonfaith2", religious_character: "Does not apply")
+      non_faith_school3 = create(:school, name: "nonfaith3", religious_character: "None")
 
       create(:vacancy, :no_tv_applications, job_title: "Vacancy 14", phases: %w[primary], organisations: [non_faith_school1])
       create(:vacancy, :no_tv_applications, job_title: "Vacancy 15-NFV2", phases: %w[primary], organisations: [non_faith_school2])
@@ -72,8 +72,8 @@ RSpec.describe VacancyFilterQuery do
       academies = create(:academy, name: "Academy1")
       create(:vacancy, :no_tv_applications, job_title: "Vacancy 5", phases: %w[primary], job_roles: ["head_of_year_or_phase"], organisations: [academies])
 
-      faith_school = create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "anything" })
-      faith_school2 = create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "somethingelse" })
+      faith_school = create(:school, name: "Religious", religious_character: "Christian")
+      faith_school2 = create(:school, name: "Religious2", religious_character: "Christian")
       create(:vacancy, :no_tv_applications, job_title: "Vacancy 13F", phases: %w[primary], publisher_organisation: faith_school, organisations: [faith_school, faith_school2])
 
       free_school = create(:school, :free_school, name: "Freeschool1")
