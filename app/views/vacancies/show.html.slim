@@ -1,4 +1,4 @@
-- if @vacancy.organisation.logo.attached?
+- if malware_scan_clean?(@vacancy.organisation.logo)
   - content_for :social_image, polymorphic_url(@vacancy.organisation.logo)
 
 = render "vacancies/show"

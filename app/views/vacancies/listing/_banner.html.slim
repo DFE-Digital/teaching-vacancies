@@ -2,7 +2,7 @@
   = govuk_tag text: t("jobs.expired_listing.tag").upcase, colour: "orange"
 
 .header-with-logo class="govuk-!-margin-bottom-5"
-  - if vacancy.organisation.logo.attached?
+  - if malware_scan_clean?(vacancy.organisation.logo)
     .header-with-logo-logo
       = image_tag(vacancy.organisation.logo, alt: "")
   .header-with-logo-title

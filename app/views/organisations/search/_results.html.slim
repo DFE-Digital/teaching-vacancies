@@ -5,7 +5,7 @@
         = govuk_link_to(school.name, organisation_path(school))
       p.govuk-body class="govuk-!-margin-bottom-0"
         = full_address(school)
-    - if school.logo.attached?
+    - if malware_scan_clean?(school.logo)
       .header-with-logo-logo--search-result
         = image_tag(school.logo, alt: t("publishers.organisations.organisation.logo.alt_text", organisation_name: school.name))
 

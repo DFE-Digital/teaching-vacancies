@@ -24,7 +24,8 @@
 
   - if @organisation.logo.attached?
     h2.govuk-heading-m = t(".current_logo_title")
-    = image_tag(@organisation.logo, alt: t("publishers.organisations.organisation.logo.alt_text", organisation_name: @organisation.name), class: "contained-image--logo govuk-!-display-block govuk-!-margin-bottom-0")
+    - if malware_scan_clean?(@organisation.logo)
+      = image_tag(@organisation.logo, alt: t("publishers.organisations.organisation.logo.alt_text", organisation_name: @organisation.name), class: "contained-image--logo govuk-!-display-block govuk-!-margin-bottom-0")
     p.govuk-body-s class="govuk-!-margin-bottom-1"
       = @organisation.logo.filename
     p.govuk-body

@@ -6,7 +6,8 @@
 span.govuk-caption-m = t(".caption")
 h1.govuk-heading-l = t(".title")
 
-= image_tag(@organisation.photo, alt: t("publishers.organisations.organisation.photo.alt_text", organisation_name: @organisation.name), class: "contained-image govuk-!-display-block govuk-!-margin-bottom-0")
+- if malware_scan_clean?(@organisation.photo)
+  = image_tag(@organisation.photo, alt: t("publishers.organisations.organisation.photo.alt_text", organisation_name: @organisation.name), class: "contained-image govuk-!-display-block govuk-!-margin-bottom-0")
 p.govuk-body-s class="govuk-!-margin-bottom-4"
   = @organisation.photo.filename
 

@@ -65,7 +65,7 @@ h2.govuk-heading-m = t("organisations.show.summary.heading")
 
 - if organisation.description?
   h2.govuk-heading-m = t("organisations.show.summary.description", organisation_name: organisation.name)
-  - if organisation.photo.attached?
+  - if malware_scan_clean?(organisation.photo)
     = image_tag(@organisation.photo.attachment,
                 alt: t("publishers.organisations.organisation.photo.alt_text", organisation_name: @organisation.name),
                 class: "contained-image govuk-!-margin-bottom-5")
