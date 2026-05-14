@@ -27,12 +27,7 @@ export default class extends Controller {
     const { editor } = this.editorTarget;
     if (!editor) return 0;
 
-    const text = editor.getDocument().toString().trim();
-    if (text.length === 0) return 0;
-
-    // '-' allows one-way street to be one word
-    const words = text.split(/(\w|-)+/);
-    return words.length;
+    return this.constructor.countWordsInText(editor.getDocument().toString());
   }
 
   displayCount(wordCount) {
@@ -46,5 +41,12 @@ export default class extends Controller {
 
   static formatNumber(num) {
     return num >= 1000 ? num.toLocaleString('en-GB') : num.toString();
+  }
+
+  static countWordsInText(text) {
+    const trimmedText = text.trim();
+    if (trimmedText.length === 0) return 0;
+
+    return trimmedText.split(/\s+/).length;
   }
 }
