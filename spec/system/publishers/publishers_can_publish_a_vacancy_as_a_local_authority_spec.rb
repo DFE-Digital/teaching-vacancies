@@ -8,10 +8,10 @@ RSpec.describe "Creating a vacancy" do
   let(:school2) { create(:school, phase: :not_applicable, name: "Second school") }
   let(:vacancy) do
     build(:vacancy, :apply_via_website, :secondary, :fixed_term, :ect_suitable, job_roles: ["teacher"],
-                                                                                 working_patterns: %w[full_time part_time], hourly_rate: nil,
-                                                                                 organisations: [school1, school2],
-                                                                                 contact_email: publisher.email,
-                                                                                 publisher: publisher)
+                                                                                working_patterns: %w[full_time part_time], hourly_rate: nil,
+                                                                                organisations: [school1, school2],
+                                                                                contact_email: publisher.email,
+                                                                                publisher: publisher)
   end
   let(:created_vacancy) { DraftVacancy.last }
 

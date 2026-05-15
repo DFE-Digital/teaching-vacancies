@@ -135,7 +135,6 @@ RSpec.describe "vacancies/show" do
     end
   end
 
-
   describe "Viewing a vacancy" do
     let(:jobseeker) { nil }
     let(:vacancy) { build_stubbed(:vacancy, organisations: [school]) }
@@ -143,16 +142,55 @@ RSpec.describe "vacancies/show" do
     context "when a school has geocoding" do
       let(:school) { build_stubbed(:school, geopoint: "POINT(51.4788757883318 0.0253328559417984)") }
 
-      it "displays a map " do
-        expect(page).to have_css("div#map")
+      it "displays a map" do
+        expect(rendered).to have_css("div#map")
       end
     end
 
     context "when a school has no geocoding" do
       let(:school) { build_stubbed(:school, geopoint: nil) }
 
-      it "does not display a map " do
-        expect(page).not_to have_css("div#map")
+      it "does not display a map" do
+        expect(rendered).to have_no_css("div#map")
+      end
+    end
+  end
+
+  # Please notify performance analyst (currently Johnathan Chambers) if you change this test
+  # as it reflects the binding between the application and the Floodlight tags in GA
+  describe "floodlight tags" do
+    # render_views
+    let(:jobseeker) { build_stubbed(:jobseeker) }
+
+    describe "Apply Button" do
+      let(:vacancy) { build_stubbed(:vacancy) }
+
+      it "has the correct text" do
+        expect(rendered).to have_content("Apply for this job")
+      end
+    end
+
+    describe "View advert on school website" do
+      let(:vacancy) { build_stubbed(:vacancy, :apply_via_website) }
+
+      it "has the correct text" do
+        expect(rendered).to have_content("View advert on school website (opens in new tab)")
+      end
+    end
+
+    describe "Download an application form" do
+      let(:vacancy) { create(:vacancy, :with_application_form) }
+
+      it "has the correct text" do
+        expect(rendered).to have_content("Download an application form - ")
+      end
+    end
+
+    describe "View advert on external website" do
+      let(:vacancy) { build_stubbed(:vacancy, :external) }
+
+      it "has the correct text" do
+        expect(rendered).to have_content("View advert on external website (opens in new tab)")
       end
     end
   end
