@@ -2,11 +2,18 @@ require "rails_helper"
 
 RSpec.describe "vacancies/show" do
   before do
+    if jobseeker.present?
+      sign_in(jobseeker, scope: :jobseeker)
+      allow(view).to receive_messages(current_jobseeker: jobseeker)
+    end
     assign :vacancy, vacancy.decorate
     render
   end
 
+  after { sign_out jobseeker if jobseeker.present? }
+
   describe "job posting metadata" do
+    let(:jobseeker) { nil }
     let(:json_ld) { JSON.parse(rendered.html.css("script.jobref").inner_text, symbolize_names: true) }
     let(:vacancy) { create(:vacancy, hourly_rate: hourly_rate, salary: salary) }
 
@@ -39,6 +46,8 @@ RSpec.describe "vacancies/show" do
   end
 
   describe "personal statement help" do
+    let(:jobseeker) { nil }
+
     context "when vacancy is ect_suitable but does not have enable_job_applications" do
       let(:vacancy) { build_stubbed(:vacancy, ect_status: :ect_suitable, enable_job_applications: false) }
 
@@ -72,6 +81,54 @@ RSpec.describe "vacancies/show" do
       it "does not render the personal statement help section" do
         expect(rendered).to have_no_css(".sidebar-info-box")
         expect(rendered).to have_no_content(I18n.t("jobs.personal_statement_help.heading"))
+      end
+    end
+  end
+
+  context "with a website vacancy" do
+    let(:expected_link) { I18n.t("jobs.view_advert.school", href: "http://www.google.com") }
+    let(:jobseeker) { nil }
+
+    context "with a published vacancy" do
+      let(:vacancy) do
+        build_stubbed(:vacancy, :apply_via_website,
+                      application_link: "www.google.com", organisations: [build(:school)])
+      end
+
+      it "has an application link" do
+        expect(rendered).to have_link(expected_link)
+      end
+    end
+
+    context "with an expired vacancy" do
+      let(:vacancy) do
+        build_stubbed(:vacancy, :expired, :apply_via_website,
+                      application_link: "www.google.com", organisations: [build(:school)])
+      end
+
+      it "does not have an application link" do
+        expect(rendered).to have_no_link(expected_link)
+      end
+    end
+  end
+
+  context "with a download form vacancy" do
+    let(:vacancy) do
+      create(:vacancy, :with_application_form,
+             organisations: [build(:school)])
+    end
+    let(:jobseeker) { nil }
+    let(:expected_content) { "Download an application form" }
+
+    it "apply link can only be found after login" do
+      expect(rendered).to have_no_content(expected_content)
+    end
+
+    context "when signed in" do
+      let(:jobseeker) { build_stubbed(:jobseeker) }
+
+      it "apply link can only be found after login" do
+        expect(rendered).to have_content(expected_content)
       end
     end
   end
