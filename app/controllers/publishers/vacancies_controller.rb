@@ -14,7 +14,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
 
   def show
     @vacancy = vacancy.decorate
-    @next_invalid_step = next_invalid_step
+    @next_invalid_step = step_process.next_invalid_step
     @current_organisation = current_organisation
     @step_process = step_process
   end

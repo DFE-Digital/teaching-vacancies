@@ -19,7 +19,7 @@ RSpec.describe VacancyFormPageHeadingComponent, type: :component do
   before do
     allow(subject).to receive(:current_organisation).and_return(organisation)
     allow(vacancy_step_process).to receive(:previous_step).and_return(previous_step)
-    allow(vacancy_step_process).to receive(:steps).and_return(steps)
+    # allow(vacancy_step_process).to receive(:steps).and_return(steps)
     allow(vacancy_step_process).to receive(:current_step_group_number).and_return(1)
     allow(vacancy_step_process).to receive(:total_step_groups).and_return(3)
 

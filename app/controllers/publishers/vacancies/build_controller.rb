@@ -80,6 +80,6 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   end
 
   def set_steps
-    self.steps = step_process.steps - [:review]
+    self.steps = step_process.steps_list - [:review]
   end
 end

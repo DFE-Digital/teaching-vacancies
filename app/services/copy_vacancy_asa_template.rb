@@ -47,7 +47,7 @@ class CopyVacancyAsaTemplate
       process = Publishers::Vacancies::VacancyStepProcess.new(:review,
                                                               vacancy: vacancy,
                                                               organisation: vacancy.organisation)
-      (process.steps - [:review]).select do |step_name|
+      (process.steps_list - [:review]).select do |step_name|
         step_form_class = File.join("publishers/job_listing", "#{step_name}_form").camelize.constantize
 
         step_form_class.load_from_model(vacancy, current_publisher: nil).valid?

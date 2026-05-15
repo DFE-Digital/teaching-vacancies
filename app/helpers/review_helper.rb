@@ -9,7 +9,7 @@ module ReviewHelper
   private
 
   def retrieve_section_forms(section, step_process)
-    step_process.step_groups[section].map do |step_name|
+    step_process.steps_list_for(section).map do |step_name|
       File.join("publishers/job_listing", "#{step_name}_form").camelize.constantize
     end
   end
