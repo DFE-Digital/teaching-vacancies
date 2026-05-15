@@ -93,7 +93,7 @@ RSpec.describe Resettable do
 
   context "when changing enable job applications" do
     let(:vacancy) do
-      create(:draft_vacancy, :no_tv_applications)
+      create(:draft_vacancy, :apply_via_website)
     end
 
     it "resets receive application" do

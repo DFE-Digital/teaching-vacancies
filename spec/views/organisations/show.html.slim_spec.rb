@@ -70,7 +70,7 @@ RSpec.describe "organisations/show", type: :view do
     let(:school_group) { create(:trust) }
     let(:organisation) { create(:school, school_groups: [school_group]) }
     let(:vacancy) { create(:vacancy, organisations: [organisation]) }
-    let(:vacancy_without_apply) { create(:vacancy, :no_tv_applications, organisations: [organisation]) }
+    let(:vacancy_without_apply) { create(:vacancy, :apply_via_website, organisations: [organisation]) }
     let(:vacancies) { [vacancy, vacancy_without_apply] }
 
     it "displays a profile summary" do

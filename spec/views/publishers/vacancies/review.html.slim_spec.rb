@@ -13,7 +13,7 @@ RSpec.describe "publishers/vacancies/review" do
   end
 
   context "with website applications" do
-    let(:vacancy) { build_stubbed(:vacancy, :no_tv_applications) }
+    let(:vacancy) { build_stubbed(:vacancy, :apply_via_website) }
 
     it "doesnt show the document link" do
       expect(rendered).not_to include("Document name")

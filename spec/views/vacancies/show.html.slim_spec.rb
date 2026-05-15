@@ -85,72 +85,75 @@ RSpec.describe "vacancies/show" do
     end
   end
 
-  context "with a website vacancy" do
-    let(:expected_link) { I18n.t("jobs.view_advert.school", href: "http://www.google.com") }
-    let(:jobseeker) { nil }
+  describe "Jobseekers can apply for a vacancy" do
+    context "with a website vacancy" do
+      let(:expected_link) { I18n.t("jobs.view_advert.school", href: "http://www.google.com") }
+      let(:jobseeker) { nil }
 
-    context "with a published vacancy" do
+      context "with a published vacancy" do
+        let(:vacancy) do
+          build_stubbed(:vacancy, :apply_via_website,
+                        application_link: "www.google.com", organisations: [build(:school)])
+        end
+
+        it "has an application link" do
+          expect(rendered).to have_link(expected_link)
+        end
+      end
+
+      context "with an expired vacancy" do
+        let(:vacancy) do
+          build_stubbed(:vacancy, :expired, :apply_via_website,
+                        application_link: "www.google.com", organisations: [build(:school)])
+        end
+
+        it "does not have an application link" do
+          expect(rendered).to have_no_link(expected_link)
+        end
+      end
+    end
+
+    context "with a download form vacancy" do
       let(:vacancy) do
-        build_stubbed(:vacancy, :apply_via_website,
-                      application_link: "www.google.com", organisations: [build(:school)])
+        create(:vacancy, :with_application_form,
+               organisations: [build(:school)])
       end
-
-      it "has an application link" do
-        expect(rendered).to have_link(expected_link)
-      end
-    end
-
-    context "with an expired vacancy" do
-      let(:vacancy) do
-        build_stubbed(:vacancy, :expired, :apply_via_website,
-                      application_link: "www.google.com", organisations: [build(:school)])
-      end
-
-      it "does not have an application link" do
-        expect(rendered).to have_no_link(expected_link)
-      end
-    end
-  end
-
-  context "with a download form vacancy" do
-    let(:vacancy) do
-      create(:vacancy, :with_application_form,
-             organisations: [build(:school)])
-    end
-    let(:jobseeker) { nil }
-    let(:expected_content) { "Download an application form" }
-
-    it "apply link can only be found after login" do
-      expect(rendered).to have_no_content(expected_content)
-    end
-
-    context "when signed in" do
-      let(:jobseeker) { build_stubbed(:jobseeker) }
+      let(:jobseeker) { nil }
+      let(:expected_content) { "Download an application form" }
 
       it "apply link can only be found after login" do
-        expect(rendered).to have_content(expected_content)
+        expect(rendered).to have_no_content(expected_content)
+      end
+
+      context "when signed in" do
+        let(:jobseeker) { build_stubbed(:jobseeker) }
+
+        it "apply link can only be found after login" do
+          expect(rendered).to have_content(expected_content)
+        end
       end
     end
   end
 
-  context "when a school has geocoding" do
+
+  describe "Viewing a vacancy" do
     let(:jobseeker) { nil }
     let(:vacancy) { build_stubbed(:vacancy, organisations: [school]) }
 
-    let(:school) { build_stubbed(:school, geopoint: "POINT(51.4788757883318 0.0253328559417984)") }
+    context "when a school has geocoding" do
+      let(:school) { build_stubbed(:school, geopoint: "POINT(51.4788757883318 0.0253328559417984)") }
 
-    it "displays a map" do
-      expect(rendered).to have_css("div#map")
+      it "displays a map " do
+        expect(page).to have_css("div#map")
+      end
     end
-  end
 
-  context "when a school has no geocoding" do
-    let(:jobseeker) { nil }
-    let(:vacancy) { build_stubbed(:vacancy, organisations: [school]) }
-    let(:school) { build_stubbed(:school, geopoint: nil) }
+    context "when a school has no geocoding" do
+      let(:school) { build_stubbed(:school, geopoint: nil) }
 
-    it "does not display a map" do
-      expect(rendered).to have_no_css("div#map")
+      it "does not display a map " do
+        expect(page).not_to have_css("div#map")
+      end
     end
   end
 end

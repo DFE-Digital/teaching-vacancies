@@ -35,7 +35,7 @@ RSpec.describe "Creating a vacancy" do
         build(:vacancy,
               :ect_suitable,
               :secondary,
-              :no_tv_applications,
+              :apply_via_website,
               publish_on: Date.current)
       end
 
@@ -370,7 +370,7 @@ RSpec.describe "Creating a vacancy" do
     let(:vacancy) do
       build(:vacancy,
             :secondary,
-            :no_tv_applications,
+            :apply_via_website,
             publish_on: Date.current)
     end
 

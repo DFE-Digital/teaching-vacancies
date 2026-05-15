@@ -131,7 +131,7 @@ FactoryBot.define do
       actual_salary { nil }
     end
 
-    trait :no_tv_applications do
+    trait :apply_via_website do
       receive_applications { "website" }
       application_link { Faker::Internet.url(host: "contoso.com") }
       enable_job_applications { false }

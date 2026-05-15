@@ -23,7 +23,7 @@ RSpec.describe VacanciesController do
   end
 
   describe "View advert on school website" do
-    let(:vacancy) { create(:vacancy, :no_tv_applications) }
+    let(:vacancy) { create(:vacancy, :apply_via_website) }
 
     it "has the correct text" do
       expect(response.body).to have_content("View advert on school website (opens in new tab)")

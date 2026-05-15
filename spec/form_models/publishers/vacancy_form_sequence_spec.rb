@@ -8,7 +8,7 @@ RSpec.describe Publishers::VacancyFormSequence do
     )
   end
 
-  let(:vacancy) { create(:draft_vacancy, :secondary, :no_tv_applications, school_visits: nil, organisations: [organisation]) }
+  let(:vacancy) { create(:draft_vacancy, :secondary, :apply_via_website, school_visits: nil, organisations: [organisation]) }
   let(:organisation) { create(:school) }
   let(:step_process) { double(:step_process, steps: all_steps, current_step: current_step) }
   let(:current_step) { :review }
