@@ -18,7 +18,7 @@ RSpec.describe "Jobseekers can view all the jobs" do
   end
 
   it "jobseekers can distinguish between the listed jobs that allow to apply through Teaching Vacancies and the ones who don't" do
-    job_without_apply = create(:vacancy, :no_tv_applications, :past_publish, expires_at: 2.years.from_now, organisations: [school])
+    job_without_apply = create(:vacancy, :apply_via_website, :past_publish, expires_at: 2.years.from_now, organisations: [school])
     visit jobs_path
 
     published_jobs.each do |job|

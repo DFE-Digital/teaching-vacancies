@@ -79,7 +79,7 @@ schools.each do |school|
             publisher_organisation: school,
             publisher: Publisher.all.sample }
   2.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
-  FactoryBot.create(:vacancy, :for_seed_data, :no_tv_applications, **attrs)
+  FactoryBot.create(:vacancy, :for_seed_data, :apply_via_website, **attrs)
   FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs)
   FactoryBot.create(:draft_vacancy, :for_seed_data, **attrs)
   FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false)

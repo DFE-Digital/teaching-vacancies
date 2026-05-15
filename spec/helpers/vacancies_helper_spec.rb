@@ -214,7 +214,7 @@ RSpec.describe VacanciesHelper do
     end
 
     context "when job applications are not enabled" do
-      let(:vacancy) { build_stubbed(:vacancy, :no_tv_applications) }
+      let(:vacancy) { build_stubbed(:vacancy, :apply_via_website) }
 
       it {
         expect(helper.vacancy_form_type(vacancy)).to eq(

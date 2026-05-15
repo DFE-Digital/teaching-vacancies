@@ -2,13 +2,20 @@ require "rails_helper"
 
 RSpec.describe "vacancies/show" do
   before do
+    if jobseeker.present?
+      sign_in(jobseeker, scope: :jobseeker)
+      allow(view).to receive_messages(current_jobseeker: jobseeker)
+    end
     assign :vacancy, vacancy.decorate
     render
   end
 
+  after { sign_out jobseeker if jobseeker.present? }
+
   describe "job posting metadata" do
+    let(:jobseeker) { nil }
     let(:json_ld) { JSON.parse(rendered.html.css("script.jobref").inner_text, symbolize_names: true) }
-    let(:vacancy) { create(:vacancy, hourly_rate: hourly_rate, salary: salary) }
+    let(:vacancy) { build_stubbed(:vacancy, hourly_rate: hourly_rate, salary: salary) }
 
     context "with hourly rate" do
       let(:hourly_rate) { 25 }
@@ -39,6 +46,8 @@ RSpec.describe "vacancies/show" do
   end
 
   describe "personal statement help" do
+    let(:jobseeker) { nil }
+
     context "when vacancy is ect_suitable but does not have enable_job_applications" do
       let(:vacancy) { build_stubbed(:vacancy, ect_status: :ect_suitable, enable_job_applications: false) }
 
@@ -72,6 +81,115 @@ RSpec.describe "vacancies/show" do
       it "does not render the personal statement help section" do
         expect(rendered).to have_no_css(".sidebar-info-box")
         expect(rendered).to have_no_content(I18n.t("jobs.personal_statement_help.heading"))
+      end
+    end
+  end
+
+  describe "Jobseekers can apply for a vacancy" do
+    context "with a website vacancy" do
+      let(:expected_link) { I18n.t("jobs.view_advert.school", href: "http://www.google.com") }
+      let(:jobseeker) { nil }
+
+      context "with a published vacancy" do
+        let(:vacancy) do
+          build_stubbed(:vacancy, :apply_via_website,
+                        application_link: "www.google.com", organisations: [build(:school)])
+        end
+
+        it "has an application link" do
+          expect(rendered).to have_link(expected_link)
+        end
+      end
+
+      context "with an expired vacancy" do
+        let(:vacancy) do
+          build_stubbed(:vacancy, :expired, :apply_via_website,
+                        application_link: "www.google.com", organisations: [build(:school)])
+        end
+
+        it "does not have an application link" do
+          expect(rendered).to have_no_link(expected_link)
+        end
+      end
+    end
+
+    context "with a download form vacancy" do
+      let(:vacancy) do
+        create(:vacancy, :with_application_form,
+               organisations: [build(:school)])
+      end
+      let(:jobseeker) { nil }
+      let(:expected_content) { "Download an application form" }
+
+      it "apply link can only be found after login" do
+        expect(rendered).to have_no_content(expected_content)
+      end
+
+      context "when signed in" do
+        let(:jobseeker) { build_stubbed(:jobseeker) }
+
+        it "apply link can only be found after login" do
+          expect(rendered).to have_content(expected_content)
+        end
+      end
+    end
+  end
+
+  describe "Viewing a vacancy" do
+    let(:jobseeker) { nil }
+    let(:vacancy) { build_stubbed(:vacancy, organisations: [school]) }
+
+    context "when a school has geocoding" do
+      let(:school) { build_stubbed(:school, geopoint: "POINT(51.4788757883318 0.0253328559417984)") }
+
+      it "displays a map" do
+        expect(rendered).to have_css("div#map")
+      end
+    end
+
+    context "when a school has no geocoding" do
+      let(:school) { build_stubbed(:school, geopoint: nil) }
+
+      it "does not display a map" do
+        expect(rendered).to have_no_css("div#map")
+      end
+    end
+  end
+
+  # Please notify performance analyst (currently Johnathan Chambers) if you change this test
+  # as it reflects the binding between the application and the Floodlight tags in GA
+  describe "floodlight tags" do
+    let(:jobseeker) { build_stubbed(:jobseeker) }
+
+    describe "Apply Button" do
+      let(:vacancy) { build_stubbed(:vacancy) }
+
+      it "has the correct text" do
+        expect(rendered).to have_content("Apply for this job")
+      end
+    end
+
+    describe "View advert on school website" do
+      let(:vacancy) { build_stubbed(:vacancy, :apply_via_website) }
+
+      it "has the correct text" do
+        expect(rendered).to have_content("View advert on school website (opens in new tab)")
+      end
+    end
+
+    describe "Download an application form" do
+      let(:vacancy) { create(:vacancy, :with_application_form) }
+
+      it "has the correct text" do
+        expect(rendered).to have_content("Download an application form - ")
+      end
+    end
+
+    describe "View advert on external website" do
+      let(:vacancy) { build_stubbed(:vacancy, :external) }
+
+      it "has the correct text" do
+        expect(rendered).to have_content("View advert on external website (opens in new tab)")
       end
     end
   end

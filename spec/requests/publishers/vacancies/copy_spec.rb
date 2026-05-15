@@ -20,7 +20,7 @@ RSpec.describe "Publishers::Vacancies::CopyController" do
     let(:new_template) { VacancyTemplate.last }
 
     context "with a simple vacancy" do
-      let(:vacancy) { create(:vacancy, :no_tv_applications, organisations: [organisation]) }
+      let(:vacancy) { create(:vacancy, :apply_via_website, organisations: [organisation]) }
 
       it "copies a vacancy into a template" do
         expect {

@@ -86,7 +86,7 @@ RSpec.describe "Viewing a single published vacancy" do
     end
 
     context "when there is an application link set" do
-      let(:vacancy) { create(:vacancy, :no_tv_applications, organisations: [school]) }
+      let(:vacancy) { create(:vacancy, :apply_via_website, organisations: [school]) }
 
       scenario "a jobseeker can click on the application link" do
         click_on I18n.t("jobs.view_advert.school")
@@ -118,7 +118,7 @@ RSpec.describe "Viewing a single published vacancy" do
     end
 
     scenario "jobseeker does not see a tag on jobs that don't allow to apply through Teaching Vacancies" do
-      vacancy_without_apply = create(:vacancy, :no_tv_applications, organisations: [school])
+      vacancy_without_apply = create(:vacancy, :apply_via_website, organisations: [school])
 
       visit job_path(vacancy_without_apply)
       expect(page).not_to have_css("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
@@ -126,7 +126,7 @@ RSpec.describe "Viewing a single published vacancy" do
 
     context "with similar jobs listed" do
       let(:similar_job_tv_application) { create(:vacancy, organisations: [school]) }
-      let(:similar_job_no_tv_application) { create(:vacancy, :no_tv_applications, organisations: [school]) }
+      let(:similar_job_no_tv_application) { create(:vacancy, :apply_via_website, organisations: [school]) }
       let(:similar_jobs_stub) do
         instance_double(Search::SimilarJobs, similar_jobs: [similar_job_tv_application, similar_job_no_tv_application])
       end
