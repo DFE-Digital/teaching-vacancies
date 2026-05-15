@@ -159,7 +159,6 @@ RSpec.describe "vacancies/show" do
   # Please notify performance analyst (currently Johnathan Chambers) if you change this test
   # as it reflects the binding between the application and the Floodlight tags in GA
   describe "floodlight tags" do
-    # render_views
     let(:jobseeker) { build_stubbed(:jobseeker) }
 
     describe "Apply Button" do
