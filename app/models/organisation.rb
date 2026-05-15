@@ -41,7 +41,6 @@ class Organisation < ApplicationRecord
 
   has_many :vacancy_templates, dependent: :destroy
 
-  scope :not_closed, -> { where.not(establishment_status: "Closed") }
   scope :schools, -> { where(type: "School") }
   scope :school_groups, -> { where(type: "SchoolGroup") }
   scope :trusts, -> { school_groups.where.not(uid: nil) }
@@ -61,7 +60,7 @@ class Organisation < ApplicationRecord
 
   scope :not_out_of_scope, -> { where.not(detailed_school_type: Organisation::OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES).or(where(detailed_school_type: nil)) }
 
-  scope :visible_to_jobseekers, -> { schools.not_closed.not_out_of_scope.or(Organisation.trusts).registered_for_service }
+  scope :visible_to_jobseekers, -> { schools.kept.not_out_of_scope.or(Organisation.trusts).registered_for_service }
 
   scope :only_faith_schools, -> { where.not("gias_data ->> 'ReligiousCharacter (name)' IN (?)", NON_FAITH_RELIGIOUS_CHARACTER_TYPES) }
 
@@ -122,7 +121,7 @@ class Organisation < ApplicationRecord
 
     if local_authority_code && local_authorities_extra_schools
       school_urns = local_authorities_extra_schools[local_authority_code]
-      School.where(urn: school_urns)
+      School.kept.where(urn: school_urns)
     else
       School.none
     end
