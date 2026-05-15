@@ -51,7 +51,7 @@ FactoryBot.define do
     expires_at { expiry_date.change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
     include_additional_documents { false }
-    job_title { generate(:job_title) }
+    job_title { "#{FFaker::Education.major} Teacher" }
     listed_elsewhere { nil }
     job_roles { %w[teacher] }
     ect_status { :ect_suitable }
@@ -102,6 +102,8 @@ FactoryBot.define do
     end
 
     trait :for_seed_data do
+      job_title { generate(:job_title) }
+
       job_roles { [factory_sample(Vacancy.job_roles.keys)] }
       ect_status { factory_sample(Vacancy.ect_statuses.keys) if job_roles.include?("teacher") }
       is_job_share { [true, false].sample }
@@ -122,6 +124,10 @@ FactoryBot.define do
         fixed_term_contract_duration { "6 months" }
       end
       anonymise_applications { [false, true].sample }
+    end
+
+    trait :with_dynamic_title do
+      job_title { generate(:job_title) }
     end
 
     trait :without_any_money do

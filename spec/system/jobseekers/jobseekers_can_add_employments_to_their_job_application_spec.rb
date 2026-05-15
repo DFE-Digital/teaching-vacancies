@@ -138,11 +138,12 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
     end
 
     it "allows jobseekers to delete employment history" do
+      expect(page).to have_content("A school")
       click_on "Delete Teacher"
 
       expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :employment_history), ignore_query: true)
       expect(page).to have_content(I18n.t("jobseekers.job_applications.employments.destroy.success"))
-      expect(page).not_to have_content("Teacher")
+      expect(page).not_to have_content("A school")
     end
 
     it "allows jobseekers to edit employment history" do

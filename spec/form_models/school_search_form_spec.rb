@@ -8,7 +8,6 @@ RSpec.describe SchoolSearchForm, type: :model do
       radius: radius,
       education_phase: education_phase,
       key_stage: key_stage,
-      special_school: special_school,
       job_availability: job_availability,
       organisation_types: organisation_types,
       school_types: school_types,
@@ -19,7 +18,6 @@ RSpec.describe SchoolSearchForm, type: :model do
   let(:radius) { nil }
   let(:education_phase) { [] }
   let(:key_stage) { [] }
-  let(:special_school) { [] }
   let(:job_availability) { [] }
   let(:organisation_types) { [] }
   let(:school_types) { [] }
@@ -41,7 +39,6 @@ RSpec.describe SchoolSearchForm, type: :model do
     %i[
       education_phase
       key_stage
-      special_school
       organisation_types
       school_types
     ].each do |field|
@@ -60,17 +57,7 @@ RSpec.describe SchoolSearchForm, type: :model do
   describe "#filters_list" do
     subject { school_search_form.filters_list }
 
-    it { is_expected.to contain_exactly(:education_phase, :key_stage, :special_school, :job_availability, :organisation_types, :school_types) }
-  end
-
-  describe "#special_school_options" do
-    subject { school_search_form.special_school_options }
-
-    let(:expected_options) do
-      [["1", I18n.t("organisations.filters.special_school")]]
-    end
-
-    it { is_expected.to match_array(expected_options) }
+    it { is_expected.to contain_exactly(:education_phase, :key_stage, :job_availability, :organisation_types, :school_types) }
   end
 
   describe "#job_availability_options" do
