@@ -30,7 +30,7 @@ gem "azure-blob", require: false
 gem "business_time"
 gem "chartkick"
 gem "devise"
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.16"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.17"
 gem "discard", "~> 1.4"
 gem "draper"
 # we populate seeds from factory bot in review apps
