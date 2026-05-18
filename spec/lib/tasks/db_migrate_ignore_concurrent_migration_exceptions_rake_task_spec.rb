@@ -4,12 +4,19 @@ require "rails_helper"
 RSpec.describe "db:migrate:ignore_concurrent_migration_exceptions" do
   let(:task_path) { "lib/tasks/migrate_swallowing_concurrent_migration_exceptions" }
 
+  before do
+    Rake::Task["db:migrate"].clear if Rake::Task.task_defined?("db:migrate")
+    Rake::Task.define_task("db:migrate")
+  end
+
+  after do
+    Rake::Task["db:migrate"].clear if Rake::Task.task_defined?("db:migrate")
+  end
+
   it "invokes db:migrate" do
-    allow(Rake::Task["db:migrate"]).to receive(:invoke)
+    expect(Rake::Task["db:migrate"]).to receive(:invoke)
 
     subject.execute
-
-    expect(Rake::Task["db:migrate"]).to have_received(:invoke)
   end
 
   it "swallows ActiveRecord::ConcurrentMigrationError" do

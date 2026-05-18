@@ -5,15 +5,18 @@ RSpec.describe "db:prepare:ignore_concurrent_migration_exceptions" do
   let(:task_path) { "lib/tasks/migrate_swallowing_concurrent_migration_exceptions" }
 
   before do
+    Rake::Task["db:prepare"].clear if Rake::Task.task_defined?("db:prepare")
     Rake::Task.define_task("db:prepare")
   end
 
+  after do
+    Rake::Task["db:prepare"].clear if Rake::Task.task_defined?("db:prepare")
+  end
+
   it "invokes db:prepare" do
-    allow(Rake::Task["db:prepare"]).to receive(:invoke)
+    expect(Rake::Task["db:prepare"]).to receive(:invoke)
 
     subject.execute
-
-    expect(Rake::Task["db:prepare"]).to have_received(:invoke)
   end
 
   it "swallows ActiveRecord::ConcurrentMigrationError" do
