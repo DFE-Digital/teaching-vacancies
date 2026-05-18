@@ -6,6 +6,20 @@ RSpec.describe OrganisationsHelper do
       helper.required_profile_image(image: image, missing_prompt: "Upload an image", alt_text: "School image")
     end
 
+    context "when an attached image has passed malware scanning" do
+      let(:image) { double(attached?: true, filename: "safe-image.png") }
+
+      before do
+        allow(helper).to receive(:malware_scan_clean?).with(image).and_return(true)
+      end
+
+      it "returns an image tag" do
+        expect(required_profile_image).to include("img")
+        expect(required_profile_image).to include("alt=\"School image\"")
+        expect(required_profile_image).to include("class=\"contained-image\"")
+      end
+    end
+
     context "when an attached image has not passed malware scanning" do
       let(:image) { double(attached?: true, filename: "unsafe-image.png") }
 
