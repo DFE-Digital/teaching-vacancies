@@ -7,10 +7,11 @@ RSpec.describe OrganisationsHelper do
     end
 
     context "when an attached image has passed malware scanning" do
-      let(:image) { double(attached?: true, filename: "safe-image.png") }
+      let(:image) { double }
 
       before do
         allow(helper).to receive(:malware_scan_clean?).with(image).and_return(true)
+        allow(helper).to receive(:image_tag).with(image, alt: "School image", class: "contained-image").and_return("<img alt=\"School image\" class=\"contained-image\">")
       end
 
       it "returns an image tag" do
