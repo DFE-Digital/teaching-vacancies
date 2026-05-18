@@ -33,15 +33,14 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
         before do
           create(:vacancy, :external, :trashed, publisher_ats_api_client: client, organisations: [school], external_reference: "REF_CLIENT_3")
-          Array.new(3) do |index|
-            create(
-              :vacancy,
-              :external,
-              publisher_ats_api_client: other_client,
-              organisations: [school],
-              external_reference: "REF_OTHER_CLIENT_#{index}",
-            )
-          end
+          create_list(
+            :vacancy,
+            3,
+            :with_dynamic_title,
+            :external,
+            publisher_ats_api_client: other_client,
+            organisations: [school],
+          )
         end
 
         # Autogenerate documentation examples from response
