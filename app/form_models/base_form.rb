@@ -1,9 +1,9 @@
 class BaseForm
   IMAGE_VALIDATION_OPTIONS = {
     file_type: :image,
-    content_types_allowed: %w[image/jpeg image/png text/plain].freeze,
+    content_types_allowed: %w[image/jpeg image/png].freeze,
     file_size_limit: 5.megabytes,
-    valid_file_types: %i[JPG JPEG PNG TXT].freeze,
+    valid_file_types: %i[JPG JPEG PNG].freeze,
   }.freeze
 
   VALID_DOCUMENT_TYPES = %i[PDF DOC DOCX].freeze
