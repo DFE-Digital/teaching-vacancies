@@ -4,10 +4,6 @@ require "rails_helper"
 RSpec.describe "db:migrate:ignore_concurrent_migration_exceptions" do
   let(:task_path) { "lib/tasks/migrate_swallowing_concurrent_migration_exceptions" }
 
-  before do
-    Rake::Task.define_task("db:migrate")
-  end
-
   it "invokes db:migrate" do
     allow(Rake::Task["db:migrate"]).to receive(:invoke)
 

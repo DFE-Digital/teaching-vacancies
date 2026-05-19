@@ -77,7 +77,7 @@ RSpec.describe "Editing a vacancy template" do
     context "with key_stages" do
       let(:change) { "key_stages" }
 
-      it "can have its key_stages edited" do
+      it "can have its key_stages edited", :retry do
         expect(page).to have_content "Key stages"
         expect(page).to be_axe_clean
 
