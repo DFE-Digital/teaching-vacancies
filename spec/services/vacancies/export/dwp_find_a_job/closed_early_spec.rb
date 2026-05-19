@@ -41,6 +41,9 @@ RSpec.describe Vacancies::Export::DwpFindAJob::ClosedEarly do
       vacancy_manually_expired2
       vacancy_naturally_expired
 
+      allow(Vacancies::Export::DwpFindAJob::ClosedEarlyVacancies::Query)
+        .to receive(:new)
+              .and_return(instance_double(Vacancies::Export::DwpFindAJob::ClosedEarlyVacancies::Query, vacancies: [vacancy_manually_expired, vacancy_manually_expired2]))
       allow(Tempfile).to receive(:new).with(filename).and_return(tempfile)
       allow(Net::SFTP).to receive(:start).and_yield(sftp_session)
     end
