@@ -6,6 +6,8 @@ class Organisation < ApplicationRecord
   include PgSearch::Model
   extend FriendlyId
 
+  include Discard::Model
+
   has_rich_text :description
 
   SPECIAL_SCHOOL_TYPES = ["Community special school", "Foundation special school", "Non-maintained special school", "Academy special converter", "Academy special sponsor led", "Free schools special"].freeze
@@ -13,13 +15,11 @@ class Organisation < ApplicationRecord
   OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES = [
     "Further education",
     "Other independent school",
-    "Online provider",
+   "Online provider",
     "British schools overseas",
-    "Institution funded by other government department",
-    "Miscellaneous",
-    "Offshore schools",
-    "Service children’s education",
-    "Special post 16 institution",
+    "Institution funded by other government department", "Miscellaneous",
+   "Offshore schools",
+    "Service children’s education", "Special post 16 institution",
     "Other independent special school",
     "Higher education institutions",
     "Welsh establishment",
