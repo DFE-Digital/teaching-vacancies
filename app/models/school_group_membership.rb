@@ -16,7 +16,7 @@ class SchoolGroupMembership < ApplicationRecord
     to_delete = marked_for_deletion.map { |m| m.school_group.name }
                                    .group_by { |x| x }
                                    .transform_values(&:length)
-    Sentry.capture_message("Memberships to delete, by SchoolGroup: #{to_delete}", level: :info)
+    Sentry.capture_message("Memberships to delete, by SchoolGroup: #{to_delete}", level: :info) if marked_for_deletion.any?
 
     if marked_for_deletion.count > MAX_RECORDS_TO_BULK_DELETE
       # If this error is raised investigate the school_groups associated with the marked for deletion school group memberships. if a school group, local authority,
