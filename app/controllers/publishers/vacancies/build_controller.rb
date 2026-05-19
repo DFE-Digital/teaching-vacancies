@@ -49,7 +49,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
     return unless step == :job_location && current_organisation.school_group?
 
     schools = current_organisation.local_authority? ? current_publisher_preference.schools : current_organisation.schools
-    @school_options = schools.not_closed.order(:name).map do |school|
+    @school_options = schools.kept.order(:name).map do |school|
       Option.new(id: school.id, name: school.name, address: full_address(school))
     end
 

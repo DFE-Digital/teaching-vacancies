@@ -3,7 +3,9 @@ require "geocoding"
 
 class Gias::ImportTrusts
   TRUSTS_CSV = "allgroupsdata".freeze
+  # alllinksdata only seems to have type 5 and 6 links in it.
   TRUST_MEMBERSHIPS_CSV = "alllinksdata".freeze
+  # TRUST_MEMBERSHIPS_CSV = "links_edubasealldata".freeze
   MAT_GROUP_TYPE = 6
 
   include LogBenchmark

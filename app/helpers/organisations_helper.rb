@@ -25,7 +25,7 @@ module OrganisationsHelper
     return organisation.group_type&.humanize if organisation.school_group?
 
     school_type_details = [
-      organisation.school_type,
+      organisation.school_type.singularize,
       organisation.religious_character,
       "ages #{organisation.minimum_age} to #{organisation.maximum_age}",
     ]

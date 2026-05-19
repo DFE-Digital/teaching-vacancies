@@ -15,8 +15,7 @@ RSpec.describe Organisation do
     end
 
     it "validates new email" do
-      org = create(:school)
-      org.email = "invalidaaddress"
+      org = build(:school, email: "invalidaaddress")
 
       expect(org).not_to be_valid
     end
@@ -217,7 +216,7 @@ RSpec.describe Organisation do
     let(:welsh_school) { create(:school, establishment_status: "Open", detailed_school_type: "Welsh establishment") }
 
     it "returns open schools that are not out of scope" do
-      expect(Organisation.visible_to_jobseekers).to contain_exactly(open_school, trust)
+      expect(Organisation.visible_to_jobseekers).to contain_exactly(open_school, trust, fe_school)
     end
   end
 
