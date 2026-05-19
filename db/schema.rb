@@ -620,10 +620,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_30_131102) do
     t.string "membership_number"
     t.integer "year_membership_obtained"
     t.boolean "exam_taken", default: false, null: false
-    t.uuid "jobseeker_profile_id"
-    t.uuid "job_application_id"
+    t.uuid "job_application_id", null: false
     t.index ["job_application_id"], name: "index_professional_body_memberships_on_job_application_id"
-    t.index ["jobseeker_profile_id"], name: "index_professional_body_memberships_on_jobseeker_profile_id"
   end
 
   create_table "publisher_ats_api_clients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -1027,7 +1025,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_30_131102) do
   add_foreign_key "personal_details", "jobseeker_profiles"
   add_foreign_key "pre_employment_check_sets", "job_applications"
   add_foreign_key "professional_body_memberships", "job_applications"
-  add_foreign_key "professional_body_memberships", "jobseeker_profiles"
   add_foreign_key "publisher_preferences", "organisations"
   add_foreign_key "publisher_preferences", "publishers"
   add_foreign_key "qualification_results", "qualifications"
