@@ -42,10 +42,6 @@
     name: postcode
     value_before_type_cast: SS14 1UE
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: locality
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: address3
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: gias_data
     value_before_type_cast: '{"URN":"139917","LA (code)":"881","LA (name)":"Essex","EstablishmentNumber":"2091","EstablishmentName":"St
       Teresa''s Catholic Primary School, Basildon","TypeOfEstablishment (code)":"28","TypeOfEstablishment
@@ -192,11 +188,6 @@
     name: postcode
     value_before_type_cast: SS13 3JQ
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: locality
-    value_before_type_cast: Pitsea
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: address3
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: gias_data
     value_before_type_cast: '{"URN":"114995","LA (code)":"881","LA (name)":"Essex","EstablishmentNumber":"2786","EstablishmentName":"Northlands
       Primary School and Nursery","TypeOfEstablishment (code)":"01","TypeOfEstablishment
@@ -342,11 +333,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: postcode
     value_before_type_cast: SS16 6AZ
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: locality
-    value_before_type_cast: Langdon Hills
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: address3
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: gias_data
     value_before_type_cast: '{"URN":"114868","LA (code)":"881","LA (name)":"Essex","EstablishmentNumber":"2498","EstablishmentName":"Lincewood

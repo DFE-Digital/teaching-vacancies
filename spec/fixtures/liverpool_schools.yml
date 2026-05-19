@@ -42,11 +42,6 @@
     name: postcode
     value_before_type_cast: L23 2TB
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: locality
-    value_before_type_cast: Crosby
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: address3
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: gias_data
     value_before_type_cast: '{"URN":"104921","LA (code)":"343","LA (name)":"Sefton","EstablishmentNumber":"3343","EstablishmentName":"St
       Luke''s Halsall Church of England Primary School","TypeOfEstablishment (code)":"02","TypeOfEstablishment
@@ -194,11 +189,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: postcode
     value_before_type_cast: L25 6EE
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: locality
-    value_before_type_cast: Woolton
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: address3
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: gias_data
     value_before_type_cast: '{"URN":"104736","LA (code)":"341","LA (name)":"Liverpool","EstablishmentNumber":"7025","EstablishmentName":"Abbot''s

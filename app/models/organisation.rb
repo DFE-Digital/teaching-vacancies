@@ -6,11 +6,21 @@ class Organisation < ApplicationRecord
   include PgSearch::Model
   extend FriendlyId
 
+  include Discard::Model
+
   has_rich_text :description
 
   SPECIAL_SCHOOL_TYPES = ["Community special school", "Foundation special school", "Non-maintained special school", "Academy special converter", "Academy special sponsor led", "Free schools special"].freeze
   NON_FAITH_RELIGIOUS_CHARACTER_TYPES = ["", "None", "Does not apply", "null"].freeze
-  OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES = ["Further education", "Other independent school", "Miscellaneous", "Special post 16 institution", "Other independent special school", "Higher education institutions", "Welsh establishment"].freeze
+  OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES = [
+    "Further education",
+    "Other independent school",
+    "Miscellaneous",
+    "Special post 16 institution",
+    "Other independent special school",
+    "Higher education institutions",
+    "Welsh establishment",
+  ].freeze
 
   friendly_id :slug_candidates, use: %i[slugged history]
 
@@ -80,6 +90,8 @@ class Organisation < ApplicationRecord
     sixth_form_or_college: 6,
     through: 7,
   }
+
+  self.ignored_columns += %i[locality address3]
 
   def live_group_vacancies
     Vacancy.none

@@ -42,11 +42,6 @@
     name: postcode
     value_before_type_cast: AL3 7ET
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: locality
-    value_before_type_cast: Redbourn
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: address3
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: gias_data
     value_before_type_cast: '{"URN":"117671","LA (code)":"919","LA (name)":"Hertfordshire","EstablishmentNumber":"7012","EstablishmentName":"St
       Luke''s School","TypeOfEstablishment (code)":"12","TypeOfEstablishment (name)":"Foundation
@@ -196,10 +191,6 @@
     name: postcode
     value_before_type_cast: AL4 0TZ
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: locality
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: address3
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: gias_data
     value_before_type_cast: '{"URN":"139197","LA (code)":"919","LA (name)":"Hertfordshire","EstablishmentNumber":"1106","EstablishmentName":"Links
       Academy","TypeOfEstablishment (code)":"42","TypeOfEstablishment (name)":"Academy
@@ -344,10 +335,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: postcode
     value_before_type_cast: AL1 2LE
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: locality
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: address3
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: gias_data
     value_before_type_cast: '{"URN":"139159","LA (code)":"919","LA (name)":"Hertfordshire","EstablishmentNumber":"2099","EstablishmentName":"Mandeville
