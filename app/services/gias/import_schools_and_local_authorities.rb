@@ -38,6 +38,9 @@ class Gias::ImportSchoolsAndLocalAuthorities
       region: "GOR (name)",
       school_type: "EstablishmentTypeGroup (name)",
       town: "Town",
+      phase: "PhaseOfEducation (code)",
+      url: "SchoolWebsite",
+      religious_character: "ReligiousCharacter (name)",
     }.freeze
 
     private
@@ -129,11 +132,21 @@ class Gias::ImportSchoolsAndLocalAuthorities
     end
 
     def school_data(row)
-      SCHOOL_MAPPINGS.to_h { |key, row_key| [key, row.fetch(row_key)] }
+      SCHOOL_MAPPINGS.to_h { |key, row_key|
+        raw_value = row.fetch(row_key)
+        value = case key
+                when :phase
+                  raw_value.to_i
+                when :url
+                  Addressable::URI.heuristic_parse(raw_value).to_s
+                when :religious_character
+                  raw_value.presence || "None"
+                else
+                  raw_value
+                end
+        [key, value]
+      }
                      .merge(
-                       phase: row["PhaseOfEducation (code)"].to_i,
-                       url: Addressable::URI.heuristic_parse(row["SchoolWebsite"]).to_s,
-                       religious_character: row.fetch("ReligiousCharacter (name)").presence || "None",
                        gias_data: row.to_h,
                      )
                      .merge(school_location_data(row))

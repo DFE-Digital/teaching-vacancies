@@ -82,7 +82,7 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
           "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv",
         ).to_return(body: "URN,EstablishmentName," \
         "County (name),LA (name),GOR (name),ReligiousCharacter (name)," \
-          "StatutoryHighAge,StatutoryLowAge," \
+          "StatutoryHighAge,StatutoryLowAge,PhaseOfEducation (code)," \
           "EstablishmentTypeGroup (name)," \
                           "EstablishmentStatus (name)," \
                           "TypeOfEstablishment (name)," \
@@ -90,7 +90,7 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
                           "Town,Postcode\n" \
                           "100000,St John\x92s School," \
                           "Hampshire,Southampton,South,None," \
-                        "11,7," \
+                        "11,7,0," \
                           "Independent schools,Open,Academy converter,999,ZZZ,http://test.com,?,?,?")
       end
 
@@ -108,7 +108,7 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
         ).to_return(body:
                         "URN,EstablishmentName," \
                           "County (name),LA (name),GOR (name),ReligiousCharacter (name)," \
-                          "StatutoryHighAge,StatutoryLowAge," \
+                          "StatutoryHighAge,StatutoryLowAge,PhaseOfEducation (code)," \
                           "EstablishmentTypeGroup (name)," \
                           "EstablishmentStatus (name)," \
                           "TypeOfEstablishment (name)," \
@@ -116,7 +116,7 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
                           "Town,Postcode\n" \
                           "100000,St John\x92s School," \
                           "Hampshire,Southampton,South,None," \
-                            "11,7," \
+                            "11,7,0," \
                           "Invalid school type,Open,Academy converter,999,ZZZ,http://test.com,?,?,?")
       end
 
@@ -133,7 +133,7 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
         ).to_return(body:
                         "URN,EstablishmentName," \
                           "County (name),LA (name),GOR (name),ReligiousCharacter (name)," \
-                          "StatutoryHighAge,StatutoryLowAge," \
+                          "StatutoryHighAge,StatutoryLowAge,PhaseOfEducation (code)," \
                           "EstablishmentTypeGroup (name)," \
                           "EstablishmentStatus (name)," \
                           "TypeOfEstablishment (name)," \
@@ -141,7 +141,7 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
                           "Town,Postcode\n" \
                           "100000,St John\x92s School," \
                           "Hampshire,Southampton,South,None," \
-                            "11,7," \
+                            "11,7,0," \
                           "Independent schools,Open,Academy converter,999,ZZZ,test.com,?,?,?")
         subject.call
         expect(example_school.url).to eq("http://test.com")
@@ -154,7 +154,7 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
         ).to_return(body:
                         "URN,EstablishmentName," \
                           "County (name),LA (name),GOR (name),ReligiousCharacter (name)," \
-                          "StatutoryHighAge,StatutoryLowAge," \
+                          "StatutoryHighAge,StatutoryLowAge,PhaseOfEducation (code)," \
                           "EstablishmentTypeGroup (name)," \
                           "EstablishmentStatus (name)," \
                           "TypeOfEstablishment (name)," \
@@ -162,7 +162,7 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
                           "Town,Postcode\n" \
                           "100000,St John\x92s School," \
                           "Hampshire,Southampton,South,None," \
-                            "11,7," \
+                            "11,7,0," \
                           "Independent schools,Open,Academy converter,999,ZZZ,,?,?,?")
         subject.call
         expect(example_school.url).to be_nil
