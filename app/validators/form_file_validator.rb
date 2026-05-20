@@ -1,4 +1,5 @@
 class FormFileValidator < ActiveModel::EachValidator
+  # TODO: - this whole class could be replaced with https://github.com/igorkasyanchuk/active_storage_validations
   def validate_each(record, attribute, value)
     # We only want to run the validations in this validator when the form is submitted to check that the file size and
     # type are valid. Every job listing form model's validations are run after a step is completed in all_steps_valid?
