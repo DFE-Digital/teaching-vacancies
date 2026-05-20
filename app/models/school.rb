@@ -2,8 +2,6 @@ class School < Organisation
   has_many :school_group_memberships, dependent: :destroy
   has_many :school_groups, through: :school_group_memberships
 
-  scope :not_excluded, -> { where.not(detailed_school_type: OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES) }
-
   validates :urn, uniqueness: true
 
   ACADEMY_TYPE = "Academies".freeze
@@ -115,9 +113,9 @@ class School < Organisation
     if part_of_a_trust?
       org_ids = [trust.id] + trust.schools.pluck(:id)
       PublishedVacancy.joins(:organisation_vacancies)
-            .where(organisation_vacancies: { organisation_id: org_ids })
-            .merge(PublishedVacancy.live)
-            .distinct
+                      .where(organisation_vacancies: { organisation_id: org_ids })
+                      .merge(PublishedVacancy.live)
+                      .distinct
     else
       PublishedVacancy.none
     end

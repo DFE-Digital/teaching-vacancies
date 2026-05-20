@@ -193,6 +193,53 @@
     name: postcode
     value_before_type_cast: L25 6EE
   - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: gias_data
+    value_before_type_cast: '{"URN":"104736","LA (code)":"341","LA (name)":"Liverpool","EstablishmentNumber":"7025","EstablishmentName":"Abbot''s
+      Lea School","TypeOfEstablishment (code)":"07","TypeOfEstablishment (name)":"Community
+      special school","EstablishmentTypeGroup (code)":"5","EstablishmentTypeGroup
+      (name)":"Special schools","EstablishmentStatus (code)":"1","EstablishmentStatus
+      (name)":"Open","ReasonEstablishmentOpened (code)":"00","ReasonEstablishmentOpened
+      (name)":"Not applicable","OpenDate":"","ReasonEstablishmentClosed (code)":"00","ReasonEstablishmentClosed
+      (name)":"Not applicable","CloseDate":"","PhaseOfEducation (code)":"0","PhaseOfEducation
+      (name)":"Not applicable","StatutoryLowAge":"3","StatutoryHighAge":"19","Boarders
+      (code)":"1","Boarders (name)":"No boarders","NurseryProvision (name)":"Has Nursery
+      Classes","OfficialSixthForm (code)":"1","OfficialSixthForm (name)":"Has a sixth
+      form","Gender (code)":"3","Gender (name)":"Mixed","ReligiousCharacter (code)":"00","ReligiousCharacter
+      (name)":"Does not apply","ReligiousEthos (name)":"Does not apply","Diocese (code)":"0000","Diocese
+      (name)":"Not applicable","AdmissionsPolicy (code)":"0","AdmissionsPolicy (name)":"Not
+      applicable","SchoolCapacity":"272","SpecialClasses (code)":"1","SpecialClasses
+      (name)":"Has Special Classes","CensusDate":"18-01-2024","NumberOfPupils":"271","NumberOfBoys":"229","NumberOfGirls":"42","PercentageFSM":"57.10","TrustSchoolFlag
+      (code)":"0","TrustSchoolFlag (name)":"Not applicable","Trusts (code)":"","Trusts
+      (name)":"","SchoolSponsorFlag (name)":"Not applicable","SchoolSponsors (name)":"","FederationFlag
+      (name)":"Not under a federation","Federations (code)":"","Federations (name)":"","UKPRN":"10017283","FEHEIdentifier":"","FurtherEducationType
+      (name)":"Not applicable","OfstedLastInsp":"10-07-2024","OfstedSpecialMeasures
+      (code)":"0","OfstedSpecialMeasures (name)":"Not applicable","LastChangedDate":"15-11-2024","Street":"Beaconsfield
+      Road","Locality":"Woolton","Address3":"","Town":"Liverpool","County (name)":"Merseyside","Postcode":"L25
+      6EE","SchoolWebsite":"www.abbotsleaschool.co.uk","TelephoneNum":"01514281161","HeadTitle
+      (name)":"Mrs","HeadFirstName":"Ania","HeadLastName":"Hildrey","HeadPreferredJobTitle":"Headteacher","BSOInspectorateName
+      (name)":"Not applicable","InspectorateReport":"","DateOfLastInspectionVisit":"","NextInspectionVisit":"","TeenMoth
+      (name)":"Not applicable","TeenMothPlaces":"","CCF (name)":"Not applicable","SENPRU
+      (name)":"Not applicable","EBD (name)":"Not applicable","PlacesPRU":"","FTProv
+      (name)":"","EdByOther (name)":"Not applicable","Section41Approved (name)":"Not
+      applicable","SEN1 (name)":"SpLD - Specific Learning Difficulty","SEN2 (name)":"OTH
+      - Other Difficulty/Disability","SEN3 (name)":"SLCN - Speech, language and Communication","SEN4
+      (name)":"ASD - Autistic Spectrum Disorder","SEN5 (name)":"SEMH - Social, Emotional
+      and Mental Health","SEN6 (name)":"MSI - Multi-Sensory Impairment","SEN7 (name)":"MLD
+      - Moderate Learning Difficulty","SEN8 (name)":"SLD - Severe Learning Difficulty","SEN9
+      (name)":"","SEN10 (name)":"","SEN11 (name)":"","SEN12 (name)":"","SEN13 (name)":"","TypeOfResourcedProvision
+      (name)":"Not applicable","ResourcedProvisionOnRoll":"","ResourcedProvisionCapacity":"","SenUnitOnRoll":"","SenUnitCapacity":"","GOR
+      (code)":"B","GOR (name)":"North West","DistrictAdministrative (code)":"E08000012","DistrictAdministrative
+      (name)":"Liverpool","AdministrativeWard (code)":"E05015339","AdministrativeWard
+      (name)":"Woolton Village","ParliamentaryConstituency (code)":"E14001337","ParliamentaryConstituency
+      (name)":"Liverpool Garston","UrbanRural (code)":"A1","UrbanRural (name)":"(England/Wales)
+      Urban major conurbation","GSSLACode (name)":"E08000012","Easting":"341418","Northing":"387532","MSOA
+      (name)":"Liverpool 047","LSOA (name)":"Liverpool 047E","InspectorateName (name)":"","SENStat":"","SENNoStat":"","BoardingEstablishment
+      (name)":"","PropsName":"","PreviousLA (code)":"999","PreviousLA (name)":"","PreviousEstablishmentNumber":"","OfstedRating
+      (name)":"Outstanding","Country (name)":"","UPRN":"38168369","SiteName":"","QABName
+      (code)":"0","QABName (name)":"Not applicable","EstablishmentAccredited (code)":"0","EstablishmentAccredited
+      (name)":"Not applicable","QABReport":"","CHNumber":"","MSOA (code)":"E02001393","LSOA
+      (code)":"E01006796","FSM":"129","AccreditationExpiryDate":""}'
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2024-11-28 16:23:32.158796000 Z
   - !ruby/object:ActiveModel::Attribute::FromDatabase
