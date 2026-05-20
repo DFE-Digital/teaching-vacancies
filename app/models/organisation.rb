@@ -51,7 +51,6 @@ class Organisation < ApplicationRecord
 
   has_many :vacancy_templates, dependent: :destroy
 
-  scope :not_closed, -> { where.not(establishment_status: CLOSED_ESTABLISHMENT_STATUSES) }
   scope :schools, -> { where(type: "School") }
   scope :school_groups, -> { where(type: "SchoolGroup") }
   scope :trusts, -> { school_groups.where.not(uid: nil) }

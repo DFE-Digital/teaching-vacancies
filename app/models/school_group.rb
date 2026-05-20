@@ -33,4 +33,8 @@ class SchoolGroup < Organisation
   def all_organisation_ids
     [id] + schools.pluck(:id) + schools_outside_local_authority.pluck(:id)
   end
+
+  def excluded?
+    false
+  end
 end
