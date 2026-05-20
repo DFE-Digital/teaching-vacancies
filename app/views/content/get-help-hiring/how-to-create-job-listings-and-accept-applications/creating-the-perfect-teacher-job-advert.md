@@ -111,7 +111,7 @@ Most candidates search for jobs on smartphones, so look at the preview link on a
  
 #### Is there any duplicate information? 
  
-Some schools post job ads including salaries or working patterns within the job description, despite these already being summarised at the top of the job advert template. Remove anything that’s already included elsewhere.
+Some schools or colleges post job ads including salaries or working patterns within the job description, despite these already being summarised at the top of the job advert template. Remove anything that’s already included elsewhere.
 
 #### Does it comply with employment legislation? 
 
