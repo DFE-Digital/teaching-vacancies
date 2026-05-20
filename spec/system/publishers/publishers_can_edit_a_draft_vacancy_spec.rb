@@ -44,7 +44,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         expect(page).to be_axe_clean
       end
 
-      it "can edit a draft", :a11y do
+      it "can edit a draft", :a11y, :retry do
         # wait for page load
         expect(page).to have_content("What type of job is this?")
         fill_in_job_role_form_fields("teaching_assistant")

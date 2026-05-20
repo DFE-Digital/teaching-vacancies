@@ -27,7 +27,7 @@ class Gias::ImportSchoolsAndLocalAuthorities
         end
         import_batch
       end
-      raise(ImportFailure, import_errors.map { |x| x.errors.full_messages }) if import_errors.any?
+      raise(ImportFailure, import_errors.map(&:errors)) if import_errors.any?
     end
   end
 
@@ -103,16 +103,14 @@ class Gias::ImportSchoolsAndLocalAuthorities
     }
   end
 
-  def school_data(row) # rubocop:disable Metrics/MethodLength
+  def school_data(row)
     {
       urn: row["URN"],
       address: row["Street"],
-      address3: row["Address3"],
       county: row["County (name)"],
       detailed_school_type: row["TypeOfEstablishment (name)"],
       establishment_status: row["EstablishmentStatus (name)"],
       local_authority_within: row["LA (name)"],
-      locality: row["Locality"],
       maximum_age: row["StatutoryHighAge"],
       minimum_age: row["StatutoryLowAge"],
       name: row["EstablishmentName"],

@@ -42,11 +42,6 @@
     name: postcode
     value_before_type_cast: AL3 7ET
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: locality
-    value_before_type_cast: Redbourn
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: address3
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: religious_character
     value_before_type_cast: 'None'
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -150,10 +145,6 @@
     name: postcode
     value_before_type_cast: AL4 0TZ
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: locality
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: address3
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: religious_character
     value_before_type_cast: 'None'
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -256,10 +247,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: postcode
     value_before_type_cast: AL1 2LE
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: locality
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: address3
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: religious_character
     value_before_type_cast: 'None'

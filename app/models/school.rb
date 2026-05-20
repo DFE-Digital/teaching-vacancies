@@ -2,7 +2,7 @@ class School < Organisation
   has_many :school_group_memberships, dependent: :destroy
   has_many :school_groups, through: :school_group_memberships
 
-  scope :not_excluded, -> { where.not(detailed_school_type: EXCLUDED_DETAILED_SCHOOL_TYPES) }
+  scope :not_excluded, -> { where.not(detailed_school_type: OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES) }
 
   validates :urn, uniqueness: true
 
@@ -10,10 +10,32 @@ class School < Organisation
   LA_SCHOOL_TYPE = "Local authority maintained schools".freeze
   FREE_SCHOOL_TYPE = "Free Schools".freeze
   INDEPENDENT_SCHOOL_TYPE = "Independent schools".freeze
-  VALID_SCHOOL_TYPES = [LA_SCHOOL_TYPE, INDEPENDENT_SCHOOL_TYPE, "Special schools", "Universities", ACADEMY_TYPE, FREE_SCHOOL_TYPE, "Welsh schools", "Other types", "Colleges", "Online provider"].freeze
+  COLLEGE_SCHOOL_TYPE = "Colleges".freeze
+  ONLINE_SCHOOL_TYPE = "Online provider".freeze
+  OTHER_SCHOOL_TYPE = "Other types".freeze
+  SPECIAL_SCHOOL_TYPE = "Special schools".freeze
+  WELSH_SCHOOL_TYPE = "Welsh schools".freeze
+  UNIVERSITY_SCHOOL_TYPE = "Universities".freeze
+
+  FE_DETAILED_SCHOOL_TYPE = "Further education".freeze
+  VALID_SCHOOL_TYPES = [LA_SCHOOL_TYPE,
+                        INDEPENDENT_SCHOOL_TYPE,
+                        SPECIAL_SCHOOL_TYPE,
+                        UNIVERSITY_SCHOOL_TYPE,
+                        ACADEMY_TYPE,
+                        FREE_SCHOOL_TYPE,
+                        WELSH_SCHOOL_TYPE,
+                        OTHER_SCHOOL_TYPE,
+                        COLLEGE_SCHOOL_TYPE,
+                        ONLINE_SCHOOL_TYPE].freeze
+  EXCLUDED_SCHOOL_TYPES = [UNIVERSITY_SCHOOL_TYPE, WELSH_SCHOOL_TYPE, ONLINE_SCHOOL_TYPE].freeze
+  CLOSED_ESTABLISHMENT_STATUSES = ["Closed", "Proposed to open"].freeze
+  OPEN_ESTABLISHMENT_STATUSES = ["Open", "Open, but proposed to close"].freeze
 
   # This is direct from GIAS
-  validates :school_type, inclusion: { in: VALID_SCHOOL_TYPES }
+  validates :school_type, inclusion: { in: VALID_SCHOOL_TYPES, allow_nil: false }
+  validates :detailed_school_type, presence: true
+  validates :establishment_status, inclusion: { in: CLOSED_ESTABLISHMENT_STATUSES + OPEN_ESTABLISHMENT_STATUSES, allow_nil: false }
 
   CHRISTIAN_RELIGIOUS_TYPES = ["Anglican",
                                "United Reformed Church",
@@ -69,21 +91,6 @@ class School < Organisation
     in: NON_FAITH_RELIGIOUS_CHARACTER_TYPES + CHRISTIAN_RELIGIOUS_TYPES + CATHOLIC_RELIGIOUS_TYPES + OTHER_RELIGIOUS_TYPES,
     allow_nil: false,
   }
-
-  EXCLUDED_DETAILED_SCHOOL_TYPES = [
-    "Further education",
-    "Other independent school",
-    "Online provider",
-    "British schools overseas",
-    "Institution funded by other government department",
-    "Miscellaneous",
-    "Offshore schools",
-    "Service children’s education",
-    "Special post 16 institution",
-    "Other independent special school",
-    "Higher education institutions",
-    "Welsh establishment",
-  ].freeze
 
   READABLE_PHASE_MAPPINGS = {
     not_applicable: nil,
