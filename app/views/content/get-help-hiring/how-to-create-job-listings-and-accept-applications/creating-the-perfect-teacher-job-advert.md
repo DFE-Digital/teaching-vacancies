@@ -38,7 +38,7 @@ Teacher salaries can be complicated compared to some other industries, so when l
  
  **Additional allowances** 
  
-Many schools and colleges offer teachers benefits beyond their monthly wages. This is your opportunity to list salary sacrifice schemes, cycle to work vouchers, tax-free childcare, and any other bonuses related to working at your school. You may also want to detail the training and career development opportunities you offer.
+Many schools and colleges offer teachers benefits beyond their monthly wages. This is your opportunity to list salary sacrifice schemes, cycle to work vouchers, tax-free childcare, and any other bonuses related to working at your school or college. You may also want to detail the training and career development opportunities you offer.
 
 However you decide to best describe the salary on offer using these fields, avoid referring to pay in a way that doesn’t make sense to people outside your organisation. Those you work with may understand the grades or bands you use, or acronyms such as MPS or UPS, but do not assume your candidates will. Make it easy for them by providing a straightforward numerical value.
 
@@ -69,7 +69,7 @@ While the information above is essential to get right, it’s the job descriptio
 
 Analysis of applications made through Teaching Vacancies suggest that around 300 to 500 words is the optimal amount of text to present to jobseekers. Any less and you’re potentially leaving out something important. Any more and you’re in danger of providing too much unnecessary information.
 
-Within this space, the tone should be overwhelmingly positive. Readers can form a lot of impressions about a school from the writing style of a job advert.
+Within this space, the tone should be overwhelmingly positive. Readers can form a lot of impressions about a school or college from the writing style of a job advert.
 
 Lengthy paragraphs containing dull and formulaic explanations of tasks related to the role suggest a stale workplace, whereas a job ad full of enthusiasm and active verbs suggest a bold and progressive teaching environment.
 
