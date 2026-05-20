@@ -16,7 +16,7 @@ We recommend you choose to receive applications through Teaching Vacancies so yo
  
 * set up an application process for your job listing with one click, saving time and money
 * receive applicant information in a structured way, making it easier to shortlist candidates
-* manage applicants for all your jobs on a single dashboard, whether you’re hiring for a single school, college or a multi-academy trust
+* manage applicants for all your jobs on a single dashboard, whether you’re hiring for a single school, college or multi-academy trust
 * easily notify successful and unsuccessful candidates
 * ensure you’re complying with the most up-to-date recruitment legislation
 
