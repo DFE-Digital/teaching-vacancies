@@ -142,22 +142,17 @@ class Gias::ImportSchoolsAndLocalAuthorities
       SCHOOL_MAPPINGS.to_h { |key, row_key|
         raw_value = row.fetch(row_key)
         value = case key
-                when :phase
+                when :phase, :uk_prn
                   raw_value.to_i
                 when :url
                   Addressable::URI.heuristic_parse(raw_value).to_s
                 when :religious_character
                   raw_value.presence || "None"
-                when :uk_prn
-                  raw_value.to_i
                 else
                   raw_value
                 end
         [key, value]
-      }
-                     .merge(
-                       gias_data: row.to_h,
-                     )
+      }.merge(gias_data: row.to_h)
                      .merge(school_location_data(row))
                      .transform_values(&:presence)
     end
