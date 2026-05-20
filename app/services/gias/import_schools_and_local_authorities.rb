@@ -16,9 +16,12 @@ class Gias::ImportSchoolsAndLocalAuthorities
   # (e.g establishment status says open/closed/proposed when reality is 'open proposed to close' and 'proposed to open')
   class << self
     def call
+      # This file is a list of colleges in-scope for FE vacancies on TVS
+      uk_colleges = CSV.read(Rails.root.join("config/data/colleges.csv"), headers: true).index_by { |r| r.fetch("UKPRN").to_i }.transform_values(&:to_h)
+
       log_benchmark("Importing schools and local authorities") do
         import_errors = Gias::Data.new(SCHOOLS_AND_LOCAL_AUTHORITIES_CSV).each_slice(BATCH_SIZE).flat_map do |group|
-          import_group  group
+          import_group uk_colleges, group
         end
         raise ImportFailure, import_errors.map(&:errors) if import_errors.any?
       end
@@ -41,12 +44,13 @@ class Gias::ImportSchoolsAndLocalAuthorities
       phase: "PhaseOfEducation (code)",
       url: "SchoolWebsite",
       religious_character: "ReligiousCharacter (name)",
+      uk_prn: "UKPRN",
     }.freeze
 
     private
 
     # rubocop:disable Metrics/MethodLength
-    def import_group(group)
+    def import_group(uk_colleges, group)
       local_authorities = Set.new # LAs are provided with every school so we can discard duplicates
       schools = []
       memberships = []
@@ -56,7 +60,8 @@ class Gias::ImportSchoolsAndLocalAuthorities
         local_authorities.add(group_data(row))
         school_row = school_data(row)
         schools.push(school_row)
-        if school_row.fetch(:school_type).in?(School::EXCLUDED_SCHOOL_TYPES)
+        if (school_row.fetch(:school_type) == School::COLLEGE_SCHOOL_TYPE && school_row.fetch(:detailed_school_type) == School::FE_DETAILED_SCHOOL_TYPE && uk_colleges.exclude?(school_row.fetch(:uk_prn)))
+           || school_row.fetch(:school_type).in?(School::EXCLUDED_SCHOOL_TYPES)
            || school_row.fetch(:detailed_school_type).in?(School::EXCLUDED_DETAILED_SCHOOL_TYPES)
            || school_row.fetch(:establishment_status).in?(School::CLOSED_ESTABLISHMENT_STATUSES)
           discarded.push(school_row)
@@ -73,9 +78,11 @@ class Gias::ImportSchoolsAndLocalAuthorities
     # rubocop:enable Metrics/MethodLength
 
     def import_batch(local_authorities, schools, memberships)
-      import_local_authorities(local_authorities).failed_instances +
-        import_schools(schools).failed_instances +
-        import_memberships(local_authorities, schools, memberships).failed_instances
+      Organisation.transaction do
+        import_local_authorities(local_authorities).failed_instances +
+          import_schools(schools).failed_instances +
+          import_memberships(local_authorities, schools, memberships).failed_instances
+      end
     end
 
     def import_local_authorities(local_authorities)
@@ -89,7 +96,7 @@ class Gias::ImportSchoolsAndLocalAuthorities
     end
 
     def import_schools(schools)
-      imported_schools = schools.map { |s| s.merge(discarded_at: nil) }
+      imported_schools = schools.map { |s| s.except(:uk_prn).merge(discarded_at: nil) }
       School.import(
         imported_schools,
         on_duplicate_key_update: {
@@ -135,7 +142,7 @@ class Gias::ImportSchoolsAndLocalAuthorities
       SCHOOL_MAPPINGS.to_h { |key, row_key|
         raw_value = row.fetch(row_key)
         value = case key
-                when :phase
+                when :phase, :uk_prn
                   raw_value.to_i
                 when :url
                   Addressable::URI.heuristic_parse(raw_value).to_s
@@ -145,10 +152,7 @@ class Gias::ImportSchoolsAndLocalAuthorities
                   raw_value
                 end
         [key, value]
-      }
-                     .merge(
-                       gias_data: row.to_h,
-                     )
+      }.merge(gias_data: row.to_h)
                      .merge(school_location_data(row))
                      .transform_values(&:presence)
     end

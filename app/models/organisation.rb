@@ -47,7 +47,8 @@ class Organisation < ApplicationRecord
   scope :local_authorities, -> { school_groups.where.not(local_authority_code: nil) }
   scope :in_vacancy_ids, ->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { vacancy_id: ids }).distinct }
 
-  scope :search_by_location, OrganisationLocationQuery
+  scope :search_by_location, ->(location_query, radius_in_miles, **options) { OrganisationLocationQuery.new(current_scope).call(location_query, radius_in_miles, **options) }
+
   pg_search_scope :search_by_name,
                   against: :name,
                   using: { tsearch: { prefix: true, tsvector_column: "searchable_content" } }
@@ -58,9 +59,7 @@ class Organisation < ApplicationRecord
       .or(where(id: SchoolGroupMembership.select(:school_id).where(school_group_id: registered_organisations)))
   end)
 
-  scope :not_out_of_scope, -> { where.not(detailed_school_type: Organisation::OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES).or(where(detailed_school_type: nil)) }
-
-  scope :visible_to_jobseekers, -> { schools.kept.not_out_of_scope.or(Organisation.trusts).registered_for_service }
+  scope :visible_to_jobseekers, -> { schools.or(Organisation.trusts).registered_for_service }
 
   scope :only_faith_schools, -> { where.not("gias_data ->> 'ReligiousCharacter (name)' IN (?)", NON_FAITH_RELIGIOUS_CHARACTER_TYPES) }
 
