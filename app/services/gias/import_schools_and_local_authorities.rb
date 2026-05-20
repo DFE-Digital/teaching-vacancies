@@ -10,6 +10,10 @@ class Gias::ImportSchoolsAndLocalAuthorities
   class ImportFailure < StandardError
   end
 
+  # New GIAS team now have some data dictionary information available at
+  # https://dfedigital.atlassian.net/wiki/spaces/GTP/pages/6155337742/Data+Dictionary
+  # but it's not quite complete/definitive
+  # (e.g establishment status says open/closed/proposed when reality is 'open proposed to close' and 'proposed to open')
   class << self
     def call
       log_benchmark("Importing schools and local authorities") do
