@@ -28,6 +28,12 @@ northcott = School.find_by!(urn: "118138")
 # Special free school
 martinbacon = School.find_by!(urn: "147661")
 
+# Roman Catholic College
+loreto_college = School.find_by!(urn: "130503")
+
+#  Agricultural college
+oaklands_college = School.find_by!(urn: "130723")
+
 # Team users
 users = [
   { email: "alisa.ali@education.gov.uk", family_name: "Ali", given_name: "Alisa" },
@@ -58,6 +64,8 @@ schools = [bexleyheath_school,
            oakwoods,
            northcott,
            martinbacon,
+           loreto_college,
+           oaklands_college,
            osmaston_cofe]
 
 user_emails = users.map { |u| u.fetch(:email) }
