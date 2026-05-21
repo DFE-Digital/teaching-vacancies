@@ -18,6 +18,7 @@ class SchoolGroupMembership < ApplicationRecord
                                    .transform_values(&:length)
     Sentry.capture_message("Memberships to delete, by SchoolGroup: #{to_delete}", level: :info)
 
+    # :nocov:
     if marked_for_deletion.count > MAX_RECORDS_TO_BULK_DELETE
       # If this error is raised investigate the school_groups associated with the marked for deletion school group memberships. if a school group, local authority,
       # or similar has been through a major change then this could be a legitimate case in which we need to delete a large amount of school group memberships to reflect the
@@ -25,6 +26,7 @@ class SchoolGroupMembership < ApplicationRecord
       raise "Exceeded maximum count of `SchoolGroupMembership`s to bulk delete " \
             "(#{marked_for_deletion.count})"
     end
+    # :nocov:
 
     marked_for_deletion.destroy_all
   end

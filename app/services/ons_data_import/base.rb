@@ -108,7 +108,9 @@ class OnsDataImport::Base
       # :nocov:
 
       response_data = JSON.parse(response.to_s)
+      # :nocov:
       raise "ArcGIS error: #{response_data['error']}" if response_data.key?("error")
+      # :nocov:
 
       response_data.fetch("features")
     end

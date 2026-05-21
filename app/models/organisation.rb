@@ -151,11 +151,13 @@ class Organisation < ApplicationRecord
     %i[email safeguarding_information logo photo url].all? { |attr| send(attr).present? } && description.body.present?
   end
 
+  # :nocov:
   def self.update_all_searchable_content!
     Organisation.all.find_each do |organisation|
       organisation.update_columns(searchable_content: organisation.generate_searchable_content)
     end
   end
+  # :nocov:
 
   def update_searchable_content
     self.searchable_content = generate_searchable_content

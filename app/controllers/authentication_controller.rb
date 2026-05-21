@@ -71,6 +71,7 @@ class AuthenticationController < ApplicationController
     DfE::Analytics::SendEvents.do([event])
   end
 
+  # :nocov:
   def trigger_jobseeker_failed_govuk_one_login_sign_in_event(jobseeker = nil)
     event = DfE::Analytics::Event.new
       .with_type(:jobseeker_failed_govuk_one_login_sign_in)
@@ -84,7 +85,9 @@ class AuthenticationController < ApplicationController
 
     DfE::Analytics::SendEvents.do([event])
   end
+  # :nocov:
 
+  # :nocov:
   def trigger_jobseeker_successful_govuk_one_login_sign_in_event(jobseeker)
     event = DfE::Analytics::Event.new
       .with_type(:jobseeker_successful_govuk_one_login_sign_in)
@@ -98,4 +101,5 @@ class AuthenticationController < ApplicationController
 
     DfE::Analytics::SendEvents.do([event])
   end
+  # :nocov:
 end

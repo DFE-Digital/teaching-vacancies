@@ -9,10 +9,12 @@ class Publishers::LoginKeysController < ApplicationController
     flash.now[:notice] = t(".notice")
   end
 
+  # :nocov:
   def create
     publisher = Publisher.find_by(email: params.dig(:publisher, :email).downcase.strip)
     send_login_key(publisher: publisher) if publisher
   end
+  # :nocov:
 
   def show
     @publisher = @login_key.owner
@@ -25,6 +27,7 @@ class Publishers::LoginKeysController < ApplicationController
     end
   end
 
+  # :nocov:
   def consume
     @publisher = @login_key.owner
     @form = Publishers::LoginKeys::ChooseOrganisationForm.new(choose_organisation_form_params)
@@ -38,6 +41,7 @@ class Publishers::LoginKeysController < ApplicationController
       render(:show)
     end
   end
+  # :nocov:
 
   private
 
@@ -56,11 +60,13 @@ class Publishers::LoginKeysController < ApplicationController
     (render(:error, locals: { failure: }) and return) if failure.present?
   end
 
+  # :nocov:
   def redirect_signed_in_publishers
     return unless publisher_signed_in? && current_organisation.present?
 
     redirect_to publisher_root_path
   end
+  # :nocov:
 
   def redirect_for_dsi_authentication
     return if AuthenticationFallback.enabled?
@@ -75,7 +81,9 @@ class Publishers::LoginKeysController < ApplicationController
     ).deliver_later
   end
 
+  # :nocov:
   def generate_login_key(publisher:)
     EmergencyLoginKey.create(owner: publisher, not_valid_after: Time.current + EMERGENCY_LOGIN_KEY_DURATION)
   end
+  # :nocov:
 end

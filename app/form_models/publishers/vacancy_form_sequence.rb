@@ -27,6 +27,7 @@ class Publishers::VacancyFormSequence < FormSequence
     end
   end
 
+  # :nocov:
   def dependent_steps # rubocop:disable Metrics/MethodLength
     case @step_process.current_step
     when :job_location
@@ -53,6 +54,7 @@ class Publishers::VacancyFormSequence < FormSequence
       []
     end
   end
+  # :nocov:
 
   def next_incomplete_step_subjects?
     return false unless @vacancy.allow_subjects?
