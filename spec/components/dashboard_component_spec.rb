@@ -94,7 +94,7 @@ RSpec.describe DashboardComponent, type: :component do
       context "when organisation is a trust" do
         let(:organisation) { create(:trust, schools: [open_school, closed_school]) }
         let(:open_school) { create(:school, name: "Open school") }
-        let(:closed_school) { create(:school, :closed, name: "Closed school") }
+        let(:closed_school) { create(:school, :closed, name: "Closed school").tap(&:discard) }
         let(:vacancies) do
           create_list(:vacancy, 1, job_title: job_title,
                                    job_applications: create_list(:job_application, 1, :status_submitted),
@@ -145,7 +145,7 @@ RSpec.describe DashboardComponent, type: :component do
       context "when the organisation is a local authority" do
         let(:organisation) { create(:local_authority, schools: [open_school, closed_school]) }
         let(:open_school) { create(:school, name: "Open school") }
-        let(:closed_school) { create(:school, :closed, name: "Closed school") }
+        let(:closed_school) { create(:school, :closed, name: "Closed school").tap(&:discard) }
         let(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: organisation, schools: [open_school]) }
         let(:vacancies) do
           create_list(:vacancy, 1, job_title: job_title,
