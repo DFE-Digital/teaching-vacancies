@@ -16,34 +16,9 @@ RSpec.describe "Publishers can edit a vacancy" do
     end
 
     describe "#job_title" do
-      before do
-        publisher_vacancy_page.change_job_title_link.click
-      end
-
-      it "can not be edited when validation fails" do
-        expect(publisher_job_title_page).to be_displayed
-
-        fill_in "publishers_job_listing_job_title_form[job_title]", with: ""
-        click_on I18n.t("buttons.save_and_continue")
-
-        expect(publisher_job_title_page.errors.map(&:text)).to eq(["Enter a job title"])
-      end
-
-      it "notifies the Google index service" do
-        expect(publisher_job_title_page).to be_displayed
-
-        expect_any_instance_of(Publishers::Vacancies::BaseController)
-          .to receive(:update_google_index).with(vacancy)
-
-        fill_in "publishers_job_listing_job_title_form[job_title]", with: "Assistant Head Teacher"
-        click_on I18n.t("buttons.save_and_continue")
-
-        expect(publisher_vacancy_page).to be_displayed
-        expect(page).to have_content("Assistant Head Teacher")
-
-        visit job_path(vacancy.reload)
-        # ensures the vacancy slug is updated when the title is saved
-        expect(page.current_path).to eq("/jobs/assistant-head-teacher")
+      it "does not show a change link for live vacancies" do
+        expect(page).to have_css("#job_title")
+        expect(page).not_to have_css("#job_title a")
       end
     end
 
