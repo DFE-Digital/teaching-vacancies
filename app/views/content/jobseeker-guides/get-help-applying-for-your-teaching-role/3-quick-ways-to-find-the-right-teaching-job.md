@@ -21,9 +21,9 @@ Easily focus your search by distance, subject and what kind of job you’re look
 
 ## Set up a profile 
 
-You can share your information with local schools you're interested in teaching at.  
+You can share your information with local schools or colleges you're interested in teaching at.  
 
-Schools can then reach out to you if they think you’re a good fit for their role. 
+Schools and colleges can then reach out to you if they think you’re a good fit for their role. 
 
 ## Apply quickly for roles 
 
