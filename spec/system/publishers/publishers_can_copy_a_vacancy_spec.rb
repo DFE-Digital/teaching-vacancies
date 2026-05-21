@@ -224,9 +224,9 @@ RSpec.describe "Copying a vacancy" do
         click_on I18n.t("buttons.save_and_continue")
         fill_in_start_date_form_fields
         click_on I18n.t("buttons.save_and_continue")
-        fill_in_include_additional_documents_form_fields(false)
-        click_on I18n.t("buttons.save_and_continue")
         fill_in_important_dates_form_fields(publish_on: Date.current, expires_at: 30.days.from_now)
+        click_on I18n.t("buttons.save_and_continue")
+        fill_in_include_additional_documents_form_fields(false)
         click_on I18n.t("buttons.save_and_continue")
         fill_in_contact_details_form_fields(contact_email: publisher.email)
         click_on I18n.t("buttons.save_and_continue")
@@ -259,11 +259,11 @@ RSpec.describe "Copying a vacancy" do
       fill_in_start_date_form_fields
       click_on I18n.t("buttons.save_and_continue")
 
-      expect(page).to have_content("Do you want to upload any additional documents?")
-      fill_in_include_additional_documents_form_fields(false)
+      fill_in_important_dates_form_fields(publish_on: Date.current, expires_at: 30.days.from_now)
       click_on I18n.t("buttons.save_and_continue")
 
-      fill_in_important_dates_form_fields(publish_on: Date.current, expires_at: 30.days.from_now)
+      expect(page).to have_content("Do you want to upload any additional documents?")
+      fill_in_include_additional_documents_form_fields(false)
       click_on I18n.t("buttons.save_and_continue")
 
       fill_in_contact_details_form_fields(contact_email: publisher.email)

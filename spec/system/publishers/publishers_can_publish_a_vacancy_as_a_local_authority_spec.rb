@@ -101,9 +101,6 @@ RSpec.describe "Creating a vacancy" do
     )
     publisher_about_the_role_page.fill_in_and_submit_form(vacancy)
 
-    expect(publisher_include_additional_documents_page).to be_displayed
-    publisher_include_additional_documents_page.fill_in_and_submit_form(vacancy.include_additional_documents)
-
     expect(publisher_school_visits_page).to be_displayed
     publisher_school_visits_page.fill_in_and_submit_form(vacancy.school_visits)
 
@@ -124,6 +121,9 @@ RSpec.describe "Creating a vacancy" do
     expect(publisher_application_link_page.errors.map(&:text)).to contain_exactly(I18n.t("application_link_errors.application_link.blank"))
     expect(publisher_application_link_page).to be_displayed
     publisher_application_link_page.fill_in_and_submit_form(vacancy.application_link)
+
+    expect(publisher_include_additional_documents_page).to be_displayed
+    publisher_include_additional_documents_page.fill_in_and_submit_form(vacancy.include_additional_documents)
 
     expect(publisher_contact_details_page).to be_displayed
     non_publisher_email = Faker::Internet.email(domain: "contoso.com")
