@@ -3,11 +3,12 @@ order: 500
 title: How to request organisation access
 meta_description: To post jobs on Teaching Vacancies, you need access to the right organisation. Find out how to make a request and get approved for one or multiple schools.
 date_posted: 20/04/2022
+date_updated: 12/05/2026
 category_tags: how-to
 card-image: "/content-assets/get-help-hiring/how-to-setup-your-account/request-organisation-access.png"
 ---
 
-Teaching Vacancies uses the DfE Sign-in service to manage who is able to post vacancies for each school.
+Teaching Vacancies uses the DfE Sign-in service to manage who is able to post vacancies for each school or college.
 
 This allows organisation administrators to approve and manage users, granting them access to post and edit job adverts, and respond to candidate applications.
 
@@ -21,21 +22,21 @@ If you have access to an organisation but not Teaching Vacancies, you will need 
 
 ## Getting access to organisations
 
-### Managing vacancies for a single school
+### Managing vacancies for a single school or college
 
-If you’re not yet associated with the school you’d like to manage vacancies for, select ‘Request access to an organisation’ from your DfE Sign-in dashboard. Search for the school by name, URN, or UKPRN.
+If you’re not yet associated with the school or college you’d like to manage vacancies for, select ‘Request access to an organisation’ from your DfE Sign-in dashboard. Search for the school or college by name, URN, or UKPRN.
 
-Once you find the school you’re looking for, confirm your request, adding an optional message to the approvers.
+Once you find the school or college you’re looking for, confirm your request, adding an optional message to the approvers.
 
-You can see the status of your request from your [Organisations](https://services.signin.education.gov.uk/organisations) page. If you're waiting on approval and need to find out who is an approver for your school, [contact the DSI support team](https://help.signin.education.gov.uk/contact-us).
+You can see the status of your request from your [Organisations](https://services.signin.education.gov.uk/organisations) page. If you're waiting on approval and need to find out who is an approver for your school or college, [contact the DSI support team](https://help.signin.education.gov.uk/contact-us).
 
-### Managing vacancies for multiple schools
+### Managing vacancies for multiple schools or colleges
 
-Each school you have access to is managed through a separate dashboard on Teaching Vacancies.
+Each school or college you have access to is managed through a separate dashboard on Teaching Vacancies.
 
-Alternatively, you can request access to a multi-academy trust (MAT) or local authority (LA), allowing you to manage vacancies for multiple schools from a single dashboard.
+Alternatively, you can request access to a multi-academy trust (MAT) or local authority (LA), allowing you to manage vacancies for multiple schools and colleges from a single dashboard.
 
-They are listed as organisations within DfE Sign-in and can be found in exactly the same way as individual schools by searching for the name of the trust, URN and UKPRN. If you’re approved for access to a MAT or LA, you will be able to post and manage job roles on Teaching Vacancies for all schools associated with that organisation.
+They are listed as organisations within DfE Sign-in and can be found in exactly the same way as individual schools or colleges by searching for the name of the trust, URN and UKPRN. If you’re approved for access to a MAT or LA, you will be able to post and manage job roles on Teaching Vacancies for all schools associated with that organisation.
 
 Your request will be sent to the MAT or LA approver and you will receive an email confirmation once it has been granted. You can see the status of your request on your [Organisations](https://services.signin.education.gov.uk/organisations) page.
 
