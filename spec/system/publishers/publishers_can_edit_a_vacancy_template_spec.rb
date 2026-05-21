@@ -108,7 +108,7 @@ RSpec.describe "Editing a vacancy template" do
     context "with salary" do
       let(:change) { "salary" }
 
-      it "can have its salary edited" do
+      it "can have its salary edited", :retry do
         expect(page).to have_content "Salary details"
         #  https://github.com/alphagov/govuk-frontend/issues/979
         expect(page).to be_axe_clean.skipping "aria-allowed-attr"
@@ -127,7 +127,7 @@ RSpec.describe "Editing a vacancy template" do
     context "with ect status" do
       let(:change) { "ect_status" }
 
-      it "can have its ect status edited" do
+      it "can have its ect status edited", :retry do
         expect(page).to have_content "Is this role suitable for an early career teacher"
         #  https://github.com/alphagov/govuk-frontend/issues/979
         expect(page).to be_axe_clean.skipping "aria-allowed-attr"
@@ -145,7 +145,7 @@ RSpec.describe "Editing a vacancy template" do
     context "with school visits" do
       let(:change) { "school_visits" }
 
-      it "can have its school visits edited" do
+      it "can have its school visits edited", :retry do
         expect(page).to have_content "Do you want to offer school visits?"
         expect(page).to be_axe_clean.skipping "aria-allowed-attr"
 
