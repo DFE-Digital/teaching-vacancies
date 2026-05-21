@@ -310,7 +310,10 @@ VCR.configure do |config|
   config.hook_into :webmock
   config.configure_rspec_metadata!
   config.ignore_localhost = true
-  config.ignore_hosts IPSocket.getaddress(Socket.gethostname) if ENV.fetch("DEVCONTAINER", nil) == "true"
+  if ENV.fetch("DEVCONTAINER", nil) == "true"
+    config.ignore_hosts "selenium-chrome"
+    config.ignore_hosts IPSocket.getaddress(Socket.gethostname)
+  end
 
   # defaults to method and URI
   config.default_cassette_options = {
