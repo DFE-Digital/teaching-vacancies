@@ -80,18 +80,18 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
         stub_request(
           :get,
           "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv",
-        ).to_return(body: "URN,EstablishmentName," \
-        "County (name),LA (name),GOR (name),ReligiousCharacter (name)," \
-          "StatutoryHighAge,StatutoryLowAge,PhaseOfEducation (code)," \
-          "EstablishmentTypeGroup (name)," \
-                          "EstablishmentStatus (name)," \
-                          "TypeOfEstablishment (name)," \
-                          "TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street," \
+        ).to_return(body:
+                        "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
+                          "EstablishmentTypeGroup (name),TypeOfEstablishment (name)," \
+                          "ReligiousCharacter (name),EstablishmentStatus (name),County (name),LA (name)," \
+                          "StatutoryHighAge,StatutoryLowAge,GOR (name),PhaseOfEducation (code)," \
+                          "SchoolWebsite,Street," \
                           "Town,Postcode\n" \
-                          "100000,St John\x92s School," \
-                          "Hampshire,Southampton,South,None," \
-                        "11,7,0," \
-                          "Independent schools,Open,Academy converter,999,ZZZ,http://test.com,?,?,?")
+                          "100000,St John\x92s School,999," \
+                          "Independent schools,Other independent school," \
+                          "None,Open,Hampshire,," \
+                          "11,7,Region,0," \
+                          "http://test.com,?,?,?")
       end
 
       it "converts the file to UTF-8" do
@@ -106,18 +106,17 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
           :get,
           "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv",
         ).to_return(body:
-                        "URN,EstablishmentName," \
-                          "County (name),LA (name),GOR (name),ReligiousCharacter (name)," \
-                          "StatutoryHighAge,StatutoryLowAge,PhaseOfEducation (code)," \
-                          "EstablishmentTypeGroup (name)," \
-                          "EstablishmentStatus (name)," \
-                          "TypeOfEstablishment (name)," \
-                          "TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street," \
+                        "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
+                          "EstablishmentTypeGroup (name),TypeOfEstablishment (name)," \
+                          "ReligiousCharacter (name),EstablishmentStatus (name),County (name),LA (name)," \
+                          "StatutoryHighAge,StatutoryLowAge,GOR (name),PhaseOfEducation (code)," \
+                          "SchoolWebsite,Street," \
                           "Town,Postcode\n" \
-                          "100000,St John\x92s School," \
-                          "Hampshire,Southampton,South,None," \
-                            "11,7,0," \
-                          "Invalid school type,Open,Academy converter,999,ZZZ,http://test.com,?,?,?")
+                          "100000,St John\x92s School,999," \
+                          "Invalid school type,Other independent school," \
+                            "None,Open,Hampshire,," \
+                          "11,7,Region,0," \
+                          "http://test.com,?,?,?")
       end
 
       it "doesnt import" do
@@ -131,18 +130,17 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
           :get,
           "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv",
         ).to_return(body:
-                        "URN,EstablishmentName," \
-                          "County (name),LA (name),GOR (name),ReligiousCharacter (name)," \
-                          "StatutoryHighAge,StatutoryLowAge,PhaseOfEducation (code)," \
-                          "EstablishmentTypeGroup (name)," \
-                          "EstablishmentStatus (name)," \
-                          "TypeOfEstablishment (name)," \
-                          "TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street," \
+                        "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
+                          "EstablishmentTypeGroup (name),TypeOfEstablishment (name)," \
+                          "ReligiousCharacter (name),EstablishmentStatus (name),County (name),LA (name)," \
+                          "StatutoryHighAge,StatutoryLowAge,GOR (name),PhaseOfEducation (code)," \
+                          "SchoolWebsite,Street," \
                           "Town,Postcode\n" \
-                          "100000,St John\x92s School," \
-                          "Hampshire,Southampton,South,None," \
-                            "11,7,0," \
-                          "Independent schools,Open,Academy converter,999,ZZZ,test.com,?,?,?")
+                          "100000,St John\x92s School,999," \
+                          "Independent schools,Other independent school," \
+                            "None,Open,Hampshire,," \
+                          "11,7,Region,0," \
+                          "test.com,?,?,?")
         subject.call
         expect(example_school.url).to eq("http://test.com")
       end
@@ -152,18 +150,17 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
           :get,
           "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv",
         ).to_return(body:
-                        "URN,EstablishmentName," \
-                          "County (name),LA (name),GOR (name),ReligiousCharacter (name)," \
-                          "StatutoryHighAge,StatutoryLowAge,PhaseOfEducation (code)," \
-                          "EstablishmentTypeGroup (name)," \
-                          "EstablishmentStatus (name)," \
-                          "TypeOfEstablishment (name)," \
-                          "TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street," \
+                        "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
+                          "EstablishmentTypeGroup (name),TypeOfEstablishment (name)," \
+                          "ReligiousCharacter (name),EstablishmentStatus (name),County (name),LA (name)," \
+                          "StatutoryHighAge,StatutoryLowAge,GOR (name),PhaseOfEducation (code)," \
+                          "SchoolWebsite,Street," \
                           "Town,Postcode\n" \
-                          "100000,St John\x92s School," \
-                          "Hampshire,Southampton,South,None," \
-                            "11,7,0," \
-                          "Independent schools,Open,Academy converter,999,ZZZ,,?,?,?")
+                          "100000,St John\x92s School,999," \
+                          "Independent schools,Other independent school," \
+                            "None,Open,Hampshire,," \
+                          "11,7,Region,0," \
+                          ",?,?,?")
         subject.call
         expect(example_school.url).to be_nil
       end
