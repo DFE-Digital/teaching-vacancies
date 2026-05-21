@@ -286,6 +286,7 @@ RSpec.configure do |config|
   config.include ViewComponent::TestHelpers, type: :component
   config.include WithEnv
   config.include PageObjects::Pages::Application
+  config.include SplitHelper
 
   # show retry status in spec process
   config.verbose_retry = true

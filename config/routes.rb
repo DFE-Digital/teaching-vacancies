@@ -7,9 +7,11 @@ Rails.application.routes.draw do
 
   if Rails.env.development?
     mount Sidekiq::Web, at: "/sidekiq"
+    mount Split::Dashboard, at: "split"
   else
     authenticate :support_user do
       mount Sidekiq::Web, at: "/sidekiq"
+      mount Split::Dashboard, at: "split"
     end
   end
 
@@ -120,7 +122,12 @@ Rails.application.routes.draw do
     end
 
     scope as: :job, path: ":job_id" do
-      resource :job_application, only: %i[new create]
+      resource :job_application, only: %i[new create] do
+        collection do
+          get :trn_interstitial
+          post :send_trn
+        end
+      end
       resource :uploaded_job_application, only: %i[create], controller: "uploaded_job_applications"
     end
 
