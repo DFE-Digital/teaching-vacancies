@@ -24,7 +24,8 @@
 
   - if @organisation.photo.attached?
     h2.govuk-heading-m = t(".current_photo_title")
-    = image_tag(@organisation.photo, alt: t("publishers.organisations.organisation.photo.alt_text", organisation_name: @organisation.name), class: "contained-image govuk-!-display-block govuk-!-margin-bottom-0")
+    - if malware_scan_clean?(@organisation.photo)
+      = image_tag(@organisation.photo, alt: t("publishers.organisations.organisation.photo.alt_text", organisation_name: @organisation.name), class: "contained-image govuk-!-display-block govuk-!-margin-bottom-0")
     p.govuk-body-s class="govuk-!-margin-bottom-1"
       = @organisation.photo.filename
     p.govuk-body class="govuk-!-margin-bottom-1"
@@ -32,7 +33,7 @@
 
   = f.govuk_file_field :photo,
     javascript: true,
-    label: { text: (@organisation.logo.attached? ? t(".change_your_photo") : t("publishers.organisations.upload_a_file")), size: "m", class: "govuk-!-padding-top-2" },
+    label: { text: (@organisation.photo.attached? ? t(".change_your_photo") : t("publishers.organisations.upload_a_file")), size: "m", class: "govuk-!-padding-top-2" },
     enctype: "multipart/form-data"
 
   = f.govuk_submit t("buttons.profile_update.photo")

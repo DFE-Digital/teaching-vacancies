@@ -35,4 +35,34 @@ RSpec.describe ApplicationHelper do
       end
     end
   end
+
+  describe "#malware_scan_clean?" do
+    let(:organisation) { create(:school) }
+
+    before do
+      organisation.logo.attach(
+        io: Rails.root.join("spec/fixtures/files/blank_image.png").open,
+        filename: "logo.png",
+        content_type: "image/png",
+      )
+    end
+
+    it "returns true when the attachment is clean" do
+      organisation.logo.blob.malware_scan_clean!
+
+      expect(helper.malware_scan_clean?(organisation.logo)).to be true
+    end
+
+    it "returns false when the attachment is pending" do
+      organisation.logo.blob.malware_scan_pending!
+
+      expect(helper.malware_scan_clean?(organisation.logo)).to be false
+    end
+
+    it "returns false when there is no attachment" do
+      organisation.logo.purge
+
+      expect(helper.malware_scan_clean?(organisation.logo)).to be false
+    end
+  end
 end

@@ -82,7 +82,8 @@ module OrganisationsHelper
   end
 
   def required_profile_image(image:, missing_prompt:, alt_text:)
-    return image_tag(image, alt: alt_text, class: "contained-image") if image.present?
+    return image_tag(image, alt: alt_text, class: "contained-image") if malware_scan_clean?(image)
+    return image.filename.to_s if image.attached?
 
     missing_profile_information_notification(missing_prompt)
   end

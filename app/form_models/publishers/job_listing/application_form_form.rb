@@ -3,7 +3,7 @@ class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::Vaca
   # Files awaiting an antivirus scan are allowed to progress through the wizard steps so publishers can continue building their vacancy.
   # Pending files are blocked at publish time in the publish controller.
   validate :application_form_scan_safe
-  validates :application_form, form_file: Vacancy::DOCUMENT_VALIDATION_OPTIONS.merge(skip_google_drive_virus_check: true)
+  validates :application_form, form_file: Vacancy::DOCUMENT_VALIDATION_OPTIONS
 
   attr_accessor :application_form
 

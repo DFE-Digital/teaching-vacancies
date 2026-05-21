@@ -6,7 +6,7 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     .header-with-logo class="govuk-!-margin-bottom-7"
-      - if @organisation.logo.attached?
+      - if malware_scan_clean?(@organisation.logo)
         .header-with-logo-logo
           = image_tag(@organisation.logo, alt: t("publishers.organisations.organisation.logo.alt_text", organisation_name: @organisation.name))
       .header-with-logo-title

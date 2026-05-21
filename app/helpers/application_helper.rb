@@ -44,4 +44,10 @@ module ApplicationHelper
   def kcsie_link
     "https://www.gov.uk/government/publications/keeping-children-safe-in-education--2"
   end
+
+  def malware_scan_clean?(attachment)
+    return false unless attachment.attached?
+
+    attachment.blob.malware_scan_clean?
+  end
 end
