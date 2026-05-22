@@ -42,10 +42,6 @@
     name: postcode
     value_before_type_cast: SS14 1UE
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: locality
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: address3
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: religious_character
     value_before_type_cast: 'None'
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -149,11 +145,6 @@
     name: postcode
     value_before_type_cast: SS13 3JQ
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: locality
-    value_before_type_cast: Pitsea
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: address3
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: religious_character
     value_before_type_cast: 'None'
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -255,11 +246,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: postcode
     value_before_type_cast: SS16 6AZ
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: locality
-    value_before_type_cast: Langdon Hills
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: address3
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: religious_character
     value_before_type_cast: 'None'
