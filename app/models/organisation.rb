@@ -26,6 +26,8 @@ class Organisation < ApplicationRecord
     "Higher education institutions",
     "Welsh establishment",
   ].freeze
+  CLOSED_ESTABLISHMENT_STATUSES = %w[Closed].freeze
+  OPEN_ESTABLISHMENT_STATUSES = ["Open", "Open, but proposed to close", "Proposed to open"].freeze
 
   friendly_id :slug_candidates, use: %i[slugged history]
 
