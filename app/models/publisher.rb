@@ -14,7 +14,7 @@ class Publisher < ApplicationRecord
 
   has_encrypted :family_name, :given_name
 
-  # don't use strict MX validation for publisher email - they come from DSILogin so can't really be fixed
+  # don't use strict MX validation for publisher email - they come from DSI Login so can't really be fixed
   validates :email, "valid_email_2/email": true, if: -> { email_changed? } # Allows data created prior to validation to still be valid
 
   devise :timeoutable
