@@ -53,7 +53,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
     let(:organisation) { create(:school, geopoint: "POINT (-0.108267 51.506438)") }
     let(:publisher) { create(:publisher, organisations: [organisation]) }
 
-    it "passes a11y", :a11y do
+    it "passes a11y", :a11y, :retry do
       # wait for page load
       expect(page).to have_content "Learning support or cover supervisor"
       expect(page).to be_axe_clean

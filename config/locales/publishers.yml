@@ -481,8 +481,8 @@ en:
             phase: The job listing will say it’s a %{phase} role.
         key_stages:
           step_title: Key stage
-        school_visits:
-          step_title: School visits
+#        school_visits:
+#          step_title: School visits
         start_date:
           step_title: Job start date
         subjects:
@@ -689,6 +689,7 @@ en:
         application_form: Receiving applications
         religious_information: Applicants religious information
         school_visits: Do you want to offer school visits?
+        college_visits: Do you want to offer college visits?
         contact_details: Contact details
         confirm_contact_details: Check this email address
         about_the_role: About the role

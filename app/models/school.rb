@@ -123,6 +123,10 @@ class School < Organisation
     end
   end
 
+  def college?
+    school_type == COLLEGE_SCHOOL_TYPE && detailed_school_type == FE_DETAILED_SCHOOL_TYPE
+  end
+
   def faith_school?
     NON_FAITH_RELIGIOUS_CHARACTER_TYPES.exclude? religious_character
   end

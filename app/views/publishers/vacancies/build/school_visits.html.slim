@@ -1,9 +1,11 @@
 - content_for :page_title_prefix, page_title_prefix(step_process, form)
 
-= form_for form, url: wizard_path(current_step), method: :patch do |f|
+= form_for form, url: wizard_path(step_process.current_step), method: :patch do |f|
   = f.govuk_error_summary
 
-  = f.govuk_radio_buttons_fieldset :school_visits, legend: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" } do
+  - heading_text = current_organisation.college? ? vacancy_form_page_heading(vacancy, step_process, back_path: back_path, heading: t("publishers.vacancies.steps.college_visits")) : vacancy_form_page_heading(vacancy, step_process, back_path: back_path)
+
+  = f.govuk_radio_buttons_fieldset :school_visits, legend: { text: heading_text, tag: "h1", size: "l" } do
     = f.govuk_radio_button :school_visits, "true", link_errors: true
     = f.govuk_radio_button :school_visits, "false"
 
