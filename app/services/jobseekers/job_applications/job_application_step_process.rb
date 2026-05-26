@@ -43,11 +43,6 @@ class Jobseekers::JobApplications::JobApplicationStepProcess
     steps[steps.index(step) + 1]
   end
 
-  def last_of_group?(step)
-    group = @step_groups.values.detect { |g| g.include?(step) }
-    step == group.last
-  end
-
   def form_class_for(step)
     "jobseekers/job_application/#{step}_form".camelize.constantize
   end
