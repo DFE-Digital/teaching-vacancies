@@ -386,6 +386,18 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
       end
     end
 
+    describe "when external reference is not provided" do
+      let(:response_body) do
+        hash = JSON.parse(super())
+        hash["result"].first.delete("reference")
+        hash.to_json
+      end
+
+      it "sets it as nil" do
+        expect(vacancy.external_reference).to eq nil
+      end
+    end
+
     describe "vacancy organisation parsing" do
       let(:trust_uid) { school_group.uid }
       let(:school_urns) { [school1.urn] }

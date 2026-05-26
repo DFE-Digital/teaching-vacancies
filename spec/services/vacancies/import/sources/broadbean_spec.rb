@@ -312,7 +312,7 @@ RSpec.describe Vacancies::Import::Sources::Broadbean do
       end
 
       context "when the source external reference has leading/trailing whitespace" do
-        let(:response_body) { super().gsub("0044", " 0044 ") }
+        let(:response_body) { super().gsub("<reference>0044</reference>", "<reference> 0044 </reference>") }
 
         it "still matches the existing vacancy and updates it" do
           expect(vacancy.id).to eq(existing_vacancy.id)
@@ -387,6 +387,14 @@ RSpec.describe Vacancies::Import::Sources::Broadbean do
 
       it "defaults visa_sponsorship_available to false" do
         expect(vacancy.visa_sponsorship_available).to eq false
+      end
+    end
+
+    context "when external reference is not provided" do
+      let(:response_body) { super().gsub("<reference>0044</reference>", "") }
+
+      it "sets it as nil" do
+        expect(vacancy.external_reference).to eq nil
       end
     end
 

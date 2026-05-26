@@ -250,7 +250,7 @@ RSpec.describe Vacancies::Import::Sources::Ventrus do
       end
 
       context "when the source external reference has leading/trailing whitespace" do
-        let(:response_body) { super().gsub("915213", " 915213 ") }
+        let(:response_body) { super().gsub("<VacancyID>915213</VacancyID>", "<VacancyID> 915213 </VacancyID>") }
 
         it "still matches the existing vacancy and updates it" do
           expect(vacancy.id).to eq(existing_vacancy.id)
@@ -355,6 +355,14 @@ RSpec.describe Vacancies::Import::Sources::Ventrus do
 
       it "defaults visa_sponsorship_available to false" do
         expect(vacancy.visa_sponsorship_available).to eq false
+      end
+    end
+
+    context "when external reference is not provided" do
+      let(:response_body) { super().gsub("<VacancyID>915213</VacancyID>", "") }
+
+      it "sets it as nil" do
+        expect(vacancy.external_reference).to eq nil
       end
     end
 
