@@ -104,11 +104,6 @@ RSpec.describe "Creating a vacancy" do
         )
         publisher_about_the_role_page.fill_in_and_submit_form(vacancy)
 
-        expect(publisher_include_additional_documents_page).to be_displayed
-        submit_empty_form
-        expect(publisher_include_additional_documents_page.errors.map(&:text)).to contain_exactly(I18n.t("include_additional_documents_errors.include_additional_documents.inclusion"))
-        publisher_include_additional_documents_page.fill_in_and_submit_form(vacancy.include_additional_documents)
-
         expect(publisher_school_visits_page).to be_displayed
         submit_empty_form
         expect(publisher_school_visits_page).to be_displayed
@@ -155,6 +150,11 @@ RSpec.describe "Creating a vacancy" do
         expect(publisher_anonymise_applications_page).to be_displayed
         publisher_anonymise_applications_page.anonymous_option.click
         click_on "Save and continue"
+
+        expect(publisher_include_additional_documents_page).to be_displayed
+        submit_empty_form
+        expect(publisher_include_additional_documents_page.errors.map(&:text)).to contain_exactly(I18n.t("include_additional_documents_errors.include_additional_documents.inclusion"))
+        publisher_include_additional_documents_page.fill_in_and_submit_form(vacancy.include_additional_documents)
 
         expect(publisher_contact_details_page).to be_displayed
         submit_empty_form
@@ -203,7 +203,6 @@ RSpec.describe "Creating a vacancy" do
           publisher_start_date_page.fill_in_and_submit_form(vacancy.starts_on)
           publisher_pay_package_page.fill_in_and_submit_form(vacancy)
           publisher_about_the_role_page.fill_in_and_submit_form(vacancy)
-          publisher_include_additional_documents_page.fill_in_and_submit_form(vacancy.include_additional_documents)
           publisher_school_visits_page.fill_in_and_submit_form(vacancy.school_visits)
           publisher_visa_sponsorship_page.fill_in_and_submit_form(vacancy.visa_sponsorship_available)
           publisher_important_dates_page.fill_in_and_submit_form(publish_on: vacancy.publish_on, expires_at: vacancy.expires_at)
@@ -243,9 +242,6 @@ RSpec.describe "Creating a vacancy" do
         expect(publisher_about_the_role_page).to be_displayed
         publisher_about_the_role_page.fill_in_and_submit_form(vacancy)
 
-        expect(publisher_include_additional_documents_page).to be_displayed
-        publisher_include_additional_documents_page.fill_in_and_submit_form(vacancy.include_additional_documents)
-
         expect(publisher_school_visits_page).to be_displayed
         publisher_school_visits_page.fill_in_and_submit_form(vacancy.school_visits)
 
@@ -262,6 +258,9 @@ RSpec.describe "Creating a vacancy" do
         expect(publisher_anonymise_applications_page).to be_displayed
         publisher_anonymise_applications_page.anonymous_option.click
         click_on "Save and continue"
+
+        expect(publisher_include_additional_documents_page).to be_displayed
+        publisher_include_additional_documents_page.fill_in_and_submit_form(vacancy.include_additional_documents)
 
         expect(publisher_contact_details_page).to be_displayed
         non_publisher_email = Faker::Internet.email(domain: "contoso.com")
@@ -429,6 +428,9 @@ RSpec.describe "Creating a vacancy" do
     publisher_anonymise_applications_page.standard_option.click
     click_on "Save and continue"
 
+    fill_in_include_additional_documents_form_fields(vacancy.include_additional_documents)
+    click_on I18n.t("buttons.save_and_continue")
+
     fill_in_contact_details_form_fields(contact_email: vacancy.contact_email, contact_number: vacancy.contact_number)
     click_on I18n.t("buttons.save_and_continue")
     publisher_confirm_contact_details_page.fill_in_and_submit_form
@@ -477,10 +479,6 @@ RSpec.describe "Creating a vacancy" do
 
     expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :about_the_role), ignore_query: true)
     fill_in_about_the_role_form_fields(vacancy)
-    click_on I18n.t("buttons.save_and_continue")
-
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :include_additional_documents), ignore_query: true)
-    fill_in_include_additional_documents_form_fields(vacancy.include_additional_documents)
     click_on I18n.t("buttons.save_and_continue")
 
     expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :school_visits), ignore_query: true)
