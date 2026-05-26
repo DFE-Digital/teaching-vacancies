@@ -157,6 +157,7 @@ class Jobseekers::SearchForm
     @organisation_type_options = [
       [I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.academy"), "includes free schools"],
       [I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.local_authority"), nil],
+      [I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.colleges"), nil],
     ]
   end
 

@@ -163,6 +163,16 @@ RSpec.describe VacancyFilterQuery do
         end
       end
 
+      context "when organisation_types == ['Colleges']" do
+        let(:filters) { { organisation_types: [School::COLLEGE_SCHOOL_TYPE] } }
+        let(:college) { create(:school, name: "College", school_type: School::COLLEGE_SCHOOL_TYPE) }
+        let!(:college_vacancy) { create(:vacancy, :apply_via_website, job_title: "College vacancy", organisations: [college]) }
+
+        it "will return vacancies associated with colleges" do
+          expect(subject).to contain_exactly(college_vacancy)
+        end
+      end
+
       context "when organisation_types is empty" do
         let(:filters) { {} }
 

@@ -109,6 +109,14 @@ RSpec.describe Jobseekers::SearchForm, type: :model do
     end
   end
 
+  describe "#organisation_type_options" do
+    let(:params) { {} }
+
+    it "includes colleges" do
+      expect(subject.organisation_type_options).to include([School::COLLEGE_SCHOOL_TYPE, nil])
+    end
+  end
+
   describe "#set_filters_from_keyword" do
     let(:params) { { keyword: keyword, previous_keyword: previous_keyword, landing_page: landing_page, phases: phases } }
 
