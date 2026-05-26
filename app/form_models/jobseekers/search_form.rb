@@ -119,7 +119,7 @@ class Jobseekers::SearchForm
     end
     set_organisation_type_options
     @school_type_options = %w[faith_school special_school].map { |school_type| [school_type, I18n.t("organisations.filters.#{school_type}")] }
-    @subject_options = SUBJECT_OPTIONS
+    @subject_options = VACANCY_SEARCH_SUBJECT_OPTIONS
   end
 
   def set_filter_variables(params)

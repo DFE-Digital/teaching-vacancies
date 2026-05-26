@@ -95,6 +95,20 @@ RSpec.describe Jobseekers::SearchForm, type: :model do
     end
   end
 
+  describe "#subject_options" do
+    let(:params) { {} }
+
+    it "includes further education subjects" do
+      expect(subject.subject_options).to include(["Animal care", ""])
+    end
+
+    it "does not include duplicate subject labels" do
+      subject_names = subject.subject_options.map(&:first)
+
+      expect(subject_names.map(&:downcase)).to eq(subject_names.map(&:downcase).uniq)
+    end
+  end
+
   describe "#set_filters_from_keyword" do
     let(:params) { { keyword: keyword, previous_keyword: previous_keyword, landing_page: landing_page, phases: phases } }
 
