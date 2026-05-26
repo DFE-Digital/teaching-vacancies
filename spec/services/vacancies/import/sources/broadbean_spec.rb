@@ -310,6 +310,18 @@ RSpec.describe Vacancies::Import::Sources::Broadbean do
 
         expect(vacancy.job_title).to eq("Class Teacher")
       end
+
+      context "when the source external reference has leading/trailing whitespace" do
+        let(:response_body) { super().gsub("0044", " 0044 ") }
+
+        it "still matches the existing vacancy and updates it" do
+          expect(vacancy.id).to eq(existing_vacancy.id)
+          expect(vacancy).to be_persisted
+          expect(vacancy).to be_changed
+
+          expect(vacancy.job_title).to eq("Class Teacher")
+        end
+      end
     end
 
     context "when the vacancy is associated with multiple schools from a trust" do

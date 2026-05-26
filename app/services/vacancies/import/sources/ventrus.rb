@@ -30,7 +30,7 @@ class Vacancies::Import::Sources::Ventrus
       # An external vacancy is by definition always published
       v = PublishedVacancy.find_or_initialize_by(
         external_source: SOURCE_NAME,
-        external_reference: item["VacancyID"],
+        external_reference: item["VacancyID"]&.strip,
       )
 
       # Consider publish_on date to be the first time we saw this vacancy come through
