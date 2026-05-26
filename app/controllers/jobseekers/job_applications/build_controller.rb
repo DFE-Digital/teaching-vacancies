@@ -17,10 +17,8 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
 
       if redirect_to_review?
         redirect_to jobseekers_job_application_review_path(job_application), success: t("messages.jobseekers.job_applications.saved")
-      elsif steps_complete?
-        redirect_to jobseekers_job_application_apply_path job_application
       else
-        redirect_to jobseekers_job_application_build_path(job_application, step_process.next_step(step))
+        redirect_to jobseekers_job_application_apply_path job_application
       end
     else
       render step
@@ -28,10 +26,6 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   private
-
-  def steps_complete?
-    step_process.last_of_group?(step)
-  end
 
   def back_path
     @back_path ||= if redirect_to_review?
