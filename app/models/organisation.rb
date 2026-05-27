@@ -6,6 +6,8 @@ class Organisation < ApplicationRecord
   include PgSearch::Model
   extend FriendlyId
 
+  include Discard::Model
+
   has_rich_text :description
 
   SPECIAL_SCHOOL_TYPES = ["Community special school", "Foundation special school", "Non-maintained special school", "Academy special converter", "Academy special sponsor led", "Free schools special"].freeze
@@ -24,6 +26,8 @@ class Organisation < ApplicationRecord
     "Higher education institutions",
     "Welsh establishment",
   ].freeze
+  CLOSED_ESTABLISHMENT_STATUSES = %w[Closed].freeze
+  OPEN_ESTABLISHMENT_STATUSES = ["Open", "Open, but proposed to close", "Proposed to open"].freeze
 
   friendly_id :slug_candidates, use: %i[slugged history]
 
@@ -44,7 +48,7 @@ class Organisation < ApplicationRecord
 
   has_many :vacancy_templates, dependent: :destroy
 
-  scope :not_closed, -> { where.not(establishment_status: "Closed") }
+  scope :not_closed, -> { where.not(establishment_status: CLOSED_ESTABLISHMENT_STATUSES) }
   scope :schools, -> { where(type: "School") }
   scope :school_groups, -> { where(type: "SchoolGroup") }
   scope :trusts, -> { school_groups.where.not(uid: nil) }

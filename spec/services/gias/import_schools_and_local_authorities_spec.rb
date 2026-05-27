@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
-  subject { described_class.new }
+  subject { described_class }
 
   describe "#call" do
     let(:csv) { File.read(test_file_path) }
@@ -83,14 +83,15 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
         ).to_return(body:
                         "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
                           "EstablishmentTypeGroup (name),TypeOfEstablishment (name)," \
-                          "ReligiousCharacter (name),EstablishmentStatus (name)," \
-                          "NumberOfPupils," \
-                          "SchoolCapacity," \
-                          "TrustSchoolFlag (code)," \
-                          "Trusts (code)," \
-                          "TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street," \
+                          "ReligiousCharacter (name),EstablishmentStatus (name),County (name),LA (name)," \
+                          "StatutoryHighAge,StatutoryLowAge,GOR (name),PhaseOfEducation (code)," \
+                          "SchoolWebsite,Street," \
                           "Town,Postcode\n" \
-                          "100000,St John\x92s School,999,Independent schools,Other independent school,None,Open,42,56,5,6756,999,ZZZ,http://test.com,?,?,?")
+                          "100000,St John\x92s School,999," \
+                          "Independent schools,Other independent school," \
+                          "None,Open,Hampshire,," \
+                          "11,7,Region,0," \
+                          "http://test.com,?,?,?")
       end
 
       it "converts the file to UTF-8" do
@@ -107,14 +108,15 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
         ).to_return(body:
                         "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
                           "EstablishmentTypeGroup (name),TypeOfEstablishment (name)," \
-                          "ReligiousCharacter (name),EstablishmentStatus (name)," \
-                          "NumberOfPupils," \
-                          "SchoolCapacity," \
-                          "TrustSchoolFlag (code)," \
-                            "Trusts (code)," \
-                          "TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street," \
+                          "ReligiousCharacter (name),EstablishmentStatus (name),County (name),LA (name)," \
+                          "StatutoryHighAge,StatutoryLowAge,GOR (name),PhaseOfEducation (code)," \
+                          "SchoolWebsite,Street," \
                           "Town,Postcode\n" \
-                          "100000,St John\x92s School,999,Invalid school type,Other independent school,None,Open,42,56,5,7656,999,ZZZ,http://test.com,?,?,?")
+                          "100000,St John\x92s School,999," \
+                          "Invalid school type,Other independent school," \
+                            "None,Open,Hampshire,," \
+                          "11,7,Region,0," \
+                          "http://test.com,?,?,?")
       end
 
       it "doesnt import" do
@@ -130,14 +132,15 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
         ).to_return(body:
                         "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
                           "EstablishmentTypeGroup (name),TypeOfEstablishment (name)," \
-                          "ReligiousCharacter (name),EstablishmentStatus (name)," \
-                          "NumberOfPupils," \
-                          "SchoolCapacity," \
-                          "TrustSchoolFlag (code)," \
-                            "Trusts (code)," \
-                          "TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street," \
+                          "ReligiousCharacter (name),EstablishmentStatus (name),County (name),LA (name)," \
+                          "StatutoryHighAge,StatutoryLowAge,GOR (name),PhaseOfEducation (code)," \
+                          "SchoolWebsite,Street," \
                           "Town,Postcode\n" \
-                          "100000,St John\x92s School,999,Independent schools,Other independent school,None,Open,42,56,5,75665,999,ZZZ,test.com,?,?,?")
+                          "100000,St John\x92s School,999," \
+                          "Independent schools,Other independent school," \
+                            "None,Open,Hampshire,," \
+                          "11,7,Region,0," \
+                          "test.com,?,?,?")
         subject.call
         expect(example_school.url).to eq("http://test.com")
       end
@@ -149,14 +152,15 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
         ).to_return(body:
                         "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
                           "EstablishmentTypeGroup (name),TypeOfEstablishment (name)," \
-                          "ReligiousCharacter (name),EstablishmentStatus (name)," \
-                          "NumberOfPupils," \
-                          "SchoolCapacity," \
-                          "TrustSchoolFlag (code)," \
-                            "Trusts (code)," \
-                          "TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street," \
+                          "ReligiousCharacter (name),EstablishmentStatus (name),County (name),LA (name)," \
+                          "StatutoryHighAge,StatutoryLowAge,GOR (name),PhaseOfEducation (code)," \
+                          "SchoolWebsite,Street," \
                           "Town,Postcode\n" \
-                          "100000,St John\x92s School,999,Independent schools,Other independent school,None,Open,42,56,5,7675,999,ZZZ,,?,?,?")
+                          "100000,St John\x92s School,999," \
+                          "Independent schools,Other independent school," \
+                            "None,Open,Hampshire,," \
+                          "11,7,Region,0," \
+                          ",?,?,?")
         subject.call
         expect(example_school.url).to be_nil
       end
