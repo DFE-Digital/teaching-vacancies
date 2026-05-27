@@ -27,6 +27,7 @@
             - row.with_key text: t("publishers.jobseeker_profiles.preferred_working_patterns", count: preferences.working_patterns.count), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
             - row.with_value text: preferences.all_working_patterns, classes: "govuk-body-s govuk-!-padding-bottom-0"
 
-          - summary_list.with_row do |row|
-            - row.with_key text: t("publishers.jobseeker_profiles.preferred_subjects", count: preferences.subjects.count), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
-            - row.with_value text: preferences.all_subjects, classes: "govuk-body-s govuk-!-padding-bottom-0"
+          - if preferences.subjects.present?
+            - summary_list.with_row do |row|
+              - row.with_key text: t("publishers.jobseeker_profiles.preferred_subjects", count: preferences.subjects.count), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
+              - row.with_value text: humanize_subjects(preferences.subjects), classes: "govuk-body-s govuk-!-padding-bottom-0"
