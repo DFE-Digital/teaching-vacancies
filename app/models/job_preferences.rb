@@ -15,10 +15,6 @@ class JobPreferences < ApplicationRecord
     working_patterns.map(&:humanize).join(", ")
   end
 
-  def all_subjects
-    subjects.map(&:humanize).join(", ")
-  end
-
   def complete?
     steps = completed_steps.symbolize_keys
     %i[roles phases key_stages subjects working_patterns locations].all? { |step| steps.include?(step) && steps[step].to_sym.in?(%i[completed skipped]) }
