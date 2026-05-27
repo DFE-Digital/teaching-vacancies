@@ -84,6 +84,7 @@ tech lead to do that and also [complete the other onboarding steps](documentatio
 * [Our Front-end](/documentation/service/technical/front-end.md)
 * [Landing Pages](/documentation/service/technical/landing-pages.md)
 * [Rails View components](/documentation/service/technical/components.md)
+* [File uploads virus scan: Microsoft Defender for Cloud](/documentation/service/technical/file-uploads-antivirus-scan.md)
 * [Bot mitigation](/documentation/service/technical/bot-mitigation.md)
 * [Tracking vacancy views](documentation/service/technical/tracking-vacancy-views.md)
 
