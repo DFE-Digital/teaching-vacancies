@@ -1,7 +1,7 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
-  before_save :strip_attributes
+  before_validation :strip_attributes
 
   private
 
