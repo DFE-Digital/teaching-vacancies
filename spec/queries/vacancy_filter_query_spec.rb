@@ -131,6 +131,7 @@ RSpec.describe VacancyFilterQuery do
 
       it "returns vacancies with that further education subject" do
         expect(subject).to contain_exactly(animal_care_vacancy)
+        expect(subject).not_to include(functional_skills_vacancy)
       end
     end
 
