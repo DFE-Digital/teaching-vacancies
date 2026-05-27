@@ -29,8 +29,6 @@ class School < Organisation
                         COLLEGE_SCHOOL_TYPE,
                         ONLINE_SCHOOL_TYPE].freeze
   EXCLUDED_SCHOOL_TYPES = [UNIVERSITY_SCHOOL_TYPE, WELSH_SCHOOL_TYPE, ONLINE_SCHOOL_TYPE].freeze
-  CLOSED_ESTABLISHMENT_STATUSES = ["Closed", "Proposed to open"].freeze
-  OPEN_ESTABLISHMENT_STATUSES = ["Open", "Open, but proposed to close"].freeze
 
   # This is direct from GIAS
   validates :school_type, inclusion: { in: VALID_SCHOOL_TYPES, allow_nil: false }
