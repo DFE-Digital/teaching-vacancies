@@ -360,6 +360,18 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
 
         expect(vacancy.job_title).to eq("Class Teacher")
       end
+
+      context "when the source external reference has leading/trailing whitespace" do
+        let(:response_body) { super().gsub("0044", " 0044 ") }
+
+        it "still matches the existing vacancy and updates it" do
+          expect(vacancy.id).to eq(existing_vacancy.id)
+          expect(vacancy).to be_persisted
+          expect(vacancy).to be_changed
+
+          expect(vacancy.job_title).to eq("Class Teacher")
+        end
+      end
     end
 
     context "when visa_sponsorship_available is not provided" do
@@ -371,6 +383,18 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
 
       it "sets visa_sponsorship_available to false" do
         expect(vacancy.visa_sponsorship_available).to eq false
+      end
+    end
+
+    describe "when external reference is not provided" do
+      let(:response_body) do
+        hash = JSON.parse(super())
+        hash["result"].first.delete("reference")
+        hash.to_json
+      end
+
+      it "sets it as nil" do
+        expect(vacancy.external_reference).to eq nil
       end
     end
 
