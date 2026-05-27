@@ -145,6 +145,18 @@ RSpec.describe Vacancy do
     end
   end
 
+  context "with a group and a school" do
+    let(:sg_one) { create(:school_group) }
+    let(:sg_two) { create(:school_group) }
+    let(:school) { create(:school, school_groups: [sg_one]) }
+    let(:school2) { create(:school, school_groups: [sg_two]) }
+    let(:school_group) { create(:school_group) }
+
+    it "is searchable" do
+      expect { create(:vacancy, organisations: [school, school_group, school2]) }.to change(described_class, :count).by(1)
+    end
+  end
+
   describe "friendly_id generated slug" do
     describe "#slug" do
       let(:green_school) { create(:school, name: "Green school", town: "Greenway", county: "Mars") }
