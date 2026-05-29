@@ -41,11 +41,16 @@ columns 3
   attach(("Attach\nFile")) space:2
   block-beta
     columns 1
-    blob>"ActiveStorage Blob\n(Extended)"]
-    space:1
-    scanresult["Scan result\nrecording"]
+    blob>"ActiveStorage Blob"]
+    block-beta
+      columns 1
+      concern>"MalwareScannable concern"]
+      scanfetching["Scan result\nfetching"]
+      space:1
+      scanresult["Scan result\nrecording"]
+    end
   end
-  service>"FetchMalwareScanResult"]
+  space:1
   block-beta
     columns 1
     job>"FetchMalwareScanResultJob"]
@@ -58,11 +63,10 @@ columns 3
   end
 
   attach -- "creates" -->blob
-  blob -- "contains" -->scanresult
-  blob -- "calls\non creation" -->job
-  service -- "sets result" --> scanresult
-  job -- "calls &\nresponds" <--> service
-  service -- "retrieves data" <-->blob
+  blob -- "includes" -->concern
+  concern -- "enqueues on creation" -->job
+  scanfetching -- "sets result" --> scanresult
+  job -- "triggers & retrieves" --> scanfetching
   job -- "handles" --> handle
 ```
 
