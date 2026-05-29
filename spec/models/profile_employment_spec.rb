@@ -41,5 +41,4 @@ RSpec.describe ProfileEmployment do
       ended_on: Date.new(2020, 7, 30),
       reason_for_leaving: "stress" }
   end
-
 end

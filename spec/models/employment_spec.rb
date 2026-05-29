@@ -234,5 +234,4 @@ RSpec.describe Employment do
       "ended_on(3i)" => "30",
       reason_for_leaving: "stress" }
   end
-
 end
