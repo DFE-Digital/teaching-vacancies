@@ -195,11 +195,13 @@ architecture-beta
   group azurerg(cloud)[Azure Resource Group] in azure
   group azureredis(database)[Azure Cache for Redis] in azurerg
   group azuredb(database)[Azure DB for PostgreSQL flexible server] in azurerg
+  group azurestorage(disk)[Azure Storage accounts] in azurerg
 
   %% Services are the 'leafs' living in eah group
   service db(database)[Backend DB] in azuredb
   service rediscache(database)[Cache] in azureredis
   service redisqueue(database)[Background Jobs Queue] in azureredis
+  service storage(disk)[File blobs Storage] in azurestorage
 
   group azureks(cloud)[Azure Kubernetes] in azure
   group web(server)[Web] in azureks
@@ -221,6 +223,7 @@ architecture-beta
 
   junctionAzureResources:T -- B:junctionAzureRedis
   db{group}:L -- R:junctionAzureResources
+  storage{group}:R -- L:junctionAzureResources
   junctionAzureResources:B -- T:junctionAzureKubernetes
 
   %% -------------------------------------------------------------------------
@@ -229,19 +232,16 @@ architecture-beta
   group aws(cloud)[AWS]
   service route53(cloud)[Route 53] in aws
   service parameterstore(cloud)[Parameter Store] in aws
-  service s3(disk)[s3] in aws
 
   %% AWS services layout
   junction junctionAws in aws
-  route53:T --> B:junctionAws
-  s3:R <--> L:junctionAws
+  route53:R <--> L:junctionAws
   parameterstore:L --> R:junctionAws
 
   %% -------------------------------------------------------------------------
   %% Google
   %% -------------------------------------------------------------------------
   group googlecloud(cloud)[Google Cloud]
-  service googledrive(disk)[Drive] in googlecloud
   service bigquery(database)[BigQuery] in googlecloud
   service geocoding(database)[Geocoding] in googlecloud
   service places(database)[Places] in googlecloud
@@ -256,7 +256,6 @@ architecture-beta
   bigquery:L <-- R:junctionGoogleBottom
   places:R --> L:junctionGoogleTop
   geocoding:L --> R:junctionGoogleTop
-  googledrive:B <-- T:junctionGoogleTop
 
   %% -------------------------------------------------------------------------
   %% Monitoring services

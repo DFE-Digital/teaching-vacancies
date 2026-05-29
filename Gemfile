@@ -46,16 +46,15 @@ gem "friendly_id"
 gem "front_matter_parser"
 # postcode and location distance calculations
 gem "geocoder"
-# These 2 can be removed when we complete move to Azure attachment checking
-gem "google-apis-drive_v3"
+# Google API client for indexing API to trigger reindexing of pages in google search when they are published or updated
 gem "google-apis-indexing_v3"
-# Only used for DFE Analytics - but sometimes we need to pin the version manually
+# only used for DFE Analytics - but sometimes we need to pin the version manually
 gem "google-cloud-bigquery"
 gem "govuk-components", "6.1.0"
 gem "govuk_design_system_formbuilder", "~> 6.1.0"
-#  used for job statistics by month, quarter year etc
+# used for job statistics by month, quarter year etc
 gem "groupdate"
-#  guidance pages
+# guidance pages
 gem "high_voltage"
 # HTTP client for downloading GIAS data
 gem "httparty"
