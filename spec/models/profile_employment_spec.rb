@@ -6,7 +6,7 @@ RSpec.describe ProfileEmployment do
 
   describe "validations" do
     context "when main duties exceeds the word limit" do
-      let(:params) { valid_params.merge(main_duties: words(EmploymentRecord::MAIN_DUTIES_MAX_WORDS + 1)) }
+      let(:params) { valid_params.merge(main_duties: "word " * (EmploymentRecord::MAIN_DUTIES_MAX_WORDS + 1)) }
 
       it "is invalid" do
         expect(profile_employment).not_to be_valid
@@ -14,8 +14,16 @@ RSpec.describe ProfileEmployment do
       end
     end
 
+    context "when main duties includes hyphenated words within the word limit" do
+      let(:params) { valid_params.merge(main_duties: "child-centred " * EmploymentRecord::MAIN_DUTIES_MAX_WORDS) }
+
+      it "is valid" do
+        expect(profile_employment).to be_valid
+      end
+    end
+
     context "when reason for leaving exceeds the word limit" do
-      let(:params) { valid_params.merge(reason_for_leaving: words(EmploymentRecord::REASON_FOR_LEAVING_MAX_WORDS + 1)) }
+      let(:params) { valid_params.merge(reason_for_leaving: "word " * (EmploymentRecord::REASON_FOR_LEAVING_MAX_WORDS + 1)) }
 
       it "is invalid" do
         expect(profile_employment).not_to be_valid
@@ -34,7 +42,4 @@ RSpec.describe ProfileEmployment do
       reason_for_leaving: "stress" }
   end
 
-  def words(count)
-    Array.new(count, "word").join(" ")
-  end
 end

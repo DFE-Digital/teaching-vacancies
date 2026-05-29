@@ -22,10 +22,10 @@ class EmploymentRecord < ApplicationRecord
   private
 
   def main_duties_words
-    main_duties.scan(/\w+/)
+    main_duties.strip.split(/\s+/)
   end
 
   def reason_for_leaving_words
-    reason_for_leaving.scan(/\w+/)
+    reason_for_leaving.strip.split(/\s+/)
   end
 end

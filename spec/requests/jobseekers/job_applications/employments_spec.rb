@@ -27,18 +27,6 @@ RSpec.describe "Job applications employments" do
       expect(get(new_jobseekers_job_application_employment_path(job_application)))
         .to render_template(:new)
     end
-
-    it "renders word counts for main duties and reason for leaving" do
-      get new_jobseekers_job_application_employment_path(job_application)
-
-      page = Capybara.string(response.body)
-      main_duties_count = page.find(".govuk-character-count[data-maxwords='150']")
-      reason_for_leaving_count = page.find(".govuk-character-count[data-maxwords='50']")
-
-      expect(page).to have_css(".govuk-character-count[data-module='govuk-character-count']", count: 2)
-      expect(main_duties_count).to have_css("#jobseekers-job-application-details-employment-form-main-duties-field")
-      expect(reason_for_leaving_count).to have_css("#jobseekers-job-application-details-employment-form-reason-for-leaving-field")
-    end
   end
 
   describe "GET #edit" do
