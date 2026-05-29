@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe "discard_invalid_subscriptions" do
   before do
+    Subscription.destroy_all
     create(:subscription)
     build(:subscription, email: "invalid").save!(validate: false)
   end

@@ -8,7 +8,7 @@ RSpec.describe "Scheduled jobs configuration" do
     ApplicationJob.descendants.map(&:name)
   end
   let(:gem_jobs) { %w[DfE::Analytics::Jobs::EntityTableCheckJob] }
-  let(:scheduled_jobs) { YAML.load_file("./config/schedule.yml").map { |_, v| v["class"] }.uniq.compact }
+  let(:scheduled_jobs) { YAML.load_file("./config/recurring.yml").map { |_, v| v["class"] }.uniq.compact }
   let(:unscheduled_jobs) do
     %w[
       AlertEmail::Base

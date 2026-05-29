@@ -68,9 +68,9 @@
       }
     },
     {
-      "label": "Sidekiq",
+      "label": "Solid Queue",
       "type": "shell",
-      "command": "bundle exec sidekiq",
+      "command": "bin/jobs",
       "presentation": {
         "reveal": "always",
         "panel": "shared"
@@ -103,7 +103,6 @@
         "Rails",
         "Asset build (JS)",
         "Asset build (CSS)",
-        "Sidekiq",
         "Solid Queue"
       ],
       "problemMatcher": [],
