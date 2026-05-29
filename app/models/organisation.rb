@@ -191,9 +191,24 @@ class Organisation < ApplicationRecord
     name_changed? || super
   end
 
+  # Interface called by ActiveStorage::Blob (MalwareScannable) when one of this
+  # record's attached blobs is found unsafe. Purges the offending photo/logo and
+  # notifies publishers. Each model that owns scannable attachments defines its own.
+  def handle_unsafe_attachment(attachment)
+    attachment.purge_later
+    malware_scan_notifier_for(attachment.name)&.with(organisation: self)&.deliver
+  end
+
   private
 
   def slug_candidates
     [:name, %i[name town], %i[name postcode]]
+  end
+
+  def malware_scan_notifier_for(name)
+    case name
+    when "photo" then Publishers::OrganisationPhotoMalwareScanNotifier
+    when "logo"  then Publishers::OrganisationLogoMalwareScanNotifier
+    end
   end
 end
