@@ -3,9 +3,6 @@
 class EmploymentRecord < ApplicationRecord
   self.abstract_class = true
 
-  MAIN_DUTIES_MAX_WORDS = 150
-  REASON_FOR_LEAVING_MAX_WORDS = 50
-
   # This class represents 2 concerns - 'job' and 'break' (from employment)
   # which might have been better modelled as 2 different types
   enum :employment_type, { job: 0, break: 1 }

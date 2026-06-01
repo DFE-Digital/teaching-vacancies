@@ -108,8 +108,8 @@ RSpec.describe "Job applications employments" do
 
       context "when the text fields exceed their word limits" do
         let(:started_on_month) { "12" }
-        let(:main_duties) { "word " * (EmploymentRecord::MAIN_DUTIES_MAX_WORDS + 1) }
-        let(:reason_for_leaving) { "word " * (EmploymentRecord::REASON_FOR_LEAVING_MAX_WORDS + 1) }
+        let(:main_duties) { "word " * (Employment::MAIN_DUTIES_MAX_WORDS + 1) }
+        let(:reason_for_leaving) { "word " * (Employment::REASON_FOR_LEAVING_MAX_WORDS + 1) }
 
         it "links the error summary to the text areas" do
           expect { post jobseekers_job_application_employments_path(job_application), params: params }

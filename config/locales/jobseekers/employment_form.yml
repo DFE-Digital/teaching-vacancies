@@ -38,12 +38,8 @@ en:
               present: End date cannot be entered for current role
             job_title:
               blank: Enter your job title
-            main_duties_words:
-              too_long: Main duties must be %{count} words or less
             organisation:
               blank: Enter a school or other organisation
-            reason_for_leaving_words:
-              too_long: Reason for leaving role must be %{count} words or less
             started_on:
               before: The date the role started must be in the past
               blank: Enter the date you started at this school or organisation

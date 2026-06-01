@@ -1,4 +1,7 @@
 class Employment < EmploymentRecord
+  MAIN_DUTIES_MAX_WORDS = 150
+  REASON_FOR_LEAVING_MAX_WORDS = 50
+
   belongs_to :job_application
 
   has_encrypted :organisation, :job_title, :main_duties
