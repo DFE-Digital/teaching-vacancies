@@ -192,32 +192,44 @@ RSpec.describe Organisation do
   end
 
   describe ".visible_to_jobseekers" do
+    let!(:open_school) { create(:school, establishment_status: "Open", detailed_school_type: "Primary school") }
+    let(:closed_school) { create(:school, establishment_status: "Closed", detailed_school_type: "Secondary school").tap(&:discard) }
+    let(:registered_trust) { create(:trust) }
+    let!(:unregistered_trust) { create(:trust) }
+    let(:fe_school) { create(:school, establishment_status: "Open", detailed_school_type: "Further education") }
+    let(:independent_school) { create(:school, establishment_status: "Open", detailed_school_type: "Other independent school") }
+    let(:misc_school) { create(:school, establishment_status: "Open", detailed_school_type: "Miscellaneous") }
+    let(:post_16_school) { create(:school, establishment_status: "Open", detailed_school_type: "Special post 16 institution") }
+    let(:independent_special_school) { create(:school, establishment_status: "Open", detailed_school_type: "Other independent special school") }
+    let(:higher_education_school) { create(:school, establishment_status: "Open", detailed_school_type: "Higher education institutions") }
+    let(:welsh_school) { create(:school, establishment_status: "Open", detailed_school_type: "Welsh establishment") }
+
     before do
-      create(:publisher, organisations: [trust,
-                                         open_school,
+      create(:publisher, organisations: [registered_trust,
                                          closed_school,
                                          fe_school,
-                                         independant_school,
+                                         independent_school,
                                          misc_school,
                                          post_16_school,
-                                         independant_special_school,
+                                         independent_special_school,
                                          higher_education_school,
                                          welsh_school])
     end
 
-    let(:open_school) { create(:school, establishment_status: "Open", detailed_school_type: "Primary school") }
-    let(:closed_school) { create(:school, establishment_status: "Closed", detailed_school_type: "Secondary school").tap(&:discard) }
-    let(:trust) { Organisation.create(type: "SchoolGroup", name: "Trust", uid: "1") }
-    let(:fe_school) { create(:school, establishment_status: "Open", detailed_school_type: "Further education") }
-    let(:independant_school) { create(:school, establishment_status: "Open", detailed_school_type: "Other independent school") }
-    let(:misc_school) { create(:school, establishment_status: "Open", detailed_school_type: "Miscellaneous") }
-    let(:post_16_school) { create(:school, establishment_status: "Open", detailed_school_type: "Special post 16 institution") }
-    let(:independant_special_school) { create(:school, establishment_status: "Open", detailed_school_type: "Other independent special school") }
-    let(:higher_education_school) { create(:school, establishment_status: "Open", detailed_school_type: "Higher education institutions") }
-    let(:welsh_school) { create(:school, establishment_status: "Open", detailed_school_type: "Welsh establishment") }
+    it "returns unregistered open in-scope schools" do
+      expect(Organisation.visible_to_jobseekers).to include(open_school)
+    end
 
-    it "returns open schools that are not out of scope" do
-      expect(Organisation.visible_to_jobseekers).to contain_exactly(open_school, trust)
+    it "does not return unregistered trusts" do
+      expect(Organisation.visible_to_jobseekers).not_to include(unregistered_trust)
+    end
+
+    it "returns registered trusts" do
+      expect(Organisation.visible_to_jobseekers).to include(registered_trust)
+    end
+
+    it "does not return closed or out-of-scope schools" do
+      expect(Organisation.visible_to_jobseekers).to contain_exactly(open_school, registered_trust)
     end
   end
 
