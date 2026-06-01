@@ -10,6 +10,7 @@ en:
       api_clients_heading: ATS API clients
       service_data_link: View service data
       sidekiq_link: View Sidekiq dashboard
+      split_link: View Split (A/B Tests) dashboard
       api_clients_link: View ATS API clients
 
     fallback_sessions:

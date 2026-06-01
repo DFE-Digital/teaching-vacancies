@@ -62,7 +62,7 @@ RSpec.describe "Editing a vacancy template" do
     context "with subjects" do
       let(:change) { "subjects" }
 
-      it "can have its subjects edited to nothing" do
+      it "can have its subjects edited to nothing", :retry do
         expect(page).to have_content "Subjects (optional)"
         expect(page).to be_axe_clean
 

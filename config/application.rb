@@ -114,8 +114,6 @@ module TeachingVacancies
 
     config.app_role = ActiveSupport::StringInquirer.new(ENV.fetch("APP_ROLE", "unknown"))
 
-    config.ab_tests = config_for(:ab_tests)
-
     config.local_authorities_extra_schools = config_for(:local_authorities_extra_schools)
 
     config.analytics = config_for(:analytics)

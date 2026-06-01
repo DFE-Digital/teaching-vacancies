@@ -23,8 +23,6 @@ class ApplicationController < ActionController::Base
 
   helper GOVUKDesignSystemFormBuilder::BuilderHelper
 
-  include AbTestable
-
   def check
     render json: { status: "OK" }, status: :ok
   end

@@ -135,6 +135,8 @@ gem "sidekiq-limit_fetch"
 # Skylight performance monitoring https://www.skylight.io/login
 gem "skylight"
 gem "slim-rails"
+#  A/B tests with dashboard
+gem "split", require: "split/dashboard"
 gem "turbo-rails"
 # Used to validate the web link for external 'website' applications
 gem "validate_url"

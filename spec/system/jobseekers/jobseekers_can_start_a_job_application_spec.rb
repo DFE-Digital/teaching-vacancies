@@ -6,6 +6,10 @@ RSpec.describe "Jobseekers can start or continue a job application" do
   let(:school) { create(:school) }
   let(:created_job_application) { JobApplication.first }
 
+  before do
+    use_ab_test trn_on_apply: "apply"
+  end
+
   context "when the jobseeker has not applied to the job before" do
     context "when the jobseeker has an account" do
       let!(:jobseeker) { create(:jobseeker) }
