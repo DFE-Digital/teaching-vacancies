@@ -3,6 +3,7 @@ order: 300
 title: Check your eligibility to advertise roles
 meta_description: Check if your school or trust is eligible to advertise roles on Teaching Vacancies.
 date_posted: 02/10/2024
+date_updated: 12/05/2026
 category_tags: how-to
 card-image: "/content-assets/get-help-hiring/how-to-setup-your-account/check-your-eligibility.png"
 ---
@@ -11,7 +12,7 @@ card-image: "/content-assets/get-help-hiring/how-to-setup-your-account/check-you
 To advertise your roles on Teaching Vacancies, you must be:
 
 * based in England
-* a state-funded school (or contain a state-funded school within your trust)
+* a state-funded school or college (or contain a state-funded school or college within your trust)
 
 
 You can [find out what type of establishment you work in](https://get-information-schools.service.gov.uk/). 
@@ -37,6 +38,7 @@ You can advertise roles on Teaching Vacancies if you are a:
 * free school alternative provision
 * free school special
 * free school
+* further education college
 * local authority nursery school
 * non-maintained special school
 * pupil referral unit
@@ -51,13 +53,11 @@ You can advertise roles on Teaching Vacancies if you are a:
 
 You cannot advertise roles on Teaching Vacancies if you are a:
 
-* British overseas school
-* further education college
-* higher education institution
-* independent school
-* independent special school
+* British overseas school or college
+* independent school or college
+* independent special school or college
 * institution funded by another government department
-* offshore schools
+* offshore schools or colleges
 * online provider
 * service children’s education
 * special post 16 institution
