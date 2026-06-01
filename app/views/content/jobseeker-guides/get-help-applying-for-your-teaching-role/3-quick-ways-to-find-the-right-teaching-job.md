@@ -3,7 +3,7 @@ order: 500
 title: 3 quick ways to find the right teaching job for you
 meta_description: Congratulations, you’ve been invited to an interview for a teaching job! What’s next? We’ve spoken to experienced teachers to get their top tips for success including how to prepare answers to interview questions.
 date_posted: 07/05/2024
-date_updated: 12/03/2026
+date_updated: 11/05/2026
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role.jpg"
 ---
@@ -21,9 +21,9 @@ Easily focus your search by distance, subject and what kind of job you’re look
 
 ## Set up a profile 
 
-You can share your information with local schools you're interested in teaching at.  
+You can share your information with local schools or colleges you're interested in teaching at.  
 
-Schools can then reach out to you if they think you’re a good fit for their role. 
+Schools and colleges can then reach out to you if they think you’re a good fit for their role. 
 
 ## Apply quickly for roles 
 
