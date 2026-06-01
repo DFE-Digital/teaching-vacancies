@@ -3,7 +3,7 @@ order: 200
 title: Using the Teaching Vacancies application form
 meta_description: Schools can receive and manage job applications through Teaching Vacancies. Find out about our application form.
 date_posted: 17/03/2022
-date_updated: 02/12/2025
+date_updated: 12/05/2026
 category_tags: how-to
 card-image: "/content-assets/get-help-hiring/how-to-create-job-listings-and-accept-applications/how-to-accept-job-applications.jpg"
 ---
@@ -16,7 +16,7 @@ We recommend you choose to receive applications through Teaching Vacancies so yo
  
 * set up an application process for your job listing with one click, saving time and money
 * receive applicant information in a structured way, making it easier to shortlist candidates
-* manage applicants for all your jobs on a single dashboard, whether you’re hiring for a single school or a multi-academy trust
+* manage applicants for all your jobs on a single dashboard, whether you’re hiring for a single school, college or multi-academy trust
 * easily notify successful and unsuccessful candidates
 * ensure you’re complying with the most up-to-date recruitment legislation
 
@@ -32,13 +32,13 @@ This allows them to spend more time personalising sections such as their persona
 
 ### Personal details 
 
-As well as basic details such as their name, address and contact information, we give applicants the option to provide their teacher reference number (TRN) and National Insurance number to make it easier for you to verify their eligibility.
+As well as basic details such as their name, address and contact information, we give applicants the option to provide their teacher reference number (TRN), where applicable, and National Insurance number to make it easier for you to verify their eligibility.
 
 ### Professional status
 
-Applicants are asked to confirm whether they have qualified teacher status (QTS) and whether they have completed their statutory induction year.
+Applicants are asked to confirm whether they have qualified teacher status (QTS), or relevant teaching qualifications and whether they have completed their statutory induction year (where applicable).
 
-If they are qualified, we ask for the year they gained QTS. If they’re not, we ask for further details on their current status.
+If they are qualified, we ask for the year they gained QTS or the year they gained their highest relevant teaching qualification. If they’re not, we ask for further details on their current status.
 
 ### Qualifications 
 
@@ -100,21 +100,21 @@ This may include adjustments related to a disability, a mental health condition,
 
 ### Declarations 
 
-We ask applicants to give details of any connections to the school through their family or close relationships.
+We ask applicants to give details of any connections to the school or college through their family or close relationships.
 
 We also ask them to confirm whether they have the right to work in the UK.
 
 Applicants are not asked if they are barred from working with children. Department for Education guidance states that applicants should be asked this at the shortlisting stage.
 
-This ensures that only school staff who are allowed to have access to this information can see it.
+This ensures that only school or college staff who are allowed to have access to this information can see it.
 
 ## What happens when an application is submitted? 
 
 Before submitting their application, we ask applicants to confirm that the information they have provided is accurate and that they are happy for their data to be shared with:
 
 * the Department for Education
-* the school, trust or local authority which posted the job listing
-* the school (or schools) the job is at
+* the school, college, trust or local authority which posted the job listing
+* the school or college (or schools or colleges) the job is at
 
 Each day you will receive a summary email of any applications that have been made for your active jobs over the previous 24 hours. This will link to your Teaching Vacancies dashboard.
 
