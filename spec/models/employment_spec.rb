@@ -16,7 +16,7 @@ RSpec.describe Employment do
 
       it "is invalid" do
         expect(employment).not_to be_valid
-        expect(employment.errors.messages[:main_duties_words]).to eq(["Main duties must be 150 words or less"])
+        expect(employment.errors.messages[:main_duties]).to eq(["Main duties must be 150 words or less"])
       end
     end
 
@@ -33,7 +33,7 @@ RSpec.describe Employment do
 
       it "is invalid" do
         expect(employment).not_to be_valid
-        expect(employment.errors.messages[:reason_for_leaving_words]).to eq(["Reason for leaving role must be 50 words or less"])
+        expect(employment.errors.messages[:reason_for_leaving]).to eq(["Reason for leaving role must be 50 words or less"])
       end
     end
   end
