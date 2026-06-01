@@ -46,6 +46,10 @@ class VacancyFilterQuery < ApplicationQuery
       selected_school_types << School::LA_SCHOOL_TYPE
     end
 
+    if filters[:organisation_types].include?(School::COLLEGE_SCHOOL_TYPE)
+      selected_school_types << School::COLLEGE_SCHOOL_TYPE
+    end
+
     built_scope.joins(organisation_vacancies: :organisation).where(organisations: { school_type: selected_school_types }).distinct
   end
 
