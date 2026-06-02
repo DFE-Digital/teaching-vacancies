@@ -25,8 +25,10 @@ class Organisation < ApplicationRecord
     "Higher education institutions",
     "Welsh establishment",
   ].freeze
+
   CLOSED_ESTABLISHMENT_STATUSES = %w[Closed].freeze
   OPEN_ESTABLISHMENT_STATUSES = ["Open", "Open, but proposed to close", "Proposed to open"].freeze
+  COLLEGE_SCHOOL_TYPE = "Colleges".freeze
 
   friendly_id :slug_candidates, use: %i[slugged history]
 
@@ -61,10 +63,20 @@ class Organisation < ApplicationRecord
                   against: :name,
                   using: { tsearch: { prefix: true, tsvector_column: "searchable_content" } }
 
-  scope :not_out_of_scope, -> { where.not(detailed_school_type: Organisation::OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES).or(where(detailed_school_type: nil)) }
+  scope(:registered_for_service, lambda do
+    registered_organisations = OrganisationPublisher.select(:organisation_id)
+    where(id: registered_organisations)
+      .or(where(id: SchoolGroupMembership.select(:school_id).where(school_group_id: registered_organisations)))
+  end)
+
+  scope :not_out_of_scope, -> { where.not(detailed_school_type: OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES).or(where(detailed_school_type: nil)) }
 
   scope :schools_visible_to_jobseekers, -> { schools.kept.not_closed.not_out_of_scope }
   scope :visible_to_jobseekers, -> { schools_visible_to_jobseekers.or(Organisation.kept.trusts_not_closed) }
+
+  scope :colleges, -> { where(school_type: COLLEGE_SCHOOL_TYPE) }
+
+  scope :in_scope_schools, -> { schools.not_closed.not_out_of_scope.or(Organisation.trusts) }
 
   scope :only_faith_schools, -> { where.not(religious_character: NON_FAITH_RELIGIOUS_CHARACTER_TYPES) }
 

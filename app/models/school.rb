@@ -8,7 +8,6 @@ class School < Organisation
   LA_SCHOOL_TYPE = "Local authority maintained schools".freeze
   FREE_SCHOOL_TYPE = "Free Schools".freeze
   INDEPENDENT_SCHOOL_TYPE = "Independent schools".freeze
-  COLLEGE_SCHOOL_TYPE = "Colleges".freeze
   ONLINE_SCHOOL_TYPE = "Online provider".freeze
   OTHER_SCHOOL_TYPE = "Other types".freeze
   SPECIAL_SCHOOL_TYPE = "Special schools".freeze
