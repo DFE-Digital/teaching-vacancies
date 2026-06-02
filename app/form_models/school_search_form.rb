@@ -1,36 +1,8 @@
-class SchoolSearchForm
-  include ActiveModel::Model
-  include ActiveModel::Attributes
-
-  attribute :name
-  attribute :location
-  attribute :radius, :integer, default: 0
+class SchoolSearchForm < OrganisationSearchForm
   attribute :education_phase, default: []
   attribute :key_stage, default: []
-  attribute :job_availability, default: []
   attribute :organisation_types, default: []
   attribute :school_types, default: []
-
-  def to_h
-    attrs = attributes.symbolize_keys
-      .transform_values { |value| value.is_a?(Array) ? value.filter_map(&:presence).presence : value.presence }
-      .compact
-
-    if attrs.key?(:location)
-      self.radius = Search::RadiusBuilder.new(attrs[:location], attrs[:radius]).radius.to_s
-      attrs[:radius] = radius
-    else
-      attrs.delete(:radius)
-    end
-
-    if attrs[:job_availability]&.one?
-      attrs[:job_availability] = attrs[:job_availability].first == "true" ? ["true"] : ["false"]
-    else
-      attrs.delete(:job_availability)
-    end
-
-    attrs
-  end
 
   def filters_list
     %i[
@@ -40,10 +12,6 @@ class SchoolSearchForm
       organisation_types
       school_types
     ]
-  end
-
-  def filters
-    to_h.delete_if { |k, _| filters_list.exclude?(k) }
   end
 
   def education_phase_options
@@ -79,12 +47,12 @@ class SchoolSearchForm
 
   def total_filters
     [
-      education_phase&.count,
-      key_stage&.count,
-      job_availability&.count,
-      organisation_types&.count,
-      school_types&.count,
-    ].compact.sum
+      job_availability,
+      education_phase,
+      key_stage,
+      organisation_types,
+      school_types,
+    ].compact.sum(&:count)
   end
 
   class << self

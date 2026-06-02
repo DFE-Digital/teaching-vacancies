@@ -15,8 +15,7 @@ RSpec.describe Organisation do
     end
 
     it "validates new email" do
-      org = create(:school)
-      org.email = "invalidaaddress"
+      org = build(:school, email: "invalidaaddress")
 
       expect(org).not_to be_valid
     end
