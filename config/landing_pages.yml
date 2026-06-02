@@ -206,6 +206,348 @@ shared:
     subjects:
       - Spanish
 
+  ### FE Subjects
+  accountancy-and-finance-fe-jobs:
+    subjects:
+      - Accountancy and finance
+    phases:
+      - sixth_form_or_college
+  agriculture-horticulture-land-based-studies-fe-jobs:
+    subjects:
+      - Agriculture/horticulture/land based studies
+    phases:
+      - sixth_form_or_college
+  animal-care-fe-jobs:
+    subjects:
+      - Animal care
+    phases:
+      - sixth_form_or_college
+  art-and-design-fe-jobs:
+    subjects:
+      - Art and design
+    phases:
+      - sixth_form_or_college
+  biology-fe-jobs:
+    subjects:
+      - Biology
+    phases:
+      - sixth_form_or_college
+  british-sign-language-fe-jobs:
+    subjects:
+      - British sign language
+    phases:
+      - sixth_form_or_college
+  building-and-construction-fe-jobs:
+    subjects:
+      - Building and construction
+    phases:
+      - sixth_form_or_college
+  catering-fe-jobs:
+    subjects:
+      - Catering
+    phases:
+      - sixth_form_or_college
+  chemistry-fe-jobs:
+    subjects:
+      - Chemistry
+    phases:
+      - sixth_form_or_college
+  childrens-development-and-learning-fe-jobs:
+    subjects:
+      - Children's development and learning
+    phases:
+      - sixth_form_or_college
+  classics-fe-jobs:
+    subjects:
+      - Classics
+    phases:
+      - sixth_form_or_college
+  computer-science-fe-jobs:
+    subjects:
+      - Computer science
+    phases:
+      - sixth_form_or_college
+  construction-fe-jobs:
+    subjects:
+      - Construction
+    phases:
+      - sixth_form_or_college
+  counselling-fe-jobs:
+    subjects:
+      - Counselling
+    phases:
+      - sixth_form_or_college
+  customer-service-fe-jobs:
+    subjects:
+      - Customer service
+    phases:
+      - sixth_form_or_college
+  dance-drama-and-music-fe-jobs:
+    subjects:
+      - Dance drama and music
+    phases:
+      - sixth_form_or_college
+  design-and-technology-fe-jobs:
+    subjects:
+      - Design and technology
+    phases:
+      - sixth_form_or_college
+  early-years-fe-jobs:
+    subjects:
+      - Early years
+    phases:
+      - sixth_form_or_college
+  economics-and-business-studies-fe-jobs:
+    subjects:
+      - Economics and Business Studies
+    phases:
+      - sixth_form_or_college
+  electrics-fe-jobs:
+    subjects:
+      - Electrics
+    phases:
+      - sixth_form_or_college
+  engineering-fe-jobs:
+    subjects:
+      - Engineering
+    phases:
+      - sixth_form_or_college
+  english-and-media-studies-fe-jobs:
+    subjects:
+      - English and Media Studies
+    phases:
+      - sixth_form_or_college
+  english-as-a-foreign-language-fe-jobs:
+    subjects:
+      - English as a foreign language
+    phases:
+      - sixth_form_or_college
+  fabrication-and-welding-fe-jobs:
+    subjects:
+      - Fabrication and welding
+    phases:
+      - sixth_form_or_college
+  farming-fe-jobs:
+    subjects:
+      - Farming
+    phases:
+      - sixth_form_or_college
+  fashion-fe-jobs:
+    subjects:
+      - Fashion
+    phases:
+      - sixth_form_or_college
+  food-technology-fe-jobs:
+    subjects:
+      - Food technology
+    phases:
+      - sixth_form_or_college
+  foreign-languages-fe-jobs:
+    subjects:
+      - Foreign languages
+    phases:
+      - sixth_form_or_college
+  french-fe-jobs:
+    subjects:
+      - French
+    phases:
+      - sixth_form_or_college
+  functional-skills-fe-jobs:
+    subjects:
+      - Functional skills
+    phases:
+      - sixth_form_or_college
+  games-design-fe-jobs:
+    subjects:
+      - Games design
+    phases:
+      - sixth_form_or_college
+  geography-fe-jobs:
+    subjects:
+      - Geography
+    phases:
+      - sixth_form_or_college
+  german-fe-jobs:
+    subjects:
+      - German
+    phases:
+      - sixth_form_or_college
+  graphic-design-fe-jobs:
+    subjects:
+      - Graphic design
+    phases:
+      - sixth_form_or_college
+  hair-and-beauty-fe-jobs:
+    subjects:
+      - Hair and beauty
+    phases:
+      - sixth_form_or_college
+  health-and-social-care-fe-jobs:
+    subjects:
+      - Health and Social Care
+    phases:
+      - sixth_form_or_college
+  history-fe-jobs:
+    subjects:
+      - History
+    phases:
+      - sixth_form_or_college
+  hotel-catering-and-travel-fe-jobs:
+    subjects:
+      - Hotel catering and travel
+    phases:
+      - sixth_form_or_college
+  humanities-fe-jobs:
+    subjects:
+      - Humanities
+    phases:
+      - sixth_form_or_college
+  ict-and-computer-science-fe-jobs:
+    subjects:
+      - ICT and Computer Science
+    phases:
+      - sixth_form_or_college
+  land-and-property-management-fe-jobs:
+    subjects:
+      - Land and Property Management
+    phases:
+      - sixth_form_or_college
+  leadership-and-management-fe-jobs:
+    subjects:
+      - Leadership and management
+    phases:
+      - sixth_form_or_college
+  logistics-fe-jobs:
+    subjects:
+      - Logistics
+    phases:
+      - sixth_form_or_college
+  mandarin-fe-jobs:
+    subjects:
+      - Mandarin
+    phases:
+      - sixth_form_or_college
+  maths-fe-jobs:
+    subjects:
+      - Maths
+    phases:
+      - sixth_form_or_college
+  modern-foreign-languages-fe-jobs:
+    subjects:
+      - Modern foreign languages
+    phases:
+      - sixth_form_or_college
+  motor-vehicle-fe-jobs:
+    subjects:
+      - Motor vehicle
+    phases:
+      - sixth_form_or_college
+  music-fe-jobs:
+    subjects:
+      - Music
+    phases:
+      - sixth_form_or_college
+  people-management-fe-jobs:
+    subjects:
+      - People management
+    phases:
+      - sixth_form_or_college
+  philosophy-fe-jobs:
+    subjects:
+      - Philosophy
+    phases:
+      - sixth_form_or_college
+  photography-fe-jobs:
+    subjects:
+      - Photography
+    phases:
+      - sixth_form_or_college
+  physical-education-fe-jobs:
+    subjects:
+      - Physical Education
+    phases:
+      - sixth_form_or_college
+  physics-fe-jobs:
+    subjects:
+      - Physics
+    phases:
+      - sixth_form_or_college
+  plumbing-and-heating-fe-jobs:
+    subjects:
+      - Plumbing and heating
+    phases:
+      - sixth_form_or_college
+  politics-fe-jobs:
+    subjects:
+      - Politics
+    phases:
+      - sixth_form_or_college
+  pshe-fe-jobs:
+    subjects:
+      - PSHE
+    phases:
+      - sixth_form_or_college
+  psychology-fe-jobs:
+    subjects:
+      - Psychology
+    phases:
+      - sixth_form_or_college
+  public-services-fe-jobs:
+    subjects:
+      - Public services
+    phases:
+      - sixth_form_or_college
+  religious-education-fe-jobs:
+    subjects:
+      - Religious education
+    phases:
+      - sixth_form_or_college
+  science-fe-jobs:
+    subjects:
+      - Science
+    phases:
+      - sixth_form_or_college
+  send-fe-jobs:
+    subjects:
+      - SEND
+    phases:
+      - sixth_form_or_college
+  sociology-fe-jobs:
+    subjects:
+      - Sociology
+    phases:
+      - sixth_form_or_college
+  spanish-fe-jobs:
+    subjects:
+      - Spanish
+    phases:
+      - sixth_form_or_college
+  sport-and-leisure-fe-jobs:
+    subjects:
+      - Sport and leisure
+    phases:
+      - sixth_form_or_college
+  sports-science-fe-jobs:
+    subjects:
+      - Sports science
+    phases:
+      - sixth_form_or_college
+  tourism-fe-jobs:
+    subjects:
+      - Tourism
+    phases:
+      - sixth_form_or_college
+  welsh-fe-jobs:
+    subjects:
+      - Welsh
+    phases:
+      - sixth_form_or_college
+  woodworking-joinery-and-carpentry-fe-jobs:
+    subjects:
+      - Woodworking joinery and carpentry
+    phases:
+      - sixth_form_or_college
+
   ### Working patterns
   full-time-school-jobs:
     working_patterns:

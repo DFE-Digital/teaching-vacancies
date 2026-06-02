@@ -1,141 +1,203 @@
 .landing-page-links
   = govuk_accordion do |accordion|
     - accordion.with_section(heading_text: t(".jobs_by_school_type_and_role")) do
-      = landing_page_link_group title: t(".teaching_roles"), classes: "govuk-grid-column-one-third" do |group|
-        - group.with_landing_page "teacher-jobs"
-        - group.with_landing_page "head-of-year-or-phase-jobs"
-        - group.with_landing_page "head-of-department-or-curriculum-jobs"
-        - group.with_landing_page "assistant-headteacher-jobs"
-        - group.with_landing_page "deputy-headteacher-jobs"
-        - group.with_landing_page "headteacher-jobs"
-        - group.with_landing_page "sendco-jobs"
-        - group.with_landing_page "ect-suitable-jobs"
-        - group.with_landing_page "other-leadership-roles-jobs"
-      = landing_page_link_group title: t(".support_roles"), classes: "govuk-grid-column-one-third" do |group|
-        - group.with_landing_page "teaching-assistant-jobs"
-        - group.with_landing_page "higher-level-teaching-assistant-jobs"
-        - group.with_landing_page "education-support-jobs"
-        - group.with_landing_page "administration-hr-data-finance-jobs"
-        - group.with_landing_page "catering-cleaning-site-management-jobs"
-        - group.with_landing_page "it-support-jobs"
-        - group.with_landing_page "pastoral-health-welfare-jobs"
-        - group.with_landing_page "other-support-roles-jobs"
-      = landing_page_link_group title: t(".education_phases"), classes: "govuk-grid-column-one-third" do |group|
-        = group.with_landing_page "nursery-jobs"
-        = group.with_landing_page "primary-school-jobs"
-        = group.with_landing_page "secondary-school-jobs"
-        = group.with_landing_page "sixth-form-or-college-jobs"
-        = group.with_landing_page "through-school-jobs"
-      = landing_page_link_group title: t(".working_patterns"), classes: "govuk-grid-column-one-third" do |group|
-        = group.with_landing_page "full-time-school-jobs"
-        = group.with_landing_page "part-time-school-jobs"
-        = group.with_landing_page "school-job-shares"
+      .govuk-grid-row
+        .govuk-grid-column-one-third
+          h3.govuk-heading-s = t(".teaching_roles")
+          ul.govuk-list
+            - landing_page_teaching_roles_list.each do |landing_page, role|
+              - count = @role_counts.fetch(role.to_sym, 0)
+              li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
+        .govuk-grid-column-one-third
+          h3.govuk-heading-s = t(".support_roles")
+          ul.govuk-list
+            - landing_page_support_roles_list.each do |landing_page, role |
+              - count = @role_counts.fetch(role.to_sym, 0)
+              li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
+        .govuk-grid-column-one-third
+          h3.govuk-heading-s = t(".education_phases")
+          ul.govuk-list
+            - landing_page_phases_list.each do |landing_page, phase |
+              - count = @phase_counts.fetch(phase.to_sym, 0)
+              li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
+          h3.govuk-heading-s = t(".working_patterns")
+          ul.govuk-list
+            - landing_page_working_patterns_list.each do |landing_page, working_pattern |
+              - count = @working_pattern_counts.fetch(working_pattern.to_sym, 0)
+              li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
+      div class="govuk-!-margin-top-6"
+        h3.govuk-heading-s = t(".subjects")
+        .govuk-grid-row
+          - all_subjects = landing_page_tallier(@subjects_counts)
+          - landing_page_subjects_columns.each do |column_slugs|
+            .govuk-grid-column-one-third
+              ul.govuk-list
+                - column_slugs.each do |landing_page|
+                  - tuple = all_subjects[landing_page]
+                  - count = tuple.first
+                  - child_subjects = tuple.second
+                  li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
+                  - if child_subjects.any?
+                    ul.govuk-list--bullet
+                      - child_subjects.each do |child_landing_page, child_count|
+                        li = govuk_link_to t("landing_pages.#{child_landing_page}.name", count: child_count), landing_page_path(child_landing_page), class: "govuk-link--no-visited-state"
+    - accordion.with_section(heading_text: t(".jobs_by_fe_type_and_role")) do
+      .govuk-grid-row
+        .govuk-grid-column-one-third
+          h3.govuk-heading-s = t(".teaching_roles")
+          ul.govuk-list
+            - landing_page_teaching_roles_list.each do |landing_page, role|
+              - count = @fe_role_counts.fetch(role.to_sym, 0)
+              li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
+        .govuk-grid-column-one-third
+          h3.govuk-heading-s = t(".support_roles")
+          ul.govuk-list
+            - landing_page_support_roles_list.each do |landing_page, role |
+              - count = @fe_role_counts.fetch(role.to_sym, 0)
+              li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
+        .govuk-grid-column-one-third
+          h3.govuk-heading-s = t(".fe_phases")
+          ul.govuk-list
+            - landing_page_fe_phases_list.each do |landing_page, phase |
+              - count = @fe_phase_counts.fetch(phase.to_sym, 0)
+              li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
+          h3.govuk-heading-s = t(".working_patterns")
+          ul.govuk-list
+            - landing_page_working_patterns_list.each do |landing_page, working_pattern |
+              - count = @fe_working_pattern_counts.fetch(working_pattern.to_sym, 0)
+              li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
+      div class="govuk-!-margin-top-6"
+        h3.govuk-heading-s = t(".subjects")
+        .govuk-grid-row
+          - all_fe_subjects = landing_page_fe_tallier(@fe_subjects_counts)
+          - landing_page_fe_subjects_columns.each do |column_slugs|
+            .govuk-grid-column-one-third
+              ul.govuk-list
+                - column_slugs.each do |landing_page|
+                  - tuple = all_fe_subjects[landing_page]
+                  - count = tuple.first
+                  - child_subjects = tuple.second
+                  li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
+                  - if child_subjects.any?
+                    ul.govuk-list--bullet
+                      - child_subjects.each do |child_landing_page, child_count|
+                        li = govuk_link_to t("landing_pages.#{child_landing_page}.name", count: child_count), landing_page_path(child_landing_page), class: "govuk-link--no-visited-state"
+    /   = landing_page_link_group title: t(".education_phases"), classes: "govuk-grid-column-one-third" do |group|
+    /     = group.with_landing_page "nursery-jobs"
+    /     = group.with_landing_page "primary-school-jobs"
+    /     = group.with_landing_page "secondary-school-jobs"
+    /     = group.with_landing_page "sixth-form-or-college-jobs"
+    /     = group.with_landing_page "through-school-jobs"
+    /   = landing_page_link_group title: t(".working_patterns"), classes: "govuk-grid-column-one-third" do |group|
+    /     = group.with_landing_page "full-time-school-jobs"
+    /     = group.with_landing_page "part-time-school-jobs"
+    /     = group.with_landing_page "school-job-shares"
+    /   = landing_page_link_group classes: "govuk-grid-column-one-third" do |group|
+    /     - group.with_landing_page "maths-teacher-jobs"
+    /     - group.with_landing_page "english-media-studies-teacher-jobs"
+    /     - group.with_landing_page "physical-education-teacher-jobs"
+    /     - group.with_landing_page "dance-drama-music-teacher-jobs"
+    /     - group.with_landing_page(subgroup: true) do |subgroup|
+    /       - subgroup.with_title_landing_page "science-teacher-jobs"
+    /       - subgroup.with_landing_page "chemistry-teacher-jobs"
+    /       - subgroup.with_landing_page "biology-teacher-jobs"
+    /       - subgroup.with_landing_page "physics-teacher-jobs"
+
+    /   = landing_page_link_group classes: "govuk-grid-column-one-third" do |group|
+    /     - group.with_landing_page "history-teacher-jobs"
+    /     - group.with_landing_page "geography-teacher-jobs"
+    /     - group.with_landing_page(subgroup: true) do |subgroup|
+    /       - subgroup.with_title_landing_page "mfl-teacher-jobs"
+    /       - subgroup.with_landing_page "french-teacher-jobs"
+    /       - subgroup.with_landing_page "spanish-teacher-jobs"
+    /       - subgroup.with_landing_page "german-teacher-jobs"
+    /       - subgroup.with_landing_page "mandarin-teacher-jobs"
+    /       - subgroup.with_landing_page "classics-latin-teacher-jobs"
+
+    /   = landing_page_link_group classes: "govuk-grid-column-one-third" do |group|
+    /     - group.with_landing_page "ict-computer-science-teacher-jobs"
+    /     - group.with_landing_page "economics-business-studies-teacher-jobs"
+    /     - group.with_landing_page "art-design-teacher-jobs"
+    /     - group.with_landing_page "design-technology-teacher-jobs"
+    /     - group.with_landing_page "food-technology-teacher-jobs"
+    /     - group.with_landing_page "politics-humanities-social-sciences-teacher-jobs"
+    /     - group.with_landing_page "psychology-philosophy-sociology-re-teacher-jobs"
+    /     - group.with_landing_page "health-relationships-social-care-teacher-jobs"
 
     - accordion.with_section(heading_text: t(".jobs_by_location")) do
-      .govuk-grid-column-one-third
-        = landing_page_link_group(use_locations: true) do |group|
-          - group.with_title_landing_page "north-west"
-          - group.with_landing_page "liverpool"
-          - group.with_landing_page "manchester"
-          - group.with_landing_page "lancashire"
-          - group.with_landing_page "cheshire-east"
-          - group.with_landing_page "cheshire-west-and-chester"
+      .govuk-grid-row
+        .govuk-grid-column-one-third
+          = landing_page_link_group(use_locations: true) do |group|
+            - group.with_title_landing_page "north-west"
+            - group.with_landing_page "liverpool"
+            - group.with_landing_page "manchester"
+            - group.with_landing_page "lancashire"
+            - group.with_landing_page "cheshire-east"
+            - group.with_landing_page "cheshire-west-and-chester"
 
-        = landing_page_link_group(use_locations: true) do |group|
-          - group.with_title_landing_page "yorkshire-and-the-humber"
-          - group.with_landing_page "sheffield"
-          - group.with_landing_page "leeds"
-          - group.with_landing_page "bradford"
-          - group.with_landing_page "doncaster"
-          - group.with_landing_page "north-yorkshire"
+          = landing_page_link_group(use_locations: true) do |group|
+            - group.with_title_landing_page "yorkshire-and-the-humber"
+            - group.with_landing_page "sheffield"
+            - group.with_landing_page "leeds"
+            - group.with_landing_page "bradford"
+            - group.with_landing_page "doncaster"
+            - group.with_landing_page "north-yorkshire"
 
-        = landing_page_link_group(use_locations: true) do |group|
-          - group.with_title_landing_page "north-east"
-          - group.with_landing_page "newcastle-upon-tyne"
-          - group.with_landing_page "middlesbrough"
-          - group.with_landing_page "sunderland"
-          - group.with_landing_page "north-tyneside"
-          - group.with_landing_page "northumberland"
+          = landing_page_link_group(use_locations: true) do |group|
+            - group.with_title_landing_page "north-east"
+            - group.with_landing_page "newcastle-upon-tyne"
+            - group.with_landing_page "middlesbrough"
+            - group.with_landing_page "sunderland"
+            - group.with_landing_page "north-tyneside"
+            - group.with_landing_page "northumberland"
 
-      .govuk-grid-column-one-third
-        = landing_page_link_group(use_locations: true) do |group|
-          - group.with_title_landing_page "london"
-          - group.with_landing_page "bexley"
-          - group.with_landing_page "havering"
-          - group.with_landing_page "barnet"
-          - group.with_landing_page "enfield"
-          - group.with_landing_page "bromley"
+        .govuk-grid-column-one-third
+          = landing_page_link_group(use_locations: true) do |group|
+            - group.with_title_landing_page "london"
+            - group.with_landing_page "bexley"
+            - group.with_landing_page "havering"
+            - group.with_landing_page "barnet"
+            - group.with_landing_page "enfield"
+            - group.with_landing_page "bromley"
 
-        = landing_page_link_group(use_locations: true) do |group|
-          - group.with_title_landing_page "south-east"
-          - group.with_landing_page "hampshire"
-          - group.with_landing_page "surrey"
-          - group.with_landing_page "kent"
-          - group.with_landing_page "west-sussex"
-          - group.with_landing_page "east-sussex"
+          = landing_page_link_group(use_locations: true) do |group|
+            - group.with_title_landing_page "south-east"
+            - group.with_landing_page "hampshire"
+            - group.with_landing_page "surrey"
+            - group.with_landing_page "kent"
+            - group.with_landing_page "west-sussex"
+            - group.with_landing_page "east-sussex"
 
-        = landing_page_link_group(use_locations: true) do |group|
-          - group.with_title_landing_page "south-west"
-          - group.with_landing_page "bristol"
-          - group.with_landing_page "gloucestershire"
-          - group.with_landing_page "devon"
-          - group.with_landing_page "cornwall"
-          - group.with_landing_page "dorset"
+          = landing_page_link_group(use_locations: true) do |group|
+            - group.with_title_landing_page "south-west"
+            - group.with_landing_page "bristol"
+            - group.with_landing_page "gloucestershire"
+            - group.with_landing_page "devon"
+            - group.with_landing_page "cornwall"
+            - group.with_landing_page "dorset"
 
-      .govuk-grid-column-one-third
-        = landing_page_link_group(use_locations: true) do |group|
-          - group.with_title_landing_page "west-midlands"
-          - group.with_landing_page "birmingham"
-          - group.with_landing_page "worcestershire"
-          - group.with_landing_page "shropshire"
-          - group.with_landing_page "staffordshire"
-          - group.with_landing_page "warwickshire"
+        .govuk-grid-column-one-third
+          = landing_page_link_group(use_locations: true) do |group|
+            - group.with_title_landing_page "west-midlands"
+            - group.with_landing_page "birmingham"
+            - group.with_landing_page "worcestershire"
+            - group.with_landing_page "shropshire"
+            - group.with_landing_page "staffordshire"
+            - group.with_landing_page "warwickshire"
 
-        = landing_page_link_group(use_locations: true) do |group|
-          - group.with_title_landing_page "east-midlands"
-          - group.with_landing_page "derby"
-          - group.with_landing_page "nottingham"
-          - group.with_landing_page "leicester"
-          - group.with_landing_page "lincolnshire"
-          - group.with_landing_page "northamptonshire"
+          = landing_page_link_group(use_locations: true) do |group|
+            - group.with_title_landing_page "east-midlands"
+            - group.with_landing_page "derby"
+            - group.with_landing_page "nottingham"
+            - group.with_landing_page "leicester"
+            - group.with_landing_page "lincolnshire"
+            - group.with_landing_page "northamptonshire"
 
-        = landing_page_link_group(use_locations: true) do |group|
-          - group.with_title_landing_page "east-of-england"
-          - group.with_landing_page "essex"
-          - group.with_landing_page "bedfordshire"
-          - group.with_landing_page "hertfordshire"
-          - group.with_landing_page "suffolk"
-          - group.with_landing_page "norfolk"
+          = landing_page_link_group(use_locations: true) do |group|
+            - group.with_title_landing_page "east-of-england"
+            - group.with_landing_page "essex"
+            - group.with_landing_page "bedfordshire"
+            - group.with_landing_page "hertfordshire"
+            - group.with_landing_page "suffolk"
+            - group.with_landing_page "norfolk"
 
-    - accordion.with_section(heading_text: t(".jobs_by_subject")) do
-      = landing_page_link_group classes: "govuk-grid-column-one-third" do |group|
-        - group.with_landing_page "maths-teacher-jobs"
-        - group.with_landing_page "english-media-studies-teacher-jobs"
-        - group.with_landing_page "physical-education-teacher-jobs"
-        - group.with_landing_page "dance-drama-music-teacher-jobs"
-        - group.with_landing_page(subgroup: true) do |subgroup|
-          - subgroup.with_title_landing_page "science-teacher-jobs"
-          - subgroup.with_landing_page "chemistry-teacher-jobs"
-          - subgroup.with_landing_page "biology-teacher-jobs"
-          - subgroup.with_landing_page "physics-teacher-jobs"
-
-      = landing_page_link_group classes: "govuk-grid-column-one-third" do |group|
-        - group.with_landing_page "history-teacher-jobs"
-        - group.with_landing_page "geography-teacher-jobs"
-        - group.with_landing_page(subgroup: true) do |subgroup|
-          - subgroup.with_title_landing_page "mfl-teacher-jobs"
-          - subgroup.with_landing_page "french-teacher-jobs"
-          - subgroup.with_landing_page "spanish-teacher-jobs"
-          - subgroup.with_landing_page "german-teacher-jobs"
-          - subgroup.with_landing_page "mandarin-teacher-jobs"
-          - subgroup.with_landing_page "classics-latin-teacher-jobs"
-
-      = landing_page_link_group classes: "govuk-grid-column-one-third" do |group|
-        - group.with_landing_page "ict-computer-science-teacher-jobs"
-        - group.with_landing_page "economics-business-studies-teacher-jobs"
-        - group.with_landing_page "art-design-teacher-jobs"
-        - group.with_landing_page "design-technology-teacher-jobs"
-        - group.with_landing_page "food-technology-teacher-jobs"
-        - group.with_landing_page "politics-humanities-social-sciences-teacher-jobs"
-        - group.with_landing_page "psychology-philosophy-sociology-re-teacher-jobs"
-        - group.with_landing_page "health-relationships-social-care-teacher-jobs"
