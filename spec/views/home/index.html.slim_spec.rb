@@ -7,6 +7,14 @@ RSpec.describe "home/index" do
     allow(view).to receive_messages(show_cookies_banner?: false,
                                     current_organisation: organisation)
     assign :form, Jobseekers::SearchForm.new
+    assign :role_counts, {}
+    assign :phase_counts, {}
+    assign :working_pattern_counts, {}
+    assign :subjects_counts, {}
+    assign :fe_role_counts, {}
+    assign :fe_phase_counts, {}
+    assign :fe_working_pattern_counts, {}
+    assign :fe_subjects_counts, {}
 
     if jobseeker.present?
       sign_in(jobseeker, scope: :jobseeker)

@@ -11,18 +11,18 @@
         .govuk-grid-column-one-third
           h3.govuk-heading-s = t(".support_roles")
           ul.govuk-list
-            - landing_page_support_roles_list.each do |landing_page, role |
+            - landing_page_support_roles_list.each do |landing_page, role|
               - count = @role_counts.fetch(role.to_sym, 0)
               li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
         .govuk-grid-column-one-third
           h3.govuk-heading-s = t(".education_phases")
           ul.govuk-list
-            - landing_page_phases_list.each do |landing_page, phase |
+            - landing_page_phases_list.each do |landing_page, phase|
               - count = @phase_counts.fetch(phase.to_sym, 0)
               li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
           h3.govuk-heading-s = t(".working_patterns")
           ul.govuk-list
-            - landing_page_working_patterns_list.each do |landing_page, working_pattern |
+            - landing_page_working_patterns_list.each do |landing_page, working_pattern|
               - count = @working_pattern_counts.fetch(working_pattern.to_sym, 0)
               li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
       div class="govuk-!-margin-top-6"
@@ -52,18 +52,18 @@
         .govuk-grid-column-one-third
           h3.govuk-heading-s = t(".support_roles")
           ul.govuk-list
-            - landing_page_support_roles_list.each do |landing_page, role |
+            - landing_page_support_roles_list.each do |landing_page, role|
               - count = @fe_role_counts.fetch(role.to_sym, 0)
               li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
         .govuk-grid-column-one-third
           h3.govuk-heading-s = t(".fe_phases")
           ul.govuk-list
-            - landing_page_fe_phases_list.each do |landing_page, phase |
+            - landing_page_fe_phases_list.each do |landing_page, phase|
               - count = @fe_phase_counts.fetch(phase.to_sym, 0)
               li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
           h3.govuk-heading-s = t(".working_patterns")
           ul.govuk-list
-            - landing_page_working_patterns_list.each do |landing_page, working_pattern |
+            - landing_page_working_patterns_list.each do |landing_page, working_pattern|
               - count = @fe_working_pattern_counts.fetch(working_pattern.to_sym, 0)
               li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
       div class="govuk-!-margin-top-6"
@@ -200,4 +200,3 @@
             - group.with_landing_page "hertfordshire"
             - group.with_landing_page "suffolk"
             - group.with_landing_page "norfolk"
-
