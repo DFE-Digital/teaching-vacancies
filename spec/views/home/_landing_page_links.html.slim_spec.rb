@@ -35,7 +35,7 @@ RSpec.describe "home/_landing_page_links" do
         expect(rendered).to have_link("Assistant headteacher")
         expect(rendered).to have_link("Deputy headteacher")
         expect(rendered).to have_link("Headteacher")
-        expect(rendered).to have_link("SENDCo (special educational needs and disabilities coordinator)")
+        expect(rendered).to have_link("SENCo (special educational needs and disabilities coordinator)")
         expect(rendered).to have_link("Other leadership roles")
       end
     end
@@ -43,7 +43,7 @@ RSpec.describe "home/_landing_page_links" do
     describe "support roles" do
       it "includes support role links" do
         expect(rendered).to have_link("Teaching assistant")
-        expect(rendered).to have_link("HLTA (higher level teaching assistant)")
+        expect(rendered).to have_link("HLTA (Higher level teaching assistant)")
         expect(rendered).to have_link("Learning support or cover supervisor")
       end
     end
@@ -61,16 +61,16 @@ RSpec.describe "home/_landing_page_links" do
     describe "school subjects" do
       it "includes core subject links" do
         expect(rendered).to have_link("Maths")
-        expect(rendered).to have_link("English and Media Studies")
-        expect(rendered).to have_link("Physical Education")
+        expect(rendered).to have_link("English and media studies")
+        expect(rendered).to have_link("Physical education")
         expect(rendered).to have_link("Science")
       end
 
       it "includes further subject links" do
         expect(rendered).to have_link("History")
         expect(rendered).to have_link("Geography")
-        expect(rendered).to have_link("ICT and Computer Science")
-        expect(rendered).to have_link("Economics and Business Studies")
+        expect(rendered).to have_link("ICT and computer science")
+        expect(rendered).to have_link("Economics and business studies")
         expect(rendered).to have_link("Art and design")
       end
 
@@ -81,7 +81,7 @@ RSpec.describe "home/_landing_page_links" do
       end
 
       it "includes modern foreign languages sub-group links" do
-        expect(rendered).to have_link("Foreign Languages")
+        expect(rendered).to have_link("Foreign languages")
         expect(rendered).to have_link("French")
         expect(rendered).to have_link("Spanish")
         expect(rendered).to have_link("German")
@@ -137,12 +137,12 @@ RSpec.describe "home/_landing_page_links" do
 
       it "includes FE subject links" do
         expect(rendered).to have_link("Maths")
-        expect(rendered).to have_link("English and Media Studies")
+        expect(rendered).to have_link("English and media studies")
         expect(rendered).to have_link("History")
         expect(rendered).to have_link("Geography")
-        expect(rendered).to have_link("ICT and Computer Science")
-        expect(rendered).to have_link("Economics and Business Studies")
-        expect(rendered).to have_link("Dance, Drama and Music")
+        expect(rendered).to have_link("ICT and computer science")
+        expect(rendered).to have_link("Economics and business studies")
+        expect(rendered).to have_link("Dance, drama and music")
         expect(rendered).to have_link("Food technology")
         expect(rendered).to have_link("Health and Social Care")
         expect(rendered).to have_link("Design and technology")
