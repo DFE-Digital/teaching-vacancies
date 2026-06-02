@@ -136,20 +136,22 @@ en:
           title: Add training and continuing professional development (CPD)
           no_training: No training or CPD specified
         ask_for_support:
-          adjustments: "This could be:"
           adjustment_examples:
-            - organising equipment, like an adapted keyboard or a hearing loop
-            - putting you in touch with support staff before the day of your interview
-            - making sure classrooms are wheelchair accessible
-          closing: >-
-            It's against the law to discriminate against you if you have a disability.
-            You should not be asked questions about your health or your disability if they are not relevant to your teaching ability or practice.
-          heading: Ask for support if you have a disability or other needs
-          opening: >-
-            When you are attending an interview, you might benefit from extra support if you have a disability, a
-            mental health condition or educational needs. You can ask for the support that you need now. Adjustments will be made so you can attend an interview.
+            assistive_technology: using your own assistive technology
+            captions_hearing_loop_bsl: using captions, a hearing loop or a British Sign Language interpreter
+            contact_method: changing how we contact you, for example by email instead of phone
+            extra_time: extra time to read or answer questions
+            questions_in_writing: having interview questions in writing
+            quiet_room: using a quiet room
+            short_break: taking a short break
+            step_free_access: making sure the interview room has step-free access
+          adjustment_examples_intro: "This could include:"
+          arranging_support: You can tell us what would help now. We'll use this information to arrange support for your interview.
+          heading: Do you need support or adjustments for your interview?
+          needs: This can be for a disability, health condition, mental health condition, neurodivergence, temporary injury or another need.
+          opening: You can ask for support or an adjustment to help you take part in an interview.
           step_title: Ask for support
-          title: Ask for support if you have a disability — Application
+          title: Do you need support or adjustments for your interview? — Application
         declarations:
           heading: Declarations
           step_title: Declarations
@@ -568,7 +570,7 @@ en:
         application_sections: Application sections
         consent_text: In submitting this application, the candidate has consented to their data being shared and processed for recruitment purposes.
         ask_for_support:
-          heading: Ask for support if you have a disability or other needs
+          heading: Do you need support or adjustments for your interview?
           support_needed: Do you want to ask for support so that you can attend an interview?
         declarations:
           close_relationships: Do you have any family or close relationship with people within %{organisation}
