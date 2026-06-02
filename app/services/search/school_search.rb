@@ -40,12 +40,14 @@ class Search::SchoolSearch < Search::OrganisationSearch
   end
   # :nocov:
 
+  # :nocov:
   def education_phase
     return unless @search_criteria.key?(:education_phase)
 
     School::READABLE_PHASE_MAPPINGS.select { |_, v| @search_criteria[:education_phase].include? v }
                                    .map { |m| m.first.to_s }
   end
+  # :nocov:
 
   # :nocov:
   def key_stage_phases
