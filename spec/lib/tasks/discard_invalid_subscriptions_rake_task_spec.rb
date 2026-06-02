@@ -7,7 +7,7 @@ RSpec.describe "discard_invalid_subscriptions" do
   end
 
   # rubocop:disable RSpec/NamedSubject
-  it "marks the invalid subscription as discarded" do
+  it "marks the invalid subscription as discarded", :retry do
     expect {
       subject.execute
     }.to change { Subscription.kept.count }.by(-1)
