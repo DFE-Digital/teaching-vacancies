@@ -194,8 +194,6 @@ RSpec.describe Organisation do
   describe ".visible_to_jobseekers" do
     let!(:open_school) { create(:school, establishment_status: "Open", detailed_school_type: "Primary school") }
     let(:closed_school) { create(:school, establishment_status: "Closed", detailed_school_type: "Secondary school").tap(&:discard) }
-    let(:registered_trust) { create(:trust) }
-    let!(:unregistered_trust) { create(:trust) }
     let(:fe_school) { create(:school, establishment_status: "Open", detailed_school_type: "Further education") }
     let(:independent_school) { create(:school, establishment_status: "Open", detailed_school_type: "Other independent school") }
     let(:misc_school) { create(:school, establishment_status: "Open", detailed_school_type: "Miscellaneous") }
@@ -203,6 +201,8 @@ RSpec.describe Organisation do
     let(:independent_special_school) { create(:school, establishment_status: "Open", detailed_school_type: "Other independent special school") }
     let(:higher_education_school) { create(:school, establishment_status: "Open", detailed_school_type: "Higher education institutions") }
     let(:welsh_school) { create(:school, establishment_status: "Open", detailed_school_type: "Welsh establishment") }
+    let(:registered_trust) { create(:trust) }
+    let!(:unregistered_trust) { create(:trust) }
 
     before do
       create(:publisher, organisations: [registered_trust,
@@ -220,16 +220,12 @@ RSpec.describe Organisation do
       expect(Organisation.visible_to_jobseekers).to include(open_school)
     end
 
-    it "does not return unregistered trusts" do
-      expect(Organisation.visible_to_jobseekers).not_to include(unregistered_trust)
-    end
-
-    it "returns registered trusts" do
-      expect(Organisation.visible_to_jobseekers).to include(registered_trust)
+    it "returns registered and unregistered trusts" do
+      expect(Organisation.visible_to_jobseekers).to include(registered_trust, unregistered_trust)
     end
 
     it "does not return closed or out-of-scope schools" do
-      expect(Organisation.visible_to_jobseekers).to contain_exactly(open_school, registered_trust)
+      expect(Organisation.visible_to_jobseekers).to contain_exactly(open_school, registered_trust, unregistered_trust)
     end
   end
 
