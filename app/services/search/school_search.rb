@@ -1,49 +1,14 @@
-class Search::SchoolSearch
-  extend Forwardable
+class Search::SchoolSearch < Search::OrganisationSearch
+  attr_reader :organisation_types, :school_types
 
-  def_delegators :location_search, :point_coordinates, :polygon
-
-  attr_reader :search_criteria, :name, :location, :radius, :organisation_types, :school_types, :original_scope
-
-  def initialize(search_criteria, scope: Organisation.visible_to_jobseekers)
-    @search_criteria = search_criteria
-    @name = search_criteria[:name]
-    @location = search_criteria[:location]
-    @radius = search_criteria[:radius]
+  def initialize(search_criteria, scope:)
+    super
     @organisation_types = search_criteria[:organisation_types]
     @school_types = search_criteria[:school_types]
-    @original_scope = scope.where(scope.where_values_hash)
-    @scope = scope
-  end
-
-  def active_criteria
-    search_criteria
-      .reject { |k, v| v.blank? || (k == :radius && search_criteria[:location].blank?) }
   end
 
   def active_criteria?
     active_criteria.any?
-  end
-
-  def location_search
-    @location_search ||= Search::LocationBuilder.new(search_criteria[:location], search_criteria[:radius])
-  end
-
-  def wider_search_suggestions
-    @wider_search_suggestions ||= Search::WiderSuggestionsBuilder.call(self)
-  end
-
-  def organisations
-    @organisations ||= scope
-  end
-
-  def total_count
-    @total_count ||= organisations.count
-  end
-
-  def total_filters
-    filter_counts = %i[education_phase key_stage special_school job_availability organisation_types school_types].map { |filter| search_criteria[filter]&.count || 0 }
-    filter_counts.sum
   end
 
   def clear_filters_params
@@ -53,17 +18,12 @@ class Search::SchoolSearch
   private
 
   def scope
-    scope = @scope.all
+    scope = super
 
-    scope = scope.search_by_name(name) if name.present?
-    scope = scope.search_by_location(location, radius, polygon:) if location
     scope = scope.where(phase: education_phase) if education_phase
     scope = scope.where(phase: key_stage_phases) if key_stage_phases
     scope = apply_organisation_type_filter(scope)
-    scope = apply_school_type_filter(scope)
-    scope = scope.with_live_vacancies if @search_criteria.key?(:job_availability)
-
-    scope
+    apply_school_type_filter(scope)
   end
 
   def marker_for_map(vacancy_id, organisation_id, geopoint)

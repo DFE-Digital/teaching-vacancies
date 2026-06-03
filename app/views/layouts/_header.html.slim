@@ -41,6 +41,7 @@
   - else
     - navigation.with_navigation_item text: t("sub_nav.jobs"), href: jobs_path
     - navigation.with_navigation_item text: t("sub_nav.schools"), href: organisations_path
+    - navigation.with_navigation_item text: t("sub_nav.colleges"), href: colleges_path
     - if jobseeker_signed_in?
       - navigation.with_navigation_item text: t("sub_nav.jobseekers.applications"), href: jobseekers_job_applications_path
       - navigation.with_navigation_item text: t("nav.notifications_html", count: current_jobseeker.notifications.unread.count), href: jobseekers_notifications_path

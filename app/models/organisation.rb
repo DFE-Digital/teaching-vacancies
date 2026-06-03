@@ -13,7 +13,6 @@ class Organisation < ApplicationRecord
   SPECIAL_SCHOOL_TYPES = ["Community special school", "Foundation special school", "Non-maintained special school", "Academy special converter", "Academy special sponsor led", "Free schools special"].freeze
   NON_FAITH_RELIGIOUS_CHARACTER_TYPES = ["None", "Does not apply"].freeze
   OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES = [
-    "Further education",
     "Other independent school",
     "Online provider",
     "British schools overseas",
@@ -48,14 +47,14 @@ class Organisation < ApplicationRecord
 
   has_many :vacancy_templates, dependent: :destroy
 
-  scope :not_closed, -> { where.not(establishment_status: CLOSED_ESTABLISHMENT_STATUSES) }
   scope :schools, -> { where(type: "School") }
   scope :school_groups, -> { where(type: "SchoolGroup") }
   scope :trusts, -> { school_groups.where.not(uid: nil) }
   scope :local_authorities, -> { school_groups.where.not(local_authority_code: nil) }
   scope :in_vacancy_ids, ->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { vacancy_id: ids }).distinct }
 
-  scope :search_by_location, OrganisationLocationQuery
+  scope :search_by_location, ->(location_query, radius_in_miles, **options) { OrganisationLocationQuery.new(current_scope).call(location_query, radius_in_miles, **options) }
+
   pg_search_scope :search_by_name,
                   against: :name,
                   using: { tsearch: { prefix: true, tsvector_column: "searchable_content" } }
@@ -68,7 +67,7 @@ class Organisation < ApplicationRecord
 
   scope :not_out_of_scope, -> { where.not(detailed_school_type: Organisation::OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES).or(where(detailed_school_type: nil)) }
 
-  scope :visible_to_jobseekers, -> { schools.not_closed.not_out_of_scope.or(Organisation.trusts).registered_for_service }
+  scope :visible_to_jobseekers, -> { schools.kept.not_out_of_scope.or(Organisation.trusts).registered_for_service }
 
   scope :only_faith_schools, -> { where.not(religious_character: NON_FAITH_RELIGIOUS_CHARACTER_TYPES) }
 
@@ -129,7 +128,7 @@ class Organisation < ApplicationRecord
 
     if local_authority_code && local_authorities_extra_schools
       school_urns = local_authorities_extra_schools[local_authority_code]
-      School.where(urn: school_urns)
+      School.kept.where(urn: school_urns)
     else
       School.none
     end

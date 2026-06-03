@@ -1,4 +1,9 @@
 en:
+  helpers:
+    label:
+      college_search_form:
+        name: Name of College
+
   organisations:
     school_type: School type
     other_type: Type
@@ -13,6 +18,10 @@ en:
         label: Job availability
         options:
           true: Only show school with jobs available
+      college_job_availability:
+        label: Job availability
+        options:
+          true: Only show colleges with jobs available
     about:
       at_one_school: About %{organisation}
       at_multiple_schools: About the schools

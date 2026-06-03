@@ -2,8 +2,6 @@ class School < Organisation
   has_many :school_group_memberships, dependent: :destroy
   has_many :school_groups, through: :school_group_memberships
 
-  scope :not_excluded, -> { where.not(detailed_school_type: OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES) }
-
   validates :urn, uniqueness: true
 
   ACADEMY_TYPE = "Academies".freeze
@@ -34,6 +32,8 @@ class School < Organisation
   validates :school_type, inclusion: { in: VALID_SCHOOL_TYPES, allow_nil: false }
   validates :detailed_school_type, presence: true
   validates :establishment_status, inclusion: { in: CLOSED_ESTABLISHMENT_STATUSES + OPEN_ESTABLISHMENT_STATUSES, allow_nil: false }
+
+  scope :colleges, -> { where(school_type: COLLEGE_SCHOOL_TYPE, detailed_school_type: FE_DETAILED_SCHOOL_TYPE) }
 
   CHRISTIAN_RELIGIOUS_TYPES = ["Anglican",
                                "United Reformed Church",
@@ -115,9 +115,9 @@ class School < Organisation
     if part_of_a_trust?
       org_ids = [trust.id] + trust.schools.pluck(:id)
       PublishedVacancy.joins(:organisation_vacancies)
-            .where(organisation_vacancies: { organisation_id: org_ids })
-            .merge(PublishedVacancy.live)
-            .distinct
+                      .where(organisation_vacancies: { organisation_id: org_ids })
+                      .merge(PublishedVacancy.live)
+                      .distinct
     else
       PublishedVacancy.none
     end
