@@ -28,6 +28,6 @@
       = govuk_button_link_to(t(".publisher_section.signed_out.link_text.sign_in"), publishers_sign_in_path, class: "govuk-!-margin-bottom-2 govuk-button--secondary")
       p.govuk-body = t(".publisher_section.signed_out.create_account_html", create_account_link: govuk_link_to(t(".publisher_section.signed_out.link_text.create_account"), page_path("dsi-account-request"), class: "govuk-link--no-visited-state"))
 
-= render "landing_page_links"
+= render "landing_page_links", school_counts: @school_counts, fe_counts: @fe_counts
 
 = govuk_link_to(t(".browse_all"), jobs_path, class: "govuk-!-font-size-19")

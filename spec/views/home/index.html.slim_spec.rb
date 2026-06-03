@@ -2,19 +2,21 @@ require "rails_helper"
 
 RSpec.describe "home/index" do
   let(:organisation) { build_stubbed(:school) }
+  let(:empty_counts) do
+    HomeController::VacancyCounts.new(
+      role_counts: {},
+      phase_counts: {},
+      working_pattern_counts: {},
+      subjects_counts: {},
+    )
+  end
 
   before do
     allow(view).to receive_messages(show_cookies_banner?: false,
                                     current_organisation: organisation)
     assign :form, Jobseekers::SearchForm.new
-    assign :role_counts, {}
-    assign :phase_counts, {}
-    assign :working_pattern_counts, {}
-    assign :subjects_counts, {}
-    assign :fe_role_counts, {}
-    assign :fe_phase_counts, {}
-    assign :fe_working_pattern_counts, {}
-    assign :fe_subjects_counts, {}
+    assign :school_counts, empty_counts
+    assign :fe_counts, empty_counts
 
     if jobseeker.present?
       sign_in(jobseeker, scope: :jobseeker)

@@ -37,82 +37,121 @@ module LandingPagesHelper
     landing_page_link_or_text({ ect_statuses: [vacancy.ect_status] }, vacancy.ect_status.humanize)
   end
 
-  def landing_page_teaching_roles_list
-    { "teacher-jobs" => "teacher", "head-of-year-or-phase-jobs" => "head_of_year_or_phase", "head-of-department-or-curriculum-jobs" => "head_of_department_or_curriculum", "assistant-headteacher-jobs" => "assistant_headteacher", "deputy-headteacher-jobs" => "deputy_headteacher", "headteacher-jobs" => "headteacher", "sendco-jobs" => "sendco", "other-leadership-roles-jobs" => "other_leadership" }
-  end
+  TEACHING_ROLES_LIST = {
+    "teacher-jobs" => "teacher",
+    "head-of-year-or-phase-jobs" => "head_of_year_or_phase",
+    "head-of-department-or-curriculum-jobs" => "head_of_department_or_curriculum",
+    "assistant-headteacher-jobs" => "assistant_headteacher",
+    "deputy-headteacher-jobs" => "deputy_headteacher",
+    "headteacher-jobs" => "headteacher",
+    "sendco-jobs" => "sendco",
+    "other-leadership-roles-jobs" => "other_leadership",
+  }.freeze
 
-  def landing_page_support_roles_list
-    { "teaching-assistant-jobs" => "teaching_assistant", "higher-level-teaching-assistant-jobs" => "higher_level_teaching_assistant", "education-support-jobs" => "education_support", "administration-hr-data-finance-jobs" => "administration_hr_data_and_finance", "catering-cleaning-site-management-jobs" => "catering_cleaning_and_site_management", "it-support-jobs" => "it_support", "pastoral-health-welfare-jobs" => "pastoral_health_and_welfare", "other-support-roles-jobs" => "other_support" }
-  end
+  SUPPORT_ROLES_LIST = {
+    "teaching-assistant-jobs" => "teaching_assistant",
+    "higher-level-teaching-assistant-jobs" => "higher_level_teaching_assistant",
+    "education-support-jobs" => "education_support",
+    "administration-hr-data-finance-jobs" => "administration_hr_data_and_finance",
+    "catering-cleaning-site-management-jobs" => "catering_cleaning_and_site_management",
+    "it-support-jobs" => "it_support",
+    "pastoral-health-welfare-jobs" => "pastoral_health_and_welfare",
+    "other-support-roles-jobs" => "other_support",
+  }.freeze
 
-  def landing_page_phases_list
-    { "nursery-jobs" => "nursery", "primary-school-jobs" => "primary", "secondary-school-jobs" => "secondary", "sixth-form-or-college-jobs" => "sixth_form_or_college", "through-school-jobs" => "through" }
-  end
+  PHASES_LIST = {
+    "nursery-jobs" => "nursery",
+    "primary-school-jobs" => "primary",
+    "secondary-school-jobs" => "secondary",
+    "sixth-form-or-college-jobs" => "sixth_form_or_college",
+    "through-school-jobs" => "through",
+  }.freeze
 
-  def landing_page_working_patterns_list
-    { "full-time-school-jobs" => "full_time", "part-time-school-jobs" => "part_time", "school-job-shares" => "job_share", "school-term-time-jobs" => "part_time", "flexible-working-jobs-in-schools" => "part_time" }
-  end
+  WORKING_PATTERNS_LIST = {
+    "full-time-school-jobs" => "full_time",
+    "part-time-school-jobs" => "part_time",
+    "school-job-shares" => "job_share",
+    "school-term-time-jobs" => "part_time",
+    "flexible-working-jobs-in-schools" => "part_time",
+  }.freeze
 
-  def landing_page_fe_phases_list
-    { "sixth-form-or-college-jobs" => "sixth_form_or_college" }
-  end
+  FE_PHASES_LIST = { "sixth-form-or-college-jobs" => "sixth_form_or_college" }.freeze
 
-  def landing_page_fe_teaching_roles_list
-    { "fe-teacher-jobs" => "teacher", "fe-head-of-year-or-phase-jobs" => "head_of_year_or_phase", "fe-head-of-department-or-curriculum-jobs" => "head_of_department_or_curriculum", "fe-assistant-headteacher-jobs" => "assistant_headteacher", "fe-deputy-headteacher-jobs" => "deputy_headteacher", "fe-headteacher-jobs" => "headteacher", "fe-sendco-jobs" => "sendco", "fe-other-leadership-roles-jobs" => "other_leadership" }
-  end
+  FE_TEACHING_ROLES_LIST = {
+    "fe-teacher-jobs" => "teacher",
+    "fe-head-of-year-or-phase-jobs" => "head_of_year_or_phase",
+    "fe-head-of-department-or-curriculum-jobs" => "head_of_department_or_curriculum",
+    "fe-assistant-headteacher-jobs" => "assistant_headteacher",
+    "fe-deputy-headteacher-jobs" => "deputy_headteacher",
+    "fe-headteacher-jobs" => "headteacher",
+    "fe-sendco-jobs" => "sendco",
+    "fe-other-leadership-roles-jobs" => "other_leadership",
+  }.freeze
 
-  def landing_page_fe_support_roles_list
-    { "fe-teaching-assistant-jobs" => "teaching_assistant", "fe-higher-level-teaching-assistant-jobs" => "higher_level_teaching_assistant", "fe-education-support-jobs" => "education_support", "fe-administration-hr-data-finance-jobs" => "administration_hr_data_and_finance", "fe-catering-cleaning-site-management-jobs" => "catering_cleaning_and_site_management", "fe-it-support-jobs" => "it_support", "fe-pastoral-health-welfare-jobs" => "pastoral_health_and_welfare", "fe-other-support-roles-jobs" => "other_support" }
-  end
+  FE_SUPPORT_ROLES_LIST = {
+    "fe-teaching-assistant-jobs" => "teaching_assistant",
+    "fe-higher-level-teaching-assistant-jobs" => "higher_level_teaching_assistant",
+    "fe-education-support-jobs" => "education_support",
+    "fe-administration-hr-data-finance-jobs" => "administration_hr_data_and_finance",
+    "fe-catering-cleaning-site-management-jobs" => "catering_cleaning_and_site_management",
+    "fe-it-support-jobs" => "it_support",
+    "fe-pastoral-health-welfare-jobs" => "pastoral_health_and_welfare",
+    "fe-other-support-roles-jobs" => "other_support",
+  }.freeze
 
-  def landing_page_subjects_columns
-    [
-      %w[maths-teacher-jobs english-media-studies-teacher-jobs physical-education-teacher-jobs dance-drama-music-teacher-jobs science-teacher-jobs],
-      %w[history-teacher-jobs geography-teacher-jobs mfl-teacher-jobs],
-      %w[ict-computer-science-teacher-jobs economics-business-studies-teacher-jobs art-design-technology-teacher-jobs food-technology-teacher-jobs politics-humanities-social-sciences-teacher-jobs psychology-philosophy-sociology-re-teacher-jobs health-relationships-social-care-teacher-jobs],
-    ]
-  end
+  SUBJECTS_COLUMNS = [
+    %w[maths-teacher-jobs english-media-studies-teacher-jobs physical-education-teacher-jobs dance-drama-music-teacher-jobs science-teacher-jobs],
+    %w[history-teacher-jobs geography-teacher-jobs mfl-teacher-jobs],
+    %w[ict-computer-science-teacher-jobs economics-business-studies-teacher-jobs art-design-technology-teacher-jobs food-technology-teacher-jobs politics-humanities-social-sciences-teacher-jobs psychology-philosophy-sociology-re-teacher-jobs health-relationships-social-care-teacher-jobs],
+  ].freeze
 
-  def landing_page_subjects_list
-    {
-      "art-design-technology-teacher-jobs" => "Art and Design Technology",
-      "dance-drama-music-teacher-jobs" => "Dance, Drama and Music",
-      "economics-business-studies-teacher-jobs" => "Economics and Business Studies",
-      "english-media-studies-teacher-jobs" => "English and Media Studies",
-      "food-technology-teacher-jobs" => "Food technology",
-      "geography-teacher-jobs" => "Geography",
-      "health-relationships-social-care-teacher-jobs" => "Health and Social Care",
-      "history-teacher-jobs" => "History",
-      "ict-computer-science-teacher-jobs" => "ICT and Computer Science",
-      "maths-teacher-jobs" => "Mathematics",
-      "mfl-teacher-jobs" => "Foreign Languages",
-      "physical-education-teacher-jobs" => "Physical education",
-      "politics-humanities-social-sciences-teacher-jobs" => "Politics, Humanities and Social Sciences",
-      "psychology-philosophy-sociology-re-teacher-jobs" => "Psychology, Sociology and RE",
-      "science-teacher-jobs" => "Science",
-    }
-  end
+  SUBJECTS_LIST = {
+    "art-design-technology-teacher-jobs" => "Art and Design Technology",
+    "dance-drama-music-teacher-jobs" => "Dance, Drama and Music",
+    "economics-business-studies-teacher-jobs" => "Economics and Business Studies",
+    "english-media-studies-teacher-jobs" => "English and Media Studies",
+    "food-technology-teacher-jobs" => "Food technology",
+    "geography-teacher-jobs" => "Geography",
+    "health-relationships-social-care-teacher-jobs" => "Health and Social Care",
+    "history-teacher-jobs" => "History",
+    "ict-computer-science-teacher-jobs" => "ICT and Computer Science",
+    "maths-teacher-jobs" => "Mathematics",
+    "mfl-teacher-jobs" => "Foreign Languages",
+    "physical-education-teacher-jobs" => "Physical education",
+    "politics-humanities-social-sciences-teacher-jobs" => "Politics, Humanities and Social Sciences",
+    "psychology-philosophy-sociology-re-teacher-jobs" => "Psychology, Sociology and RE",
+    "science-teacher-jobs" => "Science",
+  }.freeze
 
-  def child_subjects_list
-    {
-      Spanish: "spanish-teacher-jobs",
-      French: "french-teacher-jobs",
-      Mandarin: "mandarin-teacher-jobs",
-      German: "german-teacher-jobs",
-      Classics: "classics-latin-teacher-jobs",
-      Biology: "biology-teacher-jobs",
-      Chemistry: "chemistry-teacher-jobs",
-      Physics: "physics-teacher-jobs",
-    }
-  end
+  CHILD_SUBJECTS_LIST = {
+    Spanish: "spanish-teacher-jobs",
+    French: "french-teacher-jobs",
+    Mandarin: "mandarin-teacher-jobs",
+    German: "german-teacher-jobs",
+    Classics: "classics-latin-teacher-jobs",
+    Biology: "biology-teacher-jobs",
+    Chemistry: "chemistry-teacher-jobs",
+    Physics: "physics-teacher-jobs",
+  }.freeze
+
+  def landing_page_teaching_roles_list = TEACHING_ROLES_LIST
+  def landing_page_support_roles_list = SUPPORT_ROLES_LIST
+  def landing_page_phases_list = PHASES_LIST
+  def landing_page_working_patterns_list = WORKING_PATTERNS_LIST
+  def landing_page_fe_phases_list = FE_PHASES_LIST
+  def landing_page_fe_teaching_roles_list = FE_TEACHING_ROLES_LIST
+  def landing_page_fe_support_roles_list = FE_SUPPORT_ROLES_LIST
+  def landing_page_subjects_columns = SUBJECTS_COLUMNS
+  def landing_page_subjects_list = SUBJECTS_LIST
+  def child_subjects_list = CHILD_SUBJECTS_LIST
 
   def landing_page_tallier(counts_by_subject)
-    landing_page_subjects_list.to_h do |landing_page, subject|
+    SUBJECTS_LIST.to_h do |landing_page, subject|
       subject_list = VacancyCounter::GROUPED_SUBJECTS.fetch(subject.to_sym, [subject.to_sym])
       # We supply 0 in case of a subject without any jobs.
       job_count = subject_list.reduce(0) { |sum, subject| sum + counts_by_subject.fetch(subject, 0) }
       child_subjects_counts = VacancyCounter::GROUPED_SUBJECTS.fetch(subject.to_sym, []).filter_map { |child_subject|
-        child_landing_page = child_subjects_list[child_subject]
+        child_landing_page = CHILD_SUBJECTS_LIST[child_subject]
         next unless child_landing_page
 
         [child_landing_page, counts_by_subject.fetch(child_subject, 0)]

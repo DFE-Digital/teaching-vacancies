@@ -76,7 +76,7 @@ class Organisation < ApplicationRecord
 
   scope :colleges, -> { where(school_type: COLLEGE_SCHOOL_TYPE) }
 
-  scope :in_scope_schools, -> { schools.not_closed.not_out_of_scope.or(Organisation.trusts) }
+  scope :in_scope_schools, -> { schools.kept.not_out_of_scope.or(Organisation.trusts) }
 
   scope :only_faith_schools, -> { where.not(religious_character: NON_FAITH_RELIGIOUS_CHARACTER_TYPES) }
 

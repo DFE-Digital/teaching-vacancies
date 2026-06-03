@@ -1,5 +1,11 @@
 require "rails_helper"
 RSpec.describe LandingPagesHelper do
+  describe "#landing_page_fe_subjects_list" do
+    it "returns FE_SUBJECTS_LIST" do
+      expect(helper.landing_page_fe_subjects_list).to eq(LandingPagesHelper::FE_SUBJECTS_LIST)
+    end
+  end
+
   describe "landing_page_tallier" do
     let(:subject_list) { { Science: 1, Mathematics: 2, Physics: 1, ICT: 2, Computing: 1 } }
 
