@@ -105,6 +105,21 @@ RSpec.describe "Job applications employments" do
           expect(response).to render_template(:new)
         end
       end
+
+      context "when the text fields exceed their word limits" do
+        let(:started_on_month) { "12" }
+        let(:main_duties) { "word " * (Employment::MAIN_DUTIES_MAX_WORDS + 1) }
+        let(:reason_for_leaving) { "word " * (Employment::REASON_FOR_LEAVING_MAX_WORDS + 1) }
+
+        it "links the error summary to the text areas" do
+          expect { post jobseekers_job_application_employments_path(job_application), params: params }
+            .to(not_change { Employment.count })
+
+          expect(response).to render_template(:new)
+          expect(response.body).to include('href="#jobseekers-job-application-details-employment-form-main-duties-field-error"')
+          expect(response.body).to include('href="#jobseekers-job-application-details-employment-form-reason-for-leaving-field-error"')
+        end
+      end
     end
 
     describe "PATCH #update" do
