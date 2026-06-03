@@ -87,7 +87,7 @@ RSpec.describe "vacancies/show" do
 
   describe "Jobseekers can apply for a vacancy" do
     context "with a website vacancy" do
-      let(:expected_link) { I18n.t("jobs.view_advert.school.school", href: "http://www.google.com") }
+      let(:expected_link) { I18n.t("jobs.view_advert.school", href: "http://www.google.com") }
       let(:jobseeker) { nil }
 
       context "with a published vacancy" do
@@ -102,7 +102,7 @@ RSpec.describe "vacancies/show" do
       end
 
       context "with a college vacancy" do
-        let(:expected_link) { I18n.t("jobs.view_advert.school.college", href: "http://www.google.com") }
+        let(:expected_link) { I18n.t("jobs.view_advert.college", href: "http://www.google.com") }
         let(:vacancy) do
           build_stubbed(:vacancy, :apply_via_website,
                         application_link: "www.google.com", organisations: [build(:college)])

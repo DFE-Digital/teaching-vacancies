@@ -315,9 +315,8 @@ en:
     share_on_twitter: Share to Twitter
     share_this_job: Share this job
     view_advert:
-      school:
-        school: View advert on school website
-        college: View advert on college website
+      school: View advert on school website
+      college: View advert on college website
       external: View advert on external website
 
     external:
