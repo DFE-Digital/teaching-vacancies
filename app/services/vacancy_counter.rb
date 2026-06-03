@@ -12,9 +12,6 @@ class VacancyCounter
     Science: %i[Biology Chemistry Physics],
   }.freeze
 
-  SCHOOL_PHASES = %w[nursery primary secondary through].freeze
-  FE_PHASES = %w[sixth_form_or_college].freeze
-
   class << self
     def role_counts(scope:)
       scope.map(&:job_roles).flatten.group_by(&:itself).symbolize_keys.transform_values(&:count)
