@@ -150,4 +150,10 @@ RSpec.describe Publisher do
       end
     end
   end
+
+  context "when email has a trailing space" do
+    it "can be saved" do
+      expect(build(:publisher, email: "fred.bloggs@contoso.com ")).to be_valid
+    end
+  end
 end

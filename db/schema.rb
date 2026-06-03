@@ -575,6 +575,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_30_131102) do
     t.tsvector "searchable_content"
     t.geometry "uk_geopoint", limit: {srid: 27700, type: "st_point"}
     t.string "religious_character", default: "None", null: false
+    t.datetime "discarded_at"
     t.index ["geopoint"], name: "index_organisations_on_geopoint", using: :gist
     t.index ["local_authority_code"], name: "index_organisations_on_local_authority_code", unique: true
     t.index ["searchable_content"], name: "index_organisations_on_searchable_content", using: :gin

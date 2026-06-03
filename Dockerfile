@@ -4,7 +4,7 @@
  # the hardcoded versions below when they have been updated in the alpine ruby image.
  # To find the current version of each package in the alpine image, search here:
  # https://pkgs.alpinelinux.org/packages?name=&branch=v3.23
-ARG PROD_PACKAGES="imagemagick=7.1.2.22-r0 zlib=1.3.2-r0 expat=2.7.5-r0 curl=8.19.0-r0 libcurl=8.19.0-r0 curl-dev=8.19.0-r0 libpng libjpeg libxml2 libxslt libpq=18.4-r0 tzdata shared-mime-info postgresql18=18.4-r0 vips-poppler vips-magick proj-dev lcms2=2.19-r0"
+ARG PROD_PACKAGES="zlib=1.3.2-r0 expat=2.7.5-r0 curl=8.19.0-r0 libcurl=8.19.0-r0 curl-dev=8.19.0-r0 libpng libjpeg libxml2 libxslt libpq=18.4-r0 tzdata shared-mime-info postgresql18=18.4-r0 vips-poppler vips-magick proj-dev lcms2=2.19-r0"
 
 FROM ruby:4.0.1-alpine3.23 AS builder
 
@@ -15,7 +15,7 @@ ENV DEV_PACKAGES="gcc libc-dev make yaml-dev nodejs npm postgresql18-dev build-b
 RUN apk add --no-cache $PROD_PACKAGES $DEV_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
-RUN gem install bundler:4.0.11 --no-document
+RUN gem install bundler:4.0.12 --no-document
 
 
 COPY Gemfile* ./
@@ -58,7 +58,7 @@ ARG PROD_PACKAGES
 RUN apk -U upgrade && apk add --no-cache $PROD_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
-RUN gem install bundler:4.0.11 --no-document
+RUN gem install bundler:4.0.12 --no-document
 
 COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/

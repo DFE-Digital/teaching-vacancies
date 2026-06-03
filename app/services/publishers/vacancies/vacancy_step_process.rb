@@ -50,16 +50,19 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
       end
     end
 
+    steps += additional_documents_steps
     steps + %i[contact_details confirm_contact_details]
   end
 
   def about_the_role_steps
-    first_steps = %i[about_the_role include_additional_documents]
-    last_steps = %i[school_visits visa_sponsorship]
+    %i[about_the_role school_visits visa_sponsorship]
+  end
+
+  def additional_documents_steps
     if vacancy.include_additional_documents
-      first_steps + [:documents] + last_steps
+      %i[include_additional_documents documents]
     else
-      first_steps + last_steps
+      %i[include_additional_documents]
     end
   end
 end

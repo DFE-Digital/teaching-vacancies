@@ -21,12 +21,12 @@ RSpec.describe "Publishers can edit a draft vacancy" do
           start_date: ["aria-allowed-attr"],
           pay_package: ["aria-allowed-attr"],
           about_the_role: ["aria-allowed-attr"],
-          include_additional_documents: [],
           school_visits: [],
           visa_sponsorship: ["aria-allowed-attr"],
           important_dates: ["aria-allowed-attr"],
           applying_for_the_job: [],
           anonymise_applications: [],
+          include_additional_documents: [],
           contact_details: ["aria-allowed-attr"],
         }
       end

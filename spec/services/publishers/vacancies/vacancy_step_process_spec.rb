@@ -88,7 +88,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
 
     context "application_process_steps" do
       it "has the required steps" do
-        expect(subject.steps).to include(:school_visits, :contact_details)
+        expect(subject.steps).to include(:school_visits, :include_additional_documents, :contact_details)
       end
 
       context "when the organisation is a school" do
@@ -143,6 +143,11 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
           expect(subject.steps).not_to include(:how_to_receive_applications)
           expect(subject.steps).not_to include(:application_link, :application_form)
         end
+
+        it "places additional documents after the application form type-specific steps" do
+          expect(subject.steps).to include(:applying_for_the_job, :anonymise_applications, :include_additional_documents, :contact_details)
+          expect(subject.steps.index(:include_additional_documents)).to be > subject.steps.index(:anonymise_applications)
+        end
       end
 
       context "when the vacancy does not allow job applications" do
@@ -158,13 +163,18 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
           it "has the expected steps" do
             expect(subject.steps).to include(:application_link)
           end
+
+          it "places additional documents after the application link step" do
+            expect(subject.steps).to include(:applying_for_the_job, :how_to_receive_applications, :application_link, :include_additional_documents, :contact_details)
+            expect(subject.steps.index(:include_additional_documents)).to be > subject.steps.index(:application_link)
+          end
         end
       end
     end
 
     context "about_the_role_steps" do
       it "has the required steps" do
-        expect(subject.steps).to include(:about_the_role, :include_additional_documents)
+        expect(subject.steps).to include(:about_the_role, :school_visits, :visa_sponsorship)
       end
 
       context "when include_additional_documents is true" do
