@@ -88,6 +88,88 @@ shared:
       - pastoral_health_and_welfare
       - other_support
 
+  ### FE Job roles
+  fe-teacher-jobs:
+    teaching_job_roles:
+      - teacher
+    phases:
+      - sixth_form_or_college
+  fe-headteacher-jobs:
+    teaching_job_roles:
+      - headteacher
+    phases:
+      - sixth_form_or_college
+  fe-deputy-headteacher-jobs:
+    teaching_job_roles:
+      - deputy_headteacher
+    phases:
+      - sixth_form_or_college
+  fe-assistant-headteacher-jobs:
+    teaching_job_roles:
+      - assistant_headteacher
+    phases:
+      - sixth_form_or_college
+  fe-head-of-department-or-curriculum-jobs:
+    teaching_job_roles:
+      - head_of_department_or_curriculum
+    phases:
+      - sixth_form_or_college
+  fe-head-of-year-or-phase-jobs:
+    teaching_job_roles:
+      - head_of_year_or_phase
+    phases:
+      - sixth_form_or_college
+  fe-sendco-jobs:
+    teaching_job_roles:
+      - sendco
+    phases:
+      - sixth_form_or_college
+  fe-other-leadership-roles-jobs:
+    teaching_job_roles:
+      - other_leadership
+    phases:
+      - sixth_form_or_college
+  fe-teaching-assistant-jobs:
+    support_job_roles:
+      - teaching_assistant
+    phases:
+      - sixth_form_or_college
+  fe-higher-level-teaching-assistant-jobs:
+    support_job_roles:
+      - higher_level_teaching_assistant
+    phases:
+      - sixth_form_or_college
+  fe-education-support-jobs:
+    support_job_roles:
+      - education_support
+    phases:
+      - sixth_form_or_college
+  fe-administration-hr-data-finance-jobs:
+    support_job_roles:
+      - administration_hr_data_and_finance
+    phases:
+      - sixth_form_or_college
+  fe-catering-cleaning-site-management-jobs:
+    support_job_roles:
+      - catering_cleaning_and_site_management
+    phases:
+      - sixth_form_or_college
+  fe-it-support-jobs:
+    support_job_roles:
+      - it_support
+    phases:
+      - sixth_form_or_college
+  fe-pastoral-health-welfare-jobs:
+    support_job_roles:
+      - pastoral_health_and_welfare
+    phases:
+      - sixth_form_or_college
+  fe-other-support-roles-jobs:
+    support_job_roles:
+      - other_support
+    phases:
+      - sixth_form_or_college
+
   ### Phases
   nursery-jobs:
     phases:

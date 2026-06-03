@@ -57,6 +57,14 @@ module LandingPagesHelper
     { "sixth-form-or-college-jobs" => "sixth_form_or_college" }
   end
 
+  def landing_page_fe_teaching_roles_list
+    { "fe-teacher-jobs" => "teacher", "fe-head-of-year-or-phase-jobs" => "head_of_year_or_phase", "fe-head-of-department-or-curriculum-jobs" => "head_of_department_or_curriculum", "fe-assistant-headteacher-jobs" => "assistant_headteacher", "fe-deputy-headteacher-jobs" => "deputy_headteacher", "fe-headteacher-jobs" => "headteacher", "fe-sendco-jobs" => "sendco", "fe-other-leadership-roles-jobs" => "other_leadership" }
+  end
+
+  def landing_page_fe_support_roles_list
+    { "fe-teaching-assistant-jobs" => "teaching_assistant", "fe-higher-level-teaching-assistant-jobs" => "higher_level_teaching_assistant", "fe-education-support-jobs" => "education_support", "fe-administration-hr-data-finance-jobs" => "administration_hr_data_and_finance", "fe-catering-cleaning-site-management-jobs" => "catering_cleaning_and_site_management", "fe-it-support-jobs" => "it_support", "fe-pastoral-health-welfare-jobs" => "pastoral_health_and_welfare", "fe-other-support-roles-jobs" => "other_support" }
+  end
+
   def landing_page_subjects_columns
     [
       %w[maths-teacher-jobs english-media-studies-teacher-jobs physical-education-teacher-jobs dance-drama-music-teacher-jobs science-teacher-jobs],

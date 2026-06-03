@@ -143,6 +143,88 @@ en:
       heading: "%{count} support roles"
       meta_description: "Find and apply for support roles in schools on Teaching Vacancies. Apply quickly and easily for full and part time jobs in schools."
 
+    ### FE Job roles
+    fe-teacher-jobs:
+      name: "Teacher or lecturer (%{count})"
+      title: "Further Education Teacher and Lecturer Jobs"
+      heading: "%{count} further education teacher and lecturer jobs"
+      meta_description: "Find teacher and lecturer jobs in further education colleges. Browse the latest FE teaching vacancies on Teaching Vacancies."
+    fe-headteacher-jobs:
+      name: "Headteacher (%{count})"
+      title: "Further Education Headteacher Jobs"
+      heading: "%{count} further education headteacher jobs"
+      meta_description: "Find headteacher jobs in further education colleges. Browse the latest FE leadership vacancies on Teaching Vacancies."
+    fe-deputy-headteacher-jobs:
+      name: "Deputy headteacher (%{count})"
+      title: "Further Education Deputy Headteacher Jobs"
+      heading: "%{count} further education deputy headteacher jobs"
+      meta_description: "Find deputy headteacher jobs in further education colleges. Browse the latest FE leadership vacancies on Teaching Vacancies."
+    fe-assistant-headteacher-jobs:
+      name: "Assistant headteacher (%{count})"
+      title: "Further Education Assistant Headteacher Jobs"
+      heading: "%{count} further education assistant headteacher jobs"
+      meta_description: "Find assistant headteacher jobs in further education colleges. Browse the latest FE leadership vacancies on Teaching Vacancies."
+    fe-head-of-department-or-curriculum-jobs:
+      name: "Head of department or curriculum (%{count})"
+      title: "Further Education Head of Department and Curriculum Jobs"
+      heading: "%{count} further education head of department or curriculum jobs"
+      meta_description: "Find head of department and curriculum jobs in further education colleges. Browse the latest FE leadership vacancies on Teaching Vacancies."
+    fe-head-of-year-or-phase-jobs:
+      name: "Head of year or phase (%{count})"
+      title: "Further Education Head of Year and Phase Jobs"
+      heading: "%{count} further education head of year or phase jobs"
+      meta_description: "Find head of year and phase jobs in further education colleges. Browse the latest FE leadership vacancies on Teaching Vacancies."
+    fe-sendco-jobs:
+      name: "SENDCo (special educational needs and disabilities coordinator) (%{count})"
+      title: "Further Education SENDCo Jobs"
+      heading: "%{count} further education SENDCo jobs"
+      meta_description: "Find SENDCo jobs in further education colleges. Browse the latest SEND coordinator vacancies in FE on Teaching Vacancies."
+    fe-other-leadership-roles-jobs:
+      name: "Other leadership roles (%{count})"
+      title: "Further Education Other Leadership Roles"
+      heading: "%{count} further education other leadership roles"
+      meta_description: "Find other leadership roles in further education colleges. Browse the latest FE leadership vacancies on Teaching Vacancies."
+    fe-teaching-assistant-jobs:
+      name: "Teaching assistant (%{count})"
+      title: "Further Education Teaching Assistant Jobs"
+      heading: "%{count} further education teaching assistant jobs"
+      meta_description: "Find teaching assistant jobs in further education colleges. Browse the latest FE support vacancies on Teaching Vacancies."
+    fe-higher-level-teaching-assistant-jobs:
+      name: "HLTA (higher level teaching assistant) (%{count})"
+      title: "Further Education HLTA Jobs"
+      heading: "%{count} further education higher level teaching assistant (HLTA) jobs"
+      meta_description: "Find higher level teaching assistant jobs in further education colleges. Browse the latest FE support vacancies on Teaching Vacancies."
+    fe-education-support-jobs:
+      name: "Learning support or cover supervisor (%{count})"
+      title: "Further Education Learning Support Jobs"
+      heading: "%{count} further education learning support and cover supervisor jobs"
+      meta_description: "Find learning support and cover supervisor jobs in further education colleges. Browse the latest FE support vacancies on Teaching Vacancies."
+    fe-administration-hr-data-finance-jobs:
+      name: "Administration, HR, data and finance (%{count})"
+      title: "Further Education Administration, HR, Data and Finance Jobs"
+      heading: "%{count} further education administration, HR, data and finance jobs"
+      meta_description: "Find administration, HR, data and finance jobs in further education colleges. Browse the latest FE support vacancies on Teaching Vacancies."
+    fe-catering-cleaning-site-management-jobs:
+      name: "Catering, cleaning and site management (%{count})"
+      title: "Further Education Catering, Cleaning and Site Management Jobs"
+      heading: "%{count} further education catering, cleaning and site management jobs"
+      meta_description: "Find catering, cleaning and site management jobs in further education colleges. Browse the latest FE support vacancies on Teaching Vacancies."
+    fe-it-support-jobs:
+      name: "IT support (%{count})"
+      title: "Further Education IT Support Jobs"
+      heading: "%{count} further education IT support jobs"
+      meta_description: "Find IT support jobs in further education colleges. Browse the latest FE support vacancies on Teaching Vacancies."
+    fe-pastoral-health-welfare-jobs:
+      name: "Pastoral, health and welfare (%{count})"
+      title: "Further Education Pastoral, Health and Welfare Jobs"
+      heading: "%{count} further education pastoral, health and welfare jobs"
+      meta_description: "Find pastoral, health and welfare jobs in further education colleges. Browse the latest FE support vacancies on Teaching Vacancies."
+    fe-other-support-roles-jobs:
+      name: "Other support roles (%{count})"
+      title: "Further Education Other Support Roles"
+      heading: "%{count} further education other support roles"
+      meta_description: "Find other support roles in further education colleges. Browse the latest FE support vacancies on Teaching Vacancies."
+
     ### Education phases
     nursery-jobs:
       name: "Nursery (%{count})"
