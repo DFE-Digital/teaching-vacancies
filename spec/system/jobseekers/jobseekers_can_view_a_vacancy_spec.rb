@@ -89,7 +89,7 @@ RSpec.describe "Viewing a single published vacancy" do
       let(:vacancy) { create(:vacancy, :apply_via_website, organisations: [school]) }
 
       scenario "a jobseeker can click on the application link" do
-        click_on I18n.t("jobs.view_advert.school")
+        click_on I18n.t("jobs.view_advert.school.school")
 
         expect(page.current_url).to eq vacancy.application_link
       end

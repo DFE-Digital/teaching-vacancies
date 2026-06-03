@@ -39,7 +39,7 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
     def description
       description = ""
       description += description_paragraph(I18n.t("jobs.skills_and_experience.jobseeker"), vacancy.skills_and_experience)
-      description += description_paragraph(I18n.t("jobs.school_offer.jobseeker"), vacancy.school_offer)
+      description += description_paragraph(I18n.t("jobs.school_offer.jobseeker.#{school_or_college_type}"), vacancy.school_offer)
       description += description_paragraph(I18n.t("jobs.further_details"), vacancy.further_details)
       description += description_paragraph(I18n.t("jobs.safeguarding_information.jobseeker"), vacancy.organisation.safeguarding_information)
       description.strip
@@ -74,6 +74,10 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
     end
 
     private
+
+    def school_or_college_type
+      vacancy.organisation.respond_to?(:college?) && vacancy.organisation.college? ? "college" : "school"
+    end
 
     # Every particular repost version of a vacancy will be live for a different 30 days period after the previous version.
     def date_from_publishing_version(offset_days)

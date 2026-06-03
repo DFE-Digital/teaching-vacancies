@@ -87,7 +87,7 @@ RSpec.describe "vacancies/show" do
 
   describe "Jobseekers can apply for a vacancy" do
     context "with a website vacancy" do
-      let(:expected_link) { I18n.t("jobs.view_advert.school", href: "http://www.google.com") }
+      let(:expected_link) { I18n.t("jobs.view_advert.school.school", href: "http://www.google.com") }
       let(:jobseeker) { nil }
 
       context "with a published vacancy" do
@@ -97,6 +97,18 @@ RSpec.describe "vacancies/show" do
         end
 
         it "has an application link" do
+          expect(rendered).to have_link(expected_link)
+        end
+      end
+
+      context "with a college vacancy" do
+        let(:expected_link) { I18n.t("jobs.view_advert.school.college", href: "http://www.google.com") }
+        let(:vacancy) do
+          build_stubbed(:vacancy, :apply_via_website,
+                        application_link: "www.google.com", organisations: [build(:college)])
+        end
+
+        it "uses college wording for the application link" do
           expect(rendered).to have_link(expected_link)
         end
       end
@@ -177,6 +189,14 @@ RSpec.describe "vacancies/show" do
       end
     end
 
+    describe "View advert on college website" do
+      let(:vacancy) { build_stubbed(:vacancy, :apply_via_website, organisations: [build(:college)]) }
+
+      it "has the correct text" do
+        expect(rendered).to have_content("View advert on college website (opens in new tab)")
+      end
+    end
+
     describe "Download an application form" do
       let(:vacancy) { create(:vacancy, :with_application_form) }
 
@@ -190,6 +210,14 @@ RSpec.describe "vacancies/show" do
 
       it "has the correct text" do
         expect(rendered).to have_content("View advert on external website (opens in new tab)")
+      end
+    end
+
+    describe "External college notice" do
+      let(:vacancy) { build_stubbed(:vacancy, :external, organisations: [build(:college)]) }
+
+      it "uses college wording" do
+        expect(rendered).to have_content("This college accepts applications through their own website")
       end
     end
   end

@@ -195,7 +195,9 @@ en:
         description_html: Change your information about your commitment to safeguarding in your %{link}.
         link_text: profile
     school_offer:
-      jobseeker: What the school offers its staff
+      jobseeker:
+        school: What the school offers its staff
+        college: What the college offers its staff
       publisher: What does your school offer?
       hint: Provide details about what your school can offer staff, for example, employee benefits, wellbeing support or professional development.
     flexi_working:
@@ -313,12 +315,18 @@ en:
     share_on_twitter: Share to Twitter
     share_this_job: Share this job
     view_advert:
-      school: View advert on school website
+      school:
+        school: View advert on school website
+        college: View advert on college website
       external: View advert on external website
 
     external:
-      notice: This school accepts applications through their own website, where you may also find more information about this job.
-      link: View advert on school website
+      notice:
+        school: This school accepts applications through their own website, where you may also find more information about this job.
+        college: This college accepts applications through their own website, where you may also find more information about this job.
+      link:
+        school: View advert on school website
+        college: View advert on college website
 
     preview_listing:
       heading: Preview this job listing
