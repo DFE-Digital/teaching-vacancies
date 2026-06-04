@@ -5,7 +5,7 @@ class EmploymentRecord < ApplicationRecord
 
   # This class represents 2 concerns - 'job' and 'break' (from employment)
   # which might have been better modelled as 2 different types
-  enum :employment_type, { job: 0, break: 1 }
+  enum :employment_type, { job: 0, break: 1, education_gap: 2 }
 
   validates :organisation, :job_title, presence: true, if: -> { job? }
 
