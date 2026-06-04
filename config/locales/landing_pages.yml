@@ -82,10 +82,10 @@ en:
       heading: "%{count} education and school support jobs"
       meta_description: "Find jobs for LSAs, HR managers, finance officers, admin assistants, cover supervisors and other support roles in schools near you."
     sendco-jobs:
-      name: "SENDCo (special educational needs and disabilities coordinator)"
-      title: "SEND Coordinator (SENDCo) Jobs"
-      heading: "%{count} SENDCo jobs"
-      meta_description: "Find the latest special educational needs co-ordinator (SENDCo/SENCo) jobs in schools near you, with salary details. Apply for vacancies now."
+      name: "SENCo (special educational needs coordinator)"
+      title: "SEN Coordinator (SENCo) Jobs"
+      heading: "%{count} SENCo jobs"
+      meta_description: "Find the latest special educational needs co-ordinator (SENCo) jobs in schools near you, with salary details. Apply for vacancies now."
     teacher-jobs:
       name: "Teacher"
       title: "Teacher Jobs"
