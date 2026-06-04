@@ -1,22 +1,28 @@
- # Some packages are defined here with a hardcoded version to resolve vulnerabilities in the packages coming with
- # Alpine v3.23
- # TODO: Regularly check in the alpine ruby "4.0.1-alpine3.23" images for its latest upgraded packages so we can remove
- # the hardcoded versions below when they have been updated in the alpine ruby image.
- # To find the current version of each package in the alpine image, search here:
- # https://pkgs.alpinelinux.org/packages?name=&branch=v3.23
+# Some packages are defined here with a hardcoded version to resolve vulnerabilities in the packages coming with
+# Alpine v3.23
+# TODO: Regularly check in the alpine ruby "4.0.1-alpine3.23" images for its latest upgraded packages so we can remove
+# the hardcoded versions below when they have been updated in the alpine ruby image.
+# To find the current version of each package in the alpine image, search here:
+# https://pkgs.alpinelinux.org/packages?name=&branch=v3.23
+
 # These are packages we need over-and-beyond the base image
+# The hardcoded versions are to resolve vulnerabilities in the default versions that come with Alpine v3.23.
+# We may able to remove the hardcoded versions when the alpine ruby image is updated with a patched version.
+# But we cannot remove the packages themselves as their presence here is required for our application to run.
 ARG EXTRA_PACKAGES="imagemagick libpng libjpeg libxml2 libxslt tzdata shared-mime-info vips-poppler vips-magick proj-dev libpq=18.4-r0 postgresql18=18.4-r0"
 # These are security patches to the base image
-ARG PROD_PACKAGES="zlib=1.3.2-r0 expat=2.7.5-r0 curl=8.19.0-r0 libcurl=8.19.0-r0 curl-dev=8.19.0-r0 lcms2=2.19-r0"
+# The hardcoded versions are to resolve vulnerabilities in the default versions that come with Alpine v3.23.
+# We may able to completely remove the reference to the package when the alpine ruby image is updated with a patched version.
+ARG PATCHED_BASE_PACKAGES="zlib=1.3.2-r0 expat=2.7.5-r0 curl=8.19.0-r0 libcurl=8.19.0-r0 curl-dev=8.19.0-r0 lcms2=2.19-r0"
 
 FROM ruby:4.0.5-alpine3.23 AS builder
 
 WORKDIR /app
 
 ARG EXTRA_PACKAGES
-ARG PROD_PACKAGES
+ARG PATCHED_BASE_PACKAGES
 ENV DEV_PACKAGES="gcc libc-dev make yaml-dev nodejs npm postgresql18-dev build-base git"
-RUN apk add --no-cache $EXTRA_PACKAGES $PROD_PACKAGES $DEV_PACKAGES
+RUN apk add --no-cache $EXTRA_PACKAGES $PATCHED_BASE_PACKAGES $DEV_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
 RUN gem install bundler:4.0.12 --no-document
@@ -58,10 +64,10 @@ FROM ruby:4.0.5-alpine3.23 AS production
 RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
 WORKDIR /app
 
-ARG PROD_PACKAGES
+ARG PATCHED_BASE_PACKAGES
 ARG EXTRA_PACKAGES
 
-RUN apk -U upgrade && apk add --no-cache $PROD_PACKAGES $EXTRA_PACKAGES
+RUN apk -U upgrade && apk add --no-cache $PATCHED_BASE_PACKAGES $EXTRA_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
 RUN gem install bundler:4.0.12 --no-document
