@@ -94,6 +94,9 @@ Rails.application.routes.draw do
       resources :breaks, only: %i[new create edit update destroy], controller: "job_applications/breaks" do
         get :confirm_destroy
       end
+      resources :education_gaps, only: %i[new create edit update destroy], controller: "job_applications/education_gaps" do
+        get :confirm_destroy
+      end
       resources :qualifications, only: %i[new create edit update destroy], controller: "job_applications/qualifications" do
         collection do
           get :select_category
