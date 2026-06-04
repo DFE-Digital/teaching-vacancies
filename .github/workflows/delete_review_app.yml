@@ -65,7 +65,7 @@ jobs:
         role-duration-seconds: 3600
         role-skip-session-tagging: true
 
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v6.0.2
       name: Checkout Code
 
     - uses: google-github-actions/auth@v3
