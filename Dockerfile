@@ -1,6 +1,6 @@
 # Some packages are defined here with a hardcoded version to resolve vulnerabilities in the packages coming with
 # Alpine v3.23
-# TODO: Regularly check in the alpine ruby "4.0.1-alpine3.23" images for its latest upgraded packages so we can remove
+# TODO: Regularly check in the alpine ruby "4.0.5-alpine3.23" images for its latest upgraded packages so we can remove
 # the hardcoded versions below when they have been updated in the alpine ruby image.
 # To find the current version of each package in the alpine image, search here:
 # https://pkgs.alpinelinux.org/packages?name=&branch=v3.23

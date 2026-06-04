@@ -1476,7 +1476,7 @@ CHECKSUMS
   zendesk_api (3.1.1) sha256=f85b646263729fee8dc3c47f02bb3caaf26f1650a094299dee46c063e26e7216
 
 RUBY VERSION
-  ruby 4.0.1
+  ruby 4.0.5
 
 BUNDLED WITH
   4.0.12
