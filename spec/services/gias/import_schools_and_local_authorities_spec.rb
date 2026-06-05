@@ -114,7 +114,7 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
                           "Town,Postcode\n" \
                           "100000,St John\x92s School,999," \
                           "Invalid school type,Other independent school," \
-                            "None,Open,Hampshire,," \
+                          "None,Open,Hampshire,," \
                           "11,7,Region,0," \
                           "http://test.com,?,?,?")
       end
@@ -138,7 +138,7 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
                           "Town,Postcode\n" \
                           "100000,St John\x92s School,999," \
                           "Independent schools,Other independent school," \
-                            "None,Open,Hampshire,," \
+                          "None,Open,Hampshire,," \
                           "11,7,Region,0," \
                           "test.com,?,?,?")
         subject.call
@@ -158,7 +158,7 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
                           "Town,Postcode\n" \
                           "100000,St John\x92s School,999," \
                           "Independent schools,Other independent school," \
-                            "None,Open,Hampshire,," \
+                          "None,Open,Hampshire,," \
                           "11,7,Region,0," \
                           ",?,?,?")
         subject.call
