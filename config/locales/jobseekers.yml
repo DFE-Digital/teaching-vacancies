@@ -188,6 +188,10 @@ en:
               If you had a gap between finishing full-time education and starting work that you have not explained then please %{link} to give details about it
             gaps_link_text: click here
           gap_with_duration: You have a gap in your work history from %{from} to %{to} (%{duration})
+          education_gap: Gap between education and work history
+          education_gap_section:
+            heading: Gap between education and work history
+            description: This section explains the gap between my education and work experience.
           heading: Work history
           no_employments: No employment specified
           step_title: Employment history
@@ -318,6 +322,19 @@ en:
           caption: Current role and employment history
           heading: Add a gap in work history
           title: Add a reason for gap — Application
+      education_gaps:
+        confirm_destroy:
+          caption: Current role and employment history
+          heading: Are you sure you want to delete this entry?
+          title: Confirm deletion of education gap — Application
+        edit:
+          caption: Current role and employment history
+          heading: Add a gap between education and work history
+          title: Change the gap between education and work history — Application
+        new:
+          caption: Current role and employment history
+          heading: Add a gap between education and work history
+          title: Add a gap between education and work history — Application
       training_and_cpds:
         heading: Training and continuing professional development (CPD)
         step_title: Training and continuing professional development (CPD)
