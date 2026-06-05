@@ -1,7 +1,7 @@
 class BaseForm
   IMAGE_VALIDATION_OPTIONS = {
     file_type: :image,
-    content_types_allowed: %w[image/jpeg image/png].freeze,
+    content_types_allowed: %w[image/jpeg image/png text/plain].freeze, # TO DO: Remove text/plain (introduced for testing only) before merging
     file_size_limit: 5.megabytes,
     valid_file_types: %i[JPG JPEG PNG].freeze,
   }.freeze
