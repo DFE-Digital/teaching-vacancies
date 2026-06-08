@@ -64,7 +64,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         expect(page).to have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
         expect(page).to have_content(jobseeker_profile.full_name)
         expect(page).to have_content(
-          "Teacher, Headteacher, Deputy headteacher, Assistant headteacher, " \
+          "Teacher or Lecturer, Headteacher, Deputy headteacher, Assistant headteacher, " \
           "Head of year or phase, Head of department or curriculum, " \
           "Teaching assistant, HLTA (higher level teaching assistant), " \
           "Learning support or cover supervisor, SENDCo (special educational needs and disabilities coordinator), " \
