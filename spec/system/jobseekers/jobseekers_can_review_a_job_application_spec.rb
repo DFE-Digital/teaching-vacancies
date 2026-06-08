@@ -59,6 +59,13 @@ RSpec.describe "Jobseekers can review a job application" do
         expect(page).to have_content(employment.started_on.to_fs(:month_year))
         expect(page).to have_content(employment.ended_on.to_fs(:month_year))
       end
+
+      job_application.employments.education_gap.each do |employment|
+        expect(page).to have_content(I18n.t("jobseekers.job_applications.build.employment_history.education_gap"))
+        expect(page).to have_content(employment.reason_for_break)
+        expect(page).to have_content(employment.started_on.to_fs(:month_year))
+        expect(page).to have_content(employment.ended_on.to_fs(:month_year))
+      end
     end
 
     within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.personal_statement.heading") do
