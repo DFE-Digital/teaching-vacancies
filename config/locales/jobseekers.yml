@@ -330,11 +330,11 @@ en:
         edit:
           caption: Current role and employment history
           heading: Add a gap between education and work history
-          title: Change the gap between education and work history — Application
+          title: Add a reason for gap between education and work history — Application
         new:
           caption: Current role and employment history
           heading: Add a gap between education and work history
-          title: Add a gap between education and work history — Application
+          title: Add a reason for gap between education and work history — Application
       training_and_cpds:
         heading: Training and continuing professional development (CPD)
         step_title: Training and continuing professional development (CPD)

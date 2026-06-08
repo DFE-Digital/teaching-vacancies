@@ -48,39 +48,29 @@ RSpec.describe Jobseekers::JobApplication::EmploymentHistoryForm, type: :model d
       end
     end
 
-    context "with a detectable education-to-employment gap" do
-      let(:unexplained_employment_gaps) { {} }
-
-      let(:qualification) { instance_double(Qualification, finished_studying?: true, year: 2018) }
-      let(:job) { instance_double(Employment, job?: true, education_gap?: false, break?: false, started_on: Date.new(2021, 3, 1), valid?: true) }
+    context "when there is a gap between education and first job" do
+      let(:job_application) { create(:job_application) }
+      let!(:job) { create(:employment, job_application: job_application, started_on: Date.new(2021, 3, 1)) }
+      let!(:qualification) { create(:qualification, job_application: job_application, finished_studying: true, year: 2018) }
 
       let(:attributes) do
         {
           employment_history_section_completed: "true",
           unexplained_employment_gaps: {},
-          employments: [job],
-          qualifications: [qualification],
+          employments: job_application.employments,
+          qualifications: job_application.qualifications,
         }
       end
 
-      it "adds an error when no education gap record exists" do
+      it "adds an error when there is an unexplained gap between education and first job" do
         expect(form).not_to be_valid
         expect(form.errors[:education_gap]).to include(
           "You have a gap in your work history between your education and first employment",
         )
       end
 
-      context "when an education gap record has been added" do
-        let(:gap_record) { instance_double(Employment, job?: false, education_gap?: true, break?: false, started_on: nil, valid?: true) }
-
-        let(:attributes) do
-          {
-            employment_history_section_completed: "true",
-            unexplained_employment_gaps: {},
-            employments: [job, gap_record],
-            qualifications: [qualification],
-          }
-        end
+      context "when the gap between education and first job is explained" do
+        let!(:education_gap) { create(:employment, :education_gap, job_application: job_application) }
 
         it "does not add an error" do
           expect(form.errors[:education_gap]).to be_empty
@@ -88,18 +78,17 @@ RSpec.describe Jobseekers::JobApplication::EmploymentHistoryForm, type: :model d
       end
     end
 
-    context "when qualification year equals first job year (no provable gap)" do
-      let(:unexplained_employment_gaps) { {} }
-
-      let(:qualification) { instance_double(Qualification, finished_studying?: true, year: 2021) }
-      let(:job) { instance_double(Employment, job?: true, education_gap?: false, break?: false, started_on: Date.new(2021, 9, 1), valid?: true) }
+    context "when there is no gap between education and first job" do
+      let(:job_application) { create(:job_application) }
+      let!(:job) { create(:employment, job_application: job_application, started_on: Date.new(2021, 9, 1)) }
+      let!(:qualification) { create(:qualification, job_application: job_application, finished_studying: true, year: 2021) }
 
       let(:attributes) do
         {
           employment_history_section_completed: "true",
           unexplained_employment_gaps: {},
-          employments: [job],
-          qualifications: [qualification],
+          employments: job_application.employments,
+          qualifications: job_application.qualifications,
         }
       end
 
@@ -110,15 +99,15 @@ RSpec.describe Jobseekers::JobApplication::EmploymentHistoryForm, type: :model d
     end
 
     context "when there are no jobs" do
-      let(:unexplained_employment_gaps) { {} }
-      let(:qualification) { instance_double(Qualification, finished_studying?: true, year: 2018) }
+      let(:job_application) { create(:job_application) }
+      let!(:qualification) { create(:qualification, job_application: job_application, finished_studying: true, year: 2018) }
 
       let(:attributes) do
         {
           employment_history_section_completed: "true",
           unexplained_employment_gaps: {},
-          employments: [],
-          qualifications: [qualification],
+          employments: job_application.employments,
+          qualifications: job_application.qualifications,
         }
       end
 
