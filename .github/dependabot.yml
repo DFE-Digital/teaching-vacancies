@@ -78,7 +78,6 @@ updates:
           - "activerecord"
           - "activestorage"
           - "activesupport"
-          - "bundler"
           - "rails"
           - "railties"
       # Rails patch updates are grouped together into a single PR.
