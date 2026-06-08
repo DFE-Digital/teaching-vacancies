@@ -129,6 +129,40 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
     end
   end
 
+  context "managing gap between education and work history" do
+    let(:employments) { [] }
+
+    it "allows jobseekers to add, change and delete a gap between education and work history" do
+      click_on I18n.t("buttons.add_education_gap")
+
+      expect(page).to have_current_path(new_jobseekers_job_application_education_gap_path(job_application), ignore_query: true)
+      expect(page).to have_content(I18n.t("jobseekers.job_applications.education_gaps.new.heading"))
+
+      click_on I18n.t("buttons.continue")
+
+      expect(page).to have_content("There is a problem")
+
+      fill_in "Enter reasons for gap between education and work history", with: "Finishing some stuff up"
+      click_on I18n.t("buttons.continue")
+
+      expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :employment_history), ignore_query: true)
+      expect(page).to have_content("Finishing some stuff up")
+
+      click_on "Change Gap between education and work history"
+
+      fill_in "Enter reasons for gap between education and work history", with: "Preparing to being work"
+      click_on I18n.t("buttons.continue")
+
+      expect(page).to have_content("Preparing to being work")
+      expect(page).not_to have_content("Finishing some stuff up")
+
+      click_on "Delete Gap between education and work history"
+      click_on I18n.t("buttons.confirm_destroy")
+
+      expect(page).not_to have_content("Preparing to being work")
+    end
+  end
+
   context "when there is at least one role" do
     let(:employments) do
       [
