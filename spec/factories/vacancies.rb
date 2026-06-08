@@ -113,7 +113,7 @@ FactoryBot.define do
 
       # Subjects are ignored when phases don't include secondary
       # SUBJECT_OPTIONS is a list of pairs (to go directly into an HTML select)
-      subjects { factory_sample(SUBJECT_OPTIONS.map(&:first), 2).sort }
+      subjects { factory_sample(FURTHER_EDUCATION_SUBJECT_OPTIONS.map(&:first), 3).sort }
 
       key_stages { factory_rand_sample(key_stages_for_phases, 2..3) }
       rand_contract_type = Vacancy.contract_types.keys.sample
