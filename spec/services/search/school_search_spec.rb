@@ -47,6 +47,21 @@ RSpec.describe Search::SchoolSearch do
   end
 
   describe "#organisations" do
+    context "with the default scope" do
+      subject { described_class.new(form_hash) }
+
+      let!(:school_without_registered_publisher) { create(:school, name: "External only school") }
+
+      before do
+        create(:school, :closed, name: "Closed school")
+        create(:school, name: "Out of scope school", detailed_school_type: "Other independent school")
+      end
+
+      it "returns in-scope GIAS schools even when they do not have registered publishers" do
+        expect(subject.organisations).to contain_exactly(school_without_registered_publisher)
+      end
+    end
+
     context "when no filters (except for radius) are given" do
       subject { described_class.new(form_hash, scope: scope) }
 

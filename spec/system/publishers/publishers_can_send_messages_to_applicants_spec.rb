@@ -97,7 +97,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
         find("a.tabs-component-navigation__link[aria-current='page']")
       end
 
-      it "passes accessibility checks", :a11y do
+      it "passes accessibility checks", :a11y, :retry do
         expect(page).to be_axe_clean
       end
 

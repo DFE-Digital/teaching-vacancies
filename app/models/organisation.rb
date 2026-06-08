@@ -47,6 +47,7 @@ class Organisation < ApplicationRecord
 
   has_many :vacancy_templates, dependent: :destroy
 
+  scope :not_closed, -> { where.not(establishment_status: CLOSED_ESTABLISHMENT_STATUSES) }
   scope :schools, -> { where(type: "School") }
   scope :school_groups, -> { where(type: "SchoolGroup") }
   scope :trusts, -> { school_groups.where.not(uid: nil) }
@@ -67,7 +68,7 @@ class Organisation < ApplicationRecord
 
   scope :not_out_of_scope, -> { where.not(detailed_school_type: Organisation::OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES).or(where(detailed_school_type: nil)) }
 
-  scope :visible_to_jobseekers, -> { schools.kept.not_out_of_scope.or(Organisation.trusts).registered_for_service }
+  scope :visible_to_jobseekers, -> { schools.kept.not_out_of_scope.or(Organisation.trusts) }
 
   scope :only_faith_schools, -> { where.not(religious_character: NON_FAITH_RELIGIOUS_CHARACTER_TYPES) }
 
@@ -190,9 +191,24 @@ class Organisation < ApplicationRecord
     name_changed? || super
   end
 
+  # Interface called by ActiveStorage::Blob (MalwareScannable) when one of this
+  # record's attached blobs is found unsafe. Purges the offending photo/logo and
+  # notifies publishers. Each model that owns scannable attachments defines its own.
+  def handle_unsafe_attachment(attachment)
+    attachment.purge_later
+    malware_scan_notifier_for(attachment.name)&.with(organisation: self)&.deliver
+  end
+
   private
 
   def slug_candidates
     [:name, %i[name town], %i[name postcode]]
+  end
+
+  def malware_scan_notifier_for(name)
+    case name
+    when "photo" then Publishers::OrganisationPhotoMalwareScanNotifier
+    when "logo"  then Publishers::OrganisationLogoMalwareScanNotifier
+    end
   end
 end

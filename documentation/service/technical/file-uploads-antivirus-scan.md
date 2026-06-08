@@ -41,31 +41,34 @@ columns 3
   attach(("Attach\nFile")) space:2
   block-beta
     columns 1
-    blob>"ActiveStorage Blob\n(Extended)"]
-    space:1
-    scanresult["Scan result\nrecording"]
+    blob>"ActiveStorage Blob"]
+    block-beta
+      columns 1
+      concern>"MalwareScannable concern"]
+      scanfetching["Scan result\nfetching & recording"]
+      space:1
+    end
   end
-  service>"FetchMalwareScanResult"]
+  space:1
   block-beta
     columns 1
     job>"FetchMalwareScanResultJob"]
-    block-beta
-      columns 1
-      handle>"Handle unsafe attachments\n(deletes and notifies)"]
-      unsafeorg["Unsafe org attachment"]
-      unsaferef["Unsafe reference document"]
-    end
+    polling["Polls & retries\nuntil result appears"]
+  end
+  space:1
+  block-beta
+    columns 1
+    model>"ActiveRecord Model"]
+    handler["Handles unsafe attachment\nDifferent business rules per model/attachment"]
   end
 
   attach -- "creates" -->blob
-  blob -- "contains" -->scanresult
-  blob -- "calls\non creation" -->job
-  service -- "sets result" --> scanresult
-  job -- "calls &\nresponds" <--> service
-  service -- "retrieves data" <-->blob
-  job -- "handles" --> handle
+  blob -- "includes" -->concern
+  concern -- "enqueues on creation" -->job
+  polling -- "triggers" --> scanfetching
+  scanfetching -- "if unsafe\nattempts to delegate" --> handler
 ```
 
-Based on the output of the AV scan result. The attachments will be purged, resources destroyed, notifications sent, etc (all handled by `FetchMalwareScanResultJob`).
+Based on the output of the AV scan result, `process_malware_scan_result!` on the blob records the state and delegates to each owning record's `handle_unsafe_attachment` method. This is where attachments are purged, resources destroyed, and notifications sent. Each model that owns scannable attachments defines its own handler; records without one are silently skipped.
 
 Also user journeys will check/validate that the attachments are AV clean before allowing users to proceed/submit.
