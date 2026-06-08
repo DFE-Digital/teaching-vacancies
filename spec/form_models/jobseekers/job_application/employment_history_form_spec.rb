@@ -50,9 +50,6 @@ RSpec.describe Jobseekers::JobApplication::EmploymentHistoryForm, type: :model d
 
     context "when there is a gap between education and first job" do
       let(:job_application) { create(:job_application) }
-      let!(:job) { create(:employment, job_application: job_application, started_on: Date.new(2021, 3, 1)) }
-      let!(:qualification) { create(:qualification, job_application: job_application, finished_studying: true, year: 2018) }
-
       let(:attributes) do
         {
           employment_history_section_completed: "true",
@@ -60,6 +57,11 @@ RSpec.describe Jobseekers::JobApplication::EmploymentHistoryForm, type: :model d
           employments: job_application.employments,
           qualifications: job_application.qualifications,
         }
+      end
+
+      before do
+        create(:employment, job_application: job_application, started_on: Date.new(2021, 3, 1))
+        create(:qualification, job_application: job_application, finished_studying: true, year: 2018)
       end
 
       it "adds an error when there is an unexplained gap between education and first job" do
@@ -70,7 +72,7 @@ RSpec.describe Jobseekers::JobApplication::EmploymentHistoryForm, type: :model d
       end
 
       context "when the gap between education and first job is explained" do
-        let!(:education_gap) { create(:employment, :education_gap, job_application: job_application) }
+        before { create(:employment, :education_gap, job_application: job_application) }
 
         it "does not add an error" do
           expect(form.errors[:education_gap]).to be_empty
@@ -80,9 +82,6 @@ RSpec.describe Jobseekers::JobApplication::EmploymentHistoryForm, type: :model d
 
     context "when there is no gap between education and first job" do
       let(:job_application) { create(:job_application) }
-      let!(:job) { create(:employment, job_application: job_application, started_on: Date.new(2021, 9, 1)) }
-      let!(:qualification) { create(:qualification, job_application: job_application, finished_studying: true, year: 2021) }
-
       let(:attributes) do
         {
           employment_history_section_completed: "true",
@@ -90,6 +89,11 @@ RSpec.describe Jobseekers::JobApplication::EmploymentHistoryForm, type: :model d
           employments: job_application.employments,
           qualifications: job_application.qualifications,
         }
+      end
+
+      before do
+        create(:employment, job_application: job_application, started_on: Date.new(2021, 9, 1))
+        create(:qualification, job_application: job_application, finished_studying: true, year: 2021)
       end
 
       it "does not add an error" do
@@ -100,8 +104,6 @@ RSpec.describe Jobseekers::JobApplication::EmploymentHistoryForm, type: :model d
 
     context "when there are no jobs" do
       let(:job_application) { create(:job_application) }
-      let!(:qualification) { create(:qualification, job_application: job_application, finished_studying: true, year: 2018) }
-
       let(:attributes) do
         {
           employment_history_section_completed: "true",
@@ -110,6 +112,8 @@ RSpec.describe Jobseekers::JobApplication::EmploymentHistoryForm, type: :model d
           qualifications: job_application.qualifications,
         }
       end
+
+      before { create(:qualification, job_application: job_application, finished_studying: true, year: 2018) }
 
       it "does not add an education gap error" do
         expect(form).to be_valid
