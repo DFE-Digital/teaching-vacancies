@@ -227,8 +227,8 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.6.2)
-    discard (1.4.0)
-      activerecord (>= 4.2, < 9.0)
+    discard (2.0.0)
+      activerecord (>= 7.0, < 9.0)
     docile (1.4.1)
     dotenv (3.2.0)
     dotenv-rails (3.2.0)
@@ -1007,7 +1007,7 @@ DEPENDENCIES
   debug (>= 1.0.0)
   devise
   dfe-analytics!
-  discard (~> 1.4)
+  discard (~> 2.0)
   dotenv-rails
   draper
   factory_bot_rails
@@ -1167,7 +1167,7 @@ CHECKSUMS
   binding_of_caller (2.0.0) sha256=e53eebf8428a85587aede7b43a83e7419eb85b8b690938a96aa330d03052d517
   brakeman (8.0.4) sha256=7bf921fa9638544835df9aa7b3e720a9a72c0267f34f92135955edd80d4dcf6f
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
-  bundler (4.0.12) sha256=7f8b757d28dfb636e7b24fba2344ac6dd13b5b24f4b46d62573d483f211825ac
+  bundler (4.0.13) sha256=19f08be7f27022cf0b89f27da0b044ae075e8270a9ef44ad248a932614e1ca3b
   business_time (0.13.0) sha256=d62cdd1dff5e619328701b8376b38934572bdc664e2bc7831573b1d2f7026f69
   byebug (13.0.0) sha256=d2263efe751941ca520fa29744b71972d39cbc41839496706f5d9b22e92ae05d
   capybara (3.40.0) sha256=42dba720578ea1ca65fd7a41d163dd368502c191804558f6e0f71b391054aeef
@@ -1194,7 +1194,7 @@ CHECKSUMS
   devise (5.0.4) sha256=d605f2b85854e74e56ee789e2d398702bc2d06e6bcd894717a670a3199c74cc1
   dfe-analytics (1.15.17)
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
-  discard (1.4.0) sha256=6efcd2a53ddf96781f81b825d398f1c88ab88c0faa84e131bea6e16ef95d65d0
+  discard (2.0.0) sha256=0fc520786b4d7b9b1ea8b2b3dadbb13c3e41d2ce7d297d04869baf1c9e30d2c0
   docile (1.4.1) sha256=96159be799bfa73cdb721b840e9802126e4e03dfc26863db73647204c727f21e
   dotenv (3.2.0) sha256=e375b83121ea7ca4ce20f214740076129ab8514cd81378161f11c03853fe619d
   dotenv-rails (3.2.0) sha256=657e25554ba622ffc95d8c4f1670286510f47f2edda9f68293c3f661b303beab
