@@ -119,7 +119,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
       context "when working_patterns includes `flexible`" do
         let(:response_body) do
           hash = JSON.parse(super())
-          hash["result"].first["workingPatterns"] = "full_time,flexible"
+          hash[0]["workingPatterns"] = "full_time,flexible"
           hash.to_json
         end
 
@@ -131,7 +131,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
       context "when working_patterns includes `flexible` and `part_time`" do
         let(:response_body) do
           hash = JSON.parse(super())
-          hash["result"].first["workingPatterns"] = "full_time,part_time,flexible"
+          hash[0]["workingPatterns"] = "full_time,part_time,flexible"
           hash.to_json
         end
 
@@ -143,7 +143,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
       context "when working_patterns includes `term_time`" do
         let(:response_body) do
           hash = JSON.parse(super())
-          hash["result"].first["workingPatterns"] = "full_time,term_time"
+          hash[0]["workingPatterns"] = "full_time,term_time"
           hash.to_json
         end
 
@@ -155,7 +155,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
       context "when working_patterns includes `term_time` and `part_time`" do
         let(:response_body) do
           hash = JSON.parse(super())
-          hash["result"].first["workingPatterns"] = "full_time,part_time,term_time"
+          hash[0]["workingPatterns"] = "full_time,part_time,term_time"
           hash.to_json
         end
 
@@ -167,7 +167,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
       context "when working pattern includes `job_share`" do
         let(:response_body) do
           hash = JSON.parse(super())
-          hash["result"].first["workingPatterns"] = "job_share"
+          hash[0]["workingPatterns"] = "job_share"
           hash.to_json
         end
 
@@ -183,7 +183,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
       context "when the working patterns list contains spaces" do
         let(:response_body) do
           hash = JSON.parse(super())
-          hash["result"].first["workingPatterns"] = "full_time, part_time, term_time"
+          hash[0]["workingPatterns"] = "full_time, part_time, term_time"
           hash.to_json
         end
 
@@ -311,7 +311,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
     describe "ect suitability mapping" do
       let(:response_body) do
         JSON.parse(super()).tap { |h|
-          h["result"].first["ectSuitable"] = ect_suitability
+          h[0]["ectSuitable"] = ect_suitability
         }.to_json
       end
 
@@ -377,7 +377,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
     context "when visa_sponsorship_available is not provided" do
       let(:response_body) do
         hash = JSON.parse(super())
-        hash["result"].first.delete("visaSponsorshipAvailable")
+        hash[0].delete("visaSponsorshipAvailable")
         hash.to_json
       end
 
@@ -389,7 +389,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
     describe "when external reference is not provided" do
       let(:response_body) do
         hash = JSON.parse(super())
-        hash["result"].first.delete("reference")
+        hash[0].delete("reference")
         hash.to_json
       end
 
@@ -404,8 +404,8 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
 
       let(:response_body) do
         JSON.parse(super()).tap { |h|
-          h["result"].first["schoolUrns"] = school_urns
-          h["result"].first["trustUID"] = trust_uid
+          h[0]["schoolUrns"] = school_urns
+          h[0]["trustUID"] = trust_uid
         }.to_json
       end
 
