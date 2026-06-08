@@ -20,7 +20,7 @@
     = govuk_button_link_to t("buttons.add_work_history"), new_jobseekers_job_application_employment_path(job_application), class: "govuk-button--secondary govuk-!-margin-bottom-10 employment-gap-buttons"
     = govuk_button_link_to t("buttons.add_gap"), new_jobseekers_job_application_break_path(job_application), class: "govuk-button--secondary govuk-!-margin-bottom-10 employment-gap-buttons"
 
-  h2.govuk-heading-l = t(".education_gap_section.heading")
+  h2.govuk-heading-l#education-gap-section = t(".education_gap_section.heading")
   p.govuk-body = t(".education_gap_section.description")
   - if (education_gaps = job_application.employments.education_gap).any?
     - education_gaps.each do |gap|
