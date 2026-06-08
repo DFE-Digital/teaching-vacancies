@@ -12,6 +12,8 @@ class WorkHistoryErrorSummaryPresenter
           gap_id = "gap-#{gap[:started_on].strftime('%Y%m%d')}-#{gap[:ended_on].strftime('%Y%m%d')}"
           [attribute, message, "##{gap_id}"]
         end
+      elsif attribute == :education_gap
+        [[attribute, messages.first, "#education-gap-section"]]
       else
         [[attribute, messages.first]]
       end

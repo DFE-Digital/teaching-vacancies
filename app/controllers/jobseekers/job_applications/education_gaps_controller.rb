@@ -3,7 +3,7 @@ class Jobseekers::JobApplications::EducationGapsController < Jobseekers::BaseCon
 
   def create
     if form.valid?
-      job_application.employments.education_gap.create(education_gap_params)
+      job_application.employments.education_gap.create!(education_gap_params)
       redirect_to back_path
     else
       render :new
@@ -12,7 +12,7 @@ class Jobseekers::JobApplications::EducationGapsController < Jobseekers::BaseCon
 
   def update
     if form.valid?
-      education_gap.update(education_gap_params)
+      education_gap.update!(education_gap_params)
       redirect_to back_path
     else
       render :edit
@@ -20,7 +20,7 @@ class Jobseekers::JobApplications::EducationGapsController < Jobseekers::BaseCon
   end
 
   def destroy
-    education_gap.destroy
+    education_gap.destroy!
     redirect_to back_path
   end
 
