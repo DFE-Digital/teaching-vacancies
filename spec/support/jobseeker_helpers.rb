@@ -146,7 +146,7 @@ module JobseekerHelpers
     fill_in "Awarding body", with: "University of Life"
     choose "Yes", name: "jobseekers_qualifications_degree_form[finished_studying]"
     fill_in "Grade", with: "2:1"
-    fill_in "Year", with: "1960"
+    fill_in "Year", with: "2019"
   end
 
   def fill_in_other_qualification
