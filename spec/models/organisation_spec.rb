@@ -252,6 +252,62 @@ RSpec.describe Organisation do
     end
   end
 
+  describe "#handle_unsafe_attachment" do
+    let(:organisation) { create(:school) }
+    let!(:publisher) { create(:publisher, organisations: [organisation]) }
+
+    def attach_file(organisation, attachment_name)
+      organisation.send(attachment_name).attach(
+        io: Rails.root.join("spec/fixtures/files/blank_job_spec.pdf").open,
+        filename: "#{attachment_name}.pdf",
+        content_type: "application/pdf",
+      )
+      organisation.send(attachment_name).attachment
+    end
+
+    context "when the attachment is a photo" do
+      let(:attachment) { attach_file(organisation, :photo) }
+
+      it "purges the attachment" do
+        expect { organisation.handle_unsafe_attachment(attachment) }
+          .to have_enqueued_job(ActiveStorage::PurgeJob)
+      end
+
+      it "sends an in-app notification to each publisher" do
+        organisation.handle_unsafe_attachment(attachment)
+        expect(publisher.notifications.last.message).to include(organisation.name)
+      end
+    end
+
+    context "when the attachment is a logo" do
+      let(:attachment) { attach_file(organisation, :logo) }
+
+      it "purges the attachment" do
+        expect { organisation.handle_unsafe_attachment(attachment) }
+          .to have_enqueued_job(ActiveStorage::PurgeJob)
+      end
+
+      it "sends an in-app notification to each publisher" do
+        organisation.handle_unsafe_attachment(attachment)
+        expect(publisher.notifications.last.message).to include(organisation.name)
+      end
+    end
+
+    context "when the attachment name is not photo or logo" do
+      let(:attachment) { instance_double(ActiveStorage::Attachment, name: "other", purge_later: nil) }
+
+      it "purges the attachment" do
+        organisation.handle_unsafe_attachment(attachment)
+        expect(attachment).to have_received(:purge_later)
+      end
+
+      it "does not deliver a notification" do
+        organisation.handle_unsafe_attachment(attachment)
+        expect(publisher.reload.notifications).to be_empty
+      end
+    end
+  end
+
   describe "deletion restrictions" do
     context "when organisation has vacancies" do
       let(:organisation) { create(:school) }
