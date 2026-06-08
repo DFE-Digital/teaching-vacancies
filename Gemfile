@@ -31,7 +31,7 @@ gem "business_time"
 gem "chartkick"
 gem "devise"
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.17"
-gem "discard", "~> 1.4"
+gem "discard", "~> 2.0"
 gem "draper"
 # we populate seeds from factory bot in review apps
 # These could be moved into test scope
