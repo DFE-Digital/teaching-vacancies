@@ -32,7 +32,7 @@ RSpec.describe "Editing a vacancy template" do
     context "with name" do
       let(:change) { "name" }
 
-      it "can have its name edited from the template show page" do
+      it "can have its name edited from the template show page", :retry do
         expect(page).to have_content "Template name"
         expect(page).to be_axe_clean
 

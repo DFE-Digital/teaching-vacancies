@@ -19,7 +19,7 @@ ENV DEV_PACKAGES="gcc libc-dev make yaml-dev nodejs npm postgresql18-dev build-b
 RUN apk add --no-cache $EXTRA_PACKAGES $PROD_PACKAGES $DEV_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
-RUN gem install bundler:4.0.12 --no-document
+RUN gem install bundler:4.0.13 --no-document
 
 
 COPY Gemfile* ./
@@ -64,7 +64,7 @@ ARG EXTRA_PACKAGES
 RUN apk -U upgrade && apk add --no-cache $PROD_PACKAGES $EXTRA_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
-RUN gem install bundler:4.0.12 --no-document
+RUN gem install bundler:4.0.13 --no-document
 
 COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
