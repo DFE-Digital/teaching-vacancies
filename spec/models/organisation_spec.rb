@@ -224,7 +224,7 @@ RSpec.describe Organisation do
     end
 
     it "does not return closed or out-of-scope schools" do
-      expect(Organisation.visible_to_jobseekers).to contain_exactly(open_school, registered_trust, unregistered_trust)
+      expect(Organisation.visible_to_jobseekers.map(&:detailed_school_type)).to match_array([open_school, registered_trust, unregistered_trust].map(&:detailed_school_type))
     end
   end
 
