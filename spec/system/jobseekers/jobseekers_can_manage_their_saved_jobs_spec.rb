@@ -82,14 +82,11 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
         end
       end
 
-      context "when deleting a saved job" do
-        before { click_on I18n.t("jobseekers.saved_jobs.index.delete"), match: :first }
-
-        it "deletes the saved job and redirects to the dashboard" do
-          expect(page).to have_content(I18n.t("jobseekers.saved_jobs.index.page_title"))
-          expect(page).to have_content(I18n.t("jobseekers.saved_jobs.destroy.success"))
-          expect(page).to have_css(".card-component", count: 2)
-        end
+      scenario "deleting an expired saved job redirects to the dashboard" do
+        click_on I18n.t("jobseekers.saved_jobs.index.delete"), match: :first
+        expect(page).to have_content(I18n.t("jobseekers.saved_jobs.index.page_title"))
+        expect(page).to have_content(I18n.t("jobseekers.saved_jobs.destroy.success"))
+        expect(page).to have_css(".card-component", count: 2)
       end
     end
 
