@@ -3,12 +3,14 @@ require "rails_helper"
 RSpec.describe Jobseekers::JobApplication::EmploymentHistoryForm, type: :model do
   subject(:form) { described_class.new(attributes) }
 
+  let(:job_application) { create(:job_application) }
+
   let(:attributes) do
     {
       employment_history_section_completed: employment_history_section_completed,
       unexplained_employment_gaps: unexplained_employment_gaps,
-      employments: [],
-      qualifications: [],
+      employments: job_application.employments,
+      qualifications: job_application.qualifications,
     }
   end
 
@@ -49,7 +51,6 @@ RSpec.describe Jobseekers::JobApplication::EmploymentHistoryForm, type: :model d
     end
 
     context "when there is a gap between education and first job" do
-      let(:job_application) { create(:job_application) }
       let(:attributes) do
         {
           employment_history_section_completed: "true",
@@ -60,7 +61,7 @@ RSpec.describe Jobseekers::JobApplication::EmploymentHistoryForm, type: :model d
       end
 
       before do
-        create(:employment, job_application: job_application, started_on: Date.new(2021, 3, 1))
+        create(:employment, job_application: job_application, started_on: Date.new(2021, 3, 1), ended_on: Date.new(2022, 1, 1))
         create(:qualification, job_application: job_application, finished_studying: true, year: 2018)
       end
 
@@ -81,7 +82,6 @@ RSpec.describe Jobseekers::JobApplication::EmploymentHistoryForm, type: :model d
     end
 
     context "when there is no gap between education and first job" do
-      let(:job_application) { create(:job_application) }
       let(:attributes) do
         {
           employment_history_section_completed: "true",
@@ -92,7 +92,7 @@ RSpec.describe Jobseekers::JobApplication::EmploymentHistoryForm, type: :model d
       end
 
       before do
-        create(:employment, job_application: job_application, started_on: Date.new(2021, 9, 1))
+        create(:employment, job_application: job_application, started_on: Date.new(2021, 9, 1), ended_on: Date.new(2022, 6, 1))
         create(:qualification, job_application: job_application, finished_studying: true, year: 2021)
       end
 
@@ -103,7 +103,6 @@ RSpec.describe Jobseekers::JobApplication::EmploymentHistoryForm, type: :model d
     end
 
     context "when there are no jobs" do
-      let(:job_application) { create(:job_application) }
       let(:attributes) do
         {
           employment_history_section_completed: "true",
