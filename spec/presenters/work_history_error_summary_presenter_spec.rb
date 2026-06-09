@@ -27,5 +27,17 @@ RSpec.describe WorkHistoryErrorSummaryPresenter do
         ],
       )
     end
+
+    context "with an education gap error" do
+      let(:errors) { { education_gap: ["You have a gap in your work history between your education and first employment"] } }
+
+      it "provides a link to the education gap section" do
+        expect(presenter.formatted_error_messages).to eq(
+          [
+            [:education_gap, "You have a gap in your work history between your education and first employment", "#education-gap-section"],
+          ],
+        )
+      end
+    end
   end
 end
