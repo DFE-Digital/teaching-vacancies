@@ -76,6 +76,7 @@ RSpec.describe Jobseekers::JobApplication::EmploymentHistoryForm, type: :model d
         before { create(:employment, :education_gap, job_application: job_application) }
 
         it "does not add an error" do
+          expect(form).to be_valid
           expect(form.errors[:education_gap]).to be_empty
         end
       end
