@@ -433,6 +433,32 @@ RSpec.describe Vacancy do
     end
   end
 
+  describe "#accepting_applications?" do
+    context "when the vacancy is live and has job applications enabled" do
+      subject { build_stubbed(:vacancy, enable_job_applications: true) }
+
+      it "returns true" do
+        expect(subject.accepting_applications?).to be true
+      end
+    end
+
+    context "when the vacancy does not enable job applications" do
+      subject { build_stubbed(:vacancy, enable_job_applications: false) }
+
+      it "returns false" do
+        expect(subject.accepting_applications?).to be false
+      end
+    end
+
+    context "when the vacancy is expired" do
+      subject { build_stubbed(:vacancy, :expired, enable_job_applications: true) }
+
+      it "returns false" do
+        expect(subject.accepting_applications?).to be false
+      end
+    end
+  end
+
   describe "#application_link" do
     it "returns the url" do
       vacancy = create(:vacancy, application_link: "https://example.com")

@@ -40,7 +40,10 @@ class Jobseekers::SavedJobsController < Jobseekers::BaseController
   end
 
   def saved_jobs
-    @saved_jobs ||= current_jobseeker.saved_jobs.includes(:vacancy).order("#{sort.by} #{sort.order}")
+    @saved_jobs ||= current_jobseeker.saved_jobs
+      .includes(:vacancy)
+      .order("#{sort.by} #{sort.order}")
+      .map { |saved_job| SavedJobDecorator.new(saved_job, current_jobseeker) }
   end
 
   def saved_job_params
