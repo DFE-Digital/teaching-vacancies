@@ -7,6 +7,7 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
   let(:vacancy1) { create(:vacancy, enable_job_applications: false, organisations: [organisation]) }
   let(:vacancy2) { create(:vacancy, enable_job_applications: true, organisations: [organisation]) }
   let(:expired_vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
+  let(:expired_external_vacancy) { create(:vacancy, :external, :expired, organisations: [organisation]).tap(&:discard!) }
 
   context "when logged in" do
     before { login_as(jobseeker, scope: :jobseeker) }
@@ -18,6 +19,7 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
         jobseeker.saved_jobs.create(vacancy: vacancy1)
         jobseeker.saved_jobs.create(vacancy: vacancy2)
         jobseeker.saved_jobs.create(vacancy: expired_vacancy)
+        jobseeker.saved_jobs.create(vacancy: expired_external_vacancy)
 
         visit jobseekers_saved_jobs_path
       end
@@ -30,45 +32,45 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
         it "shows saved jobs" do
           expect(page).to have_content(I18n.t("jobseekers.saved_jobs.index.page_title"))
           expect(page).to have_css("h1.govuk-heading-l", text: I18n.t("jobseekers.saved_jobs.index.page_title"))
-          expect(page).to have_css(".card-component", count: 3)
+          expect(page).to have_css(".card-component", count: 4)
 
-          within ".card-component:nth-child(1)" do
+          within ".card-component:nth-child(2)" do
             expect(page).to have_css(".card-component__header", text: expired_vacancy.job_title)
           end
 
-          within ".card-component:nth-child(2)" do
+          within ".card-component:nth-child(3)" do
             expect(page).to have_css(".card-component__header", text: vacancy2.job_title)
           end
 
-          within ".card-component:nth-child(3)" do
+          within ".card-component:nth-child(4)" do
             expect(page).to have_css(".card-component__header", text: vacancy1.job_title)
           end
         end
 
         it "shows job closed label for expired jobs" do
-          within ".card-component:nth-child(1)" do
+          within ".card-component:nth-child(2)" do
             expect(page).to have_css(".card-component__body", text: I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
           end
 
-          within ".card-component:nth-child(2)" do
+          within ".card-component:nth-child(3)" do
             expect(page).not_to have_css(".card-component__body", text: I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
           end
 
-          within ".card-component:nth-child(3)" do
+          within ".card-component:nth-child(4)" do
             expect(page).not_to have_css(".card-component__body", text: I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
           end
         end
 
         it "only allows jobseekers to apply for jobs that have not expired" do
-          within ".card-component:nth-child(1)" do
+          within ".card-component:nth-child(2)" do
             expect(page).not_to have_link(I18n.t("jobseekers.saved_jobs.index.apply"))
           end
 
-          within ".card-component:nth-child(2)" do
+          within ".card-component:nth-child(3)" do
             expect(page).to have_link(I18n.t("jobseekers.saved_jobs.index.apply"))
           end
 
-          within ".card-component:nth-child(3)" do
+          within ".card-component:nth-child(4)" do
             expect(page).not_to have_link(I18n.t("jobseekers.saved_jobs.index.apply"))
           end
         end
@@ -86,7 +88,16 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
         click_on I18n.t("jobseekers.saved_jobs.index.delete"), match: :first
         expect(page).to have_content(I18n.t("jobseekers.saved_jobs.index.page_title"))
         expect(page).to have_content(I18n.t("jobseekers.saved_jobs.destroy.success"))
-        expect(page).to have_css(".card-component", count: 2)
+        expect(page).to have_css(".card-component", count: 3)
+      end
+
+      scenario "deleting an expired soft-deleted saved job redirects to the dashboard" do
+        within ".card-component:nth-child(4)" do
+          click_on I18n.t("jobseekers.saved_jobs.index.delete")
+        end
+        expect(page).to have_content(I18n.t("jobseekers.saved_jobs.index.page_title"))
+        expect(page).to have_content(I18n.t("jobseekers.saved_jobs.destroy.success"))
+        expect(page).to have_css(".card-component", count: 3)
       end
     end
 
