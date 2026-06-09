@@ -1,0 +1,264 @@
+shared:
+  ##
+  # Configuration for FE (Further Education) landing pages.
+  # All entries here automatically get organisation_types: [Colleges] applied.
+  # See config/application.rb for how this file is merged into the main landing_pages config.
+  # See config/landing_pages.yml for non-FE landing pages.
+  #
+  organisation_type: Colleges
+
+  ### FE Job roles
+  fe-teacher-jobs:
+    teaching_job_roles:
+      - teacher
+  fe-headteacher-jobs:
+    teaching_job_roles:
+      - headteacher
+  fe-deputy-headteacher-jobs:
+    teaching_job_roles:
+      - deputy_headteacher
+  fe-assistant-headteacher-jobs:
+    teaching_job_roles:
+      - assistant_headteacher
+  fe-head-of-department-or-curriculum-jobs:
+    teaching_job_roles:
+      - head_of_department_or_curriculum
+  fe-head-of-year-or-phase-jobs:
+    teaching_job_roles:
+      - head_of_year_or_phase
+  fe-sendco-jobs:
+    teaching_job_roles:
+      - sendco
+  fe-other-leadership-roles-jobs:
+    teaching_job_roles:
+      - other_leadership
+  fe-teaching-assistant-jobs:
+    support_job_roles:
+      - teaching_assistant
+  fe-higher-level-teaching-assistant-jobs:
+    support_job_roles:
+      - higher_level_teaching_assistant
+  fe-education-support-jobs:
+    support_job_roles:
+      - education_support
+  fe-administration-hr-data-finance-jobs:
+    support_job_roles:
+      - administration_hr_data_and_finance
+  fe-catering-cleaning-site-management-jobs:
+    support_job_roles:
+      - catering_cleaning_and_site_management
+  fe-it-support-jobs:
+    support_job_roles:
+      - it_support
+  fe-pastoral-health-welfare-jobs:
+    support_job_roles:
+      - pastoral_health_and_welfare
+  fe-other-support-roles-jobs:
+    support_job_roles:
+      - other_support
+
+  ### FE Subjects
+  accountancy-and-finance-fe-jobs:
+    subjects:
+      - Accountancy and finance
+  agriculture-horticulture-land-based-studies-fe-jobs:
+    subjects:
+      - Agriculture/horticulture/land based studies
+  animal-care-fe-jobs:
+    subjects:
+      - Animal care
+  art-and-design-fe-jobs:
+    subjects:
+      - Art and design
+  biology-fe-jobs:
+    subjects:
+      - Biology
+  british-sign-language-fe-jobs:
+    subjects:
+      - British sign language
+  building-and-construction-fe-jobs:
+    subjects:
+      - Building and construction
+  catering-fe-jobs:
+    subjects:
+      - Catering
+  chemistry-fe-jobs:
+    subjects:
+      - Chemistry
+  childrens-development-and-learning-fe-jobs:
+    subjects:
+      - Children's development and learning
+  classics-fe-jobs:
+    subjects:
+      - Classics
+  computer-science-fe-jobs:
+    subjects:
+      - Computer science
+  construction-fe-jobs:
+    subjects:
+      - Construction
+  counselling-fe-jobs:
+    subjects:
+      - Counselling
+  customer-service-fe-jobs:
+    subjects:
+      - Customer service
+  dance-drama-and-music-fe-jobs:
+    subjects:
+      - Dance drama and music
+  design-and-technology-fe-jobs:
+    subjects:
+      - Design and technology
+  early-years-fe-jobs:
+    subjects:
+      - Early years
+  economics-and-business-studies-fe-jobs:
+    subjects:
+      - Economics and Business Studies
+  electrics-fe-jobs:
+    subjects:
+      - Electrics
+  engineering-fe-jobs:
+    subjects:
+      - Engineering
+  english-and-media-studies-fe-jobs:
+    subjects:
+      - English and Media Studies
+  english-as-a-foreign-language-fe-jobs:
+    subjects:
+      - English as a foreign language
+  fabrication-and-welding-fe-jobs:
+    subjects:
+      - Fabrication and welding
+  farming-fe-jobs:
+    subjects:
+      - Farming
+  fashion-fe-jobs:
+    subjects:
+      - Fashion
+  food-technology-fe-jobs:
+    subjects:
+      - Food technology
+  foreign-languages-fe-jobs:
+    subjects:
+      - Foreign languages
+  french-fe-jobs:
+    subjects:
+      - French
+  functional-skills-fe-jobs:
+    subjects:
+      - Functional skills
+  games-design-fe-jobs:
+    subjects:
+      - Games design
+  geography-fe-jobs:
+    subjects:
+      - Geography
+  german-fe-jobs:
+    subjects:
+      - German
+  graphic-design-fe-jobs:
+    subjects:
+      - Graphic design
+  hair-and-beauty-fe-jobs:
+    subjects:
+      - Hair and beauty
+  health-and-social-care-fe-jobs:
+    subjects:
+      - Health and Social Care
+  history-fe-jobs:
+    subjects:
+      - History
+  hotel-catering-and-travel-fe-jobs:
+    subjects:
+      - Hotel catering and travel
+  humanities-fe-jobs:
+    subjects:
+      - Humanities
+  ict-and-computer-science-fe-jobs:
+    subjects:
+      - ICT and Computer Science
+  land-and-property-management-fe-jobs:
+    subjects:
+      - Land and Property Management
+  leadership-and-management-fe-jobs:
+    subjects:
+      - Leadership and management
+  logistics-fe-jobs:
+    subjects:
+      - Logistics
+  mandarin-fe-jobs:
+    subjects:
+      - Mandarin
+  maths-fe-jobs:
+    subjects:
+      - Maths
+  modern-foreign-languages-fe-jobs:
+    subjects:
+      - Modern foreign languages
+  motor-vehicle-fe-jobs:
+    subjects:
+      - Motor vehicle
+  music-fe-jobs:
+    subjects:
+      - Music
+  people-management-fe-jobs:
+    subjects:
+      - People management
+  philosophy-fe-jobs:
+    subjects:
+      - Philosophy
+  photography-fe-jobs:
+    subjects:
+      - Photography
+  physical-education-fe-jobs:
+    subjects:
+      - Physical Education
+  physics-fe-jobs:
+    subjects:
+      - Physics
+  plumbing-and-heating-fe-jobs:
+    subjects:
+      - Plumbing and heating
+  politics-fe-jobs:
+    subjects:
+      - Politics
+  pshe-fe-jobs:
+    subjects:
+      - PSHE
+  psychology-fe-jobs:
+    subjects:
+      - Psychology
+  public-services-fe-jobs:
+    subjects:
+      - Public services
+  religious-education-fe-jobs:
+    subjects:
+      - Religious education
+  science-fe-jobs:
+    subjects:
+      - Science
+  send-fe-jobs:
+    subjects:
+      - SEND
+  sociology-fe-jobs:
+    subjects:
+      - Sociology
+  spanish-fe-jobs:
+    subjects:
+      - Spanish
+  sport-and-leisure-fe-jobs:
+    subjects:
+      - Sport and leisure
+  sports-science-fe-jobs:
+    subjects:
+      - Sports science
+  tourism-fe-jobs:
+    subjects:
+      - Tourism
+  welsh-fe-jobs:
+    subjects:
+      - Welsh
+  woodworking-joinery-and-carpentry-fe-jobs:
+    subjects:
+      - Woodworking joinery and carpentry

@@ -63,12 +63,6 @@ class Organisation < ApplicationRecord
                   against: :name,
                   using: { tsearch: { prefix: true, tsvector_column: "searchable_content" } }
 
-  scope(:registered_for_service, lambda do
-    registered_organisations = OrganisationPublisher.select(:organisation_id)
-    where(id: registered_organisations)
-      .or(where(id: SchoolGroupMembership.select(:school_id).where(school_group_id: registered_organisations)))
-  end)
-
   scope :not_out_of_scope, -> { where.not(detailed_school_type: OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES).or(where(detailed_school_type: nil)) }
 
   scope :schools_visible_to_jobseekers, -> { schools.kept.not_closed.not_out_of_scope }
@@ -76,7 +70,7 @@ class Organisation < ApplicationRecord
 
   scope :colleges, -> { where(school_type: COLLEGE_SCHOOL_TYPE) }
 
-  scope :in_scope_schools, -> { schools.kept.not_out_of_scope.or(Organisation.trusts) }
+  scope :in_scope_schools, -> { schools.kept.not_out_of_scope.where.not(school_type: COLLEGE_SCHOOL_TYPE).or(Organisation.trusts) }
 
   scope :only_faith_schools, -> { where.not(religious_character: NON_FAITH_RELIGIOUS_CHARACTER_TYPES) }
 

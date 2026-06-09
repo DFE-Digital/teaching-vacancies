@@ -1,0 +1,39 @@
+.govuk-grid-row
+  .govuk-grid-column-one-third
+    h3.govuk-heading-s = t("home.landing_page_links.teaching_roles")
+    ul.govuk-list
+      - teaching_roles_list.each do |landing_page, role|
+        - count = counts.role_counts.fetch(role.to_sym, 0)
+        li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
+  .govuk-grid-column-one-third
+    h3.govuk-heading-s = t("home.landing_page_links.support_roles")
+    ul.govuk-list
+      - support_roles_list.each do |landing_page, role|
+        - count = counts.role_counts.fetch(role.to_sym, 0)
+        li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
+  .govuk-grid-column-one-third
+    h3.govuk-heading-s = phases_heading
+    ul.govuk-list
+      - phases_list.each do |landing_page, phase|
+        - count = counts.phase_counts.fetch(phase.to_sym, 0)
+        li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
+    h3.govuk-heading-s = t("home.landing_page_links.working_patterns")
+    ul.govuk-list
+      - landing_page_working_patterns_list.each do |landing_page, working_pattern|
+        - count = counts.working_pattern_counts.fetch(working_pattern.to_sym, 0)
+        li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
+div class="govuk-!-margin-top-6"
+  h3.govuk-heading-s = t("home.landing_page_links.subjects")
+  .govuk-grid-row
+    - subjects_columns.each do |column_slugs|
+      .govuk-grid-column-one-third
+        ul.govuk-list
+          - column_slugs.each do |landing_page|
+            - tuple = tallied_subjects[landing_page]
+            - count = tuple.first
+            - child_subjects = tuple.second
+            li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
+            - if child_subjects.any?
+              ul.govuk-list--bullet
+                - child_subjects.each do |child_landing_page, child_count|
+                  li = govuk_link_to t("landing_pages.#{child_landing_page}.name", count: child_count), landing_page_path(child_landing_page), class: "govuk-link--no-visited-state"
