@@ -159,20 +159,20 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
       expect(page).to have_content("There is a problem")
 
-      fill_in "Enter reasons for gap between education and work history", with: "Preparing to being work"
+      fill_in "Enter reasons for gap between education and work history", with: "Preparing to work (ugh)"
       fill_in "jobseekers_break_form[started_on(1i)]", with: "2018"
       fill_in "jobseekers_break_form[started_on(2i)]", with: "09"
       fill_in "jobseekers_break_form[ended_on(1i)]", with: "2019"
       fill_in "jobseekers_break_form[ended_on(2i)]", with: "06"
       click_on I18n.t("buttons.continue")
 
-      expect(page).to have_content("Preparing to being work")
+      expect(page).to have_content("Preparing to work (ugh)")
       expect(page).not_to have_content("Finishing some stuff up")
 
       click_on "Delete Gap between education and work history"
       click_on I18n.t("buttons.confirm_destroy")
 
-      expect(page).not_to have_content("Preparing to being work")
+      expect(page).not_to have_content("Preparing to work (ugh)")
     end
   end
 
