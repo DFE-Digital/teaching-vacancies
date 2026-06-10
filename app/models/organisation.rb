@@ -61,12 +61,6 @@ class Organisation < ApplicationRecord
                   against: :name,
                   using: { tsearch: { prefix: true, tsvector_column: "searchable_content" } }
 
-  scope(:registered_for_service, lambda do
-    registered_organisations = OrganisationPublisher.select(:organisation_id)
-    where(id: registered_organisations)
-      .or(where(id: SchoolGroupMembership.select(:school_id).where(school_group_id: registered_organisations)))
-  end)
-
   scope :not_out_of_scope, -> { where.not(detailed_school_type: Organisation::OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES).or(where(detailed_school_type: nil)) }
 
   scope :visible_to_jobseekers, -> { schools.not_closed.not_out_of_scope.or(Organisation.trusts) }
