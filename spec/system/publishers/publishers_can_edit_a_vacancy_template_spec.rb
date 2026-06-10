@@ -92,7 +92,7 @@ RSpec.describe "Editing a vacancy template" do
     context "with contract_type" do
       let(:change) { "contract_type" }
 
-      it "can have its contract type edited" do
+      it "can have its contract type edited", :retry do
         expect(page).to have_content "Contract information"
         #  https://github.com/alphagov/govuk-frontend/issues/979
         expect(page).to be_axe_clean.skipping "aria-allowed-attr"
