@@ -92,7 +92,7 @@ RSpec.describe Search::SchoolSearch do
     end
 
     context "when organisation_types are given" do
-      subject { described_class.new(form_hash) }
+      subject { described_class.new(form_hash, scope: Organisation.visible_to_jobseekers) }
 
       # for schools to be considered 'in-scope' for school search, they must be part of a group with a publisher
       before do
@@ -141,7 +141,7 @@ RSpec.describe Search::SchoolSearch do
     end
 
     context "when school_types are given" do
-      subject { described_class.new(form_hash) }
+      subject { described_class.new(form_hash, scope: Organisation.visible_to_jobseekers) }
 
       # for schools to be considered 'in-scope' for school search, they must be part of a group with a publisher
       before do
@@ -207,7 +207,7 @@ RSpec.describe Search::SchoolSearch do
   end
 
   context "when clearing filters" do
-    subject { described_class.new(form_hash) }
+    subject { described_class.new(form_hash, scope: Organisation.visible_to_jobseekers) }
 
     let(:name) { "Bexleyheath Academy" }
     let(:location) { "Sevenoaks" }
