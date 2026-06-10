@@ -25,7 +25,7 @@
     "core-js": "^3.49.0",
     "dfe-frontend": "^2.0.1",
     "dompurify": "^3.4.7",
-    "govuk-frontend": "^6.1.0",
+    "govuk-frontend": "^6.2.0",
     "leaflet": "^1.9.4",
     "leaflet-gesture-handling": "^1.2.2",
     "leaflet.markercluster": "^1.5.3",
