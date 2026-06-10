@@ -8,7 +8,7 @@
     label for="publishers-job-listing-job-details-form-subject-search"
       span.govuk-visually-hidden | Subject filter
 
-    - subject_options = vacancy.organisations.any?(&:college?) ? FURTHER_EDUCATION_SUBJECT_OPTIONS : SUBJECT_OPTIONS
+    - subject_options = vacancy.organisations.any?(&:fe_college?) ? FURTHER_EDUCATION_SUBJECT_OPTIONS : SUBJECT_OPTIONS
 
     div class="govuk-!-margin-bottom-6"
       = searchable_collection(collection: f.govuk_collection_check_boxes(:subjects,
