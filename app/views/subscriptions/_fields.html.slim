@@ -36,14 +36,14 @@
       - subjects = capture do
         = govuk_details(summary_text: safe_join([tag.span(t("jobs.filters.subjects"), "aria-label": t("jobs.aria_labels.filters.subjects"), title: t("jobs.filters.subjects"))]), open: @form.subjects) do
           = f.govuk_collection_check_boxes(:subjects,
-            FURTHER_EDUCATION_SUBJECT_OPTIONS,
+            VACANCY_SEARCH_SUBJECT_OPTIONS,
               :first,
               :first,
               :last,
               small: true,
               legend: nil,
               hint: nil,
-              collection_count: FURTHER_EDUCATION_SUBJECT_OPTIONS.count,
+              collection_count: VACANCY_SEARCH_SUBJECT_OPTIONS.count,
               options: { scrollable: true },
               text: { aria_label: t("jobs.filters.subject"), placeholder: t("helpers.hint.publishers_job_listing_subjects_form.subjects_placeholder") })
 
