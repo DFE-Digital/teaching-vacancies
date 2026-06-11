@@ -481,8 +481,8 @@ en:
             phase: The job listing will say it’s a %{phase} role.
         key_stages:
           step_title: Key stage
-#        school_visits:
-#          step_title: School visits
+        school_visits:
+          step_title: School visits
         start_date:
           step_title: Job start date
         subjects:

@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "publishers/vacancies/build/school_visits" do
   let(:publisher) { build_stubbed(:publisher) }
-  let(:vacancy) { build_stubbed(:vacancy) }
+  let(:vacancy) { build_stubbed(:vacancy, organisations: [organisation]) }
   let(:step_process) { Publishers::Vacancies::VacancyStepProcess.new(:school_visits, vacancy: vacancy, organisation: organisation) }
   let(:form) { Publishers::JobListing::SchoolVisitsForm.new }
 
