@@ -85,7 +85,7 @@
     {
       "label": "Solid Queue",
       "type": "shell",
-      "command": "bin/jobs --mode async",
+      "command": "bin/jobs --skip-recurring",
       "presentation": {
         "reveal": "always",
         "panel": "shared"
