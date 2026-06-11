@@ -1,4 +1,4 @@
-class DeleteOldVacancyConflictAttemptsJob < ApplicationJob
+class DeleteOldVacancyConflictAttemptsJob < SidekiqJob
   queue_as :default
 
   def perform

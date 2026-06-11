@@ -1,4 +1,4 @@
-class SendJobApplicationDataExpiryNotifierJob < ApplicationJob
+class SendJobApplicationDataExpiryNotifierJob < SidekiqJob
   queue_as :default
 
   def perform

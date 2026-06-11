@@ -80,6 +80,9 @@ gem "mail-notify"
 gem "mimemagic"
 # convert uploaded images to correct sizes
 gem "mini_magick"
+
+# dashboard for solid queue jobs
+gem "mission_control-jobs"
 gem "mutex_m"
 # DWP integration
 gem "net-sftp"
@@ -114,6 +117,7 @@ gem "rack-cors"
 gem "rails", RAILS_VERSION # Explicitly declare rails so we can do a "bundle update rails" when needed.
 gem "rails_semantic_logger"
 gem "recaptcha"
+gem "redis", "~> 4.8.1"
 # Geographic point conversions
 gem "rgeo-geojson"
 gem "rgeo-proj4"
@@ -124,12 +128,16 @@ gem "rswag-ui"
 gem "rubyzip"
 gem "sentry-rails"
 gem "sentry-ruby"
+
+# Use both sidekiq and solid queue during migration
 gem "sentry-sidekiq"
 # sidekiq 7 needs Redis 6.2.x which isn't available on Azure (yet)
 gem "sidekiq", "<7"
 gem "sidekiq-cron"
 # throttle sidekiq requests to avoid overwhelming the Govuk Notify API
 gem "sidekiq-limit_fetch"
+
+gem "solid_queue"
 # Skylight performance monitoring https://www.skylight.io/login
 gem "skylight"
 gem "slim-rails"

@@ -1,4 +1,4 @@
-class ImportPolygonDataJob < ApplicationJob
+class ImportPolygonDataJob < SidekiqJob
   queue_as :low
 
   def perform

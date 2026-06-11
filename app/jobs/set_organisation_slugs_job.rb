@@ -1,4 +1,4 @@
-class SetOrganisationSlugsJob < ApplicationJob
+class SetOrganisationSlugsJob < SidekiqJob
   queue_as :default
 
   def perform

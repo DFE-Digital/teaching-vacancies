@@ -1,4 +1,4 @@
-class SeedDatabaseJob < ApplicationJob
+class SeedDatabaseJob < SidekiqJob
   queue_as :low
 
   def perform

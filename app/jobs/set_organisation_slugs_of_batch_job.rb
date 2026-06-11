@@ -1,4 +1,4 @@
-class SetOrganisationSlugsOfBatchJob < ApplicationJob
+class SetOrganisationSlugsOfBatchJob < SidekiqJob
   queue_as :default
 
   def perform(ids)

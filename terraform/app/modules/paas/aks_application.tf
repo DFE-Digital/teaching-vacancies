@@ -67,10 +67,10 @@ module "web_application" {
   # send_traffic_to_maintenance_page = true
 }
 
-module "worker_application" {
+module "sidekiq_worker" {
   source = "../../vendor/modules/aks//aks/application"
 
-  name   = "worker"
+  name   = "sidekiq-worker"
   is_web = false
 
   namespace    = var.namespace
@@ -84,6 +84,29 @@ module "worker_application" {
 
   docker_image   = var.app_docker_image
   command        = ["/bin/sh", "-c", "bundle exec sidekiq -C config/sidekiq.yml"]
+  max_memory     = var.aks_worker_app_memory
+  replicas       = var.aks_worker_app_instances
+  enable_logit   = var.enable_logit
+  enable_gcp_wif = true
+}
+
+module "solid_queue_worker" {
+  source = "../../vendor/modules/aks//aks/application"
+
+  name   = "solid-queue-worker"
+  is_web = false
+
+  namespace    = var.namespace
+  environment  = var.environment
+  service_name = var.service_name
+
+  cluster_configuration_map  = module.cluster_data.configuration_map
+  kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
+  kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
+  run_as_non_root            = var.run_as_non_root
+
+  docker_image   = var.app_docker_image
+  command        = ["/bin/sh", "-c", "bin/jobs --mode async"]
   max_memory     = var.aks_worker_app_memory
   replicas       = var.aks_worker_app_instances
   enable_logit   = var.enable_logit

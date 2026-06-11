@@ -153,9 +153,8 @@ locals {
     var.app_env_values #Because of merge order, if present, the value of DOMAIN in .tfvars.json will overwrite app_env_domain
   )
 
-  web_app_name             = "${var.service_name}-${var.environment}"
-  worker_app_name          = "${var.service_name}-worker-${var.environment}"
-  worker_app_start_command = "bundle exec sidekiq -C config/sidekiq.yml"
+  web_app_name    = "${var.service_name}-${var.environment}"
+  worker_app_name = "${var.service_name}-worker-${var.environment}"
 
   postgres_extensions = { enable_extensions = ["btree_gist", "pgcrypto", "fuzzystrmatch", "pg_trgm", "postgis"] }
 

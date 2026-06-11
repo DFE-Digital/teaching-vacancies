@@ -1,4 +1,4 @@
-class RemoveInvalidSubscriptionsJob < ApplicationJob
+class RemoveInvalidSubscriptionsJob < SidekiqJob
   queue_as :low
 
   def perform
