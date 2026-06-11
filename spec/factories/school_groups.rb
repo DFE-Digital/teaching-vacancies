@@ -18,6 +18,7 @@ FactoryBot.define do
         "Group Locality": address,
         "Group Town": town,
         "Group County": county,
+        "Group Status": "Open",
       }
     end
     group_type { "Multi-academy trust" }
