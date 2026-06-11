@@ -7,7 +7,6 @@ import '@stimulus/polyfills';
 import '@hotwired/turbo-rails';
 
 import * as govukFrontend from 'govuk-frontend';
-import * as mojFrontend from '@ministryofjustice/frontend';
 
 import { Application } from '@hotwired/stimulus';
 import Rails from 'rails-ujs';
@@ -34,6 +33,7 @@ import ClipboardController from './js_components/clipboard/clipboard';
 import FormController from './js_components/form/form';
 import LocationFinderController from './js_components/locationFinder/locationFinder';
 import ManageQualificationsController from './js_components/manageQualifications/manageQualifications';
+import MultiSelectController from './js_components/multiSelect/multiSelect';
 import PanelController from './js_components/panel/panel';
 import ShowHiddenContentController from './js_components/showHiddenContent/showHiddenContent';
 import TrackedLinkController from './js_components/trackedLink/trackedLink';
@@ -69,6 +69,7 @@ application.register('filters', FiltersController);
 application.register('form', FormController);
 application.register('location-finder', LocationFinderController);
 application.register('manage-qualifications', ManageQualificationsController);
+application.register('multi-select', MultiSelectController);
 application.register('map', MapController);
 application.register('map-sidebar', MapSidebarController);
 application.register('panel', PanelController);
@@ -84,7 +85,6 @@ Rails.start();
 ActiveStorage.start();
 
 govukFrontend.initAll();
-mojFrontend.initAll();
 initTrixURLNormalizer();
 
 // Make links in message content open in new tabs
