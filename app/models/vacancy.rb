@@ -279,6 +279,10 @@ class Vacancy < ApplicationRecord
     blobs.reject(&:malware_scan_clean?)
   end
 
+  def for_an_fe_college?
+    organisations.any?(&:fe_college?)
+  end
+
   private
 
   def update_conversation_searchable_content

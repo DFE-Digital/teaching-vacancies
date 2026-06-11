@@ -31,4 +31,8 @@ class SchoolGroup < Organisation
   def ats_interstitial_variant
     "non_faith"
   end
+
+  def fe_college?
+    false
+  end
 end
