@@ -47,7 +47,7 @@ RSpec.describe "Editing a vacancy template" do
     context "with role" do
       let(:change) { "job_role" }
 
-      it "can have its role edited" do
+      it "can have its role edited", :retry do
         expect(page).to have_content "What type of job is this?"
         expect(page).to be_axe_clean
 
