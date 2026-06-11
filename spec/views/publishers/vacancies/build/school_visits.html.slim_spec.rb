@@ -1,13 +1,14 @@
 require "rails_helper"
 
 RSpec.describe "publishers/vacancies/build/school_visits" do
+  let(:local_authority) { build_stubbed(:local_authority) }
   let(:publisher) { build_stubbed(:publisher) }
   let(:vacancy) { build_stubbed(:vacancy, organisations: [organisation]) }
   let(:step_process) { Publishers::Vacancies::VacancyStepProcess.new(:school_visits, vacancy: vacancy, organisation: organisation) }
   let(:form) { Publishers::JobListing::SchoolVisitsForm.new }
 
   before do
-    allow(view).to receive_messages(current_organisation: organisation, vacancy: vacancy,
+    allow(view).to receive_messages(current_organisation: local_authority, vacancy: vacancy,
                                     back_path: "",
                                     step_process: step_process, form: form, wizard_path: "")
     sign_in(publisher, scope: :publisher)
