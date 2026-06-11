@@ -279,6 +279,10 @@ class Vacancy < ApplicationRecord
     blobs.reject(&:malware_scan_clean?)
   end
 
+  def for_an_fe_college?
+    organisations.any?(&:fe_college?)
+  end
+
   private
 
   def update_conversation_searchable_content
@@ -319,8 +323,5 @@ class Vacancy < ApplicationRecord
     (published? && !expired?) || draft?
   end
 
-  def for_an_fe_college?
-    organisations.any?(&:fe_college?)
-  end
 end
 # rubocop:enable Metrics/ClassLength
