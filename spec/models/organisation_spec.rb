@@ -190,6 +190,15 @@ RSpec.describe Organisation do
     end
   end
 
+  describe ".not_closed" do
+    let!(:open_trust) { create(:trust, establishment_status: "Open") }
+    let!(:closed_trust) { create(:trust, establishment_status: "Closed") }
+
+    it "returns open trusts and excludes closed trusts" do
+      expect(Organisation.trusts.not_closed).to contain_exactly(open_trust)
+    end
+  end
+
   describe ".trusts_not_closed" do
     let!(:open_trust) { create(:trust, gias_data: { "Group Status" => "Open" }) }
     let!(:closed_trust) { create(:trust, gias_data: { "Group Status" => "Closed" }) }
