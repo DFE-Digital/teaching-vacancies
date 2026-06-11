@@ -52,7 +52,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6.0.3
 
       - name: Cache swagger docs
         uses: actions/cache@v5
@@ -88,7 +88,7 @@ jobs:
 
     steps:
 
-      - uses: actions/checkout@v6.0.2
+      - uses: actions/checkout@v6.0.3
         name: Checkout Code
 
       - name: Configure AWS credentials
@@ -244,7 +244,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v6.0.2
+    - uses: actions/checkout@v6.0.3
       name: Checkout Code
 
     - name: Configure AWS credentials
@@ -339,7 +339,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v6.0.2
+      - uses: actions/checkout@v6.0.3
         name: Checkout Code
 
       - name: Set environment variables from build output
