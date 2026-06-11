@@ -190,15 +190,6 @@ RSpec.describe Organisation do
     end
   end
 
-  describe ".trusts_not_closed" do
-    let!(:open_trust) { create(:trust, gias_data: { "Group Status" => "Open" }) }
-    let!(:closed_trust) { create(:trust, gias_data: { "Group Status" => "Closed" }) }
-
-    it "returns trusts whose group status is not closed" do
-      expect(Organisation.trusts_not_closed).to contain_exactly(open_trust)
-    end
-  end
-
   describe ".visible_to_jobseekers" do
     let!(:open_school) { create(:school, establishment_status: "Open", detailed_school_type: "Primary school") }
     let(:closed_school) { create(:school, establishment_status: "Closed", detailed_school_type: "Secondary school").tap(&:discard) }
@@ -209,9 +200,9 @@ RSpec.describe Organisation do
     let(:independent_special_school) { create(:school, establishment_status: "Open", detailed_school_type: "Other independent special school") }
     let(:higher_education_school) { create(:school, establishment_status: "Open", detailed_school_type: "Higher education institutions") }
     let(:welsh_school) { create(:school, establishment_status: "Open", detailed_school_type: "Welsh establishment") }
-    let(:registered_trust) { create(:trust, gias_data: { "Group Status" => "Open" }) }
-    let!(:unregistered_trust) { create(:trust, gias_data: { "Group Status" => "Open" }) }
-    let!(:closed_trust) { create(:trust, gias_data: { "Group Status" => "Closed" }) }
+    let(:registered_trust) { create(:trust) }
+    let!(:unregistered_trust) { create(:trust) }
+    let!(:closed_trust) { create(:trust, establishment_status: "Closed") }
 
     before do
       create(:publisher, organisations: [registered_trust,
