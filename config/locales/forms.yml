@@ -579,7 +579,7 @@ en:
           leadership: Senior leader
           send_responsible: Special Educational Needs and Disability Coordinator (SENDCo)
           sendco: SENDCo (special educational needs and disabilities coordinator)
-          teacher: Teacher
+          teacher: Teacher or Lecturer
           teaching_assistant: Teaching assistant
           administration_hr_data_and_finance: Administration, HR, data and finance
           catering_cleaning_and_site_management: Catering, cleaning and site management
@@ -590,7 +590,7 @@ en:
           senior_leader: Senior leader
           middle_leader: Middle leader
         teaching_job_role_options:
-          teacher: Teacher
+          teacher: Teacher or Lecturer
           head_of_year_or_phase: Head of year or phase
           head_of_department_or_curriculum: Head of department or curriculum
           assistant_headteacher: Assistant headteacher
