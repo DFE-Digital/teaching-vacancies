@@ -32,7 +32,7 @@ class SchoolGroup < Organisation
     "non_faith"
   end
 
-  def college?
+  def fe_college?
     false
   end
 end

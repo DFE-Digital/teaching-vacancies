@@ -3,7 +3,7 @@
 = form_for form, url: wizard_path(step_process.current_step), method: :patch do |f|
   = f.govuk_error_summary
 
-  - heading_text = vacancy.organisations.any?(&:college?) ? vacancy_form_page_heading(vacancy, step_process, back_path: back_path, heading: t("publishers.vacancies.steps.college_visits")) : vacancy_form_page_heading(vacancy, step_process, back_path: back_path)
+  - heading_text = vacancy.for_an_fe_college? ? vacancy_form_page_heading(vacancy, step_process, back_path: back_path, heading: t("publishers.vacancies.steps.college_visits")) : vacancy_form_page_heading(vacancy, step_process, back_path: back_path)
 
   = f.govuk_radio_buttons_fieldset :school_visits, legend: { text: heading_text, tag: "h1", size: "l" } do
     = f.govuk_radio_button :school_visits, "true", link_errors: true

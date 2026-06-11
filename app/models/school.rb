@@ -123,7 +123,7 @@ class School < Organisation
     end
   end
 
-  def college?
+  def fe_college?
     school_type == COLLEGE_SCHOOL_TYPE && detailed_school_type == FE_DETAILED_SCHOOL_TYPE
   end
 

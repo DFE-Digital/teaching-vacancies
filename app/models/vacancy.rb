@@ -318,5 +318,9 @@ class Vacancy < ApplicationRecord
   def resettable?
     (published? && !expired?) || draft?
   end
+
+  def for_an_fe_college?
+    organisations.any?(&:fe_college?)
+  end
 end
 # rubocop:enable Metrics/ClassLength
