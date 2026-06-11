@@ -322,6 +322,5 @@ class Vacancy < ApplicationRecord
   def resettable?
     (published? && !expired?) || draft?
   end
-
 end
 # rubocop:enable Metrics/ClassLength
