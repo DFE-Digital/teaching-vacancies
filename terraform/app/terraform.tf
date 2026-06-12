@@ -95,6 +95,7 @@ module "paas" {
   azure_storage_blob_delete_retention_days  = var.azure_storage_blob_delete_retention_days
   azure_storage_blob_versioning_enabled     = var.azure_storage_blob_versioning_enabled
   azure_storage_blob_delete_after_days      = var.azure_storage_blob_delete_after_days
+  azure_storage_cors_allowed_origins        = var.azure_storage_cors_allowed_origins
 }
 
 module "statuscake" {
