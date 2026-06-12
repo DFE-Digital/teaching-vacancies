@@ -28,24 +28,29 @@ northcott = School.find_by!(urn: "118138")
 # Special free school
 martinbacon = School.find_by!(urn: "147661")
 
-# Team users
-users = [
-  { email: "alisa.ali@education.gov.uk", family_name: "Ali", given_name: "Alisa" },
-  { email: "david.thacker@education.gov.uk", family_name: "Thacker", given_name: "David" },
+# More active users - these are the only people who have vacancies made
+active_users = [
   { email: "fisal.yusuf@education.gov.uk", family_name: "Yusuf", given_name: "Fisal" },
-  { email: "joe.jeffrey@education.gov.uk", family_name: "Jeffrey", given_name: "Joe" },
-  { email: "jonathan.chambers@education.gov.uk", family_name: "Chambers", given_name: "Jonathan" },
   { email: "kyle.macpherson@education.gov.uk", family_name: "MacPherson", given_name: "Kyle" },
   { email: "marc.sardon@education.gov.uk", family_name: "Sardon", given_name: "Marc" },
-  { email: "olu.amure@education.gov.uk", family_name: "Amure", given_name: "Olu" },
-  { email: "patrick.cootes@education.gov.uk", family_name: "Cootes", given_name: "Patrick" },
   { email: "richard.pattinson@education.gov.uk", family_name: "Pattinson", given_name: "Richard" },
   { email: "ronan.machugh@education.gov.uk", family_name: "Machugh", given_name: "Ronan" },
-  { email: "sophie.mcmillan@education.gov.uk", family_name: "McMillan", given_name: "Sophie" },
   { email: "stephen.dicks@education.gov.uk", family_name: "Dicks", given_name: "Stephen" },
+]
+
+# Less active team members - they have access, but don't get vacancies made by default
+passive_users = [
+  { email: "alisa.ali@education.gov.uk", family_name: "Ali", given_name: "Alisa" },
+  { email: "david.thacker@education.gov.uk", family_name: "Thacker", given_name: "David" },
+  { email: "joe.jeffrey@education.gov.uk", family_name: "Jeffrey", given_name: "Joe" },
+  { email: "jonathan.chambers@education.gov.uk", family_name: "Chambers", given_name: "Jonathan" },
+  { email: "olu.amure@education.gov.uk", family_name: "Amure", given_name: "Olu" },
+  { email: "patrick.cootes@education.gov.uk", family_name: "Cootes", given_name: "Patrick" },
   { email: "yuan.yuan@education.gov.uk", family_name: "Yuan", given_name: "Yuan" },
   { email: "yvonne.ridley@education.gov.uk", family_name: "Ridley", given_name: "Yvonne" },
 ]
+
+users = active_users + passive_users
 
 # Schools with phase 'n/a' are tricky to create dynamic vacancies for - they tend to be
 # special schools that don't quite fit the primary/secondary/higher pattern
@@ -60,8 +65,6 @@ schools = [bexleyheath_school,
            martinbacon,
            osmaston_cofe]
 
-user_emails = users.map { |u| u.fetch(:email) }
-
 users.each do |user|
   organisations = [bexleyheath_school, weydon_trust, southampton_la, abraham_moss, aston_maths, st_anthony, osmaston_cofe]
   publisher = Publisher.create(organisations: organisations, **user)
@@ -73,11 +76,13 @@ users.each do |user|
   FactoryBot.create(:jobseeker, :for_seed_data, email: user[:email])
 end
 
+active_publishers = Publisher.where(email: active_users.map { |u| u.fetch(:email) })
+
 schools.each do |school|
   attrs = { organisations: [school],
             phases: (school.phase == "not_applicable" ? %w[secondary] : [school.phase]),
             publisher_organisation: school,
-            publisher: Publisher.all.sample }
+            publisher: active_publishers.sample }
   2.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
   FactoryBot.create(:vacancy, :for_seed_data, :apply_via_website, **attrs)
   FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs)
@@ -86,23 +91,23 @@ schools.each do |school|
 end
 
 # Vacancies at Weydon trust central office
-attrs = { organisations: [weydon_trust], phases: %w[secondary], publisher_organisation: weydon_trust, publisher: Publisher.all.sample }
+attrs = { organisations: [weydon_trust], phases: %w[secondary], publisher_organisation: weydon_trust, publisher: active_publishers.sample }
 FactoryBot.create(:vacancy, :for_seed_data, **attrs)
 
 # Vacancies at multiple schools in Weydon trust
-attrs = { organisations: weydon_trust.schools, phases: %w[secondary], publisher_organisation: weydon_trust, publisher: Publisher.all.sample }
+attrs = { organisations: weydon_trust.schools, phases: %w[secondary], publisher_organisation: weydon_trust, publisher: active_publishers.sample }
 # need some secondary jobs with subjects sometimes
 30.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
 
 # Vacancies at multiple schools in Southampton local authority
-attrs = { organisations: southampton_la.schools.first(5), phases: %w[primary], publisher_organisation: southampton_la, publisher: Publisher.all.sample }
+attrs = { organisations: southampton_la.schools.first(5), phases: %w[primary], publisher_organisation: southampton_la, publisher: active_publishers.sample }
 FactoryBot.create(:vacancy, :for_seed_data, **attrs)
 
 # Jobseekers
 FactoryBot.create(:jobseeker, email: "jobseeker@contoso.com")
 50.times { |i| FactoryBot.create(:jobseeker, email: "jobseeker#{i}@contoso.com") }
 
-emails_with_fewer_applications = ["jobseeker@contoso.com"] + user_emails
+emails_with_fewer_applications = ["jobseeker@contoso.com"] + active_publishers.map(&:email)
 # Job Applications
 statuses = JobApplication.statuses.keys
 PublishedVacancy.listed.first(50).each do |vacancy|
