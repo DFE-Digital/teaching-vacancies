@@ -120,8 +120,6 @@ gem "rgeo-proj4"
 # open API docs for external client integrations
 gem "rswag-api"
 gem "rswag-ui"
-# more limiting of Govuk Notify API requests
-gem "ruby-limiter"
 # needed to make zipfiles - often in sidekiq jobs
 gem "rubyzip"
 gem "sentry-rails"
