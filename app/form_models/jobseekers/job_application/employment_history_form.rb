@@ -43,13 +43,12 @@ module Jobseekers
       end
 
       def education_gap_is_explained
-        latest_qual_year = qualifications.where(finished_studying: true).maximum(:year)
-        first_job_year = employments.job.minimum(:started_on)&.year
+        latest_qual_year = qualifications.select(&:finished_studying?).filter_map(&:year).max
+        first_job_year = employments.select(&:job?).filter_map(&:started_on).min&.year
 
-        return unless latest_qual_year && first_job_year && latest_qual_year < first_job_year
-        return if employments.any?(&:education_gap?)
-
-        errors.add(:education_gap, :missing)
+        if latest_qual_year && first_job_year && latest_qual_year < first_job_year && employments.none?(&:education_gap?)
+          errors.add(:education_gap, :missing)
+        end
       end
 
       def employment_records_are_all_valid

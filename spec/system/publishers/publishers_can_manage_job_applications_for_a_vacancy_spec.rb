@@ -11,7 +11,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
   describe "viewing a job application with an education gap" do
     let(:job_application) { create(:job_application, :status_submitted, vacancy:) }
-    let!(:education_gap) { create(:employment, :education_gap, job_application: job_application) }
+    let!(:education_gap) { create(:education_gap, job_application: job_application) }
 
     it "displays the education gap in the work history section" do
       visit organisation_job_job_application_path(vacancy.id, job_application.id)

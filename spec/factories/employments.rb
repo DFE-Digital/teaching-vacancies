@@ -20,7 +20,7 @@ FactoryBot.define do
       employment_type { :break }
     end
 
-    trait :education_gap do
+    factory :education_gap do
       employment_type { :education_gap }
       organisation { nil }
       job_title { nil }
