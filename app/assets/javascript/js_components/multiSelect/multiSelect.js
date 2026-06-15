@@ -9,7 +9,7 @@ class MultiSelectController extends Controller {
     if (!$container || !$checkboxes.length) return;
 
     this.$checkboxes = $checkboxes;
-    this.$toggle = this.buildToggle(`${idPrefix}checkboxes-all`);
+    this.$toggle = MultiSelectController.buildToggle(`${idPrefix}checkboxes-all`);
     this.$toggleInput = this.$toggle.querySelector('input');
 
     $container.append(this.$toggle);
@@ -18,7 +18,7 @@ class MultiSelectController extends Controller {
     this.$checkboxes.forEach(($input) => $input.addEventListener('click', this.onCheckboxClick.bind(this)));
   }
 
-  buildToggle(id) {
+  static buildToggle(id) {
     const $toggle = document.createElement('div');
     const $input = document.createElement('input');
     const $label = document.createElement('label');
@@ -43,7 +43,7 @@ class MultiSelectController extends Controller {
   }
 
   onToggleClick() {
-    const checked = this.$toggleInput.checked;
+    const { checked } = this.$toggleInput;
     this.$checkboxes.forEach(($input) => { $input.checked = checked; });
   }
 
