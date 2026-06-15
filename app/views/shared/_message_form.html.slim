@@ -5,7 +5,7 @@ div class="govuk-!-margin-top-6"
   = form_for message_object, url: form_url, method: form_method do |f|
     = f.govuk_error_summary
 
-    .govuk-form-group
+    .govuk-form-group.message-form
       = f.rich_text_area :content, aria: { label: "Message" }
       noscript
         = f.govuk_text_area :content, label: { text: "Message" }, rows: 5
