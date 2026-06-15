@@ -27,7 +27,7 @@ module Jobseekers
         return unless application_form.is_a?(ActiveStorage::Attached::One)
 
         blob = application_form.blob
-        errors.add(:application_form, :unsafe_file, filename: blob.filename) if blob.malware_scan_malicious? || blob.malware_scan_scan_error?
+        errors.add(:application_form, :unsafe_file, filename: blob.filename) if blob.malware_scan_unsafe?
       end
     end
   end

@@ -172,17 +172,10 @@ class Vacancies::Import::Sources::Fusion
   end
 
   def results
-    feed["result"]
-  end
-
-  def feed
     response = HTTParty.get(FEED_URL)
     raise HTTParty::ResponseError, error_message unless response.success?
 
-    parsed_response = JSON.parse(response.body)
-    raise FusionImportError, error_message if parsed_response["error"]
-
-    parsed_response
+    JSON.parse(response.body)
   end
 
   def error_message

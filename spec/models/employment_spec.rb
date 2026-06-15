@@ -10,6 +10,32 @@ RSpec.describe Employment do
     it { is_expected.to validate_presence_of(:organisation) }
     it { is_expected.to validate_presence_of(:job_title) }
     it { is_expected.to validate_presence_of(:main_duties) }
+
+    context "when main duties exceeds the word limit" do
+      let(:params) { valid_params.merge(main_duties: "word " * (Employment::MAIN_DUTIES_MAX_WORDS + 1)) }
+
+      it "is invalid" do
+        expect(employment).not_to be_valid
+        expect(employment.errors.messages[:main_duties]).to eq(["Main duties must be 150 words or less"])
+      end
+    end
+
+    context "when main duties includes hyphenated words within the word limit" do
+      let(:params) { valid_params.merge(main_duties: "child-centred " * Employment::MAIN_DUTIES_MAX_WORDS) }
+
+      it "is valid" do
+        expect(employment).to be_valid
+      end
+    end
+
+    context "when reason for leaving exceeds the word limit" do
+      let(:params) { valid_params.merge(reason_for_leaving: "word " * (Employment::REASON_FOR_LEAVING_MAX_WORDS + 1)) }
+
+      it "is invalid" do
+        expect(employment).not_to be_valid
+        expect(employment.errors.messages[:reason_for_leaving]).to eq(["Reason for leaving role must be 50 words or less"])
+      end
+    end
   end
 
   describe "#duplicate" do
@@ -168,19 +194,7 @@ RSpec.describe Employment do
   end
 
   context "when all attributes are valid" do
-    let(:params) do
-      { organisation: "An organisation",
-        job_title: "A job title",
-        main_duties: "Some main duties",
-        is_current_role: false,
-        "started_on(1i)" => "2019",
-        "started_on(2i)" => "09",
-        "started_on(3i)" => "01",
-        "ended_on(1i)" => "2020",
-        "ended_on(2i)" => "07",
-        "ended_on(3i)" => "30",
-        reason_for_leaving: "stress" }
-    end
+    let(:params) { valid_params }
 
     it "is valid" do
       expect(employment).to be_valid
@@ -205,5 +219,19 @@ RSpec.describe Employment do
         expect(employment).to be_valid
       end
     end
+  end
+
+  def valid_params
+    { organisation: "An organisation",
+      job_title: "A job title",
+      main_duties: "Some main duties",
+      is_current_role: false,
+      "started_on(1i)" => "2019",
+      "started_on(2i)" => "09",
+      "started_on(3i)" => "01",
+      "ended_on(1i)" => "2020",
+      "ended_on(2i)" => "07",
+      "ended_on(3i)" => "30",
+      reason_for_leaving: "stress" }
   end
 end
