@@ -190,61 +190,33 @@ RSpec.describe Organisation do
     end
   end
 
-  describe ".not_closed" do
-    let!(:open_trust) { create(:trust, establishment_status: "Open") }
-    let!(:closed_trust) { create(:trust, establishment_status: "Closed") }
-
-    it "returns open trusts and excludes closed trusts" do
-      expect(Organisation.trusts.not_closed).to contain_exactly(open_trust)
-    end
-  end
-
-  describe ".trusts_not_closed" do
-    let!(:open_trust) { create(:trust, gias_data: { "Group Status" => "Open" }) }
-    let!(:closed_trust) { create(:trust, gias_data: { "Group Status" => "Closed" }) }
-
-    it "returns trusts whose group status is not closed" do
-      expect(Organisation.trusts_not_closed).to contain_exactly(open_trust)
-    end
-  end
-
   describe ".visible_to_jobseekers" do
-    let!(:open_school) { create(:school, establishment_status: "Open", detailed_school_type: "Primary school") }
-    let(:closed_school) { create(:school, establishment_status: "Closed", detailed_school_type: "Secondary school").tap(&:discard) }
-    let(:fe_school) { create(:school, establishment_status: "Open", detailed_school_type: "Further education") }
-    let(:independent_school) { create(:school, establishment_status: "Open", detailed_school_type: "Other independent school") }
-    let(:misc_school) { create(:school, establishment_status: "Open", detailed_school_type: "Miscellaneous") }
-    let(:post_16_school) { create(:school, establishment_status: "Open", detailed_school_type: "Special post 16 institution") }
-    let(:independent_special_school) { create(:school, establishment_status: "Open", detailed_school_type: "Other independent special school") }
-    let(:higher_education_school) { create(:school, establishment_status: "Open", detailed_school_type: "Higher education institutions") }
-    let(:welsh_school) { create(:school, establishment_status: "Open", detailed_school_type: "Welsh establishment") }
-    let(:registered_trust) { create(:trust) }
-    let!(:unregistered_trust) { create(:trust) }
-    let!(:closed_trust) { create(:trust, establishment_status: "Closed", gias_data: { "Group Status" => "Closed" }) }
-
     before do
-      create(:publisher, organisations: [registered_trust,
+      create(:publisher, organisations: [trust,
+                                         open_school,
                                          closed_school,
-                                         closed_trust,
                                          fe_school,
-                                         independent_school,
+                                         independant_school,
                                          misc_school,
                                          post_16_school,
-                                         independent_special_school,
+                                         independant_special_school,
                                          higher_education_school,
                                          welsh_school])
     end
 
-    it "returns unregistered open in-scope schools" do
-      expect(Organisation.visible_to_jobseekers).to include(open_school)
-    end
+    let(:open_school) { create(:school, establishment_status: "Open", detailed_school_type: "Primary school") }
+    let(:closed_school) { create(:school, establishment_status: "Closed", detailed_school_type: "Secondary school").tap(&:discard) }
+    let(:trust) { Organisation.create(type: "SchoolGroup", name: "Trust", uid: "1", gias_data: { "Group Status" => "Open" }) }
+    let(:fe_school) { create(:school, establishment_status: "Open", detailed_school_type: "Further education") }
+    let(:independant_school) { create(:school, establishment_status: "Open", detailed_school_type: "Other independent school") }
+    let(:misc_school) { create(:school, establishment_status: "Open", detailed_school_type: "Miscellaneous") }
+    let(:post_16_school) { create(:school, establishment_status: "Open", detailed_school_type: "Special post 16 institution") }
+    let(:independant_special_school) { create(:school, establishment_status: "Open", detailed_school_type: "Other independent special school") }
+    let(:higher_education_school) { create(:school, establishment_status: "Open", detailed_school_type: "Higher education institutions") }
+    let(:welsh_school) { create(:school, establishment_status: "Open", detailed_school_type: "Welsh establishment") }
 
-    it "returns registered and unregistered trusts" do
-      expect(Organisation.visible_to_jobseekers).to include(registered_trust, unregistered_trust)
-    end
-
-    it "does not return closed trusts or closed or out-of-scope schools" do
-      expect(Organisation.visible_to_jobseekers).to contain_exactly(open_school, fe_school, registered_trust, unregistered_trust)
+    it "returns open schools that are not out of scope" do
+      expect(Organisation.visible_to_jobseekers).to contain_exactly(open_school, trust, fe_school)
     end
   end
 
@@ -267,62 +239,6 @@ RSpec.describe Organisation do
     context "when another field changes" do
       it "does not create a new slug" do
         expect { subject.update(description: "Oh it is terrific") }.not_to change(subject, :slug)
-      end
-    end
-  end
-
-  describe "#handle_unsafe_attachment" do
-    let(:organisation) { create(:school) }
-    let!(:publisher) { create(:publisher, organisations: [organisation]) }
-
-    def attach_file(organisation, attachment_name)
-      organisation.send(attachment_name).attach(
-        io: Rails.root.join("spec/fixtures/files/blank_job_spec.pdf").open,
-        filename: "#{attachment_name}.pdf",
-        content_type: "application/pdf",
-      )
-      organisation.send(attachment_name).attachment
-    end
-
-    context "when the attachment is a photo" do
-      let(:attachment) { attach_file(organisation, :photo) }
-
-      it "purges the attachment" do
-        expect { organisation.handle_unsafe_attachment(attachment) }
-          .to have_enqueued_job(ActiveStorage::PurgeJob)
-      end
-
-      it "sends an in-app notification to each publisher" do
-        organisation.handle_unsafe_attachment(attachment)
-        expect(publisher.notifications.last.message).to include(organisation.name)
-      end
-    end
-
-    context "when the attachment is a logo" do
-      let(:attachment) { attach_file(organisation, :logo) }
-
-      it "purges the attachment" do
-        expect { organisation.handle_unsafe_attachment(attachment) }
-          .to have_enqueued_job(ActiveStorage::PurgeJob)
-      end
-
-      it "sends an in-app notification to each publisher" do
-        organisation.handle_unsafe_attachment(attachment)
-        expect(publisher.notifications.last.message).to include(organisation.name)
-      end
-    end
-
-    context "when the attachment name is not photo or logo" do
-      let(:attachment) { instance_double(ActiveStorage::Attachment, name: "other", purge_later: nil) }
-
-      it "purges the attachment" do
-        organisation.handle_unsafe_attachment(attachment)
-        expect(attachment).to have_received(:purge_later)
-      end
-
-      it "does not deliver a notification" do
-        organisation.handle_unsafe_attachment(attachment)
-        expect(publisher.reload.notifications).to be_empty
       end
     end
   end
