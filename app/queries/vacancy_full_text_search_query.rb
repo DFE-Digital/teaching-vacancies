@@ -1,4 +1,4 @@
-class VacancyFullTextSearchQuery
+class VacancyFullTextSearchQuery < ApplicationQuery
   attr_reader :scope
 
   def initialize(scope)

@@ -86,9 +86,20 @@ module Jobseekers
           })
         end
 
-        context "when the blob is marked as unsafe" do
+        context "when the blob is malicious" do
           before do
-            allow(blob).to receive(:malware_scan_unsafe?).and_return(true)
+            allow(blob).to receive_messages(malware_scan_malicious?: true, malware_scan_scan_error?: false)
+          end
+
+          it "adds an unsafe_file error" do
+            form.valid?
+            expect(form.errors.of_kind?(:baptism_certificate, :unsafe_file)).to be true
+          end
+        end
+
+        context "when the blob has a scan error" do
+          before do
+            allow(blob).to receive_messages(malware_scan_malicious?: false, malware_scan_scan_error?: true)
           end
 
           it "adds an unsafe_file error" do
@@ -99,7 +110,7 @@ module Jobseekers
 
         context "when the blob is clean" do
           before do
-            allow(blob).to receive(:malware_scan_unsafe?).and_return(false)
+            allow(blob).to receive_messages(malware_scan_malicious?: false, malware_scan_scan_error?: false)
           end
 
           it "does not add an unsafe_file error" do

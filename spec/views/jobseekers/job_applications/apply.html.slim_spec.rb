@@ -84,7 +84,7 @@ RSpec.describe "jobseekers/job_applications/apply" do
           { name: "Work history", status: "Incomplete" },
           { name: "Personal statement", status: "Incomplete" },
           { name: "References", status: "Incomplete" },
-          { name: "Do you need support or adjustments for your interview?", status: "Incomplete" },
+          { name: "Ask for support if you have a disability or other needs", status: "Incomplete" },
           { name: "Declarations", status: "Incomplete" },
         ]
       end
@@ -109,7 +109,7 @@ RSpec.describe "jobseekers/job_applications/apply" do
           { name: "Personal statement", status: "Incomplete" },
           { name: "References", status: "Incomplete" },
           { name: "Equal opportunities and recruitment monitoring", status: "Incomplete" },
-          { name: "Do you need support or adjustments for your interview?", status: "Incomplete" },
+          { name: "Ask for support if you have a disability or other needs", status: "Incomplete" },
           { name: "Declarations", status: "Incomplete" },
         ]
       end
@@ -136,7 +136,7 @@ RSpec.describe "jobseekers/job_applications/apply" do
           { name: "Religious information", status: "Incomplete" },
           { name: "References", status: "Incomplete" },
           { name: "Equal opportunities and recruitment monitoring", status: "Incomplete" },
-          { name: "Do you need support or adjustments for your interview?", status: "Incomplete" },
+          { name: "Ask for support if you have a disability or other needs", status: "Incomplete" },
           { name: "Declarations", status: "Incomplete" },
         ]
       end
@@ -163,7 +163,7 @@ RSpec.describe "jobseekers/job_applications/apply" do
           { name: "Religious information", status: "Incomplete" },
           { name: "References", status: "Incomplete" },
           { name: "Equal opportunities and recruitment monitoring", status: "Incomplete" },
-          { name: "Do you need support or adjustments for your interview?", status: "Incomplete" },
+          { name: "Ask for support if you have a disability or other needs", status: "Incomplete" },
           { name: "Declarations", status: "Incomplete" },
         ]
       end

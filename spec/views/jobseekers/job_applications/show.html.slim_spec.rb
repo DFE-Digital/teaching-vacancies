@@ -155,7 +155,7 @@ RSpec.describe "jobseekers/job_applications/show" do
           "Personal statement",
           "Religious information",
           "References",
-          "Do you need support or adjustments for your interview?",
+          "Ask for support if you have a disability or other needs",
           "Declarations",
         ]
       end
@@ -178,7 +178,7 @@ RSpec.describe "jobseekers/job_applications/show" do
             "Personal statement",
             "Religious information",
             "References",
-            "Do you need support or adjustments for your interview?",
+            "Ask for support if you have a disability or other needs",
             "Declarations",
           ]
         end
@@ -200,7 +200,7 @@ RSpec.describe "jobseekers/job_applications/show" do
           "Work history",
           "Personal statement",
           "References",
-          "Do you need support or adjustments for your interview?",
+          "Ask for support if you have a disability or other needs",
           "Declarations",
         ]
       end
@@ -222,7 +222,7 @@ RSpec.describe "jobseekers/job_applications/show" do
             "Work history",
             "Personal statement",
             "References",
-            "Do you need support or adjustments for your interview?",
+            "Ask for support if you have a disability or other needs",
             "Declarations",
           ]
         end

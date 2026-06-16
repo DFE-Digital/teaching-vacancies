@@ -33,7 +33,7 @@ RSpec.describe JobApplicationPdfGenerator do
       expect(pdf).to include("Work history")
       expect(pdf).to include("Personal statement")
       expect(pdf).to include("References")
-      expect(pdf).to include("Do you need support or adjustments for your interview?")
+      expect(pdf).to include("Ask for support if you have a disability or other needs")
       expect(pdf).to include("Declarations")
     end
 

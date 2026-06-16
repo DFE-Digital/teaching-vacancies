@@ -31,7 +31,7 @@ gem "business_time"
 gem "chartkick"
 gem "devise"
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.17"
-gem "discard", "~> 2.0"
+gem "discard", "~> 1.4"
 gem "draper"
 # we populate seeds from factory bot in review apps
 # These could be moved into test scope
@@ -120,6 +120,8 @@ gem "rgeo-proj4"
 # open API docs for external client integrations
 gem "rswag-api"
 gem "rswag-ui"
+# more limiting of Govuk Notify API requests
+gem "ruby-limiter"
 # needed to make zipfiles - often in sidekiq jobs
 gem "rubyzip"
 gem "sentry-rails"

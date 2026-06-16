@@ -40,22 +40,6 @@ class ReferenceRequest < ApplicationRecord
     requested? && updated_at <= 7.days.ago
   end
 
-  # Interface called by ActiveStorage::Blob (MalwareScannable) when this record's
-  # reference_form blob is found unsafe. Destroys the referee and notifies the
-  # publisher. Each model that owns scannable attachments defines its own.
-  def handle_unsafe_attachment(_attachment)
-    job_application = referee.job_application
-    vacancy = job_application.vacancy
-
-    referee.destroy!
-
-    if vacancy.find_publisher_by_contact_email
-      Publishers::ReferenceDocumentMalwareScanNotifier.with(job_application: job_application).deliver
-    else
-      Publishers::ReferenceDocumentMalwareScanMailer.reference_removed(job_application).deliver_later
-    end
-  end
-
   class << self
     def create_for_manual!(job_application)
       job_application.referees.reject { |r| r.reference_request.present? }.each do |referee|

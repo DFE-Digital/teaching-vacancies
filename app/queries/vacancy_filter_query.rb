@@ -1,4 +1,4 @@
-class VacancyFilterQuery
+class VacancyFilterQuery < ApplicationQuery
   attr_reader :scope
 
   def initialize(scope)

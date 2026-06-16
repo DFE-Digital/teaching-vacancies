@@ -56,7 +56,7 @@ module Jobseekers
         return unless baptism_certificate.respond_to?(:blob)
 
         blob = baptism_certificate.blob
-        errors.add(:baptism_certificate, :unsafe_file, filename: blob.filename) if blob.malware_scan_unsafe?
+        errors.add(:baptism_certificate, :unsafe_file, filename: blob.filename) if blob.malware_scan_malicious? || blob.malware_scan_scan_error?
       end
     end
   end

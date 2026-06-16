@@ -11,5 +11,5 @@
 = f.govuk_radio_divider
 = f.govuk_check_box :is_current_role, "true", "false", multiple: false
 
-= f.govuk_text_area :main_duties, label: { size: "s" }, required: true, max_words: Employment::MAIN_DUTIES_MAX_WORDS
-= f.govuk_text_area :reason_for_leaving, label: { size: "s" }, required: true, max_words: Employment::REASON_FOR_LEAVING_MAX_WORDS
+= f.govuk_text_area :main_duties, label: { size: "s" }, required: true
+= f.govuk_text_area :reason_for_leaving, label: { size: "s" }, required: true

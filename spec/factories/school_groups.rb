@@ -8,7 +8,6 @@ FactoryBot.define do
     county { Faker::Address.state_abbr }
     description { Faker::Lorem.paragraph(sentence_count: 1) }
     email { Faker::Internet.email(domain: "contoso.com") }
-    establishment_status { "Open" }
     gias_data do
       {
         "Group UID": uid,
@@ -19,7 +18,6 @@ FactoryBot.define do
         "Group Locality": address,
         "Group Town": town,
         "Group County": county,
-        "Group Status": "Open",
       }
     end
     group_type { "Multi-academy trust" }

@@ -103,3 +103,207 @@
       'st':1A 'teresa':2A"
   new_record: false
   active_record_yaml_version: 2
+- !ruby/object:School
+  concise_attributes:
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: id
+    value_before_type_cast: 0f655e5a-0769-4173-aca1-6421f3c2e5c9
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: type
+    value_before_type_cast: School
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: name
+    value_before_type_cast: Northlands Primary School and Nursery
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: description
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: urn
+    value_before_type_cast: '114995'
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: uid
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: phase
+    value_before_type_cast: 2
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: url
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: minimum_age
+    value_before_type_cast: 3
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: maximum_age
+    value_before_type_cast: 11
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: address
+    value_before_type_cast: Winifred Road
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: town
+    value_before_type_cast: Basildon
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: county
+    value_before_type_cast: Essex
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: postcode
+    value_before_type_cast: SS13 3JQ
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: religious_character
+    value_before_type_cast: 'None'
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: created_at
+    value_before_type_cast: 2024-11-28 16:26:00.104039000 Z
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: updated_at
+    value_before_type_cast: 2024-11-28 23:01:00.378077000 Z
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: url_override
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: region
+    value_before_type_cast: East of England
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: detailed_school_type
+    value_before_type_cast: Community school
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: school_type
+    value_before_type_cast: Local authority maintained schools
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: local_authority_code
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: group_type
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: local_authority_within
+    value_before_type_cast: Essex
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: establishment_status
+    value_before_type_cast: Closed
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: geopoint
+    value_before_type_cast: 0101000020E61000006C9F23333431E03F492F65C412C94940
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: slug
+    value_before_type_cast: northlands-primary-school-and-nursery
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: email
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: safeguarding_information
+    value_before_type_cast: |-
+      Our organisation is committed to safeguarding and promoting the welfare of children, young people and vulnerable adults. We expect all staff, volunteers and trustees to share this commitment.
+
+      Our recruitment process follows the keeping children safe in education guidance.
+
+      Offers of employment may be subject to the following checks (where relevant):
+      childcare disqualification
+      Disclosure and Barring Service (DBS)
+      medical
+      online and social media
+      prohibition from teaching
+      right to work
+      satisfactory references
+      suitability to work with children
+
+      You must tell us about any unspent conviction, cautions, reprimands or warnings under the Rehabilitation of Offenders Act 1974 (Exceptions) Order 1975.
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: searchable_content
+    value_before_type_cast: "'and':4A 'northlands':1A 'nursery':5A 'primary':2A 'school':3A"
+  new_record: false
+  active_record_yaml_version: 2
+- !ruby/object:School
+  concise_attributes:
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: id
+    value_before_type_cast: 0ff3a825-284d-4f46-b359-bc67566dc55e
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: type
+    value_before_type_cast: School
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: name
+    value_before_type_cast: Lincewood Junior School
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: description
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: urn
+    value_before_type_cast: '114868'
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: uid
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: phase
+    value_before_type_cast: 2
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: url
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: minimum_age
+    value_before_type_cast: 7
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: maximum_age
+    value_before_type_cast: 11
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: address
+    value_before_type_cast: Berry Lane
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: town
+    value_before_type_cast: Basildon
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: county
+    value_before_type_cast: Essex
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: postcode
+    value_before_type_cast: SS16 6AZ
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: religious_character
+    value_before_type_cast: 'None'
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: created_at
+    value_before_type_cast: 2024-11-28 16:25:58.975507000 Z
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: updated_at
+    value_before_type_cast: 2024-11-28 23:01:01.282103000 Z
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: url_override
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: region
+    value_before_type_cast: East of England
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: detailed_school_type
+    value_before_type_cast: Community school
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: school_type
+    value_before_type_cast: Local authority maintained schools
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: local_authority_code
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: group_type
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: local_authority_within
+    value_before_type_cast: Essex
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: establishment_status
+    value_before_type_cast: Closed
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: geopoint
+    value_before_type_cast: 0101000020E6100000F3A8E30080D0DA3F57420906D6C74940
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: slug
+    value_before_type_cast: lincewood-junior-school
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: email
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: safeguarding_information
+    value_before_type_cast: |-
+      Our organisation is committed to safeguarding and promoting the welfare of children, young people and vulnerable adults. We expect all staff, volunteers and trustees to share this commitment.
+
+      Our recruitment process follows the keeping children safe in education guidance.
+
+      Offers of employment may be subject to the following checks (where relevant):
+      childcare disqualification
+      Disclosure and Barring Service (DBS)
+      medical
+      online and social media
+      prohibition from teaching
+      right to work
+      satisfactory references
+      suitability to work with children
+
+      You must tell us about any unspent conviction, cautions, reprimands or warnings under the Rehabilitation of Offenders Act 1974 (Exceptions) Order 1975.
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: searchable_content
+    value_before_type_cast: "'junior':2A 'lincewood':1A 'school':3A"
+  new_record: false
+  active_record_yaml_version: 2

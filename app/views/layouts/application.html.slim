@@ -14,9 +14,6 @@ html.govuk-template.app-html-class lang="en"
     = stylesheet_link_tag "application", media: "all"
     = csrf_meta_tags
     = render "layouts/sentry_js_config"
-    / for chartkick gem to render using Google Charts
-    = javascript_include_tag "https://www.gstatic.com/charts/loader.js"
-    = javascript_include_tag "application", defer: true
 
   body class=body_class
     = render "layouts/skip_links"
@@ -42,3 +39,6 @@ html.govuk-template.app-html-class lang="en"
         = yield
       = content_for :after_main
     = render "layouts/footer"
+    / for chartkick gem to render using Google Charts
+    = javascript_include_tag "https://www.gstatic.com/charts/loader.js"
+    = javascript_include_tag "application", defer: true
