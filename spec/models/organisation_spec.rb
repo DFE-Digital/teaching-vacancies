@@ -206,7 +206,7 @@ RSpec.describe Organisation do
 
     let(:open_school) { create(:school, establishment_status: "Open", detailed_school_type: "Primary school") }
     let(:closed_school) { create(:school, establishment_status: "Closed", detailed_school_type: "Secondary school").tap(&:discard) }
-    let(:trust) { Organisation.create(type: "SchoolGroup", name: "Trust", uid: "1") }
+    let(:trust) { Organisation.create(type: "SchoolGroup", name: "Trust", uid: "1", gias_data: { "Group Status" => "Open" }) }
     let(:fe_school) { create(:school, establishment_status: "Open", detailed_school_type: "Further education") }
     let(:independant_school) { create(:school, establishment_status: "Open", detailed_school_type: "Other independent school") }
     let(:misc_school) { create(:school, establishment_status: "Open", detailed_school_type: "Miscellaneous") }

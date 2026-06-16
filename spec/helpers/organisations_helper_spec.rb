@@ -33,4 +33,22 @@ RSpec.describe OrganisationsHelper do
       end
     end
   end
+
+  describe "#organisation_type" do
+    context "with catholic" do
+      let(:organisation) { build_stubbed(:school, :catholic) }
+
+      it "shows the religion" do
+        expect(helper.organisation_type(organisation)).to eq("Independent school, Roman Catholic, ages 11 to 18")
+      end
+    end
+
+    context "without religion" do
+      let(:organisation) { build_stubbed(:school) }
+
+      it "omits religion" do
+        expect(helper.organisation_type(organisation)).to eq("Independent school, ages 11 to 18")
+      end
+    end
+  end
 end

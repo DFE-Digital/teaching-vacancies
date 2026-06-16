@@ -47,9 +47,11 @@ class Organisation < ApplicationRecord
 
   has_many :vacancy_templates, dependent: :destroy
 
+  scope :not_closed, -> { where.not(establishment_status: CLOSED_ESTABLISHMENT_STATUSES) }
   scope :schools, -> { where(type: "School") }
   scope :school_groups, -> { where(type: "SchoolGroup") }
   scope :trusts, -> { school_groups.where.not(uid: nil) }
+  scope :trusts_not_closed, -> { trusts.where.not("gias_data ->> 'Group Status' IN (?)", CLOSED_ESTABLISHMENT_STATUSES) }
   scope :local_authorities, -> { school_groups.where.not(local_authority_code: nil) }
   scope :in_vacancy_ids, ->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { vacancy_id: ids }).distinct }
 
@@ -59,15 +61,9 @@ class Organisation < ApplicationRecord
                   against: :name,
                   using: { tsearch: { prefix: true, tsvector_column: "searchable_content" } }
 
-  scope(:registered_for_service, lambda do
-    registered_organisations = OrganisationPublisher.select(:organisation_id)
-    where(id: registered_organisations)
-      .or(where(id: SchoolGroupMembership.select(:school_id).where(school_group_id: registered_organisations)))
-  end)
-
   scope :not_out_of_scope, -> { where.not(detailed_school_type: Organisation::OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES).or(where(detailed_school_type: nil)) }
 
-  scope :visible_to_jobseekers, -> { schools.kept.not_out_of_scope.or(Organisation.trusts).registered_for_service }
+  scope :visible_to_jobseekers, -> { schools.not_closed.not_out_of_scope.or(Organisation.trusts_not_closed) }
 
   scope :only_faith_schools, -> { where.not(religious_character: NON_FAITH_RELIGIOUS_CHARACTER_TYPES) }
 
@@ -128,7 +124,7 @@ class Organisation < ApplicationRecord
 
     if local_authority_code && local_authorities_extra_schools
       school_urns = local_authorities_extra_schools[local_authority_code]
-      School.kept.where(urn: school_urns)
+      School.where(urn: school_urns)
     else
       School.none
     end
@@ -190,9 +186,24 @@ class Organisation < ApplicationRecord
     name_changed? || super
   end
 
+  # Interface called by ActiveStorage::Blob (MalwareScannable) when one of this
+  # record's attached blobs is found unsafe. Purges the offending photo/logo and
+  # notifies publishers. Each model that owns scannable attachments defines its own.
+  def handle_unsafe_attachment(attachment)
+    attachment.purge_later
+    malware_scan_notifier_for(attachment.name)&.with(organisation: self)&.deliver
+  end
+
   private
 
   def slug_candidates
     [:name, %i[name town], %i[name postcode]]
+  end
+
+  def malware_scan_notifier_for(name)
+    case name
+    when "photo" then Publishers::OrganisationPhotoMalwareScanNotifier
+    when "logo"  then Publishers::OrganisationLogoMalwareScanNotifier
+    end
   end
 end

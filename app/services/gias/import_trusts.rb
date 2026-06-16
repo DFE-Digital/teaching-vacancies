@@ -132,6 +132,7 @@ class Gias::ImportTrusts
       group_type: row["Group Type"],
       town: row["Group Town"],
       postcode: row["Group Postcode"],
+      establishment_status: row["Group Status"],
       gias_data: row.to_h,
     }
   end

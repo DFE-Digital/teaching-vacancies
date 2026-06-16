@@ -4,8 +4,11 @@ class SendSubscriptionGovernanceEmailsJob < ApplicationJob
   def perform
     return if DisableEmailNotifications.enabled?
 
-    subscriptions_needing_governance_email.find_each do |subscription|
-      send_appropriate_governance_email(subscription)
+    subscriptions_needing_governance_email.find_each.with_index do |subscription, index|
+      delay = index * GovukNotifyMailer::SIDEKIQ_WORKER_COUNT / GovukNotifyMailer::GOVUK_NOTIFY_SEND_LIMIT_PER_MINUTE
+
+      mailer_method = appropriate_governance_email(subscription)
+      Jobseekers::SubscriptionMailer.public_send(mailer_method, subscription).deliver_later(wait: delay.minutes)
       subscription.update_column(:deletion_warning_email_sent_at, Time.current)
     end
   end
@@ -19,20 +22,18 @@ class SendSubscriptionGovernanceEmailsJob < ApplicationJob
       .where(deletion_warning_email_sent_at: nil)
   end
 
-  def send_appropriate_governance_email(subscription)
+  def appropriate_governance_email(subscription)
     registered = Jobseeker.exists?(email: subscription.email.downcase)
     never_updated = subscription.created_at.to_i == subscription.updated_at.to_i
 
-    mailer_method = if registered && never_updated
-                      :governance_email_registered_never_updated
-                    elsif registered && !never_updated
-                      :governance_email_registered_was_updated
-                    elsif !registered && never_updated
-                      :governance_email_unregistered_never_updated
-                    else # !registered && !never_updated
-                      :governance_email_unregistered_was_updated
-                    end
-
-    Jobseekers::SubscriptionMailer.public_send(mailer_method, subscription).deliver_later
+    if registered && never_updated
+      :governance_email_registered_never_updated
+    elsif registered && !never_updated
+      :governance_email_registered_was_updated
+    elsif !registered && never_updated
+      :governance_email_unregistered_never_updated
+    else # !registered && !never_updated
+      :governance_email_unregistered_was_updated
+    end
   end
 end
