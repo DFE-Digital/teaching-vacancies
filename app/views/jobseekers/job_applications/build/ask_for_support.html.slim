@@ -5,18 +5,11 @@
 h2.govuk-heading-l = t(".heading")
 
 p.govuk-body = t(".opening")
-p.govuk-body = t(".needs")
-p.govuk-body = t(".arranging_support")
-p.govuk-body = t(".adjustment_examples_intro")
+p.govuk-body = t(".adjustments")
 ul.govuk-list.govuk-list--bullet
-  li = t(".adjustment_examples.questions_in_writing")
-  li = t(".adjustment_examples.extra_time")
-  li = t(".adjustment_examples.short_break")
-  li = t(".adjustment_examples.quiet_room")
-  li = t(".adjustment_examples.captions_hearing_loop_bsl")
-  li = t(".adjustment_examples.step_free_access")
-  li = t(".adjustment_examples.contact_method")
-  li = t(".adjustment_examples.assistive_technology")
+  - t(".adjustment_examples").each do |example|
+    li = example
+p.govuk-body = t(".closing")
 
 = form_for @form, url: jobseekers_job_application_build_path(job_application, :ask_for_support), method: :patch do |f|
   = f.govuk_error_summary

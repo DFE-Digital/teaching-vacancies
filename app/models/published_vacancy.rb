@@ -22,8 +22,8 @@ class PublishedVacancy < Vacancy
   scope :expired, -> { kept.where(expires_at: ...Time.current) }
   scope :expired_yesterday, -> { where("DATE(expires_at) = ?", 1.day.ago.to_date) }
   scope :expires_within_data_access_period, -> { where(expires_at: (Time.current - DATA_ACCESS_PERIOD_FOR_PUBLISHERS)..) }
-  scope :listed, -> { where(publish_on: ..Date.current) }
-  scope :live, -> { kept.listed.applicable }
+  scope :listed, -> { kept.where(publish_on: ..Date.current) }
+  scope :live, -> { listed.applicable }
   scope :pending, -> { kept.where("publish_on > ?", Date.current) }
 
   def find_conflicting_vacancy

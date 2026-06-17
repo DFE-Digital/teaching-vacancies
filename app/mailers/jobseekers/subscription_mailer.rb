@@ -1,5 +1,10 @@
 module Jobseekers
   class SubscriptionMailer < BaseMailer
+    # Rate limit governance emails to comply with GOV.UK Notify sending limits
+    limit_method :governance_email,
+                 rate: GOVUK_NOTIFY_SEND_LIMIT_PER_MINUTE / SIDEKIQ_WORKER_COUNT,
+                 balanced: false
+
     def confirmation(subscription)
       subscription_email(subscription, "subscribed", "subscribed to")
     end

@@ -1,4 +1,5 @@
-[
+{
+  "result": [
     {
       "reference": "0044",
       "advertUrl": "http://testurl.com",
@@ -18,4 +19,10 @@
       "phase": "Incorrect value provided",
       "trustId": "12345"
     }
-  ]
+  ],
+  "targetUrl": null,
+  "success": true,
+  "error": null,
+  "unAuthorizedRequest": false,
+  "__abp": true
+}

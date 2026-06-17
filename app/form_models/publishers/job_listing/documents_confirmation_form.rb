@@ -24,7 +24,7 @@ class Publishers::JobListing::DocumentsConfirmationForm < BaseForm
   def additional_documents_scan_safe
     vacancy.supporting_documents.each do |doc|
       blob = doc.blob
-      if blob.malware_scan_unsafe?
+      if blob.malware_scan_malicious? || blob.malware_scan_scan_error?
         errors.add(:base, I18n.t("jobs.file_unsafe_error_message", filename: doc.filename))
       end
     end
