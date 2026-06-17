@@ -1,5 +1,5 @@
 # Abstracts querying for a vacancy or organisation by location, should not be used directly
-class LocationQuery < ApplicationQuery
+class LocationQuery
   NATIONWIDE_LOCATIONS = ["england", "uk", "united kingdom", "britain", "great britain"].freeze
 
   attr_reader :scope

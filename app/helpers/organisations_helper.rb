@@ -26,7 +26,7 @@ module OrganisationsHelper
 
     school_type_details = [
       organisation.school_type.singularize,
-      organisation.religious_character,
+      (organisation.religious_character unless organisation.religious_character.in? Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES),
       "ages #{organisation.minimum_age} to #{organisation.maximum_age}",
     ]
 

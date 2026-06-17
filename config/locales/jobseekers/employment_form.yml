@@ -16,6 +16,7 @@ en:
               blank: Enter your job title
             main_duties:
               blank: Enter your main duties for this role
+              too_long: Main duties must be %{count} words or less
             organisation:
               blank: Enter a school or other organisation
             started_on:
@@ -24,6 +25,7 @@ en:
               invalid: Enter a date in the correct format
             reason_for_leaving:
               blank: Enter your reason for leaving this role
+              too_long: Reason for leaving role must be %{count} words or less
         profile_employment:
           attributes:
             is_current_role:
