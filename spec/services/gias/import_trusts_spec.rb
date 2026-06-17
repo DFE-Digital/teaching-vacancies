@@ -49,6 +49,7 @@ RSpec.describe Gias::ImportTrusts do
       expect(trust1.gias_data).not_to be_blank
       expect(trust1.name).to eq("Abbey Academies Trust")
       expect(trust1.group_type).to eq("Multi-academy trust")
+      expect(trust1.establishment_status).to eq("Open")
       expect(trust1.address).to eq("Abbey Road")
       expect(trust1.county).to eq("Not recorded")
       expect(trust1.postcode).to eq("PE10 9EP")

@@ -56,7 +56,7 @@ jobs:
         echo "LINK_TO_APP=https://teaching-vacancies-${ENVIRONMENT}.test.teacherservices.cloud" >> $GITHUB_ENV
 
     - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v6.0.0
+      uses: aws-actions/configure-aws-credentials@v6.2.0
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -65,7 +65,7 @@ jobs:
         role-duration-seconds: 3600
         role-skip-session-tagging: true
 
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v6.0.3
       name: Checkout Code
 
     - uses: google-github-actions/auth@v3
@@ -74,7 +74,7 @@ jobs:
         workload_identity_provider: projects/689616473831/locations/global/workloadIdentityPools/teaching-vacancies/providers/teaching-vacancies
 
     - name: Set up Ruby
-      uses: ruby/setup-ruby@v1.307.0
+      uses: ruby/setup-ruby@v1.310.0
 
     - name: Download fetch_config.rb
       shell: bash

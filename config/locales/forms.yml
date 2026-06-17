@@ -577,8 +577,8 @@ en:
           headteacher: Headteacher
           higher_level_teaching_assistant: HLTA (higher level teaching assistant)
           leadership: Senior leader
-          send_responsible: Special Educational Needs and Disability Coordinator (SENDCo)
-          sendco: SENDCo (special educational needs and disabilities coordinator)
+          send_responsible: Special Educational Needs Coordinator (SENCo)
+          sendco: SENCo (special educational needs coordinator)
           teacher: Teacher or Lecturer
           teaching_assistant: Teaching assistant
           administration_hr_data_and_finance: Administration, HR, data and finance
@@ -596,7 +596,7 @@ en:
           assistant_headteacher: Assistant headteacher
           deputy_headteacher: Deputy headteacher
           headteacher: Headteacher
-          sendco: SENDCo (special educational needs and disabilities coordinator)
+          sendco: SENCo (special educational needs coordinator)
           other_leadership: Other leadership roles
         support_job_role_options:
           teaching_assistant: Teaching assistant

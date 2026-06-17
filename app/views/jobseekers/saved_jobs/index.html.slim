@@ -1,12 +1,12 @@
 - content_for :page_title_prefix, t(".page_title")
 
-- if saved_jobs.any?
+- if @saved_jobs.any?
   - content_for :skip_links do
     = govuk_skip_link(href: "#vacancy-results", text: t(".skip_link"))
 
 h1.govuk-heading-l = t(".page_title")
 
-- if saved_jobs.many?
+- if @saved_jobs.many?
   .govuk-grid-row
     .govuk-grid-column-full
       = render SortComponent.new path: method(:jobseekers_saved_jobs_path), sort: sort
@@ -15,9 +15,9 @@ h1.govuk-heading-l = t(".page_title")
   .govuk-grid-column-one-quarter
     = render "jobseekers/shared/side_navigation"
   .govuk-grid-column-three-quarters
-    - if saved_jobs.any?
+    - if @saved_jobs.any?
       #vacancy-results
-        - saved_jobs.each do |saved_job|
+        - @saved_jobs.each do |saved_job|
           = render CardComponent.new do |card|
             - card.with_header do
               = tag.div(govuk_link_to(saved_job.vacancy.job_title, job_path(saved_job.vacancy), class: "govuk-link--no-visited-state"))

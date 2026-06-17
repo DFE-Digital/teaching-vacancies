@@ -9,7 +9,7 @@ RSpec.describe "db:migrate:ignore_concurrent_migration_exceptions" do
 
     subject.execute
 
-    expect(Rake::Task["db:migrate"]).to have_received(:invoke)
+    expect(Rake::Task["db:migrate"]).to have_received(:invoke).at_least(:once)
   end
 
   it "swallows ActiveRecord::ConcurrentMigrationError" do

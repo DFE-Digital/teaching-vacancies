@@ -1,5 +1,6 @@
 class Jobseekers::SavedJobsController < Jobseekers::BaseController
-  helper_method :saved_jobs, :sort
+  helper_method :sort
+  before_action :set_saved_jobs, only: %i[index]
 
   def index
     redirect_to jobseekers_job_applications_path if session.delete(:after_sign_in) && current_jobseeker.job_applications.any?
@@ -39,8 +40,8 @@ class Jobseekers::SavedJobsController < Jobseekers::BaseController
     @saved_job ||= current_jobseeker.saved_jobs.find_or_initialize_by(vacancy_id: vacancy.id)
   end
 
-  def saved_jobs
-    @saved_jobs ||= current_jobseeker.saved_jobs.includes(:vacancy).order("#{sort.by} #{sort.order}")
+  def set_saved_jobs
+    @saved_jobs = current_jobseeker.saved_jobs.includes(:vacancy).order("#{sort.by} #{sort.order}")
   end
 
   def saved_job_params

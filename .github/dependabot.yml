@@ -29,6 +29,11 @@ updates:
       - dependency-name: "view_component"
         update-types: ["version-update:semver-major"]
 
+      # This needs to be done by hand as dependabot doesn't spot our Dockerfiles with the bundler
+      # version coded in them
+      - dependency-name: "bundler"
+        update-types: ["version-update:semver-major", "version-update:semver-minor", "version-update:semver-patch"]
+
       # We don't want Dependabot to update Rails major or minor versions automatically.
       # We will update Rails manually, besides patch updates which are handled by the 'rails' group below.
       - dependency-name: "actionmailer"
