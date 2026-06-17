@@ -1,5 +1,4 @@
-- organisation_label = @organisation.try(:fe_college?) ? "College" : (@organisation.school? ? "School" : "Organisation")
-- content_for :page_title_prefix, t(".title", organisation_type: organisation_label)
+- content_for :page_title_prefix, t(".title", organisation_type: organisation_label(@organisation))
 
 - if current_organisation.school_group? && @organisation.school?
   - content_for :breadcrumbs do
@@ -7,14 +6,14 @@
 
 - unless @organisation.profile_complete?
   = govuk_notification_banner title_text: t("banners.important"), classes: "govuk-!-margin-bottom-5" do |banner|
-    - banner.with_heading text: t(".profile_incomplete_banner.title", organisation_type: organisation_label.downcase)
+    - banner.with_heading text: t(".profile_incomplete_banner.title", organisation_type: organisation_label(@organisation).downcase)
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    h1.govuk-heading-l = t(".title", organisation_type: organisation_label)
+    h1.govuk-heading-l = t(".title", organisation_type: organisation_label(@organisation))
 
     .govuk-body
-      = govuk_link_to(t(".preview_link_text", organisation_type: organisation_label.downcase), publishers_organisation_preview_path(@organisation))
+      = govuk_link_to(t(".preview_link_text", organisation_type: organisation_label(@organisation).downcase), publishers_organisation_preview_path(@organisation))
 
     = render "organisation", organisation: @organisation
 
