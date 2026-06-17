@@ -21,7 +21,9 @@ h2.govuk-heading-m = t("organisations.show.summary.heading")
 
   - summary_list.with_row do |row|
     - row.with_key
-      - if organisation.school?
+      - if organisation.try(:fe_college?)
+        = t("organisations.college_type")
+      - elsif organisation.school?
         = t("organisations.school_type")
       - else
         = t("organisations.other_type")

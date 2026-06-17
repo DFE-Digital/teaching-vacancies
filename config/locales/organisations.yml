@@ -6,6 +6,7 @@ en:
 
   organisations:
     school_type: School type
+    college_type: College type
     other_type: Type
 
     filters:
