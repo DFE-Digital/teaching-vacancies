@@ -46,6 +46,11 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
           .permit(:job_title)
   end
 
+  def confirm_job_address_params(params)
+    params.require(:publishers_job_listing_confirm_job_address_form)
+          .permit(:job_address)
+  end
+
   def key_stages_params(params)
     params.require(:publishers_job_listing_key_stages_form)
           .permit(key_stages: [])
