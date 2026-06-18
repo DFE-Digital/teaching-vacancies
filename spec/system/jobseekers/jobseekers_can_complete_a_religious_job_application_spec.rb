@@ -171,6 +171,32 @@ RSpec.describe "Jobseekers can complete a religious job application" do
               expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :catholic))
               expect(job_application.reload.baptism_certificate.attached?).to be false
             end
+
+            scenario "deleting the baptism certificate resets the reference type and marks the form incomplete" do
+              complete_from_references_page
+              within("#catholic") { click_on "Change" }
+              click_on I18n.t("buttons.delete")
+
+              expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :catholic))
+
+              # expect no radio button checked for religious reference type
+              expect(page).to have_no_checked_field(I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_reference_type_options.baptism_certificate"))
+
+              # expect the section to be marked as incomplete
+              expect(page).to have_checked_field("No, I'll come back to it later")
+            end
+
+            scenario "the review page does not crash after the jobseeker deletes the baptism certificate and chooses a different reference type" do
+              complete_from_references_page
+              within("#catholic") { click_on "Change" }
+              click_on I18n.t("buttons.delete")
+              find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-no-religious-referee-field']").click
+              choose "No, I'll come back to it later"
+              click_on I18n.t("buttons.save")
+
+              expect(page).to have_current_path(jobseekers_job_application_review_path(job_application))
+              expect(page).to have_no_content("blank_baptism_cert.pdf")
+            end
           end
         end
 
