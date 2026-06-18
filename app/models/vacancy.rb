@@ -283,6 +283,18 @@ class Vacancy < ApplicationRecord
     organisations.any?(&:fe_college?)
   end
 
+  def geocode_job_address
+    address = [job_address_line1, job_address_town, job_address_postcode].reject(&:blank?).join(", ")
+    return if address.blank?
+
+    coordinates = Geocoding.new(address).coordinates
+    return if coordinates == Geocoding::COORDINATES_NO_MATCH
+
+    geopoint = GeoFactories::FACTORY_4326.point(coordinates.second, coordinates.first)
+    self.geolocation = geopoint
+    self.uk_geolocation = GeoFactories.convert_wgs84_to_sr27700(geopoint)
+  end
+
   private
 
   def update_conversation_searchable_content
@@ -319,18 +331,6 @@ class Vacancy < ApplicationRecord
                             uk_points = organisations.filter_map(&:uk_geopoint)
                             uk_points.presence && uk_points.first.factory.multi_point(uk_points)
                           end
-  end
-
-  def geocode_job_address
-    address = [job_address_line1, job_address_town, job_address_postcode].reject(&:blank?).join(", ")
-    return if address.blank?
-
-    coordinates = Geocoding.new(address).coordinates
-    return if coordinates == Geocoding::COORDINATES_NO_MATCH
-
-    geopoint = GeoFactories::FACTORY_4326.point(coordinates.second, coordinates.first)
-    self.geolocation = geopoint
-    self.uk_geolocation = GeoFactories.convert_wgs84_to_sr27700(geopoint)
   end
 
   def resettable?
