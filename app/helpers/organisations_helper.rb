@@ -51,6 +51,10 @@ module OrganisationsHelper
     end
   end
 
+  def school_or_college_type(organisation)
+    organisation.respond_to?(:college?) && organisation.college? ? "college" : "school"
+  end
+
   def school_or_trust_visits(organisation)
     if organisation.trust?
       "trust_visits_html"

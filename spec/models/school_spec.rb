@@ -32,6 +32,20 @@ RSpec.describe School do
     end
   end
 
+  describe "#college?" do
+    it "returns true when the school matches the colleges scope" do
+      expect(build(:college)).to be_college
+    end
+
+    it "returns false when the school type does not match the colleges scope" do
+      expect(build(:school, detailed_school_type: School::FE_DETAILED_SCHOOL_TYPE)).not_to be_college
+    end
+
+    it "returns false when the detailed school type does not match the colleges scope" do
+      expect(build(:school, school_type: School::COLLEGE_SCHOOL_TYPE)).not_to be_college
+    end
+  end
+
   describe "#ats_interstitial_variant" do
     subject { build(:school, religious_character: religious_character) }
 
