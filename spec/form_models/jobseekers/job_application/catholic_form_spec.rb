@@ -73,6 +73,33 @@ module Jobseekers
         end
       end
 
+      describe "baptism certificate presence" do
+        let(:form) do
+          described_class.new({ "following_religion" => "true",
+                                "faith" => "RC",
+                                "religious_reference_type" => "baptism_certificate",
+                                "catholic_section_completed" => section_completed })
+        end
+
+        context "when saving the section as complete" do
+          let(:section_completed) { "true" }
+
+          it "requires a baptism certificate" do
+            expect(form).not_to be_valid
+            expect(form.errors.of_kind?(:baptism_certificate, :blank)).to be true
+          end
+        end
+
+        context "when saving the section as incomplete" do
+          let(:section_completed) { "false" }
+
+          it "still requires a baptism certificate, so a deleted attachment can never be left dangling against this reference type" do
+            expect(form).not_to be_valid
+            expect(form.errors.of_kind?(:baptism_certificate, :blank)).to be true
+          end
+        end
+      end
+
       describe "baptism_certificate_scan_safe" do
         let(:blob) { instance_double(ActiveStorage::Blob, filename: "cert.pdf") }
         let(:attachment) { double(blob: blob) }
