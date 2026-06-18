@@ -19,11 +19,6 @@ class PostsController < ApplicationController
 
   private
 
-  def get_subcategories(section)
-    content_dir = Rails.root.join("app", "views", "content", section)
-    Dir.children(content_dir)
-  end
-
   def set_headers
     response.set_header("X-Robots-Tag", "index, nofollow")
   end

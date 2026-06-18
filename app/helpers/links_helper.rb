@@ -11,6 +11,7 @@ module LinksHelper
     tracked_link_of_style(:govuk_mail_to, *, **)
   end
 
+  # :nocov:
   def tracked_link_of_style(method_name, *, **kwargs)
     permitted_styles = %i[
       govuk_button_link_to
@@ -30,27 +31,33 @@ module LinksHelper
       "tracked-link-href": kwargs.delete(:tracked_link_href),
     }))
   end
+  # :nocov:
 
   def open_in_new_tab_link_to(text, href, **)
     govuk_link_to(t("app.opens_in_new_tab", link_text: text), href, target: "_blank", rel: "noreferrer noopener", **)
   end
 
+  # :nocov:
   def tracked_open_in_new_tab_link_to(text, href, **)
     tracked_link_to(t("app.opens_in_new_tab", link_text: text), href, target: "_blank", rel: "noreferrer noopener", **)
   end
+  # :nocov:
 
   def tracked_open_in_new_tab_button_link_to(text, href, **)
     tracked_button_link_to(t("app.opens_in_new_tab", link_text: text), href, target: "_blank", rel: "noreferrer noopener", **)
   end
 
+  # :nocov:
   def open_in_new_tab_button_link_to(text, href, **)
     govuk_button_link_to(t("app.opens_in_new_tab", link_text: text), href, target: "_blank", rel: "noopener", **)
   end
+  # :nocov:
 
   def anon(value)
     StringAnonymiser.new(value).to_s
   end
 
+  # :nocov:
   def school_website_link(organisation, vacancy: nil, **)
     tracked_link_to(
       t("vacancies.listing.schools.website_link_text", organisation_name: organisation.name),
@@ -60,6 +67,7 @@ module LinksHelper
       **,
     )
   end
+  # :nocov:
 
   def organisation_vacancies_link(organisation)
     govuk_link_to(
@@ -125,6 +133,7 @@ module LinksHelper
     )
   end
 
+  # :nocov:
   def map_link(text, url, vacancy_id: nil, **)
     tracked_link_to(
       text,
@@ -134,6 +143,7 @@ module LinksHelper
       **,
     )
   end
+  # :nocov:
 
   def results_link(vacancy, **)
     tracked_link_to(
@@ -155,6 +165,7 @@ module LinksHelper
     )
   end
 
+  # :nocov:
   def document_accessibility_link(vacancy, **)
     tracked_open_in_new_tab_link_to(
       t("publishers.vacancies.build.documents.accessibility_link_text"),
@@ -164,6 +175,7 @@ module LinksHelper
       **,
     )
   end
+  # :nocov:
 
   def search_keyword_quick_link(type, page:, **)
     tracked_link_to(

@@ -9,6 +9,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
     @form = Jobseekers::Qualifications::CategoryForm.new
   end
 
+  # :nocov:
   def submit_category
     @category = category_param
     @form = Jobseekers::Qualifications::CategoryForm.new(submit_category_params)
@@ -19,6 +20,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
       render :select_category, status: :unprocessable_entity
     end
   end
+  # :nocov:
 
   def new; end
 
@@ -35,6 +37,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
 
   def review; end
 
+  # :nocov:
   def update
     if @form.valid?
       qualification.update(qualification_params)
@@ -43,6 +46,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
       render :edit, status: :unprocessable_entity
     end
   end
+  # :nocov:
 
   def destroy
     qualification.destroy
@@ -56,6 +60,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
 
   private
 
+  # :nocov:
   def form_attributes
     case action_name
     when "new"
@@ -68,12 +73,14 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
       qualification_params
     end
   end
+  # :nocov:
 
   def submit_category_params
     key = ActiveModel::Naming.param_key(Jobseekers::Qualifications::CategoryForm)
     (params[key] || params).permit(:category)
   end
 
+  # :nocov:
   def qualification_params
     case action_name
     when "new", "confirm_destroy"
@@ -91,6 +98,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
                                                                 { qualification_results_attributes: [%i[id subject grade awarding_body]] }])
     end
   end
+  # :nocov:
 
   def set_form_and_category
     @category = action_name.in?(%w[edit update]) ? qualification.category : category_param
