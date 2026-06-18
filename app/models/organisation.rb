@@ -63,7 +63,8 @@ class Organisation < ApplicationRecord
 
   scope :not_out_of_scope, -> { where.not(detailed_school_type: Organisation::OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES).or(where(detailed_school_type: nil)) }
 
-  scope :visible_to_jobseekers, -> { schools.kept.not_closed.not_out_of_scope.or(Organisation.kept.trusts_not_closed) }
+  scope :schools_visible_to_jobseekers, -> { schools.kept.not_closed.not_out_of_scope }
+  scope :visible_to_jobseekers, -> { schools_visible_to_jobseekers.or(Organisation.kept.trusts_not_closed) }
 
   scope :only_faith_schools, -> { where.not(religious_character: NON_FAITH_RELIGIOUS_CHARACTER_TYPES) }
 
