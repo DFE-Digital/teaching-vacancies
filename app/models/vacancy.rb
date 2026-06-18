@@ -305,7 +305,7 @@ class Vacancy < ApplicationRecord
   # In the former case, it gets an argument, which we don't need and thus ignore
   #
   def refresh_geolocation(_school_added_or_removed = nil)
-    return if job_address.present?
+    return if job_address_line1.present?
 
     self.geolocation = if organisations.one?
                          organisation.geopoint
@@ -322,9 +322,10 @@ class Vacancy < ApplicationRecord
   end
 
   def geocode_job_address
-    return unless job_address.present?
+    address = [job_address_line1, job_address_town, job_address_postcode].reject(&:blank?).join(", ")
+    return if address.blank?
 
-    coordinates = Geocoding.new(job_address).coordinates
+    coordinates = Geocoding.new(address).coordinates
     return if coordinates == Geocoding::COORDINATES_NO_MATCH
 
     geopoint = GeoFactories::FACTORY_4326.point(coordinates.second, coordinates.first)

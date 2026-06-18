@@ -12,19 +12,29 @@
       strong = t(".default_address_label")
     p.govuk-body = full_address(current_organisation)
 
-  div data-controller="show-hidden-content"
-    = f.govuk_text_field :job_address,
-      label: { text: t(".change_address_label"), size: "m" },
-      hint: { text: t(".change_address_hint") },
-      autocomplete: "off",
-      form_group: { class: %w[autocomplete], data: { source: "getLocationSuggestions", controller: "autocomplete", debouncems: "400" } }
+  = f.govuk_fieldset legend: { text: t(".change_address_label"), size: "m" } do
+    = f.govuk_text_field :job_address_line1,
+      label: { text: t(".address_line1") },
+      autocomplete: "address-line1",
+      width: "two-thirds"
 
-    a.govuk-link href="#" data-action="click->show-hidden-content#show"
-      = t(".enter_address_manually")
+    = f.govuk_text_field :job_address_line2,
+      label: { text: t(".address_line2") },
+      autocomplete: "address-line2",
+      width: "two-thirds"
 
-    div data-show-hidden-content-target="content"
-      = f.govuk_text_area :job_address,
-        label: { text: t(".manual_address_label"), size: "m" },
-        rows: 4
+    = f.govuk_text_field :job_address_town,
+      label: { text: t(".town") },
+      autocomplete: "address-level2",
+      width: "two-thirds"
+
+    = f.govuk_text_field :job_address_county,
+      label: { text: t(".county") },
+      width: "two-thirds"
+
+    = f.govuk_text_field :job_address_postcode,
+      label: { text: t(".postcode") },
+      autocomplete: "postal-code",
+      width: "one-quarter"
 
   = render "publishers/vacancies/vacancy_form_partials/submit", f: f

@@ -464,9 +464,11 @@ en:
           hint: Use this page to change the address for this job. Leave these fields blank to use the default address.
           default_address_label: Default address
           change_address_label: Change the address for this job listing
-          change_address_hint: Start typing the address or postcode, then select the correct address from the list.
-          enter_address_manually: I can't find the address
-          manual_address_label: Enter address manually
+          address_line1: Address line 1
+          address_line2: Address line 2 (optional)
+          town: Town or city
+          county: County (optional)
+          postcode: Postcode
         contact_details:
           step_title: Contact details
         documents:

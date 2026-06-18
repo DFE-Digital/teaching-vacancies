@@ -48,7 +48,7 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
 
   def confirm_job_address_params(params)
     params.require(:publishers_job_listing_confirm_job_address_form)
-          .permit(:job_address)
+          .permit(:job_address_line1, :job_address_line2, :job_address_town, :job_address_county, :job_address_postcode)
   end
 
   def key_stages_params(params)
