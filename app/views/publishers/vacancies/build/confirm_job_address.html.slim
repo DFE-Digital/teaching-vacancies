@@ -12,10 +12,19 @@
       strong = t(".default_address_label")
     p.govuk-body = full_address(current_organisation)
 
-  = f.govuk_text_field :job_address,
-    label: { text: t(".change_address_label"), size: "m" },
-    hint: { text: t(".change_address_hint") },
-    autocomplete: "off",
-    form_group: { class: %w[autocomplete], data: { source: "getLocationSuggestions", controller: "autocomplete", debouncems: "400" } }
+  div data-controller="show-hidden-content"
+    = f.govuk_text_field :job_address,
+      label: { text: t(".change_address_label"), size: "m" },
+      hint: { text: t(".change_address_hint") },
+      autocomplete: "off",
+      form_group: { class: %w[autocomplete], data: { source: "getLocationSuggestions", controller: "autocomplete", debouncems: "400" } }
+
+    a.govuk-link href="#" data-action="click->show-hidden-content#show"
+      = t(".enter_address_manually")
+
+    div data-show-hidden-content-target="content"
+      = f.govuk_text_area :job_address,
+        label: { text: t(".manual_address_label"), size: "m" },
+        rows: 4
 
   = render "publishers/vacancies/vacancy_form_partials/submit", f: f
