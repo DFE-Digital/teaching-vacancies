@@ -47,9 +47,7 @@ RSpec.describe "publishers/candidate_messages/index" do
         expect(rendered).to have_content("Archive")
         expect(rendered).to have_content("Inbox (1)")
 
-        # within("table tbody") do
         expect(table_body).to have_css("tr.conversation--unread")
-        # end
       end
     end
 
@@ -57,9 +55,7 @@ RSpec.describe "publishers/candidate_messages/index" do
       let(:messages) { build_stubbed_list(:jobseeker_message, 1, sender: jobseeker, read: true) }
 
       it "marks message as read" do
-        # within("table tbody") do
         expect(table_body).to have_no_css("tr.conversation--unread")
-        # end
       end
     end
   end
