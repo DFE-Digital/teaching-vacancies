@@ -941,4 +941,49 @@ RSpec.describe Vacancy do
       end
     end
   end
+
+  describe "#vacancy_address" do
+    let(:college) { create(:college) }
+
+    context "when a custom job address has been entered" do
+      subject { build(:vacancy, organisations: [college], job_address_line1: "10 Campus Road", job_address_town: "Brighton", job_address_postcode: "BN1 1AA") }
+
+      it "returns the custom address" do
+        expect(subject.vacancy_address).to eq("10 Campus Road, Brighton, BN1 1AA")
+      end
+    end
+
+    context "when no custom job address has been entered" do
+      subject { build(:vacancy, organisations: [college]) }
+
+      it "falls back to the organisation address" do
+        expect(subject.vacancy_address).to eq([college.address, college.town, college.county, college.postcode].reject(&:blank?).join(", "))
+      end
+    end
+  end
+
+  describe "#geocode_job_address" do
+    let(:school) { create(:school) }
+    subject { build(:vacancy, organisations: [school]) }
+
+    context "when all address fields are blank" do
+      it "does not call Geocoding" do
+        expect(Geocoding).not_to receive(:new)
+        subject.geocode_job_address
+      end
+    end
+
+    context "when the address does not geocode" do
+      before do
+        subject.job_address_line1 = "Nowhere"
+        subject.job_address_town = "Nowhereville"
+        subject.job_address_postcode = "XX1 1XX"
+        allow(Geocoding).to receive(:new).and_return(instance_double(Geocoding, coordinates: Geocoding::COORDINATES_NO_MATCH))
+      end
+
+      it "does not update the geolocation" do
+        expect { subject.geocode_job_address }.not_to change { subject.geolocation }
+      end
+    end
+  end
 end

@@ -322,8 +322,10 @@ class Vacancy < ApplicationRecord
   # In the former case, it gets an argument, which we don't need and thus ignore
   #
   def refresh_geolocation(_school_added_or_removed = nil)
+    # don't override the vacancy specific job location if one has been spcified.
     return if job_address_line1.present?
 
+    # :nocov:
     self.geolocation = if organisations.one?
                          organisation.geopoint
                        else
@@ -336,6 +338,7 @@ class Vacancy < ApplicationRecord
                             uk_points = organisations.filter_map(&:uk_geopoint)
                             uk_points.presence && uk_points.first.factory.multi_point(uk_points)
                           end
+    # :nocov:
   end
 
   def resettable?

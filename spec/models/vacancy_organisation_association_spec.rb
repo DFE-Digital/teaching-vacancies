@@ -50,6 +50,16 @@ RSpec.describe Vacancy do
           expect(vacancy.geolocation).to eq(school_group.geopoint)
         end
       end
+
+      context "when the vacancy has a custom job address" do
+        let(:vacancy) { create(:vacancy, :ect_suitable, job_roles: %w[teacher], organisations: [school_one], phases: %w[primary], key_stages: %w[ks1], job_address_line1: "10 Campus Road") }
+
+        it "does not update the geolocation from the organisation" do
+          original_geolocation = vacancy.geolocation
+          vacancy.organisations = [school_two]
+          expect(vacancy.geolocation).to eq(original_geolocation)
+        end
+      end
     end
 
     describe "#organisation" do
