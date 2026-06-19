@@ -41,6 +41,16 @@ module OrganisationsHelper
     end
   end
 
+  def organisation_label(organisation)
+    if organisation.fe_college?
+      "College"
+    elsif organisation.school?
+      "School"
+    else
+      "Organisation"
+    end
+  end
+
   def organisation_type_basic(organisation)
     if organisation.school?
       "school"

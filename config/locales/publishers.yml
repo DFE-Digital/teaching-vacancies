@@ -241,9 +241,11 @@ en:
           missing_prompt:
             school: Enter a school description
             organisation: Enter an organisation description
+            college: Enter a college description
           label:
             school: School description
             organisation: Organisation description
+            college: College description
         email:
           label: Email address
           missing_prompt: Enter an email address
@@ -299,7 +301,7 @@ en:
           page_title: Schools - %{school_group_name}
       show:
         preview_link_text: Preview %{organisation_type} profile
-        schools: Schools
+        schools: Schools and colleges
         title: '%{organisation_type} profile'
         profile_incomplete_banner:
           title: Complete your %{organisation_type} profile
