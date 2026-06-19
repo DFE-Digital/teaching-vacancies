@@ -45,6 +45,7 @@ RSpec.describe "vacancies/campaign_landing_page" do
   let(:form) { Jobseekers::SearchForm.new(campaign_params.merge(landing_page: campaign_page)) }
   let(:vacancies_search) { Search::VacancySearch.new(form.to_hash, sort: form.sort) }
   let(:pagy) { pagy_array(vacancies).first }
+  let(:search_results) { campaign_landing_view.find_by_id("search-results") }
 
   before do
     allow(vacancies_search).to receive(:vacancies) { vacancies }
@@ -63,10 +64,8 @@ RSpec.describe "vacancies/campaign_landing_page" do
     expect(campaign_landing_view).to have_css("h1", text: "John, find the right mathematics fake job for you")
 
     expect(campaign_landing_view).to have_css("#search-results")
-    within "#search-results" do
-      expect(campaign_landing_view).to have_link(recent_part_time_maths_job.job_title, href: job_path(recent_part_time_maths_job))
-      expect(campaign_landing_view).to have_link(older_part_time_maths_job.job_title, href: job_path(older_part_time_maths_job))
-    end
+    expect(search_results).to have_link(recent_part_time_maths_job.job_title, href: job_path(recent_part_time_maths_job))
+    expect(search_results).to have_link(older_part_time_maths_job.job_title, href: job_path(older_part_time_maths_job))
     expect(campaign_landing_view).to have_css(".sort-container")
     expect(campaign_landing_view).to have_select("Sort by", selected: "Newest job")
   end
