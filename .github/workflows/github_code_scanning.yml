@@ -43,4 +43,4 @@ jobs:
       upload-sarif: false
       scan-args: |-
         -r
-        ./
+        app
