@@ -285,7 +285,9 @@ class Vacancy < ApplicationRecord
 
   def vacancy_address
     job_specific_address = [job_address_line1, job_address_line2, job_address_town, job_address_county, job_address_postcode].reject(&:blank?)
-    job_specific_address.any? ? job_specific_address.join(", ") : [organisation&.address, organisation&.town, organisation&.county, organisation&.postcode].reject(&:blank?).join(", ")
+    return job_specific_address.join(", ") if job_specific_address.any?
+
+    [organisation&.address, organisation&.town, organisation&.county, organisation&.postcode].reject(&:blank?).join(", ")
   end
 
   def geocode_job_address
