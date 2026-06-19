@@ -29,17 +29,29 @@ jobs:
   google-osv-scan-scheduled:
     name: Google OSV Scan - Full
     if: ${{ github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
-    uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable-pr.yml@v2.3.8"
+    uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable-pr.yml@v2.3.8
     with:
+      upload-sarif: false
       scan-args: |-
         --recursive
-        ./
+        $GITHUB_WORKSPACE
 
   google-osv-scan-pr:
-    name: Google OSV Scan - PR/Merge
-    if: ${{ github.event_name == 'pull_request' || github.event_name == 'merge_group' }}
-    uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable-pr.yml@v2.3.8"
-    with:
-      scan-args: |-
-        --recursive
-        ./
+    runs-on: ubuntu-22.04
+
+    strategy:
+      fail-fast: false
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7.0.0
+
+      - name: Install OSV Scanner
+        env:
+          GOPATH: ${{ runner.temp }}
+        run: go install github.com/google/osv-scanner/v2/cmd/osv-scanner@latest
+        shell: bash
+
+      - name: Run OSV Scanner
+        run: ${{ runner.temp }}/bin/osv-scanner scan source --recursive ./
+        shell: bash
