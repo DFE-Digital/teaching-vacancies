@@ -42,7 +42,7 @@ module OrganisationsHelper
   end
 
   def organisation_label(organisation)
-    if organisation.try(:fe_college?)
+    if organisation.fe_college?
       "College"
     elsif organisation.school?
       "School"
