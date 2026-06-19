@@ -43,7 +43,7 @@ RSpec.describe "home/_landing_page_links" do
     describe "support roles" do
       it "includes support role links" do
         expect(rendered).to have_link("Teaching assistant")
-        expect(rendered).to have_link("HLTA (Higher level teaching assistant)")
+        expect(rendered).to have_link("HLTA (higher level teaching assistant)")
         expect(rendered).to have_link("Learning support or cover supervisor")
       end
     end
