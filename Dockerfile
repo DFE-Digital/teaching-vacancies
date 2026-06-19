@@ -13,7 +13,7 @@ ARG EXTRA_PACKAGES="imagemagick libpng libjpeg libxml2 libxslt tzdata shared-mim
 # These are security patches to the base image
 # The hardcoded versions are to resolve vulnerabilities in the default versions that come with Alpine v3.23.
 # We may able to completely remove the reference to the package when the alpine ruby image is updated with a patched version.
-ARG PATCHED_BASE_PACKAGES="zlib=1.3.2-r0 expat=2.7.5-r0 curl=8.19.0-r0 libcurl=8.19.0-r0 curl-dev=8.19.0-r0 lcms2=2.19-r0"
+ARG PATCHED_BASE_PACKAGES="zlib=1.3.2-r0 expat=2.7.5-r0 curl=8.19.0-r0 libcurl=8.19.0-r0 curl-dev=8.19.0-r0 lcms2=2.19-r0 openssl=3.5.7-r0"
 
 FROM ruby:4.0.5-alpine3.23 AS builder
 
@@ -25,7 +25,7 @@ ENV DEV_PACKAGES="gcc libc-dev make yaml-dev nodejs npm postgresql18-dev build-b
 RUN apk add --no-cache $EXTRA_PACKAGES $PATCHED_BASE_PACKAGES $DEV_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
-RUN gem install bundler:4.0.12 --no-document
+RUN gem install bundler:4.0.13 --no-document
 
 
 COPY Gemfile* ./
@@ -70,7 +70,7 @@ ARG EXTRA_PACKAGES
 RUN apk -U upgrade && apk add --no-cache $PATCHED_BASE_PACKAGES $EXTRA_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
-RUN gem install bundler:4.0.12 --no-document
+RUN gem install bundler:4.0.13 --no-document
 
 COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/

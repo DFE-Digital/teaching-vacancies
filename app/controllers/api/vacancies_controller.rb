@@ -12,7 +12,7 @@ class Api::VacanciesController < Api::ApplicationController
   end
 
   def show
-    vacancy = PublishedVacancy.listed.friendly.find(params[:id])
+    vacancy = PublishedVacancy.kept.listed.friendly.find(params[:id])
     @vacancy = vacancy.decorate
   end
 

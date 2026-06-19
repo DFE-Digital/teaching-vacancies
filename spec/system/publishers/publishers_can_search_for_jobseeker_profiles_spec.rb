@@ -67,7 +67,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
           "Teacher, Headteacher, Deputy headteacher, Assistant headteacher, " \
           "Head of year or phase, Head of department or curriculum, " \
           "Teaching assistant, HLTA (higher level teaching assistant), " \
-          "Learning support or cover supervisor, SENDCo (special educational needs and disabilities coordinator), " \
+          "Learning support or cover supervisor, SENCo (special educational needs coordinator), " \
           "Administration, HR, data and finance, " \
           "Catering, cleaning and site management, IT support, " \
           "Pastoral, health and welfare, Other leadership roles, " \

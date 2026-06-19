@@ -27,6 +27,11 @@ module "documents_azure_storage" {
   ]
 
   create_encryption_scope = false
+
+  # CORS rules for Rails Direct Uploads (browser to storage)
+  cors_rules = [
+    { allowed_origins = var.azure_storage_cors_allowed_origins }
+  ]
 }
 
 # Azure Storage Account for School Images/Logos
@@ -58,4 +63,9 @@ module "images_logos_azure_storage" {
   ]
 
   create_encryption_scope = false
+
+  # CORS rules for Rails Direct Uploads (browser to storage)
+  cors_rules = [
+    { allowed_origins = var.azure_storage_cors_allowed_origins }
+  ]
 }

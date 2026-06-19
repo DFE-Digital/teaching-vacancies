@@ -1,5 +1,5 @@
 class OrganisationLocationQuery < LocationQuery
-  def initialize(scope = Organisation.all)
+  def initialize(scope)
     @scope = scope
   end
 

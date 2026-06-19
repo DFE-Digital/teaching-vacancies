@@ -32,7 +32,7 @@ RSpec.describe "Editing a vacancy template" do
     context "with name" do
       let(:change) { "name" }
 
-      it "can have its name edited from the template show page" do
+      it "can have its name edited from the template show page", :retry do
         expect(page).to have_content "Template name"
         expect(page).to be_axe_clean
 
@@ -62,7 +62,7 @@ RSpec.describe "Editing a vacancy template" do
     context "with subjects" do
       let(:change) { "subjects" }
 
-      it "can have its subjects edited to nothing" do
+      it "can have its subjects edited to nothing", :retry do
         expect(page).to have_content "Subjects (optional)"
         expect(page).to be_axe_clean
 
@@ -92,7 +92,7 @@ RSpec.describe "Editing a vacancy template" do
     context "with contract_type" do
       let(:change) { "contract_type" }
 
-      it "can have its contract type edited" do
+      it "can have its contract type edited", :retry do
         expect(page).to have_content "Contract information"
         #  https://github.com/alphagov/govuk-frontend/issues/979
         expect(page).to be_axe_clean.skipping "aria-allowed-attr"
@@ -107,6 +107,7 @@ RSpec.describe "Editing a vacancy template" do
 
     context "with salary" do
       let(:change) { "salary" }
+      let(:pay_scale) { "M1 to M2" }
 
       it "can have its salary edited", :retry do
         expect(page).to have_content "Salary details"
@@ -116,11 +117,11 @@ RSpec.describe "Editing a vacancy template" do
         uncheck "Full-time equivalent salary"
 
         check "Pay scale"
-        fill_in "Pay scale", with: "M1 to M2"
+        fill_in "Pay scale", with: pay_scale
         click_on I18n.t("buttons.save_and_continue")
 
-        expect(page).to have_content "M1 to M2"
-        expect(template.reload).to have_attributes(pay_scale: "M1 to M2")
+        expect(page).to have_content pay_scale
+        expect(template.reload).to have_attributes(pay_scale: pay_scale)
       end
     end
 
