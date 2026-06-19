@@ -3,7 +3,7 @@
 class UpdateSingleDSIUserInDbJob < ApplicationJob
   queue_as :low
 
-  # Race conditions mat result in validation failures due to duplicates
+  # Race conditions may result in validation failures due to duplicates
   retry_on ActiveModel::ValidationError
 
   def perform(dsi_user)
