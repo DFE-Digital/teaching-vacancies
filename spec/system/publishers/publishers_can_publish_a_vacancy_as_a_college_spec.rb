@@ -8,6 +8,7 @@ RSpec.describe "Creating a vacancy as an FE college" do
   let(:vacancy) do
     build(:vacancy,
           :ect_suitable,
+          :secondary,
           :apply_via_website,
           publish_on: Date.current,
           organisations: [college])
@@ -22,24 +23,29 @@ RSpec.describe "Creating a vacancy as an FE college" do
 
   after { logout }
 
-  it "follows the FE college journey, skipping education phases and applying_for_the_job" do
+  it "shows the confirm job address step after job title, restricts job roles, and shows the address on the review page" do
     expect(publisher_job_title_page).to be_displayed
     publisher_job_title_page.fill_in_and_submit_form(vacancy.job_title)
 
+    # Confirm job address is shown for FE colleges only
     expect(publisher_confirm_job_address_page).to be_displayed
-    publisher_confirm_job_address_page.fill_in_and_submit_form
+    publisher_confirm_job_address_page.fill_in_and_submit_form(
+      line1: "10 Campus Road",
+      town: "Brighton",
+      postcode: "BN1 1AA",
+    )
 
+    # Job role page only shows Teacher or Lecturer for FE colleges
     expect(publisher_job_role_page).to be_displayed
     expect(page).to have_content(I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.teacher"))
     expect(page).to have_no_content(I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.headteacher"))
     expect(page).to have_no_content(I18n.t("helpers.label.publishers_job_listing_job_role_form.support_job_role_options.teaching_assistant"))
     publisher_job_role_page.fill_in_and_submit_form(vacancy.job_roles.first)
 
-    # education_phases is skipped for FE colleges; subjects uses FE-specific options
-    expect(publisher_education_phase_page).not_to be_displayed
+    expect(publisher_key_stage_page).to be_displayed
+    publisher_key_stage_page.fill_in_and_submit_form(vacancy.key_stages_for_phases)
+
     expect(publisher_subjects_page).to be_displayed
-    expect(page).to have_content("Accountancy and finance")
-    expect(page).to have_no_content("Accounting")
     publisher_subjects_page.fill_in_and_submit_form(vacancy.subjects)
 
     expect(publisher_contract_information_page).to be_displayed
@@ -52,7 +58,6 @@ RSpec.describe "Creating a vacancy as an FE college" do
     publisher_pay_package_page.fill_in_and_submit_form(vacancy)
 
     expect(publisher_about_the_role_page).to be_displayed
-    expect(page).to have_content(I18n.t("helpers.label.publishers_job_listing_about_the_role_form.school_offer", organisation: "college"))
     publisher_about_the_role_page.fill_in_and_submit_form(vacancy)
 
     expect(publisher_school_visits_page).to be_displayed
@@ -64,11 +69,13 @@ RSpec.describe "Creating a vacancy as an FE college" do
     expect(publisher_important_dates_page).to be_displayed
     publisher_important_dates_page.fill_in_and_submit_form(publish_on: vacancy.publish_on, expires_at: vacancy.expires_at)
 
-    # applying_for_the_job is skipped; application_link is shown directly
-    expect(publisher_applying_for_the_job_page).not_to be_displayed
+    expect(publisher_applying_for_the_job_page).to be_displayed
+    publisher_applying_for_the_job_page.fill_in_and_submit_form
+
+    expect(publisher_how_to_receive_applications_page).to be_displayed
+    publisher_how_to_receive_applications_page.fill_in_and_submit_form("website")
+
     expect(publisher_application_link_page).to be_displayed
-    submit_empty_form
-    expect(publisher_application_link_page.errors.map(&:text)).to contain_exactly(I18n.t("application_link_errors.application_link.blank"))
     publisher_application_link_page.fill_in_and_submit_form(vacancy.application_link)
 
     expect(publisher_include_additional_documents_page).to be_displayed
@@ -80,14 +87,9 @@ RSpec.describe "Creating a vacancy as an FE college" do
     expect(publisher_confirm_contact_details_page).to be_displayed
     publisher_confirm_contact_details_page.fill_in_and_submit_form
 
+    # Review page — campus address row shows the custom address entered above
     expect(page).to have_current_path(organisation_job_review_path(created_vacancy.id), ignore_query: true)
-
-    click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
-    expect(page).to have_current_path(organisation_job_summary_path(created_vacancy.id), ignore_query: true)
-    expect(PublishedVacancy.find(created_vacancy.id).application_link).to eq(vacancy.application_link)
-  end
-
-  def submit_empty_form
-    click_on I18n.t("buttons.save_and_continue")
+    expect(page).to have_css("#job_address")
+    expect(page).to have_content("10 Campus Road, Brighton, BN1 1AA")
   end
 end

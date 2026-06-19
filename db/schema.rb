@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_06_18_125907) do
+ActiveRecord::Schema[8.0].define(version: 2026_06_19_113400) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -979,6 +979,11 @@ ActiveRecord::Schema[8.0].define(version: 2026_06_18_125907) do
     t.integer "receive_applications"
     t.integer "religion_type"
     t.boolean "anonymise_applications"
+    t.string "job_address_line1"
+    t.string "job_address_line2"
+    t.string "job_address_town"
+    t.string "job_address_county"
+    t.string "job_address_postcode"
     t.index ["organisation_id"], name: "index_vacancy_templates_on_organisation_id"
   end
 
