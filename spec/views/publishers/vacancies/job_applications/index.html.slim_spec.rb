@@ -169,7 +169,6 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
         expect(rendered).to have_css(".application-#{status}")
 
         expect(application_status).to have_link("#{candidate.first_name} #{candidate.last_name}", href: organisation_job_job_application_path(vacancy.id, candidate.id))
-        # end
       end
     end
   end
