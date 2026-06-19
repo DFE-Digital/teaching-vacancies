@@ -83,6 +83,11 @@ FactoryBot.define do
     trait :profile_incomplete do
       description { nil }
     end
+
+    trait :college do
+      school_type { School::COLLEGE_SCHOOL_TYPE }
+      detailed_school_type { "Further education" }
+    end
   end
 
   trait :free_school do

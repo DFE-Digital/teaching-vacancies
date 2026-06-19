@@ -1,0 +1,75 @@
+.govuk-grid-row
+  .govuk-grid-column-one-third
+    = landing_page_link_group(use_locations: true) do |group|
+      - group.with_title_landing_page "north-west"
+      - group.with_landing_page "liverpool"
+      - group.with_landing_page "manchester"
+      - group.with_landing_page "lancashire"
+      - group.with_landing_page "cheshire-east"
+      - group.with_landing_page "cheshire-west-and-chester"
+
+    = landing_page_link_group(use_locations: true) do |group|
+      - group.with_title_landing_page "yorkshire-and-the-humber"
+      - group.with_landing_page "sheffield"
+      - group.with_landing_page "leeds"
+      - group.with_landing_page "bradford"
+      - group.with_landing_page "doncaster"
+      - group.with_landing_page "north-yorkshire"
+
+    = landing_page_link_group(use_locations: true) do |group|
+      - group.with_title_landing_page "north-east"
+      - group.with_landing_page "newcastle-upon-tyne"
+      - group.with_landing_page "middlesbrough"
+      - group.with_landing_page "sunderland"
+      - group.with_landing_page "north-tyneside"
+      - group.with_landing_page "northumberland"
+
+  .govuk-grid-column-one-third
+    = landing_page_link_group(use_locations: true) do |group|
+      - group.with_title_landing_page "london"
+      - group.with_landing_page "bexley"
+      - group.with_landing_page "havering"
+      - group.with_landing_page "barnet"
+      - group.with_landing_page "enfield"
+      - group.with_landing_page "bromley"
+
+    = landing_page_link_group(use_locations: true) do |group|
+      - group.with_title_landing_page "south-east"
+      - group.with_landing_page "hampshire"
+      - group.with_landing_page "surrey"
+      - group.with_landing_page "kent"
+      - group.with_landing_page "west-sussex"
+      - group.with_landing_page "east-sussex"
+
+    = landing_page_link_group(use_locations: true) do |group|
+      - group.with_title_landing_page "south-west"
+      - group.with_landing_page "bristol"
+      - group.with_landing_page "gloucestershire"
+      - group.with_landing_page "devon"
+      - group.with_landing_page "cornwall"
+      - group.with_landing_page "dorset"
+
+  .govuk-grid-column-one-third
+    = landing_page_link_group(use_locations: true) do |group|
+      - group.with_title_landing_page "west-midlands"
+      - group.with_landing_page "birmingham"
+      - group.with_landing_page "worcestershire"
+      - group.with_landing_page "shropshire"
+      - group.with_landing_page "staffordshire"
+      - group.with_landing_page "warwickshire"
+
+    = landing_page_link_group(use_locations: true) do |group|
+      - group.with_title_landing_page "east-midlands"
+      - group.with_landing_page "derby"
+      - group.with_landing_page "nottingham"
+      - group.with_landing_page "leicester"
+      - group.with_landing_page "lincolnshire"
+      - group.with_landing_page "northamptonshire"
+
+    = landing_page_link_group(use_locations: true) do |group|
+      - group.with_title_landing_page "east-of-england"
+      - group.with_landing_page "essex"
+      - group.with_landing_page "bedfordshire"
+      - group.with_landing_page "hertfordshire"
+      - group.with_landing_page "suffolk"
+      - group.with_landing_page "norfolk"
