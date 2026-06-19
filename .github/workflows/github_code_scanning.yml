@@ -29,7 +29,7 @@ jobs:
   google-osv-scan-scheduled:
     name: Google OSV Scan - Scheduled
     if: ${{ github.event_name == 'push' || github.event_name == 'schedule' }}
-    uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable-pr.yml@v2.3.8"
+    uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@v2.3.8"
     with:
       # Example of specifying custom arguments
       scan-args: |-
