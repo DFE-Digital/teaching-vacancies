@@ -957,7 +957,7 @@ RSpec.describe Vacancy do
       subject { build(:vacancy, organisations: [college]) }
 
       it "falls back to the organisation address" do
-        expect(subject.vacancy_address).to eq([college.address, college.town, college.county, college.postcode].reject(&:blank?).join(", "))
+        expect(subject.vacancy_address).to eq([college.address, college.town, college.county, college.postcode].compact_blank.join(", "))
       end
     end
   end
@@ -982,7 +982,7 @@ RSpec.describe Vacancy do
       end
 
       it "does not update the geolocation" do
-        expect { subject.geocode_job_address }.not_to change { subject.geolocation }
+        expect { subject.geocode_job_address }.not_to(change(subject, :geolocation))
       end
     end
   end
