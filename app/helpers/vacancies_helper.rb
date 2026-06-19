@@ -25,6 +25,10 @@ module VacanciesHelper
     end
   end
 
+  def fe_college_job_roles_options
+    [["teacher", I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.teacher")]]
+  end
+
   def teaching_job_roles_options
     Vacancy::TEACHING_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.#{option}")] }
   end
