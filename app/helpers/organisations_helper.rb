@@ -52,7 +52,9 @@ module OrganisationsHelper
   end
 
   def organisation_type_basic(organisation)
-    if organisation.school?
+    if organisation.fe_college?
+      "college"
+    elsif organisation.school?
       "school"
     elsif organisation.local_authority?
       "local authority"
