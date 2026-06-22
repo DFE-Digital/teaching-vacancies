@@ -198,7 +198,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
     end
 
     it "shows text explaining that the candidates are willing to travel to the school" do
-      expect(page).to have_selector("p", text: "These candidates are willing to travel to a location that’s near to your school.")
+      expect(page).to have_selector("p", text: "These candidates are willing to travel to a location that’s near to your school or college.")
     end
   end
 
