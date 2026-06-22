@@ -169,11 +169,11 @@ RSpec.describe VacanciesHelper do
     end
 
     context "when the vacancy is at an FE college without a custom job address" do
-      let(:college) { build(:college, name: "City College", town: "Brighton", county: "East Sussex", postcode: "BN1 1AA") }
+      let(:college) { build(:college, name: "City College", address: "1 High Street", town: "Brighton", county: "East Sussex", postcode: "BN1 1AA") }
       let(:vacancy) { build(:vacancy, organisations: [college]) }
 
       it "returns the college name with the organisation address" do
-        expect(subject).to eq("City College, Brighton, East Sussex, BN1 1AA")
+        expect(subject).to eq("City College, 1 High Street, Brighton, East Sussex, BN1 1AA")
       end
     end
   end
@@ -211,11 +211,11 @@ RSpec.describe VacanciesHelper do
     end
 
     context "when the vacancy is at an FE college without a custom job address" do
-      let(:college) { build(:college, name: "City College", town: "Brighton", county: "East Sussex") }
+      let(:college) { build(:college, name: "City College", address: "1 High Street", town: "Brighton", county: "East Sussex", postcode: "BN1 1AA") }
       let(:vacancy) { build(:vacancy, organisations: [college]) }
 
       it "returns the college name with the organisation address" do
-        expect(subject).to eq("City College, Brighton, East Sussex")
+        expect(subject).to eq("City College, 1 High Street, Brighton, East Sussex, BN1 1AA")
       end
     end
   end
