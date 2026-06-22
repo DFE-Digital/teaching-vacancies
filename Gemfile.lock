@@ -195,7 +195,7 @@ GEM
     coderay (1.1.3)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
-    concurrent-ruby (1.3.6)
+    concurrent-ruby (1.3.7)
     connection_pool (2.5.5)
     crack (1.0.1)
       bigdecimal
@@ -334,10 +334,10 @@ GEM
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (>= 6, < 10)
       view_component (>= 4.0, < 4.7)
-    govuk_design_system_formbuilder (6.1.0)
-      actionview (>= 6.1)
-      activemodel (>= 6.1)
-      activesupport (>= 6.1)
+    govuk_design_system_formbuilder (6.2.0)
+      actionview (>= 7.2)
+      activemodel (>= 7.2)
+      activesupport (>= 7.2)
       html-attributes-utils (~> 1)
     groupdate (6.8.0)
       activesupport (>= 7.2)
@@ -381,7 +381,7 @@ GEM
       csv
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
-    i18n (1.14.8)
+    i18n (1.15.2)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     image_processing (2.0.2)
@@ -1020,7 +1020,7 @@ DEPENDENCIES
   google-apis-indexing_v3
   google-cloud-bigquery
   govuk-components (= 6.1.0)
-  govuk_design_system_formbuilder (~> 6.1.0)
+  govuk_design_system_formbuilder (~> 6.2.0)
   groupdate
   guard-bundler (~> 3.1)
   guard-rspec
@@ -1175,7 +1175,7 @@ CHECKSUMS
   climate_control (1.2.0) sha256=36b21896193fa8c8536fa1cd843a07cf8ddbd03aaba43665e26c53ec1bd70aa5
   coderay (1.1.3) sha256=dc530018a4684512f8f38143cd2a096c9f02a1fc2459edcfe534787a7fc77d4b
   coercible (1.0.0) sha256=5081ad24352cc8435ce5472bc2faa30260c7ea7f2102cc6a9f167c4d9bffaadc
-  concurrent-ruby (1.3.6) sha256=6b56837e1e7e5292f9864f34b69c5a2cbc75c0cf5338f1ce9903d10fa762d5ab
+  concurrent-ruby (1.3.7) sha256=4412caec3a5ea2e5fdc52076724c071a81f2c0593d83b2ac8cbb8ca63b3151b0
   connection_pool (2.5.5) sha256=e54ff92855753df1fd7c59fa04a398833355f27dd14c074f8c83a05f72a716ad
   crack (1.0.1) sha256=ff4a10390cd31d66440b7524eb1841874db86201d5b70032028553130b6d4c7e
   crass (1.0.6) sha256=dc516022a56e7b3b156099abc81b6d2b08ea1ed12676ac7a5657617f012bd45d
@@ -1234,7 +1234,7 @@ CHECKSUMS
   google-logging-utils (0.2.0) sha256=675462b4ea5affa825a3442694ca2d75d0069455a1d0956127207498fca3df7b
   googleauth (1.16.2) sha256=15009502e2e38af71948cda918f230e27d327f6882a1e47967a5a4664930a638
   govuk-components (6.1.0) sha256=242bdcc7d573eb5ae6086409754bf92656428ac8235454358b76fa5e54f0e79c
-  govuk_design_system_formbuilder (6.1.0) sha256=b0fdb3714e59665f1a522291840bcc89801cb4325f243e8717e0f9be87d1192c
+  govuk_design_system_formbuilder (6.2.0) sha256=d8cd1543776b7b15ba3d1774f16e3b8458c59446b0cad56ccbbc1e517a575e93
   groupdate (6.8.0) sha256=16f90ea18ca981c38e41e592416480b28353aa5e5cc3e7cb13a68b8fb5d40510
   guard (2.20.0) sha256=66829ac0154080f20c6b1d8e6b65c6d5b3f3064ff46f85beb56c82f27b306040
   guard-bundler (3.1.0) sha256=d0e60e46d6c06e201e79f61623211f64961cb000188f55fb76e36dc892ff0e35
@@ -1249,7 +1249,7 @@ CHECKSUMS
   high_voltage (5.0.0) sha256=fbdd1a861af30d51d6a9f710b37709ab489211402685972945cd5eac6a4c0b23
   html-attributes-utils (1.0.2) sha256=594e0b37b3dd4e554abe893bee9719896f876675fd08fe534fc2e6e1b4e2538c
   httparty (0.24.2) sha256=8fca6a54aa0c4aa4303a0fd33e5e2156175d6a5334f714263b458abd7fda9c38
-  i18n (1.14.8) sha256=285778639134865c5e0f6269e0b818256017e8cde89993fdfcbfb64d088824a5
+  i18n (1.15.2) sha256=00f9eb62412fe593b2a65a97daa75300d37abb8f7202ec748e94b6d46a9dd1b5
   ice_nine (0.11.2) sha256=5d506a7d2723d5592dc121b9928e4931742730131f22a1a37649df1c1e2e63db
   image_processing (2.0.2) sha256=d0cf990f862d64efb1a14916044bf4b5bb2bccc7e235022413cde46019799cfa
   imagen (0.2.0) sha256=369fe912078877dba92615ebfc6f35a7d833e31f24f47bdd3ad5371a4139e24b
