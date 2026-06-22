@@ -449,8 +449,11 @@ en:
 
   terms_and_conditions:
     intro_html: >-
-      Before listing a role on Teaching Vacancies you must agree to all of our %{link}, which includes information about:
+      Before listing any role at your school on Teaching Vacancies you must first read our %{terms_link} and agree to abide by them.
     intro_link_text: terms and conditions
+    intro_link_text_section: Terms and conditions for schools, colleges, trusts and local authorities
+    intro_paragraph2_html: >-
+      Pay particular attention to %{section_link}. This section explains:
     label: I agree to all of the Teaching Vacancies service terms and conditions.
     page_title: Terms and conditions
     please_accept: Accept the terms and conditions
