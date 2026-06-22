@@ -32,17 +32,17 @@ RSpec.describe School do
     end
   end
 
-  describe "#college?" do
+  describe "#fe_college?" do
     it "returns true when the school matches the colleges scope" do
-      expect(build(:college)).to be_college
+      expect(build(:college)).to be_fe_college
     end
 
     it "returns false when the school type does not match the colleges scope" do
-      expect(build(:school, detailed_school_type: School::FE_DETAILED_SCHOOL_TYPE)).not_to be_college
+      expect(build(:school, detailed_school_type: School::FE_DETAILED_SCHOOL_TYPE)).not_to be_fe_college
     end
 
     it "returns false when the detailed school type does not match the colleges scope" do
-      expect(build(:school, school_type: School::COLLEGE_SCHOOL_TYPE)).not_to be_college
+      expect(build(:school, school_type: School::COLLEGE_SCHOOL_TYPE)).not_to be_fe_college
     end
   end
 

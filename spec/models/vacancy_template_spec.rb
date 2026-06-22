@@ -48,6 +48,20 @@ RSpec.describe VacancyTemplate do
     end
   end
 
+  describe "#for_an_fe_college?" do
+    it "returns true when the organisation is an FE college" do
+      expect(described_class.new(organisation: build(:college))).to be_for_an_fe_college
+    end
+
+    it "returns false when the organisation is not an FE college" do
+      expect(described_class.new(organisation: build(:school))).not_to be_for_an_fe_college
+    end
+
+    it "returns nil when there is no organisation" do
+      expect(described_class.new).not_to be_for_an_fe_college
+    end
+  end
+
   # This test fails unless vacancy_template overrides reset_application_link to be an empty method
   describe "check that uploaded_form template types can be saved" do
     let(:template) { build(:vacancy_template, organisation: build(:school), enable_job_applications: false, receive_applications: "uploaded_form") }

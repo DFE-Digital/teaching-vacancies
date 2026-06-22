@@ -34,13 +34,17 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
   end
 
   def application_process_steps
-    steps = if vacancy.published?
+    # applying_for_the_job asks how the publisher wants to receive applications;
+    # FE colleges always use application_link so skip this step for them
+    steps = if vacancy.published? || organisation.fe_college?
               []
             else
               %i[applying_for_the_job]
             end
 
-    if vacancy.enable_job_applications
+    if organisation.fe_college?
+      steps += %i[application_link]
+    elsif vacancy.enable_job_applications
       steps += %i[anonymise_applications]
     else
       steps += %i[how_to_receive_applications]

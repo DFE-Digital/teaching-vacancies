@@ -59,7 +59,7 @@ RSpec.describe "publishers/vacancies/show" do
         expect(rendered).to have_content(vacancy.application_email) if vacancy.receive_applications == "email"
       end
 
-      expect(rendered).to have_content(I18n.t("jobs.school_visits"))
+      expect(rendered).to have_content(I18n.t("jobs.school_visits", organisation_type: "school"))
       expect(rendered).to have_content(vacancy.contact_email)
       expect(rendered).to have_content(vacancy.contact_number)
 

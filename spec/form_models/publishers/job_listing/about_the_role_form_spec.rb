@@ -59,6 +59,34 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
     end
   end
 
+  describe "organisation_type" do
+    let(:params) { { school_offer: nil } }
+
+    context "when the vacancy is for a trust central office" do
+      let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles:).tap { |v| allow(v).to receive(:central_office?).and_return(true) } }
+
+      it "uses 'trust' in the school_offer error message" do
+        expect(subject.errors.messages[:school_offer]).to include(I18n.t("about_the_role_errors.school_offer.blank", organisation: "trust"))
+      end
+    end
+
+    context "when the vacancy is for an FE college" do
+      let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles:).tap { |v| allow(v).to receive(:for_an_fe_college?).and_return(true) } }
+
+      it "uses 'college' in the school_offer error message" do
+        expect(subject.errors.messages[:school_offer]).to include(I18n.t("about_the_role_errors.school_offer.blank", organisation: "college"))
+      end
+    end
+
+    context "when the vacancy is for multiple organisations" do
+      let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles:).tap { |v| allow(v).to receive(:for_multiple_organisations?).and_return(true) } }
+
+      it "uses 'schools' in the school_offer error message" do
+        expect(subject.errors.messages[:school_offer]).to include(I18n.t("about_the_role_errors.school_offer.blank", organisation: "schools"))
+      end
+    end
+  end
+
   describe "school_offer" do
     let(:error) { [:school_offer, :blank, { organisation: "school" }] }
 

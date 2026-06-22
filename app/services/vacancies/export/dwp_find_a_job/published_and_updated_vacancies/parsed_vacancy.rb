@@ -76,7 +76,7 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
     private
 
     def school_or_college_type
-      vacancy.organisation.respond_to?(:college?) && vacancy.organisation.college? ? "college" : "school"
+      vacancy.organisation.fe_college? ? "college" : "school"
     end
 
     # Every particular repost version of a vacancy will be live for a different 30 days period after the previous version.

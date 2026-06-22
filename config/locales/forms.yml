@@ -218,6 +218,7 @@ en:
           You should cover what the role is and who you're looking to recruit.
           The first 20 to 40 words will be shown in search results, so make them stand out.
         flexi_working_details_provided: Providing details about what you can offer may increase the number of application you receive for this role.
+        school_offer: Provide details about what your %{organisation} can offer staff, for example, employee benefits, wellbeing support or professional development.
       publishers_job_listing_application_link_form:
         application_link: For example, https://www.example.com
       publishers_job_listing_application_form_form:
@@ -469,6 +470,7 @@ en:
           description_summary_text: View your %{organisation} description
           no_description: Your %{organisation} description from your %{organisation} profile will be included in the job listing once you have added it to your profile.
           no_description_link:
+            college: Add a college description
             organisation: Add an organisation description
             school: Add a school description
           no_safeguarding_information: Your commitment to safeguarding statement from your %{organisation} profile will be included in the job listing once you have added it to your profile.
@@ -634,6 +636,7 @@ en:
           pay_scale: Pay scale
           hourly_rate: Hourly rate of pay
       publishers_job_listing_school_visits_form:
+        school_visits: "Do you want to offer %{organisation_type} visits?"
         school_visits_options:
           false: "No"
           true: "Yes"
@@ -782,8 +785,6 @@ en:
       publishers_job_listing_pay_package_form:
         salary_types: Salary details
         benefits: Do you want to include additional allowances?
-      publishers_job_listing_school_visits_form:
-        school_visits: Do you want to offer school visits?
       subscription:
         frequency: When do you want to receive alerts?
       support_request_form:

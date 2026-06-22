@@ -147,7 +147,7 @@ RSpec.describe "Editing a vacancy template" do
       let(:change) { "school_visits" }
 
       it "can have its school visits edited", :retry do
-        expect(page).to have_content "Do you want to offer school visits?"
+        expect(page).to have_content "Do you want to offer candidates a visit?"
         expect(page).to be_axe_clean.skipping "aria-allowed-attr"
 
         choose "Yes"

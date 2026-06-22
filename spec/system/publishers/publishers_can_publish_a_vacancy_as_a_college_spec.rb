@@ -42,6 +42,9 @@ RSpec.describe "Creating a vacancy as an FE college" do
     expect(page).to have_no_content(I18n.t("helpers.label.publishers_job_listing_job_role_form.support_job_role_options.teaching_assistant"))
     publisher_job_role_page.fill_in_and_submit_form(vacancy.job_roles.first)
 
+    # education_phases is skipped for FE colleges
+    expect(publisher_education_phase_page).not_to be_displayed
+
     expect(publisher_key_stage_page).to be_displayed
     publisher_key_stage_page.fill_in_and_submit_form(vacancy.key_stages_for_phases)
 
@@ -69,12 +72,8 @@ RSpec.describe "Creating a vacancy as an FE college" do
     expect(publisher_important_dates_page).to be_displayed
     publisher_important_dates_page.fill_in_and_submit_form(publish_on: vacancy.publish_on, expires_at: vacancy.expires_at)
 
-    expect(publisher_applying_for_the_job_page).to be_displayed
-    publisher_applying_for_the_job_page.fill_in_and_submit_form
-
-    expect(publisher_how_to_receive_applications_page).to be_displayed
-    publisher_how_to_receive_applications_page.fill_in_and_submit_form("website")
-
+    # applying_for_the_job is skipped; application_link is shown directly
+    expect(publisher_applying_for_the_job_page).not_to be_displayed
     expect(publisher_application_link_page).to be_displayed
     publisher_application_link_page.fill_in_and_submit_form(vacancy.application_link)
 
