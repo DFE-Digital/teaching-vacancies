@@ -91,5 +91,10 @@ RSpec.describe "Creating a vacancy as an FE college" do
     expect(page).to have_current_path(organisation_job_review_path(created_vacancy.id), ignore_query: true)
     expect(page).to have_css("#job_location")
     expect(page).to have_content("10 Campus Road, Brighton, BN1 1AA")
+
+    # FE college should have a Change link on the Locations row linking to confirm_job_address
+    within("#job_location") do
+      expect(page).to have_link(I18n.t("buttons.change"), href: /confirm_job_address/)
+    end
   end
 end

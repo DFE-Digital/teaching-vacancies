@@ -158,6 +158,66 @@ RSpec.describe VacanciesHelper do
         expect(subject).to eq("#{vacancy.organisation.name}, Cool Town, Orange County, SW1A")
       end
     end
+
+    context "when the vacancy is at an FE college with a custom job address" do
+      let(:college) { build(:college, name: "City College") }
+      let(:vacancy) { build(:vacancy, organisations: [college], job_address_line1: "10 Campus Road", job_address_town: "Brighton", job_address_postcode: "BN1 1AA") }
+
+      it "returns the college name with the custom address" do
+        expect(subject).to eq("City College, 10 Campus Road, Brighton, BN1 1AA")
+      end
+    end
+
+    context "when the vacancy is at an FE college without a custom job address" do
+      let(:college) { build(:college, name: "City College", town: "Brighton", county: "East Sussex", postcode: "BN1 1AA") }
+      let(:vacancy) { build(:vacancy, organisations: [college]) }
+
+      it "returns the college name with the organisation address" do
+        expect(subject).to eq("City College, Brighton, East Sussex, BN1 1AA")
+      end
+    end
+  end
+
+  describe "#vacancy_job_location" do
+    subject { helper.vacancy_job_location(vacancy) }
+
+    context "when the vacancy is at multiple schools" do
+      let(:school_group) { create(:school_group) }
+      let(:school) { create(:school, school_groups: [school_group]) }
+      let(:school2) { create(:school, school_groups: [school_group]) }
+      let(:vacancy) { build(:vacancy, organisations: [school, school2]) }
+
+      it "returns the multiple schools location" do
+        expect(subject).to eq("More than one location, #{vacancy.organisation.name}")
+      end
+    end
+
+    context "when the vacancy is not at multiple schools" do
+      let(:school) { build(:school, name: "Magic School", town: "Cool Town", county: "Orange County") }
+      let(:vacancy) { build(:vacancy, organisations: [school]) }
+
+      it "returns the location without postcode" do
+        expect(subject).to eq("Magic School, Cool Town, Orange County")
+      end
+    end
+
+    context "when the vacancy is at an FE college with a custom job address" do
+      let(:college) { build(:college, name: "City College") }
+      let(:vacancy) { build(:vacancy, organisations: [college], job_address_line1: "10 Campus Road", job_address_town: "Brighton", job_address_postcode: "BN1 1AA") }
+
+      it "returns the college name with the custom address" do
+        expect(subject).to eq("City College, 10 Campus Road, Brighton, BN1 1AA")
+      end
+    end
+
+    context "when the vacancy is at an FE college without a custom job address" do
+      let(:college) { build(:college, name: "City College", town: "Brighton", county: "East Sussex") }
+      let(:vacancy) { build(:vacancy, organisations: [college]) }
+
+      it "returns the college name with the organisation address" do
+        expect(subject).to eq("City College, Brighton, East Sussex")
+      end
+    end
   end
 
   describe "#vacancy_form_type" do
