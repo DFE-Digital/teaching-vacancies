@@ -13,9 +13,7 @@ RSpec.describe "jobseekers/job_applications/index" do
   end
 
   before do
-    without_partial_double_verification do
-      allow(view).to receive(:current_jobseeker).and_return(jobseeker.reload)
-    end
+    allow(view).to receive(:current_jobseeker).and_return(jobseeker.reload)
 
     assign(:job_applications, job_applications)
     assign(:count, job_applications.size)

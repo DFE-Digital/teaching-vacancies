@@ -345,8 +345,9 @@ RSpec.describe Vacancy do
     end
 
     describe "#listed" do
-      it "retrieves vacancies that have a status of :published and a past publish_on date" do
+      it "retrieves vacancies that have a status of :published and a past publish_on date, including discarded vacancies" do
         published = create_list(:vacancy, 5)
+        published.first.discard
         create_list(:vacancy, 3, :future_publish)
 
         expect(PublishedVacancy.listed.count).to eq(published.count)

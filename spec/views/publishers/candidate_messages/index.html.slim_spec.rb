@@ -37,6 +37,8 @@ RSpec.describe "publishers/candidate_messages/index" do
     let(:vacancy) { build_stubbed(:vacancy, :live, organisations: [organisation]) }
     let(:job_application) { build_stubbed(:job_application, :submitted, jobseeker: jobseeker, vacancy: vacancy, status: "interviewing") }
     let(:conversations) { build_stubbed_list(:conversation, 1, last_message_at: Time.current, job_application: job_application, messages: messages) }
+    let(:page) { Capybara.string(rendered) }
+    let(:table_body) { page.find("table tbody") }
 
     context "with unread messages" do
       let(:messages) { build_stubbed_list(:jobseeker_message, 1, sender: jobseeker) }
@@ -45,9 +47,7 @@ RSpec.describe "publishers/candidate_messages/index" do
         expect(rendered).to have_content("Archive")
         expect(rendered).to have_content("Inbox (1)")
 
-        within("table tbody") do
-          expect(rendered).to have_css("tr.conversation--unread")
-        end
+        expect(table_body).to have_css("tr.conversation--unread")
       end
     end
 
@@ -55,9 +55,7 @@ RSpec.describe "publishers/candidate_messages/index" do
       let(:messages) { build_stubbed_list(:jobseeker_message, 1, sender: jobseeker, read: true) }
 
       it "marks message as read" do
-        within("table tbody") do
-          expect(rendered).to have_no_css("tr.conversation--unread")
-        end
+        expect(table_body).to have_no_css("tr.conversation--unread")
       end
     end
   end
