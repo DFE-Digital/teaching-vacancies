@@ -63,7 +63,7 @@ RSpec.describe "Redirect to correct authentication method" do
 
     it "redirects to complete your profile reminder" do
       follow_redirect!
-      expect(response.body).to include("Complete your school profile")
+      expect(response.body).to include("Complete your school or college profile")
     end
   end
 end
