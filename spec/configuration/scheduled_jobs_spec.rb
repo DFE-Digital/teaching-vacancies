@@ -12,8 +12,6 @@ RSpec.describe "Scheduled jobs configuration" do
   let(:unscheduled_jobs) do
     %w[
       AlertEmail::Base
-      MigrateVacancyDocumentsToActiveStorageJob
-      PerformancePlatformTransactionsQueueJob
       RemoveGoogleIndexQueueJob
       SeedDatabaseJob
       SendJobListingEndedEarlyNotificationJob
@@ -28,9 +26,7 @@ RSpec.describe "Scheduled jobs configuration" do
       ImportFromVacancySourceJob
       TrackVacancyViewJob
       EqualOpportunitiesReportUpdateJob
-      BackfillSubscriptionLocationJob
       SetSubscriptionLocationDataJob
-      MigratePersonalStatementJob
       UpdateSingleDSIUserInDbJob
       FetchMalwareScanResultJob
       SidekiqJob
