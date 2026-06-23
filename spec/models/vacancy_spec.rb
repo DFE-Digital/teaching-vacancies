@@ -942,6 +942,47 @@ RSpec.describe Vacancy do
     end
   end
 
+  describe "job address validations" do
+    let(:college) { create(:college) }
+    let(:school) { create(:school) }
+    let(:job_address_attrs) { { job_address_line1: "10 Campus Road", job_address_town: "Brighton", job_address_postcode: "BN1 1AA" } }
+
+    context "when the vacancy belongs to an FE college" do
+      it "is valid with job address fields present" do
+        vacancy = build(:vacancy, organisations: [college], **job_address_attrs)
+        expect(vacancy).to be_valid
+      end
+
+      it "is valid without job address fields present" do
+        vacancy = build(:vacancy, organisations: [college])
+        vacancy.valid?
+        expect(vacancy.errors[:base]).not_to include(I18n.t("activerecord.errors.models.vacancy.job_address_only_for_fe_colleges"))
+      end
+    end
+
+    context "when the vacancy does not belong to an FE college" do
+      it "is invalid with job address fields present" do
+        vacancy = build(:vacancy, organisations: [school], **job_address_attrs)
+        expect(vacancy).not_to be_valid
+        expect(vacancy.errors[:base]).to include(I18n.t("activerecord.errors.models.vacancy.job_address_only_for_fe_colleges"))
+      end
+
+      it "is valid when no job address fields are present" do
+        vacancy = build(:vacancy, organisations: [school])
+        vacancy.valid?
+        expect(vacancy.errors[:base]).not_to include(I18n.t("activerecord.errors.models.vacancy.job_address_only_for_fe_colleges"))
+      end
+    end
+
+    context "when no organisations are associated yet" do
+      it "does not raise a validation error for job address fields" do
+        vacancy = build(:vacancy, organisations: [], **job_address_attrs)
+        vacancy.valid?
+        expect(vacancy.errors[:base]).not_to include(I18n.t("activerecord.errors.models.vacancy.job_address_only_for_fe_colleges"))
+      end
+    end
+  end
+
   describe "#vacancy_address" do
     let(:college) { create(:college) }
 

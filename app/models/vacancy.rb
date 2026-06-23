@@ -149,6 +149,11 @@ class Vacancy < ApplicationRecord
   validates :application_email, email_address: true, if: -> { application_email_changed? } # Allows data created prior to validation to still be valid
   validates :contact_email, email_address: true, if: -> { contact_email_changed? }
 
+  # An FE college may want to post a vacancy at a campus in a completely different location from the
+  # college's main address. These fields are exclusively reserved for storing that campus-specific
+  # address and are only applicable to FE college vacancies.
+  validate :job_address_only_for_fe_colleges, if: -> { organisations.any? && job_address_fields.any?(&:present?) }
+
   has_noticed_notifications
   has_paper_trail on: [:update],
                   only: ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG,
@@ -284,7 +289,7 @@ class Vacancy < ApplicationRecord
   end
 
   def vacancy_address
-    job_specific_address = [job_address_line1, job_address_line2, job_address_town, job_address_county, job_address_postcode].reject(&:blank?)
+    job_specific_address = job_address_fields.reject(&:blank?)
     return job_specific_address.join(", ") if job_specific_address.any?
 
     # :nocov:
@@ -312,6 +317,16 @@ class Vacancy < ApplicationRecord
 
   private
 
+  def job_address_fields
+    [job_address_line1, job_address_line2, job_address_town, job_address_county, job_address_postcode]
+  end
+
+  def job_address_only_for_fe_colleges
+    return if for_an_fe_college?
+
+    errors.add(:base, :job_address_only_for_fe_colleges)
+  end
+
   def update_conversation_searchable_content
     Conversation.joins(job_application: :vacancy)
                 .where(job_applications: { vacancy_id: id })
@@ -333,7 +348,7 @@ class Vacancy < ApplicationRecord
   #
   def refresh_geolocation(_school_added_or_removed = nil)
     # Don't override the vacancy-specific job location if one has been specified.
-    return if [job_address_line1, job_address_line2, job_address_town, job_address_county, job_address_postcode].any?(&:present?)
+    return if job_address_fields.any?(&:present?)
 
     # :nocov:
     self.geolocation = if organisations.one?
