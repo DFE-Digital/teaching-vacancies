@@ -1046,7 +1046,7 @@ RSpec.describe Vacancy do
     let(:school_two) { create(:school, name: "Second school") }
 
     context "when only partial job address is given" do
-      let(:vacancy) { create(:vacancy, :ect_suitable, job_roles: %w[teacher], organisations: [school_one], phases: %w[primary], key_stages: %w[ks1], job_address_line2: "Floor 2") }
+      let(:vacancy) { create(:vacancy, :ect_suitable, job_roles: %w[teacher], organisations: [create(:college)], phases: %w[primary], key_stages: %w[ks1], job_address_line2: "Floor 2") }
 
       it "does not overwrite geolocation with the organisation geopoint" do
         original_geolocation = vacancy.geolocation
