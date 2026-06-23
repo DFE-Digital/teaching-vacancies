@@ -43,4 +43,5 @@ jobs:
       upload-sarif: false
       scan-args: |-
         --recursive
+        --output-file scan-results.txt
         ./
