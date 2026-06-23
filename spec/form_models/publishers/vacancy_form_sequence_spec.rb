@@ -100,7 +100,7 @@ RSpec.describe Publishers::VacancyFormSequence do
         create(:draft_vacancy, :secondary, :apply_via_website,
                school_visits: true,
                organisations: [organisation],
-               completed_steps: all_steps.map(&:to_s) - ["review"],
+               completed_steps: all_steps.map(&:to_s) - %w[review],
                job_address_town: "Brighton",
                job_address_postcode: "BN1 1AA",
                job_address_line1: nil)
