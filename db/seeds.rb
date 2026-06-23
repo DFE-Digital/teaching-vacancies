@@ -70,9 +70,9 @@ schools = [bexleyheath_school,
 
 user_emails = users.map { |u| u.fetch(:email) }
 
-users.each do |user|
+users.each.with_index do |user, index|
   organisations = [bexleyheath_school, weydon_trust, southampton_la, abraham_moss, aston_maths, st_anthony, osmaston_cofe]
-  publisher = Publisher.create(organisations: organisations, **user)
+  publisher = Publisher.create!(oid: index.to_s, organisations: organisations, **user)
 
   organisations.each do |organisation|
     FactoryBot.create(:publisher_preference, publisher: publisher, organisation: organisation)
