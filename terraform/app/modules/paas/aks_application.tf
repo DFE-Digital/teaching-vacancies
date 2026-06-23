@@ -67,29 +67,6 @@ module "web_application" {
   # send_traffic_to_maintenance_page = true
 }
 
-module "sidekiq_worker" {
-  source = "../../vendor/modules/aks//aks/application"
-
-  name   = "sidekiq-worker"
-  is_web = false
-
-  namespace    = var.namespace
-  environment  = var.environment
-  service_name = var.service_name
-
-  cluster_configuration_map  = module.cluster_data.configuration_map
-  kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
-  kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
-  run_as_non_root            = var.run_as_non_root
-
-  docker_image   = var.app_docker_image
-  command        = ["/bin/sh", "-c", "bin/jobs"]
-  max_memory     = var.aks_worker_app_memory
-  replicas       = var.aks_worker_app_instances
-  enable_logit   = var.enable_logit
-  enable_gcp_wif = true
-}
-
 module "solid_queue_worker" {
   source = "../../vendor/modules/aks//aks/application"
 
@@ -106,7 +83,7 @@ module "solid_queue_worker" {
   run_as_non_root            = var.run_as_non_root
 
   docker_image   = var.app_docker_image
-  command        = ["/bin/sh", "-c", "bin/jobs --skip-recurring"]
+  command        = ["/bin/sh", "-c", "bin/jobs"]
   max_memory     = var.aks_worker_app_memory
   replicas       = var.aks_worker_app_instances
   enable_logit   = var.enable_logit
