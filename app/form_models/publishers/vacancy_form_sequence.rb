@@ -53,7 +53,7 @@ class Publishers::VacancyFormSequence
   end
 
   def next_incomplete_step_confirm_job_address?
-    return false unless @step_process.steps.include?(:confirm_job_address)
+    return false unless @step_names.include?(:confirm_job_address)
     return false if @vacancy.completed_steps.include?("confirm_job_address")
 
     @vacancy.completed_steps.last == "job_title"
