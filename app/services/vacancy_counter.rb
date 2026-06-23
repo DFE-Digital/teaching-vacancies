@@ -1,6 +1,5 @@
 class VacancyCounter
   GROUPED_SUBJECTS = {
-    "Art and Design Technology": [:"Art and design", :"Design and technology"],
     "Dance, Drama and Music": %i[Dance Drama Music],
     "Economics and Business Studies": [:Economics, :"Business studies"],
     "English and Media Studies": [:English, :"Media studies"],
@@ -17,7 +16,7 @@ class VacancyCounter
       scope.joins("CROSS JOIN LATERAL unnest(job_roles) AS r(role)")
            .group("r.role")
            .count
-           .transform_keys { |k| Vacancy::JOB_ROLES.invert[k].to_sym }
+           .transform_keys { |k| Vacancy::JOB_ROLES.invert.fetch(k).to_sym }
     end
 
     def phase_counts(scope:)
@@ -31,7 +30,7 @@ class VacancyCounter
       scope.joins("CROSS JOIN LATERAL unnest(working_patterns) AS w(pattern)")
            .group("w.pattern")
            .count
-           .transform_keys { |k| Vacancy::WORKING_PATTERNS_ENUM.invert[k] }
+           .transform_keys { |k| Vacancy::WORKING_PATTERNS_ENUM.invert.fetch(k) }
     end
 
     def job_share_counts(scope:)
