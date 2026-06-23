@@ -1,4 +1,4 @@
-class AlertMailerJob < MailSendingJob
+class AlertMailerJob < ActionMailer::MailDeliveryJob
   EXPIRES_IN = 4.hours
 
   before_enqueue do

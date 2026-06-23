@@ -28,7 +28,6 @@ module "application_configuration" {
     REDIS_CACHE_URL                              = module.redis-cache.url
     REDIS_QUEUE_URL                              = module.redis-queue.url
     DATABASE_URL                                 = module.postgres.url
-    QUEUE_DATABASE_URL                           = module.postgres_queue.url
     GOOGLE_CLOUD_CREDENTIALS                     = var.enable_dfe_analytics_federated_auth ? module.dfe_analytics[0].google_cloud_credentials : null
     AZURE_STORAGE_DOCUMENTS_CONNECTION_STRING    = module.documents_azure_storage.primary_connection_string
     AZURE_STORAGE_IMAGES_LOGOS_CONNECTION_STRING = module.images_logos_azure_storage.primary_connection_string

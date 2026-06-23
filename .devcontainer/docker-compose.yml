@@ -44,18 +44,6 @@ services:
     ports:
       - "5432:5432"
 
-  dbq:
-    image: postgres:14.23
-    restart: unless-stopped
-    volumes:
-      - postgres_data_dbq:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - "5443:5432"
-
   redis:
     # Azure currenty runs redis 6.0
     image: redis:6.0-alpine
@@ -82,7 +70,6 @@ services:
 volumes:
   # Postgres data directory
   postgres_data:
-  postgres_data_dbq:
   # Caches for Bundler/NPM/Yarn-installed dependencies to persist across rebuilds and install faster
   bundle:
   node_modules:

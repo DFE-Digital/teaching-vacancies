@@ -1,4 +1,5 @@
 default: &default
+  adapter: postgis
   encoding: unicode
   # AKS DATABASE_URL will start with `postgres://`, which overrides the postgis adapter
   # so we need to replace `postgres` if it occurs at the beginning of DATABASE_URL
@@ -6,43 +7,15 @@ default: &default
   pool: <%= Integer(ENV.fetch('RAILS_MAX_THREADS') { 5 }) %>
 
 development:
-  primary: &primary_development
-    <<: *default
-    adapter: postgis
-    database: tvs_development
-  queue:
-    <<: *primary_development
-    adapter: postgres
-    database: tvs_development_queue
-    migrations_paths: db/queue_migrate
+  <<: *default
+  database: tvs_development
 
 test:
-  primary: &primary_test
-    <<: *default
-    adapter: postgis
-    database: tvs_test<%= ENV['TEST_ENV_NUMBER'] %>
-  queue:
-    <<: *primary_test
-    adapter: postgres
-    database: tvs_queue_test<%= ENV['TEST_ENV_NUMBER'] %>
-    migrations_paths: db/queue_migrate
+  <<: *default
+  database: tvs_test<%= ENV['TEST_ENV_NUMBER'] %>
 
 staging:
-  primary: &primary_staging
-    <<: *default
-    adapter: postgis
-  queue:
-    <<: *primary_staging
-    adapter: postgres
-    database: tvs_queue
-    migrations_paths: db/queue_migrate
+  <<: *default
 
 production:
-  primary: &primary_production
-    <<: *default
-    adapter: postgis
-  queue:
-    <<: *primary_production
-    adapter: postgres
-    url: <%= ENV['DATABASE_QUEUE_URL'] %>
-    migrations_paths: db/queue_migrate
+  <<: *default
