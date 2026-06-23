@@ -537,6 +537,11 @@ shared:
     - type
     - publisher_ats_api_client_id
     - anonymise_applications
+    - job_address_line1
+    - job_address_line2
+    - job_address_town
+    - job_address_county
+    - job_address_postcode
   failed_imported_vacancies:
     - id
     - import_errors
