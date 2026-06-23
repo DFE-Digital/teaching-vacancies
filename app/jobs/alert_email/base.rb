@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AlertEmail::Base < ApplicationJob
+class AlertEmail::Base < SidekiqJob
   BATCH_SIZE = 5000
 
   def perform

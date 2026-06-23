@@ -83,12 +83,28 @@
       }
     },
     {
+      "label": "Solid Queue",
+      "type": "shell",
+      "command": "bin/jobs --skip-recurring",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": [],
+      "options": {
+        "statusbar": {
+          "hide" : true
+        }
+      }
+    },
+    {
       "label": "TV: Run all services",
       "dependsOn": [
         "Rails",
         "Asset build (JS)",
         "Asset build (CSS)",
-        "Sidekiq"
+        "Sidekiq",
+        "Solid Queue"
       ],
       "problemMatcher": [],
       "options": {

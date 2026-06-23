@@ -1,4 +1,4 @@
-class SendSubscriptionGovernanceEmailsJob < ApplicationJob
+class SendSubscriptionGovernanceEmailsJob < SidekiqJob
   queue_as :low
 
   def perform

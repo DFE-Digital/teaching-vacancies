@@ -1,4 +1,4 @@
-class TrackVacancyViewJob < ApplicationJob
+class TrackVacancyViewJob < SolidQueueJob
   queue_as :low
 
   def perform(vacancy_id:, referrer_url:, hostname:, params:)
