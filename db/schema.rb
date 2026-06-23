@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_06_11_120102) do
+ActiveRecord::Schema[8.0].define(version: 2026_06_22_154520) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -643,7 +643,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_06_11_120102) do
   end
 
   create_table "publishers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "oid"
+    t.string "oid", null: false
     t.datetime "accepted_terms_at", precision: nil
     t.string "email"
     t.datetime "last_activity_at", precision: nil
