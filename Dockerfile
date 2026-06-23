@@ -7,7 +7,7 @@
 # These are packages we need over-and-beyond the base image
 ARG EXTRA_PACKAGES="imagemagick libpng libjpeg libxml2 libxslt tzdata shared-mime-info vips-poppler vips-magick proj-dev libpq=18.4-r0 postgresql18=18.4-r0"
 # These are security patches to the base image
-ARG PROD_PACKAGES="zlib=1.3.2-r0 expat=2.7.5-r0 curl=8.19.0-r0 libcurl=8.19.0-r0 curl-dev=8.19.0-r0 lcms2=2.19-r0 openssl=3.5.7-r0"
+ARG PROD_PACKAGES="zlib=1.3.2-r0 expat=2.8.1-r0 curl=8.19.0-r0 libcurl=8.19.0-r0 curl-dev=8.19.0-r0 lcms2=2.19-r0 openssl=3.5.7-r0"
 
 FROM ruby:4.0.1-alpine3.23 AS builder
 
@@ -19,7 +19,7 @@ ENV DEV_PACKAGES="gcc libc-dev make yaml-dev nodejs npm postgresql18-dev build-b
 RUN apk add --no-cache $EXTRA_PACKAGES $PROD_PACKAGES $DEV_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
-RUN gem install bundler:4.0.13 --no-document
+RUN gem install bundler:4.0.14 --no-document
 
 
 COPY Gemfile* ./
@@ -64,7 +64,7 @@ ARG EXTRA_PACKAGES
 RUN apk -U upgrade && apk add --no-cache $PROD_PACKAGES $EXTRA_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
-RUN gem install bundler:4.0.13 --no-document
+RUN gem install bundler:4.0.14 --no-document
 
 COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/

@@ -12,6 +12,8 @@ class Publisher < ApplicationRecord
   has_many :publisher_messages, foreign_key: :sender_id, dependent: :destroy
   has_many :message_templates, dependent: :destroy
 
+  validates :oid, uniqueness: true
+
   has_encrypted :family_name, :given_name
 
   # don't use strict MX validation for publisher email - they come from DSI Login so can't really be fixed

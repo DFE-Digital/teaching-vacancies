@@ -120,6 +120,14 @@ ALLOWED_HOSTS = %w[selenium-chrome].freeze
 
 Rails.application.load_tasks
 
+#  confusingly there is a method in RSpec::Matchers called within
+# that doesn't yield and so silently breaks system specs converted into view specs
+module RSpec
+  module Matchers
+    undef within
+  end
+end
+
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 

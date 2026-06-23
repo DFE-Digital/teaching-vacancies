@@ -53,6 +53,8 @@ class Jobseekers::SavedJobsController < Jobseekers::BaseController
   end
 
   def vacancy
+    # We want to allow jobseekers to delete saved jobs even when the vacancy was soft deleted.
+    # That is why we don't use 'kept' scope here.
     @vacancy ||= PublishedVacancy.listed.find(saved_job_params[:job_id])
   end
 end

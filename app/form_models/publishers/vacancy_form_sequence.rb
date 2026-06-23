@@ -1,13 +1,17 @@
-class Publishers::VacancyFormSequence < FormSequence
-  def initialize(vacancy:, step_process:)
+class Publishers::VacancyFormSequence
+  def initialize(vacancy:, step_names:)
     @vacancy = vacancy
-    @step_process = step_process
 
-    super(
-      model: @vacancy,
-      step_names: @step_process.steps,
-      form_prefix: "publishers/job_listing",
-    )
+    @step_names = step_names
+    @form_prefix = "publishers/job_listing"
+  end
+
+  def validate_all_steps
+    validatable_steps.each.with_object({}) { |step_name, hash| hash[step_name] = validate_step(step_name) }
+  end
+
+  def all_steps_valid?
+    validate_all_steps.values.all?(&:valid?)
   end
 
   def next_invalid_step
@@ -20,37 +24,19 @@ class Publishers::VacancyFormSequence < FormSequence
   private
 
   def validatable_steps
-    if @vacancy.published?
-      dependent_steps.intersection @step_process.steps
-    else
-      super
-    end
+    @step_names - not_validatable_steps
   end
 
-  def dependent_steps # rubocop:disable Metrics/MethodLength
-    case @step_process.current_step
-    when :job_location
-      %i[education_phases key_stages]
-    when :job_role
-      %i[key_stages about_the_role]
-    when :education_phases
-      %i[key_stages]
-    when :key_stages
-      %i[about_the_role]
-    when :applying_for_the_job
-      @vacancy.enable_job_applications ? [] : %i[how_to_receive_applications]
-    when :how_to_receive_applications
-      if @vacancy.uploaded_form?
-        %i[application_form]
-      else
-        %i[application_link]
-      end
-    when :include_additional_documents
-      %i[documents]
-    when :contact_details
-      @vacancy.contact_email_belongs_to_a_publisher? ? [] : %i[confirm_contact_details]
-    else
-      []
+  def validate_step(step_name)
+    step_form_class = File.join(@form_prefix, "#{step_name}_form").camelize.constantize
+
+    step_form_class.load_from_model(@vacancy, current_publisher: nil).tap do |form|
+      form.valid?
+      @vacancy.errors.merge!(
+        form.errors.tap do |errors|
+          errors.each { |e| e.options[:step] = step_name }
+        end,
+      )
     end
   end
 

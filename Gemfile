@@ -51,7 +51,7 @@ gem "google-apis-indexing_v3"
 # only used for DFE Analytics - but sometimes we need to pin the version manually
 gem "google-cloud-bigquery"
 gem "govuk-components", "6.1.0"
-gem "govuk_design_system_formbuilder", "~> 6.1.0"
+gem "govuk_design_system_formbuilder", "~> 6.2.0"
 # used for job statistics by month, quarter year etc
 gem "groupdate"
 # guidance pages
