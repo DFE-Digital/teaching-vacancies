@@ -1,4 +1,4 @@
-class ImportOrganisationDataJob < SidekiqJob
+class ImportOrganisationDataJob < ApplicationJob
   queue_as :low
 
   def perform

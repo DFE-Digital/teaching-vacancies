@@ -1,5 +1,5 @@
 # This is loaded correctly by Zeitwerk due to a custom inflection in config/inflections.rb
-class ExportDSIUsersToBigQueryJob < SidekiqJob
+class ExportDSIUsersToBigQueryJob < ApplicationJob
   queue_as :low
 
   def perform

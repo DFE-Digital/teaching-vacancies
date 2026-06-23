@@ -1,4 +1,4 @@
-class DestroyInactiveAccountsJob < SidekiqJob
+class DestroyInactiveAccountsJob < ApplicationJob
   queue_as :default
 
   def perform

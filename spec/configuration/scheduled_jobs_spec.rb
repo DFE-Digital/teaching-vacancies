@@ -33,7 +33,7 @@ RSpec.describe "Scheduled jobs configuration" do
       MigratePersonalStatementJob
       UpdateSingleDSIUserInDbJob
       FetchMalwareScanResultJob
-      SidekiqJob
+      ApplicationJob
       SolidQueueJob
     ]
   end

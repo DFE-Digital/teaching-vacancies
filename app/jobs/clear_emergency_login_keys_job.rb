@@ -1,4 +1,4 @@
-class ClearEmergencyLoginKeysJob < SidekiqJob
+class ClearEmergencyLoginKeysJob < ApplicationJob
   queue_as :low
 
   def perform
