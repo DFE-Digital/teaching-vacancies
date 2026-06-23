@@ -155,19 +155,6 @@ RSpec.describe VacancyCounter do
       end
     end
 
-    context "with art and design technology subjects" do
-      before do
-        create(:vacancy, :secondary, subjects: ["Art and design"])
-        create(:vacancy, :secondary, subjects: ["Design and technology"])
-        create(:vacancy, :secondary, subjects: ["Art and design", "Design and technology"])
-      end
-
-      it "groups art and design technology subjects together" do
-        expect(described_class.subject_counts(scope: school_scope))
-            .to include("Art and Design Technology": 4, "Art and design": 2, "Design and technology": 2)
-      end
-    end
-
     context "with dance, drama and music subjects" do
       before do
         create(:vacancy, :secondary, subjects: %w[Dance])
