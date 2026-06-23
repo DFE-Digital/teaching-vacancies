@@ -32,7 +32,7 @@ jobs:
     uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable-pr.yml@v2.3.8"
     with:
       scan-args: |-
-        -r
+        --recursive
         ./
 
   google-osv-scan-pr:
@@ -41,5 +41,5 @@ jobs:
     uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable-pr.yml@v2.3.8"
     with:
       scan-args: |-
-        -r
+        --recursive
         ./
