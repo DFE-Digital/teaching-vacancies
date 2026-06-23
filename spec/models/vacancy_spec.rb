@@ -971,6 +971,19 @@ RSpec.describe Vacancy do
         expect(Geocoding).not_to receive(:new)
         subject.geocode_job_address
       end
+
+      context "when the vacancy previously had custom geolocation set" do
+        before do
+          geopoint = GeoFactories::FACTORY_4326.point(-0.1, 51.5)
+          subject.geolocation = geopoint
+          subject.uk_geolocation = GeoFactories.convert_wgs84_to_sr27700(geopoint)
+        end
+
+        it "clears geolocation and resets it from the organisation" do
+          subject.geocode_job_address
+          expect(subject.geolocation).to eq(school.geopoint)
+        end
+      end
     end
 
     context "when the address does not geocode" do
@@ -983,6 +996,21 @@ RSpec.describe Vacancy do
 
       it "does not update the geolocation" do
         expect { subject.geocode_job_address }.not_to(change(subject, :geolocation))
+      end
+    end
+  end
+
+  describe "#refresh_geolocation" do
+    let(:school_one) { create(:school, name: "First school") }
+    let(:school_two) { create(:school, name: "Second school") }
+
+    context "when only partial job address is given" do
+      let(:vacancy) { create(:vacancy, :ect_suitable, job_roles: %w[teacher], organisations: [school_one], phases: %w[primary], key_stages: %w[ks1], job_address_line2: "Floor 2") }
+
+      it "does not overwrite geolocation with the organisation geopoint" do
+        original_geolocation = vacancy.geolocation
+        vacancy.organisations = [school_two]
+        expect(vacancy.geolocation).to eq(original_geolocation)
       end
     end
   end

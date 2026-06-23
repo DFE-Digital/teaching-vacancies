@@ -60,6 +60,6 @@ class Publishers::VacancyFormSequence
   end
 
   def not_validatable_steps
-    %i[subjects confirm_job_address review].freeze
+    %i[subjects review].freeze
   end
 end

@@ -294,7 +294,13 @@ class Vacancy < ApplicationRecord
 
   def geocode_job_address
     address = [job_address_line1, job_address_town, job_address_postcode].reject(&:blank?).join(", ")
-    return if address.blank?
+
+    if address.blank?
+      self.geolocation = nil
+      self.uk_geolocation = nil
+      refresh_geolocation
+      return
+    end
 
     coordinates = Geocoding.new(address).coordinates
     return if coordinates == Geocoding::COORDINATES_NO_MATCH
@@ -326,8 +332,8 @@ class Vacancy < ApplicationRecord
   # In the former case, it gets an argument, which we don't need and thus ignore
   #
   def refresh_geolocation(_school_added_or_removed = nil)
-    # don't override the vacancy specific job location if one has been spcified.
-    return if job_address_line1.present?
+    # Don't override the vacancy-specific job location if one has been specified.
+    return if [job_address_line1, job_address_line2, job_address_town, job_address_county, job_address_postcode].any?(&:present?)
 
     # :nocov:
     self.geolocation = if organisations.one?
