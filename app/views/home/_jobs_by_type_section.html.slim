@@ -29,7 +29,7 @@ div class="govuk-!-margin-top-6"
       .govuk-grid-column-one-third
         ul.govuk-list
           - column_slugs.each do |landing_page|
-            - tuple = tallied_subjects[landing_page]
+            - tuple = tallied_subjects.fetch(landing_page)
             - count = tuple.first
             - child_subjects = tuple.second
             li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
