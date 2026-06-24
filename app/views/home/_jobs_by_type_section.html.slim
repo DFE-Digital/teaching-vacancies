@@ -20,7 +20,7 @@
           li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
     h3.govuk-heading-s = t("home.landing_page_links.working_patterns")
     ul.govuk-list
-      - landing_page_working_patterns_list.each do |landing_page, working_pattern|
+      - working_patterns_list.each do |landing_page, working_pattern|
         - count = counts.working_pattern_counts.fetch(working_pattern.to_sym, 0)
         li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"
 div class="govuk-!-margin-top-6"

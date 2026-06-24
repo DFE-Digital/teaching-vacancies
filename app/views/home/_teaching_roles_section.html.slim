@@ -1,0 +1,5 @@
+h3.govuk-heading-s = t("home.landing_page_links.teaching_roles")
+ul.govuk-list
+  - teaching_roles_list.each do |landing_page, role|
+    - count = role_counts.fetch(role.to_sym, 0)
+    li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"

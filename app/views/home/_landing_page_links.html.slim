@@ -1,15 +1,15 @@
 .landing-page-links
   = govuk_accordion do |accordion|
     - accordion.with_section(heading_text: t(".jobs_by_school_type_and_role")) do
-      = render "jobs_by_type_section",
-          counts: school_counts,
-          teaching_roles_list: landing_page_teaching_roles_list,
-          support_roles_list: landing_page_support_roles_list,
-          phases_heading: t(".education_phases"),
-          phases_list: landing_page_phases_list,
-          working_patterns_list: landing_page_working_patterns_list,
-          subjects_columns: landing_page_subjects_columns,
-          tallied_subjects: landing_page_tallier(school_counts.subjects_counts)
+      .govuk-grid-row
+        .govuk-grid-column-one-third
+          = render "teaching_roles_section", teaching_roles_list: landing_page_teaching_roles_list, role_counts: school_counts.role_counts
+        .govuk-grid-column-one-third
+          = render "support_roles_section", support_roles_list: landing_page_support_roles_list, role_counts: school_counts.role_counts
+        .govuk-grid-column-one-third
+          = render "phases_section", phases_heading: t(".education_phases"), phases_list: landing_page_phases_list, phase_counts: school_counts.phase_counts
+          = render "working_patterns_section", working_patterns_list: landing_page_working_patterns_list, working_pattern_counts: school_counts.working_pattern_counts
+      = render "subjects_section", subjects_columns: landing_page_subjects_columns, tallied_subjects: landing_page_tallier(school_counts.subjects_counts)
     - accordion.with_section(heading_text: t(".jobs_by_fe_type_and_role")) do
       = render "jobs_by_type_section",
           counts: fe_counts,

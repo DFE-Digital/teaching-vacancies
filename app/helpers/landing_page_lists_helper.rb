@@ -41,8 +41,6 @@ module LandingPageListsHelper
     "full-time-fe-jobs" => "full_time",
     "part-time-fe-jobs" => "part_time",
     "fe-job-shares" => "job_share",
-    "fe-term-time-jobs" => "part_time",
-    "flexible-working-jobs-in-fe" => "part_time",
   }.freeze
 
   FE_TEACHING_ROLES_LIST = {
