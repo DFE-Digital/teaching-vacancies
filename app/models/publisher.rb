@@ -12,7 +12,7 @@ class Publisher < ApplicationRecord
   has_many :publisher_messages, foreign_key: :sender_id, dependent: :destroy
   has_many :message_templates, dependent: :destroy
 
-  validates :oid, uniqueness: true
+  validates :oid, uniqueness: true, presence: true
 
   has_encrypted :family_name, :given_name
 

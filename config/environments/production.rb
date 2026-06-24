@@ -74,8 +74,11 @@ Rails.application.configure do
   config.semantic_logger.application = "" # No need to send the application name as logstash reads it from Cloud Foundry log tags
   config.rails_semantic_logger.format = :json
   config.rails_semantic_logger.add_file_appender = false
+  # Don't log the queueing or execution of Dfe::Analytics (or heartbeats) otherwise production logs become swamped
   config.rails_semantic_logger.filter = proc do |log|
-    !(log.name == "DfE::Analytics::SendEvents" || log.message.include?("DfE::Analytics::SendEvents"))
+    !(log.name == "DfE::Analytics::SendEvents" ||
+      log.message.include?("DfE::Analytics::SendEvents") ||
+      log.message.include?("Completed #check"))
   end
 
   config.active_record.logger = nil # Don't log SQL in production

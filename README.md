@@ -54,6 +54,7 @@ tech lead to do that and also [complete the other onboarding steps](documentatio
 * [Github Actions](/documentation/operations/deployment/github-actions.md)
 
 #### Monitoring
+* [Service Outages monitoring and alerting](/documentation/operations/monitoring/service-outages.md)
 * [Monitoring](/documentation/operations/monitoring/monitoring.md)
 * [Alert Runbook](/documentation/operations/monitoring/alert-runbook.md)
 * [Sentry](/documentation/operations/monitoring/sentry.md)

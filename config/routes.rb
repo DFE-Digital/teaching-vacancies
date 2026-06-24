@@ -7,9 +7,11 @@ Rails.application.routes.draw do
 
   if Rails.env.development?
     mount Sidekiq::Web, at: "/sidekiq"
+    mount MissionControl::Jobs::Engine, at: "/solid_queue_jobs"
   else
     authenticate :support_user do
       mount Sidekiq::Web, at: "/sidekiq"
+      mount MissionControl::Jobs::Engine, at: "/solid_queue_jobs"
     end
   end
 

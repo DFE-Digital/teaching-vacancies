@@ -1,4 +1,4 @@
-class RemoveVacanciesThatExpiredYesterdayFromGoogleIndexJob < ApplicationJob
+class RemoveVacanciesThatExpiredYesterdayFromGoogleIndexJob < SidekiqJob
   queue_as :default
 
   def perform

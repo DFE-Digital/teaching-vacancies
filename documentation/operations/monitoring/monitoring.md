@@ -49,7 +49,8 @@
 
 ### StatusCake
 
-- [Uptime check including test history](https://app.statuscake.com/UptimeStatus.php?tid=5636370) against `https://teaching-vacancies.service.gov.uk/check`
+- [Uptime check including test history](https://app.statuscake.com/UptimeStatus.php?tid=7501210) against `https://teaching-vacancies.service.gov.uk/check`
+- [Homepage content presence](https://app.statuscake.com/UptimeStatus.php?tid=7501211) and [homepage no error presence](https://app.statuscake.com/UptimeStatus.php?tid=7501209) checks against `https://teaching-vacancies.service.gov.uk`
 
 ### AKS
 
