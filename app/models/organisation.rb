@@ -29,7 +29,7 @@ class Organisation < ApplicationRecord
   CLOSED_ESTABLISHMENT_STATUSES = %w[Closed].freeze
   OPEN_ESTABLISHMENT_STATUSES = ["Open", "Open, but proposed to close", "Proposed to open"].freeze
   COLLEGE_SCHOOL_TYPE = "Colleges".freeze
-  FE_DETAILED_SCHOOL_TYPE = "Further Education".freeze
+  FE_DETAILED_SCHOOL_TYPE = "Further education".freeze
 
   friendly_id :slug_candidates, use: %i[slugged history]
 
