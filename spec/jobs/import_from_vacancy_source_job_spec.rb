@@ -174,6 +174,11 @@ RSpec.describe ImportFromVacancySourceJob do
           "is_job_share" => true,
           "hourly_rate" => "£25 per hour",
           "flexi_working_details_provided" => true,
+          "job_address_line1" => nil,
+          "job_address_line2" => nil,
+          "job_address_town" => nil,
+          "job_address_county" => nil,
+          "job_address_postcode" => nil,
         )
       end
 

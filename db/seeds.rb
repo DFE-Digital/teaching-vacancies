@@ -71,7 +71,7 @@ schools = [bexleyheath_school,
 user_emails = users.map { |u| u.fetch(:email) }
 
 users.each.with_index do |user, index|
-  organisations = [bexleyheath_school, weydon_trust, southampton_la, abraham_moss, aston_maths, st_anthony, osmaston_cofe]
+  organisations = [bexleyheath_school, weydon_trust, southampton_la, abraham_moss, aston_maths, st_anthony, osmaston_cofe, oaklands_college, loreto_college]
   publisher = Publisher.create!(oid: index.to_s, organisations: organisations, **user)
 
   organisations.each do |organisation|

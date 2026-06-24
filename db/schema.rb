@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_04_30_131102) do
+ActiveRecord::Schema[8.0].define(version: 2026_06_19_113400) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -902,6 +902,11 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_30_131102) do
     t.string "type", null: false
     t.boolean "anonymise_applications", default: false
     t.geometry "uk_geolocation", limit: {srid: 27700, type: "geometry"}
+    t.string "job_address_line1"
+    t.string "job_address_line2"
+    t.string "job_address_town"
+    t.string "job_address_county"
+    t.string "job_address_postcode"
     t.index ["contact_email"], name: "index_vacancies_on_contact_email"
     t.index ["discarded_at"], name: "index_vacancies_on_discarded_at"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
@@ -974,6 +979,11 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_30_131102) do
     t.integer "receive_applications"
     t.integer "religion_type"
     t.boolean "anonymise_applications"
+    t.string "job_address_line1"
+    t.string "job_address_line2"
+    t.string "job_address_town"
+    t.string "job_address_county"
+    t.string "job_address_postcode"
     t.index ["organisation_id"], name: "index_vacancy_templates_on_organisation_id"
   end
 

@@ -23,8 +23,9 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
   private
 
   def job_details_steps
-    steps = %i[job_location job_title job_role education_phases key_stages subjects contract_information start_date pay_package]
+    steps = %i[job_location job_title confirm_job_address job_role education_phases key_stages subjects contract_information start_date pay_package]
     steps.delete(:job_location) if organisation.school?
+    steps.delete(:confirm_job_address) unless organisation.fe_college?
     steps.delete(:education_phases) unless vacancy.allow_phase_to_be_set?
     steps.delete(:key_stages) unless vacancy.allow_key_stages?
     steps.delete(:subjects) unless vacancy.allow_subjects?
