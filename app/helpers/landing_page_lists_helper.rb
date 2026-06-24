@@ -37,7 +37,13 @@ module LandingPageListsHelper
     "flexible-working-jobs-in-schools" => "part_time",
   }.freeze
 
-  FE_PHASES_LIST = { "sixth-form-or-college-jobs" => "sixth_form_or_college" }.freeze
+  FE_WORKING_PATTERNS_LIST = {
+    "full-time-fe-jobs" => "full_time",
+    "part-time-fe-jobs" => "part_time",
+    "fe-job-shares" => "job_share",
+    "fe-term-time-jobs" => "part_time",
+    "flexible-working-jobs-in-fe" => "part_time",
+  }.freeze
 
   FE_TEACHING_ROLES_LIST = {
     "fe-teacher-jobs" => "teacher",
@@ -192,7 +198,7 @@ module LandingPageListsHelper
   def landing_page_support_roles_list = SUPPORT_ROLES_LIST
   def landing_page_phases_list = PHASES_LIST
   def landing_page_working_patterns_list = WORKING_PATTERNS_LIST
-  def landing_page_fe_phases_list = FE_PHASES_LIST
+  def landing_page_fe_working_patterns_list = FE_WORKING_PATTERNS_LIST
   def landing_page_fe_teaching_roles_list = FE_TEACHING_ROLES_LIST
   def landing_page_fe_support_roles_list = FE_SUPPORT_ROLES_LIST
   def landing_page_subjects_columns = SUBJECTS_COLUMNS

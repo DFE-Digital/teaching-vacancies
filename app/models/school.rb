@@ -14,7 +14,6 @@ class School < Organisation
   WELSH_SCHOOL_TYPE = "Welsh schools".freeze
   UNIVERSITY_SCHOOL_TYPE = "Universities".freeze
 
-  FE_DETAILED_SCHOOL_TYPE = "Further education".freeze
   VALID_SCHOOL_TYPES = [LA_SCHOOL_TYPE,
                         INDEPENDENT_SCHOOL_TYPE,
                         SPECIAL_SCHOOL_TYPE,
