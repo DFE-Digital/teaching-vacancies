@@ -3,7 +3,7 @@ class VacancyCounter
     "Dance, Drama and Music": %i[Dance Drama Music],
     "Economics and Business Studies": [:Economics, :"Business studies"],
     "English and Media Studies": [:English, :"Media studies"],
-    "Foreign Languages": %i[French Spanish German Mandarin Classics],
+    "Foreign languages": %i[French Spanish German Mandarin Classics Welsh],
     "Health and Social Care": [:"Health and social care", :"Relationships and sex education"],
     "ICT and Computer Science": %i[ICT Computing],
     "Politics, Humanities and Social Sciences": [:Politics, :Humanities, :"Social sciences"],
@@ -31,10 +31,7 @@ class VacancyCounter
            .group("w.pattern")
            .count
            .transform_keys { |k| Vacancy::WORKING_PATTERNS_ENUM.invert.fetch(k) }
-    end
-
-    def job_share_counts(scope:)
-      scope.where(is_job_share: true).count
+           .merge({ job_share: scope.where(is_job_share: true).count })
     end
 
     def subject_counts(scope:)

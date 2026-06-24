@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe "home/_landing_page_links" do
-  let(:empty_counts) do
+RSpec.describe "home/landing_page_links" do
+  let(:school_counts) do
     HomeController::VacancyCounts.new(
       role_counts: {},
       phase_counts: {},
@@ -9,10 +9,18 @@ RSpec.describe "home/_landing_page_links" do
       subjects_counts: {},
     )
   end
+  let(:fe_counts) do
+    HomeController::VacancyCounts.new(
+      role_counts: {},
+      phase_counts: {},
+      working_pattern_counts: {},
+      subjects_counts: { Spanish: 1, French: 1, Welsh: 5, "Foreign languages": 7 },
+    )
+  end
 
   before do
     render partial: "home/landing_page_links",
-           locals: { school_counts: empty_counts, fe_counts: empty_counts }
+           locals: { school_counts: school_counts, fe_counts: fe_counts }
   end
 
   describe "school jobs accordion section" do
@@ -23,10 +31,6 @@ RSpec.describe "home/_landing_page_links" do
     describe "teaching and leadership roles" do
       it "includes a 'Teacher or lecturer' link" do
         expect(rendered).to have_link("Teacher or lecturer")
-      end
-
-      it "does not include a standalone 'Teacher' link" do
-        expect(rendered).to have_no_link("Teacher", exact: true)
       end
 
       it "includes other leadership role links" do

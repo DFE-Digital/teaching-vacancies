@@ -385,11 +385,11 @@ en:
       meta_description: "Search for Spanish teacher jobs near you on Teaching Vacancies. Find the latest full time and part time jobs for spanish teachers in schools across England."
 
     ### FE Subjects
-    accountancy-and-finance-fe-jobs:
-      name: "Accountancy and finance (%{count})"
-      title: "Accountancy and Finance FE Teaching Jobs"
-      heading: "%{count} accountancy and finance further education jobs"
-      meta_description: "Find accountancy and finance teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    accounting-fe-jobs:
+      name: "Accounting (%{count})"
+      title: "Accounting FE Teaching Jobs"
+      heading: "%{count} accounting further education jobs"
+      meta_description: "Find accounting teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
     agriculture-horticulture-land-based-studies-fe-jobs:
       name: "Agriculture/horticulture/land based studies (%{count})"
       title: "Agriculture, Horticulture and Land Based Studies FE Teaching Jobs"
@@ -440,21 +440,21 @@ en:
       title: "Classics FE Teaching Jobs"
       heading: "%{count} classics further education jobs"
       meta_description: "Find classics teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
-    computer-science-fe-jobs:
-      name: "Computer science (%{count})"
-      title: "Computer Science FE Teaching Jobs"
-      heading: "%{count} computer science further education jobs"
-      meta_description: "Find computer science teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
-    construction-fe-jobs:
-      name: "Construction (%{count})"
-      title: "Construction FE Teaching Jobs"
-      heading: "%{count} construction further education jobs"
-      meta_description: "Find construction teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    computing-fe-jobs:
+      name: "Computing (%{count})"
+      title: "Computing FE Teaching Jobs"
+      heading: "%{count} computing further education jobs"
+      meta_description: "Find computing teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
     counselling-fe-jobs:
       name: "Counselling (%{count})"
       title: "Counselling FE Teaching Jobs"
       heading: "%{count} counselling further education jobs"
       meta_description: "Find counselling teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    criminology-fe-jobs:
+      name: "Criminology (%{count})"
+      title: "Criminology FE Teaching Jobs"
+      heading: "%{count} Criminology further education jobs"
+      meta_description: "Find Criminology teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
     customer-service-fe-jobs:
       name: "Customer service (%{count})"
       title: "Customer Service FE Teaching Jobs"
@@ -497,9 +497,14 @@ en:
       meta_description: "Find English and media studies teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
     english-as-a-foreign-language-fe-jobs:
       name: "English as a foreign language (%{count})"
-      title: "English as a Foreign Language FE Teaching Jobs"
+      title: "English as a foreign language FE Teaching Jobs"
       heading: "%{count} English as a foreign language further education jobs"
       meta_description: "Find English as a foreign language teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    esports-fe-jobs:
+      name: "Esports (%{count})"
+      title: "Esports FE Teaching Jobs"
+      heading: "%{count} esports further education jobs"
+      meta_description: "Find esports teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
     fabrication-and-welding-fe-jobs:
       name: "Fabrication and welding (%{count})"
       title: "Fabrication and Welding FE Teaching Jobs"
@@ -580,11 +585,6 @@ en:
       title: "Humanities FE Teaching Jobs"
       heading: "%{count} humanities further education jobs"
       meta_description: "Find humanities teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
-    ict-and-computer-science-fe-jobs:
-      name: "ICT and computer science (%{count})"
-      title: "ICT and Computer Science FE Teaching Jobs"
-      heading: "%{count} ICT and computer science further education jobs"
-      meta_description: "Find ICT and computer science teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
     land-and-property-management-fe-jobs:
       name: "Land and Property Management (%{count})"
       title: "Land and Property Management FE Teaching Jobs"
@@ -610,11 +610,6 @@ en:
       title: "Maths FE Teaching Jobs"
       heading: "%{count} maths further education jobs"
       meta_description: "Find maths teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
-    modern-foreign-languages-fe-jobs:
-      name: "Modern foreign languages (%{count})"
-      title: "Modern Foreign Languages FE Teaching Jobs"
-      heading: "%{count} modern foreign languages further education jobs"
-      meta_description: "Find modern foreign languages teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
     motor-vehicle-fe-jobs:
       name: "Motor vehicles (%{count})"
       title: "Motor Vehicle FE Teaching Jobs"
@@ -685,11 +680,6 @@ en:
       title: "Science FE Teaching Jobs"
       heading: "%{count} science further education jobs"
       meta_description: "Find science teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
-    send-fe-jobs:
-      name: "SEND (%{count})"
-      title: "SEND FE Teaching Jobs"
-      heading: "%{count} SEND further education jobs"
-      meta_description: "Find SEND teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
     sociology-fe-jobs:
       name: "Sociology (%{count})"
       title: "Sociology FE Teaching Jobs"

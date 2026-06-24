@@ -58,7 +58,7 @@ users = [
 schools = [bexleyheath_school,
            aston_maths,
            weydon_trust.schools.detect { |s| s.phase != "not_applicable" && s.phase.exclude?("middle") },
-           southampton_la.schools.detect { |s| s.phase != "not_applicable" && s.phase.exclude?("middle") },
+           southampton_la.schools.detect { |s| s.phase == "nursery" },
            abraham_moss,
            st_anthony,
            oakwoods,
@@ -86,7 +86,7 @@ schools.each do |school|
             phases: (school.phase == "not_applicable" ? %w[secondary] : [school.phase]),
             publisher_organisation: school,
             publisher: Publisher.all.sample }
-  2.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+  75.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
   FactoryBot.create(:vacancy, :for_seed_data, :apply_via_website, **attrs)
   FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs)
   FactoryBot.create(:draft_vacancy, :for_seed_data, **attrs)
