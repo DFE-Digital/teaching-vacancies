@@ -2,15 +2,14 @@ require "rails_helper"
 
 RSpec.describe "vacancies/show" do
   before do
-    if jobseeker.present?
-      sign_in(jobseeker, scope: :jobseeker)
-      allow(view).to receive_messages(current_jobseeker: jobseeker)
-    end
+    create(:location_polygon, name: "hertfordshire")
+
+    allow(view).to receive_messages(current_jobseeker: jobseeker)
     assign :vacancy, vacancy.decorate
     render
   end
 
-  after { sign_out jobseeker if jobseeker.present? }
+  # after { sign_out jobseeker if jobseeker.present? }
 
   describe "job posting metadata" do
     let(:jobseeker) { nil }
@@ -164,6 +163,29 @@ RSpec.describe "vacancies/show" do
 
       it "does not display a map" do
         expect(rendered).to have_no_css("div#map")
+      end
+    end
+  end
+
+  describe "location text" do
+    let(:jobseeker) { nil }
+    let(:vacancy) { build_stubbed(:vacancy, organisations: [school]) }
+
+    context "with a school" do
+      let(:school) { build_stubbed(:school, town: "St Albans", county: "Hertfordshire") }
+
+      it "has school wording" do
+        expect(rendered).to have_content("School location")
+        expect(rendered).to have_content("Find more school jobs")
+      end
+    end
+
+    context "with an FE college" do
+      let(:school) { build_stubbed(:college, town: "St Albans", county: "Hertfordshire") }
+
+      it "has college wording" do
+        expect(rendered).to have_content("College location")
+        expect(rendered).to have_content("Find more college jobs")
       end
     end
   end
