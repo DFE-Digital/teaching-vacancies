@@ -1,6 +1,5 @@
 class Publishers::TermsAndConditionsController < Publishers::BaseController
   skip_before_action :check_terms_and_conditions, only: %i[show update]
-  skip_before_action :check_ats_interstitial_acknowledged, only: %i[show update]
 
   def show
     @terms_and_conditions_form = Publishers::TermsAndConditionsForm.new
@@ -10,7 +9,7 @@ class Publishers::TermsAndConditionsController < Publishers::BaseController
     @terms_and_conditions_form = Publishers::TermsAndConditionsForm.new(terms_params)
     if @terms_and_conditions_form.valid?
       current_publisher.update(accepted_terms_at: Time.current)
-      redirect_to publishers_ats_interstitial_path
+      redirect_to organisation_jobs_with_type_path
     else
       render :show
     end
