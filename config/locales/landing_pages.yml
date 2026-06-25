@@ -758,7 +758,7 @@ en:
     # sure to add all real landing pages above.
     ################################################################################################
     part-time-potions-and-sorcery-teacher-jobs:
-      name: "Potions and Sorcery"
+      name: "Potions and Sorcery (%{count})"
       banner_title: "Spiffy Part Time Potions and Sorcery Jobs"
       title: "Spiffy Part Time Potions and Sorcery Jobs"
       heading: "%{count} amazing jobs APPLY NOW"
