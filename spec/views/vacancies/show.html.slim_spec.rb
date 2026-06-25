@@ -9,8 +9,6 @@ RSpec.describe "vacancies/show" do
     render
   end
 
-  # after { sign_out jobseeker if jobseeker.present? }
-
   describe "job posting metadata" do
     let(:jobseeker) { nil }
     let(:json_ld) { JSON.parse(rendered.html.css("script.jobref").inner_text, symbolize_names: true) }
