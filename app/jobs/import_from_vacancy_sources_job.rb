@@ -1,4 +1,4 @@
-class ImportFromVacancySourcesJob < ApplicationJob
+class ImportFromVacancySourcesJob < SidekiqJob
   SOURCES = [
     Vacancies::Import::Sources::Broadbean,
     Vacancies::Import::Sources::Fusion,

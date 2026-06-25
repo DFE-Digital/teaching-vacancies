@@ -1,5 +1,5 @@
 require "google_indexing"
-class RemoveGoogleIndexQueueJob < ApplicationJob
+class RemoveGoogleIndexQueueJob < SidekiqJob
   queue_as :default
 
   def perform(url)

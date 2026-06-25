@@ -9,22 +9,20 @@ RSpec.describe UpdateGoogleIndexQueueJob do
     allow(GoogleIndexing).to receive(:new).with(url).and_return(indexing_service)
     expect(indexing_service).to receive(:update)
 
-    perform_enqueued_jobs { job }
+    described_class.perform_now(url)
   end
 
   it "logs an error message when the indexing service cannot be instantiated" do
     allow(GoogleIndexing).to receive(:new).and_return(nil)
     allow(Rails.logger).to receive(:info).with(any_args)
     expect(Rails.logger).to receive(:info).with("Sidekiq: Aborting Google remove index. Error: No Google API")
-    Sidekiq::Testing.inline! do
-      described_class.perform_now(url)
-    end
+    described_class.perform_now(url)
   end
 
   context "when DisableIntegrations is enabled", :disable_integrations do
     it "does not perform the job" do
       expect(GoogleIndexing).not_to receive(:new)
-      perform_enqueued_jobs { job }
+      described_class.perform_now(url)
     end
   end
 end

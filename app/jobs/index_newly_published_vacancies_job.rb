@@ -1,4 +1,4 @@
-class IndexNewlyPublishedVacanciesJob < ApplicationJob
+class IndexNewlyPublishedVacanciesJob < SidekiqJob
   queue_as :low
 
   # This job is to ensure vacancies that were created/updated before their published at date get indexed once they are published.

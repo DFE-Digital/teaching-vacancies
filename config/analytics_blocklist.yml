@@ -1,31 +1,31 @@
 ---
 :shared:
   :friendly_id_slugs:
-  - id
-  - slug
-  - sluggable_id
-  - sluggable_type
-  - scope
-  - created_at
+    - id
+    - slug
+    - sluggable_id
+    - sluggable_type
+    - scope
+    - created_at
   :versions:
-  - id
-  - item_type
-  - item_id
-  - event
-  - whodunnit
-  - object
-  - created_at
-  - object_changes
+    - id
+    - item_type
+    - item_id
+    - event
+    - whodunnit
+    - object
+    - created_at
+    - object_changes
   :sessions:
-  - id
-  - session_id
-  - data
-  - created_at
-  - updated_at
+    - id
+    - session_id
+    - data
+    - created_at
+    - updated_at
   :active_storage_variant_records:
-  - id
-  - blob_id
-  - variation_digest
+    - id
+    - blob_id
+    - variation_digest
   :action_text_rich_texts:
     - id
     - name
@@ -43,133 +43,133 @@
     - updated_at
     - template_type
   :school_group_memberships:
-  - do_not_delete
+    - do_not_delete
   :references:
-  - name_ciphertext
-  - job_title_ciphertext
-  - organisation_ciphertext
-  - email_ciphertext
-  - phone_number_ciphertext
+    - name_ciphertext
+    - job_title_ciphertext
+    - organisation_ciphertext
+    - email_ciphertext
+    - phone_number_ciphertext
   :publisher_ats_api_clients:
-  - api_key
+    - api_key
   :personal_details:
-  - first_name_ciphertext
-  - last_name_ciphertext
+    - first_name_ciphertext
+    - last_name_ciphertext
   :notes:
-  - id
-  - content
-  - publisher_id
-  - job_application_id
-  - created_at
-  - updated_at
-  - discarded_at
+    - id
+    - content
+    - publisher_id
+    - job_application_id
+    - created_at
+    - updated_at
+    - discarded_at
   :jobseeker_profiles:
-  - teacher_reference_number_ciphertext
-  - qualified_teacher_status_details
+    - teacher_reference_number_ciphertext
+    - qualified_teacher_status_details
   :job_preferences:
-  - willing_to_relocate
+    - willing_to_relocate
   :job_applications:
-  - qualified_teacher_status_details
-  - disability
-  - gender
-  - gender_description
-  - orientation
-  - orientation_description
-  - ethnicity
-  - ethnicity_description
-  - religion
-  - religion_description
-  - age
-  - first_name_ciphertext
-  - last_name_ciphertext
-  - previous_names_ciphertext
-  - street_address_ciphertext
-  - city_ciphertext
-  - postcode_ciphertext
-  - phone_number_ciphertext
-  - teacher_reference_number_ciphertext
-  - national_insurance_number_ciphertext
-  - personal_statement_ciphertext
-  - support_needed_details_ciphertext
-  - close_relationships_details_ciphertext
-  - further_instructions_ciphertext
-  - rejection_reasons_ciphertext
-  - gaps_in_employment_details_ciphertext
-  - in_progress_steps
-  - employment_history_section_completed
-  - qualifications_section_completed
-  - place_of_worship_ciphertext
-  - religious_referee_name_ciphertext
-  - religious_referee_address_ciphertext
-  - religious_referee_role_ciphertext
-  - religious_referee_email_ciphertext
-  - religious_referee_phone_ciphertext
-  - faith_ciphertext
-  - baptism_address_ciphertext
-  - baptism_date_ciphertext
-  - ethos_and_aims_ciphertext
+    - qualified_teacher_status_details
+    - disability
+    - gender
+    - gender_description
+    - orientation
+    - orientation_description
+    - ethnicity
+    - ethnicity_description
+    - religion
+    - religion_description
+    - age
+    - first_name_ciphertext
+    - last_name_ciphertext
+    - previous_names_ciphertext
+    - street_address_ciphertext
+    - city_ciphertext
+    - postcode_ciphertext
+    - phone_number_ciphertext
+    - teacher_reference_number_ciphertext
+    - national_insurance_number_ciphertext
+    - personal_statement_ciphertext
+    - support_needed_details_ciphertext
+    - close_relationships_details_ciphertext
+    - further_instructions_ciphertext
+    - rejection_reasons_ciphertext
+    - gaps_in_employment_details_ciphertext
+    - in_progress_steps
+    - employment_history_section_completed
+    - qualifications_section_completed
+    - place_of_worship_ciphertext
+    - religious_referee_name_ciphertext
+    - religious_referee_address_ciphertext
+    - religious_referee_role_ciphertext
+    - religious_referee_email_ciphertext
+    - religious_referee_phone_ciphertext
+    - faith_ciphertext
+    - baptism_address_ciphertext
+    - baptism_date_ciphertext
+    - ethos_and_aims_ciphertext
   :employments:
-  - organisation_ciphertext
-  - job_title_ciphertext
-  - main_duties_ciphertext
+    - organisation_ciphertext
+    - job_title_ciphertext
+    - main_duties_ciphertext
   :emergency_login_keys:
-  - id
-  - not_valid_after
-  - created_at
-  - updated_at
-  - owner_type
-  - owner_id
+    - id
+    - not_valid_after
+    - created_at
+    - updated_at
+    - owner_type
+    - owner_id
   :alert_runs:
-  - id
-  - subscription_id
-  - run_on
-  - job_id
-  - created_at
-  - updated_at
-  - status
+    - id
+    - subscription_id
+    - run_on
+    - job_id
+    - created_at
+    - updated_at
+    - status
   :vacancies:
-  - readable_job_location
-  - readable_phases
-  - searchable_content
-  - google_index_removed
-  - expired_vacancy_feedback_email_sent_at
+    - readable_job_location
+    - readable_phases
+    - searchable_content
+    - google_index_removed
+    - expired_vacancy_feedback_email_sent_at
   :qualifications:
-  - finished_studying_details_ciphertext
+    - finished_studying_details_ciphertext
   :feedbacks:
-  - comment
-  - other_unsubscribe_reason_comment
-  - visit_purpose_comment
-  - category
+    - comment
+    - other_unsubscribe_reason_comment
+    - visit_purpose_comment
+    - category
   :support_users:
-  - id
-  - oid
-  - email
-  - given_name
-  - family_name
-  - created_at
-  - updated_at
+    - id
+    - oid
+    - email
+    - given_name
+    - family_name
+    - created_at
+    - updated_at
   :publishers:
-  - family_name_ciphertext
-  - given_name_ciphertext
-  - dismissed_new_features_page_at
-  - unsubscribed_from_expired_vacancy_prompt_at
+    - family_name_ciphertext
+    - given_name_ciphertext
+    - dismissed_new_features_page_at
+    - unsubscribed_from_expired_vacancy_prompt_at
   :jobseekers:
-  - current_sign_in_ip_ciphertext
-  - last_sign_in_ip_ciphertext
-  - account_merge_confirmation_code
-  - last_sign_in_ip
-  - current_sign_in_ip
+    - current_sign_in_ip_ciphertext
+    - last_sign_in_ip_ciphertext
+    - account_merge_confirmation_code
+    - last_sign_in_ip
+    - current_sign_in_ip
   :organisations:
-  - gias_data_hash
-  - religious_character
-  - slug
-  - searchable_content
+    - gias_data_hash
+    - religious_character
+    - slug
+    - searchable_content
   :vacancy_analytics:
-  - id
-  - vacancy_id
-  - referrer_counts
-  - created_at
-  - updated_at
+    - id
+    - vacancy_id
+    - referrer_counts
+    - created_at
+    - updated_at
   job_references:
     - token
     - employment_start_date_ciphertext
@@ -201,44 +201,127 @@
   reference_requests:
     - token
   :job_application_batches:
-  - id
-  - vacancy_id
-  - created_at
-  - updated_at
+    - id
+    - vacancy_id
+    - created_at
+    - updated_at
   :batchable_job_applications:
-  - id
-  - job_application_id
-  - created_at
-  - updated_at
-  - job_application_batch_id
+    - id
+    - job_application_id
+    - created_at
+    - updated_at
+    - job_application_batch_id
   :self_disclosures:
-  - name_ciphertext
-  - previous_names_ciphertext
-  - address_line_1_ciphertext
-  - address_line_2_ciphertext
-  - city_ciphertext
-  - country_ciphertext
-  - postcode_ciphertext
-  - phone_number_ciphertext
-  - date_of_birth_ciphertext
-  - has_unspent_convictions_ciphertext
-  - has_spent_convictions_ciphertext
-  - is_barred_ciphertext
-  - has_been_referred_ciphertext
-  - is_known_to_children_services_ciphertext
-  - has_been_dismissed_ciphertext
-  - has_been_disciplined_ciphertext
-  - has_been_disciplined_by_regulatory_body_ciphertext
-  - agreed_for_processing_ciphertext
-  - agreed_for_criminal_record_ciphertext
-  - agreed_for_organisation_update_ciphertext
-  - agreed_for_information_sharing_ciphertext
-  - true_and_complete_ciphertext
+    - name_ciphertext
+    - previous_names_ciphertext
+    - address_line_1_ciphertext
+    - address_line_2_ciphertext
+    - city_ciphertext
+    - country_ciphertext
+    - postcode_ciphertext
+    - phone_number_ciphertext
+    - date_of_birth_ciphertext
+    - has_unspent_convictions_ciphertext
+    - has_spent_convictions_ciphertext
+    - is_barred_ciphertext
+    - has_been_referred_ciphertext
+    - is_known_to_children_services_ciphertext
+    - has_been_dismissed_ciphertext
+    - has_been_disciplined_ciphertext
+    - has_been_disciplined_by_regulatory_body_ciphertext
+    - agreed_for_processing_ciphertext
+    - agreed_for_criminal_record_ciphertext
+    - agreed_for_organisation_update_ciphertext
+    - agreed_for_information_sharing_ciphertext
+    - true_and_complete_ciphertext
   :subscriptions:
-  - area
-  - geopoint
-  - uk_area
-  - uk_geopoint
-  - radius_in_metres
+    - area
+    - geopoint
+    - uk_area
+    - uk_geopoint
+    - radius_in_metres
   :conversations:
     - searchable_content
+  :solid_queue_semaphores:
+    - id
+    - key
+    - value
+    - expires_at
+    - created_at
+    - updated_at
+  :solid_queue_recurring_tasks:
+    - id
+    - key
+    - schedule
+    - command
+    - class_name
+    - arguments
+    - queue_name
+    - priority
+    - static
+    - description
+    - created_at
+    - updated_at
+  :solid_queue_processes:
+    - id
+    - kind
+    - last_heartbeat_at
+    - supervisor_id
+    - pid
+    - hostname
+    - metadata
+    - created_at
+    - name
+  :solid_queue_pauses:
+    - id
+    - queue_name
+    - created_at
+  :solid_queue_jobs:
+    - id
+    - queue_name
+    - class_name
+    - arguments
+    - priority
+    - active_job_id
+    - scheduled_at
+    - finished_at
+    - concurrency_key
+    - created_at
+    - updated_at
+  :solid_queue_scheduled_executions:
+    - id
+    - job_id
+    - queue_name
+    - priority
+    - scheduled_at
+    - created_at
+  :solid_queue_recurring_executions:
+    - id
+    - job_id
+    - task_key
+    - run_at
+    - created_at
+  :solid_queue_ready_executions:
+    - id
+    - job_id
+    - queue_name
+    - priority
+    - created_at
+  :solid_queue_failed_executions:
+    - id
+    - job_id
+    - error
+    - created_at
+  :solid_queue_claimed_executions:
+    - id
+    - job_id
+    - process_id
+    - created_at
+  :solid_queue_blocked_executions:
+    - id
+    - job_id
+    - queue_name
+    - priority
+    - concurrency_key
+    - expires_at
+    - created_at

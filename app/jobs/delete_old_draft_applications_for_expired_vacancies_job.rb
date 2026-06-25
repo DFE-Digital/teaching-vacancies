@@ -1,4 +1,4 @@
-class DeleteOldDraftApplicationsForExpiredVacanciesJob < ApplicationJob
+class DeleteOldDraftApplicationsForExpiredVacanciesJob < SidekiqJob
   queue_as :low
 
   def perform

@@ -1,4 +1,4 @@
-class SendPeakTimesEmailReminderJob < ApplicationJob
+class SendPeakTimesEmailReminderJob < SidekiqJob
   queue_as :default
 
   def perform

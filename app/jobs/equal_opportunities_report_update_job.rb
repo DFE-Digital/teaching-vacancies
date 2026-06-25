@@ -3,7 +3,7 @@
 # so that the analytic events' request_uuid are different and avoid matching of
 # job application with equal opportunities data
 
-class EqualOpportunitiesReportUpdateJob < ApplicationJob
+class EqualOpportunitiesReportUpdateJob < SolidQueueJob
   queue_as :low
 
   def perform(job_application_id)
