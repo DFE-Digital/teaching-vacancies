@@ -737,16 +737,31 @@ en:
       title: "Full Time Jobs in Schools"
       heading: "%{count} full time jobs in schools"
       meta_description: "Discover thousands of full time jobs in schools. Teaching Vacancies has full time jobs for teachers, headteachers, SEND coordinators and more."
+    full-time-fe-jobs:
+      name: "Full time (%{count})"
+      title: "Full Time Jobs in Colleges"
+      heading: "%{count} full time jobs in colleges"
+      meta_description: "Discover thousands of full time jobs in colleges. Teaching Vacancies has full time jobs for teachers, headteachers, SEND coordinators and more."
     part-time-school-jobs:
       name: "Part time (%{count})"
       title: "Part Time Teaching and School Jobs"
       heading: "%{count} part time teacher and school jobs"
       meta_description: "Find and apply for part time teacher jobs near you. Discover jobs in local schools that offer flexible hours for teachers, teaching assistants and more."
+    part-time-fe-jobs:
+      name: "Part time (%{count})"
+      title: "Part Time College Jobs"
+      heading: "%{count} part time teacher and college jobs"
+      meta_description: "Find and apply for part time teacher jobs near you. Discover jobs in local colleges that offer flexible hours for teachers, teaching assistants and more."
     school-job-shares:
       name: "Job share (%{count})"
       title: "Job Shares for Teachers and School Staff"
       heading: "%{count} job share vacancies for teachers and school staff"
       meta_description: "Find a school job that works with your schedule. Apply on Teaching Vacancies for job share jobs for teachers, headteachers and teaching assistants."
+    fe-job-shares:
+      name: "Job share (%{count})"
+      title: "Job Shares for Teachers and College Staff"
+      heading: "%{count} job share vacancies for teachers and college staff"
+      meta_description: "Find a college job that works with your schedule. Apply on Teaching Vacancies for job share jobs for teachers, headteachers and teaching assistants."
     school-term-time-jobs:
       name: "Term time (%{count})"
       title: "School Term Time Jobs"

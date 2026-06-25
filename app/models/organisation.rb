@@ -29,6 +29,7 @@ class Organisation < ApplicationRecord
   CLOSED_ESTABLISHMENT_STATUSES = %w[Closed].freeze
   OPEN_ESTABLISHMENT_STATUSES = ["Open", "Open, but proposed to close", "Proposed to open"].freeze
   COLLEGE_SCHOOL_TYPE = "Colleges".freeze
+  FE_DETAILED_SCHOOL_TYPE = "Further education".freeze
 
   friendly_id :slug_candidates, use: %i[slugged history]
 
@@ -68,7 +69,7 @@ class Organisation < ApplicationRecord
   scope :schools_visible_to_jobseekers, -> { schools.kept.not_closed.not_out_of_scope }
   scope :visible_to_jobseekers, -> { schools_visible_to_jobseekers.or(Organisation.kept.trusts_not_closed) }
 
-  scope :colleges, -> { where(school_type: COLLEGE_SCHOOL_TYPE) }
+  scope :colleges, -> { where(school_type: COLLEGE_SCHOOL_TYPE, detailed_school_type: FE_DETAILED_SCHOOL_TYPE) }
 
   scope :in_scope_schools, -> { schools.kept.not_out_of_scope.where.not(school_type: COLLEGE_SCHOOL_TYPE).or(Organisation.trusts) }
 

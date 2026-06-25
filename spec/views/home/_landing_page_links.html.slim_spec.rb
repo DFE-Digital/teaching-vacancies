@@ -108,16 +108,6 @@ RSpec.describe "home/_landing_page_links" do
       end
     end
 
-    describe "education phases" do
-      it "has a 'College phase' group heading" do
-        expect(rendered).to have_text("College phase")
-      end
-
-      it "includes a 'Sixth form and college' link" do
-        expect(rendered).to have_link("Sixth form and college")
-      end
-    end
-
     describe "working patterns" do
       it "has a 'Working patterns' group heading" do
         expect(rendered).to have_text("Working patterns")

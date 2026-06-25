@@ -262,3 +262,12 @@ shared:
   woodworking-joinery-and-carpentry-fe-jobs:
     subjects:
       - Woodworking joinery and carpentry
+  full-time-fe-jobs:
+    working_patterns:
+      - full_time
+  part-time-fe-jobs:
+    working_patterns:
+      - part_time
+  fe-job-shares:
+    working_patterns:
+      - job_share
