@@ -46,7 +46,7 @@ jobs:
         run: bundle exec rake db:create db:schema:load parallel:create parallel:load_schema
 
       - name: Cache Swagger docs
-        uses: actions/cache@v5
+        uses: actions/cache@v5.0.5
         id: swagger-cache
         with:
           path: swagger
@@ -59,7 +59,7 @@ jobs:
         run: bundle exec rake rswag:specs:swaggerize
 
       - name: Cache precompiled assets
-        uses: actions/cache@v5
+        uses: actions/cache@v5.0.5
         id: assets-cache
         with:
           path: |
@@ -74,7 +74,7 @@ jobs:
         run: bin/rails assets:precompile
 
       - name: Cache Test Runtimes
-        uses: actions/cache@v5
+        uses: actions/cache@v5.0.5
         with:
           path: "tmp/parallel_runtime_rspec.log"
           key: ${{ runner.os }}-spec-${{ hashFiles('spec/**/*spec.rb') }}
