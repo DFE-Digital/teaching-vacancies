@@ -16,6 +16,10 @@ class SchoolGroup < Organisation
     super && schools.all?(&:profile_complete?)
   end
 
+  def fe_college?
+    false
+  end
+
   def faith_school?
     false
   end
@@ -30,9 +34,5 @@ class SchoolGroup < Organisation
 
   def ats_interstitial_variant
     "non_faith"
-  end
-
-  def fe_college?
-    false
   end
 end

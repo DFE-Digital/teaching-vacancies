@@ -134,10 +134,6 @@ class School < Organisation
     religious_character.in? CATHOLIC_RELIGIOUS_TYPES
   end
 
-  def college?
-    school_type == COLLEGE_SCHOOL_TYPE && detailed_school_type == FE_DETAILED_SCHOOL_TYPE
-  end
-
   def key_stages
     return if phase == "not_applicable"
 

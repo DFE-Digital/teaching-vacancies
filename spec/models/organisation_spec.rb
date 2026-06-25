@@ -6,6 +6,24 @@ RSpec.describe Organisation do
   it { is_expected.to have_many(:vacancies) }
   it { is_expected.to have_many(:organisation_vacancies) }
 
+  describe "#college?" do
+    context "when the organisation is a school group" do
+      subject { build(:trust) }
+
+      it "returns false" do
+        expect(subject.fe_college?).to be false
+      end
+    end
+
+    context "when the organisation is a school" do
+      subject { build(:school) }
+
+      it "returns false" do
+        expect(subject.fe_college?).to be false
+      end
+    end
+  end
+
   describe "email validation" do
     it "doesn't validate existing email" do
       org = described_class.new(email: "invalidaaddress")

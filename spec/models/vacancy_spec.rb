@@ -894,6 +894,32 @@ RSpec.describe Vacancy do
     end
   end
 
+  describe "#for_an_fe_college?" do
+    context "when the vacancy's organisation is an FE college" do
+      let(:vacancy) { create(:vacancy, organisations: [create(:college)]) }
+
+      it "returns true" do
+        expect(vacancy).to be_for_an_fe_college
+      end
+    end
+
+    context "when the vacancy's organisation is not an FE college" do
+      let(:vacancy) { build_stubbed(:vacancy) }
+
+      it "returns false" do
+        expect(vacancy).not_to be_for_an_fe_college
+      end
+    end
+
+    context "when the vacancy has multiple organisations including an FE college" do
+      let(:vacancy) { create(:vacancy, organisations: [create(:school), create(:college)]) }
+
+      it "returns true" do
+        expect(vacancy).to be_for_an_fe_college
+      end
+    end
+  end
+
   describe "#unsafe_blobs" do
     context "when no files are attached" do
       let(:vacancy) { create(:vacancy) }

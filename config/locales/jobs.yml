@@ -198,7 +198,7 @@ en:
       jobseeker:
         school: What the school offers its staff
         college: What the college offers its staff
-      publisher: What does your school offer?
+      publisher: "What does your %{organisation_type} offer?"
       hint: Provide details about what your school can offer staff, for example, employee benefits, wellbeing support or professional development.
     flexi_working:
       hint: For example, remote working for planning, preparation and assessment (PPA) time, compressed hours or personal or family days
@@ -298,7 +298,8 @@ en:
     further_details_provided: Do you want to add further details about the role?
     how_to_receive_applications: How do you want candidates to apply for the role?
     include_additional_documents: Do you want to upload any additional documents?
-    school_visits: Do you want to offer school visits?
+    school_visits: "Do you want to offer %{organisation_type} visits?"
+    candidate_visits: "Do you want to offer candidates a visit?"
     visa_sponsorship: Can you offer Skilled Worker visa sponsorship to non-UK citizens for this role?
     document_name: Document name
 

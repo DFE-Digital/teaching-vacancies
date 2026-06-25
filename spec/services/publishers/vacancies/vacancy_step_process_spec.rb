@@ -105,6 +105,26 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
         end
       end
 
+      context "when the organisation is a college" do
+        let(:organisation) { build(:college) }
+
+        it "does not include applying_for_the_job" do
+          expect(subject.steps).not_to include(:applying_for_the_job)
+        end
+
+        it "does not include how_to_receive_applications" do
+          expect(subject.steps).not_to include(:how_to_receive_applications)
+        end
+
+        it "includes application_link" do
+          expect(subject.steps).to include(:application_link)
+        end
+
+        it "places application_link before additional documents" do
+          expect(subject.steps.index(:application_link)).to be < subject.steps.index(:include_additional_documents)
+        end
+      end
+
       context "when the organisation is a local authority" do
         before { allow(vacancy).to receive(:enable_job_applications).and_return(false) }
 

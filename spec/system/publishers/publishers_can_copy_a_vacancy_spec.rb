@@ -145,7 +145,7 @@ RSpec.describe "Copying a vacancy" do
         end
         click_on I18n.t("buttons.save_and_continue")
 
-        expect(page).to have_content "school visits"
+        expect(page).to have_content "Do you want to offer candidates a visit?"
         choose "Yes"
         click_on I18n.t("buttons.save_and_continue")
 

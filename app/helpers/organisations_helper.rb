@@ -64,7 +64,17 @@ module OrganisationsHelper
   end
 
   def school_or_college_type(organisation)
-    organisation.respond_to?(:college?) && organisation.college? ? "college" : "school"
+    organisation.fe_college? ? "college" : "school"
+  end
+
+  def vacancy_organisation_type(vacancy)
+    if vacancy.for_an_fe_college?
+      "college"
+    elsif vacancy.organisations.any?(&:school?)
+      "school"
+    else
+      "school_group"
+    end
   end
 
   def school_or_trust_visits(organisation)

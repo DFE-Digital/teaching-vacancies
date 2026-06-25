@@ -208,6 +208,10 @@ class Vacancy < ApplicationRecord
     organisations.many?
   end
 
+  def for_an_fe_college?
+    organisations.any?(&:fe_college?)
+  end
+
   def live?
     published? && expires_at&.future? && (publish_on&.today? || publish_on&.past?)
   end
@@ -282,10 +286,6 @@ class Vacancy < ApplicationRecord
     blobs << application_form.blob if application_form.attached?
     blobs += supporting_documents.map(&:blob) if supporting_documents.attached?
     blobs.reject(&:malware_scan_clean?)
-  end
-
-  def for_an_fe_college?
-    organisations.any?(&:fe_college?)
   end
 
   def vacancy_address
