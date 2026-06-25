@@ -1,6 +1,4 @@
 class Publishers::AtsInterstitialsController < Publishers::BaseController
-  skip_before_action :check_ats_interstitial_acknowledged, only: %i[show update]
-
   def show
     @organisation = current_organisation
     @variant = @organisation.ats_interstitial_variant
