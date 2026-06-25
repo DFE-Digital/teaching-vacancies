@@ -152,5 +152,4 @@ class School < Organisation
   def all_organisation_ids
     [id]
   end
-
 end
