@@ -61,29 +61,38 @@ module LandingPageListsHelper
     "fe-other-support-roles-jobs" => "other_support",
   }.freeze
 
-  SUBJECTS_COLUMNS = [
-    %w[maths-teacher-jobs english-media-studies-teacher-jobs physical-education-teacher-jobs dance-drama-music-teacher-jobs science-teacher-jobs],
-    %w[history-teacher-jobs geography-teacher-jobs mfl-teacher-jobs],
-    %w[ict-computer-science-teacher-jobs economics-business-studies-teacher-jobs art-design-technology-teacher-jobs food-technology-teacher-jobs politics-humanities-social-sciences-teacher-jobs psychology-philosophy-sociology-re-teacher-jobs health-relationships-social-care-teacher-jobs],
-  ].freeze
+  LEFT_SUBJECT_LIST = { "maths-teacher-jobs" => "Mathematics",
+                        "english-media-studies-teacher-jobs" => "English and Media Studies",
+                        "physical-education-teacher-jobs" => "Physical education",
+                        "dance-drama-music-teacher-jobs" => "Dance, Drama and Music",
+                        "science-teacher-jobs" => "Science" }.freeze
 
-  SUBJECTS_LIST = {
-    "art-design-technology-teacher-jobs" => "Art and Design Technology",
-    "dance-drama-music-teacher-jobs" => "Dance, Drama and Music",
-    "economics-business-studies-teacher-jobs" => "Economics and Business Studies",
-    "english-media-studies-teacher-jobs" => "English and Media Studies",
-    "food-technology-teacher-jobs" => "Food technology",
-    "geography-teacher-jobs" => "Geography",
-    "health-relationships-social-care-teacher-jobs" => "Health and Social Care",
+  MIDDLE_SUBJECT_LIST = {
     "history-teacher-jobs" => "History",
-    "ict-computer-science-teacher-jobs" => "ICT and Computer Science",
-    "maths-teacher-jobs" => "Mathematics",
+    "geography-teacher-jobs" => "Geography",
     "mfl-teacher-jobs" => "Foreign Languages",
-    "physical-education-teacher-jobs" => "Physical education",
+  }.freeze
+
+  RIGHT_SUBJECT_LIST = {
+    "ict-computer-science-teacher-jobs" => "ICT and Computer Science",
+    "economics-business-studies-teacher-jobs" => "Economics and Business Studies",
+    "art-design-teacher-jobs" => "Art and design",
+    "design-technology-teacher-jobs" => "Design and technology",
+    "food-technology-teacher-jobs" => "Food technology",
     "politics-humanities-social-sciences-teacher-jobs" => "Politics, Humanities and Social Sciences",
     "psychology-philosophy-sociology-re-teacher-jobs" => "Psychology, Sociology and RE",
-    "science-teacher-jobs" => "Science",
+    "health-relationships-social-care-teacher-jobs" => "Health and Social Care",
   }.freeze
+
+  SUBJECTS_COLUMNS = [
+    LEFT_SUBJECT_LIST.keys,
+    MIDDLE_SUBJECT_LIST.keys,
+    RIGHT_SUBJECT_LIST.keys,
+  ].freeze
+
+  SUBJECTS_LIST = LEFT_SUBJECT_LIST.merge(MIDDLE_SUBJECT_LIST)
+                                   .merge(RIGHT_SUBJECT_LIST)
+                                   .freeze
 
   CHILD_SUBJECTS_LIST = {
     Spanish: "spanish-teacher-jobs",

@@ -122,7 +122,7 @@ RSpec.describe VacancyCounter do
 
       it "successfully groups modern foreign languages together" do
         expect(described_class.subject_counts(scope: school_scope))
-            .to include(French: 1, Spanish: 1, Mandarin: 1, Classics: 1, German: 1, "Foreign Languages": 6)
+          .to include(French: 1, Spanish: 1, Mandarin: 1, Classics: 1, German: 1, "Foreign Languages": 6)
       end
     end
 
@@ -164,7 +164,17 @@ RSpec.describe VacancyCounter do
 
       it "groups art and design technology subjects together" do
         expect(described_class.subject_counts(scope: school_scope))
-            .to include("Art and Design Technology": 4, "Art and design": 2, "Design and technology": 2)
+          .to eq("Art and design": 2,
+                 "Dance, Drama and Music": 0,
+                 "English and Media Studies": 0,
+                 "Foreign Languages": 0,
+                 "Health and Social Care": 0,
+                 "ICT and Computer Science": 0,
+                 "Design and technology": 2,
+                 "Economics and Business Studies": 0,
+                 "Politics, Humanities and Social Sciences": 0,
+                 "Psychology, Sociology and RE": 0,
+                 Science: 0)
       end
     end
 
@@ -177,7 +187,7 @@ RSpec.describe VacancyCounter do
 
       it "groups dance, drama and music subjects together" do
         expect(described_class.subject_counts(scope: school_scope))
-            .to include("Dance, Drama and Music": 3, Dance: 1, Drama: 1, Music: 1)
+          .to include("Dance, Drama and Music": 3, Dance: 1, Drama: 1, Music: 1)
       end
     end
 
@@ -189,7 +199,7 @@ RSpec.describe VacancyCounter do
 
       it "groups economics and business studies subjects together" do
         expect(described_class.subject_counts(scope: school_scope))
-            .to include("Economics and Business Studies": 2, Economics: 1, "Business studies": 1)
+          .to include("Economics and Business Studies": 2, Economics: 1, "Business studies": 1)
       end
     end
 
@@ -201,7 +211,7 @@ RSpec.describe VacancyCounter do
 
       it "groups english and media studies subjects together" do
         expect(described_class.subject_counts(scope: school_scope))
-            .to include("English and Media Studies": 2, English: 1, "Media studies": 1)
+          .to include("English and Media Studies": 2, English: 1, "Media studies": 1)
       end
     end
 
@@ -213,7 +223,7 @@ RSpec.describe VacancyCounter do
 
       it "groups health and social care subjects together" do
         expect(described_class.subject_counts(scope: school_scope))
-            .to include("Health and Social Care": 2, "Health and social care": 1, "Relationships and sex education": 1)
+          .to include("Health and Social Care": 2, "Health and social care": 1, "Relationships and sex education": 1)
       end
     end
 
@@ -225,7 +235,7 @@ RSpec.describe VacancyCounter do
 
       it "groups ICT and computer science subjects together" do
         expect(described_class.subject_counts(scope: school_scope))
-            .to include("ICT and Computer Science": 2, ICT: 1, Computing: 1)
+          .to include("ICT and Computer Science": 2, ICT: 1, Computing: 1)
       end
     end
 
@@ -238,7 +248,7 @@ RSpec.describe VacancyCounter do
 
       it "groups politics, humanities and social sciences subjects together" do
         expect(described_class.subject_counts(scope: school_scope))
-            .to include("Politics, Humanities and Social Sciences": 3, Politics: 1, Humanities: 1, "Social sciences": 1)
+          .to include("Politics, Humanities and Social Sciences": 3, Politics: 1, Humanities: 1, "Social sciences": 1)
       end
     end
 
@@ -252,7 +262,7 @@ RSpec.describe VacancyCounter do
 
       it "groups psychology, sociology and RE subjects together" do
         expect(described_class.subject_counts(scope: school_scope))
-            .to include("Psychology, Sociology and RE": 4, Psychology: 1, Philosophy: 1, Sociology: 1, "Religious education": 1)
+          .to include("Psychology, Sociology and RE": 4, Psychology: 1, Philosophy: 1, Sociology: 1, "Religious education": 1)
       end
     end
   end
