@@ -181,8 +181,8 @@ en:
     further_details: Further details about the role
     location: Location
     location_find_more_html:
-      one: Find more school jobs in %{location_link}
-      other: Find more school jobs in %{location_link} and %{second_location_link}
+      one: Find more %{school_type} jobs in %{location_link}
+      other: Find more %{school_type} jobs in %{location_link} and %{second_location_link}
     job_location: Locations where the job is based
     job_title: Job title
     job_role: Job role

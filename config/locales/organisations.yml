@@ -37,8 +37,8 @@ en:
       at_multiple_locations_with_count: More than one location (%{count})
       central_office: Head office
     locations:
-      at_one_school: School location
-      at_multiple_schools: School locations
+      at_one_school: '%{school_type} location'
+      at_multiple_schools: '%{school_type} locations'
       central_office: Head office location
     map:
       heading: Location and map
