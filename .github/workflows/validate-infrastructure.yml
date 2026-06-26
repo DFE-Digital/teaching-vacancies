@@ -20,12 +20,11 @@ jobs:
           - display: AKS infrastructure
             validation_plan: aks-infra
             terraform_base: terraform/app
+            terraform_version_file: versions.tf
 
     steps:
       - name: Validate ${{ matrix.display }}
-        uses: DFE-Digital/github-actions/validate-infra@master
-        env:
-          SKIP_CONFIRM_PRODUCTION: true
+        uses: DFE-Digital/github-actions/validate-infra@2864-validate-infra-fix
         with:
           azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
           azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
@@ -36,3 +35,6 @@ jobs:
           service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
           teams-webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL_INFRA }}
           image-prefix: main-
+          confirm-production: YES
+          terraform-version-file: ${{ matrix.terraform_version_file }}
+          target-branch: 2864-validate-infra-fix
