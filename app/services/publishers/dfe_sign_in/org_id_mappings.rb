@@ -24,25 +24,23 @@ module Publishers::DfeSignIn
     # TV service access to their users.
     # We cannot manage these policies ourselves. It will need to be raised as a ServiceDesk ticket with DfE Sign-in team
     # to make any changes to the policies.
-    OUT_OF_SCOPE_TYPES = [
-      {
-        "10" => "Other independent special school",
-        "11" => "Other independent school",
-        "18" => "Further education",
-        "25" => "Offshore schools",
-        "26" => "Service children’s education",
-        "27" => "Miscellaneous",
-        "29" => "Higher education institutions",
-        "30" => "Welsh establishment",
-        "32" => "Special post 16 institution",
-        "37" => "British schools overseas",
-        "49" => "Online provider",
-        "56" => "Institution funded by other government department",
-      },
-    ].freeze
+    OUT_OF_SCOPE_TYPES = {
+      "10" => "Other independent special school",
+      "11" => "Other independent school",
+      "18" => "Further education",
+      "25" => "Offshore schools",
+      "26" => "Service children's education",
+      "27" => "Miscellaneous",
+      "29" => "Higher education institutions",
+      "30" => "Welsh establishment",
+      "32" => "Special post 16 institution",
+      "37" => "British schools overseas",
+      "49" => "Online provider",
+      "56" => "Institution funded by other government department",
+    }.freeze
 
     def self.out_of_scope_type?(type_id)
-      OUT_OF_SCOPE_TYPES.any? { |types| types.key?(type_id) }
+      OUT_OF_SCOPE_TYPES.key?(type_id)
     end
   end
 end
