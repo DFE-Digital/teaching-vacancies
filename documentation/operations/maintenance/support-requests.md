@@ -60,6 +60,6 @@ Sometimes Publishers report seeing [this error page](/workspace/app/views/omniau
 
 The most common cause for this is the Organisation having multiple entities with similar/same name in DfE Sign-in, and the publisher belonging/signing-in with an organisation that is not between our accepted list of org types.
 
-The allowed org categories are listed in the `OmniauthCallbacksController::ORGANISATION_CATEGORIES`.
+The allowed org categories are listed in the `Publishers::DfeSignIn::OrgIdMappings::CATEGORIES`.
 
 We usually confirm this by visiting the [Get Information About Schools (GIAS)](https://get-information-schools.service.gov.uk/) Service to retrieve the valid organisation UKPRN and request the Support Team to confirm with them they're signing-in with an Org with that UKPRN.
