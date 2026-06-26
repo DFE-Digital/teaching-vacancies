@@ -1,4 +1,4 @@
-class DeleteOldNonDraftJobApplicationsJob < SidekiqJob
+class DeleteOldNonDraftJobApplicationsJob < ApplicationJob
   queue_as :low
 
   OLD_THRESHOLD = 6.years.ago.freeze

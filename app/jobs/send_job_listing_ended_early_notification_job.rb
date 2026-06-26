@@ -1,4 +1,4 @@
-class SendJobListingEndedEarlyNotificationJob < SidekiqJob
+class SendJobListingEndedEarlyNotificationJob < ApplicationJob
   queue_as :default
 
   def perform(vacancy)

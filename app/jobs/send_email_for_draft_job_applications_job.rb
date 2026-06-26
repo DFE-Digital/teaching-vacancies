@@ -1,4 +1,4 @@
-class SendEmailForDraftJobApplicationsJob < SidekiqJob
+class SendEmailForDraftJobApplicationsJob < ApplicationJob
   queue_as :default
 
   def perform

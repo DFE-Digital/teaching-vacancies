@@ -1,4 +1,4 @@
-class SetSubscriptionLocationDataJob < SidekiqJob
+class SetSubscriptionLocationDataJob < ApplicationJob
   # Uses dbintensive queue as it causes very High DB load when many subscriptions are updated/created at once
   # and we want to limit how many of these jobs run at the same time (see config/sidekiq.yml)
   queue_as :dbintensive

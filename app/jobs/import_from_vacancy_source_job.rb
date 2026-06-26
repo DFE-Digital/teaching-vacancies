@@ -1,4 +1,4 @@
-class ImportFromVacancySourceJob < SidekiqJob
+class ImportFromVacancySourceJob < ApplicationJob
   queue_as :low
 
   def perform(source_klass)

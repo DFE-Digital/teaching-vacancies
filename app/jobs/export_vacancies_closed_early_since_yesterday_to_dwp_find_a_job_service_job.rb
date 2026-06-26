@@ -1,4 +1,4 @@
-class ExportVacanciesClosedEarlySinceYesterdayToDwpFindAJobServiceJob < SidekiqJob
+class ExportVacanciesClosedEarlySinceYesterdayToDwpFindAJobServiceJob < ApplicationJob
   queue_as :default
 
   def perform

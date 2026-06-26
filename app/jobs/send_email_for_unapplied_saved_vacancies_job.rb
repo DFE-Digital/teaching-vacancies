@@ -1,4 +1,4 @@
-class SendEmailForUnappliedSavedVacanciesJob < SidekiqJob
+class SendEmailForUnappliedSavedVacanciesJob < ApplicationJob
   queue_as :default
 
   def perform

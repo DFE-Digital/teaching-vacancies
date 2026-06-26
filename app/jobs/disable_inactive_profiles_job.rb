@@ -1,4 +1,4 @@
-class DisableInactiveProfilesJob < SidekiqJob
+class DisableInactiveProfilesJob < ApplicationJob
   queue_as :low
 
   def perform

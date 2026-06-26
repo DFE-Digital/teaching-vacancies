@@ -1,4 +1,4 @@
-class DeleteOldAlertRunsJob < SidekiqJob
+class DeleteOldAlertRunsJob < ApplicationJob
   queue_as :low
 
   def perform

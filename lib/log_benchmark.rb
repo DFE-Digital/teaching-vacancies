@@ -4,8 +4,9 @@ module LogBenchmark
 
     Rails.logger.tagged(self.class.name) do
       Rails.logger.info("Started #{label}")
-      yield
-      Rails.logger.info("Finished #{label} (#{Time.now.to_i - start_time}s elapsed)")
+      yield.tap do
+        Rails.logger.info("Finished #{label} (#{Time.now.to_i - start_time}s elapsed)")
+      end
     end
   end
 end

@@ -1,16 +1,11 @@
-require "sidekiq/web"
-require "sidekiq/cron/web"
-
 Rails.application.routes.draw do
   mount Rswag::Ui::Engine => "/ats-api-docs"
   mount Rswag::Api::Engine => "/ats-api-docs"
 
   if Rails.env.development?
-    mount Sidekiq::Web, at: "/sidekiq"
     mount MissionControl::Jobs::Engine, at: "/solid_queue_jobs"
   else
     authenticate :support_user do
-      mount Sidekiq::Web, at: "/sidekiq"
       mount MissionControl::Jobs::Engine, at: "/solid_queue_jobs"
     end
   end

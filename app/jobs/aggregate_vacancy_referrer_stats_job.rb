@@ -1,4 +1,4 @@
-class AggregateVacancyReferrerStatsJob < SidekiqJob
+class AggregateVacancyReferrerStatsJob < ApplicationJob
   queue_as :low
 
   def perform

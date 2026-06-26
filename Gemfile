@@ -124,18 +124,10 @@ gem "rgeo-proj4"
 # open API docs for external client integrations
 gem "rswag-api"
 gem "rswag-ui"
-# needed to make zipfiles - often in sidekiq jobs
+# needed to make zipfiles - often in background jobs
 gem "rubyzip"
 gem "sentry-rails"
 gem "sentry-ruby"
-
-# Use both sidekiq and solid queue during migration
-gem "sentry-sidekiq"
-# sidekiq 7 needs Redis 6.2.x which isn't available on Azure (yet)
-gem "sidekiq", "<7"
-gem "sidekiq-cron"
-# throttle sidekiq requests to avoid overwhelming the Govuk Notify API
-gem "sidekiq-limit_fetch"
 
 gem "solid_queue"
 # Skylight performance monitoring https://www.skylight.io/login

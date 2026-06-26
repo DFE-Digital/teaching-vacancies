@@ -1,4 +1,7 @@
-raise "Aborting seeds - running in production with existing vacancies" if Rails.env.production? && Vacancy.any?
+if Rails.env.production? && Vacancy.any?
+  Rails.logger.error "Aborting seeds - running in production with existing vacancies"
+  return
+end
 
 require "faker"
 require "factory_bot_rails"

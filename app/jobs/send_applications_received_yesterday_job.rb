@@ -1,4 +1,4 @@
-class SendApplicationsReceivedYesterdayJob < SidekiqJob
+class SendApplicationsReceivedYesterdayJob < ApplicationJob
   queue_as :low
 
   def perform
