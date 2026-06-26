@@ -50,7 +50,7 @@ class LandingPage
   end
 
   def name
-    I18n.t(:name, **translation_args)
+    I18n.t(:name, **translation_args).html_safe
   end
 
   def heading
