@@ -85,6 +85,7 @@ gem "mini_magick"
 gem "mission_control-jobs"
 gem "mutex_m"
 # DWP integration
+gem "ed25519", ">= 1.2", "< 2.0"
 gem "net-sftp"
 # used for making XMl site map and parsing import sources
 # is a current dependency of rails, but might not continue that way

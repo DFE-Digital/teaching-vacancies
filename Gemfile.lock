@@ -245,6 +245,7 @@ GEM
       ruby2_keywords
     drb (2.2.3)
     dumb_delegator (1.1.0)
+    ed25519 (1.4.0)
     email_validator (2.2.4)
       activemodel
     erb (6.0.4)
@@ -1050,6 +1051,7 @@ DEPENDENCIES
   discard (~> 2.0)
   dotenv-rails
   draper
+  ed25519 (>= 1.2, < 2.0)
   factory_bot_rails
   faker
   fantaskspec
@@ -1244,6 +1246,7 @@ CHECKSUMS
   draper (4.0.6) sha256=e96990bffd4d98806913972f5ae2e6a7e8a5fb5433f17b80fbed7ba99d3c9236
   drb (2.2.3) sha256=0b00d6fdb50995fe4a45dea13663493c841112e4068656854646f418fda13373
   dumb_delegator (1.1.0) sha256=1ad255e5b095a2206a574c62b40c678f3d5c9151f1b3d0bae1b0463f7e40188e
+  ed25519 (1.4.0) sha256=16e97f5198689a154247169f3453ef4cfd3f7a47481fde0ae33206cdfdcac506
   email_validator (2.2.4) sha256=5ab238095bec7aef9389f230e9e0c64c5081cdf91f19d6c5cecee0a93af20604
   erb (6.0.4) sha256=38e3803694be357fe2bfe312487c74beaf9fb4e5beb3e22498952fe1645b95d9
   erubi (1.13.1) sha256=a082103b0885dbc5ecf1172fede897f9ebdb745a4b97a5e8dc63953db1ee4ad9
