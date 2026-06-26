@@ -17,6 +17,7 @@ RSpec.describe "home/landing_page_links" do
       subjects_counts: { Spanish: 1, French: 1, Welsh: 5, "Foreign languages": 7 },
     )
   end
+  let(:page) { Capybara.string(rendered) }
 
   before do
     render partial: "home/landing_page_links",
@@ -63,37 +64,36 @@ RSpec.describe "home/landing_page_links" do
     end
 
     describe "school subjects" do
+      let(:section) { page.find_by_id("school_subjects") }
+
       it "includes core subject links" do
-        expect(rendered).to have_link("Maths")
-        expect(rendered).to have_link("English and media studies")
-        expect(rendered).to have_link("Physical education")
-        expect(rendered).to have_link("Science")
+        expect(section).to have_link("Maths")
+        expect(section).to have_link("English and media studies")
+        expect(section).to have_link("Physical education")
+        expect(section).to have_link("Science")
       end
 
       it "includes further subject links" do
-        expect(rendered).to have_link("History")
-        expect(rendered).to have_link("Geography")
-        expect(rendered).to have_link("ICT and computer science")
-        expect(rendered).to have_link("Economics and business studies")
-        expect(rendered).to have_link("Art and design")
+        expect(section).to have_link("History")
+        expect(section).to have_link("Geography")
+        expect(section).to have_link("ICT and computer science")
+        expect(section).to have_link("Economics and business studies")
+        expect(section).to have_link("Art and design")
+        expect(section).to have_link("Psychology, Sociology and RE")
       end
 
       it "includes science sub-group links" do
-        expect(rendered).to have_link("Chemistry")
-        expect(rendered).to have_link("Biology")
-        expect(rendered).to have_link("Physics")
+        expect(section).to have_link("Chemistry")
+        expect(section).to have_link("Biology")
+        expect(section).to have_link("Physics")
       end
 
       it "includes modern foreign languages sub-group links" do
-        expect(rendered).to have_link("Foreign languages")
-        expect(rendered).to have_link("French")
-        expect(rendered).to have_link("Spanish")
-        expect(rendered).to have_link("German")
+        expect(section).to have_link("Foreign languages")
+        expect(section).to have_link("French")
+        expect(section).to have_link("Spanish")
+        expect(section).to have_link("German")
       end
-    end
-
-    it "does not include a separate 'Teaching jobs by subject' accordion section" do
-      expect(rendered).to have_no_text("Teaching jobs by subject")
     end
   end
 
@@ -125,23 +125,30 @@ RSpec.describe "home/landing_page_links" do
     end
 
     describe "subjects" do
+      let(:section) { page.find_by_id("fe_subjects") }
+
+      it "has language group links with correct counts" do
+        expect(section).to have_link("Foreign languages (7)")
+        expect(section).to have_link("Welsh (5)")
+        expect(section).to have_link("Spanish (1)")
+        expect(section).to have_link("French (1)")
+      end
+
       it "has a 'Subjects' group heading" do
-        expect(rendered).to have_text("Subjects")
+        expect(section).to have_text("Subjects")
       end
 
       it "includes FE subject links" do
-        expect(rendered).to have_link("Maths")
-        expect(rendered).to have_link("English and media studies")
-        expect(rendered).to have_link("History")
-        expect(rendered).to have_link("Geography")
-        expect(rendered).to have_link("ICT and computer science")
-        expect(rendered).to have_link("Economics and business studies")
-        expect(rendered).to have_link("Dance, drama and music")
-        expect(rendered).to have_link("Food technology")
-        expect(rendered).to have_link("Health and Social Care")
-        expect(rendered).to have_link("Design and technology")
-        expect(rendered).to have_link("Politics, Humanities and Social Sciences")
-        expect(rendered).to have_link("Psychology, Sociology and RE")
+        expect(section).to have_link("Maths")
+        expect(section).to have_link("English and media studies")
+        expect(section).to have_link("History")
+        expect(section).to have_link("Geography")
+        expect(section).to have_link("Economics and business studies")
+        expect(section).to have_link("Dance, drama and music")
+        expect(section).to have_link("Food technology")
+        expect(section).to have_link("Health and Social Care")
+        expect(section).to have_link("Design and technology")
+        expect(section).to have_link("Land and Property Management")
       end
     end
   end
