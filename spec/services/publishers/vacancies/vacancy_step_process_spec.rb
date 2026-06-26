@@ -1,16 +1,16 @@
 require "rails_helper"
 
 RSpec.describe Publishers::Vacancies::VacancyStepProcess do
-  subject { described_class.new(current_step, vacancy: vacancy, organisation: organisation) }
+  subject { described_class.new(current_step, vacancy: vacancy, organisation: current_organisation) }
 
+  let(:current_organisation) { build(:local_authority) }
   let(:current_step) { :job_role }
-
-  let(:vacancy) { build_stubbed(:draft_vacancy, job_roles: ["teacher"]) }
-  let(:organisation) { build(:school) }
+  let(:vacancy) { build_stubbed(:draft_vacancy, job_roles: ["teacher"], organisations: [vacancy_organisation]) }
+  let(:vacancy_organisation) { build(:school) }
 
   describe "#step_groups" do
     let(:all_possible_step_groups) { %i[job_details about_the_role important_dates application_process review] }
-    let(:vacancy) { create(:draft_vacancy, job_roles: ["teacher"], organisations: [organisation]) }
+    let(:vacancy) { create(:draft_vacancy, job_roles: ["teacher"], organisations: [vacancy_organisation]) }
 
     it "has the expected step groups" do
       expect(subject.step_groups.keys).to eq(all_possible_step_groups)
@@ -24,13 +24,15 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
       end
 
       context "when the organisation is a school" do
+        let(:current_organisation) { build(:school) }
+
         it "has the expected steps" do
           expect(subject.steps).to_not include(:job_location)
         end
       end
 
       context "when the organisation is a school group" do
-        let(:organisation) { build_stubbed(:school_group) }
+        let(:current_organisation) { build_stubbed(:school_group) }
 
         it "has the expected steps" do
           expect(subject.steps).to include(:job_location)
@@ -98,7 +100,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
       end
 
       context "when the organisation is a trust" do
-        let(:organisation) { build_stubbed(:trust) }
+        let(:vacancy_organisation) { build_stubbed(:trust) }
 
         it "has the expected steps" do
           expect(subject.steps).to include(:applying_for_the_job)
@@ -106,7 +108,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
       end
 
       context "when the organisation is a college" do
-        let(:organisation) { build(:college) }
+        let(:vacancy_organisation) { build(:college) }
 
         it "does not include applying_for_the_job" do
           expect(subject.steps).not_to include(:applying_for_the_job)
@@ -128,7 +130,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
       context "when the organisation is a local authority" do
         before { allow(vacancy).to receive(:enable_job_applications).and_return(false) }
 
-        let(:organisation) { build_stubbed(:local_authority) }
+        let(:current_organisation) { build_stubbed(:local_authority) }
 
         it "has the expected steps" do
           expect(subject.steps).to include(:how_to_receive_applications)
