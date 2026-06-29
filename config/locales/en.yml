@@ -496,7 +496,7 @@ en:
         size:
           enrolled: '%{number} pupils enrolled'
           up_to: 'Up to %{capacity} pupils'
-        type: 'Oragnisation type'
+        type: 'Organisation type'
         urn: Unique identifier (URN)
         view_ofsted_report: View Ofsted report
         website: Website
