@@ -10,15 +10,18 @@ class Gias::ImportSchoolsAndLocalAuthorities
   class ImportFailure < StandardError
   end
 
-  # New GIAS team now have some data dictionary information available at
-  # https://dfedigital.atlassian.net/wiki/spaces/GTP/pages/6155337742/Data+Dictionary
-  # but it's not quite complete/definitive
-  # (e.g establishment status says open/closed/proposed when reality is 'open proposed to close' and 'proposed to open')
   class << self
     def call
+      # This file is a list of colleges in-scope for FE vacancies on TVS
+      uk_colleges = CSV.read(Rails.root.join("config/data/colleges.csv"), headers: true)
+                       # temp - only load private beta colleges for now
+                       .select { |x| x.fetch("PrivateBeta") == "Y" }
+                       .index_by { |r| r.fetch("UKPRN").to_i }
+                       .transform_values(&:to_h)
+
       log_benchmark("Importing schools and local authorities") do
         import_errors = Gias::Data.new(SCHOOLS_AND_LOCAL_AUTHORITIES_CSV).each_slice(BATCH_SIZE).flat_map do |group|
-          import_group  group
+          import_group uk_colleges, group
         end
         raise ImportFailure, import_errors.map(&:errors) if import_errors.any?
       end
@@ -41,12 +44,12 @@ class Gias::ImportSchoolsAndLocalAuthorities
       phase: "PhaseOfEducation (code)",
       url: "SchoolWebsite",
       religious_character: "ReligiousCharacter (name)",
+      uk_prn: "UKPRN",
     }.freeze
 
     private
 
-    # rubocop:disable Metrics/MethodLength
-    def import_group(group)
+    def import_group(uk_colleges, group)
       local_authorities = Set.new # LAs are provided with every school so we can discard duplicates
       schools = []
       memberships = []
@@ -56,21 +59,17 @@ class Gias::ImportSchoolsAndLocalAuthorities
         local_authorities.add(group_data(row))
         school_row = school_data(row)
         schools.push(school_row)
-        if school_row.fetch(:school_type).in?(School::EXCLUDED_SCHOOL_TYPES)
-           || school_row.fetch(:detailed_school_type).in?(School::OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES)
-           || school_row.fetch(:establishment_status).in?(School::CLOSED_ESTABLISHMENT_STATUSES)
+        if (school_row.fetch(:school_type) == School::COLLEGE_SCHOOL_TYPE && school_row.fetch(:detailed_school_type) == School::FE_DETAILED_SCHOOL_TYPE && uk_colleges.exclude?(school_row.fetch(:uk_prn)))
+             || school_row.fetch(:school_type).in?(School::EXCLUDED_SCHOOL_TYPES)
+             || school_row.fetch(:establishment_status).in?(School::CLOSED_ESTABLISHMENT_STATUSES)
           discarded.push(school_row)
         end
         memberships.push(membership_data(row))
       end
-      # run each batch in a transaction so that data doesn't get out of sync if something crashes
-      School.transaction do
-        import_batch(local_authorities, schools, memberships).tap do
-          School.where(urn: discarded.map { |school_row| school_row.fetch(:urn) }).discard_all
-        end
+      import_batch(local_authorities, schools, memberships).tap do
+        discarded.each { |school_row| School.find_by!(urn: school_row.fetch(:urn)).discard }
       end
     end
-    # rubocop:enable Metrics/MethodLength
 
     def import_batch(local_authorities, schools, memberships)
       import_local_authorities(local_authorities).failed_instances +
@@ -89,7 +88,8 @@ class Gias::ImportSchoolsAndLocalAuthorities
     end
 
     def import_schools(schools)
-      imported_schools = schools.map { |s| s.merge(discarded_at: nil) }
+      # we only use uk_prn for mapping colleges, it is not persisted.
+      imported_schools = schools.map { |s| s.except(:uk_prn).merge(discarded_at: nil) }
       School.import(
         imported_schools,
         on_duplicate_key_update: {
@@ -135,7 +135,7 @@ class Gias::ImportSchoolsAndLocalAuthorities
       SCHOOL_MAPPINGS.to_h { |key, row_key|
         raw_value = row.fetch(row_key)
         value = case key
-                when :phase
+                when :phase, :uk_prn
                   raw_value.to_i
                 when :url
                   Addressable::URI.heuristic_parse(raw_value).to_s

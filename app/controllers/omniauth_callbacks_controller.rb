@@ -87,11 +87,11 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     render template, status: :forbidden
   end
 
-  def ensure_establishment_type_supported!
+  def find_school(urn)
     type_id = auth_hash.dig("extra", "raw_info", "organisation", "type", "id")
-    return unless Publishers::DfeSignIn::OrgIdMappings.out_of_scope_type?(type_id)
+    raise EstablishmentTypeNotSupported, "Organisation type ID `#{type_id}`" if Publishers::DfeSignIn::OrgIdMappings.out_of_scope_type?(type_id)
 
-    raise EstablishmentTypeNotSupported, "Organisation type ID `#{type_id}`"
+    School.kept.find_by(urn: urn).presence || raise(EstablishmentTypeNotSupported, "Organisation urn #{urn} not enabled")
   end
 
   def auth_hash
@@ -111,19 +111,19 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def organisation_from_request
+    org_data = auth_hash.dig("extra", "raw_info", "organisation")
     # https://github.com/DFE-Digital/login.dfe.public-api#how-do-ids-map-to-categories-and-types
     case (cat_id = auth_hash.dig("extra", "raw_info", "organisation", "category", "id"))
     when Publishers::DfeSignIn::OrgIdMappings::CATEGORIES[:single_establishment]
-      ensure_establishment_type_supported!
-      School.find_by!(urn: auth_hash.dig("extra", "raw_info", "organisation", "urn"))
+      find_school org_data.fetch("urn")
     when Publishers::DfeSignIn::OrgIdMappings::CATEGORIES[:local_authority]
-      SchoolGroup.find_by!(local_authority_code: auth_hash.dig("extra", "raw_info", "organisation", "establishmentNumber"))
+      SchoolGroup.find_by!(local_authority_code: org_data.fetch("establishmentNumber"))
     when Publishers::DfeSignIn::OrgIdMappings::CATEGORIES[:multi_academy_trust]
-      SchoolGroup.find_by!(uid: auth_hash.dig("extra", "raw_info", "organisation", "uid"))
+      SchoolGroup.find_by!(uid: org_data.fetch("uid"))
     when Publishers::DfeSignIn::OrgIdMappings::CATEGORIES[:single_academy_trust]
       # If the user is trying to sign in as a single-academy trust, try and find the school
       # contained within the trust and use that instead
-      uid = auth_hash.dig("extra", "raw_info", "organisation", "uid")
+      uid = org_data.fetch("uid")
       contained_school = School.find_by(
         "gias_data->>'TrustSchoolFlag (code)' = ? AND gias_data->>'Trusts (code)' = ?",
         "5", # "Supported by a single-academy trust"
