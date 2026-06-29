@@ -29,7 +29,7 @@ module Publishers::DfeSignIn
       "11" => "Other independent school",
       "18" => "Further education",
       "25" => "Offshore schools",
-      "26" => "Service children's education",
+      "26" => "Service children’s education",
       "27" => "Miscellaneous",
       "29" => "Higher education institutions",
       "30" => "Welsh establishment",
