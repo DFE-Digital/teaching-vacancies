@@ -271,7 +271,6 @@ Rails.application.routes.draw do
       get "schools/preview", to: "/publishers/organisations/schools#preview"
     end
     resource :terms_and_conditions, only: %i[show update]
-    resource :ats_interstitial, only: %i[show update]
     get :remove_organisation_filter, to: "publisher_preferences#remove_organisation"
   end
 
