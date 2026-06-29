@@ -85,6 +85,9 @@ gem "mini_magick"
 gem "mission_control-jobs"
 gem "mutex_m"
 # DWP integration
+# net-ssh only enables the ssh-ed25519 host key algorithm when BOTH ed25519 and
+# bcrypt_pbkdf are available; the DWP SFTP server only offers an ed25519 host key.
+gem "bcrypt_pbkdf", ">= 1.0", "< 2.0"
 gem "ed25519", ">= 1.2", "< 2.0"
 gem "net-sftp"
 # used for making XMl site map and parsing import sources
