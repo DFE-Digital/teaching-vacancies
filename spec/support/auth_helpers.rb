@@ -27,7 +27,7 @@ module AuthHelpers
 
   def stub_publisher_authentication_step(organisation_id: "939eac36-0777-48c2-9c2c-b87c948a9ee0",
                                          school_urn: "110627", trust_uid: nil, la_code: nil,
-                                         category: nil,
+                                         category: nil, establishment_type: nil,
                                          email: "an-email@example.com")
     if category.blank?
       category = "001" if school_urn.present?
@@ -64,6 +64,7 @@ module AuthHelpers
             uid: trust_uid,
             name: "FooBar organisation",
             category: { id: category, name: category_name },
+            type: establishment_type,
             establishmentNumber: la_code,
           },
         },
