@@ -152,14 +152,4 @@ class School < Organisation
   def all_organisation_ids
     [id]
   end
-
-  def ats_interstitial_variant
-    if catholic_school?
-      "catholic"
-    elsif faith_school?
-      "other_faith"
-    else
-      "non_faith"
-    end
-  end
 end
