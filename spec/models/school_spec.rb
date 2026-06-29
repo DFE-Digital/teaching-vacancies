@@ -46,34 +46,6 @@ RSpec.describe School do
     end
   end
 
-  describe "#ats_interstitial_variant" do
-    subject { build(:school, religious_character: religious_character) }
-
-    context "when catholic_school? is true" do
-      let(:religious_character) { "Catholic" }
-
-      it "returns catholic" do
-        expect(subject.ats_interstitial_variant).to eq("catholic")
-      end
-    end
-
-    context "when faith_school? is true but not catholic" do
-      let(:religious_character) { "Church of England" }
-
-      it "returns other_faith" do
-        expect(subject.ats_interstitial_variant).to eq("other_faith")
-      end
-    end
-
-    context "when the school has no faith" do
-      let(:religious_character) { "Does not apply" }
-
-      it "returns non_faith" do
-        expect(subject.ats_interstitial_variant).to eq("non_faith")
-      end
-    end
-  end
-
   describe "#urn" do
     it "must be unique" do
       create(:school, urn: "12345")

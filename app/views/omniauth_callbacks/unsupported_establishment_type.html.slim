@@ -1,0 +1,8 @@
+- content_for(:page_title_prefix) { "Sign In error" }
+
+h1.govuk-heading-xl Sorry, we cannot sign you in
+
+p.govuk-body You are trying to sign in to Teaching Vacancies on behalf of #{@org_name}, which is an establishment of type "#{@org_type}". This type of establishment is not supported by Teaching Vacancies.
+
+p.govuk-body
+  | If you are not sure why you are seeing this error, you can #{link_to("report a problem", new_support_request_path)}.
