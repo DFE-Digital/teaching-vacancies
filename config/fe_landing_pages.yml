@@ -58,9 +58,9 @@ shared:
       - other_support
 
   ### FE Subjects
-  accountancy-and-finance-fe-jobs:
+  accounting-fe-jobs:
     subjects:
-      - Accountancy and finance
+      - Accounting
   agriculture-horticulture-land-based-studies-fe-jobs:
     subjects:
       - Agriculture/horticulture/land based studies
@@ -91,21 +91,23 @@ shared:
   classics-fe-jobs:
     subjects:
       - Classics
-  computer-science-fe-jobs:
+  computing-fe-jobs:
     subjects:
-      - Computer science
-  construction-fe-jobs:
-    subjects:
-      - Construction
+      - Computing
   counselling-fe-jobs:
     subjects:
       - Counselling
+  criminology-fe-jobs:
+    subjects:
+      - Criminology
   customer-service-fe-jobs:
     subjects:
       - Customer service
   dance-drama-and-music-fe-jobs:
     subjects:
-      - Dance drama and music
+      - Dance
+      - Drama
+      - Music
   design-and-technology-fe-jobs:
     subjects:
       - Design and technology
@@ -121,9 +123,13 @@ shared:
   engineering-fe-jobs:
     subjects:
       - Engineering
+  esports-fe-jobs:
+    subjects:
+      - Esports
   english-and-media-studies-fe-jobs:
     subjects:
-      - English and Media Studies
+      - English
+      - Media Studies
   english-as-a-foreign-language-fe-jobs:
     subjects:
       - English as a foreign language
@@ -142,6 +148,11 @@ shared:
   foreign-languages-fe-jobs:
     subjects:
       - Foreign languages
+      - Welsh
+      - French
+      - German
+      - Mandarin
+      - Spanish
   french-fe-jobs:
     subjects:
       - French
@@ -175,9 +186,6 @@ shared:
   humanities-fe-jobs:
     subjects:
       - Humanities
-  ict-and-computer-science-fe-jobs:
-    subjects:
-      - ICT and Computer Science
   land-and-property-management-fe-jobs:
     subjects:
       - Land and Property Management
@@ -192,10 +200,7 @@ shared:
       - Mandarin
   maths-fe-jobs:
     subjects:
-      - Maths
-  modern-foreign-languages-fe-jobs:
-    subjects:
-      - Modern foreign languages
+      - Mathematics
   motor-vehicle-fe-jobs:
     subjects:
       - Motor vehicle
@@ -213,7 +218,7 @@ shared:
       - Photography
   physical-education-fe-jobs:
     subjects:
-      - Physical Education
+      - Physical education
   physics-fe-jobs:
     subjects:
       - Physics
@@ -238,9 +243,9 @@ shared:
   science-fe-jobs:
     subjects:
       - Science
-  send-fe-jobs:
-    subjects:
-      - SEND
+      - Physics
+      - Biology
+      - Chemistry
   sociology-fe-jobs:
     subjects:
       - Sociology

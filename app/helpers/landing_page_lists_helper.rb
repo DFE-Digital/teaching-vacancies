@@ -74,7 +74,7 @@ module LandingPageListsHelper
   MIDDLE_SUBJECT_LIST = {
     "history-teacher-jobs" => "History",
     "geography-teacher-jobs" => "Geography",
-    "mfl-teacher-jobs" => "Foreign Languages",
+    "mfl-teacher-jobs" => "Foreign languages",
   }.freeze
 
   RIGHT_SUBJECT_LIST = {
@@ -109,22 +109,31 @@ module LandingPageListsHelper
     Physics: "physics-teacher-jobs",
   }.freeze
 
+  FE_CHILD_SUBJECTS_LIST = {
+    Spanish: "spanish-fe-jobs",
+    French: "french-fe-jobs",
+    Mandarin: "mandarin-fe-jobs",
+    German: "german-fe-jobs",
+    Classics: "classics-fe-jobs",
+    Biology: "biology-fe-jobs",
+    Chemistry: "chemistry-fe-jobs",
+    Physics: "physics-fe-jobs",
+    Welsh: "welsh-fe-jobs",
+  }.freeze
+
   FE_SUBJECTS_COLUMNS = [
     %w[
-      accountancy-and-finance-fe-jobs
+      accounting-fe-jobs
       agriculture-horticulture-land-based-studies-fe-jobs
       animal-care-fe-jobs
       art-and-design-fe-jobs
-      biology-fe-jobs
       british-sign-language-fe-jobs
       building-and-construction-fe-jobs
       catering-fe-jobs
-      chemistry-fe-jobs
       childrens-development-and-learning-fe-jobs
-      classics-fe-jobs
-      computer-science-fe-jobs
-      construction-fe-jobs
+      computing-fe-jobs
       counselling-fe-jobs
+      criminology-fe-jobs
       customer-service-fe-jobs
       dance-drama-and-music-fe-jobs
       design-and-technology-fe-jobs
@@ -134,40 +143,35 @@ module LandingPageListsHelper
       engineering-fe-jobs
       english-and-media-studies-fe-jobs
       english-as-a-foreign-language-fe-jobs
+      esports-fe-jobs
+      fabrication-and-welding-fe-jobs
     ],
     %w[
-      fabrication-and-welding-fe-jobs
       farming-fe-jobs
       fashion-fe-jobs
       food-technology-fe-jobs
       foreign-languages-fe-jobs
-      french-fe-jobs
       functional-skills-fe-jobs
       games-design-fe-jobs
       geography-fe-jobs
-      german-fe-jobs
       graphic-design-fe-jobs
       hair-and-beauty-fe-jobs
       health-and-social-care-fe-jobs
       history-fe-jobs
       hotel-catering-and-travel-fe-jobs
       humanities-fe-jobs
-      ict-and-computer-science-fe-jobs
       land-and-property-management-fe-jobs
       leadership-and-management-fe-jobs
       logistics-fe-jobs
-      mandarin-fe-jobs
       maths-fe-jobs
     ],
     %w[
-      modern-foreign-languages-fe-jobs
       motor-vehicle-fe-jobs
       music-fe-jobs
       people-management-fe-jobs
       philosophy-fe-jobs
       photography-fe-jobs
       physical-education-fe-jobs
-      physics-fe-jobs
       plumbing-and-heating-fe-jobs
       politics-fe-jobs
       pshe-fe-jobs
@@ -175,13 +179,10 @@ module LandingPageListsHelper
       public-services-fe-jobs
       religious-education-fe-jobs
       science-fe-jobs
-      send-fe-jobs
       sociology-fe-jobs
-      spanish-fe-jobs
       sport-and-leisure-fe-jobs
       sports-science-fe-jobs
       tourism-fe-jobs
-      welsh-fe-jobs
       woodworking-joinery-and-carpentry-fe-jobs
     ],
   ].freeze
@@ -201,29 +202,24 @@ module LandingPageListsHelper
   def landing_page_fe_support_roles_list = FE_SUPPORT_ROLES_LIST
   def landing_page_subjects_columns = SUBJECTS_COLUMNS
   def landing_page_subjects_list = SUBJECTS_LIST
-  def child_subjects_list = CHILD_SUBJECTS_LIST
   def landing_page_fe_subjects_list = FE_SUBJECTS_LIST
   def landing_page_fe_subjects_columns = FE_SUBJECTS_COLUMNS
 
-  def landing_page_tallier(counts_by_subject)
-    SUBJECTS_LIST.to_h do |landing_page, subject|
+  def child_subjects_list = CHILD_SUBJECTS_LIST
+  def fe_child_subjects_list = FE_CHILD_SUBJECTS_LIST
+
+  def page_tallier(counts_by_subject, subjects_list, child_subjects_list)
+    subjects_list.to_h do |landing_page, subject|
       subject_list = VacancyCounter::GROUPED_SUBJECTS.fetch(subject.to_sym, [subject.to_sym])
       # We supply 0 in case of a subject without any jobs.
       job_count = subject_list.reduce(0) { |sum, subject| sum + counts_by_subject.fetch(subject, 0) }
       child_subjects_counts = VacancyCounter::GROUPED_SUBJECTS.fetch(subject.to_sym, []).filter_map { |child_subject|
-        child_landing_page = CHILD_SUBJECTS_LIST[child_subject]
+        child_landing_page = child_subjects_list[child_subject]
         next unless child_landing_page
 
         [child_landing_page, counts_by_subject.fetch(child_subject, 0)]
       }.to_h
       [landing_page, [job_count, child_subjects_counts]]
-    end
-  end
-
-  def landing_page_fe_tallier(counts_by_subject)
-    FE_SUBJECTS_LIST.to_h do |landing_page, subject|
-      job_count = counts_by_subject.fetch(subject.to_sym, 0)
-      [landing_page, [job_count, {}]]
     end
   end
 end

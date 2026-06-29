@@ -54,7 +54,7 @@ RSpec.describe VacancyCounter do
 
   describe "working_pattern_counts" do
     before do
-      create_list(:vacancy, 3, working_patterns: %w[part_time], phases: %w[primary])
+      create_list(:vacancy, 3, is_job_share: true, working_patterns: %w[part_time], phases: %w[primary])
       create(:vacancy, working_patterns: %w[full_time part_time], phases: %w[primary])
     end
 
@@ -65,33 +65,11 @@ RSpec.describe VacancyCounter do
       end
 
       it "scopes to school phases" do
-        expect(described_class.working_pattern_counts(scope: school_scope)).to eq(part_time: 4, full_time: 2)
+        expect(described_class.working_pattern_counts(scope: school_scope)).to eq(part_time: 4, full_time: 2, job_share: 3)
       end
 
       it "scopes to FE phases" do
-        expect(described_class.working_pattern_counts(scope: fe_scope)).to eq(full_time: 1)
-      end
-    end
-  end
-
-  describe "job_share_counts" do
-    before do
-      create_list(:vacancy, 3, is_job_share: true, phases: %w[primary])
-      create_list(:vacancy, 2, is_job_share: false, phases: %w[primary])
-    end
-
-    context "with a scope" do
-      before do
-        create(:vacancy, is_job_share: true, phases: %w[primary])
-        create(:vacancy, is_job_share: true, organisations: [college])
-      end
-
-      it "scopes to school phases" do
-        expect(described_class.job_share_counts(scope: school_scope)).to eq(4)
-      end
-
-      it "scopes to FE phases" do
-        expect(described_class.job_share_counts(scope: fe_scope)).to eq(1)
+        expect(described_class.working_pattern_counts(scope: fe_scope)).to eq(full_time: 1, job_share: 0)
       end
     end
   end
@@ -106,7 +84,7 @@ RSpec.describe VacancyCounter do
       end
 
       it "returns counts for all subjects by default" do
-        expect(described_class.subject_counts(scope: school_scope)).to include(Mathematics: 3, English: 1, Spanish: 1, French: 1, Science: 0, "Foreign Languages": 2)
+        expect(described_class.subject_counts(scope: school_scope)).to include(Mathematics: 3, English: 1, Spanish: 1, French: 1, Science: 0, "Foreign languages": 2)
       end
     end
 
@@ -117,12 +95,12 @@ RSpec.describe VacancyCounter do
         create(:vacancy, :secondary, subjects: %w[German])
         create(:vacancy, :secondary, subjects: %w[Mandarin])
         create(:vacancy, :secondary, subjects: %w[Classics])
-        create(:vacancy, :secondary, subjects: ["Foreign Languages"])
+        create(:vacancy, :secondary, subjects: ["Foreign languages"])
       end
 
       it "successfully groups modern foreign languages together" do
         expect(described_class.subject_counts(scope: school_scope))
-          .to include(French: 1, Spanish: 1, Mandarin: 1, Classics: 1, German: 1, "Foreign Languages": 6)
+          .to include(French: 1, Spanish: 1, Mandarin: 1, Classics: 1, German: 1, "Foreign languages": 6)
       end
     end
 
@@ -147,11 +125,11 @@ RSpec.describe VacancyCounter do
       end
 
       it "scopes to school phases" do
-        expect(described_class.subject_counts(scope: school_scope)).to include(Mathematics: 1, Science: 0, "Foreign Languages": 0)
+        expect(described_class.subject_counts(scope: school_scope)).to include(Mathematics: 1, Science: 0, "Foreign languages": 0)
       end
 
       it "scopes to FE phases" do
-        expect(described_class.subject_counts(scope: fe_scope)).to include(Mathematics: 1, Physics: 1, Science: 1, "Foreign Languages": 0)
+        expect(described_class.subject_counts(scope: fe_scope)).to include(Mathematics: 1, Physics: 1, Science: 1, "Foreign languages": 0)
       end
     end
 
@@ -167,7 +145,7 @@ RSpec.describe VacancyCounter do
           .to eq("Art and design": 2,
                  "Dance, Drama and Music": 0,
                  "English and Media Studies": 0,
-                 "Foreign Languages": 0,
+                 "Foreign languages": 0,
                  "Health and Social Care": 0,
                  "ICT and Computer Science": 0,
                  "Design and technology": 2,
