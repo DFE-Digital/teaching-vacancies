@@ -10,7 +10,8 @@
   = govuk_inset_text do
     p.govuk-body
       strong = t(".default_address_label")
-    p.govuk-body = full_address(current_organisation)
+    - vacancy.organisations.each do |organisation|
+      p.govuk-body = full_address(organisation)
 
   = f.govuk_fieldset legend: { text: t(".change_address_label"), size: "m" } do
     = f.govuk_text_field :job_address_line1,
