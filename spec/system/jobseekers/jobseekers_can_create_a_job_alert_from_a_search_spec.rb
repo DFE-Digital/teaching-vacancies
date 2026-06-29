@@ -144,6 +144,23 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
     end
   end
 
+  describe "organisation type filter search" do
+    let!(:college) { create(:college) }
+
+    before do
+      create(:vacancy, organisations: [college])
+      visit jobs_path
+      check I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.colleges")
+      first(:button, I18n.t("buttons.apply_filters")).click
+    end
+
+    scenario "successfully reaches the new job alert page after filtering by colleges" do
+      expect(page).to have_content(college.name)
+      click_on I18n.t("subscriptions.link.text")
+      expect(page).to have_content(I18n.t("subscriptions.new.title"))
+    end
+  end
+
   def click_job_alert_link
     if page.has_css?("#job-alert-link")
       click_on I18n.t("subscriptions.link.text")
