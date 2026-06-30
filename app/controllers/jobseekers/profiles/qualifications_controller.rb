@@ -20,7 +20,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
   end
 
   def new
-    @form = category_form_class(@category).new({ category: @category })
+    @form = category_form_class(@category).new(category: @category)
   end
 
   def create
