@@ -68,7 +68,7 @@ module TeachingVacancies
     # Use custom error pages
     config.exceptions_app = routes
 
-    config.active_job.queue_adapter = :solid_queue
+    config.active_job.queue_adapter = :sidekiq
 
     # we have multiple mailers (Notify and Smtp) so can't configure here
     # config.action_mailer.delivery_method = :notify
