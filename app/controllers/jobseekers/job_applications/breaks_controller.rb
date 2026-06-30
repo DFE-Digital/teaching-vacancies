@@ -5,9 +5,9 @@ class Jobseekers::JobApplications::BreaksController < Jobseekers::BaseController
     form_attributes = if params[:started_on] && params[:ended_on]
                         { started_on: Date.parse(params[:started_on]), ended_on: Date.parse(params[:ended_on]) }
                       else
-                        #:nocov:
+                        # :nocov:
                         {}
-                        #:nocov:
+                        # :nocov:
                       end
     @form = Jobseekers::BreakForm.new(form_attributes)
   end
