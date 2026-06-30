@@ -16,7 +16,6 @@ class Jobseekers::JobApplications::BreaksController < Jobseekers::BaseController
 
   def create
     @form = Jobseekers::BreakForm.new(employment_break_params)
-
     if @form.valid?
       job_application.employments.break.create(employment_break_params)
       redirect_to back_path
