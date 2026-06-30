@@ -117,13 +117,13 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     when Publishers::DfeSignIn::OrgIdMappings::CATEGORIES[:single_establishment]
       find_school org_data.fetch("urn")
     when Publishers::DfeSignIn::OrgIdMappings::CATEGORIES[:local_authority]
-      SchoolGroup.find_by!(local_authority_code: org_data.fetch("establishmentNumber"))
+      SchoolGroup.find_by!(local_authority_code: auth_hash.dig("extra", "raw_info", "organisation", "establishmentNumber"))
     when Publishers::DfeSignIn::OrgIdMappings::CATEGORIES[:multi_academy_trust]
-      SchoolGroup.find_by!(uid: org_data.fetch("uid"))
+      SchoolGroup.find_by!(uid: auth_hash.dig("extra", "raw_info", "organisation", "uid"))
     when Publishers::DfeSignIn::OrgIdMappings::CATEGORIES[:single_academy_trust]
       # If the user is trying to sign in as a single-academy trust, try and find the school
       # contained within the trust and use that instead
-      uid = org_data.fetch("uid")
+      uid = auth_hash.dig("extra", "raw_info", "organisation", "uid")
       contained_school = School.find_by(
         "gias_data->>'TrustSchoolFlag (code)' = ? AND gias_data->>'Trusts (code)' = ?",
         "5", # "Supported by a single-academy trust"
