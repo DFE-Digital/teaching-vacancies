@@ -7,7 +7,6 @@ class Jobseekers::JobApplications::BreaksController < Jobseekers::BaseController
                       else
                         {}
                       end
-
     @form = Jobseekers::BreakForm.new(form_attributes)
   end
 
