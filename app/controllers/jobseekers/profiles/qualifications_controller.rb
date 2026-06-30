@@ -3,7 +3,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
 
   helper_method :jobseeker_profile, :qualification, :qualification_form_param_key
 
-  before_action :set_form_and_category, only: %i[new create edit update]
+  before_action :set_category, only: %i[new create edit update]
 
   def select_category
     @form = Jobseekers::Qualifications::CategoryForm.new
@@ -20,9 +20,13 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
     end
   end
 
-  def new; end
+  def new
+    @form = category_form_class(@category).new({ category: @category })
+  end
 
   def create
+    @form = category_form_class(@category).new(qualification_params)
+
     if @form.valid?
       @profile.qualifications.create(qualification_params)
       redirect_to review_jobseekers_profile_qualifications_path
@@ -31,11 +35,19 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
     end
   end
 
-  def edit; end
+  def edit
+    form_attributes = qualification
+            .slice(:category, :finished_studying, :finished_studying_details, :grade, :institution, :name, :subject, :year, :qualification_results)
+            .reject { |_, v| v.blank? && v != false }
+
+    @form = category_form_class(@category).new(form_attributes)
+  end
 
   def review; end
 
   def update
+    @form = category_form_class(@category).new(qualification_params)
+
     if @form.valid?
       qualification.update(qualification_params)
       redirect_to review_jobseekers_profile_qualifications_path
@@ -56,45 +68,26 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
 
   private
 
-  def form_attributes
-    case action_name
-    when "new"
-      { category: @category }
-    when "edit"
-      qualification
-        .slice(:category, :finished_studying, :finished_studying_details, :grade, :institution, :name, :subject, :year, :qualification_results)
-        .reject { |_, v| v.blank? && v != false }
-    when "create", "update"
-      qualification_params
-    end
-  end
-
   def submit_category_params
     key = ActiveModel::Naming.param_key(Jobseekers::Qualifications::CategoryForm)
     (params[key] || params).permit(:category)
   end
 
   def qualification_params
-    case action_name
-    when "new", "confirm_destroy"
-      (params[qualification_form_param_key(@category)] || params).permit(:category)
-    when "create", "edit", "update"
-      params.expect(qualification_form_param_key(@category) => [:category,
-                                                                :finished_studying,
-                                                                :finished_studying_details,
-                                                                :grade,
-                                                                :institution,
-                                                                :name,
-                                                                :subject,
-                                                                :year,
-                                                                :awarding_body,
-                                                                { qualification_results_attributes: [%i[id subject grade awarding_body]] }])
-    end
+    params.expect(qualification_form_param_key(@category) => [:category,
+                                                              :finished_studying,
+                                                              :finished_studying_details,
+                                                              :grade,
+                                                              :institution,
+                                                              :name,
+                                                              :subject,
+                                                              :year,
+                                                              :awarding_body,
+                                                              { qualification_results_attributes: [%i[id subject grade awarding_body]] }])
   end
 
-  def set_form_and_category
+  def set_category
     @category = action_name.in?(%w[edit update]) ? qualification.category : category_param
-    @form = category_form_class(@category).new(form_attributes)
   end
 
   def category_param
