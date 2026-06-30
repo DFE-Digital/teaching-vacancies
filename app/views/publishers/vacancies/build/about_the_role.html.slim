@@ -32,7 +32,7 @@
   = editor(form_input: f.govuk_text_area(:skills_and_experience, label: { size: "s", id: "skills-and-experience-label" }, rows: 5, required: true, aria: { hidden: false }), value: form.skills_and_experience, field_name: "publishers_job_listing_about_the_role_form[skills_and_experience]", label: { text: t("helpers.label.publishers_job_listing_about_the_role_form.skills_and_experience"), size: "s", id: "skills-and-experience-label" })
 
   = editor(form_input: f.govuk_text_area(:school_offer,
-    rows: 5, required: true, aria: { hidden: false }), value: form.school_offer,
+    rows: 5, required: true, aria: { hidden: false }, hint: nil), value: form.school_offer,
     field_name: "publishers_job_listing_about_the_role_form[school_offer]", hint: t("helpers.hint.publishers_job_listing_about_the_role_form.school_offer", organisation: org_type),
     label: { text: t("helpers.label.publishers_job_listing_about_the_role_form.school_offer", organisation: org_type), size: "s", id: "school-offer-label" })
 
