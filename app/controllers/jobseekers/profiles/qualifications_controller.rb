@@ -12,6 +12,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
   def submit_category
     @category = category_param
     @form = Jobseekers::Qualifications::CategoryForm.new(submit_category_params)
+
     if @form.valid?
       redirect_to new_jobseekers_profile_qualification_path(submit_category_params)
     else
