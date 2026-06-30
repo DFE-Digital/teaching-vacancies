@@ -12,7 +12,6 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
   def submit_category
     @category = category_param
     @form = Jobseekers::Qualifications::CategoryForm.new(submit_category_params)
-
     if @form.valid?
       redirect_to new_jobseekers_profile_qualification_path(submit_category_params)
     else
@@ -26,7 +25,6 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
 
   def create
     @form = category_form_class(@category).new(qualification_params)
-
     if @form.valid?
       @profile.qualifications.create(qualification_params)
       redirect_to review_jobseekers_profile_qualifications_path
@@ -39,7 +37,6 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
     form_attributes = qualification
             .slice(:category, :finished_studying, :finished_studying_details, :grade, :institution, :name, :subject, :year, :qualification_results)
             .reject { |_, v| v.blank? && v != false }
-
     @form = category_form_class(@category).new(form_attributes)
   end
 
@@ -47,7 +44,6 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
 
   def update
     @form = category_form_class(@category).new(qualification_params)
-
     if @form.valid?
       qualification.update(qualification_params)
       redirect_to review_jobseekers_profile_qualifications_path
