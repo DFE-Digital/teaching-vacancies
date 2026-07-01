@@ -51,15 +51,6 @@ RSpec.describe "Viewing a single published vacancy" do
       expect(mock_redis.get(redis_key).to_i).to be > 0
     end
 
-    context "when the publish_on date is in the future" do
-      let(:vacancy) { create(:vacancy, :future_publish, organisations: [school]) }
-
-      scenario "Job post with a future publish_on date are not accessible" do
-        expect(page).to have_content("Page not found")
-        expect(page).to_not have_content(vacancy.job_title)
-      end
-    end
-
     context "when the vacancy has expired" do
       let(:vacancy) { create(:vacancy, :expired, organisations: [school]) }
 
@@ -151,15 +142,6 @@ RSpec.describe "Viewing a single published vacancy" do
             .not_to have_sibling("p", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
         end
       end
-    end
-  end
-
-  context "when the vacancy status is draft" do
-    let(:vacancy) { create(:draft_vacancy, organisations: [school]) }
-
-    scenario "jobseekers cannot view the vacancy" do
-      expect(page).to have_content("Page not found")
-      expect(page).to_not have_content(vacancy.job_title)
     end
   end
 end

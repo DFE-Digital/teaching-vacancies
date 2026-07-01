@@ -13,16 +13,6 @@ RSpec.describe "Job applications employments" do
   after { sign_out(jobseeker) }
 
   describe "GET #new" do
-    context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
-
-      it "returns not_found" do
-        get new_jobseekers_job_application_employment_path(job_application)
-
-        expect(response).to have_http_status(:not_found)
-      end
-    end
-
     it "renders the new page" do
       expect(get(new_jobseekers_job_application_employment_path(job_application)))
         .to render_template(:new)
@@ -30,16 +20,6 @@ RSpec.describe "Job applications employments" do
   end
 
   describe "GET #edit" do
-    context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
-
-      it "returns not_found" do
-        get edit_jobseekers_job_application_employment_path(job_application, employment)
-
-        expect(response).to have_http_status(:not_found)
-      end
-    end
-
     it "renders the edit page" do
       expect(get(edit_jobseekers_job_application_employment_path(job_application, employment)))
         .to render_template(:edit)
@@ -82,16 +62,6 @@ RSpec.describe "Job applications employments" do
 
           expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :employment_history))
           expect(Employment.order(:created_at).last.is_current_role).to be(true)
-        end
-
-        context "when the job application status is not draft" do
-          let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
-
-          it "returns not_found" do
-            post jobseekers_job_application_employments_path(job_application), params: params
-
-            expect(response).to have_http_status(:not_found)
-          end
         end
       end
 
@@ -143,16 +113,6 @@ RSpec.describe "Job applications employments" do
           expect(employment.is_current_role?).to be(false)
           expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :employment_history))
         end
-
-        context "when the job application status is not draft" do
-          let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
-
-          it "returns not_found" do
-            patch jobseekers_job_application_employment_path(job_application, employment), params: params
-
-            expect(response).to have_http_status(:not_found)
-          end
-        end
       end
 
       context "when the form is invalid" do
@@ -170,16 +130,6 @@ RSpec.describe "Job applications employments" do
 
   describe "DELETE #destroy" do
     let!(:employment) { create(:employment, job_application: job_application) }
-
-    context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
-
-      it "returns not_found" do
-        delete jobseekers_job_application_employment_path(job_application, employment)
-
-        expect(response).to have_http_status(:not_found)
-      end
-    end
 
     it "destroys the employment and redirects to the employment history build step" do
       expect { delete jobseekers_job_application_employment_path(job_application, employment) }

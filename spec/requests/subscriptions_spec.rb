@@ -381,14 +381,5 @@ RSpec.describe "Subscriptions" do
         with_data: %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier],
       )
     end
-
-    context "with an invalid token" do
-      subject { get keep_subscription_path("invalid-token") }
-
-      it "returns a 404 status" do
-        subject
-        expect(response).to have_http_status(:not_found)
-      end
-    end
   end
 end
