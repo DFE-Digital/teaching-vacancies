@@ -85,7 +85,7 @@
     {
       "label": "Solid Queue",
       "type": "shell",
-      "command": "bin/jobs --skip-recurring",
+      "command": "bin/jobs",
       "presentation": {
         "reveal": "always",
         "panel": "shared"
