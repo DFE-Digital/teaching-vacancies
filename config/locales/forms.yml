@@ -256,8 +256,8 @@ en:
           full_time: This is what the annual salary would be for someone working full time
           part_time: This is the annual amount someone will take home
       publishers_job_listing_schools_form:
-        add_school: Add a school to your account
-        edit_schools_html: "Can't see the school you are looking for? %{link}"
+        add_school: Add a school or college to your account
+        edit_schools_html: "Can't see the school or college you are looking for? %{link}"
       publishers_job_listing_subjects_form:
         subjects_placeholder: Search
       publishers_vacancy_filter_form:
