@@ -35,7 +35,7 @@ RSpec.describe "Scheduled jobs configuration" do
       FetchMalwareScanResultJob
       SidekiqJob
       SolidQueueJob
-  `   AggregateVacancyReferrerStatsJob
+      AggregateVacancyReferrerStatsJob
     ]
   end
 
