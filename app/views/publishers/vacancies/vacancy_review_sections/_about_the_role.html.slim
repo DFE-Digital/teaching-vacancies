@@ -24,14 +24,15 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                   visually_hidden_text: t("jobs.skills_and_experience.publisher")
 
   - unless vacancy.school_offer.nil?
+    - school_offer_label = t("jobs.school_offer.publisher", organisation_type: vacancy.for_an_fe_college? ? "college" : "school")
     - summary_list.with_row(html_attributes: { id: "school_offer" }) do |row|
       - row.with_key
-        = t("jobs.school_offer.publisher")
+        = school_offer_label
       - row.with_value
         .editor-rendered-content == vacancy.school_offer
       - row.with_action text: t("buttons.change"),
                   href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
-                  visually_hidden_text: t("jobs.school_offer.publisher")
+                  visually_hidden_text: school_offer_label
 
   - if vacancy.flexi_working.present?
     - summary_list.with_row(html_attributes: { id: "flexi_working" }) do |row|
@@ -103,14 +104,15 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                   visually_hidden_text: t("jobs.additional_documents")
 
   - unless vacancy.school_visits.nil?
+    - school_visits_label = t("jobs.school_visits", organisation_type: vacancy.for_an_fe_college? ? "college" : "school")
     - summary_list.with_row(html_attributes: { id: "school_visits" }) do |row|
       - row.with_key
-        = t("jobs.school_visits")
+        = school_visits_label
       - row.with_value
         = vacancy.school_visits ? "Yes" : "No"
       - row.with_action text: t("buttons.change"),
           href: organisation_job_build_path(vacancy.id, :school_visits, "back_to_#{action_name}": "true"),
-          visually_hidden_text: t("jobs.school_visits")
+          visually_hidden_text: school_visits_label
 
   - unless vacancy.visa_sponsorship_available.nil?
     - summary_list.with_row(html_attributes: { id: "visa_sponsorship_available" }) do |row|

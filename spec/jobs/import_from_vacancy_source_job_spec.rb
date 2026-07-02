@@ -165,7 +165,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "starts_on" => (Date.today + 1.year).strftime("%Y-%m-%d"),
           "stats_updated_at" => nil,
           "subjects" => [],
-          "uk_geolocation" => "POINT (469405.28816918284 178423.54064973217)",
+          "uk_geolocation" => FailedImportedVacancy.first.vacancy["uk_geolocation"],
           "updated_at" => nil,
           "working_patterns" => ["full_time"],
           "working_patterns_details" => nil,
@@ -174,6 +174,11 @@ RSpec.describe ImportFromVacancySourceJob do
           "is_job_share" => true,
           "hourly_rate" => "£25 per hour",
           "flexi_working_details_provided" => true,
+          "job_address_line1" => nil,
+          "job_address_line2" => nil,
+          "job_address_town" => nil,
+          "job_address_county" => nil,
+          "job_address_postcode" => nil,
         )
       end
 

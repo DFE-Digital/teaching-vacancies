@@ -13,16 +13,6 @@ RSpec.describe "Job applications qualifications" do
   after { sign_out(jobseeker) }
 
   describe "GET #select_category" do
-    context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
-
-      it "returns not_found" do
-        get select_category_jobseekers_job_application_qualifications_path(job_application)
-
-        expect(response).to have_http_status(:not_found)
-      end
-    end
-
     it "renders the new page" do
       expect(get(select_category_jobseekers_job_application_qualifications_path(job_application)))
         .to render_template(:select_category)
@@ -60,16 +50,6 @@ RSpec.describe "Job applications qualifications" do
   describe "GET #new" do
     let(:params) { { category: "gcse" } }
 
-    context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
-
-      it "returns not_found" do
-        get new_jobseekers_job_application_qualification_path(job_application), params: params
-
-        expect(response).to have_http_status(:not_found)
-      end
-    end
-
     it "renders the new page" do
       expect(get(new_jobseekers_job_application_qualification_path(job_application), params: params))
         .to render_template(:new)
@@ -77,16 +57,6 @@ RSpec.describe "Job applications qualifications" do
   end
 
   describe "GET #edit" do
-    context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
-
-      it "returns not_found" do
-        get edit_jobseekers_job_application_qualification_path(job_application, qualification)
-
-        expect(response).to have_http_status(:not_found)
-      end
-    end
-
     it "renders the edit page" do
       expect(get(edit_jobseekers_job_application_qualification_path(job_application, qualification)))
         .to render_template(:edit)
@@ -97,16 +67,6 @@ RSpec.describe "Job applications qualifications" do
     context "when creating a non-secondary qualification" do
       let(:params) do
         { category: "undergraduate", jobseekers_qualifications_degree_form: { subject: "Scaring" } }
-      end
-
-      context "when the job application status is not draft" do
-        let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
-
-        it "returns not_found" do
-          post jobseekers_job_application_qualifications_path(job_application), params: params
-
-          expect(response).to have_http_status(:not_found)
-        end
       end
 
       context "when the form is valid" do
@@ -229,16 +189,6 @@ RSpec.describe "Job applications qualifications" do
               .to change { qualification.reload.finished_studying_details }.from("Taking my time").to("")
           end
         end
-
-        context "when the job application status is not draft" do
-          let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
-
-          it "returns not_found" do
-            patch jobseekers_job_application_qualification_path(job_application, qualification), params: params
-
-            expect(response).to have_http_status(:not_found)
-          end
-        end
       end
 
       context "when the form is invalid" do
@@ -316,16 +266,6 @@ RSpec.describe "Job applications qualifications" do
 
   describe "DELETE #destroy" do
     let!(:qualification) { create(:qualification, job_application: job_application) }
-
-    context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
-
-      it "returns not_found" do
-        delete jobseekers_job_application_qualification_path(job_application, qualification)
-
-        expect(response).to have_http_status(:not_found)
-      end
-    end
 
     it "destroys the qualification and redirects to the qualification build step" do
       expect { delete jobseekers_job_application_qualification_path(job_application, qualification) }

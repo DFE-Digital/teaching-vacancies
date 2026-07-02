@@ -10,6 +10,7 @@ en:
         working_patterns_details: Details of working hours/days (optional)
         organisation_type_options:
           academy: Academy
+          colleges: Colleges
           local_authority: Local authority maintained schools
         working_patterns_options:
           full_time: Full time

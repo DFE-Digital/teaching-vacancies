@@ -226,7 +226,7 @@ RSpec.describe "Publisher authentication" do
       before do
         stub_publisher_authentication_step(
           email: dsi_email_address,
-          establishment_type: { id: "18", name: "Further education" },
+          establishment_type: { id: "49", name: "Online provider" },
         )
         stub_publisher_authorisation_step
       end
@@ -237,7 +237,7 @@ RSpec.describe "Publisher authentication" do
         visit new_publisher_session_path
         sign_in_publisher
         expect(page.status_code).to eq(403) # Forbidden
-        expect(page).to have_content("You are trying to sign in to Teaching Vacancies on behalf of FooBar organisation, which is an establishment of type \"Further education\". This type of establishment is not supported by Teaching Vacancies.")
+        expect(page).to have_content("You are trying to sign in to Teaching Vacancies on behalf of FooBar organisation, which is an establishment of type \"Online provider\". This type of establishment is not supported by Teaching Vacancies.")
       end
     end
 

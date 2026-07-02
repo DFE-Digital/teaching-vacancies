@@ -83,7 +83,7 @@ RSpec.describe LandingPage do
   describe "i18n methods" do
     specify { expect(landing_page.heading).to eq("<span class=\"govuk-!-font-weight-bold\">42</span> amazing jobs APPLY NOW") }
     specify { expect(landing_page.meta_description).to eq("Lorem ipsum dolor sit jobs, vacancies adipiscing elit.") }
-    specify { expect(landing_page.name).to eq("Potions and Sorcery") }
+    specify { expect(landing_page.name).to eq("Potions and Sorcery (<span class=\"govuk-!-font-weight-bold\">42</span>)") }
     specify { expect(landing_page.title).to eq("Spiffy Part Time Potions and Sorcery Jobs") }
     specify { expect(landing_page.banner_title).to eq("Spiffy Part Time Potions and Sorcery Jobs") }
   end

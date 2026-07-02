@@ -41,13 +41,39 @@ module OrganisationsHelper
     end
   end
 
+  def organisation_label(organisation)
+    if organisation.fe_college?
+      "College"
+    elsif organisation.school?
+      "School"
+    else
+      "Organisation"
+    end
+  end
+
   def organisation_type_basic(organisation)
-    if organisation.school?
+    if organisation.fe_college?
+      "college"
+    elsif organisation.school?
       "school"
     elsif organisation.local_authority?
       "local authority"
     else
       "trust"
+    end
+  end
+
+  def school_or_college_type(organisation)
+    organisation.fe_college? ? "college" : "school"
+  end
+
+  def vacancy_organisation_type(vacancy)
+    if vacancy.for_an_fe_college?
+      "college"
+    elsif vacancy.organisations.any?(&:school?)
+      "school"
+    else
+      "school_group"
     end
   end
 

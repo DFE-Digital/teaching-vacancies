@@ -28,6 +28,12 @@ northcott = School.find_by!(urn: "118138")
 # Special free school
 martinbacon = School.find_by!(urn: "147661")
 
+# Roman Catholic College
+loreto_college = School.find_by!(urn: "130503")
+
+#  Agricultural college
+oaklands_college = School.find_by!(urn: "130723")
+
 # Team users
 users = [
   { email: "alisa.ali@education.gov.uk", family_name: "Ali", given_name: "Alisa" },
@@ -52,18 +58,20 @@ users = [
 schools = [bexleyheath_school,
            aston_maths,
            weydon_trust.schools.detect { |s| s.phase != "not_applicable" && s.phase.exclude?("middle") },
-           southampton_la.schools.detect { |s| s.phase != "not_applicable" && s.phase.exclude?("middle") },
+           southampton_la.schools.detect { |s| s.phase == "nursery" },
            abraham_moss,
            st_anthony,
            oakwoods,
            northcott,
            martinbacon,
+           loreto_college,
+           oaklands_college,
            osmaston_cofe]
 
 user_emails = users.map { |u| u.fetch(:email) }
 
 users.each.with_index do |user, index|
-  organisations = [bexleyheath_school, weydon_trust, southampton_la, abraham_moss, aston_maths, st_anthony, osmaston_cofe]
+  organisations = [bexleyheath_school, weydon_trust, southampton_la, abraham_moss, aston_maths, st_anthony, osmaston_cofe, oaklands_college, loreto_college]
   publisher = Publisher.create!(oid: index.to_s, organisations: organisations, **user)
 
   organisations.each do |organisation|
@@ -78,7 +86,7 @@ schools.each do |school|
             phases: (school.phase == "not_applicable" ? %w[secondary] : [school.phase]),
             publisher_organisation: school,
             publisher: Publisher.all.sample }
-  2.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+  75.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
   FactoryBot.create(:vacancy, :for_seed_data, :apply_via_website, **attrs)
   FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs)
   FactoryBot.create(:draft_vacancy, :for_seed_data, **attrs)

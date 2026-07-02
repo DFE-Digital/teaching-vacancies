@@ -5,6 +5,7 @@ RSpec.describe Vacancy do
     let(:school_group) { create(:trust, :with_geopoint, schools: [school_one, school_two]) }
     let(:school_one) { create(:school, name: "First school", phase: "primary") }
     let(:school_two) { create(:school, name: "Second school", phase: "primary") }
+    let(:college) { create(:college) }
     let(:vacancy) { create(:vacancy, :ect_suitable, job_roles: %w[teacher], organisations: [school_group], phases: %w[primary], key_stages: %w[ks1]) }
 
     describe "#refresh_geolocation" do
@@ -48,6 +49,26 @@ RSpec.describe Vacancy do
 
         it "updates the geolocation back to the school group's geopoint" do
           expect(vacancy.geolocation).to eq(school_group.geopoint)
+        end
+      end
+
+      context "when the vacancy has a custom job address" do
+        let(:vacancy) { create(:vacancy, :ect_suitable, job_roles: %w[teacher], organisations: [college], phases: %w[primary], key_stages: %w[ks1], job_address_line1: "10 Campus Road") }
+
+        it "does not update the geolocation from the organisation" do
+          original_geolocation = vacancy.geolocation
+          vacancy.organisations = [school_two]
+          expect(vacancy.geolocation).to eq(original_geolocation)
+        end
+      end
+
+      context "when the vacancy has partial job address fields set with missing fields" do
+        let(:vacancy) { create(:vacancy, :ect_suitable, job_roles: %w[teacher], organisations: [college], phases: %w[primary], key_stages: %w[ks1], job_address_town: "Brighton", job_address_postcode: "BN1 1AA") }
+
+        it "does not update the geolocation from the organisation" do
+          original_geolocation = vacancy.geolocation
+          vacancy.organisations = [school_two]
+          expect(vacancy.geolocation).to eq(original_geolocation)
         end
       end
     end

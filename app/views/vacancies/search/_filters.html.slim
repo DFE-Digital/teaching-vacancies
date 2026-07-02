@@ -36,7 +36,7 @@ ruby:
       legend: t("jobs.filters.subject"),
       key: :subjects,
       selected: form.subjects,
-      options: SUBJECT_OPTIONS,
+      options: form.subject_options,
       value_method: :first,
       selected_method: :first,
       },
@@ -100,7 +100,7 @@ ruby:
     - filters_component.with_group key: "education_phase", component: f.govuk_collection_check_boxes(:phases, form.phase_options, :first, :last, small: true, legend: { text: t("jobs.filters.phases") }, hint: nil)
 
     - unless hidden_filters&.include?("subjects")
-      = render "shared/subjects_filter", filters_component: filters_component, f: f
+      = render "shared/subjects_filter", filters_component: filters_component, f: f, subject_options: form.subject_options
 
     - unless hidden_filters&.include?("ect_statuses")
       - filters_component.with_group key: "ect_statuses", component: f.govuk_collection_check_boxes(:ect_statuses, form.ect_status_options, :first, :last, small: true, legend: { text: t("jobs.filters.ect_suitable") }, hint: nil)

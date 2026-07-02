@@ -124,6 +124,17 @@ RSpec.describe VacancyFilterQuery do
       end
     end
 
+    context "when filtering by a further education subject" do
+      let(:filters) { { subjects: ["Animal care"] } }
+      let!(:animal_care_vacancy) { create(:vacancy, :secondary, job_title: "Animal care teacher", subjects: ["Animal care"]) }
+      let!(:functional_skills_vacancy) { create(:vacancy, :secondary, job_title: "Functional skills teacher", subjects: ["Functional skills"]) }
+
+      it "returns vacancies with that further education subject" do
+        expect(subject).to contain_exactly(animal_care_vacancy)
+        expect(subject).not_to include(functional_skills_vacancy)
+      end
+    end
+
     context "when visa_sponsorship_available is selected" do
       let(:filters) { { visa_sponsorship_availability: ["true"] } }
 
@@ -150,6 +161,16 @@ RSpec.describe VacancyFilterQuery do
 
         it "will return vacancies associated with local authority maintained schools" do
           expect(subject).to contain_exactly(vacancy3)
+        end
+      end
+
+      context "when organisation_types == ['Colleges']" do
+        let(:filters) { { organisation_types: [School::COLLEGE_SCHOOL_TYPE] } }
+        let(:college) { create(:school, name: "College", school_type: School::COLLEGE_SCHOOL_TYPE) }
+        let!(:college_vacancy) { create(:vacancy, :apply_via_website, job_title: "College vacancy", organisations: [college]) }
+
+        it "will return vacancies associated with colleges" do
+          expect(subject).to contain_exactly(college_vacancy)
         end
       end
 

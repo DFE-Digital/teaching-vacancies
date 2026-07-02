@@ -25,6 +25,10 @@ module VacanciesHelper
     end
   end
 
+  def fe_college_job_roles_options
+    [["teacher", I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.teacher")]]
+  end
+
   def teaching_job_roles_options
     Vacancy::TEACHING_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.#{option}")] }
   end
@@ -113,6 +117,7 @@ module VacanciesHelper
   def vacancy_job_location(vacancy)
     organisation = vacancy.organisation
     return "#{t('organisations.job_location_summary.at_multiple_locations')}, #{organisation.name}" if vacancy.organisations.many?
+    return address_join([organisation.name, vacancy.vacancy_address]) if vacancy.for_an_fe_college?
 
     address_join([organisation.name, organisation.town, organisation.county])
   end
@@ -127,6 +132,7 @@ module VacanciesHelper
   def vacancy_full_job_location(vacancy)
     organisation = vacancy.organisation
     return "#{t('organisations.job_location_summary.at_multiple_locations')}, #{organisation.name}" if vacancy.organisations.many?
+    return address_join([organisation.name, vacancy.vacancy_address]) if vacancy.for_an_fe_college?
 
     address_join([organisation.name, organisation.town, organisation.county, organisation.postcode])
   end

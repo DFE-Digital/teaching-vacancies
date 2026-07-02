@@ -73,7 +73,7 @@ section#job-details class="govuk-!-margin-bottom-5"
     .govuk-body.editor-rendered-content == simple_format(vacancy.job_advert)
 
   - if vacancy.school_offer.present?
-    h2.govuk-heading-m = t("jobs.school_offer.jobseeker")
+    h2.govuk-heading-m = t("jobs.school_offer.jobseeker.#{school_or_college_type(vacancy.organisation)}")
     .govuk-body.editor-rendered-content == vacancy.school_offer
 
   - if vacancy.flexi_working.present?
@@ -115,7 +115,7 @@ section#job-details class="govuk-!-margin-bottom-5"
 
     - else
       - if vacancy.external?
-        p = t("jobs.external.notice")
+        p = t("jobs.external.notice.#{school_or_college_type(vacancy.organisation)}")
         p.govuk-body = t("jobseekers.job_applications.no_cvs")
         = external_advert_link vacancy, class: "govuk-!-margin-bottom-5"
 

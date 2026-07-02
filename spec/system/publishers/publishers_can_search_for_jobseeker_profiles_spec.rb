@@ -64,7 +64,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         expect(page).to have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
         expect(page).to have_content(jobseeker_profile.full_name)
         expect(page).to have_content(
-          "Teacher, Headteacher, Deputy headteacher, Assistant headteacher, " \
+          "Teacher or Lecturer, Headteacher, Deputy headteacher, Assistant headteacher, " \
           "Head of year or phase, Head of department or curriculum, " \
           "Teaching assistant, HLTA (higher level teaching assistant), " \
           "Learning support or cover supervisor, SENCo (special educational needs coordinator), " \
@@ -198,7 +198,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
     end
 
     it "shows text explaining that the candidates are willing to travel to the school" do
-      expect(page).to have_selector("p", text: "These candidates are willing to travel to a location that’s near to your school.")
+      expect(page).to have_selector("p", text: "These candidates are willing to travel to a location that’s near to your school or college.")
     end
   end
 
@@ -211,7 +211,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
 
     context "when no locations are selected in the filters" do
       it "shows text explaining that the candidates are willing travel to one of more of the locations" do
-        expect(page).to have_selector("p", text: "These candidates are willing to travel to a location that's near to at least one of your schools.")
+        expect(page).to have_selector("p", text: "These candidates are willing to travel to a location that's near to at least one of your schools or colleges.")
       end
     end
 
@@ -222,7 +222,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         within ".filters-component" do
           first("button").click
         end
-        expect(page).to have_selector("p", text: "These candidates are willing to travel to your selected school location.")
+        expect(page).to have_selector("p", text: "These candidates are willing to travel to your selected school or college location.")
       end
     end
 
@@ -234,7 +234,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         within ".filters-component" do
           first("button").click
         end
-        expect(page).to have_selector("p", text: "These candidates are willing to travel to at least one of your selected school locations.")
+        expect(page).to have_selector("p", text: "These candidates are willing to travel to at least one of your selected school or college locations.")
       end
     end
   end

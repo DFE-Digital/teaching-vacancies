@@ -41,7 +41,7 @@ RSpec.describe "publishers/jobseeker_profiles/show" do
     expect(rendered).to have_content(jobseeker_profile.about_you)
     expect(rendered).to have_content(jobseeker_profile.job_preferences.subjects.map(&:humanize).join(", "))
     expect(rendered).to have_content(
-      "Teacher, Headteacher, Deputy headteacher, Assistant headteacher, " \
+      "Teacher or Lecturer, Headteacher, Deputy headteacher, Assistant headteacher, " \
         "Head of year or phase, Head of department or curriculum, " \
         "Teaching assistant, HLTA (higher level teaching assistant), " \
         "Learning support or cover supervisor, SENCo (special educational needs coordinator), " \

@@ -6,6 +6,24 @@ RSpec.describe Organisation do
   it { is_expected.to have_many(:vacancies) }
   it { is_expected.to have_many(:organisation_vacancies) }
 
+  describe "#college?" do
+    context "when the organisation is a school group" do
+      subject { build(:trust) }
+
+      it "returns false" do
+        expect(subject.fe_college?).to be false
+      end
+    end
+
+    context "when the organisation is a school" do
+      subject { build(:school) }
+
+      it "returns false" do
+        expect(subject.fe_college?).to be false
+      end
+    end
+  end
+
   describe "email validation" do
     it "doesn't validate existing email" do
       org = described_class.new(email: "invalidaaddress")
@@ -235,16 +253,8 @@ RSpec.describe Organisation do
                                          welsh_school])
     end
 
-    it "returns unregistered open in-scope schools" do
-      expect(Organisation.visible_to_jobseekers).to include(open_school)
-    end
-
-    it "returns registered and unregistered trusts" do
-      expect(Organisation.visible_to_jobseekers).to include(registered_trust, unregistered_trust)
-    end
-
     it "does not return closed trusts or closed or out-of-scope schools" do
-      expect(Organisation.visible_to_jobseekers).to contain_exactly(open_school, registered_trust, unregistered_trust)
+      expect(Organisation.visible_to_jobseekers).to contain_exactly(open_school, registered_trust, unregistered_trust, fe_school)
     end
   end
 

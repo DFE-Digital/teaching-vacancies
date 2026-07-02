@@ -125,7 +125,10 @@ module TeachingVacancies
 
     config.enforce_local_authority_allowlist = ActiveModel::Type::Boolean.new.cast(ENV.fetch("ENFORCE_LOCAL_AUTHORITY_ALLOWLIST", nil))
 
-    config.landing_pages = config_for(:landing_pages)
+    fe_config = config_for(:fe_landing_pages)
+    fe_org_type = fe_config[:organisation_type]
+    fe_pages = fe_config.except(:organisation_type).transform_values { |criteria| criteria.merge(organisation_types: [fe_org_type]) }
+    config.landing_pages = config_for(:landing_pages).merge(fe_pages)
     config.campaign_pages = config_for(:campaign_pages)
 
     config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets")

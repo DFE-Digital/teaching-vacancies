@@ -13,7 +13,6 @@ class Organisation < ApplicationRecord
   SPECIAL_SCHOOL_TYPES = ["Community special school", "Foundation special school", "Non-maintained special school", "Academy special converter", "Academy special sponsor led", "Free schools special"].freeze
   NON_FAITH_RELIGIOUS_CHARACTER_TYPES = ["None", "Does not apply"].freeze
   OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES = [
-    "Further education",
     "Other independent school",
     "Online provider",
     "British schools overseas",
@@ -26,8 +25,11 @@ class Organisation < ApplicationRecord
     "Higher education institutions",
     "Welsh establishment",
   ].freeze
+
   CLOSED_ESTABLISHMENT_STATUSES = %w[Closed].freeze
   OPEN_ESTABLISHMENT_STATUSES = ["Open", "Open, but proposed to close", "Proposed to open"].freeze
+  COLLEGE_SCHOOL_TYPE = "Colleges".freeze
+  FE_DETAILED_SCHOOL_TYPE = "Further education".freeze
 
   friendly_id :slug_candidates, use: %i[slugged history]
 
@@ -62,9 +64,14 @@ class Organisation < ApplicationRecord
                   against: :name,
                   using: { tsearch: { prefix: true, tsvector_column: "searchable_content" } }
 
-  scope :not_out_of_scope, -> { where.not(detailed_school_type: Organisation::OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES).or(where(detailed_school_type: nil)) }
+  scope :not_out_of_scope, -> { where.not(detailed_school_type: OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES).or(where(detailed_school_type: nil)) }
 
-  scope :visible_to_jobseekers, -> { schools.not_closed.not_out_of_scope.or(Organisation.trusts_not_closed) }
+  scope :schools_visible_to_jobseekers, -> { schools.kept.not_closed.not_out_of_scope }
+  scope :visible_to_jobseekers, -> { schools_visible_to_jobseekers.or(Organisation.kept.trusts_not_closed) }
+
+  scope :colleges, -> { where(school_type: COLLEGE_SCHOOL_TYPE, detailed_school_type: FE_DETAILED_SCHOOL_TYPE) }
+
+  scope :in_scope_schools, -> { schools.kept.not_out_of_scope.where.not(school_type: COLLEGE_SCHOOL_TYPE).or(Organisation.trusts) }
 
   scope :only_faith_schools, -> { where.not(religious_character: NON_FAITH_RELIGIOUS_CHARACTER_TYPES) }
 
@@ -125,7 +132,7 @@ class Organisation < ApplicationRecord
 
     if local_authority_code && local_authorities_extra_schools
       school_urns = local_authorities_extra_schools[local_authority_code]
-      School.where(urn: school_urns)
+      School.kept.where(urn: school_urns)
     else
       School.none
     end

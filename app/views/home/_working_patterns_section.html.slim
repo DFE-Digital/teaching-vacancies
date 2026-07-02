@@ -1,0 +1,5 @@
+h3.govuk-heading-s = t("home.landing_page_links.working_patterns")
+ul.govuk-list
+  - working_patterns_list.each do |landing_page, working_pattern|
+    - count = working_pattern_counts.fetch(working_pattern.to_sym, 0)
+    li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"

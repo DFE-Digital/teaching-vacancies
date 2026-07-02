@@ -1,0 +1,23 @@
+- content_for :page_title_prefix, "Colleges"
+
+h1 class="govuk-heading-l" role="heading" aria-level="1"
+  = "Colleges (#{number_with_delimiter(@pagy.count)})"
+
+= form_for @search_form, url: url_for, method: :get, html: { data: { controller: "form" }, role: "search" } do |f|
+  .govuk-grid-row
+    .govuk-grid-column-one-third-at-desktop
+      = render "organisations/search/open_filters_button", f: @search_form, school_search: @college_search
+      = render "filters", f: f, school_search: @college_search, search_form: @search_form
+    .govuk-grid-column-two-thirds-at-desktop
+      = render "form", f: f, search_form: @search_form
+
+      #search-results
+        - if @colleges.any?
+          = render "organisations/search/results", schools: @colleges
+        - else
+          = render "wider_search", school_search: @college_search
+
+      = govuk_pagination(pagy: @pagy)
+
+      - if @colleges.any?
+        = render "organisations/search/stats", pagy: @pagy

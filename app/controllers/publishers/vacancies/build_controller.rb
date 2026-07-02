@@ -49,7 +49,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
     return unless step == :job_location && current_organisation.school_group?
 
     schools = current_organisation.local_authority? ? current_publisher_preference.schools : current_organisation.schools
-    @school_options = schools.not_closed.order(:name).map do |school|
+    @school_options = schools.kept.order(:name).map do |school|
       Option.new(id: school.id, name: school.name, address: full_address(school))
     end
 
@@ -73,6 +73,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   def update_vacancy
     updated_completed_steps = completed_steps(steps_to_reset: form.steps_to_reset)
     vacancy.assign_attributes(form.params_to_save.merge(completed_steps: updated_completed_steps))
+    vacancy.geocode_job_address if current_step == :confirm_job_address
     vacancy.refresh_slug
     update_google_index(vacancy) if vacancy.live?
 

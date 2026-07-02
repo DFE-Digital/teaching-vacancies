@@ -27,7 +27,6 @@ module Publishers::DfeSignIn
     OUT_OF_SCOPE_TYPES = {
       "10" => "Other independent special school",
       "11" => "Other independent school",
-      "18" => "Further education",
       "25" => "Offshore schools",
       "26" => "Service children’s education",
       "27" => "Miscellaneous",

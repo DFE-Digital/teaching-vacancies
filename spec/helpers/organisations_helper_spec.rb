@@ -34,6 +34,66 @@ RSpec.describe OrganisationsHelper do
     end
   end
 
+  describe "#organisation_label" do
+    context "when the organisation is a college" do
+      let(:organisation) { build_stubbed(:college) }
+
+      it "returns 'College'" do
+        expect(helper.organisation_label(organisation)).to eq("College")
+      end
+    end
+
+    context "when the organisation is a school" do
+      let(:organisation) { build_stubbed(:school) }
+
+      it "returns 'School'" do
+        expect(helper.organisation_label(organisation)).to eq("School")
+      end
+    end
+
+    context "when the organisation is a trust" do
+      let(:organisation) { build_stubbed(:trust) }
+
+      it "returns 'Organisation'" do
+        expect(helper.organisation_label(organisation)).to eq("Organisation")
+      end
+    end
+  end
+
+  describe "#organisation_type_basic" do
+    context "when the organisation is an FE college" do
+      let(:organisation) { build_stubbed(:college) }
+
+      it "returns 'college'" do
+        expect(helper.organisation_type_basic(organisation)).to eq("college")
+      end
+    end
+
+    context "when the organisation is a school" do
+      let(:organisation) { build_stubbed(:school) }
+
+      it "returns 'school'" do
+        expect(helper.organisation_type_basic(organisation)).to eq("school")
+      end
+    end
+
+    context "when the organisation is a local authority" do
+      let(:organisation) { build_stubbed(:local_authority) }
+
+      it "returns 'local authority'" do
+        expect(helper.organisation_type_basic(organisation)).to eq("local authority")
+      end
+    end
+
+    context "when the organisation is a trust" do
+      let(:organisation) { build_stubbed(:trust) }
+
+      it "returns 'trust'" do
+        expect(helper.organisation_type_basic(organisation)).to eq("trust")
+      end
+    end
+  end
+
   describe "#organisation_type" do
     context "with catholic" do
       let(:organisation) { build_stubbed(:school, :catholic) }
