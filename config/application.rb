@@ -150,5 +150,8 @@ module TeachingVacancies
 
     # enable checking MX records on email addresses by default
     config.strict_mx_validation = true
+
+    # Mission control jobs defaults to HTTP basic auth, but we are securing it ourselves
+    config.mission_control.jobs.http_basic_auth_enabled = false
   end
 end
