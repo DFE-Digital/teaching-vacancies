@@ -63,7 +63,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         - row.with_key
           = t("jobs.document_name")
         - row.with_value
-          = vacancy.application_form.filename.to_s
+          = document_filename(vacancy, vacancy.application_form)
         - row.with_action text: t("buttons.change"),
           href: organisation_job_build_path(vacancy.id, :application_form, "back_to_#{action_name}": "true"),
           visually_hidden_text: t("jobs.document_name")
