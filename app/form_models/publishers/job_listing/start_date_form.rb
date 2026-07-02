@@ -15,7 +15,7 @@ class Publishers::JobListing::StartDateForm < Publishers::JobListing::JobListing
     %i[start_date_type starts_on earliest_start_date latest_start_date other_start_date_details expires_at]
   end
 
-  def self.load_from_params(form_params, vacancy, current_publisher:)
+  def self.load_from_params(form_params, vacancy, _current_publisher:)
     new(form_params.merge(expires_at: vacancy.expires_at))
   end
 
