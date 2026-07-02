@@ -21,6 +21,9 @@ module Referees
 
     steps(*FORMS.keys)
 
+    # so that expired and invalid tokens bounce nicely
+    rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
     def show
       if step != Wicked::FINISH_STEP
         if @reference.can_give_reference == false
