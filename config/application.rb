@@ -153,5 +153,7 @@ module TeachingVacancies
 
     # Mission control jobs defaults to HTTP basic auth, but we are securing it ourselves
     config.mission_control.jobs.http_basic_auth_enabled = false
+    # If Sidekiq is the default adapter, Mission Controll will default to attempt to use Sidekiq and fail.
+    config.mission_control.jobs.adapters = [:solid_queue]
   end
 end
