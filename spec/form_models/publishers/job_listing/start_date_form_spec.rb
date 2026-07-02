@@ -215,6 +215,23 @@ RSpec.describe Publishers::JobListing::StartDateForm, type: :model do
         expect(form.errors.of_kind?(:earliest_start_date, :after)).to be true
       end
     end
+
+    context "when starts_on is on or before the closing date" do
+      let(:form_params) do
+        {
+          start_date_type: "specific_date",
+          "starts_on(1i)" => vacancy.expires_at.year.to_s,
+          "starts_on(2i)" => vacancy.expires_at.month.to_s,
+          "starts_on(3i)" => vacancy.expires_at.day.to_s,
+        }
+      end
+
+      it "is invalid with a closing date error" do
+        form = described_class.load_from_params(form_params, vacancy, current_publisher: nil)
+        expect(form).to be_invalid
+        expect(form.errors.of_kind?(:starts_on, :after)).to be true
+      end
+    end
   end
 
   describe "other_start_date_details" do
