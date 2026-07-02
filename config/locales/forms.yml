@@ -230,7 +230,7 @@ en:
         warning_text_html: When you select ‘Save and continue’ below, you agree to share your email address with the recipient. They will be able to view your email address when we send them <a href="https://teaching-vacancies.service.gov.uk/get-help-hiring/how-to-setup-your-account/how-to-request-organisation-access" class="govuk-link">guidance on how to set up their account</a>.
         contact_details: Contact details
       publishers_job_listing_documents_form:
-        documents: You can only upload PDF or DOCX files under 20MB, You can upload multiple files at the same time.
+        documents: You can only upload PDF, DOC or DOCX files under 20MB, You can upload multiple files at the same time.
       publishers_job_listing_documents_confirmation_form:
         upload_additional_document: Jobseekers can only upload one file when applying. If an application form is required, only include additional documents here that do not need to be submitted as part of their application.
       publishers_job_listing_feedback_form:
