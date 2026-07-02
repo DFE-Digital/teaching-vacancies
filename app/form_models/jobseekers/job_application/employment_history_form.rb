@@ -12,18 +12,20 @@ module Jobseekers
         end
 
         def unstorable_fields
-          %i[unexplained_employment_gaps employment_history_section_completed employments]
+          %i[unexplained_employment_gaps employment_history_section_completed employments qualifications]
         end
 
         def load_form(model)
           super.merge(employments: model.employments,
-                      unexplained_employment_gaps: model.unexplained_employment_gaps)
+                      unexplained_employment_gaps: model.unexplained_employment_gaps,
+                      qualifications: model.qualifications)
                .merge(completed_attrs(model, :employment_history))
         end
       end
-      attr_accessor(:unexplained_employment_gaps, :employments)
+      attr_accessor(:unexplained_employment_gaps, :employments, :qualifications, :education_gap)
 
       validate :employment_history_gaps_are_explained, if: -> { employment_history_section_completed }
+      validate :education_gap_is_explained, if: -> { employment_history_section_completed }
 
       validate :employment_records_are_all_valid
 
@@ -37,6 +39,15 @@ module Jobseekers
         unexplained_employment_gaps.each_value do |details|
           gap_duration = distance_of_time_in_words(details[:started_on], details[:ended_on] || Time.zone.today)
           errors.add(:unexplained_employment_gaps, "You have a gap in your work history (#{gap_duration}).")
+        end
+      end
+
+      def education_gap_is_explained
+        latest_qual_year = qualifications.select(&:finished_studying?).filter_map(&:year).max
+        first_job_year = employments.select(&:job?).filter_map(&:started_on).min&.year
+
+        if latest_qual_year && first_job_year && latest_qual_year < first_job_year && employments.none?(&:education_gap?)
+          errors.add(:education_gap, :missing)
         end
       end
 

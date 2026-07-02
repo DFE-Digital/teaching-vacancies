@@ -19,7 +19,25 @@
   p.govuk-body
     = govuk_button_link_to t("buttons.add_work_history"), new_jobseekers_job_application_employment_path(job_application), class: "govuk-button--secondary govuk-!-margin-bottom-10 employment-gap-buttons"
     = govuk_button_link_to t("buttons.add_gap"), new_jobseekers_job_application_break_path(job_application), class: "govuk-button--secondary govuk-!-margin-bottom-10 employment-gap-buttons"
-    hr.govuk-section-break.govuk-section-break--visible
+
+  h2.govuk-heading-l#education-gap-section = t(".education_gap_section.heading")
+  p.govuk-body = t(".education_gap_section.description")
+  - if (education_gaps = job_application.employments.education_gap).any?
+    - education_gaps.each do |gap|
+      = govuk_inset_text do
+        h2.govuk-heading-s class="govuk-!-margin-bottom-1" = t(".education_gap")
+        p.govuk-body class="govuk-!-margin-bottom-0" = gap.reason_for_break
+        p.govuk-hint class="govuk-!-margin-top-0 govuk-!-margin-bottom-1" #{gap.started_on.to_fs(:month_year)} to #{gap.ended_on.to_fs(:month_year)}
+        = govuk_link_to edit_jobseekers_job_application_education_gap_path(job_application, gap), class: "govuk-link--no-visited-state govuk-!-margin-right-3"
+          = t("buttons.change")
+          span.govuk-visually-hidden = " #{t('.education_gap')} #{gap.started_on} to #{gap.ended_on}"
+        = govuk_link_to jobseekers_job_application_education_gap_confirm_destroy_path(job_application, gap)
+          = t("buttons.delete")
+          span.govuk-visually-hidden = " #{t('.education_gap')} #{gap.started_on} to #{gap.ended_on}"
+  - unless education_gaps.any?
+    p.govuk-body
+      = govuk_button_link_to t("buttons.add_education_gap"), new_jobseekers_job_application_education_gap_path(job_application), class: "govuk-button--secondary govuk-!-margin-bottom-10 employment-gap-buttons"
+  hr.govuk-section-break.govuk-section-break--visible
 
   - if employments.any?
     - employments.reverse_each do |employment|

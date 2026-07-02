@@ -42,7 +42,7 @@
             - row.with_key text: t("helpers.label.jobseekers_job_application_details_employment_form.reason_for_leaving")
             - row.with_value text: employment.reason_for_leaving
 
-      - elsif employment.break?
+      - elsif employment.break? || employment.education_gap?
         = render "jobseekers/job_applications/explained_employment_break", employment: employment, index: index
 
       - if (gap = job_application.unexplained_employment_gaps[employment]).present?

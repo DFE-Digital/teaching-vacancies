@@ -20,6 +20,15 @@ FactoryBot.define do
       employment_type { :break }
     end
 
+    factory :education_gap do
+      employment_type { :education_gap }
+      organisation { nil }
+      job_title { nil }
+      main_duties { nil }
+      reason_for_leaving { nil }
+      reason_for_break { Faker::Lorem.sentence }
+    end
+
     trait :current_role do
       is_current_role { true }
       ended_on { nil }

@@ -9,6 +9,22 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
   after { logout }
 
+  describe "viewing a job application with an education gap" do
+    let(:job_application) { create(:job_application, :status_submitted, vacancy:) }
+    let!(:education_gap) { create(:education_gap, job_application: job_application) }
+
+    it "displays the education gap in the work history section" do
+      visit organisation_job_job_application_path(vacancy.id, job_application.id)
+
+      within ".review-component__section", text: I18n.t("jobseekers.job_applications.show.employment_history.heading") do
+        expect(page).to have_content(I18n.t("jobseekers.job_applications.build.employment_history.education_gap"))
+        expect(page).to have_content(education_gap.reason_for_break)
+        expect(page).to have_content(education_gap.started_on.to_fs(:month_year))
+        expect(page).to have_content(education_gap.ended_on.to_fs(:month_year))
+      end
+    end
+  end
+
   describe "through job application page actions" do
     let(:job_application) { create(:job_application, :status_submitted, vacancy:) }
 
