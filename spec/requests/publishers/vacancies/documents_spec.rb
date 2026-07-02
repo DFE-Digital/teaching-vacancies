@@ -105,6 +105,20 @@ RSpec.describe "Documents" do
         end
       end
 
+      context "with a valid legacy Word document (.doc)" do
+        # This makes sure we don't have a regression - legacy .doc files are OLE Compound Files,
+        # and MIME detection can identify them as the generic "application/x-ole-storage"
+        # container type rather than "application/msword" (see
+        # config/initializers/marcel_legacy_office_files.rb), which would otherwise be rejected.
+        let(:file) { fixture_file_upload("mime_types/valid_legacy_word_document.doc") }
+
+        it "is accepted" do
+          expect(response.body).not_to include("has an invalid content type")
+          uploaded_document = vacancy.reload.supporting_documents.find { |document| document.filename.to_s == "valid_legacy_word_document.doc" }
+          expect(uploaded_document.content_type).to eq("application/msword")
+        end
+      end
+
       context "with a file with a valid extension but invalid 'real' MIME type" do
         let(:file) { fixture_file_upload("mime_types/zip_file_pretending_to_be_a_pdf.pdf") }
 
