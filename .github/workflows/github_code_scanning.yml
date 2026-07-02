@@ -37,6 +37,8 @@ jobs:
         $GITHUB_WORKSPACE
 
   google-osv-scan-pr:
+    name: Google OSV Scan - PR/Merge
+    if: ${{ github.event_name == 'pull_request' || github.event_name == 'merge_group' }}
     runs-on: ubuntu-22.04
 
     strategy:
