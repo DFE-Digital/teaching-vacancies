@@ -101,6 +101,10 @@ variable "postgres_enable_high_availability" {
   default     = false
   description = "Deploy postgres as a cluster across multiple availability zones"
 }
+variable "azure_storage_mb" {
+  type    = number
+  default = 32768
+}
 variable "redis_cache_capacity" {
   default     = 1
   description = "The size of the Redis cache to deploy e.g. 1 for P1"
