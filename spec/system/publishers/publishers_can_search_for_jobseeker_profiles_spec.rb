@@ -89,6 +89,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
 
     it "will allow a publisher to filter the jobseeker profiles" do
       within ".filters-component" do
+        first("summary", text: I18n.t("publishers.jobseeker_profiles.filters.preferred_working_patterns")).click
         check I18n.t("publishers.jobseeker_profiles.filters.working_pattern_options.part_time")
       end
 
@@ -104,8 +105,13 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
     context "when filters are selected" do
       before do
         within ".filters-component" do
+          first("summary", text: I18n.t("publishers.jobseeker_profiles.filters.preferred_working_patterns")).click
           check I18n.t("publishers.jobseeker_profiles.filters.working_pattern_options.part_time")
+
+          first("summary", text: I18n.t("publishers.jobseeker_profiles.filters.preferred_key_stages")).click
           check I18n.t("publishers.jobseeker_profiles.filters.key_stage_options.ks5")
+
+          first("summary", text: I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk")).click
           check I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.true")
         end
 
