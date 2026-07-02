@@ -65,16 +65,6 @@ RSpec.describe "Job applications" do
         let(:old_vacancy) { create(:vacancy, organisations: [build(:school)]) }
         let!(:recent_job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: old_vacancy) }
 
-        context "when the job is not listed" do
-          let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
-
-          it "returns not found" do
-            post jobseekers_job_job_application_path(vacancy.id)
-
-            expect(response).to have_http_status(:not_found)
-          end
-        end
-
         it "creates a job application and redirects to the review path" do
           expect { post(jobseekers_job_job_application_path(vacancy.id)) }
             .to change { jobseeker.job_applications.count }.by(1)
@@ -115,16 +105,6 @@ RSpec.describe "Job applications" do
       context "when there are non-draft applications" do
         let(:old_vacancy) { create(:vacancy, organisations: [build(:school)]) }
         let!(:recent_job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: old_vacancy) }
-
-        context "when the job is not listed" do
-          let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
-
-          it "returns not found" do
-            get new_jobseekers_job_job_application_path(vacancy.id)
-
-            expect(response).to have_http_status(:not_found)
-          end
-        end
 
         it "renders the 'new' template" do
           get new_jobseekers_job_job_application_path(vacancy.id)

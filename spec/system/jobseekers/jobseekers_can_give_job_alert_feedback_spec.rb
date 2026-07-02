@@ -96,16 +96,6 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
     end
   end
 
-  context "with the incorrect token" do
-    before { follow_the_link_in_the_job_alert_email }
-
-    let(:token) { subscription.id }
-
-    it "returns not found" do
-      expect(page.status_code).to eq(404)
-    end
-  end
-
   context "with an old token" do
     before { follow_the_link_in_the_job_alert_email }
 

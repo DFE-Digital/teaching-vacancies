@@ -14,8 +14,6 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception, except: :not_found
 
-  rescue_from ActiveRecord::RecordNotFound, with: :not_found
-
   before_action :set_sentry_user
   before_action :redirect_to_canonical_domain, :set_headers
   before_action { EventContext.dfe_analytics_request_event = dfe_analytics_request_event }

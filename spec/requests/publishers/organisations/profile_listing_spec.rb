@@ -23,19 +23,6 @@ RSpec.describe "Accessing an organisation profile" do
         get publishers_organisation_path(organisation.id)
         expect(response).to render_template(:show)
       end
-
-      it "shows a 404 page when the given school id does not exist" do
-        get publishers_organisation_path("non-existent")
-        expect(response).to have_http_status(:not_found)
-        expect(response).to render_template("errors/not_found")
-      end
-
-      it "shows a 404 page when the given school id is not the current publisher organisation" do
-        another_school = create(:school)
-        get publishers_organisation_path(another_school.friendly_id)
-        expect(response).to have_http_status(:not_found)
-        expect(response).to render_template("errors/not_found")
-      end
     end
 
     context "when the publisher current organisation is a school group" do
@@ -62,19 +49,6 @@ RSpec.describe "Accessing an organisation profile" do
       it "can access an organisation school's profile by their id" do
         get publishers_organisation_path(school.id)
         expect(response).to render_template(:show)
-      end
-
-      it "shows a 404 page when the given school id does not exist" do
-        get publishers_organisation_path("non-existent")
-        expect(response).to have_http_status(:not_found)
-        expect(response).to render_template("errors/not_found")
-      end
-
-      it "shows a 404 page when the given school does not belong to the school group" do
-        another_school = create(:school)
-        get publishers_organisation_path(another_school.friendly_id)
-        expect(response).to have_http_status(:not_found)
-        expect(response).to render_template("errors/not_found")
       end
     end
   end

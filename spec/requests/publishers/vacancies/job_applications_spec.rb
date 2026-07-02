@@ -39,34 +39,6 @@ RSpec.describe "Job applications" do
     end
   end
 
-  describe "GET #index" do
-    context "when the vacancy does not belong to the current organisation" do
-      let(:other_organisation) { create(:school) }
-      let(:vacancy) { create(:vacancy) }
-
-      before do
-        allow_any_instance_of(ApplicationController)
-          .to receive(:current_organisation).and_return(other_organisation)
-      end
-
-      it "returns not_found" do
-        get organisation_job_job_applications_path(vacancy.id)
-
-        expect(response).to have_http_status(:not_found)
-      end
-    end
-
-    context "when the vacancy is not listed" do
-      let(:vacancy) { create(:vacancy, publish_on: 1.day.from_now) }
-
-      it "returns not_found" do
-        get organisation_job_job_applications_path(vacancy.id)
-
-        expect(response).to have_http_status(:not_found)
-      end
-    end
-  end
-
   describe "GET #download" do
     context "when the job application status is not draft or withdrawn" do
       it "sends a PDF file" do

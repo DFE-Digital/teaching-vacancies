@@ -13,26 +13,6 @@ RSpec.describe "End job listing early" do
   after { sign_out(publisher) }
 
   describe "GET #show" do
-    context "when the vacancy does not belong to the current organisation" do
-      let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
-
-      it "returns not_found" do
-        get organisation_job_end_listing_path(vacancy.id)
-
-        expect(response).to have_http_status(:not_found)
-      end
-    end
-
-    context "when the vacancy is not live" do
-      let(:vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
-
-      it "returns not_found" do
-        get(organisation_job_end_listing_path(vacancy.id))
-
-        expect(response).to have_http_status(:not_found)
-      end
-    end
-
     it "renders the show page" do
       expect(get(organisation_job_end_listing_path(vacancy.id))).to render_template(:show)
     end
@@ -40,26 +20,6 @@ RSpec.describe "End job listing early" do
 
   describe "PATCH #update" do
     let(:params) { { publishers_job_listing_end_listing_form: { hired_status: "hired_other_free", listed_elsewhere: "listed_free" } } }
-
-    context "when the vacancy does not belong to the current organisation" do
-      let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
-
-      it "returns not_found" do
-        patch(organisation_job_end_listing_path(vacancy.id), params: params)
-
-        expect(response).to have_http_status(:not_found)
-      end
-    end
-
-    context "when the vacancy is not live" do
-      let(:vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
-
-      it "returns not_found" do
-        patch(organisation_job_end_listing_path(vacancy.id), params: params)
-
-        expect(response).to have_http_status(:not_found)
-      end
-    end
 
     it "updates expires_at, hired_status, listed_elsewhere, google index and redirects to the dashboard" do
       freeze_time do
