@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UpdateSingleDSIUserInDbJob < SidekiqJob
+class UpdateSingleDSIUserInDbJob < SolidQueueJob
   queue_as :low
 
   # Race conditions may result in validation failures due to duplicates
