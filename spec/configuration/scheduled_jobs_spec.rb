@@ -37,8 +37,10 @@ RSpec.describe "Scheduled jobs configuration" do
       SolidQueueJob
     ]
   end
+  # TODO: this is temporary until we move all scheduled jobs to solid queue
+  let(:solid_queue_jobs) { %w[AggregateVacancyReferrerStatsJob] }
 
   it "includes all scheduled jobs in the schedule" do
-    expect(scheduled_jobs).to match_array(all_app_jobs + gem_jobs - unscheduled_jobs)
+    expect(scheduled_jobs).to match_array(all_app_jobs + gem_jobs - unscheduled_jobs - solid_queue_jobs)
   end
 end

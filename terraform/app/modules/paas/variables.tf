@@ -75,6 +75,7 @@ variable "enable_postgres_ssl" {
 
 variable "postgres_flexible_server_sku" {}
 variable "postgres_enable_high_availability" {}
+variable "azure_storage_mb" {}
 variable "redis_cache_capacity" {}
 variable "redis_cache_family" {}
 variable "redis_cache_sku_name" {}
