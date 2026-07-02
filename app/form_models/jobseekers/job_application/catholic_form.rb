@@ -35,7 +35,12 @@ module Jobseekers
         validates :baptism_date, date: { on_or_before: :today }
       end
 
-      with_options if: -> { section_completed && following_religion && religious_reference_type == "baptism_certificate" } do
+      # Deliberately NOT gated on section_completed (unlike the baptism_date group above): a jobseeker
+      # can delete an already-attached certificate via BaptismCertificatesController#destroy without
+      # touching religious_reference_type. If presence were only checked on complete, they could save the
+      # step as "incomplete" and leave religious_reference_type == "baptism_certificate" with no file
+      # attached, which crashes the review page when it tries to read the (nonexistent) attachment's blob.
+      with_options if: -> { following_religion && religious_reference_type == "baptism_certificate" } do
         validates :baptism_certificate, form_file: Vacancy::DOCUMENT_VALIDATION_OPTIONS, presence: true
         # Files awaiting an antivirus scan are allowed to progress through the wizard steps so jobseekers can complete other steps.
         # Pending files are blocked at submit time in the review form.

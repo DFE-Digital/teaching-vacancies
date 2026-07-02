@@ -171,6 +171,29 @@ RSpec.describe "Jobseekers can complete a religious job application" do
               expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :catholic))
               expect(job_application.reload.baptism_certificate.attached?).to be false
             end
+
+            scenario "the jobseeker cannot leave the step with baptism certificate selected but no file attached" do
+              complete_from_references_page
+              within("#catholic") { click_on "Change" }
+              click_on I18n.t("buttons.delete")
+              choose "No, I'll come back to it later"
+              click_on I18n.t("buttons.save")
+
+              expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :catholic))
+              expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/catholic_form.attributes.baptism_certificate.blank"))
+            end
+
+            scenario "the review page does not crash after the jobseeker deletes the baptism certificate and chooses a different reference type" do
+              complete_from_references_page
+              within("#catholic") { click_on "Change" }
+              click_on I18n.t("buttons.delete")
+              find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-no-religious-referee-field']").click
+              choose "No, I'll come back to it later"
+              click_on I18n.t("buttons.save")
+
+              expect(page).to have_current_path(jobseekers_job_application_review_path(job_application))
+              expect(page).to have_no_content("blank_baptism_cert.pdf")
+            end
           end
         end
 
