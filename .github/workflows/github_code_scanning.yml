@@ -42,4 +42,5 @@ jobs:
     with:
       scan-args: |-
         --recursive
+        --output-file old-results.json
         ./
