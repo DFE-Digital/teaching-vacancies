@@ -258,7 +258,7 @@ RSpec.describe "Publisher authentication" do
         visit new_publisher_session_path
         sign_in_publisher
         expect(page.status_code).to eq(403) # Forbidden
-        expect(page).to have_content("You are trying to sign in to Teaching Vacancies on behalf of FooBar organisation. This establishment is registered with Teaching Vacancies.")
+        expect(page).to have_content("You are trying to sign in to Teaching Vacancies on behalf of FooBar organisation. This establishment is not registered with Teaching Vacancies.")
       end
     end
 
