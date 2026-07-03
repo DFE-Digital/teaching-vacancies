@@ -8,7 +8,7 @@ RSpec.describe "Scheduled jobs configuration" do
     ApplicationJob.descendants.map(&:name)
   end
   let(:gem_jobs) { %w[DfE::Analytics::Jobs::EntityTableCheckJob] }
-  let(:scheduled_jobs) { YAML.load_file("./config/schedule.yml").map { |_, v| v["class"] }.uniq.compact }
+  let(:scheduled_jobs) { YAML.load_file("./config/schedule.yml").fetch("production").values.pluck("class").uniq.compact }
   let(:unscheduled_jobs) do
     %w[
       AlertEmail::Base
@@ -28,14 +28,13 @@ RSpec.describe "Scheduled jobs configuration" do
       SetSubscriptionLocationDataJob
       UpdateSingleDSIUserInDbJob
       FetchMalwareScanResultJob
-      SidekiqJob
       SolidQueueJob
+      SendJobAlertsJob
+      SidekiqJob
     ]
   end
-  # TODO: this is temporary until we move all scheduled jobs to solid queue
-  let(:solid_queue_jobs) { %w[AggregateVacancyReferrerStatsJob SendJobAlertsJob SendDailyAlertEmailJob SendWeeklyAlertEmailJob] }
 
   it "includes all scheduled jobs in the schedule" do
-    expect(scheduled_jobs).to match_array(all_app_jobs + gem_jobs - unscheduled_jobs - solid_queue_jobs)
+    expect(scheduled_jobs).to match_array(all_app_jobs + gem_jobs - unscheduled_jobs)
   end
 end

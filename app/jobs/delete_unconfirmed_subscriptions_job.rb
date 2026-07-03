@@ -1,4 +1,4 @@
-class DeleteUnconfirmedSubscriptionsJob < SidekiqJob
+class DeleteUnconfirmedSubscriptionsJob < SolidQueueJob
   queue_as :low
 
   def perform

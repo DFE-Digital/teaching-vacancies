@@ -1,4 +1,4 @@
-class RefreshOrganisationsGiasDataHashJob < SidekiqJob
+class RefreshOrganisationsGiasDataHashJob < SolidQueueJob
   def perform
     Organisation.find_each(&:refresh_gias_data_hash)
   end

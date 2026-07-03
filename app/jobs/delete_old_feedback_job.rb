@@ -1,4 +1,4 @@
-class DeleteOldFeedbackJob < SidekiqJob
+class DeleteOldFeedbackJob < SolidQueueJob
   queue_as :default
 
   def perform
