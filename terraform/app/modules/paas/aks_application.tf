@@ -106,7 +106,7 @@ module "solid_queue_worker" {
   run_as_non_root            = var.run_as_non_root
 
   docker_image   = var.app_docker_image
-  command        = ["/bin/sh", "-c", "bin/jobs --skip-recurring"]
+  command        = ["/bin/sh", "-c", "bin/jobs"]
   max_memory     = var.aks_worker_app_memory
   replicas       = var.aks_worker_app_instances
   enable_logit   = var.enable_logit

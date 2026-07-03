@@ -1,10 +1,7 @@
 $govuk-global-styles: true;
-$govuk-new-link-styles: true;
 $govuk-assets-path: '/';
 
-@forward '@ministryofjustice/frontend/moj/all';
-
-// External dependencioes
+// External dependencies
 @import 'accessible-autocomplete/dist/accessible-autocomplete.min';
 @import 'dfe-frontend/packages/dfefrontend';
 @import 'govuk-frontend/dist/govuk/index';
@@ -79,6 +76,7 @@ $govuk-assets-path: '/';
 @import 'js_components/loadingIndicator';
 @import 'js_components/locationFinder';
 @import 'js_components/manageQualifications';
+@import 'js_components/multiSelect';
 @import 'js_components/panel';
 @import 'js_components/uploadDocuments';
 
