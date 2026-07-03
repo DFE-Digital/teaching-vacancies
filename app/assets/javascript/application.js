@@ -39,6 +39,7 @@ import ShowHiddenContentController from './js_components/showHiddenContent/showH
 import TrackedLinkController from './js_components/trackedLink/trackedLink';
 import UtilsController from './js_components/utils';
 import WordCounterController from './js_components/wordCounter/wordCounter';
+import DisableUploadsController from './js_components/disableUploads';
 
 import './clarity_cookies';
 
@@ -80,6 +81,7 @@ application.register('show-hidden-content', ShowHiddenContentController);
 application.register('tracked-link', TrackedLinkController);
 application.register('utils', UtilsController);
 application.register('word-counter', WordCounterController);
+application.register('disable-uploads', DisableUploadsController);
 
 Rails.start();
 ActiveStorage.start();

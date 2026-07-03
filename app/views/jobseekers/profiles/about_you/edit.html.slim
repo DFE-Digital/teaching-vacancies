@@ -16,7 +16,7 @@
         li.govuk-list-item = item
 
     = tag.div class: "about-you-form", data: { controller: "word-counter", word_counter_max_words_value: "1500" }
-      .govuk-form-group
+      .govuk-form-group data-controller="disable-uploads"
         = f.rich_text_area :about_you, aria: { label: t("helpers.label.jobseekers_profile_about_you_form.about_you") }, data: { word_counter_target: "editor" }
         noscript
           = f.govuk_text_area :about_you, label: { size: "s" }, max_words: 1500, rows: 11
