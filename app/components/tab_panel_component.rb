@@ -26,7 +26,7 @@ class TabPanelComponent < ApplicationComponent
 
   def govuk_table_args
     if @form.present?
-      { html_attributes: { data: { module: "moj-multi-select", id_prefix: "id_all_#{@tab_name}-" } } }
+      { html_attributes: { data: { controller: "multi-select", id_prefix: "id_all_#{@tab_name}-" } } }
     else
       {}
     end

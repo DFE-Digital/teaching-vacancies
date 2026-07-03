@@ -24,8 +24,8 @@ RSpec.describe TabPanelComponent, type: :component do
       expect(tab_panel.find("form")["method"]).to eq("get")
     end
 
-    it "table has moj multi select attributes" do
-      expect(tab_panel.find("table")["data-module"]).to eq("moj-multi-select")
+    it "table has multi select attributes" do
+      expect(tab_panel.find("table")["data-controller"]).to eq("multi-select")
     end
 
     it "has buttons" do
