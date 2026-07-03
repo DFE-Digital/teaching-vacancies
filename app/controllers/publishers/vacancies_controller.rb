@@ -63,6 +63,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
 
   def review
     @vacancy = vacancy.decorate
+    @step_process = step_process
   end
 
   def use_template

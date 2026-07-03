@@ -2,7 +2,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
   = t("publishers.vacancies.build.application_process.step_title")
 
 = govuk_summary_list(html_attributes: { id: "application_process" }) do |summary_list|
-  - unless current_organisation.group_type == "local_authority" && vacancy.enable_job_applications.nil?
+  - if [true, false].include?(vacancy.enable_job_applications) && step_process.steps.include?(:applying_for_the_job)
     - summary_list.with_row(html_attributes: { id: "enable_job_applications" }) do |row|
       - row.with_key
         = t("jobs.enable_job_applications")
@@ -14,14 +14,15 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                     visually_hidden_text: t("jobs.enable_job_applications")
 
   - if vacancy.enable_job_applications == false && vacancy.receive_applications.present?
-    - summary_list.with_row(html_attributes: { id: "receive_applications" }) do |row|
-      - row.with_key
-        = t("jobs.how_to_receive_applications")
-      - row.with_value
-        = t("helpers.label.publishers_job_listing_how_to_receive_applications_form.receive_applications_options.#{vacancy.receive_applications}")
-      - row.with_action text: t("buttons.change"),
-                  href: organisation_job_build_path(vacancy.id, :how_to_receive_applications, "back_to_#{action_name}": "true"),
-                  visually_hidden_text: t("jobs.how_to_receive_applications")
+    - if step_process.steps.include? :how_to_receive_applications
+      - summary_list.with_row(html_attributes: { id: "receive_applications" }) do |row|
+        - row.with_key
+          = t("jobs.how_to_receive_applications")
+        - row.with_value
+          = t("helpers.label.publishers_job_listing_how_to_receive_applications_form.receive_applications_options.#{vacancy.receive_applications}")
+        - row.with_action text: t("buttons.change"),
+                    href: organisation_job_build_path(vacancy.id, :how_to_receive_applications, "back_to_#{action_name}": "true"),
+                    visually_hidden_text: t("jobs.how_to_receive_applications")
     / legacy type - no longer supported on creation
     - if vacancy.email?
       - if vacancy.application_form.attachments&.any?
