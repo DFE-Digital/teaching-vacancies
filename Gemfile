@@ -150,7 +150,7 @@ gem "turbo-rails"
 gem "validate_url"
 # Used to validate email addresses
 gem "valid_email2"
-gem "view_component", "~> 4.6.0"
+gem "view_component"
 gem "wicked"
 gem "xml-sitemap"
 # Zendesk support integration
