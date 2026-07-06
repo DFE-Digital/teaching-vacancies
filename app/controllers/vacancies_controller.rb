@@ -16,6 +16,7 @@ class VacanciesController < ApplicationController
     trigger_search_performed_event
   end
 
+  # rubocop:disable Metrics/AbcSize
   def show
     if session[:newly_created_user]
       @newly_created_user = true
@@ -30,6 +31,7 @@ class VacanciesController < ApplicationController
     @similar_jobs = Search::SimilarJobs.new(vacancy).similar_jobs
     @vacancy = vacancy.decorate
   end
+  # rubocop:enable Metrics/AbcSize
 
   def campaign_landing_page
     @campaign_page = CampaignPage[params[:utm_content]]
@@ -61,6 +63,7 @@ class VacanciesController < ApplicationController
     params.permit(:keyword, :previous_keyword, :organisation_slug, :location, :radius, :subject, :sort_by, teaching_job_roles: [], support_job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [], quick_apply: [], organisation_types: [], school_types: [], visa_sponsorship_availability: [])
   end
 
+  # rubocop:disable Metrics/AbcSize
   def set_landing_page
     if params[:job_role_landing_page_name].present? && params[:location_landing_page_name].present?
       @landing_page = JobRoleLocationLandingPage[params[:job_role_landing_page_name], params[:location_landing_page_name]]
@@ -72,6 +75,7 @@ class VacanciesController < ApplicationController
       @landing_page = LocationLandingPage[params[:location_landing_page_name]]
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def set_headers
     if params[:landing_page_slug] == "teaching-assistant-jobs-v2"

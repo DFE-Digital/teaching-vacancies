@@ -1,8 +1,7 @@
 class Publishers::Vacancies::PublishController < Publishers::Vacancies::WizardBaseController
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   before_action :set_vacancy
 
-  def create
+  def create # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
     if vacancy.published?
       redirect_to organisation_job_path(vacancy.id), notice: t("messages.jobs.already_published")
     elsif (not_safe_blobs = vacancy.unsafe_blobs).any?
@@ -31,5 +30,4 @@ class Publishers::Vacancies::PublishController < Publishers::Vacancies::WizardBa
       redirect_to organisation_job_path(vacancy.id)
     end
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 end

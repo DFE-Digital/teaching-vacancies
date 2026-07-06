@@ -160,10 +160,12 @@ Rails/BulkChangeTable:
 # We should consider slowly moving closer to the default settings.
 
 Metrics/AbcSize:
-  Max: 31 # Default 17
+  Max: 29 # Default 17
   Exclude:
     - "config/**/*"
     - "spec/**/*"
+    - "db/migrate/*"
+    - "app/services/vacancies/import/sources/*"
 
 Metrics/BlockLength:
   Exclude:
@@ -172,21 +174,25 @@ Metrics/BlockLength:
     - "Guardfile"
 
 Metrics/CyclomaticComplexity:
-  Max: 18 # Default 7
+  Max: 9 # Default 7
   Exclude:
     - "spec/**/*"
+    - "app/services/vacancies/import/sources/*"
 
 Metrics/MethodLength:
   Max: 19 # Default 10
   Exclude:
     - "config/**/*"
     - "spec/**/*"
+    - "app/services/vacancies/import/sources/*"
 
 Metrics/ClassLength:
-  Max: 194
+  Max: 150
   Exclude:
     - "config/**/*"
     - "spec/**/*"
+    - "db/migrate/*"
+    - "app/services/vacancies/import/sources/*"
 
 Metrics/ModuleLength:
   Exclude:
@@ -197,9 +203,10 @@ Metrics/ParameterLists:
   Max: 7 # Default 5
 
 Metrics/PerceivedComplexity:
-  Max: 18 # Default 8
+  Max: 9 # Default 8
   Exclude:
     - "spec/**/*"
+    - "app/services/vacancies/import/*"
 
 Custom/RakeTaskInvoke:
   Enabled: true

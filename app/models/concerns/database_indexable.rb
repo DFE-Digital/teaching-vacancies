@@ -19,7 +19,7 @@ module DatabaseIndexable
     self.searchable_content = generate_searchable_content
   end
 
-  def generate_searchable_content # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+  def generate_searchable_content # rubocop:disable Metrics/AbcSize,Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     # For now, this configuration mirrors the current Algolia ranking as closely as possible
     # `job_title` and `subject` are used for ranking (and weighted with 'A' here, the other
     # searchable fields get the lowest possible 'D' weight)

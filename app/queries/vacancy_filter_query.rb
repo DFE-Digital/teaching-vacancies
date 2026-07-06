@@ -6,7 +6,7 @@ class VacancyFilterQuery
   end
 
   # TODO: Refactor this to be cleaner - e.g. moving from/to_date into their own scope
-  def call(filters) # rubocop:disable Metrics/AbcSize
+  def call(filters) # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
     from_date = filters[:from_date]&.to_time
     to_date = filters[:to_date]&.to_time
 

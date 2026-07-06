@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class SubscriptionsController < ApplicationController
   include ReturnPathTracking
   include RecaptchaChecking
@@ -230,3 +231,4 @@ class SubscriptionsController < ApplicationController
     params[:search_criteria] && search_criteria_params[:organisation_slug].present?
   end
 end
+# rubocop:enable Metrics/ClassLength

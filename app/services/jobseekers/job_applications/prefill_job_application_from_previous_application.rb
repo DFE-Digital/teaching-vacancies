@@ -22,6 +22,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
 
   attr_reader :jobseeker, :new_job_application
 
+  # rubocop:disable Metrics/AbcSize
   def copy_personal_info
     attributes = attributes_to_copy
     if attributes.include? :baptism_certificate
@@ -38,6 +39,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
       new_job_application.assign_attributes(recent_job_application.slice(*attributes))
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def attributes_to_copy
     (relevant_steps - %i[review declarations equal_opportunities])

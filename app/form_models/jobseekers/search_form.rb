@@ -122,7 +122,7 @@ class Jobseekers::SearchForm
     @subject_options = VACANCY_SEARCH_SUBJECT_OPTIONS
   end
 
-  def set_filter_variables(params)
+  def set_filter_variables(params) # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
     @keyword = params[:keyword] || params[:subject]
     @landing_page = params[:landing_page]
     @visa_sponsorship_availability = params[:visa_sponsorship_availability] || []

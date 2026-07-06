@@ -143,6 +143,7 @@ class JobApplicationPdf
     end
   end
 
+  # rubocop:disable Metrics/AbcSize
   def referees
     return no_data_available(I18n.t("jobseekers.job_applications.show.employment_history.none")) if job_application.referees.none?
 
@@ -166,6 +167,7 @@ class JobApplicationPdf
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def ask_for_support
     @ask_for_support ||= table_class[
@@ -443,8 +445,7 @@ class JobApplicationPdf
     doc.children.map { |child| process_node(child) }.join.strip
   end
 
-  # rubocop:disable Metrics/MethodLength
-  def process_node(node)
+  def process_node(node) # rubocop:disable Metrics/MethodLength,Metrics/CyclomaticComplexity
     return "" if node.nil?
 
     if node.element?
@@ -471,6 +472,5 @@ class JobApplicationPdf
       node.text
     end
   end
-  # rubocop:enable Metrics/MethodLength
 end
 # rubocop:enable Metrics/ClassLength

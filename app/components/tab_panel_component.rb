@@ -121,7 +121,7 @@ class TabPanelComponent < ApplicationComponent
     end
   end
 
-  def sort_candidates(candidates, tab_name)
+  def sort_candidates(candidates, tab_name) # rubocop:disable Metrics/CyclomaticComplexity
     case tab_name
     when "interviewing"
       candidates.sort_by { |candidate| [candidate.interviewing_at.nil? ? 0 : 1, candidate.interviewing_at] }
