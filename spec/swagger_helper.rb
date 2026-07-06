@@ -225,7 +225,7 @@ RSpec.configure do |config|
                     format: :datetime,
                     example: "2026-04-13T15:30:00",
                     description: "The end datetime of the vacancy in <a href='https://en.wikipedia.org/wiki/ISO_8601'>ISO 8601</a> format." \
-                                 "<br>Must be after the start date." \
+                                 "<br>Must be after the publish date." \
                                  "<br>Main example without timezone designator (recommended):" \
                                  "<ul><li>2026-04-13T15:30:00</li>" \
                                  "<li>When using this format, the datetime is interpreted in UK time (Europe/London) for the given date, with GMT/BST applied automatically as appropriate.</li></ul>" \
