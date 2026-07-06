@@ -15,6 +15,12 @@ class Publishers::JobListing::StartDateForm < Publishers::JobListing::JobListing
     %i[start_date_type starts_on earliest_start_date latest_start_date other_start_date_details expires_at]
   end
 
+  # rubocop:disable Lint/UnusedMethodArgument
+  def self.load_from_params(form_params, vacancy, current_publisher:)
+    new(form_params.merge(expires_at: vacancy.expires_at))
+  end
+  # rubocop:enable Lint/UnusedMethodArgument
+
   def params_to_save
     {
       start_date_type: start_date_type,
