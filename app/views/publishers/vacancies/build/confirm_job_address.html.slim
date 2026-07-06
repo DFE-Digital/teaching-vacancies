@@ -1,0 +1,41 @@
+- content_for :page_title_prefix, page_title_prefix(step_process, form)
+
+= form_for form, url: wizard_path(current_step), method: :patch do |f|
+  = f.govuk_error_summary
+
+  = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
+
+  p.govuk-body = t(".hint")
+
+  = govuk_inset_text do
+    p.govuk-body
+      strong = t(".default_address_label")
+    - vacancy.organisations.each do |organisation|
+      p.govuk-body = full_address(organisation)
+
+  = f.govuk_fieldset legend: { text: t(".change_address_label"), size: "m" } do
+    = f.govuk_text_field :job_address_line1,
+      label: { text: t(".address_line1") },
+      autocomplete: "address-line1",
+      width: "two-thirds"
+
+    = f.govuk_text_field :job_address_line2,
+      label: { text: t(".address_line2") },
+      autocomplete: "address-line2",
+      width: "two-thirds"
+
+    = f.govuk_text_field :job_address_town,
+      label: { text: t(".town") },
+      autocomplete: "address-level2",
+      width: "two-thirds"
+
+    = f.govuk_text_field :job_address_county,
+      label: { text: t(".county") },
+      width: "two-thirds"
+
+    = f.govuk_text_field :job_address_postcode,
+      label: { text: t(".postcode") },
+      autocomplete: "postal-code",
+      width: "one-quarter"
+
+  = render "publishers/vacancies/vacancy_form_partials/submit", f: f

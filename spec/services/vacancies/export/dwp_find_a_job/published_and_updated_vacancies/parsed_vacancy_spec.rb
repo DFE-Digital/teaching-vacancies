@@ -78,6 +78,14 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated::ParsedVacanc
       it "returns the vacancy school offer info" do
         expect(parsed.description).to eq("What the school offers its staff\n\nSchool offer info")
       end
+
+      context "when the vacancy organisation is a college" do
+        let(:school) { build_stubbed(:college, safeguarding_information: nil) }
+
+        it "uses college wording" do
+          expect(parsed.description).to eq("What the college offers its staff\n\nSchool offer info")
+        end
+      end
     end
 
     context "when the vacancy has further details information" do

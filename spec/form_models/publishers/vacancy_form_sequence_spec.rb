@@ -16,6 +16,7 @@ RSpec.describe Publishers::VacancyFormSequence do
       job_role
       education_phases
       job_title
+      confirm_job_address
       key_stages
       subjects
       contract_information
@@ -90,6 +91,23 @@ RSpec.describe Publishers::VacancyFormSequence do
         it "returns the first invalid dependent step" do
           expect(sequence.next_invalid_step).to eq(:education_phases)
         end
+      end
+    end
+
+    context "when confirm_job_address step is included and has missing fields" do
+      let(:organisation) { create(:college) }
+      let(:vacancy) do
+        create(:draft_vacancy, :secondary, :apply_via_website,
+               school_visits: true,
+               organisations: [organisation],
+               completed_steps: all_steps.map(&:to_s) - %w[review],
+               job_address_town: "Brighton",
+               job_address_postcode: "BN1 1AA",
+               job_address_line1: nil)
+      end
+
+      it "returns confirm_job_address as the next invalid step" do
+        expect(sequence.next_invalid_step).to eq(:confirm_job_address)
       end
     end
   end

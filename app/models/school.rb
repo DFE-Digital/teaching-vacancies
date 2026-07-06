@@ -2,22 +2,18 @@ class School < Organisation
   has_many :school_group_memberships, dependent: :destroy
   has_many :school_groups, through: :school_group_memberships
 
-  scope :not_excluded, -> { where.not(detailed_school_type: OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES) }
-
   validates :urn, uniqueness: true
 
   ACADEMY_TYPE = "Academies".freeze
   LA_SCHOOL_TYPE = "Local authority maintained schools".freeze
   FREE_SCHOOL_TYPE = "Free Schools".freeze
   INDEPENDENT_SCHOOL_TYPE = "Independent schools".freeze
-  COLLEGE_SCHOOL_TYPE = "Colleges".freeze
   ONLINE_SCHOOL_TYPE = "Online provider".freeze
   OTHER_SCHOOL_TYPE = "Other types".freeze
   SPECIAL_SCHOOL_TYPE = "Special schools".freeze
   WELSH_SCHOOL_TYPE = "Welsh schools".freeze
   UNIVERSITY_SCHOOL_TYPE = "Universities".freeze
 
-  FE_DETAILED_SCHOOL_TYPE = "Further education".freeze
   VALID_SCHOOL_TYPES = [LA_SCHOOL_TYPE,
                         INDEPENDENT_SCHOOL_TYPE,
                         SPECIAL_SCHOOL_TYPE,
@@ -34,6 +30,8 @@ class School < Organisation
   validates :school_type, inclusion: { in: VALID_SCHOOL_TYPES, allow_nil: false }
   validates :detailed_school_type, presence: true
   validates :establishment_status, inclusion: { in: CLOSED_ESTABLISHMENT_STATUSES + OPEN_ESTABLISHMENT_STATUSES, allow_nil: false }
+
+  scope :colleges, -> { where(school_type: COLLEGE_SCHOOL_TYPE, detailed_school_type: FE_DETAILED_SCHOOL_TYPE) }
 
   CHRISTIAN_RELIGIOUS_TYPES = ["Anglican",
                                "United Reformed Church",
@@ -115,12 +113,16 @@ class School < Organisation
     if part_of_a_trust?
       org_ids = [trust.id] + trust.schools.pluck(:id)
       PublishedVacancy.joins(:organisation_vacancies)
-            .where(organisation_vacancies: { organisation_id: org_ids })
-            .merge(PublishedVacancy.live)
-            .distinct
+                      .where(organisation_vacancies: { organisation_id: org_ids })
+                      .merge(PublishedVacancy.live)
+                      .distinct
     else
       PublishedVacancy.none
     end
+  end
+
+  def fe_college?
+    school_type == COLLEGE_SCHOOL_TYPE && detailed_school_type == FE_DETAILED_SCHOOL_TYPE
   end
 
   def faith_school?

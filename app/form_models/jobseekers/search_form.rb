@@ -119,7 +119,7 @@ class Jobseekers::SearchForm
     end
     set_organisation_type_options
     @school_type_options = %w[faith_school special_school].map { |school_type| [school_type, I18n.t("organisations.filters.#{school_type}")] }
-    @subject_options = SUBJECT_OPTIONS
+    @subject_options = VACANCY_SEARCH_SUBJECT_OPTIONS
   end
 
   def set_filter_variables(params)
@@ -157,6 +157,7 @@ class Jobseekers::SearchForm
     @organisation_type_options = [
       [I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.academy"), "includes free schools"],
       [I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.local_authority"), nil],
+      [I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.colleges"), nil],
     ]
   end
 

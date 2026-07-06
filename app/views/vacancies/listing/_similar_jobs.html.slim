@@ -23,4 +23,5 @@ section
     p.icon.icon--left.icon--map-blue
       = t("jobs.location_find_more_html", location_link: linked_locations.first,
                                           second_location_link: linked_locations.second,
+                                          school_type: vacancy.for_an_fe_college? ? "college" : "school",
                                           count: linked_locations.size)

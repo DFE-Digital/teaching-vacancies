@@ -44,7 +44,7 @@ class DashboardComponent < ApplicationComponent
 
   def set_organisation_options
     schools = organisation.local_authority? ? publisher_preference.schools : organisation.schools
-    @organisation_options = schools.not_closed.order(:name).map do |school|
+    @organisation_options = schools.kept.order(:name).map do |school|
       count = vacancies.in_organisation_ids([school.id]).count
       Option.new(id: school.id, name: school.name, label: "#{school.name} (#{count})")
     end

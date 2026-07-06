@@ -23,8 +23,9 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
   private
 
   def job_details_steps
-    steps = %i[job_location job_title job_role education_phases key_stages subjects contract_information start_date pay_package]
-    steps.delete(:job_location) if organisation.school?
+    steps = %i[job_location job_title confirm_job_address job_role education_phases key_stages subjects contract_information start_date pay_package]
+    steps.delete(:job_location) if @organisation.school?
+    steps.delete(:confirm_job_address) unless vacancy.for_an_fe_college?
     steps.delete(:education_phases) unless vacancy.allow_phase_to_be_set?
     steps.delete(:key_stages) unless vacancy.allow_key_stages?
     steps.delete(:subjects) unless vacancy.allow_subjects?
@@ -33,13 +34,17 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
   end
 
   def application_process_steps
-    steps = if vacancy.published?
+    # applying_for_the_job asks how the publisher wants to receive applications;
+    # FE colleges always use application_link so skip this step for them
+    steps = if vacancy.published? || vacancy.for_an_fe_college?
               []
             else
               %i[applying_for_the_job]
             end
 
-    if vacancy.enable_job_applications
+    if vacancy.for_an_fe_college?
+      steps += %i[application_link]
+    elsif vacancy.enable_job_applications
       steps += %i[anonymise_applications]
     else
       steps += %i[how_to_receive_applications]

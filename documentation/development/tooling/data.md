@@ -23,4 +23,3 @@ bundle exec rails db:drop db:prepare
 The _SQLTools_ VS Code extension is installed and configured in the devcontainer by default and can
 be used to browse the database and run SQL queries. The `psql` tool is also installed, so you can
 use `rails dbconsole` or even just `psql tvs_development`.
-

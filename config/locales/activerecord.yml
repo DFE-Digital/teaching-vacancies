@@ -136,6 +136,13 @@ en:
     phases:
       blank: Select education phase
       inclusion: Select education phase
+  confirm_job_address_errors: &confirm_job_address_errors
+    job_address_line1:
+      blank: Enter address line 1
+    job_address_town:
+      blank: Enter a town or city
+    job_address_postcode:
+      blank: Enter a postcode
   job_title_errors: &job_title_errors
     job_title:
       blank: Enter a job title
@@ -371,6 +378,9 @@ en:
         publishers/job_listing/education_phases_form:
           attributes:
             <<: *education_phases_errors
+        publishers/job_listing/confirm_job_address_form:
+          attributes:
+            <<: *confirm_job_address_errors
         publishers/job_listing/job_title_form:
           attributes:
             <<: *job_title_errors
@@ -679,6 +689,7 @@ en:
               same_as_old: Your new email can't be the same as your old email
               taken: This email seems to already have an account with Teaching Vacancies
         vacancy:
+          job_address_only_for_fe_colleges: Campus address fields are only applicable to FE college vacancies
           attributes:
             job_advert:
               blank: Enter a job advert

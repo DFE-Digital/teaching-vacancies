@@ -156,14 +156,14 @@ en:
 
   home:
     index:
-      browse_all: Browse all teaching, leadership and school-based support jobs in England
+      browse_all: Browse all school and college jobs in England
       description: Search for teaching, leadership and school-based support jobs in England.
       jobseeker_section:
         signed_in:
           description: Apply for jobs you are interested in, and check the status of your applications.
         signed_out:
           create_account_html: or %{create_account_link}.
-          description_html: Save and apply for jobs in schools.
+          description_html: Save and apply for jobs in schools and colleges.
           link_text:
             create_account: create a jobseeker account
             sign_in: Jobseeker sign in
@@ -189,17 +189,19 @@ en:
       title_h2: Welcome to Teaching Vacancies
     landing_page_links:
       education_phases: School phases
+      fe_phases: College phase
       job_roles: Job roles
-      jobs_by_location: School and teaching jobs by location
-      jobs_by_school_type_and_role: Jobs by type of school and role
-      jobs_by_subject: Teaching jobs by subject
+      jobs_by_location: School and college jobs by location
+      jobs_by_school_type_and_role: School jobs by role, phase and subject
+      jobs_by_fe_type_and_role: Further education jobs by role, phase and subject
+      subjects: Subjects
       working_patterns: Working patterns
       teaching_roles: Teaching and leadership roles
       support_roles: Support roles
 
     search:
       location_label: City, county or postcode
-      title_h1: Find teacher and school jobs near you
+      title_h1: Find school and college jobs near you
 
   pages:
     accessibility:
@@ -379,6 +381,7 @@ en:
       saved_jobs: Your saved jobs
       create_a_job_alert: Create a job alert
     schools: Schools
+    colleges: Colleges
 
   support_requests:
     new:
@@ -420,7 +423,7 @@ en:
 
   terms_and_conditions:
     intro_html: >-
-      Before listing a role on Teaching Vacancies you must agree to all of our %{link}, which includes information about:
+      Before listing any role at your school or college on Teaching Vacancies you must first read our %{terms_link} and agree to abide by them.
     intro_link_text: terms and conditions
     label: I agree to all of the Teaching Vacancies service terms and conditions.
     page_title: Terms and conditions
@@ -463,14 +466,14 @@ en:
         phase: Education phase
         school_age: School age
         school_details: School details
-        school_size: School size
+        school_size: Size
         size:
           enrolled: '%{number} pupils enrolled'
           up_to: 'Up to %{capacity} pupils'
-        type: 'School type'
+        type: 'Organisation type'
         urn: Unique identifier (URN)
         view_ofsted_report: View Ofsted report
-        website: School website
+        website: Website
         website_link_text: '%{organisation_name} website'
       school_groups:
         address: Trust address

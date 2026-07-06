@@ -894,6 +894,32 @@ RSpec.describe Vacancy do
     end
   end
 
+  describe "#for_an_fe_college?" do
+    context "when the vacancy's organisation is an FE college" do
+      let(:vacancy) { create(:vacancy, organisations: [create(:college)]) }
+
+      it "returns true" do
+        expect(vacancy).to be_for_an_fe_college
+      end
+    end
+
+    context "when the vacancy's organisation is not an FE college" do
+      let(:vacancy) { build_stubbed(:vacancy) }
+
+      it "returns false" do
+        expect(vacancy).not_to be_for_an_fe_college
+      end
+    end
+
+    context "when the vacancy has multiple organisations including an FE college" do
+      let(:vacancy) { create(:vacancy, organisations: [create(:school), create(:college)]) }
+
+      it "returns true" do
+        expect(vacancy).to be_for_an_fe_college
+      end
+    end
+  end
+
   describe "#unsafe_blobs" do
     context "when no files are attached" do
       let(:vacancy) { create(:vacancy) }
@@ -938,6 +964,120 @@ RSpec.describe Vacancy do
 
       it "returns only the unsafe blobs" do
         expect(vacancy.unsafe_blobs).to contain_exactly(vacancy.application_form.blob)
+      end
+    end
+  end
+
+  describe "job address validations" do
+    let(:college) { create(:college) }
+    let(:school) { create(:school) }
+    let(:job_address_attrs) { { job_address_line1: "10 Campus Road", job_address_town: "Brighton", job_address_postcode: "BN1 1AA" } }
+
+    context "when the vacancy belongs to an FE college" do
+      it "is valid with job address fields present" do
+        vacancy = build(:vacancy, organisations: [college], **job_address_attrs)
+        expect(vacancy).to be_valid
+      end
+
+      it "is valid without job address fields present" do
+        vacancy = build(:vacancy, organisations: [college])
+        vacancy.valid?
+        expect(vacancy.errors[:base]).not_to include(I18n.t("activerecord.errors.models.vacancy.job_address_only_for_fe_colleges"))
+      end
+    end
+
+    context "when the vacancy does not belong to an FE college" do
+      it "is invalid with job address fields present" do
+        vacancy = build(:vacancy, organisations: [school], **job_address_attrs)
+        expect(vacancy).not_to be_valid
+        expect(vacancy.errors[:base]).to include(I18n.t("activerecord.errors.models.vacancy.job_address_only_for_fe_colleges"))
+      end
+
+      it "is valid when no job address fields are present" do
+        vacancy = build(:vacancy, organisations: [school])
+        vacancy.valid?
+        expect(vacancy.errors[:base]).not_to include(I18n.t("activerecord.errors.models.vacancy.job_address_only_for_fe_colleges"))
+      end
+    end
+
+    context "when no organisations are associated yet" do
+      it "does not raise a validation error for job address fields" do
+        vacancy = build(:vacancy, organisations: [], **job_address_attrs)
+        vacancy.valid?
+        expect(vacancy.errors[:base]).not_to include(I18n.t("activerecord.errors.models.vacancy.job_address_only_for_fe_colleges"))
+      end
+    end
+  end
+
+  describe "#vacancy_address" do
+    let(:college) { create(:college) }
+
+    context "when a custom job address has been entered" do
+      subject { build(:vacancy, organisations: [college], job_address_line1: "10 Campus Road", job_address_town: "Brighton", job_address_postcode: "BN1 1AA") }
+
+      it "returns the custom address" do
+        expect(subject.vacancy_address).to eq("10 Campus Road, Brighton, BN1 1AA")
+      end
+    end
+
+    context "when no custom job address has been entered" do
+      subject { build(:vacancy, organisations: [college]) }
+
+      it "falls back to the organisation address" do
+        expect(subject.vacancy_address).to eq([college.address, college.town, college.county, college.postcode].compact_blank.join(", "))
+      end
+    end
+  end
+
+  describe "#geocode_job_address" do
+    let(:school) { create(:school) }
+    subject { build(:vacancy, organisations: [school]) }
+
+    context "when all address fields are blank" do
+      it "does not call Geocoding" do
+        expect(Geocoding).not_to receive(:new)
+        subject.geocode_job_address
+      end
+
+      context "when the vacancy previously had custom geolocation set" do
+        before do
+          geopoint = GeoFactories::FACTORY_4326.point(-0.1, 51.5)
+          subject.geolocation = geopoint
+          subject.uk_geolocation = GeoFactories.convert_wgs84_to_sr27700(geopoint)
+        end
+
+        it "clears geolocation and resets it from the organisation" do
+          subject.geocode_job_address
+          expect(subject.geolocation).to eq(school.geopoint)
+        end
+      end
+    end
+
+    context "when the address does not geocode" do
+      before do
+        subject.job_address_line1 = "Nowhere"
+        subject.job_address_town = "Nowhereville"
+        subject.job_address_postcode = "XX1 1XX"
+        allow(Geocoding).to receive(:new).and_return(instance_double(Geocoding, coordinates: Geocoding::COORDINATES_NO_MATCH))
+      end
+
+      it "does not update the geolocation" do
+        expect { subject.geocode_job_address }.not_to(change(subject, :geolocation))
+      end
+    end
+  end
+
+  describe "#refresh_geolocation" do
+    let(:school_one) { create(:school, name: "First school") }
+    let(:school_two) { create(:school, name: "Second school") }
+
+    context "when only partial job address is given" do
+      let(:vacancy) { create(:vacancy, :ect_suitable, job_roles: %w[teacher], organisations: [create(:college)], phases: %w[primary], key_stages: %w[ks1], job_address_line2: "Floor 2") }
+
+      it "does not overwrite geolocation with the organisation geopoint" do
+        original_geolocation = vacancy.geolocation
+        vacancy.organisations = [school_two]
+        expect(vacancy.geolocation).to eq(original_geolocation)
       end
     end
   end

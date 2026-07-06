@@ -1,0 +1,5 @@
+h3.govuk-heading-s = phases_heading
+ul.govuk-list
+  - phases_list.each do |landing_page, phase|
+    - count = phase_counts.fetch(phase.to_sym, 0)
+    li = govuk_link_to t("landing_pages.#{landing_page}.name", count: count), landing_page_path(landing_page), class: "govuk-link--no-visited-state"

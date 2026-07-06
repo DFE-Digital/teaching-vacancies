@@ -1,0 +1,21 @@
+ruby:
+  filter_types = [
+    {
+      legend: t("organisations.filters.college_job_availability.label"),
+      key: :job_availability,
+      selected: search_form.job_availability,
+      options: search_form.job_availability_options,
+      value_method: :first,
+      selected_method: :last,
+    },
+  ]
+
+= filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
+  filters: { total_count: search_form.total_filters },
+  clear_filters_link: { text: t("shared.filter_group.clear_all_filters"), url: colleges_path(school_search.clear_filters_params) },
+  options: { heading_text: "Filter", remove_filter_links: true },
+  html_attributes: { tabindex: "-1", id: "filters-component" }) do |filters_component|
+    - filters_component.with_remove_filter_links do |rb|
+      - filter_types.each do |filter_type|
+        - rb.with_group(**filter_type, remove_filter_link: { url_helper: :colleges_path, params: school_search.active_criteria })
+    - filters_component.with_group key: "job_availability", component: f.govuk_collection_check_boxes(:job_availability, f.object.job_availability_options, :first, :last, small: true, legend: { text: t("organisations.filters.college_job_availability.label") })

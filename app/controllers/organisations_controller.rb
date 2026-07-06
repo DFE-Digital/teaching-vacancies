@@ -10,7 +10,7 @@ class OrganisationsController < ApplicationController
   end
 
   def index
-    @school_search = Search::SchoolSearch.new(@search_form.to_h, scope: Organisation.visible_to_jobseekers)
+    @school_search = Search::SchoolSearch.new(@search_form.to_h, scope: Organisation.visible_to_jobseekers.where.not(detailed_school_type: School::FE_DETAILED_SCHOOL_TYPE))
     @pagy, @schools = pagy(@school_search.organisations.order(:name))
   end
 

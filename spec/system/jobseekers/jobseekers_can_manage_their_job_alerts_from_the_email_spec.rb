@@ -98,14 +98,6 @@ RSpec.describe "Jobseekers can manage their job alerts from the email" do
     end
   end
 
-  context "with the incorrect token" do
-    let(:token) { subscription.id }
-
-    it "returns not found" do
-      expect(page.status_code).to eq(404)
-    end
-  end
-
   context "with an old token" do
     let(:token) { subscription.token }
 

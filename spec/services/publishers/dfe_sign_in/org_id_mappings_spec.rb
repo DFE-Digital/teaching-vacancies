@@ -11,7 +11,7 @@ RSpec.describe Publishers::DfeSignIn::OrgIdMappings do
 
   describe ".out_of_scope_type?" do
     it "returns true for an out-of-scope type id" do
-      expect(described_class.out_of_scope_type?("18")).to be true # Further education
+      expect(described_class.out_of_scope_type?("49")).to be true # Online provider
     end
 
     it "returns false for an in-scope type id" do

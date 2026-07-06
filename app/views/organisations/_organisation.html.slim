@@ -21,10 +21,7 @@ h2.govuk-heading-m = t("organisations.show.summary.heading")
 
   - summary_list.with_row do |row|
     - row.with_key
-      - if organisation.school?
-        = t("organisations.school_type")
-      - else
-        = t("organisations.other_type")
+      = t("organisations.#{organisation_label(organisation).downcase}_type")
     - row.with_value
       = organisation_type(organisation)
 

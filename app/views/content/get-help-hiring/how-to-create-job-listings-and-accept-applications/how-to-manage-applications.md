@@ -3,14 +3,14 @@ order: 400
 title: How to manage applications
 meta_description: Schools can receive and manage job applications through Teaching Vacancies. Find out about our application form and how to manage candidates.
 date_posted: 10/11/2025
-date_updated: 10/11/2025
+date_updated: 12/05/2026
 category_tags: how-to
 card-image: "/content-assets/get-help-hiring/how-to-create-job-listings-and-accept-applications/how-to-manage-applications.png"
 ---
 
 ## Managing applications
 
-When you use the Teaching Vacancies application form to list your school’s jobs, there are a few different ways to access and manage job applications.
+When you use the Teaching Vacancies application form to list your school or college’s jobs, there are a few different ways to access and manage job applications.
 
 ## Accessing applications through your notifications
 

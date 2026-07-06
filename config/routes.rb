@@ -362,6 +362,8 @@ Rails.application.routes.draw do
     resources :schools, only: %i[index], controller: "organisations/schools"
   end
 
+  resources :colleges, only: %i[index]
+
   resource :feedback, only: %i[new create], controller: "general_feedbacks"
   resource :support_request, only: %i[new create]
 

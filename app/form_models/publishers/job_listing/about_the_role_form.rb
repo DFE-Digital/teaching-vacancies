@@ -41,6 +41,8 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
         "trust"
       elsif vacancy.for_multiple_organisations?
         "schools"
+      elsif vacancy.for_an_fe_college?
+        "college"
       else
         "school"
       end

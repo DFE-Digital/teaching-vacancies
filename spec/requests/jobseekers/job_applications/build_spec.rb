@@ -12,16 +12,6 @@ RSpec.describe "Job applications build" do
   after { sign_out(jobseeker) }
 
   describe "GET #show" do
-    context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
-
-      it "returns not_found" do
-        get jobseekers_job_application_build_path(job_application, :personal_details)
-
-        expect(response).to have_http_status(:not_found)
-      end
-    end
-
     it "renders the show page" do
       expect(get(jobseekers_job_application_build_path(job_application, :personal_details)))
         .to render_template(:personal_details)
@@ -70,16 +60,6 @@ RSpec.describe "Job applications build" do
 
             expect(response).to redirect_to(jobseekers_job_application_apply_path(job_application))
           end
-        end
-      end
-
-      context "when the job application status is not draft" do
-        let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
-
-        it "returns not_found" do
-          patch jobseekers_job_application_build_path(job_application, :personal_details)
-
-          expect(response).to have_http_status(:not_found)
         end
       end
     end

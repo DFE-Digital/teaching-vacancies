@@ -42,289 +42,718 @@ en:
 
     ### Job roles
     assistant-headteacher-jobs:
-      name: "Assistant headteacher"
+      name: "Assistant headteacher (%{count})"
       title: "Assistant Headteacher Jobs"
       heading: "%{count} assistant headteacher jobs"
       meta_description: "Discover assistant headteacher jobs in primary and secondary schools near you."
     deputy-headteacher-jobs:
-      name: "Deputy headteacher"
+      name: "Deputy headteacher (%{count})"
       title: "Deputy Headteacher Jobs"
       heading: "%{count} deputy headteacher jobs"
       meta_description: "Discover deputy headteacher jobs in primary and secondary schools near you."
     head-of-year-or-phase-jobs:
-      name: "Head of year or phase"
+      name: "Head of year or phase (%{count})"
       title: "Head of Year and Phase Jobs"
       heading: "%{count} head of year or phase jobs"
       meta_description: "Search for head of year or phase jobs in schools near you. Set up email alerts so you don't miss out on the latest vacancies for subject leads."
     head-of-department-or-curriculum-jobs:
-      name: "Head of department or curriculum"
+      name: "Head of department or curriculum (%{count})"
       title: "Head of Department and Curriculum Jobs"
       heading: "%{count} head of department or curriculum jobs"
       meta_description: "Search for head of department or curriculum jobs in schools near you. Set up email alerts so you don't miss out on the latest vacancies for subject leads."
     headteacher-jobs:
-      name: "Headteacher"
+      name: "Headteacher (%{count})"
       title: "Headteacher Jobs"
       heading: "%{count} headteacher jobs"
       meta_description: "Discover headteacher jobs in primary and secondary schools near you."
     higher-level-teaching-assistant-jobs:
-      name: "HLTA (higher level teaching assistant)"
+      name: "HLTA (higher level teaching assistant) (%{count})"
       title: "HLTA (higher level teaching assistant) Jobs"
       heading: "%{count} higher level teaching assistant (HLTA) jobs"
       meta_description: "Find higher level teaching assistant jobs in local primary and secondary schools. Get your teaching career off to a great start."
     ect-suitable-jobs:
-      name: "Suitable for early career teachers"
+      name: "Suitable for early career teachers (%{count})"
       title: "Early Career Teacher (ECT) and NQT Jobs"
       heading: "%{count} early career teacher (ECT) jobs"
       meta_description: "Find early career teacher (ECT, formerly known as NQT) jobs in local primary and secondary schools. Get your teaching career off to a great start."
     education-support-jobs:
-      name: "Learning support or cover supervisor"
+      name: "Learning support or cover supervisor (%{count})"
       title: "Education and School Support Jobs"
       heading: "%{count} education and school support jobs"
       meta_description: "Find jobs for LSAs, HR managers, finance officers, admin assistants, cover supervisors and other support roles in schools near you."
     sendco-jobs:
-      name: "SENCo (special educational needs coordinator)"
-      title: "SEN Coordinator (SENCo) Jobs"
-      heading: "%{count} SENCo jobs"
-      meta_description: "Find the latest special educational needs co-ordinator (SENCo) jobs in schools near you, with salary details. Apply for vacancies now."
+      name: "SENCO (special educational needs coordinator) (%{count})"
+      title: "SEND Coordinator (SENDCo) Jobs"
+      heading: "%{count} SENDCo jobs"
+      meta_description: "Find the latest special educational needs co-ordinator (SENDCo/SENCo) jobs in schools near you, with salary details. Apply for vacancies now."
     teacher-jobs:
-      name: "Teacher"
+      name: "Teacher or lecturer (%{count})"
       title: "Teacher Jobs"
       heading: "%{count} teacher jobs"
       meta_description: "Discover the latest full and part-time jobs for teachers. See which schools near you are hiring and apply directly on Teaching Vacancies from GOV.UK."
     teaching-assistant-jobs:
-      name: "Teaching assistant"
+      name: "Teaching assistant (%{count})"
       title: "Teaching Assistant Jobs"
       heading: "%{count} teaching assistant jobs"
       meta_description: "Find full and part time teaching assistant jobs and classroom assistant vacancies. See which schools near you are currently hiring TAs and LSAs."
     teaching-assistant-jobs-v2:
-      name: "Teaching assistant"
+      name: "Teaching assistant (%{count})"
       title: "Teaching Assistant Jobs"
       heading: "%{count} teaching assistant jobs"
       meta_description: "Find full and part time teaching assistant jobs and classroom assistant vacancies. See which schools near you are currently hiring TAs and LSAs."
       banner_title: "Find your teaching assistant job"
     other-teaching-support-jobs:
-      name: "Other teaching support"
+      name: "Other teaching support (%{count})"
       title: "Other Teaching Support Jobs"
       heading: "%{count} other teaching support jobs"
       meta_description: "Find full and part time teaching support roles in schools. See which schools near you are hiring and apply quickly and easily through Teaching Vacancies."
     administration-hr-data-finance-jobs:
-      name: "Administration, HR, data and finance"
+      name: "Administration, HR, data and finance (%{count})"
       title: "Administration, HR, Data and Finance Jobs"
       heading: "%{count} administration, HR, data and finance jobs"
       meta_description: "Find administration, HR, data and finance jobs in schools. Apply for full and part time roles quickly and easily through Teaching Vacancies. "
     catering-cleaning-site-management-jobs:
-      name: "Catering, cleaning and site management"
+      name: "Catering, cleaning and site management (%{count})"
       title: "Catering, Cleaning and Site Management Jobs"
       heading: "%{count} catering, cleaning and site management jobs"
       meta_description: "Find catering, cleaning and site management jobs in schools. Apply for full and part time roles quickly and easily through Teaching Vacancies."
     it-support-jobs:
-      name: "IT support"
+      name: "IT support (%{count})"
       title: "IT Support Jobs"
       heading: "%{count} IT support jobs"
       meta_description: "Find IT support jobs in schools. Apply for full and part time roles quickly and easily through Teaching Vacancies."
     pastoral-health-welfare-jobs:
-      name: "Pastoral, health and welfare"
+      name: "Pastoral, health and welfare (%{count})"
       title: "Pastoral, Health and Welfare Jobs"
       heading: "%{count} pastoral, health and welfare jobs"
       meta_description: "Find pastoral, health and welfare jobs in schools. Apply for full and part time roles quickly and easily through Teaching Vacancies."
     other-leadership-roles-jobs:
-      name: "Other leadership roles"
+      name: "Other leadership roles (%{count})"
       title: "Other Leadership Roles"
       heading: "%{count} other leadership roles"
       meta_description: "Find the right leadership role for you on Teaching Vacancies. Apply for full and part time jobs in schools quickly and easily."
     other-support-roles-jobs:
-      name: "Other support roles"
+      name: "Other support roles (%{count})"
       title: "Other Support Roles"
       heading: "%{count} other support roles"
       meta_description: "Find and apply for support roles in schools on Teaching Vacancies. Apply quickly and easily for full and part time jobs in schools."
     support-jobs:
-      name: "Support roles"
+      name: "Support roles (%{count})"
       title: "Support Roles"
       heading: "%{count} support roles"
       meta_description: "Find and apply for support roles in schools on Teaching Vacancies. Apply quickly and easily for full and part time jobs in schools."
 
+    ### FE Job roles
+    fe-teacher-jobs:
+      name: "Teacher or lecturer (%{count})"
+      title: "Further Education Teacher and Lecturer Jobs"
+      heading: "%{count} further education teacher and lecturer jobs"
+      meta_description: "Find teacher and lecturer jobs in further education colleges. Browse the latest FE teaching vacancies on Teaching Vacancies."
+    fe-headteacher-jobs:
+      name: "Headteacher (%{count})"
+      title: "Further Education Headteacher Jobs"
+      heading: "%{count} further education headteacher jobs"
+      meta_description: "Find headteacher jobs in further education colleges. Browse the latest FE leadership vacancies on Teaching Vacancies."
+    fe-deputy-headteacher-jobs:
+      name: "Deputy headteacher (%{count})"
+      title: "Further Education Deputy Headteacher Jobs"
+      heading: "%{count} further education deputy headteacher jobs"
+      meta_description: "Find deputy headteacher jobs in further education colleges. Browse the latest FE leadership vacancies on Teaching Vacancies."
+    fe-assistant-headteacher-jobs:
+      name: "Assistant headteacher (%{count})"
+      title: "Further Education Assistant Headteacher Jobs"
+      heading: "%{count} further education assistant headteacher jobs"
+      meta_description: "Find assistant headteacher jobs in further education colleges. Browse the latest FE leadership vacancies on Teaching Vacancies."
+    fe-head-of-department-or-curriculum-jobs:
+      name: "Head of department or curriculum (%{count})"
+      title: "Further Education Head of Department and Curriculum Jobs"
+      heading: "%{count} further education head of department or curriculum jobs"
+      meta_description: "Find head of department and curriculum jobs in further education colleges. Browse the latest FE leadership vacancies on Teaching Vacancies."
+    fe-head-of-year-or-phase-jobs:
+      name: "Head of year or phase (%{count})"
+      title: "Further Education Head of Year and Phase Jobs"
+      heading: "%{count} further education head of year or phase jobs"
+      meta_description: "Find head of year and phase jobs in further education colleges. Browse the latest FE leadership vacancies on Teaching Vacancies."
+    fe-sendco-jobs:
+      name: "SENCo (special educational needs and disabilities coordinator) (%{count})"
+      title: "Further Education SENCo Jobs"
+      heading: "%{count} further education SENDCo jobs"
+      meta_description: "Find SENDCo jobs in further education colleges. Browse the latest SEND coordinator vacancies in FE on Teaching Vacancies."
+    fe-other-leadership-roles-jobs:
+      name: "Other leadership roles (%{count})"
+      title: "Further Education Other Leadership Roles"
+      heading: "%{count} further education other leadership roles"
+      meta_description: "Find other leadership roles in further education colleges. Browse the latest FE leadership vacancies on Teaching Vacancies."
+    fe-teaching-assistant-jobs:
+      name: "Teaching assistant (%{count})"
+      title: "Further Education Teaching Assistant Jobs"
+      heading: "%{count} further education teaching assistant jobs"
+      meta_description: "Find teaching assistant jobs in further education colleges. Browse the latest FE support vacancies on Teaching Vacancies."
+    fe-higher-level-teaching-assistant-jobs:
+      name: "HLTA (higher level teaching assistant) (%{count})"
+      title: "Further Education HLTA Jobs"
+      heading: "%{count} further education higher level teaching assistant (HLTA) jobs"
+      meta_description: "Find higher level teaching assistant jobs in further education colleges. Browse the latest FE support vacancies on Teaching Vacancies."
+    fe-education-support-jobs:
+      name: "Learning support or cover supervisor (%{count})"
+      title: "Further Education Learning Support Jobs"
+      heading: "%{count} further education learning support and cover supervisor jobs"
+      meta_description: "Find learning support and cover supervisor jobs in further education colleges. Browse the latest FE support vacancies on Teaching Vacancies."
+    fe-administration-hr-data-finance-jobs:
+      name: "Administration, HR, data and finance (%{count})"
+      title: "Further Education Administration, HR, Data and Finance Jobs"
+      heading: "%{count} further education administration, HR, data and finance jobs"
+      meta_description: "Find administration, HR, data and finance jobs in further education colleges. Browse the latest FE support vacancies on Teaching Vacancies."
+    fe-catering-cleaning-site-management-jobs:
+      name: "Catering, cleaning and site management (%{count})"
+      title: "Further Education Catering, Cleaning and Site Management Jobs"
+      heading: "%{count} further education catering, cleaning and site management jobs"
+      meta_description: "Find catering, cleaning and site management jobs in further education colleges. Browse the latest FE support vacancies on Teaching Vacancies."
+    fe-it-support-jobs:
+      name: "IT support (%{count})"
+      title: "Further Education IT Support Jobs"
+      heading: "%{count} further education IT support jobs"
+      meta_description: "Find IT support jobs in further education colleges. Browse the latest FE support vacancies on Teaching Vacancies."
+    fe-pastoral-health-welfare-jobs:
+      name: "Pastoral, health and welfare (%{count})"
+      title: "Further Education Pastoral, Health and Welfare Jobs"
+      heading: "%{count} further education pastoral, health and welfare jobs"
+      meta_description: "Find pastoral, health and welfare jobs in further education colleges. Browse the latest FE support vacancies on Teaching Vacancies."
+    fe-other-support-roles-jobs:
+      name: "Other support roles (%{count})"
+      title: "Further Education Other Support Roles"
+      heading: "%{count} further education other support roles"
+      meta_description: "Find other support roles in further education colleges. Browse the latest FE support vacancies on Teaching Vacancies."
+
     ### Education phases
     nursery-jobs:
-      name: "Nursery"
+      name: "Nursery (%{count})"
       title: "Nursery, early years teacher and support jobs"
       heading: "%{count} nursery and early years school jobs"
       meta_description: "Find nursery, reception and early years teaching and leadership jobs near you."
     primary-school-jobs:
-      name: "Primary"
+      name: "Primary (%{count})"
       title: "Primary School Teacher and Support Jobs"
       heading: "%{count} primary school jobs"
       meta_description: "Find primary school jobs for head teachers, teachers and teaching assistants. See the latest reception, KS1 and KS2 teaching jobs near you."
     middle-school-jobs:
-      name: "Middle"
+      name: "Middle (%{count})"
       title: "Middle School Teacher and Support Jobs"
       heading: "%{count} middle school jobs"
       meta_description: "The latest middle school jobs near you. Teaching Vacancies has jobs for teachers, team leaders and support staff in middle schools across England."
     secondary-school-jobs:
-      name: "Secondary"
+      name: "Secondary (%{count})"
       title: "Secondary School Teacher and Support Jobs"
       heading: "%{count} secondary school jobs"
       meta_description: "Discover the latest jobs for maths teachers, science teachers, English teachers and more. Find your next secondary school job on Teaching Vacancies."
     sixth-form-or-college-jobs:
-      name: "Sixth form and college"
+      name: "Sixth form and college (%{count})"
       title: "Sixth form and college teaching jobs"
       heading: "%{count} sixth form or college jobs"
       meta_description: "Use Teaching Vacancies to find sixth form, college and 16-19 education provider teaching jobs near you."
     through-school-jobs:
-      name: "All through school"
+      name: "All through school (%{count})"
       title: "Through School Jobs"
       heading: "%{count} through school jobs"
       meta_description: "Use Teaching Vacancies to find through school jobs for head teachers, teachers, teaching assistants and education support jobs."
 
     ### Subjects
     art-design-technology-teacher-jobs:
-      name: "Art and Design Technology"
+      name: "Art and Design Technology (%{count})"
       title: "Art and Design Technology (DT) Teacher Jobs"
       heading: "%{count} art and design technology teacher jobs"
       meta_description: "Search for the latest art and design teacher jobs in England. Apply for design technology (DT) teaching roles and set up alerts for new jobs near you."
     art-design-teacher-jobs:
-      name: "Art and design"
+      name: "Art and design (%{count})"
       title: "Art and design Teacher Jobs"
       heading: "%{count} art and design teacher jobs"
       meta_description: "Search for the latest art and design teacher jobs in England. Apply for art and design teaching roles and set up alerts for new jobs near you."
     design-technology-teacher-jobs:
-      name: "Design and technology"
+      name: "Design and technology (%{count})"
       title: "Design and technology Teacher Jobs"
       heading: "%{count} design and technology teacher jobs"
       meta_description: "Search for the latest design and technology teacher jobs in England. Apply for design and technology roles and set up alerts for new jobs near you."
     biology-teacher-jobs:
-      name: "Biology"
+      name: "Biology (%{count})"
       title: "Biology Teacher Jobs"
       heading: "%{count} biology teacher jobs"
       meta_description: "Looking for your next biology teacher job? Teaching Vacancies has the latest biology teacher jobs in London, Birmingham, Manchester and across England."
     chemistry-teacher-jobs:
-      name: "Chemistry"
+      name: "Chemistry (%{count})"
       title: "Chemistry Teacher Jobs"
       heading: "%{count} chemistry teacher jobs"
       meta_description: "Discover chemistry teacher jobs in secondary schools across England. Search and apply for full time and part time chemistry teacher jobs near you."
     classics-latin-teacher-jobs:
-      name: "Classics"
-      title: "Classics and Latin Teacher Jobs"
+      name: "Classics (%{count})"
+      title: "Classics and latin Teacher Jobs"
       heading: "%{count} classics and Latin teacher jobs"
       meta_description: "Find your next Ancient Greek or Latin teaching position on Teaching Vacancies. Search and apply for the latest classics teacher jobs near you."
     dance-drama-music-teacher-jobs:
-      name: "Dance, Drama and Music"
-      title: "Dance, Drama and Music Teacher Jobs"
+      name: "Dance, drama and music (%{count})"
+      title: "Dance, drama and music Teacher Jobs"
       heading: "%{count} dance, drama and music teacher jobs"
       meta_description: "Find dance, drama and music teacher jobs on Teaching Vacancies. Set up alerts and apply for jobs teaching performing arts in schools near you."
     economics-business-studies-teacher-jobs:
-      name: "Economics and Business Studies"
-      title: "Economics and Business Studies Teacher Jobs"
+      name: "Economics and business studies (%{count})"
+      title: "Economics and business studies Teacher Jobs"
       heading: "%{count} economics and business studies teacher jobs"
       meta_description: "Find the latest economics and business studies teacher jobs near you. Search for your next role and set up job alerts on Teaching Vacancies."
     english-media-studies-teacher-jobs:
-      name: "English and Media Studies"
-      title: "English and Media Studies Teacher Jobs"
+      name: "English and media studies (%{count})"
+      title: "English and media studies Teacher Jobs"
       heading: "%{count} English and media studies teacher jobs"
       meta_description: "Find English teacher jobs in London, Birmingham, Liverpool and across England. Apply for media studies teaching jobs and set up alerts for the latest roles."
     food-technology-teacher-jobs:
-      name: "Food technology"
+      name: "Food technology (%{count})"
       title: "Food technology Teacher Jobs"
       heading: "%{count} food technology teacher jobs"
       meta_description: "Discover jobs for food technology teachers on Teaching Vacancies. Browse job descriptions and apply to get your next food technology teaching job."
     french-teacher-jobs:
-      name: "French"
+      name: "French (%{count})"
       title: "French Teacher Jobs"
       heading: "%{count} French teacher jobs"
       meta_description: "Search for French teacher jobs in primary and secondary schools across England. Set up alerts to receive the latest jobs for French teachers near you."
     geography-teacher-jobs:
-      name: "Geography"
+      name: "Geography (%{count})"
       title: "Geography Teacher Jobs"
       heading: "%{count} geography teacher jobs"
       meta_description: "Find geography teacher jobs in Cornwall, Kent and across England. Search for full time, part time and flexible jobs for geography teachers."
     german-teacher-jobs:
-      name: "German"
+      name: "German (%{count})"
       title: "German Teacher Jobs"
       heading: "%{count} German teacher jobs"
       meta_description: "Search and apply for German teacher jobs near you on Teaching Vacancies. Set up alerts for jobs in London, Leeds and the rest of England."
     health-relationships-social-care-teacher-jobs:
-      name: "Health and Social Care"
-      title: "Health and Social Care Teacher Jobs"
+      name: "Health and social care (%{count})"
+      title: "Health and social care Teacher Jobs"
       heading: "%{count} health, relationships and social care teacher jobs"
       meta_description: "Find jobs for health and social care teachers on Teaching Vacancies. Find and apply for roles teaching all areas of personal health and relationships."
     history-teacher-jobs:
-      name: "History"
+      name: "History (%{count})"
       title: "History Teacher Jobs"
       heading: "%{count} history teacher jobs"
       meta_description: "Find history teacher jobs near you on Teaching Vacancies. Set up alerts so you don't miss the latest full time and part time jobs for history teachers."
     ict-computer-science-teacher-jobs:
-      name: "ICT and Computer Science"
-      title: "ICT and Computer Science Teacher Jobs"
+      name: "ICT and computer science (%{count})"
+      title: "ICT and computer science Teacher Jobs"
       heading: "%{count} ICT and computer science teacher jobs"
       meta_description: "Search for computer science teacher jobs near you. Teaching Vacancies has the latest ICT teacher jobs in London, Manchester and across England."
     mandarin-teacher-jobs:
-      name: "Mandarin"
+      name: "Mandarin (%{count})"
       title: "Mandarin Teacher Jobs"
       heading: "%{count} Mandarin teacher jobs"
       meta_description: "Search for full time and part time jobs for Mandarin teachers on Teaching Vacancies. Find schools near you hiring Mandarin Chinese teachers."
     maths-teacher-jobs:
-      name: "Maths"
+      name: "Maths (%{count})"
       title: "Maths Teacher Jobs"
       heading: "%{count} maths teacher jobs"
       meta_description: "Find maths teacher jobs in London, York, Birmingham and across England. Set up alerts and apply for part time and full time mathematics teaching jobs."
     mfl-teacher-jobs:
-      name: "Foreign Languages"
+      name: "Foreign languages (%{count})"
       title: "Modern Foreign Language (MFL) Teacher Jobs"
       heading: "%{count} modern foreign language (MFL) teacher jobs"
       meta_description: "Looking for a job teaching modern foreign languages? Set up alerts and apply for the latest MFL teacher jobs in London, Birmingham and across England."
     physical-education-teacher-jobs:
-      name: "Physical Education"
-      title: "Physical Education (PE) Teacher Jobs"
+      name: "Physical education (%{count})"
+      title: "Physical education (PE) Teacher Jobs"
       heading: "%{count} physical education (PE) teacher jobs"
       meta_description: "Apply for your next PE teacher job on Teaching Vacancies. Find primary and secondary schools near you hiring physical education teachers."
     physics-teacher-jobs:
-      name: "Physics"
+      name: "Physics (%{count})"
       title: "Physics Teacher Jobs"
       heading: "%{count} physics teacher jobs"
       meta_description: "Search for physics teacher jobs near you on Teaching Vacancies. Set up alerts for physics teaching roles in London, Brighton, Leeds and across England."
     politics-humanities-social-sciences-teacher-jobs:
-      name: "Politics, Humanities and Social Sciences"
+      name: "Politics, Humanities and Social Sciences (%{count})"
       title: "Humanities and Social Sciences teacher jobs"
       heading: "%{count} politics, humanities and social sciences teacher jobs"
       meta_description: "Search the latest jobs for humanities and politics teachers near you. Set up alerts and apply for roles teaching the various areas of social science."
     psychology-philosophy-sociology-re-teacher-jobs:
-      name: "Psychology, Sociology and RE"
+      name: "Psychology, Sociology and RE (%{count})"
       title: "Psychology, Sociology and RE Teacher Jobs"
       heading: "%{count} psychology, philosophy, sociology and RE teacher jobs"
       meta_description: "Find full time and part time jobs for RE and sociology teachers. See the latest roles in schools near you teaching religion, psychology and philosophy."
     science-teacher-jobs:
-      name: "Science"
+      name: "Science (%{count})"
       title: "Science Teacher Jobs"
       heading: "%{count} science teacher jobs"
       meta_description: "Find jobs for science teachers near you on Teaching Vacancies. Set up alerts to receive the latest science teacher jobs in primary and secondary schools."
     spanish-teacher-jobs:
-      name: "Spanish"
+      name: "Spanish (%{count})"
       title: "Spanish Teacher Jobs"
       heading: "%{count} Spanish teacher jobs"
       meta_description: "Search for Spanish teacher jobs near you on Teaching Vacancies. Find the latest full time and part time jobs for spanish teachers in schools across England."
 
+    ### FE Subjects
+    accounting-fe-jobs:
+      name: "Accounting (%{count})"
+      title: "Accounting FE Teaching Jobs"
+      heading: "%{count} accounting further education jobs"
+      meta_description: "Find accounting teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    agriculture-horticulture-land-based-studies-fe-jobs:
+      name: "Agriculture/horticulture/land based studies (%{count})"
+      title: "Agriculture, Horticulture and Land Based Studies FE Teaching Jobs"
+      heading: "%{count} agriculture, horticulture and land based studies further education jobs"
+      meta_description: "Find agriculture, horticulture and land based studies teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    animal-care-fe-jobs:
+      name: "Animal care (%{count})"
+      title: "Animal Care FE Teaching Jobs"
+      heading: "%{count} animal care further education jobs"
+      meta_description: "Find animal care teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    art-and-design-fe-jobs:
+      name: "Art and design (%{count})"
+      title: "Art and Design FE Teaching Jobs"
+      heading: "%{count} art and design further education jobs"
+      meta_description: "Find art and design teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    biology-fe-jobs:
+      name: "Biology (%{count})"
+      title: "Biology FE Teaching Jobs"
+      heading: "%{count} biology further education jobs"
+      meta_description: "Find biology teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    british-sign-language-fe-jobs:
+      name: "British sign language (%{count})"
+      title: "British Sign Language FE Teaching Jobs"
+      heading: "%{count} British sign language further education jobs"
+      meta_description: "Find British sign language teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    building-and-construction-fe-jobs:
+      name: "Building and construction (%{count})"
+      title: "Building and Construction FE Teaching Jobs"
+      heading: "%{count} building and construction further education jobs"
+      meta_description: "Find building and construction teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    catering-fe-jobs:
+      name: "Catering (%{count})"
+      title: "Catering FE Teaching Jobs"
+      heading: "%{count} catering further education jobs"
+      meta_description: "Find catering teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    chemistry-fe-jobs:
+      name: "Chemistry (%{count})"
+      title: "Chemistry FE Teaching Jobs"
+      heading: "%{count} chemistry further education jobs"
+      meta_description: "Find chemistry teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    childrens-development-and-learning-fe-jobs:
+      name: "Children's development and learning (%{count})"
+      title: "Children's Development and Learning FE Teaching Jobs"
+      heading: "%{count} children's development and learning further education jobs"
+      meta_description: "Find children's development and learning teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    classics-fe-jobs:
+      name: "Classics (%{count})"
+      title: "Classics FE Teaching Jobs"
+      heading: "%{count} classics further education jobs"
+      meta_description: "Find classics teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    computing-fe-jobs:
+      name: "Computing (%{count})"
+      title: "Computing FE Teaching Jobs"
+      heading: "%{count} computing further education jobs"
+      meta_description: "Find computing teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    counselling-fe-jobs:
+      name: "Counselling (%{count})"
+      title: "Counselling FE Teaching Jobs"
+      heading: "%{count} counselling further education jobs"
+      meta_description: "Find counselling teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    criminology-fe-jobs:
+      name: "Criminology (%{count})"
+      title: "Criminology FE Teaching Jobs"
+      heading: "%{count} Criminology further education jobs"
+      meta_description: "Find Criminology teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    customer-service-fe-jobs:
+      name: "Customer service (%{count})"
+      title: "Customer Service FE Teaching Jobs"
+      heading: "%{count} customer service further education jobs"
+      meta_description: "Find customer service teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    dance-drama-and-music-fe-jobs:
+      name: "Dance, drama and music (%{count})"
+      title: "Dance, Drama and Music FE Teaching Jobs"
+      heading: "%{count} dance, drama and music further education jobs"
+      meta_description: "Find dance, drama and music teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    design-and-technology-fe-jobs:
+      name: "Design and technology (%{count})"
+      title: "Design and Technology FE Teaching Jobs"
+      heading: "%{count} design and technology further education jobs"
+      meta_description: "Find design and technology teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    early-years-fe-jobs:
+      name: "Early years (%{count})"
+      title: "Early Years FE Teaching Jobs"
+      heading: "%{count} early years further education jobs"
+      meta_description: "Find early years teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    economics-and-business-studies-fe-jobs:
+      name: "Economics and business studies (%{count})"
+      title: "Economics and business studies FE Teaching Jobs"
+      heading: "%{count} economics and business studies further education jobs"
+      meta_description: "Find economics and business studies teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    electrics-fe-jobs:
+      name: "Electrics (%{count})"
+      title: "Electrics FE Teaching Jobs"
+      heading: "%{count} electrics further education jobs"
+      meta_description: "Find electrics teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    engineering-fe-jobs:
+      name: "Engineering (%{count})"
+      title: "Engineering FE Teaching Jobs"
+      heading: "%{count} engineering further education jobs"
+      meta_description: "Find engineering teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    english-and-media-studies-fe-jobs:
+      name: "English and media studies (%{count})"
+      title: "English and media studies FE Teaching Jobs"
+      heading: "%{count} English and media studies further education jobs"
+      meta_description: "Find English and media studies teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    english-as-a-foreign-language-fe-jobs:
+      name: "English as a foreign language (%{count})"
+      title: "English as a foreign language FE Teaching Jobs"
+      heading: "%{count} English as a foreign language further education jobs"
+      meta_description: "Find English as a foreign language teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    esports-fe-jobs:
+      name: "Esports (%{count})"
+      title: "Esports FE Teaching Jobs"
+      heading: "%{count} esports further education jobs"
+      meta_description: "Find esports teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    fabrication-and-welding-fe-jobs:
+      name: "Fabrication and welding (%{count})"
+      title: "Fabrication and Welding FE Teaching Jobs"
+      heading: "%{count} fabrication and welding further education jobs"
+      meta_description: "Find fabrication and welding teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    farming-fe-jobs:
+      name: "Farming (%{count})"
+      title: "Farming FE Teaching Jobs"
+      heading: "%{count} farming further education jobs"
+      meta_description: "Find farming teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    fashion-fe-jobs:
+      name: "Fashion (%{count})"
+      title: "Fashion FE Teaching Jobs"
+      heading: "%{count} fashion further education jobs"
+      meta_description: "Find fashion teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    food-technology-fe-jobs:
+      name: "Food technology (%{count})"
+      title: "Food Technology FE Teaching Jobs"
+      heading: "%{count} food technology further education jobs"
+      meta_description: "Find food technology teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    foreign-languages-fe-jobs:
+      name: "Foreign languages (%{count})"
+      title: "Foreign Languages FE Teaching Jobs"
+      heading: "%{count} foreign languages further education jobs"
+      meta_description: "Find foreign languages teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    french-fe-jobs:
+      name: "French (%{count})"
+      title: "French FE Teaching Jobs"
+      heading: "%{count} French further education jobs"
+      meta_description: "Find French teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    functional-skills-fe-jobs:
+      name: "Functional skills (%{count})"
+      title: "Functional Skills FE Teaching Jobs"
+      heading: "%{count} functional skills further education jobs"
+      meta_description: "Find functional skills teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    games-design-fe-jobs:
+      name: "Games design (%{count})"
+      title: "Games Design FE Teaching Jobs"
+      heading: "%{count} games design further education jobs"
+      meta_description: "Find games design teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    geography-fe-jobs:
+      name: "Geography (%{count})"
+      title: "Geography FE Teaching Jobs"
+      heading: "%{count} geography further education jobs"
+      meta_description: "Find geography teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    german-fe-jobs:
+      name: "German (%{count})"
+      title: "German FE Teaching Jobs"
+      heading: "%{count} German further education jobs"
+      meta_description: "Find German teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    graphic-design-fe-jobs:
+      name: "Graphic design (%{count})"
+      title: "Graphic Design FE Teaching Jobs"
+      heading: "%{count} graphic design further education jobs"
+      meta_description: "Find graphic design teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    hair-and-beauty-fe-jobs:
+      name: "Hair and beauty (%{count})"
+      title: "Hair and Beauty FE Teaching Jobs"
+      heading: "%{count} hair and beauty further education jobs"
+      meta_description: "Find hair and beauty teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    health-and-social-care-fe-jobs:
+      name: "Health and Social Care (%{count})"
+      title: "Health and Social Care FE Teaching Jobs"
+      heading: "%{count} health and social care further education jobs"
+      meta_description: "Find health and social care teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    history-fe-jobs:
+      name: "History (%{count})"
+      title: "History FE Teaching Jobs"
+      heading: "%{count} history further education jobs"
+      meta_description: "Find history teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    hotel-catering-and-travel-fe-jobs:
+      name: "Hotel catering and travel (%{count})"
+      title: "Hotel Catering and Travel FE Teaching Jobs"
+      heading: "%{count} hotel catering and travel further education jobs"
+      meta_description: "Find hotel catering and travel teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    humanities-fe-jobs:
+      name: "Humanities (%{count})"
+      title: "Humanities FE Teaching Jobs"
+      heading: "%{count} humanities further education jobs"
+      meta_description: "Find humanities teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    land-and-property-management-fe-jobs:
+      name: "Land and Property Management (%{count})"
+      title: "Land and Property Management FE Teaching Jobs"
+      heading: "%{count} land and property management further education jobs"
+      meta_description: "Find land and property management teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    leadership-and-management-fe-jobs:
+      name: "Leadership and management (%{count})"
+      title: "Leadership and Management FE Teaching Jobs"
+      heading: "%{count} leadership and management further education jobs"
+      meta_description: "Find leadership and management teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    logistics-fe-jobs:
+      name: "Logistics (%{count})"
+      title: "Logistics FE Teaching Jobs"
+      heading: "%{count} logistics further education jobs"
+      meta_description: "Find logistics teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    mandarin-fe-jobs:
+      name: "Mandarin (%{count})"
+      title: "Mandarin FE Teaching Jobs"
+      heading: "%{count} Mandarin further education jobs"
+      meta_description: "Find Mandarin teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    maths-fe-jobs:
+      name: "Maths (%{count})"
+      title: "Maths FE Teaching Jobs"
+      heading: "%{count} maths further education jobs"
+      meta_description: "Find maths teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    motor-vehicle-fe-jobs:
+      name: "Motor vehicles (%{count})"
+      title: "Motor Vehicle FE Teaching Jobs"
+      heading: "%{count} motor vehicle further education jobs"
+      meta_description: "Find motor vehicle teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    music-fe-jobs:
+      name: "Music (%{count})"
+      title: "Music FE Teaching Jobs"
+      heading: "%{count} music further education jobs"
+      meta_description: "Find music teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    people-management-fe-jobs:
+      name: "People management (%{count})"
+      title: "People Management FE Teaching Jobs"
+      heading: "%{count} people management further education jobs"
+      meta_description: "Find people management teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    philosophy-fe-jobs:
+      name: "Philosophy (%{count})"
+      title: "Philosophy FE Teaching Jobs"
+      heading: "%{count} philosophy further education jobs"
+      meta_description: "Find philosophy teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    photography-fe-jobs:
+      name: "Photography (%{count})"
+      title: "Photography FE Teaching Jobs"
+      heading: "%{count} photography further education jobs"
+      meta_description: "Find photography teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    physical-education-fe-jobs:
+      name: "Physical education (%{count})"
+      title: "Physical education FE Teaching Jobs"
+      heading: "%{count} physical education further education jobs"
+      meta_description: "Find physical education teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    physics-fe-jobs:
+      name: "Physics (%{count})"
+      title: "Physics FE Teaching Jobs"
+      heading: "%{count} physics further education jobs"
+      meta_description: "Find physics teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    plumbing-and-heating-fe-jobs:
+      name: "Plumbing and heating (%{count})"
+      title: "Plumbing and Heating FE Teaching Jobs"
+      heading: "%{count} plumbing and heating further education jobs"
+      meta_description: "Find plumbing and heating teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    politics-fe-jobs:
+      name: "Politics (%{count})"
+      title: "Politics FE Teaching Jobs"
+      heading: "%{count} politics further education jobs"
+      meta_description: "Find politics teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    pshe-fe-jobs:
+      name: "PSHE (%{count})"
+      title: "PSHE FE Teaching Jobs"
+      heading: "%{count} PSHE further education jobs"
+      meta_description: "Find PSHE teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    psychology-fe-jobs:
+      name: "Psychology (%{count})"
+      title: "Psychology FE Teaching Jobs"
+      heading: "%{count} psychology further education jobs"
+      meta_description: "Find psychology teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    public-services-fe-jobs:
+      name: "Public services (%{count})"
+      title: "Public Services FE Teaching Jobs"
+      heading: "%{count} public services further education jobs"
+      meta_description: "Find public services teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    religious-education-fe-jobs:
+      name: "Religious education (%{count})"
+      title: "Religious Education FE Teaching Jobs"
+      heading: "%{count} religious education further education jobs"
+      meta_description: "Find religious education teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    science-fe-jobs:
+      name: "Science (%{count})"
+      title: "Science FE Teaching Jobs"
+      heading: "%{count} science further education jobs"
+      meta_description: "Find science teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    sociology-fe-jobs:
+      name: "Sociology (%{count})"
+      title: "Sociology FE Teaching Jobs"
+      heading: "%{count} sociology further education jobs"
+      meta_description: "Find sociology teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    spanish-fe-jobs:
+      name: "Spanish (%{count})"
+      title: "Spanish FE Teaching Jobs"
+      heading: "%{count} Spanish further education jobs"
+      meta_description: "Find Spanish teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    sport-and-leisure-fe-jobs:
+      name: "Sport and leisure (%{count})"
+      title: "Sport and Leisure FE Teaching Jobs"
+      heading: "%{count} sport and leisure further education jobs"
+      meta_description: "Find sport and leisure teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    sports-science-fe-jobs:
+      name: "Sports science (%{count})"
+      title: "Sports Science FE Teaching Jobs"
+      heading: "%{count} sports science further education jobs"
+      meta_description: "Find sports science teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    tourism-fe-jobs:
+      name: "Tourism (%{count})"
+      title: "Tourism FE Teaching Jobs"
+      heading: "%{count} tourism further education jobs"
+      meta_description: "Find tourism teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    welsh-fe-jobs:
+      name: "Welsh (%{count})"
+      title: "Welsh FE Teaching Jobs"
+      heading: "%{count} Welsh further education jobs"
+      meta_description: "Find Welsh teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+    woodworking-joinery-and-carpentry-fe-jobs:
+      name: "Woodwork joinery and carpentry (%{count})"
+      title: "Woodworking, Joinery and Carpentry FE Teaching Jobs"
+      heading: "%{count} woodworking, joinery and carpentry further education jobs"
+      meta_description: "Find woodworking, joinery and carpentry teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+
     ### Working patterns
     flexible-working-jobs-in-schools:
-      name: "Flexible working"
+      name: "Flexible working (%{count})"
       title: "Flexible Working Jobs in Schools"
       heading: "%{count} flexible working jobs in schools"
       meta_description: "The latest jobs in schools near you that offer flexible working. Find roles that allow you to work varied hours to suit your individual circumstances."
     full-time-school-jobs:
-      name: "Full time"
+      name: "Full time (%{count})"
       title: "Full Time Jobs in Schools"
       heading: "%{count} full time jobs in schools"
       meta_description: "Discover thousands of full time jobs in schools. Teaching Vacancies has full time jobs for teachers, headteachers, SEND coordinators and more."
+    full-time-fe-jobs:
+      name: "Full time (%{count})"
+      title: "Full Time Jobs in Colleges"
+      heading: "%{count} full time jobs in colleges"
+      meta_description: "Discover thousands of full time jobs in colleges. Teaching Vacancies has full time jobs for teachers, headteachers, SEND coordinators and more."
     part-time-school-jobs:
-      name: "Part time"
+      name: "Part time (%{count})"
       title: "Part Time Teaching and School Jobs"
       heading: "%{count} part time teacher and school jobs"
       meta_description: "Find and apply for part time teacher jobs near you. Discover jobs in local schools that offer flexible hours for teachers, teaching assistants and more."
+    part-time-fe-jobs:
+      name: "Part time (%{count})"
+      title: "Part Time College Jobs"
+      heading: "%{count} part time teacher and college jobs"
+      meta_description: "Find and apply for part time teacher jobs near you. Discover jobs in local colleges that offer flexible hours for teachers, teaching assistants and more."
     school-job-shares:
-      name: "Job share"
+      name: "Job share (%{count})"
       title: "Job Shares for Teachers and School Staff"
       heading: "%{count} job share vacancies for teachers and school staff"
       meta_description: "Find a school job that works with your schedule. Apply on Teaching Vacancies for job share jobs for teachers, headteachers and teaching assistants."
+    fe-job-shares:
+      name: "Job share (%{count})"
+      title: "Job Shares for Teachers and College Staff"
+      heading: "%{count} job share vacancies for teachers and college staff"
+      meta_description: "Find a college job that works with your schedule. Apply on Teaching Vacancies for job share jobs for teachers, headteachers and teaching assistants."
     school-term-time-jobs:
-      name: "Term time"
+      name: "Term time (%{count})"
       title: "School Term Time Jobs"
       heading: "%{count} school term time jobs"
       meta_description: "Looking for work that fits around school term time? Discover hundreds of term time only jobs in schools near you on Teaching Vacancies."
@@ -334,7 +763,7 @@ en:
     # sure to add all real landing pages above.
     ################################################################################################
     part-time-potions-and-sorcery-teacher-jobs:
-      name: "Potions and Sorcery"
+      name: "Potions and Sorcery (%{count})"
       banner_title: "Spiffy Part Time Potions and Sorcery Jobs"
       title: "Spiffy Part Time Potions and Sorcery Jobs"
       heading: "%{count} amazing jobs APPLY NOW"

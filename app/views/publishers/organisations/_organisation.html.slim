@@ -42,10 +42,11 @@
     - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_website_path(organisation), classes: "govuk-link--no-visited-state", visually_hidden_text: t("publishers.organisations.organisation.website.label")
 
   - summary_list.with_row(html_attributes: { id: "description" }) do |row|
-    - row.with_key text: t("publishers.organisations.organisation.description.label.#{organisation.school? ? :school : :organisation}")
+    - description_type = organisation_label(organisation).downcase.to_sym
+    - row.with_key text: t("publishers.organisations.organisation.description.label.#{description_type}")
     - row.with_value do
-      = required_profile_info(value: organisation.description, missing_prompt: t("publishers.organisations.organisation.description.missing_prompt.#{organisation.school? ? :school : :organisation}"))
-    - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_description_path(organisation), classes: "govuk-link--no-visited-state", visually_hidden_text: t("publishers.organisations.organisation.description.label.#{organisation.school? ? :school : :organisation}")
+      = required_profile_info(value: organisation.description, missing_prompt: t("publishers.organisations.organisation.description.missing_prompt.#{description_type}"))
+    - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_description_path(organisation), classes: "govuk-link--no-visited-state", visually_hidden_text: t("publishers.organisations.organisation.description.label.#{description_type}")
 
   - summary_list.with_row(html_attributes: { id: "safeguarding_information" }) do |row|
     - row.with_key text: t("publishers.organisations.organisation.safeguarding_information.label")

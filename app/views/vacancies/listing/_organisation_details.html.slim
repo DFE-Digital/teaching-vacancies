@@ -30,11 +30,12 @@ section#school-overview
   - if organisation_map_can_be_displayed?(vacancy)
     section#school-location
       h3.govuk-heading-l.heading--border-bottom
+        - school_type = vacancy.for_an_fe_college? ? "College" : "School"
         - if vacancy.central_office?
           = t("organisations.locations.central_office", organisation: vacancy.organisation_name)
         - elsif vacancy.organisations.many?
-          = t("organisations.locations.at_multiple_schools")
+          = t("organisations.locations.at_multiple_schools", school_type: school_type)
         - else
-          = t("organisations.locations.at_one_school", organisation: vacancy.organisation_name)
+          = t("organisations.locations.at_one_school", organisation: vacancy.organisation_name, school_type: school_type)
 
       = map(markers: vacancy_organisations_map_markers(vacancy), marker: { type: "organisation", tracking: { link: "school_website_from_map" } })

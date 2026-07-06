@@ -100,11 +100,11 @@ en:
       skip_link_list: Skip to candidate profiles
       trusts:
         available_to_travel_text:
-          single_selected_location: "These candidates are willing to travel to your selected school location."
-          selected_locations: "These candidates are willing to travel to at least one of your selected school locations."
-          all_locations:  "These candidates are willing to travel to a location that's near to at least one of your schools."
+          single_selected_location: "These candidates are willing to travel to your selected school or college location."
+          selected_locations: "These candidates are willing to travel to at least one of your selected school or college locations."
+          all_locations:  "These candidates are willing to travel to a location that's near to at least one of your schools or colleges."
       non_trusts:
-        available_to_travel_text: "These candidates are willing to travel to a location that’s near to your school."
+        available_to_travel_text: "These candidates are willing to travel to a location that’s near to your school or college."
       index:
         title: "Candidate profiles - %{organisation_name}"
         no_results:
@@ -156,7 +156,7 @@ en:
           on_track: On track to receive QTS
           "yes": Gained QTS
         role_options:
-          teacher: Teacher
+          teacher: Teacher or Lecturer
           head_of_year_or_phase: Head of year or phase
           head_of_department_or_curriculum: Head of department or curriculum
           assistant_headteacher: Assistant headteacher
@@ -241,9 +241,11 @@ en:
           missing_prompt:
             school: Enter a school description
             organisation: Enter an organisation description
+            college: Enter a college description
           label:
             school: School description
             organisation: Organisation description
+            college: College description
         email:
           label: Email address
           missing_prompt: Enter an email address
@@ -299,11 +301,11 @@ en:
           page_title: Schools - %{school_group_name}
       show:
         preview_link_text: Preview %{organisation_type} profile
-        schools: Schools
+        schools: Schools and colleges
         title: '%{organisation_type} profile'
         profile_incomplete_banner:
           title: Complete your %{organisation_type} profile
-        complete_school_profile: Complete your school profile
+        complete_school_profile: Complete your school or college profile
       update_success: "%{organisation_type} details updated"
       upload_a_file: Upload a file
       url_override:
@@ -457,6 +459,16 @@ en:
           step_title: Receiving applications
         application_process:
           step_title: Application process
+        confirm_job_address:
+          step_title: Confirm job address
+          hint: Use this page to change the address for this job. Leave these fields blank to use the default address.
+          default_address_label: Default address
+          change_address_label: Change the address for this job listing
+          address_line1: Address line 1
+          address_line2: Address line 2 (optional)
+          town: Town or city
+          county: County (optional)
+          postcode: Postcode
         contact_details:
           step_title: Contact details
         documents:
@@ -689,7 +701,9 @@ en:
         application_form: Receiving applications
         religious_information: Applicants religious information
         school_visits: Do you want to offer school visits?
+        college_visits: Do you want to offer college visits?
         contact_details: Contact details
+        confirm_job_address: Confirm job address
         confirm_contact_details: Check this email address
         about_the_role: About the role
         include_additional_documents: Do you want to upload any additional documents?

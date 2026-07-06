@@ -84,13 +84,13 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
                         "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
                           "EstablishmentTypeGroup (name),TypeOfEstablishment (name)," \
                           "ReligiousCharacter (name),EstablishmentStatus (name),County (name),LA (name)," \
-                          "StatutoryHighAge,StatutoryLowAge,GOR (name),PhaseOfEducation (code)," \
+                          "StatutoryHighAge,StatutoryLowAge,GOR (name),PhaseOfEducation (code),UKPRN," \
                           "SchoolWebsite,Street," \
                           "Town,Postcode\n" \
                           "100000,St John\x92s School,999," \
                           "Independent schools,Other independent school," \
                           "None,Open,Hampshire,," \
-                          "11,7,Region,0," \
+                          "11,7,Region,0,11111," \
                           "http://test.com,?,?,?")
       end
 
@@ -109,13 +109,13 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
                         "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
                           "EstablishmentTypeGroup (name),TypeOfEstablishment (name)," \
                           "ReligiousCharacter (name),EstablishmentStatus (name),County (name),LA (name)," \
-                          "StatutoryHighAge,StatutoryLowAge,GOR (name),PhaseOfEducation (code)," \
+                          "StatutoryHighAge,StatutoryLowAge,GOR (name),PhaseOfEducation (code),UKPRN," \
                           "SchoolWebsite,Street," \
                           "Town,Postcode\n" \
                           "100000,St John\x92s School,999," \
                           "Invalid school type,Other independent school," \
                             "None,Open,Hampshire,," \
-                          "11,7,Region,0," \
+                            "11,7,Region,0,11111," \
                           "http://test.com,?,?,?")
       end
 
@@ -133,13 +133,13 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
                         "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
                           "EstablishmentTypeGroup (name),TypeOfEstablishment (name)," \
                           "ReligiousCharacter (name),EstablishmentStatus (name),County (name),LA (name)," \
-                          "StatutoryHighAge,StatutoryLowAge,GOR (name),PhaseOfEducation (code)," \
+                          "StatutoryHighAge,StatutoryLowAge,GOR (name),PhaseOfEducation (code),UKPRN," \
                           "SchoolWebsite,Street," \
                           "Town,Postcode\n" \
                           "100000,St John\x92s School,999," \
                           "Independent schools,Other independent school," \
                             "None,Open,Hampshire,," \
-                          "11,7,Region,0," \
+                            "11,7,Region,0,11111," \
                           "test.com,?,?,?")
         subject.call
         expect(example_school.url).to eq("http://test.com")
@@ -153,13 +153,13 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
                         "URN,EstablishmentName,EstablishmentTypeGroup (code)," \
                           "EstablishmentTypeGroup (name),TypeOfEstablishment (name)," \
                           "ReligiousCharacter (name),EstablishmentStatus (name),County (name),LA (name)," \
-                          "StatutoryHighAge,StatutoryLowAge,GOR (name),PhaseOfEducation (code)," \
+                          "StatutoryHighAge,StatutoryLowAge,GOR (name),PhaseOfEducation (code),UKPRN," \
                           "SchoolWebsite,Street," \
                           "Town,Postcode\n" \
                           "100000,St John\x92s School,999," \
                           "Independent schools,Other independent school," \
                             "None,Open,Hampshire,," \
-                          "11,7,Region,0," \
+                            "11,7,Region,0,11111," \
                           ",?,?,?")
         subject.call
         expect(example_school.url).to be_nil

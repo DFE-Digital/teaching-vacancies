@@ -16,6 +16,10 @@ module VacancyChecks
     phases.intersect?(allowed_phases) && job_roles.intersect?(allowed_roles)
   end
 
+  def for_an_fe_college?
+    organisation&.fe_college?
+  end
+
   def allow_subjects?
     phases.any? { |phase| phase.in? %w[secondary sixth_form_or_college through] }
   end

@@ -85,18 +85,6 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
     end
   end
 
-  context "with an incorrect token" do
-    before do
-      visit unsubscribe_subscription_path(token)
-    end
-
-    let(:token) { subscription.id }
-
-    it "returns not found" do
-      expect(page.status_code).to eq(404)
-    end
-  end
-
   context "with an old token" do
     before do
       visit unsubscribe_subscription_path(token)

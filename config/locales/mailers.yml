@@ -3,7 +3,7 @@ en:
     footer: >-
       %{home_page_link} is a free job-listing service from the Department for Education. It helps schools to save money
       on recruitment and you to take the next step in your career.
-    jobseeker_footer: "%{home_page_link} is a free job-listing service from the Department for Education. It helps you find the right jobs in schools and take the next step in your career."
+    jobseeker_footer: "%{home_page_link} is a free job-listing service from the Department for Education. It helps you find the right jobs and take the next step in your career."
   admins:
   jobseekers:
     peak_times_mailer:

@@ -24,6 +24,7 @@ module PageObjects
         publisher_ats_job_feedback_date: "Publisher::Ats::FeedbackTagPage",
         publisher_include_additional_documents: "Publisher::IncludeAdditionalDocumentsPage",
         publisher_job_title: "Publisher::JobTitlePage",
+        publisher_confirm_job_address: "Publisher::ConfirmJobAddressPage",
         publisher_pay_package: "Publisher::PayPackagePage",
         publisher_application_form: "Publisher::ApplicationFormPage",
         publisher_important_dates: "Publisher::ImportantDatesPage",

@@ -2,15 +2,12 @@ require "rails_helper"
 
 RSpec.describe "vacancies/show" do
   before do
-    if jobseeker.present?
-      sign_in(jobseeker, scope: :jobseeker)
-      allow(view).to receive_messages(current_jobseeker: jobseeker)
-    end
+    create(:location_polygon, name: "hertfordshire")
+
+    allow(view).to receive_messages(current_jobseeker: jobseeker)
     assign :vacancy, vacancy.decorate
     render
   end
-
-  after { sign_out jobseeker if jobseeker.present? }
 
   describe "job posting metadata" do
     let(:jobseeker) { nil }
@@ -101,6 +98,18 @@ RSpec.describe "vacancies/show" do
         end
       end
 
+      context "with a college vacancy" do
+        let(:expected_link) { I18n.t("jobs.view_advert.college", href: "http://www.google.com") }
+        let(:vacancy) do
+          build_stubbed(:vacancy, :apply_via_website,
+                        application_link: "www.google.com", organisations: [build(:college)])
+        end
+
+        it "uses college wording for the application link" do
+          expect(rendered).to have_link(expected_link)
+        end
+      end
+
       context "with an expired vacancy" do
         let(:vacancy) do
           build_stubbed(:vacancy, :expired, :apply_via_website,
@@ -156,6 +165,29 @@ RSpec.describe "vacancies/show" do
     end
   end
 
+  describe "location text" do
+    let(:jobseeker) { nil }
+    let(:vacancy) { build_stubbed(:vacancy, organisations: [school]) }
+
+    context "with a school" do
+      let(:school) { build_stubbed(:school, town: "St Albans", county: "Hertfordshire") }
+
+      it "has school wording" do
+        expect(rendered).to have_content("School location")
+        expect(rendered).to have_content("Find more school jobs")
+      end
+    end
+
+    context "with an FE college" do
+      let(:school) { build_stubbed(:college, town: "St Albans", county: "Hertfordshire") }
+
+      it "has college wording" do
+        expect(rendered).to have_content("College location")
+        expect(rendered).to have_content("Find more college jobs")
+      end
+    end
+  end
+
   # Please notify performance analyst (currently Johnathan Chambers) if you change this test
   # as it reflects the binding between the application and the Floodlight tags in GA
   describe "floodlight tags" do
@@ -177,6 +209,14 @@ RSpec.describe "vacancies/show" do
       end
     end
 
+    describe "View advert on college website" do
+      let(:vacancy) { build_stubbed(:vacancy, :apply_via_website, organisations: [build(:college)]) }
+
+      it "has the correct text" do
+        expect(rendered).to have_content("View advert on college website (opens in new tab)")
+      end
+    end
+
     describe "Download an application form" do
       let(:vacancy) { create(:vacancy, :with_application_form) }
 
@@ -190,6 +230,14 @@ RSpec.describe "vacancies/show" do
 
       it "has the correct text" do
         expect(rendered).to have_content("View advert on external website (opens in new tab)")
+      end
+    end
+
+    describe "External college notice" do
+      let(:vacancy) { build_stubbed(:vacancy, :external, organisations: [build(:college)]) }
+
+      it "uses college wording" do
+        expect(rendered).to have_content("This college accepts applications through their own website")
       end
     end
   end

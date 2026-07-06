@@ -180,7 +180,7 @@ class SubscriptionsController < ApplicationController
                                     :location,
                                     :organisation_slug,
                                     :radius,
-                                    { teaching_job_roles: [], support_job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [], visa_sponsorship_availability: [] }])
+                                    { teaching_job_roles: [], support_job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [], visa_sponsorship_availability: [], organisation_types: [], school_types: [] }])
   end
 
   def subscription_params

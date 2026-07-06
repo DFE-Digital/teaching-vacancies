@@ -1,6 +1,13 @@
 en:
+  helpers:
+    label:
+      college_search_form:
+        name: Name of College
+
   organisations:
     school_type: School type
+    college_type: College type
+    organisation_type: Type
     other_type: Type
 
     filters:
@@ -13,6 +20,10 @@ en:
         label: Job availability
         options:
           true: Only show school with jobs available
+      college_job_availability:
+        label: Job availability
+        options:
+          true: Only show colleges with jobs available
     about:
       at_one_school: About %{organisation}
       at_multiple_schools: About the schools
@@ -26,8 +37,8 @@ en:
       at_multiple_locations_with_count: More than one location (%{count})
       central_office: Head office
     locations:
-      at_one_school: School location
-      at_multiple_schools: School locations
+      at_one_school: '%{school_type} location'
+      at_multiple_schools: '%{school_type} locations'
       central_office: Head office location
     map:
       heading: Location and map

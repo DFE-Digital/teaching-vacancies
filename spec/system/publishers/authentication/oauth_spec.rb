@@ -226,7 +226,7 @@ RSpec.describe "Publisher authentication" do
       before do
         stub_publisher_authentication_step(
           email: dsi_email_address,
-          establishment_type: { id: "18", name: "Further education" },
+          establishment_type: { id: "49", name: "Online provider" },
         )
         stub_publisher_authorisation_step
       end
@@ -237,7 +237,28 @@ RSpec.describe "Publisher authentication" do
         visit new_publisher_session_path
         sign_in_publisher
         expect(page.status_code).to eq(403) # Forbidden
-        expect(page).to have_content("You are trying to sign in to Teaching Vacancies on behalf of FooBar organisation, which is an establishment of type \"Further education\". This type of establishment is not supported by Teaching Vacancies.")
+        expect(page).to have_content("You are trying to sign in to Teaching Vacancies on behalf of FooBar organisation, which is an establishment of type \"Online provider\". This type of establishment is not supported by Teaching Vacancies.")
+      end
+    end
+
+    context "with a college not part of private beta" do
+      let(:school) { create(:college, :discarded) }
+
+      before do
+        stub_publisher_authentication_step(
+          email: dsi_email_address,
+          school_urn: school.urn.to_s,
+        )
+        stub_publisher_authorisation_step
+      end
+
+      it "records an error in sentry and shows the unsupported establishment type page" do
+        expect(Sentry).to receive(:capture_exception).with(an_instance_of(OmniauthCallbacksController::EstablishmentNotRegistered))
+
+        visit new_publisher_session_path
+        sign_in_publisher
+        expect(page.status_code).to eq(403) # Forbidden
+        expect(page).to have_content("You are trying to sign in to Teaching Vacancies on behalf of FooBar organisation. This establishment is not registered with Teaching Vacancies.")
       end
     end
 
