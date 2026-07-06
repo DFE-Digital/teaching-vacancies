@@ -17,7 +17,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  background-color: #ffffff;
+  background-color: #fff;
   border: 1px solid #b1b4b6;
   max-width: 400px;
 
@@ -41,11 +41,11 @@
   &:focus-within p,
   &:hover .govuk-heading-m,
   &:focus-within .govuk-heading-m {
-    color: #ffffff;
+    color: #fff;
   }
 
   &:focus-within {
-    outline: 3px solid #ffdd00;
+    outline: 3px solid #fd0;
   }
 }
 
@@ -71,7 +71,7 @@
 
   &::after {
     position: absolute;
-    content: "";
+    content: '';
     left: 0;
     top: 0;
     right: 0;
