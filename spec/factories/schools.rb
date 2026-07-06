@@ -83,6 +83,10 @@ FactoryBot.define do
     trait :profile_incomplete do
       description { nil }
     end
+
+    trait :discarded do
+      discarded_at { Time.current }
+    end
   end
 
   trait :free_school do

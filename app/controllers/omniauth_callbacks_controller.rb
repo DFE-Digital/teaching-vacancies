@@ -7,6 +7,9 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   class EstablishmentTypeNotSupported < StandardError; end
   rescue_from EstablishmentTypeNotSupported, with: :unsupported_establishment_type
 
+  class EstablishmentNotRegistered < StandardError; end
+  rescue_from EstablishmentNotRegistered, with: :establishment_not_registered
+
   def dfe
     authorisation = Publishers::DfeSignIn::Authorisation.new(organisation_id: organisation_id, user_id: user_id)
 
@@ -29,18 +32,30 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def unknown_organisation_category(exception)
+    @org_name = org_data.fetch("name")
+    @org_type = org_data.dig("category", "name")
+
     render_unsupported_organisation(
       exception,
       template: "unknown_organisation_category",
-      org_type: auth_hash.dig("extra", "raw_info", "organisation", "category", "name"),
     )
   end
 
   def unsupported_establishment_type(exception)
+    @org_name = org_data.fetch("name")
+    @org_type = org_data.dig("type", "name")
+
     render_unsupported_organisation(
       exception,
       template: "unsupported_establishment_type",
-      org_type: auth_hash.dig("extra", "raw_info", "organisation", "type", "name"),
+    )
+  end
+
+  def establishment_not_registered(exception)
+    @org_name = org_data.fetch("name")
+    render_unsupported_organisation(
+      exception,
+      template: "unregistered_establishment",
     )
   end
 
@@ -69,16 +84,13 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   private
 
-  def render_unsupported_organisation(exception, template:, org_type:)
-    @org_name = auth_hash.dig("extra", "raw_info", "organisation", "name")
-    @org_type = org_type
-
+  def render_unsupported_organisation(exception, template:)
     Sentry.with_scope do |scope|
       scope.set_context(
         "Authentication Organisation Context",
         {
           user_id: user_id,
-          auth_organisation: auth_hash.dig("extra", "raw_info", "organisation"),
+          auth_organisation: org_data,
         },
       )
       Sentry.capture_exception(exception)
@@ -87,11 +99,11 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     render template, status: :forbidden
   end
 
-  def ensure_establishment_type_supported!
-    type_id = auth_hash.dig("extra", "raw_info", "organisation", "type", "id")
-    return unless Publishers::DfeSignIn::OrgIdMappings.out_of_scope_type?(type_id)
+  def find_school(urn)
+    type_id = org_data.dig("type", "id")
+    raise EstablishmentTypeNotSupported, "Organisation type ID `#{type_id}`" if Publishers::DfeSignIn::OrgIdMappings.out_of_scope_type?(type_id)
 
-    raise EstablishmentTypeNotSupported, "Organisation type ID `#{type_id}`"
+    School.kept.find_by(urn: urn).presence || raise(EstablishmentNotRegistered, "Organisation urn #{urn} not enabled")
   end
 
   def auth_hash
@@ -103,23 +115,26 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def organisation_id
-    auth_hash.dig("extra", "raw_info", "organisation", "id")
+    org_data.fetch("id")
   end
 
   def id_token
     auth_hash.dig("credentials", "id_token")
   end
 
+  def org_data
+    auth_hash.dig("extra", "raw_info", "organisation")
+  end
+
   def organisation_from_request
     # https://github.com/DFE-Digital/login.dfe.public-api#how-do-ids-map-to-categories-and-types
-    case (cat_id = auth_hash.dig("extra", "raw_info", "organisation", "category", "id"))
+    case (cat_id = org_data.dig("category", "id"))
     when Publishers::DfeSignIn::OrgIdMappings::CATEGORIES[:single_establishment]
-      ensure_establishment_type_supported!
-      School.find_by!(urn: auth_hash.dig("extra", "raw_info", "organisation", "urn"))
+      find_school org_data.fetch("urn")
     when Publishers::DfeSignIn::OrgIdMappings::CATEGORIES[:local_authority]
-      SchoolGroup.find_by!(local_authority_code: auth_hash.dig("extra", "raw_info", "organisation", "establishmentNumber"))
+      SchoolGroup.find_by!(local_authority_code: org_data.fetch("establishmentNumber"))
     when Publishers::DfeSignIn::OrgIdMappings::CATEGORIES[:multi_academy_trust]
-      SchoolGroup.find_by!(uid: auth_hash.dig("extra", "raw_info", "organisation", "uid"))
+      SchoolGroup.find_by!(uid: org_data.fetch("uid"))
     when Publishers::DfeSignIn::OrgIdMappings::CATEGORIES[:single_academy_trust]
       # If the user is trying to sign in as a single-academy trust, try and find the school
       # contained within the trust and use that instead
