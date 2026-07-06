@@ -3,17 +3,14 @@ class Jobseekers::JobApplications::TrainingAndCpdsController < Jobseekers::BaseC
   before_action :set_training_and_cpd, only: %i[edit update destroy]
 
   def new
-    @form = Jobseekers::TrainingAndCpdForm.new({})
+    @training_and_cpd = @job_application.training_and_cpds.build
   end
 
-  def edit
-    @form = Jobseekers::TrainingAndCpdForm.new(@training_and_cpd.slice(:name, :provider, :grade, :year_awarded, :course_length))
-  end
+  def edit; end
 
   def create
-    @form = Jobseekers::TrainingAndCpdForm.new(training_and_cpd_form_params)
-    if @form.valid?
-      @job_application.training_and_cpds.create!(training_and_cpd_form_params)
+    @training_and_cpd = @job_application.training_and_cpds.build(training_and_cpd_form_params)
+    if @training_and_cpd.save
       redirect_to back_path
     else
       render :new
@@ -21,9 +18,7 @@ class Jobseekers::JobApplications::TrainingAndCpdsController < Jobseekers::BaseC
   end
 
   def update
-    @form = Jobseekers::TrainingAndCpdForm.new(training_and_cpd_form_params)
-    if @form.valid?
-      @training_and_cpd.update!(training_and_cpd_form_params)
+    if @training_and_cpd.update(training_and_cpd_form_params)
       redirect_to back_path
     else
       render :edit

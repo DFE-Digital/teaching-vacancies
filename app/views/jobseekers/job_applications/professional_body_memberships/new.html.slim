@@ -3,7 +3,7 @@
 span.govuk-caption-l = t(".page_title")
 h1.govuk-heading-xl = t(".heading")
 
-= form_for @form, url: jobseekers_job_application_professional_body_memberships_path(job_application), method: :post do |f|
+= form_with model: @model, scope: :jobseekers_professional_body_membership_form, url: jobseekers_job_application_professional_body_memberships_path(job_application), method: :post do |f|
   = f.govuk_error_summary
 
   = render "fields", f: f

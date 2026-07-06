@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Jobseekers::ProfessionalBodyMembershipForm, type: :model do
+RSpec.describe ProfessionalBodyMembership do
   subject(:form) do
     described_class.new(
       name: name,
@@ -8,6 +8,7 @@ RSpec.describe Jobseekers::ProfessionalBodyMembershipForm, type: :model do
       membership_number: membership_number,
       year_membership_obtained: year_membership_obtained,
       exam_taken: exam_taken,
+      job_application: build_stubbed(:job_application),
     )
   end
 
@@ -43,7 +44,10 @@ RSpec.describe Jobseekers::ProfessionalBodyMembershipForm, type: :model do
     end
 
     context "when only attributes present are name and exam_taken" do
-      let(:form) { described_class.new(name: name, exam_taken: exam_taken) }
+      let(:form) do
+        described_class.new(name: name, exam_taken: exam_taken,
+                            job_application: build_stubbed(:job_application))
+      end
 
       it "is valid" do
         expect(form).to be_valid

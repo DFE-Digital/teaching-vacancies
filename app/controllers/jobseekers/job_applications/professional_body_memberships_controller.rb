@@ -1,19 +1,18 @@
 class Jobseekers::JobApplications::ProfessionalBodyMembershipsController < Jobseekers::BaseController
-  helper_method :back_path, :job_application, :professional_body_membership
+  helper_method :back_path, :job_application
+
+  before_action :set_model, only: %i[edit update destroy]
 
   def new
-    @form = Jobseekers::ProfessionalBodyMembershipForm.new
+    @model = job_application.professional_body_memberships.build
   end
 
-  def edit
-    @form = Jobseekers::ProfessionalBodyMembershipForm.new(professional_body_membership.slice(:name, :membership_type, :membership_number, :year_membership_obtained, :exam_taken))
-  end
+  def edit; end
 
   def create
-    @form = Jobseekers::ProfessionalBodyMembershipForm.new(professional_body_memberships_form_params)
+    @model = job_application.professional_body_memberships.build(professional_body_memberships_form_params)
 
-    if @form.valid?
-      job_application.professional_body_memberships.create!(professional_body_memberships_form_params)
+    if @model.save
       redirect_to back_path
     else
       render :new
@@ -21,10 +20,7 @@ class Jobseekers::JobApplications::ProfessionalBodyMembershipsController < Jobse
   end
 
   def update
-    @form = Jobseekers::ProfessionalBodyMembershipForm.new(professional_body_memberships_form_params)
-
-    if @form.valid?
-      professional_body_membership.update!(professional_body_memberships_form_params)
+    if @model.update(professional_body_memberships_form_params)
       redirect_to back_path
     else
       render :edit
@@ -32,7 +28,7 @@ class Jobseekers::JobApplications::ProfessionalBodyMembershipsController < Jobse
   end
 
   def destroy
-    professional_body_membership.destroy!
+    @model.destroy!
     redirect_to back_path, success: t(".success")
   end
 
@@ -40,8 +36,8 @@ class Jobseekers::JobApplications::ProfessionalBodyMembershipsController < Jobse
     params.expect(jobseekers_professional_body_membership_form: %i[name membership_type membership_number year_membership_obtained exam_taken])
   end
 
-  def professional_body_membership
-    @professional_body_membership ||= job_application.professional_body_memberships.find(params[:id] || params[:professional_body_membership_id])
+  def set_model
+    @model = job_application.professional_body_memberships.find(params[:id] || params[:professional_body_membership_id])
   end
 
   def job_application
