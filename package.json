@@ -22,7 +22,6 @@
     "chartkick": "^5.0.1",
     "classlist-polyfill": "^1.2.0",
     "core-js": "^3.49.0",
-    "dfe-frontend": "^2.0.1",
     "dompurify": "^3.4.11",
     "govuk-frontend": "^6.3.0",
     "leaflet": "^1.9.4",

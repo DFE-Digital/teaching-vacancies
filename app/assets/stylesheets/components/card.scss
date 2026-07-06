@@ -1,5 +1,97 @@
 @import 'base';
 
+.dfe-grid-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+
+  @include govuk-media-query($from: tablet) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+  }
+}
+
+.dfe-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border: 1px solid #b1b4b6;
+  max-width: 400px;
+
+  @include govuk-media-query($until: tablet) {
+    max-width: 100%;
+  }
+
+  > picture,
+  > picture > img {
+    max-width: 100%;
+  }
+
+  &:hover,
+  &:focus-within {
+    background-color: #003a69;
+  }
+
+  &:hover a,
+  &:focus-within a,
+  &:hover p,
+  &:focus-within p,
+  &:hover .govuk-heading-m,
+  &:focus-within .govuk-heading-m {
+    color: #ffffff;
+  }
+
+  &:focus-within {
+    outline: 3px solid #ffdd00;
+  }
+}
+
+.dfe-card-container {
+  padding: govuk-spacing(4);
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+
+  :last-child {
+    margin-top: auto;
+  }
+
+  h2 + p:last-child,
+  h3 + p:last-child {
+    margin-top: 0;
+  }
+}
+
+.dfe-card-link--header {
+  text-decoration: none;
+  color: #347ca9;
+
+  &::after {
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  &:focus {
+    color: #0b0c0c;
+  }
+}
+
+.dfe-card-link--retake {
+  position: relative;
+  z-index: 2;
+
+  &:focus {
+    color: #0b0c0c;
+  }
+}
+
 .card-component {
   @include govuk-font(16);
   border-bottom: 1px solid govuk-functional-colour(border);
