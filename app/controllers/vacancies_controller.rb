@@ -5,6 +5,9 @@ class VacanciesController < ApplicationController
 
   before_action :store_jobseeker_location, only: %i[show], if: :storable_location?
 
+  # Looking for a non-existant job should return a 404
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
   def index
     @vacancies_search = Search::VacancySearch.new(form.to_hash, sort: form.sort)
     @pagy, @vacancies = pagy(@vacancies_search.vacancies, count: @vacancies_search.total_count)
