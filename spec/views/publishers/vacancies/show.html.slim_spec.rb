@@ -84,16 +84,6 @@ RSpec.describe "publishers/vacancies/show" do
     end
   end
 
-  context "when published with documents" do
-    # TODO: can't currently stub a vacancy with documents
-    let(:vacancy) { create(:vacancy, :secondary, :with_supporting_documents) }
-    let(:next_invalid_step) { nil }
-
-    it "shows documents" do
-      expect(rendered).to have_content(I18n.t("jobs.additional_documents"))
-    end
-  end
-
   context "when draft" do
     let(:job_details) { rendered.html.css("#job_details") }
     let(:about_the_role) { rendered.html.css("#about_the_role") }

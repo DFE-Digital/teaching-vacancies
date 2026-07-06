@@ -11,4 +11,12 @@ module DocumentsHelper
       safe_join [t("jobs.upload_documents_table.actions.delete"), tag.span("application form", class: "govuk-visually-hidden")]
     end
   end
+
+  def document_filename(vacancy, document)
+    if document.blob.malware_scan_clean?
+      govuk_link_to "#{document.filename}, #{number_to_human_size(document.byte_size)}", job_document_path(vacancy, document.id)
+    else
+      "#{document.filename}, #{number_to_human_size(document.byte_size)}"
+    end
+  end
 end
