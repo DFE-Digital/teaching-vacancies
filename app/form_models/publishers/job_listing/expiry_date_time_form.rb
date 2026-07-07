@@ -1,0 +1,55 @@
+# frozen_string_literal: true
+
+module Publishers
+  module JobListing
+    class ExpiryDateTimeForm < JobListingForm
+      include ActiveRecord::AttributeAssignment
+      include DateAttributeAssignment
+
+      attr_writer :completed_steps, :current_organisation
+
+      attr_accessor :expiry_time, :publish_on
+      attr_reader :expires_at
+
+      validates :expires_at, date: { on_or_after: :now, on_or_before: :far_future, after: :publish_on }
+      validates :expiry_time, inclusion: { in: Vacancy::EXPIRY_TIME_OPTIONS }
+
+      class << self
+        def fields
+          %i[expires_at]
+        end
+
+        def load_from_params(form_params, vacancy, current_publisher:) # rubocop:disable Lint/UnusedMethodArgument
+          new(form_params.merge(publish_on: vacancy.publish_on))
+        end
+
+        def args_from_vacancy(vacancy)
+          { expires_at: vacancy.expires_at, expiry_time: vacancy.expires_at&.strftime("%k:%M")&.strip }
+        end
+
+        def load_from_model(vacancy, current_publisher:) # rubocop:disable Lint/UnusedMethodArgument
+          new(args_from_vacancy(vacancy))
+        end
+      end
+
+      # def initialize(params)
+      #   @expiry_time = params[:expiry_time] || params[:expires_at]&.strftime("%k:%M")&.strip
+      #
+      #   super
+      # end
+
+      def params_to_save
+        { expires_at: expires_at }
+      end
+
+      def expires_at=(value)
+        expires_on = date_from_multiparameter_hash(value)
+        @expires_at = datetime_from_date_and_time(expires_on, expiry_time)
+      end
+
+      def steps_to_reset
+        []
+      end
+    end
+  end
+end
