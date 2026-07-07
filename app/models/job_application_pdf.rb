@@ -246,8 +246,7 @@ class JobApplicationPdf
     end
   end
 
-  # rubocop:disable Metrics/MethodLength
-  def religious_reference_data(religious_reference_type)
+  def religious_reference_data(religious_reference_type) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     case religious_reference_type
     when "religious_referee"
       [
@@ -271,7 +270,6 @@ class JobApplicationPdf
       []
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
   attr_reader :job_application, :vacancy
 

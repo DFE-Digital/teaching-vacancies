@@ -160,7 +160,7 @@ Rails/BulkChangeTable:
 # We should consider slowly moving closer to the default settings.
 
 Metrics/AbcSize:
-  Max: 29 # Default 17
+  Max: 27 # Default 17
   Exclude:
     - "config/**/*"
     - "spec/**/*"

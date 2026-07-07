@@ -5,7 +5,7 @@ class Jobseekers::UploadedJobApplications::UploadApplicationFormsController < Jo
     @form = Jobseekers::UploadedJobApplication::UploadApplicationFormForm.new
   end
 
-  def update
+  def update # rubocop:disable Metrics/AbcSize
     # If no new application form is uploaded and there is already one attached, we can use the existing attachment, don't need to attach it again
     if !form_params[:application_form] && @job_application.application_form.attached?
       # an application form is already attached so we can pass it to the form and validate that it passed the antivirus scan
