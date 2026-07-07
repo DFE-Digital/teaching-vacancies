@@ -103,7 +103,7 @@ class SubscriptionsController < ApplicationController
   # These emails links to our service contain parameters in their URL, which values are used to pre-populate the
   # subscription form fields.
   # Some fields have default values unless explicitly set by a parameter.
-  def campaign_attributes
+  def campaign_attributes # rubocop:disable Metrics/AbcSize
     campaign = campaign_params
     {
       campaign: true,

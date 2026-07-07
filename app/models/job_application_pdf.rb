@@ -55,7 +55,7 @@ class JobApplicationPdf
     end
   end
 
-  def professional_status
+  def professional_status # rubocop:disable Metrics/AbcSize
     return @professional_status if @professional_status.present?
 
     scope = "helpers.legend.jobseekers_job_application_professional_status_form"
