@@ -23,9 +23,10 @@ module OrganisationsHelper
     OFSTED_REPORT_ENDPOINT + school.urn
   end
 
-  # :nocov:
   def organisation_type(organisation)
+    # :nocov:
     return organisation.group_type&.humanize if organisation.school_group?
+    # :nocov:
 
     school_type_details = [
       organisation.school_type.singularize,
@@ -35,7 +36,6 @@ module OrganisationsHelper
 
     school_type_details.reject(&:blank?).reject { |str| str == I18n.t("vacancies.listing.schools.not_given") }.join(", ")
   end
-  # :nocov:
 
   def organisation_types(organisations)
     organisations.select(&:school?).group_by { |org| [org.school_type, org.religious_character] }.map do |type, orgs_by_type|
@@ -80,16 +80,6 @@ module OrganisationsHelper
       "school_group"
     end
   end
-
-  # :nocov
-  def school_or_trust_visits(organisation)
-    if organisation.trust?
-      "trust_visits_html"
-    else
-      "school_visits_html"
-    end
-  end
-  # :nocov:
 
   # :nocov:
   def school_size(school)
