@@ -51,7 +51,7 @@ class Geocoding
     end
   end
 
-  def postcode_from_coordinates
+  def postcode_from_coordinates # rubocop:disable Metrics/AbcSize
     Rails.cache.fetch([:postcode_from_coords, location], expires_in: CACHE_DURATION, skip_nil: true) do
       result = Geocoder.search(location, lookup: :google).first
       if result.present?

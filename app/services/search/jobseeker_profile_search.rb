@@ -65,7 +65,7 @@ class Search::JobseekerProfileSearch
     filters[:right_to_work_in_uk].first == "true"
   end
 
-  def location_preferences
+  def location_preferences # rubocop:disable Metrics/AbcSize
     if current_organisation.school?
       JobPreferences::Location.containing(current_organisation.geopoint)
     elsif filters[:locations].present?

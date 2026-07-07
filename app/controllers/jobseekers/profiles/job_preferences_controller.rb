@@ -18,7 +18,7 @@ module Jobseekers::Profiles
       render_wizard nil, params: { back_to_review: params[:back_to_review] }
     end
 
-    def update
+    def update # rubocop:disable Metrics/AbcSize
       @form = form_class.new(params.fetch(form_key, {}).permit(*form_class.fields))
       if @form.valid?
         @model.update!(@form.params_to_save.merge(completed_steps: @model.completed_steps.merge(step => :completed)))

@@ -313,7 +313,7 @@ class JobApplicationPdf
     job_application.address.join(", ")
   end
 
-  def basic_personal_details
+  def basic_personal_details # rubocop:disable Metrics/AbcSize
     scope = "helpers.label.jobseekers_job_application_personal_details_form"
     declaration_scope = "helpers.legend.jobseekers_job_application_declarations_form"
     address_scope = "helpers.legend.jobseekers_job_application_personal_details_form"
