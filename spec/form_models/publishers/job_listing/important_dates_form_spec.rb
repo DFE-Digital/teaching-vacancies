@@ -57,31 +57,12 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
         params["publish_on(3i)"] = ""
       end
 
-      context "when vacancy is published and publish_on is on or before today" do
-        let(:vacancy) { build_stubbed(:vacancy, :past_publish) }
-
-        it "is valid" do
-          pending("This doesnt make sense, as the field doesnt render for a past publish vacancy")
-          expect(subject).to be_valid
-        end
-
-        it "is not included in the parameters to save" do
-          pending("This doesnt make sense, as the field doesnt render for a past publish vacancy")
-          expect(subject.params_to_save).not_to have_key(:publish_on)
-        end
-      end
-
       context "when vacancy is published and publish_on is in the future" do
         let(:vacancy) { build_stubbed(:vacancy, publish_on: Date.current + 1.day) }
 
         it "is invalid" do
           expect(subject).to be_invalid
           expect(subject.errors.of_kind?(:publish_on, :blank)).to be true
-        end
-
-        it "is not included in the parameters to save" do
-          pending("This doesnt make sense, params_to_save is not called for an invalid form")
-          expect(subject.params_to_save).not_to have_key(:publish_on)
         end
       end
 
@@ -91,11 +72,6 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
         it "is invalid" do
           expect(subject).to be_invalid
           expect(subject.errors.of_kind?(:publish_on, :blank)).to be true
-        end
-
-        it "is not included in the parameters to save" do
-          pending("This doesnt make sense, params_to_save is not called for an invalid form")
-          expect(subject.params_to_save).not_to have_key(:publish_on)
         end
       end
     end
@@ -103,31 +79,12 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
     context "when date is incomplete" do
       before { params["publish_on(2i)"] = "" }
 
-      context "when vacancy is published and publish_on is on or before today" do
-        let(:vacancy) { build_stubbed(:vacancy, :past_publish) }
-
-        it "is valid" do
-          pending("This doesnt make sense, as the field doesnt render for a past publish vacancy")
-          expect(subject).to be_valid
-        end
-
-        it "is not included in the parameters to save" do
-          pending("This doesnt make sense, as the field doesnt render for a past publish vacancy")
-          expect(subject.params_to_save).not_to have_key(:publish_on)
-        end
-      end
-
       context "when vacancy is published and publish_on is in the future" do
         let(:vacancy) { build_stubbed(:vacancy, publish_on: Date.current + 1.day) }
 
         it "is invalid" do
           expect(subject).to be_invalid
           expect(subject.errors.of_kind?(:publish_on, :invalid)).to be true
-        end
-
-        it "is not included in the parameters to save" do
-          pending("This doesnt make sense, params_to_save is not called for an invalid form")
-          expect(subject.params_to_save).not_to have_key(:publish_on)
         end
       end
 
@@ -137,11 +94,6 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
         it "is invalid" do
           expect(subject).to be_invalid
           expect(subject.errors.of_kind?(:publish_on, :invalid)).to be true
-        end
-
-        it "is not included in the parameters to save" do
-          pending("This doesnt make sense, params_to_save is not called for an invalid form")
-          expect(subject.params_to_save).not_to have_key(:publish_on)
         end
       end
     end
@@ -149,31 +101,12 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
     context "when date is invalid" do
       before { params["publish_on(2i)"] = "100" }
 
-      context "when vacancy is published and publish_on is on or before today" do
-        let(:vacancy) { build_stubbed(:vacancy, :past_publish) }
-
-        it "is valid" do
-          pending("This doesnt make sense, as the field doesnt render for a past publish vacancy")
-          expect(subject).to be_valid
-        end
-
-        it "is not included in the parameters to save" do
-          pending("This doesnt make sense, as the field doesnt render for a past publish vacancy")
-          expect(subject.params_to_save).not_to have_key(:publish_on)
-        end
-      end
-
       context "when vacancy is published and publish_on is in the future" do
         let(:vacancy) { build_stubbed(:vacancy, publish_on: Date.current + 1.day) }
 
         it "is invalid" do
           expect(subject).to be_invalid
           expect(subject.errors.of_kind?(:publish_on, :invalid)).to be true
-        end
-
-        it "is not included in the parameters to save" do
-          pending("This doesnt make sense, params_to_save is not called for an invalid form")
-          expect(subject.params_to_save).not_to have_key(:publish_on)
         end
       end
 
@@ -184,30 +117,11 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
           expect(subject).to be_invalid
           expect(subject.errors.of_kind?(:publish_on, :invalid)).to be true
         end
-
-        it "is not included in the parameters to save" do
-          pending("This doesnt make sense, params_to_save is not called for an invalid form")
-          expect(subject.params_to_save).not_to have_key(:publish_on)
-        end
       end
     end
 
     context "when date is not in the future" do
       let(:publish_on) { 1.year.ago.to_date }
-
-      context "when vacancy is published" do
-        let(:vacancy) { build_stubbed(:vacancy) }
-
-        it "is valid" do
-          pending("This doesnt make sense, as the field doesnt render for a published vacancy")
-          expect(subject).to be_valid
-        end
-
-        it "is not included in the parameters to save" do
-          pending("This doesnt make sense, as the field doesnt render for a published vacancy")
-          expect(subject.params_to_save).not_to have_key(:publish_on)
-        end
-      end
 
       context "when vacancy is not published" do
         let(:vacancy) { build_stubbed(:draft_vacancy) }
