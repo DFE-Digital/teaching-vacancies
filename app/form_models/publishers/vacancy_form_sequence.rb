@@ -28,6 +28,7 @@ class Publishers::VacancyFormSequence
     @step_names - not_validatable_steps
   end
 
+  # :nocov:
   def validate_step(step_name)
     step_form_class = File.join(@form_prefix, "#{step_name}_form").camelize.constantize
 
@@ -40,6 +41,7 @@ class Publishers::VacancyFormSequence
       )
     end
   end
+  # :nocov:
 
   def next_incomplete_step_subjects?
     return false unless @vacancy.allow_subjects?

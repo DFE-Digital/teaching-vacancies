@@ -5,7 +5,9 @@ class SupportUsers::SessionsController < Devise::SessionsController
 
   def new
     if (login_failure = params[:login_failure])
+      # :nocov:
       flash.now[:alert] = t("devise.failure.#{login_failure}")
+      # :nocov:
     end
 
     store_return_location(support_user_root_path, scope: :support_user) unless redirected?

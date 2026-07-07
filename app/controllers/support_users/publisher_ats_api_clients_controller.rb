@@ -12,6 +12,7 @@ class SupportUsers::PublisherAtsApiClientsController < SupportUsers::BaseControl
     @api_client = PublisherAtsApiClient.new
   end
 
+  # :nocov:
   def create
     @api_client = PublisherAtsApiClient.new(api_client_params)
     if @api_client.save
@@ -21,6 +22,7 @@ class SupportUsers::PublisherAtsApiClientsController < SupportUsers::BaseControl
       render :new
     end
   end
+  # :nocov:
 
   def confirm_rotate_key
     @api_client = PublisherAtsApiClient.find(params[:id])

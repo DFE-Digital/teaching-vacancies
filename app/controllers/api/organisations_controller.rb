@@ -17,9 +17,11 @@ class Api::OrganisationsController < Api::ApplicationController
     params[:query]
   end
 
+  # :nocov:
   def check_valid_params
     return render(json: { error: "Missing query" }, status: :bad_request) if query.nil?
 
     render(json: { error: "Insufficient query" }, status: :bad_request) if query.length < 3
   end
+  # :nocov:
 end

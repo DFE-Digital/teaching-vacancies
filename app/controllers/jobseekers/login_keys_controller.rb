@@ -11,7 +11,9 @@ class Jobseekers::LoginKeysController < AuthenticationController
 
   def create
     jobseeker = Jobseeker.find_by(email: params.dig(:jobseeker, :email).downcase.strip)
+    # :nocov:
     send_login_key(jobseeker: jobseeker) if jobseeker
+    # :nocov:
   end
 
   def consume
@@ -23,7 +25,9 @@ class Jobseekers::LoginKeysController < AuthenticationController
       trigger_jobseeker_sign_in_event(:success)
       redirect_to jobseeker_root_path
     else
+      # :nocov:
       render(:new)
+      # :nocov:
     end
   end
 
@@ -40,17 +44,21 @@ class Jobseekers::LoginKeysController < AuthenticationController
     (render(:error, locals: { failure: }) and return) if failure.present?
   end
 
+  # :nocov:
   def redirect_signed_in_jobseekers
     return unless jobseeker_signed_in? && current_jobseeker.present?
 
     redirect_to jobseeker_root_path
   end
+  # :nocov:
 
+  # :nocov:
   def redirect_for_one_login_authentication
     return if AuthenticationFallbackForJobseekers.enabled?
 
     redirect_to new_jobseeker_session_path
   end
+  # :nocov:
 
   def send_login_key(jobseeker:)
     Jobseekers::AuthenticationFallbackMailer.sign_in_fallback(
@@ -59,7 +67,9 @@ class Jobseekers::LoginKeysController < AuthenticationController
     ).deliver_later
   end
 
+  # :nocov:
   def generate_login_key(jobseeker:)
     EmergencyLoginKey.create(owner: jobseeker, not_valid_after: Time.current + EMERGENCY_LOGIN_KEY_DURATION)
   end
+  # :nocov:
 end

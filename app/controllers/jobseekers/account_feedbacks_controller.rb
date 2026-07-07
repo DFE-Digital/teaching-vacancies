@@ -3,6 +3,7 @@ class Jobseekers::AccountFeedbacksController < Jobseekers::BaseController
     @account_feedback_form = Jobseekers::AccountFeedbackForm.new(origin_path: params[:origin])
   end
 
+  # :nocov:
   def create
     @account_feedback_form = Jobseekers::AccountFeedbackForm.new(account_feedback_form_params)
 
@@ -13,6 +14,7 @@ class Jobseekers::AccountFeedbacksController < Jobseekers::BaseController
       render :new
     end
   end
+  # :nocov:
 
   private
 

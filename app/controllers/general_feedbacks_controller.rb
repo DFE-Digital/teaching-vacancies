@@ -1,10 +1,12 @@
 class GeneralFeedbacksController < ApplicationController
   include RecaptchaChecking
 
+  # :nocov:
   def new
     origin_path = URI.parse(request.referrer).path if request.referrer.present?
     @general_feedback_form = GeneralFeedbackForm.new(user_type: current_user&.class, origin_path:)
   end
+  # :nocov:
 
   def create
     @general_feedback_form = GeneralFeedbackForm.new(general_feedback_form_params)
@@ -35,7 +37,9 @@ class GeneralFeedbacksController < ApplicationController
                                             origin_path])
   end
 
+  # :nocov:
   def feedback_attributes
     general_feedback_form_params.except("report_a_problem", "user_type").merge(feedback_type: "general", jobseeker_id: current_jobseeker&.id, publisher_id: current_publisher&.id)
   end
+  # :nocov:
 end

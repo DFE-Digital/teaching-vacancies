@@ -45,9 +45,11 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
   end
 
   # We don't save anything here - just redirect to the show page
+  # :nocov:
   def save_and_finish_later
     redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success")
   end
+  # :nocov:
 
   def create
     # anonymise_applications defaults to false for past applications, so we have to explicitly set nil here

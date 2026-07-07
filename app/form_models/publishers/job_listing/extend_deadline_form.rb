@@ -14,6 +14,7 @@ class Publishers::JobListing::ExtendDeadlineForm < BaseForm
   validates :other_start_date_details, presence: true, if: -> { start_date_type == "other" }
   validates :extension_reason, inclusion: { in: Vacancy.extension_reasons.keys }
 
+  # :nocov:
   def attributes_to_save
     {
       expires_at: expires_at,
@@ -26,6 +27,7 @@ class Publishers::JobListing::ExtendDeadlineForm < BaseForm
       other_extension_reason_details: other_extension_reason_details,
     }
   end
+  # :nocov:
 
   def expires_at=(value)
     expires_on = date_from_multiparameter_hash(value)

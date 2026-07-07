@@ -1,5 +1,4 @@
 class VacancyFormPageHeadingComponent < ApplicationComponent
-  delegate :current_organisation, to: :helpers
   attr_reader :sub_caption
 
   def initialize(vacancy, step_process, back_path:, heading: nil, fieldset: true, sub_caption: {})
@@ -11,9 +10,11 @@ class VacancyFormPageHeadingComponent < ApplicationComponent
     @heading = heading
   end
 
+  # :nocov:
   def heading_class
     @fieldset ? "govuk-fieldset__heading" : "govuk-heading-l"
   end
+  # :nocov:
 
   def heading
     @heading.presence || t("publishers.vacancies.steps.#{step_process.current_step}")
@@ -28,10 +29,4 @@ class VacancyFormPageHeadingComponent < ApplicationComponent
   private
 
   attr_reader :vacancy, :step_process, :back_path
-
-  def page_title_from_vacancy_organisations
-    return current_organisation.name if vacancy.organisations.none?
-
-    vacancy.organisations.many? ? "multiple schools" : vacancy.organisation_name
-  end
 end

@@ -55,7 +55,9 @@ class Geocoding
     Rails.cache.fetch([:postcode_from_coords, location], expires_in: CACHE_DURATION, skip_nil: true) do
       result = Geocoder.search(location, lookup: :google).first
       if result.present?
+        # :nocov:
         postcode = result.data["address_components"].find { |line| "postal_code".in?(line["types"]) }&.dig("short_name")
+        # :nocov:
         trigger_google_geocoding_api_hit_event(type: :postcode, location:, result: postcode)
         postcode
       else

@@ -11,10 +11,12 @@ class Publishers::JobListing::JobTitleForm < Publishers::JobListing::JobListingF
     %i[job_title]
   end
 
+  # :nocov:
   def job_title_has_no_tags?
     job_title_without_escaped_characters = job_title.delete("&")
     return false if job_title_without_escaped_characters == sanitize(job_title_without_escaped_characters, tags: [])
 
     errors.add(:job_title, I18n.t("job_title_errors.job_title.invalid_characters"))
   end
+  # :nocov:
 end

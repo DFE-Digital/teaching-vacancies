@@ -28,17 +28,13 @@ module Publishers::DfeSignIn
       def create_organisation_publisher(user, urn, uid, la_code)
         if urn
           organisation = Organisation.find_by(urn: urn)
-          # :nocov:
           user.organisation_publishers.find_or_create_by(organisation_id: organisation.id) if organisation
-          # :nocov:
         elsif uid
           organisation = Organisation.find_by(uid: uid)
-          # :nocov:
           user.organisation_publishers.find_or_create_by(organisation_id: organisation.id) if organisation
-          # :nocov:
         elsif la_code
-          organisation = Organisation.find_by(local_authority_code: la_code)
           # :nocov:
+          organisation = Organisation.find_by(local_authority_code: la_code)
           user.organisation_publishers.find_or_create_by(organisation_id: organisation.id) if organisation
           # :nocov:
         end

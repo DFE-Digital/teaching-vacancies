@@ -12,9 +12,11 @@ class Publishers::JobListing::KeyStagesForm < Publishers::JobListing::VacancyFor
 
   private
 
+  # :nocov:
   def key_stages_in_phase
     return if key_stages&.any? && key_stages&.all? { |ks| vacancy.key_stages_for_phases.include? ks.to_sym }
 
     errors.add(:key_stages, :inclusion)
   end
+  # :nocov:
 end

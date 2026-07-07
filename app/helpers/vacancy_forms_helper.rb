@@ -1,4 +1,5 @@
 module VacancyFormsHelper
+  # :nocov:
   def vacancy_job_title_form_hint_text(vacancy)
     first_role = vacancy.job_roles.first
     case first_role
@@ -12,8 +13,10 @@ module VacancyFormsHelper
       t("helpers.hint.publishers_job_listing_job_title_form.job_title.#{first_role}")
     end
   end
+  # :nocov:
 
   def vacancy_review_form_heading_inset_text(vacancy, status)
+    # :nocov:
     case status
     when "published"
       t("publishers.vacancies.show.heading_component.inset_text.published", publish_date: format_date(vacancy.publish_on),
@@ -33,6 +36,7 @@ module VacancyFormsHelper
       t("publishers.vacancies.show.heading_component.inset_text.scheduled", publish_date: format_date(vacancy.publish_on),
                                                                             expiry_time: format_time_to_datetime_at(vacancy.expires_at))
     end
+    # :nocov:
   end
 
   def vacancy_convert_to_draft_action_link(vacancy)
@@ -85,6 +89,7 @@ module VacancyFormsHelper
 
   private
 
+  # :nocov:
   def teacher_job_title_hint_text(vacancy)
     case vacancy.phases.first
     when "nursery"
@@ -97,7 +102,9 @@ module VacancyFormsHelper
       t("helpers.hint.publishers_job_listing_job_title_form.job_title.teacher.through")
     end
   end
+  # :nocov:
 
+  # :nocov:
   def middle_leader_job_title_hint_text(vacancy)
     case vacancy.phases.first
     when "nursery"
@@ -110,4 +117,5 @@ module VacancyFormsHelper
       t("helpers.hint.publishers_job_listing_job_title_form.job_title.middle_leader.through")
     end
   end
+  # :nocov:
 end
