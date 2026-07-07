@@ -32,9 +32,7 @@ class Jobseekers::JobApplications::EducationGapsController < Jobseekers::BaseCon
     end
   end
 
-  def confirm_destroy
-    @form = Jobseekers::BreakForm.new
-  end
+  def confirm_destroy; end
 
   def destroy
     @education_gap.destroy!

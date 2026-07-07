@@ -12,7 +12,7 @@ module Jobseekers
         end
 
         def unstorable_fields
-          %i[unexplained_employment_gaps employment_history_section_completed employments qualifications]
+          %i[employment_history_section_completed]
         end
 
         def load_form(model)
