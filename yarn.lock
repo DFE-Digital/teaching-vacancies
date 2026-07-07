@@ -4303,15 +4303,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dfe-frontend@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "dfe-frontend@npm:2.0.1"
-  dependencies:
-    govuk-frontend: "npm:^5.3.1"
-  checksum: 10c0/29558d897fe03d011d0ae0c8f729c3b2740b22659961179a9282f6af57a6e94dac950d4273de1c717ded352fb474bfbdbd9cc2e8ec681fc48426c703a81095f9
-  languageName: node
-  linkType: hard
-
 "doctrine@npm:^2.1.0":
   version: 2.1.0
   resolution: "doctrine@npm:2.1.0"
@@ -5409,13 +5400,6 @@ __metadata:
   version: 1.2.0
   resolution: "gopd@npm:1.2.0"
   checksum: 10c0/50fff1e04ba2b7737c097358534eacadad1e68d24cccee3272e04e007bed008e68d2614f3987788428fd192a5ae3889d08fb2331417e4fc4a9ab366b2043cead
-  languageName: node
-  linkType: hard
-
-"govuk-frontend@npm:^5.3.1":
-  version: 5.14.0
-  resolution: "govuk-frontend@npm:5.14.0"
-  checksum: 10c0/dcb1116003bb4a8ff167434bb30a779d6deafecb10687d044d5c560c0a7ff2053b8666000831c18ad3bcf4aa310678bf3c0cc40d734570b2b81c44853ddd388a
   languageName: node
   linkType: hard
 
@@ -8590,7 +8574,6 @@ __metadata:
     classlist-polyfill: "npm:^1.2.0"
     concurrently: "npm:^10.0.3"
     core-js: "npm:^3.49.0"
-    dfe-frontend: "npm:^2.0.1"
     dompurify: "npm:^3.4.11"
     esbuild: "npm:^0.28.1"
     esbuild-plugin-babel: "npm:^0.2.3"
