@@ -1,24 +1,36 @@
+@use "govuk-frontend/dist/govuk/base" as *;
+
 .posts_index,
 .posts_show {
   .post {
-    .govuk-button {
-      @extend .govuk-button;
-    }
-
     a {
-      @extend .govuk-link;
+      @include govuk-link-common;
+      @include govuk-link-style-default;
+      @include govuk-link-print-friendly;
     }
 
     h1 {
-      @extend .govuk-heading-xl;
+      @include govuk-font($size: 48, $weight: bold);
+      display: block;
+      margin-top: 0;
+      color: govuk-functional-colour(text);
+      @include govuk-responsive-margin(8, "bottom");
     }
 
     h2 {
-      @extend .govuk-heading-l;
+      @include govuk-font($size: 36, $weight: bold);
+      display: block;
+      margin-top: 0;
+      color: govuk-functional-colour(text);
+      @include govuk-responsive-margin(6, "bottom");
     }
 
     h3 {
-      @extend .govuk-heading-m;
+      @include govuk-font($size: 24, $weight: bold);
+      display: block;
+      margin-top: 0;
+      color: govuk-functional-colour(text);
+      @include govuk-responsive-margin(4, "bottom");
     }
 
     img {
@@ -26,15 +38,28 @@
     }
 
     ol {
-      @extend .govuk-list, .govuk-list--number;
+      @include govuk-font($size: 19);
+      margin-top: 0;
+      @include govuk-responsive-margin(4, "bottom");
+      padding-left: govuk-spacing(4);
+      list-style-type: decimal;
+      color: govuk-functional-colour(text);
     }
 
     p {
-      @extend .govuk-body-m;
+      margin-top: 0;
+      color: govuk-functional-colour(text);
+      @include govuk-font($size: 19);
+      @include govuk-responsive-margin(4, "bottom");
     }
 
     ul {
-      @extend .govuk-list, .govuk-list--bullet;
+      @include govuk-font($size: 19);
+      margin-top: 0;
+      @include govuk-responsive-margin(4, "bottom");
+      padding-left: govuk-spacing(4);
+      list-style-type: disc;
+      color: govuk-functional-colour(text);
     }
   }
 }
