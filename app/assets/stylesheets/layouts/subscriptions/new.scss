@@ -1,8 +1,10 @@
+@use "govuk-frontend/dist/govuk/helpers";
+
 .js-enabled {
   &.subscriptions_new,
   &.subscriptions_create {
     .location-finder {
-      @include govuk-media-query($from: mobile) {
+      @include helpers.govuk-media-query($from: mobile) {
         display: block;
       }
     }
@@ -12,7 +14,7 @@
   &.subscriptions_create,
   &.subscriptions_edit {
     .location-search__radius {
-      margin-top: govuk-spacing(6);
+      margin-top: helpers.govuk-spacing(6);
     }
 
     /* https://trello.com/c/IlzRdzpP/151-disable-focus-styles-for-filters-ui-on-job-alert-creation-page */
@@ -23,7 +25,7 @@
 }
 
 .campaign-header {
-  padding-top: govuk-spacing(0);
-  margin-top: govuk-spacing(0);
-  background-color: govuk-colour('black', $variant: 'tint-95');
+  padding-top: helpers.govuk-spacing(0);
+  margin-top: helpers.govuk-spacing(0);
+  background-color: helpers.govuk-colour('black', $variant: 'tint-95');
 }

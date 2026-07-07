@@ -1,7 +1,9 @@
+@use "govuk-frontend/dist/govuk/helpers";
+
 .govuk-grid-column-one-third-at-desktop {
-  @include govuk-grid-column(one-third, $at: desktop);
+  @include helpers.govuk-grid-column(one-third, $at: desktop);
 }
 
 .govuk-grid-column-two-thirds-at-desktop {
-  @include govuk-grid-column(two-thirds, $at: desktop);
+  @include helpers.govuk-grid-column(two-thirds, $at: desktop);
 }

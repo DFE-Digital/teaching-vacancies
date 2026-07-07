@@ -1,9 +1,11 @@
+@use "govuk-frontend/dist/govuk/helpers";
+
 .govuk-accordion__controls {
   display: none;
 }
 
 .js-enabled .govuk-accordion__section-content {
-  padding-bottom: govuk-spacing(4);
+  padding-bottom: helpers.govuk-spacing(4);
 }
 
 .govuk-accordion__section--no-header .govuk-accordion__section-header {
@@ -16,7 +18,7 @@
   }
 
   .govuk-accordion__section {
-    margin-top: govuk-spacing(4);
+    margin-top: helpers.govuk-spacing(4);
   }
 
   .govuk-accordion__section-toggle {

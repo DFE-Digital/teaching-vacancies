@@ -1,4 +1,5 @@
-@import 'base';
+@use 'base';
+@use "govuk-frontend/dist/govuk/helpers";
 
 .js-enabled {
   .editor-component {
@@ -26,7 +27,7 @@
     @extend .govuk-textarea;
 
     height: 400px;
-    margin-bottom: govuk-spacing(1);
+    margin-bottom: helpers.govuk-spacing(1);
     overflow: scroll;
 
     p:first-child {
@@ -44,12 +45,12 @@
 
   &__toolbar {
     display: none;
-    margin-bottom: govuk-spacing(2);
+    margin-bottom: helpers.govuk-spacing(2);
 
     &-button {
       background-position: 0 50%;
-      margin-bottom: govuk-spacing(2);
-      padding-left: govuk-spacing(7);
+      margin-bottom: helpers.govuk-spacing(2);
+      padding-left: helpers.govuk-spacing(7);
 
       &::-moz-focus-inner {
         border: 0;
@@ -57,18 +58,18 @@
       }
 
       &:focus {
-        background-color: govuk-functional-colour(focus);
-        box-shadow: 0 -2px govuk-functional-colour(focus), 0 4px govuk-functional-colour(focus-text);
-        color: govuk-functional-colour(focus-text);
+        background-color: helpers.govuk-functional-colour(focus);
+        box-shadow: 0 -2px helpers.govuk-functional-colour(focus), 0 4px helpers.govuk-functional-colour(focus-text);
+        color: helpers.govuk-functional-colour(focus-text);
         outline: none;
         position: relative;
         z-index: 2;
       }
 
       &--selected {
-        background-color: govuk-functional-colour(focus);
-        box-shadow: 0 -2px govuk-functional-colour(focus), 0 4px govuk-functional-colour(focus-text);
-        color: govuk-functional-colour(focus-text);
+        background-color: helpers.govuk-functional-colour(focus);
+        box-shadow: 0 -2px helpers.govuk-functional-colour(focus), 0 4px helpers.govuk-functional-colour(focus-text);
+        color: helpers.govuk-functional-colour(focus-text);
         outline: none;
         position: relative;
         z-index: 2;

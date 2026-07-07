@@ -1,21 +1,23 @@
+@use "govuk-frontend/dist/govuk/helpers";
+
 .search-results {
   &__item {
-    border-bottom: 1px solid govuk-functional-colour(border);
-    padding-top: govuk-spacing(3);
-    padding-bottom: govuk-spacing(3);
+    border-bottom: 1px solid helpers.govuk-functional-colour(border);
+    padding-top: helpers.govuk-spacing(3);
+    padding-bottom: helpers.govuk-spacing(3);
 
     &:first-of-type {
       padding-top: 0;
     }
 
     .govuk-summary-list {
-      @include govuk-font(16);
+      @include helpers.govuk-font(16);
       margin-bottom: 0;
     }
 
     .govuk-summary-list__key,
     .govuk-summary-list__value {
-      padding-bottom: govuk-spacing(0);
+      padding-bottom: helpers.govuk-spacing(0);
     }
 
     .govuk-summary-list__row:last-child {
@@ -28,15 +30,15 @@
   }
 
   &__summary-list--compact {
-    @include govuk-font(16);
+    @include helpers.govuk-font(16);
     margin-bottom: 0;
 
     .govuk-summary-list__key,
     .govuk-summary-list__value {
-      padding-bottom: govuk-spacing(0);
+      padding-bottom: helpers.govuk-spacing(0);
     }
 
-    @include govuk-media-query($from: tablet) {
+    @include helpers.govuk-media-query($from: tablet) {
       .govuk-summary-list__key {
         width: 37%;
       }

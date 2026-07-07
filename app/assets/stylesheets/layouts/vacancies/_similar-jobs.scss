@@ -1,15 +1,17 @@
+@use "govuk-frontend/dist/govuk/helpers";
+
 .similar-jobs {
   .govuk-grid-row {
     align-items: stretch;
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: govuk-spacing(2);
+    margin-bottom: helpers.govuk-spacing(2);
   }
 
   &__job {
-    border-left: govuk-spacing(1) solid govuk-colour('orange');
-    margin-bottom: govuk-spacing(4);
-    padding-left: govuk-spacing(3);
-    padding-right: govuk-spacing(4);
+    border-left: helpers.govuk-spacing(1) solid helpers.govuk-colour('orange');
+    margin-bottom: helpers.govuk-spacing(4);
+    padding-left: helpers.govuk-spacing(3);
+    padding-right: helpers.govuk-spacing(4);
   }
 }

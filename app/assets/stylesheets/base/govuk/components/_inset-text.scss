@@ -1,3 +1,5 @@
+@use "govuk-frontend/dist/govuk/helpers";
+
 .govuk-inset-text {
   .govuk-summary-list__value & {
     margin-top: 0;
@@ -7,22 +9,22 @@
 
   &--header {
     @extend .govuk-heading-s;
-    margin-bottom: govuk-spacing(2);
+    margin-bottom: helpers.govuk-spacing(2);
   }
 
   &--blue {
-    border-left-color: govuk-colour('blue', $variant: 'tint-25');
+    border-left-color: helpers.govuk-colour('blue', $variant: 'tint-25');
 
     .govuk-inset-text--header {
-      color: govuk-colour('blue', $variant: 'tint-25');
+      color: helpers.govuk-colour('blue', $variant: 'tint-25');
     }
   }
 
   &--red {
-    border-left-color: govuk-colour('red');
+    border-left-color: helpers.govuk-colour('red');
 
     .govuk-inset-text--header {
-      color: govuk-colour('red');
+      color: helpers.govuk-colour('red');
     }
   }
 
@@ -32,10 +34,10 @@
   }
 
   &--dark-blue {
-    border-left-color: govuk-colour('blue');
+    border-left-color: helpers.govuk-colour('blue');
 
     .govuk-inset-text--header {
-      color: govuk-colour('blue');
+      color: helpers.govuk-colour('blue');
     }
   }
 

@@ -1,5 +1,7 @@
+@use "govuk-frontend/dist/govuk/helpers";
+
 .govuk-width-container {
-  @include govuk-width-container;
+  @include helpers.govuk-width-container;
 }
 
 p {
@@ -8,21 +10,21 @@ p {
 
 dl {
   @extend .govuk-body-s;
-  margin-bottom: govuk-spacing(1);
+  margin-bottom: helpers.govuk-spacing(1);
   margin-top: 0;
 
-  @include govuk-media-query($from: desktop) {
+  @include helpers.govuk-media-query($from: desktop) {
     dt,
     dd {
       display: inline-block;
     }
 
     dd {
-      margin-left: govuk-spacing(1);
+      margin-left: helpers.govuk-spacing(1);
 
       .govuk-list--spaced {
         li {
-          margin-bottom: govuk-spacing(4);
+          margin-bottom: helpers.govuk-spacing(4);
 
           &:last-child {
             margin-bottom: 0;

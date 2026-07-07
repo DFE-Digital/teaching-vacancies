@@ -1,9 +1,10 @@
-@import 'base';
+@use 'base';
+@use "govuk-frontend/dist/govuk/helpers";
 
 .dashboard-component {
   .govuk-summary-list__key,
   .govuk-summary-list__actions {
-    @include govuk-media-query ($until: tablet) {
+    @include helpers.govuk-media-query ($until: tablet) {
       display: block;
     }
   }
@@ -20,6 +21,6 @@
   }
 
   .external-notice {
-    color: govuk-functional-colour(secondary-text);
+    color: helpers.govuk-functional-colour(secondary-text);
   }
 }

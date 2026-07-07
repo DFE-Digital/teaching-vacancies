@@ -1,12 +1,13 @@
-@import 'base';
+@use 'base';
+@use "govuk-frontend/dist/govuk/helpers";
 
 @mixin sidebar-info-box-styles {
-  background-color: govuk-colour('black', $variant: 'tint-95');
-  margin-bottom: govuk-spacing(5);
-  padding: govuk-spacing(6);
+  background-color: helpers.govuk-colour('black', $variant: 'tint-95');
+  margin-bottom: helpers.govuk-spacing(5);
+  padding: helpers.govuk-spacing(6);
 
-  @include govuk-media-query($until: tablet) {
-    margin-top: govuk-spacing(5);
+  @include helpers.govuk-media-query($until: tablet) {
+    margin-top: helpers.govuk-spacing(5);
   }
 }
 

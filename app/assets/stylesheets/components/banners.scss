@@ -1,5 +1,7 @@
+@use "../base/mixins";
+
 .full-width-banner {
-  @include full-width-mast;
+  @include mixins.full-width-mast;
   
   .govuk-width-container {
     padding-left: 15px;

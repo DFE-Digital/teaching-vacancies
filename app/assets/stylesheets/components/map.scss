@@ -1,4 +1,5 @@
-@import 'base';
+@use 'base';
+@use "govuk-frontend/dist/govuk/helpers";
 
 .map-component {
   display: none;
@@ -16,31 +17,31 @@
       position: relative;
 
       .map-component__map {
-        border: 1px solid govuk-functional-colour(border);
+        border: 1px solid helpers.govuk-functional-colour(border);
         height: 400px;
-        margin-bottom: govuk-spacing(4);
+        margin-bottom: helpers.govuk-spacing(4);
 
         &__marker {
           &:focus {
-            outline: $govuk-focus-width solid govuk-colour('red') !important;
+            outline: helpers.$govuk-focus-width solid helpers.govuk-colour('red') !important;
           }
 
           &--show {
-            outline: 2px solid govuk-colour('black') !important;
+            outline: 2px solid helpers.govuk-colour('black') !important;
           }
         }
 
         &__cluster {
-          background-color: govuk-colour('blue', $variant: 'tint-25');
-          border: 2px solid govuk-functional-colour(input-border);
+          background-color: helpers.govuk-colour('blue', $variant: 'tint-25');
+          border: 2px solid helpers.govuk-functional-colour(input-border);
           border-radius: 50%;
 
           &:focus {
-            outline: $govuk-focus-width solid govuk-functional-colour(focus);
+            outline: helpers.$govuk-focus-width solid helpers.govuk-functional-colour(focus);
           }
 
           span {
-            color: govuk-colour('white');
+            color: helpers.govuk-colour('white');
             display: block;
             font-size: 1.2em;
             line-height: 2.1 !important;
@@ -48,11 +49,11 @@
           }
 
           &--medium {
-            background-color: govuk-colour('blue');
+            background-color: helpers.govuk-colour('blue');
           }
 
           &--large {
-            background-color: govuk-colour('blue', $variant: 'shade-50');
+            background-color: helpers.govuk-colour('blue', $variant: 'shade-50');
           }
         }
 

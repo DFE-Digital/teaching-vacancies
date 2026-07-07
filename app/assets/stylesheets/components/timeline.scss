@@ -1,8 +1,9 @@
-@import 'base';
-@import 'sidebar-info-box';
+@use 'base';
+@use 'sidebar-info-box';
+@use "govuk-frontend/dist/govuk/helpers";
 
 .timeline-component {
-  @include sidebar-info-box-styles;
+  @include sidebar-info-box.sidebar-info-box-styles;
 
   ul.timeline-component__items {
     list-style-type: none;
@@ -29,7 +30,7 @@
       position: relative;
 
       &::before {
-        background-color: govuk-functional-colour(brand);
+        background-color: helpers.govuk-functional-colour(brand);
         content: '';
         height: 130%;
         left: 0;
@@ -42,7 +43,7 @@
         line-height: 1.31579;
 
         &::before {
-          background-color: govuk-functional-colour(brand);
+          background-color: helpers.govuk-functional-colour(brand);
           content: '';
           height: 5px;
           left: 0;

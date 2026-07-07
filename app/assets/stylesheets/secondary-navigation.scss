@@ -1,26 +1,28 @@
+@use "govuk-frontend/dist/govuk/helpers";
+
 // copied from "@x-govuk/govuk-prototype-components/src/x-govuk/components/secondary-navigation";
 // as their distribution references node_modules which doesn't work in ruby-land.
 //
-$_current-link-border-width: govuk-spacing(1);
+$_current-link-border-width: helpers.govuk-spacing(1);
 
 .x-govuk-secondary-navigation {
-  border-bottom: 1px solid govuk-functional-colour(border);
+  border-bottom: 1px solid helpers.govuk-functional-colour(border);
 }
 
 .x-govuk-secondary-navigation__link {
-  @include govuk-link-common;
-  @include govuk-link-style-no-underline;
-  @include govuk-link-style-no-visited-state;
+  @include helpers.govuk-link-common;
+  @include helpers.govuk-link-style-no-underline;
+  @include helpers.govuk-link-style-no-visited-state;
 }
 
 .x-govuk-secondary-navigation__list {
-  @include govuk-font(19);
+  @include helpers.govuk-font(19);
   list-style: none;
   margin: 0;
-  margin-bottom: govuk-spacing(3);
+  margin-bottom: helpers.govuk-spacing(3);
   padding: 0;
 
-  @include govuk-media-query($from: tablet) {
+  @include helpers.govuk-media-query($from: tablet) {
     align-items: start;
     display: flex;
     flex-wrap: wrap;
@@ -36,32 +38,32 @@ $_current-link-border-width: govuk-spacing(1);
 }
 
 .x-govuk-secondary-navigation__list-item {
-  border: 0 solid govuk-functional-colour(link);
-  margin: govuk-spacing(2) 0;
+  border: 0 solid helpers.govuk-functional-colour(link);
+  margin: helpers.govuk-spacing(2) 0;
   position: relative;
 
-  @include govuk-media-query($from: tablet) {
+  @include helpers.govuk-media-query($from: tablet) {
     margin-bottom: 0;
     margin-top: 0;
-    padding: govuk-spacing(4) 0;
+    padding: helpers.govuk-spacing(4) 0;
 
     &:not(:last-child) {
-      @include govuk-responsive-margin(6, $direction: right);
+      @include helpers.govuk-responsive-margin(6, $direction: right);
     }
   }
 }
 
 .x-govuk-secondary-navigation__list-item--current {
-  @include govuk-media-query($until: tablet) {
+  @include helpers.govuk-media-query($until: tablet) {
     border-left-width: $_current-link-border-width;
     // Negative offset the left margin so we can place a current page indicator
     // to the left without misaligning the list item text.
-    margin-left: ((govuk-spacing(2) + $_current-link-border-width) * -1);
-    padding-left: govuk-spacing(2);
+    margin-left: ((helpers.govuk-spacing(2) + $_current-link-border-width) * -1);
+    padding-left: helpers.govuk-spacing(2);
   }
 
-  @include govuk-media-query($from: tablet) {
+  @include helpers.govuk-media-query($from: tablet) {
     border-bottom-width: $_current-link-border-width;
-    padding-bottom: govuk-spacing(4) - $_current-link-border-width;
+    padding-bottom: helpers.govuk-spacing(4) - $_current-link-border-width;
   }
 }

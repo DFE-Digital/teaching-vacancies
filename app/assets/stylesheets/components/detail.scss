@@ -1,24 +1,25 @@
-@import 'base';
+@use 'base';
+@use "govuk-frontend/dist/govuk/helpers";
 
 .detail-component {
-  background: govuk-colour('white');
-  border: 5px solid govuk-colour('black', $variant: 'tint-95');
+  background: helpers.govuk-colour('white');
+  border: 5px solid helpers.govuk-colour('black', $variant: 'tint-95');
   box-sizing: border-box;
-  margin-bottom: govuk-spacing(5);
+  margin-bottom: helpers.govuk-spacing(5);
 
   &__title {
     .govuk-heading-s {
-      background-color: govuk-colour('black', $variant: 'tint-95');
+      background-color: helpers.govuk-colour('black', $variant: 'tint-95');
       margin-bottom: 0;
-      padding: govuk-spacing(1) govuk-spacing(3) govuk-spacing(2);
+      padding: helpers.govuk-spacing(1) helpers.govuk-spacing(3) helpers.govuk-spacing(2);
     }
   }
 
   &__body {
-    padding: govuk-spacing(1) govuk-spacing(3);
+    padding: helpers.govuk-spacing(1) helpers.govuk-spacing(3);
 
-    @include govuk-media-query ($until: tablet) {
-      padding-top: govuk-spacing(2);
+    @include helpers.govuk-media-query ($until: tablet) {
+      padding-top: helpers.govuk-spacing(2);
     }
 
     .govuk-summary-list__key {
@@ -39,11 +40,11 @@
   }
 
   &__actions {
-    padding: 0 govuk-spacing(3) govuk-spacing(3);
+    padding: 0 helpers.govuk-spacing(3) helpers.govuk-spacing(3);
 
     .border-container {
-      border-top: 1px solid govuk-functional-colour(border);
-      padding-top: govuk-spacing(3);
+      border-top: 1px solid helpers.govuk-functional-colour(border);
+      padding-top: helpers.govuk-spacing(3);
     }
 
     .button_to {
@@ -52,9 +53,9 @@
 
     a,
     input {
-      @include govuk-font(16);
+      @include helpers.govuk-font(16);
 
-      margin-right: govuk-spacing(3);
+      margin-right: helpers.govuk-spacing(3);
     }
   }
 }

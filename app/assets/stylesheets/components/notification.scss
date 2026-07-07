@@ -1,14 +1,15 @@
-@import 'base';
+@use 'base';
+@use "govuk-frontend/dist/govuk/helpers";
 
 .notification {
-  @include govuk-font(16);
+  @include helpers.govuk-font(16);
 
-  border-bottom: solid 1px govuk-functional-colour(border);
+  border-bottom: solid 1px helpers.govuk-functional-colour(border);
   display: flex;
   flex-basis: 75%;
   flex-direction: row;
   flex-grow: 2;
-  margin-bottom: govuk-spacing(3);
+  margin-bottom: helpers.govuk-spacing(3);
 
   &__content {
     display: flex;
@@ -16,33 +17,33 @@
     flex-direction: row;
     flex-grow: 2;
 
-    @include govuk-media-query ($until: desktop) {
+    @include helpers.govuk-media-query ($until: desktop) {
       flex-direction: column;
       flex-grow: 1;
     }
 
     div {
-      margin-bottom: govuk-spacing(2);
+      margin-bottom: helpers.govuk-spacing(2);
     }
   }
 
   &__tag {
     flex-basis: 10%;
     height: min-content;
-    margin-right: govuk-spacing(5);
+    margin-right: helpers.govuk-spacing(5);
   }
 
   &__message {
     flex-grow: 1;
-    margin-right: govuk-spacing(5);
+    margin-right: helpers.govuk-spacing(5);
   }
 
   &__timestamp {
-    color: govuk-functional-colour(secondary-text);
+    color: helpers.govuk-functional-colour(secondary-text);
     flex-basis: 20%;
     text-align: right;
 
-    @include govuk-media-query ($until: desktop) {
+    @include helpers.govuk-media-query ($until: desktop) {
       text-align: left;
     }
   }

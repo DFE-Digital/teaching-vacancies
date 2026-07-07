@@ -1,23 +1,24 @@
-@import 'govuk-frontend/dist/govuk/helpers/colour';
+@use 'govuk-frontend/dist/govuk/helpers/colour';
+@use "govuk-frontend/dist/govuk/helpers";
 
 // Message header styling for sender messages (blue) and recipient messages (grey)
 .message-header--sender {
-  background-color: govuk-colour('blue');
-  color: govuk-colour('white');
+  background-color: helpers.govuk-colour('blue');
+  color: helpers.govuk-colour('white');
 
   .govuk-summary-card__title {
-    color: govuk-colour('white');
+    color: helpers.govuk-colour('white');
   }
 }
 
 .message-header--recipient {
-  background-color: govuk-colour('black', $variant: 'tint-95');
-  color: govuk-colour('black');
+  background-color: helpers.govuk-colour('black', $variant: 'tint-95');
+  color: helpers.govuk-colour('black');
 }
 
 // Unread message styling - light grey background and bold text
 .message--unread {
-  background-color: govuk-colour('black', $variant: 'tint-95');
+  background-color: helpers.govuk-colour('black', $variant: 'tint-95');
 
   // Make all text within unread messages bold
   .govuk-summary-card__title,
@@ -29,6 +30,6 @@
 
 // Unread conversation styling for table rows
 .conversation--unread {
-  background-color: govuk-colour('black', $variant: 'tint-95');
+  background-color: helpers.govuk-colour('black', $variant: 'tint-95');
   font-weight: bold;
 }

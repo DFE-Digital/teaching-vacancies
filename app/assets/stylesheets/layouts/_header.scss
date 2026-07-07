@@ -1,7 +1,9 @@
-.govuk-header {
-  border-bottom: govuk-spacing(2) solid govuk-functional-colour(brand);
+@use "govuk-frontend/dist/govuk/helpers";
 
-  @include govuk-media-query($from: desktop) {
+.govuk-header {
+  border-bottom: helpers.govuk-spacing(2) solid helpers.govuk-functional-colour(brand);
+
+  @include helpers.govuk-media-query($from: desktop) {
     &__container {
       align-items: center;
       display: flex;
@@ -20,14 +22,14 @@
   &__navigation-list {
     display: flex;
     flex-wrap: wrap;
-    gap: govuk-spacing(2) govuk-spacing(4);
+    gap: helpers.govuk-spacing(2) helpers.govuk-spacing(4);
     list-style: none;
     margin: 0;
     padding: 0;
 
-    @include govuk-media-query($from: desktop) {
+    @include helpers.govuk-media-query($from: desktop) {
       justify-content: flex-end;
-      padding: govuk-spacing(1) 0;
+      padding: helpers.govuk-spacing(1) 0;
     }
   }
 
@@ -36,8 +38,8 @@
   }
 
   &__link {
-    @include govuk-font($size: 16);
-    @include govuk-link-style-inverse;
+    @include helpers.govuk-font($size: 16);
+    @include helpers.govuk-link-style-inverse;
 
     text-decoration: none;
 
@@ -53,18 +55,18 @@
 
   &__navigation {
     .count-badge {
-      background-color: govuk-colour('white');
-      border-radius: govuk-spacing(1);
-      color: govuk-colour('black');
+      background-color: helpers.govuk-colour('white');
+      border-radius: helpers.govuk-spacing(1);
+      color: helpers.govuk-colour('black');
       font-weight: bold;
-      margin-left: govuk-spacing(1);
-      padding: 0 govuk-spacing(1);
+      margin-left: helpers.govuk-spacing(1);
+      padding: 0 helpers.govuk-spacing(1);
     }
   }
 }
 
 .sub-navigation {
-  background-color: govuk-colour('black', $variant: 'tint-95');
+  background-color: helpers.govuk-colour('black', $variant: 'tint-95');
 
   .tabs-component {
     border-bottom: 0;

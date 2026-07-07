@@ -1,41 +1,41 @@
-@import 'govuk-frontend/dist/govuk/base';
+@use "govuk-frontend/dist/govuk/helpers";
 
 .js-enabled {
   .panel-component {
     margin-top: 0;
 
-    @include govuk-media-query($until: desktop) {
-      margin-top: govuk-spacing(2);
-      margin-bottom: govuk-spacing(2);
+    @include helpers.govuk-media-query($until: desktop) {
+      margin-top: helpers.govuk-spacing(2);
+      margin-bottom: helpers.govuk-spacing(2);
     }
 
     &__toggle {
       display: block;
       width: 100%;
 
-      @include govuk-media-query($from: desktop) {
+      @include helpers.govuk-media-query($from: desktop) {
         display: none;
       }
     }
 
     &__content {
-      background-color: govuk-colour('black', $variant: 'tint-95');
+      background-color: helpers.govuk-colour('black', $variant: 'tint-95');
       overflow: hidden;
-      @include govuk-media-query($until: desktop) {
+      @include helpers.govuk-media-query($until: desktop) {
         display: none;
       }
 
       &:focus {
-        @include govuk-media-query($until: desktop) {
-          outline: $govuk-focus-width solid govuk-functional-colour(focus);
+        @include helpers.govuk-media-query($until: desktop) {
+          outline: helpers.$govuk-focus-width solid helpers.govuk-functional-colour(focus);
         }
       }
 
       &--visible {
         display: block;
 
-        @include govuk-media-query($until: desktop) {
-          border: 1px solid govuk-colour('black', $variant: 'tint-80');
+        @include helpers.govuk-media-query($until: desktop) {
+          border: 1px solid helpers.govuk-colour('black', $variant: 'tint-80');
           bottom: 5px;
           max-width: 320px;
           overflow-y: scroll;
@@ -58,12 +58,12 @@
         right: 0;
         top: 0;
 
-        @include govuk-media-query($until: desktop) {
+        @include helpers.govuk-media-query($until: desktop) {
           display: block;
         }
 
         span {
-          padding-left: govuk-spacing(4);
+          padding-left: helpers.govuk-spacing(4);
         }
       }
 

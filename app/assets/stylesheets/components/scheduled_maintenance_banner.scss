@@ -1,18 +1,19 @@
-@import 'base';
+@use 'base';
+@use "govuk-frontend/dist/govuk/helpers";
 
 .scheduled-maintenance-banner-component {
-  @include govuk-font(16);
+  @include helpers.govuk-font(16);
 
-  background-color: govuk-functional-colour(brand);
-  background-size: govuk-spacing(9) govuk-spacing(9);
+  background-color: helpers.govuk-functional-colour(brand);
+  background-size: helpers.govuk-spacing(9) helpers.govuk-spacing(9);
 
-  padding: govuk-spacing(2);
-  color: govuk-colour('white');
+  padding: helpers.govuk-spacing(2);
+  color: helpers.govuk-colour('white');
 
   .govuk-tag {
-    background-color: govuk-colour('white');
-    color: govuk-colour('blue', $variant: 'shade-25');
+    background-color: helpers.govuk-colour('white');
+    color: helpers.govuk-colour('blue', $variant: 'shade-25');
 
-    margin-right: govuk-spacing(2);
+    margin-right: helpers.govuk-spacing(2);
   }
 }

@@ -1,22 +1,24 @@
+@use "govuk-frontend/dist/govuk/helpers";
+
 .help-guide {
   &--border-bottom {
-    border-bottom: 1px solid govuk-functional-colour(border);
+    border-bottom: 1px solid helpers.govuk-functional-colour(border);
   }
 
   &--desktop {
-    background-color: govuk-colour('black', $variant: 'tint-95');
-    padding: govuk-spacing(3);
+    background-color: helpers.govuk-colour('black', $variant: 'tint-95');
+    padding: helpers.govuk-spacing(3);
 
-    @include govuk-media-query($until: desktop) {
+    @include helpers.govuk-media-query($until: desktop) {
       display: none;
     }
   }
 
   &--mobile {
-    margin-bottom: govuk-spacing(3);
-    padding-bottom: govuk-spacing(4);
+    margin-bottom: helpers.govuk-spacing(3);
+    padding-bottom: helpers.govuk-spacing(4);
 
-    @include govuk-media-query($from: desktop) {
+    @include helpers.govuk-media-query($from: desktop) {
       display: none;
     }
   }

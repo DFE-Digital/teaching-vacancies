@@ -1,17 +1,17 @@
-@import 'govuk-frontend/dist/govuk/base';
+@use "govuk-frontend/dist/govuk/helpers";
 
 .js-enabled {
   .location-finder {
     display: block;
 
-    @include govuk-media-query($from: tablet) {
+    @include helpers.govuk-media-query($from: tablet) {
       display: none;
     }
   }
 }
 
 .location-finder {
-  @include govuk-font(16);
+  @include helpers.govuk-font(16);
   display: none;
   position: relative;
 
@@ -25,21 +25,21 @@
   }
 
   .govuk-c-loader {
-    background: govuk-colour('white');
+    background: helpers.govuk-colour('white');
     left: 0;
     position: absolute;
-    top: govuk-spacing(6);
+    top: helpers.govuk-spacing(6);
     user-select: none;
     width: 100%;
   }
 
   .govuk-c-loader__label {
-    line-height: govuk-spacing(5);
+    line-height: helpers.govuk-spacing(5);
     vertical-align: top;
   }
 
   &__error {
     color: inherit;
-    margin-top: govuk-spacing(2);
+    margin-top: helpers.govuk-spacing(2);
   }
 }

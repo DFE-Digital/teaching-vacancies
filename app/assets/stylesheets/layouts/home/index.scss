@@ -1,5 +1,6 @@
+@use "sass:meta";
 .home_index {
-  @import './search';
+  @include meta.load-css('search');
 
   #teaching-jobs-by-subject-content {
     display: inline-block !important;

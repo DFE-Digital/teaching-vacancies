@@ -1,3 +1,4 @@
+@use "sass:meta";
 .vacancies_show {
-  @import './similar-jobs';
+  @include meta.load-css('similar-jobs');
 }

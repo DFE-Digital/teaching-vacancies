@@ -1,23 +1,24 @@
-@import 'base';
+@use 'base';
+@use "govuk-frontend/dist/govuk/helpers";
 
 .inset-text--narrow-border {
-  border-left-width: $govuk-border-width-narrow;
+  border-left-width: helpers.$govuk-border-width-narrow;
 }
 
 .inset-text--error {
-  border-color: govuk-functional-colour(error);
-  border-left-width: $govuk-border-width;
+  border-color: helpers.govuk-functional-colour(error);
+  border-left-width: helpers.$govuk-border-width;
 
   .govuk-heading-s {
-    color: govuk-functional-colour(error);
+    color: helpers.govuk-functional-colour(error);
   }
 
   .govuk-link {
-    @include govuk-typography-weight-bold($important: true);
-    color: govuk-functional-colour(error);
+    @include helpers.govuk-typography-weight-bold($important: true);
+    color: helpers.govuk-functional-colour(error);
 
     &:focus {
-      color: govuk-functional-colour(focus-text);
+      color: helpers.govuk-functional-colour(focus-text);
     }
   }
 }

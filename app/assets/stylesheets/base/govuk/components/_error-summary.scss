@@ -1,8 +1,10 @@
+@use "govuk-frontend/dist/govuk/helpers";
+
 .govuk-info-summary {
   @extend .govuk-error-summary;
-  border-color: govuk-functional-colour(link);
-  margin-bottom: govuk-spacing(5);
-  padding: govuk-spacing(3);
+  border-color: helpers.govuk-functional-colour(link);
+  margin-bottom: helpers.govuk-spacing(5);
+  padding: helpers.govuk-spacing(3);
 }
 
 .govuk-info-summary__title {
@@ -13,7 +15,7 @@
   @extend .govuk-error-summary__body;
 
   > a.govuk-button {
-    margin-right: govuk-spacing(3);
+    margin-right: helpers.govuk-spacing(3);
   }
 }
 
@@ -24,7 +26,7 @@
 
 .govuk-success-summary {
   @extend .govuk-error-summary;
-  border-color: govuk-functional-colour(success);
+  border-color: helpers.govuk-functional-colour(success);
 }
 
 .govuk-success-summary__dismiss-link {

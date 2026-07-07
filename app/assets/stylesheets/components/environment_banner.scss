@@ -1,21 +1,22 @@
-@import 'base';
+@use 'base';
+@use "govuk-frontend/dist/govuk/helpers";
 
 @mixin striped-banner($colour-name, $tint: 'tint-25') {
-  $background-color: govuk-colour($colour-name);
-  $stripe-color: govuk-colour($colour-name, $variant: $tint);
+  $background-color: helpers.govuk-colour($colour-name);
+  $stripe-color: helpers.govuk-colour($colour-name, $variant: $tint);
 
-  @include govuk-font(16);
+  @include helpers.govuk-font(16);
 
   background-image: linear-gradient(45deg, $background-color 25%, $stripe-color 25%, $stripe-color 50%, $background-color 50%, $background-color 75%, $stripe-color 75%, $stripe-color 100%);
-  background-size: govuk-spacing(9) govuk-spacing(9);
+  background-size: helpers.govuk-spacing(9) helpers.govuk-spacing(9);
 
-  padding: govuk-spacing(2);
+  padding: helpers.govuk-spacing(2);
 
   .govuk-tag {
-    background-color: govuk-colour('white');
-    color: govuk-colour($colour-name, $variant: 'shade-25');
+    background-color: helpers.govuk-colour('white');
+    color: helpers.govuk-colour($colour-name, $variant: 'shade-25');
 
-    margin-right: govuk-spacing(2);
+    margin-right: helpers.govuk-spacing(2);
   }
 }
 
@@ -24,17 +25,17 @@
 
   &--qa {
     @include striped-banner('purple');
-    color: govuk-colour('white');
+    color: helpers.govuk-colour('white');
   }
 
   &--staging {
     @include striped-banner('red');
-    color: govuk-colour('white');
+    color: helpers.govuk-colour('white');
   }
 
   &--pentest {
     @include striped-banner('dark-grey');
-    color: govuk-colour('white');
+    color: helpers.govuk-colour('white');
   }
 
   &--review {
@@ -43,6 +44,6 @@
 
   &--user-testing {
     @include striped-banner('teal');
-    color: govuk-colour('white');
+    color: helpers.govuk-colour('white');
   }
 }

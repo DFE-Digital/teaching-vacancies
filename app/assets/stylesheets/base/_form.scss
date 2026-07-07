@@ -1,6 +1,8 @@
+@use "govuk-frontend/dist/govuk/helpers";
+
 .govuk-select {
   &.govuk-input--error {
-    border: 4px solid govuk-functional-colour(error);
+    border: 4px solid helpers.govuk-functional-colour(error);
   }
 }
 
