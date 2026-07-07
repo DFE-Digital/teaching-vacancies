@@ -440,7 +440,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         end
       end
 
-      response(409, "A conflicting vacancy exists.<br>The conflicting vacancy contains the same values for either:<ul><li>The external reference.</li><li>All these fields:</li><ul><li>job title</li><li>expiry date</li><li>contract type</li><li>working patterns</li><li>phases</li><li>salary</li></ul></ul>") do
+      response(409, "A conflicting vacancy exists.<br>The conflicting vacancy contains the same values for either:<ul><li>The external reference (must be unique per API Client).</li><li>All these fields (must be unique per school):</li><ul><li>job title</li><li>expiry date</li><li>contract type</li><li>working patterns</li><li>phases</li><li>salary</li></ul></ul>") do
         schema "$ref" => "#/components/schemas/conflict_error"
 
         let(:school) { create(:school) }
@@ -1011,7 +1011,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         end
       end
 
-      response(409, "A conflicting vacancy exists.<br>The conflicting vacancy contains the same values for either:<ul><li>The external reference.</li><li>All these fields:</li><ul><li>job title</li><li>expiry date</li><li>contract type</li><li>working patterns</li><li>phases</li><li>salary</li></ul></ul>") do
+      response(409, "A conflicting vacancy exists.<br>The conflicting vacancy contains the same values for either:<ul><li>The external reference (must be unique per API Client).</li><li>All these fields (must be unique per school):</li><ul><li>job title</li><li>expiry date</li><li>contract type</li><li>working patterns</li><li>phases</li><li>salary</li></ul></ul>") do
         schema "$ref" => "#/components/schemas/conflict_error"
 
         let!(:other_vacancy) { create(:vacancy, :external, publisher_ats_api_client: client, external_reference: "EXISTING-REF") }

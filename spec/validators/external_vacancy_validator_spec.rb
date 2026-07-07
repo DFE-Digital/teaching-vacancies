@@ -91,7 +91,7 @@ RSpec.describe ExternalVacancyValidator, type: :model do
       end
     end
 
-    context "when there a vacancy with the same ATS client ID and external reference" do
+    context "when there is a vacancy with the same ATS client ID and external reference" do
       before do
         create(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:)
       end
@@ -100,6 +100,16 @@ RSpec.describe ExternalVacancyValidator, type: :model do
         expect(vacancy).not_to be_valid
         expect(vacancy.errors[:external_reference])
           .to include("A vacancy with the provided ATS client ID and external reference already exists.")
+      end
+    end
+
+    context "when there is a deleted vacancy with the same ATS client ID and external reference" do
+      before do
+        create(:vacancy, :external, :trashed, external_reference: "REF123", publisher_ats_api_client:)
+      end
+
+      it "the new vacancy is valid" do
+        expect(vacancy).to be_valid
       end
     end
   end

@@ -568,5 +568,36 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
         expect(conflict_attempt.attempts_count).to eq(2)
       end
     end
+
+    context "when a deleted vacancy with the same information already exists for the organisation" do
+      before do
+        create(:vacancy,
+               :trashed,
+               job_title: job_title,
+               expires_at: params[:expires_at],
+               organisations: [school],
+               salary: params[:salary],
+               contract_type: params[:contract_type],
+               working_patterns: params[:working_patterns],
+               phases: params[:phases])
+      end
+
+      it "creates a new published vacancy" do
+        expect { create_vacancy_service }.to change { PublishedVacancy.kept.count }.by(1)
+        vacancy = PublishedVacancy.kept.last
+        expect(vacancy).to have_attributes(
+          job_title: job_title,
+          organisations: [school],
+          salary: params[:salary],
+          contract_type: params[:contract_type],
+          working_patterns: params[:working_patterns],
+          phases: params[:phases],
+        )
+      end
+
+      it "returns a success response" do
+        expect(create_vacancy_service).to eq(status: :created, json: { id: PublishedVacancy.kept.last.id })
+      end
+    end
   end
 end
