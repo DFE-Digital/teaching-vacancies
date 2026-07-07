@@ -173,7 +173,7 @@ module VacanciesHelper
     }
   end
 
-  def vacancy_activity_log_item(attribute, new_value, organisation_type)
+  def vacancy_activity_log_item(attribute, new_value, organisation_type) # rubocop:disable Metrics/AbcSize
     new_value.map! { |value| Vacancy.array_enums[attribute.to_sym].key(value).humanize } if attribute.to_sym.in?(Vacancy.array_enums)
 
     case attribute

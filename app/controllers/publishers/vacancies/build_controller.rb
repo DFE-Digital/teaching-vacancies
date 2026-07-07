@@ -45,7 +45,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
     "publishers/job_listing/#{step}_form".camelize.constantize
   end
 
-  def set_school_options
+  def set_school_options # rubocop:disable Metrics/AbcSize
     return unless step == :job_location && current_organisation.school_group?
 
     schools = current_organisation.local_authority? ? current_publisher_preference.schools : current_organisation.schools

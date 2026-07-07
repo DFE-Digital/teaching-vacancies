@@ -49,7 +49,7 @@ class Gias::ImportSchoolsAndLocalAuthorities
 
     private
 
-    def import_group(uk_colleges, group)
+    def import_group(uk_colleges, group) # rubocop:disable Metrics/AbcSize
       local_authorities = Set.new # LAs are provided with every school so we can discard duplicates
       schools = []
       memberships = []

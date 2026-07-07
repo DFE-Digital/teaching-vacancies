@@ -17,7 +17,7 @@ class SubscriptionsController < ApplicationController
     render("subscriptions/campaign/new", layout: "subscription_campaign") if campaign_link?
   end
 
-  def create
+  def create # rubocop:disable Metrics/AbcSize
     @form = Jobseekers::SubscriptionForm.new(subscription_params)
 
     if @form.invalid?
