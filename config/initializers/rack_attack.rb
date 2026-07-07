@@ -14,9 +14,9 @@ end
 
 # Override response to return 204 No Content (instead of 429) so our monitoring doesn't count it
 # as a failed request
-Rack::Attack.throttled_responder = lambda do |_request|
-  [204, {}, ["\n"]]
-end
+# Rack::Attack.throttled_responder = lambda do |_request|
+#   [204, {}, ["\n"]]
+# end
 
 # Throttle general requests by IP
 Rack::Attack.throttle("requests by remote ip per 4 secs", limit: 10, period: 4, &:remote_ip) # Allow 10 requests in 4 seconds (2.5 req/sec)
