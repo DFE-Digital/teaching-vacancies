@@ -1,27 +1,27 @@
 @use 'base';
-@use "govuk-frontend/dist/govuk/helpers";
+@use "govuk-frontend/dist/govuk/base" as *;
 
 .tabs-component {
-  margin-bottom: helpers.govuk-spacing(4);
+  margin-bottom: govuk-spacing(4);
 
   @media print {
     display: none !important;
   }
 
-  @include helpers.govuk-media-query ($from: desktop) {
-    border-bottom: 1px solid helpers.govuk-functional-colour(border);
-    margin-bottom: helpers.govuk-spacing(7);
+  @include govuk-media-query ($from: desktop) {
+    border-bottom: 1px solid govuk-functional-colour(border);
+    margin-bottom: govuk-spacing(7);
   }
 
   .govuk-link {
     text-decoration: none;
 
     &:visited {
-      color: helpers.govuk-functional-colour(link);
+      color: govuk-functional-colour(link);
     }
 
     &:focus {
-      color: helpers.govuk-functional-colour(focus-text);
+      color: govuk-functional-colour(focus-text);
     }
   }
 
@@ -37,31 +37,31 @@
       font-size: 1rem;
       line-height: 1.25;
       margin-bottom: 0;
-      margin-right: helpers.govuk-spacing(4);
+      margin-right: govuk-spacing(4);
       margin-top: 0;
     }
 
     &__link {
-      @include helpers.govuk-font(19);
+      @include govuk-font(19);
 
       display: block;
       font-weight: bold;
-      padding-bottom: helpers.govuk-spacing(3);
-      padding-top: helpers.govuk-spacing(3);
+      padding-bottom: govuk-spacing(3);
+      padding-top: govuk-spacing(3);
       position: relative;
       text-decoration: none;
 
       &:focus {
-        padding-bottom: helpers.govuk-spacing(2);
+        padding-bottom: govuk-spacing(2);
       }
 
       &[aria-current] {
         &::before {
-          background-color: helpers.govuk-colour('blue', $variant: 'tint-25');
+          background-color: govuk-colour('blue', $variant: 'tint-25');
           bottom: 0;
           content: '';
           display: block;
-          height: helpers.govuk-spacing(1);
+          height: govuk-spacing(1);
           left: 0;
           position: absolute;
           width: 100%;

@@ -1,9 +1,9 @@
 @use 'base';
-@use "govuk-frontend/dist/govuk/helpers";
+@use "govuk-frontend/dist/govuk/base" as *;
 
 .cookies-banner-component {
-  @include helpers.govuk-responsive-padding(0, 'bottom');
-  background-color: helpers.govuk-colour('black', $variant: 'tint-95');
+  @include govuk-responsive-padding(0, 'bottom');
+  background-color: govuk-colour('black', $variant: 'tint-95');
   bottom: 0;
   padding-top: 0;
   width: 100%;
@@ -13,7 +13,7 @@
     position: sticky;
   }
 
-  @include helpers.govuk-media-query($until: tablet) {
+  @include govuk-media-query($until: tablet) {
     .govuk-button--primary {
       width: 100%;
     }
@@ -30,6 +30,6 @@
 
   .govuk-heading-s,
   .govuk-body {
-    color: helpers.govuk-colour('black');
+    color: govuk-colour('black');
   }
 }

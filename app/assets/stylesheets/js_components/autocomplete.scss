@@ -1,4 +1,4 @@
-@use "govuk-frontend/dist/govuk/helpers";
+@use "govuk-frontend/dist/govuk/base" as *;
 
 .autocomplete {
   position: relative;
@@ -11,7 +11,7 @@
     position: relative;
     z-index: 1000;
 
-    @include helpers.govuk-media-query($from: tablet) {
+    @include govuk-media-query($from: tablet) {
       position: absolute;
     }
   }
@@ -26,7 +26,7 @@
 
   &__wrapper {
     .autocomplete__input {
-      background-color: helpers.govuk-colour('white');
+      background-color: govuk-colour('white');
       font-family: 'GDS Transport', arial, sans-serif;
       height: 2.5rem;
     }
@@ -34,11 +34,11 @@
     .autocomplete__option--focused,
     .autocomplete__option:hover {
       background-color: #c2dff4;
-      border-color: helpers.govuk-functional-colour(border);
+      border-color: govuk-functional-colour(border);
     }
 
     .autocomplete__option {
-      color: helpers.govuk-functional-colour(text);
+      color: govuk-functional-colour(text);
     }
   }
 }

@@ -1,8 +1,8 @@
-@use "govuk-frontend/dist/govuk/helpers";
+@use "govuk-frontend/dist/govuk/base" as *;
 
 .govuk-footer {
   &__list {
-    padding-bottom: helpers.govuk-spacing(7);
+    padding-bottom: govuk-spacing(7);
   }
 
   &__navigation {

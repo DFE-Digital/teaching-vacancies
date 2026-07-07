@@ -1,4 +1,4 @@
-@use "govuk-frontend/dist/govuk/helpers";
+@use "govuk-frontend/dist/govuk/base" as *;
 
 .inline-fields-container {
   display: flex;
@@ -9,7 +9,7 @@
     flex-direction: column;
     justify-content: flex-end;
 
-    padding-left: helpers.govuk-spacing(3);
+    padding-left: govuk-spacing(3);
     white-space: nowrap;
 
     &.govuk-form-group--error:not(:first-of-type) {

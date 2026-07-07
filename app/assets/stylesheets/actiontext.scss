@@ -1,4 +1,4 @@
-@use "govuk-frontend/dist/govuk/helpers";
+@use "govuk-frontend/dist/govuk/base" as *;
 
 /*
  * Provides a drop-in pointer for the default Trix stylesheet that will format the toolbar and
@@ -35,11 +35,11 @@
 
 /* Add focus states as outlined here https://design-system.service.gov.uk/get-started/focus-states/ */
 trix-toolbar .trix-button:focus {
-  outline: helpers.$govuk-focus-width solid helpers.govuk-functional-colour(focus);
+  outline: $govuk-focus-width solid govuk-functional-colour(focus);
   outline-offset: 0;
-  background-color: helpers.govuk-functional-colour(focus);
-  color: helpers.govuk-functional-colour(focus-text);
-  box-shadow: 0 -2px helpers.govuk-functional-colour(focus), 0 4px helpers.govuk-functional-colour(focus-text);
+  background-color: govuk-functional-colour(focus);
+  color: govuk-functional-colour(focus-text);
+  box-shadow: 0 -2px govuk-functional-colour(focus), 0 4px govuk-functional-colour(focus-text);
 }
 
 /* Hide unwanted toolbar buttons - keep only bold, italic, link, bullet points, undo/redo */

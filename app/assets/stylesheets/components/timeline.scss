@@ -1,6 +1,6 @@
 @use 'base';
 @use 'sidebar-info-box';
-@use "govuk-frontend/dist/govuk/helpers";
+@use "govuk-frontend/dist/govuk/base" as *;
 
 .timeline-component {
   @include sidebar-info-box.sidebar-info-box-styles;
@@ -30,7 +30,7 @@
       position: relative;
 
       &::before {
-        background-color: helpers.govuk-functional-colour(brand);
+        background-color: govuk-functional-colour(brand);
         content: '';
         height: 130%;
         left: 0;
@@ -43,7 +43,7 @@
         line-height: 1.31579;
 
         &::before {
-          background-color: helpers.govuk-functional-colour(brand);
+          background-color: govuk-functional-colour(brand);
           content: '';
           height: 5px;
           left: 0;

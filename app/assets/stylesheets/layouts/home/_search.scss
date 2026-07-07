@@ -1,11 +1,11 @@
-@use "govuk-frontend/dist/govuk/helpers";
+@use "govuk-frontend/dist/govuk/base" as *;
 
 .search {
-  color: helpers.govuk-colour('white');
+  color: govuk-colour('white');
 
-  @include helpers.govuk-media-query($until: tablet) {
-    background: url('/TVS-logo.png') no-repeat 100% 10px/120px auto helpers.govuk-functional-colour('brand');
-    padding: helpers.govuk-spacing(4);
+  @include govuk-media-query($until: tablet) {
+    background: url('/TVS-logo.png') no-repeat 100% 10px/120px auto govuk-functional-colour('brand');
+    padding: govuk-spacing(4);
 
     h1 {
       padding-right: 100px;
@@ -13,13 +13,13 @@
 
     .govuk-button {
       margin-bottom: 0;
-      margin-top: helpers.govuk-spacing(4);
+      margin-top: govuk-spacing(4);
     }
   }
 
-  @include helpers.govuk-media-query($from: tablet) {
-    background: url('/TVS-logo.png') no-repeat 100% 10px/150px auto helpers.govuk-functional-colour('brand');
-    padding: helpers.govuk-spacing(6);
+  @include govuk-media-query($from: tablet) {
+    background: url('/TVS-logo.png') no-repeat 100% 10px/150px auto govuk-functional-colour('brand');
+    padding: govuk-spacing(6);
 
     h1 {
       padding-right: 150px;
@@ -37,7 +37,7 @@
   .govuk-link,
   h1,
   h2 {
-    color: helpers.govuk-colour('white');
+    color: govuk-colour('white');
   }
 
   .govuk-hint {
@@ -45,14 +45,14 @@
   }
 
   h2 {
-    margin-bottom: helpers.govuk-spacing(2);
-    margin-top: helpers.govuk-spacing(2);
+    margin-bottom: govuk-spacing(2);
+    margin-top: govuk-spacing(2);
   }
 
   &__form {
-    @include helpers.govuk-media-query($from: tablet) {
+    @include govuk-media-query($from: tablet) {
       align-items: end;
-      column-gap: helpers.govuk-spacing(4);
+      column-gap: govuk-spacing(4);
       display: flex;
 
       >div {
@@ -61,7 +61,7 @@
     }
 
     .autocomplete__menu {
-      @include helpers.govuk-media-query($from: desktop) {
+      @include govuk-media-query($from: desktop) {
         position: absolute;
       }
     }
@@ -77,7 +77,7 @@
     flex-wrap: wrap;
 
     .govuk-link {
-      margin-right: helpers.govuk-spacing(2);
+      margin-right: govuk-spacing(2);
     }
   }
 }

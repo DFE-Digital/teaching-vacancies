@@ -1,4 +1,4 @@
-@use "govuk-frontend/dist/govuk/helpers";
+@use "govuk-frontend/dist/govuk/base" as *;
 
 .wordwrap {
   word-wrap: break-word;
@@ -42,7 +42,7 @@
 }
 
 .text-red {
-  color: helpers.govuk-colour('red');
+  color: govuk-colour('red');
   font-weight: bold;
 }
 
@@ -51,8 +51,8 @@
 }
 
 .divider-bottom {
-  border-bottom: 1px solid helpers.govuk-functional-colour(border);
-  margin-bottom: helpers.govuk-spacing(4);
+  border-bottom: 1px solid govuk-functional-colour(border);
+  margin-bottom: govuk-spacing(4);
 }
 
 .two-column-list {
@@ -61,22 +61,22 @@
 
 .govuk-form-group--error {
   select {
-    border: 4px solid helpers.govuk-functional-colour(error);
+    border: 4px solid govuk-functional-colour(error);
   }
 }
 
 .govuk-link * {
-  color: helpers.govuk-functional-colour(link);
+  color: govuk-functional-colour(link);
 
   &:hover {
-    color: helpers.govuk-functional-colour(link-hover);
+    color: govuk-functional-colour(link-hover);
   }
 }
 
 .grouped-text-block {
-  border: helpers.govuk-spacing(1) solid helpers.govuk-functional-colour(border);
-  margin-bottom: helpers.govuk-spacing(5);
-  padding: helpers.govuk-spacing(3) helpers.govuk-spacing(3) 0;
+  border: govuk-spacing(1) solid govuk-functional-colour(border);
+  margin-bottom: govuk-spacing(5);
+  padding: govuk-spacing(3) govuk-spacing(3) 0;
 
   ul li {
     margin-bottom: 0;
@@ -84,20 +84,20 @@
 }
 
 .grey-border-box {
-  border: helpers.govuk-spacing(1) solid helpers.govuk-colour('black', $variant: 'tint-80');
-  margin-bottom: helpers.govuk-spacing(5);
-  padding: helpers.govuk-spacing(5);
+  border: govuk-spacing(1) solid govuk-colour('black', $variant: 'tint-80');
+  margin-bottom: govuk-spacing(5);
+  padding: govuk-spacing(5);
 
   &--thin {
-    border: 1px solid helpers.govuk-colour('black', $variant: 'tint-80');
-    margin-bottom: helpers.govuk-spacing(5);
-    padding: helpers.govuk-spacing(3);
+    border: 1px solid govuk-colour('black', $variant: 'tint-80');
+    margin-bottom: govuk-spacing(5);
+    padding: govuk-spacing(3);
   }
 }
 
 .heading--border-bottom {
-  border-bottom: helpers.govuk-spacing(1) solid helpers.govuk-functional-colour(border);
-  padding-bottom: helpers.govuk-spacing(2);
+  border-bottom: govuk-spacing(1) solid govuk-functional-colour(border);
+  padding-bottom: govuk-spacing(2);
 }
 
 .js-action {
@@ -126,8 +126,8 @@
   align-items: center;
   display: flex;
 
-  @include helpers.govuk-media-query($until: tablet) {
-    margin-bottom: helpers.govuk-spacing(2);
+  @include govuk-media-query($until: tablet) {
+    margin-bottom: govuk-spacing(2);
   }
 
   &-title {
@@ -136,7 +136,7 @@
   }
 
   &-logo {
-    margin-right: helpers.govuk-spacing(3);
+    margin-right: govuk-spacing(3);
 
     // https://stackoverflow.com/questions/36182635/making-a-flex-item-float-right
     // float the logo right using margin-left:auto
@@ -145,7 +145,7 @@
       display: flex;
       height: 70px;
       justify-content: center;
-      margin-right: helpers.govuk-spacing(3);
+      margin-right: govuk-spacing(3);
       margin-left: auto;
       width: 70px;
     }

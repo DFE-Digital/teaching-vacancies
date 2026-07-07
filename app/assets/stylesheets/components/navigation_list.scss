@@ -1,13 +1,13 @@
 @use 'base';
-@use "govuk-frontend/dist/govuk/helpers";
+@use "govuk-frontend/dist/govuk/base" as *;
 
 .navigation-list-component {
-  margin-bottom: helpers.govuk-spacing(5);
+  margin-bottom: govuk-spacing(5);
 
   &__anchor {
-    @include helpers.govuk-font(16);
+    @include govuk-font(16);
 
-    margin-left: helpers.govuk-spacing(5);
+    margin-left: govuk-spacing(5);
 
     a {
       display: inline-block;
@@ -18,7 +18,7 @@
       content: '\2014';
       height: 100%;
       margin-left: -25px;
-      padding-right: helpers.govuk-spacing(1);
+      padding-right: govuk-spacing(1);
       position: absolute;
     }
   }

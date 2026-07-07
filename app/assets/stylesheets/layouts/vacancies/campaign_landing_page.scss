@@ -1,21 +1,21 @@
 @use "sass:meta";
-@use "govuk-frontend/dist/govuk/helpers";
+@use "govuk-frontend/dist/govuk/base" as *;
 
 .vacancies_campaign_landing_page {
   @include meta.load-css('../shared/search-results');
 
   .custom-banner-background {
-    background-color: helpers.govuk-colour('black', $variant: 'tint-95');
+    background-color: govuk-colour('black', $variant: 'tint-95');
     width: 100vw;
     position: relative;
     margin-left: calc(-50vw + 50%);
     margin-right: calc(-50vw + 50%);
-    padding: helpers.govuk-spacing(4) 0;
+    padding: govuk-spacing(4) 0;
     margin-bottom: 30px;
   }
 
   .custom-banner {
-    padding: helpers.govuk-spacing(4) 0;
+    padding: govuk-spacing(4) 0;
   }
 
   @media (max-width: 768px) {

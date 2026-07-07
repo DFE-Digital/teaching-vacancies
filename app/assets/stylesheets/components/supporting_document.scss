@@ -1,15 +1,15 @@
 @use 'base';
-@use "govuk-frontend/dist/govuk/helpers";
+@use "govuk-frontend/dist/govuk/base" as *;
 
 .supporting-document-component {
-  margin-bottom: helpers.govuk-spacing(2);
+  margin-bottom: govuk-spacing(2);
 
   &:last-child {
     margin-bottom: 0;
   }
 
   &__link {
-    margin-right: helpers.govuk-spacing(2);
+    margin-right: govuk-spacing(2);
     word-wrap: break-word;
   }
 }

@@ -1,52 +1,52 @@
 @use 'base';
-@use "govuk-frontend/dist/govuk/helpers";
+@use "govuk-frontend/dist/govuk/base" as *;
 
 .filters-component {
-  background-color: helpers.govuk-colour('black', $variant: 'tint-95');
-  padding: helpers.$govuk-gutter-half;
+  background-color: govuk-colour('black', $variant: 'tint-95');
+  padding: $govuk-gutter-half;
 
   &:focus {
-    outline: helpers.$govuk-focus-width solid helpers.govuk-functional-colour(focus);
+    outline: $govuk-focus-width solid govuk-functional-colour(focus);
   }
 
   &__heading {
-    padding-bottom: helpers.govuk-spacing(2);
+    padding-bottom: govuk-spacing(2);
     position: relative;
 
     .govuk-heading-m {
-      margin-bottom: helpers.govuk-spacing(2);
+      margin-bottom: govuk-spacing(2);
     }
   }
 
   &__remove {
     box-shadow: none;
     display: none;
-    padding: helpers.govuk-spacing(1) 0;
+    padding: govuk-spacing(1) 0;
     position: relative;
 
-    @include helpers.govuk-media-query($from: desktop) {
+    @include govuk-media-query($from: desktop) {
       display: block;
     }
 
     .govuk-heading-s {
-      @include helpers.govuk-font(16);
+      @include govuk-font(16);
       font-weight: bold;
       margin-bottom: 0;
     }
 
     .govuk-body {
-      @include helpers.govuk-font(16);
+      @include govuk-font(16);
       font-weight: normal;
     }
 
     &-group {
       margin-bottom: 0;
-      margin-top: helpers.govuk-spacing(4);
+      margin-top: govuk-spacing(4);
     }
 
     &__heading {
       display: flex;
-      margin-bottom: helpers.govuk-spacing(2);
+      margin-bottom: govuk-spacing(2);
 
       &-title {
         flex-grow: 1;
@@ -55,25 +55,25 @@
 
     &-tags {
       list-style-type: none;
-      margin-bottom: helpers.govuk-spacing(2);
-      margin-top: helpers.govuk-spacing(1);
+      margin-bottom: govuk-spacing(2);
+      margin-top: govuk-spacing(1);
       padding-left: 0;
 
       li {
         display: inline-block;
-        margin-right: helpers.govuk-spacing(2);
+        margin-right: govuk-spacing(2);
       }
 
       &__tag {
-        background-color: helpers.govuk-colour('white');
-        border: 1px solid helpers.govuk-functional-colour(input-border);
-        border-radius: helpers.govuk-spacing(1);
+        background-color: govuk-colour('white');
+        border: 1px solid govuk-functional-colour(input-border);
+        border-radius: govuk-spacing(1);
         cursor: pointer;
         display: grid;
         -webkit-font-smoothing: antialiased;
         font-weight: 400;
-        margin-top: helpers.govuk-spacing(1);
-        padding: helpers.govuk-spacing(1);
+        margin-top: govuk-spacing(1);
+        padding: govuk-spacing(1);
         text-align: left;
         white-space: break-spaces;
 
@@ -87,47 +87,47 @@
         }
 
         &:focus {
-          outline: helpers.$govuk-focus-width solid helpers.govuk-functional-colour(focus);
+          outline: $govuk-focus-width solid govuk-functional-colour(focus);
         }
 
         &.icon--left {
-          background-position: helpers.govuk-spacing(1);
-          padding-left: helpers.govuk-spacing(6);
+          background-position: govuk-spacing(1);
+          padding-left: govuk-spacing(6);
         }
 
         .fa-times {
-          color: helpers.govuk-functional-colour(link);
+          color: govuk-functional-colour(link);
           font-size: 80%;
-          margin: 0 helpers.govuk-spacing(1);
+          margin: 0 govuk-spacing(1);
         }
       }
     }
   }
 
   &__groups {
-    padding: helpers.govuk-spacing(1) 0;
+    padding: govuk-spacing(1) 0;
 
     .govuk-form-group {
-      margin-bottom: helpers.govuk-spacing(2);
+      margin-bottom: govuk-spacing(2);
     }
 
     .govuk-checkboxes__label {
       &::before {
-        background-color: helpers.govuk-colour('white');
+        background-color: govuk-colour('white');
       }
     }
 
     &__group {
-      border-bottom: 1px solid helpers.govuk-colour('black', $variant: 'tint-80');
-      margin-bottom: helpers.govuk-spacing(4);
-      padding-bottom: helpers.govuk-spacing(2);
+      border-bottom: 1px solid govuk-colour('black', $variant: 'tint-80');
+      margin-bottom: govuk-spacing(4);
+      padding-bottom: govuk-spacing(2);
 
       h3.govuk-fieldset__legend {
-        margin-bottom: helpers.govuk-spacing(3);
+        margin-bottom: govuk-spacing(3);
       }
 
       .govuk-details {
-        margin-bottom: helpers.govuk-spacing(0);
+        margin-bottom: govuk-spacing(0);
 
         &__text {
           padding-left: 0;
@@ -164,13 +164,13 @@
 .filters-list {
   ul {
     list-style-type: none;
-    margin-bottom: helpers.govuk-spacing(2);
-    margin-top: helpers.govuk-spacing(1);
+    margin-bottom: govuk-spacing(2);
+    margin-top: govuk-spacing(1);
     padding-left: 0;
 
     li {
       display: inline-block;
-      margin-right: helpers.govuk-spacing(2);
+      margin-right: govuk-spacing(2);
     }
 
   }

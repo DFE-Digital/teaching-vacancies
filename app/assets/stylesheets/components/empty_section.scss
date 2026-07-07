@@ -1,13 +1,13 @@
 @use 'base';
-@use "govuk-frontend/dist/govuk/helpers";
+@use "govuk-frontend/dist/govuk/base" as *;
 
 .empty-section-component {
-  @include helpers.govuk-font(19);
-  color: helpers.govuk-functional-colour(text);
-  @include helpers.govuk-responsive-padding(5);
+  @include govuk-font(19);
+  color: govuk-functional-colour(text);
+  @include govuk-responsive-padding(5);
 
-  background-color: rgba($color: helpers.govuk-colour('black', $variant: 'tint-95'), $alpha: 0.5);
-  border: 5px dashed helpers.govuk-functional-colour(border);
-  margin-bottom: helpers.govuk-spacing(5);
-  margin-top: helpers.govuk-spacing(2);
+  background-color: rgba($color: govuk-colour('black', $variant: 'tint-95'), $alpha: 0.5);
+  border: 5px dashed govuk-functional-colour(border);
+  margin-bottom: govuk-spacing(5);
+  margin-top: govuk-spacing(2);
 }

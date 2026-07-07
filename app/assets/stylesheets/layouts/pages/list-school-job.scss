@@ -1,33 +1,33 @@
-@use "govuk-frontend/dist/govuk/helpers";
+@use "govuk-frontend/dist/govuk/base" as *;
 @use "../../base/mixins";
 
 .pages_show {
   .list-school-job {
     &__header {
       @include mixins.full-width-mast;
-      background-color: helpers.govuk-functional-colour(brand);
-      padding-bottom: helpers.govuk-spacing(4);
-      padding-top: helpers.govuk-spacing(4);
+      background-color: govuk-functional-colour(brand);
+      padding-bottom: govuk-spacing(4);
+      padding-top: govuk-spacing(4);
 
       &__image {
         max-width: 275px;
 
-        @include helpers.govuk-media-query($until: tablet) {
+        @include govuk-media-query($until: tablet) {
           display: none;
         }
       }
 
       .actions {
         align-items: center;
-        column-gap: helpers.govuk-spacing(2);
+        column-gap: govuk-spacing(2);
         display: flex;
         flex-wrap: wrap;
-        margin-bottom: helpers.govuk-spacing(1);
+        margin-bottom: govuk-spacing(1);
 
         &__sign-in {
           flex-basis: 100%;
 
-          @include helpers.govuk-media-query($from: tablet) {
+          @include govuk-media-query($from: tablet) {
             flex-basis: auto;
 
             .govuk-button {
@@ -36,22 +36,22 @@
           }
 
           .govuk-button {
-            background-color: helpers.govuk-colour('white');
-            color: helpers.govuk-functional-colour(brand);
+            background-color: govuk-colour('white');
+            color: govuk-functional-colour(brand);
 
             &:hover {
-              background-color: helpers.govuk-colour('black', $variant: 'tint-95');
+              background-color: govuk-colour('black', $variant: 'tint-95');
             }
           }
         }
 
         .govuk-body-m {
-          color: helpers.govuk-colour('white');
+          color: govuk-colour('white');
           flex-basis: auto;
           margin-bottom: 0;
 
           &:focus {
-            color: helpers.govuk-functional-colour(focus-text);
+            color: govuk-functional-colour(focus-text);
           }
         }
 
@@ -63,7 +63,7 @@
       .govuk-body-l,
       .govuk-heading-l,
       .govuk-link {
-        color: helpers.govuk-colour('white');
+        color: govuk-colour('white');
       }
     }
 

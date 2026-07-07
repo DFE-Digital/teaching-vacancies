@@ -1,4 +1,4 @@
-@use "govuk-frontend/dist/govuk/helpers";
+@use "govuk-frontend/dist/govuk/base" as *;
 
 .govuk-inset-text {
   .govuk-summary-list__value & {
@@ -9,22 +9,22 @@
 
   &--header {
     @extend .govuk-heading-s;
-    margin-bottom: helpers.govuk-spacing(2);
+    margin-bottom: govuk-spacing(2);
   }
 
   &--blue {
-    border-left-color: helpers.govuk-colour('blue', $variant: 'tint-25');
+    border-left-color: govuk-colour('blue', $variant: 'tint-25');
 
     .govuk-inset-text--header {
-      color: helpers.govuk-colour('blue', $variant: 'tint-25');
+      color: govuk-colour('blue', $variant: 'tint-25');
     }
   }
 
   &--red {
-    border-left-color: helpers.govuk-colour('red');
+    border-left-color: govuk-colour('red');
 
     .govuk-inset-text--header {
-      color: helpers.govuk-colour('red');
+      color: govuk-colour('red');
     }
   }
 
@@ -34,10 +34,10 @@
   }
 
   &--dark-blue {
-    border-left-color: helpers.govuk-colour('blue');
+    border-left-color: govuk-colour('blue');
 
     .govuk-inset-text--header {
-      color: helpers.govuk-colour('blue');
+      color: govuk-colour('blue');
     }
   }
 

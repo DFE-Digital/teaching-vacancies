@@ -1,8 +1,8 @@
-@use "govuk-frontend/dist/govuk/helpers";
+@use "govuk-frontend/dist/govuk/base" as *;
 
 .govuk-summary-card {
   &__actions {
-    gap: helpers.govuk-spacing(2);
+    gap: govuk-spacing(2);
   }
 
   &__action {

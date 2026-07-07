@@ -1,11 +1,11 @@
 @use "sass:meta";
-@use "govuk-frontend/dist/govuk/helpers";
+@use "govuk-frontend/dist/govuk/base" as *;
 
 .vacancies_index {
   @include meta.load-css('../shared/search-results');
 
   .custom-banner-background {
-    background-color: helpers.govuk-colour('black', $variant: 'tint-95');
+    background-color: govuk-colour('black', $variant: 'tint-95');
     width: 100vw;
     position: relative;
     margin-left: calc(-50vw + 50%);
@@ -18,7 +18,7 @@
   }
 
   .custom-banner {
-    padding: helpers.govuk-spacing(4) 0;
+    padding: govuk-spacing(4) 0;
 
     img {
       width: 100%;
@@ -29,10 +29,10 @@
   .no-results {
     &__job-alert-link {
       &--organisation {
-        @include helpers.govuk-font(19);
+        @include govuk-font(19);
 
         font-weight: 700;
-        padding-bottom: helpers.govuk-spacing(2);
+        padding-bottom: govuk-spacing(2);
 
         .govuk-link {
           text-decoration: none;
@@ -42,11 +42,11 @@
   }
 
   .search-results-controls {
-    background-color: helpers.govuk-colour('black', $variant: 'tint-95');
-    padding: helpers.$govuk-gutter-half;
+    background-color: govuk-colour('black', $variant: 'tint-95');
+    padding: $govuk-gutter-half;
 
-    @include helpers.govuk-media-query($from: tablet) {
-      margin-bottom: helpers.govuk-spacing(4);
+    @include govuk-media-query($from: tablet) {
+      margin-bottom: govuk-spacing(4);
 
       .autocomplete,
       .govuk-form-group {
@@ -61,7 +61,7 @@
       }
 
       .autocomplete__menu {
-        @include helpers.govuk-media-query($from: desktop) {
+        @include govuk-media-query($from: desktop) {
           position: absolute;
         }
       }
@@ -77,25 +77,25 @@
       }
     }
 
-    @include helpers.govuk-media-query($until: tablet) {
+    @include govuk-media-query($until: tablet) {
       &__submit {
         .govuk-button {
-          margin-bottom: helpers.govuk-spacing(3);
+          margin-bottom: govuk-spacing(3);
         }
       }
     }
 
     .location-search__radius {
-      margin-top: helpers.govuk-spacing(6);
+      margin-top: govuk-spacing(6);
       flex-basis: 200px;
 
-      @include helpers.govuk-media-query($until: tablet) {
+      @include govuk-media-query($until: tablet) {
         .govuk-select[name='radius'] {
           width: 100%;
         }
       }
 
-      @include helpers.govuk-media-query($from: tablet) {
+      @include govuk-media-query($from: tablet) {
         margin-top: 0;
       }
     }

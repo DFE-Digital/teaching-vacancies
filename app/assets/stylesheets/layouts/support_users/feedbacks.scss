@@ -1,19 +1,19 @@
-@use "govuk-frontend/dist/govuk/helpers";
+@use "govuk-frontend/dist/govuk/base" as *;
 
 .support_users_feedbacks_general,
 .support_users_feedbacks_job_alerts,
 .support_users_feedbacks_satisfaction_ratings {
   .govuk-width-container {
-    @include helpers.govuk-width-container(1920px);
+    @include govuk-width-container(1920px);
   }
 
   table tr:hover {
-    background-color: helpers.govuk-colour('black', $variant: 'tint-95');
+    background-color: govuk-colour('black', $variant: 'tint-95');
   }
 }
 
 .support_users_feedbacks_satisfaction_ratings {
   .govuk-tabs {
-    margin-bottom: helpers.govuk-spacing(1);
+    margin-bottom: govuk-spacing(1);
   }
 }

@@ -1,5 +1,5 @@
 @use 'base';
-@use "govuk-frontend/dist/govuk/helpers";
+@use "govuk-frontend/dist/govuk/base" as *;
 
 .review-component {
   &__section {
@@ -9,26 +9,26 @@
 
     &__heading {
       display: flex;
-      margin-bottom: helpers.govuk-spacing(4);
+      margin-bottom: govuk-spacing(4);
 
       .govuk-link {
-        @include helpers.govuk-font($size: 16);
+        @include govuk-font($size: 16);
 
         line-height: 1.6;
         white-space: nowrap;
 
-        @include helpers.govuk-media-query($from: desktop) {
-          @include helpers.govuk-font($size: 19);
+        @include govuk-media-query($from: desktop) {
+          @include govuk-font($size: 19);
         }
       }
 
       &__title {
-        padding-bottom: helpers.govuk-spacing(2);
+        padding-bottom: govuk-spacing(2);
 
         .govuk-heading-m {
           display: inline-block;
           margin-bottom: 0;
-          margin-right: helpers.govuk-spacing(2);
+          margin-right: govuk-spacing(2);
         }
 
         @media print {
@@ -51,7 +51,7 @@
 
   &__sections {
     > li {
-      margin-bottom: helpers.govuk-spacing(6);
+      margin-bottom: govuk-spacing(6);
     }
 
     @media print {
