@@ -145,6 +145,7 @@ Jobseeker.find_each do |jobseeker|
         FactoryBot.create(:job_preferences_location, job_preferences:, name: location_preference_names.sample)
       end
     end
+    FactoryBot.create(:daily_subscription, :with_some_criteria, jobseeker: jobseeker)
   end
 end
 
