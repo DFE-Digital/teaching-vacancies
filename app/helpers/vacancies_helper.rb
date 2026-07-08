@@ -45,6 +45,18 @@ module VacanciesHelper
     items.reject(&:blank?).map(&:humanize).join(", ")
   end
 
+  # Job adverts accept two formats (documented in the ATS API schema): HTML markup
+  # restricted to the tags allowed by `config.action_view.sanitized_allowed_tags`,
+  # or plain text where newlines map to br/p tags.
+  def formatted_job_advert(job_advert)
+    if job_advert&.match?(%r{</?(#{Regexp.union(ActionView::Base.sanitized_allowed_tags.to_a)})[\s/>]}i)
+      # The ApplicationHelper#sanitize override returns a plain String, so re-mark the sanitised output as safe.
+      sanitize(job_advert).html_safe
+    else
+      simple_format(job_advert)
+    end
+  end
+
   def vacancy_form_type(vacancy)
     return t("publishers.vacancies.application_form_type.uploaded_document") if vacancy.uploaded_form?
 
