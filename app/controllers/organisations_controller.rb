@@ -1,4 +1,6 @@
 class OrganisationsController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
   before_action :strip_empty_filter_checkboxes, only: %i[index]
 
   before_action :set_organisation, only: %i[show]
