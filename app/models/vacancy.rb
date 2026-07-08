@@ -345,8 +345,8 @@ class Vacancy < ApplicationRecord
   #   * an organisation association is added or removed, or
   #   * the job location was changed to "central office"
   # In the former case, it gets an argument, which we don't need and thus ignore
-  #
-  def refresh_geolocation(_school_added_or_removed = nil)
+
+  def refresh_geolocation(_school_added_or_removed = nil) # rubocop:disable Metrics/PerceivedComplexity, Metrics/AbcSize
     # Don't override the vacancy-specific job location if one has been specified.
     return if job_address_fields.any?(&:present?)
 

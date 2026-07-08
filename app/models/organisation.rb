@@ -1,5 +1,6 @@
 require "digest"
 
+# rubocop:disable Metrics/ClassLength
 class Organisation < ApplicationRecord
   before_save :update_searchable_content
 
@@ -215,3 +216,4 @@ class Organisation < ApplicationRecord
     end
   end
 end
+# rubocop:enable Metrics/ClassLength

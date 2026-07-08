@@ -12,7 +12,7 @@ class DateValidator < ActiveModel::EachValidator
     far_future: -> { 2.years.from_now },
   }.freeze
 
-  def validate_each(record, attribute, value)
+  def validate_each(record, attribute, value) # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
     return record.errors.add(attribute, :blank) if value.blank?
     return record.errors.add(attribute, :invalid) if value.is_a?(Hash)
 

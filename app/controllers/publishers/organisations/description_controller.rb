@@ -4,7 +4,7 @@ class Publishers::Organisations::DescriptionController < Publishers::Organisatio
     @description_form = Publishers::Organisation::DescriptionForm.new(description: organisation.description)
   end
 
-  def update
+  def update # rubocop:disable Metrics/AbcSize
     @description_form = Publishers::Organisation::DescriptionForm.new(description_form_params)
 
     if @description_form.valid?

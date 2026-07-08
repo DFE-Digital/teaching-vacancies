@@ -60,6 +60,7 @@ class SubscriptionVacanciesMatchingQuery
 
   # Goes through the search criteria filters and applies them to the scope one by one, building up the SQL query used
   # to find the matching vacancies for the subscription.
+  # rubocop:disable Metrics/CyclomaticComplexity
   def build_query_from_search_criteria(scope, search_criteria, subscription)
     search_criteria.each do |criterion, value|
       scope =
@@ -80,6 +81,7 @@ class SubscriptionVacanciesMatchingQuery
     end
     scope
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   # Turns the job_roles from multiple possible criteria keys (aliases) into single job_roles list transformed into
   # array_enum to match DB values (integers) that will be used in the query.

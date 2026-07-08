@@ -122,7 +122,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
     ).none?
   end
 
-  def apply_vacancy_filters
+  def apply_vacancy_filters # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
     scope = if @selected_type == :draft
               DraftVacancy.kept.where.not(job_title: nil)
             else

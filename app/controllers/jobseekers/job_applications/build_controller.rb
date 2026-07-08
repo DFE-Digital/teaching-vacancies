@@ -10,7 +10,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
     render step
   end
 
-  def update
+  def update # rubocop:disable Metrics/AbcSize
     @form = form_class.new(form_class.load_form(job_application).merge(form_params))
     if @form.valid?
       job_application.update!(update_params)
@@ -71,7 +71,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
     session[:back_to_review]&.include?(job_application.id)
   end
 
-  def update_params
+  def update_params # rubocop:disable Metrics/AbcSize
     if step_incomplete?
       update_fields.merge(
         completed_steps: remove_current_step(job_application.completed_steps),

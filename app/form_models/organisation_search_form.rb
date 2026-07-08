@@ -9,7 +9,7 @@ class OrganisationSearchForm
   attribute :radius, :integer, default: 0
   attribute :job_availability, default: []
 
-  def to_h
+  def to_h # rubocop:disable Metrics/PerceivedComplexity, Metrics/AbcSize
     attrs = attributes.symbolize_keys
                       .transform_values { |value| value.is_a?(Array) ? value.filter_map(&:presence).presence : value.presence }
                       .compact

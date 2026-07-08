@@ -16,7 +16,7 @@ class JobPreferences < ApplicationRecord
 
     private
 
-    def set_area
+    def set_area # rubocop:disable Metrics/AbcSize
       if LocationPolygon.contain?(name)
         polygon = LocationPolygon.buffered(radius).with_name(name)
         self.area = polygon.area

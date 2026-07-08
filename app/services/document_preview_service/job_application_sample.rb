@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class DocumentPreviewService::JobApplicationSample
   POSSIBLE_DEGREE_GRADES = %w[2.1 2.2 Honours].freeze
   POSSIBLE_OTHER_GRADES = %w[Pass Merit Distinction].freeze
@@ -207,3 +208,4 @@ class DocumentPreviewService::JobApplicationSample
     end
   end
 end
+# rubocop:enable Metrics/ClassLength

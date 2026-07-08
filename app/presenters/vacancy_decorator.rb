@@ -33,7 +33,7 @@ class VacancyDecorator < Draper::Decorator
   private
 
   # :nocov:
-  def fix_bullet_points(text)
+  def fix_bullet_points(text) # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/AbcSize
     # This is a band-aid solution for the problem where (particularly) job adverts contain bullet point characters
     # (not list elements), but do not contain corresponding newlines, resulting in inline bullets.
     bullet = "•"

@@ -1,5 +1,6 @@
 module Publishers
   module Vacancies
+    # rubocop:disable Metrics/ClassLength
     class JobApplicationsController < Publishers::Vacancies::JobApplications::BaseController
       include Jobseekers::QualificationFormConcerns
       include DatesHelper
@@ -32,7 +33,7 @@ module Publishers
         send_data(document.data, filename: document.filename, disposition: "inline")
       end
 
-      def tag
+      def tag # rubocop:disable Metrics/CyclomaticComplexity, Metrics/AbcSize
         with_valid_form(@job_applications) do |form|
           case params[:tag_action]
           when "download" then download_selected(form.job_applications)
@@ -205,6 +206,7 @@ module Publishers
         )
         render "interview_datetime"
       end
+      # rubocop:enable Metrics/ClassLength
     end
   end
 end

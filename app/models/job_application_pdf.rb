@@ -55,7 +55,7 @@ class JobApplicationPdf
     end
   end
 
-  def professional_status
+  def professional_status # rubocop:disable Metrics/AbcSize
     return @professional_status if @professional_status.present?
 
     scope = "helpers.legend.jobseekers_job_application_professional_status_form"
@@ -143,6 +143,7 @@ class JobApplicationPdf
     end
   end
 
+  # rubocop:disable Metrics/AbcSize
   def referees
     return no_data_available(I18n.t("jobseekers.job_applications.show.employment_history.none")) if job_application.referees.none?
 
@@ -166,6 +167,7 @@ class JobApplicationPdf
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def ask_for_support
     @ask_for_support ||= table_class[
@@ -244,8 +246,7 @@ class JobApplicationPdf
     end
   end
 
-  # rubocop:disable Metrics/MethodLength
-  def religious_reference_data(religious_reference_type)
+  def religious_reference_data(religious_reference_type) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     case religious_reference_type
     when "religious_referee"
       [
@@ -269,7 +270,6 @@ class JobApplicationPdf
       []
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
   attr_reader :job_application, :vacancy
 
@@ -313,7 +313,7 @@ class JobApplicationPdf
     job_application.address.join(", ")
   end
 
-  def basic_personal_details
+  def basic_personal_details # rubocop:disable Metrics/AbcSize
     scope = "helpers.label.jobseekers_job_application_personal_details_form"
     declaration_scope = "helpers.legend.jobseekers_job_application_declarations_form"
     address_scope = "helpers.legend.jobseekers_job_application_personal_details_form"
@@ -443,8 +443,7 @@ class JobApplicationPdf
     doc.children.map { |child| process_node(child) }.join.strip
   end
 
-  # rubocop:disable Metrics/MethodLength
-  def process_node(node)
+  def process_node(node) # rubocop:disable Metrics/MethodLength,Metrics/CyclomaticComplexity
     return "" if node.nil?
 
     if node.element?
@@ -471,6 +470,5 @@ class JobApplicationPdf
       node.text
     end
   end
-  # rubocop:enable Metrics/MethodLength
 end
 # rubocop:enable Metrics/ClassLength

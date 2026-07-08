@@ -144,7 +144,7 @@ module VacanciesHelper
   # Determines a set of breadcrumbs for a vacancy view page based on whether the user has arrived
   # there from a search results page (take them back to search results) or somewhere else (take
   # them to the appropriate landing page, or if all else fails, the "all jobs" page)
-  def vacancy_breadcrumbs(vacancy)
+  def vacancy_breadcrumbs(vacancy) # rubocop:disable Metrics/AbcSize
     referrer = request_referrer
     referred_from_jobs_path = referrer.host == request.host && referrer.path == jobs_path
 
@@ -173,7 +173,7 @@ module VacanciesHelper
     }
   end
 
-  def vacancy_activity_log_item(attribute, new_value, organisation_type)
+  def vacancy_activity_log_item(attribute, new_value, organisation_type) # rubocop:disable Metrics/AbcSize
     new_value.map! { |value| Vacancy.array_enums[attribute.to_sym].key(value).humanize } if attribute.to_sym.in?(Vacancy.array_enums)
 
     case attribute

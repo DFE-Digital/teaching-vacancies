@@ -1,5 +1,5 @@
 class SolidQueueSchema < ActiveRecord::Migration[8.0]
-  def change # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def change # rubocop:disable Metrics/MethodLength
     create_table "solid_queue_blocked_executions" do |t|
       t.bigint "job_id", null: false
       t.string "queue_name", null: false

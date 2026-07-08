@@ -35,7 +35,7 @@ class Jobseekers::GovukOneLogin::UserFromAuthResponse
 
   private
 
-  def validate_auth_response
+  def validate_auth_response # rubocop:disable Metrics/AbcSize
     raise AuthenticationError.new(auth_response["error"], auth_response["error_description"]) if auth_response["error"].present?
     raise AuthenticationError.new("Missing", "'code' is missing") if auth_response["code"].blank?
     raise AuthenticationError.new("Missing", "'state' is missing") if auth_response["state"].blank?

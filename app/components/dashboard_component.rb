@@ -42,7 +42,7 @@ class DashboardComponent < ApplicationComponent
 
   attr_reader :publisher_preference, :organisation, :selected_type, :sort, :vacancies, :selected_organisation_ids, :selected_job_roles
 
-  def set_organisation_options
+  def set_organisation_options # rubocop:disable Metrics/AbcSize
     schools = organisation.local_authority? ? publisher_preference.schools : organisation.schools
     @organisation_options = schools.kept.order(:name).map do |school|
       count = vacancies.in_organisation_ids([school.id]).count

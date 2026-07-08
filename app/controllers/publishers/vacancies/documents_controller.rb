@@ -2,7 +2,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::Wizard
   helper_method :documents_form, :confirmation_form
   before_action :set_vacancy
 
-  def create
+  def create # rubocop:disable Metrics/AbcSize
     @documents_form = Publishers::JobListing::DocumentsForm.new(documents_form_params, vacancy)
     if @documents_form.valid?
       if @documents_form.supporting_documents.reject { |document| attach_document(document) }.any?

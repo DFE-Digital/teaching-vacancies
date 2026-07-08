@@ -1,5 +1,4 @@
 class CreateVacancyTemplates < ActiveRecord::Migration[8.0]
-  # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/BlockLength
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Rails/ThreeStateBooleanColumn
@@ -47,5 +46,4 @@ class CreateVacancyTemplates < ActiveRecord::Migration[8.0]
   # rubocop:enable Rails/ThreeStateBooleanColumn
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/BlockLength
-  # rubocop:enable Metrics/AbcSize
 end

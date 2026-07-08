@@ -1,5 +1,5 @@
 class Publishers::CandidateMessagesController < Publishers::BaseController
-  def index
+  def index # rubocop:disable Metrics/AbcSize
     @tab = params[:tab] || "inbox"
     organisation_ids = current_publisher.accessible_organisations(current_organisation).map(&:id)
     @search_form = Publishers::CandidateMessagesSearchForm.new(search_params)

@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class SubscriptionsController < ApplicationController
   include ReturnPathTracking
   include RecaptchaChecking
@@ -16,7 +17,7 @@ class SubscriptionsController < ApplicationController
     render("subscriptions/campaign/new", layout: "subscription_campaign") if campaign_link?
   end
 
-  def create
+  def create # rubocop:disable Metrics/AbcSize
     @form = Jobseekers::SubscriptionForm.new(subscription_params)
 
     if @form.invalid?
@@ -102,7 +103,7 @@ class SubscriptionsController < ApplicationController
   # These emails links to our service contain parameters in their URL, which values are used to pre-populate the
   # subscription form fields.
   # Some fields have default values unless explicitly set by a parameter.
-  def campaign_attributes
+  def campaign_attributes # rubocop:disable Metrics/AbcSize
     campaign = campaign_params
     {
       campaign: true,
@@ -230,3 +231,4 @@ class SubscriptionsController < ApplicationController
     params[:search_criteria] && search_criteria_params[:organisation_slug].present?
   end
 end
+# rubocop:enable Metrics/ClassLength

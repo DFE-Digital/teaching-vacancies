@@ -3,8 +3,7 @@ class SendJobAlertsJob < SidekiqJob
 
   MAXIMUM_RESULTS_PER_RUN = 500
 
-  # rubocop:disable Metrics/MethodLength
-  def perform(name, subscriptions, from_date)
+  def perform(name, subscriptions, from_date) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     # For stats tracking on each run
     start_time = Time.current
     sent_alerts_count = 0
@@ -34,7 +33,6 @@ class SendJobAlertsJob < SidekiqJob
                   vacancies_in_alerts_count:,
                   sent_alerts_count:)
   end
-  # rubocop:enable Metrics/MethodLength
 
   private
 

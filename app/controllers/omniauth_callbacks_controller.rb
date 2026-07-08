@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   skip_before_action :verify_authenticity_token, only: :dfe
 
@@ -210,3 +211,4 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 end
+# rubocop:enable Metrics/ClassLength

@@ -45,7 +45,7 @@ class Api::MarkersController < Api::ApplicationController
     organisation_type(organisation) if params[:marker_type] == "organisation"
   end
 
-  def details
+  def details # rubocop:disable Metrics/AbcSize
     return if params[:marker_type] == "organisation"
 
     [
