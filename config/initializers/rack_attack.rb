@@ -17,7 +17,7 @@ class Rack::Attack
   ##########################################################################################################################
 
   BLOCKED_IPS = ENV.fetch("RACK_ATTACK_BLOCKED_IPS", "").split(",").map(&:strip).freeze # Array of IPs to block
-  blocklist("block all request from a banned list of remote IPs") do |request|
+  blocklist("block all requests from a banned list of remote IPs") do |request|
     BLOCKED_IPS.include?(request.remote_ip)
   end
 

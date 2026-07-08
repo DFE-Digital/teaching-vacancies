@@ -178,7 +178,7 @@ RSpec.describe "Rack::Attack" do
       expect(response).to have_http_status(:forbidden)
       expect(Rails.logger).to have_received(:warn)
         .with(a_string_matching(/\[rack-attack\] Blocked request/),
-              hash_including(matched: "block all request from a banned list of remote IPs", ip: "127.0.0.1", path: "/check"))
+              hash_including(matched: "block all requests from a banned list of remote IPs", ip: "127.0.0.1", path: "/check"))
     end
   end
 
