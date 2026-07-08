@@ -156,6 +156,18 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       end
     end
 
+    context "when the given school is an FE college" do
+      let(:college) { create(:college) }
+      let(:school_urns) { { school_urns: [college.urn] } }
+
+      it "raises Publishers::AtsApi::CreateVacancyService::InvalidOrganisationError" do
+        expect { update_vacancy_service }.to raise_error(
+          Publishers::AtsApi::OrganisationFetcher::InvalidOrganisationError,
+          "No valid organisations found",
+        )
+      end
+    end
+
     context "when the vacancy fails validation" do
       let(:job_title) { nil }
       let(:job_advert) { nil }

@@ -161,17 +161,17 @@ class Vacancies::Import::Sources::Broadbean
   end
 
   def find_schools(item)
-    multi_academy_trust = SchoolGroup.trusts.find_by(uid: item["trustUID"]) if item["trustUID"].present?
+    multi_academy_trust = SchoolGroup.trusts.kept.find_by(uid: item["trustUID"]) if item["trustUID"].present?
 
     school_urns = item["schoolUrns"]&.split(",")
-    schools = Organisation.where(urn: school_urns) if school_urns.present?
+    schools = Organisation.eligible_for_external_publishing.where(urn: school_urns) if school_urns.present?
 
-    return [] if multi_academy_trust.blank? && schools.blank?
+    return [] if no_importable_organisations?(multi_academy_trust, school_urns, schools)
     return schools if multi_academy_trust.blank?
     return Array(multi_academy_trust) if schools.blank?
 
     # When having both trust and schools, only return the schools that are in the trust if any. Otherwise, return the trust itself.
-    multi_academy_trust.schools.where(urn: school_urns).order(:created_at).presence || Array(multi_academy_trust)
+    multi_academy_trust.schools.eligible_for_external_publishing.where(urn: school_urns).order(:created_at).presence || Array(multi_academy_trust)
   end
 
   def items

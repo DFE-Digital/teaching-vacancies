@@ -7,6 +7,13 @@ module Vacancies::Import
       (schools.map(&:detailed_school_type) & School::OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES).present?
     end
 
+    # Soft-deleted organisations and FE colleges must not publish vacancies through feed integrations.
+    # Items whose URNs only match such organisations are skipped instead of falling back to their trust.
+    def no_importable_organisations?(trust, school_urns, schools)
+      (trust.blank? && schools.blank?) ||
+        (school_urns.present? && schools.blank? && Organisation.exists?(urn: school_urns))
+    end
+
     # Our system only imports MAT type trusts from GIAS DB.
     # If a feed provides a vacancy associated to a central trust that is not a MAT, no trust will be found in our DB
     # so no orgs/schools would be associated with the vacancy.

@@ -462,6 +462,66 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       end
     end
 
+    context "when the given school is soft-deleted" do
+      let(:discarded_school) { create(:school, :discarded) }
+      let(:school_urns) { { school_urns: [discarded_school.urn] } }
+
+      it "raises InvalidOrganisationError" do
+        expect { create_vacancy_service }.to raise_error(
+          Publishers::AtsApi::OrganisationFetcher::InvalidOrganisationError,
+          "No valid organisations found",
+        )
+      end
+    end
+
+    context "when the given school is an FE college" do
+      let(:college) { create(:college) }
+      let(:school_urns) { { school_urns: [college.urn] } }
+
+      it "raises InvalidOrganisationError" do
+        expect { create_vacancy_service }.to raise_error(
+          Publishers::AtsApi::OrganisationFetcher::InvalidOrganisationError,
+          "No valid organisations found",
+        )
+      end
+    end
+
+    context "when the given trust is soft-deleted" do
+      let(:trust) { create(:trust, discarded_at: Time.current) }
+      let(:organisations) { { trust_uid: trust.uid } }
+
+      it "raises InvalidOrganisationError" do
+        expect { create_vacancy_service }.to raise_error(
+          Publishers::AtsApi::OrganisationFetcher::InvalidOrganisationError,
+          "No valid organisations found",
+        )
+      end
+    end
+
+    context "when the given school within the given trust is soft-deleted" do
+      let(:discarded_school) { create(:school, :discarded) }
+      let(:trust) { create(:trust, schools: [discarded_school]) }
+      let(:organisations) { { trust_uid: trust.uid, school_urns: [discarded_school.urn] } }
+
+      it "raises InvalidOrganisationError" do
+        expect { create_vacancy_service }.to raise_error(
+          Publishers::AtsApi::OrganisationFetcher::InvalidOrganisationError,
+          "No valid organisations found",
+        )
+      end
+    end
+
+    context "when an FE college and a valid school are both provided" do
+      let(:college) { create(:college) }
+      let(:school_urns) { { school_urns: [college.urn, school.urn] } }
+
+      it "only assigns the vacancy to the valid school" do
+        create_vacancy_service
+        vacancy = PublishedVacancy.last
+        expect(vacancy.organisations).to contain_exactly(school)
+      end
+    end
+
     context "when the vacancy is missing mandatory fields" do
       let(:job_title) { nil }
       let(:job_advert) { nil }

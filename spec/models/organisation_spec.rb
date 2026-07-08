@@ -226,6 +226,29 @@ RSpec.describe Organisation do
     end
   end
 
+  describe ".not_fe_colleges" do
+    let!(:school) { create(:school) }
+    let!(:trust) { create(:trust) }
+    let!(:college) { create(:college) }
+
+    it "returns schools and trusts but excludes FE colleges" do
+      expect(Organisation.not_fe_colleges).to contain_exactly(school, trust)
+    end
+  end
+
+  describe ".eligible_for_external_publishing" do
+    let!(:school) { create(:school) }
+    let!(:trust) { create(:trust) }
+    let!(:discarded_school) { create(:school, :discarded) }
+    let!(:college) { create(:college) }
+    let!(:discarded_college) { create(:college, :discarded) }
+    let!(:discarded_trust) { create(:trust, discarded_at: Time.current) }
+
+    it "returns kept non-FE-college organisations only" do
+      expect(Organisation.eligible_for_external_publishing).to contain_exactly(school, trust)
+    end
+  end
+
   describe ".visible_to_jobseekers" do
     let!(:open_school) { create(:school, establishment_status: "Open", detailed_school_type: "Primary school") }
     let(:closed_school) { create(:school, establishment_status: "Closed", detailed_school_type: "Secondary school").tap(&:discard) }

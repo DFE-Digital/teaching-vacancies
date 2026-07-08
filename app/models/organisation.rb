@@ -71,6 +71,9 @@ class Organisation < ApplicationRecord
   scope :visible_to_jobseekers, -> { schools_visible_to_jobseekers.or(Organisation.kept.trusts_not_closed) }
 
   scope :colleges, -> { where(school_type: COLLEGE_SCHOOL_TYPE, detailed_school_type: FE_DETAILED_SCHOOL_TYPE) }
+  scope :not_fe_colleges, -> { where.not(id: colleges) }
+  # FE colleges may only publish vacancies manually during the private beta; discarded organisations must never match.
+  scope :eligible_for_external_publishing, -> { kept.not_fe_colleges }
 
   scope :in_scope_schools, -> { schools.kept.not_out_of_scope.where.not(school_type: COLLEGE_SCHOOL_TYPE).or(Organisation.trusts) }
 

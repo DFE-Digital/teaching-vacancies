@@ -17,16 +17,16 @@ module Publishers
       private
 
       def find_trust(trust_uid)
-        SchoolGroup.trusts.find_by(uid: trust_uid) if trust_uid.present?
+        SchoolGroup.trusts.kept.find_by(uid: trust_uid) if trust_uid.present?
       end
 
       def find_schools(trust, school_urns)
         return if school_urns.blank?
 
         if trust
-          trust.schools.where(urn: school_urns)
+          trust.schools.eligible_for_external_publishing.where(urn: school_urns)
         else
-          ::Organisation.where(urn: school_urns)
+          ::Organisation.eligible_for_external_publishing.where(urn: school_urns)
         end
       end
 

@@ -64,6 +64,26 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
       end
     end
 
+    context "when the school is soft-deleted" do
+      before do
+        school1.discard
+      end
+
+      it "does not import vacancy" do
+        expect(subject.count).to eq(0)
+      end
+    end
+
+    context "when the school is an FE college" do
+      before do
+        school1.update(school_type: School::COLLEGE_SCHOOL_TYPE, detailed_school_type: School::FE_DETAILED_SCHOOL_TYPE)
+      end
+
+      it "does not import vacancy" do
+        expect(subject.count).to eq(0)
+      end
+    end
+
     describe "working_patterns mapping" do
       context "when working_patterns includes `flexible`" do
         let(:response_body) { super().gsub("full_time", "full_time,flexible") }
