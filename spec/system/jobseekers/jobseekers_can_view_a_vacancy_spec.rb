@@ -91,16 +91,16 @@ RSpec.describe "Viewing a single published vacancy" do
 
       scenario "the vacancy's meta data are rendered correctly" do
         expect(page.find('meta[name="description"]', visible: false)["content"])
-          .to eq(I18n.t("vacancies.show.page_description", job_title: vacancy.job_title,
-                                                           organisation: vacancy.organisation_name,
-                                                           deadline: format_date(vacancy.expires_at, :date_only_shorthand)))
+          .to eq(I18n.t("vacancies.vacancy_banner.page_description", job_title: vacancy.job_title,
+                                                                     organisation: vacancy.organisation_name,
+                                                                     deadline: format_date(vacancy.expires_at, :date_only_shorthand)))
       end
 
       scenario "the vacancy's open graph meta data are rendered correctly" do
         expect(page.find('meta[property="og:description"]', visible: false)["content"])
-          .to eq(I18n.t("vacancies.show.page_description", job_title: vacancy.job_title,
-                                                           organisation: vacancy.organisation_name,
-                                                           deadline: format_date(vacancy.expires_at, :date_only_shorthand)))
+          .to eq(I18n.t("vacancies.vacancy_banner.page_description", job_title: vacancy.job_title,
+                                                                     organisation: vacancy.organisation_name,
+                                                                     deadline: format_date(vacancy.expires_at, :date_only_shorthand)))
       end
     end
 

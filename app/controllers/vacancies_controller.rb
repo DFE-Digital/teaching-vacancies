@@ -5,7 +5,7 @@ class VacanciesController < ApplicationController
 
   before_action :store_jobseeker_location, only: %i[show], if: :storable_location?
 
-  # Looking for a non-existant job should return a 404
+  # Looking for a non-existent job should return a 404
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   def index
@@ -25,8 +25,8 @@ class VacanciesController < ApplicationController
 
     vacancy = PublishedVacancy.kept.listed.friendly.find(params[:id])
     TrackVacancyViewJob.perform_later(vacancy_id: vacancy.id, referrer_url: request.referer, hostname: request.host, params: request.query_parameters)
-    @saved_job = current_jobseeker&.saved_jobs&.find_by(vacancy: vacancy)
-    @job_application = current_jobseeker&.job_applications&.find_by(vacancy: vacancy)
+    @saved_job = vacancy.saved_jobs.find_by(jobseeker: current_jobseeker)
+    @job_application = vacancy.job_applications.find_by(jobseeker: current_jobseeker)
     @invented_job_alert_search_criteria = Search::CriteriaInventor.new(vacancy).criteria
     @similar_jobs = Search::SimilarJobs.new(vacancy).similar_jobs
     @vacancy = vacancy.decorate

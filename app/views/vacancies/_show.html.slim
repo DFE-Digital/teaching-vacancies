@@ -1,44 +1,16 @@
-- content_for :page_title_prefix, vacancy_listing_page_title_prefix(@vacancy)
-
-- if @newly_created_user
-  = govuk_notification_banner title_text: t("banners.success"), classes: "govuk-notification-banner--success" do |notification_banner|
-    - notification_banner.with_heading(text: t(".one_login_banner.account_not_found.title"))
-    p.govuk-body = t(".one_login_banner.account_not_found.paragraph1")
-    p.govuk-body = t(".one_login_banner.account_not_found.paragraph2", link: govuk_link_to(t(".one_login_banner.account_not_found.transfer_account_link_text"), new_jobseekers_request_account_transfer_email_path)).html_safe
-
-- content_for :page_description, t(".page_description", job_title: @vacancy.job_title,
-                                                        organisation: @vacancy.organisation_name,
-                                                        deadline: format_date(@vacancy.expires_at, :date_only_shorthand))
-
-- content_for :breadcrumbs do
-    = govuk_breadcrumbs breadcrumbs: vacancy_breadcrumbs(@vacancy)
-
-- if @vacancy.expired?
-  - content_for :meta_no_index do
-    meta name="robots" content="noindex"
-
-= render "vacancies/listing/banner", vacancy: @vacancy
-
-= render "vacancies/listing/banner_buttons", vacancy: @vacancy,
-                                             saved_job: @saved_job,
-                                             job_application: @job_application,
-                                             similar_jobs: @similar_jobs,
-                                             invented_job_alert_search_criteria: @invented_job_alert_search_criteria
-
 .govuk-grid-row class="govuk-!-margin-top-6"
   .govuk-grid-column-one-third
-    = render "vacancies/listing/key_dates_sidebar", vacancy: @vacancy, similar_jobs: @similar_jobs
-    - if @vacancy.ect_suitable? || @vacancy.enable_job_applications?
-      = render "vacancies/listing/personal_statement_help", vacancy: @vacancy
+    = render "vacancies/listing/key_dates_sidebar", vacancy: vacancy, similar_jobs: similar_jobs
+    - if vacancy.ect_suitable? || vacancy.enable_job_applications?
+      = render "vacancies/listing/personal_statement_help", vacancy: vacancy
 
   .govuk-grid-column-two-thirds
-    = render "vacancies/listing/multi_school_banner", vacancy: @vacancy
+    = render "vacancies/listing/multi_school_banner", vacancy: vacancy
 
-    = render "vacancies/listing/job_details", vacancy: @vacancy
+    = render "vacancies/listing/job_details", vacancy: vacancy
 
-    = render "vacancies/listing/organisation_details", vacancy: @vacancy
+    = render "vacancies/listing/organisation_details", vacancy: vacancy
 
-    = render "vacancies/listing/similar_jobs", vacancy: @vacancy,
-                                               similar_jobs: @similar_jobs,
-                                               invented_job_alert_search_criteria: @invented_job_alert_search_criteria,
-                                               linked_locations: linked_locations(@vacancy)
+    = render "vacancies/listing/similar_jobs", vacancy: vacancy,
+                                               similar_jobs: similar_jobs,
+                                               invented_job_alert_search_criteria: invented_job_alert_search_criteria
