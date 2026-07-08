@@ -21,9 +21,7 @@ class OrganisationsController < ApplicationController
   end
 
   def set_organisation
-    @organisation = Organisation.visible_to_jobseekers
-                                .where.not(detailed_school_type: Organisation::FE_DETAILED_SCHOOL_TYPE)
-                                .friendly.find(params[:id] || params[:organisation_id])
+    @organisation = Organisation.kept.friendly.find(params[:id] || params[:organisation_id])
   end
 
   # :nocov:
