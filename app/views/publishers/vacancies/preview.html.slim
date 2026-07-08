@@ -1,3 +1,9 @@
 - content_for :page_title_prefix, t("jobs.preview_listing.page_title", organisation: current_organisation.name)
 
-= render "vacancies/show", vacancy: @vacancy, saved_job: nil, job_application: nil, similar_jobs: nil, invented_job_alert_search_criteria: nil
+= render "vacancies/vacancy_banner", vacancy: @vacancy
+= render "vacancies/listing/banner_buttons", vacancy: @vacancy,
+  saved_job: nil,
+  job_application: nil,
+  similar_jobs: nil,
+  invented_job_alert_search_criteria: nil
+= render "vacancies/show", vacancy: @vacancy, similar_jobs: nil, invented_job_alert_search_criteria: nil

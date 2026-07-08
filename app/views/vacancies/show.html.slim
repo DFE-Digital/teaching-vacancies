@@ -7,7 +7,13 @@
     p.govuk-body = t(".one_login_banner.account_not_found.paragraph1")
     p.govuk-body = t(".one_login_banner.account_not_found.paragraph2", link: govuk_link_to(t(".one_login_banner.account_not_found.transfer_account_link_text"), new_jobseekers_request_account_transfer_email_path)).html_safe
 
-= render "vacancies/show", vacancy: @vacancy, saved_job: @saved_job, job_application: @job_application, similar_jobs: @similar_jobs, invented_job_alert_search_criteria: @invented_job_alert_search_criteria
+= render "vacancies/vacancy_banner", vacancy: @vacancy
+= render "vacancies/listing/banner_buttons", vacancy: @vacancy,
+  saved_job: @saved_job,
+  job_application: @job_application,
+  similar_jobs: @similar_jobs,
+  invented_job_alert_search_criteria: @invented_job_alert_search_criteria
+= render "vacancies/show", vacancy: @vacancy, similar_jobs: @similar_jobs, invented_job_alert_search_criteria: @invented_job_alert_search_criteria
 
 script.jobref type="application/ld+json"
   == render(partial: "api/vacancies/show", formats: [:json], locals: { vacancy: @vacancy })

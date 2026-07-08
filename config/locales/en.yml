@@ -502,8 +502,9 @@ en:
           zero: "%{heading} - Teaching, leadership and support jobs"
           one: "%{heading} - Teaching, leadership and support jobs"
           other: "%{heading} page %{count} - Teaching, leadership and support jobs"
-    show:
+    vacancy_banner:
       page_description: '%{job_title} job from %{organisation}. Apply by %{deadline}.'
+    show:
       job_details: Job details
       one_login_banner:
         account_found:

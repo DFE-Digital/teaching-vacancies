@@ -1,24 +1,3 @@
-- content_for :page_title_prefix, vacancy_listing_page_title_prefix(vacancy)
-
-- content_for :page_description, t(".page_description", job_title: vacancy.job_title,
-                                                        organisation: vacancy.organisation_name,
-                                                        deadline: format_date(vacancy.expires_at, :date_only_shorthand))
-
-- content_for :breadcrumbs do
-  = govuk_breadcrumbs breadcrumbs: vacancy_breadcrumbs(vacancy)
-
-- if vacancy.expired?
-  - content_for :meta_no_index do
-    meta name="robots" content="noindex"
-
-= render "vacancies/listing/banner", vacancy: vacancy
-
-= render "vacancies/listing/banner_buttons", vacancy: vacancy,
-                                             saved_job: saved_job,
-                                             job_application: job_application,
-                                             similar_jobs: similar_jobs,
-                                             invented_job_alert_search_criteria: invented_job_alert_search_criteria
-
 .govuk-grid-row class="govuk-!-margin-top-6"
   .govuk-grid-column-one-third
     = render "vacancies/listing/key_dates_sidebar", vacancy: vacancy, similar_jobs: similar_jobs
