@@ -1,4 +1,5 @@
-@use "sass:meta";
+@use 'sass:meta';
+
 .home_index {
   @include meta.load-css('search');
 

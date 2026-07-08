@@ -1,5 +1,5 @@
 @use 'base';
-@use "govuk-frontend/dist/govuk/base" as *;
+@use 'govuk-frontend/dist/govuk/base' as *;
 
 .scheduled-maintenance-banner-component {
   @include govuk-font(16);

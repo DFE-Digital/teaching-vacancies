@@ -1,4 +1,5 @@
-@use "sass:meta";
+@use 'sass:meta';
+
 .vacancies_show {
   @include meta.load-css('similar-jobs');
 }

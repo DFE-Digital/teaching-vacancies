@@ -1,5 +1,5 @@
 @use 'base';
-@use "govuk-frontend/dist/govuk/base" as *;
+@use 'govuk-frontend/dist/govuk/base' as *;
 
 .dashboard-component {
   .govuk-summary-list__key,

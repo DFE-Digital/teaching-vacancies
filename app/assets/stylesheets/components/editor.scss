@@ -1,6 +1,6 @@
 @use 'base';
 @use '../base/mixins' as *;
-@use "govuk-frontend/dist/govuk/base" as *;
+@use 'govuk-frontend/dist/govuk/base' as *;
 
 .js-enabled {
   .editor-component {

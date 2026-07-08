@@ -1,4 +1,4 @@
-@use "govuk-frontend/dist/govuk/base" as *;
+@use 'govuk-frontend/dist/govuk/base' as *;
 
 .posts_index,
 .posts_show {
@@ -14,7 +14,7 @@
       display: block;
       margin-top: 0;
       color: govuk-functional-colour(text);
-      @include govuk-responsive-margin(8, "bottom");
+      @include govuk-responsive-margin(8, 'bottom');
     }
 
     h2 {
@@ -22,7 +22,7 @@
       display: block;
       margin-top: 0;
       color: govuk-functional-colour(text);
-      @include govuk-responsive-margin(6, "bottom");
+      @include govuk-responsive-margin(6, 'bottom');
     }
 
     h3 {
@@ -30,7 +30,7 @@
       display: block;
       margin-top: 0;
       color: govuk-functional-colour(text);
-      @include govuk-responsive-margin(4, "bottom");
+      @include govuk-responsive-margin(4, 'bottom');
     }
 
     img {
@@ -40,7 +40,7 @@
     ol {
       @include govuk-font($size: 19);
       margin-top: 0;
-      @include govuk-responsive-margin(4, "bottom");
+      @include govuk-responsive-margin(4, 'bottom');
       padding-left: govuk-spacing(4);
       list-style-type: decimal;
       color: govuk-functional-colour(text);
@@ -50,13 +50,13 @@
       margin-top: 0;
       color: govuk-functional-colour(text);
       @include govuk-font($size: 19);
-      @include govuk-responsive-margin(4, "bottom");
+      @include govuk-responsive-margin(4, 'bottom');
     }
 
     ul {
       @include govuk-font($size: 19);
       margin-top: 0;
-      @include govuk-responsive-margin(4, "bottom");
+      @include govuk-responsive-margin(4, 'bottom');
       padding-left: govuk-spacing(4);
       list-style-type: disc;
       color: govuk-functional-colour(text);

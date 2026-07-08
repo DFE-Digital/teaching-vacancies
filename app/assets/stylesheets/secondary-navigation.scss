@@ -1,4 +1,4 @@
-@use "govuk-frontend/dist/govuk/base" as *;
+@use 'govuk-frontend/dist/govuk/base' as *;
 
 // copied from "@x-govuk/govuk-prototype-components/src/x-govuk/components/secondary-navigation";
 // as their distribution references node_modules which doesn't work in ruby-land.

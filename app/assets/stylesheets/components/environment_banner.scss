@@ -1,5 +1,5 @@
 @use 'base';
-@use "govuk-frontend/dist/govuk/base" as *;
+@use 'govuk-frontend/dist/govuk/base' as *;
 
 @mixin striped-banner($colour-name, $tint: 'tint-25') {
   $background-color: govuk-colour($colour-name);

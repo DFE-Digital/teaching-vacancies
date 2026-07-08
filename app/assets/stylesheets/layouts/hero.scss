@@ -1,4 +1,4 @@
-@use "govuk-frontend/dist/govuk/base" as *;
+@use 'govuk-frontend/dist/govuk/base' as *;
 
 .hero {
   background-color: govuk-colour('black', $variant: 'tint-95');

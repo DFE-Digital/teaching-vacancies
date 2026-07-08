@@ -1,5 +1,5 @@
-@use "sass:meta";
-@use "govuk-frontend/dist/govuk/base" as *;
+@use 'sass:meta';
+@use 'govuk-frontend/dist/govuk/base' as *;
 
 .vacancies_index {
   @include meta.load-css('../shared/search-results');

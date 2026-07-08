@@ -1,4 +1,5 @@
-@use "sass:meta";
+@use 'sass:meta';
+
 .publishers_jobseeker_profiles_index {
   @include meta.load-css('../../shared/search-results');
 }

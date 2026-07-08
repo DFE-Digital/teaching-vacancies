@@ -1,5 +1,5 @@
 @use 'base';
-@use "govuk-frontend/dist/govuk/base" as *;
+@use 'govuk-frontend/dist/govuk/base' as *;
 
 .cookies-banner-component {
   @include govuk-responsive-padding(0, 'bottom');

@@ -1,6 +1,6 @@
 @use 'base';
 @use 'sidebar-info-box';
-@use "govuk-frontend/dist/govuk/base" as *;
+@use 'govuk-frontend/dist/govuk/base' as *;
 
 .timeline-component {
   @include sidebar-info-box.sidebar-info-box-styles;
