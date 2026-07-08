@@ -1,4 +1,5 @@
 @use 'base';
+@use '../base/mixins' as *;
 @use "govuk-frontend/dist/govuk/base" as *;
 
 .js-enabled {
@@ -11,7 +12,7 @@
     .govuk-form-group {
       textarea,
       label {
-        @extend .govuk-visually-hidden;
+        @include govuk-visually-hidden;
       }
     }
   }
@@ -24,7 +25,7 @@
   }
 
   &__content {
-    @extend .govuk-textarea;
+    @include govuk-textarea-styles;
 
     height: 400px;
     margin-bottom: govuk-spacing(1);
@@ -39,7 +40,7 @@
     }
 
     ul {
-      @extend .govuk-list, .govuk-list--bullet;
+      @include govuk-list-bullet-styles;
     }
   }
 
@@ -80,8 +81,7 @@
 
 .editor-rendered-content {
   ul:not([class]) {
-    @extend %govuk-list;
-    @extend %govuk-list--bullet;
+    @include govuk-list-bullet-styles;
     max-width: 40rem;
   }
 }
