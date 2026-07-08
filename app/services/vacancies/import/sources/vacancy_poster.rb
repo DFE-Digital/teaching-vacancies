@@ -112,6 +112,7 @@ class Vacancies::Import::Sources::VacancyPoster
   end
 
   def find_schools(item)
+    multi_academy_trust = nil
     multi_academy_trust = SchoolGroup.trusts.kept.find_by(uid: item["trustUID"].strip) if item["trustUID"].present?
 
     school_urn = item["schoolUrns"]&.strip

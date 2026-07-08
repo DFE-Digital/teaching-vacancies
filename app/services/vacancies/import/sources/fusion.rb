@@ -106,6 +106,7 @@ class Vacancies::Import::Sources::Fusion
   end
 
   def find_schools(item)
+    multi_academy_trust = nil
     multi_academy_trust = SchoolGroup.trusts.kept.find_by(uid: item["trustUID"]) if item["trustUID"].present?
 
     school_urns = item["schoolUrns"]&.split(",")
