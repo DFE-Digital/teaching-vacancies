@@ -55,6 +55,28 @@
   list-style-type: decimal;
 }
 
+@mixin govuk-body-styles {
+  margin-top: 0;
+  color: govuk-functional-colour(text);
+  @include govuk-font($size: 19);
+  @include govuk-responsive-margin(4, "bottom");
+}
+
+@mixin govuk-body-s-styles {
+  margin-top: 0;
+  color: govuk-functional-colour(text);
+  @include govuk-font($size: 16);
+  @include govuk-responsive-margin(4, "bottom");
+}
+
+@mixin govuk-heading-s-styles {
+  @include govuk-font($size: 19, $weight: bold);
+  display: block;
+  margin-top: 0;
+  color: govuk-functional-colour(text);
+  @include govuk-responsive-margin(4, "bottom");
+}
+
 @mixin full-width-mast {
   left: 50%;
   margin-left: -50vw;
