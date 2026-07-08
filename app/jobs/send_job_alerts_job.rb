@@ -1,4 +1,4 @@
-class SendJobAlertsJob < SidekiqJob
+class SendJobAlertsJob < SolidQueueJob
   queue_as :jobalerts
 
   MAXIMUM_RESULTS_PER_RUN = 500

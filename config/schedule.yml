@@ -32,11 +32,6 @@ clear_emergency_login_keys:
 #
 # WEEKLY CRON JOBS
 #
-queue_weekly_alerts:
-  cron: '0 18 * * 5' # "At 18:00 on Friday."
-  class: 'SendWeeklyAlertEmailJob'
-  queue: default
-
 import_polygon_data:
   cron: '0 23 * * 0' # "At 23:00 on Sunday."
   class: 'ImportPolygonDataJob'
@@ -159,11 +154,6 @@ withdraw_stale_drafts:
   cron: '0 10 * * *' # At 10:00.
   class: 'DeleteOldDraftApplicationsForExpiredVacanciesJob'
   queue: low
-
-queue_daily_alerts:
-  cron: '0 15 * * *' # "At 15:00."
-  class: 'SendDailyAlertEmailJob'
-  queue: default
 
 export_vacancies_closed_early_to_dwp_find_a_job_service:
   cron: '30 21 * * *' # "At 21:30."

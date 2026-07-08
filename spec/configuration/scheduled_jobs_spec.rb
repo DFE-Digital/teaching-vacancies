@@ -22,7 +22,7 @@ RSpec.describe "Scheduled jobs configuration" do
       Noticed::DeliveryMethods::Database
       Noticed::DeliveryMethods::Email
       Sentry::SendEventJob
-      SendJobAlertsJob
+
       SetOrganisationSlugsJob
       SetOrganisationSlugsOfBatchJob
       ImportFromVacancySourceJob
@@ -38,7 +38,7 @@ RSpec.describe "Scheduled jobs configuration" do
     ]
   end
   # TODO: this is temporary until we move all scheduled jobs to solid queue
-  let(:solid_queue_jobs) { %w[AggregateVacancyReferrerStatsJob] }
+  let(:solid_queue_jobs) { %w[AggregateVacancyReferrerStatsJob SendJobAlertsJob] }
 
   it "includes all scheduled jobs in the schedule" do
     expect(scheduled_jobs).to match_array(all_app_jobs + gem_jobs - unscheduled_jobs - solid_queue_jobs)
