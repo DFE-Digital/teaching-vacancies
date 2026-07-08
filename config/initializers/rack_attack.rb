@@ -33,12 +33,16 @@ class Rack::Attack
     /jobseekers/account_transfer
   ].freeze
 
-  # A single combined counter across ALL auth endpoints. Deliberately looser than the per-endpoint
-  # throttles below on logins/fallback (5/min = 50/10min), so on those endpoints fail2ban only fires
-  # for clients ignoring 429s. Note it is *tighter* than the OIDC throttle (15/min = 150/10min): heavy
-  # OIDC callback volume from one IP can trip the ban even while within that throttle. That is
-  # accepted, as the ban is auth-scoped (the IP can still browse the rest of the site).
-  FAIL2BAN_MAXRETRY = 10 # Ban an IP after this many auth requests...
+  # A single combined counter across ALL auth endpoints (OIDC callbacks, jobseeker sign-in and the
+  # fallback auth POSTs). 50 auth requests in 10 minutes is far beyond any individual legitimate user
+  # — a normal login is a single callback or form POST, so a human would need a submission every ~12s
+  # for 10 minutes straight — so this only bites automated brute-forcing. It sits at or below the
+  # per-endpoint throttles' 10-minute allowances (login/fallback 5/min = 50/10min; OIDC 15/min =
+  # 150/10min), so fail2ban, not the throttles, is the binding limit on sustained auth volume. The one
+  # caveat is shared/NAT IPs (e.g. a school or trust behind one address) whose users' auth requests
+  # aggregate onto the same counter; the ban is auth-scoped, so such an IP can still browse the rest of
+  # the site while locked out of auth for FAIL2BAN_BANTIME.
+  FAIL2BAN_MAXRETRY = 50 # Ban an IP after this many auth requests...
   FAIL2BAN_FINDTIME = 10.minutes # ...within this window...
   FAIL2BAN_BANTIME = 1.hour # ...for this long.
 
