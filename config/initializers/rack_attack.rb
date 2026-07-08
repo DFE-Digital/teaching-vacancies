@@ -146,19 +146,19 @@ end
 # Log all throttled and blocked requests to Rails.logger at WARN level, including the matched rule,
 # request ID, remote IP and path.
 ####################################################################################################################
-ActiveSupport::Notifications.subscribe("throttle.rack_attack") do |_name, _start, _finish, request_id, payload|
+ActiveSupport::Notifications.subscribe("throttle.rack_attack") do |_name, _start, _finish, _instrumenter_id, payload|
   request = payload[:request]
 
-  Rails.logger.warn("[rack-attack] Throttled request #{request_id} from #{request.remote_ip} to '#{request.fullpath}'",
+  Rails.logger.warn("[rack-attack] Throttled request #{request.env['action_dispatch.request_id']} from #{request.remote_ip} to '#{request.fullpath}'",
                     matched: request.env["rack.attack.matched"],
                     ip: request.remote_ip,
                     path: request.fullpath)
 end
 
-ActiveSupport::Notifications.subscribe("blocklist.rack_attack") do |_name, _start, _finish, request_id, payload|
+ActiveSupport::Notifications.subscribe("blocklist.rack_attack") do |_name, _start, _finish, _instrumenter_id, payload|
   request = payload[:request]
 
-  Rails.logger.warn("[rack-attack] Blocked request #{request_id} from #{request.remote_ip} to '#{request.fullpath}'",
+  Rails.logger.warn("[rack-attack] Blocked request #{request.env['action_dispatch.request_id']} from #{request.remote_ip} to '#{request.fullpath}'",
                     matched: request.env["rack.attack.matched"],
                     ip: request.remote_ip,
                     path: request.fullpath)
