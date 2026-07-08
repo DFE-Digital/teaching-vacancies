@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: Validate ${{ matrix.display }}
-        uses: DFE-Digital/github-actions/validate-infra@master
+        uses: DFE-Digital/github-actions/validate-infra@2864-validate-infra-fix
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -41,3 +41,4 @@ jobs:
           image-prefix: main-
           confirm-production: YES
           terraform-version-file: ${{ matrix.terraform_version_file }}
+          target-branch: 2864-validate-infra-fix
