@@ -1,5 +1,3 @@
 - content_for :page_title_prefix, t("jobs.preview_listing.page_title", organisation: current_organisation.name)
 
-.govuk-grid-row
-  .govuk-grid-column-full
-    = render "vacancies/show"
+= render "vacancies/show", vacancy: @vacancy, saved_job: nil, job_application: nil, similar_jobs: nil, invented_job_alert_search_criteria: nil

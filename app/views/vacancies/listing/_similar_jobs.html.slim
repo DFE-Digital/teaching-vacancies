@@ -18,6 +18,7 @@ section
     = govuk_link_to(t("jobs.alert.similar.verbose.link_text"), new_subscription_path(search_criteria: invented_job_alert_search_criteria, vacancy_id: vacancy.id))
     =< t("jobs.alert.similar.verbose.reminder")
 
+- linked_locations = linked_locations(vacancy)
 - if linked_locations.any?
   section
     p.icon.icon--left.icon--map-blue

@@ -1,7 +1,13 @@
 - if malware_scan_clean?(@vacancy.organisation.logo)
   - content_for :social_image, polymorphic_url(@vacancy.organisation.logo)
 
-= render "vacancies/show"
+- if @newly_created_user
+  = govuk_notification_banner title_text: t("banners.success"), classes: "govuk-notification-banner--success" do |notification_banner|
+    - notification_banner.with_heading(text: t(".one_login_banner.account_not_found.title"))
+    p.govuk-body = t(".one_login_banner.account_not_found.paragraph1")
+    p.govuk-body = t(".one_login_banner.account_not_found.paragraph2", link: govuk_link_to(t(".one_login_banner.account_not_found.transfer_account_link_text"), new_jobseekers_request_account_transfer_email_path)).html_safe
+
+= render "vacancies/show", vacancy: @vacancy, saved_job: @saved_job, job_application: @job_application, similar_jobs: @similar_jobs, invented_job_alert_search_criteria: @invented_job_alert_search_criteria
 
 script.jobref type="application/ld+json"
   == render(partial: "api/vacancies/show", formats: [:json], locals: { vacancy: @vacancy })
