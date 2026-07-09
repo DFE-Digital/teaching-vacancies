@@ -89,8 +89,8 @@ RSpec.describe "Requesting support", recaptcha: true, vcr: true, zendesk: true d
       choose "The whole site"
     end
 
-    fill_in "Tell us about your problem or question", with: issue
+    fill_in "Describe your problem or question", with: issue
 
-    attach_file "Upload a file", screenshot if screenshot
+    attach_file "Upload screenshot", screenshot if screenshot
   end
 end
