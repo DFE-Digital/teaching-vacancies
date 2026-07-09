@@ -1,9 +1,9 @@
-- subject_options = local_assigns.fetch(:subject_options, SUBJECT_OPTIONS)
+/ - subject_options = local_assigns.fetch(:subject_options, SUBJECT_OPTIONS)
 
 - filters_component.with_group key: "subjects", title: t("jobs.filters.subject"), component: searchable_collection(collection: f.govuk_collection_check_boxes(:subjects,
     subject_options,
     :first,
-    :first,
+    :second,
     :last,
     small: true,
     legend: nil,

@@ -1,86 +1,76 @@
 ruby:
-  filter_types = [
-    {
+  filter_types = {
+    visa_sponsorship_availability: {
       legend: t("jobs.filters.visa_sponsorship_availability.legend"),
-      key: :visa_sponsorship_availability,
       selected: form.visa_sponsorship_availability,
       options: form.visa_sponsorship_availability_options,
       value_method: :first,
       selected_method: :last,
     },
-    {
+    teaching_job_roles: {
       legend: t("jobs.filters.teaching_job_roles"),
-      key: :teaching_job_roles,
       selected: form.teaching_job_roles,
       options: form.teaching_job_role_options,
       value_method: :first,
       selected_method: :last,
     },
-    {
+    support_job_roles: {
       legend: t("jobs.filters.support_job_roles"),
-      key: :support_job_roles,
       selected: form.support_job_roles,
       options: form.support_job_role_options,
       value_method: :first,
       selected_method: :last,
     },
-    {
+    phases: {
       legend: t("jobs.filters.phases"),
-      key: :phases,
       selected: form.phases,
       options: form.phase_options,
       value_method: :first,
       selected_method: :last,
     },
-    {
+    subjects: {
       legend: t("jobs.filters.subject"),
-      key: :subjects,
       selected: form.subjects,
-      options: form.subject_options,
+      options: form.subject_options.map { |subject, hint| [subject, I18n.t("subject_names.#{subject}"), hint] },
       value_method: :first,
       selected_method: :first,
     },
-    {
+    ect_statuses: {
       legend: t("jobs.filters.ect_suitable"),
-      key: :ect_statuses,
       selected: form.ect_statuses,
       options: form.ect_status_options,
       value_method: :first,
       selected_method: :last,
     },
-    {
+    organisation_types: {
       legend: t("jobs.filters.organisation_type"),
-      key: :organisation_types,
       selected: form.organisation_types,
       options: form.organisation_type_options,
       value_method: :first,
       selected_method: :first,
     },
-    {
+    school_types: {
       legend: t("jobs.filters.school_type"),
-      key: :school_types,
       selected: form.school_types,
       options: form.school_type_options,
       value_method: :first,
       selected_method: :last,
     },
-    {
+    working_patterns: {
       legend: t("jobs.filters.working_patterns"),
-      key: :working_patterns,
       selected: form.working_patterns,
       options: form.working_pattern_options,
       value_method: :first,
       selected_method: :last,
     },
-    {
+    quick_apply: {
       legend: t("jobs.filters.quick_apply"),
-      key: :quick_apply,
       selected: form.quick_apply,
       options: form.quick_apply_options,
       value_method: :first,
       selected_method: :last,
     },
-  ]
+  }
 
 = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
   filters: { total_count: form.total_filters },
@@ -88,9 +78,9 @@ ruby:
   options: { heading_text: "Filter", remove_filter_links: true },
   html_attributes: { tabindex: "-1", id: "filters-component" }) do |filters_component|
     - filters_component.with_remove_filter_links do |rb|
-      - filter_types.each do |filter_type|
-        - unless hidden_filters.include?(filter_type[:key].to_s)
-          - rb.with_group(**filter_type, remove_filter_link: { url_helper: :jobs_path, params: vacancies_search.remove_filter_params })
+      - filter_types.each do |filter_key, filter_type|
+        - unless hidden_filters.include?(filter_key.to_s)
+          - rb.with_group(**filter_type, key: filter_key, remove_filter_link: { url_helper: :jobs_path, params: vacancies_search.remove_filter_params })
 
     - unless hidden_filters&.include?("visa_sponsorship")
       - filters_component.with_group key: "visa_sponsorship_availability", component: f.govuk_collection_check_boxes(:visa_sponsorship_availability, form.visa_sponsorship_availability_options, :first, :last, small: true, legend: { text: t("jobs.filters.visa_sponsorship_availability.legend") }, hint: nil)
@@ -100,7 +90,7 @@ ruby:
     - filters_component.with_group key: "education_phase", component: f.govuk_collection_check_boxes(:phases, form.phase_options, :first, :last, small: true, legend: { text: t("jobs.filters.phases") }, hint: nil)
 
     - unless hidden_filters&.include?("subjects")
-      = render "shared/subjects_filter", filters_component: filters_component, f: f, subject_options: form.subject_options
+      = render "shared/subjects_filter", filters_component: filters_component, f: f, subject_options: filter_types.fetch(:subjects).fetch(:options)
 
     - unless hidden_filters&.include?("ect_statuses")
       - filters_component.with_group key: "ect_statuses", component: f.govuk_collection_check_boxes(:ect_statuses, form.ect_status_options, :first, :last, small: true, legend: { text: t("jobs.filters.ect_suitable") }, hint: nil)
