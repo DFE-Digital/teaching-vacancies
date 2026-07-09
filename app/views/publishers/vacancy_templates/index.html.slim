@@ -9,7 +9,9 @@
     span.govuk-caption-l = current_organisation.name
     h1.govuk-heading-l = t("jobs.dashboard.saved_job_templates.with_count", count: @count)
   .govuk-grid-column-one-quarter
-    = govuk_link_to t("buttons.create_job"), organisation_jobs_start_path, class: "float-right govuk-button"
+    .govuk-button-group.float-right
+      = govuk_link_to t("buttons.create_job"), organisation_jobs_start_path, class: "govuk-button"
+      = govuk_link_to t("buttons.create_template"), new_organisation_vacancy_template_path, class: "govuk-button govuk-button--secondary"
 
 = tabs html_attributes: { "aria-label": "Tabs navigation for vacancy types" } do |tabs|
   - @vacancy_types.each do |vacancy_type|

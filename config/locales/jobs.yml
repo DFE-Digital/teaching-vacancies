@@ -10,10 +10,10 @@ en:
     dashboard:
       add_or_remove_schools: Add or remove schools
       location_filter_hint: You can add or remove schools that are in this list
-      no_templates: You do not currently have any job templates saved
+      no_templates: You do not have any saved job templates yet
       awaiting_feedback:
         tab_heading: Jobs awaiting feedback
-        with_count: Awaiting feedback (%{count})
+        with_count: Jobs awaiting feedback (%{count})
       saved_job_templates:
         tab_heading: Saved job templates
         with_count: Saved job templates (%{count})
@@ -127,7 +127,7 @@ en:
         descending:
           vacancy:
             jobseeker: most time to apply
-            publisher: end date (most recent)
+            publisher: closing date (most recent)
       frequency:
         ascending: receiving frequency (A to Z)
       job_title:
@@ -365,8 +365,7 @@ en:
       are_you_sure: Are you sure you want to delete the ‘%{job_title}’ job?
       awaiting_feedback:
         intro: >-
-          Please tell us if you filled these expired jobs through Teaching Vacancies,
-          and whether you listed them elsewhere. Your feedback will help us improve the service.
+          Tell us whether these jobs were filled through Teaching Vacancies and whether you listed them anywhere else. Your feedback will help us improve the service.
         no_jobs:
           no_filters: There are no jobs waiting for your feedback at the moment.
           with_filters: There are no jobs waiting for your feedback for the schools you have selected.

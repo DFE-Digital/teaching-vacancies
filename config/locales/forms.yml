@@ -47,7 +47,7 @@ en:
     copy_url: Copy URL
     create_account: Create an account
     create_job: Create a job listing
-    create_template: Create a template
+    create_template: Create a job template
     delete: Delete
     delete_hidden_text_html: Delete <span class='govuk-visually-hidden'>%{hidden_text}</span>
     delete_application: Delete application
@@ -645,8 +645,8 @@ en:
           false: "No"
           true: "Yes"
       publishers_vacancy_statistics_form:
-        hired_status: Job filled on Teaching Vacancies?
-        listed_elsewhere: Listed elsewhere?
+        hired_status: Was this job filled through Teaching Vacancies?
+        listed_elsewhere: Did you list this job anywhere else?
         submit_hidden_text: feedback for %{job_title}
       subscription:
         frequency_options:
