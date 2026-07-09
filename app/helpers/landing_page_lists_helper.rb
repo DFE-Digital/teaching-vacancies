@@ -78,13 +78,13 @@ module LandingPageListsHelper
   }.freeze
 
   RIGHT_SUBJECT_LIST = {
-    "ict-computer-science-teacher-jobs" => "ICT and Computer Science",
+    "ict-computer-science-teacher-jobs" => "Computing",
     "economics-business-studies-teacher-jobs" => "Economics and Business Studies",
     "art-design-teacher-jobs" => "Art and design",
     "design-technology-teacher-jobs" => "Design and technology",
     "food-technology-teacher-jobs" => "Food technology",
-    "politics-humanities-social-sciences-teacher-jobs" => "Politics, Humanities and Social Sciences",
-    "psychology-philosophy-sociology-re-teacher-jobs" => "Psychology, Sociology and RE",
+    "politics-humanities-social-sciences-teacher-jobs" => "Politics, humanities and social sciences",
+    "psychology-philosophy-sociology-re-teacher-jobs" => "Psychology, sociology and religious education",
     "health-relationships-social-care-teacher-jobs" => "Health and Social Care",
   }.freeze
 
