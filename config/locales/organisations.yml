@@ -2,7 +2,7 @@ en:
   helpers:
     label:
       college_search_form:
-        name: Name of College
+        name: Name of college
 
   organisations:
     school_type: School type
