@@ -86,9 +86,9 @@ module LandingPageListsHelper
     RIGHT_SUBJECT_LIST,
   ].freeze
 
-  SUBJECTS_LIST = LEFT_SUBJECT_LIST.index_by { |p| I18n.t("subjects.#{p}") }
-                                   .merge(MIDDLE_SUBJECT_LIST.index_by { |p| I18n.t("subjects.#{p}") })
-                                   .merge(RIGHT_SUBJECT_LIST.index_by { |p| I18n.t("subjects.#{p}") })
+  SUBJECTS_LIST = LEFT_SUBJECT_LIST.index_with { |p| I18n.t("subjects.#{p}") }
+                                   .merge(MIDDLE_SUBJECT_LIST.index_with { |p| I18n.t("subjects.#{p}") })
+                                   .merge(RIGHT_SUBJECT_LIST.index_with { |p| I18n.t("subjects.#{p}") })
                                    .freeze
 
   CHILD_SUBJECTS_LIST = {
