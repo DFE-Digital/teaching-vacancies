@@ -521,6 +521,25 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
         end
       end
 
+      context "when no school URNs are provided" do
+        let(:response_body) do
+          JSON.parse(super()).tap { |h| h[0].delete("schoolUrns") }.to_json
+        end
+
+        it "assigns the vacancy to the trust" do
+          expect(vacancy.organisations).to contain_exactly(school_group)
+        end
+      end
+
+      context "when the school URN does not belong to the given trust" do
+        let!(:other_school) { create(:school, name: "Outside School", urn: "999999", phase: :primary) }
+        let(:school_urns) { [other_school.urn] }
+
+        it "assigns the vacancy to the trust" do
+          expect(vacancy.organisations).to contain_exactly(school_group)
+        end
+      end
+
       context "when the school doesn't belong to a school group" do
         let(:school2) { create(:school, name: "Test School 2", urn: "222222", phase: :primary) }
         let(:school_urns) { [school2.urn] }

@@ -271,6 +271,42 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
       end
     end
 
+    describe "vacancy organisation parsing" do
+      let!(:school_group) { create(:school_group, name: "E-ACT", uid: "TRUST01", schools: trust_schools) }
+      let(:trust_schools) { [school1] }
+      let(:response_body) do
+        super().gsub("<trustUID><![CDATA[ ]]></trustUID>", "<trustUID><![CDATA[TRUST01]]></trustUID>")
+      end
+
+      context "when the vacancy belongs to a school within the trust" do
+        it "assigns the vacancy to the school" do
+          expect(vacancy.organisations).to contain_exactly(school1)
+        end
+      end
+
+      context "when the vacancy belongs to the central trust office" do
+        let(:response_body) do
+          super().gsub("<schoolUrns><![CDATA[123456]]></schoolUrns>", "<schoolUrns><![CDATA[]]></schoolUrns>")
+        end
+
+        it "assigns the vacancy to the trust" do
+          expect(vacancy.organisations).to contain_exactly(school_group)
+        end
+      end
+
+      context "when the school URN does not belong to the given trust" do
+        let(:trust_schools) { [] }
+        let!(:other_school) { create(:school, name: "Outside School", urn: "999999", phase: :primary) }
+        let(:response_body) do
+          super().gsub("<schoolUrns><![CDATA[123456]]></schoolUrns>", "<schoolUrns><![CDATA[#{other_school.urn}]]></schoolUrns>")
+        end
+
+        it "assigns the vacancy to the trust" do
+          expect(vacancy.organisations).to contain_exactly(school_group)
+        end
+      end
+    end
+
     context "when the same vacancy has been imported previously" do
       let!(:existing_vacancy) do
         create(
