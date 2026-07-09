@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "Extend deadline" do
-  let(:organisation) { create(:school) }
+  let(:organisation) { create_default(:school) }
   let(:vacancy) { create(:vacancy, publish_on: publish_on, expires_at: 1.month.from_now, organisations: [organisation]) }
-  let(:publisher) { create(:publisher) }
+  let(:publisher) { create_default(:publisher) }
   let(:publish_on) { 1.month.ago }
 
   before do

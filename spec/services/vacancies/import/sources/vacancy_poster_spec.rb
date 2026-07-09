@@ -4,7 +4,7 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
   let(:response_body) { file_fixture("vacancy_sources/vacancy_poster.xml").read }
   let(:response) { instance_double(Net::HTTPResponse, body: response_body) }
 
-  let!(:school1) { create(:school, name: "Test School", urn: "123456", phase: :primary) }
+  let!(:school1) { create_default(:school, name: "Test School", urn: "123456", phase: :primary) }
   let(:schools) { [school1] }
 
   describe "enumeration" do

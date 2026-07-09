@@ -1,14 +1,14 @@
 require "rails_helper"
 
 RSpec.describe "Copying a vacancy" do
-  let(:publisher) { create(:publisher) }
+  let(:publisher) { create_default(:publisher) }
 
   before { login_publisher(publisher: publisher, organisation: organisation) }
 
   after { logout }
 
   context "when the user is part of a school" do
-    let(:organisation) { create(:school) }
+    let(:organisation) { create_default(:school) }
     let(:template_name) { Faker::Movie.title }
 
     describe "creating a template from scratch" do

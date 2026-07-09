@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Publisher session" do
-  let(:publisher) { create(:publisher) }
-  let(:school) { create(:school) }
+  let(:publisher) { create_default(:publisher) }
+  let(:school) { create_default(:school) }
 
   before do
     allow(AuthenticationFallback).to receive(:enabled?).and_return(false)

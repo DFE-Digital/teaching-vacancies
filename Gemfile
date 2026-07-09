@@ -213,6 +213,7 @@ group :test do
   gem "shoulda-matchers"
   gem "simplecov", require: false
   gem "site_prism"
+  gem "test-prof"
   gem "uri-query_params"
   gem "vcr"
   gem "webmock"

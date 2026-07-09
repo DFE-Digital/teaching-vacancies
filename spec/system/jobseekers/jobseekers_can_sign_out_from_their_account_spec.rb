@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can sign out from their account" do
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
 
   before do
     login_as(jobseeker, scope: :jobseeker)

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Publishers can accept terms and conditions" do
-  let(:school) { create(:school) }
+  let(:school) { create_default(:school) }
 
   context "the user has not accepted the terms and conditions" do
     let(:publisher) { create(:publisher, accepted_terms_at: nil) }

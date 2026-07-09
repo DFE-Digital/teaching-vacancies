@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "jobseekers/saved_jobs/index" do
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:organisation) { build(:school) }
 
   let(:vacancy_with_enabled_false) { create(:vacancy, enable_job_applications: false, organisations: [organisation]) }

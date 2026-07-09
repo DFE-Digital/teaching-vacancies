@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Search::SimilarJobs do
   subject { described_class.new(vacancy) }
 
-  let(:school) { create(:school) }
+  let(:school) { create_default(:school) }
   let(:vacancy) { create(:vacancy, organisations: [school]) }
 
   it "calls Search::CriteriaDeviser" do

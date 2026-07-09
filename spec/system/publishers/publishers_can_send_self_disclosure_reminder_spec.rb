@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Publishers can send reminder for pending self-disclosure request", :perform_enqueued do
   include ActiveJob::TestHelper
 
-  let(:publisher) { create(:publisher, :with_organisation, email: "publisher@contoso.com") }
+  let(:publisher) { create_default(:publisher, :with_organisation, email: "publisher@contoso.com") }
   let(:vacancy) { create(:vacancy, publisher:, organisations: publisher.organisations) }
   let(:job_application) { create(:job_application, :status_submitted, email_address: "jobseeker@contoso.com", vacancy:) }
   let(:self_disclosure_request) { create(:self_disclosure_request, :sent, updated_at:, job_application:) }

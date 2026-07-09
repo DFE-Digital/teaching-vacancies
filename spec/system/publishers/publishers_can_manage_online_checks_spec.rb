@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "Publishers manage online checks" do
-  let(:publisher) { create(:publisher) }
-  let(:organisation) { create(:school) }
+  let(:publisher) { create_default(:publisher) }
+  let(:organisation) { create_default(:school) }
   let(:vacancy) { create(:vacancy, :expired, organisations: [organisation], publisher: publisher) }
-  let(:jobseeker) { create(:jobseeker, :with_personal_details) }
+  let(:jobseeker) { create_default(:jobseeker, :with_personal_details) }
   let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy, jobseeker: jobseeker) }
 
   before do

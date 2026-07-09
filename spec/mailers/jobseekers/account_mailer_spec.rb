@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Jobseekers::AccountMailer do
-  let(:jobseeker) { create(:jobseeker, email: email) }
+  let(:jobseeker) { create_default(:jobseeker, email: email) }
   let(:email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
 
   describe "#account_closed" do

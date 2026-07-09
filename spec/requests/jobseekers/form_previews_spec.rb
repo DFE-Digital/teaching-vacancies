@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers::FormPreviewController" do
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:job_application) { create(:job_application, :status_withdrawn, jobseeker:) }
 
   before { sign_in(jobseeker, scope: :jobseeker) }

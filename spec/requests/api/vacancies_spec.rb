@@ -3,7 +3,7 @@ require "dfe/analytics/rspec/matchers"
 
 RSpec.describe "Api::Vacancies" do
   let(:json) { JSON.parse(response.body, symbolize_names: true) }
-  let(:school) { create(:school) }
+  let(:school) { create_default(:school) }
 
   describe "GET /api/v1/jobs.html" do
     it "returns status :not_found as only JSON format is allowed" do

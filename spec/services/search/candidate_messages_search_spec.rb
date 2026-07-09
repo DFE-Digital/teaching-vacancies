@@ -3,9 +3,9 @@ require "rails_helper"
 RSpec.describe Search::CandidateMessagesSearch do
   subject(:search) { described_class.new(search_criteria, sort: sort, scope: base_scope) }
 
-  let(:organisation) { create(:school) }
-  let(:publisher) { create(:publisher, organisations: [organisation]) }
-  let(:jobseeker) { create(:jobseeker) }
+  let(:organisation) { create_default(:school) }
+  let(:publisher) { create_default(:publisher, organisations: [organisation]) }
+  let(:jobseeker) { create_default(:jobseeker) }
 
   let(:science_vacancy) { create(:vacancy, :live, job_title: "Science Teacher", organisations: [organisation]) }
   let(:math_vacancy) { create(:vacancy, :live, job_title: "Mathematics Teacher", organisations: [organisation]) }

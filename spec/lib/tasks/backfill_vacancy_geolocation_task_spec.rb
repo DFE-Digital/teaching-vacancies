@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "backfill_vacancy_geolocation" do
-  let(:school) { create(:school) }
+  let(:school) { create_default(:school) }
   let(:trust) { create(:trust) }
 
   let(:school_vacancy) { create(:vacancy, organisations: [school]) }

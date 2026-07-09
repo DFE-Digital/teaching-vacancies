@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "Users can only be signed in to one type of account" do
-  let(:school) { create(:school, :with_image, urn: "110627") }
+  let(:school) { create_default(:school, :with_image, urn: "110627") }
 
-  let(:jobseeker) { create(:jobseeker) }
-  let!(:publisher) { create(:publisher, organisations: [school]) }
+  let(:jobseeker) { create_default(:jobseeker) }
+  let!(:publisher) { create_default(:publisher, organisations: [school]) }
 
   let(:authentication_fallback_enabled?) { false }
 

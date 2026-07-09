@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe "Publishers can view their notifications" do
   include ActiveJob::TestHelper
 
-  let(:publisher) { create(:publisher) }
-  let(:organisation) { create(:school) }
+  let(:publisher) { create_default(:publisher) }
+  let(:organisation) { create_default(:school) }
   let(:vacancy) { create(:vacancy, organisations: [organisation], publisher: publisher) }
   let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
 

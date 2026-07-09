@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Jobseekers::ReactivateAccount do
-  let(:jobseeker) { create(:jobseeker, account_closed_on: account_closed_on) }
+  let(:jobseeker) { create_default(:jobseeker, account_closed_on: account_closed_on) }
   let(:account_closed_on) { Date.yesterday }
   let!(:subscription) { create(:subscription, :inactive, email: jobseeker.email) }
   let!(:job_application) { create(:job_application, :withdrawn, jobseeker: jobseeker, withdrawn_by_closing_account: true) }

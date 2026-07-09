@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Publisher can manully set interview date and time" do
-  let(:publisher) { create(:publisher, :with_organisation, accepted_terms_at: 1.day.ago) }
+  let(:publisher) { create_default(:publisher, :with_organisation, accepted_terms_at: 1.day.ago) }
   let(:organisations) { publisher.organisations }
   let(:vacancy) { create(:vacancy, organisations:) }
   let!(:job_application) { create(:job_application, :status_interviewing, vacancy:, interviewing_at: nil) }

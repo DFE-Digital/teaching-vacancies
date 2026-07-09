@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "jobseekers/job_applications/_messages.html.slim" do
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:job_application) { create(:job_application, :submitted, jobseeker: jobseeker) }
   let(:messages) { [] }
 

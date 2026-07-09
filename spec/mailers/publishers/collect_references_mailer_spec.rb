@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Publishers::CollectReferencesMailer do
   describe "#reference_received" do
-    let(:organisation) { create(:school) }
+    let(:organisation) { create_default(:school) }
     let(:vacancy) { create(:vacancy, contact_email: "contact@contoso.com", organisations: [organisation]) }
     let(:job_application) { create(:job_application, vacancy: vacancy) }
     let(:referee) { create(:referee, job_application: job_application) }

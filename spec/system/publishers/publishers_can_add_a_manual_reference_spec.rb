@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Publishers can add a manual reference" do
-  let(:publisher) { create(:publisher, email: "publisher@contoso.com") }
+  let(:publisher) { create_default(:publisher, email: "publisher@contoso.com") }
   let(:job_application) do
     create(:job_application, :status_interviewing,
            notes: build_list(:note, 1),
@@ -9,8 +9,8 @@ RSpec.describe "Publishers can add a manual reference" do
   end
   let(:vacancy) { create(:vacancy, :expired, organisations: [school], publisher: publisher) }
   let(:organisation) { create(:local_authority, schools: [school]) }
-  let(:school) { create(:school) }
-  let(:jobseeker) { create(:jobseeker, email: "jobseeker@contoso.com") }
+  let(:school) { create_default(:school) }
+  let(:jobseeker) { create_default(:jobseeker, email: "jobseeker@contoso.com") }
   let(:created_referee) { Referee.order(:created_at).last }
 
   before do

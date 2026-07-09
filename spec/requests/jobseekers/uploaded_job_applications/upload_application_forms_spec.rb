@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Upload application forms" do
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:job_application) { create(:uploaded_job_application, :status_draft, :with_uploaded_application_form, jobseeker: jobseeker) }
 
   before { sign_in(jobseeker, scope: :jobseeker) }

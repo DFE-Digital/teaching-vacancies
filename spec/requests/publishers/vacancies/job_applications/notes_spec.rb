@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Publishers::Vacancies::JobApplications::Notes" do
-  let(:publisher) { create(:publisher) }
-  let(:organisation) { create(:school) }
+  let(:publisher) { create_default(:publisher) }
+  let(:organisation) { create_default(:school) }
   let(:vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
   let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
   let(:valid_note_params) { { note: { content: "Test note" } } }

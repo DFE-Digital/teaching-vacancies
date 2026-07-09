@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Api::Markers" do
   let(:json) { JSON.parse(response.body, symbolize_names: true) }
-  let(:organisation) { create(:school) }
+  let(:organisation) { create_default(:school) }
   let(:vacancy) { create(:vacancy, organisations: [organisation]) }
   let(:marker_type) { "vacancy" }
 

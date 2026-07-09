@@ -4,7 +4,7 @@ RSpec.describe "Accessign the service data jobseeker profiles" do
   context "when signed in as a support user" do
     let(:support_user) { create(:support_user, email: "test@example.com") }
     let(:personal_details) { create(:personal_details, first_name: "John", last_name: "Smith") }
-    let!(:jobseeker_profile) { create(:jobseeker_profile, :completed, personal_details: personal_details) }
+    let!(:jobseeker_profile) { create_default(:jobseeker_profile, :completed, personal_details: personal_details) }
 
     before do
       sign_in(support_user, scope: :support_user)
@@ -49,7 +49,7 @@ RSpec.describe "Accessign the service data jobseeker profiles" do
   end
 
   context "when signed in as a publisher" do
-    let(:publisher) { create(:publisher) }
+    let(:publisher) { create_default(:publisher) }
 
     before do
       sign_in(publisher, scope: :publisher)
@@ -65,7 +65,7 @@ RSpec.describe "Accessign the service data jobseeker profiles" do
   end
 
   context "when signed in as a jobseeker" do
-    let(:jobseeker) { create(:jobseeker) }
+    let(:jobseeker) { create_default(:jobseeker) }
 
     before do
       sign_in(jobseeker, scope: :jobseeker)

@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Publishers can view vacancy statastics" do
-  let(:publisher) { create(:publisher) }
-  let(:organisation) { create(:school) }
+  let(:publisher) { create_default(:publisher) }
+  let(:organisation) { create_default(:school) }
 
   before do
     create(:saved_job, vacancy: vacancy)

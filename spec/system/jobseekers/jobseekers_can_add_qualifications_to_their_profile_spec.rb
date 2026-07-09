@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can add qualifications to their profile" do
-  let(:jobseeker) { create(:jobseeker) }
-  let!(:profile) { create(:jobseeker_profile, jobseeker:, qualifications: qualifications) }
+  let(:jobseeker) { create_default(:jobseeker) }
+  let!(:profile) { create_default(:jobseeker_profile, jobseeker:, qualifications: qualifications) }
 
   before do
     login_as(jobseeker, scope: :jobseeker)

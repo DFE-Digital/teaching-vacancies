@@ -14,7 +14,7 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated::Query do
   end
 
   describe "#vacancies" do
-    let(:school) { create(:school) }
+    let(:school) { create_default(:school) }
     let(:published_internal_vacancy) { create(:vacancy, publish_on: "2024-05-02", expires_at: "2024-05-12", created_at: 1.week.ago, updated_at: 1.week.ago) }
     let(:published_internal_before_date_vacancy) { create(:vacancy, publish_on: "2024-04-30", expires_at: "2024-05-12", created_at: 1.week.ago, updated_at: 1.week.ago) }
     let(:published_internal_updated_vacancy) { create(:vacancy, publish_on: "2024-04-30", expires_at: "2024-05-12", created_at: 1.week.ago, updated_at: Time.zone.now) }

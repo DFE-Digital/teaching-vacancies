@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can view all the jobs" do
-  let!(:school) { create(:school) }
+  let!(:school) { create_default(:school) }
   let!(:published_jobs) { create_list(:vacancy, 5, :with_dynamic_title, :past_publish, expires_at: 2.years.from_now, organisations: [school]) }
   let!(:draft_jobs) { create_list(:draft_vacancy, 2) }
 

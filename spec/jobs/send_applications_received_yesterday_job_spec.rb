@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe SendApplicationsReceivedYesterdayJob do
   let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
-  let(:school) { create(:school) }
+  let(:school) { create_default(:school) }
   let(:vacancy) { create(:vacancy, organisations: [school], contact_email: "test@contoso.com") }
   let(:other_vacancy) { create(:vacancy, organisations: [school], contact_email: "admin@contoso.com") }
 

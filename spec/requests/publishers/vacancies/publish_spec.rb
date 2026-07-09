@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe "Publish" do
   include ActionDispatch::TestProcess::FixtureFile
 
-  let(:publisher) { create(:publisher) }
+  let(:publisher) { create_default(:publisher) }
   let(:organisation) { build(:school) }
   let(:vacancy) do
     create(:draft_vacancy, organisations: [organisation]).tap do |v|

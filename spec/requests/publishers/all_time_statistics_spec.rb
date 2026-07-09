@@ -2,9 +2,9 @@ require "rails_helper"
 require "csv"
 
 RSpec.describe "Publisher all-time statistics" do
-  let(:school) { create(:school) }
+  let(:school) { create_default(:school) }
 
-  let(:publisher) { create(:publisher, publisher_preferences: build_list(:publisher_preference, 1, organisation: school)) }
+  let(:publisher) { create_default(:publisher, publisher_preferences: build_list(:publisher_preference, 1, organisation: school)) }
 
   # rubocop:disable RSpec/AnyInstance
   before do

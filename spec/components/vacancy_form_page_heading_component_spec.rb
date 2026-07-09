@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe VacancyFormPageHeadingComponent, type: :component do
-  let(:organisation) { create(:school, name: "Teaching Vacancies Academy") }
+  let(:organisation) { create_default(:school, name: "Teaching Vacancies Academy") }
   let(:current_publisher_is_part_of_school_group?) { true }
   let(:previous_step) { :review }
   let(:back_path) { "/" }

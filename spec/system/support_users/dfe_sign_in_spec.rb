@@ -68,7 +68,7 @@ RSpec.describe "Support users can sign in with DfE Sign In" do
 
   context "with valid credentials but no authorisation" do
     before do
-      create(:school, urn: "110627")
+      create_default(:school, urn: "110627")
       stub_support_user_authentication_step(email: "another_email@example.com")
       stub_publisher_authorisation_step_with_not_found
     end

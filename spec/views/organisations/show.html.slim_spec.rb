@@ -67,10 +67,10 @@ RSpec.describe "organisations/show", type: :view do
   end
 
   context "when the organisation is part of a school group" do
-    let(:school_group) { create(:trust) }
-    let(:organisation) { create(:school, school_groups: [school_group]) }
-    let(:vacancy) { create(:vacancy, organisations: [organisation]) }
-    let(:vacancy_without_apply) { create(:vacancy, :apply_via_website, organisations: [organisation]) }
+    let(:school_group) { build_stubbed(:trust) }
+    let(:organisation) { build_stubbed(:school, school_groups: [school_group]) }
+    let(:vacancy) { build_stubbed(:vacancy, organisations: [organisation]) }
+    let(:vacancy_without_apply) { build_stubbed(:vacancy, :apply_via_website, organisations: [organisation]) }
     let(:vacancies) { [vacancy, vacancy_without_apply] }
 
     it "displays a profile summary" do
@@ -82,7 +82,7 @@ RSpec.describe "organisations/show", type: :view do
     end
 
     context "when the description contains rich text formatting" do
-      let(:organisation) { create(:school, school_groups: [school_group], description: "<strong>Bold</strong> and <em>italic</em>") }
+      let(:organisation) { build_stubbed(:school, school_groups: [school_group], description: "<strong>Bold</strong> and <em>italic</em>") }
 
       it "renders the HTML formatting" do
         expect(show_view).to have_css("strong", text: "Bold")

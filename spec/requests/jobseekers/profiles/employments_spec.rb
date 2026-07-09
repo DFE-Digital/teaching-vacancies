@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseeker profile employments" do
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:profile) { create(:jobseeker_profile, jobseeker:) }
   let(:organisation) { "Arsenal" }
   let(:job_title) { "Number 9" }

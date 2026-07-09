@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Application feature reminder" do
-  let(:organisation) { create(:school) }
-  let(:publisher) { create(:publisher) }
+  let(:organisation) { create_default(:school) }
+  let(:publisher) { create_default(:publisher) }
   let(:last_vacancy) { DraftVacancy.order(:created_at).last }
 
   before do

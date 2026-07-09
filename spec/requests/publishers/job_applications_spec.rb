@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Publishers::Vacancies::JobApplicationsController#download_application_form" do
-  let(:publisher) { create(:publisher) }
-  let(:organisation) { create(:school) }
+  let(:publisher) { create_default(:publisher) }
+  let(:organisation) { create_default(:school) }
   let(:vacancy) { create(:vacancy, organisations: [organisation]) }
   let(:job_application) { create(:uploaded_job_application, vacancy: vacancy) }
 

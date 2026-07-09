@@ -6,6 +6,7 @@ require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
 require "dfe/analytics/testing"
 require "factory_bot_rails"
+require "test_prof/recipes/rspec/factory_default"
 require "paper_trail/frameworks/rspec"
 require "rack_session_access/capybara"
 require "sidekiq/testing"

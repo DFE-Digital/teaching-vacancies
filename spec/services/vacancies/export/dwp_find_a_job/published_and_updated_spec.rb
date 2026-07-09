@@ -5,12 +5,12 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated do
     subject { described_class.new("2024-05-01") }
 
     let(:org) do
-      create(:school,
-             address: "1 School Lane",
-             town: "School Town",
-             county: "School County",
-             postcode: "AB12 3CD",
-             safeguarding_information: "Safeguarding text")
+      create_default(:school,
+                     address: "1 School Lane",
+                     town: "School Town",
+                     county: "School County",
+                     postcode: "AB12 3CD",
+                     safeguarding_information: "Safeguarding text")
     end
     let(:vacancy_published_old) do
       create(:vacancy,

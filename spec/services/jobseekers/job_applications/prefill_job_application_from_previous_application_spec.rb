@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication do
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:new_vacancy) { create(:vacancy) }
   let(:new_job_application) { jobseeker.job_applications.create(vacancy: new_vacancy) }
 

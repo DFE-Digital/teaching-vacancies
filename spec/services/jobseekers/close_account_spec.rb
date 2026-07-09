@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Jobseekers::CloseAccount do
   subject { described_class.new(jobseeker, close_account_feedback_form_params) }
 
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:close_account_feedback_form_params) { {} }
   let!(:subscription) { create(:subscription, email: jobseeker.email) }
   let!(:job_application) { create(:job_application, :reviewed, jobseeker: jobseeker) }

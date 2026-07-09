@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can give job application feedback after submitting the application" do
-  let(:jobseeker) { create(:jobseeker, jobseeker_profile: jobseeker_profile) }
-  let(:jobseeker_profile) { create(:jobseeker_profile, :with_trn) }
+  let(:jobseeker) { create_default(:jobseeker, jobseeker_profile: jobseeker_profile) }
+  let(:jobseeker_profile) { create_default(:jobseeker_profile, :with_trn) }
   let(:vacancy) { create(:vacancy, :with_application_form, organisations: [build(:school)]) }
   let(:job_application) { create(:job_application, create_details: true, jobseeker: jobseeker, vacancy: vacancy) }
   let(:uploaded_job_application) { create(:uploaded_job_application, :with_uploaded_application_form, jobseeker: jobseeker, vacancy: vacancy, completed_steps: %w[personal_details upload_application_form]) }

@@ -3,8 +3,8 @@
 require "rails_helper"
 
 RSpec.describe "Publishers::Vacancies::CopyController" do
-  let(:organisation) { create(:school) }
-  let(:publisher) { create(:publisher, accepted_terms_at: 1.day.ago) }
+  let(:organisation) { create_default(:school) }
+  let(:publisher) { create_default(:publisher, accepted_terms_at: 1.day.ago) }
 
   # rubocop:disable RSpec/AnyInstance
   before do

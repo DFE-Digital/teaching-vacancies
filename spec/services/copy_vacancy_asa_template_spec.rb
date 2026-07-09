@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe CopyVacancyAsaTemplate do
   describe "#call" do
-    let(:school) { create(:school) }
+    let(:school) { create_default(:school) }
     let(:vacancy) do
       create(:vacancy, :past_publish,
              job_title: "Maths teacher",

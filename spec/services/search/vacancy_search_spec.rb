@@ -38,7 +38,7 @@ RSpec.describe Search::VacancySearch do
   let(:quick_apply) { nil }
   let(:school_types) { nil }
   let(:visa_sponsorship_availability) { nil }
-  let(:school) { create(:school) }
+  let(:school) { create_default(:school) }
 
   before do
     allow(subject).to receive(:organisation).and_return(school)

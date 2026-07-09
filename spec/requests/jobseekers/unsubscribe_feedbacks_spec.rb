@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Job alert unsubscription feedback" do
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:subscription) { create(:subscription, email: jobseeker.email) }
 
   describe "POST #create" do

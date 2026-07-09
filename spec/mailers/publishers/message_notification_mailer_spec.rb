@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Publishers::MessageNotificationMailer do
-  let(:publisher) { create(:publisher, given_name: "John") }
+  let(:publisher) { create_default(:publisher, given_name: "John") }
 
   describe "#messages_received" do
     let(:mail) { described_class.messages_received(publisher: publisher, message_count: message_count) }

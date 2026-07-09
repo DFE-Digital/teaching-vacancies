@@ -3,10 +3,10 @@ require "rails_helper"
 RSpec.describe "Publishers manage self disclosure", :perform_enqueued do
   include ActiveJob::TestHelper
 
-  let(:publisher) { create(:publisher, email: "publisher@contoso.com") }
-  let(:organisation) { create(:school) }
+  let(:publisher) { create_default(:publisher, email: "publisher@contoso.com") }
+  let(:organisation) { create_default(:school) }
   let(:vacancy) { create(:vacancy, :expired, organisations: [organisation], publisher: publisher) }
-  let(:jobseeker) { create(:jobseeker, :with_personal_details) }
+  let(:jobseeker) { create_default(:jobseeker, :with_personal_details) }
   let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy, jobseeker: jobseeker, create_self_disclosure: false) }
   let(:disclosure_request) { SelfDisclosureRequest.order(:created_at).last }
 

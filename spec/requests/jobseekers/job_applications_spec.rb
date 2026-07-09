@@ -3,7 +3,7 @@ require "dfe/analytics/rspec/matchers"
 
 RSpec.describe "Job applications" do
   let(:vacancy) { create(:vacancy, visa_sponsorship_available: visa_sponsorship, organisations: [build(:school)]) }
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:visa_sponsorship) { false }
 
   describe "GET #new" do

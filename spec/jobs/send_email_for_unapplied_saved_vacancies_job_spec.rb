@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe SendEmailForUnappliedSavedVacanciesJob, type: :job do
-  let(:jobseeker) { create(:jobseeker, :with_profile) }
+  let(:jobseeker) { create_default(:jobseeker, :with_profile) }
   let(:vacancy) { create(:vacancy, expires_at: expires_at) }
 
   before do

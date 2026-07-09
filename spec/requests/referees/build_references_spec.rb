@@ -3,9 +3,9 @@
 require "rails_helper"
 
 RSpec.describe "Referees::BuildReferencesController" do
-  let(:organisation) { create(:school) }
+  let(:organisation) { create_default(:school) }
   let(:vacancy) { create(:vacancy, organisations: [organisation]) }
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:job_application) { create(:job_application, :status_interviewing, vacancy: vacancy, jobseeker: jobseeker) }
   let(:referee) { create(:referee, job_application: job_application) }
   let(:reference_request) { create(:reference_request, referee: referee, status: :requested) }

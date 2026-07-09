@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can delete a draft job application" do
-  let(:jobseeker) { create(:jobseeker) }
-  let(:organisation) { create(:school) }
+  let(:jobseeker) { create_default(:jobseeker) }
+  let(:organisation) { create_default(:school) }
   let(:vacancy) { create(:vacancy, organisations: [organisation]) }
   let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 

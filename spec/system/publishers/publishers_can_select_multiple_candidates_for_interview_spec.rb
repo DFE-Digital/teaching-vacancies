@@ -3,10 +3,10 @@ require "rails_helper"
 RSpec.describe "Publishers can select multiple candidates for interview", :perform_enqueued do
   include ActiveJob::TestHelper
 
-  let(:publisher) { create(:publisher, email: "publisher@contoso.com") }
+  let(:publisher) { create_default(:publisher, email: "publisher@contoso.com") }
   let(:organisation) { create(:local_authority, schools: [school]) }
-  let(:school) { create(:school) }
-  let(:jobseeker) { create(:jobseeker, email: "jobseeker@contoso.com") }
+  let(:school) { create_default(:school) }
+  let(:jobseeker) { create_default(:jobseeker, email: "jobseeker@contoso.com") }
 
   before do
     login_publisher(publisher: publisher, organisation: organisation)

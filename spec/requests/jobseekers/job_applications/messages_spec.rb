@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers::JobApplications::Messages" do
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:vacancy) { create(:vacancy, :live) }
   let(:job_application) { create(:job_application, :submitted, jobseeker: jobseeker, vacancy: vacancy, status: "interviewing") }
 
@@ -52,7 +52,7 @@ RSpec.describe "Jobseekers::JobApplications::Messages" do
         end
 
         context "when conversation has existing messages" do
-          let!(:existing_message) { create(:jobseeker_message, conversation: conversation, content: "Previous message") }
+          let!(:existing_message) { create_default(:jobseeker_message, conversation: conversation, content: "Previous message") }
 
           it "renders show with existing messages and validation errors" do
             expect {

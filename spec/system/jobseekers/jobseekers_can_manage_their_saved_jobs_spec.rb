@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can manage their saved jobs" do
-  let(:jobseeker) { create(:jobseeker) }
-  let(:organisation) { create(:school) }
+  let(:jobseeker) { create_default(:jobseeker) }
+  let(:organisation) { create_default(:school) }
 
   let(:vacancy2) { create(:vacancy, enable_job_applications: true, organisations: [organisation]) }
   let(:expired_vacancy) { create(:vacancy, :expired, organisations: [organisation]) }

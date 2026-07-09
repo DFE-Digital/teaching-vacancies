@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe PublisherMessage do
   let(:conversation) { create(:conversation, job_application: job_application) }
-  let(:publisher) { create(:publisher) }
+  let(:publisher) { create_default(:publisher) }
 
   describe "validations" do
     describe "#publisher_can_send_message" do

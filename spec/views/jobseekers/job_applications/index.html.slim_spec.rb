@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "jobseekers/job_applications/index" do
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:index_view) { Capybara.string(rendered) }
   let(:selectors) do
     {

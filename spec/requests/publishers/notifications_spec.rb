@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Publisher notifications" do
-  let(:publisher) { create(:publisher, accepted_terms_at: 1.day.ago) }
+  let(:publisher) { create_default(:publisher, accepted_terms_at: 1.day.ago) }
   let(:organisation) { build(:school) }
   let(:vacancy) { create(:vacancy, organisations: [organisation]) }
   let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }

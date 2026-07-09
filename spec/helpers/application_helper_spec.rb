@@ -37,7 +37,7 @@ RSpec.describe ApplicationHelper do
   end
 
   describe "#malware_scan_clean?" do
-    let(:organisation) { create(:school) }
+    let(:organisation) { create_default(:school) }
 
     before do
       organisation.logo.attach(

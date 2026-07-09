@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Saved jobs" do
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
 
   describe "GET #new" do
     context "when a jobseeker is signed in" do

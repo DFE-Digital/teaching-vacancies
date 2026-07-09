@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
 
   context "when logged in" do
     before { login_as(jobseeker, scope: :jobseeker) }

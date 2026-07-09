@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Publishers can unsubscribe from emails" do
-  let(:publisher) { create(:publisher) }
+  let(:publisher) { create_default(:publisher) }
 
   describe "Unsubscribing from vacancy feedback prompt emails" do
     include ActiveJob::TestHelper

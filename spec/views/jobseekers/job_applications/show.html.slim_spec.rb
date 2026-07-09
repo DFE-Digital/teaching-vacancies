@@ -139,7 +139,7 @@ RSpec.describe "jobseekers/job_applications/show" do
     subject(:quick_links) { show_view.all(".navigation-list-component .navigation-list-component__anchor a") }
 
     context "with religious vacancy" do
-      let(:jobseeker) { create(:jobseeker) }
+      let(:jobseeker) { create_default(:jobseeker) }
       let(:vacancy) { create(:vacancy, :catholic) }
       let(:job_application) do
         create(:job_application, :status_shortlisted, :with_baptism_certificate, jobseeker:, vacancy:)

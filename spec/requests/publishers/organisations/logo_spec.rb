@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Updating an organisation logo" do
-  let(:publisher) { create(:publisher, organisations: [organisation]) }
+  let(:publisher) { create_default(:publisher, organisations: [organisation]) }
   let(:organisation) { build(:school) }
   let(:uploaded_image) { fixture_file_upload("blank_image.png", "image/png") }
   let(:dimensions) { %w[100 100] }

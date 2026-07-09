@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Job applications self disclosure" do
-  let(:jobseeker) { create(:jobseeker) }
-  let(:organisations) { [create(:school)] }
+  let(:jobseeker) { create_default(:jobseeker) }
+  let(:organisations) { [create_default(:school)] }
   let(:vacancy) { create(:vacancy, organisations:) }
   let(:job_application) { create(:job_application, :status_submitted, vacancy:, jobseeker:) }
   let(:self_disclosure_request) { create(:self_disclosure_request, status:, job_application:) }

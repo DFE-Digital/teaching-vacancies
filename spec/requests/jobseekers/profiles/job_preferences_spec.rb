@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Jobseeker job preferences steps" do
-  let(:jobseeker) { create(:jobseeker) }
-  let(:profile) { create(:jobseeker_profile, :with_location_preferences, jobseeker:) }
+  let(:jobseeker) { create_default(:jobseeker) }
+  let(:profile) { create_default(:jobseeker_profile, :with_location_preferences, jobseeker:) }
 
   before do
     profile

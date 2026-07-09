@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can prefill applications" do
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:vacancy) { create(:vacancy, :at_one_school) }
   let(:school) { vacancy.organisation_vacancies.first.organisation }
 

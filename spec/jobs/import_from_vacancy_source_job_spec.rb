@@ -19,7 +19,7 @@ RSpec.describe ImportFromVacancySourceJob do
 
   subject(:import_from_vacancy_source_job) { described_class.perform_now(FakeVacancySource) }
 
-  let(:school) { create(:school) }
+  let(:school) { create_default(:school) }
 
   describe "#perform" do
     context "when the integrations are disabled", :disable_integrations do

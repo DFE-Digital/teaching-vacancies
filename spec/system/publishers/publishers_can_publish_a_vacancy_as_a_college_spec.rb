@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Creating a vacancy as an FE college" do
-  let(:college) { create(:college) }
+  let(:college) { create_default(:college) }
   let(:publisher) { create(:publisher, organisations: [college]) }
   let(:created_vacancy) { Vacancy.order(:created_at).last }
 

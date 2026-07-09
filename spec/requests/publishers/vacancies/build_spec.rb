@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Job applications build" do
-  let(:publisher) { create(:publisher, organisations: [trust]) }
+  let(:publisher) { create_default(:publisher, organisations: [trust]) }
   let(:trust) { build(:trust, schools: [school_one, school_two, school_three, school_four, school_without_phase]) }
   let(:school_one) { build(:school, phase: "nursery") }
   let(:school_two) { build(:school, phase: "secondary") }

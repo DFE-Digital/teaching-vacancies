@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Publishers can manage an organisation or school profile" do
-  let(:publisher) { create(:publisher, organisations: [organisation]) }
+  let(:publisher) { create_default(:publisher, organisations: [organisation]) }
 
   before do
     login_publisher(publisher: publisher, organisation: organisation)

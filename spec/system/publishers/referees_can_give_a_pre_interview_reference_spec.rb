@@ -3,10 +3,10 @@ require "rails_helper"
 RSpec.describe "Publishers can select a job application for interview" do
   include ActiveJob::TestHelper
 
-  let(:publisher) { create(:publisher) }
-  let(:organisation) { create(:school) }
+  let(:publisher) { create_default(:publisher) }
+  let(:organisation) { create_default(:school) }
   let(:vacancy) { create(:vacancy, :expired, organisations: [organisation], publisher: publisher) }
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:job_application) do
     create(:job_application, :status_submitted,
            referees: [

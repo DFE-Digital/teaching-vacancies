@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe SendJobApplicationDataExpiryNotifierJob do
   let(:notification) { instance_double(Publishers::JobApplicationDataExpiryNotifier) }
-  let(:organisation) { create(:school) }
-  let(:publisher) { create(:publisher, organisations: [organisation]) }
+  let(:organisation) { create_default(:school) }
+  let(:publisher) { create_default(:publisher, organisations: [organisation]) }
   let!(:vacancy) { create(:vacancy, expires_at: 351.days.ago, publisher: publisher, organisations: [organisation]) }
 
   context "when the vacancy has no job applications" do

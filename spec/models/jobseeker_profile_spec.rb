@@ -27,7 +27,7 @@ RSpec.describe JobseekerProfile, type: :model do
 
   describe ".prepare_associations" do
     context "when the record is already persisted" do
-      let(:profile) { create(:jobseeker_profile) }
+      let(:profile) { create_default(:jobseeker_profile) }
 
       it "does not save the record again" do
         expect(profile).not_to receive(:save!)

@@ -3,7 +3,7 @@ require "dfe/analytics/rspec/matchers"
 
 RSpec.describe Jobseekers::JobApplicationMailer do
   let(:job_title) { Faker::Job.title }
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:organisation) { build(:school) }
   let(:vacancy) { build(:vacancy, organisations: [organisation], job_title: job_title) }
   let(:contact_email) { vacancy.contact_email }

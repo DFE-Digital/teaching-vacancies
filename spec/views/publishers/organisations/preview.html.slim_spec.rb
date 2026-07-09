@@ -20,7 +20,7 @@ RSpec.describe "publishers/organisations/preview" do
     end
 
     context "when the description contains rich text formatting" do
-      let(:organisation) { create(:school, description: "<strong>Bold</strong> and <em>italic</em>") }
+      let(:organisation) { build_stubbed(:school, description: "<strong>Bold</strong> and <em>italic</em>") }
 
       it "renders the HTML formatting" do
         expect(rendered).to have_css("strong", text: "Bold")

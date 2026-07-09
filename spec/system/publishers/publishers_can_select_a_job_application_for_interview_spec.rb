@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Publishers can select a job application for interview", :perform_enqueued do
   include ActiveJob::TestHelper
 
-  let(:publisher) { create(:publisher, email: "publisher@contoso.com") }
+  let(:publisher) { create_default(:publisher, email: "publisher@contoso.com") }
   let(:job_application) do
     create(:job_application, :status_submitted,
            notify_before_contact_referers: notify_candidate,
@@ -17,8 +17,8 @@ RSpec.describe "Publishers can select a job application for interview", :perform
                       .transform_values(&:count)
   end
   let(:organisation) { create(:local_authority, schools: [school]) }
-  let(:school) { create(:school) }
-  let(:jobseeker) { create(:jobseeker, email: "jobseeker@contoso.com") }
+  let(:school) { create_default(:school) }
+  let(:jobseeker) { create_default(:jobseeker, email: "jobseeker@contoso.com") }
   let!(:current_referee) { create(:referee, email: "employer@contoso.com", is_most_recent_employer: true, job_application: job_application) }
   let!(:old_referee) { create(:referee, email: "previous@contoso.com", is_most_recent_employer: false, job_application: job_application) }
 

@@ -4,9 +4,9 @@ require "dfe/analytics/rspec/matchers"
 RSpec.describe Publishers::JobApplicationDataExpiryMailer do
   let(:email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
   let(:mail) { described_class.with(params).job_application_data_expiry }
-  let(:organisation) { create(:school) }
+  let(:organisation) { create_default(:school) }
   let(:params) { { vacancy: vacancy, publisher: publisher } }
-  let(:publisher) { create(:publisher, email: email) }
+  let(:publisher) { create_default(:publisher, email: email) }
   let(:vacancy) { create(:vacancy, publisher: publisher, organisations: [organisation]) }
   let(:vacancy_data_expiration_date) { (vacancy.expires_at + 1.year).to_date }
 

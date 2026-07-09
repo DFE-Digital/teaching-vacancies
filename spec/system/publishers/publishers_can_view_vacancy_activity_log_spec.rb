@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Publishers can view a vacancy's activity log", versioning: true do
-  let(:publisher) { create(:publisher, organisations: [organisation]) }
-  let(:organisation) { create(:school) }
+  let(:publisher) { create_default(:publisher, organisations: [organisation]) }
+  let(:organisation) { create_default(:school) }
   let(:vacancy) { create(:vacancy, :secondary, :live, organisations: [organisation]) }
   let(:new_salary) { "£50,000 per year" }
 

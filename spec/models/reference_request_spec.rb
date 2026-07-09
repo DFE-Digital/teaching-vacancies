@@ -4,8 +4,8 @@ require "rails_helper"
 
 RSpec.describe ReferenceRequest do
   describe "#handle_unsafe_attachment" do
-    let(:organisation) { create(:school) }
-    let!(:publisher) { create(:publisher, organisations: [organisation], email: "contact@example.com") }
+    let(:organisation) { create_default(:school) }
+    let!(:publisher) { create_default(:publisher, organisations: [organisation], email: "contact@example.com") }
     let(:vacancy) { create(:vacancy, publisher: publisher, contact_email: "contact@example.com", organisations: [organisation]) }
     let(:job_application) { create(:job_application, vacancy: vacancy) }
     let(:reference_request) { create(:reference_request, status: :received_off_service, referee: create(:referee, job_application: job_application)) }

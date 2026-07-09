@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Publishers can add additional documents to a vacancy" do
-  let(:publisher) { create(:publisher) }
-  let(:primary_school) { create(:school, name: "Primary school", phase: "primary") }
+  let(:publisher) { create_default(:publisher) }
+  let(:primary_school) { create_default(:school, name: "Primary school", phase: "primary") }
   let(:organisation) { primary_school }
 
   let!(:vacancy) { create(:draft_vacancy, :ect_suitable, job_roles: ["teacher"], organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }

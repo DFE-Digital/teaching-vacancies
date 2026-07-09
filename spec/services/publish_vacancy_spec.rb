@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe PublishVacancy do
-  let(:organisation) { create(:school) }
-  let(:user) { create(:publisher) }
+  let(:organisation) { create_default(:school) }
+  let(:user) { create_default(:publisher) }
   let(:vacancy) { create(:draft_vacancy, publisher: nil, searchable_content: nil) }
   let(:published_vacancy) { Vacancy.find(vacancy.id) }
 

@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "Publishers can end a job listing early" do
-  let(:organisation) { create(:school) }
+  let(:organisation) { create_default(:school) }
   let!(:vacancy) { create(:vacancy, organisations: [organisation]) }
-  let(:publisher) { create(:publisher) }
+  let(:publisher) { create_default(:publisher) }
 
   before do
     login_publisher(publisher: publisher, organisation: organisation)
@@ -29,7 +29,7 @@ RSpec.describe "Publishers can end a job listing early" do
 
   context "when there are draft applications for the listing" do
     let(:job) { double("Send Job Listing Ended Early Notification Job") }
-    let(:jobseeker) { create(:jobseeker) }
+    let(:jobseeker) { create_default(:jobseeker) }
     let!(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
 
     it "sends an email to jobseekers with draft applications" do

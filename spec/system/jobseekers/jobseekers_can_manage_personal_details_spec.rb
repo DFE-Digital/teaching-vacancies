@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can manage their personal details" do
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:organisation) do
-    create(:school,
-           publishers: [build(:publisher)])
+    create_default(:school,
+                   publishers: [build(:publisher)])
   end
   let(:publisher) { organisation.publishers.first }
 
@@ -53,9 +53,9 @@ RSpec.describe "Jobseekers can manage their personal details" do
       let(:new_last_name) { "Gamgee" }
 
       before do
-        create(:jobseeker_profile,
-               personal_details: build(:personal_details, first_name: Faker::Fantasy::Tolkien.character,
-                                                          last_name: Faker::Fantasy::Tolkien.race), jobseeker:)
+        create_default(:jobseeker_profile,
+                       personal_details: build(:personal_details, first_name: Faker::Fantasy::Tolkien.character,
+                                                                  last_name: Faker::Fantasy::Tolkien.race), jobseeker:)
         visit jobseekers_profile_path
       end
 

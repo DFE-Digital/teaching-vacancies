@@ -1,16 +1,16 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can manage their job preferences", :geocode do
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:bexleyheath) { %w[0.14606549011864176 51.457814649098104] }
   let(:organisation) do
-    create(:school,
-           publishers: [build(:publisher)],
-           geopoint: RGeo::Geographic.spherical_factory(srid: 4326).point(*bexleyheath))
+    create_default(:school,
+                   publishers: [build(:publisher)],
+                   geopoint: RGeo::Geographic.spherical_factory(srid: 4326).point(*bexleyheath))
   end
   let(:publisher) { organisation.publishers.first }
 
-  let(:profile) { create(:jobseeker_profile, :with_personal_details, jobseeker:) }
+  let(:profile) { create_default(:jobseeker_profile, :with_personal_details, jobseeker:) }
 
   before do
     login_as(jobseeker, scope: :jobseeker)

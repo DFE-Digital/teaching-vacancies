@@ -22,7 +22,7 @@ RSpec.describe LinksHelper do
   describe "#organisation_vacancies_link" do
     subject { helper.organisation_vacancies_link(organisation) }
 
-    let(:organisation) { create(:school) }
+    let(:organisation) { create_default(:school) }
     let(:link_text) { "#{URI(root_url).host}/organisations/#{organisation.slug}" }
 
     it "generates a link with the URL included in the link text" do

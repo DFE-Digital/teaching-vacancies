@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "check job application after status transition" do
-  let(:publisher) { create(:publisher, :with_organisation, accepted_terms_at: 1.day.ago) }
+  let(:publisher) { create_default(:publisher, :with_organisation, accepted_terms_at: 1.day.ago) }
   let(:organisations) { publisher.organisations }
   let(:vacancy) { create(:vacancy, organisations:) }
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:job_application) { jobseeker.reload.job_applications.where(status:).first }
   let(:status) { "" }
 

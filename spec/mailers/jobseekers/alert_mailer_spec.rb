@@ -22,7 +22,7 @@ RSpec.describe Jobseekers::AlertMailer do
     allow_any_instance_of(Subscription).to receive(:token) { token }
     subscription
   end
-  let(:school) { create(:school) }
+  let(:school) { create_default(:school) }
   let(:mail) { described_class.alert(subscription.id, vacancies.pluck(:id)) }
   # The array of vacancies is set to length 1 because the order varies, making it hard to test url parameters.
   let(:vacancies) { create_list(:vacancy, 1, organisations: [school]).map(&:decorate) }

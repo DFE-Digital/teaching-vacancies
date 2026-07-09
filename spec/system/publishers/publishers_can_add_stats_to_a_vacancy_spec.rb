@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
-  let(:school) { create(:school) }
-  let(:publisher) { create(:publisher) }
+  let(:school) { create_default(:school) }
+  let(:publisher) { create_default(:publisher) }
 
   before do
     login_publisher(publisher: publisher, organisation: school)

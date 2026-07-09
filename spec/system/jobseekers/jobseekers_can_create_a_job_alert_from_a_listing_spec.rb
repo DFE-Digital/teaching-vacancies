@@ -2,7 +2,7 @@ require "rails_helper"
 require "dfe/analytics/rspec/matchers"
 
 RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: true do
-  let(:school) { create(:school, :secondary) }
+  let(:school) { create_default(:school, :secondary) }
   let(:vacancy) do
     create(:vacancy,
            :secondary,

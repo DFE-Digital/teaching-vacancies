@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can complete a job application" do
-  let(:jobseeker) { create(:jobseeker) }
-  let(:organisation) { create(:school) }
+  let(:jobseeker) { create_default(:jobseeker) }
+  let(:organisation) { create_default(:school) }
 
   before do
     login_as(jobseeker, scope: :jobseeker)

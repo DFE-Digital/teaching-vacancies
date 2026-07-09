@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "End job listing early" do
-  let(:organisation) { create(:school) }
+  let(:organisation) { create_default(:school) }
   let(:vacancy) { create(:vacancy, expires_at: 1.week.from_now, organisations: [organisation]) }
-  let(:publisher) { create(:publisher) }
+  let(:publisher) { create_default(:publisher) }
 
   before do
     allow_any_instance_of(Publishers::BaseController).to receive(:current_organisation).and_return(organisation)

@@ -5,7 +5,7 @@ RSpec.describe "Jobseekers can sign in with fallback email authentication" do
   before { allow(AuthenticationFallbackForJobseekers).to receive(:enabled?).and_return(true) }
 
   context "when fallback authentication is enabled" do
-    let(:jobseeker) { create(:jobseeker) }
+    let(:jobseeker) { create_default(:jobseeker) }
 
     let(:login_key) do
       EmergencyLoginKey.create(owner: jobseeker, not_valid_after: Time.current + Jobseekers::LoginKeysController::EMERGENCY_LOGIN_KEY_DURATION)

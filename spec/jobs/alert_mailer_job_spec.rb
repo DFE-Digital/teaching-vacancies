@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe AlertMailerJob do
-  let(:school) { create(:school) }
+  let(:school) { create_default(:school) }
   let!(:vacancies) { create_list(:vacancy, 5, organisations: [school]) }
   let(:subscription) { create(:daily_subscription) }
   let(:alert_run) { create(:alert_run, subscription: subscription) }

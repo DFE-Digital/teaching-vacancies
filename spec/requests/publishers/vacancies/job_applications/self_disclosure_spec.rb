@@ -9,7 +9,7 @@ RSpec.describe "Job applications self disclosure" do
   end
   let!(:self_disclosure_request) { job_application.self_disclosure_request }
   let!(:self_disclosure) { self_disclosure_request.self_disclosure }
-  let(:publisher) { create(:publisher, accepted_terms_at: 1.day.ago) }
+  let(:publisher) { create_default(:publisher, accepted_terms_at: 1.day.ago) }
 
   before do
     # rubocop:disable RSpec/AnyInstance

@@ -1,12 +1,12 @@
 require "rails_helper"
 
 RSpec.describe Jobseekers::MessageReceivedNotifier do
-  let(:organisation) { create(:school, name: "Test School") }
+  let(:organisation) { create_default(:school, name: "Test School") }
   let(:vacancy) { create(:vacancy, job_title: "Math Teacher", organisations: [organisation]) }
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy, status: status) }
   let(:conversation) { create(:conversation, job_application: job_application) }
-  let(:message) { create(:publisher_message, conversation: conversation) }
+  let(:message) { create_default(:publisher_message, conversation: conversation) }
 
   describe "#message" do
     context "when job application is unsuccessful" do

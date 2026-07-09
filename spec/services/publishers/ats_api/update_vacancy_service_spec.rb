@@ -22,8 +22,8 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       starts_on: nil,
     )
   end
-  let(:publisher_ats_api_client_id) { create(:publisher_ats_api_client).id }
-  let(:school) { create(:school) }
+  let(:publisher_ats_api_client_id) { create_default(:publisher_ats_api_client).id }
+  let(:school) { create_default(:school) }
   let(:school_urns) { { school_urns: [school.urn] } }
   let(:job_title) { vacancy.job_title }
   let(:job_advert) { vacancy.job_advert }

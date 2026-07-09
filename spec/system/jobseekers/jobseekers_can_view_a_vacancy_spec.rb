@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Viewing a single published vacancy" do
   include ActiveJob::TestHelper
 
-  let(:school) { create(:school) }
+  let(:school) { create_default(:school) }
 
   before do
     visit job_path(vacancy)

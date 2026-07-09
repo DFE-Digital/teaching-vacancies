@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Publisher can set feedback and declined dates" do
-  let(:publisher) { create(:publisher, :with_organisation, accepted_terms_at: 1.day.ago) }
+  let(:publisher) { create_default(:publisher, :with_organisation, accepted_terms_at: 1.day.ago) }
   let(:organisations) { publisher.organisations }
   let(:vacancy) { create(:vacancy, organisations:) }
 

@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Publishers::MessageReceivedNotifier do
-  let(:organisation) { create(:school, name: "Test School") }
-  let(:message) { create(:jobseeker_message, conversation: conversation) }
-  let(:publisher) { create(:publisher, organisations: [organisation]) }
+  let(:organisation) { create_default(:school, name: "Test School") }
+  let(:message) { create_default(:jobseeker_message, conversation: conversation) }
+  let(:publisher) { create_default(:publisher, organisations: [organisation]) }
   let(:vacancy) { create(:vacancy, job_title: "Math Teacher", organisations: [organisation], publisher: publisher) }
   let(:job_application) { create(:job_application, vacancy: vacancy, first_name: "John", last_name: "Doe", status: "interviewing") }
   let(:conversation) { create(:conversation, job_application: job_application) }

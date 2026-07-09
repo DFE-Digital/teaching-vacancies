@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers applications statuses" do
-  let!(:jobseeker) { create(:jobseeker, jobseeker_profile: jobseeker_profile) }
+  let!(:jobseeker) { create_default(:jobseeker, jobseeker_profile: jobseeker_profile) }
   let(:vacancy) { create(:vacancy, organisations: [school], visa_sponsorship_available: true) }
-  let(:school) { create(:school) }
+  let(:school) { create_default(:school) }
 
   before do
     login_as(jobseeker, scope: :jobseeker)

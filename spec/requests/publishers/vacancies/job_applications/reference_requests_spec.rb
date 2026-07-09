@@ -8,7 +8,7 @@ RSpec.describe "Job applications reference request" do
   let(:reference_request) do
     referee.create_reference_request!(token: SecureRandom.uuid, status: :received, email: referee.email)
   end
-  let(:publisher) { create(:publisher, accepted_terms_at: 1.day.ago) }
+  let(:publisher) { create_default(:publisher, accepted_terms_at: 1.day.ago) }
 
   before do
     create(:job_reference, :reference_given, reference_request:)

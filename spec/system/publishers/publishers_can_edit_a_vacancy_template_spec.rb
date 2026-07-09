@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "Editing a vacancy template" do
-  let(:publisher) { create(:publisher) }
+  let(:publisher) { create_default(:publisher) }
   let(:template) { create(:vacancy_template, :secondary, organisation: organisation, subjects: %w[Chemistry]) }
-  let(:organisation) { create(:school) }
+  let(:organisation) { create_default(:school) }
   let(:template_name) { Faker::Movie.title }
 
   before do

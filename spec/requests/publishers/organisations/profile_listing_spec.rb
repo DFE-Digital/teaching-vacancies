@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Accessing an organisation profile" do
-  let(:publisher) { create(:publisher, organisations: [organisation]) }
+  let(:publisher) { create_default(:publisher, organisations: [organisation]) }
 
   before do
     sign_in(publisher, scope: :publisher)

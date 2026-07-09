@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe DeleteOldNonDraftJobApplicationsJob, type: :job do
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:over_6_years_ago) { 6.years.ago - 1.day }
 
   before do

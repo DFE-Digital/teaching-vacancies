@@ -2,9 +2,9 @@ require "rails_helper"
 require "dfe/analytics/rspec/matchers"
 
 RSpec.describe Publishers::JobApplicationMailer do
-  let(:publisher) { create(:publisher, email: email) }
+  let(:publisher) { create_default(:publisher, email: email) }
   let(:email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
-  let(:organisation) { create(:school) }
+  let(:organisation) { create_default(:school) }
   let!(:vacancy) { create(:vacancy, publisher: publisher, organisations: [organisation]) }
   let(:contact_email) { vacancy.contact_email }
 

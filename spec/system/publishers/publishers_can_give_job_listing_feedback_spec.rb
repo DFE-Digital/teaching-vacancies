@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Publishers can give job listing feedback" do
-  let(:publisher) { create(:publisher) }
-  let(:organisation) { create(:school) }
+  let(:publisher) { create_default(:publisher) }
+  let(:organisation) { create_default(:school) }
   let(:comment) { "I love this service!" }
   let(:occupation) { "Teaching assistant" }
 

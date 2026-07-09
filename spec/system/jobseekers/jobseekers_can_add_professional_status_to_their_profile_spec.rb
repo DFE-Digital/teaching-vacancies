@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can add professional status to their profile" do
-  let(:jobseeker) { create(:jobseeker, jobseeker_profile: profile) }
+  let(:jobseeker) { create_default(:jobseeker, jobseeker_profile: profile) }
 
   before do
     login_as(jobseeker, scope: :jobseeker)

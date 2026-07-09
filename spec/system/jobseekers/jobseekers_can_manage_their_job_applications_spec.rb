@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can manage their job applications" do
-  let(:jobseeker) { create(:jobseeker) }
-  let(:organisation) { create(:school) }
+  let(:jobseeker) { create_default(:jobseeker) }
+  let(:organisation) { create_default(:school) }
 
   context "when logged in" do
     before do

@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Publishers can manage job applications for a vacancy" do
   let(:vacancy) { create(:vacancy) }
   let(:organisation) { vacancy.organisations.first }
-  let(:publisher) { create(:publisher, accepted_terms_at: 1.day.ago) }
+  let(:publisher) { create_default(:publisher, accepted_terms_at: 1.day.ago) }
 
   before { login_publisher(publisher: publisher, organisation: organisation) }
 

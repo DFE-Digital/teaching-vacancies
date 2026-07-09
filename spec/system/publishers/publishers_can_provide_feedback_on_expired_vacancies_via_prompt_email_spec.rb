@@ -4,7 +4,7 @@ RSpec.describe "Publishers can provide feedback on expired vacancies via the pro
   include ActiveJob::TestHelper
 
   let(:first_email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
-  let(:publisher) { create(:publisher, email: first_email) }
+  let(:publisher) { create_default(:publisher, email: first_email) }
 
   before { ActionMailer::Base.deliveries.clear }
 
@@ -57,7 +57,7 @@ RSpec.describe "Publishers can provide feedback on expired vacancies via the pro
 
   context "when multiple publishers have vacancies that expired between 2 and 6 weeks ago" do
     let(:second_email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
-    let(:second_publisher) { create(:publisher, email: second_email) }
+    let(:second_publisher) { create_default(:publisher, email: second_email) }
 
     before do
       create_list(:vacancy, 2, publisher: publisher, expires_at: 4.weeks.ago)

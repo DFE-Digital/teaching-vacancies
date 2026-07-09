@@ -7,7 +7,7 @@ RSpec.describe SendMessagesReceivedYesterdayJob do
     let(:vacancy) { create(:vacancy, organisations: [organisation], publisher: publisher) }
     let(:job_application) { create(:job_application, vacancy: vacancy, status: "interviewing") }
     let(:conversation) { create(:conversation, job_application: job_application) }
-    let(:jobseeker) { create(:jobseeker) }
+    let(:jobseeker) { create_default(:jobseeker) }
 
     before do
       allow(Publishers::MessageNotificationMailer).to receive(:messages_received).and_call_original

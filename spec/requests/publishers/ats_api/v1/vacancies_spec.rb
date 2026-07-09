@@ -3,7 +3,7 @@ require "swagger_helper"
 # rubocop:disable RSpec/VariableName
 # rubocop:disable RSpec/ScatteredSetup
 RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
-  let!(:client) { create(:publisher_ats_api_client) }
+  let!(:client) { create_default(:publisher_ats_api_client) }
   let(:"X-Api-Key") { client.api_key }
 
   path "/ats-api/v1/vacancies" do

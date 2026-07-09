@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Publishers can filter vacancies in their dashboard" do
-  let(:publisher) { create(:publisher) }
+  let(:publisher) { create_default(:publisher) }
   let(:trust) { create(:trust, schools: [school1, school2]) }
   let(:local_authority1) { create(:local_authority, schools: [school1, school2, school4, school5]) }
   let(:local_authority2) { create(:local_authority) }

@@ -17,11 +17,11 @@ RSpec.describe "Service Data supportal section" do
   end
 
   scenario "support users can list and see the Jobseekers Profile information through the Supportal" do
-    profile = create(:jobseeker_profile,
-                     :completed,
-                     about_you: "I am a jobseeker",
-                     qualified_teacher_status: "yes",
-                     qualified_teacher_status_year: "2010")
+    profile = create_default(:jobseeker_profile,
+                             :completed,
+                             about_you: "I am a jobseeker",
+                             qualified_teacher_status: "yes",
+                             qualified_teacher_status_year: "2010")
     jobseeker = profile.jobseeker
     personal_details = profile.personal_details
     jobseeker_name = "#{personal_details.first_name} #{personal_details.last_name}"

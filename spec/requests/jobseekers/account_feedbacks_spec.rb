@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Account feedback" do
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
 
   describe "GET #new" do
     context "when logged out" do

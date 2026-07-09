@@ -1,12 +1,12 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can save a job" do
-  let(:school) { create(:school) }
+  let(:school) { create_default(:school) }
   let(:vacancy) { create(:vacancy, organisations: [school]) }
   let(:created_jobseeker) { Jobseeker.first }
 
   context "when a jobseeker has an account" do
-    let(:jobseeker) { create(:jobseeker) }
+    let(:jobseeker) { create_default(:jobseeker) }
 
     context "when they are signed in to their account" do
       before { login_as(jobseeker, scope: :jobseeker) }

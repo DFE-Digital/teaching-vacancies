@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "Publishers can manage candidate messages" do
-  let(:organisation) { create(:school) }
-  let(:publisher) { create(:publisher, organisations: [organisation]) }
-  let(:jobseeker) { create(:jobseeker) }
+  let(:organisation) { create_default(:school) }
+  let(:publisher) { create_default(:publisher, organisations: [organisation]) }
+  let(:jobseeker) { create_default(:jobseeker) }
 
   before do
     login_publisher(publisher: login_user, organisation: login_organisation)

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe SendEmailForDraftJobApplicationsJob, type: :job do
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:vacancy) { create(:vacancy, expires_at: Date.today + time_left + 2.hours) }
   let(:job_application) { JobApplication.last }
 

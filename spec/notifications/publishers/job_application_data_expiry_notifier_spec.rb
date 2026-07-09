@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobApplicationDataExpiryNotifier do
-  let(:organisation) { create(:school) }
-  let(:publisher) { create(:publisher) }
+  let(:organisation) { create_default(:school) }
+  let(:publisher) { create_default(:publisher) }
   let(:vacancy) { create(:vacancy, publisher: publisher, organisations: [organisation]) }
 
   describe "#message" do

@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "Publishers fill out pre-employement checks" do
-  let(:publisher) { create(:publisher, email: "publisher@contoso.com") }
+  let(:publisher) { create_default(:publisher, email: "publisher@contoso.com") }
   let(:job_application) { create(:job_application, :status_offered, vacancy: vacancy) }
   let(:vacancy) { create(:vacancy, :expired, organisations: [school], publisher: publisher) }
-  let(:school) { create(:school) }
+  let(:school) { create_default(:school) }
 
   before do
     login_publisher(publisher: publisher, organisation: school)

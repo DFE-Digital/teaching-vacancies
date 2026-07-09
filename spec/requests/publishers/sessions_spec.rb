@@ -47,7 +47,7 @@ RSpec.describe "Redirect to correct authentication method" do
 
   context "when organisation profile is incomplete" do
     let(:authentication_fallback_enabled?) { false }
-    let(:publisher) { create(:publisher) }
+    let(:publisher) { create_default(:publisher) }
     let(:organisation) { build(:school) }
 
     before do

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can add a personal statement to their profile" do
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
 
   context "with a jobseeker" do
     before { login_as(jobseeker, scope: :jobseeker) }

@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe "Publishers can reject a job application" do
   include ActiveJob::TestHelper
 
-  let(:publisher) { create(:publisher) }
-  let(:organisation) { create(:school, :with_image) }
+  let(:publisher) { create_default(:publisher) }
+  let(:organisation) { create_default(:school, :with_image) }
   let(:vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
 
   before do

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can add job preferences to their profile" do
-  let!(:jobseeker) { create(:jobseeker, jobseeker_profile: build(:jobseeker_profile, job_preferences: job_preferences)) }
+  let!(:jobseeker) { create_default(:jobseeker, jobseeker_profile: build(:jobseeker_profile, job_preferences: job_preferences)) }
 
   before do
     login_as(jobseeker, scope: :jobseeker)

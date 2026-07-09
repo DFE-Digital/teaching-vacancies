@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "support_users/publisher_ats_api_clients/index" do
-  let(:organisation) { create(:school) }
+  let(:organisation) { create_default(:school) }
   let(:vacancy_one) { create(:vacancy, :external, organisations: [organisation], created_at: 2.days.ago) }
   let(:vacancy_two) { create(:vacancy, :external, organisations: [organisation], created_at: 1.day.ago) }
-  let(:api_client) { create(:publisher_ats_api_client, vacancies: [vacancy_one, vacancy_two], created_at: 3.days.ago) }
+  let(:api_client) { create_default(:publisher_ats_api_client, vacancies: [vacancy_one, vacancy_two], created_at: 3.days.ago) }
 
   before do
     assign :api_clients, [api_client]

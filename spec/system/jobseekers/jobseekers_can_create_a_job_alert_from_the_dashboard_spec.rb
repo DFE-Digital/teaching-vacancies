@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha: true do
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:subscription) { build(:subscription, :with_some_criteria) }
   let(:search_criteria) { subscription.search_criteria }
 

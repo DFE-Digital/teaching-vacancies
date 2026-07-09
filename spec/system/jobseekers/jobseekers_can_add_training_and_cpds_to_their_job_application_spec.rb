@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseeker can add training and cpds to their job application" do
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create_default(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy, training_and_cpds: training_and_cpds) }
 

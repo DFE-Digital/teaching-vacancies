@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "backfill_vacancy_searchable_content" do
-  let(:school) { create(:school) }
+  let(:school) { create_default(:school) }
 
   let(:school_vacancy) { create(:vacancy, organisations: [school]) }
   let(:expired_vacancy) { create(:vacancy, :expired, organisations: [school]) }

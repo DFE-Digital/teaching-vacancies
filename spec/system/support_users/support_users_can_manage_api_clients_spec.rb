@@ -24,7 +24,7 @@ RSpec.describe "Support users can manage API clients" do
     context "with an API client" do
       let(:api_client_name) { "Test API Client" }
       let(:old_api_key) { SecureRandom.hex(20) }
-      let!(:api_client) { create(:publisher_ats_api_client, name: api_client_name, api_key: old_api_key) }
+      let!(:api_client) { create_default(:publisher_ats_api_client, name: api_client_name, api_key: old_api_key) }
 
       before do
         visit current_path

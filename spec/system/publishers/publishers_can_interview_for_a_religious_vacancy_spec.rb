@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Publishers can interview for a religious vacancy" do
-  let(:publisher) { create(:publisher, email: "publisher@contoso.com") }
+  let(:publisher) { create_default(:publisher, email: "publisher@contoso.com") }
   let(:job_application) do
     create(:job_application, :status_interviewing,
            :with_religious_referee,
@@ -13,8 +13,8 @@ RSpec.describe "Publishers can interview for a religious vacancy" do
   let(:vacancy) { create(:vacancy, :catholic, :expired, organisations: [school], publisher: publisher) }
   let(:action_needed) { "Action needed" }
   let(:organisation) { create(:local_authority, schools: [school]) }
-  let(:school) { create(:school) }
-  let(:jobseeker) { create(:jobseeker, email: "jobseeker@contoso.com") }
+  let(:school) { create_default(:school) }
+  let(:jobseeker) { create_default(:jobseeker, email: "jobseeker@contoso.com") }
 
   before do
     login_publisher(publisher: publisher, organisation: organisation)

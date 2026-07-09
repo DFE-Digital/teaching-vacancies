@@ -50,7 +50,7 @@ RSpec.describe "home/index" do
   end
 
   context "when jobseeker is signed in" do
-    let(:jobseeker) { create(:jobseeker) }
+    let(:jobseeker) { create_default(:jobseeker) }
     let(:publisher) { nil }
 
     it "renders the correct links" do
@@ -64,7 +64,7 @@ RSpec.describe "home/index" do
 
   context "when publisher is signed in" do
     let(:jobseeker) { nil }
-    let(:publisher) { create(:publisher) }
+    let(:publisher) { create_default(:publisher) }
 
     it "renders the correct links" do
       expect(rendered).to have_content(I18n.t("nav.manage_jobs"))

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "backfill_about_you" do
-  let!(:profile) { create(:jobseeker_profile, about_you: "Hello") }
+  let!(:profile) { create_default(:jobseeker_profile, about_you: "Hello") }
 
   # rubocop:disable RSpec/NamedSubject
   it "backfills the about_you_richtext field" do

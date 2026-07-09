@@ -30,7 +30,7 @@ RSpec.describe "CORS" do
   end
 
   describe "/api/v1/markers/:id.json" do
-    let(:organisation) { create(:school) }
+    let(:organisation) { create_default(:school) }
     let(:vacancy) { create(:vacancy, organisations: [organisation]) }
     let(:params) { { id: vacancy.id, parent_id: organisation.id, format: :json, api_version: 1 } }
 

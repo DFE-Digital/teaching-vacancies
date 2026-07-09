@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Publishers can send messages to job applicants" do
-  let(:organisation) { create(:school) }
+  let(:organisation) { create_default(:school) }
   let(:publisher) { create(:publisher, organisations: [organisation]) }
   let(:vacancy) { create(:vacancy, :live, organisations: [organisation]) }
   let(:job_application) { create(:job_application, :submitted, vacancy: vacancy) }
@@ -15,7 +15,7 @@ RSpec.describe "Publishers can send messages to job applicants" do
     after { logout }
 
     context "with messages from 2 different publishers" do
-      let(:another_publisher) { create(:publisher) }
+      let(:another_publisher) { create_default(:publisher) }
       let!(:conversation) { create(:conversation, job_application: job_application) }
 
       before do

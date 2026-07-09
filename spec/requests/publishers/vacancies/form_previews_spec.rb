@@ -6,7 +6,7 @@ RSpec.describe "Publishers::Vacancies::FormPreviewController" do
   let(:vacancy) { create(:vacancy) }
   let(:organisation) { vacancy.organisations.first }
   let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
-  let(:publisher) { create(:publisher, accepted_terms_at: 1.day.ago) }
+  let(:publisher) { create_default(:publisher, accepted_terms_at: 1.day.ago) }
 
   before do
     allow_any_instance_of(ApplicationController).to receive(:current_organisation).and_return(organisation)

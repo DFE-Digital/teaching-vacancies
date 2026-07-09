@@ -3,7 +3,7 @@ require "dfe/analytics/rspec/matchers"
 
 RSpec.describe Publishers::AuthenticationFallbackMailer do
   describe "the user receives the sign in email containing the magic link" do
-    let(:publisher) { create(:publisher) }
+    let(:publisher) { create_default(:publisher) }
     let(:login_key) { EmergencyLoginKey.create(not_valid_after: Time.current + 10.minutes, owner: publisher) }
     let(:mail) { described_class.sign_in_fallback(login_key_id: login_key.id, publisher: publisher) }
     let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }

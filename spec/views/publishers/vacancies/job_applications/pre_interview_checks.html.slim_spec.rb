@@ -3,8 +3,8 @@
 require "rails_helper"
 
 RSpec.describe "publishers/vacancies/job_applications/pre_interview_checks" do
-  let(:organisation) { create(:school) }
-  let(:publisher) { create(:publisher, organisations: [organisation]) }
+  let(:organisation) { create_default(:school) }
+  let(:publisher) { create_default(:publisher, organisations: [organisation]) }
   let(:vacancy) { create(:vacancy, publisher: publisher, organisations: [organisation]) }
   let(:job_application) { create(:job_application, :status_interviewing, vacancy: vacancy) }
   let(:referee) { create(:referee, job_application: job_application) }

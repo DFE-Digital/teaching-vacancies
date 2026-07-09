@@ -8,7 +8,7 @@ RSpec.describe "Application meta tags" do
   end
 
   context "when viewing an expired vacancy" do
-    let(:organisation) { create(:school) }
+    let(:organisation) { create_default(:school) }
     let(:expired_vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
 
     scenario "the correct meta tag is present" do

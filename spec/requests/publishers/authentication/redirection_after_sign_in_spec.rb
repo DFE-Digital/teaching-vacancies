@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Publishers redirection" do
-  let(:organisation) { create(:school, :with_image) }
-  let(:publisher) { create(:publisher) }
+  let(:organisation) { create_default(:school, :with_image) }
+  let(:publisher) { create_default(:publisher) }
   let(:vacancy) { create(:vacancy, publisher: publisher, organisations: [organisation]) }
 
   before do
@@ -35,7 +35,7 @@ RSpec.describe "Publishers redirection" do
     end
 
     context "when the organisation's profile is incomplete" do
-      let(:organisation) { create(:school, :with_image, email: nil) }
+      let(:organisation) { create_default(:school, :with_image, email: nil) }
 
       it "redirects to the interstitial profile completion reminder page" do
         get auth_dfe_callback_path

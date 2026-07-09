@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Publishers can manage a reference request", :perform_enqueued do
   include ActiveJob::TestHelper
 
-  let(:publisher) { create(:publisher, email: "publisher@contoso.com") }
+  let(:publisher) { create_default(:publisher, email: "publisher@contoso.com") }
   let(:job_application) do
     create(:job_application, :status_submitted,
            email_address: jobseeker.email,
@@ -11,8 +11,8 @@ RSpec.describe "Publishers can manage a reference request", :perform_enqueued do
   end
   let(:vacancy) { create(:vacancy, :expired, organisations: [school], publisher: publisher) }
   let(:organisation) { create(:local_authority, schools: [school]) }
-  let(:school) { create(:school) }
-  let(:jobseeker) { create(:jobseeker, email: "jobseeker@contoso.com") }
+  let(:school) { create_default(:school) }
+  let(:jobseeker) { create_default(:jobseeker, email: "jobseeker@contoso.com") }
   let(:current_referee) do
     create(:referee, email: "referee@contoso.com", is_most_recent_employer: true, job_application: job_application,
                      reference_request: reference_request)

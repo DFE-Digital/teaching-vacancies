@@ -4,7 +4,7 @@ require "dfe/analytics/rspec/matchers"
 RSpec.describe "Documents" do
   include ActionDispatch::TestProcess::FixtureFile
 
-  let(:publisher) { create(:publisher) }
+  let(:publisher) { create_default(:publisher) }
   let(:organisation) { build(:school) }
 
   before do

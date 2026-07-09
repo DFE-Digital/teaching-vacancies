@@ -1,12 +1,12 @@
 require "rails_helper"
 
 RSpec.describe Jobseekers::MessageMailer do
-  let(:jobseeker) { create(:jobseeker) }
-  let(:organisation) { create(:school) }
+  let(:jobseeker) { create_default(:jobseeker) }
+  let(:organisation) { create_default(:school) }
   let(:vacancy) { create(:vacancy, organisations: [organisation]) }
   let(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
   let(:conversation) { create(:conversation, job_application: job_application) }
-  let(:message) { create(:publisher_message, conversation: conversation) }
+  let(:message) { create_default(:publisher_message, conversation: conversation) }
 
   describe "#rejection_message" do
     subject(:mail) { described_class.rejection_message(message) }
