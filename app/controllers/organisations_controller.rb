@@ -1,4 +1,6 @@
 class OrganisationsController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
   before_action :strip_empty_filter_checkboxes, only: %i[index]
 
   before_action :set_organisation, only: %i[show]
@@ -21,7 +23,7 @@ class OrganisationsController < ApplicationController
   end
 
   def set_organisation
-    @organisation = Organisation.friendly.find(params[:id] || params[:organisation_id])
+    @organisation = Organisation.visible_to_jobseekers.friendly.find(params[:id] || params[:organisation_id])
   end
 
   # :nocov:
