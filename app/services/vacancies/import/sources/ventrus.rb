@@ -105,15 +105,16 @@ class Vacancies::Import::Sources::Ventrus
   def find_schools(item)
     return [] if item["TrustUID"] != VENTRUS_TRUST_UID
 
-    multi_academy_trust = SchoolGroup.trusts.find_by(uid: item["TrustUID"])
+    multi_academy_trust = SchoolGroup.trusts.kept.find_by(uid: item["TrustUID"])
     return [] if multi_academy_trust.blank?
 
     school_urns = item["URN"]&.split(",")
-    schools = Organisation.where(urn: school_urns) if school_urns.present?
+    schools = Organisation.eligible_for_external_publishing.where(urn: school_urns) if school_urns.present?
+    return [] if no_importable_organisations?(multi_academy_trust, school_urns, schools)
     return Array(multi_academy_trust) if schools.blank?
 
     # When having both trust and schools, only return the schools that are in the trust if any. Otherwise, return the trust itself.
-    multi_academy_trust.schools.where(urn: school_urns).order(:created_at).presence || Array(multi_academy_trust)
+    multi_academy_trust.schools.eligible_for_external_publishing.where(urn: school_urns).order(:created_at).presence || Array(multi_academy_trust)
   end
 
   def job_roles_for(item)

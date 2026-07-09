@@ -380,6 +380,26 @@ RSpec.describe Vacancies::Import::Sources::Broadbean do
           expect(subject.count).to eq(0)
         end
       end
+
+      context "when the school is soft-deleted" do
+        before do
+          school2.discard
+        end
+
+        it "does not import vacancy" do
+          expect(subject.count).to eq(0)
+        end
+      end
+
+      context "when the school is an FE college" do
+        before do
+          school2.update(school_type: School::COLLEGE_SCHOOL_TYPE, detailed_school_type: School::FE_DETAILED_SCHOOL_TYPE)
+        end
+
+        it "does not import vacancy" do
+          expect(subject.count).to eq(0)
+        end
+      end
     end
 
     context "when visa_sponsorship_available field is not supplied" do
