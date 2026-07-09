@@ -65,37 +65,30 @@ module LandingPageListsHelper
     "fe-other-support-roles-jobs" => "other_support",
   }.freeze
 
-  LEFT_SUBJECT_LIST = { "maths-teacher-jobs" => "Mathematics",
-                        "english-media-studies-teacher-jobs" => "English and Media Studies",
-                        "physical-education-teacher-jobs" => "Physical education",
-                        "dance-drama-music-teacher-jobs" => "Dance, Drama and Music",
-                        "science-teacher-jobs" => "Science" }.freeze
+  LEFT_SUBJECT_LIST = %w[maths-teacher-jobs english-media-studies-teacher-jobs physical-education-teacher-jobs dance-drama-music-teacher-jobs science-teacher-jobs].freeze
 
-  MIDDLE_SUBJECT_LIST = {
-    "history-teacher-jobs" => "History",
-    "geography-teacher-jobs" => "Geography",
-    "mfl-teacher-jobs" => "Foreign languages",
-  }.freeze
+  MIDDLE_SUBJECT_LIST = %w[history-teacher-jobs geography-teacher-jobs mfl-teacher-jobs].freeze
 
-  RIGHT_SUBJECT_LIST = {
-    "ict-computer-science-teacher-jobs" => "Computing",
-    "economics-business-studies-teacher-jobs" => "Economics and Business Studies",
-    "art-design-teacher-jobs" => "Art and design",
-    "design-technology-teacher-jobs" => "Design and technology",
-    "food-technology-teacher-jobs" => "Food technology",
-    "politics-humanities-social-sciences-teacher-jobs" => "Politics, humanities and social sciences",
-    "psychology-philosophy-sociology-re-teacher-jobs" => "Psychology, sociology and religious education",
-    "health-relationships-social-care-teacher-jobs" => "Health and Social Care",
-  }.freeze
-
-  SUBJECTS_COLUMNS = [
-    LEFT_SUBJECT_LIST.keys,
-    MIDDLE_SUBJECT_LIST.keys,
-    RIGHT_SUBJECT_LIST.keys,
+  RIGHT_SUBJECT_LIST = %w[
+    ict-computer-science-teacher-jobs
+    economics-business-studies-teacher-jobs
+    art-design-teacher-jobs
+    design-technology-teacher-jobs
+    food-technology-teacher-jobs
+    politics-humanities-social-sciences-teacher-jobs
+    psychology-philosophy-sociology-re-teacher-jobs
+    health-relationships-social-care-teacher-jobs
   ].freeze
 
-  SUBJECTS_LIST = LEFT_SUBJECT_LIST.merge(MIDDLE_SUBJECT_LIST)
-                                   .merge(RIGHT_SUBJECT_LIST)
+  SUBJECTS_COLUMNS = [
+    LEFT_SUBJECT_LIST,
+    MIDDLE_SUBJECT_LIST,
+    RIGHT_SUBJECT_LIST,
+  ].freeze
+
+  SUBJECTS_LIST = LEFT_SUBJECT_LIST.index_by { |p| I18n.t("subjects.#{p}") }
+                                   .merge(MIDDLE_SUBJECT_LIST.index_by { |p| I18n.t("subjects.#{p}") })
+                                   .merge(RIGHT_SUBJECT_LIST.index_by { |p| I18n.t("subjects.#{p}") })
                                    .freeze
 
   CHILD_SUBJECTS_LIST = {
