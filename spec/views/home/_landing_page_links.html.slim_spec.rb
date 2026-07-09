@@ -146,9 +146,9 @@ RSpec.describe "home/landing_page_links" do
         expect(section).to have_link("Economics and business studies")
         expect(section).to have_link("Dance, drama and music")
         expect(section).to have_link("Food technology")
-        expect(section).to have_link("Health and Social Care")
+        expect(section).to have_link("Health and social care")
         expect(section).to have_link("Design and technology")
-        expect(section).to have_link("Land and Property Management")
+        expect(section).to have_link("Land and property management")
       end
     end
   end
