@@ -1,6 +1,5 @@
 require "hash_shape"
 
-# rubocop:disable Metrics/ClassLength
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   skip_before_action :verify_authenticity_token, only: :dfe
   prepend_before_action :set_sentry_auth_context, only: :dfe
@@ -61,19 +60,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       exception,
       template: "unregistered_establishment",
     )
-  end
-
-  def not_found(error)
-    # Overrides `ApplicationController`, which globally rescues all `ActiveRecord::RecordNotFound`
-    # errors and shows a "page not found" error page to the user.
-    # It's unexpected for a record to not be found as part of the sign in process, so send this
-    # error to our error tracking system so it can be investigated.
-    # The DSI auth context is already attached to the Sentry scope by `set_sentry_auth_context`.
-    Sentry.capture_exception(error)
-
-    Rails.logger.error("Not found error encountered during sign in", error)
-
-    super
   end
 
   private
@@ -214,4 +200,3 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 end
-# rubocop:enable Metrics/ClassLength
