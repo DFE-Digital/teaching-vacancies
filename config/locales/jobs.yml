@@ -221,7 +221,7 @@ en:
     distance_from_location: "%{distance} miles"
 
     actual_salary: Actual salary
-    annual_salary: Full-time equivalent salary
+    annual_salary: Full time equivalent salary
     benefits: Do you want to include additional allowances?
     benefits_details: Additional allowances
     pay_scale: Pay scale

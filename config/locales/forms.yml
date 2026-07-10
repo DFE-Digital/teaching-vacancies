@@ -248,7 +248,7 @@ en:
       publishers_job_listing_include_additional_documents_form:
         include_additional_documents: Jobseekers can only upload one file when applying. If an application form is required, only include additional documents here that do not need to be submitted as part of their application.
       publishers_job_listing_pay_package_form:
-        benefits: For example, special educational needs (SEN) or teaching and learning responsibility (TLR) payments
+        benefits: For example, special educational needs (SEN) allowances or teaching and learning responsibility (TLR) payments
         pay_scale: For example, ‘M1 to M2’
         salary: For example, ‘Between £20,000 and £40,000’
         hourly_rate: For example, '£10.00 per hour'
@@ -624,15 +624,15 @@ en:
         job_title: Job title
       publishers_job_listing_pay_package_form:
         actual_salary: Actual salary
-        benefits_details: Additional allowances
+        benefits_details: What additional allowances do you want to include?
         benefits_options:
           false: "No"
           true: "Yes"
         pay_scale: Pay scale
-        salary: Full-time equivalent salary
+        salary: Full time equivalent salary
         hourly_rate: Hourly rate of pay
         salary_types_options:
-          full_time: Full-time equivalent salary
+          full_time: Full time equivalent salary
           part_time: Actual salary
           pay_scale: Pay scale
           hourly_rate: Hourly rate of pay
@@ -784,7 +784,7 @@ en:
       publishers_job_listing_schools_form:
         organisations: Locations where the job is based
       publishers_job_listing_pay_package_form:
-        salary_types: Salary details
+        salary_types: Which salary details do you want to include?
         benefits: Do you want to include additional allowances?
       subscription:
         frequency: When do you want to receive alerts?

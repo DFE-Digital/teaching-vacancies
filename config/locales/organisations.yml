@@ -110,7 +110,7 @@ en:
         heading: Current jobs
       vacancy:
         actual_salary: Actual salary
-        full_time_equivalent_salary: Full-time equivalent salary
+        full_time_equivalent_salary: Full time equivalent salary
         job_role: Role
         school_name: School name
         working_pattern: Working pattern
