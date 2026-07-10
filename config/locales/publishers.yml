@@ -499,6 +499,8 @@ en:
           step_title: Job start date
         subjects:
           step_title: Subjects
+          search_label: Search subjects
+          search_hint: Start typing to filter the list of subjects.
         contract_type:
           step_title: Contract type
           fixed_term: Fixed term
@@ -687,7 +689,7 @@ en:
         education_phases: Which education phases is this job for?
         job_title: Job title
         key_stages: Key stage
-        subjects: Subjects (optional)
+        subjects: Which subject or subjects is this job for? (optional)
         contract_type: Contract type
         contract_information: Contract information
         pay_package: Salary and allowances

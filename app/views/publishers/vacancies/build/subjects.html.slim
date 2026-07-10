@@ -1,12 +1,15 @@
 - content_for :page_title_prefix, page_title_prefix(step_process, form)
 
+= vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false, sub_caption: { text: "Select all that apply. You can leave this blank if the job is not for a specific subject.", class: "govuk-!-margin-top-4 govuk-!-margin-bottom-4" })
+
 = form_for form, url: wizard_path(current_step), method: :patch do |f|
   = f.govuk_error_summary
 
-  = f.govuk_fieldset legend: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" } do
+  = f.govuk_fieldset legend: { hidden: true } do
 
-    label for="publishers-job-listing-job-details-form-subject-search"
-      span.govuk-visually-hidden | Subject filter
+    label.govuk-label.govuk-label--m for="publishers-job-listing-job-details-form-subject-search"
+      = t("publishers.vacancies.build.subjects.search_label")
+    p.govuk-hint = t("publishers.vacancies.build.subjects.search_hint")
 
     - subject_options = vacancy.organisations.any?(&:fe_college?) ? FURTHER_EDUCATION_SUBJECT_OPTIONS : SUBJECT_OPTIONS
 
