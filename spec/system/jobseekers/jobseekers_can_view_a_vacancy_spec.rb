@@ -116,8 +116,8 @@ RSpec.describe "Viewing a single published vacancy" do
     end
 
     context "with similar jobs listed" do
-      let(:similar_job_tv_application) { create(:vacancy, organisations: [school]) }
-      let(:similar_job_no_tv_application) { create(:vacancy, :apply_via_website, organisations: [school]) }
+      let(:similar_job_tv_application) { create(:vacancy, :with_dynamic_title, organisations: [school]) }
+      let(:similar_job_no_tv_application) { create(:vacancy, :with_dynamic_title, :apply_via_website, organisations: [school]) }
       let(:similar_jobs_stub) do
         instance_double(Search::SimilarJobs, similar_jobs: [similar_job_tv_application, similar_job_no_tv_application])
       end
