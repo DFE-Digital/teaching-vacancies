@@ -15,10 +15,6 @@ module Publishers
       validates :expiry_time, inclusion: { in: Vacancy::EXPIRY_TIME_OPTIONS }
 
       class << self
-        def fields
-          %i[expires_at]
-        end
-
         def load_from_params(form_params, vacancy, current_publisher:) # rubocop:disable Lint/UnusedMethodArgument
           new(form_params.merge(publish_on: vacancy.publish_on))
         end
@@ -31,12 +27,6 @@ module Publishers
           new(args_from_vacancy(vacancy))
         end
       end
-
-      # def initialize(params)
-      #   @expiry_time = params[:expiry_time] || params[:expires_at]&.strftime("%k:%M")&.strip
-      #
-      #   super
-      # end
 
       def params_to_save
         { expires_at: expires_at }
