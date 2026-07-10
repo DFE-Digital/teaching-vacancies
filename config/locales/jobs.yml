@@ -299,7 +299,7 @@ en:
     how_to_receive_applications: How do you want candidates to apply for the role?
     include_additional_documents: Do you want to upload any additional documents?
     school_visits: "Do you want to offer %{organisation_type} visits?"
-    candidate_visits: "Do you want to offer candidates a visit?"
+    candidate_visits: "Do you want to offer candidates the opportunity to visit?"
     visa_sponsorship: Can you offer Skilled Worker visa sponsorship to non-UK citizens for this role?
     document_name: Document name
 
