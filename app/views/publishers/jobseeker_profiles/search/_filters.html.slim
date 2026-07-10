@@ -38,7 +38,7 @@ ruby:
     subjects: {
       legend: t("publishers.jobseeker_profiles.filters.subjects"),
       selected: form.subjects,
-      options: VACANCY_SEARCH_SUBJECT_OPTIONS.map { |subject, hint| [subject, I18n.t("subject_names.#{subject}"), hint] },
+      options: VACANCY_SEARCH_SUBJECT_OPTIONS,
       value_method: :first,
       selected_method: :first,
     },

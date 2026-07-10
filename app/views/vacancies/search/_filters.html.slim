@@ -31,7 +31,7 @@ ruby:
     subjects: {
       legend: t("jobs.filters.subject"),
       selected: form.subjects,
-      options: form.subject_options.map { |subject, hint| [subject, I18n.t("subject_names.#{subject}"), hint] },
+      options: form.subject_options,
       value_method: :first,
       selected_method: :first,
     },
