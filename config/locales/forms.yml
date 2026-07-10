@@ -244,7 +244,7 @@ en:
         receive_applications_options:
           email: You’ll need to upload an application form.
           website: You’ll need to provide a link to the website.
-          uploaded_form: You’ll need to upload an application form. You will receive an email when an applicant has uploaded and submitted their completed application form.
+          uploaded_form: You’ll need to upload an application form. We’ll email you when an applicant submits their completed form.
       publishers_job_listing_include_additional_documents_form:
         include_additional_documents: Jobseekers can only upload one file when applying. If an application form is required, only include additional documents here that do not need to be submitted as part of their application.
       publishers_job_listing_pay_package_form:
@@ -554,8 +554,8 @@ en:
       publishers_job_listing_how_to_receive_applications_form:
         receive_applications_options:
           email: By email
-          website: By visiting a different website
-          uploaded_form: By uploading an application form
+          website: Send candidates to another website
+          uploaded_form: Upload an application form
       publishers_job_listing_important_dates_form:
         publish_on_day_options:
           another_day: Another date
