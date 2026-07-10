@@ -684,7 +684,7 @@ en:
         job_details: Job details
         job_role: What type of job is this?
         job_location: Locations where the job is based
-        education_phases: Education phase
+        education_phases: Which education phases is this job for?
         job_title: Job title
         key_stages: Key stage
         subjects: Subjects (optional)
