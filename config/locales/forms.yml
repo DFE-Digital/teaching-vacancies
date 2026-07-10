@@ -90,7 +90,7 @@ en:
     create_new_template: Create new template
     send_without_template: Send message without template
     save_template: Save template
-    save_and_finish_later: Save and finish later
+    save_and_finish_later: Save and come back later
     save_changes: Save changes
     save_employment: Save role
     save_note: Save note
@@ -581,15 +581,15 @@ en:
           higher_level_teaching_assistant: HLTA (higher level teaching assistant)
           leadership: Senior leader
           send_responsible: Special Educational Needs Coordinator (SENCo)
-          sendco: SENCo (special educational needs coordinator)
-          teacher: Teacher or Lecturer
+          sendco: SENCO (special educational needs coordinator)
+          teacher: Teacher or lecturer
           teaching_assistant: Teaching assistant
           administration_hr_data_and_finance: Administration, HR, data and finance
           catering_cleaning_and_site_management: Catering, cleaning and site management
           it_support: IT support
           pastoral_health_and_welfare: Pastoral, health and welfare
-          other_leadership: Other leadership roles
-          other_support: Other support roles
+          other_leadership: Other leadership role
+          other_support: Other support role
           senior_leader: Senior leader
           middle_leader: Middle leader
         teaching_job_role_options:
@@ -600,7 +600,7 @@ en:
           deputy_headteacher: Deputy headteacher
           headteacher: Headteacher
           sendco: SENCo (special educational needs coordinator)
-          other_leadership: Other leadership roles
+          other_leadership: Other leadership role
         support_job_role_options:
           teaching_assistant: Teaching assistant
           higher_level_teaching_assistant: HLTA (higher level teaching assistant)
@@ -609,7 +609,7 @@ en:
           catering_cleaning_and_site_management: Catering, cleaning and site management
           it_support: IT support
           pastoral_health_and_welfare: Pastoral, health and welfare
-          other_support: Other support roles
+          other_support: Other support role
         job_roles_options:
           <<: *job_role_options
       publishers_job_listing_key_stages_form:

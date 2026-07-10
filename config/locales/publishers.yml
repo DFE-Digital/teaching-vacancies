@@ -156,7 +156,7 @@ en:
           on_track: On track to receive QTS
           "yes": Gained QTS
         role_options:
-          teacher: Teacher or Lecturer
+          teacher: Teacher or lecturer
           head_of_year_or_phase: Head of year or phase
           head_of_department_or_curriculum: Head of department or curriculum
           assistant_headteacher: Assistant headteacher
@@ -165,7 +165,7 @@ en:
           teaching_assistant: Teaching assistant
           higher_level_teaching_assistant: HLTA (higher level teaching assistant)
           education_support: Learning support or cover supervisor
-          sendco: SENCo (special educational needs coordinator)
+          sendco: SENCO (special educational needs coordinator)
         schools: Locations
         working_pattern_options:
           full_time: Full time
