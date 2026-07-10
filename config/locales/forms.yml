@@ -213,13 +213,13 @@ en:
         about_schools: >-
           Give a brief summary of the schools where the jobseeker would be teaching and any relevant information about
           the %{organisation_type}
-        ect_status: Early career teachers were previously called newly qualified teachers (NQT)
+        ect_status: Early career teachers were previously called newly qualified teachers (NQTs)
         job_advert: >-
           Get jobseekers interested in the role by providing a brief summary of around 400 words.
           You should cover what the role is and who you're looking to recruit.
           The first 20 to 40 words will be shown in search results, so make them stand out.
-        flexi_working_details_provided: Providing details about what you can offer may increase the number of application you receive for this role.
-        school_offer: Provide details about what your %{organisation} can offer staff, for example, employee benefits, wellbeing support or professional development.
+        flexi_working_details_provided: Providing details about flexible working may increase the number of applications you receive for this role.
+        school_offer: Provide details about what your organisation can offer staff, for example, employee benefits, wellbeing support or professional development.
       publishers_job_listing_application_link_form:
         application_link: For example, https://www.example.com
       publishers_job_listing_application_form_form:
@@ -456,7 +456,7 @@ en:
         ect_status_options:
           ect_suitable: "Yes"
           ect_unsuitable: "No"
-        further_details: Further details about the role
+        further_details: What further details do you want to add about the role?
         further_details_provided_options:
           false: "No"
           true: "Yes"
@@ -723,7 +723,7 @@ en:
       publishers_job_listing_about_the_role_form:
         ect_status: Is this role suitable for an early career teacher (ECT)?
         further_details_provided: Do you want to add further details about the role?
-        flexi_working_details_provided: Do you want to provide details about the flexible working opportunities you offer?
+        flexi_working_details_provided: Do you want to add details about flexible working?
       publishers_job_listing_application_form_form:
         application_email: Email address to receive applications
       publishers_job_listing_contact_details_form:

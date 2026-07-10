@@ -1,4 +1,8 @@
 en:
+  components:
+    editor:
+      bullet_points_hint: You can copy and paste bullet points into the text box
+
   active_storage:
     blobs:
       file_unavailable: This file is not available for download.

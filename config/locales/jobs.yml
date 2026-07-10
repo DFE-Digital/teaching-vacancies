@@ -178,7 +178,7 @@ en:
     create_job_caption: Create a job listing - section %{step} of %{total}
 
     ect_status: Is this role suitable for an early career teacher (ECT)?
-    further_details: Further details about the role
+    further_details: What further details do you want to add about the role?
     location: Location
     location_find_more_html:
       one: Find more %{school_type} jobs in %{location_link}
@@ -199,10 +199,10 @@ en:
         school: What the school offers its staff
         college: What the college offers its staff
       publisher: "What does your %{organisation_type} offer?"
-      hint: Provide details about what your school can offer staff, for example, employee benefits, wellbeing support or professional development.
+      hint: Provide details about what your organisation can offer staff, for example, employee benefits, wellbeing support or professional development.
     flexi_working:
       hint: For example, remote working for planning, preparation and assessment (PPA) time, compressed hours or personal or family days
-      publisher: Provide details about your flexible working opportunities
+      publisher: What flexible working opportunities do you offer?
       jobseeker: Flexible working opportunities
     skills_and_experience:
       jobseeker: What skills and experience we're looking for

@@ -33,7 +33,7 @@
 
   = editor(form_input: f.govuk_text_area(:school_offer,
     rows: 5, required: true, aria: { hidden: false }, hint: nil), value: form.school_offer,
-    field_name: "publishers_job_listing_about_the_role_form[school_offer]", hint: t("helpers.hint.publishers_job_listing_about_the_role_form.school_offer", organisation: org_type),
+    field_name: "publishers_job_listing_about_the_role_form[school_offer]", hint: t("helpers.hint.publishers_job_listing_about_the_role_form.school_offer"),
     label: { text: t("helpers.label.publishers_job_listing_about_the_role_form.school_offer", organisation: org_type), size: "s", id: "school-offer-label" })
 
   = f.govuk_radio_buttons_fieldset :flexi_working_details_provided, legend: { size: "m", tag: nil }, class: %w[flexi_working_details_provided] do
