@@ -104,7 +104,7 @@ en:
           selected_locations: "These candidates are willing to travel to at least one of your selected school or college locations."
           all_locations:  "These candidates are willing to travel to a location that's near to at least one of your schools or colleges."
       non_trusts:
-        available_to_travel_text: "These candidates are willing to travel to a location that’s near to your school or college."
+        available_to_travel_text: "These candidates are willing to travel to a location near your school or college."
       index:
         title: "Candidate profiles - %{organisation_name}"
         no_results:
@@ -129,7 +129,7 @@ en:
       latest_role: "Latest role"
       previously_role: "Previously %{job_title}"
       search_result_heading: "Candidate profiles (%{count})"
-      sort_result_text: "Ordered by most recently updated."
+      sort_result_text: "Sorted by most recently updated."
       filters:
         education_phase_options:
           nursery: "Nursery"
