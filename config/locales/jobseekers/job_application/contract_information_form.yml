@@ -2,12 +2,12 @@ en:
   helpers:
     hint:
       publishers_job_listing_contract_information_form:
-        working_patterns: Select all that apply.
-        working_patterns_details: For example, 16 hours a week, Monday to Wednesday.
+        working_patterns: Select all that apply
+        working_patterns_details: For example, 16 hours a week, Monday to Wednesday
         is_job_share: For example, can this role be filled by 2 teachers who share responsibility for the class?
     label:
       publishers_job_listing_contract_information_form:
-        working_patterns_details: Details of working hours/days (optional)
+        working_patterns_details: Details of working hours and days (optional)
         organisation_type_options:
           academy: Academy
           colleges: Colleges
@@ -25,7 +25,7 @@ en:
         is_parental_leave_cover: Is this covering maternity or paternal leave?
     legend:
       publishers_job_listing_contract_information_form:
-        working_patterns: Working patterns
-        contract_type: Contract type
+        working_patterns: Which working patterns are available?
+        contract_type: What type of contract is it?
         is_parental_leave_cover: Is this covering maternity or paternity leave?
         is_job_share: Can this role be done as a job share?
