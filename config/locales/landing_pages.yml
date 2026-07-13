@@ -391,8 +391,8 @@ en:
       heading: "%{count} accounting further education jobs"
       meta_description: "Find accounting teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
     agriculture-horticulture-land-based-studies-fe-jobs:
-      name: "Agriculture/horticulture/land based studies (%{count})"
-      title: "Agriculture, Horticulture and Land Based Studies FE Teaching Jobs"
+      name: "Agriculture, horticulture and land based studies (%{count})"
+      title: "Agriculture, horticulture and land based studies FE Teaching Jobs"
       heading: "%{count} agriculture, horticulture and land based studies further education jobs"
       meta_description: "Find agriculture, horticulture and land based studies teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
     animal-care-fe-jobs:
@@ -566,8 +566,8 @@ en:
       heading: "%{count} hair and beauty further education jobs"
       meta_description: "Find hair and beauty teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
     health-and-social-care-fe-jobs:
-      name: "Health and Social Care (%{count})"
-      title: "Health and Social Care FE Teaching Jobs"
+      name: "Health and social care (%{count})"
+      title: "Health and social care FE Teaching Jobs"
       heading: "%{count} health and social care further education jobs"
       meta_description: "Find health and social care teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
     history-fe-jobs:
@@ -586,8 +586,8 @@ en:
       heading: "%{count} humanities further education jobs"
       meta_description: "Find humanities teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
     land-and-property-management-fe-jobs:
-      name: "Land and Property Management (%{count})"
-      title: "Land and Property Management FE Teaching Jobs"
+      name: "Land and property management (%{count})"
+      title: "Land and property management FE Teaching Jobs"
       heading: "%{count} land and property management further education jobs"
       meta_description: "Find land and property management teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
     leadership-and-management-fe-jobs:
@@ -656,10 +656,10 @@ en:
       heading: "%{count} politics further education jobs"
       meta_description: "Find politics teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
     pshe-fe-jobs:
-      name: "PSHE (%{count})"
-      title: "PSHE FE Teaching Jobs"
-      heading: "%{count} PSHE further education jobs"
-      meta_description: "Find PSHE teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
+      name: "Personal, social, health and economic (PSHE) education (%{count})"
+      title: "Personal, social, health and economic (PSHE) education FE Teaching Jobs"
+      heading: "%{count} Personal, social, health and economic (PSHE) further education jobs"
+      meta_description: "Find Personal, social, health and economic (PSHE) teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
     psychology-fe-jobs:
       name: "Psychology (%{count})"
       title: "Psychology FE Teaching Jobs"
@@ -712,7 +712,7 @@ en:
       meta_description: "Find Welsh teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
     woodworking-joinery-and-carpentry-fe-jobs:
       name: "Woodwork joinery and carpentry (%{count})"
-      title: "Woodworking, Joinery and Carpentry FE Teaching Jobs"
+      title: "Woodworking, joinery and carpentry FE Teaching Jobs"
       heading: "%{count} woodworking, joinery and carpentry further education jobs"
       meta_description: "Find woodworking, joinery and carpentry teaching jobs in further education. Browse the latest FE lecturer and teacher vacancies on Teaching Vacancies."
 
