@@ -513,7 +513,7 @@ GEM
     omniauth_openid_connect (0.8.0)
       omniauth (>= 1.9, < 3)
       openid_connect (~> 2.2)
-    online_migrations (0.34.0)
+    online_migrations (0.35.0)
       activerecord (>= 7.2)
     open3 (0.2.1)
     openid_connect (2.3.0)
@@ -1340,7 +1340,7 @@ CHECKSUMS
   omniauth (2.1.4) sha256=42a05b0496f0d22e1dd85d42aaf602f064e36bb47a6826a27ab55e5ba608763c
   omniauth-rails_csrf_protection (2.0.1) sha256=c6e3204d7e3925bb537cb52d50fdfc9f05293f1a9d87c5d4ab4ca3a39ba8c32d
   omniauth_openid_connect (0.8.0) sha256=1f2f3890386e2a742221cee0d2e903b78d874e6fab9ea3bfa31c1462f4793d25
-  online_migrations (0.34.0) sha256=c778e9341d74c8f2dbe5d76bcd9b5617e6d7b01d09699c644cbada9829ff3d07
+  online_migrations (0.35.0) sha256=c4e3a74d78eb36ad7b5566e7b551428ff174cccde39330894447138251ac7f66
   open3 (0.2.1) sha256=8e2d7d2113526351201438c1aa35c8139f0141c9e8913baa007c898973bf3952
   openid_connect (2.3.0) sha256=0dbb9cefeb11e0a65e706349266355bbbb060382ae138fc9e199ab1aa622744c
   orm_adapter (0.5.0) sha256=aa5d0be5d540cbb46d3a93e88061f4ece6a25f6e97d6a47122beb84fe595e9b9
