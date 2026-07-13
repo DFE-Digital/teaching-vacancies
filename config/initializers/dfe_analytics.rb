@@ -69,9 +69,11 @@ end
 module DfE
   module Analytics
     module Jobs
-      class AnalyticsJob < ApplicationJob
+      # rubocop:disable Rails/ApplicationJob
+      class AnalyticsJob < ActiveJob::Base
         self.queue_adapter = :sidekiq
       end
+      # rubocop:enable Rails/ApplicationJob
     end
   end
 end
