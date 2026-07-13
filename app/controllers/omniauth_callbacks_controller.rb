@@ -1,6 +1,8 @@
-# rubocop:disable Metrics/ClassLength
+require "hash_shape"
+
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   skip_before_action :verify_authenticity_token, only: :dfe
+  prepend_before_action :set_sentry_auth_context, only: :dfe
 
   class OrganisationCategoryNotFound < StandardError; end
   rescue_from OrganisationCategoryNotFound, with: :unknown_organisation_category
@@ -60,42 +62,29 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     )
   end
 
-  def not_found(error)
-    # Overrides `ApplicationController`, which globally rescues all `ActiveRecord::RecordNotFound`
-    # errors and shows a "page not found" error page to the user.
-    # It's unexpected for a record to not be found as part of the sign in process, so send this
-    # error to our error tracking system so it can be investigated.
-    Sentry.with_scope do |scope|
-      scope.set_context(
-        "Authentication Context",
-        {
-          user_id: user_id,
-          auth_hash_info: auth_hash["info"],
-          auth_hash_extra: auth_hash["extra"],
-        },
-      )
-
-      Sentry.capture_exception(error)
-    end
-
-    Rails.logger.error("Not found error encountered during sign in", error)
-
-    super
-  end
-
   private
 
-  def render_unsupported_organisation(exception, template:)
-    Sentry.with_scope do |scope|
+  # Attaches the DSI auth data to the Sentry scope so that any error reported during the sign in
+  # flow (whether captured explicitly or auto-captured as an unhandled exception) carries the
+  # organisation payload and the full key structure of the auth hash.
+  def set_sentry_auth_context
+    return if auth_hash.blank?
+
+    Sentry.configure_scope do |scope|
       scope.set_context(
-        "Authentication Organisation Context",
+        "DSI auth data",
         {
-          user_id: user_id,
-          auth_organisation: org_data,
+          dsi_user_id: user_id,
+          organisation: org_data,
+          auth_hash_shape: HashShape.of(auth_hash),
         },
       )
-      Sentry.capture_exception(exception)
     end
+  end
+
+  def render_unsupported_organisation(exception, template:)
+    # The DSI auth context is already attached to the Sentry scope by `set_sentry_auth_context`.
+    Sentry.capture_exception(exception)
 
     render template, status: :forbidden
   end
@@ -211,4 +200,3 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 end
-# rubocop:enable Metrics/ClassLength
