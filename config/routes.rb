@@ -33,7 +33,7 @@ Rails.application.routes.draw do
     Rails.application.routes.url_helpers.post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "creating-the-perfect-teacher-job-advert")
   }
   get "/get-help-hiring/accepting-job-applications-on-teaching-vacancies", to: redirect { |_params, _request|
-    Rails.application.routes.url_helpers.post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "accepting-job-applications-on-teaching-vacancies")
+    Rails.application.routes.url_helpers.post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "using-the-teaching-vacancies-application-form")
   }
   get "/get-help-hiring/communicating-with-jobseekers", to: redirect { |_params, _request|
     Rails.application.routes.url_helpers.post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "communicating-with-jobseekers")
