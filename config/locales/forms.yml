@@ -593,13 +593,13 @@ en:
           senior_leader: Senior leader
           middle_leader: Middle leader
         teaching_job_role_options:
-          teacher: Teacher or Lecturer
+          teacher: Teacher or lecturer
           head_of_year_or_phase: Head of year or phase
           head_of_department_or_curriculum: Head of department or curriculum
           assistant_headteacher: Assistant headteacher
           deputy_headteacher: Deputy headteacher
           headteacher: Headteacher
-          sendco: SENCo (special educational needs coordinator)
+          sendco: SENCO (special educational needs coordinator)
           other_leadership: Other leadership role
         support_job_role_options:
           teaching_assistant: Teaching assistant

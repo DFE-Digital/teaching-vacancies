@@ -180,7 +180,7 @@ RSpec.describe "Editing a vacancy template" do
         expect(page).to have_content "How do you want candidates to apply?"
         expect(page).to be_axe_clean.skipping "aria-allowed-attr"
 
-        choose "Use other application form"
+        choose "Use your own application form"
         click_on I18n.t("buttons.save_and_continue")
 
         expect(page).to have_current_path organisation_vacancy_template_path(template)

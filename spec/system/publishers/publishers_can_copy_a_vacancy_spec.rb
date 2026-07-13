@@ -27,7 +27,7 @@ RSpec.describe "Copying a vacancy" do
         # acts as a page wait
         expect(page).to have_current_path(new_organisation_vacancy_template_path)
 
-        click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
+        click_on I18n.t("buttons.save_and_continue")
         expect(page).to have_content "Enter a template name"
       end
 
@@ -41,7 +41,7 @@ RSpec.describe "Copying a vacancy" do
         expect(page).to have_current_path(new_organisation_vacancy_template_path)
 
         fill_in "What is the template name?", with: template_name
-        click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
+        click_on I18n.t("buttons.save_and_continue")
 
         check "Teaching assistant"
         click_on I18n.t("buttons.save_and_finish_later")
@@ -58,7 +58,7 @@ RSpec.describe "Copying a vacancy" do
         expect(page).to have_current_path(new_organisation_vacancy_template_path)
 
         fill_in "What is the template name?", with: template_name
-        click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
+        click_on I18n.t("buttons.save_and_continue")
 
         expect(page).to have_content "Teaching assistant"
         click_on I18n.t("buttons.save_and_continue")
@@ -75,7 +75,7 @@ RSpec.describe "Copying a vacancy" do
         expect(page).to have_current_path(new_organisation_vacancy_template_path)
 
         fill_in "What is the template name?", with: template_name
-        click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
+        click_on I18n.t("buttons.save_and_continue")
 
         expect(page).to have_content "Teaching assistant"
         check "Assistant headteacher"
@@ -102,7 +102,7 @@ RSpec.describe "Copying a vacancy" do
         expect(page).to have_current_path(new_organisation_vacancy_template_path)
 
         fill_in "What is the template name?", with: template_name
-        click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
+        click_on I18n.t("buttons.save_and_continue")
 
         expect(page).to have_content "Teaching assistant"
         check "Assistant headteacher"
@@ -145,7 +145,7 @@ RSpec.describe "Copying a vacancy" do
         end
         click_on I18n.t("buttons.save_and_continue")
 
-        expect(page).to have_content "Do you want to offer candidates a visit?"
+        expect(page).to have_content "Do you want to offer candidates the opportunity to visit?"
         choose "Yes"
         click_on I18n.t("buttons.save_and_continue")
 
@@ -153,7 +153,7 @@ RSpec.describe "Copying a vacancy" do
         choose "Yes"
         click_on I18n.t("buttons.save_and_continue")
 
-        choose "Use other application form"
+        choose "Use your own application form"
         click_on I18n.t("buttons.save_and_continue")
 
         expect(page).to have_content "How do you want candidates to apply"

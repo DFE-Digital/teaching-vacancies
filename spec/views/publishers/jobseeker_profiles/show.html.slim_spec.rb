@@ -47,8 +47,8 @@ RSpec.describe "publishers/jobseeker_profiles/show" do
         "Learning support or cover supervisor, SENCO (special educational needs coordinator), " \
         "Administration, HR, data and finance, " \
         "Catering, cleaning and site management, IT support, " \
-        "Pastoral, health and welfare, Other leadership roles, " \
-        "Other support roles, Senior leader, Middle leader",
+        "Pastoral, health and welfare, Other leadership role, " \
+        "Other support role, Senior leader, Middle leader",
     )
     expect(rendered).to have_content("almost 3 years")
     expect(rendered).to have_no_content("Location")

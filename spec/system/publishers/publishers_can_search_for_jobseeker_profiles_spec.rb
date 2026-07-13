@@ -70,8 +70,8 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
           "Learning support or cover supervisor, SENCO (special educational needs coordinator), " \
           "Administration, HR, data and finance, " \
           "Catering, cleaning and site management, IT support, " \
-          "Pastoral, health and welfare, Other leadership roles, " \
-          "Other support roles",
+          "Pastoral, health and welfare, Other leadership role, " \
+          "Other support role",
         )
         expect(page).to have_content(jobseeker_profile.job_preferences.key_stages.first.humanize)
         expect(page).to have_content(jobseeker_profile.job_preferences.working_patterns.first.humanize)
