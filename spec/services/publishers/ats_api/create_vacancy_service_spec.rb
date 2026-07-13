@@ -563,7 +563,18 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
         expect(create_vacancy_service[:status]).to eq :unprocessable_entity
         expect(create_vacancy_service[:json][:errors]).to include(
           "expires_at: must be a future date",
-          "expires_at: must be later than the publish date",
+          "expires_at: must be at least one day after the publish date",
+        )
+      end
+    end
+
+    context "when expires_at is later today" do
+      let(:expires_at) { Time.zone.today.end_of_day }
+
+      it "returns a validation error" do
+        expect(create_vacancy_service[:status]).to eq :unprocessable_entity
+        expect(create_vacancy_service[:json][:errors]).to include(
+          "expires_at: must be a future date",
         )
       end
     end
@@ -577,7 +588,23 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
           {
             status: :unprocessable_entity,
             json: {
-              errors: ["expires_at: must be later than the publish date"],
+              errors: ["expires_at: must be at least one day after the publish date"],
+            },
+          },
+        )
+      end
+    end
+
+    context "when expires_at is on the same date as publish_on but later in the day" do
+      let(:expires_at) { (Date.current + 2.weeks).end_of_day }
+      let(:publish_on) { Date.current + 2.weeks }
+
+      it "returns a validation error" do
+        expect(create_vacancy_service).to eq(
+          {
+            status: :unprocessable_entity,
+            json: {
+              errors: ["expires_at: must be at least one day after the publish date"],
             },
           },
         )
