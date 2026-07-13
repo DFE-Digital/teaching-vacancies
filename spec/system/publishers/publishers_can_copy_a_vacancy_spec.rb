@@ -89,7 +89,7 @@ RSpec.describe "Copying a vacancy" do
         check "Key stage 1"
         click_on I18n.t("buttons.save_and_continue")
 
-        expect(page).to have_content "Contract type"
+        expect(page).to have_content "Contract information"
       end
 
       it "allows the publisher to create a job template" do
@@ -121,7 +121,7 @@ RSpec.describe "Copying a vacancy" do
         check "Biology"
         click_on I18n.t("buttons.save_and_continue")
 
-        expect(page).to have_content "Contract type"
+        expect(page).to have_content "Contract information"
         choose "Permanent"
         check "Full time"
         job_share_label = "publishers-job-listing-contract-information-form-is-job-share-false-field"
@@ -157,11 +157,11 @@ RSpec.describe "Copying a vacancy" do
         click_on I18n.t("buttons.save_and_continue")
 
         expect(page).to have_content "How do you want candidates to apply"
-        choose "By visiting a different website"
+        choose "Send candidates to another website"
         click_on I18n.t("buttons.save_and_continue")
 
-        expect(page).to have_content "How would you like to view your applications"
-        choose "Anonymously"
+        expect(page).to have_content "How do you want to view applications?"
+        choose "View anonymised applications"
         click_on I18n.t("buttons.save_and_continue")
         expect(page).to have_current_path(organisation_vacancy_templates_path)
         # acts as a page wait
