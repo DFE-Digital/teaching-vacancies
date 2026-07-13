@@ -1,70 +1,62 @@
 ruby:
-  filter_types = [
-    {
+  filter_types = {
+    teaching_job_roles: {
       legend: t("jobs.filters.teaching_job_roles"),
-      key: :teaching_job_roles,
       selected: @form.teaching_job_roles,
       options: @form.teaching_job_role_options,
       value_method: :first,
       selected_method: :last,
     },
-    {
+    support_job_roles: {
       legend: t("jobs.filters.support_job_roles"),
-      key: :support_job_roles,
       selected: @form.support_job_roles,
       options: @form.support_job_role_options,
       value_method: :first,
       selected_method: :last,
     },
-    {
+    right_to_work_in_uk: {
       legend: t("publishers.jobseeker_profiles.filters.right_to_work_in_uk"),
-      key: :right_to_work_in_uk,
       selected: @form.right_to_work_in_uk,
       options: @form.right_to_work_in_uk_options,
       value_method: :first,
       selected_method: :last,
     },
-    {
+    qualified_teacher_status: {
       legend: t("publishers.jobseeker_profiles.filters.qualified_teacher_status"),
-      key: :qualified_teacher_status,
       selected: @form.qualified_teacher_status,
       options: @form.qts_options,
       value_method: :first,
       selected_method: :last,
     },
-    {
+    working_patterns: {
       legend: t("publishers.jobseeker_profiles.filters.preferred_working_patterns"),
-      key: :working_patterns,
       selected: @form.working_patterns,
       options:  @form.working_pattern_options,
       value_method: :first,
       selected_method: :last,
     },
-    {
+    subjects: {
       legend: t("publishers.jobseeker_profiles.filters.subjects"),
-      key: :subjects,
       selected: form.subjects,
-      options: SUBJECT_OPTIONS,
+      options: VACANCY_SEARCH_SUBJECT_OPTIONS,
       value_method: :first,
       selected_method: :first,
     },
-    {
+    education_phases: {
       legend: t("publishers.jobseeker_profiles.filters.preferred_education_phases"),
-      key: :education_phases,
       selected: @form.education_phases,
       options: @form.education_phase_options,
       value_method: :first,
       selected_method: :last,
     },
-    {
+    key_stages: {
       legend: t("publishers.jobseeker_profiles.filters.preferred_key_stages"),
-      key: :key_stages,
       selected: @form.key_stages,
       options: @form.key_stage_options,
       value_method: :first,
       selected_method: :last,
     },
-  ]
+  }
 
 = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
         filters: { total_count: @jobseeker_profile_search.total_filters },
@@ -80,8 +72,8 @@ ruby:
             options: { scrollable: true })
 
         - filters_component.with_remove_filter_links do |rb|
-          - filter_types.each do |filter_type|
-            - rb.with_group(**filter_type, remove_filter_link: { url_helper: :publishers_jobseeker_profiles_path, params: @jobseeker_profile_search.filters })
+          - filter_types.each do |filter_key, filter_type|
+            - rb.with_group(**filter_type, key: filter_key, remove_filter_link: { url_helper: :publishers_jobseeker_profiles_path, params: @jobseeker_profile_search.filters })
 
         = render "publishers/jobseeker_profiles/search/job_roles_filters", filters_component: filters_component, f: f, form: @form
 
@@ -110,4 +102,4 @@ ruby:
             = f.govuk_collection_check_boxes(:key_stages, f.object.key_stage_options, :first, :last, small: true, legend: nil, hint: nil)
         - filters_component.with_group key: "key_stages", component: key_stages
 
-        = render "shared/subjects_filter", filters_component: filters_component, f: f
+        = render "shared/subjects_filter", filters_component: filters_component, f: f, subject_options: filter_types.fetch(:subjects).fetch(:options)
