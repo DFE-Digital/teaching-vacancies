@@ -8,8 +8,9 @@ h1.govuk-heading-xl = t(".heading")
 
   = f.govuk_text_field :name
 
-  = f.govuk_label :content
-  = f.rich_text_area :content
+  div data-controller="disable-uploads"
+    = f.govuk_label :content
+    = f.rich_text_area :content
 
   .govuk-button-group
     = f.govuk_submit t("buttons.save_template"), class: "govuk-!-margin-top-6"
