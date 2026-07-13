@@ -33,10 +33,10 @@ RSpec.describe "Editing a vacancy template" do
       let(:change) { "name" }
 
       it "can have its name edited from the template show page", :retry do
-        expect(page).to have_content "Template name"
+        expect(page).to have_content "What is the template name?"
         expect(page).to be_axe_clean
 
-        fill_in "Template name", with: template_name
+        fill_in "What is the template name?", with: template_name
         click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
         expect(page).to have_content "Template details"
         expect(page).to have_content template_name
@@ -63,7 +63,7 @@ RSpec.describe "Editing a vacancy template" do
       let(:change) { "subjects" }
 
       it "can have its subjects edited to nothing", :retry do
-        expect(page).to have_content "Subjects (optional)"
+        expect(page).to have_content "Which subject or subjects is this job for? (optional)"
         expect(page).to be_axe_clean
 
         uncheck "Chemistry"
@@ -110,11 +110,11 @@ RSpec.describe "Editing a vacancy template" do
       let(:pay_scale) { "M1 to M2" }
 
       it "can have its salary edited", :retry do
-        expect(page).to have_content "Salary details"
+        expect(page).to have_content "Salary and allowances"
         #  https://github.com/alphagov/govuk-frontend/issues/979
         expect(page).to be_axe_clean.skipping "aria-allowed-attr"
 
-        uncheck "Full-time equivalent salary"
+        uncheck "Full time equivalent salary"
 
         check "Pay scale"
         fill_in "Pay scale", with: pay_scale
@@ -147,7 +147,7 @@ RSpec.describe "Editing a vacancy template" do
       let(:change) { "school_visits" }
 
       it "can have its school visits edited", :retry do
-        expect(page).to have_content "Do you want to offer candidates a visit?"
+        expect(page).to have_content "Do you want to offer candidates the opportunity to visit?"
         expect(page).to be_axe_clean.skipping "aria-allowed-attr"
 
         choose "Yes"
@@ -177,7 +177,7 @@ RSpec.describe "Editing a vacancy template" do
       let(:change) { "enable_job_applications" }
 
       it "can have its application type edited", :retry do
-        expect(page).to have_content "Choose your application form"
+        expect(page).to have_content "How do you want candidates to apply?"
         expect(page).to be_axe_clean.skipping "aria-allowed-attr"
 
         choose "Use other application form"
@@ -195,7 +195,7 @@ RSpec.describe "Editing a vacancy template" do
     within "#name" do
       click_on "Change"
     end
-    fill_in "Template name", with: ""
+    fill_in "What is the template name?", with: ""
     click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
     expect(page).to have_content "Enter a template name"
   end

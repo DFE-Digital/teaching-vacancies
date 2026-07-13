@@ -21,8 +21,8 @@ RSpec.describe "Copying a vacancy" do
 
       it "bounces when the name is not entered" do
         # acts as a page wait
-        expect(page).to have_content "Create a template"
-        click_on "Create a template"
+        expect(page).to have_content "Create a job template"
+        click_on "Create a job template"
 
         # acts as a page wait
         expect(page).to have_current_path(new_organisation_vacancy_template_path)
@@ -33,14 +33,14 @@ RSpec.describe "Copying a vacancy" do
 
       it "can be saved later" do
         # acts as a page wait
-        expect(page).to have_content "Create a template"
-        click_on "Create a template"
+        expect(page).to have_content "Create a job template"
+        click_on "Create a job template"
 
         # acts as a page wait
-        expect(page).to have_content "Template name"
+        expect(page).to have_content "What is the template name?"
         expect(page).to have_current_path(new_organisation_vacancy_template_path)
 
-        fill_in "Template name", with: template_name
+        fill_in "What is the template name?", with: template_name
         click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
         check "Teaching assistant"
@@ -50,14 +50,14 @@ RSpec.describe "Copying a vacancy" do
 
       it "bounces on form errors" do
         # acts as a page wait
-        expect(page).to have_content "Create a template"
-        click_on "Create a template"
+        expect(page).to have_content "Create a job template"
+        click_on "Create a job template"
 
         # acts as a page wait
-        expect(page).to have_content "Template name"
+        expect(page).to have_content "What is the template name?"
         expect(page).to have_current_path(new_organisation_vacancy_template_path)
 
-        fill_in "Template name", with: template_name
+        fill_in "What is the template name?", with: template_name
         click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
         expect(page).to have_content "Teaching assistant"
@@ -67,14 +67,14 @@ RSpec.describe "Copying a vacancy" do
 
       it "doesn't show subjects for primary roles" do
         # acts as a page wait
-        expect(page).to have_content "Create a template"
-        click_on "Create a template"
+        expect(page).to have_content "Create a job template"
+        click_on "Create a job template"
 
         # acts as a page wait
-        expect(page).to have_content "Template name"
+        expect(page).to have_content "What is the template name?"
         expect(page).to have_current_path(new_organisation_vacancy_template_path)
 
-        fill_in "Template name", with: template_name
+        fill_in "What is the template name?", with: template_name
         click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
         expect(page).to have_content "Teaching assistant"
@@ -94,14 +94,14 @@ RSpec.describe "Copying a vacancy" do
 
       it "allows the publisher to create a job template" do
         # acts as a page wait
-        expect(page).to have_content "Create a template"
-        click_on "Create a template"
+        expect(page).to have_content "Create a job template"
+        click_on "Create a job template"
 
         # acts as a page wait
-        expect(page).to have_content "Template name"
+        expect(page).to have_content "What is the template name?"
         expect(page).to have_current_path(new_organisation_vacancy_template_path)
 
-        fill_in "Template name", with: template_name
+        fill_in "What is the template name?", with: template_name
         click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
         expect(page).to have_content "Teaching assistant"
@@ -128,9 +128,9 @@ RSpec.describe "Copying a vacancy" do
         find("label[for=#{job_share_label}]").click
         click_on I18n.t("buttons.save_and_continue")
 
-        expect(page).to have_content "Salary details"
-        check "Full-time equivalent salary"
-        fill_in "Full-time equivalent salary", with: "#{Faker::Number.between(from: 1.0, to: 5.0)} #{Faker::CryptoCoin.coin_name}"
+        expect(page).to have_content "Salary and allowances"
+        check "Full time equivalent salary"
+        fill_in "Full time equivalent salary", with: "#{Faker::Number.between(from: 1.0, to: 5.0)} #{Faker::CryptoCoin.coin_name}"
         choose "No"
         click_on I18n.t("buttons.save_and_continue")
 
@@ -185,7 +185,7 @@ RSpec.describe "Copying a vacancy" do
 
         click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
-        fill_in "Template name", with: ""
+        fill_in "What is the template name?", with: ""
         click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
         expect(page).to have_content "Enter a template name"
       end
@@ -195,7 +195,7 @@ RSpec.describe "Copying a vacancy" do
 
         click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
-        fill_in "Template name", with: template_name
+        fill_in "What is the template name?", with: template_name
         click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
         expect(new_template).to have_attributes(name: template_name, job_roles: %w[teacher],

@@ -41,10 +41,10 @@ RSpec.describe "publishers/jobseeker_profiles/show" do
     expect(rendered).to have_content(jobseeker_profile.about_you)
     expect(rendered).to have_content(jobseeker_profile.job_preferences.subjects.map(&:humanize).join(", "))
     expect(rendered).to have_content(
-      "Teacher or Lecturer, Headteacher, Deputy headteacher, Assistant headteacher, " \
+      "Teacher or lecturer, Headteacher, Deputy headteacher, Assistant headteacher, " \
         "Head of year or phase, Head of department or curriculum, " \
         "Teaching assistant, HLTA (higher level teaching assistant), " \
-        "Learning support or cover supervisor, SENCo (special educational needs coordinator), " \
+        "Learning support or cover supervisor, SENCO (special educational needs coordinator), " \
         "Administration, HR, data and finance, " \
         "Catering, cleaning and site management, IT support, " \
         "Pastoral, health and welfare, Other leadership roles, " \
