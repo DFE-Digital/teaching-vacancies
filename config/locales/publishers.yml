@@ -400,8 +400,8 @@ en:
           no_orgs_html: >-
             The login link you used is not associated with any organisations. Unfortunately, we cannot associate your
             account with an organisation until DfE Sign In is working as normal. Please %{try_again} later.
-        heading: Choose your organisation
-        page_title: Choose your organisation
+        heading: Which organisation do you want to sign in with?
+        page_title: Which organisation do you want to sign in with?
         please_select: >-
           Which organisation do you want to sign in with?
       email:
