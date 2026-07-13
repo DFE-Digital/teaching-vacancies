@@ -178,7 +178,7 @@ en:
     create_job_caption: Create a job listing - section %{step} of %{total}
 
     ect_status: Is this role suitable for an early career teacher (ECT)?
-    further_details: What further details do you want to add about the role?
+    further_details: Further details about the role
     location: Location
     location_find_more_html:
       one: Find more %{school_type} jobs in %{location_link}
