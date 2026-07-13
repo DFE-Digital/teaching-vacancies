@@ -113,7 +113,7 @@
                     dd = format_time_to_datetime_at(vacancy.expires_at)
                 - when :pending
                   dl
-                    dt = "#{t('jobs.publication_date')}:"
+                    dt = "#{t('jobs.publication_date')}: "
                     dd = vacancy.publish_on.to_fs
                   dl
                     dt = "#{t('jobs.manage.closing_date')}: "
@@ -125,10 +125,10 @@
                     - else
                       p.govuk-body-s = t("jobs.manage.view_applicants", count: 0)
                   dl
-                    dt = "#{t('jobs.date_listed')}:"
+                    dt = "#{t('jobs.date_listed')}: "
                     dd = vacancy.publish_on.to_fs
                   dl
-                    dt = "#{t('jobs.manage.expired.expired_on')}:"
+                    dt = "#{t('jobs.manage.expired.expired_on')}: "
                     dd = format_time_to_datetime_at(vacancy.expires_at)
                   = govuk_link_to(t("publishers.vacancies.show.heading_component.action.give_feedback"), new_organisation_job_expired_feedback_path(job_id: vacancy.id))
                 - when :draft
@@ -136,7 +136,7 @@
                     dt = "#{t('jobs.manage.draft.time_created')}: "
                     dd = format_date(vacancy.created_at.to_date)
                   dl
-                    dt = "#{t('jobs.manage.draft.time_updated')}:"
+                    dt = "#{t('jobs.manage.draft.time_updated')}: "
                     dd = format_date(vacancy.updated_at.to_date)
                 - if vacancy.external?
                   p.govuk-body-s.external-notice

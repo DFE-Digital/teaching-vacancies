@@ -353,11 +353,11 @@ en:
           title: Hiring staff sign in
     current_year_statistics:
       bar_chart:
-        accessible_view: Change to table and accessible view
-        chart_view: Change to chart view
+        accessible_view: Show data as a table
+        chart_view: Show data as a chart
       donut_chart:
-        accessible_view: Change to table and accessible view
-        chart_view: Change to chart view
+        accessible_view: Show data as a table
+        chart_view: Show data as a chart
       equal_opportunities:
         applicant_age: Applicant age
         applicant_disability: Disability
@@ -367,12 +367,12 @@ en:
         applicant_religion: Religion
         application_counts: You have received %{count} applications this academic year.
         download_stats: >-
-          Select 'Download statistics' to download all historical equal opportunities data.
+          Download all historical equal opportunities data as a CSV.
       index:
-        vacancy_counts_html: You have posted %{link}.
-        vacancy_counts_link: "%{count} job listings this academic year"
+        vacancy_counts_html: "%{link}"
+        vacancy_counts_link: "View your %{count} job listings from this academic year"
         download_stats: >-
-          Select 'Download statistics' to download all historical job listing data.
+          Download all historical job listing data as a CSV.
       page_header:
         equal_opportunities: Equal opportunities
         overview: Overview
@@ -380,8 +380,7 @@ en:
           This data is from the current academic year. If a job is live in two academic years (for example from
           August 2025 to September 2025) it will be counted for both academic years. This data resets each academic year.
         this_may_include: >-
-          This may include data from people who have withdrawn their applications.
-          This is to ensure that any equal opportunities data provided in applications is anonymised.
+          This may include equal opportunities data from people who have withdrawn their applications. We include this to help keep the data anonymous.
         title: Statistics dashboard
     temp_login:
       check_your_email:
@@ -755,14 +754,14 @@ en:
           applications:
             0: Shortlisted or sucessful applications
             1: Rejected or Withdrawn applications
-          accessible_view: Change to table and accessible view
-          chart_view: Change to chart view
+          accessible_view: Show data as a table
+          chart_view: Show data as a chart
         update:
           success: Thank you for submitting your feedback for %{job_title}
         statistics: Statistics
         vacancy_view_stats:
-          accessible_view: Change to table and accessible view
-          chart_view: Change to chart view
+          accessible_view: Show data as a table
+          chart_view: Show data as a chart
           job_source: Job listing source
       vacancy_publisher_feedbacks:
         new:
