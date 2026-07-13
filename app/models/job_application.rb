@@ -244,6 +244,15 @@ class JobApplication < ApplicationRecord
     [street_address, city, postcode, country].compact_blank
   end
 
+  def remove_baptism_certificate
+    baptism_certificate.purge_later
+    update!(
+      religious_reference_type: nil,
+      completed_steps: completed_steps - %w[catholic],
+      in_progress_steps: (in_progress_steps + %w[catholic]).uniq,
+    )
+  end
+
   private
 
   def update_conversation_searchable_content

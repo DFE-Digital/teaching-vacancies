@@ -4,7 +4,7 @@ class Jobseekers::JobApplications::BaptismCertificatesController < Jobseekers::J
   before_action :set_job_application
 
   def destroy
-    job_application.baptism_certificate.purge_later
+    job_application.remove_baptism_certificate
     redirect_to jobseekers_job_application_build_path(job_application, :catholic)
   end
 
