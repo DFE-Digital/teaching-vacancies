@@ -8,6 +8,9 @@
     }
   }
 
+  // Restore desktop spacing between dt and dd labels/values.
+  // The global dl styles set margin-left: govuk-spacing(1) on dd at desktop,
+  // but an unconditional dd { margin-left: 0 } rule later in _global.scss overrides it.
   dl {
     @include govuk-media-query($from: desktop) {
       dd {
