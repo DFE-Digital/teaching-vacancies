@@ -8,6 +8,14 @@
     }
   }
 
+  dl {
+    @include govuk-media-query($from: desktop) {
+      dd {
+        margin-left: govuk-spacing(1);
+      }
+    }
+  }
+
   .external-notice {
     color: govuk-functional-colour(secondary-text);
   }
