@@ -63,3 +63,14 @@ DfE::Analytics.configure do |config|
 
   config.azure_federated_auth = ENV.include? "GOOGLE_CLOUD_CREDENTIALS"
 end
+
+#  Temp - run DfEAnalytics Jobs on sidekiq
+module DfE
+  module Analytics
+    module Jobs
+      class AnalyticsJob < ApplicationJob
+        self.queue_adapter = :sidekiq
+      end
+    end
+  end
+end
