@@ -29,6 +29,62 @@ RSpec.describe VacanciesHelper do
     end
   end
 
+  describe "#formatted_job_advert" do
+    subject { helper.formatted_job_advert(job_advert) }
+
+    context "when the job advert contains HTML markup" do
+      let(:job_advert) { "<p>We are hiring.</p>\n<ul>\n<li>Teach</li>\n<li>Mark</li>\n</ul>" }
+
+      it "renders the markup without inserting br tags for newlines between tags" do
+        expect(subject).to eq("<p>We are hiring.</p>\n<ul>\n<li>Teach</li>\n<li>Mark</li>\n</ul>")
+      end
+
+      it "is html safe" do
+        expect(subject).to be_html_safe
+      end
+    end
+
+    context "when the job advert contains HTML markup with disallowed tags or attributes" do
+      let(:job_advert) do
+        "<p style=\"color: red\"><span>Apply</span> <strong>now</strong></p>" \
+          "<script>alert('x')</script>" \
+          "<a href=\"https://example.com\" target=\"_blank\">school website</a>"
+      end
+
+      it "strips disallowed tags and attributes but keeps allowed ones" do
+        expect(subject).to eq("<p>Apply <strong>now</strong></p>alert('x')<a href=\"https://example.com\" target=\"_blank\">school website</a>")
+      end
+    end
+
+    context "when the job advert contains an ordered list" do
+      let(:job_advert) { "<ol><li>First</li><li>Second</li></ol>" }
+
+      it "strips the ol tag but keeps the list items" do
+        expect(subject).to eq("<li>First</li><li>Second</li>")
+      end
+    end
+
+    context "when the job advert is plain text" do
+      let(:job_advert) { "We are hiring.\nApply now.\n\nInterviews next week. 1 < 2" }
+
+      it "converts single newlines to br tags and double newlines to paragraphs" do
+        expect(subject).to eq("<p>We are hiring.\n<br />Apply now.</p>\n\n<p>Interviews next week. 1 &lt; 2</p>")
+      end
+
+      it "is html safe" do
+        expect(subject).to be_html_safe
+      end
+    end
+
+    context "when the job advert is nil" do
+      let(:job_advert) { nil }
+
+      it "returns an empty paragraph" do
+        expect(subject).to eq("<p></p>")
+      end
+    end
+  end
+
   describe "#tag_name" do
     subject { helper.tag_name(vacancy) }
 
