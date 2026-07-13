@@ -71,7 +71,9 @@ module DfE
     module Jobs
       # rubocop:disable Rails/ApplicationJob
       class AnalyticsJob < ActiveJob::Base
-        self.queue_adapter = :sidekiq
+        # :nocov:
+        self.queue_adapter = :sidekiq unless Rails.env.test?
+        # :nocov:
       end
       # rubocop:enable Rails/ApplicationJob
     end
