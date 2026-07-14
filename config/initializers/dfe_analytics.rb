@@ -64,8 +64,7 @@ DfE::Analytics.configure do |config|
   config.azure_federated_auth = ENV.include? "GOOGLE_CLOUD_CREDENTIALS"
 end
 
-#  Temp - run DfEAnalytics Jobs on sidekiq.
-# Config doesn't allow override of queue adapter
+# Temporary: run DfE Analytics jobs on Sidekiq (the gem doesn't allow overriding the ActiveJob adapter).
 module DfE
   module Analytics
     module Jobs
