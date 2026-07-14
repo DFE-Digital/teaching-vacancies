@@ -20,7 +20,9 @@ class LocationLandingPage < LandingPage
   end
 
   def name
-    (MAPPED_LOCATIONS[location.tr("-", " ")] || location).titleize.gsub(/\bAnd\b/, "and")
+    key = location.tr("-", " ")
+
+    (MAPPED_LOCATIONS[key] || location).titleize.gsub(/\b(And|Of|The|Upon)\b/, &:downcase)
   end
 
   private
