@@ -135,8 +135,7 @@ en:
       date: For example, %{date}
       general_feedback_form:
         comment_html: >-
-          <p class="govuk-hint">Do not include any information that could identify you personally
-          (such as your name or the name of your school).</p><p class="govuk-hint">(Limit is 1,200 characters)</p>
+          <p class="govuk-hint">Do not include information that could identify you, such as your name or the name of your school or college.</p><p class="govuk-hint">You can enter up to 1,200 characters</p>
         email: >-
           We'll only use this to tell you about opportunities to take part in user research that helps us improve
           Department for Education services.
@@ -294,17 +293,17 @@ en:
           "yes": "Yes"
         visit_purpose_options:
           find_teaching_job: Find a job
-          list_teaching_job: List a job on the service
+          list_teaching_job: List a job
           other_purpose: Something else
         user_participation_response_options:
           interested: 'Yes'
           uninterested: 'No'
         rating:
-          highly_satisfied: Highly satisfied
-          somewhat_satisfied: Somewhat satisfied
+          highly_satisfied: Very satisfied
+          somewhat_satisfied: Satisfied
           neither: Neither satisfied nor dissatisfied
-          somewhat_dissatisfied: Somewhat dissatisfied
-          highly_dissatisfied: Highly dissatisfied
+          somewhat_dissatisfied: Dissatisfied
+          highly_dissatisfied: Very dissatisfied
         occupation: What is your occupation?
 
       jobseeker:
@@ -664,10 +663,10 @@ en:
 
     legend:
       general_feedback_form:
-        report_a_problem: Do you need to report a problem or request support with using Teaching Vacancies?
-        visit_purpose: What did you come to Teaching Vacancies to do?
-        user_participation_response: Would you like to participate in our research?
-        rating: How satisfied are you with using Teaching Vacancies?
+        report_a_problem: Do you need to report a problem or get support using Teaching Vacancies?
+        visit_purpose: What were you trying to do on Teaching Vacancies?
+        user_participation_response: Would you like to take part in research?
+        rating: How satisfied were you with Teaching Vacancies today?
 
       jobseekers_job_alert_further_feedback_form:
         user_participation_response: Would you like to participate in our research?
