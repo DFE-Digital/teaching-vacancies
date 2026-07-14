@@ -42,7 +42,7 @@ module Jobseekers
         end
       end
 
-      def education_gap_is_explained
+      def education_gap_is_explained # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
         latest_qual_year = qualifications.select(&:finished_studying?).filter_map(&:year).max
         first_job_year = employments.select(&:job?).filter_map(&:started_on).min&.year
 
