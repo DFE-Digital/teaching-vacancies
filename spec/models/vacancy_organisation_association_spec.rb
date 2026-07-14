@@ -56,9 +56,9 @@ RSpec.describe Vacancy do
         let(:vacancy) { create(:vacancy, :ect_suitable, job_roles: %w[teacher], organisations: [college], phases: %w[primary], key_stages: %w[ks1], job_address_line1: "10 Campus Road") }
 
         it "does not update the geolocation from the organisation" do
-          original_geolocation = vacancy.geolocation
+          original_geolocation = vacancy.uk_geolocation
           vacancy.organisations = [school_two]
-          expect(vacancy.geolocation).to eq(original_geolocation)
+          expect(vacancy.uk_geolocation).to eq(original_geolocation)
         end
       end
 
@@ -66,9 +66,9 @@ RSpec.describe Vacancy do
         let(:vacancy) { create(:vacancy, :ect_suitable, job_roles: %w[teacher], organisations: [college], phases: %w[primary], key_stages: %w[ks1], job_address_town: "Brighton", job_address_postcode: "BN1 1AA") }
 
         it "does not update the geolocation from the organisation" do
-          original_geolocation = vacancy.geolocation
+          original_geolocation = vacancy.uk_geolocation
           vacancy.organisations = [school_two]
-          expect(vacancy.geolocation).to eq(original_geolocation)
+          expect(vacancy.uk_geolocation).to eq(original_geolocation)
         end
       end
     end

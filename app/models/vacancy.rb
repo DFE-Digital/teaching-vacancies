@@ -303,7 +303,6 @@ class Vacancy < ApplicationRecord
     address = [job_address_line1, job_address_town, job_address_postcode].reject(&:blank?).join(", ")
 
     if address.blank?
-      self.geolocation = nil
       self.uk_geolocation = nil
       refresh_geolocation
       return
@@ -313,7 +312,6 @@ class Vacancy < ApplicationRecord
     return if coordinates == Geocoding::COORDINATES_NO_MATCH
 
     geopoint = GeoFactories::FACTORY_4326.point(coordinates.second, coordinates.first)
-    self.geolocation = geopoint
     self.uk_geolocation = GeoFactories.convert_wgs84_to_sr27700(geopoint)
   end
 
@@ -352,7 +350,7 @@ class Vacancy < ApplicationRecord
   #   * the job location was changed to "central office"
   # In the former case, it gets an argument, which we don't need and thus ignore
 
-  def refresh_geolocation(_school_added_or_removed = nil) # rubocop:disable Metrics/PerceivedComplexity, Metrics/AbcSize
+  def refresh_geolocation(_school_added_or_removed = nil)
     # Don't override the vacancy-specific job location if one has been specified.
     return if job_address_fields.any?(&:present?)
 

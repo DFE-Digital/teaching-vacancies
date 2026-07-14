@@ -8,9 +8,6 @@
     name: name
     value_before_type_cast: blackburn with darwen
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: cities
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 20:59:55.338653000 Z
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -32,9 +29,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: name
     value_before_type_cast: blackpool
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: cities
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 20:59:55.433991000 Z
@@ -58,9 +52,6 @@
     name: name
     value_before_type_cast: bath and north east somerset
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: other
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 20:59:59.121269000 Z
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -82,9 +73,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: name
     value_before_type_cast: bristol, city of
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: cities
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 20:59:59.271085000 Z
@@ -108,9 +96,6 @@
     name: name
     value_before_type_cast: bracknell forest
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: other
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:00:00.749079000 Z
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -132,9 +117,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: name
     value_before_type_cast: brighton and hove
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: cities
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:00:09.387533000 Z
@@ -158,9 +140,6 @@
     name: name
     value_before_type_cast: bedford
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: cities
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:00:15.741977000 Z
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -182,9 +161,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: name
     value_before_type_cast: bournemouth, christchurch and poole
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: cities
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:00:16.821237000 Z
@@ -208,9 +184,6 @@
     name: name
     value_before_type_cast: bolton
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: cities
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:00:17.770424000 Z
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -232,9 +205,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: name
     value_before_type_cast: bury
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: cities
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:00:17.859615000 Z
@@ -258,9 +228,6 @@
     name: name
     value_before_type_cast: barnsley
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: cities
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:00:20.411880000 Z
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -282,9 +249,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: name
     value_before_type_cast: birmingham
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: cities
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:00:21.201551000 Z
@@ -308,9 +272,6 @@
     name: name
     value_before_type_cast: bradford
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: cities
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:00:22.979157000 Z
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -332,9 +293,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: name
     value_before_type_cast: buckinghamshire
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: counties
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:00:41.854433000 Z
@@ -358,9 +316,6 @@
     name: name
     value_before_type_cast: barking and dagenham
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: other
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:00:23.609446000 Z
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -382,9 +337,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: name
     value_before_type_cast: barnet
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: other
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:00:23.667867000 Z
@@ -408,9 +360,6 @@
     name: name
     value_before_type_cast: bexley
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: other
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:00:23.723759000 Z
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -432,9 +381,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: name
     value_before_type_cast: brent
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: other
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:00:23.797021000 Z
@@ -458,9 +404,6 @@
     name: name
     value_before_type_cast: bromley
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: other
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:00:23.840642000 Z
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -482,9 +425,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: name
     value_before_type_cast: bournemouth
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: cities
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:01:13.026043000 Z
@@ -552,9 +492,6 @@
     name: name
     value_before_type_cast: bath
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: cities
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:01:12.876530000 Z
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -576,9 +513,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: name
     value_before_type_cast: birkenhead
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: cities
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:01:12.937336000 Z
@@ -602,9 +536,6 @@
     name: name
     value_before_type_cast: blackburn
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: cities
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:01:12.970343000 Z
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -626,9 +557,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: name
     value_before_type_cast: bracknell
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: cities
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:01:13.079866000 Z
@@ -652,9 +580,6 @@
     name: name
     value_before_type_cast: bristol
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: cities
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:01:13.143054000 Z
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -676,9 +601,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: name
     value_before_type_cast: burnley
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: cities
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:01:13.287174000 Z
@@ -702,9 +624,6 @@
     name: name
     value_before_type_cast: burton upon trent
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: cities
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:01:13.345903000 Z
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -726,9 +645,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: name
     value_before_type_cast: bedfordshire
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: location_type
-    value_before_type_cast: composite
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: created_at
     value_before_type_cast: 2025-12-04 21:01:23.209668000 Z

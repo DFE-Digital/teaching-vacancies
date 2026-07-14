@@ -1042,13 +1042,12 @@ RSpec.describe Vacancy do
       context "when the vacancy previously had custom geolocation set" do
         before do
           geopoint = GeoFactories::FACTORY_4326.point(-0.1, 51.5)
-          subject.geolocation = geopoint
           subject.uk_geolocation = GeoFactories.convert_wgs84_to_sr27700(geopoint)
         end
 
         it "clears geolocation and resets it from the organisation" do
           subject.geocode_job_address
-          expect(subject.geolocation).to eq(school.geopoint)
+          expect(subject.uk_geolocation).to eq(school.uk_geopoint)
         end
       end
     end
@@ -1062,7 +1061,7 @@ RSpec.describe Vacancy do
       end
 
       it "does not update the geolocation" do
-        expect { subject.geocode_job_address }.not_to(change(subject, :geolocation))
+        expect { subject.geocode_job_address }.not_to(change(subject, :uk_geolocation))
       end
     end
   end
@@ -1075,9 +1074,9 @@ RSpec.describe Vacancy do
       let(:vacancy) { create(:vacancy, :ect_suitable, job_roles: %w[teacher], organisations: [create(:college)], phases: %w[primary], key_stages: %w[ks1], job_address_line2: "Floor 2") }
 
       it "does not overwrite geolocation with the organisation geopoint" do
-        original_geolocation = vacancy.geolocation
+        original_geolocation = vacancy.uk_geolocation
         vacancy.organisations = [school_two]
-        expect(vacancy.geolocation).to eq(original_geolocation)
+        expect(vacancy.uk_geolocation).to eq(original_geolocation)
       end
     end
   end
