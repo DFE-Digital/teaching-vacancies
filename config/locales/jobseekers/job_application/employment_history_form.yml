@@ -6,6 +6,8 @@ en:
           attributes:
             employment_history_section_completed:
               inclusion: Select yes if you have completed this section
+            education_gap:
+              missing: You have a gap in your work history between your education and first employment
           invalid_employment: One or more of your employment records is invalid
   helpers:
     legend:

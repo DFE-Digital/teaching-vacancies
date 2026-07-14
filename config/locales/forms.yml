@@ -7,6 +7,7 @@ en:
     add_another_qualification: Add another qualification
     add_another_reference: Add another referee
     add_another_subject: Add another subject
+    add_education_gap: Add gap between education and work history
     add_gap: Add gap in work history
     add_job: Add a job
     add_note: Add note
@@ -339,6 +340,7 @@ en:
           uninterested: 'No'
       jobseekers_break_form:
         reason_for_break: Enter reasons for gap in work history
+        reason_for_break_education_gap: Enter reasons for gap between education and work history
       jobseekers_qualifications_shared_labels: &jobseekers_qualifications_shared_labels
         category_options:
           gcse: GCSEs

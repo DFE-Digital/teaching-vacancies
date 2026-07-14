@@ -1,0 +1,7 @@
+= f.govuk_date_field :started_on,
+  omit_day: true,
+  hint: -> { t("helpers.hint.date", date: 15.months.ago.strftime("%m %Y")) }
+= f.govuk_date_field :ended_on,
+  omit_day: true,
+  hint: -> { t("helpers.hint.date", date: 3.months.ago.strftime("%m %Y")) }
+= f.govuk_text_area :reason_for_break, label: { text: t("helpers.label.jobseekers_break_form.reason_for_break_education_gap"), size: "s" }, required: true
