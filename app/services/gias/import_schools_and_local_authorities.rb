@@ -154,7 +154,7 @@ class Gias::ImportSchoolsAndLocalAuthorities
       return { uk_geopoint: nil } unless row["Easting"].to_i.positive? && row["Northing"].to_i.positive?
 
       { uk_geopoint: GeoFactories::FACTORY_27700.point(row["Easting"].to_i, row["Northing"].to_i) }
-  end
+    end
 
     def membership_data(row)
       {

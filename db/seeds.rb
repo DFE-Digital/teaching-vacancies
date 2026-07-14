@@ -101,18 +101,18 @@ end
 #  about 400k test jobs
 School.not_closed.not_excluded
       .find_each do |school|
-        phase = school.not_applicable? || school.middle_deemed_primary? || school.middle_deemed_secondary? ? "primary" : school.phase
+  phase = school.not_applicable? || school.middle_deemed_primary? || school.middle_deemed_secondary? ? "primary" : school.phase
 
-        # make some vacancies multi-site
-        orgs = school.part_of_a_trust? ? school.trust.schools.sample(2) : [school]
+  # make some vacancies multi-site
+  orgs = school.part_of_a_trust? ? school.trust.schools.sample(2) : [school]
 
-        attrs = { organisations: orgs,
-                  phases: [phase],
-                  publisher_organisation: orgs.first,
-                  publisher: FactoryBot.create(:publisher, organisations: [orgs.first]) }
-        Vacancy.transaction do
-          18.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
-        end
+  attrs = { organisations: orgs,
+            phases: [phase],
+            publisher_organisation: orgs.first,
+            publisher: FactoryBot.create(:publisher, organisations: [orgs.first]) }
+  Vacancy.transaction do
+    18.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+  end
 end
 
 # Vacancies at Weydon trust central office
