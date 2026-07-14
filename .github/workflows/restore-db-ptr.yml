@@ -39,7 +39,7 @@ jobs:
   ptr-restore:
     name: PTR Restore AKS Database
     if: ${{ inputs.environment != 'production' || (inputs.environment == 'production' && github.event.inputs.confirm-production == 'true' )  }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     environment: ${{ inputs.environment }}
     concurrency: deploy_${{ inputs.environment }}
 

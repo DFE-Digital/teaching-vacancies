@@ -37,7 +37,7 @@ env:
 jobs:
   backup:
     name: Backup database
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     environment:
       name: ${{ inputs.environment || 'production' }}
     env:

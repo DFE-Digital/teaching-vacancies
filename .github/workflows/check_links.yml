@@ -13,7 +13,7 @@ jobs:
       contents: read
     env:
       RAILS_ENV: test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v7.0.0

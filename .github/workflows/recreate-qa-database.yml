@@ -20,7 +20,7 @@ jobs:
 
   replace-postgres-DB-and-apps:
     name: Replace PostgresDB and apps in ${{ github.event.inputs.environment }} environment
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
 
     - uses: actions/checkout@v7.0.0

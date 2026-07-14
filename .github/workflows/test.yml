@@ -12,7 +12,7 @@ jobs:
   backend-tests:
     name: Run RSpec Tests in parallel
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     strategy:
       fail-fast: false
@@ -113,7 +113,7 @@ jobs:
   frontend-tests:
     name: Run frontend JS unit tests
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code

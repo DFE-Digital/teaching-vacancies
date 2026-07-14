@@ -13,7 +13,7 @@ jobs:
   backend-lint:
     name: Run backend linting checks
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -36,7 +36,7 @@ jobs:
   frontend-lint:
     name: Run frontend JS and SASS linting checks
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -53,7 +53,7 @@ jobs:
   terraform-lint:
     name: Run Terraform check
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -72,7 +72,7 @@ jobs:
   db-lint:
     name: Run Database consistency checks
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     env:
       DATABASE_URL: postgis://postgres:postgres@localhost:5432/tvs_test

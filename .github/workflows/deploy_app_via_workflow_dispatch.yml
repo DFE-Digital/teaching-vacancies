@@ -22,7 +22,7 @@ env:
 jobs:
   deploy-app:
     name: Deploy ${{ inputs.tag }} to ${{ inputs.environment }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     environment: ${{ inputs.environment }}
 
     steps:

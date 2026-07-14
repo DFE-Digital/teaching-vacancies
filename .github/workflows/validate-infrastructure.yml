@@ -8,7 +8,7 @@ on:
 jobs:
   validate:
     name: ${{ matrix.display }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     environment: production
     permissions:
       id-token: write

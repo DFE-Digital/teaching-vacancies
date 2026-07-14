@@ -34,7 +34,7 @@ jobs:
   restore:
     name: Restore AKS Database
     if: ${{ inputs.environment != 'production' || (inputs.environment == 'production' && inputs.confirm-production == 'true' )  }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     environment: ${{ inputs.environment }}
     concurrency: deploy_${{ inputs.environment }}
     permissions:

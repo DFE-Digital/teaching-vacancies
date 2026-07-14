@@ -16,7 +16,7 @@ jobs:
       RAILS_ENV: test
       HTTP_BASIC_USER: ${{ secrets.HTTP_BASIC_USER }}
       HTTP_BASIC_PASSWORD: ${{ secrets.HTTP_BASIC_PASSWORD }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v7.0.0
@@ -76,7 +76,7 @@ jobs:
       RAILS_ENV: test
       HTTP_BASIC_USER: ${{ secrets.HTTP_BASIC_USER }}
       HTTP_BASIC_PASSWORD: ${{ secrets.HTTP_BASIC_PASSWORD }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v7.0.0
