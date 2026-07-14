@@ -387,15 +387,15 @@ en:
     new:
       page_description: >-
         Are you experiencing difficulties using Teaching Vacancies? Ask a question or report a problem and we'll resolve your issue as soon as possible.
-      screenshot_description: You can help us undestand your query by providing images of your screen.
+      screenshot_description: You can help us understand your problem by uploading an image of your screen.
       intro_html: |
         <p>
           You can use this form to ask a question or report a problem.
-          If you have particular feedback about Teaching Vacancies, please use the %{give_feedback_link} form.
+          If you want to give feedback about Teaching Vacancies, use the %{give_feedback_link} form.
         </p>
 
-        <p>We will aim to resolve your issue as soon as possible.</p>
-      give_feedback: give feedback
+        <p>We'll aim to respond as soon as possible.</p>
+      give_feedback: feedback
       title: Get help
       heading: Get help
     create:

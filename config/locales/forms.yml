@@ -655,12 +655,12 @@ en:
       support_request_form:
         email_address: Email address
         is_for_whole_site_options:
-          "no": "A specific page"
+          "no": "A specific page or job listing"
           "yes": "The whole site"
-        issue: Tell us about your problem or question
+        issue: Describe your problem or question
         name: Name
         page: Enter the URL or the name of the page
-        screenshot: Upload a file
+        screenshot: Upload screenshot
 
     legend:
       general_feedback_form:
@@ -788,8 +788,8 @@ en:
       subscription:
         frequency: When do you want to receive alerts?
       support_request_form:
-        is_for_whole_site: What area of the website is your problem or question about?
-        screenshot: Upload screenshots (optional)
+        is_for_whole_site: Which area of the website is your problem or question about?
+        screenshot: Upload a screenshot (optional)
 
     options:
       publishers_job_listing_copy_vacancy_form:

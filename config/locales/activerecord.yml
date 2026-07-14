@@ -654,7 +654,7 @@ en:
             is_for_whole_site:
               inclusion: Choose whether this issue is for the whole site or a specific page
             issue:
-              blank: Tell us about your problem or question
+              blank: Describe your problem or question
               too_long: Feedback must not be more than 1,200 characters
             name:
               blank: Enter your name

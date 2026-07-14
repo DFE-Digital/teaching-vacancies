@@ -28,7 +28,9 @@
         = f.govuk_file_field :screenshot,
           javascript: true,
           accept: "image/jpeg, image/png",
-          enctype: "multipart/form-data"
+          enctype: "multipart/form-data",
+          choose_files_button_text: "Upload screenshot",
+          drop_instruction_text: "or drop a file"
 
       = render "shared/recaptcha", form: f
 
