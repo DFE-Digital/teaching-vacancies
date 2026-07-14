@@ -14,6 +14,8 @@ variable "distribution_list_aks" {
     offline_bucket_domain_name    = string
     offline_bucket_origin_path    = string
     cloudfront_origin_domain_name = string
+    enable_cloudfront_waf         = optional(bool, false)
+    waf_ip_rate_limit             = optional(number, null)
   }))
   default = {}
 }

@@ -131,3 +131,67 @@ resource "aws_route53_record" "cloudfront-cnames" {
   ttl      = "300"
   records  = ["${aws_cloudfront_distribution.default.domain_name}."]
 }
+
+resource "aws_wafv2_web_acl" "cloudfront-waf" {
+  count = var.enable_cloudfront_waf == true ? 1 : 0
+  name  = "${var.service_name}-${var.environment}-waf"
+  scope = "CLOUDFRONT"
+
+  default_action {
+    allow {}
+  }
+  visibility_config {
+    cloudwatch_metrics_enabled = true
+    metric_name                = "${var.service_name}-${var.environment}-allowed-traffic"
+    sampled_requests_enabled   = true
+  }
+
+  lifecycle { ignore_changes = [rule] }
+}
+
+resource "aws_wafv2_web_acl_rule" "rate-limit" {
+  count       = var.enable_cloudfront_waf == true ? 1 : 0
+  name        = "${var.service_name}-${var.environment}-rate-limit"
+  priority    = 1
+  web_acl_arn = aws_wafv2_web_acl.cloudfront-waf[0].arn
+
+  action {
+    block {}
+  }
+
+  statement {
+    rate_based_statement {
+      limit              = var.waf_ip_rate_limit
+      aggregate_key_type = "IP"
+    }
+  }
+
+  visibility_config {
+    cloudwatch_metrics_enabled = true
+    metric_name                = "${var.service_name}-${var.environment}-blocked-ip-rate"
+    sampled_requests_enabled   = true
+  }
+}
+
+resource "aws_wafv2_web_acl_rule" "sql-protection" {
+  count       = var.enable_cloudfront_waf == true ? 1 : 0
+  name        = "${var.service_name}-${var.environment}-sql-protection"
+  priority    = 2
+  web_acl_arn = aws_wafv2_web_acl.cloudfront-waf[0].arn
+
+  action {
+    block {}
+  }
+
+  statement {
+    managed_rule_group_statement {
+      vendor_name = "AWS"
+      name        = "AWSManagedRulesSQLiRuleSet"
+    }
+  }
+  visibility_config {
+    cloudwatch_metrics_enabled = true
+    metric_name                = "${var.service_name}-${var.environment}-blocked-sql-protection"
+    sampled_requests_enabled   = true
+  }
+}
