@@ -105,7 +105,7 @@ RSpec.describe "subscription location matching" do
       end
     end
 
-    context "with a medium radius" do
+    context "with a 50 radius" do
       let(:radius) { 50 }
 
       it "finds basildon and st albans vacancies" do
@@ -113,7 +113,7 @@ RSpec.describe "subscription location matching" do
       end
     end
 
-    context "with a large radius" do
+    context "with a 200 radius" do
       let(:radius) { 200 }
 
       it "finds all vacancies" do
