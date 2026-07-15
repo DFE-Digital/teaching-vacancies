@@ -1,13 +1,13 @@
- # Some packages are defined here with a hardcoded version to resolve vulnerabilities in the packages coming with
- # Alpine v3.23
- # TODO: Regularly check in the alpine ruby "4.0.2-alpine3.23" images for its latest upgraded packages so we can remove
- # the hardcoded versions below when they have been updated in the alpine ruby image.
- # To find the current version of each package in the alpine image, search here:
- # https://pkgs.alpinelinux.org/packages?name=&branch=v3.23
+# Some packages are defined here with a hardcoded version to resolve vulnerabilities in the packages coming with
+# Alpine v3.23
+# TODO: Regularly check in the alpine ruby "4.0.2-alpine3.23" images for its latest upgraded packages so we can remove
+# the hardcoded versions below when they have been updated in the alpine ruby image.
+# To find the current version of each package in the alpine image, search here:
+# https://pkgs.alpinelinux.org/packages?name=&branch=v3.23
 # These are packages we need over-and-beyond the base image
-ARG EXTRA_PACKAGES="imagemagick libpng libjpeg libxml2 libxslt tzdata shared-mime-info vips-poppler vips-magick proj-dev libpq=18.4-r0 postgresql18=18.4-r0"
+ARG EXTRA_PACKAGES="imagemagick libpng libjpeg libxml2 libxslt tzdata shared-mime-info vips-poppler vips-magick proj-dev libpq postgresql18"
 # These are security patches to the base image
-ARG PROD_PACKAGES="zlib=1.3.2-r0 curl=8.20.0-r0 libcurl=8.20.0-r0 curl-dev=8.20.0-r0 lcms2=2.19-r0 openssl=3.5.7-r0 c-ares=1.34.8-r0"
+ARG PROD_PACKAGES="openssl=3.5.7-r0"
 
 FROM ruby:4.0.2-alpine3.23 AS builder
 
