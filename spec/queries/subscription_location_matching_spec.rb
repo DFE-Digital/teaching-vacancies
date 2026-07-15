@@ -97,7 +97,7 @@ RSpec.describe "subscription location matching" do
       allow(Geocoding).to receive(:new).and_return(geocoding_for_basildon)
     end
 
-    context "with a small radius" do
+    context "with a 5 radius" do
       let(:radius) { 5 }
 
       it "finds just basildon vacancy" do
@@ -105,7 +105,7 @@ RSpec.describe "subscription location matching" do
       end
     end
 
-    context "with a 50 radius" do
+    context "with a medium radius" do
       let(:radius) { 50 }
 
       it "finds basildon and st albans vacancies" do

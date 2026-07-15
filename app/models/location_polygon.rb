@@ -33,9 +33,7 @@ class LocationPolygon < ApplicationRecord
 
   def self.find_valid_for_location(location)
     polygon = with_name(location)
-    if polygon.present? && polygon.area.invalid_reason.nil?
-      polygon
-    end
+    polygon.presence
   rescue RGeo::Error::InvalidGeometry
     nil
   end
