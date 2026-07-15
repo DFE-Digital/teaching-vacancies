@@ -56,7 +56,7 @@ en:
       visa_sponsorship_availability:
         legend: Visa sponsorship
         option: Only show jobs with visa sponsorship
-        subscriptions: Only send alerts for jobs with visa sponsorship
+        subscriptions: Only send alerts for jobs that offer visa sponsorship
 
 
     education_phase_options:

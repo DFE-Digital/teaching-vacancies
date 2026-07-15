@@ -78,7 +78,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
 
       it "allows jobseekers to edit the qualification" do
         expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :qualifications))
-        fill_in "Awarding body", with: "University of Life"
+        fill_in "University or college", with: "University of Life"
         click_on I18n.t("buttons.save_qualification.one")
         expect(page).not_to have_content("Life University")
         expect(page).to have_content("University of Life")

@@ -78,11 +78,11 @@ en:
       is_current_role: Is this your current role?
       ended_on: End date
       main_duties: Main duties
-      organisation: School or employer
+      organisation: School, college or employer
       started_on: Start date
       subjects: Subjects and key stages taught (optional)
       reason_for_leaving: Reason for leaving
-      gap_with_duration: You have a gap in your work history (%{duration})
+      gap_with_duration: You have a gap in your work history of %{duration}
     forced_login:
       job_application_html: You need to login or create an account with Teaching Vacancies to apply for this job.
       saved_job_html: You need to login or create an account with Teaching Vacancies to save this job.
@@ -100,7 +100,7 @@ en:
         success: Thank you for providing additional feedback on your job alert
     shared:
       training_shared: &training_shared
-        example_intro: "For example you could include:"
+        example_intro: "For example, you could include:"
         example1: safeguarding training
         example2: Prevent duty training
         example3: first aid courses
@@ -114,9 +114,9 @@ en:
       apply:
         apply: Apply for this job
         heading: Your application
-        review_application: Review application
+        review_application: Review and submit application
         review_and_submit: Review and submit your application
-        you_will_have: You will have the opportunity to review your application in full before you submit it.
+        you_will_have: You can review your application before you submit it.
         title: Review your application — Application
         download_application_form: To apply for this job, you'll need to download the application form. Complete the sections below to provide your personal details and upload your completed application form.
       applying_for_the_job_heading: Applying for the job
@@ -133,23 +133,23 @@ en:
         training_and_cpds:
           heading: Training and continuing professional development (CPD)
           step_title: Training and continuing professional development (CPD)
-          title: Add training and continuing professional development (CPD)
+          title: Add training or continuing professional development (CPD)
           no_training: No training or CPD specified
         ask_for_support:
           adjustment_examples:
             assistive_technology: using your own assistive technology
-            captions_hearing_loop_bsl: using captions, a hearing loop or a British Sign Language interpreter
+            captions_hearing_loop_bsl: using captions, a hearing loop or a British Sign Language (BSL) interpreter
             contact_method: changing how we contact you, for example by email instead of phone
             extra_time: extra time to read or answer questions
             questions_in_writing: having interview questions in writing
             quiet_room: using a quiet room
             short_break: taking a short break
             step_free_access: making sure the interview room has step-free access
-          adjustment_examples_intro: "This could include:"
-          arranging_support: You can tell us what would help now. We'll use this information to arrange support for your interview.
+          adjustment_examples_intro: "Examples of support or adjustments include:"
+          arranging_support: Tell us what would help. We’ll use this information to arrange support for your interview.
           heading: Do you need support or adjustments for your interview?
-          needs: This can be for a disability, health condition, mental health condition, neurodivergence, temporary injury or another need.
-          opening: You can ask for support or an adjustment to help you take part in an interview.
+          needs: This could be because of a disability, health condition, neurodivergence, temporary injury or another need.
+          opening: You can ask for support or adjustments to help you take part in an interview.
           step_title: Ask for support
           title: Do you need support or adjustments for your interview? — Application
         declarations:
@@ -158,16 +158,15 @@ en:
           title: Declarations — Application
           dbs_link_text: Disclosure and Barring Service (DBS) check
           description1: >-
-            You'll need to complete an enhanced %{link_text} if you're successful in this role. If you're outside the UK, you'll need to get a
-            criminal record check from your home country.
-          description2: It's a criminal offence if you're barred by the DBS or court orders to apply for a role working with children.
-          description3: Not all convictions or police cautions on a criminal record will stop you from working in a school. But you will have to declare any convictions.
-          description4: Learn more about when you need to tell someone about your criminal record.
-          keep_children_safe_link_text: keeping children safe in education obligations.
-          description5: Schools may also conduct their own online checks as part of their %{link_text}
+            If you are successful, you will need to complete an enhanced %{link_text}. If you have lived or worked outside the UK, you may need to
+            provide a criminal record check from another country.
+          description2: It's a criminal offence to apply for a role working with children or young people if you are barred from doing so by the DBS or a court order.
+          description3: Not all convictions or cautions will stop you from working in a school or college. You must declare any convictions or cautions you are required to disclose.
+          description4: Check when you need to tell someone about your criminal record
+          description5: Schools and colleges may also carry out online searches as part of their safeguarding checks.
           safeguarding_issue:
-            "yes": "Yes, I want to share something"
-            hint: "Give any relevant information"
+            "yes": "Yes, I need to declare something"
+            hint: "Give details of the safeguarding issue"
             "no": "No"
         employment_history:
           break: Gap in work history
@@ -178,12 +177,12 @@ en:
               - all paid roles
               - voluntary work, if relevant to your application
             work_experience_advice: If you’re applying for a teaching job, you should include teaching and other experience, if you have it.
-            gaps_advice: "You’ll also need to explain any gaps in your work history. This includes any gaps between:"
+            gaps_advice: "You’ll also need to explain any gaps in your work history. This includes gaps between:"
             gaps_bullets:
               - school and university
               - university and employment
-              - different forms of employment
-            reasons: You’ll need to provide the reason you left each role.
+              - different jobs
+            reasons: You will need to give the reason you left each role.
             gaps: >-
               If you had a gap between finishing full-time education and starting work that you have not explained then please %{link} to give details about it
             gaps_link_text: click here
@@ -198,13 +197,13 @@ en:
           title: Current role and employment history — Application
         equal_opportunities:
           anonymity: >-
-            Your information will be held anonymously by the Department for Education to monitor the inclusivity of applicants.
-            It will not be used as part of your application.
+            Your answers will be anonymised and used by the Department for Education to monitor the diversity of applicants.
+            They will not be used as part of your application.
           explanation: >-
-            School staff from a range of backgrounds and experiences in society provide students with a better all-round education.
-            Please provide some basic information about your identity to help achieve this.
+            Staff from a range of backgrounds and experiences help provide children and young people with a better education.
+            We ask these questions to help monitor the diversity of applicants.
           heading: Equal opportunities and recruitment monitoring
-          optional: You can select ‘prefer not to say’ if you would rather not answer any question.
+          optional: Select ‘Prefer not to say’ if you do not want to answer a question.
           step_title: Equal opportunities
           title: Equal opportunities — Application
         catholic:
@@ -249,18 +248,18 @@ en:
           banner_documents_html: >-
             Documents supplied with %{job_link} listing that may be of some help with your personal statement.
           banner_no_documents_html: >-
-            It may be helpful to refer to %{job_link}. You should include any skills, qualities and experience that are relevant to this role.
+            You may find it helpful to refer to %{job_link}. You should include any skills, qualities and experience that are relevant to this role.
           description: >-
-            Your personal statement is your opportunity to explain why you are suitable for this role. Schools typically expect personal statements to be about 2 pages long, which is approximately 500 to 1,000 words.
+            Your personal statement is your opportunity to explain why you are suitable for this role. Schools typically expect personal statements to be about 500 to 1,000 words.
           job_description: job description
           heading: Personal statement
           applying_for_a_teaching_role: If you're applying for a teaching role
-          you_could_provide: "You could include information about:"
+          you_could_provide: "You could include:"
           personal_statement_preamble: "Get advice from experienced teachers and school leaders on "
           personal_statement_preamble_continued_html: . You can can also use the %{tool_link} for prompts and tips to help you get started.
           tool_link_text: personal statement builder
           bullets:
-            - your teaching and classroom management style
+            - your teaching style and approach to classroom management
             - your knowledge of the curriculum
             - your understanding of safeguarding and pupil wellbeing
             - additional responsibilities you’ve taken on in school
@@ -274,22 +273,22 @@ en:
           heading: Professional status
           step_title: Professional status
           title: Professional status — Application
-          introduction: If you have no teaching experience and are applying for a support role, you should answer no to these questions.
+          introduction: If you're applying for a support role and do not have teaching experience, answer ‘No’ to these questions.
         qualifications:
           heading: Qualifications
           no_qualifications: No qualifications specified
           step_title: Education and qualifications
           title: Education and qualifications — Application
         referees:
-          description_html: You must include details for a referee from your current or most recent employer. If you did not work with children in this role, you must include at least one referee from the last job where you worked with children. Schools must contact your referees in compliance with %{link}.
-          kcsie: Keeping children safe in education statutory guidance
+          description_html: You must include details for a referee from your current or most recent employer. If you did not work with children in this role, you must include at least one referee from the last job where you worked with children. Schools or colleges must contact referees in line with %{link}.
+          kcsie: keeping children safe in education (KCSIE) statutory guidance
           heading: References
-          no_references: No referees specified
+          no_references: No referees added
           step_title: References
           title: References — Application
         review:
           step_title: Review your application
-      cancel_caption: If you select cancel you will lose any unsaved information from this step. Completed details from previous steps will be saved in your draft applications.
+      cancel_caption: If you select ‘Cancel and return to your account’, you will lose any unsaved information from this step. Information from previous steps will be saved in your draft application.
       caption: "%{job_title} at %{organisation}"
       closing_date: Closing date
       confirm_destroy:
@@ -338,19 +337,19 @@ en:
       training_and_cpds:
         heading: Training and continuing professional development (CPD)
         step_title: Training and continuing professional development (CPD)
-        title: Add training and continuing professional development (CPD)
+        title: Add training or continuing professional development (CPD)
         fields:
           hint: For example, 2024.
         new:
           <<: *training_shared
           caption: Training and continuing professional development (CPD)
-          heading: Add training and continuing professional development (CPD)
-          description: Include any training you've completed within the last 3 years relevant to the role you're applying for.
+          heading: Add training or continuing professional development (CPD)
+          description: Include any training you've completed in the last 3 years that is relevant to the role.
         edit:
           <<: *training_shared
           caption: Training and continuing professional development (CPD)
-          heading: Edit training and continuing professional development (CPD)
-          description: Include any training you've completed within the last 3 years relevant to the role you're applying for.
+          heading: Edit training or continuing professional development (CPD)
+          description: Include any training you've completed in the last 3 years that is relevant to the role.
         destroy:
           success: Training deleted
         review:
@@ -369,7 +368,7 @@ en:
         reason_for_leaving: Reason for leaving
         new:
           caption: Current role and employment history
-          heading: Add a role
+          heading: Add a job or voluntary role
           title: Add a role — Application
         organisation: Organisation
         salary: Salary
@@ -474,12 +473,12 @@ en:
           caption: Education and qualifications
           subjects_and_grades: Subjects and grades
           hint:
-            gcse: Add all your GCSEs.
+            gcse: Add all your GCSEs
             as_level: Add all your AS levels.
             a_level: Add all your A levels.
             undergraduate: Add your undergraduate degree.
-            postgraduate: You do not need to add qualified teacher status (QTS) here. You can add this to your application in the professional status section.
-            other: Add any formal qualifications. You can add details of any training or professional development in the continuing professional development part of the application.
+            postgraduate: Do not add qualified teacher status (QTS) here. You can add it in the professional status section.
+            other: Add any formal qualifications. You can add training or professional development in the training and professional development section.
         edit:
           <<: *qualifications_shared
           heading:
@@ -494,8 +493,8 @@ en:
           <<: *qualifications_shared
           heading:
             gcse: Add GCSEs
-            as_level: Add AS Levels
-            a_level: Add A Levels
+            as_level: Add AS levels
+            a_level: Add A levels
             undergraduate: Add an undergraduate degree
             postgraduate: Add a postgraduate qualification
             other: Add a qualification
@@ -511,37 +510,37 @@ en:
         edit:
           caption: References
           description:
-            html: If you are shortlisted, your referees may be contacted before your interview. Schools must contact your referees in compliance with %{link}. You can ask to be told before a school contacts your referees, but we cannot guarantee the school will do so.
-          kcsie: Keeping children safe in education statutory guidance
+            html: If you are shortlisted, your referees may be contacted before your interview. Schools or colleges must contact referees in line with %{link}. You can ask to be told before a school contacts your referees, but we cannot guarantee the school will do so.
+          kcsie: keeping children safe in education (KCSIE) statutory guidance
           heading: Edit a referee
           title: Edit a referee — Application
-          work_in_school_heading: If you work in a school
-          work_in_school_guidance: Your reference must be confirmed by your headteacher but does not have to be provided by them.
+          work_in_school_heading: If you work in a school or college now
+          work_in_school_guidance: Your reference must be confirmed by your headteacher, but they do not have to provide it.
           trainee_teacher_heading: If you are a trainee teacher
-          trainee_teacher_guidance: You should provide a reference where you can show your experience working with children. You can include references from school placements or from your course provider.
-          work_with_children_heading: If you used to work with children
-          work_with_children_guidance: If you do not currently work with children but have in the past, you should provide one reference from your current or most recent employer and one from the last time you worked with children.
-          consent_confirmation: By adding this referee, you are confirming that they have consented to providing their contact information for the purpose of providing a reference.
+          trainee_teacher_guidance: You should provide a reference from someone who can confirm your experience working with children or young people. You can include references from school placements or from your course provider.
+          work_with_children_heading: If you have worked with children or young people before
+          work_with_children_guidance: If you do not work with children or young people now but have in the past, you should provide one reference from your current or most recent employer and one from the last time you worked with children or young people.
+          consent_confirmation: By adding this referee, you confirm they have agreed to provide their contact information for a reference.
         email: Email address
         job_title: Job title
         name: Name
         new:
           caption: References
           description:
-            html: If you are shortlisted, your referees may be contacted before your interview. Schools must contact your referees in compliance with %{link}. You can ask to be told before a school contacts your referees, but we cannot guarantee the school will do so.
-          kcsie: Keeping children safe in education statutory guidance
+            html: If you are shortlisted, your referees may be contacted before your interview. Schools or colleges must contact referees in line with %{link}. You can ask to be told before a school contacts your referees, but we cannot guarantee the school will do so.
+          kcsie: keeping children safe in education (KCSIE) statutory guidance
           heading: Add a referee
           title: Add a referee — Application
-          work_in_school_heading: If you work in a school
-          work_in_school_guidance: Your reference must be confirmed by your headteacher but does not have to be provided by them.
+          work_in_school_heading: If you work in a school or college now
+          work_in_school_guidance: Your reference must be confirmed by your headteacher, but they do not have to provide it.
           trainee_teacher_heading: If you are a trainee teacher
-          trainee_teacher_guidance: You should provide a reference where you can show your experience working with children. You can include references from school placements or from your course provider.
-          work_with_children_heading: If you used to work with children
-          work_with_children_guidance: If you do not currently work with children but have in the past, you should provide one reference from your current or most recent employer and one from the last time you worked with children.
-          consent_confirmation: By adding this referee, you are confirming that they have consented to providing their contact information for the purpose of providing a reference.
+          trainee_teacher_guidance: You should provide a reference from someone who can confirm your experience working with children or young people. You can include references from school placements or from your course provider.
+          work_with_children_heading: If you have worked with children or young people before
+          work_with_children_guidance: If you do not work with children or young people now but have in the past, you should provide one reference from your current or most recent employer and one from the last time you worked with children or young people.
+          consent_confirmation: By adding this referee, you confirm they have agreed to provide their contact information for a reference.
         organisation: Organisation
         phone_number: Phone number
-        relationship: Relationship to applicant
+        relationship: Relationship to you
         is_most_recent_employer: Current or most recent employer
       review:
         contact_referer:
@@ -549,7 +548,7 @@ en:
           publisher: This applicant wants to be contacted before you collect their references.
         view_your_profile: View your profile
         confirmation:
-          heading: Confirmation
+          heading: Confirm and submit your application
           update_your_profile:
             heading: Do you want to update your profile?
             hint: You can update your profile to match this application. This will replace the current information on your profile. Choose the sections you'd like to update.
@@ -558,12 +557,12 @@ en:
             heading: How your data is used
             list:
               dfe: the Department for Education
-              employer: the school or schools the job is at
-              listing_organisation: the school, trust or local authority which posted the job listing
+              employer: the school or college, or group of schools or colleges, where the job is based
+              listing_organisation: the school, trust, college or local authority that posted the job listing
             privacy_policy:
-              description_html: Please read the Teaching Vacancies %{link_to} for more information on how your data is used.
-              link_text: Privacy Policy
-          resubmission_warning: You cannot edit your application after submitting. If you withdraw your application, you will not be able to resubmit.
+              description_html: Read the Teaching Vacancies %{link_to} for more information about how your data is used.
+              link_text: privacy policy
+          resubmission_warning: You cannot edit your application after you submit it. If you withdraw your application, you will not be able to submit it again.
         deadline_passed: The deadline for this job listing has passed
         employment_history:
           none: You have not added any roles or employment history.
@@ -706,17 +705,17 @@ en:
         continue: Continue application
         deadline_passed: job closed
         delete: Delete
-        link_find: Find a job
+        link_find: Find jobs
         page_title: Saved jobs
         skip_link: Skip to my saved jobs
         view: View application
-        zero_saved_jobs_body_html: '%{link_to} and start saving jobs you may want to review and apply for later.'
+        zero_saved_jobs_body_html: '%{link_to} and save the ones you want to review or apply for later.'
         zero_saved_jobs_title: You have no saved jobs
         one_login_banner:
           header: Can't see your saved jobs?
-          paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, your saved jobs will not automatically be saved.
-          paragraph2_html: You can request to %{link}
-          transfer_profile_link_text: transfer your existing profile.
+          paragraph1: If your Teaching Vacancies account used a different email address from your GOV.UK One Login account, your saved jobs will not automatically appear here.
+          paragraph2_html: You can request %{link}
+          transfer_profile_link_text: a transfer of your existing profile.
 
       save: Save this job for later
       saved: Job saved
@@ -780,7 +779,7 @@ en:
           caption: Personal details
           heading: Name and visa sponsorship
           page_title: Name and visa sponsorship
-          visa: Do you need Skilled Worker visa sponsorship?
+          visa: Do you need Skilled Worker visa sponsorship to work in the UK?
           learn_more:
             other_routes_to_qts: other routes to QTS
             qualifications_and_experience: the qualifications and experience you’ll need
@@ -790,14 +789,14 @@ en:
             link: check your eligibility (link opens in new tab)
           work:
             options:
-              false: "Yes, I will need to apply for a visa giving me the right to work in the UK"
+              false: "Yes, I need Skilled Worker visa sponsorship"
               true: "No, I already have the right to work in the UK"
             hint:
               text: If you're a non-UK citizen you will need a visa or immigration status which allows you to work in England. If you're looking for a teaching job, you can learn more about %{link}
               link: teaching in England as a non-UK citizen (opens in new tab).
               no_visa:
-                text: You can %{link}
-                link: find out what visa you need if you're a non-UK citizen (link opens in new tab).
+                text: "%{link}"
+                link: Find out what visa you need if you’re a non-UK citizen (opens in new tab)
             warning:
               text: This role cannot offer visa sponsorship.
               paragraph_1: It is unlikely you will be considered for this job as it is not offering Skilled Worker visa sponsorship to non-UK citizens.
@@ -828,24 +827,24 @@ en:
         activate_profile_text: >-
           When you turn on your profile it will only be visible to hiring staff in schools and trusts.
           They can get in touch by email to invite you apply for roles.
-        hide_profile: Hide profile from schools or trusts
+        hide_profile: Hide profile from schools, trusts or colleges
         imported: You have recently submitted a job application, so some of your details have been imported into your profile.
-        page_description: Your profile allows schools to contact you, based on the details in your profile.
+        page_description: Your profile allows schools, trusts and colleges to contact you, based on your profile details.
         inactive_profile: >-
-          Your profile is inactive. You can reactivate it by selecting 'Turn on profile'.
-          When your profile is active, schools and trust hiring staff can view your details and contact you about jobs by email.
+          Your profile is inactive. To make it active, select ‘Turn on your profile’.
+          When your profile is active, school, trust, and college hiring staff can view your details and contact you about jobs by email.
         page_title: Your profile
         preview_and_turn_off_profile: Preview and turn off profile
-        preview_and_turn_on_profile: Preview and turn on profile
+        preview_and_turn_on_profile: Preview and turn on your profile
         preview_profile: Preview profile
         profile_turned_off: Profile turned off
         profile_turned_on: Profile turned on
-        set_up_profile_visibility: Set up who cannot view your profile
+        set_up_profile_visibility: Choose who cannot view your profile
         turn_off_profile_text: When you turn off your profile it will not be visible to hiring staff in schools and trusts.
         turn_off_profile: Turn off profile
-        turn_on_profile_text: When you turn on your profile, school and trust hiring staff will be able to view your details and contact you by email. You can %{link_text}
-        turn_on_profile_link_text: hide your profile from specific schools or trusts.
-        turn_on_profile: Turn on profile
+        turn_on_profile_text: When you turn on your profile, hiring staff can view your details and contact you by email. You can %{link_text}
+        turn_on_profile_link_text: hide your profile from specific schools, colleges or trusts.
+        turn_on_profile: Turn on your profile
         one_login_banner:
           header: Can't see your profile details?
           paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, your existing profile will not automatically be saved.
@@ -1041,8 +1040,9 @@ en:
     request_account_transfer_emails:
       new:
         page_title: Transfer account details
-        heading: What was the email address on your Teaching Vacancies account?
-        hint: If you have an account associated with this email address, we'll send you an email to verify your details.
+        heading: What email address did you use for your Teaching Vacancies account?
+        hint: If there’s a Teaching Vacancies account for this email address, we’ll send you an email to verify your details.
+        submit: Send verification email
       errors:
         recent_code_request: Please wait 1 minute before requesting another code.
         cannot_transfer_logged_in_account: You entered the email of the account you are currently logged in to. The data in this account is already available to you and cannot be transferred.

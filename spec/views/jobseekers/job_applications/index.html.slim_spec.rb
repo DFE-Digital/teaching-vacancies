@@ -57,7 +57,7 @@ RSpec.describe "jobseekers/job_applications/index" do
         it "renders draft applications group first" do
           expect(groups[0]).to have_css(selectors[:job_application_header], text: active_draft_job.job_title)
           expect(groups[0].find(selectors[:job_application_header])["href"]).to eq(jobseekers_job_application_apply_path(active_draft))
-          expect(groups[0]).to have_css(selectors[:job_application_tag], text: "draft")
+          expect(groups[0]).to have_css(selectors[:job_application_tag], text: "Draft")
         end
 
         it "renders active applications group" do
@@ -65,9 +65,9 @@ RSpec.describe "jobseekers/job_applications/index" do
             expect(groups[idx + 1]).to have_css(selectors[:job_application_header], text: application.vacancy.job_title)
             expect(groups[idx + 1].find(selectors[:job_application_header])["href"]).to eq(jobseekers_job_application_path(application))
             if application.status == "reviewed"
-              expect(groups[idx + 1]).to have_css(selectors[:job_application_tag], text: "submitted")
+              expect(groups[idx + 1]).to have_css(selectors[:job_application_tag], text: "Submitted")
             else
-              expect(groups[idx + 1]).to have_css(selectors[:job_application_tag], text: application.status)
+              expect(groups[idx + 1]).to have_css(selectors[:job_application_tag], text: JobApplicationsHelper::JOBSEEKER_STATUS_MAPPINGS[application.status.to_sym])
             end
           end
         end
@@ -75,14 +75,14 @@ RSpec.describe "jobseekers/job_applications/index" do
         it "renders expired applications group last" do
           expect(groups.last).to have_css(selectors[:job_application_header], text: vacancy_expired.job_title)
           expect(groups.last.find(selectors[:job_application_header])["href"]).to eq(jobseekers_job_application_apply_path(expired_draft))
-          expect(groups.last).to have_css(selectors[:job_application_tag], text: "job closed")
+          expect(groups.last).to have_css(selectors[:job_application_tag], text: "Job closed")
         end
       end
     end
   end
 
   describe "self disclosure request tag" do
-    let(:tag_text) { "needs action" }
+    let(:tag_text) { "Needs action" }
     let(:job_applications) { [job_application] }
 
     context "when self_disclosure_request sent" do

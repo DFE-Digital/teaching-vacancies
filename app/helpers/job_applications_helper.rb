@@ -13,19 +13,19 @@ module JobApplicationsHelper
   }.freeze
 
   JOBSEEKER_STATUS_MAPPINGS = {
-    deadline_passed: "job closed",
-    draft: "draft",
-    submitted: "submitted",
-    reviewed: "submitted",
-    shortlisted: "shortlisted",
-    unsuccessful: "unsuccessful",
-    rejected: "unsuccessful",
-    withdrawn: "withdrawn",
-    interviewing: "interviewing",
-    unsuccessful_interview: "unsuccessful",
-    action_required: "needs action",
-    offered: "offered",
-    declined: "declined",
+    deadline_passed: "Job closed",
+    draft: "Draft",
+    submitted: "Submitted",
+    reviewed: "Submitted",
+    shortlisted: "Shortlisted",
+    unsuccessful: "Unsuccessful",
+    rejected: "Unsuccessful",
+    withdrawn: "Withdrawn",
+    interviewing: "Interviewing",
+    unsuccessful_interview: "Unsuccessful",
+    action_required: "Needs action",
+    offered: "Offered",
+    declined: "Declined",
   }.freeze
 
   JOB_APPLICATION_STATUS_TAG_COLOURS = {

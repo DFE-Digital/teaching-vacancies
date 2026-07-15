@@ -10,7 +10,7 @@
       .inline-fields-container.subject-row class="#{idx > f.object.highest_present_result_index ? "js-hidden" : ""}" data-manage-qualifications-target="row"
         = result_form.govuk_text_field :subject, label: { text: "Subject #{idx + 1}" }, aria: { required: idx.zero? }, form_group: { classes: "govuk-!-width-two-thirds" }
         = result_form.govuk_text_field :grade, aria: { required: idx.zero? }, form_group: { classes: "govuk-!-width-one-third" }, label: { text: "Grade" }
-        = result_form.govuk_text_field :awarding_body, aria: { required: false }, form_group: { classes: "govuk-!-width-one-third" }, label: { text: "Awarding Body (optional)" }
+        = result_form.govuk_text_field :awarding_body, aria: { required: false }, form_group: { classes: "govuk-!-width-one-third" }, label: { text: "Awarding body (optional)" }
         .govuk-form-group.button_to
           button.govuk-button.js-action.govuk-button--secondary class="govuk-!-margin-bottom-0" data-action="manage-qualifications#deleteRow" type="button"
             = "#{t('buttons.delete_subject')} #{idx + 1}"

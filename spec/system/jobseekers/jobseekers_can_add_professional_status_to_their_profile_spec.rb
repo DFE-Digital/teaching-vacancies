@@ -45,7 +45,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
             expect(page).to have_link("Select yes if you have completed your statutory induction year", href: "#jobseekers-profiles-qualified-teacher-status-form-is-statutory-induction-complete-field-error")
           end
           fill_in "Year QTS was gained", with: "2032"
-          fill_in "What is your teacher reference number (TRN)?", with: "ABC"
+          fill_in "What is your teacher reference number?", with: "ABC"
           choose "Yes, I have completed my induction period"
           click_on "Save and continue"
           within "ul.govuk-list.govuk-error-summary__list" do
@@ -53,7 +53,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
             expect(page).to have_link("Enter a teacher reference number (TRN) that is 7 digits long", href: "#jobseekers-profiles-qualified-teacher-status-form-teacher-reference-number-field-error")
           end
           fill_in "Year QTS was gained", with: "2022"
-          fill_in "What is your teacher reference number (TRN)?", with: "1234567"
+          fill_in "What is your teacher reference number?", with: "1234567"
           choose "No, I have not completed my induction period"
           fill_in "jobseekers-profiles-qualified-teacher-status-form-statutory-induction-complete-details-field", with: "Don't have time to explain"
           click_on "Save and continue"
@@ -96,7 +96,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
       expect(find("#jobseekers-profiles-qualified-teacher-status-form-teacher-reference-number-field", visible: false).value).to eq("7777777")
 
       fill_in "Year QTS was gained", with: "2000"
-      fill_in "What is your teacher reference number (TRN)?", with: "1234567"
+      fill_in "What is your teacher reference number?", with: "1234567"
       choose "No, I have not completed my induction period"
       fill_in "jobseekers-profiles-qualified-teacher-status-form-statutory-induction-complete-details-field", with: "I am working on it."
 

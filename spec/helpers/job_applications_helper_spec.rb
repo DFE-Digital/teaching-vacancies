@@ -23,8 +23,8 @@ RSpec.describe JobApplicationsHelper do
 
       it "has good translations" do
         expect(radio_button_legend_hint(vacancy).transform_values { |t| I18n.t(t) })
-          .to eq(text: "You can %{link}",
-                 link: "find out what visa you need if you're a non-UK citizen (link opens in new tab).")
+          .to eq(text: "%{link}",
+                 link: "Find out what visa you need if you’re a non-UK citizen (opens in new tab)")
       end
     end
   end

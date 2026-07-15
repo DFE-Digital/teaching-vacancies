@@ -44,7 +44,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
         expect(page).to have_content("Superteacher Certificate")
         expect(page).to have_content("Teachers Academy")
         expect(page).to have_content("I expect to finish next year")
-        expect(page).to have_content("Not finished yet")
+        expect(page).to have_content("No, I have not completed it yet")
         expect(page).to have_content("Superteaching")
         expect(page).to have_content("AXA")
         expect(page).not_to have_content("Grade")
@@ -64,7 +64,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
         expect(page).to have_content("Maths – 110%")
         expect(page).to have_content("PE – 90%")
         expect(page).to have_content("2020")
-        expect(page).not_to have_content("Not finished yet")
+        expect(page).not_to have_content("No, I have not completed it yet")
         expect(page).not_to have_content("Yes")
       end
     end
@@ -85,7 +85,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
       it "allows jobseekers to edit the qualification" do
         visit review_jobseekers_profile_qualifications_path
         click_on "Change"
-        fill_in "Awarding body", with: "University of Life"
+        fill_in "University or college", with: "University of Life"
         click_on I18n.t("buttons.save_and_continue")
         expect(page).not_to have_content("Life University")
         expect(page).to have_content("University of Life")

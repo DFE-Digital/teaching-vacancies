@@ -1,10 +1,10 @@
 = f.govuk_text_field :keyword,
-  label: { text: t("jobs.search.keyword"), size: "s" },
-  hint: { text: t("jobs.search.keyword_hint") },
+  label: { text: t("subscriptions.new.keyword"), size: "s" },
+  hint: { text: t("subscriptions.new.keyword_hint") },
   autocomplete: "off"
 - unless @organisation
   = f.govuk_text_field :location,
-    label: { text: t("jobs.search.location"), size: "s" },
+    label: { text: t("subscriptions.new.location.label"), size: "s" },
     autocomplete: "off",
     form_group: { class: %w[location-finder__input govuk-!-margin-bottom-0 autocomplete], data: { source: "getLocationSuggestions", controller: "autocomplete" } },
     data: { coordinates: @vacancies_search&.point_coordinates || @point_coordinates }

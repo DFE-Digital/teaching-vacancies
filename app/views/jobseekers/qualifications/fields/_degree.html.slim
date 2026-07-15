@@ -1,6 +1,10 @@
-= f.govuk_text_field :institution, label: { size: "s" }, aria: { required: true }
+- institution_label = t("helpers.label.jobseekers_qualifications_degree_form.institution_options.#{category}", default: t("helpers.label.jobseekers_qualifications_degree_form.institution_options.undergraduate"))
+- institution_hint = t("helpers.hint.jobseekers_qualifications_degree_form.institution_options.#{category}", default: nil)
+- subject_label = t("helpers.label.jobseekers_qualifications_degree_form.subject_options.#{category}", default: t("helpers.label.jobseekers_qualifications_degree_form.subject_options.undergraduate"))
 
-= f.govuk_text_field :subject, label: { size: "s" }, aria: { required: true }
+= f.govuk_text_field :institution, label: { size: "s", text: institution_label }, hint: (institution_hint ? { text: institution_hint } : {}), aria: { required: true }
+
+= f.govuk_text_field :subject, label: { size: "s", text: subject_label }, aria: { required: true }
 
 - finished_studying_legend = capture do
   legend.govuk-fieldset__legend.govuk-fieldset__legend--s

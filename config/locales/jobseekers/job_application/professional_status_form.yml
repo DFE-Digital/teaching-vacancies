@@ -52,32 +52,32 @@ en:
           "true": "Yes, I have completed my induction period"
         qualified_teacher_status_year: Year QTS was gained
         qts_age_range_and_subject: Age range and subject you trained to teach
-        teacher_reference_number: What is your teacher reference number (TRN)?
+        teacher_reference_number: What is your teacher reference number?
         is_statutory_induction_complete: Have you completed your induction period?
-        statutory_induction_complete_details: Provide more detail, for example, if you have started but not completed your induction, or you are %{link} (optional)
-        statutory_induction_complete_details_hint_text: exempt from completing an induction
+        statutory_induction_complete_details: Provide more details about your induction period (optional)
         trn_link_text: find your TRN
       jobseekers_job_application_professional_status_form:
-        qualified_teacher_status_details_html: Please provide more detail (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        qualified_teacher_status_details_html: Why do you not have QTS? (optional<span class='govuk-visually-hidden'> field</span>)</span>
         qualified_teacher_status_options:
           "no": "No"
-          on_track: I'm on track to receive my QTS
+          on_track: I’m on track to get QTS
           non_teacher: I'm not looking for a teaching job
           "yes": "Yes"
-        teacher_reference_number: What is your teacher reference number (TRN)?
+        teacher_reference_number: What is your teacher reference number?
         is_statutory_induction_complete_options:
           "false": "No, I have not completed my induction period"
           "true": "Yes, I have completed my induction period"
-        qualified_teacher_status_year: Year QTS was gained
+        qualified_teacher_status_year: Year you gained QTS
         qts_age_range_and_subject: Age range and subject you trained to teach
-        hint: You're unlikely to get a teaching job in England unless you have QTS. Find out %{link}. If you answer yes to this question, we’ll ask you to provide your teacher reference number (TRN).
+        hint: You are unlikely to get a teaching job in England unless you have qualified teacher status (QTS). If you answer ‘Yes’, we’ll ask for your teacher reference number (TRN).
         link_text: how to get QTS
         professional_status_section_completed_options:
           false: No, I'll come back to it later
           true: Yes, I've completed this section
     hint:
       jobseekers_job_application_professional_status_form:
-        is_statutory_induction_complete: Early career teachers (ECTs) have to complete a 2 year induction period. This used to be 1 year for newly qualified teachers (NQTs).
-        teacher_reference_number: You can %{link} if you do not know it (for example, if you're a trainee teacher) or have forgotten it. Your TRN is 7 digits long.
+        is_statutory_induction_complete: Early career teachers (ECTs) have to complete a 2-year induction period. This used to be 1 year for newly qualified teachers (NQTs).
+        teacher_reference_number: Your teacher reference number (TRN) is 7 digits long. You can %{link} if you do not know it or have forgotten it.
+        statutory_induction_complete_details: For example, whether you have started but not completed your induction, or are exempt from completing it
       jobseekers_profiles_qualified_teacher_status_form:
         is_statutory_induction_complete: Early career teachers (ECTs) have to complete a 2 year induction period. This used to be 1 year for newly qualified teachers (NQTs).

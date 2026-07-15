@@ -28,7 +28,7 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
           choose "Yes"
         end
         fill_in "jobseekers_profiles_qualified_teacher_status_form[qualified_teacher_status_year]", with: "2019"
-        fill_in "What is your teacher reference number (TRN)?", with: "1234567"
+        fill_in "What is your teacher reference number?", with: "1234567"
         fill_in "Age range and subject you trained to teach", with: subject_ages
         choose "No, I have not completed my induction period"
         fill_in "jobseekers-profiles-qualified-teacher-status-form-statutory-induction-complete-details-field", with: "I am working on it."
@@ -61,7 +61,7 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
 
         describe "errors" do
           before do
-            click_link("Add roles")
+            click_link("Add a job or voluntary role")
           end
 
           it "raises errors for missing fields" do
@@ -105,9 +105,9 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
             add_jobseeker_profile_employment_with_a_gap
             click_link "Return to profile"
 
-            expect(page).to have_content "You have a gap in your work history (almost 1 year)"
-            expect(page).to have_content "Add another job or add a reason for this gap"
-            click_link "add a reason for this gap"
+            expect(page).to have_content "You have a gap in your work history of almost 1 year"
+            expect(page).to have_content "Add another job or explain this gap"
+            click_link "explain this gap"
 
             click_button "Continue"
 
@@ -142,8 +142,8 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
             click_on I18n.t("buttons.confirm_destroy")
 
             expect(page).not_to have_content("I was ill")
-            expect(page).to have_content "You have a gap in your work history (almost 1 year)"
-            expect(page).to have_content "Add another job or add a reason for this gap"
+            expect(page).to have_content "You have a gap in your work history of almost 1 year"
+            expect(page).to have_content "Add another job or explain this gap"
           end
         end
       end
@@ -498,7 +498,7 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
   private
 
   def add_jobseeker_profile_employment
-    click_link("Add roles")
+    click_link("Add a job or voluntary role")
 
     fill_in_current_role(form: "jobseekers_profile_employment_form")
 
@@ -509,7 +509,7 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
   end
 
   def add_jobseeker_profile_employment_with_a_gap
-    click_link("Add roles")
+    click_link("Add a job or voluntary role")
 
     fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.organisation"), with: "Arsenal"
     fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.job_title"), with: "Number 9"

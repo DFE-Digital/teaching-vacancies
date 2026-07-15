@@ -29,9 +29,7 @@ ruby:
     summary_list.with_row do |row|
       row.with_key text: t("jobseekers.profiles.personal_details.summary.email")
       row.with_value text: (current_jobseeker.email +
-                       govuk_inset_text(text: t("helpers.label.personal_details.change_email_html",
-                                              link: govuk_link_to(t("helpers.label.personal_details.change_email_link_text"),
-                                                    jobseekers_account_path)),
+                       govuk_inset_text(text: govuk_link_to(t("helpers.label.personal_details.change_email_link_text"), jobseekers_account_path),
                                         classes: "govuk-!-margin-top-3")).html_safe
     end
   end

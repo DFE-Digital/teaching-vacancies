@@ -15,4 +15,4 @@
   = f.govuk_radio_button :is_statutory_induction_complete, "true", link_errors: true
   = f.govuk_radio_button :is_statutory_induction_complete, "false" do
     = f.govuk_text_area :statutory_induction_complete_details,
-      label: -> { tag.p(t("helpers.label.jobseekers_profiles_qualified_teacher_status_form.statutory_induction_complete_details", link: govuk_link_to(t("helpers.label.jobseekers_profiles_qualified_teacher_status_form.statutory_induction_complete_details_hint_text"), "https://www.gov.uk/government/publications/induction-for-early-career-teachers-england", target: "_blank")).html_safe) }
+      label: { text: t("helpers.label.jobseekers_profiles_qualified_teacher_status_form.statutory_induction_complete_details") }
