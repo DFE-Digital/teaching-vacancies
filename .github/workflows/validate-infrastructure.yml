@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: Validate ${{ matrix.display }}
-        uses: DFE-Digital/github-actions/validate-infra@master
+        uses: DFE-Digital/github-actions/validate-infra@2893-test-validate
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -32,6 +32,7 @@ jobs:
           azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           gcp-wip: projects/689616473831/locations/global/workloadIdentityPools/teaching-vacancies/providers/teaching-vacancies
+          #workload_identity_provider: projects//locations/global/workloadIdentityPools/teaching-vacancies/providers/teaching-vacancie689616473831s
           gcp-project-id: teacher-vacancy-service
           environment: production
           terraform-base: ${{ matrix.terraform_base }}
