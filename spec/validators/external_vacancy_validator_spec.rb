@@ -64,6 +64,28 @@ RSpec.describe ExternalVacancyValidator, type: :model do
     end
   end
 
+  context "when expiry date is later today" do
+    before do
+      vacancy.expires_at = Time.zone.today.end_of_day
+      vacancy.validate
+    end
+
+    it "adds an expiry date error" do
+      expect(vacancy.errors[:expires_at]).to include("must be a future date")
+    end
+  end
+
+  context "when expiry date is tomorrow" do
+    before do
+      vacancy.expires_at = Time.zone.tomorrow.beginning_of_day
+      vacancy.validate
+    end
+
+    it "does not add an expiry date error" do
+      expect(vacancy.errors[:expires_at]).to be_empty
+    end
+  end
+
   context "when expiry date is before publish date" do
     before do
       vacancy.publish_on = Date.current + 5.days
@@ -72,7 +94,31 @@ RSpec.describe ExternalVacancyValidator, type: :model do
     end
 
     it "adds an expiry date vs publish date error" do
-      expect(vacancy.errors[:expires_at]).to include("must be later than the publish date")
+      expect(vacancy.errors[:expires_at]).to include("must be at least one day after the publish date")
+    end
+  end
+
+  context "when expiry date is on the same date as the publish date but later in the day" do
+    before do
+      vacancy.publish_on = Date.current + 5.days
+      vacancy.expires_at = (Date.current + 5.days).end_of_day
+      vacancy.validate
+    end
+
+    it "adds an expiry date vs publish date error" do
+      expect(vacancy.errors[:expires_at]).to include("must be at least one day after the publish date")
+    end
+  end
+
+  context "when expiry date is the day after the publish date" do
+    before do
+      vacancy.publish_on = Date.current + 5.days
+      vacancy.expires_at = (Date.current + 6.days).beginning_of_day
+      vacancy.validate
+    end
+
+    it "does not add an expiry date error" do
+      expect(vacancy.errors[:expires_at]).to be_empty
     end
   end
 
