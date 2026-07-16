@@ -11,7 +11,7 @@ class OnsDataImport::Base
   # polygon (tested original vs simplified outputs in geojson.io).
   # EG: The original Cornwall polygon from ONS has 125k vertices, the simplified version with 0.001 tolerance has 2.5k
   # vertices, while retaining the same shape.
-  TOLERANCE_100M = 0.001
+  TOLERANCE_100M = 0.0008
   # SIMPLIFICATION_TOLERANCE = TOLERANCE_100M * 2.5
 
   class << self
