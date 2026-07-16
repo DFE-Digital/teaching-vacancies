@@ -134,7 +134,7 @@ terraform-app-init: set-azure-account
 	$(eval export TF_VAR_service_name=${SERVICE_NAME})
 	$(eval export TF_VAR_service_short=${SERVICE_SHORT})
 
-terraform-plan: terraform-app-plan terraform-common-plan
+terraform-plan: terraform-app-plan
 
 .PHONY: terraform-app-plan
 terraform-app-plan: terraform-app-init check-terraform-variables ## make passcode=MyPasscode tag=dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714 <env> terraform-app-plan
