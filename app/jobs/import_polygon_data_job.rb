@@ -4,9 +4,9 @@ class ImportPolygonDataJob < SidekiqJob
   def perform
     (0..).each do |tolerance_multiplier|
       tolerance = OnsDataImport::Base::TOLERANCE_100M + (tolerance_multiplier / 10_000.0)
-      OnsDataImport::ImportCounties.call(tolerance)
+      OnsDataImport::ImportCounties.call(tolerance * 2)
       OnsDataImport::ImportCities.call(tolerance)
-      OnsDataImport::ImportRegions.call(tolerance)
+      OnsDataImport::ImportRegions.call(tolerance * 2)
       OnsDataImport::CreateComposites.call(tolerance)
 
       invalid_names = LocationPolygon.order(:name).reject { |p|
