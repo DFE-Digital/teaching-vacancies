@@ -14,7 +14,7 @@ RSpec.describe "publishers/vacancy_templates/show" do
     end
 
     it "shows the school visits text" do
-      expect(rendered).to have_content("Do you want to offer candidates a visit?")
+      expect(rendered).to have_content("Do you want to offer candidates the opportunity to visit?")
     end
 
     it "shows organisation type offer text" do

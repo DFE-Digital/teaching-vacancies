@@ -12,7 +12,7 @@ en:
       publishers_vacancies_copy_vacancy_form:
         name: Template name
       vacancy_template:
-        name: Template name
+        name: What is the template name?
     legend:
       publishers_job_listing_visa_sponsorship_form:
         visa_sponsorship_available: Visa sponsorship
@@ -21,9 +21,9 @@ en:
       copy:
         new:
           caption: Create a template
-          heading: Job template
-          para1: To create a template, we'll ask you to provide information that you would for a job listing.
-          para2: If you do not have all the information you need to complete the template, select 'Save and finish later' on any page to make changes later.
+          heading: Create a job template
+          para1: To create a template, we'll ask you to provide the same information as you would for a job listing.
+          para2: If you do not have all the information you need, you can select 'Save and come back later' on any page.
     vacancy_templates:
       index:
         saved_date: "Saved date: %{date}"

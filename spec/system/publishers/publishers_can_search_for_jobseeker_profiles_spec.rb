@@ -64,14 +64,14 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         expect(page).to have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
         expect(page).to have_content(jobseeker_profile.full_name)
         expect(page).to have_content(
-          "Teacher or Lecturer, Headteacher, Deputy headteacher, Assistant headteacher, " \
+          "Teacher or lecturer, Headteacher, Deputy headteacher, Assistant headteacher, " \
           "Head of year or phase, Head of department or curriculum, " \
           "Teaching assistant, HLTA (higher level teaching assistant), " \
-          "Learning support or cover supervisor, SENCo (special educational needs coordinator), " \
+          "Learning support or cover supervisor, SENCO (special educational needs coordinator), " \
           "Administration, HR, data and finance, " \
           "Catering, cleaning and site management, IT support, " \
-          "Pastoral, health and welfare, Other leadership roles, " \
-          "Other support roles",
+          "Pastoral, health and welfare, Other leadership role, " \
+          "Other support role",
         )
         expect(page).to have_content(jobseeker_profile.job_preferences.key_stages.first.humanize)
         expect(page).to have_content(jobseeker_profile.job_preferences.working_patterns.first.humanize)
@@ -204,7 +204,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
     end
 
     it "shows text explaining that the candidates are willing to travel to the school" do
-      expect(page).to have_selector("p", text: "These candidates are willing to travel to a location that’s near to your school or college.")
+      expect(page).to have_selector("p", text: "These candidates are willing to travel to a location near your school or college.")
     end
   end
 

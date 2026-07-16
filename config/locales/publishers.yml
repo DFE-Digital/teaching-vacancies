@@ -76,8 +76,8 @@ en:
           no_messages: "No messages yet."
           no_archived_messages: "No archived messages yet."
         search:
-          label: "Find a candidate"
-          hint: "Search by candidate name or job listing"
+          label: "Search messages"
+          hint: "Search by candidate name, job title or message content"
           placeholder: "Enter candidate name, job title, or message content"
           submit: "Search"
           clear: "Clear search"
@@ -104,7 +104,7 @@ en:
           selected_locations: "These candidates are willing to travel to at least one of your selected school or college locations."
           all_locations:  "These candidates are willing to travel to a location that's near to at least one of your schools or colleges."
       non_trusts:
-        available_to_travel_text: "These candidates are willing to travel to a location that’s near to your school or college."
+        available_to_travel_text: "These candidates are willing to travel to a location near your school or college."
       index:
         title: "Candidate profiles - %{organisation_name}"
         no_results:
@@ -129,7 +129,7 @@ en:
       latest_role: "Latest role"
       previously_role: "Previously %{job_title}"
       search_result_heading: "Candidate profiles (%{count})"
-      sort_result_text: "Ordered by most recently updated."
+      sort_result_text: "Sorted by most recently updated."
       filters:
         education_phase_options:
           nursery: "Nursery"
@@ -156,7 +156,7 @@ en:
           on_track: On track to receive QTS
           "yes": Gained QTS
         role_options:
-          teacher: Teacher or Lecturer
+          teacher: Teacher or lecturer
           head_of_year_or_phase: Head of year or phase
           head_of_department_or_curriculum: Head of department or curriculum
           assistant_headteacher: Assistant headteacher
@@ -165,7 +165,7 @@ en:
           teaching_assistant: Teaching assistant
           higher_level_teaching_assistant: HLTA (higher level teaching assistant)
           education_support: Learning support or cover supervisor
-          sendco: SENCo (special educational needs coordinator)
+          sendco: SENCO (special educational needs coordinator)
         schools: Locations
         working_pattern_options:
           full_time: Full time
@@ -353,11 +353,11 @@ en:
           title: Hiring staff sign in
     current_year_statistics:
       bar_chart:
-        accessible_view: Change to table and accessible view
-        chart_view: Change to chart view
+        accessible_view: Show data as a table
+        chart_view: Show data as a chart
       donut_chart:
-        accessible_view: Change to table and accessible view
-        chart_view: Change to chart view
+        accessible_view: Show data as a table
+        chart_view: Show data as a chart
       equal_opportunities:
         applicant_age: Applicant age
         applicant_disability: Disability
@@ -367,12 +367,12 @@ en:
         applicant_religion: Religion
         application_counts: You have received %{count} applications this academic year.
         download_stats: >-
-          Select 'Download statistics' to download all historical equal opportunities data.
+          Download all historical equal opportunities data as a CSV.
       index:
-        vacancy_counts_html: You have posted %{link}.
-        vacancy_counts_link: "%{count} job listings this academic year"
+        vacancy_counts_html: "%{link}"
+        vacancy_counts_link: "View your %{count} job listings from this academic year"
         download_stats: >-
-          Select 'Download statistics' to download all historical job listing data.
+          Download all historical job listing data as a CSV.
       page_header:
         equal_opportunities: Equal opportunities
         overview: Overview
@@ -380,8 +380,7 @@ en:
           This data is from the current academic year. If a job is live in two academic years (for example from
           August 2025 to September 2025) it will be counted for both academic years. This data resets each academic year.
         this_may_include: >-
-          This may include data from people who have withdrawn their applications.
-          This is to ensure that any equal opportunities data provided in applications is anonymised.
+          This may include equal opportunities data from people who have withdrawn their applications. We include this to help keep the data anonymous.
         title: Statistics dashboard
     temp_login:
       check_your_email:
@@ -401,10 +400,10 @@ en:
           no_orgs_html: >-
             The login link you used is not associated with any organisations. Unfortunately, we cannot associate your
             account with an organisation until DfE Sign In is working as normal. Please %{try_again} later.
-        heading: Choose your organisation
-        page_title: Choose your organisation
+        heading: Which organisation do you want to sign in with?
+        page_title: Which organisation do you want to sign in with?
         please_select: >-
-          Please select the organisation you wish to sign in with.
+          Which organisation do you want to sign in with?
       email:
         body: Click the link below to sign in to the Teaching Vacancies service. This link can only be used once.
         heading: Sign in to Teaching Vacancies
@@ -437,8 +436,8 @@ en:
               content_with_link_html: You can choose for candidates to apply for the job through Teaching Vacancies. %{link}
               content_with_no_link: You can choose for candidates to apply for the job through Teaching Vacancies.
               link: Preview the application form
-          kcsie_guidance: Keeping children safe in education (KCSIE) guidance
-          using_application_form_html: Use Teaching Vacancies' application form for an online form compliant with %{link}.
+          kcsie_guidance: keeping children safe in education (KCSIE)
+          using_application_form_html: Use the Teaching Vacancies application form to create an online form that follows %{link} guidance.
           kcsie_compliant: KCSIE compliant
           reason_for_our_form: Online application forms make it quicker and easier for jobseekers to apply and may lead to more applicants for your role.
           no_information_required: If the job you are listing does not require applicants to provide religious information, you can use the first application form option provided below.
@@ -499,6 +498,8 @@ en:
           step_title: Job start date
         subjects:
           step_title: Subjects
+          search_label: Search subjects
+          search_hint: Start typing to filter the list of subjects.
         contract_type:
           step_title: Contract type
           fixed_term: Fixed term
@@ -607,13 +608,13 @@ en:
         title: Create a job listing
         list:
           job_location: job location
-          part_time_or_full_time: if the role is full or part time
+          part_time_or_full_time: whether the role is full or part time
           contract_type: the contract type, for example, permanent, temporary or fixed term
           salary_details: salary details
           start_date: start date
-          role_details: role details including job responsibilities
+          role_details: role details, including job responsibilities
           visa_sponsorship: whether visa sponsorship is available
-          additional_documents: any additional documents, such as job description or person specification
+          additional_documents: any additional documents, such as a job description or person specification
           when_to_publish_role: when the role should be published
           closing_date: the closing date for applications
         paragraphs:
@@ -621,15 +622,15 @@ en:
           provide_details_about_the_role: Provide details about the role, how candidates should apply and when the listing should be published.
           should_include: "You should include:"
           how_to_receive_applications: You will also be able to choose how to receive applications.
-          need_to_specify: "You will need to specify:"
-        contract_details: Contract details
+          need_to_specify: "You will need to tell us:"
+        contract_details: Job details
         info_about_role: Information about the role
         listing_details: Listing details
       show:
         task_list:
           sections:
             job_details:
-              title: Contract details
+              title: Job details
               hint: Job location, job type, contract type, salary and start date
             about_the_role:
               title: Information about the role
@@ -684,17 +685,17 @@ en:
         job_details: Job details
         job_role: What type of job is this?
         job_location: Locations where the job is based
-        education_phases: Education phase
+        education_phases: Which education phases is this job for?
         job_title: Job title
         key_stages: Key stage
-        subjects: Subjects (optional)
+        subjects: Which subject or subjects is this job for? (optional)
         contract_type: Contract type
         contract_information: Contract information
         pay_package: Salary and allowances
         important_dates: Publish and closing dates
         start_date: Job start date
         application_process: Application process
-        applying_for_the_job: Choose your application form
+        applying_for_the_job: How do you want candidates to apply?
         how_to_receive_applications: How do you want candidates to apply for the role?
         application_link: Link to website
         anonymise_applications: Anonymise applications
@@ -709,7 +710,7 @@ en:
         include_additional_documents: Do you want to upload any additional documents?
         documents: Upload additional documents
         review_heading: Review the job listing
-        visa_sponsorship: Can you offer Skilled Worker visa sponsorship to non-UK citizens for this role?
+        visa_sponsorship: Can you sponsor a Skilled Worker visa for this role?
       submit:
         cancel_caption: If you select cancel you will lose any unsaved information from this step. Completed details from previous steps will be saved in your draft jobs.
       summary:
@@ -753,14 +754,14 @@ en:
           applications:
             0: Shortlisted or sucessful applications
             1: Rejected or Withdrawn applications
-          accessible_view: Change to table and accessible view
-          chart_view: Change to chart view
+          accessible_view: Show data as a table
+          chart_view: Show data as a chart
         update:
           success: Thank you for submitting your feedback for %{job_title}
         statistics: Statistics
         vacancy_view_stats:
-          accessible_view: Change to table and accessible view
-          chart_view: Change to chart view
+          accessible_view: Show data as a table
+          chart_view: Show data as a chart
           job_source: Job listing source
       vacancy_publisher_feedbacks:
         new:

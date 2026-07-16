@@ -5,7 +5,7 @@
     = form_for @terms_and_conditions_form, url: publishers_terms_and_conditions_path, method: :patch do |f|
       = f.govuk_error_summary
 
-      h1.govuk-heading-xl = t("terms_and_conditions.page_title")
+      h1.govuk-heading-xl = t("terms_and_conditions.heading")
       p = t("terms_and_conditions.intro_html", terms_link: govuk_link_to(t("terms_and_conditions.intro_link_text"), page_path("terms-and-conditions")))
       ul.govuk-list.govuk-list--bullet
         - t("terms_and_conditions.summary_list").each do |item|
