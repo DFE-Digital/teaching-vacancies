@@ -30,7 +30,7 @@ class OnsDataImport::Base
         # so try progressively larger and larger simplifications until the areas are valid
         # Our simplification runs make some areas invalid (east of england and norwich didn't work with 0.001)
         # so try progressively larger and larger simplifications until the areas are valid
-        0.upto(10).each do |tolerance_multiplier|
+        0.upto(20).each do |tolerance_multiplier|
           new_tolerance = tolerance + (TOLERANCE_100M * tolerance_multiplier / 10.0)
           set_area_data(location_polygon, geometry, type, new_tolerance)
           set_uk_area_data(location_polygon, geometry, type, new_tolerance)
