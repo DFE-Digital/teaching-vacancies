@@ -10,11 +10,11 @@ class OnsDataImport::Base
   # polygon (tested original vs simplified outputs in geojson.io).
   # EG: The original Cornwall polygon from ONS has 125k vertices, the simplified version with 0.001 tolerance has 2.5k
   # vertices, while retaining the same shape.
-  SIMPLIFICATION_TOLERANCE = 0.001
+  SIMPLIFICATION_TOLERANCE = 0.0005
 
   class << self
-    def call(api_name:, name_field:, valid_locations:)
-      (0..).each do |offset|
+    def call(api_name:, name_field:, valid_locations:) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      (0..).each do |offset| # rubocop:disable Metrics/BlockLength
         features = arcgis_features(offset: offset, name_field: name_field, api_name: api_name)
         break if features.blank?
 
