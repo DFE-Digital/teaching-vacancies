@@ -20,8 +20,11 @@ class SchoolGroup < Organisation
     false
   end
 
+  # Allows School Groups/MATs to post religious character vacancies for their head office.
+  # School Groups don't have religious character information, but some are religious.
+  # Only allowing this as this provides extra functionality that may be ignored if not needed.
   def faith_school?
-    false
+    schools.only_faith_schools.exists?
   end
 
   def all_organisations
