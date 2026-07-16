@@ -62,7 +62,7 @@ namespace :ons do
 
   desc "Create composites from ONS polygons"
   task create_composites: :environment do
-    OnsDataImport::CreateComposites.new.call
+    OnsDataImport::CreateComposites.call
   end
 end
 

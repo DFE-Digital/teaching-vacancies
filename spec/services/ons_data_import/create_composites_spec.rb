@@ -21,7 +21,7 @@ RSpec.describe OnsDataImport::CreateComposites do
 
   describe "#call" do
     it "generates a composite polygon" do
-      expect { subject.call }.to change(LocationPolygon, :count).by(29)
+      expect { described_class.call(OnsDataImport::Base::TOLERANCE_100M) }.to change(LocationPolygon, :count).by(29)
 
       # expect(other_realm.area.coordinates).to contain_exactly(
       #   contain_exactly(

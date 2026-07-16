@@ -1,5 +1,6 @@
 class OnsDataImport::Base
   # Security note: "ESMARspQHYMw9BZ9" looks like an API key, but it's just a service name
+  # Hitting this URL gives a list f possible api_name values
   ARCGIS_BASE_URL = "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/".freeze
 
   PER_PAGE = 20
@@ -10,42 +11,25 @@ class OnsDataImport::Base
   # polygon (tested original vs simplified outputs in geojson.io).
   # EG: The original Cornwall polygon from ONS has 125k vertices, the simplified version with 0.001 tolerance has 2.5k
   # vertices, while retaining the same shape.
-  SIMPLIFICATION_TOLERANCE = 0.0005
+  TOLERANCE_100M = 0.001
+  # SIMPLIFICATION_TOLERANCE = TOLERANCE_100M * 2.5
 
   class << self
-    def call(api_name:, name_field:, valid_locations:) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-      (0..).each do |offset| # rubocop:disable Metrics/BlockLength
-        features = arcgis_features(offset: offset, name_field: name_field, api_name: api_name)
-        break if features.blank?
+    def call(api_name:, name_field:, valid_locations:, tolerance:)
+      arcgis_features(name_field: name_field, api_name: api_name).select { |f|
+        valid_locations.include?(f.fetch(:name))
+      }.each do |feature|
+        name = feature.fetch(:name)
 
-        features.each do |feature|
-          name = feature["properties"][name_field].downcase
-          unless valid_locations.include?(name)
-            Rails.logger.debug { "Skipping import for #{name} (#{api_name})" }
-            next
-          end
+        location_polygon = LocationPolygon.find_or_create_by(name: name)
+        type = LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES[name]
+        geometry = feature.fetch(:geometry)
 
-          location_polygon = LocationPolygon.find_or_create_by(name: name)
-          type = LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES[name]
-          geometry = feature["geometry"].to_json
-
-          # Our simplification runs make some areas invalid (east of england and norwich didn't work with 0.001)
-          # so try progressively larger and larger simplifications until the areas are valid
-          1.upto(10).each do |tolerance_multiplier|
-            tolerance = SIMPLIFICATION_TOLERANCE * tolerance_multiplier
-            set_area_data(location_polygon, geometry, type, tolerance)
-            set_uk_area_data(location_polygon, geometry, type, tolerance)
-            location_polygon.reload
-            begin
-              if location_polygon.area.invalid_reason.nil? && location_polygon.uk_area.invalid_reason.nil?
-                Rails.logger.info("Persisted new area data for '#{name}' (#{type}) tolerance #{tolerance}")
-                break
-              end
-            rescue StandardError
-              false
-            end
-          end
-        end
+        # Rails.logger.info("Persisting new area data for '#{name}' (#{type}) tolerance #{tolerance}")
+        # Our simplification runs make some areas invalid (east of england and norwich didn't work with 0.001)
+        # so try progressively larger and larger simplifications until the areas are valid
+        set_area_data(location_polygon, geometry, type, tolerance)
+        set_uk_area_data(location_polygon, geometry, type, tolerance)
       end
     end
 
@@ -107,26 +91,33 @@ class OnsDataImport::Base
     ")
     end
 
-    def arcgis_features(offset:, name_field:, api_name:)
-      params = [
-        "where=1%3D1",
-        "outSR=4326",
-        "f=pgeojson",
-        "outFields=#{name_field}",
-        "resultRecordCount=#{PER_PAGE}",
-        "resultOffset=#{offset * PER_PAGE}",
-      ].join("&")
+    def arcgis_features(name_field:, api_name:)
+      Enumerator.new do |yielder|
+        (0..).each do |offset|
+          params = [
+            "where=1%3D1",
+            "outSR=4326",
+            "f=pgeojson",
+            "outFields=#{name_field}",
+            "resultRecordCount=#{PER_PAGE}",
+            "resultOffset=#{offset * PER_PAGE}",
+          ].join("&")
 
-      response = HTTParty.get("#{ARCGIS_BASE_URL}#{api_name}/FeatureServer/0/query?#{params}")
-      # really hard to auto-test this, as it doesn't normally happen
-      # :nocov:
-      raise "Unexpected ArcGIS response: #{response.code}" unless response.success?
-      # :nocov:
+          response = HTTParty.get("#{ARCGIS_BASE_URL}#{api_name}/FeatureServer/0/query?#{params}")
+          # really hard to auto-test this, as it doesn't normally happen
+          # :nocov:
+          raise "Unexpected ArcGIS response: #{response.code}" unless response.success?
+          # :nocov:
 
-      response_data = JSON.parse(response.to_s)
-      raise "ArcGIS error: #{response_data['error']}" if response_data.key?("error")
+          response_data = JSON.parse(response.to_s)
+          raise "ArcGIS error: #{response_data['error']}" if response_data.key?("error")
 
-      response_data.fetch("features")
+          features = response_data.fetch("features")
+          break if features.blank?
+
+          features.each { |f| yielder << { name: f["properties"][name_field].downcase, geometry: f["geometry"].to_json } }
+        end
+      end
     end
   end
 end
