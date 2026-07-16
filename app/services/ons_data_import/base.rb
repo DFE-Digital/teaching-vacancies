@@ -4,7 +4,7 @@ class OnsDataImport::Base
 
   PER_PAGE = 20
 
-  # The higher the value, the less vertices the polygon will have. Less vertices means less precision but faster.
+  # The higher the value, the fewer vertices the polygon will have. Fewer vertices means less precision but faster.
   # In degrees, 0.001 is the equivalent to ~100m.
   # 0.001 provides a good balance between reducing the number of vertices and maintaining a precise shape for the
   # polygon (tested original vs simplified outputs in geojson.io).
@@ -20,15 +20,31 @@ class OnsDataImport::Base
 
         features.each do |feature|
           name = feature["properties"][name_field].downcase
-          next unless valid_locations.include?(name)
+          unless valid_locations.include?(name)
+            Rails.logger.debug { "Skipping import for #{name} (#{api_name})" }
+            next
+          end
 
           location_polygon = LocationPolygon.find_or_create_by(name: name)
           type = LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES[name]
           geometry = feature["geometry"].to_json
 
-          Rails.logger.info("Persisting new area data for '#{name}' (#{type})")
-          set_area_data(location_polygon, geometry, type)
-          set_uk_area_data(location_polygon, geometry, type)
+          # Our simplification runs make some areas invalid (east of england and norwich didn't work with 0.001)
+          # so try progressively larger and larger simplifications until the areas are valid
+          1.upto(10).each do |tolerance_multiplier|
+            tolerance = SIMPLIFICATION_TOLERANCE * tolerance_multiplier
+            set_area_data(location_polygon, geometry, type, tolerance)
+            set_uk_area_data(location_polygon, geometry, type, tolerance)
+            location_polygon.reload
+            begin
+              if location_polygon.area.invalid_reason.nil? && location_polygon.uk_area.invalid_reason.nil?
+                Rails.logger.info("Persisted new area data for '#{name}' (#{type}) tolerance #{tolerance}")
+                break
+              end
+            rescue StandardError
+              false
+            end
+          end
         end
       end
     end
@@ -47,13 +63,13 @@ class OnsDataImport::Base
     # non-overlapping polygon
     #
     # The area centroid is precomputed and stored to avoid recomputing it every time it's needed.
-    def set_area_data(location_polygon, geometry, type)
+    def set_area_data(location_polygon, geometry, type, tolerance)
       ActiveRecord::Base.connection.exec_update("
       WITH geom AS (
         SELECT ST_MakeValid(
           ST_SimplifyPreserveTopology(
             ST_GeomFromGeoJSON(#{ActiveRecord::Base.connection.quote(geometry)}),
-            #{SIMPLIFICATION_TOLERANCE}
+            #{tolerance}
           ),
           'method=structure'
         )::geography AS geo
@@ -67,7 +83,7 @@ class OnsDataImport::Base
     ")
     end
 
-    def set_uk_area_data(location_polygon, geometry_json, type)
+    def set_uk_area_data(location_polygon, geometry_json, type, tolerance)
       # This is necessary as the ST_GeomFromGeoJSON() method that we would like to use
       # doesn't appear to support the optional 'srid' parameter that we need to pass
       geometry = RGeo::GeoJSON.decode(geometry_json)
@@ -77,7 +93,7 @@ class OnsDataImport::Base
         SELECT ST_MakeValid(
           ST_SimplifyPreserveTopology(
             ST_GeomFromText(#{ActiveRecord::Base.connection.quote(geometry_as_wkt)}, 27700),
-            #{SIMPLIFICATION_TOLERANCE}
+            #{tolerance}
           ),
           'method=structure'
         )::geometry AS geo
