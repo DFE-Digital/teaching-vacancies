@@ -14,7 +14,7 @@
       label: -> { t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.no_religion_html", tag: govuk_tag(text: t("publishers.vacancies.build.applying_for_the_job.kcsie_compliant"), colour: "green")) },
       link_errors: true
 
-    - if @faith_school
+    - if current_organisation.faith_school?
       = f.govuk_radio_button :application_form_type, :catholic,
         label: -> { t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.catholic_html", tag: govuk_tag(text: t("publishers.vacancies.build.applying_for_the_job.kcsie_compliant"), colour: "green")) }
 
