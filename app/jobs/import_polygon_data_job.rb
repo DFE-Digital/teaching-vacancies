@@ -31,6 +31,28 @@ class ImportPolygonDataJob < SidekiqJob
       else
         logger.info "Loading #{name} Invalid names #{invalid_names} for tolerance #{tolerance_multiplier} (#{tolerance})"
       end
+      # LocationPolygon.where(updated_at: newest_polygon.updated_at..).order(:name).each { |p|
+      #   case p.area.invalid_reason
+      #   when RGeo::Error::SELF_INTERSECTION
+      #     p.area.make_valid
+      #     p.save!
+      #     break
+      #   when nil
+      #     break
+      #   else
+      #     p.area.check_validity!
+      #   end
+      #   case p.uk_area.invalid_reason
+      #   when RGeo::Error::SELF_INTERSECTION
+      #     p.uk_area.make_valid
+      #     p.save!
+      #     break
+      #   when nil
+      #     break
+      #   else
+      #     p.uk_area.check_validity!
+      #   end
+      # }
     end
   end
 end
