@@ -3,9 +3,9 @@ class ImportPolygonDataJob < SidekiqJob
 
   def perform
     load_data_set("cities") { |tolerance| OnsDataImport::ImportCities.call(tolerance) }
-    load_data_set("counties") { |tolerance| OnsDataImport::ImportCounties.call(tolerance * 2) }
-    load_data_set("regions") { |tolerance| OnsDataImport::ImportRegions.call(tolerance * 2) }
-    load_data_set("composites") { |tolerance| OnsDataImport::CreateComposites.call(tolerance * 3) }
+    load_data_set("counties") { |tolerance| OnsDataImport::ImportCounties.call(tolerance) }
+    load_data_set("composites") { |tolerance| OnsDataImport::CreateComposites.call(tolerance) }
+    load_data_set("regions") { |tolerance| OnsDataImport::ImportRegions.call(tolerance * 3) }
   end
 
   def load_data_set name, &block
