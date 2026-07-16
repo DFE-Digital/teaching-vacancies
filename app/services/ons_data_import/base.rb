@@ -28,8 +28,23 @@ class OnsDataImport::Base
         # Rails.logger.info("Persisting new area data for '#{name}' (#{type}) tolerance #{tolerance}")
         # Our simplification runs make some areas invalid (east of england and norwich didn't work with 0.001)
         # so try progressively larger and larger simplifications until the areas are valid
-        set_area_data(location_polygon, geometry, type, tolerance)
-        set_uk_area_data(location_polygon, geometry, type, tolerance)
+        # Our simplification runs make some areas invalid (east of england and norwich didn't work with 0.001)
+        # so try progressively larger and larger simplifications until the areas are valid
+        0.upto(10).each do |tolerance_multiplier|
+          new_tolerance = tolerance + (TOLERANCE_100M * tolerance_multiplier / 10.0)
+          set_area_data(location_polygon, geometry, type, new_tolerance)
+          set_uk_area_data(location_polygon, geometry, type, new_tolerance)
+          location_polygon.touch
+          location_polygon.reload
+          begin
+            if location_polygon.area.invalid_reason.nil? && location_polygon.uk_area.invalid_reason.nil?
+              Rails.logger.info("Persisted new area data for '#{name}' (#{type}) tolerance #{new_tolerance}")
+              break
+            end
+          rescue StandardError
+            false
+          end
+        end
       end
     end
 

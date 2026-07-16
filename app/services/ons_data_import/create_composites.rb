@@ -10,6 +10,7 @@ class OnsDataImport::CreateComposites
 
         set_area_data(location_polygon, quoted_constituents, tolerance)
         set_uk_area_data(location_polygon, quoted_constituents, tolerance)
+        location_polygon.touch
       end
     end
 

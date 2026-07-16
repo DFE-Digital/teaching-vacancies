@@ -12,9 +12,12 @@ class ImportPolygonDataJob < SidekiqJob
     (0..).each do |tolerance_multiplier|
       tolerance = OnsDataImport::Base::TOLERANCE_100M + (tolerance_multiplier / 10_000.0)
 
+      newest_polygon = LocationPolygon.order(:updated_at).last
+
       block.call(tolerance)
 
-      invalid_names = LocationPolygon.order(:name).reject { |p|
+      # only check polygons updated by the call
+      invalid_names = LocationPolygon.where(updated_at: newest_polygon.updated_at..).order(:name).reject { |p|
         begin
           p.area.invalid_reason.nil? && p.uk_area.invalid_reason.nil?
         rescue StandardError
@@ -23,7 +26,7 @@ class ImportPolygonDataJob < SidekiqJob
       }.map(&:name)
 
       if invalid_names.empty?
-        logger.info "Loading #{name} tolerance #{tolerance_multiplier} (#{tolerance})"
+        logger.info "Loaded #{name} tolerance #{tolerance_multiplier} (#{tolerance})"
         break
       else
         logger.info "Loading #{name} Invalid names #{invalid_names} for tolerance #{tolerance_multiplier} (#{tolerance})"
