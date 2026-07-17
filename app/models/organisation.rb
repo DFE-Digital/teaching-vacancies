@@ -77,7 +77,7 @@ class Organisation < ApplicationRecord
 
   scope :in_scope_schools, -> { schools.kept.not_out_of_scope.where.not(school_type: COLLEGE_SCHOOL_TYPE).or(Organisation.trusts) }
 
-  scope :only_faith_schools, -> { where.not(religious_character: NON_FAITH_RELIGIOUS_CHARACTER_TYPES) }
+  scope :faith_schools, -> { where.not(religious_character: NON_FAITH_RELIGIOUS_CHARACTER_TYPES) }
 
   # This can safely ignore the 'extra' LA mappings as it is always called with a scope which excludes LAs in the first place
   scope :with_live_vacancies, lambda {
