@@ -45,3 +45,32 @@ CITIES = (ons_cities.map(&:first) + ons_region_cities + ons_unitary_authority_ci
 end
 
 REDIRECTED_LOCATION_LANDING_PAGES = YAML.load_file("config/data/redirected_location_landing_pages.yml").freeze
+
+# Subscribes to all events from Faraday::HttpCache.
+# ActiveSupport::Notifications.subscribe "http_cache.faraday" do |*args|
+#   event = ActiveSupport::Notifications::Event.new(*args)
+#   cache_status = event.payload[:cache_status]
+#   # statsd = Statsd.new
+#
+#   case cache_status
+#   when :fresh, :valid, :stale
+#     # statsd.increment('api-calls.cache_hits')
+#     Rails.logger.info('api-calls.cache_hits')
+#   when :invalid, :miss
+#     # statsd.increment('api-calls.cache_misses')
+#     Rails.logger.info('api-calls.cache_misses')
+#   when :unacceptable
+#     # statsd.increment('api-calls.cache_bypass')
+#     Rails.logger.info('api-calls.cache_bypass')
+#   end
+# end
+
+module Faraday
+  class HttpCache
+    class Response
+      def max_age
+        1.day
+      end
+    end
+  end
+end

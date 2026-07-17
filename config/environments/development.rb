@@ -42,7 +42,9 @@ Rails.application.configure do
   end
 
   # Change to :null_store to avoid any caching.
-  config.cache_store = :memory_store
+  # config.cache_store = :memory_store
+  # config.cache_store = :memory_store, { size: 64.megabytes }
+  config.cache_store = :redis_cache_store, { url: config.redis_cache_url }
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
@@ -74,7 +76,7 @@ Rails.application.configure do
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
-  config.log_level = :info
+  # config.log_level = :info
 
   # Annotate rendered view with file names.
   config.action_view.annotate_rendered_view_with_filenames = true

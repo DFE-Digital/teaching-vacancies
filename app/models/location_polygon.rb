@@ -40,6 +40,12 @@ class LocationPolygon < ApplicationRecord
     nil
   end
 
+  def area_data_valid?
+    area.invalid_reason.nil? && uk_area.invalid_reason.nil?
+  rescue RGeo::Error::InvalidGeometry
+    false
+  end
+
   # Buffers the polygon's area by the given radius in metres and returns the resulting expanded area in geometry.
   # Transformations are needed since the original area is a geographic type.
   #

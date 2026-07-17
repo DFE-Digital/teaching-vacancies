@@ -1,25 +1,25 @@
 class OnsDataImport::CreateComposites
   class << self
-    def call(tolerance)
-      DOWNCASE_COMPOSITE_LOCATIONS.each do |name, constituents|
+    def call(tolerance: OnsDataImport::Base::TOLERANCE_100M)
+      DOWNCASE_COMPOSITE_LOCATIONS.map { |n, c| [n, c.map(&:downcase)] }.each do |name, constituents|
         location_polygon = LocationPolygon.find_or_create_by(name: name)
-        quoted_constituents = constituents.map { |c| ActiveRecord::Base.connection.quote(c.downcase) }
+
+        quoted_constituents = constituents.map { |c| ActiveRecord::Base.connection.quote(c) }
         # devon, plymouth and torbay didn't cope with the default tolerance
 
-        0.upto(10).each do |tolerance_multiplier|
+        0.upto(500).each do |tolerance_multiplier|
           new_tolerance = tolerance + (OnsDataImport::Base::TOLERANCE_100M * tolerance_multiplier / 10.0)
+
+          OnsDataImport::ImportCities.call(tolerance: new_tolerance, valid_locations: constituents)
+          OnsDataImport::ImportCounties.call(tolerance: new_tolerance, valid_locations: constituents)
 
           set_area_data(location_polygon, quoted_constituents, new_tolerance)
           set_uk_area_data(location_polygon, quoted_constituents, new_tolerance)
           location_polygon.touch
           location_polygon.reload
-          begin
-            if location_polygon.area.invalid_reason.nil? && location_polygon.uk_area.invalid_reason.nil?
-              Rails.logger.info("Created composite polygon for '#{name}' tolerance #{new_tolerance}")
-              break
-            end
-          rescue StandardError
-            false
+          if location_polygon.area_data_valid?
+            Rails.logger.info("Created composite polygon for '#{name}' tolerance #{new_tolerance}")
+            break
           end
         end
       end

@@ -11,17 +11,17 @@ class OnsDataImport::Base
   # polygon (tested original vs simplified outputs in geojson.io).
   # EG: The original Cornwall polygon from ONS has 125k vertices, the simplified version with 0.001 tolerance has 2.5k
   # vertices, while retaining the same shape.
-  TOLERANCE_100M = 0.0008
+  TOLERANCE_100M = 0.002
   # SIMPLIFICATION_TOLERANCE = TOLERANCE_100M * 2.5
 
   class << self
-    def call(api_name:, name_field:, valid_locations:, tolerance:)
-      arcgis_features(name_field: name_field, api_name: api_name).select { |f|
+    def call(api_name:, name_field:, valid_locations:, tolerance: TOLERANCE_100M)
+      arcgis_features(client: faraday_client, name_field: name_field, api_name: api_name).select { |f|
         valid_locations.include?(f.fetch(:name))
       }.each do |feature|
         name = feature.fetch(:name)
 
-        location_polygon = LocationPolygon.find_or_create_by(name: name)
+        location_polygon = LocationPolygon.find_or_create_by!(name: name)
         type = LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES[name]
         geometry = feature.fetch(:geometry)
 
@@ -36,19 +36,33 @@ class OnsDataImport::Base
           set_uk_area_data(location_polygon, geometry, type, new_tolerance)
           location_polygon.touch
           location_polygon.reload
-          begin
-            if location_polygon.area.invalid_reason.nil? && location_polygon.uk_area.invalid_reason.nil?
-              Rails.logger.info("Persisted new area data for '#{name}' (#{type}) tolerance #{new_tolerance}")
-              break
-            end
-          rescue StandardError
-            false
+          if location_polygon.area_data_valid?
+            Rails.logger.info("Persisted new area data for '#{name}' (#{type}) tolerance #{new_tolerance}")
+            break
           end
         end
       end
     end
 
     private
+
+    def faraday_client
+      Faraday.new do |builder|
+        builder.request :retry, {
+          max: 2,
+          interval: 0.05,
+          interval_randomness: 0.5,
+          backoff_factor: 2,
+        }
+        builder.use :http_cache, store: Rails.cache,
+                                 logger: Rails.logger
+        builder.adapter Faraday.default_adapter
+        # builder.logger Rails.logger
+        builder.response :json
+        builder.response :logger
+        builder.response :raise_error
+      end
+    end
 
     # Sets the area, location type and centroid for a location polygon coming from the ONS API.
     #
@@ -106,25 +120,35 @@ class OnsDataImport::Base
     ")
     end
 
-    def arcgis_features(name_field:, api_name:)
+    def arcgis_features(client:, name_field:, api_name:)
       Enumerator.new do |yielder|
         (0..).each do |offset|
-          params = [
-            "where=1%3D1",
-            "outSR=4326",
-            "f=pgeojson",
-            "outFields=#{name_field}",
-            "resultRecordCount=#{PER_PAGE}",
-            "resultOffset=#{offset * PER_PAGE}",
-          ].join("&")
+          # params = [
+          #   "where=1%3D1",
+          #   "outSR=4326",
+          #   "f=pgeojson",
+          #   "outFields=#{name_field}",
+          #   "resultRecordCount=#{PER_PAGE}",
+          #   "resultOffset=#{offset * PER_PAGE}",
+          # ].join("&")
+          params = {
+            "where" => "1=1",
+            "outSR" => "4326",
+            "f" => "pgeojson",
+            "outFields" => name_field,
+            "resultRecordCount" => PER_PAGE,
+            "resultOffset" => offset * PER_PAGE,
+          }
 
-          response = HTTParty.get("#{ARCGIS_BASE_URL}#{api_name}/FeatureServer/0/query?#{params}")
+          # response = HTTParty.get("#{ARCGIS_BASE_URL}#{api_name}/FeatureServer/0/query?#{params}")
+          response = client.get "#{ARCGIS_BASE_URL}#{api_name}/FeatureServer/0/query", params
           # really hard to auto-test this, as it doesn't normally happen
           # :nocov:
-          raise "Unexpected ArcGIS response: #{response.code}" unless response.success?
+          # raise "Unexpected ArcGIS response: #{response.code}" unless response.success?
           # :nocov:
 
-          response_data = JSON.parse(response.to_s)
+          # response_data = JSON.parse(response.to_s)
+          response_data = response.body
           raise "ArcGIS error: #{response_data['error']}" if response_data.key?("error")
 
           features = response_data.fetch("features")
