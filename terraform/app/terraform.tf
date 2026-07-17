@@ -38,6 +38,8 @@ module "cloudfront_aks" {
   is_production                 = local.is_production
   route53_a_records             = var.aks_route53_a_records
   route53_cname_record          = var.aks_route53_cname_record
+  enable_cloudfront_waf         = each.value.enable_cloudfront_waf
+  waf_ip_rate_limit             = each.value.waf_ip_rate_limit
   providers = {
     aws.aws_us_east_1 = aws.aws_us_east_1
   }

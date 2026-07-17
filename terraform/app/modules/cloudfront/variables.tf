@@ -25,6 +25,13 @@ variable "is_production" {}
 variable "route53_cname_record" {}
 variable "route53_a_records" {}
 
+variable "enable_cloudfront_waf" {
+  default = false
+}
+
+variable "waf_ip_rate_limit" {
+}
+
 locals {
   route53_zones                = toset(var.route53_zones)
   route53_zones_with_a_records = var.is_production && length(var.route53_a_records) > 0 ? local.route53_zones : toset([])
