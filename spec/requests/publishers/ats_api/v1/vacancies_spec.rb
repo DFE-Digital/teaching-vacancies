@@ -1073,8 +1073,38 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           submit_request(example.metadata)
           assert_response_matches_metadata(example.metadata)
           expect(response.parsed_body).to eq(
-            { "errors" => ["job_title: can't be blank", "external_reference: Enter an external reference", "expires_at: must be a future date", "expires_at: must be later than the publish date"] },
+            { "errors" => ["job_title: can't be blank", "external_reference: Enter an external reference", "expires_at: must be a future date", "expires_at: must be at least one day after the publish date"] },
           )
+        end
+
+        context "when expires_at is later today", document: false do
+          let(:vacancy) do
+            {
+              vacancy: {
+                external_advert_url: "https://www.example.com/ats-site/advertid",
+                expires_at: Time.zone.now.end_of_day.iso8601,
+                job_title: "Teacher of Geography",
+                job_advert: "We're looking for a dedicated Teacher of Geography",
+                salary: "£12,345 to £67,890",
+                external_reference: "REF1234HYZ",
+                job_roles: %w[teacher],
+                working_patterns: %w[full_time],
+                contract_type: "permanent",
+                phases: %w[secondary],
+                schools: {
+                  school_urns: [create(:school).urn],
+                },
+              },
+            }
+          end
+
+          it "rejects the vacancy as expires_at must be at least one day after today & publish date" do |example|
+            submit_request(example.metadata)
+            assert_response_matches_metadata(example.metadata)
+            expect(response.parsed_body).to eq(
+              { "errors" => ["expires_at: must be a future date", "expires_at: must be at least one day after the publish date"] },
+            )
+          end
         end
       end
 

@@ -44,12 +44,12 @@ class ExternalVacancyValidator < ActiveModel::Validator
   end
 
   def validate_expiry_date(record)
-    if record.expires_at <= Time.zone.today
+    if record.expires_at.to_date <= Time.zone.today
       record.errors.add(:expires_at, "must be a future date")
     end
 
-    if record.publish_on && record.expires_at <= record.publish_on
-      record.errors.add(:expires_at, "must be later than the publish date")
+    if record.publish_on && record.expires_at.to_date <= record.publish_on
+      record.errors.add(:expires_at, "must be at least one day after the publish date")
     end
   end
 end

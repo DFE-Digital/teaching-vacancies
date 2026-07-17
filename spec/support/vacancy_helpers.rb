@@ -216,12 +216,12 @@ module VacancyHelpers
 
   def expect_correct_pay_package_options(vacancy)
     if vacancy.contract_type == "casual"
-      expect(page).not_to have_content("Full-time equivalent salary")
+      expect(page).not_to have_content("Full time equivalent salary")
       expect(page).not_to have_content("Actual salary")
       expect(page).not_to have_content("Pay scale")
       expect(page).to have_content("Hourly rate of pay")
     else
-      expect(page).to have_content("Full-time equivalent salary")
+      expect(page).to have_content("Full time equivalent salary")
       expect(page).to have_content("Pay scale")
       expect(page).to have_content("Hourly rate of pay")
       if vacancy.working_patterns.include? "part_time"

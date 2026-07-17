@@ -41,6 +41,7 @@ en:
     confirm_unsubscribe: Unsubscribe
     continue: Continue
     save_as_template: Save as template
+    save_and_continue: Save and continue
     continue_to_account: Continue to your account
     continue_to_dsi: Continue to DfE Sign-in
     copy_expired_listing: Copy
@@ -48,7 +49,7 @@ en:
     copy_url: Copy URL
     create_account: Create an account
     create_job: Create a job listing
-    create_template: Create a template
+    create_template: Create a job template
     delete: Delete
     delete_hidden_text_html: Delete <span class='govuk-visually-hidden'>%{hidden_text}</span>
     delete_application: Delete application
@@ -62,7 +63,7 @@ en:
     download_blank_application: Download a blank application form
     download_application_form: Download an application form - %{size}
     download_submitted_application_form: Download submitted application form - %{size}
-    download_stats: Download statistics (csv, 0.2KB)
+    download_stats: Download statistics (CSV, 0.2 KB)
     edit: Edit
     end_listing: Close job listing
     end_listing_early: End job listing early
@@ -90,7 +91,7 @@ en:
     create_new_template: Create new template
     send_without_template: Send message without template
     save_template: Save template
-    save_and_finish_later: Save and finish later
+    save_and_finish_later: Save and come back later
     save_changes: Save changes
     save_employment: Save role
     save_note: Save note
@@ -212,13 +213,13 @@ en:
         about_schools: >-
           Give a brief summary of the schools where the jobseeker would be teaching and any relevant information about
           the %{organisation_type}
-        ect_status: Early career teachers were previously called newly qualified teachers (NQT)
+        ect_status: Early career teachers were previously called newly qualified teachers (NQTs)
         job_advert: >-
           Get jobseekers interested in the role by providing a brief summary of around 400 words.
           You should cover what the role is and who you're looking to recruit.
           The first 20 to 40 words will be shown in search results, so make them stand out.
-        flexi_working_details_provided: Providing details about what you can offer may increase the number of application you receive for this role.
-        school_offer: Provide details about what your %{organisation} can offer staff, for example, employee benefits, wellbeing support or professional development.
+        flexi_working_details_provided: Providing details about flexible working may increase the number of applications you receive for this role
+        school_offer: Provide details about what your organisation can offer staff, for example, employee benefits, wellbeing support or professional development.
       publishers_job_listing_application_link_form:
         application_link: For example, https://www.example.com
       publishers_job_listing_application_form_form:
@@ -243,11 +244,11 @@ en:
         receive_applications_options:
           email: You’ll need to upload an application form.
           website: You’ll need to provide a link to the website.
-          uploaded_form: You’ll need to upload an application form. You will receive an email when an applicant has uploaded and submitted their completed application form.
+          uploaded_form: You’ll need to upload an application form. We’ll email you when an applicant submits their completed form.
       publishers_job_listing_include_additional_documents_form:
         include_additional_documents: Jobseekers can only upload one file when applying. If an application form is required, only include additional documents here that do not need to be submitted as part of their application.
       publishers_job_listing_pay_package_form:
-        benefits: For example, special educational needs (SEN) or teaching and learning responsibility (TLR) payments
+        benefits: For example, special educational needs (SEN) allowances or teaching and learning responsibility (TLR) payments
         pay_scale: For example, ‘M1 to M2’
         salary: For example, ‘Between £20,000 and £40,000’
         hourly_rate: For example, '£10.00 per hour'
@@ -456,7 +457,7 @@ en:
         ect_status_options:
           ect_suitable: "Yes"
           ect_unsuitable: "No"
-        further_details: Further details about the role
+        further_details: What further details do you want to add about the role?
         further_details_provided_options:
           false: "No"
           true: "Yes"
@@ -554,8 +555,8 @@ en:
       publishers_job_listing_how_to_receive_applications_form:
         receive_applications_options:
           email: By email
-          website: By visiting a different website
-          uploaded_form: By uploading an application form
+          website: Send candidates to another website
+          uploaded_form: Upload an application form
       publishers_job_listing_important_dates_form:
         publish_on_day_options:
           another_day: Another date
@@ -581,26 +582,26 @@ en:
           higher_level_teaching_assistant: HLTA (higher level teaching assistant)
           leadership: Senior leader
           send_responsible: Special Educational Needs Coordinator (SENCo)
-          sendco: SENCo (special educational needs coordinator)
-          teacher: Teacher or Lecturer
+          sendco: SENCO (special educational needs coordinator)
+          teacher: Teacher or lecturer
           teaching_assistant: Teaching assistant
           administration_hr_data_and_finance: Administration, HR, data and finance
           catering_cleaning_and_site_management: Catering, cleaning and site management
           it_support: IT support
           pastoral_health_and_welfare: Pastoral, health and welfare
-          other_leadership: Other leadership roles
-          other_support: Other support roles
+          other_leadership: Other leadership role
+          other_support: Other support role
           senior_leader: Senior leader
           middle_leader: Middle leader
         teaching_job_role_options:
-          teacher: Teacher or Lecturer
+          teacher: Teacher or lecturer
           head_of_year_or_phase: Head of year or phase
           head_of_department_or_curriculum: Head of department or curriculum
           assistant_headteacher: Assistant headteacher
           deputy_headteacher: Deputy headteacher
           headteacher: Headteacher
-          sendco: SENCo (special educational needs coordinator)
-          other_leadership: Other leadership roles
+          sendco: SENCO (special educational needs coordinator)
+          other_leadership: Other leadership role
         support_job_role_options:
           teaching_assistant: Teaching assistant
           higher_level_teaching_assistant: HLTA (higher level teaching assistant)
@@ -609,7 +610,7 @@ en:
           catering_cleaning_and_site_management: Catering, cleaning and site management
           it_support: IT support
           pastoral_health_and_welfare: Pastoral, health and welfare
-          other_support: Other support roles
+          other_support: Other support role
         job_roles_options:
           <<: *job_role_options
       publishers_job_listing_key_stages_form:
@@ -624,15 +625,15 @@ en:
         job_title: Job title
       publishers_job_listing_pay_package_form:
         actual_salary: Actual salary
-        benefits_details: Additional allowances
+        benefits_details: What additional allowances do you want to include?
         benefits_options:
           false: "No"
           true: "Yes"
         pay_scale: Pay scale
-        salary: Full-time equivalent salary
+        salary: Full time equivalent salary
         hourly_rate: Hourly rate of pay
         salary_types_options:
-          full_time: Full-time equivalent salary
+          full_time: Full time equivalent salary
           part_time: Actual salary
           pay_scale: Pay scale
           hourly_rate: Hourly rate of pay
@@ -646,8 +647,8 @@ en:
           false: "No"
           true: "Yes"
       publishers_vacancy_statistics_form:
-        hired_status: Job filled on Teaching Vacancies?
-        listed_elsewhere: Listed elsewhere?
+        hired_status: Was this job filled through Teaching Vacancies?
+        listed_elsewhere: Did you list this job anywhere else?
         submit_hidden_text: feedback for %{job_title}
       subscription:
         frequency_options:
@@ -723,7 +724,7 @@ en:
       publishers_job_listing_about_the_role_form:
         ect_status: Is this role suitable for an early career teacher (ECT)?
         further_details_provided: Do you want to add further details about the role?
-        flexi_working_details_provided: Do you want to provide details about the flexible working opportunities you offer?
+        flexi_working_details_provided: Do you want to add details about flexible working?
       publishers_job_listing_application_form_form:
         application_email: Email address to receive applications
       publishers_job_listing_contact_details_form:
@@ -784,7 +785,7 @@ en:
       publishers_job_listing_schools_form:
         organisations: Locations where the job is based
       publishers_job_listing_pay_package_form:
-        salary_types: Salary details
+        salary_types: Which salary details do you want to include?
         benefits: Do you want to include additional allowances?
       subscription:
         frequency: When do you want to receive alerts?
