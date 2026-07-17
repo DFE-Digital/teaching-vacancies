@@ -17,8 +17,12 @@ class ImportPolygonDataJob < SidekiqJob
       yield(tolerance)
 
       # only check polygons updated by the call
-      invalid_names = LocationPolygon.where(updated_at: newest_polygon.updated_at..)
-                                     .order(:name)
+      changed_polygons = if newest_polygon.present?
+                           LocationPolygon.where(updated_at: newest_polygon.updated_at..)
+                         else
+                           LocationPolygon.all
+                         end
+      invalid_names = changed_polygons.order(:name)
                                      .reject(&:area_data_valid?)
                                      .map(&:name)
 
@@ -28,28 +32,6 @@ class ImportPolygonDataJob < SidekiqJob
       else
         logger.info "Loading #{name} Invalid names #{invalid_names} for tolerance #{tolerance_multiplier} (#{tolerance})"
       end
-      # LocationPolygon.where(updated_at: newest_polygon.updated_at..).order(:name).each { |p|
-      #   case p.area.invalid_reason
-      #   when RGeo::Error::SELF_INTERSECTION
-      #     p.area.make_valid
-      #     p.save!
-      #     break
-      #   when nil
-      #     break
-      #   else
-      #     p.area.check_validity!
-      #   end
-      #   case p.uk_area.invalid_reason
-      #   when RGeo::Error::SELF_INTERSECTION
-      #     p.uk_area.make_valid
-      #     p.save!
-      #     break
-      #   when nil
-      #     break
-      #   else
-      #     p.uk_area.check_validity!
-      #   end
-      # }
     end
   end
 end

@@ -2,7 +2,7 @@ class OnsDataImport::CreateComposites
   class << self
     def call(tolerance: OnsDataImport::Base::TOLERANCE_100M)
       DOWNCASE_COMPOSITE_LOCATIONS.map { |n, c| [n, c.map(&:downcase)] }.each do |name, constituents|
-        location_polygon = LocationPolygon.find_or_create_by(name: name)
+        location_polygon = LocationPolygon.find_or_create_by!(name: name)
 
         quoted_constituents = constituents.map { |c| ActiveRecord::Base.connection.quote(c) }
         # devon, plymouth and torbay didn't cope with the default tolerance
