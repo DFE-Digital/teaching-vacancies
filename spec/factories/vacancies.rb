@@ -16,6 +16,8 @@ FactoryBot.define do
     "#{job_titles.sample} #{n}"
   end
 
+  sequence :seed_job_title_number
+
   factory :vacancy, class: "PublishedVacancy" do
     salaries = [
       "Main pay range 1 to Upper pay range 3, £23,719 to £39,406 per year (full time equivalent)",
@@ -102,8 +104,6 @@ FactoryBot.define do
     end
 
     trait :for_seed_data do
-      job_title { generate(:job_title) }
-
       job_roles { [factory_sample(Vacancy.job_roles.keys)] }
       ect_status { factory_sample(Vacancy.ect_statuses.keys) if job_roles.include?("teacher") }
       is_job_share { [true, false].sample }
@@ -114,6 +114,17 @@ FactoryBot.define do
       # Subjects are ignored when phases don't include secondary
       # SUBJECT_OPTIONS is a list of pairs (to go directly into an HTML select)
       subjects { factory_sample(VACANCY_SEARCH_SUBJECT_OPTIONS.map(&:first), 3).sort }
+
+      job_title do
+        role_name = I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{job_roles.first}", default: "Teacher")
+        subject = subjects.first
+        base = if subject.present? && Vacancy::TEACHING_JOB_ROLES.include?(job_roles.first)
+                 "#{role_name} of #{subject}"
+               else
+                 role_name
+               end
+        "#{base} #{generate(:seed_job_title_number)}"
+      end
 
       key_stages { factory_rand_sample(key_stages_for_phases, 2..3) }
       rand_contract_type = Vacancy.contract_types.keys.sample
