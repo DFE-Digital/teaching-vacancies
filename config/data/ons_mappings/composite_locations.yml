@@ -12,16 +12,6 @@
 # to construct these out of their component local authorities. I am also including 'Yorkshire',
 # which is not a ceremonial county, because it's a common search location.
 
-Derbyshire and Derby:
-  - Derbyshire
-  - Derby
-"Lancashire, Blackburn and Blackpool":
-  - Lancashire
-  - Blackburn with Darwen
-  - Blackpool
-Staffordshire and Stoke:
-  - Staffordshire
-  - Stoke-on-Trent
 Bedfordshire:
   - Bedford
   - Central Bedfordshire
@@ -49,6 +39,9 @@ Cheshire:
   - Darlington
   - Hartlepool
   - Stockton-on-Tees
+Derbyshire and Derby:
+  - Derbyshire
+  - Derby
 "Devon, Plymouth and Torbay":
   - Devon
   - Plymouth
@@ -83,6 +76,10 @@ Greater Manchester:
 Kent and Medway:
   - Kent
   - Medway
+"Lancashire, Blackburn and Blackpool":
+  - Lancashire
+  - Blackburn with Darwen
+  - Blackpool
 Leicestershire and Rutland:
   - Leicestershire
   - Leicester
@@ -118,6 +115,9 @@ Shropshire and Telford and Wrekin:
   - Bath and North East Somerset
   - Bristol
   - North Somerset
+Staffordshire and Stoke:
+  - Staffordshire
+  - Stoke-on-Trent
 Tyne and Wear:
   - Newcastle upon Tyne
   - Gateshead

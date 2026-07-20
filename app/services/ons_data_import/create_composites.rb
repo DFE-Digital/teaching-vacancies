@@ -8,7 +8,7 @@ class OnsDataImport::CreateComposites
         # devon, plymouth and torbay didn't cope with the default tolerance
 
         0.upto(500).each do |tolerance_multiplier|
-          new_tolerance = tolerance + (OnsDataImport::Base::TOLERANCE_100M * tolerance_multiplier / 10.0)
+          new_tolerance = tolerance + (OnsDataImport::Base::TOLERANCE_100M * tolerance_multiplier / 2.0)
 
           OnsDataImport::ImportCities.call(tolerance: new_tolerance, valid_locations: constituents)
           OnsDataImport::ImportCounties.call(tolerance: new_tolerance, valid_locations: constituents)
