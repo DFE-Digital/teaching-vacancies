@@ -60,6 +60,7 @@ module OnsDataImport
         HttpClient.connection do |builder|
           builder.use :http_cache, store: Rails.cache,
                                    logger: Rails.logger
+          builder.adapter Faraday.default_adapter
           builder.response :json
           builder.response :raise_error
         end
@@ -138,6 +139,7 @@ module OnsDataImport
             response_data = response.body
             # :simplecov:disable
             raise "ArcGIS error: #{response_data['error']}" if response_data.key?("error")
+            # :nocov:
 
             # :simplecov:enable
 
