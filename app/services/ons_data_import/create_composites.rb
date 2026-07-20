@@ -7,7 +7,7 @@ class OnsDataImport::CreateComposites
         quoted_constituents = constituents.map { |c| ActiveRecord::Base.connection.quote(c) }
         # devon, plymouth and torbay didn't cope with the default tolerance
 
-        0.upto(500).each do |tolerance_multiplier|
+        (0..).each do |tolerance_multiplier|
           new_tolerance = tolerance + (OnsDataImport::Base::TOLERANCE_100M * tolerance_multiplier / 2.0)
 
           OnsDataImport::ImportCities.call(tolerance: new_tolerance, valid_locations: constituents)
