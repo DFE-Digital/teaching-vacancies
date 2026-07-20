@@ -118,8 +118,8 @@ FactoryBot.define do
       job_title do
         role_name = I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{job_roles.first}", default: "Teacher")
         subject = subjects.first
-        base = if subject.present? && Vacancy::TEACHING_JOB_ROLES.include?(job_roles.first)
-                 "#{role_name} of #{subject}"
+        base = if subjects.present? && Vacancy::TEACHING_JOB_ROLES.include?(job_roles.first)
+                 "#{role_name} (#{subjects.join(', ')})"
                else
                  role_name
                end
