@@ -42,7 +42,8 @@ Rails.application.configure do
   end
 
   # Change to :null_store to avoid any caching.
-  config.cache_store = :memory_store
+  # Cache needs to be big enough to hold ONS download data
+  config.cache_store = :memory_store, { size: 128.megabytes }
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local

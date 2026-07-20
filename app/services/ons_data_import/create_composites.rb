@@ -1,24 +1,41 @@
 class OnsDataImport::CreateComposites
-  def call
-    DOWNCASE_COMPOSITE_LOCATIONS.each do |name, constituents|
-      Rails.logger.info("Creating composite polygon for '#{name}'")
+  class << self
+    def call(tolerance: OnsDataImport::Import::SIMPLIFICATION_TOLERANCE)
+      DOWNCASE_COMPOSITE_LOCATIONS.map { |n, c| [n, c.map(&:downcase)] }.each do |name, constituents|
+        location_polygon = LocationPolygon.find_or_create_by!(name: name)
 
-      composite = LocationPolygon.find_or_create_by(name: name)
-      quoted_constituents = constituents.map { |c| ActiveRecord::Base.connection.quote(c.downcase) }
-      set_area_data(composite, quoted_constituents)
-      set_uk_area_data(composite, quoted_constituents)
+        quoted_constituents = constituents.map { |c| ActiveRecord::Base.connection.quote(c) }
+        # devon, plymouth and torbay didn't cope with the default tolerance
+
+        (0..).each do |tolerance_multiplier|
+          new_tolerance = tolerance + (OnsDataImport::Import::SIMPLIFICATION_TOLERANCE * tolerance_multiplier / 2.0)
+
+          OnsDataImport::ImportCities.call(tolerance: new_tolerance, valid_locations: constituents)
+          OnsDataImport::ImportCounties.call(tolerance: new_tolerance, valid_locations: constituents)
+
+          set_area_data(location_polygon, quoted_constituents, new_tolerance)
+          set_uk_area_data(location_polygon, quoted_constituents, new_tolerance)
+          location_polygon.touch
+          location_polygon.reload
+          # :nocov:
+          if location_polygon.area_data_valid?
+            Rails.logger.info("Created composite polygon for '#{name}' tolerance #{new_tolerance}")
+            break
+          end
+          # :nocov:
+        end
+      end
     end
-  end
 
-  private
+    private
 
-  def set_area_data(composite, quoted_constituents)
-    ActiveRecord::Base.connection.exec_update("
+    def set_area_data(composite, quoted_constituents, tolerance)
+      ActiveRecord::Base.connection.exec_update("
       WITH composite_area AS (
         SELECT ST_MakeValid(
           ST_SimplifyPreserveTopology(
             ST_Union(area::geometry),
-            #{OnsDataImport::Base::SIMPLIFICATION_TOLERANCE}
+            #{tolerance}
           ),
           'method=structure'
         )::geography AS geo
@@ -32,15 +49,15 @@ class OnsDataImport::CreateComposites
       FROM composite_area
       WHERE id='#{composite.id}'
     ")
-  end
+    end
 
-  def set_uk_area_data(composite, quoted_constituents)
-    ActiveRecord::Base.connection.exec_update("
+    def set_uk_area_data(composite, quoted_constituents, tolerance)
+      ActiveRecord::Base.connection.exec_update("
       WITH composite_area AS (
         SELECT ST_MakeValid(
           ST_SimplifyPreserveTopology(
             ST_Union(uk_area::geometry),
-            #{OnsDataImport::Base::SIMPLIFICATION_TOLERANCE}
+            #{tolerance}
           ),
           'method=structure'
         )::geometry AS geo
@@ -54,5 +71,6 @@ class OnsDataImport::CreateComposites
       FROM composite_area
       WHERE id='#{composite.id}'
     ")
+    end
   end
 end
