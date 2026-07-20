@@ -2,10 +2,10 @@ require "rails_helper"
 
 RSpec.describe OnsDataImport::ImportRegions do
   before do
-    stub_request(:get, /regions/)
+    stub_request(:get, /Regions_December_2025_Boundaries_EN_BSC/)
       .to_return(
-        { status: 200, body: file_fixture("ons_regions_geojson.json").read },
-        { status: 200, body: { features: [] }.to_json },
+        { status: 200, body: file_fixture("ons_regions_geojson.json").read, headers: { content_type: "application/json" } },
+        { status: 200, body: { features: [] }.to_json, headers: { content_type: "application/json" } },
       )
     described_class.call
   end

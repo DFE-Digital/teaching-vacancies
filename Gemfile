@@ -41,6 +41,8 @@ gem "faker"
 gem "faraday"
 # automatic retries on Faraday requests to ephemeral third-party failures
 gem "faraday-retry"
+# HTTP client cache just for ONS data
+gem "faraday-http-cache"
 # more uk-friendly fakes available
 gem "ffaker"
 

@@ -1,60 +1,34 @@
 require "rails_helper"
 
 RSpec.describe OnsDataImport::CreateComposites do
-  let!(:somewhereshire) do
-    create(:location_polygon, name: "somewhereshire",
-                              area: "POLYGON((0 0, 0 1, 1 1, 1 0, 0 0))",
-                              uk_area: GeoFactories::FACTORY_27700.parse_wkt("POLYGON((0 0, 0 1, 1 1, 1 0, 0 0))"))
-  end
-  let!(:elsewhereshire) do
-    create(:location_polygon, name: "elsewhereshire",
-                              area: "POLYGON((0 0, 0 -1, -1 -1, -1 0, 0 0))",
-                              uk_area: GeoFactories::FACTORY_27700.parse_wkt("POLYGON((0 0, 0 -1, -1 -1, -1 0, 0 0))"))
-  end
-
-  let(:composite_locations) { { "other realm" => %w[Somewhereshire Elsewhereshire] } }
-  let(:other_realm) { LocationPolygon.find_by(name: "other realm") }
+  let(:composite_locations) { { "bedfordshire" => ["Bedford", "Central Bedfordshire", "Luton"] } }
+  # faraday doesn't work with VerifiedDoubles as it creates methods dynamically
+  # rubocop:disable RSpec/VerifiedDoubles
+  let(:faraday) { double(Faraday) }
+  # rubocop:enable RSpec/VerifiedDoubles
+  let(:city_response) { double(body: JSON.parse(file_fixture("ons_cities_geojson.json").read)) }
+  let(:endtransmission) { double(body: { "features" => [] }) }
+  let(:response2) { double(body: JSON.parse(file_fixture("ons_bedfordshire_geojson.json").read)) }
 
   before do
     stub_const("DOWNCASE_COMPOSITE_LOCATIONS", composite_locations)
   end
 
-  describe "#call" do
-    it "generates a composite polygon" do
-      subject.call
+  describe "#call", :vcr do
+    before do
+      allow(Faraday).to receive(:new)
+                          .and_return(faraday)
+      allow(faraday).to receive(:get)
+                          .with(/Major_Towns_and_Cities_Dec_2015_Boundaries_V2_2022/,
+                                hash_including("outSR" => "4326"))
+                          .and_return(city_response, endtransmission)
+      allow(faraday).to receive(:get)
+                          .with(/Counties_and_Unitary_Authorities_December_2025_Boundaries_UK_BSC/, hash_including("outSR" => "4326"))
+                          .and_return(response2, endtransmission)
+    end
 
-      expect(other_realm.area.coordinates).to contain_exactly(
-        contain_exactly(
-          contain_exactly([-1.0, -1.0],
-                          [-1.0, 0.0],
-                          [0.0, 0.0],
-                          [0.0, -1.0],
-                          [-1.0, -1.0]),
-        ),
-        contain_exactly(
-          contain_exactly([1.0, 1.0],
-                          [1.0, 0.0],
-                          [0.0, 0.0],
-                          [0.0, 1.0],
-                          [1.0, 1.0]),
-        ),
-      )
-      expect(other_realm.uk_area.coordinates).to contain_exactly(
-        contain_exactly(
-          contain_exactly([-1.0, -1.0],
-                          [-1.0, 0.0],
-                          [0.0, 0.0],
-                          [0.0, -1.0],
-                          [-1.0, -1.0]),
-        ),
-        contain_exactly(
-          contain_exactly([1.0, 1.0],
-                          [1.0, 0.0],
-                          [0.0, 0.0],
-                          [0.0, 1.0],
-                          [1.0, 1.0]),
-        ),
-      )
+    it "generates a composite polygon and its children" do
+      expect { described_class.call }.to change(LocationPolygon, :count).by(4)
     end
   end
 end
