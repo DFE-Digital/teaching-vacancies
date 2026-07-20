@@ -17,7 +17,7 @@
         ]
       },
       "properties" : {
-        "GOR10NM" : "East Midlands"
+        "RGN25NM" : "East Midlands"
       }
     },
     {
@@ -36,7 +36,7 @@
         ]
       },
       "properties" : {
-        "GOR10NM" : "Mid Eastlands"
+        "RGN25NM" : "Mid Eastlands"
       }
     }
   ]

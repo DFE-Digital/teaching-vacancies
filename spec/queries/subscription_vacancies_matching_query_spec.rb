@@ -3,7 +3,6 @@ require "rails_helper"
 RSpec.describe SubscriptionVacanciesMatchingQuery do
   subject(:query_results) { Vacancy.find(described_class.new(scope: scope, subscription: subscription, limit: limit).call).pluck(:job_title) }
 
-  let(:subscription) { nil }
   let(:scope) { Vacancy.all }
   let(:limit) { nil }
 
