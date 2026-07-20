@@ -133,9 +133,10 @@ resource "aws_route53_record" "cloudfront-cnames" {
 }
 
 resource "aws_wafv2_web_acl" "cloudfront-waf" {
-  count = var.enable_cloudfront_waf == true ? 1 : 0
-  name  = "${var.service_name}-${var.environment}-waf"
-  scope = "CLOUDFRONT"
+  count    = var.enable_cloudfront_waf == true ? 1 : 0
+  provider = aws.aws_us_east_1
+  name     = "${var.service_name}-${var.environment}-waf"
+  scope    = "CLOUDFRONT"
 
   default_action {
     allow {}
