@@ -102,3 +102,7 @@ ProfileEmployment:
   jobseeker_profile:
     ColumnPresenceChecker:
       enabled: false
+ProfileEmploymentGap:
+  jobseeker_profile:
+    ColumnPresenceChecker:
+      enabled: false

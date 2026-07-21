@@ -50,6 +50,7 @@ module PageObjects
         jobseeker_application: "Jobseeker::JobApplicationPage",
         jobseeker_application_apply: "Jobseeker::JobApplicationApplyPage",
         jobseeker_application_start: "Jobseeker::JobApplicationStartPage",
+        jobseeker_application_education_gap: "Jobseeker::JobApplicationEducationGapPage",
         publisher_ats_self_disclosure: "Publisher::Ats::SelfDisclosurePage",
         jobseeker_self_disclosure_personal_details: "Jobseeker::JobApplications::SelfDisclosure::PersonalDetailPage",
         jobseeker_self_disclosure_barred_list: "Jobseeker::JobApplications::SelfDisclosure::BarredListPage",

@@ -44,6 +44,8 @@ en:
               before: The date the role started must be in the past
               blank: Enter the date you started at this school or organisation
               invalid: Enter a date in the correct format
+            reason_for_break:
+              blank: Enter a reason for this gap
 
   helpers:
     hint:

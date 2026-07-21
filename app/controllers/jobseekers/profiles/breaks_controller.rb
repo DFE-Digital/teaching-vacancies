@@ -2,24 +2,23 @@ class Jobseekers::Profiles::BreaksController < Jobseekers::ProfilesController
   helper_method :back_path, :employment_break
 
   def new
-    form_attrubutes = if params[:started_on] && params[:ended_on]
+    form_attributes = if params[:started_on] && params[:ended_on]
                         { started_on: Date.parse(params[:started_on]), ended_on: Date.parse(params[:ended_on]) }
                       else
                         # :nocov:
                         {}
                         # :nocov:
                       end
-    @form = Jobseekers::BreakForm.new(form_attrubutes)
+    @model = @profile.employments.break.build(form_attributes)
   end
 
   def edit
-    @form = Jobseekers::BreakForm.new(employment_break.slice(:reason_for_break, :started_on, :ended_on))
+    @model = employment_break
   end
 
   def create
-    @form = Jobseekers::BreakForm.new(employment_break_params)
-    if @form.valid?
-      @profile.employments.break.create(employment_break_params)
+    @model = @profile.employments.break.build(employment_break_params)
+    if @model.save
       redirect_to back_path
     else
       render :new
@@ -27,9 +26,8 @@ class Jobseekers::Profiles::BreaksController < Jobseekers::ProfilesController
   end
 
   def update
-    @form = Jobseekers::BreakForm.new(employment_break_params)
-    if @form.valid?
-      employment_break.update(employment_break_params)
+    @model = employment_break
+    if @model.update(employment_break_params)
       redirect_to back_path
     else
       render :edit
@@ -37,7 +35,7 @@ class Jobseekers::Profiles::BreaksController < Jobseekers::ProfilesController
   end
 
   def confirm_destroy
-    @form = Jobseekers::BreakForm.new
+    @model = employment_break
   end
 
   def destroy

@@ -2,16 +2,15 @@ class Jobseekers::Profiles::EmploymentsController < Jobseekers::ProfilesControll
   before_action :set_employment, only: %i[edit update destroy]
 
   def new
-    @employment = @profile.employments.job.build
+    @employment = @profile.employment_jobs.build
   end
 
   def edit; end
 
   def create
-    @employment = @profile.employments.job.build
-    @employment.attributes = employment_form_params
+    @employment = @profile.employment_jobs.build
 
-    if @employment.save
+    if @employment.update(employment_form_params)
       redirect_to review_jobseekers_profile_work_history_index_path
     else
       render :new
@@ -24,9 +23,7 @@ class Jobseekers::Profiles::EmploymentsController < Jobseekers::ProfilesControll
   end
 
   def update
-    @employment.attributes = employment_form_params
-
-    if @employment.save
+    if @employment.update(employment_form_params)
       redirect_to review_jobseekers_profile_work_history_index_path, success: t(".success")
     else
       render :edit

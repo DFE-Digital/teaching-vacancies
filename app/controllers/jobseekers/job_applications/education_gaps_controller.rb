@@ -3,18 +3,14 @@ class Jobseekers::JobApplications::EducationGapsController < Jobseekers::BaseCon
   before_action :set_education_gap, only: %i[edit update destroy confirm_destroy]
 
   def new
-    @form = Jobseekers::BreakForm.new
+    @education_gap = @job_application.education_gaps.build
   end
 
-  def edit
-    @form = Jobseekers::BreakForm.new(@education_gap.slice(:reason_for_break, :started_on, :ended_on))
-  end
+  def edit; end
 
   def create
-    @form = Jobseekers::BreakForm.new(education_gap_params)
-
-    if @form.valid?
-      @job_application.employments.education_gap.create!(education_gap_params)
+    @education_gap = @job_application.education_gaps.build(education_gap_params)
+    if @education_gap.save
       redirect_to back_path
     else
       render :new
@@ -22,10 +18,7 @@ class Jobseekers::JobApplications::EducationGapsController < Jobseekers::BaseCon
   end
 
   def update
-    @form = Jobseekers::BreakForm.new(education_gap_params)
-
-    if @form.valid?
-      @education_gap.update!(education_gap_params)
+    if @education_gap.update(education_gap_params)
       redirect_to back_path
     else
       render :edit
@@ -50,7 +43,7 @@ class Jobseekers::JobApplications::EducationGapsController < Jobseekers::BaseCon
   end
 
   def set_education_gap
-    @education_gap = @job_application.employments.education_gap.find(params[:id] || params[:education_gap_id])
+    @education_gap = @job_application.education_gaps.find(params[:id] || params[:education_gap_id])
   end
 
   def education_gap_params

@@ -4,13 +4,13 @@ class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseContr
   before_action :set_employment, only: %i[edit update destroy]
 
   def new
-    @employment = job_application.employments.job.build
+    @employment = job_application.jobs.build
   end
 
   def edit; end
 
   def create
-    @employment = job_application.employments.job.build
+    @employment = job_application.jobs.build
     @employment.attributes = employment_params
 
     if @employment.save
@@ -26,9 +26,7 @@ class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseContr
   end
 
   def update
-    @employment.attributes = employment_params
-
-    if @employment.save
+    if @employment.update(employment_params)
       redirect_to back_path
     else
       render :edit

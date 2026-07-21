@@ -140,7 +140,8 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
       click_on I18n.t("buttons.continue")
 
-      expect(page).to have_content("There is a problem")
+      expect(jobseeker_application_education_gap_page.errors.map(&:text))
+        .to contain_exactly("Enter a reason for this gap", "Enter the date you started the gap", "Enter the date the gap finished")
 
       fill_in "Enter reasons for gap between education and work history", with: "Finishing some stuff up"
       fill_in "jobseekers_break_form[started_on(1i)]", with: "2018"
@@ -152,12 +153,15 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
       expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :employment_history), ignore_query: true)
       expect(page).to have_content("Finishing some stuff up")
 
+      # Note - some of this label is visuaLLy hidden
       click_on "Change Gap between education and work history"
 
       fill_in "Enter reasons for gap between education and work history", with: ""
       click_on I18n.t("buttons.continue")
 
       expect(page).to have_content("There is a problem")
+      expect(jobseeker_application_education_gap_page.errors.map(&:text))
+        .to contain_exactly("Enter a reason for this gap")
 
       fill_in "Enter reasons for gap between education and work history", with: "Preparing to work (ugh)"
       fill_in "jobseekers_break_form[started_on(1i)]", with: "2018"

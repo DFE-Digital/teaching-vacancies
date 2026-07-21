@@ -18,6 +18,7 @@ FactoryBot.define do
 
     trait :break do
       employment_type { :break }
+      reason_for_break { Faker::Lorem.paragraph(sentence_count: 1) }
     end
 
     factory :education_gap do
@@ -42,18 +43,24 @@ FactoryBot.define do
     job_title { "Teacher" }
     started_on { Date.new(2016, 1, 1) }
     ended_on { Date.new(2018, 12, 31) }
-    employment_type { :job }
+
+    trait :job do
+      employment_type { :job }
+    end
 
     trait :for_seed_data do
+      employment_type { :job }
       started_on { Faker::Date.in_date_period(year: 2016) }
       ended_on { Faker::Date.in_date_period(year: 2018) }
     end
 
     trait :break do
       employment_type { :break }
+      reason_for_break { Faker::Lorem.paragraph(sentence_count: 1) }
     end
 
     trait :current_role do
+      employment_type { :job }
       is_current_role { true }
       ended_on { nil }
     end
