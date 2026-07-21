@@ -1,13 +1,23 @@
 en:
-  activemodel:
+  activerecord:
     errors:
       models:
-        jobseekers/professional_body_membership_form:
+        professional_body_membership:
           attributes:
-            name: 
+            name:
               blank: Enter the name of the professional body.
             exam_taken:
               inclusion: Select yes if your professional body membership required you to take an exam.
+        training_and_cpd:
+          attributes:
+            name:
+              blank: Enter the name of the course or training
+            provider:
+              blank: Enter the name of the provider of the training
+            year_awarded:
+              blank: Enter the year the course or training was awarded
+            course_length:
+              blank: Enter the length of the course
   helpers:
     label:
       jobseekers_professional_body_membership_form:
@@ -34,7 +44,7 @@ en:
         professional_body_memberships:
           list_heading: Professional body memberships
           heading: Professional body memberships (optional)
-          hint: You can include professional memberships here, such as the Chartered College of Teaching or the General Teaching Council. 
+          hint: You can include professional memberships here, such as the Chartered College of Teaching or the General Teaching Council.
           no_training: No memberships specified
           no_professional_body_memberships: No memberships specified
       professional_body_memberships:

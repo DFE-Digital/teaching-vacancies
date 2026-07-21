@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_06_25_113746) do
+ActiveRecord::Schema[8.0].define(version: 2026_07_08_151811) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -616,7 +616,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_06_25_113746) do
   create_table "professional_body_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name"
+    t.string "name", null: false
     t.string "membership_type"
     t.string "membership_number"
     t.integer "year_membership_obtained"
@@ -940,10 +940,10 @@ ActiveRecord::Schema[8.0].define(version: 2026_06_25_113746) do
   end
 
   create_table "training_and_cpds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.string "provider"
     t.string "grade"
-    t.string "year_awarded"
+    t.string "year_awarded", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "job_application_id", null: false

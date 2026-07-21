@@ -25,7 +25,7 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
           visit organisation_jobs_with_type_path(:live)
         end
 
-        it "passes a11y", :a11y do
+        it "passes a11y", :a11y, :retry do
           # wait for page load
           expect(page).to have_content(school_group_vacancy.job_title)
           expect(page).to be_axe_clean

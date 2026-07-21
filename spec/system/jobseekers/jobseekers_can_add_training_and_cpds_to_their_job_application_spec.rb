@@ -47,6 +47,9 @@ RSpec.describe "Jobseeker can add training and cpds to their job application" do
       expect_page_to_have_values("Rock climbing", "TeachTrainLtd", "Pass", "2020", "1 year")
 
       click_link "Change"
+      fill_in "Name", with: ""
+      click_on "Save and continue"
+      expect(page).to have_css("h2.govuk-error-summary__title", text: "There is a problem")
 
       fill_in_and_submit_training_form("Choir singing instructional course", "Training org", "A", "2024", "6 months")
 
