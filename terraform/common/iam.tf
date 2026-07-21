@@ -96,6 +96,13 @@ data "aws_iam_policy_document" "deployments_role_policy" {
     resources = ["*"]
   }
 
+  # WAF
+  statement {
+    sid       = "ManageWAF"
+    actions   = ["wafv2:*"]
+    resources = ["*"]
+  }
+
   # Offline site in S3
   statement {
     sid       = "ManageOfflineSiteS3Files"
