@@ -1,16 +1,17 @@
-class Jobseekers::JobApplications::ProfessionalBodyMembershipsController < Jobseekers::BaseController
-  helper_method :back_path, :job_application
+module Jobseekers
+class JobApplications::ProfessionalBodyMembershipsController < BaseController
+  before_action :set_job_application, only: %i[create edit new update destroy]
 
   before_action :set_model, only: %i[edit update destroy]
 
   def new
-    @model = job_application.professional_body_memberships.build
+    @model = @job_application.professional_body_memberships.build
   end
 
   def edit; end
 
   def create
-    @model = job_application.professional_body_memberships.build(professional_body_memberships_form_params)
+    @model = @job_application.professional_body_memberships.build(professional_body_memberships_form_params)
 
     if @model.save
       redirect_to back_path
@@ -37,14 +38,12 @@ class Jobseekers::JobApplications::ProfessionalBodyMembershipsController < Jobse
   end
 
   def set_model
-    @model = job_application.professional_body_memberships.find(params[:id] || params[:professional_body_membership_id])
+    @model = @job_application.professional_body_memberships.find(params[:id])
   end
 
-  def job_application
-    @job_application ||= current_jobseeker.job_applications.draft.find(params[:job_application_id])
+  def set_job_application
+    @job_application = current_jobseeker.job_applications.draft.find(params[:job_application_id])
   end
 
-  def back_path
-    @back_path ||= jobseekers_job_application_build_path(job_application, :professional_body_memberships)
-  end
+end
 end

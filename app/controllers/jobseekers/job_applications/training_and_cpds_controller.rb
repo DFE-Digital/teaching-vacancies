@@ -1,4 +1,5 @@
-class Jobseekers::JobApplications::TrainingAndCpdsController < Jobseekers::BaseController
+module Jobseekers
+class JobApplications::TrainingAndCpdsController < BaseController
   before_action :set_job_application, only: %i[create edit new update destroy]
   before_action :set_training_and_cpd, only: %i[edit update destroy]
 
@@ -37,7 +38,7 @@ class Jobseekers::JobApplications::TrainingAndCpdsController < Jobseekers::BaseC
   end
 
   def set_training_and_cpd
-    @training_and_cpd = @job_application.training_and_cpds.find(params[:id] || params[:training_and_cpd_id])
+    @training_and_cpd = @job_application.training_and_cpds.find(params[:id])
   end
 
   def set_job_application
@@ -47,4 +48,5 @@ class Jobseekers::JobApplications::TrainingAndCpdsController < Jobseekers::BaseC
   def back_path
     @back_path ||= jobseekers_job_application_build_path(@job_application, :training_and_cpds)
   end
+end
 end
