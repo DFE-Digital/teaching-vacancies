@@ -34,10 +34,10 @@
 = govuk_service_navigation(service_name: t("app.title"), navigation_id: "tv-service-navigation") do |navigation|
   - if publisher_signed_in?
     - navigation.with_navigation_item text: t("nav.manage_jobs"), href: organisation_jobs_with_type_path, active: manage_jobs_active?
-    - navigation.with_navigation_item text: t("nav.messages"), href: publishers_candidate_messages_path
-    - navigation.with_navigation_item text: t("nav.candidate_profiles"), href: publishers_jobseeker_profiles_path
-    - navigation.with_navigation_item text: "Statistics", href: publishers_current_year_statistics_path
-    - navigation.with_navigation_item text: t("nav.notifications_html", count: current_publisher.notifications.unread.count), href: publishers_notifications_path
+    - navigation.with_navigation_item text: t("nav.messages"), href: publishers_candidate_messages_path, active: messages_active?
+    - navigation.with_navigation_item text: t("nav.candidate_profiles"), href: publishers_jobseeker_profiles_path, active: candidate_profiles_active?
+    - navigation.with_navigation_item text: "Statistics", href: publishers_current_year_statistics_path, active: statistics_active?
+    - navigation.with_navigation_item text: t("nav.notifications_html", count: current_publisher.notifications.unread.count), href: publishers_notifications_path, active: notifications_active?
   - else
     - navigation.with_navigation_item text: t("sub_nav.jobs"), href: jobs_path
     - navigation.with_navigation_item text: t("sub_nav.schools"), href: organisations_path
