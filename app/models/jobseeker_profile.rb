@@ -6,8 +6,8 @@ class JobseekerProfile < ApplicationRecord
   has_one :personal_details, dependent: :destroy
   has_one :job_preferences, dependent: :destroy
   has_many :employments, class_name: "ProfileEmployment", dependent: :destroy
-  has_many :employment_jobs, -> { where(employment_type: :job) }, class_name: "ProfileEmployment", dependent: :destroy
-  has_many :employment_gaps, -> { where(employment_type: :break) }, class_name: "ProfileEmploymentGap", dependent: :destroy
+  has_many :employment_jobs, -> { where(employment_type: :job) }, class_name: "ProfileEmployment"
+  has_many :employment_gaps, -> { where(employment_type: :break) }, class_name: "ProfileEmploymentGap"
   has_many :qualifications, dependent: :destroy
   has_many :organisation_exclusions, class_name: "JobseekerProfileExcludedOrganisation", dependent: :destroy
   has_many :excluded_organisations, through: :organisation_exclusions, source: :organisation
