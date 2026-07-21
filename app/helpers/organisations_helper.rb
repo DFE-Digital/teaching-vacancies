@@ -73,7 +73,7 @@ module OrganisationsHelper
     elsif vacancy.organisations.any?(&:school?)
       "school"
     else
-      "school_group"
+      "organisation"
     end
   end
 
