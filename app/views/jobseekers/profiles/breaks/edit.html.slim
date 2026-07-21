@@ -1,11 +1,11 @@
-- content_for :page_title_prefix, job_application_page_title_prefix(@model, t(".title"))
+- content_for :page_title_prefix, job_application_page_title_prefix(@employment_break, t(".title"))
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     span.govuk-caption-l = t(".caption")
     h1.govuk-heading-xl = t(".heading")
 
-    = form_with model: @model, scope: "jobseekers_break_form", url: jobseekers_profile_break_path(@model), method: :patch do |f|
+    = form_with model: @employment_break, scope: "jobseekers_break_form", url: jobseekers_profile_break_path(@employment_break), method: :patch do |f|
       = f.govuk_error_summary
 
       = render "fields", f: f

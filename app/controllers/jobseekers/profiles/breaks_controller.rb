@@ -1,5 +1,6 @@
 class Jobseekers::Profiles::BreaksController < Jobseekers::ProfilesController
-  helper_method :back_path, :employment_break
+  helper_method :back_path
+  before_action :set_employment_break, only: %i[update edit confirm_destroy destroy]
 
   def new
     form_attributes = if params[:started_on] && params[:ended_on]
@@ -9,16 +10,14 @@ class Jobseekers::Profiles::BreaksController < Jobseekers::ProfilesController
                         {}
                         # :nocov:
                       end
-    @model = @profile.employments.break.build(form_attributes)
+    @employment_break = @profile.employment_gaps.build(form_attributes)
   end
 
-  def edit
-    @model = employment_break
-  end
+  def edit; end
 
   def create
-    @model = @profile.employments.break.build(employment_break_params)
-    if @model.save
+    @employment_break = @profile.employment_gaps.build(employment_break_params)
+    if @employment_break.save
       redirect_to back_path
     else
       render :new
@@ -26,20 +25,17 @@ class Jobseekers::Profiles::BreaksController < Jobseekers::ProfilesController
   end
 
   def update
-    @model = employment_break
-    if @model.update(employment_break_params)
+    if @employment_break.update(employment_break_params)
       redirect_to back_path
     else
       render :edit
     end
   end
 
-  def confirm_destroy
-    @model = employment_break
-  end
+  def confirm_destroy; end
 
   def destroy
-    employment_break.destroy
+    @employment_break.destroy
     redirect_to back_path
   end
 
@@ -49,8 +45,8 @@ class Jobseekers::Profiles::BreaksController < Jobseekers::ProfilesController
     jobseekers_profile_path
   end
 
-  def employment_break
-    @profile.employments.break.find(params[:id] || params[:break_id])
+  def set_employment_break
+    @employment_break = @profile.employment_gaps.find(params[:id] || params[:break_id])
   end
 
   def employment_break_params
