@@ -105,6 +105,7 @@ class OnsDataImport::Base
       # really hard to auto-test this, as it doesn't normally happen
       # simplecov:disable
       raise "Unexpected ArcGIS response: #{response.code}" unless response.success?
+
       # simplecov:enable
 
       response_data = JSON.parse(response.to_s)
