@@ -68,7 +68,8 @@ Rails.application.configure do
   # Ensure that query logs are not verbose in tests (tests are way slower when enabled).
   config.active_record.verbose_query_logs = false
   config.active_record.query_log_tags_enabled = false
-  config.log_level = :fatal
+  # This can only usefilly be commented-out (for debug) or left (for speed)
+  # config.log_level = :fatal
 
   # we don't need strict mx validation (checking MX records etc) in test mode
   config.strict_mx_validation = false
