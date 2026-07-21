@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe SubscriptionVacanciesMatchingQuery do
-  subject(:query_results) { described_class.call(scope: scope, subscription: subscription, limit: limit).map(&:job_title) }
+  subject(:query_results) { described_class.call(scope: scope, subscription: subscription, limit: limit).pluck(:job_title) }
 
   let(:subscription) { nil }
   let(:scope) { Vacancy.all }
