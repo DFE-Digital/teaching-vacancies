@@ -48,7 +48,7 @@ module Jobseekers
     end
 
     def back_path
-      @bath_path ||= jobseekers_job_application_build_path(@job_application, :professional_body_memberships)
+      @back_path ||= jobseekers_job_application_build_path(@job_application, :professional_body_memberships)
     end
   end
 end
