@@ -41,7 +41,7 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
       SimpleCov::Formatter::Undercover,
       SimpleCov::Formatter::HTMLFormatter,
     ],
-    )
+  )
 
   SimpleCov.start :rails do
     enable_coverage :branch
