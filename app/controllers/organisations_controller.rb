@@ -26,9 +26,9 @@ class OrganisationsController < ApplicationController
     @organisation = Organisation.visible_to_jobseekers.friendly.find(params[:id] || params[:organisation_id])
   end
 
-  # :nocov:
+  # simplecov:disable
   def strip_empty_filter_checkboxes
     strip_empty_checkboxes(%i[education_phase key_stage job_availability organisation_types school_types]) unless params[:skip_strip_checkboxes]
   end
-  # :nocov:
+  # simplecov:enable
 end

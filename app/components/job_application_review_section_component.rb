@@ -38,9 +38,9 @@ class JobApplicationReviewSectionComponent < ApplicationComponent
     if @job_application.vacancy.uploaded_form?
       return edit_jobseekers_uploaded_job_application_personal_details_path(@job_application) if @name == :personal_details
 
-      # :nocov:
+      # simplecov:disable
       edit_jobseekers_uploaded_job_application_upload_application_form_path(@job_application) if @name == :upload_application_form
-      # :nocov:
+      # simplecov:enable
     elsif @job_application.persisted?
       jobseekers_job_application_build_path(@job_application, @name)
     end

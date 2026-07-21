@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SidekiqJob < ApplicationJob
-  # :nocov:
+  # simplecov:disable
   self.queue_adapter = :sidekiq unless Rails.env.test?
-  # :nocov:
+  # simplecov:enable
 end

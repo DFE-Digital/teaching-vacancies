@@ -82,13 +82,13 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
     redirect_to organisation_jobs_with_type_path, success: t(".success_html", job_title: vacancy.job_title)
   end
 
-  # :nocov:
+  # simplecov:disable
   def preview
     redirect_to organisation_job_path(vacancy.id) unless all_steps_valid?
 
     @vacancy = vacancy.decorate
   end
-  # :nocov:
+  # simplecov:enable
 
   def convert_to_draft
     vacancy.update!(type: "DraftVacancy")

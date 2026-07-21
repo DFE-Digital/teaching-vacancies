@@ -22,3 +22,82 @@ end
 RSpec::Matchers.define_negated_matcher :not_change, :change
 RSpec::Matchers.define_negated_matcher :not_have_enqueued_job, :have_enqueued_job
 RSpec::Matchers.define_negated_matcher :not_have_triggered_event, :have_triggered_event
+
+# default to coverage 'off' as it makes no sense
+# unless most of the tests are being run
+# however setting merge_timeout super-large is a possible option
+# e.g. COVERAGE=1 MERGE_TIMEOUT=86400
+# merge_timeout just keeps coverage data around a long time
+# as it doesn't change very often - would probably need guard support
+# for this to be valuable so that only changed files have tests run
+if ENV.fetch("COVERAGE", 0).to_i.positive?
+  require "simplecov"
+  require "undercover/simplecov_formatter"
+
+  # This allows both LCOV and HTML formatting -
+  # lcov for undercover gem, HTML for humans
+  SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new(
+    [
+      SimpleCov::Formatter::Undercover,
+      SimpleCov::Formatter::HTMLFormatter,
+    ],
+    )
+
+  SimpleCov.start :rails do
+    enable_coverage :branch
+
+    # This line would enable coverage for view templates, but the slim compiler
+    # appears to have a bug which puts the whole coverage data out by one line.
+    # enable_coverage_for_eval
+
+    # This is the 'cache timeout' for coverage files. Setting it high
+    # (e.g. to 86400 (1 day) allows confident running of test subsets (using guard)
+    # as the coverage data for not-run tests stays valid for that long. The
+    # default is 10 minutes which is just long enough to make sure that these don't
+    # expire in the middle of a test run.
+    merge_timeout ENV["MERGE_TIMEOUT"].to_i if ENV.key? "MERGE_TIMEOUT"
+
+    # Filter out files from coverage reports
+    # which are not part of the actual code under test.
+
+    # only used in tests
+    skip "lib/dfe_sign_in/fake_sign_out_endpoint.rb"
+    # only used in development to preview email layouts
+    skip "app/controllers/previews_controller.rb"
+    # only really used in review apps - hard to auto-test
+    skip "app/mailers/jobseekers/authentication_fallback_mailer.rb"
+    # used to format production logs
+    skip "app/services/custom_log_formatter.rb"
+
+    # base mailer, currently unused
+    skip "app/mailers/amazon_ses_mailer.rb"
+
+    # legacy rake tasks, unlikely to ever be test covered
+    skip "lib/tasks/audit.rake"
+    skip "lib/tasks/data.rake"
+
+    # safe replacement for rake db:migrate, never going to be covered by tests
+    skip "lib/tasks/migrate_swallowing_concurrent_migration_exceptions.rake"
+
+    # Each group will be displayed in the report as its own Tab.
+    group "Components", "app/components"
+    group "Queries", "app/queries"
+    group "Services", "app/services"
+    group "Forms", "app/form_models"
+    group "Validators", "app/validators"
+    group "Presenters", "app/presenters"
+    group "Notifiers", "app/notifiers"
+    group "Tasks", "lib/tasks"
+
+    # Most of the uncovered lines are in very old unchanging code, so chasing more coverage
+    # in those areas does not appear to be worth-while
+
+    # However (possibly due to some residual random behaviour in test factories)
+    # the line coverage needs to be set 0.02 below the reported value.
+    # Nornmally this value needs to be 0.01 below the reported value due to rounding issues.
+    minimum_coverage line: 97.77, branch: 88.82
+    # Values from test run 30th June 2026
+    # Line Coverage: 97.78% (12707 / 12995) -> 287 lines uncovered
+    # Branch Coverage: 88.85% (2740 / 3084) -> 260 + 84 = 344 branches uncovered
+  end
+end
