@@ -152,6 +152,7 @@ resource "aws_wafv2_web_acl" "cloudfront-waf" {
 
 resource "aws_wafv2_web_acl_rule" "rate-limit" {
   count       = var.enable_cloudfront_waf == true ? 1 : 0
+  provider    = aws.aws_us_east_1
   name        = "${var.service_name}-${var.environment}-rate-limit"
   priority    = 1
   web_acl_arn = aws_wafv2_web_acl.cloudfront-waf[0].arn
@@ -176,6 +177,7 @@ resource "aws_wafv2_web_acl_rule" "rate-limit" {
 
 resource "aws_wafv2_web_acl_rule" "sql-protection" {
   count       = var.enable_cloudfront_waf == true ? 1 : 0
+  provider    = aws.aws_us_east_1
   name        = "${var.service_name}-${var.environment}-sql-protection"
   priority    = 2
   web_acl_arn = aws_wafv2_web_acl.cloudfront-waf[0].arn
