@@ -32,7 +32,8 @@ class SendJobAlertsJob < ApplicationJob
     already_run_ids = Set.new AlertRun.for_today.pluck(:subscription_id)
 
     subscriptions.each.reject { |sub| already_run_ids.include?(sub.id) }.each do |subscription|
-      matching_vacancy_ids = subscription.vacancies_matching(default_scope, limit: MAXIMUM_RESULTS_PER_RUN)
+      # Crystallize early so that any? and size don't trigger queries
+      matching_vacancy_ids = subscription.vacancies_matching(default_scope, limit: MAXIMUM_RESULTS_PER_RUN).pluck(:id)
       next unless matching_vacancy_ids.any?
       next if subscription.email.blank?
 

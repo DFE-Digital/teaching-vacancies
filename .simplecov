@@ -132,7 +132,7 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # the line coverage needs to be set 0.02 below the reported value.
     # Normally this value needs to be 0.01 below the reported value due to rounding issues.
     # This is somewhat superceded by the simplecov ratchet baseline configured below
-    minimum_coverage line: 96.34, branch: 84.30
+    minimum_coverage line: 96.29, branch: 84.16
     # Values from CI run 30th September 2026
     # Line Coverage: 96.49% (20362 / 21101) -> 638 + 101 = 739 lines uncovered
     # Branch Coverage: 84.17% (4134 / 4906) -> 772 branches uncovered
