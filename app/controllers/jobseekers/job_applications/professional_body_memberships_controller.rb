@@ -33,6 +33,8 @@ module Jobseekers
       redirect_to back_path, success: t(".success")
     end
 
+    private
+
     def professional_body_memberships_form_params
       params.expect(jobseekers_professional_body_membership_form: %i[name membership_type membership_number year_membership_obtained exam_taken])
     end
@@ -43,6 +45,10 @@ module Jobseekers
 
     def set_job_application
       @job_application = current_jobseeker.job_applications.draft.find(params[:job_application_id])
+    end
+
+    def back_path
+      @bath_path |= jobseekers_job_application_build_path(@job_application, :professional_body_memberships)
     end
   end
 end
