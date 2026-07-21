@@ -45,9 +45,9 @@ RSpec.describe "jobseekers/saved_jobs/index" do
       end
 
       it "shows job closed label for expired jobs" do
-        expect(second_child).to have_css(".card-component__body", text: I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
-        expect(third_child).to have_no_css(".card-component__body", text: I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
-        expect(fourth_child).to have_no_css(".card-component__body", text: I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
+        expect(second_child).to have_css(".card-component__body", text: "Job closed")
+        expect(third_child).to have_no_css(".card-component__body", text: "Job closed")
+        expect(fourth_child).to have_no_css(".card-component__body", text: "Job closed")
       end
 
       it "only allows jobseekers to apply for jobs that have not expired" do
