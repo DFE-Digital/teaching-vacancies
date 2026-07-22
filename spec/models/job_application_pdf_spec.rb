@@ -416,7 +416,7 @@ RSpec.describe JobApplicationPdf do
 
       context "when employment break present" do
         let(:reason_for_break) { Faker::Adjective.negative }
-        let(:employments) { build_stubbed_list(:employment, 1, :break, reason_for_break: reason_for_break) }
+        let(:employments) { build_stubbed_list(:employment_break, 1, reason_for_break: reason_for_break) }
 
         it "formats employment break correctly" do
           expect(employment_data).to include(["Employment Break"])

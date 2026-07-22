@@ -16,7 +16,7 @@ FactoryBot.define do
       ended_on { Faker::Date.in_date_period(year: 2018) }
     end
 
-    trait :break do
+    factory :employment_break do
       employment_type { :break }
       reason_for_break { Faker::Lorem.paragraph(sentence_count: 1) }
     end
@@ -44,23 +44,19 @@ FactoryBot.define do
     started_on { Date.new(2016, 1, 1) }
     ended_on { Date.new(2018, 12, 31) }
 
-    trait :job do
-      employment_type { :job }
-    end
+    employment_type { :job }
 
     trait :for_seed_data do
-      employment_type { :job }
       started_on { Faker::Date.in_date_period(year: 2016) }
       ended_on { Faker::Date.in_date_period(year: 2018) }
     end
 
-    trait :break do
+    factory :profile_employment_break do
       employment_type { :break }
       reason_for_break { Faker::Lorem.paragraph(sentence_count: 1) }
     end
 
     trait :current_role do
-      employment_type { :job }
       is_current_role { true }
       ended_on { nil }
     end

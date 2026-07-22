@@ -106,3 +106,7 @@ ProfileEmploymentGap:
   jobseeker_profile:
     ColumnPresenceChecker:
       enabled: false
+EmploymentBreak:
+  job_application:
+    ColumnPresenceChecker:
+      enabled: false

@@ -1,6 +1,6 @@
-class Jobseekers::JobApplications::BreaksController < Jobseekers::BaseController
-  helper_method :back_path, :job_application
-
+module Jobseekers
+class JobApplications::BreaksController < BaseController
+  before_action :set_job_application
   before_action :set_employment_break, only: %i[edit update confirm_destroy destroy]
 
   def new
@@ -11,13 +11,13 @@ class Jobseekers::JobApplications::BreaksController < Jobseekers::BaseController
                         {}
                         # :nocov:
                       end
-    @employment_break = job_application.employment_breaks.build(form_attributes)
+    @employment_break = @job_application.employment_breaks.build(form_attributes)
   end
 
   def edit; end
 
   def create
-    @employment_break = job_application.employment_breaks.build(employment_break_params)
+    @employment_break = @job_application.employment_breaks.build(employment_break_params)
     if @employment_break.save
       redirect_to back_path
     else
@@ -43,11 +43,11 @@ class Jobseekers::JobApplications::BreaksController < Jobseekers::BaseController
   private
 
   def back_path
-    @back_path ||= jobseekers_job_application_build_path(job_application, :employment_history)
+    @back_path ||= jobseekers_job_application_build_path(@job_application, :employment_history)
   end
 
   def set_employment_break
-    @employment_break = job_application.employment_breaks.find(params[:id] || params[:break_id])
+    @employment_break = @job_application.employment_breaks.find(params[:id] || params[:break_id])
   end
 
   def employment_break_params
@@ -55,7 +55,8 @@ class Jobseekers::JobApplications::BreaksController < Jobseekers::BaseController
           .merge("started_on(3i)" => "1", "ended_on(3i)" => "1")
   end
 
-  def job_application
-    @job_application ||= current_jobseeker.job_applications.draft.find(params[:job_application_id])
+  def set_job_application
+    @job_application = current_jobseeker.job_applications.draft.find(params[:job_application_id])
   end
+end
 end
