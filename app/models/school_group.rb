@@ -23,7 +23,7 @@ class SchoolGroup < Organisation
   # Allows School Groups/MATs to use religious application forms for head office vacancies.
   # School Groups don’t store religious character information, so we treat a group with at least one faith school as a faith organisation.
   def faith_school?
-    schools.only_faith_schools.exists?
+    schools.faith_schools.exists?
   end
 
   def all_organisations
