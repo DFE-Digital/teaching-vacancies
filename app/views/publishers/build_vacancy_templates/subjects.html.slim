@@ -6,8 +6,9 @@
 
   = f.govuk_fieldset legend: { text: t("publishers.vacancies.steps.subjects"), tag: "h1", size: "l" } do
 
-    label for="publishers-job-listing-job-details-form-subject-search"
-      span.govuk-visually-hidden | Subject filter
+    label.govuk-label.govuk-label--m for="publishers-job-listing-job-details-form-subject-search"
+      = t("publishers.vacancies.build.subjects.search_label")
+    p.govuk-hint = t("publishers.vacancies.build.subjects.search_hint")
 
     div class="govuk-!-margin-bottom-6"
       = searchable_collection(collection: f.govuk_collection_check_boxes(:subjects,

@@ -499,7 +499,9 @@ en:
         subjects:
           step_title: Subjects
           search_label: Search subjects
-          search_hint: Start typing to filter the list of subjects.
+          search_hint: "Start typing a subject, then select it from the list. Leave this blank if the subject is not listed."
+          errors:
+            not_in_list: Select a subject from the list, or leave this blank
         contract_type:
           step_title: Contract type
           fixed_term: Fixed term

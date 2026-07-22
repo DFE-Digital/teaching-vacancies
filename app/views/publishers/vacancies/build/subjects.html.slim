@@ -7,7 +7,7 @@
 
   = f.govuk_fieldset legend: { hidden: true } do
 
-    label.govuk-label.govuk-label--m for="publishers-job-listing-job-details-form-subject-search"
+    label.govuk-label.govuk-label--m for="publishers_job_listing_subjects_form_subject_search"
       = t("publishers.vacancies.build.subjects.search_label")
     p.govuk-hint = t("publishers.vacancies.build.subjects.search_hint")
 
@@ -23,7 +23,7 @@
         hint: nil,
         classes: "checkbox-label__bold"),
         collection_count: subject_options.count,
-        options: { border: true },
+        options: { border: true, search_name: "#{f.object_name}[subject_search]", search_id: "#{f.object_name}_subject_search" },
         text: { aria_label: "search subjects" })
 
   = render "publishers/vacancies/vacancy_form_partials/submit", f: f

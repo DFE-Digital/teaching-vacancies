@@ -10,6 +10,8 @@ class SearchableCollectionComponent < ApplicationComponent
     @border = options[:border] || false
     @collection_count = collection_count
     @scrollable = options[:scrollable] || searchable?
+    @search_name = options[:search_name]
+    @search_id = options[:search_id]
   end
 
   def searchable?
@@ -24,6 +26,14 @@ class SearchableCollectionComponent < ApplicationComponent
     return nil unless border
 
     "searchable-collection-component--border" if searchable?
+  end
+
+  def search_name
+    @search_name
+  end
+
+  def search_id
+    @search_id
   end
 
   private
