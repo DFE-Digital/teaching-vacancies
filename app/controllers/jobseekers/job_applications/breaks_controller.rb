@@ -1,7 +1,7 @@
 module Jobseekers
   class JobApplications::BreaksController < BaseController
     before_action :set_job_application
-    before_action :set_employment_break, only: %i[edit update confirm_destroy destroy]
+    before_action :set_employment_break, only: %i[edit update destroy]
 
     def new
       form_attributes = if params[:started_on] && params[:ended_on]
@@ -33,7 +33,9 @@ module Jobseekers
       end
     end
 
-    def confirm_destroy; end
+    def confirm_destroy
+      @employment_break = @job_application.employment_breaks.find(params[:break_id])
+    end
 
     def destroy
       @employment_break.destroy
@@ -47,7 +49,7 @@ module Jobseekers
     end
 
     def set_employment_break
-      @employment_break = @job_application.employment_breaks.find(params[:id] || params[:break_id])
+      @employment_break = @job_application.employment_breaks.find(params[:id])
     end
 
     def employment_break_params

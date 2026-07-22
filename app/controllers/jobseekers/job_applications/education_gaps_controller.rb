@@ -1,7 +1,7 @@
 module Jobseekers
   class JobApplications::EducationGapsController < BaseController
     before_action :set_job_application
-    before_action :set_education_gap, only: %i[edit update destroy confirm_destroy]
+    before_action :set_education_gap, only: %i[edit update destroy]
 
     def new
       @education_gap = @job_application.education_gaps.build
@@ -26,7 +26,9 @@ module Jobseekers
       end
     end
 
-    def confirm_destroy; end
+    def confirm_destroy
+      @education_gap = @job_application.education_gaps.find(params[:education_gap_id])
+    end
 
     def destroy
       @education_gap.destroy!
@@ -44,7 +46,7 @@ module Jobseekers
     end
 
     def set_education_gap
-      @education_gap = @job_application.education_gaps.find(params[:id] || params[:education_gap_id])
+      @education_gap = @job_application.education_gaps.find(params[:id])
     end
 
     def education_gap_params
