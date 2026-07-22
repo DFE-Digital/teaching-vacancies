@@ -12,8 +12,7 @@ class Publishers::JobListing::SubjectsForm < Publishers::JobListing::JobListingF
       { subjects: [] }
     end
   end
-  attr_accessor(*FIELDS)
-  attr_accessor :subject_search
+  attr_accessor(*FIELDS, :subject_search)
 
   validate :subject_search_must_be_selected
 
