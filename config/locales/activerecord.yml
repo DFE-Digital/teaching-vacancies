@@ -594,16 +594,6 @@ en:
               blank: Enter your personal statement
             about_you_words:
               too_long: Personal statement must be %{count} words or less
-        jobseekers/training_and_cpd_form:
-          attributes:
-            name:
-              blank: Enter the name of the course or training
-            provider:
-              blank: Enter the name of the provider of the training
-            year_awarded:
-              blank: Enter the year the course or training was awarded
-            course_length:
-              blank: Enter the length of the course
         jobseekers/account_transfer_form:
           attributes:
             email:
