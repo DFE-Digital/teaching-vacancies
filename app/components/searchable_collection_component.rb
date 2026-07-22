@@ -1,5 +1,6 @@
 class SearchableCollectionComponent < ApplicationComponent
   attr_accessor :collection, :collection_count, :threshold, :border, :label_text, :options, :scrollable
+  attr_reader :search_name, :search_id
 
   def initialize(collection:, collection_count:, options: {}, text: {}, classes: [], html_attributes: {})
     super(classes: classes, html_attributes: html_attributes.merge({ data: { controller: "searchable-collection" } }))
@@ -26,14 +27,6 @@ class SearchableCollectionComponent < ApplicationComponent
     return nil unless border
 
     "searchable-collection-component--border" if searchable?
-  end
-
-  def search_name
-    @search_name
-  end
-
-  def search_id
-    @search_id
   end
 
   private

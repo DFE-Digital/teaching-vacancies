@@ -15,7 +15,6 @@ class Publishers::JobListing::SubjectsForm < Publishers::JobListing::JobListingF
   attr_accessor(*FIELDS)
   attr_accessor :subject_search
 
-  validate :subjects_must_be_from_list
   validate :subject_search_must_be_selected
 
   def params_to_save
@@ -24,20 +23,10 @@ class Publishers::JobListing::SubjectsForm < Publishers::JobListing::JobListingF
 
   private
 
-  def subjects_must_be_from_list
-    valid_subjects = (SUBJECT_OPTIONS + FURTHER_EDUCATION_SUBJECT_OPTIONS).map(&:first)
-    Array(subjects).compact_blank.each do |subject|
-      unless valid_subjects.include?(subject)
-        errors.add(:subjects, I18n.t("publishers.vacancies.build.subjects.errors.not_in_list"))
-        break
-      end
-    end
-  end
-
   def subject_search_must_be_selected
     return if subject_search.blank?
-    return if Array(subjects).compact_blank.any?
+    return if subjects.present?
 
-    errors.add(:subject_search, I18n.t("publishers.vacancies.build.subjects.errors.not_in_list"))
+    errors.add(:subject_search, I18n.t("publishers.vacancies.build.subjects.errors.subject_searched_for_but_not_selected"))
   end
 end
