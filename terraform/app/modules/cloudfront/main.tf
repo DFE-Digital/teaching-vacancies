@@ -182,8 +182,8 @@ resource "aws_wafv2_web_acl_rule" "sql-protection" {
   priority    = 2
   web_acl_arn = aws_wafv2_web_acl.cloudfront-waf[0].arn
 
-  action {
-    block {}
+  override_action {
+    none {}
   }
 
   statement {
