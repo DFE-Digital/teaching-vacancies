@@ -110,3 +110,7 @@ EmploymentBreak:
   job_application:
     ColumnPresenceChecker:
       enabled: false
+EducationGap:
+  job_application:
+    ColumnPresenceChecker:
+      enabled: false
