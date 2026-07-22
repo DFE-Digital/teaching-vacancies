@@ -26,6 +26,6 @@ class Publishers::JobListing::SubjectsForm < Publishers::JobListing::JobListingF
     return if subject_search.blank?
     return if subjects.present?
 
-    errors.add(:subject_search, I18n.t("publishers.vacancies.build.subjects.errors.subject_searched_for_but_not_selected"))
+    errors.add(:subjects, I18n.t("publishers.vacancies.build.subjects.errors.subject_searched_for_but_not_selected"))
   end
 end

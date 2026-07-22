@@ -21,7 +21,7 @@
         hint: nil,
         classes: "checkbox-label__bold"),
         collection_count: SUBJECT_OPTIONS.count,
-        options: { border: true },
+        options: { border: true, error: @form.errors[:subjects].first },
         text: { aria_label: "search subjects" })
 
   = render "button_group", f: f

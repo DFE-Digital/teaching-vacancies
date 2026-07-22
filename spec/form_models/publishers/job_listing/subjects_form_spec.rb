@@ -16,7 +16,7 @@ RSpec.describe Publishers::JobListing::SubjectsForm, type: :model do
 
     it "adds the correct error message" do
       form.valid?
-      expect(form.errors[:subject_search]).to include(I18n.t("publishers.vacancies.build.subjects.errors.subject_searched_for_but_not_selected"))
+      expect(form.errors[:subjects]).to include(I18n.t("publishers.vacancies.build.subjects.errors.subject_searched_for_but_not_selected"))
     end
   end
 
