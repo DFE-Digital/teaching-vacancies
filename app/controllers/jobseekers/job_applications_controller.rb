@@ -69,7 +69,23 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
       redirect_to jobseekers_job_application_apply_path(new_job_application), notice: t("jobseekers.job_applications.new.import_from_previous_application")
     else
       new_job_application = vacancy.create_job_application_for(current_jobseeker)
-      redirect_to jobseekers_job_application_apply_path(new_job_application.id)
+      redirect_to jobseekers_job_application_apply_path(new_job_application)
+    end
+  end
+
+  def send_trn
+    trn = params.expect(job_application: [:teacher_reference_number])[:teacher_reference_number]
+
+    if trn.present?
+      ab_finished(:trn_on_apply)
+    end
+    if vacancy.enable_job_applications?
+      redirect_to new_jobseekers_job_job_application_path(vacancy.id)
+    elsif vacancy.website?
+      redirect_to vacancy.application_link
+    else
+      new_job_application = vacancy.create_job_application_for(current_jobseeker)
+      redirect_to jobseekers_job_application_apply_path(new_job_application)
     end
   end
 
@@ -161,6 +177,10 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     else
       render :confirm_withdraw
     end
+  end
+
+  def trn_interstitial
+    @job_application = vacancy.job_applications.build
   end
 
   private
