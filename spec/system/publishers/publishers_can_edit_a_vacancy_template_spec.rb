@@ -72,6 +72,14 @@ RSpec.describe "Editing a vacancy template" do
         expect(page).to have_no_content "Chemistry"
         expect(template.reload).to have_attributes(subjects: [])
       end
+
+      it "shows an error when typing in the search bar without selecting a subject", :retry do
+        uncheck "Chemistry"
+        fill_in "publishers_job_listing_subjects_form[subject_search]", with: "magic"
+        click_on I18n.t("buttons.save_and_continue")
+
+        expect(page).to have_content I18n.t("publishers.vacancies.build.subjects.errors.subject_searched_for_but_not_selected")
+      end
     end
 
     context "with key_stages" do

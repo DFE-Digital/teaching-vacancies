@@ -5,19 +5,25 @@
 = form_for form, url: wizard_path(current_step), method: :patch do |f|
   = f.govuk_error_summary
 
-  - subject_options = vacancy.organisations.any?(&:fe_college?) ? FURTHER_EDUCATION_SUBJECT_OPTIONS : SUBJECT_OPTIONS
+  = f.govuk_fieldset legend: { hidden: true } do
 
-  div class="govuk-!-margin-bottom-6"
-    = searchable_collection(collection: f.govuk_collection_check_boxes(:subjects,
-      subject_options,
-      :first,
-      :first,
-      :last,
-      legend: { text: t("publishers.vacancies.build.subjects.search_label"), size: "m" },
-      hint: { text: t("publishers.vacancies.build.subjects.search_hint") },
-      classes: "checkbox-label__bold"),
-      collection_count: subject_options.count,
-      options: { border: true, search_name: "#{f.object_name}[subject_search]", search_id: "#{f.object_name}_subject_search" },
-      text: { aria_label: "search subjects" })
+    - subject_options = vacancy.organisations.any?(&:fe_college?) ? FURTHER_EDUCATION_SUBJECT_OPTIONS : SUBJECT_OPTIONS
+
+    label.govuk-label.govuk-label--m for="#{f.object_name}_subject_search"
+      = t("publishers.vacancies.build.subjects.search_label")
+    p.govuk-hint = t("publishers.vacancies.build.subjects.search_hint")
+
+    div class="govuk-!-margin-bottom-6"
+      = searchable_collection(collection: f.govuk_collection_check_boxes(:subjects,
+        subject_options,
+        :first,
+        :first,
+        :last,
+        legend: nil,
+        hint: nil,
+        classes: "checkbox-label__bold"),
+        collection_count: subject_options.count,
+        options: { border: true, search_name: "#{f.object_name}[subject_search]", search_id: "#{f.object_name}_subject_search" },
+        text: { aria_label: "search subjects" })
 
   = render "publishers/vacancies/vacancy_form_partials/submit", f: f

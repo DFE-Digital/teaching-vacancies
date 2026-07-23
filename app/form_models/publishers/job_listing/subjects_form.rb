@@ -1,18 +1,18 @@
 class Publishers::JobListing::SubjectsForm < Publishers::JobListing::JobListingForm
-  FIELDS = %i[subjects].freeze
+  FIELDS = %i[subjects subject_search].freeze
 
   class << self
     # rubocop:disable Lint/UnusedMethodArgument
     def load_from_model(vacancy, current_publisher:)
-      new(vacancy.slice(*FIELDS))
+      new(vacancy.slice(:subjects))
     end
     # rubocop:enable Lint/UnusedMethodArgument
 
     def fields
-      { subjects: [] }
+      [:subject_search, { subjects: [] }]
     end
   end
-  attr_accessor(*FIELDS, :subject_search)
+  attr_accessor(*FIELDS)
 
   validate :subject_search_must_be_selected
 
