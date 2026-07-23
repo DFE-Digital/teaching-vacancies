@@ -61,9 +61,10 @@ RSpec.describe "DfE Sign In omniauth callbacks" do
         )
       end
 
-      it "raises a KeyError but still attaches the DSI auth data to the Sentry scope first" do
-        expect { get "/auth/dfe/callback" }.to raise_error(KeyError)
+      it "renders the pending approval page and attaches the DSI auth data to the Sentry scope" do
+        get "/auth/dfe/callback"
 
+        expect(response.body).to include("Your account is waiting for approval")
         expect(sentry_scope).to have_received(:set_context).with(
           "DSI auth data",
           hash_including(
