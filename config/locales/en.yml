@@ -122,6 +122,11 @@ en:
   omniauth_callbacks:
     failure:
       message: Your session has expired so you have been logged out. Please sign in again to your account below.
+    pending_approval:
+      heading: Your account is waiting for approval
+      paragraph_1: Your request to access Teaching Vacancies has been sent to your organisation's DfE Sign-in approver.
+      paragraph_2: You'll be able to sign in after they approve your request.
+      paragraph_3: If you need help, contact your organisation's DfE Sign-in approver.
 
   nav:
     create_a_job_alert: Create a job alert
