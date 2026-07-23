@@ -33,8 +33,8 @@ RSpec.describe "Jobseekers can add professional body memberships to their job ap
           { key: "Name of professional body", value: "Teachers Union" },
           { key: "Membership type or level (optional)", value: "Gold" },
           { key: "Membership or registration number (optional)", value: "42" },
-          { key: "Date obtained (optional)", value: "2020" },
-          { key: "Did you take an exam for this membership?", value: "Yes" },
+          { key: "Date you joined (optional)", value: "2020" },
+          { key: "Did you take an exam to get this membership?", value: "Yes" },
         ]
 
         rows.each do |row|

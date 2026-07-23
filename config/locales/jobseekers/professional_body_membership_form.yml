@@ -24,14 +24,14 @@ en:
         name: Name of professional body
         membership_type: Membership type or level (optional)
         membership_number: Membership or registration number (optional)
-        year_membership_obtained: Date obtained (optional)
-        exam_taken: Did you take an exam for this membership?
+        year_membership_obtained: Date you joined (optional)
+        exam_taken: Did you take an exam to get this membership?
         exam_taken_options:
           "true": "Yes"
           "false": "No"
     legend:
       jobseekers_professional_body_membership_form:
-        exam_taken: Did you take an exam for this membership?
+        exam_taken: Did you take an exam to get this membership?
   jobseekers:
     job_applications:
       show:
@@ -44,12 +44,12 @@ en:
         professional_body_memberships:
           list_heading: Professional body memberships
           heading: Professional body memberships (optional)
-          hint: You can include professional memberships here, such as the Chartered College of Teaching or the General Teaching Council.
-          no_training: No memberships specified
-          no_professional_body_memberships: No memberships specified
+          hint: You can add professional body memberships, such as the Chartered College of Teaching or the General Teaching Council.
+          no_training: No memberships added
+          no_professional_body_memberships: No memberships added
       professional_body_memberships:
         new:
-          heading: Add professional body memberships
+          heading: Add a professional body membership
           page_title: Professional body memberships
         edit:
           heading: Edit professional body memberships

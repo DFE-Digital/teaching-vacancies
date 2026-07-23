@@ -66,7 +66,7 @@ RSpec.describe "check job application after status transition" do
         # view draft application
         jobseeker_applications_page.click_on_job_application(job_application.id)
         expect(jobseeker_application_apply_page).to be_displayed(id: job_application.id)
-        expect(jobseeker_application_apply_page.tag).to have_text("draft")
+        expect(jobseeker_application_apply_page.tag).to have_text("Draft")
       end
 
       run_with_publisher(publisher) do
@@ -94,7 +94,7 @@ RSpec.describe "check job application after status transition" do
         #
         jobseeker_applications_page.click_on_job_application(job_application.id)
         expect(jobseeker_application_page).to be_displayed(id: job_application.id)
-        expect(jobseeker_application_page.tag).to have_text("submitted")
+        expect(jobseeker_application_page.tag).to have_text("Submitted")
       end
 
       run_with_publisher(publisher) do
@@ -129,7 +129,7 @@ RSpec.describe "check job application after status transition" do
         #
         jobseeker_applications_page.click_on_job_application(job_application.id)
         expect(jobseeker_application_page).to be_displayed(id: job_application.id)
-        expect(jobseeker_application_page.tag).to have_text("unsuccessful")
+        expect(jobseeker_application_page.tag).to have_text("Unsuccessful")
       end
     end
   end
@@ -171,7 +171,7 @@ RSpec.describe "check job application after status transition" do
         #
         jobseeker_applications_page.click_on_job_application(job_application.id)
         expect(jobseeker_application_page).to be_displayed(id: job_application.id)
-        expect(jobseeker_application_page.tag).to have_text("shortlisted")
+        expect(jobseeker_application_page.tag).to have_text("Shortlisted")
       end
     end
   end
@@ -193,7 +193,7 @@ RSpec.describe "check job application after status transition" do
         #
         jobseeker_applications_page.click_on_job_application(job_application.id)
         expect(jobseeker_application_page).to be_displayed(id: job_application.id)
-        expect(jobseeker_application_page.tag).to have_text("shortlisted")
+        expect(jobseeker_application_page.tag).to have_text("Shortlisted")
       end
 
       run_with_publisher(publisher) do
@@ -243,7 +243,7 @@ RSpec.describe "check job application after status transition" do
 
         jobseeker_applications_page.click_on_job_application(job_application.id)
         expect(jobseeker_application_page).to be_displayed(id: job_application.id)
-        expect(jobseeker_application_page.tag).to have_text("interviewing")
+        expect(jobseeker_application_page.tag).to have_text("Interviewing")
       end
     end
   end
@@ -265,7 +265,7 @@ RSpec.describe "check job application after status transition" do
         #
         jobseeker_applications_page.click_on_job_application(job_application.id)
         expect(jobseeker_application_page).to be_displayed(id: job_application.id)
-        expect(jobseeker_application_page.tag).to have_text("interviewing")
+        expect(jobseeker_application_page.tag).to have_text("Interviewing")
       end
 
       run_with_publisher(publisher) do
@@ -308,7 +308,7 @@ RSpec.describe "check job application after status transition" do
 
         jobseeker_applications_page.click_on_job_application(job_application.id)
         expect(jobseeker_application_page).to be_displayed(id: job_application.id)
-        expect(jobseeker_application_page.tag).to have_text("offered")
+        expect(jobseeker_application_page.tag).to have_text("Offered")
       end
     end
   end
@@ -330,7 +330,7 @@ RSpec.describe "check job application after status transition" do
         #
         jobseeker_applications_page.click_on_job_application(job_application.id)
         expect(jobseeker_application_page).to be_displayed(id: job_application.id)
-        expect(jobseeker_application_page.tag).to have_text("interviewing")
+        expect(jobseeker_application_page.tag).to have_text("Interviewing")
       end
 
       run_with_publisher(publisher) do
@@ -362,7 +362,7 @@ RSpec.describe "check job application after status transition" do
         #
         jobseeker_applications_page.click_on_job_application(job_application.id)
         expect(jobseeker_application_page).to be_displayed(id: job_application.id)
-        expect(jobseeker_application_page.tag).to have_text("unsuccessful")
+        expect(jobseeker_application_page.tag).to have_text("Unsuccessful")
       end
     end
   end
@@ -382,7 +382,7 @@ RSpec.describe "check job application after status transition" do
 
         jobseeker_applications_page.click_on_job_application(job_application.id)
         expect(jobseeker_application_page).to be_displayed(id: job_application.id)
-        expect(jobseeker_application_page.tag).to have_text("offered")
+        expect(jobseeker_application_page.tag).to have_text("Offered")
       end
 
       run_with_publisher(publisher) do
@@ -411,7 +411,7 @@ RSpec.describe "check job application after status transition" do
         #
         jobseeker_applications_page.click_on_job_application(job_application.id)
         expect(jobseeker_application_page).to be_displayed(id: job_application.id)
-        expect(jobseeker_application_page.tag).to have_text("declined")
+        expect(jobseeker_application_page.tag).to have_text("Declined")
       end
     end
   end

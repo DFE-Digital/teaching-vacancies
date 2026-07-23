@@ -98,15 +98,15 @@ RSpec.describe "jobseekers/job_applications/show" do
 
     it "displays common elements" do
       expect(banner).to have_css(selectors[:header], text: "#{vacancy.job_title} at #{vacancy.organisation.name}")
-      expect(banner).to have_css(selectors[:view_link], text: "View this listing (opens in new tab)")
-      expect(banner).to have_link("View this listing (opens in new tab)", href: job_path(vacancy))
+      expect(banner).to have_css(selectors[:view_link], text: "View job listing (opens in new tab)")
+      expect(banner).to have_link("View job listing (opens in new tab)", href: job_path(vacancy))
     end
 
     context "with active application" do
       let(:job_application) { build_stubbed(:job_application, :status_shortlisted, jobseeker:, vacancy:) }
 
       it "renders section" do
-        expect(banner).to have_css(selectors[:tag], text: "shortlisted")
+        expect(banner).to have_css(selectors[:tag], text: "Shortlisted")
 
         expect(banner).to have_css(selectors[:withdraw_btn])
         expect(banner).to have_link("Withdraw", href: jobseekers_job_application_confirm_withdraw_path(job_application))
@@ -123,7 +123,7 @@ RSpec.describe "jobseekers/job_applications/show" do
       let(:self_disclosure_request) { create(:self_disclosure_request, :sent) }
 
       it "renders section" do
-        expect(banner).to have_css(selectors[:tag], text: "unsuccessful")
+        expect(banner).to have_css(selectors[:tag], text: "Unsuccessful")
 
         expect(banner).to have_css(selectors[:download_btn])
         expect(banner).to have_link("Download your completed application", href: jobseekers_job_application_download_path(job_application))

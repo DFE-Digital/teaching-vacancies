@@ -64,10 +64,10 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
     expect(rendered).to have_css(".govuk-summary-list__key", text: "Email address")
     expect(rendered).to have_css(".govuk-summary-list__value", text: job_application.email_address)
 
-    expect(rendered).to have_css(".govuk-summary-list__key", text: "Do you need Skilled Worker visa sponsorship?")
+    expect(rendered).to have_css(".govuk-summary-list__key", text: "Do you need Skilled Worker visa sponsorship to work in the UK?")
     expect(rendered).to have_css(".govuk-summary-list__value", text: I18n.t("jobseekers.profiles.personal_details.edit.work.options.true"))
 
-    expect(rendered).to have_css(".govuk-summary-list__key", text: "Do you have a national insurance number?")
+    expect(rendered).to have_css(".govuk-summary-list__key", text: "Do you have a National Insurance number?")
     expect(rendered).to have_css(".govuk-summary-list__value", text: I18n.t("helpers.label.jobseekers_job_application_personal_details_form.has_ni_number_options.yes"))
 
     expect(rendered).to have_css(".govuk-summary-list__key", text: "National Insurance number")
@@ -103,10 +103,10 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
       expect(rendered).to have_css(".govuk-summary-list__key", text: "Email address")
       expect(rendered).to have_no_css(".govuk-summary-list__value", text: job_application.email_address)
 
-      expect(rendered).to have_css(".govuk-summary-list__key", text: "Do you need Skilled Worker visa sponsorship?")
+      expect(rendered).to have_css(".govuk-summary-list__key", text: "Do you need Skilled Worker visa sponsorship to work in the UK?")
       expect(rendered).to have_css(".govuk-summary-list__value", text: I18n.t("jobseekers.profiles.personal_details.edit.work.options.true"))
 
-      expect(rendered).to have_css(".govuk-summary-list__key", text: "Do you have a national insurance number?")
+      expect(rendered).to have_css(".govuk-summary-list__key", text: "Do you have a National Insurance number?")
       expect(rendered).to have_css(".govuk-summary-list__value", text: I18n.t("helpers.label.jobseekers_job_application_personal_details_form.has_ni_number_options.yes"))
 
       expect(rendered).to have_css(".govuk-summary-list__key", text: "National Insurance number")
@@ -164,7 +164,7 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
       expect(rendered).to have_css(".govuk-summary-list__key", text: "Email address")
       expect(rendered).to have_css(".govuk-summary-list__value", text: uploaded_job_application.email_address)
 
-      expect(rendered).to have_css(".govuk-summary-list__key", text: "Do you need Skilled Worker visa sponsorship?")
+      expect(rendered).to have_css(".govuk-summary-list__key", text: "Do you need Skilled Worker visa sponsorship to work in the UK?")
       expect(rendered).to have_css(".govuk-summary-list__value", text: I18n.t("jobseekers.profiles.personal_details.edit.work.options.true"))
 
       expect(rendered).to have_css(".govuk-summary-list__key", text: "Teacher reference number (TRN)")

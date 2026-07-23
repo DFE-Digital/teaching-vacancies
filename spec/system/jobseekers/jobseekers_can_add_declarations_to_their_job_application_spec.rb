@@ -30,7 +30,7 @@ RSpec.describe "Jobseekers can disclose close relationships or safeguarding issu
     end
 
     choose("Yes")
-    choose("Yes, I want to share something")
+    choose("Yes, I need to declare something")
 
     click_on "Save and continue"
 

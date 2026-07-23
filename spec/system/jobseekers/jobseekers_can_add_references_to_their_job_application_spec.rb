@@ -21,7 +21,7 @@ RSpec.describe "Jobseekers can add references to their job application" do
     end
 
     it "shows no referees" do
-      expect(page).to have_content("No referees specified")
+      expect(page).to have_content("No referees added")
     end
 
     context "when adding a referee" do

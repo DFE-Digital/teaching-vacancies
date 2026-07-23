@@ -59,22 +59,22 @@ RSpec.describe "Jobseekers can manage their job applications" do
 
           within ".card-component:nth-child(1)" do
             expect(page).to have_css(".card-component__header", text: draft_job_application.vacancy.job_title)
-            expect(page).to have_css(".card-component__actions", text: "draft")
+            expect(page).to have_css(".card-component__actions", text: "Draft")
           end
 
           within ".card-component:nth-child(2)" do
             expect(page).to have_css(".card-component__header", text: application_with_action.vacancy.job_title)
-            expect(page).to have_css(".card-component__actions", text: "needs action")
+            expect(page).to have_css(".card-component__actions", text: "Needs action")
           end
 
           within ".card-component:nth-child(3)" do
             expect(page).to have_css(".card-component__header", text: interviewing_job_application.vacancy.job_title)
-            expect(page).to have_css(".card-component__actions", text: "interviewing")
+            expect(page).to have_css(".card-component__actions", text: "Interviewing")
           end
 
           within ".card-component:nth-child(4)" do
             expect(page).to have_css(".card-component__header", text: shortlisted_job_application.vacancy.job_title)
-            expect(page).to have_css(".card-component__actions", text: "shortlisted")
+            expect(page).to have_css(".card-component__actions", text: "Shortlisted")
           end
 
           within ".card-component:nth-child(5)" do
@@ -83,22 +83,22 @@ RSpec.describe "Jobseekers can manage their job applications" do
               dt = find("dt", text: "Submitted")
               expect(dt.sibling("dd").text).to eq("1 March 2025 at 12:31pm")
             end
-            expect(page).to have_css(".card-component__actions", text: "submitted")
+            expect(page).to have_css(".card-component__actions", text: "Submitted")
           end
 
           within ".card-component:nth-child(6)" do
             expect(page).to have_css(".card-component__header", text: unsuccessful_job_application.vacancy.job_title)
-            expect(page).to have_css(".card-component__actions", text: "unsuccessful")
+            expect(page).to have_css(".card-component__actions", text: "Unsuccessful")
           end
 
           within ".card-component:nth-child(7)" do
             expect(page).to have_css(".card-component__header", text: withdrawn_job_application.vacancy.job_title)
-            expect(page).to have_css(".card-component__actions", text: "withdrawn")
+            expect(page).to have_css(".card-component__actions", text: "Withdrawn")
           end
 
           within ".card-component:nth-child(8)" do
             expect(page).to have_css(".card-component__header", text: deadline_passed_job_application.vacancy.job_title)
-            expect(page).to have_css(".card-component__actions", text: "job closed")
+            expect(page).to have_css(".card-component__actions", text: "Job closed")
           end
         end
 

@@ -69,7 +69,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
       within all(".govuk-summary-card").last do
         click_on "Change"
       end
-      fill_in "Reason for leaving role", with: "Needed for KSCIE compliance"
+      fill_in "Reason for leaving this role", with: "Needed for KSCIE compliance"
       click_on I18n.t("buttons.save_employment")
       choose "Yes, I've completed this section"
       click_on "Save and continue"
@@ -196,10 +196,10 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
     it "allows jobseekers to edit employment history" do
       click_on "Change Teacher"
 
-      fill_in "School or other organisation", with: ""
+      fill_in "Organisation name", with: ""
       validates_step_complete(button: I18n.t("buttons.save_employment"))
 
-      fill_in "School or other organisation", with: "A different school"
+      fill_in "Organisation name", with: "A different school"
       click_on I18n.t("buttons.save_employment")
 
       expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :employment_history), ignore_query: true)

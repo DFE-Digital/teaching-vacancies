@@ -4,11 +4,11 @@
 
 = f.govuk_date_field :started_on,
   omit_day: true,
-  hint: -> { t("helpers.hint.date", date: 15.months.ago.strftime("%m %Y")) }
+  hint: -> { t("helpers.hint.date", date: 15.months.ago.strftime("%-m %Y")) }
 = f.govuk_date_field :ended_on,
   omit_day: true,
-  hint: -> { t("helpers.hint.date", date: 3.months.ago.strftime("%m %Y")) }
-= f.govuk_radio_divider
+  hint: -> { t("helpers.hint.date", date: 3.months.ago.strftime("%-m %Y")) }
+= f.govuk_radio_divider "Or"
 = f.govuk_check_box :is_current_role, "true", "false", multiple: false
 
 = f.govuk_text_area :main_duties, label: { size: "s" }, required: true, max_words: Employment::MAIN_DUTIES_MAX_WORDS

@@ -86,7 +86,7 @@ RSpec.describe "Jobseeker can add training and cpds to their job application" do
   end
 
   def expect_page_to_have_values(name, provider, grade, year, course_length)
-    expect(page).to have_css(".govuk-summary-list__key", text: "Name of course or training")
+    expect(page).to have_css(".govuk-summary-list__key", text: "Name of training or course")
     expect(page).to have_css(".govuk-summary-list__value", text: name)
 
     expect(page).to have_css(".govuk-summary-list__key", text: "Training provider")

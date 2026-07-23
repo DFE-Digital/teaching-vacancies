@@ -14,11 +14,11 @@ en:
   helpers:
     legend:
       jobseekers_job_application_ask_for_support_form:
-        is_support_needed: Do you need support or adjustments for an interview?
+        is_support_needed: Do you need support or adjustments for your interview?
         ask_for_support_section_completed: Have you completed this section?
     label:
       jobseekers_job_application_ask_for_support_form:
-        support_needed_details: Tell us any information you think is relevant
+        support_needed_details: Tell us what support or adjustments you need
         is_support_needed_options:
           "false": No, I do not need support or adjustments
           "true": Yes, I need support or adjustments
