@@ -47,6 +47,23 @@ RSpec.describe "DfE Sign In omniauth callbacks" do
       end
     end
 
+    context "when the auth hash has no organisation" do
+      before do
+        OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
+          provider: "dfe",
+          uid: "161d1f6a-44f1-4a1a-940d-d1088c439da7",
+          info: { email: "an-email@example.com" },
+          extra: { raw_info: {} },
+        )
+      end
+
+      it "renders the pending approval page" do
+        get "/auth/dfe/callback"
+
+        expect(response.body).to include("Your account is waiting for approval")
+      end
+    end
+
     context "when the auth hash organisation has no id" do
       before do
         OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
