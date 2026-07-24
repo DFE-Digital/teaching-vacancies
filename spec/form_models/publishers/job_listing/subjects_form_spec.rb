@@ -31,4 +31,10 @@ RSpec.describe Publishers::JobListing::SubjectsForm, type: :model do
 
     it { is_expected.to be_valid }
   end
+
+  context "when subject_search is blank and subjects are selected" do
+    subject(:form) { described_class.new(subjects: [SUBJECT_OPTIONS.first.first], subject_search: "") }
+
+    it { is_expected.to be_valid }
+  end
 end
