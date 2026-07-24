@@ -45,8 +45,9 @@ RUN --mount=type=secret,id=master_key,env=RAILS_MASTER_KEY RAILS_ENV=production 
 
 # govuk-frontend fonts and images are referenced by hardcoded paths in the compiled CSS.
 # Copy them to public/assets before node_modules is deleted so they are served correctly.
-RUN cp -r node_modules/govuk-frontend/dist/govuk/assets/fonts public/assets/fonts && \
-    cp -r node_modules/govuk-frontend/dist/govuk/assets/images public/assets/images
+RUN mkdir -p public/assets/fonts public/assets/images && \
+    cp -r node_modules/govuk-frontend/dist/govuk/assets/fonts/. public/assets/fonts/ && \
+    cp -r node_modules/govuk-frontend/dist/govuk/assets/images/. public/assets/images/
 
 RUN rm -rf node_modules log tmp yarn.lock && \
       rm -rf /usr/local/bundle/cache && \

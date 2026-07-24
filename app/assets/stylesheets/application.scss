@@ -1,8 +1,8 @@
-$govuk-global-styles: true;
-$govuk-assets-path: '/';
-
 // External dependencies
-@use 'govuk-frontend/dist/govuk/index' as govuk;
+@use 'govuk-frontend/dist/govuk/index' as govuk with (
+  $govuk-global-styles: true,
+  $govuk-assets-path: '/assets/'
+);
 @use 'accessible-autocomplete/dist/accessible-autocomplete.min';
 @use 'leaflet/dist/leaflet';
 @use 'leaflet.markercluster/dist/MarkerCluster';
