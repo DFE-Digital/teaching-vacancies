@@ -20,7 +20,7 @@ en:
     label:
       jobseekers_job_application_review_form:
         confirm_data_accurate_options:
-          "1": I confirm that the above information is accurate and complete
+          "1": I confirm that the information in my application is accurate and complete
         confirm_data_usage_options:
-          "1": I consent to my data being shared with and processed by these organisations for recruitment purposes (for example, background and qualification checks)
+          "1": I consent to my data being shared with and processed by these organisations for recruitment purposes, including background and qualification checks
 

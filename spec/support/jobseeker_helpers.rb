@@ -13,7 +13,7 @@ module JobseekerHelpers
 
   def fill_in_ask_for_support
     choose "Yes", name: "jobseekers_job_application_ask_for_support_form[is_support_needed]"
-    fill_in "Tell us any information you think is relevant", with: "Some details about support"
+    fill_in "Tell us what support or adjustments you need", with: "Some details about support"
     choose I18n.t("helpers.label.jobseekers_job_application_ask_for_support_form.ask_for_support_section_completed_options.true")
   end
 
@@ -24,27 +24,27 @@ module JobseekerHelpers
     fill_in I18n.t("helpers.label.#{form}.reason_for_leaving"), with: reason_for_leaving if reason_for_leaving.present?
 
     if I18n.exists?("helpers.label.#{form}.subjects_html")
-      fill_in "Subjects and key stages taught (optional field)", with: "English KS1"
+      fill_in "Subjects and key stages you taught (optional field)", with: "English KS1"
     end
 
     fill_in "#{form}[started_on(1i)]", with: start_year
     fill_in "#{form}[started_on(2i)]", with: start_month
-    check "I currently work here"
+    check I18n.t("helpers.label.#{form}.is_current_role_options.true")
   end
 
   def fill_in_declarations
     choose "Yes", name: "jobseekers_job_application_declarations_form[has_close_relationships]"
-    fill_in "Please give details", with: "Some details of the relationship"
-    choose "Yes, I want to share something"
-    fill_in "Give any relevant information", with: "Criminal record"
+    fill_in "Give details of the relationship", with: "Some details of the relationship"
+    choose "Yes, I need to declare something"
+    fill_in "Give details of the safeguarding issue", with: "Criminal record"
     choose I18n.t("helpers.label.jobseekers_job_application_declarations_form.declarations_section_completed_options.true")
   end
 
   def fill_in_employment_history(job_title: "The Best Teacher", start_month: "09", start_year: "2019", end_month: "07", end_year: "2020")
-    fill_in "School or other organisation", with: "The Best School"
+    fill_in "Organisation name", with: "The Best School"
     fill_in "Job title", with: job_title
     fill_in "Main duties", with: "Some details about what the main duties were"
-    fill_in "Reason for leaving role", with: "Just couldn't take it any longer"
+    fill_in "Reason for leaving this role", with: "Just couldn't take it any longer"
     fill_in "jobseekers_job_application_details_employment_form[started_on(1i)]", with: start_year
     fill_in "jobseekers_job_application_details_employment_form[started_on(2i)]", with: start_month
     fill_in "jobseekers_job_application_details_employment_form[ended_on(1i)]", with: end_year
@@ -52,7 +52,7 @@ module JobseekerHelpers
   end
 
   def fill_in_training_and_cpds(name: "Fire safety", provider: "TrainingProvider ltd", grade: "Pass", year_awarded: "2020", course_length: "1 year")
-    fill_in "Name of course or training", with: name
+    fill_in "Name of training or course", with: name
     fill_in "Training provider", with: provider
     fill_in "Grade", with: grade
     fill_in "Date completed", with: year_awarded
@@ -113,8 +113,8 @@ module JobseekerHelpers
 
   def fill_in_professional_status
     choose "Yes", name: "jobseekers_job_application_professional_status_form[qualified_teacher_status]"
-    fill_in "Year QTS was gained", with: Time.current.year
-    fill_in "What is your teacher reference number (TRN)?", with: "1234567"
+    fill_in "Year you gained QTS", with: Time.current.year
+    fill_in "What is your teacher reference number?", with: "1234567"
     choose "Yes", name: "jobseekers_job_application_professional_status_form[is_statutory_induction_complete]"
 
     choose I18n.t("helpers.label.jobseekers_job_application_professional_status_form.professional_status_section_completed_options.true")
@@ -124,7 +124,7 @@ module JobseekerHelpers
     fill_in "Name", with: "Jim Referee"
     fill_in "Job title", with: "Important job"
     fill_in "Organisation", with: "Important organisation"
-    fill_in "Relationship to applicant", with: "Colleague"
+    fill_in "Relationship to you", with: "Colleague"
     fill_in "Email address", with: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)
     fill_in "Phone number", with: "09999 123456"
     choose("Yes")
@@ -142,8 +142,8 @@ module JobseekerHelpers
   end
 
   def fill_in_undergraduate_degree
-    fill_in "Subject", with: "Linguistics"
-    fill_in "Awarding body", with: "University of Life"
+    fill_in "Degree subject", with: "Linguistics"
+    fill_in "University or college", with: "University of Life"
     choose "Yes", name: "jobseekers_qualifications_degree_form[finished_studying]"
     fill_in "Grade", with: "2:1"
     fill_in "Year", with: "2019"
@@ -155,14 +155,14 @@ module JobseekerHelpers
     fill_in "Awarding body (optional)", with: "AXA"
     fill_in "Subject", with: "Superteaching"
     choose "No", name: "jobseekers_qualifications_other_form[finished_studying]"
-    fill_in "Please give details", with: "I expect to finish next year"
+    fill_in "Provide details about your qualification (optional)", with: "I expect to finish next year"
   end
 
   def fill_in_professional_body_membership
     fill_in "Name of professional body", with: "Teachers Union"
     fill_in "Membership type or level (optional)", with: "Gold"
     fill_in "Membership or registration number (optional)", with: "42"
-    fill_in "Date obtained (optional)", with: "2020"
+    fill_in "Date you joined (optional)", with: "2020"
     choose "Yes"
   end
 

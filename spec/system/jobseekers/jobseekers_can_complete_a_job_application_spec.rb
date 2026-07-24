@@ -66,7 +66,7 @@ RSpec.describe "Jobseekers can complete a job application" do
       fill_in_declarations
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_css("#declarations", text: I18n.t("shared.status_tags.complete"))
-      click_on "Review application"
+      click_on "Review and submit application"
 
       # wait for page load
       find(".govuk-list.review-component__sections")
@@ -154,7 +154,7 @@ RSpec.describe "Jobseekers can complete a job application" do
     click_on(I18n.t("jobseekers.job_applications.build.professional_body_memberships.list_heading"))
     expect(page).to have_content("No memberships")
     validates_step_complete
-    click_on "Add membership"
+    click_on "Add a membership"
     fill_in_professional_body_membership
     click_on "Save and continue"
     choose "Yes, I've completed this section"
@@ -178,7 +178,7 @@ RSpec.describe "Jobseekers can complete a job application" do
     let(:vacancy) { create(:vacancy, :with_uploaded_application_form, job_roles: ["teacher"], organisations: [organisation]) }
 
     it "errors on the review button" do
-      click_button "Review application"
+      click_button "Review and submit application"
       within(".govuk-error-summary__body") do
         expect(page).to have_link("Complete your personal details")
       end
@@ -187,7 +187,7 @@ RSpec.describe "Jobseekers can complete a job application" do
     it "allows jobseekers to complete an application and go to review page" do
       click_link(I18n.t("jobseekers.job_applications.build.personal_details.heading"))
       validates_step_complete
-      choose I18n.t("helpers.label.jobseekers_job_application_personal_details_form.personal_details_section_completed_options.false")
+      choose I18n.t("helpers.label.jobseekers_uploaded_job_application_personal_details_form.personal_details_section_completed_options.false")
       click_on I18n.t("buttons.save_and_continue")
       expect(page).not_to have_content("There is a problem")
       expect(page).to have_css("#personal_details .govuk-task-list__status .govuk-tag", text: "Incomplete")
@@ -228,7 +228,7 @@ RSpec.describe "Jobseekers can complete a job application" do
       choose I18n.t("helpers.label.jobseekers_uploaded_job_application_upload_application_form_form.upload_application_form_section_completed_options.true")
       click_on I18n.t("buttons.save_and_continue")
 
-      click_button "Review application"
+      click_button "Review and submit application"
       expect(page).to have_current_path(jobseekers_job_application_review_path(vacancy.job_applications.first), ignore_query: true)
     end
   end

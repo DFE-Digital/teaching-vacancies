@@ -17,7 +17,7 @@ RSpec.describe "jobseekers/job_applications/review" do
     let(:vacancy) { build_stubbed(:vacancy, organisations: build_stubbed_list(:trust, 1, name: trust_name)) }
 
     it "has MAT-specific content" do
-      expect(rendered).to have_content("Do you have any family or close relationship(s) with people within the school, MAT or any governors or trustees at #{trust_name}?")
+      expect(rendered).to have_content("Do you have a family or close relationship with anyone who works at #{trust_name}, or with any of its governors or trustees?")
     end
   end
 
@@ -26,7 +26,7 @@ RSpec.describe "jobseekers/job_applications/review" do
     let(:vacancy) { build_stubbed(:vacancy, organisations: build_stubbed_list(:school, 1, name: school_name)) }
 
     it "has content which doesnt mention a MAT" do
-      expect(rendered).to have_content("Do you have any family or close relationship(s) with people within the school or any governors or trustees at #{school_name}?")
+      expect(rendered).to have_content("Do you have a family or close relationship with anyone who works at #{school_name}, or with any of its governors or trustees?")
     end
   end
 end

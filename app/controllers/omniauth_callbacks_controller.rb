@@ -14,6 +14,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   rescue_from EstablishmentNotRegistered, with: :establishment_not_registered
 
   def dfe
+    return render "pending_approval" unless org_data&.key?("id")
+
     authorisation = Publishers::DfeSignIn::Authorisation.new(organisation_id: organisation_id, user_id: user_id)
 
     if authorisation.authorised_support_user?

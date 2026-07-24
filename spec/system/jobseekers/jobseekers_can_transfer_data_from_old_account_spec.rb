@@ -28,21 +28,21 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
       expect_account_to_have_no_data
 
       visit new_jobseekers_request_account_transfer_email_path
-      click_on "Save and continue"
+      click_on "Send verification email"
       expect(page).to have_css("ul.govuk-list.govuk-error-summary__list")
       within "ul.govuk-list.govuk-error-summary__list" do
         expect(page).to have_link("Enter your email address", href: "#jobseekers-request-account-transfer-email-form-email-field-error")
       end
 
       fill_in "jobseekers_request_account_transfer_email_form[email]", with: "xxxxx"
-      click_on "Save and continue"
+      click_on "Send verification email"
       expect(page).to have_css("ul.govuk-list.govuk-error-summary__list")
       within "ul.govuk-list.govuk-error-summary__list" do
         expect(page).to have_link("Enter a valid email address in the correct format, like name@example.com", href: "#jobseekers-request-account-transfer-email-form-email-field-error")
       end
 
       fill_in "jobseekers_request_account_transfer_email_form[email]", with: old_jobseeker_account.email
-      click_on "Save and continue"
+      click_on "Send verification email"
       expect(delivered_emails.last.personalisation.fetch(:token)).to eq(old_jobseeker_account.reload.account_merge_confirmation_code)
       expect(page).not_to have_css("div.govuk-notification-banner__content p.govuk-notification-banner__heading", text: "Email resent")
 
@@ -72,7 +72,7 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
     it "allows user to request an account transfer but does not send an email" do
       visit new_jobseekers_request_account_transfer_email_path
       fill_in "jobseekers_request_account_transfer_email_form[email]", with: "nonexistant-user-email@gmail.com"
-      click_on "Save and continue"
+      click_on "Send verification email"
       expect(delivered_emails).to eq []
       expect(page).to have_content "Check your email"
     end
@@ -87,7 +87,7 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
       visit new_jobseekers_request_account_transfer_email_path
 
       fill_in "jobseekers_request_account_transfer_email_form[email]", with: jobseeker.email
-      click_on "Save and continue"
+      click_on "Send verification email"
 
       within "ul.govuk-list.govuk-error-summary__list" do
         expect(page).to have_link("You entered the email of the account you are currently logged in to. The data in this account is already available to you and cannot be transferred.", href: "#jobseekers-request-account-transfer-email-form-email-field-error")
@@ -99,7 +99,7 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
     before do
       visit new_jobseekers_request_account_transfer_email_path
       fill_in "jobseekers_request_account_transfer_email_form[email]", with: old_jobseeker_account.email
-      click_on "Save and continue"
+      click_on "Send verification email"
       travel_to(Time.current + 61.minutes)
     end
 
@@ -119,13 +119,13 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
     it "only sends the first email" do
       visit new_jobseekers_request_account_transfer_email_path
       fill_in "jobseekers_request_account_transfer_email_form[email]", with: old_jobseeker_account.email
-      click_on "Save and continue"
+      click_on "Send verification email"
 
       expect(page).to have_content "Email sent to: #{old_jobseeker_account.email}"
 
       visit new_jobseekers_request_account_transfer_email_path
       fill_in "jobseekers_request_account_transfer_email_form[email]", with: old_jobseeker_account.email
-      click_on "Save and continue"
+      click_on "Send verification email"
 
       expect(page).to have_css("ul.govuk-list.govuk-error-summary__list")
       within "ul.govuk-list.govuk-error-summary__list" do

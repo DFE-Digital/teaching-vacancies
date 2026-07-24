@@ -40,7 +40,7 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
       title: "Work history",
       display_summary: ->(profile) { profile.employments.any? },
       key: "employments",
-      link_text: "Add roles",
+      link_text: "Add a job or voluntary role",
       page_path: -> { new_jobseekers_profile_work_history_path },
     },
     {

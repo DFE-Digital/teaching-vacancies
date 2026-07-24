@@ -14,11 +14,11 @@ en:
   helpers:
     legend:
       jobseekers_job_application_referees_form:
-        notify_before_contact_referers: Do you want the school to tell you before they contact your referees?
+        notify_before_contact_referers: Do you want the school or college to contact you before they contact your referees?
         referees_section_completed: Have you completed this section?
       jobseekers_job_application_details_referee_form:
         phone_number: Phone number
-        is_most_recent_employer: Is this your current or most recent employer?
+        is_most_recent_employer: Is this referee from your current or most recent employer?
     label:
       jobseekers_job_application_referees_form:
         referees_section_completed_options:
@@ -32,7 +32,7 @@ en:
         job_title: Job title
         name: Name
         organisation: Organisation
-        relationship: Relationship to applicant
+        relationship: Relationship to you
         phone_number: Phone number (optional)
         is_most_recent_employer_options:
           "true": "Yes"
@@ -40,12 +40,11 @@ en:
 
     hint:
       jobseekers_job_application_referees_form:
-        notify_before_contact_referers: We will ask the school to tell you before contacting your referees, but we cannot guarantee they will do so.
+        notify_before_contact_referers: We’ll ask the school or college to contact you before they contact your referees, but we cannot guarantee they will do this.
         notify_before_contact_referers_options:
-          text: We will ask the school to tell you before contacting your referees.
+          text: We’ll ask the school or college to contact you before they contact your referees.
       jobseekers_job_application_details_referee_form:
-        phone_number: >-
-          Provide a phone number that your referee is happy to be contacted on.
+        phone_number: Provide a phone number we can use to contact your referee
         is_most_recent_employer_hints:
           hint1: One of your referees should be your current or most recent employer.
           hint2: If you do not have an employer referee, you can provide a personal referee.

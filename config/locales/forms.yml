@@ -2,30 +2,30 @@ en:
   buttons:
     accept_all_cookies: Accept all cookies
     accept_and_continue: Accept and continue
-    add_reason_for_break: add a reason for this gap
+    add_reason_for_break: explain this gap
     add_another_job: Add another job
     add_another_qualification: Add another qualification
     add_another_reference: Add another referee
     add_another_subject: Add another subject
     add_education_gap: Add gap between education and work history
-    add_gap: Add gap in work history
+    add_gap: Add a gap in work history
     add_job: Add a job
     add_note: Add note
     add_qualification: Add a qualification
     add_training: Add training
-    add_another_training: Add another training
+    add_another_training: Add another training or CPD activity
     add_another_professional_body_membership: Add another membership
-    add_professional_body_membership: Add membership
+    add_professional_body_membership: Add a membership
     add_referee: Add a referee
     add_reference: Add a reference
-    add_work_history: Add work history
+    add_work_history: Add a job or voluntary role
     apply_filters: Apply filters
     back: Back
     back_to_manage_jobs: Back to manage jobs
     back_to_teaching_vacancies: Back to Teaching Vacancies
     cancel: Cancel
     cancel_and_return: Cancel and return
-    cancel_and_return_to_account: Cancel and return to account
+    cancel_and_return_to_account: Cancel and return to your account
     cancel_copy: Cancel job listing copy
     change: Change
     change_hidden_text_html: Change <span class='govuk-visually-hidden'>%{hidden_text}</span>
@@ -93,7 +93,7 @@ en:
     save_template: Save template
     save_and_finish_later: Save and come back later
     save_changes: Save changes
-    save_employment: Save role
+    save_employment: Save job or voluntary role
     save_note: Save note
     save_qualification:
       one: Save qualification
@@ -170,7 +170,8 @@ en:
         occupation: >-
           We'll only use this to tell you about opportunities to take part in user research that is relevant to you.
       jobseekers_qualifications_degree_form:
-        institution: For example, a university or college
+        institution_options:
+          postgraduate: For example, a university or college
         qualifications_section_completed: Ensure you've added all the education and qualifications you've done.
       jobseekers_qualifications_other_form:
         awarding_body: For example, a university or college
@@ -345,14 +346,14 @@ en:
       jobseekers_qualifications_shared_labels: &jobseekers_qualifications_shared_labels
         category_options:
           gcse: GCSEs
-          as_level: AS Levels
-          a_level: A Levels
+          as_level: AS levels
+          a_level: A levels
           undergraduate: Undergraduate degree
           postgraduate: Postgraduate qualification
           other: Other qualification
-        finished_studying_details: Please give details
+        finished_studying_details: Provide details about your qualification (optional)
         finished_studying_options:
-          false: "Not finished yet"
+          false: "No, I have not completed it yet"
           true: "Yes"
         grade: Grade
         subject: Subject
@@ -386,14 +387,20 @@ en:
         <<: *jobseekers_qualifications_shared_labels
         category_options:
           gcse: GCSEs
-          as_level: AS Levels
-          a_level: A Levels
+          as_level: AS levels
+          a_level: A levels
           undergraduate: Undergraduate degree
           postgraduate: Postgraduate qualification
           other: Other qualification
       jobseekers_qualifications_degree_form:
         <<: *jobseekers_qualifications_shared_labels
         institution: Awarding body
+        institution_options:
+          undergraduate: University or college
+          postgraduate: University, college or awarding body
+        subject_options:
+          undergraduate: Degree subject
+          postgraduate: Qualification subject
         qualifications: Qualifications
         award_date: Year qualification was awarded
       jobseekers_qualifications_other_form:
@@ -404,11 +411,11 @@ en:
         awarding_body: Awarding body (optional)
       jobseekers_qualifications_secondary_common_form:
         <<: *jobseekers_qualifications_shared_labels
-        institution: School, college, or other organisation
+        institution: School, college or other organisation
         award_date: Year qualification was awarded
       jobseekers_training_and_cpd_form:
-        name: Name of course or training
-        provider: Training provider (optional)
+        name: Name of training or course
+        provider: Training provider
         grade: Grade (optional)
         year_awarded: Date completed
         year_completed_hint: For example, 1998
@@ -419,8 +426,8 @@ en:
       jobseekers_subscription_form:
         email: Email address
         frequency_options:
-          daily: Daily, around 3 pm
-          weekly: Weekly (Friday, around 6 pm)
+          daily: Daily, around 3pm
+          weekly: Weekly, on Friday around 6pm
       jobseekers_unsubscribe_feedback_form:
         email: What is your email address?
         comment: Is there anything else you'd like to tell us?
@@ -685,7 +692,7 @@ en:
         employment_history_section_completed: Have you completed this section?
       jobseekers_job_application_equal_opportunities_form:
         age: How old are you?
-        disability: Do you consider yourself to have a disability as defined by the Equality Act 2010?
+        disability: Do you consider yourself to be disabled under the Equality Act 2010?
         ethnicity: What is your ethnic group?
         gender: How would you describe your gender?
         orientation: How would you describe your sexual orientation?
@@ -696,7 +703,7 @@ en:
       jobseekers_job_application_details_qualifications_category_form:
         category: What qualification would you like to add?
       jobseekers_qualifications_shared_legends: &jobseekers_qualifications_shared_legends
-        finished_studying: Have you finished studying for this qualification?
+        finished_studying: Have you completed this qualification?
         subjects: Subjects
       jobseekers_job_application_details_qualifications_degree_form:
         <<: *jobseekers_qualifications_shared_legends
@@ -714,12 +721,12 @@ en:
       jobseekers_qualifications_other_form:
         <<: *jobseekers_qualifications_shared_legends
       jobseekers_subscription_form:
-        frequency: When do you want to receive alerts?
+        frequency: How often do you want to receive alerts?
       jobseekers_unsubscribe_feedback_form:
         reason: Why do you want to unsubscribe from this alert?
         user_participation_response: Would you like to participate in our research?
       jobseekers_qualifications_category_form:
-        category: Enter your highest level of qualification.
+        category: What is your highest level of qualification?
 
       publishers_job_listing_about_the_role_form:
         ect_status: Is this role suitable for an early career teacher (ECT)?

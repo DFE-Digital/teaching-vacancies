@@ -48,9 +48,9 @@ en:
   helpers:
     hint:
       jobseekers_job_application_details_employment_form:
-        main_duties: Give a brief summary of your key responsibilities.
-        organisation: For a non-teaching job, tell us the name of the organisation you worked at
-        reason_for_leaving: If you’re still in the role, give a brief summary of your reasons for wanting to leave.
+        main_duties: Give a brief summary of your main responsibilities
+        organisation: For example, the name of the school, company or organisation
+        reason_for_leaving: If you are still in this role, give a brief summary of your reasons for wanting to leave
       jobseekers_profile_employment_form:
         main_duties: Give a brief summary of your key responsibilities.
         organisation_name: If you worked for yourself, enter ‘self-employed’
@@ -60,13 +60,13 @@ en:
     label:
       jobseekers_job_application_details_employment_form:
         is_current_role_options:
-          "true": I currently work here
+          "true": I currently work in this role
         job_title: Job title
         main_duties: Main duties
-        organisation: School or other organisation
+        organisation: Organisation name
         subjects_review: Subjects and key stages taught
-        subjects_html: Subjects and key stages taught (optional<span class='govuk-visually-hidden'> field</span>)</span>
-        reason_for_leaving: Reason for leaving role
+        subjects_html: Subjects and key stages you taught (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        reason_for_leaving: Reason for leaving this role
       jobseekers_profile_employment_form:
         is_current_role_options:
           "true": I currently work here

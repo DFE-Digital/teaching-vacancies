@@ -84,10 +84,10 @@ en:
     legend:
       jobseekers_job_application_personal_details_form:
         your_address: Your address
-        has_ni_number: Do you have a national insurance number?
+        has_ni_number: Do you have a National Insurance number?
         personal_details_section_completed: Have you completed this section?
         working_pattern_details: Working pattern preference details
-        working_patterns: Working pattern preference
+        working_patterns: Working pattern preferences
       jobseekers_uploaded_job_application_personal_details_form:
         personal_details_section_completed: Have you completed this section?
       jobseekers_uploaded_job_application_upload_application_form_form:
@@ -95,8 +95,7 @@ en:
     label:
       personal_details:
         email: Email
-        change_email_html: Select to %{link}
-        change_email_link_text: change your email address
+        change_email_link_text: Change your email address
         first_name: First name
         last_name: Last name
 
@@ -117,11 +116,11 @@ en:
         teacher_reference_number_html: Teacher reference number (TRN) (optional<span class='govuk-visually-hidden'> field</span>)</span>
         has_ni_number_options:
           "yes": "Yes"
-          "no": No, I do not have one or do not want to provide it yet
+          "no": No, I do not have one or I do not want to provide it yet
         personal_details_section_completed_options:
-          false: No, I'll come back to it later
+          false: No, I’ll come back to it later
           true: Yes, I've completed this section
-        working_pattern_details: Provide more details about your working patterns preference (optional)
+        working_pattern_details: Provide more details about your working pattern preferences (optional)
         working_patterns: Full, part time or job share
       jobseekers_uploaded_job_application_personal_details_form:
         email_address: Email address
@@ -149,12 +148,7 @@ en:
         has_ni_number: >-
           You can find this on your National Insurance card,
           benefit letter, payslip or P60. It's made up of 2 letters, 6 numbers and a final letter.
-        phone_number: Enter a phone number you are happy to be contacted on. For example, 01632 960 001, 07700 900 982 or +44 0808 157 0192.
-        previous_names: For example maiden name or name at birth, if different from the name you have now.
-        working_patterns: >-
-          Some schools may be open to part-time applicants even if a position is advertised as full time.
-
-          Provide your preference so that you can discuss your options with the school.
-
-          Select all that apply.
-        working_pattern_details: For example, if you're looking for a role that's 2 days a week, or Monday to Wednesday.
+        phone_number: Enter a phone number we can use to contact you, for example 01632 960 001, 07700 900 982 or +44 0808 157 0192
+        previous_names: For example, a maiden name or name at birth, if it is different from the name you use now
+        working_patterns: Some schools may consider part-time applicants, even if a role is advertised as full time. Select all that apply
+        working_pattern_details: For example, 2 days a week or Monday to Wednesday

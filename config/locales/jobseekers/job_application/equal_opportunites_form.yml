@@ -54,7 +54,7 @@ en:
     orientation_options:
       bisexual: Bisexual
       gay_or_lesbian: Gay or lesbian
-      heterosexual: Heterosexual
+      heterosexual: Heterosexual or straight
       other: Other sexual orientation
       prefer_not_to_say: Prefer not to say
     religion_options:
@@ -83,13 +83,13 @@ en:
           true: Yes, I've completed this section
     hint:
       jobseekers_job_application_equal_opportunities_form:
-        gender: If the options below do not reflect how you identify, please select ‘Other gender identity’.
-        ethnicity: If the options below do not reflect how you identify, please select ‘Other ethnic group’.
+        gender: If none of the options reflect how you identify, select ‘Other gender identity’.
+        ethnicity: If none of the options reflect how you identify, select ‘Other ethnic group’.
         ethnicity_options:
           asian: Includes Indian, Pakistani, Bangladeshi or Chinese
           mixed: Includes White and Black Caribbean, White and Black African or White and Asian
-          white: Includes English, Welsh, Scottish, Northern Irish, British, Irish Gypsy or Irish Traveller
-        orientation: If the options below do not reflect how you identify, please select ‘Other sexual orientation’.
+          white: Includes English, Welsh, Scottish, Northern Irish, British, Irish, Gypsy or Irish Traveller
+        orientation: If none of the options reflect how you identify, select ‘Other sexual orientation’.
         religion: >-
-          You can select ‘Other religion or belief’ if your beliefs are not represented by one of the given options.
+          If none of the options reflect your religion or belief, select ‘Other religion or belief’.
 

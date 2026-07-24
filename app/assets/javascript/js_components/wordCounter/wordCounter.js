@@ -33,9 +33,9 @@ export default class extends Controller {
   displayCount(wordCount) {
     const formattedCount = this.constructor.formatNumber(wordCount);
     const formattedMax = this.constructor.formatNumber(this.maxWordsValue);
-    const message = `You have written ${formattedCount} words in this section. `
-      + `The word limit for this section is ${formattedMax} words. `
-      + 'Schools typically expect personal statements to be between 500 and 1,000 words long.';
+    const message = `You have written ${formattedCount} words. `
+      + `The word limit is ${formattedMax} words. `
+      + 'Schools typically expect personal statements to be 500 to 1,000 words.';
     this.counterTarget.textContent = message;
   }
 

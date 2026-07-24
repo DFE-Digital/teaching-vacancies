@@ -74,7 +74,7 @@ jobs:
         workload_identity_provider: projects/689616473831/locations/global/workloadIdentityPools/teaching-vacancies/providers/teaching-vacancies
 
     - name: Set up Ruby
-      uses: ruby/setup-ruby@v1.316.0
+      uses: ruby/setup-ruby@v1.319.0
 
     - name: Download fetch_config.rb
       shell: bash
@@ -110,7 +110,7 @@ jobs:
       run: ./bin/delete-state-file ${{env.PR_NUMBER}}
 
     - name: Post sticky pull request comment
-      uses: marocchino/sticky-pull-request-comment@0ea0beb66eb9baf113663a64ec522f60e49231c0 # Pinned at v3.0.4
+      uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # Pinned at v3.0.5
       with:
         message: |
           Review app <${{ env.LINK_TO_APP }}> was successfully deleted
