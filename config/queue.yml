@@ -2,9 +2,9 @@ default: &default
   dispatchers:
     - polling_interval: 1
       batch_size: 500
-  # Each worker defined below runs on every Kubernetes worker pod in production, so
-  # the total worker count is (workers defined here) x (number of pods).
-  # For example, 2 workers here x 4 pods = 8 workers in total.
+  # Each worker definition below runs on every Kubernetes worker pod in production.
+  # Total concurrency is roughly (sum of (processes * threads) per worker) x (number of pods).
+  # For example, worker1 (processes=1, threads=3) + worker2 (processes=1, threads=1) across 4 pods = (3 + 1) x 4 = 16 threads.
   workers:
     # First worker: handles most queues, with parallel threads and frequent polling.
     # Queues are drained in priority order, left to right: notify jobs first, then default, then low.
