@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_07_08_151811) do
+ActiveRecord::Schema[8.0].define(version: 2026_07_23_204840) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -646,7 +646,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_07_08_151811) do
     t.string "oid", null: false
     t.datetime "accepted_terms_at", precision: nil
     t.string "email"
-    t.datetime "last_activity_at", precision: nil
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text "family_name_ciphertext"
