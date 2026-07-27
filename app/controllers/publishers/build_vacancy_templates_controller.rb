@@ -6,6 +6,7 @@ module Publishers
     include Publishers::Wizardable
 
     before_action :load_template
+    before_action :strip_checkbox_params, only: %i[update]
 
     steps(*VacancyTemplates::VacancyTemplateStepProcess.steps)
 
@@ -66,6 +67,12 @@ module Publishers
 
     def form_class
       VacancyTemplates::VacancyTemplateStepProcess.form_class(step)
+    end
+
+    def strip_checkbox_params
+      return unless STRIP_CHECKBOXES.key?(step)
+
+      strip_empty_checkboxes(STRIP_CHECKBOXES[step], :"publishers_job_listing_#{step}_form")
     end
 
     def load_template

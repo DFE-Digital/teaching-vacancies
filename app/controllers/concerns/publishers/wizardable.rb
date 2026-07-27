@@ -58,7 +58,7 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
 
   def subjects_params(params)
     params.require(:publishers_job_listing_subjects_form)
-          .permit(subjects: [])
+          .permit(:subject_search, subjects: [])
   end
 
   def contract_information_params(params)

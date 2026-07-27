@@ -64,6 +64,10 @@ RSpec.describe "Creating a vacancy" do
         # tick every key stage for the relevant phase
         publisher_key_stage_page.fill_in_and_submit_form(vacancy.key_stages_for_phases)
         expect(publisher_subjects_page).to be_displayed
+        fill_in "publishers_job_listing_subjects_form[subject_search]", with: "magic"
+        click_on I18n.t("buttons.save_and_continue")
+        expect(publisher_subjects_page).to be_displayed
+        expect(publisher_subjects_page.errors.map(&:text)).to contain_exactly(I18n.t("publishers.vacancies.build.subjects.errors.subject_searched_for_but_not_selected"))
         publisher_subjects_page.fill_in_and_submit_form(vacancy.subjects)
 
         expect(publisher_contract_information_page).to be_displayed
