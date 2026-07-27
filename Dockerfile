@@ -5,7 +5,7 @@
 # To find the current version of each package in the alpine image, search here:
 # https://pkgs.alpinelinux.org/packages?name=&branch=v3.23
 # These are packages we need over-and-beyond the base image
-ARG EXTRA_PACKAGES="imagemagick libpng libjpeg libxml2 libxslt tzdata shared-mime-info vips-poppler vips-magick proj-dev libpq postgresql18"
+ARG EXTRA_PACKAGES="imagemagick libpng libjpeg libxml2 libxslt tzdata shared-mime-info vips-poppler vips-magick proj-dev libpq postgresql18 openexr=3.4.13-r0"
 # These are security patches to the base image
 ARG PROD_PACKAGES="openssl=3.5.7-r0"
 
