@@ -13,4 +13,8 @@ class EmploymentRecord < ApplicationRecord
 
   validates :ended_on, date: { before: :today, on_or_after: :started_on }, unless: -> { is_current_role? }, if: -> { job? }
   validates :ended_on, absence: true, if: -> { job? && is_current_role? }
+
+  validates :reason_for_break, presence: true, unless: -> { job? }
+  validates :started_on, date: { before: :today }, unless: -> { job? }
+  validates :ended_on, date: { on_or_before: :today, after: :started_on }, unless: -> { job? }
 end

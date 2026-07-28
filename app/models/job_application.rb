@@ -118,7 +118,12 @@ class JobApplication < ApplicationRecord
   has_many :notes, dependent: :destroy
   has_many :qualifications, dependent: :destroy
   has_many :conversations, dependent: :destroy
+
   has_many :employments, dependent: :destroy
+  has_many :jobs, -> { where(employment_type: :job) }, class_name: "Employment"
+  has_many :employment_breaks, -> { where(employment_type: :break) }, class_name: "EmploymentBreak"
+  has_many :education_gaps, -> { where(employment_type: :education_gap) }, class_name: "EducationGap"
+
   has_many :referees, dependent: :destroy
   has_many :training_and_cpds, dependent: :destroy
   has_many :professional_body_memberships, dependent: :destroy

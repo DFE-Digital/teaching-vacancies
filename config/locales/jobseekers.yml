@@ -328,7 +328,7 @@ en:
           title: Confirm deletion of education gap — Application
         edit:
           caption: Current role and employment history
-          heading: Add a gap between education and work history
+          heading: Change gap between education and work history
           title: Add a reason for gap between education and work history — Application
         new:
           caption: Current role and employment history

@@ -130,7 +130,7 @@ RSpec.describe JobseekerProfile, type: :model do
       let!(:employment) { create(:profile_employment, jobseeker_profile: profile, started_on: 1.year.ago, ended_on: 6.months.ago) }
 
       before do
-        create(:profile_employment, :break, jobseeker_profile: profile, started_on: 6.months.ago, ended_on: 3.months.ago)
+        create(:profile_employment_break, jobseeker_profile: profile, started_on: 6.months.ago, ended_on: 3.months.ago)
       end
 
       it "returns only job employments, not breaks" do
