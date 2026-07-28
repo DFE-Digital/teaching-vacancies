@@ -281,6 +281,11 @@ class Vacancy < ApplicationRecord
     Publisher.find_by(email: contact_email).present?
   end
 
+  # We won't allow editing of publish_on if the vacancy is already published
+  def disable_editing_publish_on?
+    published? && (publish_on.past? || publish_on.today?)
+  end
+
   def unsafe_blobs
     blobs = []
     blobs << application_form.blob if application_form.attached?

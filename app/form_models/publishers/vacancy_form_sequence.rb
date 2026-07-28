@@ -29,7 +29,11 @@ class Publishers::VacancyFormSequence
   end
 
   def validate_step(step_name)
-    step_form_class = File.join(@form_prefix, "#{step_name}_form").camelize.constantize
+    step_form_class = if step_name == :important_dates && @vacancy.disable_editing_publish_on?
+                        Publishers::JobListing::ExpiryDateTimeForm
+                      else
+                        File.join(@form_prefix, "#{step_name}_form").camelize.constantize
+                      end
 
     step_form_class.load_from_model(@vacancy, current_publisher: nil).tap do |form|
       form.valid?

@@ -41,8 +41,20 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
 
   attr_reader :form
 
+  def form_params
+    if current_step == :important_dates && vacancy.disable_editing_publish_on?
+      expiry_date_time_params(params)
+    else
+      super
+    end
+  end
+
   def form_class
-    "publishers/job_listing/#{step}_form".camelize.constantize
+    if current_step == :important_dates && vacancy.disable_editing_publish_on?
+      Publishers::JobListing::ExpiryDateTimeForm
+    else
+      "publishers/job_listing/#{step}_form".camelize.constantize
+    end
   end
 
   def set_school_options # rubocop:disable Metrics/AbcSize
@@ -71,8 +83,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   end
 
   def update_vacancy
-    updated_completed_steps = completed_steps(steps_to_reset: form.steps_to_reset)
-    vacancy.assign_attributes(form.params_to_save.merge(completed_steps: updated_completed_steps))
+    updated_completed_steps = completed_steps(steps_to_reset: @form.steps_to_reset)
+    vacancy.assign_attributes(@form.params_to_save.merge(completed_steps: updated_completed_steps))
     vacancy.geocode_job_address if current_step == :confirm_job_address
     vacancy.refresh_slug
     update_google_index(vacancy) if vacancy.live?

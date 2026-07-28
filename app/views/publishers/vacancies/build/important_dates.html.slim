@@ -5,7 +5,7 @@
 
   = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
 
-  - if form.disable_editing_publish_on?
+  - if vacancy.disable_editing_publish_on?
     #publish_on
       legend.govuk-fieldset__legend.govuk-fieldset__legend--m
         .govuk-fieldset__heading = t("helpers.legend.publishers_job_listing_important_dates_form.publish_on_day")
