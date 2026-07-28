@@ -20,9 +20,9 @@ module ComponentsHelper
       capture do
         render(klass.constantize.new(*args, **kwargs)) do |com|
           # no code ever fails to provide a block
-          # :nocov:
+          # simplecov:disable
           block.presence&.call(com)
-          # :nocov:
+          # simplecov:enable
         end
       end
     end

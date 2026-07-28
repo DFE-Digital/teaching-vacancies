@@ -297,9 +297,9 @@ class Vacancy < ApplicationRecord
     job_specific_address = job_address_fields.reject(&:blank?)
     return job_specific_address.join(", ") if job_specific_address.any?
 
-    # :nocov:
+    # simplecov:disable
     [organisation&.address, organisation&.town, organisation&.county, organisation&.postcode].reject(&:blank?).join(", ")
-    # :nocov:
+    # simplecov:enable
   end
 
   def geocode_job_address
@@ -355,7 +355,7 @@ class Vacancy < ApplicationRecord
     # Don't override the vacancy-specific job location if one has been specified.
     return if job_address_fields.any?(&:present?)
 
-    # :nocov:
+    # simplecov:disable
     self.geolocation = if organisations.one?
                          organisation.geopoint
                        else
@@ -368,7 +368,7 @@ class Vacancy < ApplicationRecord
                             uk_points = organisations.filter_map(&:uk_geopoint)
                             uk_points.presence && uk_points.first.factory.multi_point(uk_points)
                           end
-    # :nocov:
+    # simplecov:disable
   end
 
   def resettable?

@@ -24,7 +24,7 @@ class NotificationsController < ApplicationController
                                           .newest_first
   end
 
-  # :nocov:
+  # simplecov:disable
   def mark_all_as_read_notifications_path(options = {})
     raise NotImplementedError, "Subclasses must implement mark_all_as_read_notifications_path"
   end
@@ -32,5 +32,5 @@ class NotificationsController < ApplicationController
   def path_for_notifications_list
     raise NotImplementedError, "Subclasses must implement path_for_notifications_list"
   end
-  # :nocov:
+  # simplecov:enable
 end

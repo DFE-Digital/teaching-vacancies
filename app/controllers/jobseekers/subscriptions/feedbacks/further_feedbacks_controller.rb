@@ -27,9 +27,9 @@ class Jobseekers::Subscriptions::Feedbacks::FurtherFeedbacksController < Applica
   def update_feedback
     feedback.update(further_feedback_form_params)
     # tricky to auto-test where recaptcha-reply is nil
-    # :nocov:
+    # simplecov:disable
     feedback.recaptcha_score = recaptcha_reply&.score
-    # :nocov:
+    # simplecov:enable
     feedback.save
   end
 

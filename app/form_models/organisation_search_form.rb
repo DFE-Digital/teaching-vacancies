@@ -21,13 +21,13 @@ class OrganisationSearchForm
       attrs.delete(:radius)
     end
 
-    # :nocov:
+    # simplecov:disable
     if attrs[:job_availability]&.one?
       attrs[:job_availability] = attrs[:job_availability].first == "true" ? %w[true] : %w[false]
     else
       attrs.delete(:job_availability)
     end
-    # :nocov:
+    # simplecov:enable
 
     attrs
   end

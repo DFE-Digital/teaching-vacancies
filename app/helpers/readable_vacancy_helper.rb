@@ -19,7 +19,7 @@ module ReadableVacancyHelper
     end
   end
 
-  # :nocov:
+  # simplecov:disable
   def vacancy_contract_type_with_duration(model)
     return nil if model.contract_type.blank?
 
@@ -31,23 +31,23 @@ module ReadableVacancyHelper
       [I18n.t("publishers.vacancies.build.contract_type.#{model.contract_type}"),  model.fixed_term_contract_duration].compact.join(" - ")
     end
   end
-  # :nocov:
+  # simplecov:enable
 
-  # :nocov:
+  # simplecov:disable
   def vacancy_readable_job_roles(model)
     model.job_roles&.map { |job_role|
       I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{job_role}")
     }&.join(", ")
   end
-  # :nocov:
+  # simplecov:enable
 
-  # :nocov:
+  # simplecov:disable
   def vacancy_readable_key_stages(model)
     model.key_stages&.map { |key_stage|
       I18n.t("helpers.label.publishers_job_listing_key_stages_form.key_stages_options.#{key_stage}")
     }&.join(", ")
   end
-  # :nocov:
+  # simplecov:enable
 
   def vacancy_readable_subjects(model)
     model.subjects.join(", ")
