@@ -5,13 +5,13 @@ class VacancyDecorator < Draper::Decorator
 
   HTML_STRIP_REGEX = %r{(&nbsp;|<div>|</div>|<!--block-->)+}
 
-  # :nocov:
+  # simplecov:disable
   def benefits_details
     simple_format(fix_bullet_points(model.benefits_details)) if model.benefits_details.present?
   end
-  # :nocov:
+  # simplecov:enable
 
-  # :nocov:
+  # simplecov:disable
   def working_patterns_for_job_schema
     [
       ("FULL_TIME" if model.working_patterns.include? "full_time"),
@@ -20,19 +20,19 @@ class VacancyDecorator < Draper::Decorator
       ("OTHER" if model.working_patterns.any?("job_share") && !model.fixed_term_contract_duration?),
     ].compact
   end
-  # :nocov:
+  # simplecov:enable
 
-  # :nocov:
+  # simplecov:disable
   def readable_ect_status
     return if model.ect_status.blank?
 
     I18n.t("helpers.label.publishers_job_listing_about_the_role_form.ect_status_options.#{model.ect_status}")
   end
-  # :nocov:
+  # simplecov:enable
 
   private
 
-  # :nocov:
+  # simplecov:disable
   def fix_bullet_points(text) # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/AbcSize
     # This is a band-aid solution for the problem where (particularly) job adverts contain bullet point characters
     # (not list elements), but do not contain corresponding newlines, resulting in inline bullets.
@@ -51,23 +51,23 @@ class VacancyDecorator < Draper::Decorator
       }.join.concat("</ul>")
     }.join("\n")
   end
-  # :nocov:
+  # simplecov:enable
 
-  # :nocov:
+  # simplecov:disable
   def normalize_bullets(text, normalized_bullet)
     return unless text
 
     # `⁃` is a hyphen bullet, not an en-dash or a hyphen.
     text.gsub("⁃", normalized_bullet).gsub("·", normalized_bullet).gsub("∙", normalized_bullet)
   end
-  # :nocov:
+  # simplecov:enable
 
-  # :nocov:
+  # simplecov:disable
   def normalize_newlines(text)
     # Required for backwards-compatibility for fields created with a rich-text editor
     text&.gsub("<br>", "\n")
   end
-  # :nocov:
+  # simplecov:enable
 
   def strip(text)
     text.gsub(/\s+/, "").gsub(HTML_STRIP_REGEX, "")

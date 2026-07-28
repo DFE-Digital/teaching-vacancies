@@ -59,12 +59,12 @@ module Jobseekers
         @profile = current_jobseeker.jobseeker_profile
         ApplicationRecord.transaction do
           model.locations.delete params[:id]
-          # :nocov:
+          # simplecov:disable
           if model.locations.empty?
             model.update!(completed_steps: model.completed_steps.merge(locations: :invalidated))
             @profile.deactivate!
           end
-          # :nocov:
+          # simplecov:enable
         end
         flash[:success] = "Location deleted"
         redirect_to new_jobseekers_job_preferences_location_path

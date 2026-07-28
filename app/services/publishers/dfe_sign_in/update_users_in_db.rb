@@ -28,19 +28,19 @@ module Publishers::DfeSignIn
       def create_organisation_publisher(user, urn, uid, la_code)
         if urn
           organisation = Organisation.find_by(urn: urn)
-          # :nocov:
+          # simplecov:disable
           user.organisation_publishers.find_or_create_by(organisation_id: organisation.id) if organisation
-          # :nocov:
+          # simplecov:enable
         elsif uid
           organisation = Organisation.find_by(uid: uid)
-          # :nocov:
+          # simplecov:disable
           user.organisation_publishers.find_or_create_by(organisation_id: organisation.id) if organisation
-          # :nocov:
+          # simplecov:enable
         elsif la_code
           organisation = Organisation.find_by(local_authority_code: la_code)
-          # :nocov:
+          # simplecov:disable
           user.organisation_publishers.find_or_create_by(organisation_id: organisation.id) if organisation
-          # :nocov:
+          # simplecov:enable
         end
       end
     end

@@ -18,11 +18,12 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     ],
   )
 
-  SimpleCov.start :rails do
+  SimpleCov.configure do
     enable_coverage :branch
 
     # This line would enable coverage for view templates, but the slim compiler
     # appears to have a bug which puts the whole coverage data out by one line.
+    # turns out this only works with ERB according to the docs
     # enable_coverage_for_eval
 
     # This is the 'cache timeout' for coverage files. Setting it high
@@ -36,33 +37,33 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # which are not part of the actual code under test.
 
     # only used in tests
-    add_filter "lib/dfe_sign_in/fake_sign_out_endpoint.rb"
+    skip "lib/dfe_sign_in/fake_sign_out_endpoint.rb"
     # only used in development to preview email layouts
-    add_filter "app/controllers/previews_controller.rb"
+    skip "app/controllers/previews_controller.rb"
     # only really used in review apps - hard to auto-test
-    add_filter "app/mailers/jobseekers/authentication_fallback_mailer.rb"
+    skip "app/mailers/jobseekers/authentication_fallback_mailer.rb"
     # used to format production logs
-    add_filter "app/services/custom_log_formatter.rb"
+    skip "app/services/custom_log_formatter.rb"
 
     # base mailer, currently unused
-    add_filter "app/mailers/amazon_ses_mailer.rb"
+    skip "app/mailers/amazon_ses_mailer.rb"
 
     # legacy rake tasks, unlikely to ever be test covered
-    add_filter "lib/tasks/audit.rake"
-    add_filter "lib/tasks/data.rake"
+    skip "lib/tasks/audit.rake"
+    skip "lib/tasks/data.rake"
 
     # safe replacement for rake db:migrate, never going to be covered by tests
-    add_filter "lib/tasks/migrate_swallowing_concurrent_migration_exceptions.rake"
+    skip "lib/tasks/migrate_swallowing_concurrent_migration_exceptions.rake"
 
     # Each group will be displayed in the report as its own Tab.
-    add_group "Components", "app/components"
-    add_group "Queries", "app/queries"
-    add_group "Services", "app/services"
-    add_group "Forms", "app/form_models"
-    add_group "Validators", "app/validators"
-    add_group "Presenters", "app/presenters"
-    add_group "Notifiers", "app/notifiers"
-    add_group "Tasks", "lib/tasks"
+    group "Components", "app/components"
+    group "Queries", "app/queries"
+    group "Services", "app/services"
+    group "Forms", "app/form_models"
+    group "Validators", "app/validators"
+    group "Presenters", "app/presenters"
+    group "Notifiers", "app/notifiers"
+    group "Tasks", "lib/tasks"
 
     # Most of the uncovered lines are in very old unchanging code, so chasing more coverage
     # in those areas does not appear to be worth-while

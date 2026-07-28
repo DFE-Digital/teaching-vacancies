@@ -11,14 +11,14 @@ class GovukNotifyMailer < Mail::Notify::Mailer
   after_action :trigger_dfe_analytics_email_event
 
   # This line clearly cannot be auto-tested
-  # :nocov:
+  # simplecov:disable
   self.delivery_method = :notify unless Rails.env.test?
 
   def send_email(to:, subject:)
     @to = to
     view_mail(template, to: to, subject: subject)
   end
-  # :nocov:
+  # simplecov:enable
 
   private
 

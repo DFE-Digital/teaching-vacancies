@@ -99,7 +99,7 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
   end
 
   # These 2 functions are really tricky to write automated tests for
-  # :nocov:
+  # simplecov:disable
   def trigger_jobseeker_changed_govuk_one_login_id_event(jobseeker, previous_id)
     event = DfE::Analytics::Event.new
       .with_type(:jobseeker_changed_govuk_one_login_id)
@@ -129,5 +129,5 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
 
     DfE::Analytics::SendEvents.do([event])
   end
-  # :nocov:
+  # simplecov:enable
 end

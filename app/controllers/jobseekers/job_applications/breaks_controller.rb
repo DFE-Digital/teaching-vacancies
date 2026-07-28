@@ -7,9 +7,9 @@ module Jobseekers
       form_attributes = if params[:started_on] && params[:ended_on]
                           { started_on: Date.parse(params[:started_on]), ended_on: Date.parse(params[:ended_on]) }
                         else
-                          # :nocov:
+                          # simplecov:disable
                           {}
-                          # :nocov:
+                          # simplecov:enable
                         end
       @employment_break = @job_application.employment_breaks.build(form_attributes)
     end
