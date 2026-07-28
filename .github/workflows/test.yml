@@ -97,9 +97,9 @@ jobs:
           name: coverage report
           path: coverage
 
-      - name: Check coverage
+      - name: Check coverage regardless of failure
         if: always()
-        run: bundle exec undercover -c origin/main
+        run: bundle exec undercover
 
       - name: Upload Capybara failures screenshots
         if: failure()
