@@ -24,8 +24,14 @@ module OrganisationsHelper
   def organisation_type(organisation)
     return organisation.group_type&.humanize if organisation.school_group?
 
+    school_type = if organisation.fe_college?
+                    "FE College"
+                  else
+                    organisation.school_type.singularize
+                  end
+
     school_type_details = [
-      organisation.school_type.singularize,
+      school_type,
       (organisation.religious_character unless organisation.religious_character.in? Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES),
       "ages #{organisation.minimum_age} to #{organisation.maximum_age}",
     ]

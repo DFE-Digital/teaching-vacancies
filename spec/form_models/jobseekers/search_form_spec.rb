@@ -113,7 +113,7 @@ RSpec.describe Jobseekers::SearchForm, type: :model do
     let(:params) { {} }
 
     it "includes colleges" do
-      expect(subject.organisation_type_options).to include([School::COLLEGE_SCHOOL_TYPE, nil])
+      expect(subject.organisation_type_options).to include(["FE Colleges", nil])
     end
   end
 
