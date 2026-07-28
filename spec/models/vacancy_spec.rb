@@ -585,29 +585,29 @@ RSpec.describe Vacancy do
     subject { create(:vacancy, organisations: organisations) }
 
     context "for single school vacancies" do
-      let(:organisations) { [create(:school, geopoint: "POINT(1 2)")] }
+      let(:organisations) { [create(:school, uk_geopoint: "POINT(1 2)")] }
 
       it "is set to a point" do
-        expect(subject.geolocation.lat).to eq(2)
-        expect(subject.geolocation.lon).to eq(1)
+        expect(subject.uk_geolocation.y.round(6)).to eq(2)
+        expect(subject.uk_geolocation.x.round(6)).to eq(1)
       end
     end
 
     context "for trust central office vacancies" do
-      let(:organisations) { [create(:trust, geopoint: "POINT(1 2)")] }
+      let(:organisations) { [create(:trust, uk_geopoint: "POINT(1 2)")] }
 
       it "is set to a point" do
-        expect(subject.geolocation.lat).to eq(2)
-        expect(subject.geolocation.lon).to eq(1)
+        expect(subject.uk_geolocation.y.round(6)).to eq(2)
+        expect(subject.uk_geolocation.x.round(6)).to eq(1)
       end
     end
 
     context "for multi-school vacancies" do
-      let(:organisations) { [create(:school, geopoint: "POINT(1 2)"), create(:school, geopoint: "POINT(3 4)")] }
+      let(:organisations) { [create(:school, uk_geopoint: "POINT(1 2)"), create(:school, uk_geopoint: "POINT(3 4)")] }
 
       it "is set to a multipoint" do
-        expect(subject.geolocation.map(&:lat)).to contain_exactly(2, 4)
-        expect(subject.geolocation.map(&:lon)).to contain_exactly(1, 3)
+        expect(subject.uk_geolocation.map { |x| x.y.round(6) }).to contain_exactly(2, 4)
+        expect(subject.uk_geolocation.map { |x| x.x.round(6) }).to contain_exactly(1, 3)
       end
     end
 
@@ -615,7 +615,7 @@ RSpec.describe Vacancy do
       let(:organisations) { [create(:school, geopoint: nil), create(:school, geopoint: nil)] }
 
       it "is set to nil" do
-        expect(subject.geolocation).to be_nil
+        expect(subject.uk_geolocation).to be_nil
       end
     end
   end
@@ -1042,13 +1042,12 @@ RSpec.describe Vacancy do
       context "when the vacancy previously had custom geolocation set" do
         before do
           geopoint = GeoFactories::FACTORY_4326.point(-0.1, 51.5)
-          subject.geolocation = geopoint
           subject.uk_geolocation = GeoFactories.convert_wgs84_to_sr27700(geopoint)
         end
 
         it "clears geolocation and resets it from the organisation" do
           subject.geocode_job_address
-          expect(subject.geolocation).to eq(school.geopoint)
+          expect(subject.uk_geolocation).to eq(school.uk_geopoint)
         end
       end
     end
@@ -1062,7 +1061,7 @@ RSpec.describe Vacancy do
       end
 
       it "does not update the geolocation" do
-        expect { subject.geocode_job_address }.not_to(change(subject, :geolocation))
+        expect { subject.geocode_job_address }.not_to(change(subject, :uk_geolocation))
       end
     end
   end
@@ -1075,9 +1074,9 @@ RSpec.describe Vacancy do
       let(:vacancy) { create(:vacancy, :ect_suitable, job_roles: %w[teacher], organisations: [create(:college)], phases: %w[primary], key_stages: %w[ks1], job_address_line2: "Floor 2") }
 
       it "does not overwrite geolocation with the organisation geopoint" do
-        original_geolocation = vacancy.geolocation
+        original_geolocation = vacancy.uk_geolocation
         vacancy.organisations = [school_two]
-        expect(vacancy.geolocation).to eq(original_geolocation)
+        expect(vacancy.uk_geolocation).to eq(original_geolocation)
       end
     end
   end

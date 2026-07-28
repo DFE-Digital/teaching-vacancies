@@ -11,7 +11,7 @@ RSpec.describe Vacancy do
     describe "#refresh_geolocation" do
       context "when associated with a school group (trust)" do
         it "uses the school group's geopoint" do
-          expect(vacancy.geolocation).to eq(school_group.geopoint)
+          expect(vacancy.uk_geolocation.to_s).to eq("POINT (531387.0072560036 180307.9721039306)")
         end
       end
 
@@ -21,7 +21,7 @@ RSpec.describe Vacancy do
         end
 
         it "updates the geolocation to the school's geopoint" do
-          expect(vacancy.geolocation).to eq(school_one.geopoint)
+          expect(vacancy.uk_geolocation).to eq(school_one.uk_geopoint)
         end
       end
 
@@ -31,11 +31,11 @@ RSpec.describe Vacancy do
         end
 
         it "creates a multi-point geolocation" do
-          expect(vacancy.geolocation).to be_a(RGeo::Geographic::SphericalMultiPointImpl)
-          points = [school_one.geopoint, school_two.geopoint]
-          expect(vacancy.geolocation.count).to eq(2)
+          expect(vacancy.uk_geolocation).to be_a(RGeo::Cartesian::MultiPointImpl)
+          points = [school_one.uk_geopoint, school_two.uk_geopoint]
+          expect(vacancy.uk_geolocation.count).to eq(2)
           # We need to test that each point in the multipoint is one of our school geopoints
-          vacancy.geolocation.each do |point|
+          vacancy.uk_geolocation.each do |point|
             expect(points).to include(point)
           end
         end
@@ -48,7 +48,7 @@ RSpec.describe Vacancy do
         end
 
         it "updates the geolocation back to the school group's geopoint" do
-          expect(vacancy.geolocation).to eq(school_group.geopoint)
+          expect(vacancy.uk_geolocation).to eq(school_group.uk_geopoint)
         end
       end
 
@@ -56,9 +56,9 @@ RSpec.describe Vacancy do
         let(:vacancy) { create(:vacancy, :ect_suitable, job_roles: %w[teacher], organisations: [college], phases: %w[primary], key_stages: %w[ks1], job_address_line1: "10 Campus Road") }
 
         it "does not update the geolocation from the organisation" do
-          original_geolocation = vacancy.geolocation
+          original_geolocation = vacancy.uk_geolocation
           vacancy.organisations = [school_two]
-          expect(vacancy.geolocation).to eq(original_geolocation)
+          expect(vacancy.uk_geolocation).to eq(original_geolocation)
         end
       end
 
@@ -66,9 +66,9 @@ RSpec.describe Vacancy do
         let(:vacancy) { create(:vacancy, :ect_suitable, job_roles: %w[teacher], organisations: [college], phases: %w[primary], key_stages: %w[ks1], job_address_town: "Brighton", job_address_postcode: "BN1 1AA") }
 
         it "does not update the geolocation from the organisation" do
-          original_geolocation = vacancy.geolocation
+          original_geolocation = vacancy.uk_geolocation
           vacancy.organisations = [school_two]
-          expect(vacancy.geolocation).to eq(original_geolocation)
+          expect(vacancy.uk_geolocation).to eq(original_geolocation)
         end
       end
     end

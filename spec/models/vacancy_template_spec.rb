@@ -36,7 +36,6 @@ RSpec.describe VacancyTemplate do
                            external_advert_url
                            external_reference
                            external_source
-                           geolocation
                            other_start_date_details
                            hired_status
                            include_additional_documents

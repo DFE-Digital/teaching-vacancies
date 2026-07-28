@@ -131,7 +131,6 @@ RSpec.describe ImportFromVacancySourceJob do
           "flexi_working" => "Debitis id voluptate cumque iusto quod ut libero facere repellendus est perspiciatis rem labore voluptatibus",
           "further_details" => "details",
           "further_details_provided" => true,
-          "geolocation" => "POINT (-1.0 51.5)",
           "hired_status" => nil,
           "id" => nil,
           "include_additional_documents" => false,

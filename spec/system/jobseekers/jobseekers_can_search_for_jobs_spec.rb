@@ -216,12 +216,12 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
         within(".search-results__item", text: "Physics Teacher") do
           distance_text = find("dt", text: "Distance from location").sibling("dd").text
-          expect(distance_text).to eq("76.6 miles")
+          expect(distance_text).to eq("76.8 miles")
         end
 
         within(".search-results__item", text: "Maths 1") do
           distance_text = find("dt", text: "Distance from location").sibling("dd").text
-          expect(distance_text).to eq("81.2 miles")
+          expect(distance_text).to eq("81.4 miles")
         end
 
         within(".search-results__item", text: "Maths Teacher 2") do

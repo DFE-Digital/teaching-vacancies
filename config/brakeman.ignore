@@ -3,18 +3,18 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "11470d12efb4e5d5b0f114eab8b39b18f1c89aba310d7ccf0a0a401058ad8403",
+      "fingerprint": "0992435a806a45544dfb5106c222f77db9a7dd8e0148ba25a16c8d9e77cb56d1",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/queries/location_query.rb",
-      "line": 51,
+      "line": 35,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "scope.where(\"ST_DWithin(#{field_name}, ?, ?, false)\", \"POINT(#{Geocoding.new(query).coordinates.second} #{Geocoding.new(query).coordinates.first})\", radius)",
+      "code": "scope.joins(\"\\n      INNER JOIN location_polygons\\n      ON ST_DWithin(#{field_name}, location_polygons.uk_area, #{radius})\\n    \")",
       "render_path": null,
       "location": {
         "type": "method",
         "class": "LocationQuery",
-        "method": "handle_coordinates"
+        "method": "handle_polygon_location"
       },
       "user_input": "field_name",
       "confidence": "Weak",
@@ -26,21 +26,44 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "15db60bfa4ee24da38dd0c72ed69b7287f3130bde4f784ab8279d2f288ba24e6",
+      "fingerprint": "1ef5031b1401b8fdcdc6704662ea8810c4b7ffdf7423f765e713d6c5504be478",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/location_polygon.rb",
+      "line": 37,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "Arel.sql(\"ST_AsBinary(ST_Buffer(uk_area::geometry,#{radius_in_metres}))\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "LocationPolygon",
+        "method": "buffered_geometry_area"
+      },
+      "user_input": "radius_in_metres",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "3630afc2d20de2f2714010d558a774fc32d3bb8ab9ff2ba51fb2cb25f50c398e",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/queries/location_query.rb",
-      "line": 61,
+      "line": 52,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "Arel.sql(\"ST_Distance(#{field_name}, location_polygons.centroid, false)\")",
+      "code": "scope.where(\"ST_DWithin(#{field_name}, ?, ?)\", \"SRID=#{GeoFactories.convert_wgs84_to_sr27700(GeoFactories::FACTORY_4326.point(Geocoding.new(query).coordinates.second, Geocoding.new(query).coordinates.first)).srid};#{GeoFactories.convert_wgs84_to_sr27700(GeoFactories::FACTORY_4326.point(Geocoding.new(query).coordinates.second, Geocoding.new(query).coordinates.first))}\", radius)",
       "render_path": null,
       "location": {
         "type": "method",
         "class": "LocationQuery",
-        "method": "sort_by_polygon_distance"
+        "method": "handle_coordinates"
       },
       "user_input": "field_name",
-      "confidence": "Medium",
+      "confidence": "Weak",
       "cwe_id": [
         89
       ],
@@ -93,52 +116,6 @@
       "note": "Token is a UUID, only valid for 10 mins, and deleted after use."
     },
     {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "46ba98a6804b79053060718da628101f86c86959fda772ff0ead453d1028041a",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/queries/location_query.rb",
-      "line": 67,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "Arel.sql(\"ST_Distance(#{field_name}, '#{point}', false)\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "LocationQuery",
-        "method": "sort_by_coordinates_distance"
-      },
-      "user_input": "field_name",
-      "confidence": "Medium",
-      "cwe_id": [
-        89
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "58e03f427588782c955b58d0395db2ddd46bfc30885c13e8ec2b4b4767ce2b26",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/models/location_polygon.rb",
-      "line": 54,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "Arel.sql(\"ST_AsBinary(\\n            ST_Transform(\\n              ST_Buffer(\\n                ST_Transform(area::geometry, #{27700}),\\n                #{radius_in_metres}\\n              ),\\n            4326)\\n          )\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "LocationPolygon",
-        "method": "buffered_geometry_area"
-      },
-      "user_input": "radius_in_metres",
-      "confidence": "Medium",
-      "cwe_id": [
-        89
-      ],
-      "note": ""
-    },
-    {
       "warning_type": "Unscoped Find",
       "warning_code": 82,
       "fingerprint": "58f3df7253d0dfa30ca15dd14b17c6e3c5f8f5760b5363c3df49a692a1c74195",
@@ -160,52 +137,6 @@
         285
       ],
       "note": "Support users are meant to be able to see jobseeker profiles"
-    },
-    {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "76138ca17e9d6416c6b49d1462d247ca4c3d386810bae1b340a645a133d75709",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/services/ons_data_import/create_composites.rb",
-      "line": 26,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "ActiveRecord::Base.connection.exec_update(\"\\n      WITH composite_area AS (\\n        SELECT ST_MakeValid(\\n          ST_SimplifyPreserveTopology(\\n            ST_Union(area::geometry),\\n            #{0.001}\\n          ),\\n          'method=structure'\\n        )::geography AS geo\\n        FROM location_polygons\\n        WHERE name IN (#{quoted_constituents.join(\", \")})\\n      )\\n      UPDATE location_polygons\\n      SET area=composite_area.geo,\\n          location_type='composite',\\n          centroid=ST_Centroid(composite_area.geo)\\n      FROM composite_area\\n      WHERE id='#{composite.id}'\\n    \")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "OnsDataImport::CreateComposites",
-        "method": "set_area_data"
-      },
-      "user_input": "quoted_constituents.join(\", \")",
-      "confidence": "Medium",
-      "cwe_id": [
-        89
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "8290d1619d3aad637ca2386bd7527a9131daed3bde82808c5e2b00a318d1b7bd",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/models/location_polygon.rb",
-      "line": 72,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "Arel.sql(\"ST_AsBinary(ST_Buffer(uk_area::geometry,#{radius_in_metres}))\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "LocationPolygon",
-        "method": "buffered_geometry_uk_area"
-      },
-      "user_input": "radius_in_metres",
-      "confidence": "Medium",
-      "cwe_id": [
-        89
-      ],
-      "note": ""
     },
     {
       "warning_type": "Cross-Site Scripting",
@@ -244,11 +175,34 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
+      "fingerprint": "8736ce50cd0d9efe9f17a743baf492f4d493b1386dff5ae8f10ca67f2b426a22",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/queries/location_query.rb",
+      "line": 62,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "Arel.sql(\"ST_Distance(#{field_name}, location_polygons.uk_centroid)\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "LocationQuery",
+        "method": "sort_by_polygon_distance"
+      },
+      "user_input": "field_name",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
       "fingerprint": "b8a31cd61c10f5d331ab5d00cf45abd47bf6ace7cb0ba833de306c760de2dc13",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/services/ons_data_import/create_composites.rb",
-      "line": 48,
+      "line": 25,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "ActiveRecord::Base.connection.exec_update(\"\\n      WITH composite_area AS (\\n        SELECT ST_MakeValid(\\n          ST_SimplifyPreserveTopology(\\n            ST_Union(uk_area::geometry),\\n            #{0.001}\\n          ),\\n          'method=structure'\\n        )::geometry AS geo\\n        FROM location_polygons\\n        WHERE name IN (#{quoted_constituents.join(\", \")})\\n      )\\n      UPDATE location_polygons\\n      SET uk_area=composite_area.geo,\\n          location_type='composite',\\n          uk_centroid=ST_Centroid(composite_area.geo)\\n      FROM composite_area\\n      WHERE id='#{composite.id}'\\n    \")",
       "render_path": null,
@@ -267,25 +221,25 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "bdb6e5e218cff279e924b58b25fb8cbadd3161da685319b6725256b791286670",
+      "fingerprint": "c26231a9ad9253d60194a58137ae0b1a18d2dead703983e25d1a0a7df6ecda79",
       "check_name": "SQL",
       "message": "Possible SQL injection",
-      "file": "app/models/location_polygon.rb",
-      "line": 16,
+      "file": "app/queries/location_query.rb",
+      "line": 68,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "select(\"*, ST_Buffer(area, #{convert_miles_to_metres((radius_in_miles or 0))}) AS area\")",
+      "code": "Arel.sql(\"ST_Distance(#{field_name}, 'SRID=#{point.srid};#{point}')\")",
       "render_path": null,
       "location": {
         "type": "method",
-        "class": "LocationPolygon",
-        "method": "buffered"
+        "class": "LocationQuery",
+        "method": "sort_by_coordinates_distance"
       },
-      "user_input": "convert_miles_to_metres((radius_in_miles or 0))",
+      "user_input": "field_name",
       "confidence": "Medium",
       "cwe_id": [
         89
       ],
-      "note": "Does not receive any user input"
+      "note": ""
     },
     {
       "warning_type": "Unscoped Find",
@@ -313,21 +267,21 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "f7c2efcdfcd1f854891e68c002de7a7b13153238e0a4bab01658786920810555",
+      "fingerprint": "eecb1ed6b4874a0ad1933972b5ca70ea6b8e471f50edfdf11b8d49a012907a7c",
       "check_name": "SQL",
       "message": "Possible SQL injection",
-      "file": "app/queries/location_query.rb",
-      "line": 35,
+      "file": "app/models/location_polygon.rb",
+      "line": 8,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "scope.joins(\"\\n      INNER JOIN location_polygons\\n      ON ST_DWithin(#{field_name}, location_polygons.area, #{radius}, false)\\n    \")",
+      "code": "select(\"*, ST_Buffer(uk_area, #{convert_miles_to_metres((radius_in_miles or 0))}) AS uk_area\")",
       "render_path": null,
       "location": {
         "type": "method",
-        "class": "LocationQuery",
-        "method": "handle_polygon_location"
+        "class": "LocationPolygon",
+        "method": "buffered"
       },
-      "user_input": "field_name",
-      "confidence": "Weak",
+      "user_input": "convert_miles_to_metres((radius_in_miles or 0))",
+      "confidence": "Medium",
       "cwe_id": [
         89
       ],

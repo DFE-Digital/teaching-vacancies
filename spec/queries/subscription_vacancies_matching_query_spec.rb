@@ -441,10 +441,18 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
 
     # rubocop:disable RSpec/BeforeAfterAll
     before(:all) do
-      YAML.unsafe_load_file(Rails.root.join("spec/fixtures/polygons.yml")).map(&:attributes).each { |s| LocationPolygon.create!(s) }
-      YAML.unsafe_load_file(Rails.root.join("spec/fixtures/liverpool_schools.yml")).map(&:attributes).each { |s| School.create!(s) }
-      YAML.unsafe_load_file(Rails.root.join("spec/fixtures/basildon_schools.yml")).map(&:attributes).each { |s| School.create!(s) }
-      YAML.unsafe_load_file(Rails.root.join("spec/fixtures/st_albans_schools.yml")).map(&:attributes).each { |s| School.create!(s) }
+      YAML.unsafe_load_file(Rails.root.join("spec/fixtures/polygons.yml")).map(&:attributes).each do |s|
+        LocationPolygon.create!(s.symbolize_keys.except(:location_type))
+      end
+      YAML.unsafe_load_file(Rails.root.join("spec/fixtures/liverpool_schools.yml")).map(&:attributes).each do |s|
+        School.create!(s.symbolize_keys.except(:locality, :address3, :geopoint))
+      end
+      YAML.unsafe_load_file(Rails.root.join("spec/fixtures/basildon_schools.yml")).map(&:attributes).each do |s|
+        School.create!(s.symbolize_keys.except(:locality, :address3, :geopoint))
+      end
+      YAML.unsafe_load_file(Rails.root.join("spec/fixtures/st_albans_schools.yml")).map(&:attributes).each do |s|
+        School.create!(s.symbolize_keys.except(:locality, :address3, :geopoint))
+      end
       liverpool_org = School.find_by!(town: "Liverpool")
       basildon_org = School.find_by!(town: "Basildon")
       st_albans_org = School.find_by!(town: "St Albans")

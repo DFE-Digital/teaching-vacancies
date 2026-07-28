@@ -57,8 +57,6 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
       expect(example_school.region).to eq("London")
       expect(example_school.school_type).to eq("Local authority maintained schools")
       expect(example_school.url).to eq("http://www.sirjohncassprimary.org")
-      expect(example_school.geopoint.lat).to be_within(0.0001).of(51.51396894535262)
-      expect(example_school.geopoint.lon).to be_within(0.0001).of(-0.07751626505544208)
       expect(example_school.uk_geopoint.x).to be_within(0.0001).of(533_498)
       expect(example_school.uk_geopoint.y).to be_within(0.0001).of(181_201)
     end

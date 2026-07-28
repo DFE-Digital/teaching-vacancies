@@ -20,6 +20,8 @@ class Subscription < ApplicationRecord
   # support_job_roles used to be called teaching_support_job_roles and non_teaching_support_job_roles in the past, and there are still active subscriptions with this name
   JOB_ROLE_ALIASES = %i[teaching_job_roles support_job_roles teaching_support_job_roles non_teaching_support_job_roles].freeze
 
+  self.ignored_columns += %i[area geopoint]
+
   def self.encryptor(serializer: :json_allow_marshal)
     key_generator_secret = SUBSCRIPTION_KEY_GENERATOR_SECRET
     key_generator_salt = SUBSCRIPTION_KEY_GENERATOR_SALT
@@ -96,25 +98,16 @@ class Subscription < ApplicationRecord
 
   # A subscription with location area has a polygon area seat buffered by radius, no geopoint.
   def set_location_from_polygon(polygon, radius)
-    # Cast polygon area from geography to geometry and buffer by radius before storing
-    self.area = polygon.buffered_geometry_area(self.class.convert_miles_to_metres(radius))
-    self.geopoint = nil
-
-    self.uk_area = polygon.buffered_geometry_uk_area(self.class.convert_miles_to_metres(radius))
+    self.uk_area = polygon.buffered_geometry_area(self.class.convert_miles_to_metres(radius))
     self.uk_geopoint = nil
-
     self.radius_in_metres = self.class.convert_miles_to_metres(radius)
   end
 
   # A subscription with location coordinates has a geopoint, no area.
   def set_location_from_coordinates(coordinates, radius)
-    self.geopoint = RGeo::Cartesian.factory(srid: 4326).point(coordinates.second, coordinates.first)
-    self.area = nil
-
     geopoint = GeoFactories::FACTORY_4326.point(coordinates.second, coordinates.first)
     self.uk_geopoint = GeoFactories.convert_wgs84_to_sr27700 geopoint
     self.uk_area = nil
-
     self.radius_in_metres = self.class.convert_miles_to_metres(radius)
   end
 end
