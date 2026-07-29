@@ -1,6 +1,20 @@
 class SendJobAlertsJob < SolidQueueJob
   queue_as :jobalerts
 
+  # Concurrency is limited per job here rather than via worker threads in config/queue.yml, because the
+  # jobalerts queue runs one thread per pod, so only a per-job limit caps concurrency across all pods.
+  #
+  # Alerts are enqueued in batches of 5000 subscriptions, so tens of these jobs land at once, and each
+  # runs heavy subscription/vacancy matching queries. Unthrottled they have driven DB CPU to 90-100%
+  # and crashed the service; at a limit of 2 the same run peaks at 20-30%. Alerts are not time critical,
+  # so the few minutes of delay this adds costs jobseekers nothing. Measure DB CPU over a full run
+  # before raising the limit.
+  #
+  # `duration` is not a job timeout: it is the expiry on the concurrency semaphore, a failsafe for a
+  # worker that dies without releasing it. Keep it well above the slowest single run, as an expired
+  # semaphore is deleted while jobs are still running and lets extra jobs through.
+  limits_concurrency to: 2, key: :send_job_alerts, duration: 10.minutes
+
   MAXIMUM_RESULTS_PER_RUN = 500
 
   def perform(name, subscriptions, from_date) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
