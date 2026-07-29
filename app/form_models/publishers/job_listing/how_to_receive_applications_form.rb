@@ -5,4 +5,8 @@ class Publishers::JobListing::HowToReceiveApplicationsForm < Publishers::JobList
     %i[receive_applications]
   end
   attr_accessor(*fields)
+
+  def params_to_save
+    super.merge(enable_job_applications: false)
+  end
 end
