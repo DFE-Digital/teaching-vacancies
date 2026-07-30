@@ -21,21 +21,16 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
 
   attr_accessor :organisation_type
 
+  VACANCY_FIELDS = [:flexi_working_details_provided, :skills_and_experience,
+                    :school_offer, :flexi_working, :further_details_provided, :further_details].freeze
+
   class << self
     def fields
-      %i[flexi_working_details_provided
-         needs_qts_status
-         ect_suitable
-         skills_and_experience
-         school_offer
-         flexi_working
-         further_details_provided
-         further_details]
+      VACANCY_FIELDS + %i[needs_qts_status ect_suitable]
     end
 
     def load_from_model(vacancy, current_publisher:) # rubocop:disable Lint/UnusedMethodArgument
-      new(vacancy.slice(:flexi_working_details_provided, :skills_and_experience,
-                        :school_offer, :flexi_working, :further_details_provided, :further_details)
+      new(vacancy.slice(*VACANCY_FIELDS)
                  .merge(ect_suitable: vacancy.ect_status.nil? ? nil : (vacancy.ect_suitable? || vacancy.suitable_for_non_teachers?),
                         needs_qts_status: vacancy.ect_status.nil? ? nil : (vacancy.ect_suitable? || vacancy.ect_unsuitable?)), vacancy)
     end
