@@ -1,4 +1,4 @@
-class SendInactiveAccountEmailJob < SidekiqJob
+class SendInactiveAccountEmailJob < SolidQueueJob
   queue_as :default
 
   def perform
