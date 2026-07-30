@@ -6,10 +6,7 @@ module PageObjects
 
         def fill_in_and_submit_form(vacancy)
           if vacancy.for_an_fe_college?
-            # sleep 40
-            within "#needs_qts_status_radios" do
-              choose "Yes"
-            end
+            find("label[for='publishers-job-listing-about-the-role-form-needs-qts-status-true-field']").click
           end
           within ".ect-status-radios" do
             choose vacancy.ect_suitable? ? "Yes" : "No"
