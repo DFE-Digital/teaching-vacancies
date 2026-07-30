@@ -1,3 +1,5 @@
+@use 'govuk-frontend/dist/govuk/base' as *;
+
 /*
  * Provides a drop-in pointer for the default Trix stylesheet that will format the toolbar and
  * the trix-editor content (whether displayed or under editing). Feel free to incorporate this

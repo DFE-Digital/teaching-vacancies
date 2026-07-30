@@ -1,3 +1,5 @@
+@use 'govuk-frontend/dist/govuk/base' as *;
+
 .search-results {
   &__item {
     border-bottom: 1px solid govuk-functional-colour(border);

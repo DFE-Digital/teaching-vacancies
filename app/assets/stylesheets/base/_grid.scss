@@ -1,3 +1,5 @@
+@use 'govuk-frontend/dist/govuk/base' as *;
+
 .govuk-grid-column-one-third-at-desktop {
   @include govuk-grid-column(one-third, $at: desktop);
 }

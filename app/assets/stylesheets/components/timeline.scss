@@ -1,8 +1,9 @@
-@import 'base';
-@import 'sidebar-info-box';
+@use 'base';
+@use 'sidebar-info-box';
+@use 'govuk-frontend/dist/govuk/base' as *;
 
 .timeline-component {
-  @include sidebar-info-box-styles;
+  @include sidebar-info-box.sidebar-info-box-styles;
 
   ul.timeline-component__items {
     list-style-type: none;

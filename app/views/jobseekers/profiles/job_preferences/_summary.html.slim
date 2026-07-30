@@ -5,8 +5,8 @@ ruby:
 - if model.complete?
   = render "jobseekers/profiles/job_preferences/job_preferences", profile: profile
 - else
-  .govuk-inset-text.govuk-inset-text--incomplete
+  .govuk-inset-text.govuk-inset-text--narrow.govuk-inset-text--dark-blue
     = render "jobseekers/profiles/job_preferences/job_preferences", profile: profile
-    p.govuk-body-m.govuk-inset-text--header
+    p.govuk-heading-s
       strong You must complete your job preferences before you turn on your profile.
     = govuk_link_to "Complete job preferences", jobseekers_job_preferences_step_path(multistep.next_invalid_step), class: "govuk-button"

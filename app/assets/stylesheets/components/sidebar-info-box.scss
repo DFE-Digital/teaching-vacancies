@@ -1,4 +1,5 @@
-@import 'base';
+@use 'base';
+@use 'govuk-frontend/dist/govuk/base' as *;
 
 @mixin sidebar-info-box-styles {
   background-color: govuk-colour('black', $variant: 'tint-95');

@@ -1,4 +1,5 @@
-@import 'govuk-frontend/dist/govuk/helpers/colour';
+@use 'govuk-frontend/dist/govuk/helpers/colour';
+@use 'govuk-frontend/dist/govuk/base' as *;
 
 // Message header styling for sender messages (blue) and recipient messages (grey)
 .message-header--sender {

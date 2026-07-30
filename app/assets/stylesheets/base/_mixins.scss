@@ -1,4 +1,5 @@
 @use 'sass:color';
+@use 'govuk-frontend/dist/govuk/base' as *;
 
 /// Slightly lighten a color
 /// @access public
@@ -18,6 +19,62 @@
 
 @function shade($color, $percentage) {
   @return color.mix(black, $color, $percentage);
+}
+
+@mixin govuk-textarea-styles {
+  @include govuk-font($size: 19, $line-height: 1.25);
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  min-height: 40px;
+  @include govuk-responsive-margin(6, 'bottom');
+  padding: govuk-spacing(1);
+  resize: vertical;
+  border: $govuk-border-width-form-element solid govuk-functional-colour(input-border);
+  border-radius: 0;
+}
+
+@mixin govuk-list-styles {
+  @include govuk-font($size: 19);
+  margin-top: 0;
+  @include govuk-responsive-margin(4, 'bottom');
+  padding-left: 0;
+  list-style-type: none;
+  color: govuk-functional-colour(text);
+}
+
+@mixin govuk-list-bullet-styles {
+  @include govuk-list-styles;
+  padding-left: govuk-spacing(4);
+  list-style-type: disc;
+}
+
+@mixin govuk-list-number-styles {
+  @include govuk-list-styles;
+  padding-left: govuk-spacing(4);
+  list-style-type: decimal;
+}
+
+@mixin govuk-body-styles {
+  margin-top: 0;
+  color: govuk-functional-colour(text);
+  @include govuk-font($size: 19);
+  @include govuk-responsive-margin(4, 'bottom');
+}
+
+@mixin govuk-body-s-styles {
+  margin-top: 0;
+  color: govuk-functional-colour(text);
+  @include govuk-font($size: 16);
+  @include govuk-responsive-margin(4, 'bottom');
+}
+
+@mixin govuk-heading-s-styles {
+  @include govuk-font($size: 19, $weight: bold);
+  display: block;
+  margin-top: 0;
+  color: govuk-functional-colour(text);
+  @include govuk-responsive-margin(4, 'bottom');
 }
 
 @mixin full-width-mast {

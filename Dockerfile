@@ -43,6 +43,12 @@ ENV IMAGES_LOGOS_AZURE_STORAGE_ACCESS_KEY=throwaway_value
 
 RUN --mount=type=secret,id=master_key,env=RAILS_MASTER_KEY RAILS_ENV=production SECRET_KEY_BASE=required-to-run-but-not-used RAILS_SERVE_STATIC_FILES=1 bundle exec rake assets:precompile
 
+# govuk-frontend fonts and images are referenced by hardcoded paths in the compiled CSS.
+# Copy them to public/assets before node_modules is deleted so they are served correctly.
+RUN mkdir -p public/assets/fonts public/assets/images && \
+    cp -r node_modules/govuk-frontend/dist/govuk/assets/fonts/. public/assets/fonts/ && \
+    cp -r node_modules/govuk-frontend/dist/govuk/assets/images/. public/assets/images/
+
 RUN rm -rf node_modules log tmp yarn.lock && \
       rm -rf /usr/local/bundle/cache && \
       rm -rf .env && touch .env && \

@@ -1,3 +1,5 @@
+@use 'govuk-frontend/dist/govuk/base' as *;
+
 .govuk-footer {
   &__list {
     padding-bottom: govuk-spacing(7);

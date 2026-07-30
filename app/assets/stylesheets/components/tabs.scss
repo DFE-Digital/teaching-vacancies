@@ -1,4 +1,5 @@
-@import 'base';
+@use 'base';
+@use 'govuk-frontend/dist/govuk/base' as *;
 
 .tabs-component {
   margin-bottom: govuk-spacing(4);

@@ -1,13 +1,16 @@
+@use 'govuk-frontend/dist/govuk/base' as *;
+@use 'mixins' as *;
+
 .govuk-width-container {
   @include govuk-width-container;
 }
 
 p {
-  @extend .govuk-body;
+  @include govuk-body-styles;
 }
 
 dl {
-  @extend .govuk-body-s;
+  @include govuk-body-s-styles;
   margin-bottom: govuk-spacing(1);
   margin-top: 0;
 

@@ -1,5 +1,8 @@
+@use 'sass:meta';
+@use 'govuk-frontend/dist/govuk/base' as *;
+
 .vacancies_index {
-  @import '../shared/search-results';
+  @include meta.load-css('../shared/search-results');
 
   .custom-banner-background {
     background-color: govuk-colour('black', $variant: 'tint-95');

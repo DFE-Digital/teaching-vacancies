@@ -1,3 +1,5 @@
+@use 'govuk-frontend/dist/govuk/base' as *;
+
 .govuk-header {
   border-bottom: govuk-spacing(2) solid govuk-functional-colour(brand);
 

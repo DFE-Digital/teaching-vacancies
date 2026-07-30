@@ -14,14 +14,14 @@
             = full_address(vacancy.organisation)
 
 section
-  p.icon.icon--left.icon--alert-blue
+  p.govuk-body.icon.icon--left.icon--alert-blue
     = govuk_link_to(t("jobs.alert.similar.verbose.link_text"), new_subscription_path(search_criteria: invented_job_alert_search_criteria, vacancy_id: vacancy.id))
     =< t("jobs.alert.similar.verbose.reminder")
 
 - linked_locations = linked_locations(vacancy)
 - if linked_locations.any?
   section
-    p.icon.icon--left.icon--map-blue
+    p.govuk-body.icon.icon--left.icon--map-blue
       = t("jobs.location_find_more_html", location_link: linked_locations.first,
                                           second_location_link: linked_locations.second,
                                           school_type: vacancy.for_an_fe_college? ? "college" : "school",

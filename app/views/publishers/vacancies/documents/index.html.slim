@@ -15,7 +15,7 @@
 
       .js-documents class=("js-documents--empty" if vacancy.supporting_documents.none?)
         = render "publishers/vacancies/documents/documents"
-        p.js-documents__no-files = t("jobs.no_files_message")
+        p.govuk-body.js-documents__no-files = t("jobs.no_files_message")
 
       = f.govuk_radio_buttons_fieldset :upload_additional_document, legend: { text: t("helpers.legend.publishers_job_listing_documents_confirmation_form.upload_additional_document"), tag: nil, size: "m" } do
         = f.govuk_radio_button :upload_additional_document, "true", link_errors: true

@@ -1,3 +1,5 @@
+@use 'govuk-frontend/dist/govuk/base' as *;
+
 .govuk-summary-card {
   &__actions {
     gap: govuk-spacing(2);
