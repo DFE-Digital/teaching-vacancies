@@ -32,7 +32,7 @@ class SubscriptionPresenter < BasePresenter
     when "location"
       render_location_filter(value, search_criteria["radius"])
     when "ect_statuses"
-      render_ect_statuses_filter(value)
+      render_ect_statuses_filter([value.first == "ect_suitable"])
     when "subjects"
       render_subjects_filter(value)
     when "working_patterns"
@@ -88,7 +88,7 @@ class SubscriptionPresenter < BasePresenter
   end
 
   def render_ect_statuses_filter(value)
-    { suitable_for_early_career_teachers: value.map { |option| I18n.t("helpers.label.publishers_job_listing_about_the_role_form.ect_status_options.#{option}") }.join(", ") }
+    { suitable_for_early_career_teachers: value.map { |option| I18n.t("helpers.label.publishers_job_listing_about_the_role_form.ect_suitable_options.#{option}") }.join(", ") }
   end
 
   def render_subjects_filter(value)

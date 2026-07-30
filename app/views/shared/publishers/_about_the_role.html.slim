@@ -1,9 +1,22 @@
 - if vacancy.job_roles.include? "teacher"
-  = f.govuk_collection_radio_buttons :ect_status,
-    Vacancy.ect_statuses.keys,
-    :to_s,
-    class: %w[ect-status-radios],
-    legend: { size: "m", tag: nil }
+  - if vacancy.for_an_fe_college?
+    = f.govuk_radio_buttons_fieldset :needs_qts_status, id: "needs_qts_status_radios" do
+      = f.govuk_radio_button :needs_qts_status, "true", link_errors: true do
+        = f.govuk_collection_radio_buttons :ect_suitable,
+          [true, false],
+          :to_s,
+          class: %w[ect-status-radios],
+          legend: { size: "m", tag: nil }
+      = f.govuk_radio_button :needs_qts_status, "false"
+  - else
+    = f.hidden_field :needs_qts_status, value: "true"
+    = f.govuk_collection_radio_buttons :ect_suitable,
+      [true, false],
+      :to_s,
+      class: %w[ect-status-radios],
+      legend: { size: "m", tag: nil }
+- else
+  = f.hidden_field :needs_qts_status, value: "false"
 
 = editor(form_input: f.govuk_text_area(:skills_and_experience, label: { size: "s", id: "skills-and-experience-label" }, rows: 5, required: true, aria: { hidden: false }), value: @form.skills_and_experience, field_name: "publishers_job_listing_about_the_role_form[skills_and_experience]", label: { text: t("helpers.label.publishers_job_listing_about_the_role_form.skills_and_experience"), size: "s", id: "skills-and-experience-label" })
 

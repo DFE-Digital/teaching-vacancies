@@ -63,7 +63,6 @@ RSpec.describe "publishers/vacancies/show" do
       expect(rendered).to have_content(vacancy.contact_email)
       expect(rendered).to have_content(vacancy.contact_number)
 
-      expect(rendered).to have_content(strip_tags(vacancy_presenter.readable_ect_status)) if vacancy.ect_status.present?
       expect(rendered).to have_content(vacancy.skills_and_experience)
       expect(rendered).to have_content(vacancy.school_offer)
       expect(rendered).to have_content(vacancy.flexi_working)

@@ -44,6 +44,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   def form_params
     if current_step == :important_dates && vacancy.disable_editing_publish_on?
       expiry_date_time_params(params)
+    elsif current_step == :about_the_role
+      params.fetch(form_key, {}).permit(form_class.fields)
     else
       super
     end
@@ -55,6 +57,10 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
     else
       "publishers/job_listing/#{step}_form".camelize.constantize
     end
+  end
+
+  def form_key
+    ActiveModel::Naming.param_key(form_class)
   end
 
   def set_school_options # rubocop:disable Metrics/AbcSize

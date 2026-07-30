@@ -1,0 +1,56 @@
+en:
+  helpers:
+    hint:
+      publishers_job_listing_about_the_role_form:
+        about_organisation: >-
+          This will appear next to the job details under '%{organisation_type} overview'. Feel free to adapt this text
+        about_schools: >-
+          Give a brief summary of the schools where the jobseeker would be teaching and any relevant information about
+          the %{organisation_type}
+        ect_suitable: Early career teachers were previously called newly qualified teachers (NQTs)
+        job_advert: >-
+          Get jobseekers interested in the role by providing a brief summary of around 400 words.
+          You should cover what the role is and who you're looking to recruit.
+          The first 20 to 40 words will be shown in search results, so make them stand out.
+        flexi_working_details_provided: Providing details about flexible working may increase the number of applications you receive for this role
+        school_offer: Provide details about what your organisation can offer staff, for example, employee benefits, wellbeing support or professional development.
+
+    label:
+      publishers_job_listing_about_the_role_form:
+        about_organisation: About %{organisation}
+        ect_suitable_options:
+          "true": "Yes"
+          "false": "No"
+        needs_qts_status_options:
+          "true": "Yes"
+          "false": "No"
+        further_details: What further details do you want to add about the role?
+        further_details_provided_options:
+          false: "No"
+          true: "Yes"
+        flexi_working_details_provided_options:
+          "false": "No"
+          "true": "Yes"
+        job_advert: Job advert
+        school_offer: What does your %{organisation} offer?
+        schools_offer: What do your schools offer?
+        school_profile:
+          description: Your %{organisation} description from your %{organisation} profile will be included in the job listing.
+          description_summary_text: View your %{organisation} description
+          no_description: Your %{organisation} description from your %{organisation} profile will be included in the job listing once you have added it to your profile.
+          no_description_link:
+            college: Add a college description
+            organisation: Add an organisation description
+            school: Add a school description
+          no_safeguarding_information: Your commitment to safeguarding statement from your %{organisation} profile will be included in the job listing once you have added it to your profile.
+          no_safeguarding_information_link: Add a commitment to safeguarding statement
+          safeguarding_information: Your commitment to safeguarding statement from your %{organisation} profile will be included in the job listing.
+          safeguarding_information_summary_text: View your commitment to safeguarding statement
+        skills_and_experience: What skills and experience are you looking for?
+
+    legend:
+      publishers_job_listing_about_the_role_form:
+        ect_suitable: Is this role suitable for an early career teacher (ECT)?
+        needs_qts_status: Does this job require qualified teacher status (QTS)?
+        further_details_provided: Do you want to add further details about the role?
+        flexi_working_details_provided: Do you want to add details about flexible working?

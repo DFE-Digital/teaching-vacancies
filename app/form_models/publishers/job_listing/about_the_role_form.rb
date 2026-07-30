@@ -1,16 +1,18 @@
 class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::VacancyForm
   include ActiveModel::Attributes
 
-  validates :ect_status, inclusion: { in: Vacancy.ect_statuses.keys }, if: -> { vacancy&.job_roles&.include?("teacher") }
+  validates :ect_suitable, inclusion: { in: [true, false] }, if: -> { vacancy&.job_roles&.include?("teacher") && needs_qts_status }
   validate :skills_and_experience_presence
   validate :school_offer_presence
   validates :further_details_provided, inclusion: { in: [true, false] }
   validate :further_details_presence, if: -> { further_details_provided }
   validates :flexi_working_details_provided, inclusion: { in: [true, false] }
   validate :flexi_working_presence, if: -> { flexi_working_details_provided }
+  validates :needs_qts_status, inclusion: { in: [true, false] }
 
   attribute :flexi_working_details_provided, :boolean
-  attribute :ect_status
+  attribute :needs_qts_status, :boolean
+  attribute :ect_suitable, :boolean
   attribute :skills_and_experience
   attribute :school_offer
   attribute :flexi_working
@@ -22,12 +24,20 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   class << self
     def fields
       %i[flexi_working_details_provided
-         ect_status
+         needs_qts_status
+         ect_suitable
          skills_and_experience
          school_offer
          flexi_working
          further_details_provided
          further_details]
+    end
+
+    def load_from_model(vacancy, current_publisher:) # rubocop:disable Lint/UnusedMethodArgument
+      new(vacancy.slice(:flexi_working_details_provided, :skills_and_experience,
+                        :school_offer, :flexi_working, :further_details_provided, :further_details)
+                 .merge(ect_suitable: vacancy.ect_status.nil? ? nil : (vacancy.ect_suitable? || vacancy.suitable_for_non_teachers?),
+                        needs_qts_status: vacancy.ect_status.nil? ? nil : (vacancy.ect_suitable? || vacancy.ect_unsuitable?)), vacancy)
     end
 
     def load_from_params(form_params, vacancy, current_publisher:)
@@ -62,6 +72,18 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   end
 
   private
+
+  def ect_status
+    if needs_qts_status
+      if ect_suitable
+        :ect_suitable
+      else
+        :ect_unsuitable
+      end
+    else
+      :suitable_for_non_teachers
+    end
+  end
 
   def school_offer_presence
     return if remove_html_tags(school_offer).present?

@@ -123,7 +123,7 @@ module VacancyHelpers
 
   def fill_in_about_the_role_form_fields(vacancy)
     within ".ect-status-radios" do
-      choose I18n.t("helpers.label.publishers_job_listing_about_the_role_form.ect_status_options.#{vacancy.ect_status}")
+      choose vacancy.ect_suitable? ? "Yes" : "No"
     end
 
     fill_in "publishers_job_listing_about_the_role_form[skills_and_experience]", with: vacancy.skills_and_experience

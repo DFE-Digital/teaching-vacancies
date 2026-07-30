@@ -5,8 +5,14 @@ module PageObjects
         set_url "/organisation/jobs/{vacancy_id}/build/about_the_role"
 
         def fill_in_and_submit_form(vacancy)
+          if vacancy.for_an_fe_college?
+            # sleep 40
+            within "#needs_qts_status_radios" do
+              choose "Yes"
+            end
+          end
           within ".ect-status-radios" do
-            choose I18n.t("helpers.label.publishers_job_listing_about_the_role_form.ect_status_options.#{vacancy.ect_status}")
+            choose vacancy.ect_suitable? ? "Yes" : "No"
           end
 
           fill_in "publishers_job_listing_about_the_role_form[skills_and_experience]", with: vacancy.skills_and_experience
