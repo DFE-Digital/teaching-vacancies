@@ -17,12 +17,12 @@ class OnsDataImport::CreateComposites
           set_uk_area_data(location_polygon, quoted_constituents, new_tolerance)
           location_polygon.touch
           location_polygon.reload
-          # :nocov:
+          # simplecov:disable
           if location_polygon.area_data_valid?
             Rails.logger.info("Created composite polygon for '#{name}' tolerance #{new_tolerance}")
             break
           end
-          # :nocov:
+          # simplecov:enable
         end
       end
     end
