@@ -1,12 +1,11 @@
-require "google/apis/drive_v3"
-
 class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::WizardBaseController
   helper_method :documents_form, :confirmation_form
+  before_action :set_vacancy
 
-  def create
+  def create # rubocop:disable Metrics/AbcSize
     @documents_form = Publishers::JobListing::DocumentsForm.new(documents_form_params, vacancy)
     if @documents_form.valid?
-      if @documents_form.supporting_documents.reject { |document| vacancy.supporting_documents.attach(document) }.any?
+      if @documents_form.supporting_documents.reject { |document| attach_document(document) }.any?
         vacancy.errors.each do |error|
           @documents_form.errors.add error.attribute, error.message
         end
@@ -48,6 +47,14 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::Wizard
     :documents
   end
 
+  def attach_document(document)
+    vacancy.supporting_documents.attach(document)
+  rescue ActiveRecord::RecordNotUnique
+    # Document already attached (e.g., due to double-click or page refresh)
+    # This is fine - the user's intent is fulfilled
+    true
+  end
+
   def documents_form
     @documents_form ||= Publishers::JobListing::DocumentsForm.new(documents_form_params, vacancy)
   end
@@ -59,7 +66,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::Wizard
   end
 
   def confirmation_form
-    @confirmation_form ||= Publishers::JobListing::DocumentsConfirmationForm.new(confirmation_form_params)
+    @confirmation_form ||= Publishers::JobListing::DocumentsConfirmationForm.new(confirmation_form_params, vacancy)
   end
 
   def confirmation_form_params
@@ -84,17 +91,17 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::Wizard
   def send_dfe_analytics_event(event_type, name, size, content_type)
     fail_safe do
       event = DfE::Analytics::Event.new
-        .with_type(event_type)
-        .with_request_details(request)
-        .with_response_details(response)
-        .with_user(current_publisher)
-        .with_data(data: {
-          vacancy_id: vacancy.id,
-          document_type: "supporting_document",
-          name: name,
-          size: size,
-          content_type: content_type,
-        })
+                                   .with_type(event_type)
+                                   .with_request_details(request)
+                                   .with_response_details(response)
+                                   .with_user(current_publisher)
+                                   .with_data(data: {
+                                     vacancy_id: vacancy.id,
+                                     document_type: "supporting_document",
+                                     name: name,
+                                     size: size,
+                                     content_type: content_type,
+                                   })
 
       DfE::Analytics::SendEvents.do([event])
     end
