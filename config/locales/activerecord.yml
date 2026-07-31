@@ -514,6 +514,10 @@ en:
             incomplete: Complete your references
           school_ethos:
             incomplete: Complete the question about how you meet the schools ethos and aims
+          catholic:
+            incomplete: Complete your religious information
+          non_catholic:
+            incomplete: Complete your religious information
           catholic_following_religion:
             incomplete: Complete your religious information
           non_catholic_following_religion:
