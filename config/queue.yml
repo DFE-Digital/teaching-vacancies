@@ -11,7 +11,7 @@ default: &default
     - queues: [ notify, default, low ]
       threads: 3
       processes: <%= ENV.fetch("JOB_CONCURRENCY", 1) %>
-      polling_interval: 0.5
+      polling_interval: 1
     # Second worker: handles throttled jobs, with a single thread and process
     # and less frequent polling. Queues are drained in priority order, left to right.
     # We throttle via worker concurrency and polling interval rather than #limit_concurrency
@@ -21,7 +21,7 @@ default: &default
     - queues: [ dbintensive, solid_queue_recurring, jobalerts ]
       threads: 1
       processes: 1
-      polling_interval: 1
+      polling_interval: 2
 
 development:
   <<: *default
