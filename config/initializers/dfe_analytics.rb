@@ -63,18 +63,3 @@ DfE::Analytics.configure do |config|
 
   config.azure_federated_auth = ENV.include? "GOOGLE_CLOUD_CREDENTIALS"
 end
-
-# Temporary: run DfE Analytics jobs on Sidekiq (the gem doesn't allow overriding the ActiveJob adapter).
-module DfE
-  module Analytics
-    module Jobs
-      # rubocop:disable Rails/ApplicationJob
-      class AnalyticsJob < ActiveJob::Base
-        # simplecov:disable
-        self.queue_adapter = :sidekiq unless Rails.env.test?
-        # simplecov:enable
-      end
-      # rubocop:enable Rails/ApplicationJob
-    end
-  end
-end
