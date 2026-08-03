@@ -119,7 +119,12 @@ gem "puma"
 gem "rack-attack"
 gem "rack-cors"
 gem "rails", RAILS_VERSION # Explicitly declare rails so we can do a "bundle update rails" when needed.
-gem "rails_semantic_logger"
+# TODO: Unpin once Sidekiq is removed.
+# 5.1.0's Sidekiq integration calls ::Sidekiq::Config::ERROR_HANDLER, a Sidekiq 7+ constant, from
+# inside Sidekiq.configure_server. We are pinned to sidekiq < 7 until our Redis service instance is
+# 6.2+ on Azure, so the sidekiq workers crash on boot with
+# "NameError: uninitialized constant Sidekiq::Config".
+gem "rails_semantic_logger", "5.0.0"
 gem "recaptcha"
 gem "redis", "~> 4.8.1"
 # Geographic point conversions

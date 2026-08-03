@@ -647,10 +647,10 @@ GEM
     rails-html-sanitizer (1.7.1)
       loofah (~> 2.25, >= 2.25.2)
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
-    rails_semantic_logger (5.1.0)
+    rails_semantic_logger (5.0.0)
       rack
       railties (>= 7.2)
-      semantic_logger (>= 5.1)
+      semantic_logger (>= 5.0)
     railties (8.0.5.1)
       actionpack (= 8.0.5.1)
       activesupport (= 8.0.5.1)
@@ -1087,7 +1087,7 @@ DEPENDENCIES
   rack_session_access
   rails (< 8.1)
   rails-controller-testing
-  rails_semantic_logger
+  rails_semantic_logger (= 5.0.0)
   railties (< 8.1)
   recaptcha
   redis (~> 4.8.1)
@@ -1376,7 +1376,7 @@ CHECKSUMS
   rails-controller-testing (1.0.5) sha256=741448db59366073e86fc965ba403f881c636b79a2c39a48d0486f2607182e94
   rails-dom-testing (2.3.0) sha256=8acc7953a7b911ca44588bf08737bc16719f431a1cc3091a292bca7317925c1d
   rails-html-sanitizer (1.7.1) sha256=e797a7c9b01e567307e317c576b49ab4168017e63eea4dba9ce3cb587e2f22c2
-  rails_semantic_logger (5.1.0) sha256=926a2a2fbff97c19f9852eb0b99c63b4cea351164cebb846f283a312ad2db740
+  rails_semantic_logger (5.0.0) sha256=0ac433d4acab1fd7c36b5b810caced6204bbaca3b52827ab7a236931869c74fc
   railties (8.0.5.1) sha256=da1958e1d9dab04691a2f8721b3ff7fab323715d37f103c19972dedfd644d5c7
   rainbow (3.1.1) sha256=039491aa3a89f42efa1d6dec2fc4e62ede96eb6acd95e52f1ad581182b79bc6a
   rake (13.4.2) sha256=cb825b2bd5f1f8e91ca37bddb4b9aaf345551b4731da62949be002fa89283701
