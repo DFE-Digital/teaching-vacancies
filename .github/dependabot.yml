@@ -24,6 +24,13 @@ updates:
       - dependency-name: "redis"
         update-types: ["version-update:semver-major"]
 
+      # TODO: Remove this ignore config once Sidekiq is removed.
+      # rails_semantic_logger 5.1.0's Sidekiq integration requires Sidekiq 7+ (Sidekiq::Config), and
+      # we're pinned to sidekiq <7 until our Redis service instance is 6.2+ on Azure.
+      # Minor updates are ignored too, as 5.1.0 was itself a minor bump.
+      - dependency-name: "rails_semantic_logger"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+
       # TODO: Remove this ignore config when we can upgrade to view components 4.x
       # which is brought in by govuk-components 5.11.2
       - dependency-name: "view_component"
