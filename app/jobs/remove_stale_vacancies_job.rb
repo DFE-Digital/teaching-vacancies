@@ -1,4 +1,4 @@
-class RemoveStaleVacanciesJob < SidekiqJob
+class RemoveStaleVacanciesJob < SolidQueueJob
   queue_as :low
 
   def perform

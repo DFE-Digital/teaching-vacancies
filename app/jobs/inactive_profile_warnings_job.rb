@@ -1,4 +1,4 @@
-class InactiveProfileWarningsJob < SidekiqJob
+class InactiveProfileWarningsJob < SolidQueueJob
   queue_as :low
 
   def perform

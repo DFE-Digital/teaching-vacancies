@@ -1,4 +1,4 @@
-class ImportOrganisationDataJob < SidekiqJob
+class ImportOrganisationDataJob < SolidQueueJob
   queue_as :low
 
   def perform

@@ -137,7 +137,6 @@ gem "sentry-ruby"
 gem "sentry-sidekiq"
 # sidekiq 7 needs Redis 6.2.x which isn't available on Azure (yet)
 gem "sidekiq", "<7"
-gem "sidekiq-cron"
 # throttle sidekiq requests to avoid overwhelming the Govuk Notify API
 gem "sidekiq-limit_fetch"
 

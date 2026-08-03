@@ -1,4 +1,4 @@
-class ResetSessionsJob < SidekiqJob
+class ResetSessionsJob < SolidQueueJob
   queue_as :low
 
   def perform

@@ -1,4 +1,206 @@
 production:
+#
+# SET DATE CRON JOBS
+#
+  send_peak_times_email_reminder_march:
+    schedule: '0 15 26 3 *' # "At 15:00 on 26 of March."
+    class: 'SendPeakTimesEmailReminderJob'
+    queue: default
+
+  send_peak_times_email_reminder_may:
+    schedule: '0 11 11 5 *' # "At 11:00 on 11 of May."
+    class: 'SendPeakTimesEmailReminderJob'
+    queue: default
+
+  send_peak_times_email_reminder_november:
+    schedule: '0 12 4 11 *' # "At 12:00 on 4 of November."
+    class: 'SendPeakTimesEmailReminderJob'
+    queue: default
+
+  delete_old_vacancy_conflict_attempts:
+    schedule: '0 3 30 9 *' # "At 03:00 on 30th of September."
+    class: 'DeleteOldVacancyConflictAttemptsJob'
+    queue: low
+
+  #
+  # MONTHLY CRON JOBS
+  #
+  clear_emergency_login_keys:
+    schedule: '30 0 1 * *' # "At 00:30 on day-of-month 1."
+    class: 'ClearEmergencyLoginKeysJob'
+    queue: low
+
+  #
+  # WEEKLY CRON JOBS
+  #
+  queue_weekly_alerts:
+    schedule: '0 18 * * 5' # "At 18:00 on Friday."
+    class: 'SendWeeklyAlertEmailJob'
+    queue: default
+
+  import_polygon_data:
+    schedule: '0 23 * * 0' # "At 23:00 on Sunday."
+    class: 'ImportPolygonDataJob'
+    queue: low
+
+  #
+  # DAILY CRON JOBS
+  #
+  remove_stale_vacancies:
+    schedule: '0 00 * * *' # "At 00:00."
+    class: 'RemoveStaleVacanciesJob'
+    queue: low
+
+  update_dsi_users_in_db:
+    schedule: '0 0 * * *' # "At 00:00."
+    class: 'UpdateDSIUsersInDbJob'
+    queue: low
+
+  export_users:
+    schedule: '0 01 * * *' # "At 01:00."
+    class: 'ExportDSIUsersToBigQueryJob'
+    queue: low
+
+  send_entity_table_checks_to_bigquery:
+    schedule: "30 1 * * *" # "At 01:30."
+    class: "DfE::Analytics::Jobs::EntityTableCheckJob"
+    queue: low
+
+  reset_sessions:
+    schedule: '0 02 * * *' # "At 02:00."
+    class: 'ResetSessionsJob'
+    queue: low
+
+  send_unapplied_saved_vacancies_email:
+    schedule: '05 2 * * *' # "At 02:05."
+    class: 'SendEmailForUnappliedSavedVacanciesJob'
+    queue: default
+
+  send_draft_applications_email:
+    schedule: '20 2 * * *' # "At 02:20."
+    class: 'SendEmailForDraftJobApplicationsJob'
+    queue: default
+
+  delete_old_feedback:
+    schedule: '0 3 * * *' # "At 03:00."
+    class: 'DeleteOldFeedbackJob'
+    queue: default
+
+  remove_vacancies_that_expired_yesterday_from_google_index:
+    schedule: '0 04 * * *' # "At 04:00."
+    class: 'RemoveVacanciesThatExpiredYesterdayFromGoogleIndexJob'
+    queue: low
+
+  remove_invalid_subscriptions:
+    schedule: '0 05 * * *' # "At 05:00."
+    class: 'RemoveInvalidSubscriptionsJob'
+    queue: low
+
+  delete_old_applications:
+    schedule: '0 05 * * *' # "At 05:00."
+    class: 'DeleteOldNonDraftJobApplicationsJob'
+    queue: low
+
+  delete_old_alert_runs:
+    schedule: '10 5 * * *' # "At 05:10."
+    class: 'DeleteOldAlertRunsJob'
+    queue: low
+
+  send_job_application_data_expiry_notification:
+    schedule: '0 6 * * *' # "At 06:00."
+    class: 'SendJobApplicationDataExpiryNotifierJob'
+    queue: default
+
+  queue_applications_received:
+    schedule: '0 6 * * *' # "At 06:00."
+    class: 'SendApplicationsReceivedYesterdayJob'
+    queue: default
+
+  queue_messages_received:
+    schedule: '0 7 * * *' # "At 07:00."
+    class: 'SendMessagesReceivedYesterdayJob'
+    queue: default
+
+  send_subscription_governance_emails:
+    schedule: '50 08 * * *' # "At 08:50."
+    class: 'SendSubscriptionGovernanceEmailsJob'
+    queue: low
+
+  send_inactive_account_email:
+    schedule: '0 8 * * *' # "At 8:00."
+    class: 'SendInactiveAccountEmailJob'
+    queue: low
+
+  destroy_inactive_accounts:
+    schedule: '10 8 * * *' # "At 08:10."
+    class: 'DestroyInactiveAccountsJob'
+    queue: low
+
+  inactive_profile_warnings:
+    schedule: '40 08 * * *' # "At 08:40."
+    class: 'InactiveProfileWarningsJob'
+    queue: low
+
+  disable_inactive_profiles:
+    schedule: '20 08 * * *' # "At 08:20."
+    class: 'DisableInactiveProfilesJob'
+    queue: low
+
+  email_feedback_prompt:
+    schedule: '0 09 * * *' # "At 09:00."
+    class: 'SendExpiredVacancyFeedbackPromptJob'
+    queue: low
+
+  delete_unconfirmed_subscriptions:
+    schedule: '10 09 * * *' # "At 09:10."
+    class: 'DeleteUnconfirmedSubscriptionsJob'
+    queue: low
+
+  withdraw_stale_drafts:
+    schedule: '0 10 * * *' # At 10:00.
+    class: 'DeleteOldDraftApplicationsForExpiredVacanciesJob'
+    queue: low
+
+  queue_daily_alerts:
+    schedule: '0 15 * * *' # "At 15:00."
+    class: 'SendDailyAlertEmailJob'
+    queue: default
+
+  export_vacancies_closed_early_to_dwp_find_a_job_service:
+    schedule: '30 21 * * *' # "At 21:30."
+    class: 'ExportVacanciesClosedEarlySinceYesterdayToDwpFindAJobServiceJob'
+    queue: low
+
+  import_organisation_data:
+    schedule: '0 22 * * *' # "At 22:00."
+    class: 'ImportOrganisationDataJob'
+    queue: low
+
+  refresh_organisations_gias_data_hash:
+    schedule: '0 23 * * *' # "At 23:00."
+    class: 'RefreshOrganisationsGiasDataHashJob'
+    queue: low
+
+  index_newly_published_vacancies:
+    schedule: '01 00 * * *' # "At 00:01."
+    class: 'IndexNewlyPublishedVacanciesJob'
+    queue: low
+
+  # Internal querying & parsing of Find a Job export data depends on this running time.
+  # Be careful if changing this time as you will need to adapt the code.
+  export_vacancies_published_and_updated_to_dwp_find_a_job_service:
+    schedule: '30 23 * * *' # "At 23:30."
+    class: 'ExportVacanciesPublishedAndUpdatedSinceYesterdayToDwpFindAJobServiceJob'
+    queue: low
+
+  #
+  # HOURLY CRON JOBS
+  #
+  import_from_vacancy_sources:
+    schedule: '55 6-21 * * *' # "Every hour between 06:55 and 21:55."
+    class: 'ImportFromVacancySourcesJob'
+    queue: default
+
   aggregate_vacancy_referrer_stats:
     schedule: "*/15 * * * *" # Every 15 minutes
     class: 'AggregateVacancyReferrerStatsJob'
@@ -7,14 +209,3 @@ production:
   clear_solid_queue_finished_jobs:
     command: "SolidQueue::Job.clear_finished_in_batches(sleep_between_batches: 0.3)"
     schedule: every hour at minute 12
-
-  queue_daily_alerts:
-    schedule: '0 15 * * *' # "At 15:00."
-    class: 'SendDailyAlertEmailJob'
-    queue: default
-
-  queue_weekly_alerts:
-    schedule: '0 18 * * 5' # "At 18:00 on Friday."
-    class: 'SendWeeklyAlertEmailJob'
-    queue: default
-

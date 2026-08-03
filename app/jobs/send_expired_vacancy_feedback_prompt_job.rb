@@ -1,4 +1,4 @@
-class SendExpiredVacancyFeedbackPromptJob < SidekiqJob
+class SendExpiredVacancyFeedbackPromptJob < SolidQueueJob
   queue_as :low
 
   MAX_NUMBER_OF_VACANCIES = 5

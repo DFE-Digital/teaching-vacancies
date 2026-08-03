@@ -1,4 +1,4 @@
-class DestroyInactiveAccountsJob < SidekiqJob
+class DestroyInactiveAccountsJob < SolidQueueJob
   queue_as :default
 
   def perform

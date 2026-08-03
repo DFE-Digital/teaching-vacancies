@@ -1,4 +1,4 @@
-class SendJobApplicationDataExpiryNotifierJob < SidekiqJob
+class SendJobApplicationDataExpiryNotifierJob < SolidQueueJob
   queue_as :default
 
   def perform
