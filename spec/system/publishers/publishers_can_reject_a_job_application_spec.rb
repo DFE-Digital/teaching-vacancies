@@ -111,11 +111,7 @@ RSpec.describe "Publishers can reject a job application" do
           # check that the rejected applications have moved from the top row to the table below
           expect(all("tr.govuk-table__row.application-unsuccessful").size).to eq(1)
 
-          within("#rejected_emails") do
-            within(".govuk-table__body") do
-              expect(all("tr").count).to eq(2)
-            end
-          end
+          expect(all("tr.govuk-table__row.application-rejected").size).to eq(2)
         end
       end
     end
