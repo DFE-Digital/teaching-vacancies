@@ -70,8 +70,10 @@ class JobApplication < ApplicationRecord
     "reviewed"     => %w[unsuccessful shortlisted interviewing offered withdrawn],
     "shortlisted"  => %w[unsuccessful interviewing offered withdrawn],
     "interviewing" => INTERVIEWING_TARGETS,
-    "offered"      => %w[declined withdrawn],
-    "unsuccessful" => %w[rejected],
+    "offered"                => %w[declined withdrawn],
+    "unsuccessful"           => %w[rejected shortlisted interviewing],
+    "rejected"               => %w[shortlisted interviewing],
+    "unsuccessful_interview" => %w[shortlisted interviewing],
   }.freeze
   # rubocop:enable Layout/HashAlignment
 

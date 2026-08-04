@@ -194,7 +194,7 @@ RSpec.describe JobApplication do
     context "when from status is unsuccessful" do
       let(:from_status) { "unsuccessful" }
 
-      it { is_expected.to match_array(%w[rejected]) }
+      it { is_expected.to match_array(%w[rejected shortlisted interviewing]) }
     end
 
     context "when from status is rejected" do
