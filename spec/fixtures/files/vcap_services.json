@@ -66,19 +66,19 @@
       "volume_mounts": []
     },
     {
-      "binding_name": "redis-sidekiq",
+      "binding_name": "redis-queue",
       "credentials": {
-        "host": "redis_sidekiq_host",
-        "name": "redis_sidekiq_name",
-        "password": "redis_sidekiq_pass",
-        "port": "redis_sidekiq_port",
+        "host": "redis_queue_host",
+        "name": "redis_queue_name",
+        "password": "redis_queue_pass",
+        "port": "redis_queue_port",
         "tls_enabled": true,
-        "uri": "redis_sidekiq_uri"
+        "uri": "redis_queue_uri"
       },
-      "instance_name": "redis_sidekiq_instance_name",
+      "instance_name": "redis_queue_instance_name",
       "label": "redis",
-      "name": "redis_sidekiq_name",
-      "plan": "redis_sidekiq_plan",
+      "name": "redis_queue_name",
+      "plan": "redis_queue_plan",
       "provider": null,
       "syslog_drain_url": null,
       "tags": [
