@@ -16,7 +16,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
     if @form.valid?
       redirect_to new_jobseekers_profile_qualification_path(submit_category_params)
     else
-      render :select_category, status: :unprocessable_entity
+      render :select_category, status: :unprocessable_content
     end
   end
 
@@ -30,7 +30,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
       @profile.qualifications.create(qualification_params)
       redirect_to review_jobseekers_profile_qualifications_path
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -49,7 +49,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
       qualification.update(qualification_params)
       redirect_to review_jobseekers_profile_qualifications_path
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

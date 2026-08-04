@@ -45,7 +45,7 @@ RSpec.describe "Jobseekers::JobApplications::Messages" do
             post jobseekers_job_application_messages_path(job_application), params: message_params
           }.not_to change(Message, :count)
 
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response).to render_template("jobseekers/job_applications/show")
           expect(assigns(:message).errors[:content]).to include("Please enter your message")
           expect(assigns(:messages)).to eq([])
@@ -59,7 +59,7 @@ RSpec.describe "Jobseekers::JobApplications::Messages" do
               post jobseekers_job_application_messages_path(job_application), params: message_params
             }.not_to change(Message, :count)
 
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(response).to render_template("jobseekers/job_applications/show")
             expect(assigns(:message).errors[:content]).to include("Please enter your message")
             expect(assigns(:messages)).to include(existing_message)
