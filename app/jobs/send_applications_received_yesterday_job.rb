@@ -6,7 +6,7 @@ class SendApplicationsReceivedYesterdayJob < SolidQueueJob
       next if contact_email.blank?
 
       Publishers::JobApplicationMailer.applications_received(contact_email).deliver_later
-      Rails.logger.info("Sidekiq: Sending job applications received yesterday for contact email: #{contact_email}")
+      Rails.logger.info("Sending job applications received yesterday for contact email: #{contact_email}")
     end
   end
 

@@ -15,7 +15,7 @@ RSpec.describe UpdateGoogleIndexQueueJob do
   it "logs an error message when the indexing service cannot be instantiated" do
     allow(GoogleIndexing).to receive(:new).and_return(nil)
     allow(Rails.logger).to receive(:info).with(any_args)
-    expect(Rails.logger).to receive(:info).with("Sidekiq: Aborting Google remove index. Error: No Google API")
+    expect(Rails.logger).to receive(:info).with("Aborting Google update index. Error: No Google API")
     described_class.perform_now(url)
   end
 
