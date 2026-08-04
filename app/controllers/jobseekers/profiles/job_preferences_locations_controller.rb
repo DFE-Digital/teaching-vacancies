@@ -32,7 +32,7 @@ module Jobseekers
         if @location.update(location_params)
           redirect_to jobseekers_job_preferences_locations_path
         else
-          render "edit", status: :unprocessable_entity
+          render "edit", status: :unprocessable_content
         end
       end
 

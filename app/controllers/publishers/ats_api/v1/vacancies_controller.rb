@@ -160,6 +160,6 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   end
 
   def render_unprocessable_entity(exception)
-    render json: { errors: [exception.message] }, status: :unprocessable_entity
+    render json: { errors: [exception.message] }, status: :unprocessable_content
   end
 end
