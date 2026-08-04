@@ -772,6 +772,8 @@ en:
         expires_at: Closing date
         expiry_time: Closing time
       publishers_job_listing_important_dates_form:
+        expires_at: Closing date
+        expiry_time: Closing time
         publish_on: Another date
         publish_on_day: Publish date
       publishers_job_listing_relist_form:
