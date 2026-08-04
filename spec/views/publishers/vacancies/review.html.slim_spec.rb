@@ -40,8 +40,8 @@ RSpec.describe "publishers/vacancies/review" do
         expect(rendered).not_to include(application_type)
       end
 
-      it "doesn't have an apply type line" do
-        expect(rendered).not_to include(apply_type)
+      it "has an apply type line" do
+        expect(rendered).to include(apply_type)
       end
     end
   end

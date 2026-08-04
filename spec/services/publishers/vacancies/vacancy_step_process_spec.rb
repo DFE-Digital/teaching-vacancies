@@ -109,21 +109,38 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
 
       context "when the organisation is a college" do
         let(:vacancy_organisation) { build(:college) }
+        let(:vacancy) { build_stubbed(:draft_vacancy, job_roles: ["teacher"], enable_job_applications: nil, organisations: [vacancy_organisation]) }
 
         it "does not include applying_for_the_job" do
           expect(subject.steps).not_to include(:applying_for_the_job)
         end
 
-        it "does not include how_to_receive_applications" do
-          expect(subject.steps).not_to include(:how_to_receive_applications)
+        it "includes how_to_receive_applications" do
+          expect(subject.steps).to include(:how_to_receive_applications)
         end
 
-        it "includes application_link" do
-          expect(subject.steps).to include(:application_link)
+        context "when receive_applications is website" do
+          before { allow(vacancy).to receive(:receive_applications).and_return("website") }
+
+          it "includes application_link" do
+            expect(subject.steps).to include(:application_link)
+          end
+
+          it "places application_link before additional documents" do
+            expect(subject.steps.index(:application_link)).to be < subject.steps.index(:include_additional_documents)
+          end
         end
 
-        it "places application_link before additional documents" do
-          expect(subject.steps.index(:application_link)).to be < subject.steps.index(:include_additional_documents)
+        context "when receive_applications is uploaded_form" do
+          before { allow(vacancy).to receive(:receive_applications).and_return("uploaded_form") }
+
+          it "includes application_form" do
+            expect(subject.steps).to include(:application_form)
+          end
+
+          it "places application_form before additional documents" do
+            expect(subject.steps.index(:application_form)).to be < subject.steps.index(:include_additional_documents)
+          end
         end
       end
 
