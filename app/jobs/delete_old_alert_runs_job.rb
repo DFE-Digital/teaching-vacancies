@@ -1,4 +1,4 @@
-class DeleteOldAlertRunsJob < SolidQueueJob
+class DeleteOldAlertRunsJob < ApplicationJob
   queue_as :low
 
   def perform

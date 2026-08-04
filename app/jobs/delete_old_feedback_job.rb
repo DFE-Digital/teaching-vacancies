@@ -1,4 +1,4 @@
-class DeleteOldFeedbackJob < SolidQueueJob
+class DeleteOldFeedbackJob < ApplicationJob
   queue_as :default
 
   def perform

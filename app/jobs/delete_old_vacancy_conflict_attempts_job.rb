@@ -1,4 +1,4 @@
-class DeleteOldVacancyConflictAttemptsJob < SolidQueueJob
+class DeleteOldVacancyConflictAttemptsJob < ApplicationJob
   queue_as :default
 
   def perform

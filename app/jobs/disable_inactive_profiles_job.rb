@@ -1,4 +1,4 @@
-class DisableInactiveProfilesJob < SolidQueueJob
+class DisableInactiveProfilesJob < ApplicationJob
   queue_as :low
 
   def perform

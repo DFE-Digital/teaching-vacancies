@@ -1,4 +1,4 @@
-class SendPeakTimesEmailReminderJob < SolidQueueJob
+class SendPeakTimesEmailReminderJob < ApplicationJob
   queue_as :default
 
   def perform

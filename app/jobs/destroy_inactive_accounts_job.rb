@@ -1,4 +1,4 @@
-class DestroyInactiveAccountsJob < SolidQueueJob
+class DestroyInactiveAccountsJob < ApplicationJob
   queue_as :default
 
   def perform

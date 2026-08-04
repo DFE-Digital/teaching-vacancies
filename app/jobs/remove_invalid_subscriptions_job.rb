@@ -1,4 +1,4 @@
-class RemoveInvalidSubscriptionsJob < SolidQueueJob
+class RemoveInvalidSubscriptionsJob < ApplicationJob
   queue_as :low
 
   def perform

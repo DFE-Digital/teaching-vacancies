@@ -1,4 +1,4 @@
-class SendJobAlertsJob < SolidQueueJob
+class SendJobAlertsJob < ApplicationJob
   queue_as :jobalerts
 
   # Concurrency is limited per job here rather than via worker threads in config/queue.yml, because the

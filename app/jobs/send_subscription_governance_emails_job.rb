@@ -1,4 +1,4 @@
-class SendSubscriptionGovernanceEmailsJob < SolidQueueJob
+class SendSubscriptionGovernanceEmailsJob < ApplicationJob
   queue_as :low
 
   def perform

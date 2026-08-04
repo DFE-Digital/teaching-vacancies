@@ -1,5 +1,5 @@
 require "google_indexing"
-class UpdateGoogleIndexQueueJob < SolidQueueJob
+class UpdateGoogleIndexQueueJob < ApplicationJob
   queue_as :default
 
   def perform(url)

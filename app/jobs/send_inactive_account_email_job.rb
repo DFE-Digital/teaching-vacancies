@@ -1,4 +1,4 @@
-class SendInactiveAccountEmailJob < SolidQueueJob
+class SendInactiveAccountEmailJob < ApplicationJob
   queue_as :default
 
   def perform

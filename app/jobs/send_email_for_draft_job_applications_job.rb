@@ -1,4 +1,4 @@
-class SendEmailForDraftJobApplicationsJob < SolidQueueJob
+class SendEmailForDraftJobApplicationsJob < ApplicationJob
   queue_as :default
 
   def perform

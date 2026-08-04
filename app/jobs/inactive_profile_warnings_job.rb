@@ -1,4 +1,4 @@
-class InactiveProfileWarningsJob < SolidQueueJob
+class InactiveProfileWarningsJob < ApplicationJob
   queue_as :low
 
   def perform

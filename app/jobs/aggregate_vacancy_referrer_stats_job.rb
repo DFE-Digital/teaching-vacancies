@@ -1,4 +1,4 @@
-class AggregateVacancyReferrerStatsJob < SolidQueueJob
+class AggregateVacancyReferrerStatsJob < ApplicationJob
   queue_as :low
 
   def perform

@@ -1,4 +1,4 @@
-class DeleteUnconfirmedSubscriptionsJob < SolidQueueJob
+class DeleteUnconfirmedSubscriptionsJob < ApplicationJob
   queue_as :low
 
   def perform

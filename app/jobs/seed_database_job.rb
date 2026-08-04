@@ -1,4 +1,4 @@
-class SeedDatabaseJob < SolidQueueJob
+class SeedDatabaseJob < ApplicationJob
   queue_as :low
 
   def perform

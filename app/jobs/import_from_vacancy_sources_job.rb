@@ -1,4 +1,4 @@
-class ImportFromVacancySourcesJob < SolidQueueJob
+class ImportFromVacancySourcesJob < ApplicationJob
   SOURCES = [
     Vacancies::Import::Sources::Broadbean,
     Vacancies::Import::Sources::Fusion,

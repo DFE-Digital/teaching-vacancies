@@ -1,4 +1,4 @@
-class DeleteOldDraftApplicationsForExpiredVacanciesJob < SolidQueueJob
+class DeleteOldDraftApplicationsForExpiredVacanciesJob < ApplicationJob
   queue_as :low
 
   def perform
