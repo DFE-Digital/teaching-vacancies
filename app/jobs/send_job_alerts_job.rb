@@ -61,7 +61,7 @@ class SendJobAlertsJob < SolidQueueJob
       Sentry.capture_message(
         "#{name} run successfully (duration: #{formatted_duration})",
         level: :info,
-        fingerprint: ["{{ transaction }}"], # Groups Sentry messages by transaction. EG: Sidekiq/SendDailyAlertEmailJob
+        fingerprint: ["{{ transaction }}"], # Groups Sentry messages by transaction. EG: SendDailyAlertEmailJob
       )
     end
   end
