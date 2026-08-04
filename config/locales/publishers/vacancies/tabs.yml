@@ -8,6 +8,7 @@ en:
       declined_at: Decline date
       interview_feedback_received_at: Feedback date
       interviewing_at: Interview date
+      rejected_at: Date sent
     buttons:
       download: Download selected
       message_shortlisted: Send a message
@@ -58,4 +59,8 @@ en:
     unsuccessful_interview:
       heading: Interview unsuccessful
       none: No applications have had a unsuccessful interview yet
+      hint: ""
+    rejected:
+      heading: Rejected applications
+      none: No applications have been rejected yet
       hint: ""

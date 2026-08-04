@@ -132,7 +132,7 @@ RSpec.describe JobApplicationsHelper do
     context "when tab_origin unsuccessful" do
       let(:tab_origin) { "unsuccessful" }
 
-      it { is_expected.to match_array(%w[rejected]) }
+      it { is_expected.to match_array(%w[rejected shortlisted interviewing]) }
     end
 
     context "when tab_origin shortlisted" do

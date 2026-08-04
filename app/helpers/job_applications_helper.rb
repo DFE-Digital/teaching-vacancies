@@ -4,7 +4,7 @@ module JobApplicationsHelper
     reviewed: "reviewed",
     shortlisted: "shortlisted",
     unsuccessful: "not progressing",
-    rejected: "not progressing",
+    rejected: "rejection sent",
     withdrawn: "withdrawn",
     interviewing: "interviewing",
     unsuccessful_interview: "not progressing",
@@ -68,7 +68,7 @@ module JobApplicationsHelper
   end
 
   def tag_status_options(tab_origin)
-    job_application_status = TABS_DEFINITION[tab_origin].first
+    job_application_status = TABS_DEFINITION.fetch(tab_origin, [tab_origin]).first
     JobApplication.next_statuses(job_application_status) - %w[withdrawn]
   end
 

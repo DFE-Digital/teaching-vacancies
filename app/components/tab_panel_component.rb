@@ -111,6 +111,10 @@ class TabPanelComponent < ApplicationComponent
     end
   end
 
+  def candidate_rejected_at(application)
+    application.rejected_at&.to_fs(:day_month_year)
+  end
+
   def candidate_interviewing_at(application)
     if application.interviewing_at
       application.interviewing_at.to_fs
