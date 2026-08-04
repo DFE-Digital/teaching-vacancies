@@ -8,12 +8,9 @@ require "dfe/analytics/testing"
 require "factory_bot_rails"
 require "paper_trail/frameworks/rspec"
 require "rack_session_access/capybara"
-require "sidekiq/testing"
 require "view_component/test_helpers"
 require "webmock/rspec"
 require "axe-rspec"
-
-Sidekiq::Testing.fake!
 
 # Stub Geocoder HTTP requests in specs
 Geocoder::DEFAULT_STUB_COORDINATES = [51.1789, -1.8262].freeze

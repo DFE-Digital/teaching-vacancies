@@ -116,15 +116,13 @@ gem "pg_search"
 # PDF table support
 gem "prawn-table"
 gem "puma"
+# Removing sidekiq (which pinned rack ~> 2.0) unpins rack.
+# TODO: Unpin so we can upgrade to rack 3 in its own PR.
+gem "rack", "~> 2.2"
 gem "rack-attack"
 gem "rack-cors"
 gem "rails", RAILS_VERSION # Explicitly declare rails so we can do a "bundle update rails" when needed.
-# TODO: Unpin once Sidekiq is removed.
-# 5.1.0's Sidekiq integration calls ::Sidekiq::Config::ERROR_HANDLER, a Sidekiq 7+ constant, from
-# inside Sidekiq.configure_server. We are pinned to sidekiq < 7 until our Redis service instance is
-# 6.2+ on Azure, so the sidekiq workers crash on boot with
-# "NameError: uninitialized constant Sidekiq::Config".
-gem "rails_semantic_logger", "5.0.0"
+gem "rails_semantic_logger"
 gem "recaptcha"
 gem "redis", "~> 4.8.1"
 # Geographic point conversions
@@ -133,18 +131,10 @@ gem "rgeo-proj4"
 # open API docs for external client integrations
 gem "rswag-api"
 gem "rswag-ui"
-# needed to make zipfiles - often in sidekiq jobs
+# needed to make zipfiles - often in background jobs
 gem "rubyzip"
 gem "sentry-rails"
 gem "sentry-ruby"
-
-# Use both sidekiq and solid queue during migration
-gem "sentry-sidekiq"
-# sidekiq 7 needs Redis 6.2.x which isn't available on Azure (yet)
-gem "sidekiq", "<7"
-# throttle sidekiq requests to avoid overwhelming the Govuk Notify API
-gem "sidekiq-limit_fetch"
-
 gem "solid_queue"
 # Skylight performance monitoring https://www.skylight.io/login
 gem "skylight"

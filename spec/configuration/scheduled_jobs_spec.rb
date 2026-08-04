@@ -30,7 +30,6 @@ RSpec.describe "Scheduled jobs configuration" do
       FetchMalwareScanResultJob
       SolidQueueJob
       SendJobAlertsJob
-      SidekiqJob
     ]
   end
 
