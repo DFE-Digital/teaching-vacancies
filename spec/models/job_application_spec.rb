@@ -196,6 +196,18 @@ RSpec.describe JobApplication do
 
       it { is_expected.to match_array(%w[rejected]) }
     end
+
+    context "when from status is rejected" do
+      let(:from_status) { "rejected" }
+
+      it { is_expected.to match_array(%w[shortlisted interviewing]) }
+    end
+
+    context "when from status is unsuccessful_interview" do
+      let(:from_status) { "unsuccessful_interview" }
+
+      it { is_expected.to match_array(%w[shortlisted interviewing]) }
+    end
   end
 
   describe "#active_status?" do
@@ -243,12 +255,12 @@ RSpec.describe JobApplication do
         reviewed: false,
         shortlisted: false,
         unsuccessful: false,
-        rejected: true,
+        rejected: false,
         withdrawn: true,
         interviewing: false,
         offered: false,
         declined: true,
-        unsuccessful_interview: true,
+        unsuccessful_interview: false,
       }.each do |status_value, terminal|
         context "when status is set to #{status_value}" do
           let(:status) { status_value }
