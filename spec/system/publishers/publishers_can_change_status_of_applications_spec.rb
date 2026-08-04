@@ -367,6 +367,77 @@ RSpec.describe "check job application after status transition" do
     end
   end
 
+  describe "transition: unsuccessful to shortlisted" do
+    let(:status) { "unsuccessful" }
+
+    # JS needed so that all tabs are not visible
+    it "allows the publisher to move a not-considering application back to shortlisted to correct human error", :js do
+      run_with_publisher(publisher) do
+        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :unsuccessful)
+
+        expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
+
+        publisher_ats_applications_page.update_status(job_application) do |tag_page|
+          tag_page.select_and_submit("shortlisted")
+        end
+
+        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :shortlisted)
+
+        display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
+        expect(display_status).to have_text("shortlisted")
+      end
+    end
+  end
+
+  describe "transition: rejected to shortlisted" do
+    let(:status) { "rejected" }
+
+    # JS needed so that all tabs are not visible
+    it "allows the publisher to move a rejected application back to shortlisted to correct human error", :js do
+      run_with_publisher(publisher) do
+        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :unsuccessful)
+
+        expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
+
+        publisher_ats_applications_page.update_status(job_application) do |tag_page|
+          tag_page.select_and_submit("shortlisted")
+        end
+
+        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :shortlisted)
+
+        display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
+        expect(display_status).to have_text("shortlisted")
+      end
+    end
+  end
+
+  describe "transition: unsuccessful_interview to interviewing" do
+    let(:status) { "unsuccessful_interview" }
+
+    # JS needed so that all tabs are not visible
+    it "allows the publisher to move an interview-unsuccessful application back to interviewing to correct human error", :js do
+      run_with_publisher(publisher) do
+        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :interviewing)
+
+        expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
+
+        publisher_ats_applications_page.update_status(job_application) do |tag_page|
+          tag_page.select_and_submit("interviewing")
+        end
+
+        expect(publisher_ats_collect_references_page).to be_displayed(vacancy_id: vacancy.id)
+        publisher_ats_collect_references_page.answer_no
+        find("label[for='publishers-job-application-collect-self-disclosure-form-collect-self-disclosure-false-field']").click
+        click_on "Save and continue"
+
+        expect(publisher_ats_applications_page).to be_displayed
+        expect(publisher_ats_applications_page.selected_tab).to have_text("Interviewing")
+        display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
+        expect(display_status).to have_text("interviewing")
+      end
+    end
+  end
+
   describe "transition: offered to declined", :versioning do
     let(:status) { "offered" }
 
