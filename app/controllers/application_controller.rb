@@ -40,6 +40,12 @@ class ApplicationController < ActionController::Base
 
   private
 
+  # Clamp out-of-range/non-numeric page params (e.g. ?page=0 or ?page=-1) to page 1
+  # instead of letting Pagy raise Pagy::VariableError.
+  def pagy_get_page(vars)
+    [super.to_i, 1].max
+  end
+
   def show_cookies_banner?
     cookies["consented-to-additional-cookies-v3"].blank?
   end
