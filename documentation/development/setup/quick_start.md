@@ -33,7 +33,7 @@ When the build has finished, you can run the application by clicking on "▶️ 
 bar, using the VS Code "Run task" option, or the Rails convention `bin/dev` script. This will start:
 - The Rails application running on http://localhost:3000
 - An asset build task each for Javascript and CSS
-- Sidekiq for processing background jobs
+- Solid Queue for processing background jobs
 
 Currently the application is tied to port 3000 - no other port will work 
 

@@ -178,7 +178,7 @@ If you need to scale the changes for a period of time and to keep the new number
 need to set it up in the [terraform configuration](/terraform/workspace-variables/production.tfvars.json) and release
 it through a PR/deployment.
 
-#### EG: Executing a task that will enqueue thousands of jobs in our workers, this could cause a bottleneck in our Sidekiq queues.
+#### EG: Executing a task that will enqueue thousands of jobs in our workers, this could cause a bottleneck in our job queues.
 
 To see the original number of instances:
 ```

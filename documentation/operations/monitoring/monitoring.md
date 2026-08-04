@@ -36,7 +36,7 @@
 
 ### Background jobs
 
-- [The Sidekiq dashboard](https://teaching-vacancies.service.gov.uk/sidekiq) allows us to monitor and trigger background and scheduled jobs.
+- [The Mission Control Jobs dashboard](https://teaching-vacancies.service.gov.uk/solid_queue_jobs) allows us to monitor queues, workers, in-progress and failed jobs, and to trigger recurring tasks.
 
 ### Grafana Dashboards
 
