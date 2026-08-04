@@ -75,7 +75,7 @@ class TabPanelComponent < ApplicationComponent
           + tag.br \
           + govuk_link_to(t("tabs.offered.pre_employment_checks"), pre_employment_checks_organisation_job_job_application_path(application.vacancy.id, application.id))
       end
-    elsif application.has_pre_interview_checks?
+    elsif application.in_or_past_interview_stage?
       tag.div do
         publisher_job_application_status_tag(application.status) \
         + tag.br \

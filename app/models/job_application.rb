@@ -97,7 +97,6 @@ class JobApplication < ApplicationRecord
   INACTIVE_STATUSES = (%w[draft] + TERMINAL_STATUSES).freeze
 
   PRE_SHORTLIST_STATUSES = %w[submitted reviewed].freeze
-  POST_INTERVIEW_STATUSES = (%w[interviewing] + INTERVIEWING_TARGETS + INTERVIEWING_TARGETS.flat_map { |st| STATUS_TRANSITIONS.fetch(st, []) }).uniq - %w[withdrawn]
 
   RELIGIOUS_REFERENCE_TYPES = { religious_referee: 1, baptism_certificate: 2, baptism_date: 3, no_religious_referee: 4 }.freeze
 
@@ -164,8 +163,8 @@ class JobApplication < ApplicationRecord
     INACTIVE_STATUSES.exclude?(status)
   end
 
-  def has_pre_interview_checks?
-    status.in?(POST_INTERVIEW_STATUSES)
+  def in_or_past_interview_stage?
+    status.in?(%w[interviewing unsuccessful_interview offered declined])
   end
 
   def name
