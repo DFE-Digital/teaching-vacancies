@@ -18,6 +18,24 @@ RSpec.describe RemoveGoogleIndexQueueJob do
     described_class.perform_now(url)
   end
 
+  it "logs and swallows a SystemExit raised by the indexing service" do
+    indexing_service = instance_double(GoogleIndexing)
+    allow(GoogleIndexing).to receive(:new).with(url).and_return(indexing_service)
+    allow(indexing_service).to receive(:remove).and_raise(SystemExit, "boom")
+    expect(Rails.logger).to receive(:info).with("Aborting Google remove index. Error: boom")
+
+    expect { described_class.new.perform(url) }.not_to raise_error
+  end
+
+  it "logs and re-raises a StandardError raised by the indexing service" do
+    indexing_service = instance_double(GoogleIndexing)
+    allow(GoogleIndexing).to receive(:new).with(url).and_return(indexing_service)
+    allow(indexing_service).to receive(:remove).and_raise(StandardError, "boom")
+    expect(Rails.logger).to receive(:error).with("Google remove index error: boom")
+
+    expect { described_class.new.perform(url) }.to raise_error(StandardError, "boom")
+  end
+
   context "when DisableIntegrations is enabled", :disable_integrations do
     it "does not perform the job" do
       expect(GoogleIndexing).not_to receive(:new)
