@@ -9,7 +9,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   rescue_from StandardError, with: :render_server_error
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
   rescue_from Publishers::AtsApi::OrganisationFetcher::InvalidOrganisationError, with: :render_unprocessable_content
-  # If there is an issue with the parameter parsing we return a controlled 400 error with a messagge rather than a default 500 error.
+  # If there is an issue with the parameter parsing we return a controlled 400 error with a message rather than a default 500 error.
   rescue_from ActionController::ParameterMissing, with: :render_bad_request
 
   def index
