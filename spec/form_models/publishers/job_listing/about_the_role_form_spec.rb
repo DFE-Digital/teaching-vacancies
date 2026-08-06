@@ -84,18 +84,15 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
   end
 
   describe "skills_and_experience" do
-    let(:error) { %i[skills_and_experience blank] }
-
-    context "when skills_and_experience exceeds the maximum words " do
-      let(:params) { {} }
-      let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"]) }
+    context "when contains text" do
+      let(:params) { { skills_and_experience: "Some text" } }
 
       it "is valid" do
         expect(subject).to be_valid
       end
     end
 
-    context "when school offer is not present" do
+    context "when no text is provided" do
       let(:params) { { skills_and_experience: nil } }
 
       it "has the correct error message" do
@@ -104,7 +101,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
       end
     end
 
-    context "when job_advert ony contains bullet points" do
+    context "when only contains bullet points" do
       let(:params) { { skills_and_experience: "<editor-content><ul><li><br></li></ul></editor-content>" } }
 
       it "has the correct error message" do
@@ -135,7 +132,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
       end
     end
 
-    context "when the vacancy is for multip123:1le organisations" do
+    context "when the vacancy is for multiple organisations" do
       let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles:).tap { |v| allow(v).to receive(:for_multiple_organisations?).and_return(true) } }
 
       it "uses 'schools' in the school_offer error message" do
@@ -148,16 +145,15 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
   describe "school_offer" do
     let(:error) { [:school_offer, :blank, { organisation: "school" }] }
 
-    context "when school_offer exceeds the maximum words" do
-      let(:params) { { school_offer: Faker::Lorem.sentence(word_count: 151) } }
-      let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"]) }
+    context "when contains text" do
+      let(:params) { { school_offer: "Some text" } }
 
       it "is valid" do
-        expect(subject.errors.added?(*error)).to be false
+        expect(subject).to be_valid
       end
     end
 
-    context "when school offer is not present" do
+    context "when no text is provided" do
       let(:params) { { school_offer: nil } }
 
       it "has the correct error message" do
@@ -166,7 +162,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
       end
     end
 
-    context "when job_advert ony contains bullet points" do
+    context "when only contains bullet points" do
       let(:params) { { school_offer: "<editor-content><ul><li><br></li></ul></editor-content>" } }
 
       it "has the correct error message" do
