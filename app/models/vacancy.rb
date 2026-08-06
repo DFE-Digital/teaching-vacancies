@@ -120,17 +120,13 @@ class Vacancy < ApplicationRecord
   # Not called from the code but frequently used for filtering during manual debugging sessions
   scope :external, -> { where.not(external_source: nil).or(where.not(publisher_ats_api_client_id: nil)) }
 
-  # we need these 3 tiny modules to provide 'scoping glue' between the model and the queries
-  # so that if we can use PublishedVacancy and DraftVacancy safely
-  extend VacancyFilterQueryModule
+  scope :search_by_filter, ->(filters) { VacancyFilterQuery.new(all).call(filters) }
 
-  scope :search_by_filter, ->(filters) { vacancy_filter_query(filters) }
-  extend VacancyLocationQueryModule
+  scope :search_by_location, lambda { |location_query, radius_in_miles, polygon:, sort_by_distance:|
+    VacancyLocationQuery.new(all).call(location_query, radius_in_miles, polygon: polygon, sort_by_distance: sort_by_distance)
+  }
 
-  scope :search_by_location, ->(location_query, radius_in_miles, polygon:, sort_by_distance:) { vacancy_location_query(location_query, radius_in_miles, polygon: polygon, sort_by_distance: sort_by_distance) }
-  extend VacancyFulTextSearchQueryModule
-
-  scope :search_by_full_text, ->(query) { vacancy_full_text_search_query(query) }
+  scope :search_by_full_text, ->(query) { VacancyFullTextSearchQuery.new(all).call(query) }
 
   scope :active_in_current_academic_year, lambda {
     sept_1st = Date.current.beginning_of_year.months_since(8)
