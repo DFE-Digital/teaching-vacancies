@@ -53,6 +53,21 @@ shared:
   fe-pastoral-health-welfare-jobs:
     support_job_roles:
       - pastoral_health_and_welfare
+  fe-leadership-management-jobs:
+    support_job_roles:
+      - leadership_and_management
+  fe-business-support-administration-corporate-services-jobs:
+    support_job_roles:
+      - business_support_administration_and_corporate_services
+  fe-student-support-learning-progress-jobs:
+    support_job_roles:
+      - student_support_learning_and_progress
+  fe-marketing-communications-jobs:
+    support_job_roles:
+      - marketing_and_communications
+  fe-apprenticeships-commercial-services-jobs:
+    support_job_roles:
+      - apprenticeships_and_commercial_services
   fe-other-support-roles-jobs:
     support_job_roles:
       - other_support
