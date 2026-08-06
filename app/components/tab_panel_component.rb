@@ -75,7 +75,7 @@ class TabPanelComponent < ApplicationComponent
           + tag.br \
           + govuk_link_to(t("tabs.offered.pre_employment_checks"), pre_employment_checks_organisation_job_job_application_path(application.vacancy.id, application.id))
       end
-    elsif application.has_pre_interview_checks?
+    elsif application.in_or_past_interview_stage?
       tag.div do
         publisher_job_application_status_tag(application.status) \
         + tag.br \
@@ -109,6 +109,10 @@ class TabPanelComponent < ApplicationComponent
     else
       govuk_link_to(t("tabs.offered.add_feedback_date"), tag_organisation_job_job_applications_path(application.vacancy.id, params: { publishers_job_application_tag_form: { origin: :interviewing, job_applications: [application.id] }, tag_action: "unsuccessful_interview" }))
     end
+  end
+
+  def candidate_rejected_at(application)
+    application.rejected_at&.to_fs(:day_month_year)
   end
 
   def candidate_interviewing_at(application)

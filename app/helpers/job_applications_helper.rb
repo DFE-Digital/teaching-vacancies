@@ -4,7 +4,7 @@ module JobApplicationsHelper
     reviewed: "reviewed",
     shortlisted: "shortlisted",
     unsuccessful: "not progressing",
-    rejected: "not progressing",
+    rejected: "rejection sent",
     withdrawn: "withdrawn",
     interviewing: "interviewing",
     unsuccessful_interview: "not progressing",
@@ -44,7 +44,7 @@ module JobApplicationsHelper
     declined: "grey",
   }.freeze
 
-  TABS_DEFINITION = {
+  TABS_TO_CONTAINED_STATUSES = {
     submitted: %w[submitted reviewed],
     unsuccessful: %w[unsuccessful withdrawn rejected],
     shortlisted: %w[shortlisted],
@@ -52,12 +52,12 @@ module JobApplicationsHelper
     offered: %w[offered declined],
   }.stringify_keys.freeze
 
-  REVERSE_TABS_LOOKUP = TABS_DEFINITION.invert
+  REVERSE_TABS_LOOKUP = TABS_TO_CONTAINED_STATUSES.invert
                                        .flat_map { |keys, v| keys.map { |k| [k, v] } }
                                        .to_h.freeze
 
   def job_applications_to_tabs(job_applications_hash)
-    TABS_DEFINITION.transform_values do |status_list|
+    TABS_TO_CONTAINED_STATUSES.transform_values do |status_list|
       # There might not be any applications with a particular status, so fill with empty list
       status_list.index_with { |status| job_applications_hash.fetch(status, []) }
     end
@@ -68,7 +68,7 @@ module JobApplicationsHelper
   end
 
   def tag_status_options(tab_origin)
-    job_application_status = TABS_DEFINITION[tab_origin].first
+    job_application_status = TABS_TO_CONTAINED_STATUSES.fetch(tab_origin, [tab_origin]).first
     JobApplication.next_statuses(job_application_status) - %w[withdrawn]
   end
 
