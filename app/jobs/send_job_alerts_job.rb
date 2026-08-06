@@ -32,13 +32,13 @@ class SendJobAlertsJob < SolidQueueJob
     already_run_ids = Set.new AlertRun.for_today.pluck(:subscription_id)
 
     subscriptions.each.reject { |sub| already_run_ids.include?(sub.id) }.each do |subscription|
-      matching_vacancy_ids = subscription.vacancies_matching(default_scope, limit: MAXIMUM_RESULTS_PER_RUN)
-      next unless matching_vacancy_ids.any?
+      matching_vacancies = subscription.vacancies_matching(default_scope, limit: MAXIMUM_RESULTS_PER_RUN)
+      next unless matching_vacancies.any?
       next if subscription.email.blank?
 
       sent_alerts_count += 1
-      vacancies_in_alerts_count += matching_vacancy_ids.size
-      Jobseekers::AlertMailer.alert(subscription.id, matching_vacancy_ids).deliver_later
+      vacancies_in_alerts_count += matching_vacancies.size
+      Jobseekers::AlertMailer.alert(subscription.id, matching_vacancies.pluck(:id)).deliver_later
     end
     log_to_sentry(name: name,
                   duration: Time.current - start_time,
