@@ -78,7 +78,7 @@ en:
           nursery: Nursery
           primary: Primary school
           secondary: Secondary school
-          sixth_form_or_college: Sixth form or college
+          sixth_form_or_college: Sixth form or FE college
           through: All through school
     organisation:
       see_trust_jobs: View %{count} jobs across %{name}
