@@ -1,11 +1,11 @@
-class SendSubscriptionGovernanceEmailsJob < SolidQueueJob
+class SendSubscriptionGovernanceEmailsJob < ApplicationJob
   queue_as :low
 
   def perform
     return if DisableEmailNotifications.enabled?
 
     subscriptions_needing_governance_email.find_each.with_index do |subscription, index|
-      delay = index * GovukNotifyMailer::SIDEKIQ_WORKER_COUNT / GovukNotifyMailer::GOVUK_NOTIFY_SEND_LIMIT_PER_MINUTE
+      delay = index * GovukNotifyMailer::WORKER_COUNT / GovukNotifyMailer::GOVUK_NOTIFY_SEND_LIMIT_PER_MINUTE
 
       mailer_method = appropriate_governance_email(subscription)
       Jobseekers::SubscriptionMailer.public_send(mailer_method, subscription).deliver_later(wait: delay.minutes)

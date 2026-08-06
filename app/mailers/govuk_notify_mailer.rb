@@ -1,5 +1,5 @@
 class GovukNotifyMailer < Mail::Notify::Mailer
-  SIDEKIQ_WORKER_COUNT = 4
+  WORKER_COUNT = 4
   # Maximum rate we can send through production Govuk Notify is 3000 - reduce it a bit so we don't hit the limit
   GOVUK_NOTIFY_SEND_LIMIT_PER_MINUTE = 2800
 

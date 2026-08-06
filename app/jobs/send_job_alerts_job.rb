@@ -1,4 +1,4 @@
-class SendJobAlertsJob < SolidQueueJob
+class SendJobAlertsJob < ApplicationJob
   queue_as :jobalerts
 
   # Concurrency is limited per job here rather than via worker threads in config/queue.yml, because the
@@ -61,7 +61,7 @@ class SendJobAlertsJob < SolidQueueJob
       Sentry.capture_message(
         "#{name} run successfully (duration: #{formatted_duration})",
         level: :info,
-        fingerprint: ["{{ transaction }}"], # Groups Sentry messages by transaction. EG: Sidekiq/SendDailyAlertEmailJob
+        fingerprint: ["{{ transaction }}"], # Groups Sentry messages by transaction. EG: SendDailyAlertEmailJob
       )
     end
   end

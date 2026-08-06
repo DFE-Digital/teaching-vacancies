@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AlertEmail::Base < SolidQueueJob
+class AlertEmail::Base < ApplicationJob
   BATCH_SIZE = 5000
 
   def perform

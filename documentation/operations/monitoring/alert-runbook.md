@@ -40,7 +40,7 @@ postgres_enable_high_availability = true
 redis_queue_sku_name              = "Premium"
 aks_web_app_instances             = 8
 worker_app_instances              = 4
-aks_worker_app_memory             = "1.5Gi"
+aks_worker_app_memory             = "2Gi"
 ```
 
 ### Apps

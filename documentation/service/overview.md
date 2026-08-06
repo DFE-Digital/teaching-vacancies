@@ -94,7 +94,7 @@ Container_Boundary(auth_notify, "User authentication and notification<br>service
 Container_Boundary(tv, "Teaching Vacancies service") {
   Container(web_app, "Web Application", "Ruby on Rails MVC", "Contains all the business logic.<br>Lists Vacancies.<br>Manages/progresses<br>Job Applications.")
   ContainerQueue(queue, "Jobs Queue", "Redis Queue", "Background Jobs<br>queue")
-  Container(worker, "Worker", "Sidekiq worker", "Runs service background jobs.")
+  Container(worker, "Worker", "Solid Queue worker", "Runs service background jobs.")
   ContainerQueue(cache, "Cache", "Redis Cache", "Web Application cache<br>memory")
   ContainerDb(db, "Database", "PostgreSQL (PostGis)", "Relational DB containing<br>all the service information")
 }
@@ -208,7 +208,7 @@ architecture-beta
   group worker(server)[Worker] in azureks
 
   service rails(server)[Ruby on Rails pods] in web
-  service workerpod(server)[Sidekiq pods] in worker
+  service workerpod(server)[Solid Queue pods] in worker
 
   %% Azure services layout
   junction junctionAzure in azure

@@ -62,12 +62,16 @@ COPY (
 
 ### Running schedule tasks on demand
 
-We now and then want to execute a [scheduled rake task](/config/schedule.yml) on demand.
+We now and then want to execute a [scheduled task](/config/recurring.yml) on demand.
 
 Unless for particular debugging reasons, there is no need to do this from a production rails console.
 
-They can be triggered from the Sidekiq dashboard, accessible with your work email through DfE Sign-in.
-[Link to Sidekiq dashboard in production](https://teaching-vacancies.service.gov.uk/sidekiq)
+They can be triggered from the Mission Control Jobs dashboard, accessible with your work email through DfE Sign-in.
+[Link to the Mission Control Jobs dashboard in production](https://teaching-vacancies.service.gov.uk/solid_queue_jobs)
 
-Once in the dashboard, the [Cron tab](https://teaching-vacancies.service.gov.uk/sidekiq/cron) lists all the schedule jobs,
-where they can be inmediately enqued or enabled/disabled on demand. .
+Once in the dashboard, the "Recurring tasks" tab lists all the tasks defined in [config/recurring.yml](/config/recurring.yml).
+Select a task to see its recent runs, then use the "Run now" button to enqueue it immediately.
+
+Note that "Run now" *enqueues* the job rather than running it inline, so it will be picked up by the next
+available worker. There is also no enable/disable toggle: to stop a task from running on its schedule you
+need to edit [config/recurring.yml](/config/recurring.yml) and deploy the change.

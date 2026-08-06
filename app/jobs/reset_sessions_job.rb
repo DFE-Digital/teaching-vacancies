@@ -1,4 +1,4 @@
-class ResetSessionsJob < SolidQueueJob
+class ResetSessionsJob < ApplicationJob
   queue_as :low
 
   def perform

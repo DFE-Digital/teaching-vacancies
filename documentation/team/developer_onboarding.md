@@ -26,7 +26,7 @@ This user will be available for [Teaching Vacancies QA environment site](https:/
 ### Production Support user:
 A team member with approver rights in [DfE Sign-in production environment](https://services.signin.education.gov.uk/) invites the new developer to Teaching Vacancies support team.
 
-This user allows the developer to visit the [Teaching Vacancies production support dashboard](https://teaching-vacancies.service.gov.uk/support-users), that provides access to the [production user feedback](https://teaching-vacancies.service.gov.uk/support-users/feedback/general) and [sidekiq](https://teaching-vacancies.service.gov.uk/sidekiq) dashboards.
+This user allows the developer to visit the [Teaching Vacancies production support dashboard](https://teaching-vacancies.service.gov.uk/support-users), that provides access to the [production user feedback](https://teaching-vacancies.service.gov.uk/support-users/feedback/general) and [background jobs](https://teaching-vacancies.service.gov.uk/solid_queue_jobs) dashboards.
 ## GitHub
 
 `#digital-tools-support` will add the new team member to the [DFE-Digital organisation](https://github.com/orgs/DFE-Digital/teams). This needs to be requested through the [DFE Service Portal](https://dfe.service-now.com.mcas.ms/serviceportal?id=sc_cat_item&sys_id=0aacf3a81ba52110b192ec69b04bcb14) under `GitHub (dfe-digital) -> Add account`.

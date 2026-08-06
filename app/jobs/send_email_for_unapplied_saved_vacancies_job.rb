@@ -1,4 +1,4 @@
-class SendEmailForUnappliedSavedVacanciesJob < SolidQueueJob
+class SendEmailForUnappliedSavedVacanciesJob < ApplicationJob
   queue_as :default
 
   def perform

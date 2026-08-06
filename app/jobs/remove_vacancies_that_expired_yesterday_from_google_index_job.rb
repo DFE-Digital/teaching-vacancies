@@ -1,4 +1,4 @@
-class RemoveVacanciesThatExpiredYesterdayFromGoogleIndexJob < SolidQueueJob
+class RemoveVacanciesThatExpiredYesterdayFromGoogleIndexJob < ApplicationJob
   queue_as :default
 
   def perform

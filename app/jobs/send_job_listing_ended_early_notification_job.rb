@@ -1,4 +1,4 @@
-class SendJobListingEndedEarlyNotificationJob < SolidQueueJob
+class SendJobListingEndedEarlyNotificationJob < ApplicationJob
   queue_as :default
 
   def perform(vacancy)
