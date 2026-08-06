@@ -22,14 +22,6 @@ class VacancyDecorator < Draper::Decorator
   end
   # simplecov:enable
 
-  # simplecov:disable
-  def readable_ect_status
-    return if model.ect_status.blank?
-
-    I18n.t("helpers.label.publishers_job_listing_about_the_role_form.ect_status_options.#{model.ect_status}")
-  end
-  # simplecov:enable
-
   private
 
   # simplecov:disable

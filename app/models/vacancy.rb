@@ -57,7 +57,7 @@ class Vacancy < ApplicationRecord
   CONTRACT_TYPES = { permanent: 0, fixed_term: 1, casual: 3 }.freeze
   enum :contract_type, CONTRACT_TYPES
 
-  ECT_STATUSES = { ect_suitable: 0, ect_unsuitable: 1 }.freeze
+  ECT_STATUSES = { ect_suitable: 0, ect_unsuitable: 1, suitable_for_non_teachers: 2 }.freeze
   enum :ect_status, ECT_STATUSES
   enum :hired_status, { hired_tvs: 0, hired_other_free: 1, hired_paid: 2, hired_no_listing: 3, not_filled_ongoing: 4, not_filled_not_looking: 5, hired_dont_know: 6 }
   enum :listed_elsewhere, { listed_paid: 0, listed_free: 1, listed_mix: 2, not_listed: 3, listed_dont_know: 4 }

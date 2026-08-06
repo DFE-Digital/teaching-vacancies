@@ -1,59 +1,111 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
-  subject { described_class.load_from_params(params, vacancy, current_publisher: nil) }
+  subject do
+    described_class.load_from_params(vacancy.slice(*class_fields)
+                                                    .merge(needs_qts_status: false, ect_suitable: false)
+                                                    .merge(params), vacancy, current_publisher: nil)
+  end
 
   let(:job_roles) { %w[teacher] }
   let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles:) }
   let(:organisation) { build_stubbed(:school) }
   let(:params) { {} }
+  let(:class_fields) { described_class.fields - %i[needs_qts_status ect_suitable] }
 
-  before { subject.valid? }
+  describe "load_from_model" do
+    let(:form) { described_class.load_from_model(vacancy, current_publisher: nil) }
 
-  context "when vacancy job roles contains `teacher`" do
-    let(:job_roles) { %w[teacher] }
+    context "with ect_status suitable for non-teacher" do
+      let(:vacancy) { build_stubbed(:vacancy, ect_status: :suitable_for_non_teachers) }
 
-    it { is_expected.to validate_inclusion_of(:ect_status).in_array(Vacancy.ect_statuses.keys) }
-  end
-
-  context "when vacancy job roles does not contain `teacher`" do
-    let(:job_roles) { nil }
-
-    it { is_expected.not_to validate_inclusion_of(:ect_status).in_array(Vacancy.ect_statuses.keys) }
-  end
-
-  describe "skills_and_experience" do
-    let(:error) { %i[skills_and_experience blank] }
-
-    context "when skills_and_experience exceeds the maximum words " do
-      let(:params) { { skills_and_experience: Faker::Lorem.sentence(word_count: 151) } }
-      let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"]) }
-
-      it "is valid" do
-        expect(subject.errors.added?(*error)).to be false
+      it "doesnt require QTS" do
+        expect(form.needs_qts_status).to be(false)
+        expect(form.ect_suitable).to be(true)
       end
     end
 
-    context "when school offer is not present" do
+    context "with ect_status suitable" do
+      let(:vacancy) { build_stubbed(:vacancy, ect_status: :ect_suitable) }
+
+      it "doesnt require QTS" do
+        expect(form.needs_qts_status).to be(true)
+        expect(form.ect_suitable).to be(true)
+      end
+    end
+
+    context "without ect_status" do
+      let(:vacancy) { build_stubbed(:vacancy, ect_status: nil) }
+
+      it "doesnt require QTS" do
+        expect(form.ect_suitable).to be_nil
+        expect(form.needs_qts_status).to be_nil
+      end
+    end
+
+    context "with ect_status non suitable" do
+      let(:vacancy) { build_stubbed(:vacancy, ect_status: :ect_unsuitable) }
+
+      it "doesnt require QTS" do
+        expect(form.needs_qts_status).to be(true)
+        expect(form.ect_suitable).to be(false)
+      end
+    end
+  end
+
+  describe "#params_to_save" do
+    context "without QTS" do
+      let(:params) { { needs_qts_status: false } }
+
+      it "allows non-teachers" do
+        expect(subject.params_to_save.fetch(:ect_status)).to eq(:suitable_for_non_teachers)
+      end
+    end
+
+    context "with QTS but suitable" do
+      let(:params) { { needs_qts_status: true, ect_suitable: true } }
+
+      it "is suitable" do
+        expect(subject.params_to_save.fetch(:ect_status)).to eq(:ect_suitable)
+      end
+    end
+
+    context "with QTS unsuitable" do
+      let(:params) { { needs_qts_status: true, ect_suitable: false } }
+
+      it "is unsuitable" do
+        expect(subject.params_to_save.fetch(:ect_status)).to eq(:ect_unsuitable)
+      end
+    end
+
+    it "contains all the fields" do
+      expect(subject.params_to_save.keys).to match_array(class_fields + [:ect_status])
+    end
+  end
+
+  describe "skills_and_experience" do
+    context "when contains text" do
+      let(:params) { { skills_and_experience: "Some text" } }
+
+      it "is valid" do
+        expect(subject).to be_valid
+      end
+    end
+
+    context "when no text is provided" do
       let(:params) { { skills_and_experience: nil } }
 
-      it "fails validation" do
-        expect(subject.errors.added?(*error)).to be true
-      end
-
       it "has the correct error message" do
+        expect(subject).not_to be_valid
         expect(subject.errors.messages[:skills_and_experience]).to include(I18n.t("about_the_role_errors.skills_and_experience.blank"))
       end
     end
 
-    context "when job_advert ony contains bullet points" do
+    context "when only contains bullet points" do
       let(:params) { { skills_and_experience: "<editor-content><ul><li><br></li></ul></editor-content>" } }
 
-      it "fails validation" do
-        expect(subject.errors.added?(*error)).to be true
-      end
-
       it "has the correct error message" do
+        expect(subject).not_to be_valid
         expect(subject.errors.messages[:skills_and_experience]).to include(I18n.t("about_the_role_errors.skills_and_experience.blank"))
       end
     end
@@ -66,6 +118,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
       let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles:).tap { |v| allow(v).to receive(:central_office?).and_return(true) } }
 
       it "uses 'trust' in the school_offer error message" do
+        expect(subject).not_to be_valid
         expect(subject.errors.messages[:school_offer]).to include(I18n.t("about_the_role_errors.school_offer.blank", organisation: "trust"))
       end
     end
@@ -74,6 +127,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
       let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles:).tap { |v| allow(v).to receive(:for_an_fe_college?).and_return(true) } }
 
       it "uses 'college' in the school_offer error message" do
+        expect(subject).not_to be_valid
         expect(subject.errors.messages[:school_offer]).to include(I18n.t("about_the_role_errors.school_offer.blank", organisation: "college"))
       end
     end
@@ -82,6 +136,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
       let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles:).tap { |v| allow(v).to receive(:for_multiple_organisations?).and_return(true) } }
 
       it "uses 'schools' in the school_offer error message" do
+        expect(subject).not_to be_valid
         expect(subject.errors.messages[:school_offer]).to include(I18n.t("about_the_role_errors.school_offer.blank", organisation: "schools"))
       end
     end
@@ -90,35 +145,28 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
   describe "school_offer" do
     let(:error) { [:school_offer, :blank, { organisation: "school" }] }
 
-    context "when school_offer exceeds the maximum words" do
-      let(:params) { { school_offer: Faker::Lorem.sentence(word_count: 151) } }
-      let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"]) }
+    context "when contains text" do
+      let(:params) { { school_offer: "Some text" } }
 
       it "is valid" do
-        expect(subject.errors.added?(*error)).to be false
+        expect(subject).to be_valid
       end
     end
 
-    context "when school offer is not present" do
+    context "when no text is provided" do
       let(:params) { { school_offer: nil } }
 
-      it "fails validation" do
-        expect(subject).not_to be_valid
-      end
-
       it "has the correct error message" do
+        expect(subject).not_to be_valid
         expect(subject.errors.messages[:school_offer]).to include(I18n.t("about_the_role_errors.school_offer.blank", organisation: "school"))
       end
     end
 
-    context "when job_advert ony contains bullet points" do
+    context "when only contains bullet points" do
       let(:params) { { school_offer: "<editor-content><ul><li><br></li></ul></editor-content>" } }
 
-      it "fails validation" do
-        expect(subject).not_to be_valid
-      end
-
       it "has the correct error message" do
+        expect(subject).not_to be_valid
         expect(subject.errors.messages[:school_offer]).to include(I18n.t("about_the_role_errors.school_offer.blank", organisation: "school"))
       end
     end
@@ -161,6 +209,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
       let(:params) { { flexi_working_details_provided: "true", flexi_working: nil } }
 
       it "fails validation" do
+        expect(subject).not_to be_valid
         expect(subject.errors[:flexi_working]).to include("Enter flexible working details")
       end
     end
@@ -169,7 +218,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
       let(:params) { { flexi_working_details_provided: "true", flexi_working: "Some flexible working details" } }
 
       it "passes validation" do
-        expect(subject.errors[:flexi_working_details_provided].blank?).to be true
+        expect(subject).to be_valid
       end
     end
 
@@ -177,7 +226,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
       let(:params) { { flexi_working_details_provided: "false", flexi_working: nil } }
 
       it "passes validation even if flexi_working is blank" do
-        expect(subject.errors[:flexi_working_details_provided].blank?).to be true
+        expect(subject).to be_valid
       end
     end
   end
@@ -205,6 +254,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
       let(:params) { { flexi_working_details_provided: nil } }
 
       it "raises errors" do
+        expect(subject).not_to be_valid
         expect(subject.errors[:flexi_working_details_provided].blank?).to be false
       end
     end

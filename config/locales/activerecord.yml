@@ -281,7 +281,7 @@ en:
       blank: Enter an email address
       invalid: Enter a valid email address in the correct format, like name@example.com
   about_the_role_errors: &about_the_role_errors
-    ect_status:
+    ect_suitable:
       inclusion: Select yes if this role is suitable for an early career teacher
     skills_and_experience:
       blank: Enter the skills and experience you’re looking for

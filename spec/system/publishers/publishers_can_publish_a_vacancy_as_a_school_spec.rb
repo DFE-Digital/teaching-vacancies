@@ -100,7 +100,7 @@ RSpec.describe "Creating a vacancy" do
         submit_empty_form
         expect(publisher_about_the_role_page).to be_displayed
         expect(publisher_about_the_role_page.errors.map(&:text)).to contain_exactly(
-          I18n.t("about_the_role_errors.ect_status.inclusion"),
+          I18n.t("about_the_role_errors.ect_suitable.inclusion"),
           I18n.t("about_the_role_errors.skills_and_experience.blank"),
           I18n.t("about_the_role_errors.further_details_provided.inclusion"),
           I18n.t("about_the_role_errors.school_offer.blank", organisation: "school"),
