@@ -118,7 +118,7 @@ gem "prawn-table"
 gem "puma"
 # Removing sidekiq (which pinned rack ~> 2.0) unpins rack.
 # TODO: Unpin so we can upgrade to rack 3 in its own PR.
-gem "rack", "~> 2.2"
+gem "rack", "~> 3.2"
 gem "rack-attack"
 gem "rack-cors"
 gem "rails", RAILS_VERSION # Explicitly declare rails so we can do a "bundle update rails" when needed.
