@@ -219,6 +219,31 @@ en:
       title: "Further Education Pastoral, Health and Welfare Jobs"
       heading: "%{count} further education pastoral, health and welfare jobs"
       meta_description: "Find pastoral, health and welfare jobs in further education colleges. Browse the latest FE support vacancies on Teaching Vacancies."
+    fe-leadership-management-jobs:
+      name: "Leadership and management (%{count})"
+      title: "Further Education Leadership and Management Jobs"
+      heading: "%{count} further education leadership and management jobs"
+      meta_description: "Find leadership and management jobs in further education colleges. Browse the latest FE support vacancies on Teaching Vacancies."
+    fe-business-support-administration-corporate-services-jobs:
+      name: "Business support, administration and corporate services (%{count})"
+      title: "Further Education Business Support, Administration and Corporate Services Jobs"
+      heading: "%{count} further education business support, administration and corporate services jobs"
+      meta_description: "Find business support, administration and corporate services jobs in further education colleges. Browse the latest FE support vacancies on Teaching Vacancies."
+    fe-student-support-learning-progress-jobs:
+      name: "Student support, learning and progress (%{count})"
+      title: "Further Education Student Support, Learning and Progress Jobs"
+      heading: "%{count} further education student support, learning and progress jobs"
+      meta_description: "Find student support, learning and progress jobs in further education colleges. Browse the latest FE support vacancies on Teaching Vacancies."
+    fe-marketing-communications-jobs:
+      name: "Marketing and communications (%{count})"
+      title: "Further Education Marketing and Communications Jobs"
+      heading: "%{count} further education marketing and communications jobs"
+      meta_description: "Find marketing and communications jobs in further education colleges. Browse the latest FE support vacancies on Teaching Vacancies."
+    fe-apprenticeships-commercial-services-jobs:
+      name: "Apprenticeships and commercial services (%{count})"
+      title: "Further Education Apprenticeships and Commercial Services Jobs"
+      heading: "%{count} further education apprenticeships and commercial services jobs"
+      meta_description: "Find apprenticeships and commercial services jobs in further education colleges. Browse the latest FE support vacancies on Teaching Vacancies."
     fe-other-support-roles-jobs:
       name: "Other support roles (%{count})"
       title: "Further Education Other Support Roles"
