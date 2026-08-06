@@ -50,7 +50,7 @@ gem "geocoder"
 gem "google-apis-indexing_v3"
 # only used for DFE Analytics - but sometimes we need to pin the version manually
 gem "google-cloud-bigquery"
-gem "govuk-components", "6.1.0"
+gem "govuk-components", "6.4.1"
 gem "govuk_design_system_formbuilder", "~> 6.4.0"
 # used for job statistics by month, quarter year etc
 gem "groupdate"
@@ -144,7 +144,7 @@ gem "turbo-rails"
 gem "validate_url"
 # Used to validate email addresses
 gem "valid_email2"
-gem "view_component", "~> 4.6.0"
+gem "view_component", "~> 4.12.0"
 gem "wicked"
 gem "xml-sitemap"
 # Zendesk support integration
