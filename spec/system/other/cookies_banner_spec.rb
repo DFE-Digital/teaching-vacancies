@@ -2,10 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Cookies banner" do
   def set_cookie(name, value)
-    headers = {}
-    Rack::Utils.set_cookie_header!(headers, name, value)
-    cookie_string = headers["Set-Cookie"]
-    Capybara.current_session.driver.browser.set_cookie cookie_string
+    Capybara.current_session.driver.browser.set_cookie Rack::Utils.set_cookie_header(name, value)
   end
 
   context "when the user has not set their cookies preferences" do

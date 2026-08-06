@@ -76,7 +76,7 @@ module Publishers
 
         def validation_error_response(vacancy)
           {
-            status: :unprocessable_entity,
+            status: :unprocessable_content,
             json: {
               errors: vacancy.errors.messages.flat_map do |attr, messages|
                 messages.map { |message| "#{attr}: #{message}" }
