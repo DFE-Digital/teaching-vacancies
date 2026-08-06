@@ -18,6 +18,11 @@ module LandingPageListsHelper
     "catering-cleaning-site-management-jobs" => "catering_cleaning_and_site_management",
     "it-support-jobs" => "it_support",
     "pastoral-health-welfare-jobs" => "pastoral_health_and_welfare",
+    "leadership-management-jobs" => "leadership_and_management",
+    "business-support-administration-corporate-services-jobs" => "business_support_administration_and_corporate_services",
+    "student-support-learning-progress-jobs" => "student_support_learning_and_progress",
+    "marketing-communications-jobs" => "marketing_and_communications",
+    "apprenticeships-commercial-services-jobs" => "apprenticeships_and_commercial_services",
     "other-support-roles-jobs" => "other_support",
   }.freeze
 
@@ -62,6 +67,11 @@ module LandingPageListsHelper
     "fe-catering-cleaning-site-management-jobs" => "catering_cleaning_and_site_management",
     "fe-it-support-jobs" => "it_support",
     "fe-pastoral-health-welfare-jobs" => "pastoral_health_and_welfare",
+    "fe-leadership-management-jobs" => "leadership_and_management",
+    "fe-business-support-administration-corporate-services-jobs" => "business_support_administration_and_corporate_services",
+    "fe-student-support-learning-progress-jobs" => "student_support_learning_and_progress",
+    "fe-marketing-communications-jobs" => "marketing_and_communications",
+    "fe-apprenticeships-commercial-services-jobs" => "apprenticeships_and_commercial_services",
     "fe-other-support-roles-jobs" => "other_support",
   }.freeze
 

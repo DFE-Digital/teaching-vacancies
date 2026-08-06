@@ -24,7 +24,9 @@ class Vacancy < ApplicationRecord
                 "head_of_year_or_phase" => 4, "head_of_department_or_curriculum" => 5, "teaching_assistant" => 6,
                 "higher_level_teaching_assistant" => 7, "education_support" => 8, "sendco" => 9, "administration_hr_data_and_finance" => 11,
                 "catering_cleaning_and_site_management" => 12, "it_support" => 13, "pastoral_health_and_welfare" => 14,
-                "other_leadership" => 15, "other_support" => 16 }.freeze
+                "other_leadership" => 15, "other_support" => 16, "leadership_and_management" => 17,
+                "business_support_administration_and_corporate_services" => 18, "student_support_learning_and_progress" => 19,
+                "marketing_and_communications" => 20, "apprenticeships_and_commercial_services" => 21 }.freeze
 
   MIDDLE_LEADER_JOB_ROLES = %w[head_of_year_or_phase head_of_department_or_curriculum].freeze
   SENIOR_LEADER_JOB_ROLES = %w[headteacher deputy_headteacher assistant_headteacher].freeze
@@ -33,7 +35,9 @@ class Vacancy < ApplicationRecord
                           deputy_headteacher headteacher sendco other_leadership].freeze
   SUPPORT_JOB_ROLES = %w[teaching_assistant higher_level_teaching_assistant education_support
                          administration_hr_data_and_finance catering_cleaning_and_site_management
-                         it_support pastoral_health_and_welfare other_support].freeze
+                         it_support pastoral_health_and_welfare leadership_and_management
+                         business_support_administration_and_corporate_services student_support_learning_and_progress
+                         marketing_and_communications apprenticeships_and_commercial_services other_support].freeze
 
   SCHOOL_PHASES_MATCHING_VACANCY_PHASES = %w[nursery primary secondary sixth_form_or_college].freeze
 
