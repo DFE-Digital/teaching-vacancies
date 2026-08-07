@@ -66,11 +66,14 @@ RSpec.describe "Publishers can add additional documents to a vacancy" do
     publisher_include_additional_documents_page.include_documents_yes.click
     click_on I18n.t("buttons.save_and_continue")
 
-    upload_and_continue("blank_job_spec.pdf")
-    upload_and_continue("blank_baptism_cert.pdf")
-    upload_and_continue("mime_types/valid_word_document.docx")
+    ["blank_job_spec.pdf", "blank_baptism_cert.pdf", "mime_types/valid_word_document.docx"].each_with_index do |filename, index|
+      page.attach_file("publishers_job_listing_documents_form[supporting_documents][]",
+                       Rails.root.join("spec/fixtures/files/#{filename}"))
+      click_on I18n.t("buttons.save_and_continue")
 
-    publisher_vacancy_documents_page.add_another_document_no_radio.click
+      publisher_vacancy_documents_page.add_another_document_yes_radio.click if index < 2
+      click_on I18n.t("buttons.save_and_continue") if index < 2
+    end
 
     filenames = page.all(".govuk-summary-list__value").map(&:text)
     expect(filenames[0]).to include("blank_job_spec.pdf")
@@ -81,14 +84,6 @@ RSpec.describe "Publishers can add additional documents to a vacancy" do
   def add_document
     page.attach_file("publishers_job_listing_documents_form[supporting_documents][]",
                      Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"))
-    click_on I18n.t("buttons.save_and_continue")
-  end
-
-  def upload_and_continue(filename)
-    page.attach_file("publishers_job_listing_documents_form[supporting_documents][]",
-                     Rails.root.join("spec/fixtures/files/#{filename}"))
-    click_on I18n.t("buttons.save_and_continue")
-    publisher_vacancy_documents_page.add_another_document_yes_radio.click
     click_on I18n.t("buttons.save_and_continue")
   end
 end

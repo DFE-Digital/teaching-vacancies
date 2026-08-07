@@ -12,7 +12,7 @@
     - if job_application.vacancy.supporting_documents.any?
       = t(".banner_documents_html", job_link: open_in_new_tab_link_to("‘#{job_application.vacancy.job_title}’", job_path(job_application.vacancy)))
       div class="govuk-!-margin-top-3"
-        = render SupportingDocumentComponent.with_collection(job_application.vacancy.supporting_documents)
+        = render SupportingDocumentComponent.with_collection(job_application.vacancy.supporting_documents.order("active_storage_attachments.created_at ASC"))
     - else
       = t(".banner_no_documents_html", job_link: open_in_new_tab_link_to("'#{job_application.vacancy.job_title}' #{t('.job_description')}", job_path(job_application.vacancy)))
 
