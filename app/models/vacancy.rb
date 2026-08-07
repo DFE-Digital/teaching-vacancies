@@ -88,6 +88,11 @@ class Vacancy < ApplicationRecord
   }.freeze
 
   has_many_attached :supporting_documents, service: :azure_storage_documents
+  has_many :supporting_documents_in_order,
+           -> { where(name: "supporting_documents").order(created_at: :asc) },
+           class_name: "ActiveStorage::Attachment",
+           as: :record,
+           inverse_of: :record
 
   validates :supporting_documents, content_type: DOCUMENT_CONTENT_TYPES,
                                    size: { less_than: DOCUMENT_FILE_SIZE_LIMIT }, if: -> { include_additional_documents }
