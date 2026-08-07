@@ -87,7 +87,9 @@ class Vacancy < ApplicationRecord
     valid_file_types: %i[PDF DOC DOCX],
   }.freeze
 
-  has_many_attached :supporting_documents, service: :azure_storage_documents
+  has_many_attached :supporting_documents, service: :azure_storage_documents do |attachable|
+    attachable.order("active_storage_attachments.created_at ASC")
+  end
 
   validates :supporting_documents, content_type: DOCUMENT_CONTENT_TYPES,
                                    size: { less_than: DOCUMENT_FILE_SIZE_LIMIT }, if: -> { include_additional_documents }
