@@ -5,6 +5,10 @@ module DfeSignIn
       class ForbiddenRequestError < StandardError; end
       class UnknownResponseError < StandardError; end
 
+      # Without this a hanging DSI response pins a Solid Queue worker thread indefinitely,
+      # and there are only a handful of threads per worker process (see `config/queue.yml`).
+      TIMEOUT_SECONDS = 30
+
       def initialize(endpoint, page, page_size)
         @endpoint = endpoint
         @page = page
@@ -16,6 +20,7 @@ module DfeSignIn
         response = HTTParty.get(
           "#{ENV.fetch('DFE_SIGN_IN_URL', nil)}#{@endpoint}?page=#{@page}&pageSize=#{@page_size}",
           headers: { "Authorization" => "Bearer #{token}" },
+          timeout: TIMEOUT_SECONDS,
         )
 
         raise ExternalServerError if response.code.eql?(500)

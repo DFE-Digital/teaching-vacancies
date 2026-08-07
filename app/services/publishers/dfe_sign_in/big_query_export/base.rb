@@ -3,6 +3,10 @@ require "google/cloud/bigquery"
 
 module Publishers::DfeSignIn::BigQueryExport
   class Base
+    # Raised when an export cannot complete. Always raised from within a `rescue`, so the
+    # underlying error (a DSI or BigQuery failure) is preserved as its `cause`.
+    class ExportError < StandardError; end
+
     include DfeSignIn::API
     include Publishers::DfeSignIn::Parsing
 
