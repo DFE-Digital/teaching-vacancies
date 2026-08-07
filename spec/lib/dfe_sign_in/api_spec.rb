@@ -40,6 +40,45 @@ RSpec.describe DfeSignIn::API do
     end
   end
 
+  describe "retrying a failed page" do
+    let(:fixture_filename) { "users" }
+
+    # Retrying at the job level would restart pagination from page one, so a transient
+    # failure has to be absorbed here instead.
+    before { stub_const("DfeSignIn::API::PaginatedUsers::RETRY_WAIT_SECONDS", 0) }
+
+    it "retries the page and carries on when the failure is transient" do
+      stub_responses(DfeSignIn::API::Request::ExternalServerError, stubbed_response, stubbed_response)
+
+      expect(subject.dsi_users.to_a).to eq [JSON.parse(response_file(1))["users"],
+                                            JSON.parse(response_file(2))["users"]]
+    end
+
+    it "gives up once the page has been attempted the maximum number of times" do
+      stub_responses(*Array.new(DfeSignIn::API::PaginatedUsers::PAGE_ATTEMPTS, DfeSignIn::API::Request::ExternalServerError))
+
+      expect { subject.dsi_users }.to raise_error(DfeSignIn::API::Request::ExternalServerError)
+    end
+
+    it "does not retry errors that will not resolve themselves" do
+      stub_responses(DfeSignIn::API::Request::ForbiddenRequestError, stubbed_response)
+
+      expect { subject.dsi_users }.to raise_error(DfeSignIn::API::Request::ForbiddenRequestError)
+      expect(DfeSignIn::API::Response).to have_received(:new).once
+    end
+
+    # Each element is either an exception class to raise or a response to return, consumed
+    # one per call to `DfeSignIn::API::Response.new`.
+    def stub_responses(*outcomes)
+      allow(DfeSignIn::API::Response).to receive(:new) do
+        outcome = outcomes.shift
+        raise outcome if outcome.is_a?(Class)
+
+        outcome
+      end
+    end
+  end
+
   def response_file(page)
     File.read(Rails.root.join(
                 "spec",

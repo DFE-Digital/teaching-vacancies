@@ -49,6 +49,16 @@ RSpec.shared_examples "a DFE Sign In endpoint" do
       end
     end
 
+    # Without a timeout a hanging DSI response would pin a worker thread indefinitely.
+    it "bounds the request with a timeout" do
+      stub_api_response_for_page(1)
+      expect(HTTParty).to receive(:get)
+        .with(anything, hash_including(timeout: DfeSignIn::API::Request::TIMEOUT_SECONDS))
+        .and_call_original
+
+      subject.perform
+    end
+
     it "sets a token in the header of the request" do
       freeze_time do
         expected_token = generate_jwt_token
