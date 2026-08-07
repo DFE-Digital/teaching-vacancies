@@ -3,11 +3,16 @@ module Publishers::DfeSignIn::BigQueryExport
     TABLE_NAME = "dsi_users".freeze
 
     def call
+      # `dsi_users` performs the first page request eagerly, so fetching before deleting
+      # means an unavailable DSI leaves the existing table intact instead of dropping it
+      # and having nothing to replace it with.
+      pages = dsi_users
+
       delete_table(TABLE_NAME)
-      dsi_users.each { |page| insert_table_data(page) }
+      pages.each { |page| insert_table_data(page) }
     rescue StandardError => e
       Rails.logger.warn("DSI API /users failed to respond with error: #{e.message}")
-      raise "#{e.message}, while writing data from DSI /users endpoint. Flag this to Steven + Comms team"
+      raise ExportError, "#{e.message}, while writing data from DSI /users endpoint. Flag this to Steven + Comms team"
     end
 
     private
