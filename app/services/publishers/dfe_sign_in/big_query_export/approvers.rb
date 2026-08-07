@@ -3,11 +3,15 @@ module Publishers::DfeSignIn::BigQueryExport
     TABLE_NAME = "dsi_approvers".freeze
 
     def call
+      # See the note in `Users#call`: fetch the first page before deleting the table so a
+      # DSI outage does not leave us with no data at all.
+      pages = dsi_approvers
+
       delete_table(TABLE_NAME)
-      dsi_approvers.each { |page| insert_table_data(page) }
+      pages.each { |page| insert_table_data(page) }
     rescue StandardError => e
       Rails.logger.warn("DSI API /approvers failed to respond with error: #{e.message}")
-      raise "#{e.message}, while writing data from DSI /approvers endpoint. Flag this to Steven + Comms team"
+      raise ExportError, "#{e.message}, while writing data from DSI /approvers endpoint. Flag this to Steven + Comms team"
     end
 
     private
