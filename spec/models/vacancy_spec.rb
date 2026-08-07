@@ -10,6 +10,35 @@ RSpec.describe Vacancy do
   it { is_expected.to have_many(:job_applications) }
   it { is_expected.to have_one(:equal_opportunities_report) }
 
+  describe "#supporting_documents_in_order" do
+    it "returns supporting documents ordered by upload time" do
+      vacancy = create(:vacancy)
+
+      travel_to(1.minute.ago) do
+        vacancy.supporting_documents.attach(
+          io: File.open(Rails.root.join("spec/fixtures/files/blank_job_spec.pdf")),
+          filename: "blank_job_spec.pdf",
+          content_type: "application/pdf",
+        )
+      end
+
+      vacancy.supporting_documents.attach(
+        io: File.open(Rails.root.join("spec/fixtures/files/blank_baptism_cert.pdf")),
+        filename: "blank_baptism_cert.pdf",
+        content_type: "application/pdf",
+      )
+
+      vacancy.supporting_documents.attach(
+        io: File.open(Rails.root.join("spec/fixtures/files/mime_types/valid_word_document.docx")),
+        filename: "valid_word_document.docx",
+        content_type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      )
+
+      expect(vacancy.supporting_documents_in_order.map { |document| document.filename.to_s })
+        .to eq(%w[blank_job_spec.pdf blank_baptism_cert.pdf valid_word_document.docx])
+    end
+  end
+
   describe "publish_on removal callback" do
     it "publish_on is not removed when creating a new draft" do
       draft_vacancy = create(:draft_vacancy, publish_on: Date.current)

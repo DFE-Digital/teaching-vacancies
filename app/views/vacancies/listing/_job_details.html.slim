@@ -138,4 +138,4 @@ section#job-details class="govuk-!-margin-bottom-5"
       h3.govuk-heading-l.heading--border-bottom = t("jobs.additional_documents")
       p.govuk-body = t("jobs.supporting_documents_accessibility")
       .grey-border-box--thin
-        = render SupportingDocumentComponent.with_collection(vacancy.supporting_documents.order("active_storage_attachments.created_at ASC"))
+        = render SupportingDocumentComponent.with_collection(vacancy.supporting_documents_in_order)
