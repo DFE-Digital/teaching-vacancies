@@ -16,20 +16,20 @@ RSpec.describe Vacancy do
 
       travel_to(1.minute.ago) do
         vacancy.supporting_documents.attach(
-          io: File.open(Rails.root.join("spec/fixtures/files/blank_job_spec.pdf")),
+          io: Rails.root.join("spec/fixtures/files/blank_job_spec.pdf").open,
           filename: "blank_job_spec.pdf",
           content_type: "application/pdf",
         )
       end
 
       vacancy.supporting_documents.attach(
-        io: File.open(Rails.root.join("spec/fixtures/files/blank_baptism_cert.pdf")),
+        io: Rails.root.join("spec/fixtures/files/blank_baptism_cert.pdf").open,
         filename: "blank_baptism_cert.pdf",
         content_type: "application/pdf",
       )
 
       vacancy.supporting_documents.attach(
-        io: File.open(Rails.root.join("spec/fixtures/files/mime_types/valid_word_document.docx")),
+        io: Rails.root.join("spec/fixtures/files/mime_types/valid_word_document.docx").open,
         filename: "valid_word_document.docx",
         content_type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       )
