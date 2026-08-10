@@ -95,6 +95,7 @@ class JobApplication < ApplicationRecord
   # end of the road statuses for job application we cannot further update status at the point
   TERMINAL_STATUSES = (statuses.keys.map(&:to_s) - STATUS_TRANSITIONS.keys).freeze
   INACTIVE_STATUSES = (%w[draft] + TERMINAL_STATUSES).freeze
+  IN_OR_PAST_INTERVIEW_STAGE = %w[interviewing unsuccessful_interview offered declined].freeze
 
   PRE_SHORTLIST_STATUSES = %w[submitted reviewed].freeze
 
@@ -164,7 +165,7 @@ class JobApplication < ApplicationRecord
   end
 
   def in_or_past_interview_stage?
-    status.in?(%w[interviewing unsuccessful_interview offered declined])
+    status.in?(IN_OR_PAST_INTERVIEW_STAGE)
   end
 
   def name
