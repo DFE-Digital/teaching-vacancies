@@ -181,7 +181,7 @@ module LandingPageListsHelper
   ].freeze
 
   FE_SUBJECTS_LIST = Rails.application.config.landing_pages
-    .select { |_, v| v[:organisation_types] == %w[Colleges] && v.key?(:subjects) }
+    .select { |_, v| v[:organisation_types] == ["FE Colleges"] && v.key?(:subjects) }
     .transform_keys(&:to_s)
     .transform_values { |v| v[:subjects].first }
     .freeze

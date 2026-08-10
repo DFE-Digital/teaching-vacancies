@@ -1,11 +1,11 @@
 shared:
   ##
   # Configuration for FE (Further Education) landing pages.
-  # All entries here automatically get organisation_types: [Colleges] applied.
+  # All entries here automatically get organisation_types: [FE Colleges] applied.
   # See config/application.rb for how this file is merged into the main landing_pages config.
   # See config/landing_pages.yml for non-FE landing pages.
   #
-  organisation_type: Colleges
+  organisation_type: FE Colleges
 
   ### FE Job roles
   fe-teacher-jobs:

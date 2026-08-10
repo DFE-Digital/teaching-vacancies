@@ -46,7 +46,7 @@ class VacancyFilterQuery
       selected_school_types << School::LA_SCHOOL_TYPE
     end
 
-    if filters[:organisation_types].include?(School::COLLEGE_SCHOOL_TYPE)
+    if filters[:organisation_types].include?("FE Colleges")
       selected_school_types << School::COLLEGE_SCHOOL_TYPE
     end
 
