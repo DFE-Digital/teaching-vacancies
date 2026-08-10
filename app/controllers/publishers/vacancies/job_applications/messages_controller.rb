@@ -18,7 +18,7 @@ class Publishers::Vacancies::JobApplications::MessagesController < Publishers::V
                     []
                   end
 
-      render "publishers/vacancies/job_applications/messages", status: :unprocessable_entity
+      render "publishers/vacancies/job_applications/messages", status: :unprocessable_content
     end
   end
 

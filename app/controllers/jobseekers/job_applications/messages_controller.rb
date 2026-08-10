@@ -15,7 +15,7 @@ class Jobseekers::JobApplications::MessagesController < Jobseekers::JobApplicati
       conversation = @job_application.conversations.first
       @messages = conversation.messages.order(created_at: :desc)
 
-      render "jobseekers/job_applications/show", status: :unprocessable_entity
+      render "jobseekers/job_applications/show", status: :unprocessable_content
     end
   end
 

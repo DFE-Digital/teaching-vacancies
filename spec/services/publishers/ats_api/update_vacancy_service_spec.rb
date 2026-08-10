@@ -176,7 +176,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       let(:expires_at) { nil }
 
       it "returns a validation error response" do
-        expect(update_vacancy_service[:status]).to eq :unprocessable_entity
+        expect(update_vacancy_service[:status]).to eq :unprocessable_content
         expect(update_vacancy_service[:json][:errors]).to include(
           "job_title: can't be blank",
           "job_advert: Enter a job advert",
@@ -194,7 +194,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
     it "returns a validation error" do
       expect(update_vacancy_service).to eq(
         {
-          status: :unprocessable_entity,
+          status: :unprocessable_content,
           json: {
             errors: ["job_title: must be 75 characters or fewer"],
           },
@@ -209,7 +209,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
     it "returns a validation error" do
       expect(update_vacancy_service).to eq(
         {
-          status: :unprocessable_entity,
+          status: :unprocessable_content,
           json: {
             errors: [
               "expires_at: must be a future date",
@@ -226,7 +226,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
     it "returns a validation error" do
       expect(update_vacancy_service).to eq(
         {
-          status: :unprocessable_entity,
+          status: :unprocessable_content,
           json: {
             errors: [
               "expires_at: must be a future date",
@@ -244,7 +244,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
     it "returns a validation error" do
       expect(update_vacancy_service).to eq(
         {
-          status: :unprocessable_entity,
+          status: :unprocessable_content,
           json: {
             errors: ["expires_at: must be at least one day after the publish date"],
           },
@@ -260,7 +260,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
     it "returns a validation error" do
       expect(update_vacancy_service).to eq(
         {
-          status: :unprocessable_entity,
+          status: :unprocessable_content,
           json: {
             errors: ["expires_at: must be at least one day after the publish date"],
           },
