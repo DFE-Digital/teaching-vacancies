@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe DestroyInactiveAccountsJob do
   let!(:jobseeker) do
-    create(:jobseeker, last_sign_in_at: last_sign_in_at,
+    create(:jobseeker, current_sign_in_at: last_sign_in_at,
                        job_applications: build_list(:job_application, 1,
                                                     create_details: true, create_self_disclosure: true, create_references: true))
   end

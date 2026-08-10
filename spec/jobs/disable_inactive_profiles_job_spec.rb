@@ -4,7 +4,7 @@ RSpec.describe DisableInactiveProfilesJob do
   before do
     create(:jobseeker)
     create(:jobseeker_profile)
-    create(:jobseeker_profile, jobseeker: build(:jobseeker, last_sign_in_at: 7.months.ago))
+    create(:jobseeker_profile, jobseeker: build(:jobseeker, current_sign_in_at: 7.months.ago))
   end
 
   it "makes profiles over 6 months inactive" do

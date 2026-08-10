@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe SendInactiveAccountEmailJob do
-  let(:jobseeker) { create(:jobseeker, last_sign_in_at: last_sign_in_at) }
+  let(:jobseeker) { create(:jobseeker, current_sign_in_at: last_sign_in_at) }
   let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
 
   context "with inactive jobseeker for 6 years" do
