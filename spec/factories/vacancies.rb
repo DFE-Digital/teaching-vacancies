@@ -53,7 +53,7 @@ FactoryBot.define do
     expires_at { expiry_date.change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
     include_additional_documents { false }
-    job_title { "#{FFaker::Education.major} Teacher" }
+    job_title { generate(:job_title) }
     listed_elsewhere { nil }
     job_roles { %w[teacher] }
     ect_status { :ect_suitable }
@@ -136,8 +136,8 @@ FactoryBot.define do
       anonymise_applications { [false, true].sample }
     end
 
-    trait :with_dynamic_title do
-      job_title { generate(:job_title) }
+    trait :with_fixed_title do
+      job_title { "#{FFaker::Education.major} Teacher" }
     end
 
     trait :without_any_money do
