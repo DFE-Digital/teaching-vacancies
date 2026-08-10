@@ -816,7 +816,7 @@ RSpec.describe Vacancy do
 
     context "when there is a vacancy with the same external reference but different ATS client ID" do
       before do
-        create(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client: nil, organisations: [school])
+        create(:vacancy, :external, :with_dynamic_title, external_reference: "REF123", publisher_ats_api_client: nil, organisations: [school])
       end
 
       it "returns nil" do
