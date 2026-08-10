@@ -50,7 +50,6 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
 
     # legacy rake tasks, unlikely to ever be test covered
     skip "lib/tasks/audit.rake"
-    skip "lib/tasks/data.rake"
 
     # safe replacement for rake db:migrate, never going to be covered by tests
     skip "lib/tasks/migrate_swallowing_concurrent_migration_exceptions.rake"
