@@ -41,8 +41,8 @@ namespace :google do
   end
 end
 
-# simplecov:disable
 namespace :ons do
+  # simplecov:disable
   desc "Import all ONS areas"
   task import_all: %i[create_composites import_counties import_cities import_regions]
 
@@ -65,8 +65,8 @@ namespace :ons do
   task create_composites: :environment do
     OnsDataImport::CreateComposites.call
   end
+  # simplecov:enable
 end
-# simplecov:enable
 
 namespace :publishers do
   desc "Reset 'New features' attributes so all publishers are shown 'New features' page"
