@@ -19,7 +19,7 @@ on:
 permissions:
   id-token: write
   contents: read
-  pull-requests: read
+  pull-requests: write
 
 env:
   TERRAFORM_STATE_BUCKET: 530003481352-terraform-state
