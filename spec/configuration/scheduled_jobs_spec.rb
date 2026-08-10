@@ -29,6 +29,7 @@ RSpec.describe "Scheduled jobs configuration" do
       UpdateSingleDSIUserInDbJob
       FetchMalwareScanResultJob
       SendJobAlertsJob
+      TestApplicationJob
     ]
   end
 
