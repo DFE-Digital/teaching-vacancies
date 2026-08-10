@@ -36,7 +36,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           create_list(
             :vacancy,
             3,
-            :with_dynamic_title,
             :external,
             publisher_ats_api_client: other_client,
             organisations: [school],
