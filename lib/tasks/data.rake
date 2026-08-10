@@ -42,7 +42,6 @@ namespace :google do
 end
 
 namespace :ons do
-  # simplecov:disable
   desc "Import all ONS areas"
   task import_all: %i[create_composites import_counties import_cities import_regions]
 
@@ -65,7 +64,6 @@ namespace :ons do
   task create_composites: :environment do
     OnsDataImport::CreateComposites.call
   end
-  # simplecov:enable
 end
 
 namespace :publishers do
