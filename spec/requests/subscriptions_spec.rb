@@ -331,6 +331,27 @@ RSpec.describe "Subscriptions" do
     end
   end
 
+  describe "GET #unsubscribe" do
+    let!(:subscription) { create(:subscription, frequency: :daily) }
+
+    subject { get unsubscribe_subscription_path(subscription.token) }
+
+    it "renders the unsubscribe page" do
+      subject
+      expect(response).to have_http_status(:ok)
+    end
+
+    context "when the subscription has been discarded" do
+      before { subscription.discard }
+
+      it "redirects to root with a success message" do
+        subject
+        expect(response).to redirect_to(root_path)
+        expect(flash[:success]).to be_present
+      end
+    end
+  end
+
   describe "DELETE #destroy" do
     let!(:subscription) { create(:subscription, frequency: :daily) }
 

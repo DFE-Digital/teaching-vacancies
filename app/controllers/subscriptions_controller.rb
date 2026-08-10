@@ -68,6 +68,8 @@ class SubscriptionsController < ApplicationController
     subscription = Subscription.kept.find_and_verify_by_token(token)
 
     @subscription = SubscriptionPresenter.new(subscription)
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path, success: t(".already_unsubscribed")
   end
 
   def destroy
