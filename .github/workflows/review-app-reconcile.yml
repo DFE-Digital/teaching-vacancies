@@ -1,0 +1,174 @@
+name: Reconcile review apps
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Only display stale review apps; do not delete"
+        required: true
+        default: true
+        type: boolean
+
+  schedule:
+    - cron: "0 08 * * 0"
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+env:
+  TERRAFORM_STATE_BUCKET: 530003481352-terraform-state
+
+jobs:
+  find-stale-review-apps:
+    name: Find stale review apps
+    runs-on: ubuntu-latest
+    environment: review
+
+    outputs:
+      stale_prs: ${{ steps.find-stale.outputs.stale_prs }}
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6.2.1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+          role-to-assume: Deployments
+          role-duration-seconds: 3600
+          role-skip-session-tagging: true
+
+      - name: Azure login
+        uses: azure/login@v3
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
+        with:
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Install kubectl
+        uses: DFE-Digital/github-actions/set-kubectl@master
+
+      - name: Get AKS credentials
+        shell: bash
+        run: |
+          az aks get-credentials \
+            --resource-group s189t01-tsc-ts-rg \
+            --name s189t01-tsc-test-aks \
+            --overwrite-existing
+
+          kubelogin convert-kubeconfig -l spn
+
+      - name: Find stale review apps
+        id: find-stale
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          echo "Finding deployed review apps from AKS deployments..."
+          echo ""
+
+          stale_prs=()
+
+          prs=$(
+            kubectl get deployments -n tv-development -o json |
+            jq -r '
+              .items[]
+              | select(.metadata.name | test("^teaching-vacancies-review-pr-[0-9]+-worker$"))
+              | .metadata.name
+            ' |
+            sed -n 's/^teaching-vacancies-review-pr-\([0-9]\+\)-worker$/\1/p' |
+            sort -n
+          )
+
+          if [[ -z "$prs" ]]; then
+            echo "No deployed review apps found."
+            echo "stale_prs=[]" >> "$GITHUB_OUTPUT"
+            echo "stale_count=0" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          for pr in $prs; do
+
+            pr_json=$(
+              gh pr view "$pr" \
+                --repo "${{ github.repository }}" \
+                --json number,state,mergeable,title,url \
+                2>/dev/null || true
+            )
+
+            if [[ -z "$pr_json" ]]; then
+              echo "PR #$pr | NOT_FOUND | stale review app will be removed"
+              stale_prs+=("$pr")
+              continue
+            fi
+
+            state=$(echo "$pr_json" | jq -r '.state')
+            mergeable=$(echo "$pr_json" | jq -r '.mergeable')
+            title=$(echo "$pr_json" | jq -r '.title')
+            url=$(echo "$pr_json" | jq -r '.url')
+
+            if [[ "$state" != "OPEN" ]]; then
+              echo "PR #$pr | $state | mergeable=$mergeable | $title"
+              echo "$url"
+              echo ""
+
+              stale_prs+=("$pr")
+            fi
+
+          done
+
+          if (( ${#stale_prs[@]} == 0 )); then
+            stale_json="[]"
+          else
+            stale_json=$(printf '%s\n' "${stale_prs[@]}" | jq -R . | jq -s -c .)
+          fi
+
+          stale_count=$(jq 'length' <<< "$stale_json")
+
+          echo ""
+          echo "Stale PRs:"
+          echo "$stale_json"
+
+          echo ""
+          echo "========================================="
+          echo "Stale review apps found: $stale_count"
+          echo "========================================="
+
+          echo "stale_prs=$stale_json" >> "$GITHUB_OUTPUT"
+          echo "stale_count=$stale_count" >> "$GITHUB_OUTPUT"
+
+  delete-review-apps:
+    name: Delete stale review apps
+    needs: find-stale-review-apps
+
+    if: >
+      (
+        github.event_name == 'schedule' ||
+        github.event.inputs.dry_run == 'false'
+      ) &&
+      needs.find-stale-review-apps.outputs.stale_prs != '[]'
+
+    strategy:
+      max-parallel: 1
+      fail-fast: false
+      matrix:
+        pr_number: ${{ fromJson(needs.find-stale-review-apps.outputs.stale_prs) }}
+
+    uses: ./.github/workflows/delete_review_app.yml
+
+    with:
+      pr_number: ${{ matrix.pr_number }}
+
+    secrets: inherit
