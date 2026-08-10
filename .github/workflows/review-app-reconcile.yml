@@ -148,7 +148,7 @@ jobs:
       matrix:
         pr_number: ${{ fromJson(needs.find-stale-review-apps.outputs.stale_prs) }}
 
-    uses: ./.github/workflows/delete-review-app.yml
+    uses: ./.github/workflows/delete_review_app.yml
 
     with:
       pr_number: ${{ matrix.pr_number }}
