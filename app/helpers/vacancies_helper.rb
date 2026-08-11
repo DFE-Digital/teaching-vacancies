@@ -30,7 +30,8 @@ module VacanciesHelper
   end
 
   def fe_college_support_job_roles_options
-    Vacancy::FE_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.fe_support_job_role_options.#{option}")] }
+    roles = (Vacancy::SUPPORT_JOB_ROLES - %w[other_support]) + Vacancy::FE_SUPPORT_JOB_ROLES + %w[other_support]
+    roles.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.fe_support_job_role_options.#{option}")] }
   end
 
   def teaching_job_roles_options

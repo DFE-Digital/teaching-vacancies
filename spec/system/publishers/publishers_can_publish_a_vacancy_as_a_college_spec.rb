@@ -26,12 +26,12 @@ RSpec.describe "Creating a vacancy as an FE college" do
       postcode: "BN1 1AA",
     )
 
-    # Job role page shows Teacher or Lecturer plus the FE-specific support roles, but not the school-only roles
+    # Job role page shows Teacher for teaching roles, and the full support role list (school-style plus FE-specific), but not other teaching roles
     expect(publisher_job_role_page).to be_displayed
     expect(page).to have_content(I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.teacher"))
     expect(page).to have_content(I18n.t("helpers.label.publishers_job_listing_job_role_form.fe_support_job_role_options.leadership_and_management"))
+    expect(page).to have_content(I18n.t("helpers.label.publishers_job_listing_job_role_form.fe_support_job_role_options.teaching_assistant"))
     expect(page).to have_no_content(I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.headteacher"))
-    expect(page).to have_no_content(I18n.t("helpers.label.publishers_job_listing_job_role_form.support_job_role_options.teaching_assistant"))
     publisher_job_role_page.fill_in_and_submit_form(vacancy.job_roles.first)
 
     # education_phases and key stages are skipped for FE colleges
