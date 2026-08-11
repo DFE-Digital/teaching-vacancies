@@ -28,6 +28,7 @@ jobs:
   find-stale-review-apps:
     name: Find stale review apps
     runs-on: ubuntu-latest
+    environment: review
 
     outputs:
       stale_prs: ${{ steps.find-stale.outputs.stale_prs }}
@@ -45,6 +46,32 @@ jobs:
           role-duration-seconds: 3600
           role-skip-session-tagging: true
 
+      - name: Azure login
+        uses: azure/login@v3
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
+        with:
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Install kubectl
+        uses: DFE-Digital/github-actions/set-kubectl@master
+
+      - name: Get AKS credentials
+        shell: bash
+        run: |
+          az aks get-credentials \
+            --resource-group s189t01-tsc-ts-rg \
+            --name s189t01-tsc-test-aks \
+            --overwrite-existing
+
+          kubelogin convert-kubeconfig -l spn
+
       - name: Find stale review apps
         id: find-stale
         env:
@@ -53,65 +80,56 @@ jobs:
         run: |
           set -euo pipefail
 
-          echo "========================================="
-          echo "Finding review app state files"
-          echo "========================================="
+          echo "Finding deployed review apps from AKS deployments..."
+          echo ""
 
           stale_prs=()
 
           prs=$(
-            aws s3api list-object-versions \
-              --bucket "${TERRAFORM_STATE_BUCKET}" \
-              --query 'Versions[].Key' \
-              --output text |
-            tr '\t' '\n' |
-            grep '^review/review-pr-[0-9]\+\.tfstate$' |
-            sed -E 's|review/review-pr-([0-9]+)\.tfstate|\1|' |
-            sort -u -n
+            kubectl get deployments -n tv-development -o json |
+            jq -r '
+              .items[]
+              | select(.metadata.name | test("^teaching-vacancies-review-pr-[0-9]+-worker$"))
+              | .metadata.name
+            ' |
+            sed -n 's/^teaching-vacancies-review-pr-\([0-9]\+\)-worker$/\1/p' |
+            sort -n
           )
 
           if [[ -z "$prs" ]]; then
-            echo "No review app state files found."
-
+            echo "No deployed review apps found."
             echo "stale_prs=[]" >> "$GITHUB_OUTPUT"
+            echo "stale_count=0" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
-          echo ""
-          echo "Review app PR numbers discovered:"
-          echo "$prs"
-          echo ""
-
           for pr in $prs; do
-
-            echo "Checking PR #$pr"
 
             pr_json=$(
               gh pr view "$pr" \
                 --repo "${{ github.repository }}" \
-                --json number,state,title,url \
+                --json number,state,mergeable,title,url \
                 2>/dev/null || true
             )
 
             if [[ -z "$pr_json" ]]; then
-              echo "PR #$pr | NOT_FOUND | stale"
+              echo "PR #$pr | NOT_FOUND | stale review app will be removed"
               stale_prs+=("$pr")
               continue
             fi
 
             state=$(echo "$pr_json" | jq -r '.state')
+            mergeable=$(echo "$pr_json" | jq -r '.mergeable')
             title=$(echo "$pr_json" | jq -r '.title')
             url=$(echo "$pr_json" | jq -r '.url')
 
             if [[ "$state" != "OPEN" ]]; then
-              echo "PR #$pr | $state | stale"
+              echo "PR #$pr | $state | mergeable=$mergeable | $title"
               echo "$url"
-              stale_prs+=("$pr")
-            else
-              echo "PR #$pr | OPEN | active"
-            fi
+              echo ""
 
-            echo ""
+              stale_prs+=("$pr")
+            fi
 
           done
 
@@ -124,12 +142,16 @@ jobs:
           stale_count=$(jq 'length' <<< "$stale_json")
 
           echo ""
+          echo "Stale PRs:"
+          echo "$stale_json"
+
+          echo ""
           echo "========================================="
           echo "Stale review apps found: $stale_count"
           echo "========================================="
-          echo "$stale_json"
 
           echo "stale_prs=$stale_json" >> "$GITHUB_OUTPUT"
+          echo "stale_count=$stale_count" >> "$GITHUB_OUTPUT"
 
   delete-review-apps:
     name: Delete stale review apps
