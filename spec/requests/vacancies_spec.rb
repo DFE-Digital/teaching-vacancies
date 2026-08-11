@@ -17,4 +17,30 @@ RSpec.describe "Vacancies" do
       expect(response).to have_http_status(:ok)
     end
   end
+
+  describe "GET #show" do
+    let(:vacancy) { create(:vacancy) }
+
+    context "with referrer" do
+      let(:referrer_url) {  "https://example.com/some/path?utm=123" }
+
+      it "tracks the view in Redis" do
+        mock_redis = MockRedis.new
+        allow(Redis).to receive(:new).and_return(mock_redis)
+
+        redis_key = "vacancy_referrer_stats:#{vacancy.id}:example"
+
+        perform_enqueued_jobs do
+          get job_path(vacancy), params: {}, headers: { "Referer" => referrer_url }
+        end
+        expect(mock_redis.get(redis_key).to_i).to be > 0
+      end
+    end
+
+    context "without referrer" do
+      it "doesnt track the job" do
+        expect { get job_path(vacancy) }.not_to have_enqueued_job(TrackVacancyViewJob)
+      end
+    end
+  end
 end

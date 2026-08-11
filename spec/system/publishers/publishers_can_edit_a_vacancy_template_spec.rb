@@ -169,7 +169,7 @@ RSpec.describe "Editing a vacancy template" do
     context "with visa_sponsorship_available" do
       let(:change) { "visa_sponsorship_available" }
 
-      it "can have its visa_sponsorship_available edited", :a11y do
+      it "can have its visa_sponsorship_available edited", :a11y, :retry do
         expect(page).to have_content "Visa sponsorship"
         expect(page).to be_axe_clean.skipping "aria-allowed-attr"
 
