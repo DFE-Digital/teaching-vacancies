@@ -39,7 +39,7 @@ RSpec.describe "vacancies/show" do
     context "with a quick apply vacancy" do
       let(:vacancy) { build_stubbed(:vacancy, organisations: [school]) }
 
-      scenario "jobseeker sees a tag on jobs that allow to apply through Teaching Vacancies" do
+      it "has a tag on jobs that allow to apply through Teaching Vacancies" do
         expect(rendered).to have_css("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
       end
     end
@@ -47,11 +47,11 @@ RSpec.describe "vacancies/show" do
     context "with a website vacancy" do
       let(:vacancy) { build_stubbed(:vacancy, :apply_via_website, organisations: [school]) }
 
-      scenario "jobseeker does not see a tag on jobs that don't allow to apply through Teaching Vacancies" do
+      it "does not have a tag on jobs that don't allow to apply through Teaching Vacancies" do
         expect(rendered).to have_no_css("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
       end
 
-      scenario "a jobseeker can click on the application link" do
+      it "has an application link" do
         expect(rendered).to have_link I18n.t("jobs.view_advert.school"), href: vacancy.application_link
       end
     end
