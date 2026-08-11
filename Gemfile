@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby "4.0.2"
 
-RAILS_VERSION = "< 8.1".freeze
+RAILS_VERSION = "< 8.2".freeze
 gem "actionmailer", RAILS_VERSION
 gem "actionpack", RAILS_VERSION
 gem "actionpack-action_caching"
