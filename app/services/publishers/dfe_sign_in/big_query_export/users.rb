@@ -12,7 +12,7 @@ module Publishers::DfeSignIn::BigQueryExport
       pages.each { |page| insert_table_data(page) }
     rescue StandardError => e
       Rails.logger.warn("DSI API /users failed to respond with error: #{e.message}")
-      raise ExportError, "#{e.message}, while writing data from DSI /users endpoint. Flag this to Steven + Comms team"
+      raise ExportError, "#{e.message}, while exporting data from DSI /users endpoint into BigQ"
     end
 
     private

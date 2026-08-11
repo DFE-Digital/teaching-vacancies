@@ -91,20 +91,21 @@ RSpec.describe Publishers::DfeSignIn::BigQueryExport::Approvers do
         subject.call
       end
     end
+  end
 
-    context "when DSI API fails" do
-      let(:api_response) { unsuccesful_api_response }
+  context "when DSI API fails" do
+    let(:table_stub) { instance_double(Google::Cloud::Bigquery::Table) }
+    let(:api_response) { unsuccesful_api_response }
 
-      it "raises an export error that preserves the underlying failure" do
-        expect { subject.call }
-          .to raise_error(described_class::ExportError, /jwt expired, while writing data from DSI \/approvers endpoint/)
-      end
+    it "raises an export error that preserves the underlying failure" do
+      expect { subject.call }
+        .to raise_error(described_class::ExportError, /jwt expired, while exporting data from DSI \/users endpoint into BigQ/)
+    end
 
-      it "does not touch the existing table, so it is not left empty" do
-        expect { subject.call }.to raise_error(described_class::ExportError)
+    it "does not touch the existing table, so it is not left empty" do
+      expect { subject.call }.to raise_error(described_class::ExportError)
 
-        expect(dataset_stub).not_to have_received(:table)
-      end
+      expect(dataset_stub).not_to have_received(:table)
     end
   end
 
