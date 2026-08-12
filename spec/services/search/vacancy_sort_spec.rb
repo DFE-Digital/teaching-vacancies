@@ -5,6 +5,16 @@ RSpec.describe Search::VacancySort do
   let(:sort_by) { "" }
   let(:keyword) { "" }
 
+  shared_examples "sorts by expires_at" do
+    it "sorts by expires_at" do
+      expect(subject.sort_by).to eq("expires_at")
+    end
+
+    it "has order 'asc'" do
+      expect(subject.order).to eq("asc")
+    end
+  end
+
   shared_examples "sorts by publish_on" do
     it "sorts by publish_on" do
       expect(subject.sort_by).to eq("publish_on")
@@ -54,11 +64,11 @@ RSpec.describe Search::VacancySort do
         context "and a keyword is specified" do
           let(:keyword) { "maths" }
 
-          it_behaves_like "sorts by publish_on"
+          it_behaves_like "sorts by expires_at"
         end
 
         context "and a keyword is NOT specified" do
-          it_behaves_like "sorts by publish_on"
+          it_behaves_like "sorts by expires_at"
         end
       end
 
@@ -66,7 +76,7 @@ RSpec.describe Search::VacancySort do
         let(:sort_by) { "worst_listing" }
         let(:keyword) { "maths" }
 
-        it_behaves_like "sorts by publish_on"
+        it_behaves_like "sorts by expires_at"
       end
     end
   end
@@ -75,7 +85,7 @@ RSpec.describe Search::VacancySort do
     context "when the sort option 'relevance' is selected and there is no keyword" do
       let(:sort_by) { "relevance" }
 
-      it_behaves_like "sorts by publish_on"
+      it_behaves_like "sorts by expires_at"
 
       it "does not include 'relevance' in the sorting options" do
         expect(subject.options.map(&:sort_by)).not_to include("relevance")

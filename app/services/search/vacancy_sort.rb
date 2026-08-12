@@ -9,7 +9,7 @@ class Search::VacancySort < RecordSort
     if location.present?
       [distance_option, publish_on_non_default_desc_option, closing_date_asc_option]
     else
-      [publish_on_desc_option, closing_date_asc_option]
+      [closing_date_asc_option, publish_on_desc_option]
     end
   end
 
@@ -17,7 +17,7 @@ class Search::VacancySort < RecordSort
     if location.present?
       distance_option
     else
-      publish_on_desc_option
+      closing_date_asc_option
     end
   end
 
