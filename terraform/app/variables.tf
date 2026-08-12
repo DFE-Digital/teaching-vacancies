@@ -63,6 +63,35 @@ variable "statuscake_alerts" {
   default     = {}
 }
 
+# Application Insights
+variable "enable_application_insights" {
+  type = bool
+  description = "Boolean to enable application insights resources"
+  default = false
+}
+variable "availability_tests" {
+  type = map
+  description = "Configuration for application insights availability tests"
+  default = {}
+}
+variable "azure_monitoring" {
+  type = bool
+  description = "Boolean to control whether monitoring resources are used in Azure"
+  default = false
+}
+
+variable "action_group_email_receivers" {
+  type = list
+  description = "List of email receivers for metric alert action group"
+  default = []
+}
+
+variable "action_group_sms_receivers" {
+  type = list
+  description = "List of SMS receivers for metric alert action group"
+  default = []
+}
+
 # AKS
 variable "cluster" {
   description = "AKS cluster where this app is deployed. Either 'test' or 'production'"
@@ -195,6 +224,12 @@ variable "azure_storage_blob_delete_after_days" {
 variable "azure_storage_cors_allowed_origins" {
   default     = []
   description = "Allowed origins (URLs) for Cross Origin Resource Sharing (CORS) rule"
+}
+
+variable "monitoring_tags" {
+  type = map
+  description = "tags for Azure monitoring resources"
+  default = {}
 }
 
 locals {
