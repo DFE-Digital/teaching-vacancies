@@ -51,19 +51,19 @@ production:
     class: 'RemoveStaleVacanciesJob'
     queue: low
 
+  send_entity_table_checks_to_bigquery:
+    schedule: "30 0 * * *" # "At 00:30."
+    class: "DfE::Analytics::Jobs::EntityTableCheckJob"
+    queue: low
+
   update_dsi_users_in_db:
-    schedule: '0 0 * * *' # "At 00:00."
+    schedule: '30 01 * * *' # "At 01:30."
     class: 'UpdateDSIUsersInDbJob'
     queue: low
 
   export_users:
-    schedule: '0 01 * * *' # "At 01:00."
+    schedule: '0 02 * * *' # "At 02:00."
     class: 'ExportDSIUsersToBigQueryJob'
-    queue: low
-
-  send_entity_table_checks_to_bigquery:
-    schedule: "30 1 * * *" # "At 01:30."
-    class: "DfE::Analytics::Jobs::EntityTableCheckJob"
     queue: low
 
   reset_sessions:
