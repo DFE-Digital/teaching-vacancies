@@ -16,32 +16,32 @@ module DatabaseIndexable
   end
 
   def update_searchable_content
-    self.searchable_content = generate_searchable_content
+    self.searchable_content = generate_searchable_content(decorate)
   end
 
-  def generate_searchable_content # rubocop:disable Metrics/AbcSize,Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def generate_searchable_content(vacancy) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     # For now, this configuration mirrors the current Algolia ranking as closely as possible
     # `job_title` and `subject` are used for ranking (and weighted with 'A' here, the other
     # searchable fields get the lowest possible 'D' weight)
     Search::Postgres::TsvectorGenerator.new(
-      a: [unique_words(job_title), subjects],
+      a: [unique_words(vacancy.job_title), vacancy.subjects],
       d: [
-        phases.map(&:humanize),
-        vacancy_readable_job_roles(self),
-        vacancy_readable_key_stages(self),
-        organisation_name,
-        school_group_names,
-        school_group_types,
-        vacancy_readable_working_patterns(self),
-        religious_character,
-        organisations.map { |org| org.school_type&.singularize }.reject(&:blank?).uniq,
-        organisations.map(&:detailed_school_type).reject(&:blank?).uniq,
-        organisations.map(&:name),
-        organisations.map(&:town).reject(&:blank?).uniq,
-        organisations.map(&:local_authority_within).reject(&:blank?).uniq,
-        organisations.map(&:county).reject(&:blank?).uniq,
-        organisations.map(&:region).reject(&:blank?).uniq,
-        vacancy_readable_visa_sponsorship_availability(self),
+        vacancy.phases.map(&:humanize),
+        vacancy_readable_job_roles(vacancy),
+        vacancy_readable_key_stages(vacancy),
+        vacancy.organisation_name,
+        vacancy.school_group_names,
+        vacancy.school_group_types,
+        vacancy_readable_working_patterns(vacancy),
+        vacancy.religious_character,
+        vacancy.organisations.map { |org| org.school_type&.singularize }.reject(&:blank?).uniq,
+        vacancy.organisations.map(&:detailed_school_type).reject(&:blank?).uniq,
+        vacancy.organisations.map(&:name),
+        vacancy.organisations.map(&:town).reject(&:blank?).uniq,
+        vacancy.organisations.map(&:local_authority_within).reject(&:blank?).uniq,
+        vacancy.organisations.map(&:county).reject(&:blank?).uniq,
+        vacancy.organisations.map(&:region).reject(&:blank?).uniq,
+        vacancy_readable_visa_sponsorship_availability(vacancy),
       ],
     ).tsvector
   end

@@ -1,5 +1,21 @@
 class VacancyDecorator < Draper::Decorator
-  delegate_all
+  delegate :school_group_names, :job_title, :organisation_name, :organisation, :organisations,
+           :is_job_share, :id, :school_group_types,
+           :publish_on, :skills_and_experience, :job_roles,
+           :hourly_rate?, :hourly_rate, :salary?, :actual_salary?, :pay_scale?, :salary, :pay_scale, :actual_salary,
+           :about_school, :expires_at, :expired?, :enable_job_applications?,
+           :for_an_fe_college?, :live?, :uploaded_form?, :start_date_type, :starts_on, :ect_suitable?,
+           :slug, :allow_key_stages?, :allow_subjects?, :contract_type, :ect_status,
+           :visa_sponsorship_available, :fixed_term_contract_duration, :school_offer, :flexi_working,
+           :further_details, :include_additional_documents, :central_office?, :contact_email, :contact_number,
+           :school_visits?, :location, :key_stages, :subjects, :benefits?, :supporting_documents,
+           :application_link, :allow_phase_to_be_set?, :published?, :draft?, :pending?,
+           :salary_types, :benefits, :working_patterns_details?, :working_patterns_details, :working_patterns,
+           :completed_steps, :phases, :further_details_provided, :school_visits, :contact_number_provided, :contact_number_provided?,
+           :receive_applications, :allow_job_applications?, :can_receive_job_applications?, :enable_job_applications,
+           :catholic?, :religious_character, :other_religion?, :anonymise_applications?, :is_parental_leave_cover, :email?,
+           :application_form, :application_email, :website?, :vacancy_address,
+           :external?, :job_advert, :external_advert_url
 
   include ActionView::Helpers::TextHelper
 
@@ -30,7 +46,20 @@ class VacancyDecorator < Draper::Decorator
   end
   # simplecov:enable
 
+  def section_begun?(section, step_process)
+    retrieve_section_forms(section, step_process)
+      .map { |form_class| form_class.load_from_model(model, current_publisher: nil).slice(*form_class.fields).values }
+      .flatten
+      .any? { |value| !value.nil? }
+  end
+
   private
+
+  def retrieve_section_forms(section, step_process)
+    step_process.step_groups[section].map do |step_name|
+      File.join("publishers/job_listing", "#{step_name}_form").camelize.constantize
+    end
+  end
 
   # simplecov:disable
   def fix_bullet_points(text) # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/AbcSize

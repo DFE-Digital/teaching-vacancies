@@ -23,7 +23,7 @@ RSpec.describe Jobseekers::AlertMailer do
     subscription
   end
   let(:school) { create(:school) }
-  let(:mail) { described_class.alert(subscription.id, vacancies.pluck(:id)) }
+  let(:mail) { described_class.alert(subscription.id, vacancies.map(&:id)) }
   # The array of vacancies is set to length 1 because the order varies, making it hard to test url parameters.
   let(:vacancies) { create_list(:vacancy, 1, organisations: [school]).map(&:decorate) }
   let(:utm_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "#{frequency}_alert" } }
@@ -31,7 +31,7 @@ RSpec.describe Jobseekers::AlertMailer do
     subscription_submit_feedback_url(
       subscription.token,
       params: { job_alert_relevance_feedback: { relevant_to_user: true,
-                                                job_alert_vacancy_ids: vacancies.pluck(:id),
+                                                job_alert_vacancy_ids: vacancies.map(&:id),
                                                 search_criteria: subscription.search_criteria } },
     )
   end
@@ -39,7 +39,7 @@ RSpec.describe Jobseekers::AlertMailer do
     subscription_submit_feedback_url(
       subscription.token,
       params: { job_alert_relevance_feedback: { relevant_to_user: false,
-                                                job_alert_vacancy_ids: vacancies.pluck(:id),
+                                                job_alert_vacancy_ids: vacancies.map(&:id),
                                                 search_criteria: subscription.search_criteria } },
     )
   end
