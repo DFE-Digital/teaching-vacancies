@@ -377,6 +377,7 @@ en:
         teaching_roles: Teaching and leadership roles
         support_roles: Support roles
     unsubscribe:
+      already_unsubscribed: You have already unsubscribed from this job alert
       confirmation: Are you sure you want to unsubscribe?
       guidance:
         heading: Want to unsubscribe?
