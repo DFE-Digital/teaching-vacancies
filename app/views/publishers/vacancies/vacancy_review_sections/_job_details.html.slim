@@ -73,12 +73,12 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                     href: organisation_job_build_path(vacancy.id, :contract_information, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.contract_type")
 
-  - if vacancy.working_patterns.any?
+  - if vacancy.working_patterns_any?
     - summary_list.with_row(html_attributes: { id: "working_patterns" }) do |row|
       - row.with_key
         = t("jobs.working_patterns")
       - row.with_value
-        = vacancy_readable_working_patterns(vacancy)
+        = vacancy.readable_working_patterns
       - unless vacancy.live?
         - row.with_action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :contract_information, "back_to_#{action_name}": "true"),

@@ -32,7 +32,7 @@ module DatabaseIndexable
         vacancy.organisation_name,
         vacancy.school_group_names,
         vacancy.school_group_types,
-        vacancy_readable_working_patterns(vacancy),
+        vacancy.readable_working_patterns,
         vacancy.religious_character,
         vacancy.organisations.map { |org| org.school_type&.singularize }.reject(&:blank?).uniq,
         vacancy.organisations.map(&:detailed_school_type).reject(&:blank?).uniq,

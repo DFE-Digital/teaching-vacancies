@@ -309,4 +309,40 @@ RSpec.describe VacancyDecorator do
       end
     end
   end
+
+  describe "#readable_working_patterns_with_details" do
+    let(:working_patterns) { %w[full_time part_time] }
+    let(:working_patterns_details) { "Some details" }
+    let(:vacancy) { build_stubbed(:vacancy, working_patterns:, working_patterns_details:, is_job_share: false).decorate }
+
+    it "returns the working with details" do
+      expect(vacancy.readable_working_patterns_with_details).to eq("Full time, part time: Some details")
+    end
+
+    context "when there is no details" do
+      let(:working_patterns_details) { "" }
+
+      it "returns the working patterns" do
+        expect(vacancy.readable_working_patterns_with_details).to eq("Full time, part time")
+      end
+    end
+  end
+
+  describe "#readable_working_patterns" do
+    context "when is_job_share" do
+      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time], is_job_share: true).decorate }
+
+      it "returns working patterns" do
+        expect(vacancy.readable_working_patterns).to eq("Full time, part time (Can be done as a job share)")
+      end
+    end
+
+    context "when is_job_share == false" do
+      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time], is_job_share: false).decorate }
+
+      it "returns working patterns" do
+        expect(vacancy.readable_working_patterns).to eq("Full time, part time")
+      end
+    end
+  end
 end

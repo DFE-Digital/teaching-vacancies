@@ -1,4 +1,6 @@
 class VacancyDecorator < Draper::Decorator
+  # TODO: try to reduce this surface by bringing methods into this class
+  # to reduce logic in slim templates (which don't support coverage, and can get ungainly)
   delegate :school_group_names, :job_title, :organisation_name, :organisation, :organisations,
            :is_job_share, :id, :school_group_types,
            :publish_on, :skills_and_experience, :job_roles,
@@ -10,7 +12,8 @@ class VacancyDecorator < Draper::Decorator
            :further_details, :include_additional_documents, :central_office?, :contact_email, :contact_number,
            :school_visits?, :location, :key_stages, :subjects, :benefits?, :supporting_documents,
            :application_link, :allow_phase_to_be_set?, :published?, :draft?, :pending?,
-           :salary_types, :benefits, :working_patterns_details?, :working_patterns_details, :working_patterns,
+           :salary_types, :benefits,
+           :working_patterns_details?, :working_patterns_details,
            :completed_steps, :phases, :further_details_provided, :school_visits, :contact_number_provided, :contact_number_provided?,
            :receive_applications, :allow_job_applications?, :can_receive_job_applications?, :enable_job_applications,
            :catholic?, :religious_character, :other_religion?, :anonymise_applications?, :is_parental_leave_cover, :email?,
@@ -51,6 +54,28 @@ class VacancyDecorator < Draper::Decorator
       .map { |form_class| form_class.load_from_model(model, current_publisher: nil).slice(*form_class.fields).values }
       .flatten
       .any? { |value| !value.nil? }
+  end
+
+  def working_patterns_any?
+    model.working_patterns.any?
+  end
+
+  def readable_working_patterns
+    working_patterns = model.working_patterns.map { |working_pattern|
+      Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
+    }.join(", ").capitalize
+
+    return working_patterns unless model.is_job_share
+
+    "#{working_patterns} (Can be done as a job share)"
+  end
+
+  def readable_working_patterns_with_details
+    if model.working_patterns_details.present?
+      "#{readable_working_patterns}: #{model.working_patterns_details}"
+    else
+      readable_working_patterns
+    end
   end
 
   private

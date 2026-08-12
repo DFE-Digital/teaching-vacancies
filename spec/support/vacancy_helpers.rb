@@ -155,7 +155,7 @@ module VacancyHelpers
     expect(page).to have_content(sponsorship_text)
     vacancy.subjects.each { |subject| expect(page).to have_content subject }
 
-    expect(page).to have_content(vacancy_readable_working_patterns(vacancy))
+    expect(page).to have_content(vacancy.readable_working_patterns)
     expect(page).to have_content(vacancy_contract_type_with_duration(vacancy))
 
     expect(page).to have_content(vacancy.salary)

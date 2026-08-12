@@ -106,7 +106,7 @@ RSpec.describe Jobseekers::AlertMailer do
       expect(body).to include(I18n.t("jobseekers.alert_mailer.alert.summary.daily", count: 1))
                   .and include(vacancies.first.job_title)
                   .and include(job_url(vacancies.first, **utm_params))
-                  .and include(I18n.t("jobseekers.alert_mailer.alert.working_pattern", working_pattern: vacancy_readable_working_patterns_with_details(vacancies.first)))
+                  .and include(I18n.t("jobseekers.alert_mailer.alert.working_pattern", working_pattern: vacancies.first.readable_working_patterns_with_details))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.title"))
                   .and include("Keyword: English")
                   .and include(I18n.t("jobseekers.alert_mailer.alert.relevance_feedback.heading"))
@@ -165,7 +165,7 @@ RSpec.describe Jobseekers::AlertMailer do
                   .and include(vacancies.first.job_title)
                   .and include(job_url(vacancies.first, **utm_params))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.working_pattern",
-                                      working_pattern: vacancy_readable_working_patterns_with_details(vacancies.first)))
+                                      working_pattern: vacancies.first.readable_working_patterns_with_details))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.title"))
                   .and include("Keyword: English")
                   .and include(I18n.t("jobseekers.alert_mailer.alert.relevance_feedback.heading"))
