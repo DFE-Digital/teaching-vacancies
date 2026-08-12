@@ -106,6 +106,7 @@ en:
       sorted_by_publish_on: "Jobs (%{count}) sorted by newest"
       sorted_by_publish_on_non_default: "Jobs (%{count}) sorted by newest"
       sorted_by_expires_at: "Jobs (%{count}) ending soon"
+      sorted_by_expires_at_non_default: "Jobs (%{count}) ending soon"
       sorted_by_distance: "Jobs (%{count}) sorted by distance"
 
     legacy_job_alert:

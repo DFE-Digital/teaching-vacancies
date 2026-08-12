@@ -5,9 +5,9 @@ RSpec.describe Search::VacancySort do
   let(:sort_by) { "" }
   let(:keyword) { "" }
 
-  shared_examples "sorts by expires_at" do
-    it "sorts by expires_at" do
-      expect(subject.sort_by).to eq("expires_at")
+  shared_examples "sorts by expires_at_non_default" do
+    it "sorts by expires_at_non_default" do
+      expect(subject.sort_by).to eq("expires_at_non_default")
     end
 
     it "has order 'asc'" do
@@ -64,11 +64,11 @@ RSpec.describe Search::VacancySort do
         context "and a keyword is specified" do
           let(:keyword) { "maths" }
 
-          it_behaves_like "sorts by expires_at"
+          it_behaves_like "sorts by expires_at_non_default"
         end
 
         context "and a keyword is NOT specified" do
-          it_behaves_like "sorts by expires_at"
+          it_behaves_like "sorts by expires_at_non_default"
         end
       end
 
@@ -76,7 +76,7 @@ RSpec.describe Search::VacancySort do
         let(:sort_by) { "worst_listing" }
         let(:keyword) { "maths" }
 
-        it_behaves_like "sorts by expires_at"
+        it_behaves_like "sorts by expires_at_non_default"
       end
     end
   end
@@ -85,18 +85,18 @@ RSpec.describe Search::VacancySort do
     context "when the sort option 'relevance' is selected and there is no keyword" do
       let(:sort_by) { "relevance" }
 
-      it_behaves_like "sorts by expires_at"
+      it_behaves_like "sorts by expires_at_non_default"
 
       it "does not include 'relevance' in the sorting options" do
         expect(subject.options.map(&:sort_by)).not_to include("relevance")
       end
     end
 
-    context "when the sort option `expires_at` is selected" do
-      let(:sort_by) { "expires_at" }
+    context "when the sort option `expires_at_non_default` is selected" do
+      let(:sort_by) { "expires_at_non_default" }
 
-      it "sorts by publish_on" do
-        expect(subject.sort_by).to eq("expires_at")
+      it "sorts by expires_at_non_default" do
+        expect(subject.sort_by).to eq("expires_at_non_default")
       end
 
       it "has order 'asc'" do
@@ -131,8 +131,8 @@ RSpec.describe Search::VacancySort do
       it { is_expected.to be_by_db_column }
     end
 
-    context "when sorting by publish_on" do
-      let(:sort_by) { "publish_on_non_default" }
+    context "when sorting by expires_at_non_default" do
+      let(:sort_by) { "expires_at_non_default" }
 
       it { is_expected.to be_by_db_column }
     end
