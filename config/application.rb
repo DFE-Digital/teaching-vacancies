@@ -27,7 +27,7 @@ require "rack-mini-profiler" if ENV.fetch("RACK_MINI_PROFILER", nil) == "true" &
 
 module TeachingVacancies
   class Application < Rails::Application
-    config.load_defaults 8.0
+    config.load_defaults 8.1
 
     config.add_autoload_paths_to_load_path = false
 
@@ -81,6 +81,11 @@ module TeachingVacancies
     config.active_storage.routes_prefix = "/attachments"
     config.active_storage.resolve_model_to_route = :rails_storage_proxy
     config.active_storage.web_image_content_types = %w[image/png image/jpeg image/gif image/webp]
+
+    # We use ImageMagick (via the mini_magick gem), not libvips, to process variants.
+    # Rails defaults to :vips since 7.1; as of Rails 8.1 that processor library is now
+    # required eagerly at boot, which crashes the app since the vips gem isn't installed.
+    config.active_storage.variant_processor = :mini_magick
 
     # Specify the default serializer used by `MessageEncryptor` and `MessageVerifier`
     # instances.
@@ -141,7 +146,7 @@ module TeachingVacancies
     # TODO: We use Devise's `after_sign_out_path_for` to redirect users to DSI after signing out,
     # and have no way of disabling the foreign host redirect protection in that instance. Until
     # we figure out a way around that, this keeps the pre-Rails 7 default around.
-    Rails.application.config.action_controller.raise_on_open_redirects = false
+    Rails.application.config.action_controller.action_on_open_redirect = :log
 
     Rails.autoloaders.main.ignore(Rails.root.join("app/frontend"))
 
