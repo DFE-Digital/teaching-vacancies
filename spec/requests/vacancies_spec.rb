@@ -37,6 +37,12 @@ RSpec.describe "Vacancies" do
       end
     end
 
+    context "with utm campaign (e.g. job alert links)" do
+      it "tracks the view" do
+        expect { get job_path(vacancy), params: { utm_campaign: "job_alert" } }.to have_enqueued_job(TrackVacancyViewJob)
+      end
+    end
+
     context "without referrer" do
       it "doesnt track the job" do
         expect { get job_path(vacancy) }.not_to have_enqueued_job(TrackVacancyViewJob)

@@ -26,7 +26,9 @@ class VacanciesController < ApplicationController
     vacancy = PublishedVacancy.kept.listed.friendly.find(params[:id])
     # Only track views which have a referrer - this should reduce bots while in practice not affecting user tracking
     # Referrer is an 'optional, not to be trusted' header, but every browser sends it correctly at the time of writing (Aug 2026)
-    TrackVacancyViewJob.perform_later(vacancy_id: vacancy.id, referrer_url: request.referer, hostname: request.host, params: request.query_parameters) if request.referer.present?
+    if request.referer.present? || params.key?(:utm_campaign)
+      TrackVacancyViewJob.perform_later(vacancy_id: vacancy.id, referrer_url: request.referer, hostname: request.host, params: request.query_parameters)
+    end
 
     @saved_job = vacancy.saved_jobs.find_by(jobseeker: current_jobseeker)
     @job_application = vacancy.job_applications.find_by(jobseeker: current_jobseeker)
