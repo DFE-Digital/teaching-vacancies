@@ -62,6 +62,25 @@ RSpec.describe "Publishers can add additional documents to a vacancy" do
     expect(current_path).to eq(organisation_job_summary_path(vacancy.id))
   end
 
+  scenario "documents appear in the order they were uploaded" do
+    publisher_include_additional_documents_page.include_documents_yes.click
+    click_on I18n.t("buttons.save_and_continue")
+
+    ["blank_job_spec.pdf", "blank_baptism_cert.pdf", "mime_types/valid_word_document.docx"].each_with_index do |filename, index|
+      page.attach_file("publishers_job_listing_documents_form[supporting_documents][]",
+                       Rails.root.join("spec/fixtures/files/#{filename}"))
+      click_on I18n.t("buttons.save_and_continue")
+
+      publisher_vacancy_documents_page.add_another_document_yes_radio.click if index < 2
+      click_on I18n.t("buttons.save_and_continue") if index < 2
+    end
+
+    filenames = page.all(".govuk-summary-list__value").map(&:text)
+    expect(filenames[0]).to include("blank_job_spec.pdf")
+    expect(filenames[1]).to include("blank_baptism_cert.pdf")
+    expect(filenames[2]).to include("valid_word_document.docx")
+  end
+
   def add_document
     page.attach_file("publishers_job_listing_documents_form[supporting_documents][]",
                      Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"))
