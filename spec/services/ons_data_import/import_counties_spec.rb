@@ -1,15 +1,14 @@
 require "rails_helper"
 
 RSpec.describe OnsDataImport::ImportCounties do
-  let(:response1) { double(success?: true, to_s: file_fixture("ons_counties_geojson.json").read) }
-  let(:response2) { double(success?: true, to_s: { features: [] }.to_json) }
-
   # sadly this can't be a VCR test because the resultant download file is 118Mb
   # which is impractical to even cut-down
   before do
-    allow(HTTParty).to receive(:get)
-      .with(/Counties_and_Unitary_Authorities_April_2019_Boundaries_EW_BFC_2022/)
-      .and_return(response1, response2)
+    stub_request(:get, /Counties_and_Unitary_Authorities_April_2019_Boundaries_EW_BFC_2022/)
+      .to_return(
+        { status: 200, body: file_fixture("ons_counties_geojson.json").read },
+        { status: 200, body: { features: [] }.to_json },
+      )
     described_class.call
   end
 

@@ -1,13 +1,12 @@
 require "rails_helper"
 
 RSpec.describe OnsDataImport::ImportRegions do
-  let(:response1) { double(success?: true, to_s: file_fixture("ons_regions_geojson.json").read) }
-  let(:response2) { double(success?: true, to_s: { features: [] }.to_json) }
-
   before do
-    allow(HTTParty).to receive(:get)
-      .with(/regions/)
-      .and_return(response1, response2)
+    stub_request(:get, /regions/)
+      .to_return(
+        { status: 200, body: file_fixture("ons_regions_geojson.json").read },
+        { status: 200, body: { features: [] }.to_json },
+      )
     described_class.call
   end
 
