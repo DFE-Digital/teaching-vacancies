@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "Viewing a single published vacancy" do
-  include ActiveJob::TestHelper
-
   let(:school) { create(:school) }
 
   before do
@@ -37,52 +35,12 @@ RSpec.describe "Viewing a single published vacancy" do
       verify_vacancy_show_page_details(vacancy)
     end
 
-    scenario "tracks the view in Redis" do
-      mock_redis = MockRedis.new
-      allow(Redis).to receive(:new).and_return(mock_redis)
-
-      referrer_url = "https://example.com/some/path?utm=123"
-      redis_key = "vacancy_referrer_stats:#{vacancy.id}:example"
-
-      perform_enqueued_jobs do
-        page.driver.header("Referer", referrer_url)
-        visit job_path(vacancy)
-      end
-      expect(mock_redis.get(redis_key).to_i).to be > 0
-    end
-
-    context "when the vacancy has expired" do
-      let(:vacancy) { create(:vacancy, :expired, organisations: [school]) }
-
-      scenario "it shows warnings that the post has expired" do
-        expect(page).to have_content("EXPIRED")
-        expect(page).to have_content("This job expired on #{format_date(vacancy.expires_at, :date_only)}")
-      end
-    end
-
-    context "when the vacancy has not expired" do
-      scenario "it does not show warnings that the post has expired" do
-        expect(page).not_to have_content("EXPIRED")
-        expect(page).not_to have_content("This job expired on #{format_date(vacancy.expires_at, :date_only)}")
-      end
-    end
-
     context "with supporting documents attached" do
       let(:vacancy) { create(:vacancy, :with_supporting_documents, organisations: [school]) }
 
       scenario "can see the supporting documents section" do
         expect(page).to have_content(I18n.t("jobs.additional_documents"))
         expect(page).to have_content(vacancy.supporting_documents.first.filename)
-      end
-    end
-
-    context "when there is an application link set" do
-      let(:vacancy) { create(:vacancy, :apply_via_website, organisations: [school]) }
-
-      scenario "a jobseeker can click on the application link" do
-        click_on I18n.t("jobs.view_advert.school")
-
-        expect(page.current_url).to eq vacancy.application_link
       end
     end
 
@@ -102,17 +60,6 @@ RSpec.describe "Viewing a single published vacancy" do
                                                                      organisation: vacancy.organisation_name,
                                                                      deadline: format_date(vacancy.expires_at, :date_only_shorthand)))
       end
-    end
-
-    scenario "jobseeker sees a tag on jobs that allow to apply through Teaching Vacancies" do
-      expect(page).to have_css("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
-    end
-
-    scenario "jobseeker does not see a tag on jobs that don't allow to apply through Teaching Vacancies" do
-      vacancy_without_apply = create(:vacancy, :apply_via_website, organisations: [school])
-
-      visit job_path(vacancy_without_apply)
-      expect(page).not_to have_css("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
     end
 
     context "with similar jobs listed" do

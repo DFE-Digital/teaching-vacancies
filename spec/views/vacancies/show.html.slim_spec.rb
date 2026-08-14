@@ -9,6 +9,54 @@ RSpec.describe "vacancies/show" do
     render
   end
 
+  let(:school) { build_stubbed(:school) }
+
+  describe "job expiry" do
+    let(:jobseeker) { nil }
+
+    context "when the vacancy has expired" do
+      let(:vacancy) { build_stubbed(:vacancy, :expired, organisations: [school]) }
+
+      it "shows warnings that the post has expired" do
+        expect(rendered).to have_content("EXPIRED")
+        expect(rendered).to have_content("This job expired on #{format_date(vacancy.expires_at, :date_only)}")
+      end
+    end
+
+    context "when the vacancy has not expired" do
+      let(:vacancy) { build_stubbed(:vacancy, organisations: [school]) }
+
+      it "does not show warnings that the post has expired" do
+        expect(rendered).to have_no_content("EXPIRED")
+        expect(rendered).to have_no_content("This job expired on")
+      end
+    end
+  end
+
+  describe "quick apply tags" do
+    let(:jobseeker) { nil }
+
+    context "with a quick apply vacancy" do
+      let(:vacancy) { build_stubbed(:vacancy, organisations: [school]) }
+
+      it "has a tag on jobs that allow to apply through Teaching Vacancies" do
+        expect(rendered).to have_css("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
+      end
+    end
+
+    context "with a website vacancy" do
+      let(:vacancy) { build_stubbed(:vacancy, :apply_via_website, organisations: [school]) }
+
+      it "does not have a tag on jobs that don't allow to apply through Teaching Vacancies" do
+        expect(rendered).to have_no_css("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
+      end
+
+      it "has an application link" do
+        expect(rendered).to have_link I18n.t("jobs.view_advert.school"), href: vacancy.application_link
+      end
+    end
+  end
+
   describe "job posting metadata" do
     let(:jobseeker) { nil }
     let(:json_ld) { JSON.parse(rendered.html.css("script.jobref").inner_text, symbolize_names: true) }
