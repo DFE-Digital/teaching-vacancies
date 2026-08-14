@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe Vacancies::Import::Sources::VacancyPoster do
   let(:response_body) { file_fixture("vacancy_sources/vacancy_poster.xml").read }
-  let(:response) { instance_double(Net::HTTPResponse, body: response_body) }
 
   let!(:school1) { create(:school, name: "Test School", urn: "123456", phase: :primary) }
   let(:schools) { [school1] }
@@ -26,7 +25,7 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
     end
 
     before do
-      expect(HTTParty).to receive(:get).with("http://example.com/feed.xml").and_return(response)
+      stub_request(:get, "http://example.com/feed.xml").to_return(body: response_body)
     end
 
     it "has the correct number of vacancies" do
