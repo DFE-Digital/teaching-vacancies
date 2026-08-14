@@ -28,17 +28,16 @@ RSpec.describe LocationSuggestion do
       stub_request(:get, request_url).to_return(body: request_body, status: request_status)
     end
 
-    # false assertion from rubocop
-    # rubocop:disable RSpec/UnspecifiedException
     context "the request is unsuccessful" do
       let(:request_status) { 400 }
 
-      it "raises a HTTParty::ResponseError" do
-        expect { subject.send(:get_suggestions_from_google) }.to raise_error do
-          HTTParty::ResponseError.new("Something went wrong")
-        end
+      it "raises a LocationSuggestion::RequestError" do
+        expect { subject.send(:get_suggestions_from_google) }.to raise_error(described_class::RequestError, "Something went wrong")
       end
     end
+
+    # false assertion from rubocop
+    # rubocop:disable RSpec/UnspecifiedException
 
     context "the response contains an error message" do
       let(:error_message) { "This is an error" }

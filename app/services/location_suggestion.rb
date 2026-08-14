@@ -8,6 +8,8 @@ class LocationSuggestion
 
   class GooglePlacesAutocompleteError < StandardError; end
 
+  class RequestError < StandardError; end
+
   attr_accessor :location_input
 
   def initialize(location_input)
@@ -33,8 +35,8 @@ class LocationSuggestion
   end
 
   def get_suggestions_from_google
-    response = HTTParty.get(request_url)
-    raise HTTParty::ResponseError, "Something went wrong" unless response.success?
+    response = HttpClient.connection.get(request_url)
+    raise RequestError, "Something went wrong" unless response.success?
 
     parsed_response = JSON.parse(response.body)
     raise GooglePlacesAutocompleteError, parsed_response["error_message"] if
