@@ -8,7 +8,7 @@
             ul.govuk-footer__list
               li.govuk-footer__list-item
                 - if jobseeker_signed_in?
-                  = link_to t("nav.create_a_job_alert"), jobseekers_account_path, class: "govuk-footer__link"
+                  = link_to t("nav.create_a_job_alert"), new_subscription_path, class: "govuk-footer__link"
                 - else
                   = link_to t("nav.jobseeker_sign_in"), new_jobseeker_session_path, class: "govuk-footer__link"
               li.govuk-footer__list-item
