@@ -1042,7 +1042,6 @@ DEPENDENCIES
   guard-shell
   guard-slim_lint
   high_voltage
-  httparty
   image_processing
   ipaddr
   jbuilder
