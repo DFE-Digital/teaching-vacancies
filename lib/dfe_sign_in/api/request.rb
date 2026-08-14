@@ -13,14 +13,15 @@ module DfeSignIn
 
       def perform
         token = generate_jwt_token
-        response = HTTParty.get(
+        response = HttpClient.connection.get(
           "#{ENV.fetch('DFE_SIGN_IN_URL', nil)}#{@endpoint}?page=#{@page}&pageSize=#{@page_size}",
-          headers: { "Authorization" => "Bearer #{token}" },
-        )
+        ) do |req|
+          req.headers["Authorization"] = "Bearer #{token}"
+        end
 
-        raise ExternalServerError if response.code.eql?(500)
-        raise ForbiddenRequestError if response.code.eql?(403)
-        raise UnknownResponseError unless response.code.eql?(200)
+        raise ExternalServerError if response.status.eql?(500)
+        raise ForbiddenRequestError if response.status.eql?(403)
+        raise UnknownResponseError unless response.status.eql?(200)
 
         JSON.parse(response.body)
       end
