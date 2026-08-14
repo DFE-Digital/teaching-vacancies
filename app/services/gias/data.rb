@@ -13,10 +13,20 @@ class Gias::Data
     Tempfile.create(type) do |file|
       file.binmode
 
-      HTTParty.get(csv_url, stream_body: true, headers: { "User-Agent" => "teaching-vancancies" }) do |fragment|
-        raise "Could not download file #{csv_url} from GIAS: #{fragment.code}" unless fragment.code == 200
+      # If a retry kicks in mid-download, discard whatever was already written so the
+      # retried attempt doesn't get appended after a partial/corrupt download.
+      retry_options = { retry_block: proc {
+        file.truncate(0)
+        file.rewind
+      } }
 
-        file.write(fragment)
+      HttpClient.connection(retry_options: retry_options).get(csv_url) do |req|
+        req.headers["User-Agent"] = "teaching-vancancies"
+        req.options.on_data = proc do |chunk, _bytes_received, env|
+          raise "Could not download file #{csv_url} from GIAS: #{env.status}" unless env.status == 200
+
+          file.write(chunk)
+        end
       end
       file.rewind
 
