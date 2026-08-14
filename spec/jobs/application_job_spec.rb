@@ -33,6 +33,25 @@ RSpec.describe ApplicationJob do
     end
   end
 
+  describe "retry backoff" do
+    # A flat 3 second wait (the Active Job default) exhausts every attempt in well under a
+    # minute, which is not long enough to ride out a briefly unavailable external API.
+    it "spaces retries polynomially rather than at a flat 3 seconds" do
+      TestApplicationJob.define_method(:perform) { raise "transient failure" }
+
+      job = TestApplicationJob.new
+
+      freeze_time do
+        3.times { job.perform_now }
+
+        delays = enqueued_jobs.map { |enqueued| enqueued[:at] - Time.current.to_f }
+
+        expect(delays.first).to be < 5.seconds
+        expect(delays.last).to be > 60.seconds
+      end
+    end
+  end
+
   describe "retrying other errors" do
     it "re-enqueues instead of failing, then succeeds on retry" do
       attempts = 0
