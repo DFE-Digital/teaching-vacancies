@@ -69,7 +69,7 @@ module JobApplicationsHelper
 
   def tag_status_options(tab_origin)
     job_application_status = TABS_TO_CONTAINED_STATUSES.fetch(tab_origin, [tab_origin]).first
-    JobApplication.next_statuses(job_application_status) - %w[withdrawn]
+    JobApplication.next_statuses(job_application_status) - %w[withdrawn rejected]
   end
 
   def job_application_qualified_teacher_status_info(job_application)
