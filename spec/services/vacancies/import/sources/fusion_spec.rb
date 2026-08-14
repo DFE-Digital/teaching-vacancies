@@ -6,12 +6,11 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
   let(:trust_schools) { [school1] }
 
   let(:response_body) { file_fixture("vacancy_sources/fusion.json").read }
-  let(:response) { double("FusionHttpResponse", success?: true, body: response_body) }
-  let(:argument_error_response) { double("FusionHttpResponse", success?: true, body: file_fixture("vacancy_sources/fusion_argument_error.json").read) }
+  let(:argument_error_body) { file_fixture("vacancy_sources/fusion_argument_error.json").read }
 
   describe "enumeration" do
     before do
-      expect(HTTParty).to receive(:get).with("http://example.com/feed.json").and_return(response)
+      stub_request(:get, "http://example.com/feed.json").to_return(body: response_body)
     end
 
     let(:vacancy) { subject.first }
@@ -562,7 +561,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
 
   describe "enumeration error" do
     before do
-      expect(HTTParty).to receive(:get).with("http://example.com/feed.json").and_return(argument_error_response)
+      stub_request(:get, "http://example.com/feed.json").to_return(body: argument_error_body)
     end
 
     let(:vacancy) { subject.first }
@@ -571,6 +570,16 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
       it "adds an error to the vacancy object" do
         expect(vacancy.errors.count).to eq(1)
       end
+    end
+  end
+
+  describe "when the feed request is unsuccessful" do
+    before do
+      stub_request(:get, "http://example.com/feed.json").to_return(status: 500)
+    end
+
+    it "raises a FusionImportError" do
+      expect { subject.to_a }.to raise_error(described_class::FusionImportError, "Something went wrong with Fusion Import")
     end
   end
 end
