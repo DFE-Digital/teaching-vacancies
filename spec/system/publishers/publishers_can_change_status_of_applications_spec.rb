@@ -415,7 +415,7 @@ RSpec.describe "check job application after status transition" do
     let(:status) { "unsuccessful_interview" }
 
     # JS needed so that all tabs are not visible
-    it "allows the publisher to move an interview-unsuccessful application back to interviewing to correct human error", :js do
+    it "allows the publisher to move an interview-unsuccessful application back to interviewing without going through the references/self-disclosure journey again", :js do
       run_with_publisher(publisher) do
         publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :interviewing)
 
@@ -425,11 +425,7 @@ RSpec.describe "check job application after status transition" do
           tag_page.select_and_submit("interviewing")
         end
 
-        expect(publisher_ats_collect_references_page).to be_displayed(vacancy_id: vacancy.id)
-        publisher_ats_collect_references_page.answer_no
-        find("label[for='publishers-job-application-collect-self-disclosure-form-collect-self-disclosure-false-field']").click
-        click_on "Save and continue"
-
+        expect(publisher_ats_collect_references_page).not_to be_displayed(vacancy_id: vacancy.id)
         expect(publisher_ats_applications_page).to be_displayed
         expect(publisher_ats_applications_page.selected_tab).to have_text("Interviewing")
         display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status

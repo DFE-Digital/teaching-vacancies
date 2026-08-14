@@ -64,7 +64,7 @@ class ReferenceRequest < ApplicationRecord
     end
 
     def create_for_external!(job_application)
-      job_application.referees.each do |referee|
+      job_application.referees.reject { |r| r.reference_request.present? }.each do |referee|
         create_external_for_referee!(referee)
       end
     end

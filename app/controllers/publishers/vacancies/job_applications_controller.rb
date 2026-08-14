@@ -56,7 +56,13 @@ module Publishers
       def update_tag
         with_valid_form(@job_applications, validate_all_attributes: true) do |form|
           case form.status
-          when "interviewing" then redirect_to_references_and_self_disclosure(form.job_applications)
+          when "interviewing"
+            if form.job_applications.all?(&:unsuccessful_interview?)
+              form.job_applications.each { it.update!(status: :interviewing) }
+              redirect_to organisation_job_job_applications_path(@vacancy.id, anchor: form.origin)
+            else
+              redirect_to_references_and_self_disclosure(form.job_applications)
+            end
           when "offered"      then render_offered_form(form.job_applications, form.origin)
           when "unsuccessful_interview" then render_unsuccessful_interview_form(form.job_applications, form.origin)
           else
