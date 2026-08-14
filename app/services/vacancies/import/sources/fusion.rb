@@ -173,8 +173,8 @@ class Vacancies::Import::Sources::Fusion
   end
 
   def results
-    response = HTTParty.get(FEED_URL)
-    raise HTTParty::ResponseError, error_message unless response.success?
+    response = HttpClient.connection.get(FEED_URL)
+    raise FusionImportError, error_message unless response.success?
 
     JSON.parse(response.body)
   end
