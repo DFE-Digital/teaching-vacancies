@@ -84,6 +84,10 @@ FactoryBot.define do
       end
     end
 
+    trait :it_support do
+      job_roles { %w[it_support] }
+    end
+
     trait :secondary do
       phases { %w[secondary] }
       key_stages { %w[ks3] }

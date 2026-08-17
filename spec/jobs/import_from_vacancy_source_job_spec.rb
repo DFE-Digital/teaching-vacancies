@@ -179,6 +179,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "job_address_town" => nil,
           "job_address_county" => nil,
           "job_address_postcode" => nil,
+          "fe_role_qts_required" => nil,
         )
       end
 
