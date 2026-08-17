@@ -17,7 +17,7 @@
         ]
       },
       "properties" : {
-        "CTYUA25NM" : "Lincolnshire"
+        "CTYUA25NM" : "Bedford"
       }
     },
     {
@@ -36,7 +36,26 @@
         ]
       },
       "properties" : {
-        "CTYUA25NM" : "Conwy"
+        "CTYUA25NM" : "Luton"
+      }
+    },
+    {
+      "type" : "Feature",
+      "geometry" :
+      {
+        "type" : "Polygon",
+        "coordinates" :
+        [
+          [
+            [0,0],
+            [1,1],
+            [1,-1],
+            [0,0]
+          ]
+        ]
+      },
+      "properties" : {
+        "CTYUA25NM" : "Central Bedfordshire"
       }
     }
   ]

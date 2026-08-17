@@ -2,9 +2,10 @@ class ImportPolygonDataJob < ApplicationJob
   queue_as :low
 
   def perform
+    # Import composites first (including their constituents)
+    OnsDataImport::CreateComposites.call
     OnsDataImport::ImportCounties.call
     OnsDataImport::ImportCities.call
     OnsDataImport::ImportRegions.call
-    OnsDataImport::CreateComposites.new.call
   end
 end

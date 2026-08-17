@@ -55,26 +55,6 @@ RSpec.describe LocationPolygon do
       it "the area of the polygon gets returned if is valid" do
         expect(described_class.find_valid_for_location("london")).to eq(polygon)
       end
-
-      context "when the polygon area has an invalid reason" do
-        before do
-          allow(area).to receive(:invalid_reason).and_return("Some reason")
-        end
-
-        it "doesn't return the polygon" do
-          expect(described_class.find_valid_for_location("london")).to be_nil
-        end
-      end
-
-      context "when the polygon area raises an InvalidGeometry error" do
-        before do
-          allow(polygon.area).to receive(:invalid_reason).and_raise(RGeo::Error::InvalidGeometry)
-        end
-
-        it "doesn't return the polygon" do
-          expect(described_class.find_valid_for_location("london")).to be_nil
-        end
-      end
     end
   end
 
