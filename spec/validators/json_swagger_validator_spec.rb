@@ -10,7 +10,7 @@ RSpec.describe "JsonSwaggerValidator" do
                                .except(:enable_job_applications, :contact_number_provided,
                                        :contact_number, :fixed_term_contract_duration, :further_details_provided,
                                        :hired_status, :include_additional_documents,
-                                       :listed_elsewhere, :ect_status, :school_visits,
+                                       :listed_elsewhere, :ect_status, :school_visits, :fe_role_qts_required,
                                        :start_date_type, :status, :anonymise_applications,
                                        :working_patterns_details, :organisations,
                                        :further_details, :hourly_rate, :pay_scale,

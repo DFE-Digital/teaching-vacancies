@@ -14,7 +14,7 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
     let(:visa_sponsorship_job) { Vacancy.find_by(job_title: "Visa sponsorship job") }
 
     let(:non_visa_sponsorship_job) { Vacancy.find_by(job_title: "Non-visa sponsorship job") }
-    let(:non_ect_job) { Vacancy.find_by!(job_title: "Non-ECT job") }
+    let(:ect_job) { Vacancy.find_by!(job_title: "ECT job") }
 
     let(:french_job) { Vacancy.find_by!(job_title: "French job") }
     let(:german_job) { Vacancy.find_by!(job_title: "German job") }
@@ -32,6 +32,8 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
     let(:great_job) { Vacancy.find_by!(job_title: "Great job") }
     let(:really_nice_job) { Vacancy.find_by!(job_title: "This is a Really Nice job") }
     let(:nice_job) { Vacancy.find_by!(job_title: "This is a nice job") }
+    let(:college_job_qts) { Vacancy.find_by!(job_title: "FE QTS Required") }
+    let(:college_job_not_qts) { Vacancy.find_by!(job_title: "FE QTS Not Required") }
 
     # rubocop:disable RSpec/BeforeAfterAll
     before(:all) do
@@ -42,7 +44,7 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
       create(:vacancy, :published_slugged, organisations: [school], job_title: "Visa sponsorship job", visa_sponsorship_available: true)
 
       create(:vacancy, :published_slugged, organisations: [school], job_title: "Non-visa sponsorship job", visa_sponsorship_available: false)
-      create(:vacancy, :published_slugged, organisations: [school], job_title: "Non-ECT job", ect_status: "ect_unsuitable")
+      create(:vacancy, :published_slugged, :ect_suitable, organisations: [school], job_title: "ECT job")
       create(:vacancy, :published_slugged, :secondary, organisations: [school],  job_title: "French job", subjects: %w[French])
       create(:vacancy, :published_slugged, :secondary, organisations: [school],  job_title: "German job", subjects: %w[German])
       create(:vacancy, :published_slugged, :secondary, organisations: [school],  job_title: "Maths and English job", subjects: %w[Maths English])
@@ -61,6 +63,9 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
       create(:vacancy, :published_slugged, job_title: "Great job", organisations: [great_school])
       create(:vacancy, :published_slugged, :secondary, organisations: [school], job_title: "This is a Really Nice job")
       create(:vacancy, :published_slugged, :secondary, organisations: [school], job_title: "This is a nice job")
+      college = create(:college)
+      create(:vacancy, :published_slugged, :college_support_role, organisations: [college], fe_role_qts_required: false, job_title: "FE QTS Not Required")
+      create(:vacancy, :published_slugged, :college_support_role, organisations: [college], fe_role_qts_required: true, job_title: "FE QTS Required")
     end
 
     after(:all) do
@@ -110,7 +115,7 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
                              really_nice_job,
                              visa_sponsorship_job,
                              non_visa_sponsorship_job,
-                             non_ect_job,
+                             ect_job,
                              french_job,
                              fantastic_job,
                              great_job,
@@ -124,6 +129,8 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
                              full_and_part_time_job,
                              full_time_job,
                              job_share_job,
+                             college_job_qts,
+                             college_job_not_qts,
                              no_subject_job].map(&:job_title))
         end
       end
@@ -178,10 +185,28 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
     end
 
     describe "ECT status matching" do
-      let(:subscription) { build_stubbed(:daily_subscription, ect_statuses: %w[ect_suitable]) }
+      context "with ect suitable" do
+        let(:subscription) { build_stubbed(:daily_subscription, ect_statuses: %w[ect_suitable]) }
 
-      it "finds only the vacancies that suitable for ECT" do
-        expect(query_results).not_to include(non_ect_job.job_title)
+        it "finds only the vacancies that suitable for ECT" do
+          expect(query_results).to eq([ect_job.job_title])
+        end
+      end
+
+      context "with qts_not_needed" do
+        let(:subscription) { build_stubbed(:daily_subscription, ect_statuses: %w[qts_not_needed]) }
+
+        it "returns college vacancies that don't require QTS" do
+          expect(query_results).to contain_exactly("FE QTS Not Required")
+        end
+      end
+
+      context "with both statuses" do
+        let(:subscription) { build_stubbed(:daily_subscription, ect_statuses: %w[ect_suitable qts_not_needed]) }
+
+        it "finds only the vacancies that suitable for ECT and dont require QTS" do
+          expect(query_results).to contain_exactly(ect_job.job_title, "FE QTS Not Required")
+        end
       end
     end
 
@@ -192,7 +217,7 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
         let(:newly_qualified_teacher) { "true" }
 
         it "finds only the vacancies that are suitable for ECT" do
-          expect(query_results).not_to include(non_ect_job.job_title)
+          expect(query_results).to eq([ect_job.job_title])
         end
       end
 
@@ -200,7 +225,7 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
         let(:newly_qualified_teacher) { "false" }
 
         it "finds all the vacancies" do
-          expect(query_results).to include(non_ect_job.job_title)
+          expect(query_results).to include(ect_job.job_title)
         end
       end
     end
@@ -301,7 +326,7 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
                                                 it_support_job,
                                                 maths_and_english_job,
                                                 no_subject_job,
-                                                non_ect_job,
+                                                ect_job,
                                                 great_job,
                                                 nice_job,
                                                 really_nice_job,
@@ -312,6 +337,8 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
                                                 secondary_job,
                                                 full_time_job,
                                                 through_job,
+                                                college_job_not_qts,
+                                                college_job_qts,
                                                 teacher_and_other_support_job,
                                                 visa_sponsorship_job,
                                                 full_and_part_time_job].map(&:job_title))
@@ -338,9 +365,11 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
                              headteacher_job,
                              it_support_job,
                              no_subject_job,
-                             non_ect_job,
+                             ect_job,
                              non_visa_sponsorship_job,
                              maths_and_english_job,
+                             college_job_not_qts,
+                             college_job_qts,
                              full_time_job,
                              part_time_job,
                              full_and_part_time_job,

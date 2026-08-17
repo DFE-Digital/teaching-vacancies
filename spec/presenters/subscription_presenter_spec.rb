@@ -67,6 +67,22 @@ RSpec.describe SubscriptionPresenter do
       end
     end
 
+    context "with the ECT filter" do
+      let(:search_criteria) { { ect_statuses: %w[ect_suitable] } }
+
+      it "formats and returns the ECT options" do
+        expect(presenter.filtered_search_criteria).to eq({ "suitable_for_early_career_teachers" => "Yes" })
+      end
+    end
+
+    context "with the QTS not required filter" do
+      let(:search_criteria) { { ect_statuses: %w[qts_not_needed] } }
+
+      it "formats and returns the QTS not required options" do
+        expect(presenter.filtered_search_criteria).to eq({ "fe_qts_required" => "No" })
+      end
+    end
+
     context "when the job alert has been created from an organisation landing page" do
       let(:search_criteria) { { organisation_slug: organisation.slug } }
 
