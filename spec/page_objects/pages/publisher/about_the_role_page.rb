@@ -5,6 +5,13 @@ module PageObjects
         set_url "/organisation/jobs/{vacancy_id}/build/about_the_role"
 
         def fill_in_and_submit_form(vacancy)
+          if vacancy.for_an_fe_college?
+            # The ID of the 'true' option can change when there is a field error
+            within "#needs_qts_status_radios" do
+              true_box_id = find(".govuk-radios__input[value='true']")["id"]
+              find("label[for='#{true_box_id}']").click
+            end
+          end
           within ".ect-status-radios" do
             choose I18n.t("helpers.label.publishers_job_listing_about_the_role_form.ect_status_options.#{vacancy.ect_status}")
           end

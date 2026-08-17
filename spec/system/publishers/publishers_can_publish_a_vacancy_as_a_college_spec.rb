@@ -51,6 +51,17 @@ RSpec.describe "Creating a vacancy as an FE college" do
     publisher_pay_package_page.fill_in_and_submit_form(vacancy)
 
     expect(publisher_about_the_role_page).to be_displayed
+    click_on I18n.t("buttons.save_and_continue")
+
+    expect(publisher_about_the_role_page).to be_displayed
+    expect(publisher_about_the_role_page.errors.map(&:text)).to eq([
+      I18n.t("about_the_role_errors.fe_role_qts_required.inclusion"),
+      I18n.t("about_the_role_errors.ect_status.inclusion"),
+      I18n.t("about_the_role_errors.skills_and_experience.blank"),
+      I18n.t("about_the_role_errors.school_offer.blank", organisation: "college"),
+      I18n.t("about_the_role_errors.further_details_provided.inclusion"),
+      I18n.t("about_the_role_errors.flexi_working_details_provided.inclusion"),
+    ])
     publisher_about_the_role_page.fill_in_and_submit_form(vacancy)
 
     expect(publisher_school_visits_page).to be_displayed

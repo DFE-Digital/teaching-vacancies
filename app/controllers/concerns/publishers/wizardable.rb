@@ -137,12 +137,6 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
           .permit(:confirm_contact_email)
   end
 
-  def about_the_role_params(params)
-    params.require(:publishers_job_listing_about_the_role_form)
-          .permit(:ect_status, :skills_and_experience, :school_offer, :flexi_working, :flexi_working_details_provided,
-                  :further_details_provided, :further_details)
-  end
-
   def include_additional_documents_params(params)
     if params[:publishers_job_listing_include_additional_documents_form]
       params.require(:publishers_job_listing_include_additional_documents_form)
