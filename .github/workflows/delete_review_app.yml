@@ -53,11 +53,17 @@ jobs:
     environment: review
 
     steps:
+      - name: Debug trigger
+        run: |
+          echo "event_name=${{ github.event_name }}"
+          echo "action=${{ github.event.action }}"
+          echo "pr_number=${{ inputs.pr_number }}"
+
       - name: Set environment variables
         run: |
-          if [ "${{ github.event_name }}" = "workflow_call" ]; then
-            PR_NUMBER="${{ inputs.pr_number }}"
-          else
+          PR_NUMBER="${{ inputs.pr_number }}"
+
+          if [ -z "$PR_NUMBER" ]; then
             PR_NUMBER="${{ github.event.inputs.pr_number || github.event.number }}"
           fi
           ENVIRONMENT=review-pr-${PR_NUMBER}
@@ -115,7 +121,8 @@ jobs:
           azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
 
       - name: Terraform destroy (on PR closed)
-        run: |
+        run: 
+          echo "Deleting PR ${PR_NUMBER}"
           make review ci terraform-app-destroy pr_id=${{env.PR_NUMBER}}
 
       - name: Delete Terraform Statefile
