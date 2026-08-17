@@ -129,9 +129,9 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   context "jobseekers can sort jobs by closing date" do
     it "lists the jobs with the earliest closing date first" do
       visit jobs_path
-      select "Closing date", from: "sort-by-field"
+      select "Ending soon", from: "sort-by-field"
       click_button "Sort"
-      expect(page).to have_select("sort_by", selected: "Closing date")
+      expect(page).to have_select("sort_by", selected: "Ending soon")
       expect("Maths 1").to appear_before("Physics Teacher")
       expect("Physics Teacher").to appear_before("Maths Teacher 2")
       expect("Maths Teacher 2").to appear_before("Chemistry Teacher")
@@ -235,8 +235,8 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
         expect(page).to have_select("sort_by", selected: "Distance")
 
-        select "Closing date", from: "sort-by-field"
-        expect(page).to have_select("sort_by", selected: "Closing date")
+        select "Ending soon", from: "sort-by-field"
+        expect(page).to have_select("sort_by", selected: "Ending soon")
 
         expect("Maths 1").to appear_before("Physics Teacher")
         expect("Physics Teacher").to appear_before("Maths Teacher 2")

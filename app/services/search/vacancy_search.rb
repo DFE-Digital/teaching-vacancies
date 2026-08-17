@@ -66,8 +66,8 @@ class Search::VacancySearch
   end
 
   def sort_by
-    if sort.by == "publish_on_non_default"
-      "publish_on"
+    if sort.by == "expires_at_non_default"
+      "expires_at"
     else
       sort.by
     end

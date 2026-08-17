@@ -105,7 +105,8 @@ en:
     search_result_title:
       sorted_by_publish_on: "Jobs (%{count}) sorted by newest"
       sorted_by_publish_on_non_default: "Jobs (%{count}) sorted by newest"
-      sorted_by_expires_at: "Jobs (%{count}) sorted by closing date"
+      sorted_by_expires_at: "Jobs (%{count}) ending soon"
+      sorted_by_expires_at_non_default: "Jobs (%{count}) ending soon"
       sorted_by_distance: "Jobs (%{count}) sorted by distance"
 
     legacy_job_alert:
@@ -122,7 +123,7 @@ en:
         ascending:
           saved_job: application deadline (soonest)
           vacancy:
-            jobseeker: Closing date
+            jobseeker: Ending soon
             publisher: closing date (soonest)
         descending:
           vacancy:

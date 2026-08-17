@@ -67,6 +67,6 @@ RSpec.describe "vacancies/campaign_landing_page" do
     expect(search_results).to have_link(recent_part_time_maths_job.job_title, href: job_path(recent_part_time_maths_job))
     expect(search_results).to have_link(older_part_time_maths_job.job_title, href: job_path(older_part_time_maths_job))
     expect(campaign_landing_view).to have_css(".sort-container")
-    expect(campaign_landing_view).to have_select("Sort by", selected: "Newest job")
+    expect(campaign_landing_view).to have_select("Sort by", selected: "Ending soon")
   end
 end

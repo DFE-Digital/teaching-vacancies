@@ -7,9 +7,9 @@ class Search::VacancySort < RecordSort
 
   def options
     if location.present?
-      [distance_option, publish_on_non_default_desc_option, closing_date_asc_option]
+      [distance_option, publish_on_desc_option, closing_date_asc_option]
     else
-      [publish_on_desc_option, closing_date_asc_option]
+      [closing_date_asc_non_default_option, publish_on_desc_option]
     end
   end
 
@@ -17,12 +17,12 @@ class Search::VacancySort < RecordSort
     if location.present?
       distance_option
     else
-      publish_on_desc_option
+      closing_date_asc_non_default_option
     end
   end
 
   def by_db_column?
-    return true if sort_by == "publish_on_non_default"
+    return true if sort_by == "expires_at_non_default"
 
     super
   end
@@ -39,11 +39,11 @@ class Search::VacancySort < RecordSort
     SortOption.new("expires_at", I18n.t("jobs.sort_by.expires_at.ascending.vacancy.jobseeker"), "asc")
   end
 
-  def distance_option
-    SortOption.new("distance", "Distance", "asc")
+  def closing_date_asc_non_default_option
+    SortOption.new("expires_at_non_default", I18n.t("jobs.sort_by.expires_at.ascending.vacancy.jobseeker"), "asc")
   end
 
-  def publish_on_non_default_desc_option
-    SortOption.new("publish_on_non_default", I18n.t("jobs.sort_by.publish_on.descending"), "desc")
+  def distance_option
+    SortOption.new("distance", "Distance", "asc")
   end
 end
