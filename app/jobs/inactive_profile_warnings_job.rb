@@ -12,12 +12,12 @@ class InactiveProfileWarningsJob < ApplicationJob
     next_date = date + 1.day
     Jobseeker.includes(:jobseeker_profile)
              .active
-             .where(last_sign_in_at: date..next_date)
+             .where(current_sign_in_at: date..next_date)
              .find_each
              .filter_map(&:jobseeker_profile)
              .select(&:active?)
              .each do |profile|
-               profile_expiry_date = (profile.jobseeker.last_sign_in_at + 6.months).to_date
+               profile_expiry_date = (profile.jobseeker.current_sign_in_at + 6.months).to_date
                Jobseekers::ProfilesMailer.inactive_profile_warning(profile, profile_expiry_date).deliver_later
     end
   end
