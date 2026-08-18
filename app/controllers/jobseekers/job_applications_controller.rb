@@ -73,22 +73,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     end
   end
 
-  def send_trn
-    trn = params.expect(job_application: [:teacher_reference_number])[:teacher_reference_number]
-
-    if trn.present?
-      field_test_converted(:trn_on_apply)
-    end
-    if vacancy.enable_job_applications?
-      redirect_to new_jobseekers_job_job_application_path(vacancy.id)
-    elsif vacancy.website?
-      redirect_to vacancy.application_link
-    else
-      new_job_application = vacancy.create_job_application_for(current_jobseeker)
-      redirect_to jobseekers_job_application_apply_path(new_job_application)
-    end
-  end
-
   def pre_submit
     @form = Jobseekers::JobApplication::PreSubmitForm.new(completed_steps: job_application.completed_steps, all_steps: step_process.validatable_steps)
     if @form.valid? && all_steps_valid?
@@ -177,10 +161,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     else
       render :confirm_withdraw
     end
-  end
-
-  def trn_interstitial
-    @job_application = vacancy.job_applications.build
   end
 
   private

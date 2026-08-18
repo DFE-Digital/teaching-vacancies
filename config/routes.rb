@@ -4,11 +4,11 @@ Rails.application.routes.draw do
 
   if Rails.env.development?
     mount MissionControl::Jobs::Engine, at: "/solid_queue_jobs"
-    mount FieldTest::Engine, at: "field_test"
+    mount FieldTest::Engine, at: "/field_test"
   else
     authenticate :support_user do
       mount MissionControl::Jobs::Engine, at: "/solid_queue_jobs"
-      mount FieldTest::Engine, at: "field_test"
+      mount FieldTest::Engine, at: "/field_test"
     end
   end
 
@@ -122,12 +122,7 @@ Rails.application.routes.draw do
     end
 
     scope as: :job, path: ":job_id" do
-      resource :job_application, only: %i[new create] do
-        collection do
-          get :trn_interstitial
-          post :send_trn
-        end
-      end
+      resource :job_application, only: %i[new create]
       resource :uploaded_job_application, only: %i[create], controller: "uploaded_job_applications"
     end
 
@@ -359,6 +354,10 @@ Rails.application.routes.draw do
 
   resources :jobs, only: %i[index show], controller: "vacancies" do
     resources :documents, only: %i[show]
+    member do
+      get :trn_interstitial
+      post :send_trn
+    end
   end
 
   resources :organisations, only: %i[index show], path: "schools" do
