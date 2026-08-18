@@ -427,6 +427,8 @@ RSpec.describe "check job application after status transition" do
 
         expect(publisher_ats_collect_references_page).not_to be_displayed(vacancy_id: vacancy.id)
         expect(publisher_ats_applications_page).to be_displayed
+
+        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :interviewing)
         expect(publisher_ats_applications_page.selected_tab).to have_text("Interviewing")
         display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
         expect(display_status).to have_text("interviewing")
