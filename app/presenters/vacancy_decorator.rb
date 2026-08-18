@@ -19,6 +19,8 @@ class VacancyDecorator < Draper::Decorator
            :catholic?, :religious_character, :other_religion?, :anonymise_applications?, :is_parental_leave_cover, :email?,
            :application_form, :application_email, :website?, :vacancy_address,
            :external?, :job_advert, :external_advert_url
+  # These ones are all untested by our test suite
+  delegate :earliest_start_date, :latest_start_date, :other_start_date_details, :supporting_documents_in_order
 
   include ActionView::Helpers::TextHelper
 
