@@ -81,7 +81,7 @@ class VacancyDecorator < Draper::Decorator
   end
 
   def fe_role_qts_required
-    t("helpers.label.publishers_job_listing_about_the_role_form.fe_role_qts_required_options.#{model.fe_role_qts_required}")
+    I18n.t("helpers.label.publishers_job_listing_about_the_role_form.fe_role_qts_required_options.#{model.fe_role_qts_required}")
   end
 
   private
