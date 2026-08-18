@@ -1,4 +1,6 @@
-class SubscriptionPresenter < BasePresenter
+class SubscriptionDecorator < Draper::Decorator
+  delegate :email, :frequency, :search_criteria, :token, :id, :destroy!, :organisation, :to_key
+
   include ApplicationHelper
   include OrganisationsHelper
 

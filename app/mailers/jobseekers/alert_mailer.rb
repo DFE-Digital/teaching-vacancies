@@ -52,7 +52,7 @@ class Jobseekers::AlertMailer < Jobseekers::BaseMailer
   end
 
   def subscription
-    @subscription ||= SubscriptionPresenter.new(Subscription.find(subscription_id))
+    @subscription ||= Subscription.find(subscription_id).decorate
   end
 
   def jobseeker_has_profile?
