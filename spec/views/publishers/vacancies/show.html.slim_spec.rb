@@ -84,6 +84,43 @@ RSpec.describe "publishers/vacancies/show" do
     end
   end
 
+  context "with supporting documents" do
+    let(:vacancy) { create(:vacancy, :with_supporting_documents) }
+    let(:next_invalid_step) { nil }
+
+    it "displays the supporting docs" do
+      expect(rendered).to have_content("blank_job_spec")
+    end
+  end
+
+  context "with start date type other" do
+    let(:vacancy) { build_stubbed(:vacancy, start_date_type: :other, other_start_date_details: "Next Year") }
+    let(:next_invalid_step) { nil }
+
+    it "has the start date" do
+      expect(rendered).to have_content("Next Year")
+    end
+  end
+
+  context "with specific start date" do
+    let(:vacancy) { build_stubbed(:vacancy, start_date_type: :specific_date, starts_on: 1.year.from_now) }
+    let(:next_invalid_step) { nil }
+
+    it "has the start date" do
+      expect(rendered).to have_content(1.year.from_now.year)
+    end
+  end
+
+  context "with start date type date range" do
+    let(:vacancy) { build_stubbed(:vacancy, start_date_type: :date_range, earliest_start_date: 1.year.from_now, latest_start_date: 2.years.from_now) }
+    let(:next_invalid_step) { nil }
+
+    it "displays the start date" do
+      expect(rendered).to have_content(1.year.from_now.year)
+      expect(rendered).to have_content(2.years.from_now.year)
+    end
+  end
+
   context "when draft" do
     let(:job_details) { rendered.html.css("#job_details") }
     let(:about_the_role) { rendered.html.css("#about_the_role") }

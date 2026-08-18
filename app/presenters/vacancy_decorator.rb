@@ -6,7 +6,7 @@ class VacancyDecorator < Draper::Decorator
            :publish_on, :skills_and_experience, :job_roles,
            :hourly_rate?, :hourly_rate, :salary?, :actual_salary?, :pay_scale?, :salary, :pay_scale, :actual_salary,
            :about_school, :expires_at, :expired?, :enable_job_applications?,
-           :for_an_fe_college?, :live?, :uploaded_form?, :start_date_type, :starts_on, :ect_suitable?,
+           :for_an_fe_college?, :live?, :uploaded_form?,:ect_suitable?,
            :slug, :allow_key_stages?, :allow_subjects?, :contract_type, :ect_status,
            :visa_sponsorship_available, :fixed_term_contract_duration, :school_offer, :flexi_working,
            :further_details, :include_additional_documents, :central_office?, :contact_email, :contact_number,
@@ -18,9 +18,9 @@ class VacancyDecorator < Draper::Decorator
            :receive_applications, :allow_job_applications?, :can_receive_job_applications?, :enable_job_applications,
            :catholic?, :religious_character, :other_religion?, :anonymise_applications?, :is_parental_leave_cover, :email?,
            :application_form, :application_email, :website?, :vacancy_address,
-           :external?, :job_advert, :external_advert_url
-  # These ones are all untested by our test suite
-  delegate :earliest_start_date, :latest_start_date, :other_start_date_details, :supporting_documents_in_order
+           :external?, :job_advert, :external_advert_url,
+           :supporting_documents_in_order,
+           :other_start_date_details, :earliest_start_date, :latest_start_date, :starts_on, :start_date_type
 
   include ActionView::Helpers::TextHelper
 
