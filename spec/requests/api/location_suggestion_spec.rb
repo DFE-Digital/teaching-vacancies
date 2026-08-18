@@ -60,9 +60,9 @@ RSpec.describe "Api::LocationSuggestion" do
       end
     end
 
-    context "LocationSuggestion raises HTTParty::Response error" do
+    context "LocationSuggestion raises RequestError" do
       before do
-        allow(location_suggestion).to receive(:suggest_locations).and_raise(HTTParty::ResponseError, "HTTP error")
+        allow(location_suggestion).to receive(:suggest_locations).and_raise(LocationSuggestion::RequestError, "HTTP error")
       end
 
       it "returns status :bad_request" do

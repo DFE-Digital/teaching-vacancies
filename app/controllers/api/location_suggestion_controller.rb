@@ -8,7 +8,7 @@ class Api::LocationSuggestionController < Api::ApplicationController
   def show
     begin
       suggestions, matched_terms = LocationSuggestion.new(location).suggest_locations
-    rescue HTTParty::ResponseError, LocationSuggestion::GooglePlacesAutocompleteError => e
+    rescue LocationSuggestion::RequestError, LocationSuggestion::GooglePlacesAutocompleteError => e
       return render(json: { error: e }, status: :bad_request)
     end
 

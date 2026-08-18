@@ -37,6 +37,10 @@ gem "draper"
 # These could be moved into test scope
 gem "factory_bot_rails"
 gem "faker"
+# HTTP client used for external API/feed requests
+gem "faraday"
+# automatic retries on Faraday requests to ephemeral third-party failures
+gem "faraday-retry"
 # more uk-friendly fakes available
 gem "ffaker"
 
