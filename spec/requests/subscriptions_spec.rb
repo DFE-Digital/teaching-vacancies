@@ -42,7 +42,7 @@ RSpec.describe "Subscriptions" do
     end
 
     context "when hit via the ECT job alerts url" do
-      let(:params) { { "ect_job_alert" => true, "search_criteria" => { "teaching_job_roles" => ["ect_suitable"] } } }
+      let(:params) { { "ect_job_alert" => true, "search_criteria" => { "ect_statuses" => ["ect_suitable"] } } }
 
       before { get ect_job_alerts_path }
 
