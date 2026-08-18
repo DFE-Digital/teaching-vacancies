@@ -46,7 +46,7 @@ module NotifyViewsHelper
 
   def job_alert_relevance_feedback_link(relevant, subscription, vacancies)
     params = { job_alert_relevance_feedback: { relevant_to_user: relevant,
-                                               job_alert_vacancy_ids: vacancies.pluck(:id),
+                                               job_alert_vacancy_ids: vacancies.map(&:id),
                                                search_criteria: subscription.search_criteria } }.merge(utm_params)
 
     url = subscription_submit_feedback_url(subscription.token, **params)

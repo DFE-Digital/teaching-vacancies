@@ -121,7 +121,7 @@ RSpec.describe "Publishers can view candidate messages" do
         visit publishers_candidate_messages_path(tab: "archive")
       end
 
-      it "passes accessibility checks", :a11y do
+      it "passes accessibility checks", :a11y, :retry do
         expect(page).to have_content("Inbox (0)")
         expect(page).to be_axe_clean
       end

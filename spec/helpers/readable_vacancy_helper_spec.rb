@@ -3,42 +3,6 @@
 require "rails_helper"
 
 RSpec.describe ReadableVacancyHelper do
-  describe "#readable_working_patterns" do
-    context "when is_job_share" do
-      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time], is_job_share: true) }
-
-      it "returns working patterns" do
-        expect(vacancy_readable_working_patterns(vacancy)).to eq("Full time, part time (Can be done as a job share)")
-      end
-    end
-
-    context "when is_job_share == false" do
-      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time], is_job_share: false) }
-
-      it "returns working patterns" do
-        expect(vacancy_readable_working_patterns(vacancy)).to eq("Full time, part time")
-      end
-    end
-  end
-
-  describe "#readable_working_patterns_with_details" do
-    let(:working_patterns) { %w[full_time part_time] }
-    let(:working_patterns_details) { "Some details" }
-    let(:vacancy) { build_stubbed(:vacancy, working_patterns:, working_patterns_details:, is_job_share: false) }
-
-    it "returns the working with details" do
-      expect(vacancy_readable_working_patterns_with_details(vacancy)).to eq("Full time, part time: Some details")
-    end
-
-    context "when there is no details" do
-      let(:working_patterns_details) { "" }
-
-      it "returns the working patterns" do
-        expect(vacancy_readable_working_patterns_with_details(vacancy)).to eq("Full time, part time")
-      end
-    end
-  end
-
   describe "#fixed_term_contract_duration" do
     let(:vacancy) do
       build_stubbed(:vacancy, contract_type: contract_type,

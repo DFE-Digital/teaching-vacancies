@@ -1,24 +1,6 @@
 # frozen_string_literal: true
 
 module ReadableVacancyHelper
-  def vacancy_readable_working_patterns(model)
-    working_patterns = model.working_patterns.map { |working_pattern|
-      Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
-    }.join(", ").capitalize
-
-    return working_patterns unless model.is_job_share
-
-    "#{working_patterns} (Can be done as a job share)"
-  end
-
-  def vacancy_readable_working_patterns_with_details(model)
-    if model.working_patterns_details.present?
-      "#{vacancy_readable_working_patterns(model)}: #{model.working_patterns_details}"
-    else
-      vacancy_readable_working_patterns(model)
-    end
-  end
-
   # simplecov:disable
   def vacancy_contract_type_with_duration(model)
     return nil if model.contract_type.blank?

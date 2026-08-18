@@ -13,8 +13,8 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
   def start; end
 
   def show
-    @vacancy = vacancy.decorate
     @next_invalid_step = next_invalid_step
+    @vacancy = vacancy.decorate
     @current_organisation = current_organisation
     @step_process = step_process
   end
