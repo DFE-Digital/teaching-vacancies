@@ -7,7 +7,7 @@
 # These are packages we need over-and-beyond the base image
 ARG EXTRA_PACKAGES="imagemagick libpng libjpeg libxml2 libxslt tzdata shared-mime-info vips-poppler vips-magick proj-dev libpq postgresql18 openexr=3.4.13-r0"
 # These are security patches to the base image
-ARG PROD_PACKAGES="openssl=3.5.7-r0"
+ARG PROD_PACKAGES="openssl=3.5.7-r0 sqlite-libs=3.53.4-r0"
 
 FROM ruby:4.0.2-alpine3.23 AS builder
 
