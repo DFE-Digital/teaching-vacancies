@@ -16,18 +16,17 @@
             icon: "green-tick"
       - elsif vacancy.teaching_or_middle_leader_role?
         / possible ab-test for TRN prompt for these role types
+        - apply_path = field_test(:trn_on_apply)
         - if vacancy.uploaded_form?
-          - ab_test(:trn_on_apply, *job_application_trn_alteratives) do |apply_path|
-            = banner_button text: t("jobseekers.job_applications.banner_links.apply"),
-              href: apply_path == "apply" ? new_application_path(vacancy) : trn_interstitial_jobseekers_job_job_application_path(vacancy.id),
-              icon: "apply",
-              method: apply_path == "apply" ? :post : :get
+          = banner_button text: t("jobseekers.job_applications.banner_links.apply"),
+            href: apply_path == "apply" ? new_application_path(vacancy) : trn_interstitial_jobseekers_job_job_application_path(vacancy.id),
+            icon: "apply",
+            method: apply_path == "apply" ? :post : :get
         - else
-          - ab_test(:trn_on_apply, *job_application_trn_alteratives) do |apply_path|
-            = banner_button text: t("jobseekers.job_applications.banner_links.apply"),
-              href: apply_path == "apply" ? new_application_path(vacancy) : trn_interstitial_jobseekers_job_job_application_path(vacancy.id),
-              icon: "apply",
-              method: :get
+          = banner_button text: t("jobseekers.job_applications.banner_links.apply"),
+            href: apply_path == "apply" ? new_application_path(vacancy) : trn_interstitial_jobseekers_job_job_application_path(vacancy.id),
+            icon: "apply",
+            method: :get
       - else
         - method = vacancy.uploaded_form? ? :post : :get
         = banner_button text: t("jobseekers.job_applications.banner_links.apply"),

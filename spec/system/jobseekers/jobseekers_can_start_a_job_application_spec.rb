@@ -7,7 +7,7 @@ RSpec.describe "Jobseekers can start or continue a job application" do
   let(:created_job_application) { JobApplication.first }
 
   before do
-    use_ab_test trn_on_apply: "apply"
+    use_ab_test jobseeker, :trn_on_apply, :apply
   end
 
   context "when the jobseeker has not applied to the job before" do
