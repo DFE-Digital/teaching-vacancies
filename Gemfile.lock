@@ -166,6 +166,7 @@ GEM
       debug_inspector (>= 1.2.0)
     brakeman (8.0.5)
       racc
+    browser (6.2.0)
     builder (3.3.0)
     business_time (0.13.0)
       activesupport (>= 3.2.0)
@@ -269,6 +270,10 @@ GEM
       websocket-driver (~> 0.7)
     ffaker (2.25.0)
     ffi (1.17.4-x86_64-linux-gnu)
+    field_test (1.0.0)
+      activerecord (>= 7.2)
+      browser (>= 2)
+      railties (>= 7.2)
     formatador (1.2.3)
       reline
     friendly_id (5.7.0)
@@ -467,7 +472,6 @@ GEM
     multi_json (1.21.1)
     multi_xml (0.6.0)
     multipart-post (2.4.1)
-    mustermann (3.1.1)
     mutex_m (0.3.0)
     nenv (0.3.0)
     net-http (0.9.1)
@@ -784,8 +788,6 @@ GEM
     ruby-progressbar (1.13.0)
     ruby-rc4 (0.1.5)
     ruby2_keywords (0.0.5)
-    rubystats (0.4.1)
-      matrix
     rubyzip (3.4.1)
     rugged (1.9.0)
     securerandom (0.4.1)
@@ -813,13 +815,6 @@ GEM
       jwt (>= 1.5, < 4.0)
     simplecov (1.0.3)
     simplecov_json_formatter (0.1.4)
-    sinatra (4.2.1)
-      logger (>= 1.6.0)
-      mustermann (~> 3.0)
-      rack (>= 3.0.0, < 4)
-      rack-protection (= 4.2.1)
-      rack-session (>= 2.0.0, < 3)
-      tilt (~> 2.0)
     site_prism (6.0.1)
       addressable (~> 2.8, >= 2.8.4)
       base64 (~> 0.3.0)
@@ -880,13 +875,6 @@ GEM
       rbs (>= 3.0, < 5)
       sorbet-runtime
       yard
-    split (4.0.5)
-      bigdecimal
-      cgi
-      matrix
-      redis (>= 4.2)
-      rubystats (>= 0.3.0)
-      sinatra (>= 1.2.6)
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
     stringio (3.2.0)
@@ -1027,6 +1015,7 @@ DEPENDENCIES
   faraday-retry
   fastimage
   ffaker
+  field_test
   friendly_id
   front_matter_parser
   geocoder
@@ -1114,7 +1103,6 @@ DEPENDENCIES
   slim_lint
   solargraph
   solid_queue
-  split
   turbo-rails
   tzinfo-data
   undercover
@@ -1178,6 +1166,7 @@ CHECKSUMS
   bindex (0.8.1) sha256=7b1ecc9dc539ed8bccfc8cb4d2732046227b09d6f37582ff12e50a5047ceb17e
   binding_of_caller (2.0.0) sha256=e53eebf8428a85587aede7b43a83e7419eb85b8b690938a96aa330d03052d517
   brakeman (8.0.5) sha256=03735f9690d3fd4b32d66aacbf0a6d15a84266bdd06b32c05c8ecc8f6021d2be
+  browser (6.2.0) sha256=281d5295788825c9396427c292c2d2be0a5c91875c93c390fde6e5d61a5ace2d
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
   bundler (4.0.14) sha256=d09a0a965cf772266a7e49e83610be7c2f4e49e61134c42a56804bb383cc24b8
   business_time (0.13.0) sha256=d62cdd1dff5e619328701b8376b38934572bdc664e2bc7831573b1d2f7026f69
@@ -1228,6 +1217,7 @@ CHECKSUMS
   ferrum (0.17.1) sha256=51d591120fc593e5a13b5d9d6474389f5145bb92a91e36eab147b5d096c8cbe7
   ffaker (2.25.0) sha256=e485c5adf8195aac55662875b7f515469bca46d77b60d0e7d08db6861bcbec40
   ffi (1.17.4-x86_64-linux-gnu) sha256=9d3db14c2eae074b382fa9c083fe95aec6e0a1451da249eab096c34002bc752d
+  field_test (1.0.0) sha256=8a6f10d3791cbb2d48fc3dbda1fe8f8b3f3231ff1c2bd9866ae06204397cf9b6
   formatador (1.2.3) sha256=19fa898133c2c26cdbb5d09f6998c1e137ad9427a046663e55adfe18b950d894
   friendly_id (5.7.0) sha256=b8994416ebaceebc7c60bc556e84ef32a3a663e2e582eb04c429216cc98de4c4
   front_matter_parser (1.0.1) sha256=bae298bda01db95788a4d6452f1670a3d198c6716c8d3727db9a95533deb7b7b
@@ -1300,7 +1290,6 @@ CHECKSUMS
   multi_json (1.21.1) sha256=e6126a31808e3b4d19f483c775ceac34df190dffa62adfb63a165ee14ba68080
   multi_xml (0.6.0) sha256=d24393cf958adb226db884b976b007914a89c53ad88718e25679d7008823ad52
   multipart-post (2.4.1) sha256=9872d03a8e552020ca096adadbf5e3cb1cd1cdd6acd3c161136b8a5737cdb4a8
-  mustermann (3.1.1) sha256=4c6170c7234d5499c345562ba7c7dfe73e1754286dcc1abb053064d66a127198
   mutex_m (0.3.0) sha256=cfcb04ac16b69c4813777022fdceda24e9f798e48092a2b817eb4c0a782b0751
   nenv (0.3.0) sha256=d9de6d8fb7072228463bf61843159419c969edb34b3cef51832b516ae7972765
   net-http (0.9.1) sha256=25ba0b67c63e89df626ed8fac771d0ad24ad151a858af2cc8e6a716ca4336996
@@ -1415,7 +1404,6 @@ CHECKSUMS
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   ruby-rc4 (0.1.5) sha256=00cc40a39d20b53f5459e7ea006a92cf584e9bc275e2a6f7aa1515510e896c03
   ruby2_keywords (0.0.5) sha256=ffd13740c573b7301cf7a2e61fc857b2a8e3d3aff32545d6f8300d8bae10e3ef
-  rubystats (0.4.1) sha256=dca3ec8cff4b96f0780cb4b2248d97f6566a29a74361ffe0b46d6b65e6508e99
   rubyzip (3.4.1) sha256=0a79e745b5c25872ebd148457df5665da8530ed8626c993b01457128f173ca02
   rugged (1.9.0) sha256=7faaa912c5888d6e348d20fa31209b6409f1574346b1b80e309dbc7e8d63efac
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
@@ -1428,7 +1416,6 @@ CHECKSUMS
   signet (0.22.0) sha256=b76d495ccb07ad35dbc89f3e920665a9d8ed717141955034005d7843dcfe4780
   simplecov (1.0.3) sha256=38ef0514f16ae7562f0d0f4df02610071115103d301b6de7dacbcc000082e39b
   simplecov_json_formatter (0.1.4) sha256=529418fbe8de1713ac2b2d612aa3daa56d316975d307244399fa4838c601b428
-  sinatra (4.2.1) sha256=b7aeb9b11d046b552972ade834f1f9be98b185fa8444480688e3627625377080
   site_prism (6.0.1) sha256=f8144d8baa8d533787436c0f777dd95ac6a17b4f9743d10e3141c418b6bd5843
   site_prism-all_there (3.0.9) sha256=3d9e0b722fa62a3553589130dea23fa50c99dc80f108c851d7480d341d83f4f6
   skylight (7.1.1) sha256=90b09ad73288ad11322f7db4e25b3f096b522d752a368d2c9e70bc346986e951
@@ -1439,7 +1426,6 @@ CHECKSUMS
   solid_queue (1.6.0) sha256=b5fc3bb34162e09d8f960df6400d0f9304dc80fe66c2cfface31c32b228de6a1
   sorbet-runtime (0.6.13425) sha256=92f55873199d8bb259ce20c4fc02d95b63e8d6c0c5abba60b7c67054f175f147
   sord (7.1.0) sha256=e02fd59294da520e50cea80a07fb9bc93db709c552d055871379ae8d8e87601f
-  split (4.0.5) sha256=ba5666991c1445f8c2c31f2aba6352815764a3db4fc463119ef4312c93753058
   stimulus-rails (1.3.4) sha256=765676ffa1f33af64ce026d26b48e8ffb2e0b94e0f50e9119e11d6107d67cb06
   stringio (3.2.0) sha256=c37cb2e58b4ffbd33fe5cd948c05934af997b36e0b6ca6fdf43afa234cf222e1
   swd (2.0.3) sha256=4cdbe2a4246c19f093fce22e967ec3ebdd4657d37673672e621bf0c7eb770655

@@ -77,7 +77,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     trn = params.expect(job_application: [:teacher_reference_number])[:teacher_reference_number]
 
     if trn.present?
-      ab_finished(:trn_on_apply)
+      field_test_converted(:trn_on_apply)
     end
     if vacancy.enable_job_applications?
       redirect_to new_jobseekers_job_job_application_path(vacancy.id)

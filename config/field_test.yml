@@ -1,0 +1,11 @@
+experiments:
+  trn_on_apply:
+    variants:
+      - apply
+      - trn
+    weights:
+      - 95
+      - 5
+
+exclude:
+  bots: false

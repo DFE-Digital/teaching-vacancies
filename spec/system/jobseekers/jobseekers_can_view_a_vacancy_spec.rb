@@ -4,7 +4,6 @@ RSpec.describe "Viewing a single published vacancy" do
   let(:school) { create(:school) }
 
   before do
-    use_ab_test trn_on_apply: "apply"
     visit job_path(vacancy)
   end
 

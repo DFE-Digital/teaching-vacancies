@@ -6,7 +6,7 @@ RSpec.describe "Jobseekers can complete a job application" do
 
   before do
     login_as(jobseeker, scope: :jobseeker)
-    use_ab_test trn_on_apply: ab_test
+    use_ab_test jobseeker, :trn_on_apply, ab_test
 
     visit job_path(vacancy)
   end

@@ -7,7 +7,7 @@ RSpec.describe "Jobseekers applications statuses" do
 
   before do
     login_as(jobseeker, scope: :jobseeker)
-    use_ab_test trn_on_apply: "apply"
+    use_ab_test jobseeker, :trn_on_apply, :apply
   end
 
   after { logout }

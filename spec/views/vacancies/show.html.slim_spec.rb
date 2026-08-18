@@ -34,9 +34,9 @@ RSpec.describe "vacancies/show" do
   end
 
   describe "quick apply tags" do
-    let(:jobseeker) { nil }
-
     context "with a quick apply vacancy" do
+      let(:jobseeker) { nil }
+
       let(:vacancy) { build_stubbed(:vacancy, organisations: [school]) }
 
       it "has a tag on jobs that allow to apply through Teaching Vacancies" do
@@ -45,7 +45,13 @@ RSpec.describe "vacancies/show" do
     end
 
     context "with a website vacancy" do
+      # need jobseeker to prevent ab_test changing apply link
+      let(:jobseeker) { create(:jobseeker) }
       let(:vacancy) { build_stubbed(:vacancy, :apply_via_website, organisations: [school]) }
+
+      before do
+        use_ab_test(jobseeker, :trn_on_apply, :apply)
+      end
 
       it "does not have a tag on jobs that don't allow to apply through Teaching Vacancies" do
         expect(rendered).to have_no_css("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))

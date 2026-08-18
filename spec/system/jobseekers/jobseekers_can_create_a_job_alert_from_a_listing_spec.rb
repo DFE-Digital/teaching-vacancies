@@ -15,7 +15,6 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
   end
 
   before do
-    use_ab_test trn_on_apply: "apply"
     visit job_path(vacancy)
   end
 

@@ -4,11 +4,11 @@ Rails.application.routes.draw do
 
   if Rails.env.development?
     mount MissionControl::Jobs::Engine, at: "/solid_queue_jobs"
-    mount Split::Dashboard, at: "split"
+    mount FieldTest::Engine, at: "field_test"
   else
     authenticate :support_user do
       mount MissionControl::Jobs::Engine, at: "/solid_queue_jobs"
-      mount Split::Dashboard, at: "split"
+      mount FieldTest::Engine, at: "field_test"
     end
   end
 
