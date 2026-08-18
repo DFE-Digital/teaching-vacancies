@@ -101,14 +101,14 @@ class OnsDataImport::Base
         "resultOffset=#{offset * PER_PAGE}",
       ].join("&")
 
-      response = HTTParty.get("#{ARCGIS_BASE_URL}#{api_name}/FeatureServer/0/query?#{params}")
+      response = HttpClient.connection.get("#{ARCGIS_BASE_URL}#{api_name}/FeatureServer/0/query?#{params}")
       # really hard to auto-test this, as it doesn't normally happen
       # simplecov:disable
-      raise "Unexpected ArcGIS response: #{response.code}" unless response.success?
+      raise "Unexpected ArcGIS response: #{response.status}" unless response.success?
 
       # simplecov:enable
 
-      response_data = JSON.parse(response.to_s)
+      response_data = JSON.parse(response.body)
       raise "ArcGIS error: #{response_data['error']}" if response_data.key?("error")
 
       response_data.fetch("features")
