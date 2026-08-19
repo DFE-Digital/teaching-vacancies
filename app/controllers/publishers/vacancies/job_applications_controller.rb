@@ -53,6 +53,7 @@ module Publishers
         end
       end
 
+      # rubocop:disable Metrics/AbcSize
       def update_tag
         with_valid_form(@job_applications, validate_all_attributes: true) do |form|
           case form.status
@@ -63,7 +64,7 @@ module Publishers
             else
               redirect_to_references_and_self_disclosure(form.job_applications)
             end
-          when "offered"      then render_offered_form(form.job_applications, form.origin)
+          when "offered" then render_offered_form(form.job_applications, form.origin)
           when "unsuccessful_interview" then render_unsuccessful_interview_form(form.job_applications, form.origin)
           else
             form.job_applications.each { it.update!(form.attributes) }
@@ -71,6 +72,7 @@ module Publishers
           end
         end
       end
+      # rubocop:enable Metrics/AbcSize
 
       def offer
         with_valid_form(@job_applications, validate_all_attributes: true) do |form|
