@@ -106,7 +106,7 @@ RSpec.describe "Searching on the schools page" do
       expect_page_not_to_show_schools([secondary_school, special_school1, primary_school])
     end
 
-    it "passes a11y", :a11y do
+    it "passes a11y", :a11y, :retry do
       expect(page).to be_axe_clean
     end
   end

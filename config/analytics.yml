@@ -467,6 +467,7 @@ shared:
     - job_address_town
     - job_address_county
     - job_address_postcode
+    - fe_role_qts_required
   vacancies:
     - id
     - job_title
@@ -540,6 +541,7 @@ shared:
     - job_address_town
     - job_address_county
     - job_address_postcode
+    - fe_role_qts_required
   failed_imported_vacancies:
     - id
     - import_errors

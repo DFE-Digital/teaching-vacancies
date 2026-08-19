@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_23_204840) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_10_152440) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -974,6 +974,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_23_204840) do
     t.string "external_advert_url"
     t.string "external_reference"
     t.string "external_source"
+    t.boolean "fe_role_qts_required"
     t.string "fixed_term_contract_duration"
     t.string "flexi_working"
     t.boolean "flexi_working_details_provided"
@@ -1073,6 +1074,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_23_204840) do
     t.datetime "created_at", null: false
     t.integer "ect_status"
     t.boolean "enable_job_applications"
+    t.boolean "fe_role_qts_required"
     t.string "fixed_term_contract_duration"
     t.string "flexi_working"
     t.boolean "flexi_working_details_provided"
