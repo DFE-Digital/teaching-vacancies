@@ -1,6 +1,7 @@
 class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::VacancyForm
   include ActiveModel::Attributes
 
+  validates :fe_role_qts_required, inclusion: { in: [true, false] }, if: -> { vacancy.for_an_fe_college? && vacancy.job_roles.include?("teacher") }
   validates :ect_status, inclusion: { in: Vacancy.ect_statuses.keys }, if: -> { vacancy&.job_roles&.include?("teacher") }
   validate :skills_and_experience_presence
   validate :school_offer_presence
@@ -9,8 +10,9 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   validates :flexi_working_details_provided, inclusion: { in: [true, false] }
   validate :flexi_working_presence, if: -> { flexi_working_details_provided }
 
-  attribute :flexi_working_details_provided, :boolean
+  attribute :fe_role_qts_required, :boolean
   attribute :ect_status
+  attribute :flexi_working_details_provided, :boolean
   attribute :skills_and_experience
   attribute :school_offer
   attribute :flexi_working
@@ -23,6 +25,7 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
     def fields
       %i[flexi_working_details_provided
          ect_status
+         fe_role_qts_required
          skills_and_experience
          school_offer
          flexi_working
@@ -52,6 +55,7 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   def params_to_save
     {
       ect_status:,
+      fe_role_qts_required:,
       skills_and_experience:,
       school_offer:,
       flexi_working: normalize_flexi_working,

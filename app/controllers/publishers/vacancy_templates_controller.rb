@@ -20,7 +20,8 @@ module Publishers
     def edit; end
 
     def create
-      @template = current_organisation.vacancy_templates.create template_params
+      @template = current_organisation.vacancy_templates.create template_params.merge(anonymise_applications: nil)
+
       if @template.valid?
         redirect_to organisation_vacancy_template_build_path(@template, Wicked::FIRST_STEP)
       else
