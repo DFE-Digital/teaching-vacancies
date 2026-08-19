@@ -15,9 +15,12 @@ module ActiveModel
       private
 
       def cast_value(value)
-        return value unless value.is_a?(String) && value.match?(VALID_TIME_FORMAT)
+        return value unless value.is_a?(::String) && value.match?(VALID_TIME_FORMAT)
 
-        ::Time.zone.parse(value).extend(TimeInputField) || value
+        parsed_time = ::Time.zone.parse(value)
+        return value if parsed_time.nil?
+
+        parsed_time.extend(TimeInputField)
       rescue ArgumentError, TypeError
         value
       end
