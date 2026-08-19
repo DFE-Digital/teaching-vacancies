@@ -28,6 +28,12 @@ RSpec.describe "Publisher can manully set interview date and time" do
       10,
       45,
     )
+    publisher_ats_interview_datetime_page.set_interview_datetime(interview_datetime)
+    publisher_ats_interview_datetime_page.interview_time.set("2.30pm")
+    publisher_ats_interview_datetime_page.btn_submit.click
+
+    expect(publisher_ats_interview_datetime_page).to have_text("Enter a valid time, for example, 9am or 2:30pm")
+
     publisher_ats_interview_datetime_page.fill_and_submit(interview_datetime)
 
     expect(publisher_ats_applications_page).to be_displayed(vacancy_id: vacancy.id)
