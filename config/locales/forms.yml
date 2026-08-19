@@ -128,7 +128,7 @@ en:
     update_job: Update listing
     update_password: Update password
     upload_files: Upload files
-    view_account: View your account
+    view_applications: View your applications
     withdraw_application: Withdraw application
 
   helpers:
