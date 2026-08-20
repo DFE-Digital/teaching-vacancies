@@ -10,6 +10,7 @@ class SubscriptionsController < ApplicationController
   def new
     @point_coordinates = params[:coordinates_present] == "true"
     @ect_job_alert = params[:ect_job_alert]
+    @fe_job_alert = params[:fe_job_alert]
     session[:subscription_autopopulated] = params[:search_criteria].present?
     @form = Jobseekers::SubscriptionForm.new(new_form_attributes)
     @organisation = Organisation.friendly.find(search_criteria_params[:organisation_slug]) if organisation_job_alert?
