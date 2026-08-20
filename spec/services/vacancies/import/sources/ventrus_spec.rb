@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe Vacancies::Import::Sources::Ventrus do
   let(:response_body) { file_fixture("vacancy_sources/ventrus.xml").read }
-  let(:response) { double("VentrusHttpResponse", success?: true, body: response_body) }
 
   let!(:school1) { create(:school, name: "Test School", urn: "111111", phase: :primary) }
   let!(:school_group) { create(:school_group, name: "Ventrus", uid: "4243", schools: schools) }
@@ -28,7 +27,7 @@ RSpec.describe Vacancies::Import::Sources::Ventrus do
     end
 
     before do
-      expect(HTTParty).to receive(:get).with("http://example.com/feed.xml").and_return(response)
+      stub_request(:get, "http://example.com/feed.xml").to_return(body: response_body)
     end
 
     it "has the correct number of vacancies" do
