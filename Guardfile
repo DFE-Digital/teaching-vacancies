@@ -51,7 +51,7 @@ JOBSEEKER_SYSTEM_SPEC_MAPPINGS = {
                     can_create_a_job_alert_from_a_search
                     can_create_a_job_alert_from_the_dashboard
                     can_manage_their_job_alerts_from_the_dashboard
-                    can_manage_their_job_alerts_from_the_email]
+                    can_manage_their_job_alerts_from_the_email],
 }.freeze
 
 JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS = {
@@ -66,7 +66,6 @@ JOBSEEKER_JOB_APPLICATIONS_SPECS = %w[can_add_declarations_to_their_job_applicat
 JOBSEEKER_JOB_APPLICATION_SYSTEM_SPEC_MAPPINGS = {
   employments: %w[can_add_employments],
 }.freeze
-
 
 guard :rspec, RSPEC_OPTIONS do
   require "guard/rspec/dsl"
@@ -106,15 +105,15 @@ guard :rspec, RSPEC_OPTIONS do
   # Capybara features specs
   watch(rails.controllers) do |m|
     system_spec_name = m[1].split("/")
-    if system_spec_name == ["jobseekers", "job_applications", "build"]
+    if system_spec_name == %w[jobseekers job_applications build]
       JOBSEEKER_JOB_APPLICATIONS_SPECS.map do |spec|
         "spec/system/jobseekers/jobseekers_#{spec}_spec.rb"
       end
-    elsif system_spec_name.size > 2 && system_spec_name.first(2) == ["jobseekers", "job_applications"]
+    elsif system_spec_name.size > 2 && system_spec_name.first(2) == %w[jobseekers job_applications]
       JOBSEEKER_JOB_APPLICATION_SYSTEM_SPEC_MAPPINGS.fetch(system_spec_name.last.to_sym).map do |system_spec|
         "spec/system/jobseekers/jobseekers_#{system_spec}_to_their_job_application_spec.rb"
       end
-    elsif system_spec_name.size > 2 && system_spec_name.first(2) == ["jobseekers", "profiles"]
+    elsif system_spec_name.size > 2 && system_spec_name.first(2) == %w[jobseekers profiles]
       JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS.fetch(system_spec_name.last.to_sym).map do |system_spec|
         "spec/system/jobseekers/jobseekers_#{system_spec}_spec.rb"
       end
@@ -135,6 +134,7 @@ end
 
 guard :rubocop, cli: ["-A", "--no-parallel", "--no-server"], all_on_start: false do
   watch(%r{.+\.rb$})
+  watch("Guardfile")
   watch(%r{(?:.+/)?\.rubocop(?:_todo)?\.yml$}) { |m| File.dirname(m[0]) }
 end
 
