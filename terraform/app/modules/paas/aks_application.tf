@@ -10,6 +10,8 @@ module "application_configuration" {
 
   is_rails_application = true
 
+  probe_path = null
+
   config_variables = merge(
     var.app_env_values,
     {
