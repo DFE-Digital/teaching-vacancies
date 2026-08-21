@@ -52,6 +52,7 @@ JOBSEEKER_SYSTEM_SPEC_MAPPINGS = {
                     can_create_a_job_alert_from_the_dashboard
                     can_manage_their_job_alerts_from_the_dashboard
                     can_manage_their_job_alerts_from_the_email],
+  profiles: %w[can_manage_a_profile]
 }.freeze
 
 JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS = {
@@ -126,9 +127,23 @@ guard :rspec, RSPEC_OPTIONS do
 
   watch(rails.view_dirs) do |m|
     system_spec_name = m[1].split("/")
-    system_spec = "#{system_spec_name.first}/#{system_spec_name.join('_')}"
-    rspec.spec.call("system/#{system_spec}")
-    #   "#{rspec.spec_dir}/system/#{system_spec_name.first}"
+    if system_spec_name == %w[jobseekers job_applications build]
+      JOBSEEKER_JOB_APPLICATIONS_SPECS.map do |spec|
+        "spec/system/jobseekers/jobseekers_#{spec}_spec.rb"
+      end
+    elsif system_spec_name.size > 2 && system_spec_name.first(2) == %w[jobseekers job_applications]
+      JOBSEEKER_JOB_APPLICATION_SYSTEM_SPEC_MAPPINGS.fetch(system_spec_name.last.to_sym).map do |system_spec|
+        "spec/system/jobseekers/jobseekers_#{system_spec}_to_their_job_application_spec.rb"
+      end
+    elsif system_spec_name.size > 2 && system_spec_name.first(2) == %w[jobseekers profiles]
+      JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS.fetch(system_spec_name.last.to_sym).map do |system_spec|
+        "spec/system/jobseekers/jobseekers_#{system_spec}_spec.rb"
+      end
+    elsif system_spec_name.size > 1 && system_spec_name.first == "jobseekers"
+      JOBSEEKER_SYSTEM_SPEC_MAPPINGS.fetch(system_spec_name.last.to_sym).map do |system_spec|
+        "spec/system/jobseekers/jobseekers_#{system_spec}_spec.rb"
+      end
+    end
   end
 end
 
