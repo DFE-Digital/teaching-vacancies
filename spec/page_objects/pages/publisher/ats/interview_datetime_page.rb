@@ -21,7 +21,7 @@ module PageObjects
           element :btn_cancel, "#main-content .govuk-button-group .govuk-button--secondary"
 
           section :interview_date, InterviewDateField, ".govuk-date-input"
-          element :interview_time, "#publishers-job-application-interview-datetime-form-interview-time-field"
+          element :interview_time, %(input[name="publishers_job_application_interview_datetime_form[interview_time]"])
 
           def set_interview_datetime(datetime)
             interview_date.day.set(datetime.day)

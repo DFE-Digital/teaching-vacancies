@@ -10,10 +10,17 @@ module ActiveModel
         end
       end
 
+      VALID_TIME_FORMAT = /\A\d{1,2}(:\d{2})?\s*(am|pm)?\z/i
+
       private
 
       def cast_value(value)
-        ::Time.zone.parse(value).extend(TimeInputField) || value
+        return value unless value.is_a?(::String) && value.match?(VALID_TIME_FORMAT)
+
+        parsed_time = ::Time.zone.parse(value)
+        return value if parsed_time.nil?
+
+        parsed_time.extend(TimeInputField)
       rescue ArgumentError, TypeError
         value
       end
