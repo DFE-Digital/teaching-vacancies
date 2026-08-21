@@ -63,8 +63,6 @@ class VacancyFilterQuery
         built_scope.merge(Organisation.faith_schools).distinct
       elsif school_types.include?("special_school")
         built_scope.merge(Organisation.where(detailed_school_type: Organisation::SPECIAL_SCHOOL_TYPES)).distinct
-      else
-        built_scope
       end
     end
 
