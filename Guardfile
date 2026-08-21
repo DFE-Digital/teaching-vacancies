@@ -37,15 +37,38 @@ guard :bundler do
   files.each { |file| watch(helper.real_path(file)) }
 end
 
-rspec_options = {
+RSPEC_OPTIONS = {
   cmd: "bundle exec rspec",
   run_all: {
     cmd: "bundle exec parallel_rspec -o '",
     cmd_additional_args: "'",
   },
-}
+}.freeze
 
-guard :rspec, rspec_options do
+JOBSEEKER_SYSTEM_SPEC_MAPPINGS = {
+  subscriptions: %w[can_create_a_job_alert_from_a_listing
+                    can_create_a_job_alert_from_a_mailing_campaign
+                    can_create_a_job_alert_from_a_search
+                    can_create_a_job_alert_from_the_dashboard
+                    can_manage_their_job_alerts_from_the_dashboard
+                    can_manage_their_job_alerts_from_the_email],
+  profiles: %w[can_manage_a_profile],
+}.freeze
+
+JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS = {
+  about_you: %w[can_add_a_personal_statement],
+  job_preferences: %w[can_add_job_preferences_to_their_profile can_manage_job_preferences],
+}.freeze
+
+JOBSEEKER_JOB_APPLICATIONS_SPECS = %w[can_add_declarations_to_their_job_application
+                                      can_review_a_job_application
+                                      can_manage_their_job_applications].freeze
+
+JOBSEEKER_JOB_APPLICATION_SYSTEM_SPEC_MAPPINGS = {
+  employments: %w[can_add_employments],
+}.freeze
+
+guard :rspec, RSPEC_OPTIONS do
   require "guard/rspec/dsl"
   dsl = Guard::RSpec::Dsl.new(self)
 
@@ -80,25 +103,53 @@ guard :rspec, rspec_options do
   watch(rails.routes)          { "#{rspec.spec_dir}/routing" }
   watch(rails.app_controller)  { "#{rspec.spec_dir}/requests" }
 
-  # Capybara features specs - probably too heavy a trigger for now
+  # Capybara features specs
   watch(rails.controllers) do |m|
     system_spec_name = m[1].split("/")
-    # This would be ideal, but our system specs don't have names that match the controllers that they test
-    system_spec = "#{system_spec_name.first}/#{system_spec_name.join('_')}"
-    rspec.spec.call("system/#{system_spec}")
-    #   "#{rspec.spec_dir}/system/#{system_spec_name.first}"
+    if system_spec_name == %w[jobseekers job_applications build]
+      JOBSEEKER_JOB_APPLICATIONS_SPECS.map do |spec|
+        "spec/system/jobseekers/jobseekers_#{spec}_spec.rb"
+      end
+    elsif system_spec_name.size > 2 && system_spec_name.first(2) == %w[jobseekers job_applications]
+      JOBSEEKER_JOB_APPLICATION_SYSTEM_SPEC_MAPPINGS.fetch(system_spec_name.last.to_sym).map do |system_spec|
+        "spec/system/jobseekers/jobseekers_#{system_spec}_to_their_job_application_spec.rb"
+      end
+    elsif system_spec_name.size > 2 && system_spec_name.first(2) == %w[jobseekers profiles]
+      JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS.fetch(system_spec_name.last.to_sym).map do |system_spec|
+        "spec/system/jobseekers/jobseekers_#{system_spec}_spec.rb"
+      end
+    elsif system_spec_name.size > 1 && system_spec_name.first == "jobseekers"
+      JOBSEEKER_SYSTEM_SPEC_MAPPINGS.fetch(system_spec_name.last.to_sym).map do |system_spec|
+        "spec/system/jobseekers/jobseekers_#{system_spec}_spec.rb"
+      end
+    end
   end
 
   watch(rails.view_dirs) do |m|
     system_spec_name = m[1].split("/")
-    system_spec = "#{system_spec_name.first}/#{system_spec_name.join('_')}"
-    rspec.spec.call("system/#{system_spec}")
-    #   "#{rspec.spec_dir}/system/#{system_spec_name.first}"
+    if system_spec_name == %w[jobseekers job_applications build]
+      JOBSEEKER_JOB_APPLICATIONS_SPECS.map do |spec|
+        "spec/system/jobseekers/jobseekers_#{spec}_spec.rb"
+      end
+    elsif system_spec_name.size > 2 && system_spec_name.first(2) == %w[jobseekers job_applications]
+      JOBSEEKER_JOB_APPLICATION_SYSTEM_SPEC_MAPPINGS.fetch(system_spec_name.last.to_sym).map do |system_spec|
+        "spec/system/jobseekers/jobseekers_#{system_spec}_to_their_job_application_spec.rb"
+      end
+    elsif system_spec_name.size > 2 && system_spec_name.first(2) == %w[jobseekers profiles]
+      JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS.fetch(system_spec_name.last.to_sym).map do |system_spec|
+        "spec/system/jobseekers/jobseekers_#{system_spec}_spec.rb"
+      end
+    elsif system_spec_name.size > 1 && system_spec_name.first == "jobseekers"
+      JOBSEEKER_SYSTEM_SPEC_MAPPINGS.fetch(system_spec_name.last.to_sym).map do |system_spec|
+        "spec/system/jobseekers/jobseekers_#{system_spec}_spec.rb"
+      end
+    end
   end
 end
 
 guard :rubocop, cli: ["-A", "--no-parallel", "--no-server"], all_on_start: false do
   watch(%r{.+\.rb$})
+  watch("Guardfile")
   watch(%r{(?:.+/)?\.rubocop(?:_todo)?\.yml$}) { |m| File.dirname(m[0]) }
 end
 
