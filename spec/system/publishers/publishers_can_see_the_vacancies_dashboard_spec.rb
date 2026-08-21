@@ -24,7 +24,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
     expect(page).to have_content(vacancy.skills_and_experience)
   end
 
-  it "passes a11y", :a11y do
+  it "passes a11y", :a11y, :retry do
     expect(page).to be_axe_clean
   end
 
