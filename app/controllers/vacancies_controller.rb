@@ -101,7 +101,7 @@ class VacanciesController < ApplicationController
         data: {
           search_criteria: form.to_hash,
           sort_by: form.sort.by,
-          page: params[:page] || 1,
+          page: @pagy.page,
           total_count: @vacancies_search.total_count,
           vacancies_on_page: @vacancies.map(&:id),
           landing_page: params[:landing_page_slug],

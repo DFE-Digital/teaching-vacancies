@@ -7,8 +7,7 @@ RSpec.describe VacancyFilterQuery do
     create(:vacancy, :trashed, :secondary, working_patterns: %w[part_time full_time], subjects: %w[English Spanish], ect_status: "ect_suitable")
   end
 
-  let(:vacancy1) { Vacancy.find_by!(job_title: "Vacancy 1") }
-  let(:vacancy2) { Vacancy.find_by!(job_title: "Vacancy 2FR") }
+  let(:ect_suitable_job) { Vacancy.find_by!(job_title: "ECT Suitable") }
   let(:vacancy3) { Vacancy.find_by!(job_title: "Vacancy 3") }
   let(:vacancy4) { Vacancy.find_by!(job_title: "Vacancy 4FR") }
   let(:vacancy5) { Vacancy.find_by!(job_title: "Vacancy 5") }
@@ -42,7 +41,7 @@ RSpec.describe VacancyFilterQuery do
     Vacancy.transaction do
       academy = create(:academy, name: "Academy2")
       # Subjects are ignored when phases are primary-only
-      create(:vacancy, :secondary, job_title: "Vacancy 1", subjects: %w[English Spanish], working_patterns: %w[part_time full_time], ect_status: "ect_suitable", organisations: [academy], enable_job_applications: true, visa_sponsorship_available: true)
+      create(:vacancy, :secondary, job_title: "ECT Suitable", subjects: %w[English Spanish], working_patterns: %w[part_time full_time], ect_status: "ect_suitable", organisations: [academy], enable_job_applications: true, visa_sponsorship_available: true)
 
       local_authority_school = create(:school, name: "local authority", school_type: "Local authority maintained schools")
       create(:vacancy, job_title: "Vacancy 3", phases: %w[primary], job_roles: ["sendco"], organisations: [local_authority_school], enable_job_applications: true)
@@ -79,7 +78,6 @@ RSpec.describe VacancyFilterQuery do
       free_school = create(:school, :free_school, name: "Freeschool1")
       free_schools = create(:school, :free_school, name: "Freeschool2")
 
-      create(:vacancy, job_title: "Vacancy 2FR", subjects: %w[English Spanish], phases: %w[sixth_form_or_college], ect_status: "ect_unsuitable", organisations: [free_school], enable_job_applications: true)
       create(:vacancy, :apply_via_website, job_title: "Vacancy 4FR", phases: %w[primary])
       create(:vacancy, :apply_via_website, job_title: "Vacancy 6FR", phases: %w[primary], job_roles: ["head_of_department_or_curriculum"], publisher_organisation: free_school, organisations: [free_school, free_schools])
       create(:vacancy, :apply_via_website, job_title: "Vacancy 7FR", phases: %w[primary], job_roles: ["headteacher"], publisher_organisation: free_school, organisations: [free_school, free_schools])
@@ -120,7 +118,7 @@ RSpec.describe VacancyFilterQuery do
       end
 
       it "queries based on the given filters" do
-        expect(subject).to contain_exactly(vacancy1)
+        expect(subject.map(&:job_title)).to contain_exactly(ect_suitable_job.job_title)
       end
     end
 
@@ -139,7 +137,17 @@ RSpec.describe VacancyFilterQuery do
       let(:filters) { { visa_sponsorship_availability: ["true"] } }
 
       it "will return vacancies that offer visa sponsorships" do
-        expect(subject).to contain_exactly(vacancy1, non_faith_vacancy3)
+        expect(subject.map(&:job_title)).to match_array([ect_suitable_job, non_faith_vacancy3].map(&:job_title))
+      end
+    end
+
+    describe "ect_statuses filter" do
+      context "when ect_suitable" do
+        let(:filters) { { ect_statuses: ["ect_suitable"] } }
+
+        it "will return ect suitable roles" do
+          expect(subject.map(&:job_title)).to contain_exactly(ect_suitable_job.job_title)
+        end
       end
     end
 
@@ -149,7 +157,7 @@ RSpec.describe VacancyFilterQuery do
 
         it "will return vacancies associated with academies and free schools" do
           expect(subject)
-            .to contain_exactly(vacancy1, vacancy2, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, teaching_assistant_vacancy,
+            .to contain_exactly(ect_suitable_job, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, teaching_assistant_vacancy,
                                 hlta_vacancy, education_support_vacancy, sendco_vacancy,
                                 administration_hr_data_and_finance_vacancy, it_support_vacancy, pastoral_health_and_welfare_vacancy,
                                 other_leadership_vacancy, other_support_vacancy, catering_cleaning_and_site_management_vacancy)
@@ -178,14 +186,36 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { {} }
 
         it "will return vacancies associated with all schools" do
-          expect(subject).to contain_exactly(
-            vacancy1, vacancy2, vacancy3, vacancy4, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, special_vacancy1,
-            special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6, faith_vacancy,
-            non_faith_vacancy1, non_faith_vacancy2, non_faith_vacancy3, teaching_assistant_vacancy,
-            hlta_vacancy, education_support_vacancy, sendco_vacancy,
-            administration_hr_data_and_finance_vacancy, it_support_vacancy, pastoral_health_and_welfare_vacancy,
-            other_leadership_vacancy, other_support_vacancy, catering_cleaning_and_site_management_vacancy
-          )
+          expect(subject.map(&:job_title)).to match_array([
+            ect_suitable_job,
+            vacancy3,
+            vacancy4,
+            vacancy5,
+            vacancy6,
+            vacancy7,
+            vacancy8,
+            vacancy9,
+            special_vacancy1,
+            special_vacancy2,
+            special_vacancy3,
+            special_vacancy4,
+            special_vacancy5,
+            special_vacancy6,
+            faith_vacancy,
+            non_faith_vacancy1,
+            non_faith_vacancy2,
+            non_faith_vacancy3,
+            teaching_assistant_vacancy,
+            hlta_vacancy,
+            education_support_vacancy,
+            sendco_vacancy,
+            administration_hr_data_and_finance_vacancy,
+            it_support_vacancy,
+            pastoral_health_and_welfare_vacancy,
+            other_leadership_vacancy,
+            other_support_vacancy,
+            catering_cleaning_and_site_management_vacancy,
+          ].map(&:job_title))
         end
       end
 
@@ -195,7 +225,7 @@ RSpec.describe VacancyFilterQuery do
         it "will return vacancies associated with local authority maintained schools, academies and free schools" do
           expect(subject)
             .to contain_exactly(
-              vacancy1, vacancy2, vacancy3, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, teaching_assistant_vacancy,
+              ect_suitable_job, vacancy3, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, teaching_assistant_vacancy,
               hlta_vacancy, education_support_vacancy, sendco_vacancy,
               administration_hr_data_and_finance_vacancy, it_support_vacancy, pastoral_health_and_welfare_vacancy,
               other_leadership_vacancy, other_support_vacancy, catering_cleaning_and_site_management_vacancy
@@ -208,7 +238,7 @@ RSpec.describe VacancyFilterQuery do
       let(:filters) { { quick_apply: ["quick_apply"] } }
 
       it "will return vacancies with TV quick apply status only" do
-        expect(subject).to contain_exactly(vacancy1, vacancy2, vacancy3)
+        expect(subject.map(&:job_title)).to match_array([ect_suitable_job, vacancy3].map(&:job_title))
       end
     end
 
@@ -217,7 +247,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { school_types: ["faith_school"] } }
 
         it "will return vacancies associated with faith schools" do
-          expect(subject).to contain_exactly(faith_vacancy)
+          expect(subject.map(&:job_title)).to eq([faith_vacancy.job_title])
         end
       end
 
@@ -225,7 +255,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { school_types: ["special_school"] } }
 
         it "will return vacancies associated with special schools" do
-          expect(subject).to contain_exactly(special_vacancy1, special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6)
+          expect(subject.map(&:job_title)).to match_array([special_vacancy1, special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6].map(&:job_title))
         end
       end
 
@@ -240,8 +270,8 @@ RSpec.describe VacancyFilterQuery do
 
     describe "working patterns search" do
       before do
-        create(:vacancy, slug: "pt1", is_job_share: false, working_patterns: %w[part_time])
-        create(:vacancy, slug: "ft1", is_job_share: true, working_patterns: %w[full_time])
+        create(:vacancy, job_title: "Part Time Job", is_job_share: false, working_patterns: %w[part_time])
+        create(:vacancy, job_title: "Full Time Job", is_job_share: true, working_patterns: %w[full_time])
       end
 
       context "with job share filter" do
@@ -256,7 +286,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { working_patterns: %w[part_time] } }
 
         it "returns pt jobs" do
-          expect(subject.map(&:slug)).to contain_exactly("vacancy-1", "pt1")
+          expect(subject.map(&:job_title)).to contain_exactly("ECT Suitable", "Part Time Job")
         end
       end
 
@@ -264,7 +294,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { working_patterns: %w[part_time full_time] } }
 
         it "returns many jobs" do
-          expect(subject.count).to eq(31)
+          expect(subject.count).to eq(30)
         end
       end
 
@@ -272,7 +302,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { working_patterns: %w[full_time] } }
 
         it "returns fewer jobs" do
-          expect(subject.count).to eq(30)
+          expect(subject.count).to eq(29)
         end
       end
 
@@ -280,7 +310,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { working_patterns: %w[part_time job_share] } }
 
         it "returns two jobs" do
-          expect(subject.map(&:slug)).to contain_exactly("vacancy-1", "pt1", "ft1")
+          expect(subject.map(&:job_title)).to contain_exactly("ECT Suitable", "Part Time Job", "Full Time Job")
         end
       end
 
@@ -288,7 +318,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { working_patterns: %w[compressed_hours staggered_hours] } }
 
         it "ignores the legacy filters and returns many jobs" do
-          expect(subject.count).to eq(31)
+          expect(subject.count).to eq(30)
         end
       end
 
@@ -296,7 +326,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { working_patterns: [] } }
 
         it "ignores the legacy filters and returns many jobs" do
-          expect(subject.count).to eq(31)
+          expect(subject.count).to eq(30)
         end
       end
     end
@@ -306,7 +336,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { phases: [] } }
 
         it "returns many jobs" do
-          expect(subject.count).to eq(29)
+          expect(subject.count).to eq(28)
         end
       end
 
@@ -330,7 +360,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { phases: %w[middle] } }
 
         it "ignores the legacy filters and returns many jobs" do
-          expect(subject.count).to eq(29)
+          expect(subject.count).to eq(28)
         end
       end
 
@@ -372,14 +402,36 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { teaching_job_roles: %w[non_valid_role] } }
 
         it "doesn't filter by role if it is not included in current job roles list" do
-          expect(subject).to contain_exactly(
-            vacancy1, vacancy2, vacancy3, vacancy4, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, special_vacancy1,
-            special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6, faith_vacancy,
-            non_faith_vacancy1, non_faith_vacancy2, non_faith_vacancy3, teaching_assistant_vacancy,
-            hlta_vacancy, education_support_vacancy, sendco_vacancy,
-            administration_hr_data_and_finance_vacancy, it_support_vacancy, pastoral_health_and_welfare_vacancy,
-            other_leadership_vacancy, other_support_vacancy, catering_cleaning_and_site_management_vacancy
-          )
+          expect(subject.map(&:job_title)).to match_array([
+            ect_suitable_job,
+            vacancy3,
+            vacancy4,
+            vacancy5,
+            vacancy6,
+            vacancy7,
+            vacancy8,
+            vacancy9,
+            special_vacancy1,
+            special_vacancy2,
+            special_vacancy3,
+            special_vacancy4,
+            special_vacancy5,
+            special_vacancy6,
+            faith_vacancy,
+            non_faith_vacancy1,
+            non_faith_vacancy2,
+            non_faith_vacancy3,
+            teaching_assistant_vacancy,
+            hlta_vacancy,
+            education_support_vacancy,
+            sendco_vacancy,
+            administration_hr_data_and_finance_vacancy,
+            it_support_vacancy,
+            pastoral_health_and_welfare_vacancy,
+            other_leadership_vacancy,
+            other_support_vacancy,
+            catering_cleaning_and_site_management_vacancy,
+          ].map(&:job_title))
         end
       end
 
@@ -424,12 +476,21 @@ RSpec.describe VacancyFilterQuery do
         end
 
         it "correctly filters by multiple roles, including all roles selected" do
-          expect(subject.count).to eq(14)
-          expect(subject).to contain_exactly(
-            vacancy1, vacancy2, vacancy4, catering_cleaning_and_site_management_vacancy, special_vacancy1,
-            special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6, faith_vacancy,
-            non_faith_vacancy1, non_faith_vacancy2, non_faith_vacancy3
-          )
+          expect(subject.map(&:job_title)).to match_array([
+            ect_suitable_job,
+            vacancy4,
+            catering_cleaning_and_site_management_vacancy,
+            special_vacancy1,
+            special_vacancy2,
+            special_vacancy3,
+            special_vacancy4,
+            special_vacancy5,
+            special_vacancy6,
+            faith_vacancy,
+            non_faith_vacancy1,
+            non_faith_vacancy2,
+            non_faith_vacancy3,
+          ].map(&:job_title))
         end
       end
     end

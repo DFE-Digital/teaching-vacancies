@@ -56,7 +56,7 @@ FactoryBot.define do
     job_title { generate(:job_title) }
     listed_elsewhere { nil }
     job_roles { %w[teacher] }
-    ect_status { :ect_suitable }
+    ect_status { :ect_unsuitable }
     pay_scale { factory_sample(salaries) }
     publish_on { Date.current }
     salary { factory_sample(salaries) }
@@ -101,6 +101,11 @@ FactoryBot.define do
       end
     end
 
+    trait :college_support_role do
+      phases { %w[sixth_form_or_college] }
+      job_roles { %w[apprenticeships_and_commercial_services] }
+    end
+
     trait :fixed_term do
       contract_type { :fixed_term }
       fixed_term_contract_duration { "6 months" }
@@ -138,6 +143,7 @@ FactoryBot.define do
         fixed_term_contract_duration { "6 months" }
       end
       anonymise_applications { [false, true].sample }
+      fe_role_qts_required { [false, true].sample }
     end
 
     trait :with_fixed_title do
