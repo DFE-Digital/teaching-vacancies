@@ -77,8 +77,7 @@ Rails.application.configure do
   # Don't log the queueing or execution of Dfe::Analytics (or heartbeats) otherwise production logs become swamped
   config.rails_semantic_logger.filter = proc do |log|
     !(log.name == "DfE::Analytics::SendEvents" ||
-      log.message.include?("DfE::Analytics::SendEvents") ||
-      log.message.include?("Completed #check"))
+      log.message.include?("DfE::Analytics::SendEvents"))
   end
 
   config.active_record.logger = nil # Don't log SQL in production

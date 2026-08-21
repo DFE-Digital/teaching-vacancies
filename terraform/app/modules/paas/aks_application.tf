@@ -55,7 +55,8 @@ module "web_application" {
 
   docker_image           = var.app_docker_image
   command                = var.aks_web_app_start_command
-  probe_path             = "/check"
+  probe_path             = null
+
   web_external_hostnames = var.web_external_hostnames_aks
   replicas               = var.aks_web_app_instances
   enable_logit           = var.enable_logit
