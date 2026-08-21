@@ -120,6 +120,21 @@ RSpec.describe TabPanelComponent, type: :component do
     end
   end
 
+  context "when rendering candidate's rejected_at date" do
+    let(:candidates) { build_stubbed_list(:job_application, 1, :status_rejected, vacancy:, rejected_at: Time.zone.now) }
+    let(:displayed_fields) { %i[name email_address rejected_at] }
+    let(:expected_date) { candidates.first.rejected_at.to_fs(:day_month_year) }
+
+    it { expect(tab_panel.find(".rejected_at")).to have_text(expected_date) }
+    it { expect(component.candidate_rejected_at(candidates.first)).to eq(expected_date) }
+
+    context "when date nil" do
+      let(:candidates) { build_stubbed_list(:job_application, 1, :status_rejected, vacancy:, rejected_at: nil) }
+
+      it { expect(component.candidate_rejected_at(candidates.first)).to be_nil }
+    end
+  end
+
   context "when rendering candidate's feedback date" do
     let(:candidates) { build_stubbed_list(:job_application, 1, :status_unsuccessful_interview, vacancy:, interview_feedback_received_at: Time.zone.now) }
     let(:displayed_fields) { %i[name email_address interview_feedback_received_at] }
