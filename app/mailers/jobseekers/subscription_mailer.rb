@@ -27,7 +27,7 @@ module Jobseekers
     private
 
     def subscription_email(subscription, action, action_desc)
-      @filtered_search_criteria = SubscriptionPresenter.new(subscription).filtered_search_criteria
+      @filtered_search_criteria = subscription.decorate.filtered_search_criteria
       criteria_list = @filtered_search_criteria.map { |filter, value| "- #{filter.humanize}: #{value}" }.join("\n")
 
       template_mail("35ad9468-5042-439d-959d-3166325b265a",
@@ -59,7 +59,7 @@ module Jobseekers
     end
 
     def governance_email(subscription, registered:, never_updated:)
-      @filtered_search_criteria = SubscriptionPresenter.new(subscription).filtered_search_criteria
+      @filtered_search_criteria = subscription.decorate.filtered_search_criteria
       @subscription_id = subscription.id
 
       template_id = governance_template_id(registered, never_updated)

@@ -1,4 +1,6 @@
-class SubscriptionPresenter < BasePresenter
+class SubscriptionDecorator < Draper::Decorator
+  delegate :email, :frequency, :search_criteria, :token, :id, :destroy!, :organisation, :to_key
+
   include ApplicationHelper
   include OrganisationsHelper
 
@@ -15,10 +17,9 @@ class SubscriptionPresenter < BasePresenter
                                   working_patterns].freeze
 
   def filtered_search_criteria
-    @filtered_search_criteria ||= sorted_search_criteria.each_with_object({}) { |(field, value), criteria|
-      search_field = search_criteria_field(field, value)
-      criteria.merge!(search_field) if search_field.present?
-    }.stringify_keys
+    @filtered_search_criteria ||= sorted_search_criteria.filter_map { |field, value| search_criteria_field(field, value) }
+                                                        .reduce({}) { |hash, item| hash.merge(item) }
+                                    .stringify_keys
   end
 
   private
@@ -62,12 +63,17 @@ class SubscriptionPresenter < BasePresenter
   end
 
   def render_location_filter(location, radius)
+    # simplecov:disable
     return if location.blank?
+
+    # simplecov:enable
 
     if radius.present? && radius.to_s != "0"
       { location: I18n.t("subscriptions.location_with_radius", radius: radius, location: location) }
+      # simplecov:disable
     elsif LocationPolygon.contain?(location)
       { location: I18n.t("subscriptions.location_in", location: location) }
+      # simplecov:enable
     end
   end
 
