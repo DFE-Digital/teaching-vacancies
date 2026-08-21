@@ -22,7 +22,7 @@ class VacancyFilterQuery
 
       scopes
         .compact
-       .reduce(scope) do |accum_scope, vacancy_scope|
+        .reduce(scope) do |accum_scope, vacancy_scope|
         accum_scope.merge(vacancy_scope)
       end
     end
@@ -30,8 +30,17 @@ class VacancyFilterQuery
     private
 
     def ect_filter_scope(ect_filters)
-      if ect_filters.include?("ect_suitable")
-        Vacancy.ect_suitable
+      built_scope = Vacancy.joins(:organisations)
+
+      if ect_filters.include?("ect_suitable") && ect_filters.include?("qts_not_needed")
+        built_scope.merge(Vacancy.ect_suitable)
+                   .or(built_scope.merge(Organisation.colleges).qts_not_needed).distinct
+      elsif ect_filters.include?("ect_suitable")
+        built_scope.merge(Vacancy.ect_suitable).distinct
+      elsif ect_filters.include?("qts_not_needed")
+        built_scope.merge(Organisation.colleges).qts_not_needed.distinct
+      else
+        built_scope
       end
     end
 
