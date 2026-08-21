@@ -52,7 +52,7 @@ JOBSEEKER_SYSTEM_SPEC_MAPPINGS = {
                     can_create_a_job_alert_from_the_dashboard
                     can_manage_their_job_alerts_from_the_dashboard
                     can_manage_their_job_alerts_from_the_email],
-  profiles: %w[can_manage_a_profile]
+  profiles: %w[can_manage_a_profile],
 }.freeze
 
 JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS = {
