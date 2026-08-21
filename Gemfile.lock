@@ -166,6 +166,7 @@ GEM
       debug_inspector (>= 1.2.0)
     brakeman (8.0.5)
       racc
+    browser (6.2.0)
     builder (3.3.0)
     business_time (0.13.0)
       activesupport (>= 3.2.0)
@@ -272,6 +273,10 @@ GEM
     ffi (1.17.4-x86_64-darwin)
     ffi (1.17.4-x86_64-linux-gnu)
     ffi (1.17.4-x86_64-linux-musl)
+    field_test (1.0.0)
+      activerecord (>= 7.2)
+      browser (>= 2)
+      railties (>= 7.2)
     formatador (1.2.3)
       reline
     friendly_id (5.7.0)
@@ -1028,6 +1033,7 @@ DEPENDENCIES
   faraday-retry
   fastimage
   ffaker
+  field_test
   friendly_id
   front_matter_parser
   geocoder
@@ -1178,6 +1184,7 @@ CHECKSUMS
   bindex (0.8.1) sha256=7b1ecc9dc539ed8bccfc8cb4d2732046227b09d6f37582ff12e50a5047ceb17e
   binding_of_caller (2.0.0) sha256=e53eebf8428a85587aede7b43a83e7419eb85b8b690938a96aa330d03052d517
   brakeman (8.0.5) sha256=03735f9690d3fd4b32d66aacbf0a6d15a84266bdd06b32c05c8ecc8f6021d2be
+  browser (6.2.0) sha256=281d5295788825c9396427c292c2d2be0a5c91875c93c390fde6e5d61a5ace2d
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
   bundler (4.0.14) sha256=d09a0a965cf772266a7e49e83610be7c2f4e49e61134c42a56804bb383cc24b8
   business_time (0.13.0) sha256=d62cdd1dff5e619328701b8376b38934572bdc664e2bc7831573b1d2f7026f69
@@ -1231,6 +1238,7 @@ CHECKSUMS
   ffi (1.17.4-x86_64-darwin) sha256=aa70390523cf3235096cf64962b709b4cfbd5c082a2cb2ae714eb0fe2ccda496
   ffi (1.17.4-x86_64-linux-gnu) sha256=9d3db14c2eae074b382fa9c083fe95aec6e0a1451da249eab096c34002bc752d
   ffi (1.17.4-x86_64-linux-musl) sha256=3fdf9888483de005f8ef8d1cf2d3b20d86626af206cbf780f6a6a12439a9c49e
+  field_test (1.0.0) sha256=8a6f10d3791cbb2d48fc3dbda1fe8f8b3f3231ff1c2bd9866ae06204397cf9b6
   formatador (1.2.3) sha256=19fa898133c2c26cdbb5d09f6998c1e137ad9427a046663e55adfe18b950d894
   friendly_id (5.7.0) sha256=b8994416ebaceebc7c60bc556e84ef32a3a663e2e582eb04c429216cc98de4c4
   front_matter_parser (1.0.1) sha256=bae298bda01db95788a4d6452f1670a3d198c6716c8d3727db9a95533deb7b7b

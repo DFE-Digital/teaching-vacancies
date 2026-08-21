@@ -93,6 +93,10 @@ gem "mutex_m"
 # bcrypt_pbkdf are available; the DWP SFTP server only offers an ed25519 host key.
 gem "bcrypt_pbkdf", ">= 1.0", "< 2.0"
 gem "ed25519", ">= 1.2", "< 2.0"
+
+#  A/B tests with dashboard
+gem "field_test"
+
 gem "net-sftp"
 # used for making XMl site map and parsing import sources
 # is a current dependency of rails, but might not continue that way
