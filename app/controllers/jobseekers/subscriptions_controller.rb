@@ -1,6 +1,8 @@
 class Jobseekers::SubscriptionsController < Jobseekers::BaseController
   helper_method :sort, :subscriptions
 
+  def index; end
+
   private
 
   def sort
