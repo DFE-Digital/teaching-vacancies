@@ -20,14 +20,14 @@ class Gias::Data
         file.rewind
       } }
 
-      HttpClient.connection(retry_options: retry_options).get(csv_url) do |req|
-        req.headers["User-Agent"] = "teaching-vancancies"
+      response = HttpClient.connection(retry_options: retry_options).get(csv_url) do |req|
+        req.headers["User-Agent"] = "teaching-vacancies"
         req.options.on_data = proc do |chunk, _bytes_received, env|
-          raise "Could not download file #{csv_url} from GIAS: #{env.status}" unless env.status == 200
-
-          file.write(chunk)
+          file.write(chunk) if env.status == 200
         end
       end
+      raise "Could not download file #{csv_url} from GIAS: #{response.status}" unless response.status == 200
+
       file.rewind
 
       CSV.foreach(file, headers: true, encoding: "windows-1252:utf-8", &)
