@@ -68,6 +68,7 @@ RSpec.describe ImportFromVacancySourceJob do
       let(:vacancy) do
         build(:vacancy,
               :external,
+              :ect_suitable,
               phases: [],
               enable_job_applications: true,
               organisations: [school],
