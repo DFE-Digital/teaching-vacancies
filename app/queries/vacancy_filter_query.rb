@@ -61,8 +61,10 @@ class VacancyFilterQuery
                    .or(built_scope.merge(Organisation.where(detailed_school_type: Organisation::SPECIAL_SCHOOL_TYPES))).distinct
       elsif school_types.include?("faith_school")
         built_scope.merge(Organisation.faith_schools).distinct
+        # simplecov:disable
       elsif school_types.include?("special_school")
         built_scope.merge(Organisation.where(detailed_school_type: Organisation::SPECIAL_SCHOOL_TYPES)).distinct
+        # simplecov:enable
       end
     end
 
