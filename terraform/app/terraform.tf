@@ -110,15 +110,15 @@ module "statuscake" {
 }
 
 module "application_insights" {
-  count = var.azure_monitoring ? 1 : 0
+  count  = var.azure_monitoring ? 1 : 0
   source = "./modules/application_insights"
 
-  azure_resource_prefix               = var.azure_resource_prefix
-  config_short                        = var.config_short
-  service_short                       = var.service_short
-  enable_application_insights         = var.enable_application_insights
-  availability_tests                  = var.availability_tests
-  monitoring_tags                     = var.monitoring_tags
-  action_group_email_receivers        = var.action_group_email_receivers
-  action_group_sms_receivers          = var.action_group_sms_receivers
+  azure_resource_prefix        = var.azure_resource_prefix
+  config_short                 = var.config_short
+  service_short                = var.service_short
+  enable_application_insights  = var.enable_application_insights
+  availability_tests           = var.availability_tests
+  monitoring_tags              = var.monitoring_tags
+  action_group_email_receivers = var.action_group_email_receivers
+  action_group_sms_receivers   = var.action_group_sms_receivers
 }

@@ -9,31 +9,31 @@ variable "service_short" {
 }
 
 variable "enable_application_insights" {
-  type = bool
+  type        = bool
   description = "Boolean to enable application insights resources"
-  default = false
+  default     = false
 }
 
 variable "availability_tests" {
-  type = map
+  type        = map(any)
   description = "Configuration for application insights availability tests"
-  default = {}
+  default     = {}
 }
 
 variable "action_group_email_receivers" {
-  type = list
+  type        = list(any)
   description = "List of email receivers for metric alert action group"
-  default = []
+  default     = []
 }
 
 variable "action_group_sms_receivers" {
-  type = list
+  type        = list(any)
   description = "List of SMS receivers for metric alert action group"
-  default = []
+  default     = []
 }
 
 variable "monitoring_tags" {
-  type = map
+  type        = map(any)
   description = "tags for Azure monitoring resources"
-  default = {}
+  default     = {}
 }

@@ -27,16 +27,16 @@ resource "azurerm_application_insights_standard_web_test" "availability_test" {
   }
 
   validation_rules {
-    ssl_check_enabled = var.availability_tests[each.key].ssl_check_enabled == true ? true : false
+    ssl_check_enabled           = var.availability_tests[each.key].ssl_check_enabled == true ? true : false
     ssl_cert_remaining_lifetime = var.availability_tests[each.key].ssl_cert_remaining_lifetime != null ? var.availability_tests[each.key].ssl_cert_remaining_lifetime : null
     dynamic "content" {
       for_each = length(keys(var.availability_tests[each.key].content)) > 0 ? [var.availability_tests[each.key].content] : []
-        content {
-          content_match      = content.value.content_match
-          ignore_case        = content.value.ignore_case
-          pass_if_text_found = content.value.pass_if_text_found
-        }
+      content {
+        content_match      = content.value.content_match
+        ignore_case        = content.value.ignore_case
+        pass_if_text_found = content.value.pass_if_text_found
       }
+    }
   }
 
   tags = var.monitoring_tags
@@ -48,7 +48,7 @@ resource "azurerm_monitor_action_group" "action_group" {
   resource_group_name = "${var.azure_resource_prefix}-${var.service_short}-${var.config_short}-rg"
   short_name          = "${var.service_short}${var.config_short}-act-grp"
 
-  dynamic email_receiver {
+  dynamic "email_receiver" {
     for_each = var.action_group_email_receivers
     content {
       name                    = email_receiver.value.name
@@ -61,7 +61,7 @@ resource "azurerm_monitor_action_group" "action_group" {
   # [{"name": "FirstName1 LastName1_-EmailAction-","emailAddress":"firstname1.lastname1@education.gov.uk"},{"name": "FirstName2 LastName2_-EmailAction-","emailAddress": "firstname2.lastname2@education.gov.uk"}]
   # Full existing config can be found by opening the JSON view of the resource in the Azure portal
 
-  dynamic sms_receiver {
+  dynamic "sms_receiver" {
     for_each = var.action_group_sms_receivers
     content {
       name         = sms_receiver.value.name
@@ -92,7 +92,7 @@ resource "azurerm_monitor_metric_alert" "metric_alert" {
     failed_location_count = 2
   }
 
-  dynamic action {
+  dynamic "action" {
     for_each = var.availability_tests[each.key].action_group ? [1] : []
     content {
       action_group_id    = azurerm_monitor_action_group.action_group[0].id
@@ -101,7 +101,7 @@ resource "azurerm_monitor_metric_alert" "metric_alert" {
   }
 
   tags = merge(var.monitoring_tags, {
-    "hidden-link:/subscriptions/3c033a0c-7a1c-4653-93cb-0f2a9f57a391/resourcegroups/s189p01-tv-pd-rg/providers/microsoft.insights/components/${azurerm_application_insights.application_insights[0].name}" = "Resource",
+    "hidden-link:/subscriptions/3c033a0c-7a1c-4653-93cb-0f2a9f57a391/resourcegroups/s189p01-tv-pd-rg/providers/microsoft.insights/components/${azurerm_application_insights.application_insights[0].name}"                     = "Resource",
     "hidden-link:/subscriptions/3c033a0c-7a1c-4653-93cb-0f2a9f57a391/resourcegroups/s189p01-tv-pd-rg/providers/microsoft.insights/webtests/${azurerm_application_insights_standard_web_test.availability_test[each.key].name}" = "Resource"
   })
 }
