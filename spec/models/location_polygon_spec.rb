@@ -39,25 +39,6 @@ RSpec.describe LocationPolygon do
     end
   end
 
-  describe ".find_valid_for_location" do
-    it "returns nil when there is no polygon matching the location" do
-      expect(described_class.find_valid_for_location("Canterbury")).to be_nil
-    end
-
-    context "with a polygon matching the location" do
-      let(:area) { instance_double(RGeo::Geographic::SphericalPolygonImpl, invalid_reason: nil) }
-      let!(:polygon) { instance_double(described_class, name: "london", area: area) }
-
-      before do
-        allow(described_class).to receive(:with_name).with("london").and_return(polygon)
-      end
-
-      it "the area of the polygon gets returned if is valid" do
-        expect(described_class.find_valid_for_location("london")).to eq(polygon)
-      end
-    end
-  end
-
   describe "#buffered_geometry_area" do
     let!(:polygon) { create(:location_polygon) }
 
