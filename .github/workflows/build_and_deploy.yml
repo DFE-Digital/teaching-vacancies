@@ -287,6 +287,8 @@ jobs:
         azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
         azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        action_group_email_receivers: ${{ secrets.ACTION_GROUP_EMAIL_RECEIVERS }}
+        action_group_sms_receivers: ${{ secrets.ACTION_GROUP_SMS_RECEIVERS }}
 
     - name: Notify twd_tv_dev channel on ${{ env.ENVIRONMENT }} deployment failure
       if: steps.deploy_app_to_env.conclusion != 'success'
