@@ -38,6 +38,14 @@ class VacanciesController < ApplicationController
   end
   # rubocop:enable Metrics/AbcSize
 
+  def apply
+    vacancy = PublishedVacancy.live.friendly.find(params[:id])
+    raise ActiveRecord::RecordNotFound if vacancy.application_link.blank?
+
+    Vacancy.increment_counter(:external_application_clicks, vacancy.id)
+    redirect_to vacancy.application_link, allow_other_host: true
+  end
+
   def campaign_landing_page
     @campaign_page = CampaignPage[params[:utm_content]]
     campaign_params = CampaignSearchParamsMerger.new(campaign_search_params, @campaign_page).merged_params

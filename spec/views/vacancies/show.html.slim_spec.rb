@@ -54,7 +54,7 @@ RSpec.describe "vacancies/show" do
       end
 
       it "has an application link" do
-        expect(rendered).to have_link I18n.t("jobs.view_advert.school"), href: vacancy.application_link
+        expect(rendered).to have_link I18n.t("jobs.view_advert.school"), href: apply_job_path(vacancy)
       end
     end
   end
