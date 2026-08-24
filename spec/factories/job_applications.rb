@@ -12,7 +12,7 @@ FactoryBot.define do
     vacancy
 
     # Personal details
-    first_name { Faker::Name.first_name }
+    first_name { Faker::Name.unique.first_name }
     # avoid last names with single quotes, as they are escaped and make tests fail sometimes
     last_name { Faker::Name.last_name.delete("'") }
     previous_names { Faker::Name.name }
