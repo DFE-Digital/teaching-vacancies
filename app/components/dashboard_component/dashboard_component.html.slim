@@ -87,8 +87,9 @@
         = govuk_summary_list do |summary_list|
           - vacancies.each do |vacancy|
             / only ignore draft aplications in this count, otherwise 1 withdrawn application doesn't show up and can't be viewed.
-            - job_applications_count = vacancy.job_applications.after_submission.within_hiring_staff_retention_period.count
-            - summary_list.with_row do |row|
+            - job_applications_count = vacancy.application_interest_count
+            - highlight_low_interest = @selected_type == :live && vacancy.low_application_interest?(application_count: job_applications_count)
+            - summary_list.with_row(classes: ("vacancy-low-application-interest" if highlight_low_interest)) do |row|
               - row.with_key do
                 - if vacancy.external?
                   = vacancy.job_title
@@ -98,6 +99,9 @@
                   = govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id))
                 - if organisation.school_group?
                   p.govuk-body-s = vacancy_job_location_summary(vacancy)
+                - if highlight_low_interest
+                  p class="govuk-!-margin-top-1 govuk-!-margin-bottom-0"
+                    span.govuk-tag.govuk-tag--yellow = t("jobs.manage.low_application_interest")
 
               - row.with_value do
                 - case @selected_type

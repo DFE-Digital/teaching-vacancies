@@ -394,6 +394,7 @@ en:
         no_jobs:
           no_filters: You currently have no active jobs.
           with_filters: There are no active jobs for the schools you have selected.
+      low_application_interest: Low application interest
       view_applicants:
         zero: "View %{count} applicants"
         one: "View %{count} applicant"

@@ -178,6 +178,7 @@ class Vacancy < ApplicationRecord
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[8:00 9:00 12:00 15:00 23:59].freeze
+  LOW_TEACHING_APPLICATION_THRESHOLD = 13
 
   # Class method added to help with the mapping of array_enums for paper_trail, which stores the changes
   # as an array of integers in the version.
@@ -280,6 +281,21 @@ class Vacancy < ApplicationRecord
 
   def teaching_or_middle_leader_role?
     job_roles.intersect?(TEACHING_JOB_ROLES)
+  end
+
+  def low_application_interest?(application_count:)
+    return false unless teaching_or_middle_leader_role?
+    return false if extension_reason.blank?
+    return false unless publish_on&.between?(90.days.ago.to_date, Date.current)
+    return false unless expires_at&.future? && expires_at < 1.week.from_now
+
+    application_count < LOW_TEACHING_APPLICATION_THRESHOLD
+  end
+
+  def application_interest_count
+    return external_application_clicks if application_link.present?
+
+    job_applications.after_submission.within_hiring_staff_retention_period.count
   end
 
   def create_job_application_for(jobseeker)
