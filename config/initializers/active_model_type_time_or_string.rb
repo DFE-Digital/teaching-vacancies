@@ -15,9 +15,12 @@ module ActiveModel
       private
 
       def cast_value(value)
-        return value unless value.is_a?(::String) && value.match?(VALID_TIME_FORMAT)
+        return value unless value.is_a?(::String)
 
-        parsed_time = ::Time.zone.parse(value)
+        stripped_value = value.strip
+        return value unless stripped_value.match?(VALID_TIME_FORMAT)
+
+        parsed_time = ::Time.zone.parse(stripped_value)
         return value if parsed_time.nil?
 
         parsed_time.extend(TimeInputField)

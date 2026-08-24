@@ -43,7 +43,7 @@ module Publishers
           it { expect(form.interview_time).to eq(Time.zone.parse("22:30")) }
         end
 
-        context "with 2-digit hour without separator (1030)" do
+        context "with 4-digit time without separator (1030)" do
           let(:interview_time) { "1030" }
 
           it { expect(form.interview_time).to eq("1030") }
@@ -121,6 +121,12 @@ module Publishers
 
           context "with valid time (2:30pm)" do
             let(:interview_time) { "2:30pm" }
+
+            it { expect(form.errors.details).not_to include(:interview_time) }
+          end
+
+          context "with leading and trailing whitespace ( 2:30pm )" do
+            let(:interview_time) { " 2:30pm " }
 
             it { expect(form.errors.details).not_to include(:interview_time) }
           end
