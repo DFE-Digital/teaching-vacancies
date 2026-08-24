@@ -32,16 +32,18 @@ class VacancyFilterQuery
     private
 
     def ect_filter_scope(ect_filters)
-      built_scope = Vacancy.joins(:organisations)
-
-      if ect_filters.include?("ect_suitable") && ect_filters.include?("qts_not_needed")
-        built_scope.merge(Vacancy.ect_suitable)
-                   .or(built_scope.merge(Organisation.colleges).qts_not_needed).distinct
-      elsif ect_filters.include?("ect_suitable")
-        built_scope.merge(Vacancy.ect_suitable).distinct
-      elsif ect_filters.include?("qts_not_needed")
-        built_scope.merge(Organisation.colleges).qts_not_needed.distinct
-      end
+      ect_scope = ect_filters.filter_map { |filter|
+        # coverage of case statements without an effective 'else' doesn't work properly
+        # simplecov:disable
+        case filter
+          # simplecov:enable
+        when "ect_suitable"
+          Vacancy.ect_suitable
+        when "qts_not_needed"
+          Vacancy.qts_not_needed.merge(Organisation.colleges)
+        end
+      }.reduce { |scope, ect_scope| scope.or(ect_scope) }
+      Vacancy.joins(:organisations).merge(ect_scope).distinct if ect_scope
     end
 
     def organisation_type_filters(organisation_types)
@@ -63,16 +65,18 @@ class VacancyFilterQuery
     end
 
     def school_type_filters(school_types)
-      built_scope = Vacancy.joins(:organisations)
-
-      if school_types.include?("faith_school") && school_types.include?("special_school")
-        built_scope.merge(Organisation.faith_schools)
-                   .or(built_scope.merge(Organisation.where(detailed_school_type: Organisation::SPECIAL_SCHOOL_TYPES))).distinct
-      elsif school_types.include?("faith_school")
-        built_scope.merge(Organisation.faith_schools).distinct
-      elsif school_types.include?("special_school")
-        built_scope.merge(Organisation.where(detailed_school_type: Organisation::SPECIAL_SCHOOL_TYPES)).distinct
-      end
+      school_type_scope = school_types.filter_map { |filter|
+        # coverage of case statements without an effective 'else' doesn't work properly
+        # simplecov:disable
+        case filter
+        # simplecov:enable
+        when "faith_school"
+          Organisation.faith_schools
+        when "special_school"
+          Organisation.where(detailed_school_type: Organisation::SPECIAL_SCHOOL_TYPES)
+        end
+      }.reduce { |scope, new_scope| scope.or(new_scope) }
+      Vacancy.joins(:organisations).merge(school_type_scope).distinct if school_type_scope
     end
 
     # Keeps compatibility with legacy job roles filters that have been removed but they are still used by users.
