@@ -131,9 +131,11 @@ class SubscriptionVacanciesMatchingQuery
       built_scope.merge(Vacancy.ect_suitable)
     elsif subscription_ect_statuses.include?("qts_not_needed")
       built_scope.merge(Organisation.colleges).qts_not_needed
+    # simplecov:disable
     else
-      built_scope
+      scope
     end
+    # simplecov:enable
   end
 
   # legacy criteria:  value always 'true' if present

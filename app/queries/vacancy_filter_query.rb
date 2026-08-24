@@ -39,8 +39,6 @@ class VacancyFilterQuery
         built_scope.merge(Vacancy.ect_suitable).distinct
       elsif ect_filters.include?("qts_not_needed")
         built_scope.merge(Organisation.colleges).qts_not_needed.distinct
-      else
-        built_scope
       end
     end
 
@@ -69,10 +67,9 @@ class VacancyFilterQuery
         built_scope.merge(Organisation.faith_schools)
                    .or(built_scope.merge(Organisation.where(detailed_school_type: Organisation::SPECIAL_SCHOOL_TYPES))).distinct
       elsif school_types.include?("faith_school")
-        built_scope.merge(Organisation.faith_schools).distinct# simplecov:disable
+        built_scope.merge(Organisation.faith_schools).distinct
       elsif school_types.include?("special_school")
         built_scope.merge(Organisation.where(detailed_school_type: Organisation::SPECIAL_SCHOOL_TYPES)).distinct
-      # simplecov:enable
       end
     end
 
