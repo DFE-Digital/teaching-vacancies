@@ -14,9 +14,11 @@ class VacancyFilterQuery
     phases: ->(filter) { phases_filters(filter) },
   }.freeze
 
+  JOB_ROLES_FILTERS = %i[job_roles teaching_job_roles support_job_roles].freeze
+
   class << self
     def call(scope, filters)
-      job_roles_scope = job_roles_filters(%i[job_roles teaching_job_roles support_job_roles], filters)
+      job_roles_scope = job_roles_filters(filters)
       scopes = FILTERS.slice(*filters.keys)
                       .map { |key, function| function.call(filters.fetch(key)) } + [job_roles_scope]
 
@@ -113,8 +115,8 @@ class VacancyFilterQuery
       end
     end
 
-    def job_roles_filters(keys, filters)
-      filtered_roles_as_strings = keys.flat_map { |key|
+    def job_roles_filters(filters)
+      filtered_roles_as_strings = JOB_ROLES_FILTERS.flat_map { |key|
         job_roles(filters[key])
       }.compact
 
