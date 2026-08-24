@@ -116,6 +116,7 @@ FactoryBot.define do
       job_roles { [factory_sample(Vacancy.job_roles.keys)] }
       ect_status { factory_sample(Vacancy.ect_statuses.keys) if job_roles.include?("teacher") }
       is_job_share { [true, false].sample }
+      visa_sponsorship_available { [true, false].sample }
       working_patterns { factory_rand_sample(%w[full_time part_time], 1..2) }
       working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
       phases { factory_rand_sample(Vacancy::PHASES.keys, 1..3) }
