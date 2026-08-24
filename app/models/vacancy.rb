@@ -179,6 +179,7 @@ class Vacancy < ApplicationRecord
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[8:00 9:00 12:00 15:00 23:59].freeze
   LOW_TEACHING_APPLICATION_THRESHOLD = 13
+  LOW_SUPPORT_APPLICATION_THRESHOLD = 7
 
   # Class method added to help with the mapping of array_enums for paper_trail, which stores the changes
   # as an array of integers in the version.
@@ -279,17 +280,17 @@ class Vacancy < ApplicationRecord
     end
   end
 
-  def teaching_or_middle_leader_role?
+  def teaching_role?
     job_roles.intersect?(TEACHING_JOB_ROLES)
   end
+  alias_method :teaching_or_middle_leader_role?, :teaching_role?
 
   def low_application_interest?(application_count:)
-    return false unless teaching_or_middle_leader_role?
-    return false if extension_reason.blank?
-    return false unless publish_on&.between?(90.days.ago.to_date, Date.current)
-    return false unless expires_at&.future? && expires_at < 1.week.from_now
+    return false unless recently_published_extension_near_expiry?
 
-    application_count < LOW_TEACHING_APPLICATION_THRESHOLD
+    return application_count < LOW_TEACHING_APPLICATION_THRESHOLD if teaching_role?
+
+    application_count < LOW_SUPPORT_APPLICATION_THRESHOLD && (expires_at.to_date - publish_on).to_i >= 30
   end
 
   def application_interest_count
@@ -349,6 +350,12 @@ class Vacancy < ApplicationRecord
   end
 
   private
+
+  def recently_published_extension_near_expiry?
+    extension_reason.present? &&
+      publish_on&.between?(90.days.ago.to_date, Date.current) &&
+      expires_at&.future? && expires_at < 1.week.from_now
+  end
 
   def job_address_fields
     [job_address_line1, job_address_line2, job_address_town, job_address_county, job_address_postcode]
