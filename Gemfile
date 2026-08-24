@@ -60,8 +60,6 @@ gem "govuk_design_system_formbuilder", "~> 6.4.0"
 gem "groupdate"
 # guidance pages
 gem "high_voltage"
-# HTTP client for downloading GIAS data
-gem "httparty"
 # needed for processing of message attachments
 gem "image_processing"
 # startard library for creating IPAddresses. Used in production config

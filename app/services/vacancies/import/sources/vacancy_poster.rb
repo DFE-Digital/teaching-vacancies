@@ -173,6 +173,6 @@ class Vacancies::Import::Sources::VacancyPoster
   end
 
   def feed
-    @feed ||= Nokogiri::XML(HTTParty.get(FEED_URL).body)
+    @feed ||= Nokogiri::XML(HttpClient.connection.get(FEED_URL).body)
   end
 end
