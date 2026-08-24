@@ -17,10 +17,14 @@ class HttpClient
     exceptions: Faraday::Retry::Middleware::DEFAULT_EXCEPTIONS + [Faraday::ConnectionFailed],
   }.freeze
 
-  def self.connection(retry_options: {}, **faraday_options)
-    Faraday.new(**faraday_options) do |conn|
-      conn.request :retry, DEFAULT_RETRY_OPTIONS.merge(retry_options)
-      conn.adapter Faraday.default_adapter
+  class << self
+    def connection(retry_options: {}, **faraday_options)
+      Faraday.new(**faraday_options) do |conn|
+        conn.request :retry, DEFAULT_RETRY_OPTIONS.merge(retry_options)
+        conn.adapter Faraday.default_adapter
+
+        yield conn if block_given?
+      end
     end
   end
 end

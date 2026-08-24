@@ -57,16 +57,9 @@ module OnsDataImport
       private
 
       def faraday_client
-        Faraday.new do |builder|
-          builder.request :retry, {
-            max: 2,
-            interval: 0.05,
-            interval_randomness: 0.5,
-            backoff_factor: 2,
-          }
+        HttpClient.connection do |builder|
           builder.use :http_cache, store: Rails.cache,
                                    logger: Rails.logger
-          builder.adapter Faraday.default_adapter
           builder.response :json
           builder.response :raise_error
         end
