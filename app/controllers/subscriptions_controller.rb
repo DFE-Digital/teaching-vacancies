@@ -27,7 +27,7 @@ class SubscriptionsController < ApplicationController
       recaptcha_protected(form: @form) do
         subscription = Jobseekers::CreateSubscription.new(@form, recaptcha_reply&.score).call
         trigger_subscription_event(:job_alert_subscription_created, subscription)
-        @subscription = SubscriptionPresenter.new(subscription)
+        @subscription = subscription.decorate
         if jobseeker_signed_in?
           redirect_to jobseekers_subscriptions_path, success: t(".success")
         else
@@ -50,11 +50,11 @@ class SubscriptionsController < ApplicationController
 
     if updating_frequency?
       subscription.update(frequency: params.dig(:subscription, :frequency))
-      @subscription = SubscriptionPresenter.new(subscription)
+      @subscription = subscription.decorate
       notify_and_redirect subscription
     else
       @form = Jobseekers::SubscriptionForm.new(subscription_params)
-      @subscription = SubscriptionPresenter.new(subscription)
+      @subscription = subscription.decorate
 
       if @form.valid?
         subscription.update_with_search_criteria(@form.job_alert_params)
@@ -68,7 +68,7 @@ class SubscriptionsController < ApplicationController
   def unsubscribe
     subscription = Subscription.kept.find_and_verify_by_token(token)
 
-    @subscription = SubscriptionPresenter.new(subscription)
+    @subscription = subscription.decorate
   rescue ActiveRecord::RecordNotFound
     redirect_to root_path, success: t(".already_unsubscribed")
   end

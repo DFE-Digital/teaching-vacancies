@@ -9,6 +9,6 @@ class Jobseekers::SubscriptionsController < Jobseekers::BaseController
 
   def subscriptions
     @subscriptions ||= Subscription.kept.where(email: current_jobseeker.email).order(sort.by => sort.order)
-                                   .map { |subscription| SubscriptionPresenter.new(subscription) }
+                                   .decorate
   end
 end
