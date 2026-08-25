@@ -53,10 +53,9 @@ module "web_application" {
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
   run_as_non_root            = var.run_as_non_root
 
-  docker_image               = var.app_docker_image
-  command                    = var.aks_web_app_start_command
-  probe_path                 = "/check"
-
+  docker_image           = var.app_docker_image
+  command                = var.aks_web_app_start_command
+  probe_path             = "/check"
   web_external_hostnames = var.web_external_hostnames_aks
   replicas               = var.aks_web_app_instances
   enable_logit           = var.enable_logit
