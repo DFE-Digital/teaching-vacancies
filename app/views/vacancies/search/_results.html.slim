@@ -1,11 +1,13 @@
 .search-results
   - vacancies.each do |vacancy|
-    .search-results__item
+    - low_application_interest = vacancy.low_application_interest?
+    .search-results__item class=("search-results__item--low-application-interest" if low_application_interest)
       .header-with-logo
         .header-with-logo-title
           h2.govuk-heading-m class="govuk-!-margin-bottom-1"
             span class="govuk-!-margin-right-2" = results_link(vacancy, class: "view-vacancy-link")
             = govuk_tag(text: t("vacancies.listing.enable_job_applications_tag"), colour: "green") if vacancy.enable_job_applications?
+            = govuk_tag(text: t("jobs.low_application_interest"), colour: "yellow") if low_application_interest
           p.govuk-body.address class="govuk-!-margin-bottom-0 govuk-!-margin-top-0"
             = vacancy_full_job_location(vacancy)
         - if malware_scan_clean?(vacancy.organisation.logo)

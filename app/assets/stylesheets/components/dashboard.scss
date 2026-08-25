@@ -24,8 +24,4 @@
     color: govuk-functional-colour(secondary-text);
   }
 
-  .vacancy-low-application-interest {
-    background-color: govuk-colour('yellow', $variant: 'tint-95');
-    box-shadow: inset govuk-spacing(1) 0 govuk-colour('orange');
-  }
 }
