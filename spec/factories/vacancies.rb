@@ -41,8 +41,21 @@ FactoryBot.define do
     benefits { true }
     benefits_details { Faker::Lorem.paragraph(sentence_count: factory_rand(1..3)) }
     completed_steps do
-      %w[job_location job_role education_phases job_title key_stages contract_type working_patterns pay_package important_dates start_date
-         applying_for_the_job school_visits contact_details about_the_role include_additional_documents]
+      %w[job_location
+         job_role
+         education_phases
+         job_title
+         key_stages
+         contract_type
+         working_patterns
+         pay_package
+         important_dates
+         start_date
+         applying_for_the_job
+         school_visits
+         contact_details
+         about_the_role
+         include_additional_documents]
     end
     contact_email { publisher&.email || Faker::Internet.email(domain: "contoso.com") }
     contact_number_provided { true }
@@ -96,8 +109,22 @@ FactoryBot.define do
       subjects { factory_sample(SUBJECT_OPTIONS, 2).map(&:first).sort! }
 
       completed_steps do
-        %w[job_location job_role education_phases job_title key_stages contract_type working_patterns pay_package important_dates start_date
-           applying_for_the_job school_visits contact_details about_the_role include_additional_documents subjects]
+        %w[job_location
+           job_role
+           education_phases
+           job_title
+           key_stages
+           contract_type
+           working_patterns
+           pay_package
+           important_dates
+           start_date
+           applying_for_the_job
+           school_visits
+           contact_details
+           about_the_role
+           include_additional_documents
+           subjects]
       end
     end
 
@@ -303,8 +330,22 @@ FactoryBot.define do
 
     factory :draft_vacancy, class: "DraftVacancy" do
       completed_steps do
-        %w[job_location job_role education_phases job_title key_stages subjects contract_type working_patterns pay_package start_date
-           applying_for_the_job school_visits contact_details about_the_role include_additional_documents anonymise_applications]
+        %w[job_location
+           job_role
+           education_phases
+           job_title
+           key_stages
+           subjects
+           contract_type
+           working_patterns
+           pay_package
+           start_date
+           applying_for_the_job
+           school_visits
+           contact_details
+           about_the_role
+           include_additional_documents
+           anonymise_applications]
       end
 
       trait :with_contract_details do
