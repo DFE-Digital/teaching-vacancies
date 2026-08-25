@@ -204,7 +204,7 @@ group :test do
   gem "rspec-rebound"
   gem "selenium-webdriver"
   gem "shoulda-matchers"
-  gem "simplecov", require: false
+  gem "simplecov", "< 1.1", require: false
   gem "site_prism"
   gem "uri-query_params"
   gem "vcr"

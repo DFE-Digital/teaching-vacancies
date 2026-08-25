@@ -24,7 +24,7 @@ class VacancyFilterQuery
 
       scopes
         .compact
-       .reduce(scope) do |accum_scope, vacancy_scope|
+        .reduce(scope) do |accum_scope, vacancy_scope|
         accum_scope.merge(vacancy_scope)
       end
     end
@@ -32,9 +32,18 @@ class VacancyFilterQuery
     private
 
     def ect_filter_scope(ect_filters)
-      if ect_filters.include?("ect_suitable")
-        Vacancy.ect_suitable
-      end
+      ect_scope = ect_filters.filter_map { |filter|
+        # coverage of case statements without an effective 'else' doesn't work properly
+        # simplecov:disable
+        case filter
+          # simplecov:enable
+        when "ect_suitable"
+          Vacancy.ect_suitable
+        when "qts_not_needed"
+          Vacancy.qts_not_needed.merge(Organisation.colleges)
+        end
+      }.reduce { |scope, ect_scope| scope.or(ect_scope) }
+      Vacancy.joins(:organisations).merge(ect_scope).distinct if ect_scope
     end
 
     def organisation_type_filters(organisation_types)
