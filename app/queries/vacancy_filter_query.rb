@@ -65,18 +65,18 @@ class VacancyFilterQuery
     end
 
     def school_type_filters(school_types)
-      school_type_scope = school_types.filter_map { |filter|
-        # coverage of case statements without an effective 'else' doesn't work properly
+      built_scope = Vacancy.joins(:organisations)
+
+      if school_types.include?("faith_school") && school_types.include?("special_school")
+        built_scope.merge(Organisation.faith_schools)
+                   .or(built_scope.merge(Organisation.where(detailed_school_type: Organisation::SPECIAL_SCHOOL_TYPES))).distinct
+      elsif school_types.include?("faith_school")
+        built_scope.merge(Organisation.faith_schools).distinct
         # simplecov:disable
-        case filter
+      elsif school_types.include?("special_school")
+        built_scope.merge(Organisation.where(detailed_school_type: Organisation::SPECIAL_SCHOOL_TYPES)).distinct
         # simplecov:enable
-        when "faith_school"
-          Organisation.faith_schools
-        when "special_school"
-          Organisation.where(detailed_school_type: Organisation::SPECIAL_SCHOOL_TYPES)
-        end
-      }.reduce { |scope, new_scope| scope.or(new_scope) }
-      Vacancy.joins(:organisations).merge(school_type_scope).distinct if school_type_scope
+      end
     end
 
     # Keeps compatibility with legacy job roles filters that have been removed but they are still used by users.
