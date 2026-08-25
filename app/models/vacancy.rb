@@ -285,18 +285,21 @@ class Vacancy < ApplicationRecord
   end
   alias_method :teaching_or_middle_leader_role?, :teaching_role?
 
-  def low_application_interest?(application_count:)
+  def low_application_interest?
     return false unless recently_published_extension_near_expiry?
 
+    application_count = application_interest_count
     return application_count < LOW_TEACHING_APPLICATION_THRESHOLD if teaching_role?
 
     application_count < LOW_SUPPORT_APPLICATION_THRESHOLD && (expires_at.to_date - publish_on).to_i >= 30
   end
 
   def application_interest_count
-    return external_application_clicks if application_link.present?
-
-    job_applications.after_submission.within_hiring_staff_retention_period.count
+    @application_interest_count ||= if application_link.present?
+                                      external_application_clicks
+                                    else
+                                      job_applications.after_submission.count
+                                    end
   end
 
   def create_job_application_for(jobseeker)
