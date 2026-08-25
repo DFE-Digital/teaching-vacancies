@@ -204,7 +204,7 @@ group :test do
   gem "rspec-rebound"
   gem "selenium-webdriver"
   gem "shoulda-matchers"
-  gem "simplecov", require: false
+  gem "simplecov", "< 1.1", require: false # 1.1.0 and 1.1.1 seem to have a bug in generating HTML coverage reports
   gem "site_prism"
   gem "uri-query_params"
   gem "vcr"
