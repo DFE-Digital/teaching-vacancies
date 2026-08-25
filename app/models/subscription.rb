@@ -84,7 +84,7 @@ class Subscription < ApplicationRecord
 
     radius = search_criteria["radius"] || 10
 
-    if (polygon = LocationPolygon.find_valid_for_location(location))
+    if (polygon = LocationPolygon.with_name(location))
       set_location_from_polygon(polygon, radius)
     elsif (coordinates = Geocoding.new(location).coordinates)
       set_location_from_coordinates(coordinates, radius) if coordinates != Geocoding::COORDINATES_NO_MATCH

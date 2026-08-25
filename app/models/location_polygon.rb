@@ -31,13 +31,12 @@ class LocationPolygon < ApplicationRecord
     (MAPPED_LOCATIONS[location&.downcase].presence || location)&.downcase
   end
 
-  def self.find_valid_for_location(location)
-    polygon = with_name(location)
-    if polygon.present? && polygon.area.invalid_reason.nil?
-      polygon
-    end
+  def area_data_valid?
+    area.invalid_reason.nil? && uk_area.invalid_reason.nil?
+    # simplecov:disable
   rescue RGeo::Error::InvalidGeometry
-    nil
+    false
+    # simplecov:enable
   end
 
   # Buffers the polygon's area by the given radius in metres and returns the resulting expanded area in geometry.

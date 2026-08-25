@@ -4,10 +4,10 @@ RSpec.describe OnsDataImport::ImportCounties do
   # sadly this can't be a VCR test because the resultant download file is 118Mb
   # which is impractical to even cut-down
   before do
-    stub_request(:get, /Counties_and_Unitary_Authorities_April_2019_Boundaries_EW_BFC_2022/)
+    stub_request(:get, /Counties_and_Unitary_Authorities_December_2025_Boundaries_UK_BSC/)
       .to_return(
-        { status: 200, body: file_fixture("ons_counties_geojson.json").read },
-        { status: 200, body: { features: [] }.to_json },
+        { status: 200, body: file_fixture("ons_counties_geojson.json").read, headers: { content_type: "application/json" } },
+        { status: 200, body: { features: [] }.to_json, headers: { content_type: "application/json" } },
       )
     described_class.call
   end

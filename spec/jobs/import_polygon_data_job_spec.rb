@@ -8,6 +8,7 @@ RSpec.describe ImportPolygonDataJob do
       expect(OnsDataImport::ImportCounties).to receive(:call)
       expect(OnsDataImport::ImportCities).to receive(:call)
       expect(OnsDataImport::ImportRegions).to receive(:call)
+      expect(OnsDataImport::CreateComposites).to receive(:call)
 
       subject.perform
     end

@@ -45,3 +45,15 @@ CITIES = (ons_cities.map(&:first) + ons_region_cities + ons_unitary_authority_ci
 end
 
 REDIRECTED_LOCATION_LANDING_PAGES = YAML.load_file("config/data/redirected_location_landing_pages.yml").freeze
+
+# Only use Faraday for ONS data - open Response class and hard-code cache value as ONS returns max-age=30 (seconds)
+# even though data file is over 3 years old
+module Faraday
+  class HttpCache
+    class Response
+      def max_age
+        1.day
+      end
+    end
+  end
+end

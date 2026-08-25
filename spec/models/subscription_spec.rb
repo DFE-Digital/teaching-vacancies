@@ -214,7 +214,7 @@ RSpec.describe Subscription do
 
       before do
         allow(Geocoding).to receive(:new).and_return(geocoding)
-        allow(LocationPolygon).to receive(:find_valid_for_location).and_return(nil)
+        allow(LocationPolygon).to receive(:with_name).and_return(nil)
       end
 
       it "sets the geopoint field and radius_in_metres" do
