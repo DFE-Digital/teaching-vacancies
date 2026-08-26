@@ -37,19 +37,17 @@ env:
 
 jobs:
   delete-review-app:
-    # Check if PR was closed with deploy label OR workflow was manually/schedule triggered OR deploy label was removed
+    # Check if PR was closed with deploy label OR workflow was manually triggered OR deploy label was removed
     # Define conditions for triggering the job
     # 1. PR is closed and has the 'deploy' label
     # 2. Workflow is manually triggered
     # 3. Workflow is called by another workflow
-    # 4. Workflow is triggered by another scheduled workflow
-    # 5. 'deploy' label is removed from the PR
-    if: >
-      (github.event.action == 'closed' && contains(github.event.pull_request.labels.*.name, 'deploy')) ||
-      github.event_name == 'workflow_dispatch' ||
-      github.event_name == 'workflow_call' ||
-      github.event_name == 'schedule' ||
-      (github.event.action == 'unlabeled' && github.event.label.name == 'deploy')
+    # 4. 'deploy' label is removed from the PR
+    # if: >
+    #   (github.event.action == 'closed' && contains(github.event.pull_request.labels.*.name, 'deploy')) ||
+    #   github.event_name == 'workflow_dispatch' ||
+    #   github.event_name == 'workflow_call' ||
+    #   (github.event.action == 'unlabeled' && github.event.label.name == 'deploy')
     name: Delete review app
     runs-on: ubuntu-latest
     environment: review
@@ -122,12 +120,10 @@ jobs:
           azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
 
-      - name: Terraform destroy (on PR closed)
-        run: |
-          echo "Would delete PR ${PR_NUMBER}"
-          make review ci terraform-app-init pr_id=${{ env.PR_NUMBER }}
-          terraform -chdir=terraform/app state list
-      #     make review ci terraform-app-destroy pr_id=${{ env.PR_NUMBER }}
+      - name: Terraform destroy
+        run: echo "Would delete PR ${PR_NUMBER}"
+          echo "env.PR_NUMBER=${{env.PR_NUMBER}}"
+      #     make review ci terraform-app-destroy pr_id=${{env.PR_NUMBER}}
 
       # - name: Delete Terraform Statefile
       #   run: ./bin/delete-state-file ${{env.PR_NUMBER}}
@@ -147,5 +143,5 @@ jobs:
       #     service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
       #     message: |
       #       Failed deletion of review app PR ${{env.PR_NUMBER}}
-      #       Pull Request: ${{ env.LINK_TO_PR }}
+      #       Pull Requst: ${{ env.LINK_TO_PR }}
       #       Review app: ${{ env.LINK_TO_APP }}
