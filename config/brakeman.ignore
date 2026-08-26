@@ -93,6 +93,29 @@
       "note": ""
     },
     {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "42ada4273ecac39e5a82c397387ce17fba49366e31977c50aba4d8114ecc4da9",
+      "check_name": "Redirect",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/vacancies_controller.rb",
+      "line": 46,
+      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(PublishedVacancy.live.friendly.find(params[:id]).application_link, :allow_other_host => true)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "VacanciesController",
+        "method": "apply"
+      },
+      "user_input": "PublishedVacancy.live.friendly.find(params[:id]).application_link",
+      "confidence": "Weak",
+      "cwe_id": [
+        601
+      ],
+      "note": "The destination is a stored application URL and redirecting to the external recruitment site is the intended behaviour."
+    },
+    {
       "warning_type": "Unscoped Find",
       "warning_code": 82,
       "fingerprint": "4555c296b942cffb89636f6e393403f7c6a8918d34ce290871cd44ee9a0a6ab1",
