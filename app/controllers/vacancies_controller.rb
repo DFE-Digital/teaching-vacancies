@@ -42,7 +42,7 @@ class VacanciesController < ApplicationController
     vacancy = PublishedVacancy.live.friendly.find(params[:id])
     raise ActiveRecord::RecordNotFound if vacancy.application_link.blank?
 
-    Vacancy.increment_counter(:external_application_clicks, vacancy.id)
+    vacancy.increment!(:external_application_clicks)
     redirect_to vacancy.application_link, allow_other_host: true
   end
 
