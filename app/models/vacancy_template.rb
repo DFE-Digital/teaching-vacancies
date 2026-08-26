@@ -30,6 +30,7 @@ class VacancyTemplate < ApplicationRecord
     external_source
     external_reference
     external_advert_url
+    external_application_clicks
     start_date_type
     earliest_start_date
     latest_start_date

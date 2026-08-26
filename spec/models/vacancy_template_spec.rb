@@ -34,6 +34,7 @@ RSpec.describe VacancyTemplate do
                            publisher_organisation_id
                            readable_job_location
                            external_advert_url
+                           external_application_clicks
                            external_reference
                            external_source
                            geolocation

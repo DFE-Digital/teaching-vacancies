@@ -126,6 +126,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "expired_vacancy_feedback_email_sent_at" => nil,
           "expires_at" => "2023-06-06T09:00:00.000+01:00",
           "external_advert_url" => "https://example.com/jobs/123",
+          "external_application_clicks" => 0,
           "external_reference" => "invalid_vac_ref",
           "external_source" => "may_the_feed_be_with_you",
           "fixed_term_contract_duration" => "",
