@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_10_152440) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_24_135752) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -972,6 +972,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_10_152440) do
     t.datetime "expires_at", precision: nil
     t.integer "extension_reason"
     t.string "external_advert_url"
+    t.integer "external_application_clicks", default: 0, null: false
     t.string "external_reference"
     t.string "external_source"
     t.boolean "fe_role_qts_required"

@@ -49,4 +49,33 @@ RSpec.describe "Vacancies" do
       end
     end
   end
+
+  describe "GET #apply" do
+    let(:vacancy) { create(:vacancy, :apply_via_website, external_application_clicks: 2) }
+
+    it "increments the application click count and redirects to the application website" do
+      expect { get apply_job_path(vacancy) }
+        .to change { vacancy.reload.external_application_clicks }.from(2).to(3)
+
+      expect(response).to redirect_to(vacancy.application_link)
+    end
+
+    it "does not count clicks for an expired vacancy" do
+      vacancy.update!(expires_at: 1.day.ago)
+
+      expect { get apply_job_path(vacancy) }
+        .to(not_change { vacancy.reload.external_application_clicks })
+
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it "does not count clicks when there is no application link" do
+      vacancy.update!(application_link: nil)
+
+      expect { get apply_job_path(vacancy) }
+        .to(not_change { vacancy.reload.external_application_clicks })
+
+      expect(response).to have_http_status(:not_found)
+    end
+  end
 end

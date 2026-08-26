@@ -6,6 +6,7 @@ en:
       You can search and apply for jobs at schools or trusts in England, save jobs and set up job alerts.
     skip_link_list: Skip to search results
     skip_link_map: Skip to map search results
+    low_application_interest: Low application interest
 
     dashboard:
       add_or_remove_schools: Add or remove schools
