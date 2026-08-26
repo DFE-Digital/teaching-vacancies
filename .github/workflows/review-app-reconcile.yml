@@ -10,7 +10,7 @@ on:
         type: boolean
 
   schedule:
-    - cron: "0 08 * * 0"
+    - cron: "*/30 * * * *"
 
 permissions:
   id-token: write
@@ -166,7 +166,7 @@ jobs:
       matrix:
         pr_number: ${{ fromJson(needs.find-stale-review-apps.outputs.stale_prs) }}
 
-    uses: ./.github/workflows/delete_review_app.yml
+    uses: ./.github/workflows/debug_delete_review_app.yml
 
     with:
       pr_number: ${{ matrix.pr_number }}
