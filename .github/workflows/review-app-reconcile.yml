@@ -85,11 +85,11 @@ jobs:
             kubectl get deployments -n tv-development -o json |
             jq -r '
               .items[]
-              | select(.metadata.name | test("^teaching-vacancies-review-pr-[0-9]+-worker$"))
+              | select(.metadata.name | test("^teaching-vacancies-review-pr-[0-9]+"))
               | .metadata.name
             ' |
-            sed -n 's/^teaching-vacancies-review-pr-\([0-9]\+\)-worker$/\1/p' |
-            sort -n
+            sed -n 's/^teaching-vacancies-review-pr-\([0-9]\+\).*$/\1/p' |
+            sort -nu
           )
 
           if [[ -z "$prs" ]]; then
