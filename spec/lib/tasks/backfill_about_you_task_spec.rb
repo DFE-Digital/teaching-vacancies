@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "backfill_about_you" do
+  let(:task_path) { "lib/tasks/backfill_about_you" }
+
   let!(:profile) { create(:jobseeker_profile, about_you: "Hello") }
 
   # rubocop:disable RSpec/NamedSubject
