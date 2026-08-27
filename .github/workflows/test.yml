@@ -45,19 +45,6 @@ jobs:
       - name: Set up test database
         run: bundle exec rake db:create db:schema:load parallel:create parallel:load_schema
 
-      - name: Cache Swagger docs
-        uses: actions/cache@v6.1.0
-        id: swagger-cache
-        with:
-          path: swagger
-          key: ${{ runner.os }}-swagger-${{ hashFiles('spec/swagger_helper.rb', 'spec/requests/publishers/ats_api/v1/**', 'app/controllers/publishers/ats_api/v1/**') }}
-          restore-keys: |
-            ${{ runner.os }}-swagger-
-
-      - name: Generate Swagger (OpenAPI) docs
-        if: steps.swagger-cache.outputs.cache-hit != 'true'
-        run: bundle exec rake rswag:specs:swaggerize
-
       - name: Cache precompiled assets
         uses: actions/cache@v6.1.0
         id: assets-cache
@@ -75,6 +62,19 @@ jobs:
 
       - name: Run accessibility tests - no coverage required
         run: bundle exec rspec --tag a11y
+
+      - name: Cache Swagger docs
+        uses: actions/cache@v6.1.0
+        id: swagger-cache
+        with:
+          path: swagger
+          key: ${{ runner.os }}-swagger-${{ hashFiles('spec/swagger_helper.rb', 'spec/requests/publishers/ats_api/v1/**', 'app/controllers/publishers/ats_api/v1/**') }}
+          restore-keys: |
+            ${{ runner.os }}-swagger-
+
+      - name: Generate Swagger (OpenAPI) docs
+        if: steps.swagger-cache.outputs.cache-hit != 'true'
+        run: bundle exec rake rswag:specs:swaggerize
 
       - name: Cache Test Runtimes
         uses: actions/cache@v6.1.0
