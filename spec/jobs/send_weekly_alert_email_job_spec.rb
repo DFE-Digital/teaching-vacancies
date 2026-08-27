@@ -15,6 +15,7 @@ RSpec.describe SendWeeklyAlertEmailJob do
   context "with multiple vacancies", :perform_enqueued do
     before do
       create(:vacancy, :published_slugged, publish_on: Date.current - 8)
+      create(:vacancy, :published_slugged, publish_on: Date.current)
     end
 
     # rubocop:disable RSpec/VerifiedDoubles
@@ -27,7 +28,7 @@ RSpec.describe SendWeeklyAlertEmailJob do
 
     let!(:subscription) { create(:weekly_subscription) }
 
-    it "sends an email" do
+    it "only includes jobs from the last week" do
       expect(Jobseekers::AlertMailer).to receive(:alert).with(subscription.id, [yesterday, two_days_ago, one_week_ago].map(&:id)) { mail }
       expect(mail).to receive(:deliver_later) { ActionMailer::MailDeliveryJob.new }
       described_class.perform_later

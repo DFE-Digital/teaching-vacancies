@@ -11,13 +11,14 @@ RSpec.describe SendDailyAlertEmailJob do
         before do
           create(:vacancy, :published_slugged, publish_on: Date.current - 7)
           create(:vacancy, :published_slugged, publish_on: Date.yesterday - 1)
+          create(:vacancy, :published_slugged, publish_on: Date.current)
         end
 
         let!(:yesterday) { create(:vacancy, :published_slugged, publish_on: Date.yesterday) }
 
         let!(:subscription) { create(:daily_subscription) }
 
-        it "sends an email" do
+        it "onlt includes yesterdays jobs" do
           expect(Jobseekers::AlertMailer).to receive(:alert).with(subscription.id, [yesterday].map(&:id)) { mail }
           expect(mail).to receive(:deliver_later) { ActionMailer::MailDeliveryJob.new }
           perform_enqueued_jobs { job }
