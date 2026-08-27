@@ -1,8 +1,6 @@
 class VacancyFilterQuery
   FILTERS = {
     # Job alert specific filters
-    from_date: ->(from_date) { Vacancy.where(publish_on: (from_date.to_time..)) },
-    to_date: ->(to_date) { Vacancy.where(publish_on: (..to_date.to_time)) },
     subjects: ->(subjects) { Vacancy.where("vacancies.subjects && ARRAY[?]::varchar[]", subjects) },
     # General filters
     visa_sponsorship_availability: ->(_) { Vacancy.visa_sponsorship_available },

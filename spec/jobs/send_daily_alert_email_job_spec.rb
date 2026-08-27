@@ -7,65 +7,85 @@ RSpec.describe SendDailyAlertEmailJob do
     let(:mail) { double(:mail) }
 
     context "with vacancies" do
-      before do
-        create(:vacancy, :published_slugged, publish_on: Date.yesterday)
-      end
-
-      let!(:subscription) { create(:daily_subscription) }
-
-      it "sends an email" do
-        expect(Jobseekers::AlertMailer).to receive(:alert).with(subscription.id, PublishedVacancy.pluck(:id)) { mail }
-        expect(mail).to receive(:deliver_later) { ActionMailer::MailDeliveryJob.new }
-        perform_enqueued_jobs { job }
-      end
-
-      it "logs the job run statistics to Sentry" do
-        scope_mock = instance_double(Sentry::Scope).as_null_object
-
-        allow(Time).to receive(:current).and_return(Time.current, Time.current + 65)
-        allow(Sentry).to receive(:capture_message)
-        allow(Sentry).to receive(:with_scope).and_yield(scope_mock)
-
-        expect(scope_mock).to receive(:set_context).with("Alert run Statistics", { duration: "1m 5s",
-                                                                                   new_vacancies_count: 1,
-                                                                                   subscriptions_count: 1,
-                                                                                   sent_alerts_count: 1,
-                                                                                   vacancies_in_alerts_count: 1 })
-        expect(Sentry).to receive(:capture_message).with(
-          "SendDailyAlertEmailJob run successfully (duration: 1m 5s)",
-          level: :info,
-          fingerprint: ["{{ transaction }}"],
-        )
-        perform_enqueued_jobs { job }
-      end
-
-      context "when subscription does not have an email address" do
+      context "with multiple vacancies" do
         before do
-          subscription.update!(email: nil)
+          create(:vacancy, :published_slugged, publish_on: Date.current - 7)
+          create(:vacancy, :published_slugged, publish_on: Date.yesterday - 1)
+          create(:vacancy, :published_slugged, publish_on: Date.current)
         end
 
-        it "does not send an email" do
-          expect(Jobseekers::AlertMailer).to_not receive(:alert).with(subscription.id, PublishedVacancy.pluck(:id)) { mail }
+        let!(:yesterday) { create(:vacancy, :published_slugged, publish_on: Date.yesterday) }
+
+        let!(:subscription) { create(:daily_subscription) }
+
+        it "onlt includes yesterdays jobs" do
+          expect(Jobseekers::AlertMailer).to receive(:alert).with(subscription.id, [yesterday].map(&:id)) { mail }
+          expect(mail).to receive(:deliver_later) { ActionMailer::MailDeliveryJob.new }
           perform_enqueued_jobs { job }
         end
       end
 
-      context "when a run exists" do
+      context "with single vacancy" do
         before do
-          create(:alert_run, subscription: subscription, run_on: Date.current)
+          create(:vacancy, :published_slugged, publish_on: Date.yesterday)
         end
 
-        it "does not send another email" do
-          expect(Jobseekers::AlertMailer).to_not receive(:alert)
+        let!(:subscription) { create(:daily_subscription) }
+
+        it "sends an email" do
+          expect(Jobseekers::AlertMailer).to receive(:alert).with(subscription.id, PublishedVacancy.pluck(:id)) { mail }
+          expect(mail).to receive(:deliver_later) { ActionMailer::MailDeliveryJob.new }
           perform_enqueued_jobs { job }
         end
-      end
 
-      context "when email notifications are disabled", :disable_email_notifications do
-        it "does not send an email or create a run" do
-          expect(Jobseekers::AlertMailer).to_not receive(:alert)
+        it "logs the job run statistics to Sentry" do
+          scope_mock = instance_double(Sentry::Scope).as_null_object
+
+          allow(Time).to receive(:current).and_return(Time.current, Time.current + 65)
+          allow(Sentry).to receive(:capture_message)
+          allow(Sentry).to receive(:with_scope).and_yield(scope_mock)
+
+          expect(scope_mock).to receive(:set_context).with("Alert run Statistics", { duration: "1m 5s",
+                                                                                     new_vacancies_count: 1,
+                                                                                     subscriptions_count: 1,
+                                                                                     sent_alerts_count: 1,
+                                                                                     vacancies_in_alerts_count: 1 })
+          expect(Sentry).to receive(:capture_message).with(
+            "SendDailyAlertEmailJob run successfully (duration: 1m 5s)",
+            level: :info,
+            fingerprint: ["{{ transaction }}"],
+          )
           perform_enqueued_jobs { job }
-          expect(subscription.alert_runs.count).to eq(0)
+        end
+
+        context "when subscription does not have an email address" do
+          before do
+            subscription.update!(email: nil)
+          end
+
+          it "does not send an email" do
+            expect(Jobseekers::AlertMailer).to_not receive(:alert).with(subscription.id, PublishedVacancy.pluck(:id)) { mail }
+            perform_enqueued_jobs { job }
+          end
+        end
+
+        context "when a run exists" do
+          before do
+            create(:alert_run, subscription: subscription, run_on: Date.current)
+          end
+
+          it "does not send another email" do
+            expect(Jobseekers::AlertMailer).to_not receive(:alert)
+            perform_enqueued_jobs { job }
+          end
+        end
+
+        context "when email notifications are disabled", :disable_email_notifications do
+          it "does not send an email or create a run" do
+            expect(Jobseekers::AlertMailer).to_not receive(:alert)
+            perform_enqueued_jobs { job }
+            expect(subscription.alert_runs.count).to eq(0)
+          end
         end
       end
     end
