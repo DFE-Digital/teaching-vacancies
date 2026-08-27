@@ -27,12 +27,8 @@ const LocationFinder = class extends Controller {
       this.removeErrorMessage();
     });
 
-    if (this.input.value === '' && navigator.permissions) {
-      navigator.permissions.query({ name: 'geolocation' }).then((result) => {
-        if (result.state === 'granted') {
-          this.findLocation();
-        }
-      });
+    if (this.input.value === '' && navigator.geolocation) {
+      this.findLocation();
     }
   }
 
@@ -46,6 +42,9 @@ const LocationFinder = class extends Controller {
         this.onFailure();
         logger.log(`${LOGGING_MESSAGE}: ${error.message}`);
       });
+    }, () => {
+      this.onFailure();
+      logger.log(LOGGING_MESSAGE);
     });
   }
 
