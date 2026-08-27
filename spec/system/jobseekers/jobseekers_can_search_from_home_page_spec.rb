@@ -5,6 +5,10 @@ RSpec.describe "Searching on the home page" do
     visit root_path
   end
 
+  scenario "shows the use my location button" do
+    expect(page).to have_css(".location-finder")
+  end
+
   context "when the location is not a polygon" do
     scenario "resets radius to a default radius" do
       fill_in I18n.t("jobs.search.keyword"), with: "math"
