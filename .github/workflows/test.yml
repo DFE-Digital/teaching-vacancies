@@ -73,6 +73,9 @@ jobs:
         if: steps.assets-cache.outputs.cache-hit != 'true'
         run: bin/rails assets:precompile
 
+      - name: Run accessibility tests - no coverage required
+        run: bundle exec rspec --tag a11y
+
       - name: Cache Test Runtimes
         uses: actions/cache@v6.1.0
         with:
@@ -80,9 +83,6 @@ jobs:
           key: ${{ runner.os }}-spec-${{ hashFiles('spec/**/*spec.rb') }}
           restore-keys: |
             ${{ runner.os }}-spec-
-
-      - name: Run accessibility tests - no coverage required
-        run: bundle exec rspec --tag a11y
 
       - name: Run tests in parallel
         env:
