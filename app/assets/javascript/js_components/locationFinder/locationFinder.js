@@ -26,6 +26,14 @@ const LocationFinder = class extends Controller {
     this.input.addEventListener('focus', () => {
       this.removeErrorMessage();
     });
+
+    if (this.input.value === '' && navigator.permissions) {
+      navigator.permissions.query({ name: 'geolocation' }).then((result) => {
+        if (result.state === 'granted') {
+          this.findLocation();
+        }
+      });
+    }
   }
 
   findLocation() {
