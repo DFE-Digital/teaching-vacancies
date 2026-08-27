@@ -104,7 +104,7 @@ section#job-details class="govuk-!-margin-bottom-5"
     - elsif vacancy.receive_applications == "website"
       p.govuk-body = t("jobs.apply_via_website")
       p.govuk-body = t("jobseekers.job_applications.no_cvs")
-      - ab_test = field_test(:trn_on_apply)
+      - ab_test = current_jobseeker.present? ? field_test(:trn_on_apply, participant: current_jobseeker) : "apply"
       - if ab_test == "apply"
         = apply_link(vacancy, class: "govuk-!-margin-bottom-5")
       - else
