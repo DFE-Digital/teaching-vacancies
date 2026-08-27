@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "backfill_fe_role_qts_required" do
+  let(:task_path) { "lib/tasks/backfill_fe_role_qts_required" }
+
   let(:college) { create(:college) }
   let(:school) { create(:school) }
   let!(:expired_college_teaching_role) { create(:vacancy, :expired, fe_role_qts_required: nil, organisations: [college]) }
