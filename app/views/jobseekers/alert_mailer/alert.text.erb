@@ -1,4 +1,4 @@
-# <%= t(".summary.#{subscription.frequency}", count: @vacancies.count) %>
+# <%= t(".summary.#{@subscription.frequency}", count: @vacancies.count) %>
 
 ---
 <%- @vacancies.each do |vacancy| %>
@@ -11,20 +11,20 @@
 
 # <%= t(".title") %>
 
-<%- subscription.filtered_search_criteria.each_pair do |filter, value| %>
+<%- @filtered_search_criteria.each_pair do |filter, value| %>
   <%= "#{filter.humanize}: #{value}" %>
 <% end %>
 
 <%- if jobseeker %>
-  <%= edit_job_alert_link(subscription) %>
+  <%= edit_job_alert_link(@subscription) %>
 <% end %>
 
 ---
 
 # <%= t(".relevance_feedback.heading") %>
 
-<%= job_alert_relevance_feedback_link(true, subscription, @vacancies) %>
-<%= job_alert_relevance_feedback_link(false, subscription, @vacancies) %>
+<%= job_alert_relevance_feedback_link(true, @subscription, @vacancies) %>
+<%= job_alert_relevance_feedback_link(false, @subscription, @vacancies) %>
 
 
 <%= t(".relevance_feedback.reason") %>
@@ -33,4 +33,4 @@
 
 <%= t("shared.jobseeker_footer", home_page_link: home_page_link) %>
 
-<%= t(".unsubscribe", unsubscribe_link: unsubscribe_link(subscription)) %>
+<%= t(".unsubscribe", unsubscribe_link: unsubscribe_link(@subscription)) %>

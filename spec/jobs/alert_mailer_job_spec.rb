@@ -5,7 +5,7 @@ RSpec.describe AlertMailerJob do
   let!(:vacancies) { create_list(:vacancy, 5, organisations: [school]) }
   let(:subscription) { create(:daily_subscription) }
   let(:alert_run) { create(:alert_run, subscription: subscription) }
-  let(:job) { Jobseekers::AlertMailer.alert(subscription.id, vacancies.pluck(:id)).deliver_later! }
+  let(:job) { Jobseekers::AlertMailer.alert(subscription, vacancies.pluck(:id)).deliver_later! }
 
   it "creates a run" do
     job_id = "ABC1234"

@@ -38,7 +38,7 @@ class SendJobAlertsJob < ApplicationJob
 
       sent_alerts_count += 1
       vacancies_in_alerts_count += matching_vacancy_ids.size
-      Jobseekers::AlertMailer.alert(subscription.id, matching_vacancy_ids).deliver_later
+      Jobseekers::AlertMailer.alert(subscription, matching_vacancy_ids).deliver_later
     end
     log_to_sentry(name: name,
                   duration: Time.current - start_time,

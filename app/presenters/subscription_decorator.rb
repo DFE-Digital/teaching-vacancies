@@ -1,5 +1,5 @@
 class SubscriptionDecorator < Draper::Decorator
-  delegate :email, :frequency, :search_criteria, :token, :id, :destroy!, :organisation, :to_key
+  delegate :email, :frequency, :search_criteria, :token, :organisation, :to_key
 
   include ApplicationHelper
   include OrganisationsHelper
@@ -25,13 +25,13 @@ class SubscriptionDecorator < Draper::Decorator
   private
 
   def sorted_search_criteria
-    search_criteria.except("radius").sort_by { |(key, _)| SEARCH_CRITERIA_SORT_ORDER.find_index(key) || SEARCH_CRITERIA_SORT_ORDER.count }.to_h
+    model.search_criteria.except("radius").sort_by { |(key, _)| SEARCH_CRITERIA_SORT_ORDER.find_index(key) || SEARCH_CRITERIA_SORT_ORDER.count }.to_h
   end
 
   def search_criteria_field(field, value)
     case field
     when "location"
-      render_location_filter(value, search_criteria["radius"])
+      render_location_filter(value, model.search_criteria["radius"])
     when "ect_statuses"
       render_ect_statuses_filter(value)
     when "subjects"
@@ -110,6 +110,6 @@ class SubscriptionDecorator < Draper::Decorator
   end
 
   def render_organisation_filter
-    { organisation_type_basic(organisation).titleize => organisation.name }
+    { organisation_type_basic(model.organisation).titleize => model.organisation.name }
   end
 end

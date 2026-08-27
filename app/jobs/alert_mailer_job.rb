@@ -28,11 +28,7 @@ class AlertMailerJob < ApplicationMailDeliveryJob
   end
 
   def subscription
-    @subscription ||= Subscription.find(subscription_id)
-  end
-
-  def subscription_id
-    arguments.last[:args].first
+    @subscription ||= arguments.last[:args].first
   end
 
   def alert_run

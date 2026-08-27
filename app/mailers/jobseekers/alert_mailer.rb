@@ -9,11 +9,13 @@ class Jobseekers::AlertMailer < Jobseekers::BaseMailer
   helper VacanciesHelper
   helper ReadableVacancyHelper
 
-  helper_method :subscription, :jobseeker, :jobseeker_has_profile?
+  helper_method :jobseeker, :jobseeker_has_profile?
 
-  def alert(subscription_id, vacancy_ids)
-    @subscription_id = subscription_id
+  def alert(subscription, vacancy_ids)
+    @subscription = subscription
     return if subscription.email.blank?
+
+    @filtered_search_criteria = subscription.decorate.filtered_search_criteria
 
     @vacancies = PublishedVacancy.where(id: vacancy_ids)
                    .order(:expires_at)
@@ -32,13 +34,13 @@ class Jobseekers::AlertMailer < Jobseekers::BaseMailer
   attr_reader :subscription_id
 
   def handle_invalid_email_exception(exception)
-    return subscription.destroy! if exception.message.match?(INVALID_EMAIL_REGEXP)
+    return @subscription.destroy! if exception.message.match?(INVALID_EMAIL_REGEXP)
 
     raise exception
   end
 
   def dfe_analytics_custom_data
-    { subscription_identifier: subscription.id, subscription_frequency: subscription.frequency }
+    { subscription_identifier: @subscription.id, subscription_frequency: @subscription.frequency }
   end
 
   def email_event_prefix
@@ -48,11 +50,7 @@ class Jobseekers::AlertMailer < Jobseekers::BaseMailer
   def jobseeker
     return @jobseeker if defined?(@jobseeker)
 
-    @jobseeker = Jobseeker.find_by(email: subscription.email)
-  end
-
-  def subscription
-    @subscription ||= Subscription.find(subscription_id).decorate
+    @jobseeker = Jobseeker.find_by(email: @subscription.email)
   end
 
   def jobseeker_has_profile?
@@ -62,6 +60,6 @@ class Jobseekers::AlertMailer < Jobseekers::BaseMailer
   end
 
   def utm_campaign
-    "#{subscription.frequency}_alert"
+    "#{@subscription.frequency}_alert"
   end
 end

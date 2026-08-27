@@ -14,7 +14,7 @@ RSpec.describe SendDailyAlertEmailJob do
       let!(:subscription) { create(:daily_subscription) }
 
       it "sends an email" do
-        expect(Jobseekers::AlertMailer).to receive(:alert).with(subscription.id, PublishedVacancy.pluck(:id)) { mail }
+        expect(Jobseekers::AlertMailer).to receive(:alert).with(subscription, PublishedVacancy.pluck(:id)) { mail }
         expect(mail).to receive(:deliver_later) { ActionMailer::MailDeliveryJob.new }
         perform_enqueued_jobs { job }
       end
@@ -45,7 +45,7 @@ RSpec.describe SendDailyAlertEmailJob do
         end
 
         it "does not send an email" do
-          expect(Jobseekers::AlertMailer).to_not receive(:alert).with(subscription.id, PublishedVacancy.pluck(:id)) { mail }
+          expect(Jobseekers::AlertMailer).to_not receive(:alert).with(subscription, PublishedVacancy.pluck(:id)) { mail }
           perform_enqueued_jobs { job }
         end
       end
