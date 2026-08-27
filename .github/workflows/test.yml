@@ -100,7 +100,7 @@ jobs:
           name: coverage report
           path: coverage
 
-      - name: Check coverage regardless of failure
+      - name: Check coverage
         if: always()
         run: bundle exec undercover
 
