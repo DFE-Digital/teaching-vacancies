@@ -6,6 +6,8 @@ RSpec.describe "vacancies/show" do
 
     allow(view).to receive_messages(current_jobseeker: jobseeker)
     assign :vacancy, vacancy.decorate
+    use_ab_test jobseeker, :trn_on_apply, :apply if jobseeker.present?
+
     render
   end
 
@@ -287,6 +289,27 @@ RSpec.describe "vacancies/show" do
       it "uses college wording" do
         expect(rendered).to have_content("This college accepts applications through their own website")
       end
+    end
+  end
+
+  context "when a school has geocoding" do
+    let(:jobseeker) { nil }
+    let(:vacancy) { build_stubbed(:vacancy, organisations: [school]) }
+
+    let(:school) { build_stubbed(:school, geopoint: "POINT(51.4788757883318 0.0253328559417984)") }
+
+    it "displays a map" do
+      expect(rendered).to have_css("div#map")
+    end
+  end
+
+  context "when a school has no geocoding" do
+    let(:jobseeker) { nil }
+    let(:vacancy) { build_stubbed(:vacancy, organisations: [school]) }
+    let(:school) { build_stubbed(:school, geopoint: nil) }
+
+    it "does not display a map" do
+      expect(rendered).to have_no_css("div#map")
     end
   end
 end

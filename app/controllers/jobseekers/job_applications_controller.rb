@@ -69,7 +69,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
       redirect_to jobseekers_job_application_apply_path(new_job_application), notice: t("jobseekers.job_applications.new.import_from_previous_application")
     else
       new_job_application = vacancy.create_job_application_for(current_jobseeker)
-      redirect_to jobseekers_job_application_apply_path(new_job_application.id)
+      redirect_to jobseekers_job_application_apply_path(new_job_application)
     end
   end
 

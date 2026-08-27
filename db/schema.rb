@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_10_152440) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_18_075048) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -208,6 +208,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_10_152440) do
     t.index ["publisher_id"], name: "index_feedbacks_publisher_id"
     t.index ["subscription_id"], name: "index_feedbacks_subscription_id"
     t.index ["vacancy_id"], name: "index_feedbacks_on_vacancy_id"
+  end
+
+  create_table "field_test_memberships", force: :cascade do |t|
+    t.boolean "converted", default: false, null: false
+    t.datetime "created_at"
+    t.string "experiment"
+    t.string "participant_id"
+    t.string "participant_type"
+    t.string "variant"
+    t.index ["experiment", "created_at"], name: "index_field_test_memberships_on_experiment_and_created_at"
+    t.index ["participant_type", "participant_id", "experiment"], name: "index_field_test_memberships_on_participant", unique: true
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|

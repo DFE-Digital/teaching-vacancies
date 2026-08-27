@@ -52,6 +52,25 @@ class VacanciesController < ApplicationController
     trigger_search_performed_event
   end
 
+  def trn_interstitial
+    @vacancy = PublishedVacancy.kept.listed.friendly.find(params[:id])
+    @job_application = @vacancy.job_applications.build
+  end
+
+  def send_trn
+    vacancy = PublishedVacancy.kept.listed.friendly.find(params[:id])
+    trn = params.expect(job_application: [:teacher_reference_number])[:teacher_reference_number]
+
+    if trn.present?
+      field_test_converted(:trn_on_apply)
+    end
+    if vacancy.website?
+      redirect_to vacancy.application_link, allow_other_host: true
+    else
+      redirect_to new_jobseekers_job_job_application_path(vacancy.id)
+    end
+  end
+
   private
 
   def form

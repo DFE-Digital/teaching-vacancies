@@ -20,7 +20,8 @@ class VacancyDecorator < Draper::Decorator
            :application_form, :application_email, :website?, :vacancy_address,
            :external?, :job_advert, :external_advert_url,
            :supporting_documents_in_order,
-           :other_start_date_details, :earliest_start_date, :latest_start_date, :starts_on, :start_date_type
+           :other_start_date_details, :earliest_start_date, :latest_start_date, :starts_on, :start_date_type,
+           :teaching_or_middle_leader_role?
 
   include ActionView::Helpers::TextHelper
 
