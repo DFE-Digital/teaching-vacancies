@@ -4,7 +4,11 @@ RSpec.describe "Jobseekers can complete a religious job application" do
   let(:jobseeker) { create(:jobseeker, jobseeker_profile: jobseeker_profile) }
   let(:jobseeker_profile) { create(:jobseeker_profile, :with_trn) }
   let(:organisation) { create(:school) }
-  let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
+  let(:job_application) do
+    create(:job_application, :status_draft, :with_personal_details, :with_professional_status, :with_personal_statement,
+           completed_steps: %w[personal_details professional_status qualifications training_and_cpds professional_body_memberships employment_history personal_statement],
+           jobseeker: jobseeker, vacancy: vacancy)
+  end
   let(:vacancy) { create(:vacancy, organisations: [organisation], religion_type: religion_type) }
 
   let(:referee_name) { Faker::Name.name }
@@ -19,26 +23,224 @@ RSpec.describe "Jobseekers can complete a religious job application" do
   context "with a catholic vacancy" do
     let(:religion_type) { :catholic }
 
-    before do
-      fill_in_application_up_to_and_including_personal_statement
-      click_on I18n.t("jobseekers.job_applications.build.catholic.step_title")
-      choose "Yes, I've completed this section"
-    end
-
-    it "passes a11y", :a11y do
-      #  https://github.com/alphagov/govuk-frontend/issues/979
-      expect(page).to be_axe_clean.skipping "aria-allowed-attr"
-    end
-
-    it "validates first religion step" do
-      expect(page).to have_content(I18n.t("jobseekers.job_applications.build.catholic.preference_to_catholics"))
-      validates_step_complete
-      expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.following_religion.inclusion"))
-    end
-
-    context "without a religion" do
+    context "when starting from religious information" do
       before do
+        visit jobseekers_job_application_apply_path(job_application)
+        click_on I18n.t("jobseekers.job_applications.build.catholic.step_title")
+        choose "Yes, I've completed this section"
+      end
+
+      it "passes a11y", :a11y do
+        #  https://github.com/alphagov/govuk-frontend/issues/979
+        expect(page).to be_axe_clean.skipping "aria-allowed-attr"
+      end
+
+      it "validates first religion step" do
+        expect(page).to have_content(I18n.t("jobseekers.job_applications.build.catholic.preference_to_catholics"))
+        validates_step_complete
+        expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.following_religion.inclusion"))
+      end
+
+      context "when choosing a religion" do
+        before do
+          find("label[for='jobseekers-job-application-catholic-form-following-religion-true-field']").click
+          choose "Yes, I've completed this section"
+        end
+
+        it "produces the correct errors" do
+          validates_step_complete
+          expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.faith.blank"))
+          expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.religious_reference_type.inclusion"))
+        end
+
+        context "with a denomination" do
+          before do
+            fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.faith"), with: "follower of #{Faker::Religion::Bible.character}"
+            fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.place_of_worship"), with: "#{Faker::Address.city} Church"
+          end
+
+          context "with a referee" do
+            before do
+              find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-religious-referee-field']").click
+            end
+
+            it "produces the correct error messages" do
+              validates_step_complete
+              expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.religious_referee_name.blank"))
+              expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.religious_referee_role.blank"))
+              expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.religious_referee_address.blank"))
+              expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.religious_referee_email.blank"))
+            end
+
+            context "when on review page" do
+              before do
+                fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_name"), with: referee_name
+                fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_address"), with: referee_address
+                fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_role"), with: referee_role
+                fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_email"), with: referee_email
+                fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_phone"), with: referee_phone
+
+                choose "Yes, I've completed this section"
+                click_on I18n.t("buttons.save_and_continue")
+                complete_from_references_page
+              end
+
+              it "passes a11y", :a11y do
+                expect(page).to be_axe_clean
+              end
+
+              it "has a correct change link" do
+                expect(page).to have_link(href: jobseekers_job_application_build_path(job_application, :catholic))
+              end
+
+              it "shows the referee details" do
+                expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
+
+                expect(page).to have_content(referee_name)
+                expect(page).to have_content(referee_address)
+                expect(page).to have_content(referee_role)
+                expect(page).to have_content(referee_email)
+                expect(page).to have_content(referee_phone)
+              end
+
+              it "contains the entered information" do
+                expect(job_application.reload).to have_attributes(religious_reference_type: "religious_referee")
+              end
+
+              it "can submit application" do
+                check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
+                check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
+                click_on I18n.t("buttons.submit_application")
+                click_on I18n.t("jobseekers.job_applications.post_submit.next_step.view_applications")
+                expect(page).to have_content(vacancy.job_title)
+              end
+            end
+          end
+
+          context "with a baptism certificate" do
+            before do
+              choose I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_reference_type_options.baptism_certificate")
+            end
+
+            it "produces the correct errors" do
+              validates_step_complete
+              expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/catholic_form.attributes.baptism_certificate.blank"))
+            end
+
+            context "with an uploaded baptism cerificate" do
+              before do
+                page.attach_file("jobseekers-job-application-catholic-form-baptism-certificate-field", Rails.root.join("spec/fixtures/files/blank_baptism_cert.pdf"))
+
+                click_on I18n.t("buttons.save_and_continue")
+              end
+
+              it "allows the certificate to be uploaded" do
+                expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
+                complete_from_references_page
+                expect(page).to have_content("blank_baptism_cert.pdf")
+              end
+
+              it "can submit application, but not if the baptism certificate has been flagged as unsafe" do
+                complete_from_references_page
+                check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
+                check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
+                # mark baptism certificate as failing azure virus scan
+                job_application.baptism_certificate.blob.malware_scan_malicious!
+                click_on I18n.t("buttons.submit_application")
+                expect(page).to have_content(I18n.t("jobs.file_unsafe_error_message", filename: job_application.baptism_certificate.filename))
+                # mark baptism certificate as passing azure virus scan
+                job_application.baptism_certificate.blob.malware_scan_clean!
+                click_on I18n.t("buttons.submit_application")
+                click_on I18n.t("jobseekers.job_applications.post_submit.next_step.view_applications")
+                expect(page).to have_content(vacancy.job_title)
+              end
+
+              scenario "the jobseeker views and deletes the uploaded baptism certificate" do
+                visit jobseekers_job_application_build_path(job_application, :catholic)
+                find("label[for='jobseekers-job-application-catholic-form-following-religion-true-field']").click
+                find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-baptism-certificate-field']").click
+                expect(page).to have_content("blank_baptism_cert.pdf")
+                click_on I18n.t("buttons.delete")
+                expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :catholic))
+                expect(job_application.reload.baptism_certificate.attached?).to be false
+              end
+
+              scenario "deleting the baptism certificate resets the reference type and marks the form incomplete" do
+                complete_from_references_page
+                within("#catholic") { click_on "Change" }
+                click_on I18n.t("buttons.delete")
+
+                expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :catholic))
+
+                # expect no radio button checked for religious reference type
+                expect(page).to have_no_checked_field(I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_reference_type_options.baptism_certificate"))
+
+                # expect the section to be marked as incomplete
+                expect(page).to have_checked_field("No, I'll come back to it later")
+              end
+
+              scenario "the review page does not crash after the jobseeker deletes the baptism certificate and chooses a different reference type" do
+                complete_from_references_page
+                within("#catholic") { click_on "Change" }
+                click_on I18n.t("buttons.delete")
+                find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-no-religious-referee-field']").click
+                choose "No, I'll come back to it later"
+                click_on I18n.t("buttons.save")
+
+                expect(page).to have_current_path(jobseekers_job_application_review_path(job_application))
+                expect(page).to have_no_content("blank_baptism_cert.pdf")
+              end
+            end
+          end
+
+          context "with an address and date of baptism" do
+            before do
+              choose I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_reference_type_options.baptism_date")
+            end
+
+            let(:baptism_address) { Faker::Address.full_address }
+
+            it "produces the correct errors" do
+              validates_step_complete
+              expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/catholic_form.attributes.baptism_address.blank"))
+              expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/catholic_form.attributes.baptism_date.blank"))
+            end
+
+            it "allows jobseekers to specify a baptism address and date" do
+              fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.baptism_address"), with: baptism_address
+              fill_in "Day", with: 7
+              fill_in "Month", with: 3
+              fill_in "Year", with: 2007
+              click_on I18n.t("buttons.save_and_continue")
+              expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
+              complete_from_references_page
+
+              expect(page).to have_content("07 March 2007")
+              expect(page).to have_content(baptism_address)
+            end
+          end
+
+          context "without a referee" do
+            before do
+              find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-no-religious-referee-field']").click
+            end
+
+            it "allows jobseeker to not specify a religious referee" do
+              click_on I18n.t("buttons.save_and_continue")
+              expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
+            end
+          end
+        end
+      end
+    end
+
+    describe "full religious application journey" do
+      before do
+        fill_in_application_up_to_and_including_personal_statement
+        click_on I18n.t("jobseekers.job_applications.build.catholic.step_title")
+
         find("label[for='jobseekers-job-application-catholic-form-following-religion-false-field']").click
+        choose "Yes, I've completed this section"
         click_on I18n.t("buttons.save_and_continue")
       end
 
@@ -47,205 +249,13 @@ RSpec.describe "Jobseekers can complete a religious job application" do
         complete_from_references_page
       end
     end
-
-    context "with a religion" do
-      before do
-        find("label[for='jobseekers-job-application-catholic-form-following-religion-true-field']").click
-        choose "Yes, I've completed this section"
-      end
-
-      it "produces the correct errors" do
-        validates_step_complete
-        expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.faith.blank"))
-        expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.religious_reference_type.inclusion"))
-      end
-
-      context "with a denomination" do
-        before do
-          fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.faith"), with: "follower of #{Faker::Religion::Bible.character}"
-          fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.place_of_worship"), with: "#{Faker::Address.city} Church"
-        end
-
-        context "with a referee" do
-          before do
-            find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-religious-referee-field']").click
-          end
-
-          it "produces the correct error messages" do
-            validates_step_complete
-            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.religious_referee_name.blank"))
-            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.religious_referee_role.blank"))
-            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.religious_referee_address.blank"))
-            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.religious_referee_email.blank"))
-          end
-
-          context "when on review page" do
-            before do
-              fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_name"), with: referee_name
-              fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_address"), with: referee_address
-              fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_role"), with: referee_role
-              fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_email"), with: referee_email
-              fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_phone"), with: referee_phone
-
-              choose "Yes, I've completed this section"
-              click_on I18n.t("buttons.save_and_continue")
-              complete_from_references_page
-            end
-
-            it "passes a11y", :a11y do
-              expect(page).to be_axe_clean
-            end
-
-            it "has a correct change link" do
-              expect(page).to have_link(href: jobseekers_job_application_build_path(job_application, :catholic))
-            end
-
-            it "shows the referee details" do
-              expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
-
-              expect(page).to have_content(referee_name)
-              expect(page).to have_content(referee_address)
-              expect(page).to have_content(referee_role)
-              expect(page).to have_content(referee_email)
-              expect(page).to have_content(referee_phone)
-            end
-
-            it "contains the entered information" do
-              expect(job_application.reload).to have_attributes(religious_reference_type: "religious_referee")
-            end
-
-            it "can submit application" do
-              check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
-              check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
-              click_on I18n.t("buttons.submit_application")
-              click_on I18n.t("jobseekers.job_applications.post_submit.next_step.view_applications")
-              expect(page).to have_content(vacancy.job_title)
-            end
-          end
-        end
-
-        context "with a baptism certificate" do
-          before do
-            choose I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_reference_type_options.baptism_certificate")
-          end
-
-          it "produces the correct errors" do
-            validates_step_complete
-            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/catholic_form.attributes.baptism_certificate.blank"))
-          end
-
-          context "with an uploaded baptism cerificate" do
-            before do
-              page.attach_file("jobseekers-job-application-catholic-form-baptism-certificate-field", Rails.root.join("spec/fixtures/files/blank_baptism_cert.pdf"))
-
-              click_on I18n.t("buttons.save_and_continue")
-            end
-
-            it "allows the certificate to be uploaded" do
-              expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
-              complete_from_references_page
-              expect(page).to have_content("blank_baptism_cert.pdf")
-            end
-
-            it "can submit application, but not if the baptism certificate has been flagged as unsafe" do
-              complete_from_references_page
-              check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
-              check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
-              # mark baptism certificate as failing azure virus scan
-              job_application.baptism_certificate.blob.malware_scan_malicious!
-              click_on I18n.t("buttons.submit_application")
-              expect(page).to have_content(I18n.t("jobs.file_unsafe_error_message", filename: job_application.baptism_certificate.filename))
-              # mark baptism certificate as passing azure virus scan
-              job_application.baptism_certificate.blob.malware_scan_clean!
-              click_on I18n.t("buttons.submit_application")
-              click_on I18n.t("jobseekers.job_applications.post_submit.next_step.view_applications")
-              expect(page).to have_content(vacancy.job_title)
-            end
-
-            scenario "the jobseeker views and deletes the uploaded baptism certificate" do
-              visit jobseekers_job_application_build_path(job_application, :catholic)
-              find("label[for='jobseekers-job-application-catholic-form-following-religion-true-field']").click
-              find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-baptism-certificate-field']").click
-              expect(page).to have_content("blank_baptism_cert.pdf")
-              click_on I18n.t("buttons.delete")
-              expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :catholic))
-              expect(job_application.reload.baptism_certificate.attached?).to be false
-            end
-
-            scenario "deleting the baptism certificate resets the reference type and marks the form incomplete" do
-              complete_from_references_page
-              within("#catholic") { click_on "Change" }
-              click_on I18n.t("buttons.delete")
-
-              expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :catholic))
-
-              # expect no radio button checked for religious reference type
-              expect(page).to have_no_checked_field(I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_reference_type_options.baptism_certificate"))
-
-              # expect the section to be marked as incomplete
-              expect(page).to have_checked_field("No, I'll come back to it later")
-            end
-
-            scenario "the review page does not crash after the jobseeker deletes the baptism certificate and chooses a different reference type" do
-              complete_from_references_page
-              within("#catholic") { click_on "Change" }
-              click_on I18n.t("buttons.delete")
-              find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-no-religious-referee-field']").click
-              choose "No, I'll come back to it later"
-              click_on I18n.t("buttons.save")
-
-              expect(page).to have_current_path(jobseekers_job_application_review_path(job_application))
-              expect(page).to have_no_content("blank_baptism_cert.pdf")
-            end
-          end
-        end
-
-        context "with an address and date of baptism" do
-          before do
-            choose I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_reference_type_options.baptism_date")
-          end
-
-          let(:baptism_address) { Faker::Address.full_address }
-
-          it "produces the correct errors" do
-            validates_step_complete
-            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/catholic_form.attributes.baptism_address.blank"))
-            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/catholic_form.attributes.baptism_date.blank"))
-          end
-
-          it "allows jobseekers to specify a baptism address and date" do
-            fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.baptism_address"), with: baptism_address
-            fill_in "Day", with: 7
-            fill_in "Month", with: 3
-            fill_in "Year", with: 2007
-            click_on I18n.t("buttons.save_and_continue")
-            expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
-            complete_from_references_page
-
-            expect(page).to have_content("07 March 2007")
-            expect(page).to have_content(baptism_address)
-          end
-        end
-
-        context "without a referee" do
-          before do
-            find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-no-religious-referee-field']").click
-          end
-
-          it "allows jobseeker to not specify a religious referee" do
-            click_on I18n.t("buttons.save_and_continue")
-            expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
-          end
-        end
-      end
-    end
   end
 
   context "with other religion type vacancy" do
     let(:religion_type) { :other_religion }
 
     before do
-      fill_in_application_up_to_and_including_personal_statement
+      visit jobseekers_job_application_apply_path(job_application)
       click_on I18n.t("jobseekers.job_applications.build.catholic.step_title")
       choose "Yes, I've completed this section"
     end

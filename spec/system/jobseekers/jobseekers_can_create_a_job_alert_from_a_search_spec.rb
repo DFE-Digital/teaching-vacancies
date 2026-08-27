@@ -47,7 +47,8 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
           expect(page).to be_axe_clean
         end
 
-        scenario "redirects to job alerts dashboard" do
+        # need the JS driver here otherwise it doesn't execute the same path
+        it "redirects to job alerts dashboard", :js do
           expect(current_path).to eq(jobseekers_subscriptions_path)
         end
       end
@@ -76,7 +77,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
       let(:search_with_polygons?) { true }
       let(:location) { "London" }
 
-      scenario "successfully creates a job alert" do
+      it "successfully creates a job alert" do
         expect(page).to have_content(I18n.t("subscriptions.new.title"))
         expect_search_criteria_to_be_populated
 

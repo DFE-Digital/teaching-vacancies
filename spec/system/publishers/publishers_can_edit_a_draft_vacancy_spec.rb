@@ -44,7 +44,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         expect(page).to be_axe_clean
       end
 
-      it "can edit a draft", :a11y, :retry do
+      it "has accessible edit pages", :a11y, :retry do
         # wait for page load
         expect(page).to have_content("What type of job is this?")
         fill_in_job_role_form_fields("teaching_assistant")
@@ -57,15 +57,44 @@ RSpec.describe "Publishers can edit a draft vacancy" do
 
         fill_in_key_stages_form_fields(vacancy.key_stages_for_phases)
 
-        pages_with_skips.each do |page_name, allowed_skips|
-          progress_to_edit_page(page_name)
-          #  https://github.com/alphagov/govuk-frontend/issues/979
-          if allowed_skips.any?
-            expect(page).to be_axe_clean.skipping(*allowed_skips)
-          else
-            expect(page).to be_axe_clean
-          end
-        end
+        #  https://github.com/alphagov/govuk-frontend/issues/979
+        progress_to_edit_page(:contract_information)
+        expect(page).to be_axe_clean.skipping("aria-allowed-attr")
+        progress_to_edit_page(:start_date)
+        expect(page).to be_axe_clean.skipping("aria-allowed-attr")
+        progress_to_edit_page(:pay_package)
+        expect(page).to be_axe_clean.skipping("aria-allowed-attr")
+        progress_to_edit_page(:about_the_role)
+        expect(page).to be_axe_clean.skipping("aria-allowed-attr")
+        progress_to_edit_page(:school_visits)
+        expect(page).to be_axe_clean
+        progress_to_edit_page(:visa_sponsorship)
+        expect(page).to be_axe_clean.skipping("aria-allowed-attr")
+        progress_to_edit_page(:important_dates)
+        expect(page).to be_axe_clean.skipping("aria-allowed-attr")
+        progress_to_edit_page(:applying_for_the_job)
+        expect(page).to be_axe_clean
+        progress_to_edit_page(:anonymise_applications)
+        expect(page).to be_axe_clean
+        progress_to_edit_page(:include_additional_documents)
+        expect(page).to be_axe_clean
+        progress_to_edit_page(:contact_details)
+        expect(page).to be_axe_clean.skipping("aria-allowed-attr")
+      end
+
+      it "can edit a draft" do
+        # wait for page load
+        expect(page).to have_content("What type of job is this?")
+        fill_in_job_role_form_fields("teaching_assistant")
+        click_on I18n.t("buttons.save_and_continue")
+
+        # page load wait
+        find("form.new_publishers_job_listing_key_stages_form")
+        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :key_stages))
+
+        fill_in_key_stages_form_fields(vacancy.key_stages_for_phases)
+
+        visit(organisation_job_wizard_path(vacancy.id, :contact_details))
 
         non_publisher_email = Faker::Internet.email(domain: "contoso.com")
         choose I18n.t("helpers.label.publishers_job_listing_contact_details_form.contact_email_options.other")

@@ -81,6 +81,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-spec-
 
+      - name: Run accessibility tests - no coverage required
+        run: bundle exec rspec --tag a11y
+
       - name: Run tests in parallel
         env:
           PARALLEL_TEST_PROCESSORS: 4 # Match GitHub Action runner CPU count

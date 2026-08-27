@@ -26,6 +26,11 @@ RSpec.describe "Jobseekers can complete a job application" do
 
       context "without TRN ab test" do
         let(:ab_test) { "apply" }
+        let(:job_application) do
+          create(:job_application, :status_draft, :with_personal_details, :with_professional_status,
+                 completed_steps: %w[personal_details professional_status qualifications training_and_cpds professional_body_memberships employment_history],
+                 jobseeker: jobseeker)
+        end
 
         before do
           #  wait for page load - this only works for a quick apply job, not an uploaded one
@@ -34,42 +39,65 @@ RSpec.describe "Jobseekers can complete a job application" do
           end
         end
 
-        it "passes a11y", :a11y do
-          expect(page).to be_axe_clean
+        describe "accessibility", :a11y do
+          it "passes a11y" do
+            expect(page).to be_axe_clean
+          end
+
+          it "has an accessible starting page" do
+            click_button "Start application"
+            expect(page).to be_axe_clean
+          end
+
+          it "has an accessible personal statement" do
+            visit jobseekers_job_application_apply_path(job_application)
+
+            click_on(I18n.t("jobseekers.job_applications.build.personal_statement.heading"))
+
+            expect(page).to be_axe_clean
+          end
+
+          it "has an accessible equal opportunities section" do
+            visit jobseekers_job_application_apply_path(job_application)
+
+            click_on(I18n.t("jobseekers.job_applications.build.equal_opportunities.heading"))
+
+            #  https://github.com/alphagov/govuk-frontend/issues/979
+            expect(page).to be_axe_clean.skipping "aria-allowed-attr"
+          end
+
+          it "has an accessible support section" do
+            visit jobseekers_job_application_apply_path(job_application)
+
+            click_on(I18n.t("jobseekers.job_applications.build.ask_for_support.heading"))
+
+            #  https://github.com/alphagov/govuk-frontend/issues/979
+            expect(page).to be_axe_clean.skipping "aria-allowed-attr"
+          end
+
+          it "has an accessible declarations section" do
+            visit jobseekers_job_application_apply_path(job_application)
+
+            click_on(I18n.t("jobseekers.job_applications.build.declarations.heading"))
+
+            #  https://github.com/alphagov/govuk-frontend/issues/979
+            expect(page).to be_axe_clean.skipping "aria-allowed-attr"
+          end
         end
 
-        it "has an accessible starting page", :a11y do
-          click_button "Start application"
-          expect(page).to be_axe_clean
-        end
-
-        it "allows jobseekers to complete an application and go to review page", :a11y do
-          fill_in_application_a_bit
+        it "allows jobseekers to complete an application and go to review page" do
+          visit jobseekers_job_application_apply_path(job_application)
 
           click_on(I18n.t("jobseekers.job_applications.build.personal_statement.heading"))
-
-          expect(page).to be_axe_clean
-
           fill_personal_statement_referees
 
           click_on(I18n.t("jobseekers.job_applications.build.equal_opportunities.heading"))
-
-          #  https://github.com/alphagov/govuk-frontend/issues/979
-          expect(page).to be_axe_clean.skipping "aria-allowed-attr"
-
           fill_in_equal_opportunities_section
 
           click_on(I18n.t("jobseekers.job_applications.build.ask_for_support.heading"))
-
-          #  https://github.com/alphagov/govuk-frontend/issues/979
-          expect(page).to be_axe_clean.skipping "aria-allowed-attr"
-
           fill_in_ask_for_support_section
 
           click_on(I18n.t("jobseekers.job_applications.build.declarations.heading"))
-
-          #  https://github.com/alphagov/govuk-frontend/issues/979
-          expect(page).to be_axe_clean.skipping "aria-allowed-attr"
 
           validates_step_complete
           fill_in_declarations
@@ -79,7 +107,7 @@ RSpec.describe "Jobseekers can complete a job application" do
 
           # wait for page load
           find(".govuk-list.review-component__sections")
-          expect(page).to have_current_path(jobseekers_job_application_review_path(JobApplication.last), ignore_query: true)
+          expect(page).to have_current_path(jobseekers_job_application_review_path(job_application), ignore_query: true)
         end
       end
 
@@ -254,69 +282,5 @@ RSpec.describe "Jobseekers can complete a job application" do
     choose "Yes"
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_css("#referees", text: I18n.t("shared.status_tags.complete"))
-  end
-
-  def fill_in_application_a_bit
-    click_button "Start application"
-    click_on(I18n.t("jobseekers.job_applications.build.personal_details.heading"))
-    validates_step_complete
-    fill_in_personal_details
-    click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_css("#personal_details", text: I18n.t("shared.status_tags.complete"))
-
-    click_on(I18n.t("jobseekers.job_applications.build.professional_status.heading"))
-    validates_step_complete
-    fill_in_professional_status
-    click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_css("#professional_status", text: I18n.t("shared.status_tags.complete"))
-
-    click_on(I18n.t("jobseekers.job_applications.build.qualifications.heading"))
-    validates_step_complete
-    choose I18n.t("helpers.label.jobseekers_job_application_qualifications_form.qualifications_section_completed_options.true")
-    click_on I18n.t("buttons.save_and_continue")
-
-    click_on I18n.t("jobseekers.job_applications.build.qualifications.heading")
-    click_on I18n.t("buttons.add_qualification")
-    validates_step_complete(button: I18n.t("buttons.continue"))
-    select_qualification_category("Undergraduate degree")
-    expect(page).to have_content(I18n.t("jobseekers.job_applications.qualifications.new.heading.undergraduate"))
-    validates_step_complete(button: I18n.t("buttons.save_qualification.one"))
-    fill_in_undergraduate_degree
-    click_on I18n.t("buttons.save_qualification.one")
-    choose "Yes, I've completed this section"
-    click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_css("#qualifications", text: I18n.t("shared.status_tags.complete"))
-
-    click_on(I18n.t("jobseekers.job_applications.build.training_and_cpds.heading"))
-    expect(page).to have_content("No training or CPD specified")
-    validates_step_complete
-    click_on "Add training"
-    fill_in_training_and_cpds
-    click_on "Save and continue"
-    choose "Yes, I've completed this section"
-    click_on "Save and continue"
-    expect(page).to have_css("#training_and_cpds", text: I18n.t("shared.status_tags.complete"))
-
-    click_on(I18n.t("jobseekers.job_applications.build.professional_body_memberships.list_heading"))
-    expect(page).to have_content("No memberships")
-    validates_step_complete
-    click_on "Add a membership"
-    fill_in_professional_body_membership
-    click_on "Save and continue"
-    choose "Yes, I've completed this section"
-    click_on "Save and continue"
-    expect(page).to have_css("#professional_body_memberships", text: I18n.t("shared.status_tags.complete"))
-
-    click_on(I18n.t("jobseekers.job_applications.build.employment_history.heading"))
-    validates_step_complete
-    click_on I18n.t("buttons.add_work_history")
-    fill_in_employment_history
-    click_on I18n.t("buttons.save_employment")
-    click_on I18n.t("buttons.add_reason_for_break")
-    fill_in_break_in_employment(end_year: Date.today.year.to_s, end_month: Date.today.month.to_s.rjust(2, "0"))
-    click_on I18n.t("buttons.continue")
-    choose I18n.t("helpers.label.jobseekers_job_application_employment_history_form.employment_history_section_completed_options.true")
-    click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_css("#employment_history", text: I18n.t("shared.status_tags.complete"))
   end
 end

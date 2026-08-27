@@ -97,7 +97,7 @@ RSpec.describe "Api::Vacancies" do
     end
   end
 
-  describe "GET /api/v1/jobs/:id.json", json: true do
+  describe "GET /api/v1/jobs/:id.json" do
     let(:vacancy) { create(:vacancy, organisations: [school]) }
 
     subject do

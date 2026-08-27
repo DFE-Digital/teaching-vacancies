@@ -66,8 +66,7 @@ RSpec.describe "Publishers can select a job application for interview" do
         find("form[action='/references/#{reference_request.id}/build/can_share']")
       end
 
-      #  have to use JS driver for send_keys support
-      it "displays the fit_and_proper page followed by the employment_reference page", :a11y, :perform_enqueued do
+      it "has accessible pages", :a11y do
         expect(page).to be_axe_clean
 
         choose I18n.t("helpers.label.referees_can_share_reference_form.is_reference_sharable_options.false")
@@ -146,6 +145,77 @@ RSpec.describe "Publishers can select a job application for interview" do
 
         expect(referee_referee_details_page).to be_displayed
         expect(page).to be_axe_clean
+      end
+
+      #  have to use JS driver for send_keys support
+      it "displays the fit_and_proper page followed by the employment_reference page", :js, :perform_enqueued do
+        choose I18n.t("helpers.label.referees_can_share_reference_form.is_reference_sharable_options.false")
+        click_on I18n.t("buttons.continue")
+        # click through fit-and-proper-person blurb
+        # wait for page
+        find("form[action='/references/#{reference_request.id}/build/fit_and_proper_persons']")
+        click_on I18n.t("buttons.continue")
+
+        expect(referee_employment_reference_page).to be_displayed
+
+        referee_employment_reference_page.currently_employed_no.click
+        referee_employment_reference_page.reemploy_current_yes.click
+        referee_employment_reference_page.reemploy_any_yes.click
+
+        fill_in "referees_employment_reference_form[how_do_you_know_the_candidate]", with: Faker::Lorem.paragraph
+        fill_in "referees_employment_reference_form[reason_for_leaving]", with: Faker::Lorem.paragraph
+        fill_in "referees_employment_reference_form[would_reemploy_current_reason]", with: Faker::Lorem.paragraph
+        fill_in "referees_employment_reference_form[would_reemploy_any_reason]", with: Faker::Lorem.paragraph
+
+        referee_employment_reference_page.employment_start_day.send_keys "2"
+        referee_employment_reference_page.employment_start_month.send_keys "0"
+        referee_employment_reference_page.employment_start_year.send_keys "2007"
+
+        referee_employment_reference_page.employment_end_day.send_keys "2"
+        referee_employment_reference_page.employment_end_month.send_keys "0"
+        referee_employment_reference_page.employment_end_year.send_keys "2008"
+
+        click_on I18n.t("buttons.continue")
+        expect(referee_employment_reference_page.errors.map(&:text)).to eq(["Enter a date in the correct format", "Enter a date in the correct format"])
+
+        referee_employment_reference_page.employment_start_month.send_keys "3"
+        referee_employment_reference_page.employment_end_month.send_keys "3"
+
+        click_on I18n.t("buttons.continue")
+
+        expect(referee_reference_information_page).to be_displayed
+        referee_reference_information_page.under_investigation_yes.click
+        referee_reference_information_page.warnings_yes.click
+        referee_reference_information_page.allegations_yes.click
+        referee_reference_information_page.not_fit_to_practice_yes.click
+        referee_reference_information_page.able_to_undertake_role_yes.click
+        fill_in "referees_reference_information_form[under_investigation_details]", with: Faker::Lorem.paragraph
+        fill_in "referees_reference_information_form[warning_details]", with: Faker::Lorem.paragraph
+
+        click_on I18n.t("buttons.continue")
+
+        expect(referee_how_would_you_rate1_page).to be_displayed
+        referee_how_would_you_rate1_page.outstanding_punctuality.click
+        referee_how_would_you_rate1_page.outstanding_working_relationships.click
+        referee_how_would_you_rate1_page.outstanding_customer_care.click
+        referee_how_would_you_rate1_page.outstanding_adapt_to_change.click
+        click_on I18n.t("buttons.continue")
+
+        expect(referee_how_would_you_rate2_page).to be_displayed
+        referee_how_would_you_rate2_page.outstanding_deal_with_conflict.click
+        referee_how_would_you_rate2_page.outstanding_prioritise_workload.click
+        referee_how_would_you_rate2_page.outstanding_team_working.click
+        referee_how_would_you_rate2_page.outstanding_communication.click
+        click_on I18n.t("buttons.continue")
+
+        expect(referee_how_would_you_rate3_page).to be_displayed
+        referee_how_would_you_rate3_page.outstanding_problem_solving.click
+        referee_how_would_you_rate3_page.outstanding_general_attitude.click
+        referee_how_would_you_rate3_page.outstanding_technical_competence.click
+        referee_how_would_you_rate3_page.outstanding_leadership.click
+        click_on I18n.t("buttons.continue")
+
+        expect(referee_referee_details_page).to be_displayed
 
         referee_referee_details_page.complete_and_accurate_checkbox.click
         # last click to go to the confirmation page

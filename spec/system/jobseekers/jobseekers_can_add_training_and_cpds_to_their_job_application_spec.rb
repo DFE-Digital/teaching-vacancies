@@ -19,10 +19,14 @@ RSpec.describe "Jobseeker can add training and cpds to their job application" do
       expect(page).to be_axe_clean
     end
 
-    it "allows jobseeker to add training", :a11y do
+    it "has an accesible training page", :a11y do
       click_on "Add training"
 
       expect(page).to be_axe_clean
+    end
+
+    it "allows jobseeker to add training" do
+      click_on "Add training"
 
       click_on "Save and continue"
 
