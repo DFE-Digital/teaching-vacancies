@@ -43,12 +43,12 @@ module OnsDataImport
               location_polygon.reload
               # Need to keep importing with slightly greater tolerances until the data is valid.
               # Invalid polygons are worse than none because checking for validity at runtime is very expensive.
-              # :nocov:
+              # simplecov:disable
               if location_polygon.area_data_valid?
                 Rails.logger.info("Persisted new area data for '#{feature.name}' (#{type}) tolerance #{new_tolerance}")
                 break
               end
-              # :nocov:
+              # simplecov:enable
             end
           end
         end
@@ -136,9 +136,10 @@ module OnsDataImport
             response = client.get "#{ARCGIS_BASE_URL}#{api_name}/FeatureServer/0/query", params
 
             response_data = response.body
-            # :nocov:
+            # :simplecov:disable
             raise "ArcGIS error: #{response_data['error']}" if response_data.key?("error")
-            # :nocov:
+
+            # :simplecov:enable
 
             features = response_data.fetch("features")
             break if features.blank?

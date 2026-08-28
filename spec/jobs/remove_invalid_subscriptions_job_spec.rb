@@ -44,10 +44,10 @@ RSpec.describe RemoveInvalidSubscriptionsJob do
     let(:inactive_jobseeker) { create(:jobseeker, :with_closed_account) }
     let!(:inactive_for_closed) { create(:subscription, :inactive, email: inactive_jobseeker.email) }
     let!(:inactive_for_open) { create(:subscription, :inactive, email: active_jobseeker.email) }
-    let!(:inactive_without_account) { create(:subscription, :inactive) }
     let!(:active_subscription) { create(:subscription, email: active_jobseeker.email) }
 
     before do
+      create(:subscription, :inactive)
       described_class.perform_now
     end
 

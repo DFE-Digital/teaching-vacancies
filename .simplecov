@@ -54,6 +54,9 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # safe replacement for rake db:migrate, never going to be covered by tests
     skip "lib/tasks/migrate_swallowing_concurrent_migration_exceptions.rake"
 
+    # doesn't appear to be used
+    skip "app/services/email_event.rb"
+
     # Each group will be displayed in the report as its own Tab.
     group "Components", "app/components"
     group "Queries", "app/queries"
@@ -70,9 +73,9 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # However (possibly due to some residual random behaviour in test factories)
     # the line coverage needs to be set 0.02 below the reported value.
     # Nornmally this value needs to be 0.01 below the reported value due to rounding issues.
-    minimum_coverage line: 97.92, branch: 89.70
-    # Values from test run 27th August 2026
-    # Line Coverage: 97.93% (13058 / 13334) -> 276 lines uncovered
-    # Branch Coverage: 89.71% (2790 / 3110) -> 210 + 110 = 320 branches uncovered
+    minimum_coverage line: 98.00, branch: 89.88
+    # Values from test run 28th August 2026
+    # Line Coverage: 98.02% (13031 / 13293) -> 262 lines uncovered
+    # Branch Coverage: 89.90% (2789 / 3102) -> 211 + 102 = 313 branches uncovered
   end
 end

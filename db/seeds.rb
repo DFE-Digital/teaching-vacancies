@@ -141,7 +141,7 @@ location_preference_names = schools.map(&:postcode)
 
 Jobseeker.find_each do |jobseeker|
   Jobseeker.transaction do
-    FactoryBot.create(:jobseeker_profile, :with_personal_details,
+    FactoryBot.create(:jobseeker_profile, :for_seed_data, :with_personal_details,
                       active: true,
                       qualifications: FactoryBot.build_list(:qualification, 1, :for_seed_data, job_application: nil),
                       employments: FactoryBot.build_list(:profile_employment, 1, :for_seed_data),
