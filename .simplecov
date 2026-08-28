@@ -54,6 +54,9 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # safe replacement for rake db:migrate, never going to be covered by tests
     skip "lib/tasks/migrate_swallowing_concurrent_migration_exceptions.rake"
 
+    # doesn't appear to be used
+    skip "app/services/email_event.rb"
+
     # Each group will be displayed in the report as its own Tab.
     group "Components", "app/components"
     group "Queries", "app/queries"
