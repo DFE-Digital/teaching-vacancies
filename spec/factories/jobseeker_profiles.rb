@@ -2,8 +2,8 @@ FactoryBot.define do
   factory :jobseeker_profile do
     about_you { Faker::Lorem.paragraph(sentence_count: 2) }
     active { true }
-    qualified_teacher_status { factory_sample(JobseekerProfile.qualified_teacher_statuses.keys) }
-    qualified_teacher_status_year { "2000" if qualified_teacher_status == "yes" }
+    qualified_teacher_status { "yes" }
+    qualified_teacher_status_year { "2000" }
 
     association :jobseeker
 
@@ -40,6 +40,11 @@ FactoryBot.define do
       job_preferences { build(:job_preferences, :with_locations, jobseeker_profile: instance) }
       qualifications { build_list(:qualification, 1, :with_random_category, job_application: nil, jobseeker_profile: instance) }
       employments { build_list(:profile_employment, 1, :current_role, jobseeker_profile: instance) }
+    end
+
+    trait :for_seed_data do
+      qualified_teacher_status { factory_sample(JobseekerProfile.qualified_teacher_statuses.keys) }
+      qualified_teacher_status_year { "2000" if qualified_teacher_status == "yes" }
     end
   end
 end
