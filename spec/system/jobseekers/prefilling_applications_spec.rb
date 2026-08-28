@@ -135,6 +135,7 @@ RSpec.describe "Jobseekers can prefill applications" do
         click_on I18n.t("jobseekers.saved_jobs.index.apply")
       end
 
+      expect(page).to have_current_path new_jobseekers_job_job_application_path(vacancy.id)
       click_on I18n.t("buttons.start_application")
 
       click_on "Personal details"
