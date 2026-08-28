@@ -351,5 +351,31 @@ FactoryBot.define do
       religious_referee_email { Faker::Internet.email(domain: "contoso.com") }
       religious_referee_phone { Faker::PhoneNumber.phone_number }
     end
+
+    trait :with_personal_details do
+      first_name { Faker::Name.first_name }
+      last_name {  Faker::Name.last_name }
+      street_address { Faker::Address.street_address }
+      city { Faker::Address.city }
+      postcode { Faker::Address.postcode }
+      country { "United Kingdom" }
+      phone_number { Faker::PhoneNumber.phone_number }
+      email_address { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
+      working_patterns { %w[part_time] }
+      working_pattern_details { "I only work on days starting with T sorry." }
+      has_right_to_work_in_uk { true }
+      national_insurance_number { "AB 12 12 12 A" }
+    end
+
+    trait :with_professional_status do
+      qualified_teacher_status { "yes" }
+      qualified_teacher_status_year { Time.current.year }
+      teacher_reference_number { "1234567" }
+      is_statutory_induction_complete { true }
+    end
+
+    trait :with_personal_statement do
+      personal_statement_richtext { Faker::Lorem.paragraph(sentence_count: 8) }
+    end
   end
 end

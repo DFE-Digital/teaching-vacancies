@@ -17,10 +17,30 @@ RSpec.describe "Jobseekers applications statuses" do
       visit job_path(vacancy)
     end
 
-    context "when the jobseeker has completed details in their profile", :a11y do
+    context "when the jobseeker has completed details in their profile" do
       let(:jobseeker_profile) { build(:jobseeker_profile, :completed) }
 
-      it "passes accessibility checks" do
+      it "passes accessibility checks", :a11y do
+        expect(page).to be_axe_clean
+      end
+
+      it "has an accessible start page", :a11y do
+        within ".banner-buttons" do
+          click_on I18n.t("jobseekers.job_applications.banner_links.apply")
+        end
+
+        expect(page).to be_axe_clean
+      end
+
+      it "has an accessible status page", :a11y do
+        within ".banner-buttons" do
+          click_on I18n.t("jobseekers.job_applications.banner_links.apply")
+        end
+
+        click_button "Start application"
+        # wait for page load
+        find_by_id("personal_details")
+
         expect(page).to be_axe_clean
       end
 
@@ -29,13 +49,9 @@ RSpec.describe "Jobseekers applications statuses" do
           click_on I18n.t("jobseekers.job_applications.banner_links.apply")
         end
 
-        expect(page).to be_axe_clean
-
         click_button "Start application"
         # wait for page load
         find_by_id("personal_details")
-
-        expect(page).to be_axe_clean
 
         expect(page).to have_css("#personal_details", text: I18n.t("shared.status_tags.incomplete"))
         expect(page).to have_css("#professional_status", text: I18n.t("shared.status_tags.incomplete"))

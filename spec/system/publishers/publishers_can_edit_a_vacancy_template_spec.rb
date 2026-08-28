@@ -22,7 +22,7 @@ RSpec.describe "Editing a vacancy template" do
     }.to change(VacancyTemplate, :count).by(-1)
   end
 
-  describe "accessibility of change pages", :a11y do
+  describe "change pages" do
     before do
       within "##{change}" do
         click_on "Change"
@@ -32,10 +32,12 @@ RSpec.describe "Editing a vacancy template" do
     context "with name" do
       let(:change) { "name" }
 
-      it "can have its name edited from the template show page", :retry do
+      it "is accessible", :a11y, :retry do
         expect(page).to have_content "What is the template name?"
         expect(page).to be_axe_clean
+      end
 
+      it "can be changed" do
         fill_in "What is the template name?", with: template_name
         click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
         expect(page).to have_content "Template details"
@@ -47,10 +49,12 @@ RSpec.describe "Editing a vacancy template" do
     context "with role" do
       let(:change) { "job_role" }
 
-      it "can have its role edited", :retry do
+      it "is accessible", :a11y, :retry do
         expect(page).to have_content "What type of job is this?"
         expect(page).to be_axe_clean
+      end
 
+      it "can have its role edited" do
         check "Headteacher"
         click_on I18n.t("buttons.save_and_continue")
 
@@ -62,10 +66,12 @@ RSpec.describe "Editing a vacancy template" do
     context "with subjects" do
       let(:change) { "subjects" }
 
-      it "can have its subjects edited to nothing", :retry do
+      it "is accessible", :a11y, :retry do
         expect(page).to have_content "Which subject or subjects is this job for? (optional)"
         expect(page).to be_axe_clean
+      end
 
+      it "can have its subjects edited to nothing" do
         uncheck "Chemistry"
         click_on I18n.t("buttons.save_and_continue")
 
@@ -73,7 +79,7 @@ RSpec.describe "Editing a vacancy template" do
         expect(template.reload).to have_attributes(subjects: [])
       end
 
-      it "shows an error when typing in the search bar without selecting a subject", :retry do
+      it "shows an error when typing in the search bar without selecting a subject" do
         uncheck "Chemistry"
         fill_in "publishers_job_listing_subjects_form[subject_search]", with: "magic"
         click_on I18n.t("buttons.save_and_continue")
@@ -85,10 +91,12 @@ RSpec.describe "Editing a vacancy template" do
     context "with key_stages" do
       let(:change) { "key_stages" }
 
-      it "can have its key_stages edited", :retry do
+      it "is accessible", :a11y, :retry do
         expect(page).to have_content "Key stages"
         expect(page).to be_axe_clean
+      end
 
+      it "can have its key_stages edited" do
         check "Key stage 4"
         click_on I18n.t("buttons.save_and_continue")
 
@@ -100,11 +108,13 @@ RSpec.describe "Editing a vacancy template" do
     context "with contract_type" do
       let(:change) { "contract_type" }
 
-      it "can have its contract type edited", :retry do
+      it "is accessible", :a11y, :retry do
         expect(page).to have_content "Contract information"
         #  https://github.com/alphagov/govuk-frontend/issues/979
         expect(page).to be_axe_clean.skipping "aria-allowed-attr"
+      end
 
+      it "can have its contract type edited" do
         choose "Permanent"
         click_on I18n.t("buttons.save_and_continue")
 
@@ -117,11 +127,13 @@ RSpec.describe "Editing a vacancy template" do
       let(:change) { "salary" }
       let(:pay_scale) { "M1 to M2" }
 
-      it "can have its salary edited", :retry do
+      it "is accessible", :a11y, :retry do
         expect(page).to have_content "Salary and allowances"
         #  https://github.com/alphagov/govuk-frontend/issues/979
         expect(page).to be_axe_clean.skipping "aria-allowed-attr"
+      end
 
+      it "can have its salary edited" do
         uncheck "Full time equivalent salary"
 
         check "Pay scale"
@@ -136,11 +148,13 @@ RSpec.describe "Editing a vacancy template" do
     context "with ect status" do
       let(:change) { "ect_status" }
 
-      it "can have its ect status edited", :retry do
+      it "is accessible", :a11y, :retry do
         expect(page).to have_content "Is this role suitable for an early career teacher"
         #  https://github.com/alphagov/govuk-frontend/issues/979
         expect(page).to be_axe_clean.skipping "aria-allowed-attr"
+      end
 
+      it "can have its ect status edited" do
         within ".ect-status-radios" do
           choose "No"
         end
@@ -154,10 +168,12 @@ RSpec.describe "Editing a vacancy template" do
     context "with school visits" do
       let(:change) { "school_visits" }
 
-      it "can have its school visits edited", :retry do
+      it "is accessible", :a11y, :retry do
         expect(page).to have_content "Do you want to offer candidates the opportunity to visit?"
         expect(page).to be_axe_clean.skipping "aria-allowed-attr"
+      end
 
+      it "can have its school visits edited" do
         choose "Yes"
         click_on I18n.t("buttons.save_and_continue")
 
@@ -169,10 +185,12 @@ RSpec.describe "Editing a vacancy template" do
     context "with visa_sponsorship_available" do
       let(:change) { "visa_sponsorship_available" }
 
-      it "can have its visa_sponsorship_available edited", :a11y, :retry do
+      it "is accessible", :a11y, :retry do
         expect(page).to have_content "Visa sponsorship"
         expect(page).to be_axe_clean.skipping "aria-allowed-attr"
+      end
 
+      it "can have its visa_sponsorship_available edited" do
         choose "Yes"
         click_on I18n.t("buttons.save_and_continue")
 
@@ -184,10 +202,12 @@ RSpec.describe "Editing a vacancy template" do
     context "with application type" do
       let(:change) { "enable_job_applications" }
 
-      it "can have its application type edited", :retry do
+      it "is accessible", :a11y, :retry do
         expect(page).to have_content "How do you want candidates to apply?"
         expect(page).to be_axe_clean.skipping "aria-allowed-attr"
+      end
 
+      it "can have its application type edited" do
         choose "Use your own application form"
         click_on I18n.t("buttons.save_and_continue")
 

@@ -6,13 +6,19 @@ RSpec.describe "Api::Markers" do
   let(:vacancy) { create(:vacancy, organisations: [organisation]) }
   let(:marker_type) { "vacancy" }
 
-  describe "GET /api/v1/markers/:id.json?parent_id=:parent_id", json: true do
+  describe "GET /api/v1/markers/:id.json?parent_id=:parent_id" do
     subject do
       get api_marker_path(vacancy.id, api_version: 1), params: { parent_id: organisation.id, marker_type: marker_type, format: :json }
     end
 
     it "returns status :not_found if the request format is not JSON" do
       get api_marker_path(vacancy.id, api_version: 1), params: { parent_id: organisation.id, marker_type: marker_type, format: :html }
+
+      expect(response.status).to eq(Rack::Utils.status_code(:not_found))
+    end
+
+    it "returns status :not_found when id not present" do
+      get api_marker_path(SecureRandom.uuid, api_version: 1), params: { parent_id: organisation.id, marker_type: marker_type, format: :json }
 
       expect(response.status).to eq(Rack::Utils.status_code(:not_found))
     end

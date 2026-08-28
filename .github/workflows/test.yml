@@ -45,19 +45,6 @@ jobs:
       - name: Set up test database
         run: bundle exec rake db:create db:schema:load parallel:create parallel:load_schema
 
-      - name: Cache Swagger docs
-        uses: actions/cache@v6.1.0
-        id: swagger-cache
-        with:
-          path: swagger
-          key: ${{ runner.os }}-swagger-${{ hashFiles('spec/swagger_helper.rb', 'spec/requests/publishers/ats_api/v1/**', 'app/controllers/publishers/ats_api/v1/**') }}
-          restore-keys: |
-            ${{ runner.os }}-swagger-
-
-      - name: Generate Swagger (OpenAPI) docs
-        if: steps.swagger-cache.outputs.cache-hit != 'true'
-        run: bundle exec rake rswag:specs:swaggerize
-
       - name: Cache precompiled assets
         uses: actions/cache@v6.1.0
         id: assets-cache
@@ -72,6 +59,19 @@ jobs:
       - name: Precompile assets
         if: steps.assets-cache.outputs.cache-hit != 'true'
         run: bin/rails assets:precompile
+
+      - name: Cache Swagger docs
+        uses: actions/cache@v6.1.0
+        id: swagger-cache
+        with:
+          path: swagger
+          key: ${{ runner.os }}-swagger-${{ hashFiles('spec/swagger_helper.rb', 'spec/requests/publishers/ats_api/v1/**', 'app/controllers/publishers/ats_api/v1/**') }}
+          restore-keys: |
+            ${{ runner.os }}-swagger-
+
+      - name: Generate Swagger (OpenAPI) docs
+        if: steps.swagger-cache.outputs.cache-hit != 'true'
+        run: bundle exec rake rswag:specs:swaggerize
 
       - name: Cache Test Runtimes
         uses: actions/cache@v6.1.0
@@ -97,7 +97,7 @@ jobs:
           name: coverage report
           path: coverage
 
-      - name: Check coverage regardless of failure
+      - name: Check if any new or changed code is not covered by tests
         if: always()
         run: bundle exec undercover
 
@@ -108,7 +108,6 @@ jobs:
           name: capybara-screenshots
           path: /home/runner/work/teaching-vacancies/teaching-vacancies/tmp/capybara/*.png
           if-no-files-found: ignore # If only non-capybara tests fail there will be no screenshots
-
 
   frontend-tests:
     name: Run frontend JS unit tests
@@ -126,3 +125,52 @@ jobs:
 
       - name: run frontend tests and linting
         run: yarn run js:test
+
+  accessibility-tests:
+    name: Run accessibility tests
+
+    runs-on: ubuntu-latest
+
+    env:
+      DATABASE_URL: postgis://postgres:postgres@localhost:5432
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+
+    services:
+      postgres:
+        image: postgis/postgis:14-3.5-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7.0.1
+
+      - name: Prepare application environment
+        uses: ./.github/actions/prepare-app-env
+
+      - name: Set up test database
+        env:
+          RAILS_ENV: test
+        run: bundle exec rake db:create db:schema:load
+
+      - name: Cache precompiled assets
+        uses: actions/cache@v6.1.0
+        id: assets-cache
+        with:
+          path: |
+            public/assets
+            tmp/cache/assets
+          key: ${{ runner.os }}-assets-${{ hashFiles('app/assets/stylesheets/**/*', 'app/assets/javascript/**/*', 'app/assets/images/**/*', 'app/components/**/*.scss', 'config/initializers/assets.rb', 'esbuild.config.js', 'yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-assets-
+
+      - name: Precompile assets
+        if: steps.assets-cache.outputs.cache-hit != 'true'
+        run: bin/rails assets:precompile
+
+      - name: Run accessibility tests without coverage
+        run: bundle exec rspec --tag a11y

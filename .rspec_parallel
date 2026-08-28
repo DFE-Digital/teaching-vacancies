@@ -1,4 +1,5 @@
 --require spec_helper
 --tag ~smoke_test
+--tag ~a11y
 --format progress
 --format ParallelTests::RSpec::RuntimeLogger --out tmp/parallel_runtime_rspec.log
