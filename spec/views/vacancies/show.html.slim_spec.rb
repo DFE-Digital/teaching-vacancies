@@ -241,10 +241,9 @@ RSpec.describe "vacancies/show" do
   # Please notify performance analyst (currently Johnathan Chambers) if you change this test
   # as it reflects the binding between the application and the Floodlight tags in GA
   describe "floodlight tags" do
-    let(:jobseeker) { build_stubbed(:jobseeker) }
-
     describe "Apply Button" do
       let(:vacancy) { build_stubbed(:vacancy) }
+      let(:jobseeker) { nil }
 
       it "has the correct text" do
         expect(rendered).to have_content("Apply for this job")
@@ -253,6 +252,7 @@ RSpec.describe "vacancies/show" do
 
     describe "View advert on school website" do
       let(:vacancy) { build_stubbed(:vacancy, :apply_via_website) }
+      let(:jobseeker) { nil }
 
       it "has the correct text" do
         expect(rendered).to have_content("View advert on school website (opens in new tab)")
@@ -261,6 +261,7 @@ RSpec.describe "vacancies/show" do
 
     describe "View advert on college website" do
       let(:vacancy) { build_stubbed(:vacancy, :apply_via_website, organisations: [build(:college)]) }
+      let(:jobseeker) { nil }
 
       it "has the correct text" do
         expect(rendered).to have_content("View advert on college website (opens in new tab)")
@@ -269,6 +270,7 @@ RSpec.describe "vacancies/show" do
 
     describe "Download an application form" do
       let(:vacancy) { create(:vacancy, :with_application_form) }
+      let(:jobseeker) { build_stubbed(:jobseeker) }
 
       it "has the correct text" do
         expect(rendered).to have_content("Download an application form - ")
@@ -277,6 +279,7 @@ RSpec.describe "vacancies/show" do
 
     describe "View advert on external website" do
       let(:vacancy) { build_stubbed(:vacancy, :external) }
+      let(:jobseeker) { nil }
 
       it "has the correct text" do
         expect(rendered).to have_content("View advert on external website (opens in new tab)")
@@ -285,6 +288,7 @@ RSpec.describe "vacancies/show" do
 
     describe "External college notice" do
       let(:vacancy) { build_stubbed(:vacancy, :external, organisations: [build(:college)]) }
+      let(:jobseeker) { nil }
 
       it "uses college wording" do
         expect(rendered).to have_content("This college accepts applications through their own website")
