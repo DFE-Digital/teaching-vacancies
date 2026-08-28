@@ -43,12 +43,12 @@ module OnsDataImport
               location_polygon.reload
               # Need to keep importing with slightly greater tolerances until the data is valid.
               # Invalid polygons are worse than none because checking for validity at runtime is very expensive.
-              # :nocov:
+              # simplecov:disable
               if location_polygon.area_data_valid?
                 Rails.logger.info("Persisted new area data for '#{feature.name}' (#{type}) tolerance #{new_tolerance}")
                 break
               end
-              # :nocov:
+              # simplecov:enable
             end
           end
         end
