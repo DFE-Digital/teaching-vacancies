@@ -27,7 +27,7 @@ const LocationFinder = class extends Controller {
       this.removeErrorMessage();
     });
 
-    if (this.input.value === '' && navigator.geolocation) {
+    if (this.input.value === '' && navigator.geolocation && this.element.offsetParent !== null) {
       this.findLocation();
     }
   }
