@@ -6,6 +6,7 @@
     = f.govuk_text_field :location,
       label: { text: t("organisations.search.location"), size: "s" },
       class: %w[location-finder__input]
+  = render "vacancies/search/current_location", target: "college-search-form-location-field"
 
   = f.govuk_collection_select :radius, radius_filter_options, :last, :first,
     label: { text: t("jobs.search.within_radius"), size: "s" },
