@@ -22,7 +22,7 @@
     "chartkick": "^5.0.1",
     "classlist-polyfill": "^1.2.0",
     "core-js": "^3.50.0",
-    "dompurify": "^3.4.13",
+    "dompurify": "^3.4.14",
     "govuk-frontend": "^6.4.0",
     "leaflet": "^1.9.4",
     "leaflet-gesture-handling": "^1.2.2",
