@@ -53,3 +53,5 @@
         - summary_list.with_row do |row|
           - row.with_key text: t("jobs.visa_sponsorship_row_title"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
           - row.with_value text: t("jobs.visa_sponsorship_#{vacancy.visa_sponsorship_available ? 'available' : 'unavailable'}"), classes: "govuk-body-s govuk-!-padding-bottom-0"
+
+      = render "vacancies/search/commute_time", vacancy: vacancy if vacancy.geolocation.is_a?(RGeo::Feature::Point)

@@ -100,6 +100,8 @@ en:
       other: Save qualifications
     save_reference: Save referee
     search: Search
+    check_commute: Check
+    checking_commute: Checking…
     search_toggle_panel: Edit search
     select_file: Select a file
     send_message: Send message

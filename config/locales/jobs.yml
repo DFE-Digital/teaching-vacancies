@@ -251,6 +251,21 @@ en:
     expires_at: Closing date
     time_at: at
     visa_sponsorship_row_title: Visa sponsorship
+    commute_time: Commute time
+    commute_time_postcode_label: Enter your postcode to check commute time
+    commute_time_change: Change postcode
+    commute_time_attribution: Google Maps
+    commute_time_error: We could not calculate the driving time. Try again later.
+    commute_time_invalid_postcode: Enter a full UK postcode
+    commute_time_minutes:
+      one: 1 minute
+      other: "%{count} minutes"
+    commute_time_route_not_found: We could not find a driving route from that postcode.
+    commute_time_mode:
+      driving: "%{duration} by car"
+      transit: "%{duration} by public transport"
+      cycling: "%{duration} cycling"
+      walking: "%{duration} walking"
     visa_sponsorship_available: Skilled Worker visas can be sponsored
     visa_sponsorship_unavailable: Visas cannot be sponsored
     supporting_documents: Supporting documents

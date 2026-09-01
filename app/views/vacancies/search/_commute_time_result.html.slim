@@ -1,0 +1,6 @@
+.commute-time__result
+  span.commute-time__label.govuk-body-s class="govuk-!-font-weight-bold govuk-!-margin-bottom-0" = t("jobs.commute_time")
+  .commute-time__result-value
+    span.govuk-body-s class="govuk-!-margin-bottom-0" = t("jobs.commute_time_mode.driving", duration: t("jobs.commute_time_minutes", count: duration))
+    a.govuk-link.govuk-body-s.commute-time__change href="#" data-action="commute-time#reset" = t("jobs.commute_time_change")
+    span.govuk-body-s.commute-time__attribution = t("jobs.commute_time_attribution")
