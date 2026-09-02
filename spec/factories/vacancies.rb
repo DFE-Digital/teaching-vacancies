@@ -71,6 +71,7 @@ FactoryBot.define do
     job_roles { %w[teacher] }
     ect_status { :ect_unsuitable }
     pay_scale { factory_sample(salaries) }
+    phases { %w[primary] }
     publish_on { Date.current }
     salary { factory_sample(salaries) }
     hourly_rate { "£25 per hour" }
@@ -99,6 +100,7 @@ FactoryBot.define do
 
     trait :it_support do
       job_roles { %w[it_support] }
+      key_stages { %w[] }
     end
 
     trait :secondary do

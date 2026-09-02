@@ -124,7 +124,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
             li
               div => "#{t('jobs.annual_salary')}:"
               = vacancy.salary
-          - if vacancy.actual_salary?
+          - if vacancy.actual_salary.present?
             li
               div => "#{t('jobs.actual_salary')}:"
               = vacancy.actual_salary

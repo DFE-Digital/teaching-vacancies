@@ -345,4 +345,20 @@ RSpec.describe VacancyDecorator do
       end
     end
   end
+
+  describe "#actual_salary" do
+    let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time], actual_salary: "50000") }
+
+    it "resets actual_salary field" do
+      expect(decorated.actual_salary).to be_blank
+    end
+  end
+
+  describe "#fixed_term_contract_duration" do
+    let(:vacancy) { build_stubbed(:vacancy, contract_type: "permanent", fixed_term_contract_duration: "6 months") }
+
+    it "resets fixed term contract duration" do
+      expect(decorated.fixed_term_contract_duration).to be_blank
+    end
+  end
 end

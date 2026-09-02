@@ -8,8 +8,6 @@ module Resettable
   end
 
   def reset_dependent_fields
-    reset_actual_salary
-    reset_fixed_term_contract_duration
     reset_keystages
     reset_subjects
     set_default_key_stage
@@ -22,18 +20,6 @@ module Resettable
     reset_contact_number
     reset_further_details
     reset_benefits_details
-  end
-
-  def reset_actual_salary
-    return unless working_patterns_changed? && working_patterns == ["full_time"]
-
-    self.actual_salary = ""
-  end
-
-  def reset_fixed_term_contract_duration
-    return unless contract_type_changed? && contract_type != "fixed_term"
-
-    self.fixed_term_contract_duration = ""
   end
 
   def reset_keystages
