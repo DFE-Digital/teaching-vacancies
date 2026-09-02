@@ -15,7 +15,7 @@ RSpec.describe Resettable do
 
     it "resets actual salary" do
       expect { update_working_patterns }
-        .to change { vacancy.actual_salary }
+        .to change(vacancy, :actual_salary)
         .from(previous_actual_salary).to("")
     end
   end
@@ -31,21 +31,21 @@ RSpec.describe Resettable do
 
       it "resets fixed term contract duration" do
         expect { update_contract_type }
-          .to change { vacancy.fixed_term_contract_duration }
+          .to change(vacancy, :fixed_term_contract_duration)
           .from(previous_fixed_term_contract_duration).to("")
       end
     end
   end
 
   context "when changing education support" do
-    subject(:update_education_support) { vacancy.update(job_roles: ["education_support"]) }
+    subject(:update_education_support) { vacancy.update(job_roles: %w[education_support]) }
 
-    let(:vacancy) { build(:vacancy, phases: %w[primary], job_roles: ["teacher"], key_stages: %w[ks1]) }
+    let(:vacancy) { build(:vacancy, phases: %w[primary], job_roles: %w[teacher], key_stages: %w[ks1]) }
     let(:previous_key_stages) { vacancy.key_stages }
 
     it "resets key stages" do
       expect { update_education_support }
-        .to change { vacancy.key_stages }
+        .to change(vacancy, :key_stages)
         .from(previous_key_stages).to([])
     end
   end
@@ -62,7 +62,7 @@ RSpec.describe Resettable do
 
       it "resets subjects" do
         expect { update_education_phases }
-          .to change { vacancy.subjects }
+          .to change(vacancy, :subjects)
           .from(previous_subjects).to([])
       end
     end
@@ -72,21 +72,21 @@ RSpec.describe Resettable do
 
       it "resets key stages" do
         expect { update_education_phases }
-          .to change { vacancy.key_stages }
+          .to change(vacancy, :key_stages)
           .from(previous_key_stages).to(%w[early_years])
       end
     end
   end
 
   context "when changing job role" do
-    subject(:update_job_role) { vacancy.update(job_roles: ["education_support"]) }
+    subject(:update_job_role) { vacancy.update(job_roles: %w[education_support]) }
 
-    let(:vacancy) { build(:vacancy, job_roles: ["teacher"]) }
+    let(:vacancy) { build(:vacancy, job_roles: %w[teacher]) }
     let(:previous_ect_status) { vacancy.ect_status }
 
     it "resets the ect status" do
       expect { update_job_role }
-        .to change { vacancy.ect_status }
+        .to change(vacancy, :ect_status)
         .from(previous_ect_status).to(nil)
     end
   end
@@ -113,7 +113,7 @@ RSpec.describe Resettable do
 
       it "resets application email" do
         expect { update_receive_application }
-        .to change { vacancy.application_email }
+        .to change(vacancy, :application_email)
         .from(previous_application_email).to(nil)
       end
     end
@@ -125,7 +125,7 @@ RSpec.describe Resettable do
 
       it "resets application link" do
         expect { update_receive_application }
-          .to change { vacancy.application_link }
+          .to change(vacancy, :application_link)
           .from(previous_application_link).to("")
       end
     end
@@ -138,7 +138,7 @@ RSpec.describe Resettable do
 
     before do
       allow(vacancy).to receive(:supporting_documents).and_return([document])
-      vacancy.update(include_additional_documents: false)
+      vacancy.update!(include_additional_documents: false)
     end
 
     it "removes all previous supporting documents" do
@@ -154,7 +154,7 @@ RSpec.describe Resettable do
 
     it "resets contact number" do
       expect { update_contact_number_provided }
-        .to change { vacancy.contact_number }
+        .to change(vacancy, :contact_number)
         .from(previous_contact_number).to(nil)
     end
   end
@@ -167,7 +167,7 @@ RSpec.describe Resettable do
 
     it "resets further details" do
       expect { update_further_details_provided }
-        .to change { vacancy.further_details }
+        .to change(vacancy, :further_details)
         .from(previous_further_details).to(nil)
     end
   end
@@ -180,7 +180,7 @@ RSpec.describe Resettable do
 
     it "resets benefits details" do
       expect { update_benefits }
-        .to change { vacancy.benefits_details }
+        .to change(vacancy, :benefits_details)
         .from(previous_benefits_details).to(nil)
     end
   end
