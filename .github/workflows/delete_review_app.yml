@@ -123,9 +123,9 @@ jobs:
           azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
 
       - name: Terraform destroy (on PR closed)
-        run: 
+        run: |
           echo "Deleting PR ${PR_NUMBER}"
-          make review ci terraform-app-destroy pr_id=${{env.PR_NUMBER}}
+          make review ci terraform-app-destroy pr_id=${{ env.PR_NUMBER }}
 
       - name: Delete Terraform Statefile
         run: ./bin/delete-state-file ${{env.PR_NUMBER}}
@@ -145,5 +145,5 @@ jobs:
           service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
           message: |
             Failed deletion of review app PR ${{env.PR_NUMBER}}
-            Pull Requst: ${{ env.LINK_TO_PR }}
+            Pull Request: ${{ env.LINK_TO_PR }}
             Review app: ${{ env.LINK_TO_APP }}

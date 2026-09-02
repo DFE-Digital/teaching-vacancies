@@ -8,12 +8,19 @@ statefile="review-pr-${PR}.tfstate"
 prefix="review/${statefile}"
 key=$prefix
 
-list_statefile_versionId=$(aws s3api list-object-versions --bucket ${bucket_name} --prefix "${prefix}" --query 'Versions[*].[VersionId]' --output text)
+list_statefile_versionId=$(
+  aws s3api list-object-versions --bucket "$bucket_name" --prefix "$prefix" --query 'Versions[*].[VersionId]' --output text
+)
 
-echo Deleting Review app\'s state file
+echo "Deleting Review app's state file"
+
+if [[ -z "$list_statefile_versionId" || "$list_statefile_versionId" == "None" ]]; then
+    echo "No state file found for PR ${PR}. Skipping deletion."
+    exit 0
+fi
 
 for versionId in $list_statefile_versionId
-    do
-        echo "$versionId"
-        aws s3api delete-object --bucket ${bucket_name} --key "$key" --version-id "$versionId"
-    done
+do
+    echo "$versionId"
+    aws s3api delete-object --bucket "$bucket_name" --key "$key" --version-id "$versionId"
+done
