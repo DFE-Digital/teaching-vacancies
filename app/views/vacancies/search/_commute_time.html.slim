@@ -2,12 +2,11 @@
 - error_id = "#{field_id}_error"
 - commute_time_url = job_commute_time_path(vacancy)
 .commute-time data-controller="commute-time" data-commute-time-url-value=commute_time_url data-commute-time-checking-value=t("buttons.checking_commute") data-commute-time-error-value=t("jobs.commute_time_error")
-  form.commute-time__form action=commute_time_url method="post" data-action="submit->commute-time#calculate" data-commute-time-target="form"
-    = hidden_field_tag :authenticity_token, form_authenticity_token
+  .commute-time__form data-commute-time-target="form"
     label.commute-time__label.govuk-body-s class="govuk-!-font-weight-bold govuk-!-margin-bottom-0" for=field_id = t("jobs.commute_time")
     .commute-time__control
       p.govuk-error-message.commute-time__error id=error_id role="alert" hidden=true data-commute-time-target="error"
       .commute-time__inputs
-        input.govuk-input.govuk-input--width-10 type="text" id=field_id name="postcode" placeholder="e.g. SW1A 1AA" autocomplete="postal-code" required=true aria-describedby=error_id data-commute-time-target="postcode"
-        button.govuk-button.govuk-button--secondary.commute-time__button type="submit" data-commute-time-target="button" = t("buttons.check_commute")
+        input.govuk-input.govuk-input--width-10 type="text" id=field_id name="postcode" placeholder="e.g. SW1A 1AA" autocomplete="postal-code" aria-describedby=error_id data-action="keydown.enter->commute-time#calculate" data-commute-time-target="postcode"
+        button.govuk-button.govuk-button--secondary.commute-time__button type="button" data-action="click->commute-time#calculate" data-commute-time-target="button" = t("buttons.check_commute")
   .commute-time__result-container aria-live="polite" data-commute-time-target="result"
