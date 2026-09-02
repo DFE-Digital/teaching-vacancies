@@ -96,6 +96,13 @@ production:
     class: 'RemoveVacanciesThatExpiredYesterdayFromGoogleIndexJob'
     queue: low
 
+  # Comfortably after export_users/export_approvers (01:00/01:05) plus their stale-run
+  # threshold, so a run that hasn't finished by now is genuinely stuck.
+  monitor_dsi_export_runs:
+    schedule: '10 04 * * *' # "At 04:10."
+    class: 'MonitorDSIExportRunsJob'
+    queue: low
+
   remove_invalid_subscriptions:
     schedule: '0 05 * * *' # "At 05:00."
     class: 'RemoveInvalidSubscriptionsJob'
