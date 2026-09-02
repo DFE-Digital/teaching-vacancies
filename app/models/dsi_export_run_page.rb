@@ -5,5 +5,8 @@
 class DSIExportRunPage < ApplicationRecord
   belongs_to :dsi_export_run
 
-  validates :page_number, uniqueness: { scope: :dsi_export_run_id }
+  validates :page_number, presence: true, uniqueness: { scope: :dsi_export_run_id }
+  # Not `presence: true`: an empty array is a legitimate payload (see FetchDSIUsersPageJob,
+  # which has nothing worth caching per page), so only nil itself should be rejected.
+  validates :payload, exclusion: { in: [nil] }
 end

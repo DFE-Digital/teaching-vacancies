@@ -9,7 +9,7 @@ class CreateDSIExportRuns < ActiveRecord::Migration[8.1]
     end
 
     create_table :dsi_export_run_pages, id: :uuid do |t|
-      t.references :dsi_export_run, null: false, type: :uuid, foreign_key: true
+      t.references :dsi_export_run, null: false, type: :uuid, foreign_key: true, index: false
       t.integer :page_number, null: false
       t.jsonb :payload, null: false
 

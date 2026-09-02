@@ -100,7 +100,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_28_120000) do
     t.jsonb "payload", null: false
     t.datetime "updated_at", null: false
     t.index ["dsi_export_run_id", "page_number"], name: "index_dsi_export_run_pages_on_run_id_and_page_number", unique: true
-    t.index ["dsi_export_run_id"], name: "index_dsi_export_run_pages_on_dsi_export_run_id"
   end
 
   create_table "dsi_export_runs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
