@@ -4,7 +4,7 @@ require "dfe_sign_in/api/request"
 RSpec.describe Publishers::DfeSignIn::BigQueryExport::Users do
   before do
     expect(bigquery_stub).to receive(:dataset).with("test_dataset").and_return(dataset_stub)
-    expect(dataset_stub).to receive(:table).and_return(table_stub)
+    allow(dataset_stub).to receive(:table).and_return(table_stub)
 
     expect(DfeSignIn::API::Request).to receive(:new).at_least(:once).and_return(api_request)
     expect(api_request).to receive(:perform).at_least(:once).and_return(api_response)
@@ -96,6 +96,12 @@ RSpec.describe Publishers::DfeSignIn::BigQueryExport::Users do
 
       it "raises a runtime error" do
         expect { subject.call }.to raise_error(RuntimeError)
+      end
+
+      it "does not touch the existing table, so it is not left empty" do
+        expect { subject.call }.to raise_error(RuntimeError)
+
+        expect(dataset_stub).not_to have_received(:table)
       end
     end
   end
