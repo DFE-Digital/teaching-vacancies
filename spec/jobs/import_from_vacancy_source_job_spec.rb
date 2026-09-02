@@ -106,7 +106,7 @@ RSpec.describe ImportFromVacancySourceJob do
         expect(FailedImportedVacancy.first.import_errors).to include("phases:[can't be blank]")
         expect(FailedImportedVacancy.first.vacancy).to eq(
           "about_school" => "test",
-          "actual_salary" => "",
+          "actual_salary" => nil,
           "anonymise_applications" => false,
           "application_email" => nil,
           "application_link" => nil,
@@ -128,7 +128,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "external_advert_url" => "https://example.com/jobs/123",
           "external_reference" => "invalid_vac_ref",
           "external_source" => "may_the_feed_be_with_you",
-          "fixed_term_contract_duration" => "",
+          "fixed_term_contract_duration" => nil,
           "flexi_working" => "Debitis id voluptate cumque iusto quod ut libero facere repellendus est perspiciatis rem labore voluptatibus",
           "further_details" => "details",
           "further_details_provided" => true,
@@ -140,7 +140,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "job_location" => nil,
           "job_roles" => ["teacher"],
           "job_title" => "",
-          "key_stages" => [],
+          "key_stages" => ["ks1"],
           "latest_start_date" => nil,
           "listed_elsewhere" => nil,
           "other_extension_reason_details" => nil,

@@ -137,7 +137,13 @@ RSpec.describe VacancyDecorator do
   describe "#benefits_details" do
     subject { decorated }
 
+    let(:vacancy) { build_stubbed(:vacancy, benefits: false, benefits_details: "test") }
+
     it_behaves_like "a fields that outputs the correct HTML", :benefits_details
+
+    it "resets benefits details" do
+      expect(decorated.benefits_details).to be_nil
+    end
   end
 
   describe "#working_patterns_for_job_schema" do
@@ -343,6 +349,70 @@ RSpec.describe VacancyDecorator do
       it "returns working patterns" do
         expect(vacancy.readable_working_patterns).to eq("Full time, part time")
       end
+    end
+  end
+
+  describe "#actual_salary" do
+    let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time], actual_salary: "50000") }
+
+    it "resets actual_salary field" do
+      expect(decorated.actual_salary).to be_blank
+    end
+  end
+
+  describe "#fixed_term_contract_duration" do
+    let(:vacancy) { build_stubbed(:vacancy, contract_type: "permanent", fixed_term_contract_duration: "6 months") }
+
+    it "resets fixed term contract duration" do
+      expect(decorated.fixed_term_contract_duration).to be_blank
+    end
+  end
+
+  describe "#subjects" do
+    let(:vacancy) { build_stubbed(:vacancy, phases: %w[primary], subjects: %w[Maths English]) }
+
+    it "resets subjects" do
+      expect(decorated.subjects).to be_blank
+    end
+  end
+
+  describe "#receive_applications" do
+    let(:vacancy) { build_stubbed(:draft_vacancy, :apply_via_website, enable_job_applications: true) }
+
+    it "resets receive application" do
+      expect(decorated.receive_applications).to be_nil
+    end
+  end
+
+  describe "#contact_number" do
+    let(:vacancy) { build_stubbed(:vacancy, contact_number_provided: false, contact_number: "1111111111") }
+
+    it "resets contact number" do
+      expect(decorated.contact_number).to be_nil
+    end
+  end
+
+  describe "#application_email" do
+    let(:vacancy) { build_stubbed(:vacancy, enable_job_applications: false, receive_applications: "website", application_email: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)) }
+
+    it "resets application email" do
+      expect(decorated.application_email).to be_nil
+    end
+  end
+
+  describe "#application_link" do
+    let(:vacancy) { build_stubbed(:vacancy, enable_job_applications: false, receive_applications: "email", application_link: "www.test.com") }
+
+    it "resets application link" do
+      expect(decorated.application_link).to be_nil
+    end
+  end
+
+  describe "#further_details" do
+    let(:vacancy) { build_stubbed(:vacancy, further_details_provided: false, further_details: "test") }
+
+    it "resets further details" do
+      expect(decorated.further_details).to be_nil
     end
   end
 end
