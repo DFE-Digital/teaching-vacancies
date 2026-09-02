@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Jobseekers can prefill applications" do
+RSpec.describe "Jobseekers can complete a prefilled job application" do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, :at_one_school) }
   let(:school) { vacancy.organisation_vacancies.first.organisation }
@@ -14,15 +14,15 @@ RSpec.describe "Jobseekers can prefill applications" do
 
   context "when the jobseeker has a previous application" do
     let(:referee) { create(:referee, job_title: "Reference4Testing") }
-    let(:employment1) { create(:employment) }
-    let(:employment2) { create(:employment) }
-    let(:qualification1) { build(:qualification, :with_random_category) }
-    let(:qualification2) { build(:qualification, :with_random_category) }
+    let(:first_employment) { build(:employment) }
+    let(:second_employment) { build(:employment) }
+    let(:first_qualification) { build(:qualification, :with_random_category) }
+    let(:second_qualification) { build(:qualification, :with_random_category) }
     let(:training) { build(:training_and_cpd) }
     let(:professional_body_membership) { build(:professional_body_membership) }
     let!(:previous_application) do
       create(:job_application, :status_submitted, create_details: true, jobseeker:, qualified_teacher_status: "yes", qualified_teacher_status_year: "2020", created_at: 1.year.ago,
-                                                  referees: [referee], employments: [employment1, employment2], qualifications: [qualification1, qualification2],
+                                                  referees: [referee], employments: [first_employment, second_employment], qualifications: [first_qualification, second_qualification],
                                                   professional_body_memberships: [professional_body_membership])
     end
     let(:current_job_application) { JobApplication.order(:created_at).last }
@@ -72,10 +72,10 @@ RSpec.describe "Jobseekers can prefill applications" do
       click_on "Back"
       # work history
       click_on "Work history"
-      expect(page).to have_content(employment1.main_duties)
-      expect(page).to have_content(employment1.organisation)
-      expect(page).to have_content(employment2.main_duties)
-      expect(page).to have_content(employment2.organisation)
+      expect(page).to have_content(first_employment.main_duties)
+      expect(page).to have_content(first_employment.organisation)
+      expect(page).to have_content(second_employment.main_duties)
+      expect(page).to have_content(second_employment.organisation)
       click_on "Back"
       within("#employment_history") do
         expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: I18n.t("shared.status_tags.imported"))
@@ -140,7 +140,7 @@ RSpec.describe "Jobseekers can prefill applications" do
 
       click_on "Personal details"
       expect(page).to have_field("jobseekers_job_application_personal_details_form[first_name]")
-      expect(page.find("#jobseekers-job-application-personal-details-form-first-name-field").value).to be_blank
+      expect(page.find_by_id("jobseekers-job-application-personal-details-form-first-name-field").value).to be_blank
     end
   end
 end
