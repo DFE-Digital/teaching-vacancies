@@ -94,15 +94,7 @@ class VacancyDecorator < Draper::Decorator
   def fixed_term_contract_duration
     model.fixed_term_contract_duration if model.contract_type == "fixed_term"
   end
-  #
-  # def key_stages
-  #   model.allow_key_stages? ? model.key_stages : []
-  # end
-  #
-  # def subjects
-  #   model.allow_subjects? ? model.subjects : []
-  # end
-  #
+
   def receive_applications
     model.receive_applications unless model.enable_job_applications?
   end

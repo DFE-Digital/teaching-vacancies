@@ -12,14 +12,8 @@ module Resettable
     reset_subjects
     set_default_key_stage
     reset_ect_status
-    reset_receive_applications
-    reset_application_email
     reset_application_form
-    reset_application_link
     reset_documents
-    reset_contact_number
-    reset_further_details
-    reset_benefits_details
   end
 
   def reset_keystages
@@ -40,51 +34,15 @@ module Resettable
     self.ect_status = nil
   end
 
-  def reset_receive_applications
-    return unless enable_job_applications_changed? && enable_job_applications
-
-    self.receive_applications = nil
-  end
-
-  def reset_application_email
-    return unless receive_applications_changed? && receive_applications != "email"
-
-    self.application_email = nil
-  end
-
   def reset_application_form
     return unless enable_job_applications_changed? || receive_applications_changed?
 
     application_form.purge_later if enable_job_applications || receive_applications == "website"
   end
 
-  def reset_application_link
-    return unless receive_applications_changed? && receive_applications != "website"
-
-    self.application_link = nil
-  end
-
   def reset_documents
     return unless include_additional_documents_changed?
 
     supporting_documents.each(&:purge_later) unless include_additional_documents?
-  end
-
-  def reset_contact_number
-    return unless contact_number_provided_changed? && !contact_number_provided
-
-    self.contact_number = nil
-  end
-
-  def reset_further_details
-    return unless further_details_provided_changed? && !further_details_provided
-
-    self.further_details = nil
-  end
-
-  def reset_benefits_details
-    return unless benefits_changed? && !benefits
-
-    self.benefits_details = nil
   end
 end
