@@ -40,13 +40,13 @@ class CommuteTime
     raise InvalidPostcodeError unless self.class.valid_postcode?(postcode)
     raise InvalidTravelModeError unless self.class.valid_travel_mode?(travel_mode)
     raise RouteNotFoundError unless destination.is_a?(RGeo::Feature::Point)
-    raise RequestError if GOOGLE_LOCATION_SEARCH_API_KEY.blank?
+    raise RequestError if GOOGLE_ROUTES_API_KEY.blank?
   end
 
   def route_duration
     response = connection.post do |request|
       request.headers["Content-Type"] = "application/json"
-      request.headers["X-Goog-Api-Key"] = GOOGLE_LOCATION_SEARCH_API_KEY
+      request.headers["X-Goog-Api-Key"] = GOOGLE_ROUTES_API_KEY
       request.headers["X-Goog-FieldMask"] = "routes.duration"
       request.body = request_body.to_json
     end

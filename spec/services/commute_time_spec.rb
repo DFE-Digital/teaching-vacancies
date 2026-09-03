@@ -11,7 +11,7 @@ RSpec.describe CommuteTime do
   let(:response_body) { { routes: [{ duration: "1501s" }] }.to_json }
 
   before do
-    stub_const("GOOGLE_LOCATION_SEARCH_API_KEY", "test-key")
+    stub_const("GOOGLE_ROUTES_API_KEY", "test-key")
     stub_request(:post, described_class::ENDPOINT).to_return(status: 200, body: response_body)
   end
 
