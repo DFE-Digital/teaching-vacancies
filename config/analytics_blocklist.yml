@@ -333,3 +333,17 @@
     - variant
     - created_at
     - converted
+  :dsi_export_runs:
+    - id
+    - source
+    - total_pages
+    - status
+    - created_at
+    - updated_at
+  :dsi_export_run_pages:
+    - id
+    - dsi_export_run_id
+    - page_number
+    - payload
+    - created_at
+    - updated_at

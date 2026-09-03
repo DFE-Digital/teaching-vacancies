@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_18_075048) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_28_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -91,6 +91,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_18_075048) do
     t.index ["archived"], name: "index_conversations_on_archived"
     t.index ["job_application_id"], name: "index_conversations_on_job_application_id"
     t.index ["searchable_content"], name: "index_conversations_on_searchable_content", using: :gin
+  end
+
+  create_table "dsi_export_run_pages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.uuid "dsi_export_run_id", null: false
+    t.integer "page_number", null: false
+    t.jsonb "payload", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dsi_export_run_id", "page_number"], name: "index_dsi_export_run_pages_on_run_id_and_page_number", unique: true
+  end
+
+  create_table "dsi_export_runs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "source", null: false
+    t.integer "status", default: 0, null: false
+    t.integer "total_pages", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "emergency_login_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -1136,6 +1153,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_18_075048) do
   add_foreign_key "batchable_job_applications", "job_application_batches"
   add_foreign_key "batchable_job_applications", "job_applications", on_delete: :nullify
   add_foreign_key "conversations", "job_applications"
+  add_foreign_key "dsi_export_run_pages", "dsi_export_runs"
   add_foreign_key "employments", "job_applications"
   add_foreign_key "employments", "jobseeker_profiles"
   add_foreign_key "equal_opportunities_reports", "vacancies"

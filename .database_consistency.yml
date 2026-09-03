@@ -114,3 +114,13 @@ EducationGap:
   job_application:
     ColumnPresenceChecker:
       enabled: false
+
+# payload is validated with a plain `validate` callback (see DSIExportRunPage) rather than
+# `exclusion: { in: [nil] }`, because that validator misbehaves on Array-typed attributes:
+# an empty array vacuously passes its `all?` check and is wrongly treated as excluded. This
+# checker only recognises presence/inclusion/exclusion/numericality validators, not a plain
+# callback, so it can't see that nil is actually rejected.
+DSIExportRunPage:
+  payload:
+    NullConstraintChecker:
+      enabled: false

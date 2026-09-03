@@ -61,6 +61,11 @@ production:
     class: 'ExportDSIUsersToBigQueryJob'
     queue: low
 
+  export_approvers:
+    schedule: '05 01 * * *' # "At 01:05."
+    class: 'ExportDSIApproversToBigQueryJob'
+    queue: low
+
   send_entity_table_checks_to_bigquery:
     schedule: "30 1 * * *" # "At 01:30."
     class: "DfE::Analytics::Jobs::EntityTableCheckJob"
@@ -89,6 +94,13 @@ production:
   remove_vacancies_that_expired_yesterday_from_google_index:
     schedule: '0 04 * * *' # "At 04:00."
     class: 'RemoveVacanciesThatExpiredYesterdayFromGoogleIndexJob'
+    queue: low
+
+  # Comfortably after export_users/export_approvers (01:00/01:05) plus their stale-run
+  # threshold, so a run that hasn't finished by now is genuinely stuck.
+  monitor_dsi_export_runs:
+    schedule: '10 04 * * *' # "At 04:10."
+    class: 'MonitorDSIExportRunsJob'
     queue: low
 
   remove_invalid_subscriptions:

@@ -3,8 +3,17 @@ module Publishers::DfeSignIn::BigQueryExport
     TABLE_NAME = "dsi_users".freeze
 
     def call
+      # Fetch every page before touching the table: `dsi_users` is a lazy enumerator, so
+      # forcing it here means a DSI failure on any page aborts before the table is deleted,
+      # rather than leaving it empty with no replacement data.
+      insert_pages(dsi_users.to_a)
+    end
+
+    # Used by FinalizeDSIUsersExportJob once every page of a fanned-out export run has
+    # already been fetched and cached: replaces the table with pages that are known-complete.
+    def insert_pages(pages)
       delete_table(TABLE_NAME)
-      dsi_users.each { |page| insert_table_data(page) }
+      pages.each { |page| insert_table_data(page) }
     rescue StandardError => e
       Rails.logger.warn("DSI API /users failed to respond with error: #{e.message}")
       raise "#{e.message}, while writing data from DSI /users endpoint. Flag this to Steven + Comms team"
