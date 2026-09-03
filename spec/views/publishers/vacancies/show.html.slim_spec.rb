@@ -30,11 +30,11 @@ RSpec.describe "publishers/vacancies/show" do
         expect(rendered).to have_content("#{organisation.name}, #{full_address(organisation)}")
       end
 
-      expect(rendered).to have_content(vacancy_readable_job_roles(vacancy))
+      expect(rendered).to have_content(vacancy.decorate.readable_job_role)
       expect(rendered).to have_content(vacancy.job_title)
-      expect(rendered).to have_content(vacancy_readable_key_stages(vacancy))
-      expect(rendered).to have_content(vacancy_readable_subjects(vacancy))
-      expect(rendered).to have_content(vacancy_contract_type_with_duration(vacancy))
+      expect(rendered).to have_content(vacancy.decorate.readable_key_stages)
+      expect(rendered).to have_content(vacancy.decorate.readable_subjects)
+      expect(rendered).to have_content(vacancy.decorate.readable_contract_information)
 
       vacancy.working_patterns.each do |working_pattern|
         expect(rendered).to have_content(/#{working_pattern.humanize}/i)

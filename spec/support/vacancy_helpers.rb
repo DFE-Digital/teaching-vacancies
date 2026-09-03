@@ -147,7 +147,7 @@ module VacancyHelpers
   def verify_vacancy_show_page_details(vacancy)
     vacancy = vacancy.decorate
     expect(page).to have_content(vacancy.job_title)
-    readable_job_roles = vacancy.job_roles.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{role}") }
+    readable_job_roles = vacancy.model.job_roles.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{role}") }
     readable_job_roles.each do |role|
       expect(page).to have_content(role)
     end
@@ -156,7 +156,7 @@ module VacancyHelpers
     vacancy.subjects.each { |subject| expect(page).to have_content subject }
 
     expect(page).to have_content(vacancy.readable_working_patterns)
-    expect(page).to have_content(vacancy_contract_type_with_duration(vacancy))
+    expect(page).to have_content(vacancy.readable_contract_information)
 
     expect(page).to have_content(vacancy.salary)
     expect(page.html).to include(vacancy.benefits_details) if vacancy.benefits?
