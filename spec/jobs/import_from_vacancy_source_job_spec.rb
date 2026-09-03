@@ -140,7 +140,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "job_location" => nil,
           "job_roles" => ["teacher"],
           "job_title" => "",
-          "key_stages" => ["ks1"],
+          "key_stages" => [],
           "latest_start_date" => nil,
           "listed_elsewhere" => nil,
           "other_extension_reason_details" => nil,
