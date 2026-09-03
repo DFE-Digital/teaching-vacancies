@@ -89,7 +89,7 @@ class VacancyDecorator < Draper::Decorator
     model.working_patterns == %w[full_time] ? "" : model.actual_salary
   end
 
-  delegate :key_stages, :subjects, :receive_applications, :contact_number, :application_email, :further_details, :application_link
+  delegate :key_stages, :subjects
 
   def fixed_term_contract_duration
     model.fixed_term_contract_duration if model.contract_type == "fixed_term"
@@ -103,25 +103,25 @@ class VacancyDecorator < Draper::Decorator
   #   model.allow_subjects? ? model.subjects : []
   # end
   #
-  # def receive_applications
-  #   model.receive_applications unless model.enable_job_applications?
-  # end
-  #
-  # def contact_number
-  #   model.contact_number if model.contact_number_provided
-  # end
-  #
-  # def application_email
-  #   model.application_email if model.email?
-  # end
-  #
-  # def further_details
-  #   model.further_details if model.further_details_provided?
-  # end
-  #
-  # def application_link
-  #   model.application_link if model.website?
-  # end
+  def receive_applications
+    model.receive_applications unless model.enable_job_applications?
+  end
+
+  def contact_number
+    model.contact_number if model.contact_number_provided
+  end
+
+  def application_email
+    model.application_email if model.email?
+  end
+
+  def further_details
+    model.further_details if model.further_details_provided?
+  end
+
+  def application_link
+    model.application_link if model.website?
+  end
 
   private
 
