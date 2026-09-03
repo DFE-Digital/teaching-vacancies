@@ -542,6 +542,7 @@ shared:
     - job_address_county
     - job_address_postcode
     - fe_role_qts_required
+    - external_application_clicks
   failed_imported_vacancies:
     - id
     - import_errors

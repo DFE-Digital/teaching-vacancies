@@ -223,7 +223,7 @@ RSpec.describe "Jobseekers can complete a job application" do
       let(:ab_test) { "apply" }
 
       it "allows the user to apply" do
-        expect(page).to have_link(href: vacancy.application_link)
+        expect(page).to have_link(href: apply_job_path(vacancy))
       end
     end
 
