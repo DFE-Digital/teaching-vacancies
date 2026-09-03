@@ -7,18 +7,18 @@ RSpec.describe Resettable do
     it { expect(vacancy).to respond_to(:reset_dependent_fields) }
   end
 
-  # context "when changing education support" do
-  #   subject(:update_education_support) { vacancy.update(job_roles: %w[education_support]) }
-  #
-  #   let(:vacancy) { build(:vacancy, phases: %w[primary], job_roles: %w[teacher], key_stages: %w[ks1]) }
-  #   let(:previous_key_stages) { vacancy.key_stages }
-  #
-  #   it "resets key stages" do
-  #     expect { update_education_support }
-  #       .to change(vacancy, :key_stages)
-  #       .from(previous_key_stages).to([])
-  #   end
-  # end
+  context "when changing education support" do
+    subject(:update_education_support) { vacancy.update(job_roles: %w[education_support]) }
+
+    let(:vacancy) { build(:vacancy, phases: %w[primary], job_roles: %w[teacher], key_stages: %w[ks1]) }
+    let(:previous_key_stages) { vacancy.key_stages }
+
+    it "resets key stages" do
+      expect { update_education_support }
+        .to change(vacancy, :key_stages)
+        .from(previous_key_stages).to([])
+    end
+  end
 
   context "when changing education phases" do
     subject(:update_education_phases) { vacancy.update(phases: updated_phases) }
@@ -37,15 +37,15 @@ RSpec.describe Resettable do
       end
     end
 
-    # context "to nursery" do
-    #   let(:updated_phases) { %w[nursery] }
-    #
-    #   it "resets key stages" do
-    #     expect { update_education_phases }
-    #       .to change(vacancy, :key_stages)
-    #       .from(previous_key_stages).to(%w[early_years])
-    #   end
-    # end
+    context "to nursery" do
+      let(:updated_phases) { %w[nursery] }
+
+      it "resets key stages" do
+        expect { update_education_phases }
+          .to change(vacancy, :key_stages)
+          .from(previous_key_stages).to(%w[early_years])
+      end
+    end
   end
 
   context "when changing job role" do
