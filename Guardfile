@@ -130,6 +130,7 @@ PUBLISHER_VACANCY_MAPPINGS = {
   references_and_self_disclosure: %w[can_manage_self_disclosure],
   relist: %w[],
   statistics: %w[can_view_vacancy_statistics],
+  vacancy_review_sections: %w[],
   wizard_base: %w[],
   wizard: %w[],
 }.freeze
