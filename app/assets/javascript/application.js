@@ -30,7 +30,6 @@ import SearchableCollectionComponent from './components/searchable_collection/se
 // js components
 import AutocompleteController from './js_components/autocomplete/autocomplete';
 import ClipboardController from './js_components/clipboard/clipboard';
-import CommuteTimeController from './js_components/commuteTime/commuteTime';
 import FormController from './js_components/form/form';
 import LocationFinderController from './js_components/locationFinder/locationFinder';
 import ManageQualificationsController from './js_components/manageQualifications/manageQualifications';
@@ -66,7 +65,6 @@ window.Stimulus = application;
 
 application.register('autocomplete', AutocompleteController);
 application.register('clipboard', ClipboardController);
-application.register('commute-time', CommuteTimeController);
 application.register('cookies-banner', CookiesBannerController);
 application.register('filters', FiltersController);
 application.register('form', FormController);

@@ -4,7 +4,7 @@
       .header-with-logo
         .header-with-logo-title
           h2.govuk-heading-m class="govuk-!-margin-bottom-1"
-            span class="govuk-!-margin-right-2" = results_link(vacancy, class: "view-vacancy-link")
+            span class="govuk-!-margin-right-2" = results_link(vacancy, search_location: search_location, class: "view-vacancy-link")
             = govuk_tag(text: t("vacancies.listing.enable_job_applications_tag"), colour: "green") if vacancy.enable_job_applications?
           p.govuk-body.address class="govuk-!-margin-bottom-0 govuk-!-margin-top-0"
             = vacancy_full_job_location(vacancy)
@@ -53,5 +53,3 @@
         - summary_list.with_row do |row|
           - row.with_key text: t("jobs.visa_sponsorship_row_title"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
           - row.with_value text: t("jobs.visa_sponsorship_#{vacancy.visa_sponsorship_available ? 'available' : 'unavailable'}"), classes: "govuk-body-s govuk-!-padding-bottom-0"
-
-      = render "vacancies/search/commute_time", vacancy: vacancy if vacancy.geolocation.is_a?(RGeo::Feature::Point)

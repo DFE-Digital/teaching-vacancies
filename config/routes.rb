@@ -354,7 +354,7 @@ Rails.application.routes.draw do
 
   resources :jobs, only: %i[index show], controller: "vacancies" do
     resources :documents, only: %i[show]
-    resource :commute_time, only: %i[create], path: "commute-time"
+    resource :commute_time, only: %i[show], path: "commute-time"
     member do
       get :trn_interstitial
       post :send_trn

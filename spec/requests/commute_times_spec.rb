@@ -2,66 +2,85 @@ require "rails_helper"
 
 RSpec.describe "Commute times" do
   let(:vacancy) { create(:vacancy) }
-  let(:driving_time) { instance_double(DrivingTime, duration_in_minutes: 26) }
+  let(:search_location) { "SW1A 1AA" }
+  let(:travel_mode) { "driving" }
+  let(:commute_time) { instance_double(CommuteTime, duration_in_minutes: 26) }
 
   before do
-    allow(DrivingTime).to receive(:new)
-      .with(postcode: "SW1A 1AA", destination: vacancy.geolocation)
-      .and_return(driving_time)
+    allow(CommuteTime).to receive(:new)
+      .with(postcode: search_location.upcase, destination: vacancy.geolocation, travel_mode: travel_mode)
+      .and_return(commute_time)
   end
 
-  describe "POST /jobs/:job_id/commute-time" do
+  describe "GET /jobs/:job_id/commute-time" do
     subject(:request) do
-      post job_commute_time_path(vacancy), params: { postcode: "SW1A 1AA" }
+      get job_commute_time_path(vacancy), params: { search_location: search_location, travel_mode: travel_mode }
     end
 
-    it "renders the driving time" do
+    it "renders the commute time in the travel mode's Turbo Frame" do
       request
 
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include("26 minutes by car")
-      expect(response.body).to include("Google Maps")
+      expect(Capybara.string(response.body)).to have_css("turbo-frame#commute_time_vacancy_#{vacancy.id}_driving")
+      expect(response.body).to include("26 minutes")
     end
 
     context "with an invalid postcode" do
+      let(:search_location) { "not a postcode" }
+
       before do
-        allow(driving_time).to receive(:duration_in_minutes).and_raise(DrivingTime::InvalidPostcodeError)
+        allow(commute_time).to receive(:duration_in_minutes).and_raise(CommuteTime::InvalidPostcodeError)
       end
 
-      it "returns a useful error" do
+      it "renders a useful error in the frame" do
         request
 
-        expect(response).to have_http_status(:unprocessable_content)
-        expect(response.parsed_body).to eq("error" => "Enter a full UK postcode")
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include("Enter a full UK postcode")
       end
     end
 
-    context "when no driving route can be found" do
+    context "when no route can be found" do
       before do
-        allow(driving_time).to receive(:duration_in_minutes).and_raise(DrivingTime::RouteNotFoundError)
+        allow(commute_time).to receive(:duration_in_minutes).and_raise(CommuteTime::RouteNotFoundError)
       end
 
-      it "returns a useful error" do
+      it "renders a useful error in the frame" do
         request
 
-        expect(response).to have_http_status(:unprocessable_content)
-        expect(response.parsed_body).to eq("error" => "We could not find a driving route from that postcode.")
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include("Not available")
       end
     end
 
     context "when Google is unavailable" do
       before do
-        allow(driving_time).to receive(:duration_in_minutes)
-          .and_raise(DrivingTime::RequestError, "Google Routes API returned 403: Routes API is disabled")
+        allow(commute_time).to receive(:duration_in_minutes)
+          .and_raise(CommuteTime::RequestError, "Google Routes API returned 403: Routes API is disabled")
       end
 
-      it "returns a temporary error" do
+      it "logs the details and renders a safe error in the frame" do
         expect(Rails.logger).to receive(:error)
-          .with("Driving time request failed: Google Routes API returned 403: Routes API is disabled")
+          .with("Commute time request failed for driving: Google Routes API returned 403: Routes API is disabled")
 
         request
-        expect(response).to have_http_status(:bad_gateway)
-        expect(response.parsed_body).to eq("error" => "We could not calculate the driving time. Try again later.")
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include("Not available")
+      end
+    end
+
+    context "with an unsupported travel mode" do
+      let(:travel_mode) { "flying" }
+
+      before do
+        allow(commute_time).to receive(:duration_in_minutes).and_raise(CommuteTime::InvalidTravelModeError)
+      end
+
+      it "renders a useful error in the frame" do
+        request
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include("Not available")
       end
     end
   end

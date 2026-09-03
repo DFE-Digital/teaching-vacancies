@@ -1,14 +1,29 @@
-class DrivingTime
+class CommuteTime
   ENDPOINT = "https://routes.googleapis.com/directions/v2:computeRoutes".freeze
   POSTCODE_PATTERN = /\A(?:GIR ?0AA|[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2})\z/i
+  TRAVEL_MODES = {
+    "driving" => "DRIVE",
+    "walking" => "WALK",
+    "transit" => "TRANSIT",
+  }.freeze
 
   class InvalidPostcodeError < StandardError; end
+  class InvalidTravelModeError < StandardError; end
   class RouteNotFoundError < StandardError; end
   class RequestError < StandardError; end
 
-  def initialize(postcode:, destination:)
+  def self.valid_postcode?(postcode)
+    postcode.to_s.strip.match?(POSTCODE_PATTERN)
+  end
+
+  def self.valid_travel_mode?(travel_mode)
+    TRAVEL_MODES.key?(travel_mode.to_s)
+  end
+
+  def initialize(postcode:, destination:, travel_mode:)
     @postcode = postcode.to_s.strip.upcase
     @destination = destination
+    @travel_mode = travel_mode.to_s
   end
 
   def duration_in_minutes
@@ -19,10 +34,11 @@ class DrivingTime
 
   private
 
-  attr_reader :postcode, :destination
+  attr_reader :postcode, :destination, :travel_mode
 
   def validate!
-    raise InvalidPostcodeError unless postcode.match?(POSTCODE_PATTERN)
+    raise InvalidPostcodeError unless self.class.valid_postcode?(postcode)
+    raise InvalidTravelModeError unless self.class.valid_travel_mode?(travel_mode)
     raise RouteNotFoundError unless destination.is_a?(RGeo::Feature::Point)
     raise RequestError if GOOGLE_LOCATION_SEARCH_API_KEY.blank?
   end
@@ -70,7 +86,7 @@ class DrivingTime
           },
         },
       },
-      travelMode: "DRIVE",
+      travelMode: TRAVEL_MODES.fetch(travel_mode),
     }
   end
 end

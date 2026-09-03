@@ -1,71 +1,7 @@
 @use 'govuk-frontend/dist/govuk/base' as *;
 
 .commute-time {
-  padding-top: govuk-spacing(2);
-  padding-bottom: govuk-spacing(1);
-  border-top: 1px solid govuk-functional-colour(border);
-
-  &__form {
-    display: grid;
-    grid-template-columns: 37% minmax(0, 1fr);
-    align-items: center;
-
-    @include govuk-media-query($until: 400px) {
-      grid-template-columns: 1fr;
-
-      .commute-time__label {
-        margin-bottom: govuk-spacing(1);
-      }
-    }
-  }
-
-  &__label {
-    margin-bottom: 0;
-  }
-
-  &__inputs {
-    display: flex;
-    align-items: center;
-    gap: govuk-spacing(2);
-  }
-
-  &__error {
-    margin-bottom: govuk-spacing(1);
-  }
-
-  &__button {
-    margin-bottom: 0;
-  }
-
-  // Result state
-  &__result {
-    display: grid;
-    grid-template-columns: 37% minmax(0, 1fr);
-    align-items: center;
-
-    @include govuk-media-query($until: 400px) {
-      grid-template-columns: 1fr;
-      gap: govuk-spacing(1);
-    }
-  }
-
-  &__result-value {
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: govuk-spacing(1) govuk-spacing(2);
-  }
-
-  &__change {
-    margin-bottom: 0;
-    white-space: nowrap;
-  }
-
-  &__attribution {
-    @include govuk-font(16);
-
-    color: govuk-functional-colour(secondary-text);
-    margin-bottom: 0;
-    width: 100%;
+  @include govuk-media-query($from: desktop) {
+    display: none;
   }
 }
