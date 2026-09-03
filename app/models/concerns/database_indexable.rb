@@ -27,8 +27,8 @@ module DatabaseIndexable
       a: [unique_words(vacancy.job_title), vacancy.subjects],
       d: [
         vacancy.phases.map(&:humanize),
-        vacancy_readable_job_roles(vacancy),
-        vacancy_readable_key_stages(vacancy),
+        vacancy.readable_job_role,
+        vacancy.readable_key_stages,
         vacancy.organisation_name,
         vacancy.school_group_names,
         vacancy.school_group_types,

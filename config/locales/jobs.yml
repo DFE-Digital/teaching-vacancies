@@ -179,6 +179,22 @@ en:
     create_job_caption: Create a job listing - section %{step} of %{total}
 
     ect_status: Is this role suitable for an early career teacher (ECT)?
+    fields:
+      job_title:
+        text: Job title
+        hidden: Job title
+      job_role:
+        text: Job role
+        hidden: What type of job is this?
+      key_stages:
+        text: Key stage
+        hidden: Key stage
+      subjects:
+        text: Subjects
+        hidden: Subjects
+      contract_information:
+        text: Contract type
+        hidden: Contract type
     further_details: Further details about the role
     location: Location
     location_find_more_html:
