@@ -55,8 +55,6 @@ class VacancyTemplate < ApplicationRecord
 
   validates :name, presence: true
 
-  validates :key_stages, absence: true, unless: -> { allow_key_stages? }
-
   array_enum job_roles: Vacancy::JOB_ROLES
   enum :ect_status, Vacancy::ECT_STATUSES
   enum :contract_type, Vacancy::CONTRACT_TYPES

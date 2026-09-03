@@ -71,7 +71,7 @@ FactoryBot.define do
     job_roles { %w[teacher] }
     ect_status { :ect_unsuitable }
     pay_scale { factory_sample(salaries) }
-    phases { %w[primary] }
+    # phases { %w[primary] }
     publish_on { Date.current }
     salary { factory_sample(salaries) }
     hourly_rate { "£25 per hour" }
