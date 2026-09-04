@@ -91,10 +91,10 @@ end
 general_throttle = lambda do |request|
   request.remote_ip unless request.path.start_with?(Rack::Attack::ATS_API_PATH_PREFIX) # ATS API clients have their own dedicated throttle below
 end
-Rack::Attack.throttle("requests by remote ip per 4 secs", limit: 10, period: 4, &general_throttle) # Allow 10 requests in 4 seconds (2.5 req/sec)
-Rack::Attack.throttle("requests by remote ip per minute", limit: 105, period: 60, &general_throttle) # Allow 105 requests in 1 minute (1.75 req/sec over 1 minute)
-Rack::Attack.throttle("requests by remote ip per 10 minutes", limit: 900, period: 600, &general_throttle) # Allow 900 requests in 10 minutes (1.5 req/sec over 10 minutes)
-Rack::Attack.throttle("requests by remote ip per hour", limit: 4500, period: 3600, &general_throttle) # Allow 4500 requests in 1 hour (1.25 req/sec over an hour)
+# Rack::Attack.throttle("requests by remote ip per 4 secs", limit: 10, period: 4, &general_throttle) # Allow 10 requests in 4 seconds (2.5 req/sec)
+# Rack::Attack.throttle("requests by remote ip per minute", limit: 105, period: 60, &general_throttle) # Allow 105 requests in 1 minute (1.75 req/sec over 1 minute)
+# Rack::Attack.throttle("requests by remote ip per 10 minutes", limit: 900, period: 600, &general_throttle) # Allow 900 requests in 10 minutes (1.5 req/sec over 10 minutes)
+# Rack::Attack.throttle("requests by remote ip per hour", limit: 4500, period: 3600, &general_throttle) # Allow 4500 requests in 1 hour (1.25 req/sec over an hour)
 Rack::Attack.throttle("requests by remote ip per 12 hours", limit: 43_200, period: 43_200, &general_throttle) # Allow 43200 requests in 12 hours (1 req/sec over 12 hours)
 
 ####################################################################################################################

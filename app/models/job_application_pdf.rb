@@ -136,7 +136,7 @@ class JobApplicationPdf
     make_nested_section do
       job_application
         .employments
-        .sort_by { |r| r[:started_on] }
+        .sort_by(&:started_on)
         .reverse
         .flat_map
         .with_index { |employment, idx| employment_data(employment, idx) }

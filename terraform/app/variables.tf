@@ -175,7 +175,7 @@ variable "aks_worker_app_memory" {
 }
 
 variable "aks_web_app_memory" {
-  default = "1Gi"
+  default = "2Gi"
 }
 
 variable "aks_route53_a_records" {

@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :job_applications, only: [:show]
+
   get "check" => "application#check"
 
   get "/get-help-hiring/how-to-approve-access-for-hiring-staff", to: redirect { |_params, _request|
