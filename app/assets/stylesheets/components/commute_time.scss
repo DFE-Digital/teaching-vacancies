@@ -1,7 +1,1 @@
 @use 'govuk-frontend/dist/govuk/base' as *;
-
-.commute-time {
-  @include govuk-media-query($from: desktop) {
-    display: none;
-  }
-}
