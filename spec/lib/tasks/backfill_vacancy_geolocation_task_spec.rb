@@ -13,11 +13,9 @@ RSpec.describe "backfill_vacancy_geolocation" do
     create(:vacancy, organisations: [trust])
   end
 
-  # rubocop:disable RSpec/NamedSubject
   it "backfills the geolocation field" do
     expect {
-      subject.execute
+      Rake::Task["backfill_vacancy_geolocation"].execute
     }.to change { Vacancy.where(geolocation: nil).count }.by(-1)
   end
-  # rubocop:enable RSpec/NamedSubject
 end
