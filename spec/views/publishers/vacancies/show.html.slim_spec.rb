@@ -42,7 +42,6 @@ RSpec.describe "publishers/vacancies/show" do
       expect(rendered).to have_content(vacancy.working_patterns_details)
 
       expect(rendered).to have_content(vacancy.salary)
-      expect(rendered).to have_content(vacancy.actual_salary)
       expect(rendered).to have_content(vacancy.pay_scale)
 
       expect(rendered).to have_content(strip_tags(vacancy.benefits_details))

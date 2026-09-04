@@ -20,19 +20,19 @@ RSpec.shared_examples "a fields that outputs the correct HTML" do |field|
     let(:vacancy) { build_stubbed(:vacancy, field => well_formatted_text) }
     let(:well_formatted_text) do
       "Some list\n" \
-      "Some itmes to follow:\n" \
-      "·   Item number one\n" \
-      "·   Item number two\n" \
-      "·   Item number three\n" \
-      "Apply now. "
+        "Some itmes to follow:\n" \
+        "·   Item number one\n" \
+        "·   Item number two\n" \
+        "·   Item number three\n" \
+        "Apply now. "
     end
     let(:well_formatted_html) do
       "<p>Some list\n<br />" \
-      "Some itmes to follow:\n<br />" \
-      "•   Item number one\n<br />" \
-      "•   Item number two\n<br />" \
-      "•   Item number three\n<br />" \
-      "Apply now. </p>"
+        "Some itmes to follow:\n<br />" \
+        "•   Item number one\n<br />" \
+        "•   Item number two\n<br />" \
+        "•   Item number three\n<br />" \
+        "Apply now. </p>"
     end
 
     it "does not reformat text" do
@@ -45,24 +45,24 @@ RSpec.shared_examples "a fields that outputs the correct HTML" do |field|
 
     let(:badly_formatted_text) do
       " Sentence one. Sentence two.\n" \
-      "Paragraph two. Qualifications:\n" \
-      "•    Skill one." \
-      "•    Skill two." \
-      "•    Skill three.\n" \
-      "Penultimate paragraph.\n" \
-      "Last paragraph \n"
+        "Paragraph two. Qualifications:\n" \
+        "•    Skill one." \
+        "•    Skill two." \
+        "•    Skill three.\n" \
+        "Penultimate paragraph.\n" \
+        "Last paragraph \n"
     end
 
     let(:well_formatted_html) do
       "<p> Sentence one. Sentence two.\n<br />" \
-      "Paragraph two. Qualifications:\n<br />" \
-      "<ul>" \
-      "<li>    Skill one.</li>" \
-      "<li>    Skill two.</li>" \
-      "<li>    Skill three.</li>" \
-      "</ul>" \
-      "\n<br />Penultimate paragraph.\n<br />" \
-      "Last paragraph </p>"
+        "Paragraph two. Qualifications:\n<br />" \
+        "<ul>" \
+        "<li>    Skill one.</li>" \
+        "<li>    Skill two.</li>" \
+        "<li>    Skill three.</li>" \
+        "</ul>" \
+        "\n<br />Penultimate paragraph.\n<br />" \
+        "Last paragraph </p>"
     end
 
     it "transforms badly formatted inline bullet point symbols into validly formatted <li> tags" do
@@ -77,20 +77,20 @@ RSpec.shared_examples "a fields that outputs the correct HTML" do |field|
 
       let(:well_formatted_text) do
         "<div><!--block-->&nbsp;</div><div><!--block--><strong>Some list</strong>&nbsp;<br><br></div>" \
-        "<div><!--block-->Some itmes to follow:&nbsp;<br><br></div>" \
-        "<div><!--block-->· &nbsp; Item number one;&nbsp;<br><br></div>" \
-        "<div><!--block-->· &nbsp; Item number two;&nbsp;<br><br></div>" \
-        "<div><!--block-->· &nbsp; Item number three;&nbsp;<br><br></div>" \
-        "<div><!--block-->Apply now.&nbsp;</div>"
+          "<div><!--block-->Some itmes to follow:&nbsp;<br><br></div>" \
+          "<div><!--block-->· &nbsp; Item number one;&nbsp;<br><br></div>" \
+          "<div><!--block-->· &nbsp; Item number two;&nbsp;<br><br></div>" \
+          "<div><!--block-->· &nbsp; Item number three;&nbsp;<br><br></div>" \
+          "<div><!--block-->Apply now.&nbsp;</div>"
       end
 
       let(:well_formatted_html) do
         "<p> <strong>Some list</strong> </p>\n\n" \
-        "<p>Some itmes to follow: </p>\n\n" \
-        "<p>•   Item number one; </p>\n\n" \
-        "<p>•   Item number two; </p>\n\n" \
-        "<p>•   Item number three; </p>\n\n" \
-        "<p>Apply now. </p>"
+          "<p>Some itmes to follow: </p>\n\n" \
+          "<p>•   Item number one; </p>\n\n" \
+          "<p>•   Item number two; </p>\n\n" \
+          "<p>•   Item number three; </p>\n\n" \
+          "<p>Apply now. </p>"
       end
 
       it "does not reformat text" do
@@ -103,24 +103,24 @@ RSpec.shared_examples "a fields that outputs the correct HTML" do |field|
 
       let(:badly_formatted_text) do
         "<div><!--block-->&nbsp;</div><div><!--block-->Sentence one. Sentence two.&nbsp;<br><br></div>" \
-        "<div><!--block-->Paragraph two. Qualifications:&nbsp;<br><br></div>" \
-        "<div><!--block-->•&nbsp; &nbsp; Skill one.&nbsp;</div>" \
-        "<div><!--block-->•&nbsp; &nbsp; Skill two.&nbsp;</div>" \
-        "<div><!--block-->•&nbsp; &nbsp; Skill three.&nbsp;<br><br></div>" \
-        "<div><!--block-->Penultimate paragraph.&nbsp;<br><br>" \
-        "Last paragraph &nbsp;<br><br></div><div>"
+          "<div><!--block-->Paragraph two. Qualifications:&nbsp;<br><br></div>" \
+          "<div><!--block-->•&nbsp; &nbsp; Skill one.&nbsp;</div>" \
+          "<div><!--block-->•&nbsp; &nbsp; Skill two.&nbsp;</div>" \
+          "<div><!--block-->•&nbsp; &nbsp; Skill three.&nbsp;<br><br></div>" \
+          "<div><!--block-->Penultimate paragraph.&nbsp;<br><br>" \
+          "Last paragraph &nbsp;<br><br></div><div>"
       end
 
       let(:well_formatted_html) do
         "<p> Sentence one. Sentence two. </p>\n\n" \
-        "<p>Paragraph two. Qualifications: </p>\n\n" \
-        "<p></p><ul>\n" \
-        "<li>  Skill one.</li>\n" \
-        "<li>  Skill two.</li>\n" \
-        "<li>  Skill three.</li>\n" \
-        "</ul>\n\n" \
-        "<p>Penultimate paragraph. </p>\n\n" \
-        "<p>Last paragraph  </p>"
+          "<p>Paragraph two. Qualifications: </p>\n\n" \
+          "<p></p><ul>\n" \
+          "<li>  Skill one.</li>\n" \
+          "<li>  Skill two.</li>\n" \
+          "<li>  Skill three.</li>\n" \
+          "</ul>\n\n" \
+          "<p>Penultimate paragraph. </p>\n\n" \
+          "<p>Last paragraph  </p>"
       end
 
       it "transforms badly formatted inline bullet point symbols into validly formatted <li> tags" do
@@ -137,7 +137,13 @@ RSpec.describe VacancyDecorator do
   describe "#benefits_details" do
     subject { decorated }
 
+    let(:vacancy) { build_stubbed(:vacancy, benefits: false, benefits_details: "test") }
+
     it_behaves_like "a fields that outputs the correct HTML", :benefits_details
+
+    it "resets benefits details" do
+      expect(decorated.benefits_details).to be_nil
+    end
   end
 
   describe "#working_patterns_for_job_schema" do
@@ -343,6 +349,62 @@ RSpec.describe VacancyDecorator do
       it "returns working patterns" do
         expect(vacancy.readable_working_patterns).to eq("Full time, part time")
       end
+    end
+  end
+
+  describe "#actual_salary" do
+    let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time], actual_salary: "50000") }
+
+    it "resets actual_salary field" do
+      expect(decorated.actual_salary).to be_blank
+    end
+  end
+
+  describe "#fixed_term_contract_duration" do
+    let(:vacancy) { build_stubbed(:vacancy, contract_type: "permanent", fixed_term_contract_duration: "6 months") }
+
+    it "resets fixed term contract duration" do
+      expect(decorated.fixed_term_contract_duration).to be_blank
+    end
+  end
+
+  describe "#receive_applications" do
+    let(:vacancy) { build_stubbed(:draft_vacancy, :apply_via_website, enable_job_applications: true) }
+
+    it "resets receive application" do
+      expect(decorated.receive_applications).to be_nil
+    end
+  end
+
+  describe "#contact_number" do
+    let(:vacancy) { build_stubbed(:vacancy, contact_number_provided: false, contact_number: "1111111111") }
+
+    it "resets contact number" do
+      expect(decorated.contact_number).to be_nil
+    end
+  end
+
+  describe "#application_email" do
+    let(:vacancy) { build_stubbed(:vacancy, enable_job_applications: false, receive_applications: "website", application_email: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)) }
+
+    it "resets application email" do
+      expect(decorated.application_email).to be_nil
+    end
+  end
+
+  describe "#application_link" do
+    let(:vacancy) { build_stubbed(:vacancy, enable_job_applications: false, receive_applications: "email", application_link: "www.test.com") }
+
+    it "resets application link" do
+      expect(decorated.application_link).to be_nil
+    end
+  end
+
+  describe "#further_details" do
+    let(:vacancy) { build_stubbed(:vacancy, further_details_provided: false, further_details: "test") }
+
+    it "resets further details" do
+      expect(decorated.further_details).to be_nil
     end
   end
 end
