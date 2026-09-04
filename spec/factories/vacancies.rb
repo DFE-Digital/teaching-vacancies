@@ -140,7 +140,7 @@ FactoryBot.define do
     end
 
     trait :for_seed_data do
-      job_roles { [factory_sample(Vacancy.job_roles.keys)] }
+      job_roles { factory_rand_sample(Vacancy.job_roles.keys, 2..4) }
       ect_status { factory_sample(Vacancy.ect_statuses.keys) if job_roles.include?("teacher") }
       is_job_share { [true, false].sample }
       visa_sponsorship_available { [true, false].sample }

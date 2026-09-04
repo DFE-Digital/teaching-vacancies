@@ -33,14 +33,18 @@ class Vacancy < ApplicationRecord
 
   TEACHING_JOB_ROLES = %w[teacher head_of_year_or_phase head_of_department_or_curriculum assistant_headteacher
                           deputy_headteacher headteacher sendco other_leadership].freeze
-  SUPPORT_JOB_ROLES = %w[teaching_assistant higher_level_teaching_assistant education_support
-                         administration_hr_data_and_finance catering_cleaning_and_site_management
-                         it_support pastoral_health_and_welfare other_support].freeze
+
+  # Only here so that 'other_support' is in the correct location when used for display purposes in 'SUPPORT_JOB_ROLES' constant
+  SCHOOL_SUPPORT_ROLES = %w[teaching_assistant higher_level_teaching_assistant education_support
+                            administration_hr_data_and_finance catering_cleaning_and_site_management
+                            it_support pastoral_health_and_welfare].freeze
+  SCHOOL_SUPPORT_JOB_ROLES = SCHOOL_SUPPORT_ROLES + %w[other_support]
 
   # Only offered to publishers posting on behalf of an FE college - see Vacancy#for_an_fe_college?
   FE_SUPPORT_JOB_ROLES = %w[leadership_and_management business_support_administration_and_corporate_services
                             student_support_learning_and_progress marketing_and_communications
                             apprenticeships_and_commercial_services].freeze
+  SUPPORT_JOB_ROLES = SCHOOL_SUPPORT_ROLES + FE_SUPPORT_JOB_ROLES + %w[other_support]
 
   SCHOOL_PHASES_MATCHING_VACANCY_PHASES = %w[nursery primary secondary sixth_form_or_college].freeze
 
