@@ -26,6 +26,10 @@ const LocationFinder = class extends Controller {
     this.input.addEventListener('focus', () => {
       this.removeErrorMessage();
     });
+
+    if (this.input.value === '' && navigator.geolocation && this.element.offsetParent !== null) {
+      this.findLocation();
+    }
   }
 
   findLocation() {
@@ -38,6 +42,9 @@ const LocationFinder = class extends Controller {
         this.onFailure();
         logger.log(`${LOGGING_MESSAGE}: ${error.message}`);
       });
+    }, () => {
+      this.onFailure();
+      logger.log(LOGGING_MESSAGE);
     });
   }
 
