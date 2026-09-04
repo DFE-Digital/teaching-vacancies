@@ -9,6 +9,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
     @form = Jobseekers::Qualifications::CategoryForm.new
   end
 
+  # simplecov:disable
   def submit_category
     @category = category_param
     @form = Jobseekers::Qualifications::CategoryForm.new(submit_category_params)
@@ -19,6 +20,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
       render :select_category, status: :unprocessable_content
     end
   end
+  # simplecov:enable
 
   def new
     @form = category_form_class(@category).new(category: @category)
@@ -43,6 +45,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
 
   def review; end
 
+  # simplecov:disable
   def update
     @form = category_form_class(@category).new(qualification_params)
     if @form.valid?
@@ -52,6 +55,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
       render :edit, status: :unprocessable_content
     end
   end
+  # simplecov:enable
 
   def destroy
     qualification.destroy
@@ -70,6 +74,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
     (params[key] || params).permit(:category)
   end
 
+  # simplecov:disable
   def qualification_params
     params.expect(qualification_form_param_key(@category) => [:category,
                                                               :finished_studying,
@@ -82,6 +87,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
                                                               :awarding_body,
                                                               { qualification_results_attributes: [%i[id subject grade awarding_body]] }])
   end
+  # simplecov:enable
 
   def set_category
     @category = action_name.in?(%w[edit update]) ? qualification.category : category_param

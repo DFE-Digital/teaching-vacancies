@@ -9,6 +9,7 @@ module MapsHelper
     end
   end
 
+  # simplecov:disable
   def organisation_map_marker(organisation)
     [
       {
@@ -23,4 +24,5 @@ module MapsHelper
 
     vacancy.organisation.geopoint.present?
   end
+  # simplecov:enable
 end

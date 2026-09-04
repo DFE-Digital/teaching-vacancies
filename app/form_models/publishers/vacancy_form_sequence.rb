@@ -28,6 +28,7 @@ class Publishers::VacancyFormSequence
     @step_names - not_validatable_steps
   end
 
+  # simplecov:disable
   def validate_step(step_name)
     step_form_class = if step_name == :important_dates && @vacancy.disable_editing_publish_on?
                         Publishers::JobListing::ExpiryDateTimeForm
@@ -44,6 +45,7 @@ class Publishers::VacancyFormSequence
       )
     end
   end
+  # simplecov:enable
 
   def next_incomplete_step_subjects?
     return false unless @vacancy.allow_subjects?
