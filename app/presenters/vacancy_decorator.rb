@@ -25,6 +25,8 @@ class VacancyDecorator < Draper::Decorator
 
   include ActionView::Helpers::TextHelper
 
+  include ReadableVacancy
+
   HTML_STRIP_REGEX = %r{(&nbsp;|<div>|</div>|<!--block-->)+}
 
   # simplecov:disable

@@ -466,8 +466,9 @@ en:
     international_teacher_advice:
         link: help you understand your next steps
         text_html: If you're interested in teaching or training to teach in England as an international citizen, we can %{link}.
-    sponsorship_available: Skilled Worker visas can be sponsored.
-    sponsorship_unavailable: Visas cannot be sponsored.
+    sponsorship_available:
+      true: Skilled Worker visas can be sponsored.
+      false: Visas cannot be sponsored.
     listing:
       enable_job_applications_tag: "Quick Apply"
       schools:

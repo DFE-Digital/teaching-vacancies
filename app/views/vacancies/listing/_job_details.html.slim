@@ -16,13 +16,13 @@ section#job-details class="govuk-!-margin-bottom-5"
       - summary_list.with_row do |row|
         - row.with_key do
           h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.key_stage", count: vacancy.key_stages.count)
-        - row.with_value text: vacancy_readable_key_stages(vacancy)
+        - row.with_value text: vacancy.readable_key_stages
 
     - if vacancy.allow_subjects? && vacancy.subjects&.any?
       - summary_list.with_row do |row|
         - row.with_key do
           h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.subjects", count: vacancy.subjects.count)
-        - row.with_value text: vacancy_readable_subjects(vacancy)
+        - row.with_value text: vacancy.readable_subjects
 
     - summary_list.with_row do |row|
       - row.with_key do
@@ -33,7 +33,7 @@ section#job-details class="govuk-!-margin-bottom-5"
       - summary_list.with_row do |row|
         - row.with_key do
           h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.contract_type")
-        - row.with_value text: vacancy_contract_type_with_duration(vacancy)
+        - row.with_value text: vacancy.readable_contract_information
 
     - if vacancy.salary?
       - summary_list.with_row do |row|
@@ -82,10 +82,10 @@ section#job-details class="govuk-!-margin-bottom-5"
 
   h2.govuk-heading-m = t("jobseekers.job_applications.further_details.heading")
   .govuk_body = t("jobseekers.job_applications.further_details.dbs_check_info")
-  = govuk_inset_text text: t("vacancies.#{vacancy.visa_sponsorship_available ? 'sponsorship_available' : 'sponsorship_unavailable'}")
+  = govuk_inset_text text: t("vacancies.sponsorship_available.#{vacancy.visa_sponsorship_available}")
   .govuk-body = t("vacancies.international_teacher_advice.text_html", link: tracked_link_to(t("vacancies.international_teacher_advice.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers", link_type: :international_teacher_advice_link_job_listing))
   .govuk-body == vacancy.further_details
-  - if vacancy.organisation&.safeguarding_information.present?
+  - if vacancy.organisation.safeguarding_information.present?
     h2.govuk-heading-m = t("jobs.safeguarding_information.jobseeker")
     .govuk-body == simple_format(vacancy.organisation.safeguarding_information)
 
