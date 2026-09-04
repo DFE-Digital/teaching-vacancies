@@ -251,6 +251,27 @@ en:
     expires_at: Closing date
     time_at: at
     visa_sponsorship_row_title: Visa sponsorship
+    commute_time: Estimated commute time
+    commute_time_attribution: Google Maps
+    commute_time_from: From %{location}
+    commute_time_loading: Calculating…
+    commute_time_loading_all: Calculating commute times from %{location}…
+    commute_time_error: Not available
+    commute_time_invalid_postcode: Enter a full UK postcode
+    commute_time_invalid_travel_mode: Not available
+    commute_time_hours:
+      one: 1 hour
+      other: "%{count} hours"
+    commute_time_hours_and_minutes: "%{hours} %{minutes}"
+    commute_time_minutes:
+      one: 1 minute
+      other: "%{count} minutes"
+    commute_time_route_not_found: Not available
+    commute_time_mode:
+      driving: Driving
+      walking: Walking
+      transit: Public transport
+    commute_time_walking_warning: Walking routes may not always include clear pavements or pedestrian paths.
     visa_sponsorship_available: Skilled Worker visas can be sponsored
     visa_sponsorship_unavailable: Visas cannot be sponsored
     supporting_documents: Supporting documents
