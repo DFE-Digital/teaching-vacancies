@@ -34,6 +34,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                       href: organisation_job_build_path(vacancy.id, field_name, "back_to_#{action_name}": "true"),
                       visually_hidden_text: t("jobs.fields.#{field_name}.hidden")
 
+  / 2 fields together makes the above pattern not work in this situation
   - if vacancy.working_patterns_any?
     - summary_list.with_row(html_attributes: { id: "working_patterns" }) do |row|
       - row.with_key
