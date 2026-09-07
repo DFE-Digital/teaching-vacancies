@@ -59,6 +59,14 @@ JOBSEEKER_SYSTEM_SPEC_MAPPINGS = {
   schools: %w[can_search_for_schools can_search_for_colleges],
   jobs: %w[can_search_for_jobs can_search_from_home_page can_view_a_vacancy can_view_all_the_jobs],
   home: %w[can_view_intermediary_landing_pages can_view_job_role_location_landing_pages],
+  further_feedbacks: %w[],
+  relevance_feedbacks: %w[],
+  sessions: %w[],
+  job_applications: %w[],
+  govuk_one_login_callbacks: %w[],
+  login_keys: %w[],
+  account_transfers: %w[],
+  account_feedbacks: %w[],
 }.freeze
 
 JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS = {
@@ -66,6 +74,7 @@ JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS = {
   job_preferences: %w[can_add_job_preferences_to_their_profile
                       can_manage_job_preferences],
   qualifications: %w[can_add_qualifications],
+  hide_profile: %w[],
 }.freeze
 
 JOBSEEKER_JOB_APPLICATIONS_SPECS = %w[can_add_declarations_to_their_job_application
