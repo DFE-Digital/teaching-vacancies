@@ -28,10 +28,6 @@ module ReadableVacancy
     "#{working_patterns} (Can be done as a job share)"
   end
 
-  def readable_working_patterns_details
-    model.working_patterns_details
-  end
-
   def readable_subjects
     model.subjects.join(", ")
   end
