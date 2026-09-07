@@ -13,6 +13,8 @@ module DocumentsHelper
   end
 
   def document_filename(vacancy, document)
+    return "" if document.blob.nil?
+
     if document.blob.malware_scan_clean?
       govuk_link_to "#{document.filename}, #{number_to_human_size(document.byte_size)}", job_document_path(vacancy, document.id)
     else

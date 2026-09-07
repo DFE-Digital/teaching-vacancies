@@ -162,4 +162,20 @@ RSpec.describe "Job applications build" do
       end
     end
   end
+
+  describe "GET #show" do
+    context "when requesting the application form step for a published vacancy" do
+      let(:vacancy) { create(:vacancy, :with_uploaded_application_form, organisations: [school_one]) }
+
+      before { get(organisation_job_build_path(vacancy.id, :application_form)) }
+
+      it "renders the step" do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "offers to remove the uploaded application form" do
+        expect(response.body).to include(organisation_job_application_forms_path(vacancy.id))
+      end
+    end
+  end
 end
