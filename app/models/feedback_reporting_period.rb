@@ -39,7 +39,7 @@ class FeedbackReportingPeriod
     (@from.beginning_of_day)..(@to.end_of_day)
   end
 
-  # :nocov:
+  # simplecov:disable
   def self.parse_date(dateish)
     case dateish
     when DateTime, Time
@@ -52,7 +52,7 @@ class FeedbackReportingPeriod
       raise ArgumentError, "Unsupported date type #{dateish.class.name}"
     end
   end
-  # :nocov:
+  # simplecov:enable
 
   attr_reader :from, :to
 

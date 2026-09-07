@@ -35,9 +35,10 @@ class JobApplicationPdf
   end
 
   def personal_details
-    # :nocov:
+    # simplecov:disable
     return @personal_details if @personal_details.present?
-    # :nocov:
+
+    # simplecov:enable
 
     scope = "helpers.label.jobseekers_job_application_personal_details_form"
     ni_review = job_application.national_insurance_number.presence || I18n.t("jobseekers.job_applications.not_defined")
@@ -58,9 +59,10 @@ class JobApplicationPdf
   end
 
   def professional_status # rubocop:disable Metrics/AbcSize
-    # :nocov:
+    # simplecov:disable
     return @professional_status if @professional_status.present?
-    # :nocov:
+
+    # simplecov:enable
 
     scope = "helpers.legend.jobseekers_job_application_professional_status_form"
     label_scope = "helpers.label.jobseekers_job_application_personal_details_form"
@@ -128,9 +130,9 @@ class JobApplicationPdf
     religious_data = if vacancy.catholic?
                        catholic_religious_information
                      else
-                       # :nocov:
+                       # simplecov:disable
                        non_catholic_religious_information
-                       # :nocov:
+                       # simplecov:enable
                      end
 
     table_class[religious_data]
@@ -166,12 +168,12 @@ class JobApplicationPdf
           ["Email:", referee.email],
         ]
 
-        # :nocov:
+        # simplecov:disable
         reference_data << ["Phone Number:", referee.phone_number] if referee.phone_number.present?
         reference_data << ["Current or most recent employer:", I18n.t("helpers.label.jobseekers_job_application_details_referee_form.is_most_recent_employer_options.#{referee.is_most_recent_employer}")] unless referee.is_most_recent_employer.nil?
 
         table_class[reference_data]
-        # :nocov:
+        # simplecov:enable
       end
     end
   end
@@ -257,7 +259,7 @@ class JobApplicationPdf
   def religious_reference_data(religious_reference_type) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     case religious_reference_type
     when "religious_referee"
-      # :nocov:
+      # simplecov:disable
       [
         [I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_name"), job_application.religious_referee_name],
         [I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_address"), job_application.religious_referee_address],
@@ -265,19 +267,19 @@ class JobApplicationPdf
         [I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_email"), job_application.religious_referee_email],
         [I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_phone"), job_application.religious_referee_phone],
       ]
-      # :nocov:
+      # simplecov:enable
     when "baptism_certificate"
       [
         [I18n.t("jobseekers.job_applications.review.religious_information.baptism_certificate"), job_application.baptism_certificate.filename.to_s],
       ]
 
     when "baptism_date"
-      # :nocov:
+      # simplecov:disable
       [
         [I18n.t("helpers.label.jobseekers_job_application_catholic_form.baptism_address"), job_application.baptism_address],
         [I18n.t("helpers.legend.jobseekers_job_application_catholic_form.baptism_date"), job_application.baptism_date.to_fs(:day_month_year)],
       ]
-      # :nocov:
+      # simplecov:enable
     else
       []
     end
@@ -343,9 +345,10 @@ class JobApplicationPdf
   end
 
   def qualifications_group_name(group)
-    # :nocov:
+    # simplecov:disable
     return group.first.name if qualifications_group_category_other?(group)
-    # :nocov:
+
+    # simplecov:enable
 
     I18n.t("helpers.label.jobseekers_qualifications_category_form.category_options.#{group.first[:category]}")
   end
@@ -361,7 +364,7 @@ class JobApplicationPdf
   end
 
   def secondary_qualification_data(qualification)
-    # :nocov:
+    # simplecov:disable
     qualification.qualification_results.map do |result|
       table_class[
         [
@@ -373,7 +376,7 @@ class JobApplicationPdf
         ].compact,
       ]
     end
-    # :nocov:
+    # simplecov:enable
   end
 
   def general_qualification_data(qualification)
@@ -408,15 +411,15 @@ class JobApplicationPdf
       ["Main duties:", employment.main_duties],
     ]
 
-    # :nocov:
+    # simplecov:disable
     employment_data << ["Subjects:", employment.subjects] if employment.subjects.present?
-    # :nocov:
+    # simplecov:enable
     employment_data << ["Employment currently held:", yes_no(employment.is_current_role?)]
     employment_data << ["Reason for leaving:", employment.reason_for_leaving]
 
-    # :nocov:
+    # simplecov:disable
     employment_data << ["End date:", employment.is_current_role? ? "present" : end_date(employment.ended_on)]
-    # :nocov:
+    # simplecov:enable
 
     employment_data << ["Start date:", month_year(employment.started_on)]
 
@@ -453,9 +456,9 @@ class JobApplicationPdf
     when "on_track"
       "I'm on track to receive my QTS"
     else
-      # :nocov:
+      # simplecov:disable
       "Status not provided"
-      # :nocov:
+      # simplecov:enable
     end
   end
 

@@ -77,9 +77,9 @@ module PdfUiHelper
   end
 
   def page_sub_title(title)
-    # :nocov:
+    # simplecov:disable
     start_new_page if close_to_bottom?
-    # :nocov:
+    # simplecov:enable
 
     move_down 0.3.cm
     fill_color COLOR_PALETTE[:lighter_grey]

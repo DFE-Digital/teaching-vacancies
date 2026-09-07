@@ -83,7 +83,7 @@ module NotifyViewsHelper
     notify_link(url, "View your messages")
   end
 
-  # :nocov:
+  # simplecov:disable
   def show_link(vacancy)
     url = job_url(vacancy, **utm_params)
     if vacancy.organisations.many?
@@ -92,21 +92,21 @@ module NotifyViewsHelper
       notify_link(url, t("jobseekers.alert_mailer.alert.show_job_link_with_organisation", job_title: vacancy.job_title, organisation_name: vacancy.organisations.first.name))
     end
   end
-  # :nocov:
+  # simplecov:enable
 
-  # :nocov:
+  # simplecov:disable
   def sign_in_link
     url = new_jobseeker_session_url(**utm_params)
     notify_link(url, t(".link"))
   end
-  # :nocov:
+  # simplecov:enable
 
-  # :nocov:
+  # simplecov:disable
   def sign_up_link
     url = new_jobseeker_session_url(**utm_params)
     notify_link(url, t(".create_account.link"))
   end
-  # :nocov:
+  # simplecov:enable
 
   def support_user_fallback_sign_in_link(signed_id)
     url = support_users_fallback_session_url(signed_id)
@@ -127,12 +127,12 @@ module NotifyViewsHelper
     end
   end
 
-  # :nocov:
+  # simplecov:disable
   def edit_job_alert_link(subscription)
     url = edit_subscription_url(subscription.token)
     notify_link(url, t(".edit_link_text"))
   end
-  # :nocov:
+  # simplecov:enable
 
   private
 

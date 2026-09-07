@@ -133,19 +133,19 @@ class School < Organisation
     religious_character.in? CATHOLIC_RELIGIOUS_TYPES
   end
 
-  # :nocov:
+  # simplecov:disable
   def key_stages
     return if phase == "not_applicable"
 
     PHASE_TO_KEY_STAGES_MAPPINGS[phase.to_sym]
   end
-  # :nocov:
+  # simplecov:enable
 
-  # :nocov:
+  # simplecov:disable
   def trust
     school_groups&.find(&:trust?)
   end
-  # :nocov:
+  # simplecov:enable
 
   def part_of_a_trust?
     trust.present?

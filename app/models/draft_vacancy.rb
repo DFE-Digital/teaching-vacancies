@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class DraftVacancy < Vacancy
-  # :nocov:
+  # simplecov:disable
   def trash!
     destroy!
   end
-  # :nocov:
+  # simplecov:enable
 
   def draft?
     true

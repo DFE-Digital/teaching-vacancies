@@ -27,11 +27,11 @@ class LocationPolygon < ApplicationRecord
     with_name(location).present?
   end
 
-  # :nocov:
+  # simplecov:disable
   def self.mapped_name(location)
     (MAPPED_LOCATIONS[location&.downcase].presence || location)&.downcase
   end
-  # :nocov:
+  # simplecov:enable
 
   def area_data_valid?
     area.invalid_reason.nil? && uk_area.invalid_reason.nil?

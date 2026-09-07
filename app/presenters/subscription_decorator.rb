@@ -16,13 +16,13 @@ class SubscriptionDecorator < Draper::Decorator
                                   phases
                                   working_patterns].freeze
 
-  # :nocov:
+  # simplecov:disable
   def filtered_search_criteria
     @filtered_search_criteria ||= sorted_search_criteria.filter_map { |field, value| search_criteria_field(field, value) }
                                                         .reduce({}) { |hash, item| hash.merge(item) }
                                     .stringify_keys
   end
-  # :nocov:
+  # simplecov:enable
 
   private
 
@@ -64,7 +64,6 @@ class SubscriptionDecorator < Draper::Decorator
     end
   end
 
-  # :nocov:
   def render_location_filter(location, radius)
     # simplecov:disable
     return if location.blank?
@@ -79,7 +78,6 @@ class SubscriptionDecorator < Draper::Decorator
       # simplecov:enable
     end
   end
-  # :nocov:
 
   def render_legacy_job_roles_filter(value)
     { job_role: value.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{role}") }.join(", ") }

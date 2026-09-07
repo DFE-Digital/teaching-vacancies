@@ -5,7 +5,7 @@ module ProfilesHelper
 
   private
 
-  # :nocov:
+  # simplecov:disable
   def qualified_teacher_status_string(profile)
     case profile.qualified_teacher_status
     when "on_track"
@@ -18,15 +18,16 @@ module ProfilesHelper
       ""
     end
   end
-  # :nocov:
+  # simplecov:enable
 
-  # :nocov:
   def right_to_work_status_string(profile)
+    # simplecov:disable
     return nil if profile&.personal_details&.has_right_to_work_in_uk.nil?
+
+    # simplecov:enable
 
     profile.personal_details.has_right_to_work_in_uk? ? "Has the right to work in the UK." : "Does not have the right to work in the UK."
   end
-  # :nocov:
 
   def radius_options
     [0, 1, 5, 10, 15, 20, 25, 50, 100, 200].map { |radius| [radius, I18n.t("jobs.search.number_of_miles", count: radius)] }
