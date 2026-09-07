@@ -48,7 +48,7 @@
     "jest": "^30.4.2",
     "jest-environment-jsdom": "30.4.1",
     "jsdom": "^30.0.1",
-    "postcss": "^8.5.26",
+    "postcss": "^8.5.27",
     "postcss-scss": "^4.0.9",
     "sass": "^1.103.1",
     "stylelint": "^17.14.1",
