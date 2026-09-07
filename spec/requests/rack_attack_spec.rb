@@ -16,8 +16,25 @@ RSpec.describe "Rack::Attack" do
     Rack::Attack::Request.new(Rack::MockRequest.env_for(path, env_options))
   end
 
+  describe "health check safelist" do
+    it "is neither throttled nor blocked, even when the IP is blocklisted" do
+      stub_const("Rack::Attack::BLOCKED_IPS", %w[127.0.0.1])
+
+      freeze_time do
+        120.times { get "/check" }
+      end
+
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
   describe "general requests throttles" do
-    let(:throttle) { Rack::Attack.throttles["requests by remote ip per 4 secs"] }
+    let(:throttle) { Rack::Attack.throttles["requests by remote ip per minute"] }
+
+    it "allows 105 requests per minute" do
+      expect(throttle.limit).to eq(105)
+      expect(throttle.period).to eq(60)
+    end
 
     it "keys requests by remote IP" do
       expect(throttle.block.call(build_request("/jobs"))).to eq("1.2.3.4")
@@ -31,8 +48,8 @@ RSpec.describe "Rack::Attack" do
   describe "ATS API throttle" do
     let(:throttle) { Rack::Attack.throttles["ATS API requests by client"] }
 
-    it "allows more requests than the general throttles" do
-      expect(throttle.limit).to eq(600)
+    it "allows fewer requests per minute than the CloudFront WAF's per-IP limit" do
+      expect(throttle.limit).to eq(150)
       expect(throttle.period).to eq(60)
     end
 
@@ -68,16 +85,31 @@ RSpec.describe "Rack::Attack" do
     end
   end
 
-  describe "jobseeker logins by IP throttle" do
-    let(:throttle) { Rack::Attack.throttles["limit jobseeker logins by IP"] }
+  describe "auth attempts by IP throttle" do
+    let(:throttle) { Rack::Attack.throttles["limit auth attempts by IP"] }
 
     it "keys POST requests to the jobseeker sign-in endpoint by remote IP" do
       request = build_request("/jobseekers/sign-in", method: "POST")
       expect(throttle.block.call(request)).to eq("1.2.3.4")
     end
 
+    it "keys POST requests to the fallback auth endpoints by remote IP" do
+      paths = %w[
+        /jobseekers/login_keys
+        /publishers/login_keys
+        /publishers/login_keys/some-id/consume
+        /support-users/fallback_sessions
+        /jobseekers/request_account_transfer_email
+        /jobseekers/account_transfer
+      ]
+      paths.each do |path|
+        expect(throttle.block.call(build_request(path, method: "POST"))).to eq("1.2.3.4")
+      end
+    end
+
     it "does not match other HTTP methods" do
       expect(throttle.block.call(build_request("/jobseekers/sign-in"))).to be_nil
+      expect(throttle.block.call(build_request("/jobseekers/login_keys"))).to be_nil
     end
 
     it "does not match other paths" do
@@ -108,34 +140,8 @@ RSpec.describe "Rack::Attack" do
     end
   end
 
-  describe "fallback auth throttle" do
-    let(:throttle) { Rack::Attack.throttles["limit fallback auth requests by IP"] }
-
-    it "keys POST requests to the fallback auth endpoints by remote IP" do
-      paths = %w[
-        /jobseekers/login_keys
-        /publishers/login_keys
-        /publishers/login_keys/some-id/consume
-        /support-users/fallback_sessions
-        /jobseekers/request_account_transfer_email
-        /jobseekers/account_transfer
-      ]
-      paths.each do |path|
-        expect(throttle.block.call(build_request(path, method: "POST"))).to eq("1.2.3.4")
-      end
-    end
-
-    it "does not match other HTTP methods" do
-      expect(throttle.block.call(build_request("/jobseekers/login_keys"))).to be_nil
-    end
-
-    it "does not match other paths" do
-      expect(throttle.block.call(build_request("/jobs", method: "POST"))).to be_nil
-    end
-  end
-
   describe "throttled requests" do
-    it "returns 429 and logs a warning when a throttle limit is exceeded" do
+    it "returns 429 with a Retry-After header, and logs a warning, when a throttle limit is exceeded" do
       allow(Rails.logger).to receive(:warn)
 
       freeze_time do
@@ -143,9 +149,10 @@ RSpec.describe "Rack::Attack" do
       end
 
       expect(response).to have_http_status(:too_many_requests)
+      expect(response.headers["Retry-After"]).to be_present
       expect(Rails.logger).to have_received(:warn)
         .with(a_string_matching(/\[rack-attack\] Throttled request/),
-              hash_including(matched: "limit jobseeker logins by IP", ip: "127.0.0.1", path: "/jobseekers/sign-in"))
+              hash_including(matched: "limit auth attempts by IP", ip: "127.0.0.1", path: "/jobseekers/sign-in"))
     end
 
     it "does not apply the general throttles to ATS API requests" do
@@ -154,14 +161,6 @@ RSpec.describe "Rack::Attack" do
       end
 
       expect(response).to have_http_status(:unauthorized)
-    end
-
-    it "applies the general throttles to non-ATS API requests" do
-      freeze_time do
-        11.times { get "/check" }
-      end
-
-      expect(response).to have_http_status(:too_many_requests)
     end
   end
 
@@ -173,12 +172,12 @@ RSpec.describe "Rack::Attack" do
     it "returns 403 and logs a warning" do
       allow(Rails.logger).to receive(:warn)
 
-      get "/check"
+      get "/jobs"
 
       expect(response).to have_http_status(:forbidden)
       expect(Rails.logger).to have_received(:warn)
         .with(a_string_matching(/\[rack-attack\] Blocked request/),
-              hash_including(matched: "block all requests from a banned list of remote IPs", ip: "127.0.0.1", path: "/check"))
+              hash_including(matched: "block all requests from a banned list of remote IPs", ip: "127.0.0.1", path: "/jobs"))
     end
   end
 
@@ -218,7 +217,7 @@ RSpec.describe "Rack::Attack" do
     it "does not ban non-auth traffic (the ban is auth-scoped)" do
       freeze_time do
         (Rack::Attack::FAIL2BAN_MAXRETRY + 1).times { get "/auth/dfe" }
-        get "/check"
+        get "/jobs"
       end
 
       expect(response).not_to have_http_status(:forbidden)

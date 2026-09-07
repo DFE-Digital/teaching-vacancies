@@ -147,11 +147,23 @@ RSpec.configure do |config|
           If you ever need a new or replacement key, let us know, and we’ll assist you with the process.
           You can email us at [teachingvacancies.ats@education.gov.uk](mailto:teachingvacancies.ats@education.gov.uk).
 
+          ## Rate limiting
+
+          Requests are limited to 150 per minute per API key (or per source IP for unauthenticated requests).
+          If you exceed this, the API responds with `HTTP 429` (Too Many Requests) and a `Retry-After`
+          header giving the number of seconds to wait before your next request.
+
+          A separate, coarser limit also applies per source IP at the network level. If you sustain a rate
+          well above 150 requests per minute, you may see connections rejected there instead of receiving
+          a `429` response.
+
           **Base URL**: `/ats-api/v1`
 
           **Supported Formats**: JSON
 
           **Authentication**: API key in `X-Api-Key`
+
+          **Rate limit**: 150 requests/minute
 
         DESCRIPTION
       },

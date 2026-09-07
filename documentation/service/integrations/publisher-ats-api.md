@@ -9,6 +9,17 @@ The API clients will be able to do these operations:
 - Delete a vacancy
 - List all their vacancies
 
+## Rate limiting
+
+ATS API requests are throttled to 150 requests per minute per client (see the `"ATS API requests by
+client"` throttle in [config/initializers/rack_attack.rb](/config/initializers/rack_attack.rb)).
+Exceeding it returns `HTTP 429` with a `Retry-After` header, as documented for clients in the
+[API description](/spec/swagger_helper.rb).
+
+150/min is set below the CloudFront WAF's rate-based rule (`waf_ip_rate_limit` in
+[terraform/app/modules/cloudfront/main.tf](/terraform/app/modules/cloudfront/main.tf)), which blocks
+a source IP outright with an opaque `403` at roughly 180 requests/minute. Keep this throttle below
+that ceiling, or clients will hit the edge block instead of a documented, resettable `429`.
 
 ## Onboarding new clients
 
