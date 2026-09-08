@@ -23,6 +23,8 @@ class Gias::ImportSchoolsAndLocalAuthorities
         import_errors = Gias::Data.new(SCHOOLS_AND_LOCAL_AUTHORITIES_CSV).each_slice(BATCH_SIZE).flat_map do |group|
           import_group uk_colleges, group
         end
+        # This is run every day, so discard old records which are clearly no longer in GIAS.
+        School.where(updated_at: ..1.week.ago).discard_all
         raise ImportFailure, import_errors.map(&:errors) if import_errors.any?
       end
     end
