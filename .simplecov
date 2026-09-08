@@ -74,7 +74,7 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # the line coverage needs to be set 0.02 below the reported value.
     # Nornmally this value needs to be 0.01 below the reported value due to rounding issues.
     minimum_coverage line: 98.02, branch: 89.42
-    # Values from test run 3rd September 2026
+    # Values from test run 8th September 2026
     # Line Coverage: 98.03% (13030 / 13291) -> 261 lines uncovered
     # Branch Coverage: 89.43% (2803 / 3134) -> 197 + 134 = 331 branches uncovered
   end
