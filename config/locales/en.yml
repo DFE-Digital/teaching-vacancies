@@ -188,7 +188,7 @@ en:
             manage_jobs: manage your jobs
         signed_out:
           create_account_html: or %{create_account_link}.
-          description_html: Post jobs and manage applications.
+          description_html: Post your jobs and manage applications.
           link_text:
             create_account: create a hiring staff account
             sign_in: Hiring staff sign in
