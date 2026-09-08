@@ -27,9 +27,23 @@ const LocationFinder = class extends Controller {
       this.removeErrorMessage();
     });
 
-    if (this.input.value === '' && navigator.geolocation && this.element.offsetParent !== null) {
-      this.findLocation();
+    this.autoFindLocationIfPermitted();
+  }
+
+  autoFindLocationIfPermitted() {
+    if (this.input.value !== '' || !navigator.geolocation || this.element.offsetParent === null) {
+      return;
     }
+
+    if (!navigator.permissions || !navigator.permissions.query) {
+      return;
+    }
+
+    navigator.permissions.query({ name: 'geolocation' }).then((status) => {
+      if (status.state === 'granted') {
+        this.findLocation();
+      }
+    }).catch(() => {});
   }
 
   findLocation() {
