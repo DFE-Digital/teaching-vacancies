@@ -1,3 +1,5 @@
+#  Only used in publishers/vacancies/index.html.slim
+# could probably be converted into a simple template
 class DashboardComponent < ApplicationComponent
   include DatesHelper
   include VacanciesHelper

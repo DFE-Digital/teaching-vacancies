@@ -1,3 +1,4 @@
+#  somewhat inconsistent usage - sometimes uses as a 'text' property which looks a bit strange
 class VacancyFormPageHeadingComponent < ApplicationComponent
   delegate :current_organisation, to: :helpers
   attr_reader :sub_caption

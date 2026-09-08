@@ -1,3 +1,4 @@
+#  This could be replaced by teh SLIm templatw
 class NavigationListComponent < ApplicationComponent
   attr_reader :title
 

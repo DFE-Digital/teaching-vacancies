@@ -1,3 +1,8 @@
+# This looks like 2 components - it rendered differently if the 'form' parameter
+# is provided. It also has a slightly strange relationship with the model it
+# renders - if it has a method candidate_<method> then it calls that, else
+# it calls candidate.public_send(method) (where candidate is actually a JobApplication)
+# This class also knows how to sort applications
 class TabPanelComponent < ApplicationComponent
   include JobApplicationsHelper
 
