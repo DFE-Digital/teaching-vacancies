@@ -1,6 +1,6 @@
 .sub-navigation
   .govuk-width-container
-    = tabs html_attributes: { "aria-label": "publisher nav", id: "publisher-nav" } do |tabs|
+    = tvs_tabs html_attributes: { "aria-label": "publisher nav", id: "publisher-nav" } do |tabs|
       - tabs.with_navigation_item text: "Job listings", link: organisation_jobs_with_type_path
       - tabs.with_navigation_item text: "Candidate profiles", link: publishers_jobseeker_profiles_path
       - tabs.with_navigation_item text: "Candidate messages", link: publishers_candidate_messages_path

@@ -5,7 +5,7 @@
 
 = render "tabs"
 
-= tabs do |tabs|
+= tvs_tabs do |tabs|
   - @satisfaction_ratings.each do |satisfaction_rating_type|
     - tabs.with_navigation_item text: t("support_users.feedbacks.satisfaction_ratings.#{satisfaction_rating_type[:feedback_type]}.tab_heading"),
                            link: support_users_feedback_satisfaction_ratings_path(satisfaction_rating_type: satisfaction_rating_type[:feedback_type]),

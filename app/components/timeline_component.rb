@@ -1,8 +1,4 @@
 class TimelineComponent < ApplicationComponent
-  def initialize(classes: [], html_attributes: {})
-    super
-  end
-
   renders_one :heading, lambda { |title:|
     tag.h2(class: "timeline-component__heading govuk-heading-s") { title }
   }

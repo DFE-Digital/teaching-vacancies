@@ -1,3 +1,5 @@
+# As this uses govuk-summary-card] CSS, not sure why we're not just
+# using govuk_summary_card directly
 class DetailComponent < ApplicationComponent
   attr_reader :title
 

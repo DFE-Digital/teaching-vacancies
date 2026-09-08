@@ -33,4 +33,4 @@
               = f.govuk_submit t(value, scope: "tabs.buttons"), name: "tag_action", value:, secondary: index.positive?
 
       - else
-        = render EmptySectionComponent.new title: t("tabs.#{@tab_name}.none")
+        = render empty_section title: t("tabs.#{@tab_name}.none")

@@ -1,3 +1,4 @@
+#  doesn't do much, but isn't causing any issues. Only 1 invocation doesn't provide a title
 class EmptySectionComponent < ApplicationComponent
   attr_reader :title
 
