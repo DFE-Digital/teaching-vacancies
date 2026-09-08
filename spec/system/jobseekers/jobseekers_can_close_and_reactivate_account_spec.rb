@@ -11,6 +11,7 @@ RSpec.describe "Jobseekers can close and reactivate their account" do
 
   after { logout }
 
+  # rubocop:disable Capybara/SpecificActions
   it "allows closing and reactivating a jobseeker account" do
     visit jobseekers_account_path
 
@@ -29,4 +30,5 @@ RSpec.describe "Jobseekers can close and reactivate their account" do
 
     expect(current_path).to eq(jobseekers_job_applications_path)
   end
+  # rubocop:enable Capybara/SpecificActions
 end

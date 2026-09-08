@@ -1,6 +1,7 @@
 require "rails_helper"
 require "dfe/analytics/rspec/matchers"
 
+# rubocop:disable Capybara/SpecificActions
 RSpec.describe "Publishers can sign in with fallback email authentication" do
   before { allow(AuthenticationFallback).to receive(:enabled?).and_return(true) }
 
@@ -232,3 +233,4 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
     end
   end
 end
+# rubocop:enable Capybara/SpecificActions
