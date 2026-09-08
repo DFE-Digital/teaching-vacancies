@@ -71,11 +71,16 @@ class Gias::ImportSchoolsAndLocalAuthorities
       end
     end
 
+    # This transform breaks this code pattern
+    # rubocop:disable Performance/Sum
     def import_batch(local_authorities, schools, memberships)
-      import_local_authorities(local_authorities).failed_instances +
-        import_schools(schools).failed_instances +
-        import_memberships(local_authorities, schools, memberships).failed_instances
+      [import_local_authorities(local_authorities),
+       import_schools(schools),
+       import_memberships(local_authorities, schools, memberships)]
+        .map(&:failed_instances)
+        .reduce(:+)
     end
+    # rubocop:enable Performance/Sum
 
     def import_local_authorities(local_authorities)
       SchoolGroup.import(
