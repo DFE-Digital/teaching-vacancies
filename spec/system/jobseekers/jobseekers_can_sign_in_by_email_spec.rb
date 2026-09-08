@@ -28,7 +28,7 @@ RSpec.describe "Jobseekers can sign in with fallback email authentication" do
         freeze_time do
           visit root_path
           within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
-          click_on I18n.t("buttons.sign_in_jobseeker")
+          find("a.govuk-button[href='/jobseekers/sign-in']").click
 
           # Expect to send an email
           expect(message_delivery).to receive(:deliver_later)
@@ -63,7 +63,7 @@ RSpec.describe "Jobseekers can sign in with fallback email authentication" do
       it "cannot sign in if key has expired" do
         visit root_path
         within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
-        click_on I18n.t("buttons.sign_in_jobseeker")
+        find("a.govuk-button[href='/jobseekers/sign-in']").click
         expect(message_delivery).to receive(:deliver_later)
         fill_in "jobseeker[email]", with: jobseeker.email
         click_on I18n.t("buttons.submit")
