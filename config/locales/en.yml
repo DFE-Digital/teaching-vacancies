@@ -209,7 +209,7 @@ en:
       support_roles: Support roles
 
     search:
-      location_label: City, county or postcode
+      location_label: City, county, or postcode
       title_h1: Find school and college jobs near you
 
   pages:
@@ -361,7 +361,7 @@ en:
       keyword: Job title or keyword
       keyword_hint: Enter a job title, subject or keyword
       location:
-        label: City, county or postcode in England
+        label: City, county, or postcode in England
         hint: Teaching Vacancies advertises school roles in England. Enter a UK city, county or postcode to look for roles near you.
       campaign:
         title:
@@ -370,7 +370,7 @@ en:
         description:
           with_subject: Get %{subject} teacher jobs sent straight to your inbox.
           without_subject: Get teaching jobs sent straight to your inbox.
-        location: City, county or postcode (in England)
+        location: City, county, or postcode (in England)
       banner:
         title: Get jobs sent straight to your inbox
       headings:
