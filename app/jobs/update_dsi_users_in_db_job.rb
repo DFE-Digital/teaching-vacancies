@@ -1,19 +1,21 @@
 # This is loaded correctly by Zeitwerk due to a custom inflection in config/inflections.rb
 class UpdateDSIUsersInDbJob < ApplicationJob
+  include ActiveJob::Continuable
+
   queue_as :low
 
-  # Fans out one FetchDSIUsersPageJob per page instead of fetching every page serially in
-  # this job: a page that keeps failing only holds up that page, and pages fetch in
-  # parallel (bounded by the low queue's worker threads and FetchDSIUsersPageJob's own
-  # concurrency limit) instead of one at a time.
+  # Each page just enqueues idempotent per-user upserts (UpdateSingleDSIUserInDbJob), so
+  # unlike the BigQuery exports there's no accumulated result that a restart would lose:
+  # the cursor can safely skip pages already processed, and re-running the in-flight page
+  # after a resume is harmless.
   def perform
-    # A previous run that hasn't finished (e.g. stuck on a permanently failing page) must
-    # not overlap with today's: it would double up DSI requests and page-processing jobs.
-    return if DSIExportRun.exists?(source: "db_sync", status: %i[running finalizing])
-
     fetch_dsi_users = Publishers::DfeSignIn::FetchDSIUsers.new
-    run = DSIExportRun.create!(source: "db_sync", total_pages: fetch_dsi_users.dsi_users_page_count)
 
-    (1..run.total_pages).each { |page| FetchDSIUsersPageJob.perform_later(run.id, page) }
+    step :sync_users, start: 1 do |step|
+      (step.cursor..fetch_dsi_users.dsi_users_page_count).each do |page|
+        fetch_dsi_users.dsi_users_page(page).each { |dsi_user| UpdateSingleDSIUserInDbJob.perform_later(dsi_user) }
+        step.advance!
+      end
+    end
   end
 end

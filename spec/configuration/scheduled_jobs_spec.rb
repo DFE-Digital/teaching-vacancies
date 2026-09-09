@@ -27,11 +27,6 @@ RSpec.describe "Scheduled jobs configuration" do
       EqualOpportunitiesReportUpdateJob
       SetSubscriptionLocationDataJob
       UpdateSingleDSIUserInDbJob
-      FetchDSIUsersPageJob
-      FetchDSIUsersExportPageJob
-      FetchDSIApproversExportPageJob
-      FinalizeDSIUsersExportJob
-      FinalizeDSIApproversExportJob
       FetchMalwareScanResultJob
       SendJobAlertsJob
       TestApplicationJob

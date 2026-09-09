@@ -12,8 +12,8 @@ module DfeSignIn
       users_pagination.results
     end
 
-    # The total number of pages of users, so a caller can fan out one job per page
-    # rather than fetching them all serially in a single long-running job.
+    # The total number of pages of users, so a caller can step through them one at a time
+    # (e.g. to checkpoint progress between pages) rather than only via #dsi_users.
     def dsi_users_page_count
       users_pagination.number_of_pages
     end

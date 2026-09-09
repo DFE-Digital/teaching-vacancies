@@ -6,12 +6,7 @@ module Publishers::DfeSignIn::BigQueryExport
       # Fetch every page before touching the table: `dsi_users` is a lazy enumerator, so
       # forcing it here means a DSI failure on any page aborts before the table is deleted,
       # rather than leaving it empty with no replacement data.
-      insert_pages(dsi_users.to_a)
-    end
-
-    # Used by FinalizeDSIUsersExportJob once every page of a fanned-out export run has
-    # already been fetched and cached: replaces the table with pages that are known-complete.
-    def insert_pages(pages)
+      pages = dsi_users.to_a
       delete_table(TABLE_NAME)
       pages.each { |page| insert_table_data(page) }
     rescue StandardError => e
