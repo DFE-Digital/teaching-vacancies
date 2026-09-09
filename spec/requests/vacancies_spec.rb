@@ -24,28 +24,31 @@ RSpec.describe "Vacancies" do
     context "with referrer" do
       let(:referrer_url) {  "https://example.com/some/path?utm=123" }
 
-      it "tracks the view in Redis" do
-        mock_redis = MockRedis.new
-        allow(Redis).to receive(:new).and_return(mock_redis)
-
-        redis_key = "vacancy_referrer_stats:#{vacancy.id}:example"
-
+      it "tracks the view" do
         perform_enqueued_jobs do
           get job_path(vacancy), params: {}, headers: { "Referer" => referrer_url }
         end
-        expect(mock_redis.get(redis_key).to_i).to be > 0
+        expect(VacancyAnalytics.find_by!(vacancy_id: vacancy.id).referrer_counts.symbolize_keys).to eq({ example: 1 })
       end
     end
 
     context "with utm campaign (e.g. job alert links)" do
+      before do
+        get job_path(vacancy), params: { utm_campaign: "job_alert" }
+      end
+
       it "tracks the view" do
-        expect { get job_path(vacancy), params: { utm_campaign: "job_alert" } }.to have_enqueued_job(TrackVacancyViewJob)
+        expect(VacancyAnalytics.find_by!(vacancy_id: vacancy.id).referrer_counts.symbolize_keys).to eq({ direct: 1 })
       end
     end
 
     context "without referrer" do
+      before do
+        get job_path(vacancy)
+      end
+
       it "doesnt track the job" do
-        expect { get job_path(vacancy) }.not_to have_enqueued_job(TrackVacancyViewJob)
+        expect(VacancyAnalytics.find_by(vacancy_id: vacancy.id)).to be_nil
       end
     end
   end
