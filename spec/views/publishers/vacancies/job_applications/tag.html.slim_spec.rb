@@ -49,6 +49,14 @@ RSpec.describe "publishers/vacancies/job_applications/tag" do
           expect(rendered).to have_css("#publishers-job-application-tag-form-status-#{status}-field")
         end
       end
+
+      it "only shows the irreversible action hint when not progressing is selected" do
+        expect(tag_page).to have_no_text("Applications that you are not taking forward to interview")
+
+        conditional = tag_page.find("#publishers-job-application-tag-form-status-unsuccessful-conditional")
+        expect(conditional[:class]).to include("govuk-radios__conditional--hidden")
+        expect(conditional).to have_text(I18n.t("publishers.vacancies.job_applications.tag.unsuccessful_hint"))
+      end
     end
 
     context "when job applications have status shortlisted" do
@@ -70,6 +78,20 @@ RSpec.describe "publishers/vacancies/job_applications/tag" do
         it "shows a radio button for status '#{status}'" do
           expect(rendered).to have_css("#publishers-job-application-tag-form-status-#{status}-field")
         end
+      end
+
+      it "conditionally reveals the irreversible action hint for interview unsuccessful" do
+        radio = tag_page.find("#publishers-job-application-tag-form-status-unsuccessful-interview-field")
+        conditional = tag_page.find("#publishers-job-application-tag-form-status-unsuccessful-interview-conditional")
+
+        expect(radio["data-aria-controls"]).to eq(conditional[:id])
+        expect(conditional[:class]).to include("govuk-radios__conditional--hidden")
+        expect(conditional).to have_text(I18n.t("publishers.vacancies.job_applications.tag.unsuccessful_hint"))
+      end
+
+      it "continues to show the job offered hint" do
+        expect(tag_page).to have_text(I18n.t("helpers.hint.publishers_job_application_tag_form.status_options.offered"))
+        expect(tag_page).to have_no_css("#publishers-job-application-tag-form-status-offered-conditional")
       end
     end
   end
