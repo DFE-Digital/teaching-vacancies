@@ -23,9 +23,10 @@ class Gias::ImportSchoolsAndLocalAuthorities
         import_errors = Gias::Data.new(SCHOOLS_AND_LOCAL_AUTHORITIES_CSV).each_slice(BATCH_SIZE).flat_map do |group|
           import_group uk_colleges, group
         end
+        raise ImportFailure, import_errors.map(&:errors) if import_errors.any?
+
         # This is run every day, so discard old records which are clearly no longer in GIAS.
         School.where(updated_at: ..1.week.ago).discard_all
-        raise ImportFailure, import_errors.map(&:errors) if import_errors.any?
       end
     end
 
@@ -73,16 +74,12 @@ class Gias::ImportSchoolsAndLocalAuthorities
       end
     end
 
-    # This transform breaks this code pattern
-    # rubocop:disable Performance/Sum
     def import_batch(local_authorities, schools, memberships)
       [import_local_authorities(local_authorities),
        import_schools(schools),
        import_memberships(local_authorities, schools, memberships)]
-        .map(&:failed_instances)
-        .reduce(:+)
+        .flat_map(&:failed_instances)
     end
-    # rubocop:enable Performance/Sum
 
     def import_local_authorities(local_authorities)
       SchoolGroup.import(
