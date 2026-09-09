@@ -11,6 +11,7 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
 
     let(:local_authority1) { SchoolGroup.find_by(local_authority_code: "201") }
     let(:local_authority2) { SchoolGroup.find_by(local_authority_code: "202") }
+    let!(:non_gias_school) { create(:school, urn: "123456").tap { |s| s.update_columns(updated_at: 2.weeks.ago) } }
 
     before do
       stub_request(
@@ -19,8 +20,13 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
       ).to_return(body: csv)
     end
 
-    it "creates Schools" do
-      expect { subject.call }.to change(School, :count).by 19
+    it "discards old records not in GIAS" do
+      subject.call
+      expect(non_gias_school.reload).to be_discarded
+    end
+
+    it "creates non-discarded Schools" do
+      expect { subject.call }.to change { School.kept.count }.by 12
     end
 
     it "creates SchoolGroups" do
