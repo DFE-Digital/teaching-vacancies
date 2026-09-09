@@ -4,8 +4,8 @@ experiments:
       - apply
       - trn
     weights:
-      - 95
-      - 5
+      - 75
+      - 25
 
 exclude:
   bots: false
