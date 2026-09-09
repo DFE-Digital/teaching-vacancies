@@ -3,6 +3,7 @@ require "dfe/analytics/rspec/matchers"
 
 RSpec.describe "Documents" do
   include ActionDispatch::TestProcess::FixtureFile
+  include ActiveJob::TestHelper
 
   let(:publisher) { create(:publisher) }
   let(:organisation) { build(:school) }
@@ -194,6 +195,39 @@ RSpec.describe "Documents" do
         it "is rejected even if the file extension suggests it is valid" do
           expect(response.body).to include(I18n.t("jobs.file_type_error_message", filename: "invalid_plain_text_file.txt", valid_file_types: valid_file_types))
         end
+      end
+    end
+  end
+
+  describe "DELETE #destroy" do
+    let(:request) { delete organisation_job_application_forms_path(vacancy.id) }
+
+    context "when the vacancy is published" do
+      let(:vacancy) { create(:vacancy, :with_uploaded_application_form, organisations: [organisation]) }
+
+      it "removes the application form" do
+        expect { perform_enqueued_jobs { request } }
+          .to change { vacancy.reload.application_form.attached? }.from(true).to(false)
+      end
+
+      it "redirects to the application form step" do
+        expect(request).to redirect_to(organisation_job_build_path(vacancy.id, :application_form))
+      end
+
+      it "leaves the vacancy published without an application form" do
+        perform_enqueued_jobs { request }
+
+        expect(vacancy.reload).to be_published
+        expect(vacancy.receive_applications).to eq("uploaded_form")
+      end
+    end
+
+    context "when the vacancy is a draft" do
+      let(:vacancy) { create(:draft_vacancy, :with_uploaded_application_form, organisations: [organisation]) }
+
+      it "removes the application form" do
+        expect { perform_enqueued_jobs { request } }
+          .to change { vacancy.reload.application_form.attached? }.from(true).to(false)
       end
     end
   end
