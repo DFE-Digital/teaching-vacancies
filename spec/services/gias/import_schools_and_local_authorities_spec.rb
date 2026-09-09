@@ -11,7 +11,7 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
 
     let(:local_authority1) { SchoolGroup.find_by(local_authority_code: "201") }
     let(:local_authority2) { SchoolGroup.find_by(local_authority_code: "202") }
-    let!(:non_gias_school) { create(:school, urn: "123456").tap { |s| s.update_columns(updated_at: 2.weeks.ago) } }
+    let!(:non_gias_school) { create(:school, urn: "123456").tap { |s| s.update_columns(updated_at: 2.months.ago) } }
 
     before do
       stub_request(

@@ -26,7 +26,7 @@ class Gias::ImportSchoolsAndLocalAuthorities
         raise ImportFailure, import_errors.map(&:errors) if import_errors.any?
 
         # This is run every day, so discard old records which are clearly no longer in GIAS.
-        School.where(updated_at: ..1.week.ago).discard_all
+        School.where(updated_at: ..1.month.ago).discard_all
       end
     end
 
