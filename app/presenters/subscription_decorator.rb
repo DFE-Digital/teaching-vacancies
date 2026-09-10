@@ -93,8 +93,18 @@ class SubscriptionDecorator < Draper::Decorator
     { visa_sponsorship_availability: value.map { |option| I18n.t("helpers.label.publishers_job_listing_visa_sponsorship_form.visa_sponsorship_available_options.#{option}") }.join(", ") }
   end
 
-  def render_ect_statuses_filter(value)
-    { suitable_for_early_career_teachers: value.map { |option| I18n.t("helpers.label.publishers_job_listing_about_the_role_form.ect_status_options.#{option}") }.join(", ") }
+  def render_ect_statuses_filter(values)
+    values.filter_map { |option|
+      # coverage of case statements without an effective 'else' doesn't work properly
+      # simplecov:disable
+      case option
+      # simplecov:enable
+      when "ect_suitable"
+        { suitable_for_early_career_teachers: I18n.t("helpers.label.publishers_job_listing_about_the_role_form.ect_status_options.ect_suitable") }
+      when "qts_not_needed"
+        { fe_qts_required: I18n.t("helpers.label.publishers_job_listing_about_the_role_form.fe_role_qts_required_options.false") }
+      end
+    }.reduce({}) { |hash, item| hash.merge(item) }
   end
 
   def render_subjects_filter(value)

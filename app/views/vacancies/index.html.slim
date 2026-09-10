@@ -4,7 +4,7 @@
 - content_for :breadcrumbs do
   = govuk_breadcrumbs breadcrumbs: organisation_landing_page_breadcrumbs(@vacancies_search.organisation_slug) if @vacancies_search.organisation_slug.present?
 
-= render "vacancies/search/page_title_and_description", landing_page: @landing_page
+= render "vacancies/search/page_title_and_description", landing_page: @landing_page, vacancies_search: @vacancies_search, page_number: @pagy.page
 
 = form_for @form, as: "", url: jobs_path, method: :get, html: { data: { controller: "form" }, role: "search" } do |f|
 

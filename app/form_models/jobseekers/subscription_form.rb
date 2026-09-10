@@ -81,7 +81,7 @@ class Jobseekers::SubscriptionForm < BaseForm
     @teaching_job_role_options = Vacancy::TEACHING_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.#{option}")] }
     @support_job_role_options = Vacancy::SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.support_job_role_options.#{option}")] }
     @phase_options = Vacancy.phases.keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_education_phases_form.phases_options.#{option}")] }
-    @ect_status_options = [["ect_suitable", I18n.t("jobs.filters.ect_suitable")]]
+    @ect_status_options = %w[ect_suitable qts_not_needed].map { |ect_type| [ect_type, I18n.t("jobs.filters.#{ect_type}")] }
     @working_pattern_options = Vacancy.working_patterns.keys.map do |option|
       [option, I18n.t("helpers.label.publishers_job_listing_contract_information_form.working_patterns_options.#{option}")]
     end
@@ -89,7 +89,7 @@ class Jobseekers::SubscriptionForm < BaseForm
 
   def location_and_one_other_criterion_selected
     errors.add(:base, I18n.t("subscriptions.errors.no_location_and_other_criterion_selected")) unless
-      location.present? && %i[keyword teaching_job_roles support_job_roles subjects phases working_patterns].any? { |criterion| public_send(criterion).present? }
+      location.present? && %i[keyword ect_statuses teaching_job_roles support_job_roles subjects phases working_patterns].any? { |criterion| public_send(criterion).present? }
   end
 
   def unique_job_alert
