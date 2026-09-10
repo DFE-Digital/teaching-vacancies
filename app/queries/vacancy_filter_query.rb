@@ -30,7 +30,7 @@ class VacancyFilterQuery
     private
 
     def ect_filter_scope(ect_filters)
-      ect_scope = ect_filters.filter_map { |filter|
+      ect_filters.filter_map { |filter|
         # coverage of case statements without an effective 'else' doesn't work properly
         # simplecov:disable
         case filter
@@ -38,10 +38,13 @@ class VacancyFilterQuery
         when "ect_suitable"
           Vacancy.ect_suitable
         when "qts_not_needed"
-          Vacancy.qts_not_needed.merge(Organisation.colleges)
+          # QTS-not-needed only applies to FE colleges. We filter via an id subquery rather than
+          # joining organisations onto the outer scope, so this stays a plain, non-distinct
+          # relation on vacancies (see Search::SimilarJobs, which plucks ids from a query ordered
+          # by ST_Distance - DISTINCT + ORDER BY an expression not in the select list is invalid SQL).
+          Vacancy.where(id: Vacancy.qts_not_needed.joins(:organisations).merge(Organisation.colleges).select(:id))
         end
-      }.reduce { |scope, ect_scope| scope.or(ect_scope) }
-      Vacancy.joins(:organisations).merge(ect_scope).distinct if ect_scope
+      }.reduce { |scope, other| scope.or(other) }
     end
 
     def organisation_type_filters(organisation_types)

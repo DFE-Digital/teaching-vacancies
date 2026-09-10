@@ -171,6 +171,17 @@ RSpec.describe VacancyFilterQuery do
           expect(subject.map(&:job_title)).to match_array([college_non_qts_vacancy, ect_suitable_job].map(&:job_title))
         end
       end
+
+      context "when only ect_suitable is selected" do
+        let(:filters) { { ect_statuses: ["ect_suitable"] } }
+
+        # Regression test: the returned scope must not carry a `.distinct`, otherwise combining it
+        # with an ORDER BY expression not present in the select list (e.g. ST_Distance ordering
+        # used for similar jobs / distance search) raises PG::InvalidColumnReference.
+        it "does not mark the scope as distinct" do
+          expect(subject.distinct_value).to be_falsey
+        end
+      end
     end
 
     context "when organisation_types filter is selected" do
