@@ -1,13 +1,13 @@
 class LandingPageLinkGroupComponent < ApplicationComponent
   include FailSafe
 
-  def initialize(title: nil, subgroup: false, use_locations: false, list_class: "", classes: [], html_attributes: {})
-    super(classes: classes, html_attributes: html_attributes)
+  def initialize(use_locations: false)
+    super()
 
-    @title = title
-    @list_class = list_class
+    @title = nil
+    @list_class = ""
     @use_locations = use_locations
-    @subgroup = subgroup
+    @subgroup = false
   end
 
   renders_one :title_landing_page, ->(*args, **kwargs) { build_landing_page(*args, **kwargs) }
