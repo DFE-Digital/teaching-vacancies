@@ -11,9 +11,13 @@ class SubscriptionVacanciesMatchingQuery
       if search_criteria.key?(:location) && search_criteria.key?(:radius)
         scope = scope.search_by_location(search_criteria.fetch(:location), search_criteria.fetch(:radius), polygon: nil, sort_by_distance: false)
       end
-      # search_by_filter doesn't suuport filter by slug
+      # search_by_filter doesn't support filter by slug
       if search_criteria.key?(:organisation_slug)
         scope = organisation_slug_filter(scope, search_criteria.fetch(:organisation_slug))
+      end
+      if search_criteria.key?(:ect_statuses)
+        scope = ect_status_filter(scope, search_criteria.fetch(:ect_statuses))
+        search_criteria = search_criteria.except(:ect_statuses)
       end
       scope.search_by_filter(search_criteria).limit(limit).order(publish_on: :desc)
     end
@@ -44,6 +48,25 @@ class SubscriptionVacanciesMatchingQuery
     # When subscriptions are for a particular org new vacancies. The search criteria contains the exact org. slug.
     def organisation_slug_filter(scope, organisation_slug)
       scope.joins(:organisations).where(organisations: { slug: organisation_slug })
+    end
+
+    # Where any of the subscription's ect_statuses match the vacancy's ect_status
+    def ect_status_filter(scope, subscription_ect_statuses)
+      built_scope = scope.joins(:organisations)
+
+      # QTS not needed only applies to FE Colleges
+      if subscription_ect_statuses.include?("ect_suitable") && subscription_ect_statuses.include?("qts_not_needed")
+        built_scope.merge(Vacancy.ect_suitable)
+                   .or(built_scope.merge(Organisation.colleges).qts_not_needed)
+      elsif subscription_ect_statuses.include?("ect_suitable")
+        built_scope.merge(Vacancy.ect_suitable)
+      elsif subscription_ect_statuses.include?("qts_not_needed")
+        built_scope.merge(Organisation.colleges).qts_not_needed
+        # simplecov:disable
+      else
+        scope
+      end
+      # simplecov:enable
     end
   end
 end
