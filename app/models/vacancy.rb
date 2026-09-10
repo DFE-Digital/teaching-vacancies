@@ -156,8 +156,6 @@ class Vacancy < ApplicationRecord
     published_in_year.or(expired_in_year)
   }
 
-  scope :qts_not_needed, -> { where(fe_role_qts_required: false) }
-
   validates :slug, presence: true
 
   validates :application_email, email_address: true, if: -> { application_email_changed? } # Allows data created prior to validation to still be valid

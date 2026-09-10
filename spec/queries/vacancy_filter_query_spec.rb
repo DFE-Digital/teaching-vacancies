@@ -35,7 +35,6 @@ RSpec.describe VacancyFilterQuery do
   let(:non_faith_vacancy1) {  Vacancy.find_by!(job_title: "Vacancy 14") }
   let(:non_faith_vacancy2) {  Vacancy.find_by!(job_title: "Vacancy 15-NFV2") }
   let(:non_faith_vacancy3) {  Vacancy.find_by!(job_title: "Vacancy 14-NFV3") }
-  let(:college_non_qts_vacancy) { Vacancy.find_by!(job_title: "College non QTS") }
 
   # rubocop:disable RSpec/BeforeAfterAll
   before(:all) do
@@ -94,11 +93,6 @@ RSpec.describe VacancyFilterQuery do
       create(:vacancy, :apply_via_website, job_title: "Vacancy 18FR", phases: %w[primary], job_roles: ["other_leadership"], publisher_organisation: free_school, organisations: [free_school, free_schools])
       create(:vacancy, :apply_via_website, job_title: "Vacancy 19FR", phases: %w[primary], job_roles: ["other_support"], publisher_organisation: free_school, organisations: [free_school, free_schools], expires_at: 2.days.from_now)
       create(:vacancy, :apply_via_website, job_title: "Vacancy 191FR", phases: %w[primary], job_roles: ["catering_cleaning_and_site_management"], publisher_organisation: free_school, organisations: [free_school, free_schools], expires_at: 1.day.from_now)
-
-      college = create(:college)
-      create(:school)
-      create(:vacancy, :apply_via_website, organisations: [college], job_title: "College non QTS", fe_role_qts_required: false)
-      create(:vacancy, :apply_via_website, organisations: [college], job_title: "College QTS", fe_role_qts_required: true)
     end
   end
 
@@ -148,27 +142,11 @@ RSpec.describe VacancyFilterQuery do
     end
 
     describe "ect_statuses filter" do
-      context "when qts_not_needed" do
-        let(:filters) { { ect_statuses: ["qts_not_needed"] } }
-
-        it "will return college vacancies that don't require QTS" do
-          expect(subject.map(&:job_title)).to contain_exactly(college_non_qts_vacancy.job_title)
-        end
-      end
-
       context "when ect_suitable" do
         let(:filters) { { ect_statuses: ["ect_suitable"] } }
 
         it "will return ect suitable roles" do
           expect(subject.map(&:job_title)).to contain_exactly(ect_suitable_job.job_title)
-        end
-      end
-
-      context "when both filters are included" do
-        let(:filters) { { ect_statuses: ["ect_suitable", "qts_not_needed"] } }
-
-        it "will returns both vacancies" do
-          expect(subject.map(&:job_title)).to match_array([college_non_qts_vacancy, ect_suitable_job].map(&:job_title))
         end
       end
     end
@@ -196,9 +174,11 @@ RSpec.describe VacancyFilterQuery do
 
       context "when organisation_types == ['FE Colleges']" do
         let(:filters) { { organisation_types: ["FE Colleges"] } }
+        let(:college) { create(:school, name: "College", school_type: School::COLLEGE_SCHOOL_TYPE) }
+        let!(:college_vacancy) { create(:vacancy, :apply_via_website, job_title: "College vacancy", organisations: [college]) }
 
         it "will return vacancies associated with colleges" do
-          expect(subject.map(&:job_title)).to contain_exactly("College QTS", "College non QTS")
+          expect(subject).to contain_exactly(college_vacancy)
         end
       end
 
@@ -235,7 +215,7 @@ RSpec.describe VacancyFilterQuery do
             other_leadership_vacancy,
             other_support_vacancy,
             catering_cleaning_and_site_management_vacancy,
-          ].map(&:job_title) + ["College QTS", "College non QTS"])
+          ].map(&:job_title))
         end
       end
 
@@ -314,7 +294,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { working_patterns: %w[part_time full_time] } }
 
         it "returns many jobs" do
-          expect(subject.count).to eq(32)
+          expect(subject.count).to eq(30)
         end
       end
 
@@ -322,7 +302,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { working_patterns: %w[full_time] } }
 
         it "returns fewer jobs" do
-          expect(subject.count).to eq(31)
+          expect(subject.count).to eq(29)
         end
       end
 
@@ -338,7 +318,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { working_patterns: %w[compressed_hours staggered_hours] } }
 
         it "ignores the legacy filters and returns many jobs" do
-          expect(subject.count).to eq(32)
+          expect(subject.count).to eq(30)
         end
       end
 
@@ -346,7 +326,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { working_patterns: [] } }
 
         it "ignores the legacy filters and returns many jobs" do
-          expect(subject.count).to eq(32)
+          expect(subject.count).to eq(30)
         end
       end
     end
@@ -356,7 +336,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { phases: [] } }
 
         it "returns many jobs" do
-          expect(subject.count).to eq(30)
+          expect(subject.count).to eq(28)
         end
       end
 
@@ -380,7 +360,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { phases: %w[middle] } }
 
         it "ignores the legacy filters and returns many jobs" do
-          expect(subject.count).to eq(30)
+          expect(subject.count).to eq(28)
         end
       end
 
@@ -451,7 +431,7 @@ RSpec.describe VacancyFilterQuery do
             other_leadership_vacancy,
             other_support_vacancy,
             catering_cleaning_and_site_management_vacancy,
-          ].map(&:job_title) + ["College QTS", "College non QTS"])
+          ].map(&:job_title))
         end
       end
 
@@ -510,7 +490,7 @@ RSpec.describe VacancyFilterQuery do
             non_faith_vacancy1,
             non_faith_vacancy2,
             non_faith_vacancy3,
-          ].map(&:job_title) + ["College QTS", "College non QTS"])
+          ].map(&:job_title))
         end
       end
     end
