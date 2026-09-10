@@ -8,7 +8,7 @@
     h3.govuk-heading-m = t(".feedback")
     p.govuk-body class="govuk-!-margin-bottom-0" = job_application.rejection_reasons
 
-= tabs do |t|
+= tvs_tabs do |t|
   - t.with_navigation_item text: "Application", link: jobseekers_job_application_path(job_application, tab: "application"), active: @tab.nil? || @tab == "application"
   - t.with_navigation_item text: "Messages", link: jobseekers_job_application_path(job_application, tab: "messages"), active: (@tab == "messages")
 

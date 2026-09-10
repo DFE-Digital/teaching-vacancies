@@ -1,6 +1,6 @@
 .sub-navigation
   .govuk-width-container
-    = tabs html_attributes: { "aria-label": "main menu" } do |tabs|
+    = tvs_tabs html_attributes: { "aria-label": "main menu" } do |tabs|
       - tabs.with_navigation_item text: t("sub_nav.jobs"), link: jobs_path
       - tabs.with_navigation_item text: t("sub_nav.schools"), link: organisations_path
       - tabs.with_navigation_item text: t("sub_nav.colleges"), link: colleges_path

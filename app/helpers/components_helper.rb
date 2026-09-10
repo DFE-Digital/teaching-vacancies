@@ -1,19 +1,19 @@
 module ComponentsHelper
   {
     banner_button: "BannerButtonComponent",
-    card: "CardComponent",
+    tvs_card: "CardComponent",
     dashboard: "DashboardComponent",
     empty_section: "EmptySectionComponent",
     filters: "FiltersComponent",
     job_application_notes: "PublisherNotesOnJobApplicationComponent",
     landing_page_link_group: "LandingPageLinkGroupComponent",
-    map: "MapComponent",
+    tvs_map: "MapComponent",
     navigation_list: "NavigationListComponent",
     editor: "EditorComponent",
     review_section: "JobApplicationReviewSectionComponent",
     searchable_collection: "SearchableCollectionComponent",
     supportal_table: "SupportalTableComponent",
-    tabs: "TabsComponent",
+    tvs_tabs: "TabsComponent",
     vacancy_form_page_heading: "VacancyFormPageHeadingComponent",
   }.each do |name, klass|
     define_method(name) do |*args, **kwargs, &block|
