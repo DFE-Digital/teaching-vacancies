@@ -1,5 +1,4 @@
-# seems ok - used in 4 places
-class EditorComponent < ApplicationComponent
+class EditorComponent < TvsClassesComponent
   def initialize(form_input:, value:, field_name:, hint: nil, label: {}, classes: [], html_attributes: {})
     super(classes: classes, html_attributes: html_attributes.merge({ data: { controller: "editor" } }))
 

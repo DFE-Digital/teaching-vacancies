@@ -1,4 +1,4 @@
-class SupportalTableComponent < ApplicationComponent
+class SupportalTableComponent < TvsClassesComponent
   SUPPORTED_TYPES = %i[
     boolean
     column

@@ -1,13 +1,11 @@
 class LandingPageLinkGroupComponent < ApplicationComponent
   include FailSafe
 
-  def initialize(use_locations: false)
+  def initialize(use_locations: false, subgroup: false)
     super()
 
-    @title = nil
-    @list_class = ""
     @use_locations = use_locations
-    @subgroup = false
+    @subgroup = subgroup
   end
 
   renders_one :title_landing_page, ->(*args, **kwargs) { build_landing_page(*args, **kwargs) }
@@ -34,7 +32,6 @@ class LandingPageLinkGroupComponent < ApplicationComponent
 
   def list_class
     [
-      @list_class,
       ("govuk-list--bullet" if title_landing_page.present?),
     ].compact.join
   end
