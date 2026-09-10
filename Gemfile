@@ -46,11 +46,6 @@ gem "faraday-http-cache"
 # more uk-friendly fakes available
 gem "ffaker"
 
-# HTTP client just for ONS data (with cache)
-gem "faraday"
-gem "faraday-http-cache"
-gem "faraday-retry"
-
 # slugs for vacancies
 gem "friendly_id"
 # guidance pages content
