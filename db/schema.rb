@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_24_135752) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_10_072548) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -1060,7 +1060,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_24_135752) do
     t.jsonb "referrer_counts", default: {}, null: false
     t.datetime "updated_at", null: false
     t.uuid "vacancy_id", null: false
-    t.index ["referrer_counts"], name: "index_vacancy_analytics_on_referrer_counts", using: :gin
     t.index ["vacancy_id"], name: "index_vacancy_analytics_on_vacancy_id", unique: true
   end
 
