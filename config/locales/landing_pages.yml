@@ -273,9 +273,9 @@ en:
       meta_description: "Discover the latest jobs for maths teachers, science teachers, English teachers and more. Find your next secondary school job on Teaching Vacancies."
     sixth-form-or-college-jobs:
       name: "Sixth form and college (%{count})"
-      title: "Sixth form and college teaching jobs"
+      title: "Sixth Form and College Jobs and Support Roles"
       heading: "%{count} sixth form or college jobs"
-      meta_description: "Use Teaching Vacancies to find sixth form, college and 16-19 education provider teaching jobs near you."
+      meta_description: "Find and apply for support roles in Further Education on Teaching Vacancies. Apply quickly and easily for full- and part-time jobs."
     through-school-jobs:
       name: "All through school (%{count})"
       title: "Through School Jobs"
