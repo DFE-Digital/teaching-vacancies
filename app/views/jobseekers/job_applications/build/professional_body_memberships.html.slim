@@ -6,7 +6,7 @@ h2.govuk-heading-l = t(".heading")
 p.govuk-hint = t(".hint")
 - if job_application.professional_body_memberships.any?
   - job_application.professional_body_memberships.each do |professional_body_membership|
-    = render DetailComponent.new title: professional_body_membership.name do |detail|
+    = tvs_summary_card title: professional_body_membership.name do |detail|
       - detail.with_body do
         = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
           - attributes = %w[name membership_type membership_number year_membership_obtained]

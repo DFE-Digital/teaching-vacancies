@@ -1,7 +1,6 @@
 = tag.div(**html_attributes) do
   .govuk-summary-card__title-wrapper
-    - if title
-      h3.govuk-summary-card__title = title
+    h3.govuk-summary-card__title = title
     - if actions
       ul.govuk-summary-card__actions
         - actions.each do |action|

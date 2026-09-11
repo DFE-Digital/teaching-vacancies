@@ -8,7 +8,7 @@ p.govuk-body = t(".description_html", link: govuk_link_to(t(".kcsie"), "https://
 
 - if job_application.referees.any?
   - job_application.referees.each do |referee|
-    = render DetailComponent.new title: referee.name do |detail|
+    = tvs_summary_card title: referee.name do |detail|
       - detail.with_body do
         = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
           - attributes = %w[job_title organisation relationship email phone_number]

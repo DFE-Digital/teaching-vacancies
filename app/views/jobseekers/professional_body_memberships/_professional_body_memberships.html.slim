@@ -1,5 +1,5 @@
 - profile.professional_body_memberships.each do |professional_body_membership|
-  = render DetailComponent.new title: professional_body_membership.name do |detail|
+  = tvs_summary_card title: professional_body_membership.name do |detail|
     - detail.with_body do
       = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
         - summary_list.with_row do |row|
