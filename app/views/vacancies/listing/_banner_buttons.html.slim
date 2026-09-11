@@ -3,13 +3,9 @@
     .govuk-grid-column-one-third
       - if job_application
         - if job_application.draft?
-          = banner_button text: t("jobseekers.job_applications.banner_links.draft"),
-            href: jobseekers_job_application_apply_path(job_application),
-            icon: "green-tick"
+          = button_to t("jobseekers.job_applications.banner_links.draft"), jobseekers_job_application_apply_path(job_application), method: :get, class: "banner-button-component__button icon icon--left icon--green-tick"
         - elsif job_application.withdrawn?
-          = banner_button text: t("jobseekers.job_applications.banner_links.withdrawn"),
-            href: jobseekers_job_application_path(job_application),
-            icon: "green-tick"
+          = button_to t("jobseekers.job_applications.banner_links.withdrawn"), jobseekers_job_application_path(job_application), class: "banner-button-component__button icon icon--left icon--green-tick"
         - else
           = banner_button text: t("jobseekers.job_applications.banner_links.submitted"),
             href: jobseekers_job_application_path(job_application),
@@ -18,33 +14,31 @@
         / possible ab-test for TRN prompt for these role types
         / can't do it unless jobseeker is signed in at this point
         - trn_on_apply_variant = current_jobseeker.present? ? field_test(:trn_on_apply) : "apply"
+        - href = trn_on_apply_variant == "apply" ? new_application_path(vacancy) : trn_interstitial_job_path(vacancy.id)
         - if vacancy.uploaded_form?
-          = banner_button text: t("jobseekers.job_applications.banner_links.apply"),
-            href: trn_on_apply_variant == "apply" ? new_application_path(vacancy) : trn_interstitial_job_path(vacancy.id),
-            icon: "apply",
-            method: trn_on_apply_variant == "apply" ? :post : :get
+          = button_to t("jobseekers.job_applications.banner_links.apply"), href, method: trn_on_apply_variant == "apply" ? :post : :get, class: "banner-button-component__button icon icon--left icon--apply"
         - else
-          = banner_button text: t("jobseekers.job_applications.banner_links.apply"),
-            href: trn_on_apply_variant == "apply" ? new_application_path(vacancy) : trn_interstitial_job_path(vacancy.id),
-            icon: "apply",
-            method: :get
+          = button_to t("jobseekers.job_applications.banner_links.apply"), href, method: :get, class: "banner-button-component__button icon icon--left icon--apply"
       - else
         - method = vacancy.uploaded_form? ? :post : :get
-        = banner_button text: t("jobseekers.job_applications.banner_links.apply"),
-          href: new_application_path(vacancy),
-          icon: "apply",
-          method: method
+        = button_to t("jobseekers.job_applications.banner_links.apply"), new_application_path(vacancy), method: method, class: "banner-button-component__button icon icon--left icon--apply"
 
   .govuk-grid-column-one-third
-    = banner_button text: t("jobs.alert.similar.terse"),
-      href: new_subscription_path,
-      icon: "alert-blue",
-      params: { search_criteria: invented_job_alert_search_criteria, vacancy_id: vacancy.id }
+    = button_to t("jobs.alert.similar.terse"), new_subscription_path, method: :get, params: { search_criteria: invented_job_alert_search_criteria, vacancy_id: vacancy.id }, class: "banner-button-component__button icon icon--left icon--alert-blue"
+    / = banner_button text: t("jobs.alert.similar.terse"),
+    /   href: new_subscription_path,
+    /   icon: "alert-blue",
+    /   params: { search_criteria: invented_job_alert_search_criteria, vacancy_id: vacancy.id }
 
-  - unless job_application
+  - if job_application.nil?
     .govuk-grid-column-one-third
-      = banner_button text: t("jobseekers.saved_jobs.#{saved_job ? 'saved' : 'save'}"),
-        href: saved_job ? jobseekers_saved_job_path(vacancy.id, saved_job) : new_jobseekers_saved_job_path(vacancy.id),
-        icon: saved_job ? "saved" : "save",
-        method: saved_job ? :delete : :get,
-        params: {}
+      - if saved_job
+        = banner_button text: t("jobseekers.saved_jobs.saved"),
+          href: jobseekers_saved_job_path(vacancy.id, saved_job),
+          icon: "saved"
+          method: :delete
+      - else
+        = banner_button text: t("jobseekers.saved_jobs.save"),
+          href: new_jobseekers_saved_job_path(vacancy.id),
+          icon: "save",
+          method: :get,
