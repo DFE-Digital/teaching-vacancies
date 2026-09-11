@@ -1,11 +1,11 @@
 require "rails_helper"
 
-RSpec.describe "publishers/vacancies/vacancy_review_sections/_application_process" do
+RSpec.describe "publishers/vacancies/application_process" do
   let(:organisation) { create(:school) }
   let(:step_process) { Publishers::Vacancies::VacancyStepProcess.new(:review, vacancy: vacancy, organisation: organisation) }
 
   before do
-    render partial: "publishers/vacancies/vacancy_review_sections/application_process",
+    render partial: "publishers/vacancies/application_process",
            locals: { vacancy: vacancy.decorate, current_organisation: organisation, step_process: step_process }
   end
 
