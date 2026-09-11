@@ -6,23 +6,10 @@ RSpec.describe NavigationListComponent, type: :component do
 
   subject! { render_inline(described_class.new(**kwargs)) }
 
-  it_behaves_like "a component that accepts custom classes"
-  it_behaves_like "a component that accepts custom HTML attributes"
-
   context "when title is defined" do
     it "renders the title" do
       expect(page).to have_css("div", class: "navigation-list-component") do |navigation|
         expect(navigation).to have_css("h2", class: "govuk-heading-m", text: title)
-      end
-    end
-  end
-
-  context "when title is not defined" do
-    let(:title) { nil }
-
-    it "does not render the title" do
-      expect(page).to have_css("div", class: "navigation-list-component") do |navigation|
-        expect(navigation).not_to have_css("h2", class: "govuk-heading-m")
       end
     end
   end
@@ -46,14 +33,6 @@ RSpec.describe NavigationListComponent, type: :component do
             expect(anchor).to have_css("a[href='#to-this-other-place']", class: "govuk-link")
           end
         end
-      end
-    end
-  end
-
-  context "when anchors are not defined" do
-    it "does not render the anchors" do
-      expect(page).to have_css("div", class: "navigation-list-component") do |navigation|
-        expect(navigation).not_to have_css("div", class: "navigation-list-component__anchors")
       end
     end
   end

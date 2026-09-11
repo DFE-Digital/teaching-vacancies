@@ -25,7 +25,7 @@ p.govuk-hint = t(".hint")
 
   = govuk_button_link_to t("buttons.add_another_professional_body_membership"), new_jobseekers_job_application_professional_body_membership_path(job_application)
 - else
-  = render EmptySectionComponent.new title: t(".no_professional_body_memberships") do
+  = empty_section title: t(".no_professional_body_memberships") do
     = govuk_button_link_to t("buttons.add_professional_body_membership"), new_jobseekers_job_application_professional_body_membership_path(job_application), class: "govuk-!-margin-bottom-0"
 
 = form_for @form, url: jobseekers_job_application_build_path(job_application, :professional_body_memberships), method: :patch do |f|

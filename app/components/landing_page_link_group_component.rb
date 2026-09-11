@@ -1,3 +1,7 @@
+# Always uses locations after recent refactor that removed its other usage
+# in favour of a much simpler design. Wired into LandingPage which is a much more
+# complex piece of logic, which includes its own caching (when it probably shouldn't - that is normally a view concern)
+# It is a hangover from when all LandingPage items were rendered individually resulting in a massive DB surge for the home page.
 class LandingPageLinkGroupComponent < ApplicationComponent
   include FailSafe
 

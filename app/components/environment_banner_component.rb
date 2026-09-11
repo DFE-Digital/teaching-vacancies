@@ -1,3 +1,4 @@
+# could easily be a simple HTML SLIM template
 class EnvironmentBannerComponent < ApplicationComponent
   include FailSafe
 

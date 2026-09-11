@@ -38,4 +38,4 @@ section#school-overview
         - else
           = t("organisations.locations.at_one_school", organisation: vacancy.organisation_name, school_type: school_type)
 
-      = map(markers: vacancy_organisations_map_markers(vacancy), marker: { type: "organisation", tracking: { link: "school_website_from_map" } })
+      = tvs_map(markers: vacancy_organisations_map_markers(vacancy), marker: { type: "organisation", tracking: { link: "school_website_from_map" } })

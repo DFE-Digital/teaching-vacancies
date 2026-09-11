@@ -1,3 +1,5 @@
+#  Only used in one place. Can't quite work out how this works, as there is no HTML file
+# Its a button_to (see call below) - a bit over-engineered IMHO
 class BannerButtonComponent < ApplicationComponent
   attr_reader :text, :href, :method, :params, :icon
 

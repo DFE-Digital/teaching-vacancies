@@ -1,3 +1,5 @@
+#  Only used in 3 places with header and body
+# has specific styles with tests, but no CSS appears to use those styles
 class CardComponent < ApplicationComponent
   renders_one :header
   renders_one :body

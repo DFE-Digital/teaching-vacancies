@@ -1,3 +1,5 @@
+#  Only used in one place (_cookies_banner.html.slim)
+# could probably be converted into a plain SLIM template
 class CookiesBannerComponent < ApplicationComponent
   attr_reader :accept_path, :reject_path, :preferences_path
 

@@ -1,6 +1,6 @@
 - job_application_link = job_application_link(job_application)
 
-= render CardComponent.new do |card|
+= tvs_card do |card|
   - card.with_header do
     = tag.div(govuk_link_to(job_application.vacancy.job_title, job_application_link, class: "govuk-link--no-visited-state"))
     = tag.div(vacancy_job_location(job_application.vacancy))

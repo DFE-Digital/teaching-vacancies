@@ -1,9 +1,10 @@
+#  Slightly complicated, but does a job and doesn't really need 'fixing'
 class JobApplicationReviewSectionComponent < ApplicationComponent
   include JobApplicationsHelper
   include VacanciesHelper
   include StatusTagHelper
 
-  renders_many :field_div_sets, ->(form: nil) { render_divs_for_fields(form) }
+  renders_many :field_div_sets, ->(form:) { render_divs_for_fields(form) }
 
   def initialize(job_application, name, forms: [])
     super()
