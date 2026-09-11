@@ -45,12 +45,4 @@ Can you give examples of how you’ve created a positive and safe environment fo
   
 ## Fulfil wider professional responsibilities 
 
-Can you show how you have communicated and collaborated effectively with colleagues and parents? 
- 
-## Get support from a return to teaching advisor
- 
-If you have previously taught or trained to teach in the UK, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers?). 
- 
-Advisers offer free one-to-one support to help prepare you for a teaching interview. They can also provide you with advice about CPD and training opportunities. 
- 
-You can chat by phone, text or email, as little or as often as you need. 
+Can you show how you have communicated and collaborated effectively with colleagues and parents?
