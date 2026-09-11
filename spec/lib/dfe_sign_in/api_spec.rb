@@ -27,6 +27,22 @@ RSpec.describe DfeSignIn::API do
     end
   end
 
+  describe "#dsi_users_page_count" do
+    let(:fixture_filename) { "users" }
+
+    it "returns the total number of pages without fetching every page" do
+      expect(subject.dsi_users_page_count).to eq(2)
+    end
+  end
+
+  describe "#dsi_users_page" do
+    let(:fixture_filename) { "users" }
+
+    it "returns just the requested page of users" do
+      expect(subject.dsi_users_page(1)).to eq JSON.parse(response_file(1))["users"]
+    end
+  end
+
   describe "#dsi_approvers" do
     let(:fixture_filename) { "approvers" }
 
@@ -37,6 +53,22 @@ RSpec.describe DfeSignIn::API do
     it "the enumerated collection contains all approvers from the API as pages" do
       expect(subject.dsi_approvers.to_a).to eq [JSON.parse(response_file(1))["users"],
                                                 JSON.parse(response_file(2))["users"]]
+    end
+  end
+
+  describe "#dsi_approvers_page_count" do
+    let(:fixture_filename) { "approvers" }
+
+    it "returns the total number of pages without fetching every page" do
+      expect(subject.dsi_approvers_page_count).to eq(2)
+    end
+  end
+
+  describe "#dsi_approvers_page" do
+    let(:fixture_filename) { "approvers" }
+
+    it "returns just the requested page of approvers" do
+      expect(subject.dsi_approvers_page(1)).to eq JSON.parse(response_file(1))["users"]
     end
   end
 

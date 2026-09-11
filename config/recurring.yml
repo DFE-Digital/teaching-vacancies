@@ -61,6 +61,11 @@ production:
     class: 'ExportDSIUsersToBigQueryJob'
     queue: low
 
+  export_approvers:
+    schedule: '05 01 * * *' # "At 01:05."
+    class: 'ExportDSIApproversToBigQueryJob'
+    queue: low
+
   send_entity_table_checks_to_bigquery:
     schedule: "30 1 * * *" # "At 01:30."
     class: "DfE::Analytics::Jobs::EntityTableCheckJob"
