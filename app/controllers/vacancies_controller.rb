@@ -35,6 +35,11 @@ class VacanciesController < ApplicationController
     @invented_job_alert_search_criteria = Search::CriteriaInventor.new(vacancy).criteria
     @similar_jobs = Search::SimilarJobs.new(vacancy).similar_jobs
     @vacancy = vacancy.decorate
+    @search_location = if Rails.env.development?
+                         "E16 2SZ"
+                       elsif CommuteTime.valid_postcode?(params[:search_location])
+                         params[:search_location].to_s.strip.upcase
+                       end
   end
   # rubocop:enable Metrics/AbcSize
 

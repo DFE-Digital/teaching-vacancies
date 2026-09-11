@@ -135,10 +135,16 @@ module LinksHelper
     )
   end
 
-  def results_link(vacancy, **)
+  def results_link(vacancy, search_location: nil, **)
+    path = if CommuteTime.valid_postcode?(search_location)
+             job_path(vacancy, search_location: search_location)
+           else
+             job_path(vacancy)
+           end
+
     tracked_link_to(
       vacancy.job_title,
-      job_path(vacancy),
+      path,
       link_type: :vacancy_visited_from_list,
       link_subject: vacancy.id,
       **,

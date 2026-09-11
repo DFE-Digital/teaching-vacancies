@@ -7,6 +7,9 @@
   .govuk-grid-column-two-thirds
     = render "vacancies/listing/multi_school_banner", vacancy: vacancy
 
+    - if local_assigns[:search_location].present? && vacancy.geolocation.is_a?(RGeo::Feature::Point)
+      = render "vacancies/listing/commute_time", vacancy: vacancy, search_location: search_location
+
     = render "vacancies/listing/job_details", vacancy: vacancy
 
     = render "vacancies/listing/organisation_details", vacancy: vacancy

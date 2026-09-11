@@ -1,0 +1,24 @@
+- section_id = "commute_time_vacancy_#{@vacancy.id}"
+- if @travel_mode.present?
+  = turbo_frame_tag "#{section_id}_#{@travel_mode}" do
+    - if @error
+      = @error
+    - else
+      strong = commute_time_duration(@duration)
+- else
+  = turbo_frame_tag section_id, class: "commute-time" do
+    section class="govuk-!-margin-bottom-6" aria-labelledby="#{section_id}_heading"
+      h2.govuk-heading-m id="#{section_id}_heading" = t("jobs.commute_time")
+      p.govuk-body = t("jobs.commute_time_from", location: @search_location)
+
+      dl.govuk-summary-list
+        - CommuteTime::TRAVEL_MODES.each_key do |travel_mode|
+          .govuk-summary-list__row
+            dt.govuk-summary-list__key = t("jobs.commute_time_mode.#{travel_mode}")
+            dd.govuk-summary-list__value
+              - frame_id = "#{section_id}_#{travel_mode}"
+              = turbo_frame_tag frame_id, src: job_commute_time_path(@vacancy, search_location: @search_location, travel_mode: travel_mode), aria: { live: "polite" } do
+                = t("jobs.commute_time_loading")
+
+      p.govuk-body-s = t("jobs.commute_time_walking_warning")
+      p.govuk-body-s = t("jobs.commute_time_attribution")
