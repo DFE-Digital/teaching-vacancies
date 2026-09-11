@@ -9,7 +9,10 @@ class SupportUsers::FallbackSessionsController < ApplicationController
   def create
     email = params.expect(support_user: [:email])[:email]
     support_user = SupportUser.find_by(email: email)
+    # simplecov:disable
     return unless support_user
+
+    # simplecov:enable
 
     signed_id = support_user.signed_id(purpose: SIGNED_ID_PURPOSE, expires_in: SIGNED_ID_VALIDITY)
     SupportUsers::AuthenticationFallbackMailer

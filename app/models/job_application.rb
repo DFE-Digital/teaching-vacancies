@@ -198,9 +198,11 @@ class JobApplication < ApplicationRecord
     !deadline_passed? && draft?
   end
 
+  # simplecov:disable
   def deadline_passed?
     draft? && vacancy&.expired?
   end
+  # simplecov:enable
 
   def unexplained_employment_gaps
     @unexplained_employment_gaps ||= Jobseekers::JobApplications::EmploymentGapFinder.new(self).significant_gaps

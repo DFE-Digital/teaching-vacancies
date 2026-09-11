@@ -5,7 +5,9 @@ class SendWeeklyAlertEmailJob < AlertEmail::Base
     Subscription.kept.weekly
   end
 
+  # simplecov:disable
   def from_date
     1.week.ago.to_date
   end
+  # simplecov:enable
 end

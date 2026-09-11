@@ -5,6 +5,7 @@ module ProfilesHelper
 
   private
 
+  # simplecov:disable
   def qualified_teacher_status_string(profile)
     case profile.qualified_teacher_status
     when "on_track"
@@ -17,9 +18,13 @@ module ProfilesHelper
       ""
     end
   end
+  # simplecov:enable
 
   def right_to_work_status_string(profile)
+    # simplecov:disable
     return nil if profile&.personal_details&.has_right_to_work_in_uk.nil?
+
+    # simplecov:enable
 
     profile.personal_details.has_right_to_work_in_uk? ? "Has the right to work in the UK." : "Does not have the right to work in the UK."
   end

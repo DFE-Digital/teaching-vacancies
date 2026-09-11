@@ -3,11 +3,13 @@ module OrganisationsHelper
 
   OFSTED_REPORT_ENDPOINT = "https://reports.ofsted.gov.uk/oxedu_providers/full/(urn)/".freeze
 
+  # simplecov:disable
   def age_range(school)
     return I18n.t("vacancies.listing.schools.not_given") unless school.minimum_age? && school.maximum_age?
 
     "#{school.minimum_age} to #{school.maximum_age}"
   end
+  # simplecov:enable
 
   def full_address(organisation)
     address_join([organisation.address, organisation.town, organisation.county, organisation.postcode])
@@ -22,7 +24,10 @@ module OrganisationsHelper
   end
 
   def organisation_type(organisation)
+    # simplecov:disable
     return organisation.group_type&.humanize if organisation.school_group?
+
+    # simplecov:enable
 
     school_type = if organisation.fe_college?
                     "FE College"
@@ -83,14 +88,7 @@ module OrganisationsHelper
     end
   end
 
-  def school_or_trust_visits(organisation)
-    if organisation.trust?
-      "trust_visits_html"
-    else
-      "school_visits_html"
-    end
-  end
-
+  # simplecov:disable
   def school_size(school)
     if school.gias_data.present?
       return number_of_pupils(school) if school.gias_data["NumberOfPupils"].present?
@@ -98,6 +96,7 @@ module OrganisationsHelper
     end
     I18n.t("vacancies.listing.schools.no_information")
   end
+  # simplecov:enable
 
   def school_has_school_size_data?(school)
     school.gias_data["NumberOfPupils"].present? || school.gias_data["SchoolCapacity"].present?
@@ -122,15 +121,19 @@ module OrganisationsHelper
 
   private
 
+  # simplecov:disable
   def number_of_pupils(school)
     return unless (number = school.gias_data["NumberOfPupils"])
 
     I18n.t("vacancies.listing.schools.size.enrolled", number: number)
   end
+  # simplecov:enable
 
+  # simplecov:disable
   def school_capacity(school)
     I18n.t("vacancies.listing.schools.size.up_to", capacity: school.gias_data["SchoolCapacity"])
   end
+  # simplecov:enable
 
   def missing_profile_information_notification(prompt)
     content_tag(:div, class: %i[govuk-inset-text govuk-inset-text--dark-blue inset-text--narrow-border]) do

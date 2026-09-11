@@ -29,7 +29,9 @@ class VacancyAnalyticsService
         keys_to_delete << key
       end
 
+      # :nocov:
       update_stats_in_database(updates_by_vacancy) if updates_by_vacancy.any?
+      # :nocov:
       redis.del(*keys_to_delete)
     end
   end

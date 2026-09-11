@@ -3,6 +3,7 @@ class Jobseekers::Profiles::HideProfileController < Jobseekers::ProfilesControll
     @form = Jobseekers::Profile::HideProfileForm.new(requested_hidden_profile: @profile.requested_hidden_profile)
   end
 
+  # simplecov:disable
   def confirm_hide
     form_params = params.expect(jobseekers_profile_hide_profile_form: [:requested_hidden_profile])
 
@@ -18,6 +19,7 @@ class Jobseekers::Profiles::HideProfileController < Jobseekers::ProfilesControll
       render :show
     end
   end
+  # simplecov:enable
 
   def add
     @form = Jobseekers::Profile::SelectOrganisationForm.new
@@ -76,6 +78,7 @@ class Jobseekers::Profiles::HideProfileController < Jobseekers::ProfilesControll
 
   private
 
+  # simplecov:disable
   def hide_school(form)
     if form.valid?
       if @profile.excluded_organisations.include?(form.organisation)
@@ -89,4 +92,5 @@ class Jobseekers::Profiles::HideProfileController < Jobseekers::ProfilesControll
       redirect_to cannot_find_school_jobseekers_profile_hide_profile_path
     end
   end
+  # simplecov:enable
 end

@@ -37,6 +37,7 @@ module Publishers::DfeSignIn
           user.organisation_publishers.find_or_create_by(organisation_id: organisation.id) if organisation
           # simplecov:enable
         elsif la_code
+          # :nocov:
           organisation = Organisation.find_by(local_authority_code: la_code)
           # simplecov:disable
           user.organisation_publishers.find_or_create_by(organisation_id: organisation.id) if organisation

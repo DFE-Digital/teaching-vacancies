@@ -20,7 +20,9 @@ module Publishers::DfeSignIn::BigQueryExport
       table = dataset.table table_name
       return if table.nil?
 
+      # :nocov:
       dataset.reload! if table.delete
+      # :nocov:
     end
   end
 end

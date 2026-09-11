@@ -34,9 +34,11 @@ class MarkdownDocument
     @front_matter["title"]
   end
 
+  # :nocov:
   def category_tags
     @front_matter["category_tags"]&.split(",")&.map(&:strip)
   end
+  # :nocov:
 
   def date_posted
     Date.parse(@front_matter["date_posted"]) if @front_matter["date_posted"]

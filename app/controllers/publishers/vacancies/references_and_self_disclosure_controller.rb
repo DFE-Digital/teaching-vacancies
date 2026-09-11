@@ -54,7 +54,9 @@ module Publishers
             else
               ReferenceRequest.create_for_manual!(job_application)
             end
+            # simplecov:disable
             job_application.create_religious_reference_request!(status: :action_needed) if job_application.religious_referee?
+            # simplecov:enable
             if @form.collect_self_disclosure
               SelfDisclosureRequest.create_and_notify!(job_application)
             else

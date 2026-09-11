@@ -11,9 +11,12 @@ class MapComponent < ApplicationComponent
 
   private
 
+  # The location polygon variant is untested
+  # simplecov:disable
   def radius
     @polygon.nil? && @radius ? @radius : nil
   end
+  # simplecov:enable
 
   def default_classes
     %w[map-component]

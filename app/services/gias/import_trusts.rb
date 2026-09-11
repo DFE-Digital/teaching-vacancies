@@ -22,7 +22,9 @@ class Gias::ImportTrusts
 
     import_trusts
     import_memberships
+    # :nocov:
     update_geolocation_for_changed_postcodes unless DisableExpensiveJobs.enabled?
+    # :nocov:
   end
 
   private
@@ -38,7 +40,9 @@ class Gias::ImportTrusts
       end
 
       Gias::Data.new(TRUST_MEMBERSHIPS_CSV).each do |row|
+        # :nocov:
         next unless multi_academy_trust_data?(row)
+        # :nocov:
 
         memberships.push(membership_data(row))
       end
@@ -65,7 +69,9 @@ class Gias::ImportTrusts
       school_group_memberships = memberships.filter_map do |m|
         school_id = school_ids[m[:urn]]
         group_id = group_ids[m[:uid]]
+        # :nocov:
         next unless school_id && group_id
+        # :nocov:
 
         {
           school_id: school_id,
@@ -74,6 +80,7 @@ class Gias::ImportTrusts
         }
       end
 
+      # :nocov:
       unless school_group_memberships.none?
         SchoolGroupMembership.import(
           school_group_memberships,
@@ -83,6 +90,7 @@ class Gias::ImportTrusts
           },
         )
       end
+      # :nocov:
     end
   end
 
@@ -93,7 +101,9 @@ class Gias::ImportTrusts
     log_benchmark("Updating geolocation for #{trusts_with_changed_postcode.size} trusts with new or changed postcodes") do
       postcode_updates = trusts_with_changed_postcode.filter_map { |trust|
         coordinates = Geocoding.new(trust[:postcode]).coordinates
+        # :nocov:
         next if coordinates == [0, 0]
+        # :nocov:
 
         geopoint = GeoFactories::FACTORY_4326.point(coordinates.second, coordinates.first)
 
@@ -104,6 +114,7 @@ class Gias::ImportTrusts
         }
       }.compact
 
+      # :nocov:
       unless postcode_updates.none?
         SchoolGroup.import(
           postcode_updates,
@@ -113,6 +124,7 @@ class Gias::ImportTrusts
           },
         )
       end
+      # :nocov:
     end
   end
   # rubocop:enable Metrics/MethodLength

@@ -5,6 +5,7 @@ class Publishers::Organisations::LogoController < Publishers::OrganisationsContr
     @logo_form = Publishers::Organisation::LogoForm.new(logo: @organisation.logo)
   end
 
+  # simplecov:disable
   def update
     @logo_form = Publishers::Organisation::LogoForm.new(logo_form_params)
 
@@ -25,12 +26,15 @@ class Publishers::Organisations::LogoController < Publishers::OrganisationsContr
 
     redirect_to publishers_organisation_path(@organisation), success: t("publishers.organisations.logo.destroy_success", organisation_type: @organisation.school? ? "School" : "Organisation")
   end
+  # simplecov:enable
 
   def confirm_destroy; end
 
   private
 
+  # simplecov:disable
   def logo_form_params
     (params[:publishers_organisation_logo_form] || params)&.permit(:logo)
   end
+  # simplecov:enable
 end

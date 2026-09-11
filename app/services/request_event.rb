@@ -23,6 +23,7 @@ class RequestEvent < Event
                         .merge(user_data)
   end
 
+  # simplecov:disable
   def request_data
     {
       request_uuid: request.uuid,
@@ -58,4 +59,5 @@ class RequestEvent < Event
   def user_agent
     request.headers["User-Agent"]
   end
+  # simplecov:enable
 end

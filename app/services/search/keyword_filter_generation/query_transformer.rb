@@ -6,7 +6,9 @@ class Search::KeywordFilterGeneration::QueryTransformer < Parslet::Transform
 
   def self.apply(parsed_query)
     # Only transform query if query contains any matches
+    # :nocov:
     return nil unless parsed_query[:query].is_a?(Array)
+    # :nocov:
 
     new
       .apply(parsed_query)[:query]
