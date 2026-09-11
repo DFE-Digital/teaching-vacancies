@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe JobApplicationsHelper do
   describe "all job application statuses except draft are listed" do
-    subject { JobApplicationsHelper::TABS_DEFINITION.values.flatten }
+    subject { JobApplicationsHelper::TABS_TO_CONTAINED_STATUSES.values.flatten }
 
     it { is_expected.to match_array(JobApplication.statuses.except(:draft).keys) }
   end
@@ -132,7 +132,7 @@ RSpec.describe JobApplicationsHelper do
     context "when tab_origin unsuccessful" do
       let(:tab_origin) { "unsuccessful" }
 
-      it { is_expected.to match_array(%w[rejected]) }
+      it { is_expected.to match_array(%w[shortlisted interviewing]) }
     end
 
     context "when tab_origin shortlisted" do

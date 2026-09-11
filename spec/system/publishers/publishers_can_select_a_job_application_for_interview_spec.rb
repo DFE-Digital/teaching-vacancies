@@ -238,4 +238,27 @@ RSpec.describe "Publishers can select a job application for interview", :perform
       end
     end
   end
+
+  context "when the job application already has a religious reference request" do
+    let(:notify_candidate) { false }
+    let(:job_application) do
+      create(:job_application, :status_submitted, :with_religious_referee,
+             notify_before_contact_referers: notify_candidate,
+             email_address: jobseeker.email,
+             religious_reference_request: build(:religious_reference_request),
+             vacancy: vacancy, jobseeker: jobseeker)
+    end
+
+    it "does not create a duplicate religious reference request" do
+      expect(ReligiousReferenceRequest.count).to eq(1)
+      choose "Yes"
+      click_on "Save and continue"
+      # 2nd question not asked when candidate doesn't need contacting
+      choose "Yes"
+      click_on "Save and continue"
+      # wait for page load
+      find_by_id("interviewing")
+      expect(ReligiousReferenceRequest.count).to eq(1)
+    end
+  end
 end

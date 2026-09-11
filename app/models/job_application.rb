@@ -70,8 +70,10 @@ class JobApplication < ApplicationRecord
     "reviewed"     => %w[unsuccessful shortlisted interviewing offered withdrawn],
     "shortlisted"  => %w[unsuccessful interviewing offered withdrawn],
     "interviewing" => INTERVIEWING_TARGETS,
-    "offered"      => %w[declined withdrawn],
-    "unsuccessful" => %w[rejected],
+    "offered"                => %w[declined withdrawn],
+    "unsuccessful"           => %w[rejected shortlisted interviewing],
+    "rejected"               => %w[shortlisted interviewing],
+    "unsuccessful_interview" => %w[shortlisted interviewing],
   }.freeze
   # rubocop:enable Layout/HashAlignment
 
@@ -93,9 +95,9 @@ class JobApplication < ApplicationRecord
   # end of the road statuses for job application we cannot further update status at the point
   TERMINAL_STATUSES = (statuses.keys.map(&:to_s) - STATUS_TRANSITIONS.keys).freeze
   INACTIVE_STATUSES = (%w[draft] + TERMINAL_STATUSES).freeze
+  IN_OR_PAST_INTERVIEW_STAGE = %w[interviewing unsuccessful_interview offered declined].freeze
 
   PRE_SHORTLIST_STATUSES = %w[submitted reviewed].freeze
-  POST_INTERVIEW_STATUSES = (%w[interviewing] + INTERVIEWING_TARGETS + INTERVIEWING_TARGETS.flat_map { |st| STATUS_TRANSITIONS.fetch(st, []) }).uniq - %w[withdrawn]
 
   RELIGIOUS_REFERENCE_TYPES = { religious_referee: 1, baptism_certificate: 2, baptism_date: 3, no_religious_referee: 4 }.freeze
 
@@ -162,8 +164,8 @@ class JobApplication < ApplicationRecord
     INACTIVE_STATUSES.exclude?(status)
   end
 
-  def has_pre_interview_checks?
-    status.in?(POST_INTERVIEW_STATUSES)
+  def in_or_past_interview_stage?
+    status.in?(IN_OR_PAST_INTERVIEW_STAGE)
   end
 
   def name
