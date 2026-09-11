@@ -14,7 +14,7 @@
         / possible ab-test for TRN prompt for these role types
         / can't do it unless jobseeker is signed in at this point
         - trn_on_apply_variant = current_jobseeker.present? ? field_test(:trn_on_apply) : "apply"
-        - href =  trn_on_apply_variant == "apply" ? new_application_path(vacancy) : trn_interstitial_job_path(vacancy.id)
+        - href = trn_on_apply_variant == "apply" ? new_application_path(vacancy) : trn_interstitial_job_path(vacancy.id)
         - if vacancy.uploaded_form?
           = button_to t("jobseekers.job_applications.banner_links.apply"), href, method: trn_on_apply_variant == "apply" ? :post : :get, class: "banner-button-component__button icon icon--left icon--apply"
           / = banner_button text: t("jobseekers.job_applications.banner_links.apply"),
