@@ -26,6 +26,24 @@ const LocationFinder = class extends Controller {
     this.input.addEventListener('focus', () => {
       this.removeErrorMessage();
     });
+
+    this.autoFindLocationIfPermitted();
+  }
+
+  autoFindLocationIfPermitted() {
+    if (this.input.value !== '' || !navigator.geolocation || this.element.offsetParent === null) {
+      return;
+    }
+
+    if (!navigator.permissions || !navigator.permissions.query) {
+      return;
+    }
+
+    navigator.permissions.query({ name: 'geolocation' }).then((status) => {
+      if (status.state === 'granted') {
+        this.findLocation();
+      }
+    }).catch(() => {});
   }
 
   findLocation() {
@@ -38,6 +56,9 @@ const LocationFinder = class extends Controller {
         this.onFailure();
         logger.log(`${LOGGING_MESSAGE}: ${error.message}`);
       });
+    }, () => {
+      this.onFailure();
+      logger.log(LOGGING_MESSAGE);
     });
   }
 
