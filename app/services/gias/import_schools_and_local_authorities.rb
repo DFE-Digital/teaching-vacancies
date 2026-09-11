@@ -24,6 +24,9 @@ class Gias::ImportSchoolsAndLocalAuthorities
           import_group uk_colleges, group
         end
         raise ImportFailure, import_errors.map(&:errors) if import_errors.any?
+
+        # This is run every day, so discard old records which are clearly no longer in GIAS.
+        School.where(updated_at: ..1.month.ago).discard_all
       end
     end
 
@@ -72,9 +75,10 @@ class Gias::ImportSchoolsAndLocalAuthorities
     end
 
     def import_batch(local_authorities, schools, memberships)
-      import_local_authorities(local_authorities).failed_instances +
-        import_schools(schools).failed_instances +
-        import_memberships(local_authorities, schools, memberships).failed_instances
+      [import_local_authorities(local_authorities),
+       import_schools(schools),
+       import_memberships(local_authorities, schools, memberships)]
+        .flat_map(&:failed_instances)
     end
 
     def import_local_authorities(local_authorities)
