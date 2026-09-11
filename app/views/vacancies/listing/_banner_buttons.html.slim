@@ -3,7 +3,7 @@
     .govuk-grid-column-one-third
       - if job_application
         - if job_application.draft?
-          = button_to t("jobseekers.job_applications.banner_links.draft"), jobseekers_job_application_apply_path(job_application), class: "banner-button-component__button icon icon--left icon--green-tick"
+          = button_to t("jobseekers.job_applications.banner_links.draft"), jobseekers_job_application_apply_path(job_application), method: :get, class: "banner-button-component__button icon icon--left icon--green-tick"
         - elsif job_application.withdrawn?
           = button_to t("jobseekers.job_applications.banner_links.withdrawn"), jobseekers_job_application_path(job_application), class: "banner-button-component__button icon icon--left icon--green-tick"
         - else
