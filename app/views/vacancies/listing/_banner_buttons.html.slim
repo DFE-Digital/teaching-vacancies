@@ -17,29 +17,18 @@
         - href = trn_on_apply_variant == "apply" ? new_application_path(vacancy) : trn_interstitial_job_path(vacancy.id)
         - if vacancy.uploaded_form?
           = button_to t("jobseekers.job_applications.banner_links.apply"), href, method: trn_on_apply_variant == "apply" ? :post : :get, class: "banner-button-component__button icon icon--left icon--apply"
-          / = banner_button text: t("jobseekers.job_applications.banner_links.apply"),
-          /   href: trn_on_apply_variant == "apply" ? new_application_path(vacancy) : trn_interstitial_job_path(vacancy.id),
-          /   icon: "apply",
-          /   method: trn_on_apply_variant == "apply" ? :post : :get
         - else
           = button_to t("jobseekers.job_applications.banner_links.apply"), href, method: :get, class: "banner-button-component__button icon icon--left icon--apply"
-          / = banner_button text: t("jobseekers.job_applications.banner_links.apply"),
-          /   href: trn_on_apply_variant == "apply" ? new_application_path(vacancy) : trn_interstitial_job_path(vacancy.id),
-          /   icon: "apply",
-          /   method: :get
       - else
         - method = vacancy.uploaded_form? ? :post : :get
         = button_to t("jobseekers.job_applications.banner_links.apply"), new_application_path(vacancy), method: method, class: "banner-button-component__button icon icon--left icon--apply"
-        / = banner_button text: t("jobseekers.job_applications.banner_links.apply"),
-        /   href: new_application_path(vacancy),
-        /   icon: "apply",
-        /   method: method
 
   .govuk-grid-column-one-third
-    = banner_button text: t("jobs.alert.similar.terse"),
-      href: new_subscription_path,
-      icon: "alert-blue",
-      params: { search_criteria: invented_job_alert_search_criteria, vacancy_id: vacancy.id }
+    = button_to t("jobs.alert.similar.terse"), new_subscription_path, params: { search_criteria: invented_job_alert_search_criteria, vacancy_id: vacancy.id }, class: "banner-button-component__button icon icon--left icon--alert-blue"
+    / = banner_button text: t("jobs.alert.similar.terse"),
+    /   href: new_subscription_path,
+    /   icon: "alert-blue",
+    /   params: { search_criteria: invented_job_alert_search_criteria, vacancy_id: vacancy.id }
 
   - unless job_application
     .govuk-grid-column-one-third
