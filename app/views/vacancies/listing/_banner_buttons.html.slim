@@ -30,10 +30,15 @@
     /   icon: "alert-blue",
     /   params: { search_criteria: invented_job_alert_search_criteria, vacancy_id: vacancy.id }
 
-  - unless job_application
+  - if job_application.nil?
     .govuk-grid-column-one-third
-      = banner_button text: t("jobseekers.saved_jobs.#{saved_job ? 'saved' : 'save'}"),
-        href: saved_job ? jobseekers_saved_job_path(vacancy.id, saved_job) : new_jobseekers_saved_job_path(vacancy.id),
-        icon: saved_job ? "saved" : "save",
-        method: saved_job ? :delete : :get,
-        params: {}
+      - if saved_job
+        = banner_button text: t("jobseekers.saved_jobs.saved"),
+          href: jobseekers_saved_job_path(vacancy.id, saved_job),
+          icon: "saved"
+          method: :delete
+      - else
+        = banner_button text: t("jobseekers.saved_jobs.save"),
+          href: new_jobseekers_saved_job_path(vacancy.id),
+          icon: "save",
+          method: :get,
