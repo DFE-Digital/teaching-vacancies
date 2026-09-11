@@ -1,13 +1,14 @@
 require "rails_helper"
 require "dfe/analytics/rspec/matchers"
 
+# rubocop:disable Capybara/SpecificActions
 RSpec.describe "Publishers can sign in with fallback email authentication" do
   before { allow(AuthenticationFallback).to receive(:enabled?).and_return(true) }
 
   it "can reach email authentication page" do
     visit root_path
     within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
-    click_on I18n.t("buttons.sign_in_publisher")
+    find("a.govuk-button[href='/publishers/sign-in']").click
 
     expect(page).to have_content(I18n.t("publishers.login_keys.new.notice"))
   end
@@ -48,7 +49,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
         freeze_time do
           visit root_path
           within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
-          click_on I18n.t("buttons.sign_in_publisher")
+          find("a.govuk-button[href='/publishers/sign-in']").click
 
           # Expect to send an email
           expect(message_delivery).to receive(:deliver_later)
@@ -106,7 +107,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
         freeze_time do
           visit root_path
           within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
-          click_on I18n.t("buttons.sign_in_publisher")
+          find("a.govuk-button[href='/publishers/sign-in']").click
 
           # Expect to send an email
           expect(message_delivery).to receive(:deliver_later)
@@ -130,7 +131,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
           freeze_time do
             visit root_path
             within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
-            click_on I18n.t("buttons.sign_in_publisher")
+            find("a.govuk-button[href='/publishers/sign-in']").click
 
             # Expect to send an email
             expect(message_delivery).to receive(:deliver_later)
@@ -165,7 +166,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
           freeze_time do
             visit root_path
             within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
-            click_on I18n.t("buttons.sign_in_publisher")
+            find("a.govuk-button[href='/publishers/sign-in']").click
 
             # Expect to send an email
             expect(message_delivery).to receive(:deliver_later)
@@ -203,7 +204,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
           freeze_time do
             visit root_path
             within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
-            click_on I18n.t("buttons.sign_in_publisher")
+            find("a.govuk-button[href='/publishers/sign-in']").click
 
             # Expect to send an email
             expect(message_delivery).to receive(:deliver_later)
@@ -232,3 +233,4 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
     end
   end
 end
+# rubocop:enable Capybara/SpecificActions

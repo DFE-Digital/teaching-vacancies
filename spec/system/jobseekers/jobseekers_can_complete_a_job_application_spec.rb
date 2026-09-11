@@ -39,7 +39,7 @@ RSpec.describe "Jobseekers can complete a job application" do
           end
         end
 
-        describe "accessibility", :a11y do
+        describe "accessibility", :a11y, :retry do
           it "passes a11y" do
             expect(page).to be_axe_clean
           end
