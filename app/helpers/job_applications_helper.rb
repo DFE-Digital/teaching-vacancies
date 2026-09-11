@@ -40,7 +40,7 @@ module JobApplicationsHelper
     action_required: "orange",
     interviewing: "teal",
     unsuccessful_interview: "red",
-    offered: "purple",
+    offered: "green",
     declined: "grey",
   }.freeze
 

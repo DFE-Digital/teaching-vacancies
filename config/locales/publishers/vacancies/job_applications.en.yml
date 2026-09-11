@@ -211,6 +211,7 @@ en:
             change_email_success: Email address updated and reference request sent
         tag:
           page_title: Update application status
+          unsuccessful_hint: You cannot undo this action after you select ‘Save and continue’.
           what_application_status:
             one: What application status do you want to assign to this applicant?
             other: What application status do you want to assign to these applicants?
