@@ -24,7 +24,7 @@
         = button_to t("jobseekers.job_applications.banner_links.apply"), new_application_path(vacancy), method: method, class: "banner-button-component__button icon icon--left icon--apply"
 
   .govuk-grid-column-one-third
-    = button_to t("jobs.alert.similar.terse"), new_subscription_path, params: { search_criteria: invented_job_alert_search_criteria, vacancy_id: vacancy.id }, class: "banner-button-component__button icon icon--left icon--alert-blue"
+    = button_to t("jobs.alert.similar.terse"), new_subscription_path, method: :get, params: { search_criteria: invented_job_alert_search_criteria, vacancy_id: vacancy.id }, class: "banner-button-component__button icon icon--left icon--alert-blue"
     / = banner_button text: t("jobs.alert.similar.terse"),
     /   href: new_subscription_path,
     /   icon: "alert-blue",
