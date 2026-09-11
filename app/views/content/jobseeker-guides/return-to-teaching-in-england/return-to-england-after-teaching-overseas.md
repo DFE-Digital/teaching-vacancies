@@ -31,7 +31,6 @@ If you trained as a teacher or have gained teaching experience outside the UK, y
 ## Get help and support
 Find out:
 
-* how to [sign up for a dedicated adviser](https://getintoteaching.education.gov.uk/teacher-training-adviser/sign_up/identity) for one-to-one support with returning to teach in England
 * what the Department for Education is doing to [reduce teachers’ workload](https://www.gov.uk/guidance/school-workload-reduction-toolkit), [manage pupil behaviour](https://www.gov.uk/government/collections/improving-behaviour-in-schools) and [support wellbeing](https://www.gov.uk/guidance/education-staff-wellbeing-charter)
 * how teaching fosters diversity and inclusion with networks including [WomenEd](https://womened.com/), [BAMEed](https://www.bameednetwork.com/), [LGBTed](https://lgbted.uk/) and [DisabilityEd](https://twitter.com/disability_ed)
 
