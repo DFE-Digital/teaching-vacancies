@@ -4,24 +4,24 @@ class VacancyDecorator < Draper::Decorator
   delegate :school_group_names, :job_title, :organisation_name, :organisation, :organisations,
            :is_job_share, :id, :school_group_types,
            :publish_on, :skills_and_experience, :job_roles,
-           :hourly_rate?, :hourly_rate, :salary?, :actual_salary?, :pay_scale?, :salary, :pay_scale, :actual_salary,
+           :hourly_rate?, :hourly_rate, :salary?, :pay_scale?, :salary, :pay_scale,
            :about_school, :expires_at, :expired?, :enable_job_applications?,
-           :for_an_fe_college?, :live?, :uploaded_form?, :ect_suitable?,
-           :slug, :allow_key_stages?, :allow_subjects?, :contract_type, :ect_status,
-           :visa_sponsorship_available, :fixed_term_contract_duration, :school_offer, :flexi_working,
-           :further_details, :include_additional_documents, :central_office?, :contact_email, :contact_number,
-           :school_visits?, :location, :key_stages, :subjects, :benefits?, :supporting_documents,
-           :application_link, :allow_phase_to_be_set?, :published?, :draft?, :pending?,
+           :for_an_fe_college?, :live?, :uploaded_form?,
+           :slug, :allow_key_stages?, :allow_subjects?, :contract_type,
+           :visa_sponsorship_available, :school_offer, :flexi_working,
+           :include_additional_documents, :central_office?, :contact_email,
+           :school_visits?, :location, :benefits?, :supporting_documents,
+           :allow_phase_to_be_set?, :published?, :draft?, :pending?,
            :salary_types, :benefits,
            :working_patterns_details?, :working_patterns_details,
-           :completed_steps, :phases, :further_details_provided, :school_visits, :contact_number_provided, :contact_number_provided?,
-           :receive_applications, :allow_job_applications?, :can_receive_job_applications?, :enable_job_applications,
-           :catholic?, :religious_character, :other_religion?, :anonymise_applications?, :is_parental_leave_cover, :email?,
-           :application_form, :application_email, :website?, :vacancy_address,
+           :completed_steps, :phases, :further_details_provided, :school_visits,
+           :allow_job_applications?, :can_receive_job_applications?, :enable_job_applications,
+           :catholic?, :religious_character, :other_religion?, :anonymise_applications?, :is_parental_leave_cover,
+           :application_form, :website?, :vacancy_address,
            :external?, :job_advert, :external_advert_url,
            :supporting_documents_in_order,
            :other_start_date_details, :earliest_start_date, :latest_start_date, :starts_on, :start_date_type,
-           :teaching_or_middle_leader_role?
+           :teaching_or_middle_leader_role?, :email?, :ect_suitable?, :ect_status
 
   include ActionView::Helpers::TextHelper
 
@@ -29,7 +29,7 @@ class VacancyDecorator < Draper::Decorator
 
   # simplecov:disable
   def benefits_details
-    simple_format(fix_bullet_points(model.benefits_details)) if model.benefits_details.present?
+    simple_format(fix_bullet_points(model.benefits_details)) if model.benefits?
   end
   # simplecov:enable
 
@@ -83,6 +83,36 @@ class VacancyDecorator < Draper::Decorator
 
   def fe_role_qts_required
     I18n.t("helpers.label.publishers_job_listing_about_the_role_form.fe_role_qts_required_options.#{model.fe_role_qts_required}")
+  end
+
+  def actual_salary
+    model.working_patterns == %w[full_time] ? "" : model.actual_salary
+  end
+
+  delegate :key_stages, :subjects
+
+  def fixed_term_contract_duration
+    model.fixed_term_contract_duration if model.contract_type == "fixed_term"
+  end
+
+  def receive_applications
+    model.receive_applications unless model.enable_job_applications?
+  end
+
+  def contact_number
+    model.contact_number if model.contact_number_provided
+  end
+
+  def application_email
+    model.application_email if model.email?
+  end
+
+  def further_details
+    model.further_details if model.further_details_provided?
+  end
+
+  def application_link
+    model.application_link if model.website?
   end
 
   private
