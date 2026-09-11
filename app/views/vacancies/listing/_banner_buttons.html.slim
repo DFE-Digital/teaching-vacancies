@@ -3,14 +3,9 @@
     .govuk-grid-column-one-third
       - if job_application
         - if job_application.draft?
-          = button_to t("jobseekers.job_applications.banner_links.draft"), jobseekers_job_application_apply_path(job_application), class: "icon icon--left icon--green-tick"
-          / = banner_button text: t("jobseekers.job_applications.banner_links.draft"),
-          /   href: jobseekers_job_application_apply_path(job_application),
-          /   icon: "green-tick"
+          = button_to t("jobseekers.job_applications.banner_links.draft"), jobseekers_job_application_apply_path(job_application), class: "banner-button-component__button icon icon--left icon--green-tick"
         - elsif job_application.withdrawn?
-          = banner_button text: t("jobseekers.job_applications.banner_links.withdrawn"),
-            href: jobseekers_job_application_path(job_application),
-            icon: "green-tick"
+          = button_to t("jobseekers.job_applications.banner_links.withdrawn"), jobseekers_job_application_path(job_application), class: "banner-button-component__button icon icon--left icon--green-tick"
         - else
           = banner_button text: t("jobseekers.job_applications.banner_links.submitted"),
             href: jobseekers_job_application_path(job_application),
