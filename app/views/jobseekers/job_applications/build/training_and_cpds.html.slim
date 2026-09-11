@@ -6,7 +6,7 @@ h2.govuk-heading-l = t(".heading")
 
 - if job_application.training_and_cpds.any?
   - job_application.training_and_cpds.each do |training|
-    = render DetailComponent.new title: training.name do |detail|
+    = tvs_summary_card title: training.name do |detail|
       - detail.with_body do
         = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
           - attributes = %w[name provider grade year_awarded course_length]
@@ -21,7 +21,7 @@ h2.govuk-heading-l = t(".heading")
 
   = govuk_button_link_to t("buttons.add_another_training"), new_jobseekers_job_application_training_and_cpd_path(job_application)
 - else
-  = render EmptySectionComponent.new title: t(".no_training") do
+  = empty_section title: t(".no_training") do
     = govuk_button_link_to t("buttons.add_training"), new_jobseekers_job_application_training_and_cpd_path(job_application), class: "govuk-!-margin-bottom-0"
 
 = form_for @form, url: jobseekers_job_application_build_path(job_application, :training_and_cpds), method: :patch do |f|

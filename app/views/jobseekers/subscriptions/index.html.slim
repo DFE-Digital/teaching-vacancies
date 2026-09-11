@@ -14,7 +14,7 @@ h1.govuk-heading-l = t(".page_title")
       #subscriptions-results
         = govuk_button_link_to t(".button_create"), new_subscription_path
         - subscriptions.each do |subscription|
-          = render CardComponent.new do |card|
+          = tvs_card do |card|
             - card.with_header do
               - subscription.filtered_search_criteria.each_pair do |filter, value|
                 - humanized_filter = filter == "teaching_job_roles" ? "Teaching and leadership roles" : filter.humanize
@@ -30,7 +30,7 @@ h1.govuk-heading-l = t(".page_title")
                     legend: { tag: "h2" }, form_group: { data: { action: "change->form#submitListener" } }, inline: true
                   = f.govuk_submit t("buttons.save"), secondary: true
     - else
-      = render EmptySectionComponent.new title: t(".zero_subscriptions_title") do
+      = empty_section title: t(".zero_subscriptions_title") do
         = t(".zero_subscriptions_body_html", link_to: govuk_link_to(t(".link_create"), new_subscription_path))
 
     = govuk_details summary_text: t(".one_login_banner.header") do
