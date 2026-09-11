@@ -36,32 +36,6 @@ The Department for Education (DfE) has been taking action to help schools suppor
 * [looking after their mental health](https://www.gov.uk/guidance/education-staff-wellbeing-charter)
 * enabling [flexible working opportunities](https://www.gov.uk/government/collections/flexible-working-resources-for-teachers-and-schools)
 
-## Get a return to teaching adviser
-If you have previously taught or trained to teach in the UK, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers).
-
-Advisers can give you free one-to-one support with:
-
-  * the applications process, such as writing personal statements and preparing for interviews
-  * accessing courses to enhance your subject knowledge or teaching practice, such as national professional qualifications (NPQs)
-  * finding teaching vacancies
-  * accessing themed webinars
-
-You can chat by phone, text or email, as little or as often as you need.
-
-### Eligibility if you qualified outside the UK
-
-If you qualified as a teacher outside the UK, to get a return to teaching adviser you will need:
-
-* qualified teacher status (QTS)
-* at least one term of paid teaching experience in the UK
-* a [Teacher Reference Number](https://www.gov.uk/guidance/teacher-reference-number-trn)
-
-You can [find out more about teaching in England as a non-UK citizen](https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas).
-
-Call us on [0800 389 2500](tel:08003892500) to check if you’re eligible for an adviser.
-
-[Get a return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers).
-
 ## Other things to consider
 
 Getting back into teaching provides you with a chance to consider other things like:
