@@ -25,10 +25,12 @@ module OnsDataImport
     ArcGISFeature = Data.define(:name, :geometry)
 
     class << self
-      def call(api_name:, name_field:, valid_locations:, tolerance:) # rubocop:disable Metrics/AbcSize
+      def call(api_name:, name_field:, valid_locations:, tolerance:) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         if valid_locations.any?
           arcgis_features(client: faraday_client, name_field: name_field, api_name: api_name).select { |f|
-            valid_locations.include?(f.name)
+            valid_locations.include?(f.name).tap do |included|
+              Rails.logger.debug { "Skipping #{f.name}" } if !included && valid_locations.size > 10
+            end
           }.each do |feature|
             location_polygon = LocationPolygon.find_or_create_by!(name: feature.name)
             type = LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES[feature.name]
@@ -60,6 +62,7 @@ module OnsDataImport
         HttpClient.connection do |builder|
           builder.use :http_cache, store: Rails.cache,
                                    logger: Rails.logger
+          builder.adapter Faraday.default_adapter
           builder.response :json
           builder.response :raise_error
         end
@@ -138,6 +141,7 @@ module OnsDataImport
             response_data = response.body
             # :simplecov:disable
             raise "ArcGIS error: #{response_data['error']}" if response_data.key?("error")
+            # :nocov:
 
             # :simplecov:enable
 
