@@ -219,11 +219,6 @@ SIMPLE_MAPPINGS = {
 
 def system_specs_to_run(controller_name) # rubocop:disable Metrics/MethodLength, Metrics/PerceivedComplexity
   if controller_name.size > 1
-  # if controller_name == %w[jobseekers job_applications build]
-  #   JOBSEEKER_JOB_APPLICATIONS_SPECS.map do |spec|
-  #     "spec/system/jobseekers/jobseekers_#{spec}_spec.rb"
-  #   end
-  # elsif controller_name.size > 1
     mapping_key = if controller_name.size > 3
                     controller_name.first(3)
                   elsif controller_name.size > 2
