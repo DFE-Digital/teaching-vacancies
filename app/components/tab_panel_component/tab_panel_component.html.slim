@@ -30,7 +30,7 @@
           .govuk-button-group
             - @button_group.each.with_index do |value, index|
               / assume first button of group is primary, and the rest are secondary
-              = f.govuk_submit t(value, scope: "tabs.buttons"), name: "tag_action", value:, secondary: index.positive?
+              = f.govuk_submit t(value, scope: "tabs.buttons"), **button_attributes(value), secondary: index.positive?
 
       - else
         = render EmptySectionComponent.new title: t("tabs.#{@tab_name}.none")

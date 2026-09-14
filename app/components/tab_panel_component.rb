@@ -6,6 +6,7 @@ class TabPanelComponent < ApplicationComponent
                  candidates:,
                  displayed_fields: %i[name email_address status],
                  button_group: %i[download update_status],
+                 custom_actions: {},
                  form: nil)
     super(classes: [], html_attributes: { class: "tab-#{tab_name}" })
     @tab_name = tab_name
@@ -14,6 +15,7 @@ class TabPanelComponent < ApplicationComponent
     @candidates = sort_candidates(candidates, tab_name)
     @displayed_fields = displayed_fields
     @button_group = button_group
+    @custom_actions = custom_actions
   end
 
   def form_with_args
@@ -41,6 +43,14 @@ class TabPanelComponent < ApplicationComponent
       end
     else
       tag.span
+    end
+  end
+
+  def button_attributes(value)
+    if @custom_actions.key?(value)
+      { formaction: @custom_actions.fetch(value), formmethod: :get }
+    else
+      { name: "tag_action", value: }
     end
   end
 
