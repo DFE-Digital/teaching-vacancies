@@ -1,0 +1,36 @@
+en:
+  activemodel:
+    errors:
+      models:
+        publishers/job_application/shortlist_share_form:
+          attributes:
+            email:
+              blank: Enter a valid email address in the correct format, like name@example.com
+              invalid: Enter a valid email address in the correct format, like name@example.com
+  publishers:
+    vacancies:
+      shortlist_shares:
+        errors:
+          none_selected: Select at least one application to share
+          not_shortlisted: Select shortlisted applications only
+          too_many: Select no more than %{count} applications to share
+          unsupported_application_form: Sharing uploaded application forms is not currently supported
+        new:
+          page_title: Share shortlisted applications
+          heading: Who do you want to share these applications with?
+          description:
+            one: You are sharing 1 shortlisted application.
+            other: You are sharing %{count} shortlisted applications.
+          email_label: Hiring manager's email address
+          email_hint: They will need to enter this email address to download the applications.
+        review:
+          page_title: Check details before sharing
+          heading: Check details before sharing
+          recipient: Hiring manager's email address
+          applications_heading:
+            one: 1 application to share
+            other: "%{count} applications to share"
+          sensitive_information_warning: These application forms contain personal and sensitive information. Check the email address before sending them.
+          send: Send applications
+        create:
+          success: The selected applications are being sent to the hiring manager
