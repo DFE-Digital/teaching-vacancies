@@ -43,6 +43,18 @@ RSpec.describe Publishers::ShortlistShareMailer do
       expect(mail.personalisation).not_to have_key(:application_9)
     end
 
+    it "supplies the applicant name alongside each file placeholder" do
+      sorted_applications = job_applications.sort_by { |job_application| [job_application.last_name, job_application.first_name] }
+
+      expect(mail.personalisation).to include(
+        applicant_name_1: sorted_applications.first.name,
+        applicant_name_2: sorted_applications.second.name,
+        applicant_name_3: "",
+        applicant_name_8: "",
+      )
+      expect(mail.personalisation).not_to have_key(:applicant_name_9)
+    end
+
     it "addresses the configured Notify template" do
       expect(mail.to).to eq([recipient_email])
       expect(mail.template_id).to eq(described_class::TEMPLATE_ID)
