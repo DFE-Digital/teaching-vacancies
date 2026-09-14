@@ -26,7 +26,7 @@ module Publishers
         personalisation: {
           job_title: vacancy.job_title,
           organisation_name: vacancy.organisation_name,
-        }.merge(file_personalisation(job_applications)),
+        }.merge(application_personalisation(job_applications)),
       )
     end
 
@@ -37,17 +37,15 @@ module Publishers
         job_applications.all?(&:shortlisted?)
     end
 
-    def file_personalisation(job_applications)
-      files = (1..Publishers::JobApplication::ShortlistShareForm::MAX_APPLICATIONS)
-                .index_with { "" }
-                .transform_keys { |index| :"application_#{index}" }
+    def application_personalisation(job_applications)
+      sorted_applications = job_applications.sort_by { |job_application| [job_application.last_name, job_application.first_name] }
 
-      job_applications.sort_by { |job_application| [job_application.last_name, job_application.first_name] }
-                      .each_with_index do |job_application, index|
-        files[:"application_#{index + 1}"] = prepare_application(job_application, index)
+      (1..Publishers::JobApplication::ShortlistShareForm::MAX_APPLICATIONS).each_with_object({}) do |position, personalisation|
+        job_application = sorted_applications[position - 1]
+
+        personalisation[:"applicant_name_#{position}"] = job_application&.name.to_s
+        personalisation[:"application_#{position}"] = job_application ? prepare_application(job_application, position - 1) : ""
       end
-
-      files
     end
 
     def prepare_application(job_application, index)
