@@ -215,7 +215,18 @@ SIMPLE_MAPPINGS = {
   vacancies: [:jobseekers, %w[]],
 }.freeze
 
-def system_specs_to_run(controller_name) # rubocop:disable Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+def map_type_to_spec(type, system_spec)
+  case type
+  when :jobseekers
+    "spec/system/jobseekers/jobseekers_#{system_spec}_spec.rb"
+  when :publishers
+    "spec/system/publishers/publishers_#{system_spec}_spec.rb"
+  when :support_users
+    "spec/system/support_users/support_users_#{system_spec}_spec.rb"
+  end
+end
+
+def system_specs_to_run(controller_name)
   if controller_name.size > 1
     mapping_key = if controller_name.size > 3
                     controller_name.first(3)
@@ -225,25 +236,10 @@ def system_specs_to_run(controller_name) # rubocop:disable Metrics/MethodLength,
                     [controller_name.first]
                   end
     type, mapping_hash = MASTER_MAPPINGS.fetch(mapping_key)
-    mapping_hash.fetch(controller_name.last.to_sym).map do |system_spec|
-      case type
-      when :jobseekers
-        "spec/system/jobseekers/jobseekers_#{system_spec}_spec.rb"
-      when :publishers
-        "spec/system/publishers/publishers_#{system_spec}_spec.rb"
-      when :support_users
-        "spec/system/support_users/support_users_#{system_spec}_spec.rb"
-      end
-    end
+    mapping_hash.fetch(controller_name.last.to_sym).map { |system_spec| map_type_to_spec(type, system_spec) }
   else
     type, spec_list = SIMPLE_MAPPINGS.fetch(controller_name.first.to_sym)
-    spec_list.map do |system_spec|
-      if type == :jobseekers
-        "spec/system/jobseekers/jobseekers_#{system_spec}_spec.rb"
-      else
-        "spec/system/publishers/publishers_#{system_spec}_spec.rb"
-      end
-    end
+    spec_list.map { |system_spec| map_type_to_spec(type, system_spec) }
   end
 end
 
