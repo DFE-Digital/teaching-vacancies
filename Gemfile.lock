@@ -332,7 +332,7 @@ GEM
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (>= 6, < 10)
       view_component (>= 4.9, < 4.16)
-    govuk_design_system_formbuilder (6.4.0)
+    govuk_design_system_formbuilder (6.5.0)
       actionview (>= 7.2)
       activemodel (>= 7.2)
       activesupport (>= 7.2)
@@ -1041,7 +1041,7 @@ DEPENDENCIES
   google-apis-indexing_v3
   google-cloud-bigquery
   govuk-components (= 6.5.0)
-  govuk_design_system_formbuilder (~> 6.4.0)
+  govuk_design_system_formbuilder (~> 6.5.0)
   groupdate
   guard-bundler (~> 3.1)
   guard-rspec
@@ -1256,7 +1256,7 @@ CHECKSUMS
   google-logging-utils (0.2.0) sha256=675462b4ea5affa825a3442694ca2d75d0069455a1d0956127207498fca3df7b
   googleauth (1.17.1) sha256=0f7e6fc70e204cee1b2d71f1e1de2d3b349d432404197fe68ebf7fa23d0821b9
   govuk-components (6.5.0) sha256=9f2476ac0c64a15ce4afc5d331c5f318679401f6cb844876a03b2f120f47b45c
-  govuk_design_system_formbuilder (6.4.0) sha256=28f85f8277d0fe941d04eff20b081e321ac9e84a501152f56c6933ffed1201a6
+  govuk_design_system_formbuilder (6.5.0) sha256=ab8932ed72d49025418a4c91d062d221c4fcf761232c9af217ef8e71c3ae4485
   groupdate (6.8.0) sha256=16f90ea18ca981c38e41e592416480b28353aa5e5cc3e7cb13a68b8fb5d40510
   guard (2.20.0) sha256=66829ac0154080f20c6b1d8e6b65c6d5b3f3064ff46f85beb56c82f27b306040
   guard-bundler (3.1.0) sha256=d0e60e46d6c06e201e79f61623211f64961cb000188f55fb76e36dc892ff0e35
