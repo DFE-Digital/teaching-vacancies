@@ -149,13 +149,6 @@ PUBLISHER_VACANCY_MAPPINGS = {
   wizard: %w[],
 }.freeze
 
-SUPPORT_MAPPINGS = {
-  sessions: %w[],
-  publisher_ats_api_clients: %w[],
-  feedbacks: %w[],
-  fallback_sessions: %w[],
-}.freeze
-
 PUBLISHER_MAPPINGS = {
   vacancies: %w[],
   sessions: %w[],
@@ -187,6 +180,13 @@ PUBLISHER_API_MAPPINGS = {
   vacancies: %w[],
 }.freeze
 
+SUPPORT_MAPPINGS = {
+  sessions: %w[],
+  publisher_ats_api_clients: %w[can_manage_api_clients],
+  feedbacks: %w[],
+  fallback_sessions: %w[can_sign_in_using_fallback],
+}.freeze
+
 MASTER_MAPPINGS = {
   %w[jobseekers job_applications] => [:jobseekers, JOBSEEKER_JOB_APPLICATION_SYSTEM_SPEC_MAPPINGS],
   %w[jobseekers profiles] => [:jobseekers, JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS],
@@ -197,7 +197,7 @@ MASTER_MAPPINGS = {
   %w[jobseekers] => [:jobseekers, JOBSEEKER_SYSTEM_SPEC_MAPPINGS],
   %w[publishers] => [:publishers, PUBLISHER_MAPPINGS],
   %w[publishers organisations] => [:publishers, PUBLISHER_ORG_MAPPINGS],
-  %w[support_users] => [:jobseekers, SUPPORT_MAPPINGS],
+  %w[support_users] => [:support_users, SUPPORT_MAPPINGS],
   %w[vacancies] => [:jobseekers, VACANCY_MAPPINGS],
   %w[api] => [:publishers, API_MAPPINGS],
 }.freeze
@@ -226,10 +226,13 @@ def system_specs_to_run(controller_name) # rubocop:disable Metrics/MethodLength,
                   end
     type, mapping_hash = MASTER_MAPPINGS.fetch(mapping_key)
     mapping_hash.fetch(controller_name.last.to_sym).map do |system_spec|
-      if type == :jobseekers
+      case type
+      when :jobseekers
         "spec/system/jobseekers/jobseekers_#{system_spec}_spec.rb"
-      else
+      when :publishers
         "spec/system/publishers/publishers_#{system_spec}_spec.rb"
+      when :support_users
+        "spec/system/support_users/support_users_#{system_spec}_spec.rb"
       end
     end
   else
