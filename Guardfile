@@ -83,7 +83,14 @@ JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS = {
   hide_profile: %w[can_manage_a_profile],
 }.freeze
 
-JOBSEEKER_JOB_APPLICATIONS_SPECS = %w[can_add_declarations_to_their_job_application
+JOBSEEKER_JOB_APPLICATION_SYSTEM_SPEC_MAPPINGS = {
+  employments: %w[can_add_employments_to_their_job_application],
+  professional_body_memberships: %w[can_add_professional_body_membership_to_their_job_application],
+  qualifications: %w[can_add_qualifications_to_their_job_application],
+  referees: %w[can_add_references_to_their_job_application],
+  training_and_cpds: %w[can_add_training_and_cpds_to_their_job_application],
+  feedbacks: %w[can_give_application_feedback can_give_job_alert_feedback],
+  build: %w[can_add_declarations_to_their_job_application
                                       can_add_professional_status_to_their_job_application
                                       can_review_a_job_application
                                       can_start_a_job_application
@@ -95,15 +102,7 @@ JOBSEEKER_JOB_APPLICATIONS_SPECS = %w[can_add_declarations_to_their_job_applicat
                                       can_review_a_job_application
                                       can_edit_a_draft_job_application
                                       can_complete_a_religious_job_application
-                                      can_manage_their_job_applications].freeze
-
-JOBSEEKER_JOB_APPLICATION_SYSTEM_SPEC_MAPPINGS = {
-  employments: %w[can_add_employments_to_their_job_application],
-  professional_body_memberships: %w[can_add_professional_body_membership_to_their_job_application],
-  qualifications: %w[can_add_qualifications_to_their_job_application],
-  referees: %w[can_add_references_to_their_job_application],
-  training_and_cpds: %w[can_add_training_and_cpds_to_their_job_application],
-  feedbacks: %w[can_give_application_feedback can_give_job_alert_feedback],
+                                      can_manage_their_job_applications]
 }.freeze
 
 PUBLISHER_JOB_APPLICATION_MAPPINGS = {
@@ -189,7 +188,6 @@ PUBLISHER_API_MAPPINGS = {
 }.freeze
 
 MASTER_MAPPINGS = {
-  %w[jobseekers job_applications build] => [:jobseekers, JOBSEEKER_JOB_APPLICATIONS_SPECS ],
   %w[jobseekers job_applications] => [:jobseekers, JOBSEEKER_JOB_APPLICATION_SYSTEM_SPEC_MAPPINGS],
   %w[jobseekers profiles] => [:jobseekers, JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS],
   %w[publishers vacancies job_applications] => [:publishers, PUBLISHER_JOB_APPLICATION_MAPPINGS],
