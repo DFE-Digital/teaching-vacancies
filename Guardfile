@@ -91,18 +91,18 @@ JOBSEEKER_JOB_APPLICATION_SYSTEM_SPEC_MAPPINGS = {
   training_and_cpds: %w[can_add_training_and_cpds_to_their_job_application],
   feedbacks: %w[can_give_application_feedback can_give_job_alert_feedback],
   build: %w[can_add_declarations_to_their_job_application
-                                      can_add_professional_status_to_their_job_application
-                                      can_review_a_job_application
-                                      can_start_a_job_application
-                                      can_submit_a_job_application
-                                      can_complete_a_prefilled_job_application
-                                      can_complete_a_job_application
-                                      can_delete_a_draft_job_application
-                                      can_view_a_job_application
-                                      can_review_a_job_application
-                                      can_edit_a_draft_job_application
-                                      can_complete_a_religious_job_application
-                                      can_manage_their_job_applications]
+            can_add_professional_status_to_their_job_application
+            can_review_a_job_application
+            can_start_a_job_application
+            can_submit_a_job_application
+            can_complete_a_prefilled_job_application
+            can_complete_a_job_application
+            can_delete_a_draft_job_application
+            can_view_a_job_application
+            can_review_a_job_application
+            can_edit_a_draft_job_application
+            can_complete_a_religious_job_application
+            can_manage_their_job_applications],
 }.freeze
 
 PUBLISHER_JOB_APPLICATION_MAPPINGS = {
@@ -173,7 +173,7 @@ PUBLISHER_ORG_MAPPINGS = {
 }.freeze
 
 API_MAPPINGS = {
-  organisations: %w[]
+  organisations: %w[],
 }.freeze
 
 PUBLISHER_API_MAPPINGS = {
@@ -206,7 +206,7 @@ SIMPLE_MAPPINGS = {
   warden: [:jobseekers, %w[]],
   application: [:jobseekers, %w[]],
   subscriptions: [:jobseekers, %w[]],
-  authentication: [:publishers,  %w[]],
+  authentication: [:publishers, %w[]],
   cookies_preferences: [:jobseekers, %w[]],
   general_feedbacks: [:jobseekers, %w[]],
   omniauth_callbacks: [:jobseekers, %w[]],
@@ -215,7 +215,7 @@ SIMPLE_MAPPINGS = {
   vacancies: [:jobseekers, %w[]],
 }.freeze
 
-def system_specs_to_run(controller_name) # rubocop:disable Metrics/MethodLength, Metrics/PerceivedComplexity
+def system_specs_to_run(controller_name) # rubocop:disable Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
   if controller_name.size > 1
     mapping_key = if controller_name.size > 3
                     controller_name.first(3)
