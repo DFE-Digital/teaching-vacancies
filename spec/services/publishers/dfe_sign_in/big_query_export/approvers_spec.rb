@@ -89,6 +89,29 @@ RSpec.describe Publishers::DfeSignIn::BigQueryExport::Approvers do
         expect(dataset_stub).not_to have_received(:table)
       end
     end
+
+    context "when there is more than one page" do
+      let(:number_of_pages) { 2 }
+      let(:second_page_request) { instance_double(DfeSignIn::API::Request) }
+      let(:second_page_response) do
+        json_response(users: [approver.merge("userId" => SecureRandom.uuid)], numberOfPages: number_of_pages)
+      end
+
+      before do
+        allow(DfeSignIn::API::Request).to receive(:new)
+          .with(DfeSignIn::API::APPROVERS_ENDPOINT, 2, DfeSignIn::API::APPROVERS_PAGE_SIZE)
+          .and_return(second_page_request)
+        allow(second_page_request).to receive(:perform).and_return(second_page_response)
+      end
+
+      it "only deletes the table once, before the first page, then inserts every page" do
+        expect(table_stub).to receive(:delete).once.and_return(true)
+        allow(dataset_stub).to receive(:reload!)
+        expect(dataset_stub).to receive(:insert).twice
+
+        subject.call
+      end
+    end
   end
 
   context "when the approver table does not exist in the dataset" do
