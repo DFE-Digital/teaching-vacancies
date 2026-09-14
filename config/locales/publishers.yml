@@ -350,7 +350,7 @@ en:
         sign_in:
           description: Use DfE Sign-in to access your Teaching Vacancies account.
           description_fallback: Enter your email below and we will send you a link that will take you straight into your account.
-          title: Hiring staff sign in
+          title: Hiring staff sign-in
     current_year_statistics:
       bar_chart:
         accessible_view: Show data as a table

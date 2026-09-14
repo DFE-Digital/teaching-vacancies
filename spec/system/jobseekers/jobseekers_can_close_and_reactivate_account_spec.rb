@@ -11,6 +11,7 @@ RSpec.describe "Jobseekers can close and reactivate their account" do
 
   after { logout }
 
+  # rubocop:disable Capybara/SpecificActions
   it "allows closing and reactivating a jobseeker account" do
     visit jobseekers_account_path
 
@@ -24,9 +25,10 @@ RSpec.describe "Jobseekers can close and reactivate their account" do
     expect(page).to have_content(I18n.t("jobseekers.registrations.destroy.success"))
 
     within(".govuk-header__navigation") { click_link I18n.t("buttons.sign_in") }
-    click_on I18n.t("buttons.sign_in_jobseeker")
+    find("a.govuk-button[href='/jobseekers/sign-in']").click
     sign_in_jobseeker_govuk_one_login(jobseeker)
 
     expect(current_path).to eq(jobseekers_job_applications_path)
   end
+  # rubocop:enable Capybara/SpecificActions
 end

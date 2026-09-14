@@ -87,7 +87,7 @@ en:
         You can use any keywords that describe your ideal role.
         This alert is especially for jobs suitable for early career teachers, so you don’t need to add early career teacher or ECT as a keyword.
       keyword_hint: Enter job title or other information relevant to the roles you’re looking for.
-      location: City, county or postcode (in England)
+      location: City, county, or postcode (in England)
       number_of_miles:
         zero: This area only
         one: '%{count} mile'
@@ -99,7 +99,7 @@ en:
           primary: Primary
           science: Science
           teaching_assistant: Teaching Assistant
-        title: "Popular searches:"
+        title: "Popular keyword searches:"
       use_current_location_html: use current location<span class="govuk-visually-hidden"> to search teaching vacancies</span>
       within_radius: Search radius
 

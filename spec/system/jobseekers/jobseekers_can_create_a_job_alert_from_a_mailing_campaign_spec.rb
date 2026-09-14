@@ -30,7 +30,7 @@ RSpec.describe "Jobseekers can create a job alert from a mailing campaign", reca
   scenario "the landing form has default values when not set from the URL parameters" do
     expect(page).to have_css("h1", text: "Welcome to Teaching Vacancies!", exact_text: true)
     expect(page).to have_css("p", text: "Get teaching jobs sent straight to your inbox.")
-    expect(page).to have_field("City, county or postcode (in England)", with: "SW24LP")
+    expect(page).to have_field("City, county, or postcode (in England)", with: "SW24LP")
                 .and have_field("Email address", with: email_address)
                 .and have_field("Search radius", with: "15")
                 .and have_checked_field("Teacher")
@@ -55,7 +55,7 @@ RSpec.describe "Jobseekers can create a job alert from a mailing campaign", reca
     scenario "the subscription form values are set from the URL parameters" do
       expect(page).to have_css("h1", text: "Hey Ali, welcome to Teaching Vacancies!", exact_text: true)
       expect(page).to have_css("p", text: "Get mathematics teacher jobs sent straight to your inbox.")
-      expect(page).to have_field("City, county or postcode (in England)", with: "SW24LP")
+      expect(page).to have_field("City, county, or postcode (in England)", with: "SW24LP")
                   .and have_field("Email address", with: email_address)
                   .and have_field("Search radius", with: "10")
                   .and have_checked_field("Assistant headteacher")

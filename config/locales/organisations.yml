@@ -62,7 +62,7 @@ en:
             one: (%{count} result)
             other: (%{count} results)
       name: Name of school
-      location: City, county or postcode (in England)
+      location: City, county, or postcode (in England)
       results:
         active_jobs: Current jobs
         key_stage: Key stage
