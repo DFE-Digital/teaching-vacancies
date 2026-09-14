@@ -8,7 +8,7 @@
         = " or "
         = govuk_link_to t("buttons.add_reason_for_break"), new_jobseekers_profile_break_path(started_on: gap[:started_on], ended_on: gap[:ended_on] || Date.current)
   - if employment.job?
-    = render DetailComponent.new(title: employment.job_title) do |detail_component|
+    = tvs_summary_card(title: employment.job_title) do |detail_component|
       - detail_component.with_body do
         = govuk_summary_list(classes: "govuk-!-margin-bottom-0") do |summary_list|
           - summary_list.with_row(classes: "govuk-summary-list__row--no-actions") do |row|

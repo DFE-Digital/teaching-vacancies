@@ -16,7 +16,7 @@ h1.govuk-heading-l = t(".page_title_with_count", count: @count)
           = render "job_application", job_application: job_application
 
     - else
-      = render EmptySectionComponent.new title: t(".no_job_applications") do
+      = empty_section title: t(".no_job_applications") do
         = t(".no_job_applications_body_html", link_to: govuk_link_to(t(".find_and_apply"), root_path))
 
     = govuk_details summary_text: t(".one_login_banner.header"), classes: "govuk-!-margin-top-6" do

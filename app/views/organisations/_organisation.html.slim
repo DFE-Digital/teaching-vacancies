@@ -77,7 +77,7 @@ h2.govuk-heading-m = t("organisations.show.summary.heading")
   h2.govuk-heading-m = t("organisations.map.heading")
   p.govuk-body = full_address(organisation)
 
-  = map(markers: organisation_map_marker(organisation), marker: { type: "organisation", tracking: { link: "school_website_from_map" } })
+  = tvs_map(markers: organisation_map_marker(organisation), marker: { type: "organisation", tracking: { link: "school_website_from_map" } })
 
 h2.govuk-heading-m = t("organisations.show.vacancies.heading")
 

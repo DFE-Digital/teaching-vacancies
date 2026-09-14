@@ -8,7 +8,7 @@ p.govuk-body = t(".description_html", link: govuk_link_to(t(".kcsie"), "https://
 
 - if job_application.referees.any?
   - job_application.referees.each do |referee|
-    = render DetailComponent.new title: referee.name do |detail|
+    = tvs_summary_card title: referee.name do |detail|
       - detail.with_body do
         = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
           - attributes = %w[job_title organisation relationship email phone_number]
@@ -28,7 +28,7 @@ p.govuk-body = t(".description_html", link: govuk_link_to(t(".kcsie"), "https://
 
   = govuk_button_link_to t("buttons.add_another_reference"), new_jobseekers_job_application_referee_path(job_application)
 - else
-  = render EmptySectionComponent.new title: t(".no_references") do
+  = empty_section title: t(".no_references") do
     = govuk_button_link_to t("buttons.add_referee"), new_jobseekers_job_application_referee_path(job_application), class: "govuk-!-margin-bottom-0"
 
 = form_for @form, url: jobseekers_job_application_build_path(job_application, :referees), method: :patch do |f|

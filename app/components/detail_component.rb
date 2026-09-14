@@ -3,7 +3,7 @@ class DetailComponent < ApplicationComponent
 
   renders_one :body
 
-  def initialize(title: nil, classes: [], html_attributes: {})
+  def initialize(title:, classes: [], html_attributes: {})
     super(classes: classes, html_attributes: html_attributes)
 
     @title = title

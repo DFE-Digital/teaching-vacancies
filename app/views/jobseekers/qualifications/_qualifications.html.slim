@@ -1,6 +1,6 @@
 - qualifications_sort_and_group(qualifications).each_value do |qualification_group|
   - qualification_group.each do |qualification|
-    = render DetailComponent.new title: qualification.name do |detail|
+    = tvs_summary_card title: qualification.name do |detail|
       - detail.with_body do
         = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
           - if qualification.secondary?

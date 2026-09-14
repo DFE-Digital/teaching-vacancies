@@ -13,7 +13,7 @@
       = govuk_link_to t("buttons.create_job"), organisation_jobs_start_path, class: "govuk-button"
       = govuk_link_to t("buttons.create_template"), new_organisation_vacancy_template_path, class: "govuk-button govuk-button--secondary"
 
-= tabs html_attributes: { "aria-label": "Tabs navigation for vacancy types" } do |tabs|
+= tvs_tabs html_attributes: { "aria-label": "Tabs navigation for vacancy types" } do |tabs|
   - @vacancy_types.each do |vacancy_type|
     - tabs.with_navigation_item text: t("jobs.dashboard.#{vacancy_type}.tab_heading"), link: organisation_jobs_with_type_path(vacancy_type), active: false
   - tabs.with_navigation_item text: t("jobs.dashboard.saved_job_templates.tab_heading"), link: organisation_vacancy_templates_path, active: true

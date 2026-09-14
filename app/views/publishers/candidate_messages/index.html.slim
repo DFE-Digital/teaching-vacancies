@@ -2,7 +2,7 @@
 
 h1.govuk-heading-l Candidate messages
 
-= tabs do |t|
+= tvs_tabs do |t|
   - t.with_navigation_item text: "Inbox (#{@inbox_count})", link: publishers_candidate_messages_path
   - t.with_navigation_item text: "Archive", link: publishers_candidate_messages_path(tab: "archive")
 
