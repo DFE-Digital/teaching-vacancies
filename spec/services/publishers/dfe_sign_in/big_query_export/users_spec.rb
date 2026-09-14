@@ -78,6 +78,16 @@ RSpec.describe Publishers::DfeSignIn::BigQueryExport::Users do
 
       subject.call
     end
+
+    context "when DSI API fails" do
+      let(:api_response) { unsuccessful_api_response }
+
+      it "does not touch the existing table, so it is not left empty" do
+        expect { subject.call }.to raise_error(RuntimeError)
+
+        expect(dataset_stub).not_to have_received(:table)
+      end
+    end
   end
 
   context "when the user table does not exist in the dataset" do
@@ -96,12 +106,6 @@ RSpec.describe Publishers::DfeSignIn::BigQueryExport::Users do
 
       it "raises a runtime error" do
         expect { subject.call }.to raise_error(RuntimeError)
-      end
-
-      it "does not touch the existing table, so it is not left empty" do
-        expect { subject.call }.to raise_error(RuntimeError)
-
-        expect(dataset_stub).not_to have_received(:table)
       end
     end
   end

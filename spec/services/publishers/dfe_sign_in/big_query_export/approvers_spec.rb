@@ -69,7 +69,7 @@ RSpec.describe Publishers::DfeSignIn::BigQueryExport::Approvers do
     ]
   end
 
-  context "when the user table exists in the dataset" do
+  context "when the approver table exists in the dataset" do
     let(:table_stub) { instance_double(Google::Cloud::Bigquery::Table) }
 
     it "deletes the table first before inserting new table data" do
@@ -78,6 +78,16 @@ RSpec.describe Publishers::DfeSignIn::BigQueryExport::Approvers do
       expect(dataset_stub).to receive(:insert)
 
       subject.call
+    end
+
+    context "when DSI API fails" do
+      let(:api_response) { unsuccesful_api_response }
+
+      it "does not touch the existing table, so it is not left empty" do
+        expect { subject.call }.to raise_error(RuntimeError)
+
+        expect(dataset_stub).not_to have_received(:table)
+      end
     end
   end
 
@@ -97,12 +107,6 @@ RSpec.describe Publishers::DfeSignIn::BigQueryExport::Approvers do
 
       it "raises a runtime error" do
         expect { subject.call }.to raise_error(RuntimeError)
-      end
-
-      it "does not touch the existing table, so it is not left empty" do
-        expect { subject.call }.to raise_error(RuntimeError)
-
-        expect(dataset_stub).not_to have_received(:table)
       end
     end
   end

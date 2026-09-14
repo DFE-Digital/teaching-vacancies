@@ -62,7 +62,7 @@ production:
     queue: low
 
   export_approvers:
-    schedule: '05 01 * * *' # "At 01:05."
+    schedule: '0 01 * * *' # "At 01:00." Runs alongside export_users; they're independent.
     class: 'ExportDSIApproversToBigQueryJob'
     queue: low
 

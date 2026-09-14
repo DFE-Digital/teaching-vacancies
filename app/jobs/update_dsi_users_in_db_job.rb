@@ -1,4 +1,4 @@
-# This is loaded correctly by Zeitwerk due to a custom inflection in config/inflections.rb
+# This is loaded correctly by Zeitwerk due to a custom inflection in config/initializers/inflections.rb
 class UpdateDSIUsersInDbJob < ApplicationJob
   include ActiveJob::Continuable
 
