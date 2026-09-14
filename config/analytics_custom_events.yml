@@ -45,6 +45,7 @@ shared:
   - publisher_reference_received
   - publisher_self_disclosure_received
   - publisher_sign_in_fallback
+  - publisher_shortlist
   - publisher_vacancy_relisted
   - search_performed
   - successful_publisher_sign_in_attempt
