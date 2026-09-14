@@ -65,8 +65,13 @@ JOBSEEKER_SYSTEM_SPEC_MAPPINGS = {
   job_applications: %w[],
   govuk_one_login_callbacks: %w[],
   login_keys: %w[],
-  account_transfers: %w[],
-  account_feedbacks: %w[],
+  account_transfers: %w[can_transfer_data_from_old_account],
+  account_feedbacks: %w[can_give_account_feedback],
+}.freeze
+
+VACANCY_MAPPINGS = {
+  listing: %w[can_create_a_job_alert_from_a_listing can_save_a_job],
+  search: %w[can_create_a_job_alert_from_a_search],
 }.freeze
 
 JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS = {
@@ -74,7 +79,7 @@ JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS = {
   job_preferences: %w[can_add_job_preferences_to_their_profile
                       can_manage_job_preferences],
   qualifications: %w[can_add_qualifications],
-  hide_profile: %w[],
+  hide_profile: %w[can_manage_a_profile],
 }.freeze
 
 JOBSEEKER_JOB_APPLICATIONS_SPECS = %w[can_add_declarations_to_their_job_application
@@ -170,6 +175,12 @@ def system_specs_to_run(controller_name) # rubocop:disable Metrics/AbcSize, Metr
     PUBLISHER_VACANCY_MAPPINGS.fetch(controller_name.last.to_sym).map do |system_spec|
       "spec/system/publishers/publishers_#{system_spec}_spec.rb"
     end
+  elsif controller_name.size > 1 && controller_name.first == "vacancies"
+    VACANCY_MAPPINGS.fetch(controller_name.last.to_sym).map do |system_spec|
+      "spec/system/jobseekers/jobseekers_#{system_spec}_spec.rb"
+    end
+  else
+    puts "Controller #{controller_name}"
   end
 end
 
