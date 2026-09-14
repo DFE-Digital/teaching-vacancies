@@ -1,4 +1,5 @@
 require "rails_helper"
+require "dfe/analytics/rspec/matchers"
 
 RSpec.describe Publishers::ShortlistShareMailer do
   let(:publisher) { create(:publisher) }
@@ -49,6 +50,12 @@ RSpec.describe Publishers::ShortlistShareMailer do
         job_title: vacancy.job_title,
         organisation_name: vacancy.organisation_name,
       )
+    end
+
+    it "triggers a `publisher_shortlist` email event", :dfe_analytics do
+      mail.deliver_now
+
+      expect(:publisher_shortlist).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
     end
   end
 end
