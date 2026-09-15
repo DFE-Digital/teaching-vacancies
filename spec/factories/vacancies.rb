@@ -170,8 +170,27 @@ FactoryBot.define do
         is_parental_leave_cover { true }
         fixed_term_contract_duration { "6 months" }
       end
-      anonymise_applications { [false, true].sample }
       fe_role_qts_required { [false, true].sample }
+
+      job_type = %i[quick_apply website upload].sample
+
+      if job_type == :website
+        receive_applications { "website" }
+        application_link { Faker::Internet.url(host: "contoso.com") }
+        enable_job_applications { false }
+        anonymise_applications { nil }
+      elsif job_type == :upload
+        enable_job_applications { false }
+        receive_applications { "email" }
+        application_form do
+          Rack::Test::UploadedFile.new(
+            Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"),
+            "application/pdf",
+          )
+        end
+      else
+        anonymise_applications { [false, true].sample }
+      end
     end
 
     trait :with_fixed_title do
@@ -284,10 +303,10 @@ FactoryBot.define do
           "application/pdf",
         )
       end
+    end
 
-      after(:create) do |vacancy|
-        vacancy.application_form.blob.malware_scan_clean!
-      end
+    after(:create) do |vacancy|
+      vacancy.application_form.blob.malware_scan_clean! if vacancy.application_form.attached?
     end
 
     trait :catholic do
