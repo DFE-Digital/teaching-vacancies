@@ -37,4 +37,10 @@
 - else
   = render "review_banner", vacancy: @vacancy, current_organisation: @current_organisation
 
-  = render "sections", vacancy: @vacancy, current_organisation: @current_organisation, step_process: @step_process
+  = render "publishers/vacancies/vacancy_review_sections/job_details", vacancy: @vacancy, current_organisation: @current_organisation, step_process: @step_process
+
+  = render "publishers/vacancies/vacancy_review_sections/about_the_role", vacancy: @vacancy
+
+  = render "publishers/vacancies/vacancy_review_sections/important_dates", vacancy: @vacancy
+
+  = render "publishers/vacancies/vacancy_review_sections/application_process", vacancy: @vacancy, current_organisation: @current_organisation, step_process: @step_process
