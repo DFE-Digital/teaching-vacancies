@@ -38,6 +38,9 @@ tech lead to do that and also [complete the other onboarding steps](documentatio
 #### Agreed Practices
 * [Development practices agreed by our dev team](/documentation/development/agreed-practices.md)
 
+#### AI coding agents
+* [Guidance for AI coding agents](/AGENTS.md)
+
 ### Operations
 
 #### Infrastructure
