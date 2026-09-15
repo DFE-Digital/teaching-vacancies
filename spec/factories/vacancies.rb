@@ -191,6 +191,10 @@ FactoryBot.define do
       else
         anonymise_applications { [false, true].sample }
       end
+
+      after(:create) do |vacancy|
+        vacancy.application_form.blob.presence&.malware_scan_clean!
+      end
     end
 
     trait :with_fixed_title do
@@ -303,10 +307,10 @@ FactoryBot.define do
           "application/pdf",
         )
       end
-    end
 
-    after(:create) do |vacancy|
-      vacancy.application_form.blob.malware_scan_clean! if vacancy.application_form.attached?
+      after(:create) do |vacancy|
+        vacancy.application_form.blob.malware_scan_clean!
+      end
     end
 
     trait :catholic do
