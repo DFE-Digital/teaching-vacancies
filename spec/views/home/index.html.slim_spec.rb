@@ -41,6 +41,10 @@ RSpec.describe "home/index" do
     let(:jobseeker) { nil }
     let(:publisher) { nil }
 
+    it "renders the use my location button" do
+      expect(rendered).to have_css(".location-finder")
+    end
+
     it "renders the correct links" do
       expect(rendered).to have_content(I18n.t("buttons.sign_in"))
       expect(rendered).to have_content(I18n.t("buttons.search"))
