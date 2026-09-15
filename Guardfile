@@ -65,8 +65,14 @@ JOBSEEKER_SYSTEM_SPEC_MAPPINGS = {
   job_applications: %w[],
   govuk_one_login_callbacks: %w[],
   login_keys: %w[],
-  account_transfers: %w[],
-  account_feedbacks: %w[],
+  account_transfers: %w[can_transfer_data_from_old_account],
+  account_feedbacks: %w[can_give_account_feedback],
+}.freeze
+
+VACANCY_MAPPINGS = {
+  listing: %w[can_create_a_job_alert_from_a_listing can_save_a_job],
+  search: %w[can_create_a_job_alert_from_a_search],
+  vacancies: %w[],
 }.freeze
 
 JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS = {
@@ -74,22 +80,8 @@ JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS = {
   job_preferences: %w[can_add_job_preferences_to_their_profile
                       can_manage_job_preferences],
   qualifications: %w[can_add_qualifications],
-  hide_profile: %w[],
+  hide_profile: %w[can_manage_a_profile],
 }.freeze
-
-JOBSEEKER_JOB_APPLICATIONS_SPECS = %w[can_add_declarations_to_their_job_application
-                                      can_add_professional_status_to_their_job_application
-                                      can_review_a_job_application
-                                      can_start_a_job_application
-                                      can_submit_a_job_application
-                                      can_complete_a_prefilled_job_application
-                                      can_complete_a_job_application
-                                      can_delete_a_draft_job_application
-                                      can_view_a_job_application
-                                      can_review_a_job_application
-                                      can_edit_a_draft_job_application
-                                      can_complete_a_religious_job_application
-                                      can_manage_their_job_applications].freeze
 
 JOBSEEKER_JOB_APPLICATION_SYSTEM_SPEC_MAPPINGS = {
   employments: %w[can_add_employments_to_their_job_application],
@@ -98,6 +90,19 @@ JOBSEEKER_JOB_APPLICATION_SYSTEM_SPEC_MAPPINGS = {
   referees: %w[can_add_references_to_their_job_application],
   training_and_cpds: %w[can_add_training_and_cpds_to_their_job_application],
   feedbacks: %w[can_give_application_feedback can_give_job_alert_feedback],
+  build: %w[can_add_declarations_to_their_job_application
+            can_add_professional_status_to_their_job_application
+            can_review_a_job_application
+            can_start_a_job_application
+            can_submit_a_job_application
+            can_complete_a_prefilled_job_application
+            can_complete_a_job_application
+            can_delete_a_draft_job_application
+            can_view_a_job_application
+            can_review_a_job_application
+            can_edit_a_draft_job_application
+            can_complete_a_religious_job_application
+            can_manage_their_job_applications],
 }.freeze
 
 PUBLISHER_JOB_APPLICATION_MAPPINGS = {
@@ -144,32 +149,97 @@ PUBLISHER_VACANCY_MAPPINGS = {
   wizard: %w[],
 }.freeze
 
-def system_specs_to_run(controller_name) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
-  if controller_name == %w[jobseekers job_applications build]
-    JOBSEEKER_JOB_APPLICATIONS_SPECS.map do |spec|
-      "spec/system/jobseekers/jobseekers_#{spec}_spec.rb"
-    end
-  elsif controller_name.size > 2 && controller_name.first(2) == %w[jobseekers job_applications]
-    JOBSEEKER_JOB_APPLICATION_SYSTEM_SPEC_MAPPINGS.fetch(controller_name.last.to_sym).map do |system_spec|
-      "spec/system/jobseekers/jobseekers_#{system_spec}_spec.rb"
-    end
-  elsif controller_name.size > 2 && controller_name.first(2) == %w[jobseekers profiles]
-    JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS.fetch(controller_name.last.to_sym).map do |system_spec|
-      "spec/system/jobseekers/jobseekers_#{system_spec}_spec.rb"
-    end
-  elsif controller_name.size > 1 && controller_name.first == "jobseekers"
-    JOBSEEKER_SYSTEM_SPEC_MAPPINGS.fetch(controller_name.last.to_sym).map do |system_spec|
-      "spec/system/jobseekers/jobseekers_#{system_spec}_spec.rb"
-    end
-  elsif controller_name.size > 3 && controller_name.first(3) == %w[publishers vacancies job_applications]
-    # puts "found Controller #{controller_name}"
-    PUBLISHER_JOB_APPLICATION_MAPPINGS.fetch(controller_name.last.to_sym).map do |system_spec|
-      "spec/system/publishers/publishers_#{system_spec}_spec.rb"
-    end
-  elsif controller_name.size > 2 && controller_name.first(2) == %w[publishers vacancies]
-    PUBLISHER_VACANCY_MAPPINGS.fetch(controller_name.last.to_sym).map do |system_spec|
-      "spec/system/publishers/publishers_#{system_spec}_spec.rb"
-    end
+PUBLISHER_MAPPINGS = {
+  vacancies: %w[],
+  sessions: %w[],
+  publisher_preferences: %w[],
+  organisations: %w[],
+  jobseeker_profiles: %w[],
+  login_keys: %w[],
+}.freeze
+
+JOBSEEKER_SUB_FEEDBACK_MAPPINGS = {
+  relevance_feedbacks: %w[],
+  further_feedbacks: %w[],
+}.freeze
+
+PUBLISHER_ORG_MAPPINGS = {
+  url_override: %w[],
+  safeguarding_information: %w[],
+  photo: %w[],
+  logo: %w[],
+  email: %w[],
+  description: %w[],
+}.freeze
+
+API_MAPPINGS = {
+  organisations: %w[],
+}.freeze
+
+PUBLISHER_API_MAPPINGS = {
+  vacancies: %w[],
+}.freeze
+
+SUPPORT_MAPPINGS = {
+  sessions: %w[],
+  publisher_ats_api_clients: %w[can_manage_api_clients],
+  feedbacks: %w[],
+  fallback_sessions: %w[can_sign_in_using_fallback],
+}.freeze
+
+MASTER_MAPPINGS = {
+  %w[jobseekers job_applications] => [:jobseekers, JOBSEEKER_JOB_APPLICATION_SYSTEM_SPEC_MAPPINGS],
+  %w[jobseekers profiles] => [:jobseekers, JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS],
+  %w[publishers vacancies job_applications] => [:publishers, PUBLISHER_JOB_APPLICATION_MAPPINGS],
+  %w[publishers vacancies] => [:publishers, PUBLISHER_VACANCY_MAPPINGS],
+  %w[publishers ats_api v1] => [:publishers, PUBLISHER_API_MAPPINGS],
+  %w[jobseekers subscriptions feedbacks] => [:jobseekers, JOBSEEKER_SUB_FEEDBACK_MAPPINGS],
+  %w[jobseekers] => [:jobseekers, JOBSEEKER_SYSTEM_SPEC_MAPPINGS],
+  %w[publishers] => [:publishers, PUBLISHER_MAPPINGS],
+  %w[publishers organisations] => [:publishers, PUBLISHER_ORG_MAPPINGS],
+  %w[support_users] => [:support_users, SUPPORT_MAPPINGS],
+  %w[vacancies] => [:jobseekers, VACANCY_MAPPINGS],
+  %w[api] => [:publishers, API_MAPPINGS],
+}.freeze
+
+SIMPLE_MAPPINGS = {
+  warden: [:jobseekers, %w[]],
+  application: [:jobseekers, %w[]],
+  subscriptions: [:jobseekers, %w[]],
+  authentication: [:publishers, %w[]],
+  cookies_preferences: [:jobseekers, %w[]],
+  general_feedbacks: [:jobseekers, %w[]],
+  omniauth_callbacks: [:jobseekers, %w[]],
+  posts: [:jobseekers, %w[]],
+  pages: [:jobseekers, %w[]],
+  vacancies: [:jobseekers, %w[]],
+}.freeze
+
+def map_type_to_spec(type, system_spec)
+  case type
+  when :jobseekers
+    "spec/system/jobseekers/jobseekers_#{system_spec}_spec.rb"
+  when :publishers
+    "spec/system/publishers/publishers_#{system_spec}_spec.rb"
+  when :support_users
+    "spec/system/support_users/support_users_#{system_spec}_spec.rb"
+  end
+end
+
+def system_specs_to_run(controller_name)
+  if controller_name.size > 1
+    mapping_key = if controller_name.size > 3
+                    controller_name.first(3)
+                  elsif controller_name.size > 2
+                    controller_name.first(2)
+                  else
+                    [controller_name.first]
+                  end
+    type, mapping_hash = MASTER_MAPPINGS.fetch(mapping_key)
+    mapping_hash.fetch(controller_name.last.to_sym).map { |system_spec| map_type_to_spec(type, system_spec) }
+  else
+    type, spec_list = SIMPLE_MAPPINGS.fetch(controller_name.first.to_sym)
+    spec_list.map { |system_spec| map_type_to_spec(type, system_spec) }
   end
 end
 
