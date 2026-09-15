@@ -118,6 +118,24 @@ describe('Content editable form control', () => {
     expect(controller.editorTarget.innerHTML).toBe('<p>para text</p><p>para text 2</p>');
   });
 
+  it('should replace &nbsp; with a space rather than deleting it', () => {
+    controller.editorTarget.innerHTML = '<p>Access to&nbsp;free&nbsp;staff parking</p>';
+    controller.removeNbsp();
+    expect(controller.editorTarget.innerHTML).toBe('<p>Access to free staff parking</p>');
+  });
+
+  it('should still remove paragraphs containing only &nbsp; as empty', () => {
+    controller.editorTarget.innerHTML = '<p>para text</p><p>&nbsp;</p><p>para text 2</p>';
+    controller.removeEmptyParagraphs();
+    expect(controller.editorTarget.innerHTML).toBe('<p>para text</p><p>para text 2</p>');
+  });
+
+  it('should not merge words together when &nbsp; is removed on update', () => {
+    controller.editorTarget.innerHTML = '<p>Access to&nbsp;free&nbsp;staff parking</p>';
+    controller.editorTarget.dispatchEvent(new Event('input'));
+    expect(document.getElementById('input-test').value).toBe('<p>Access to free staff parking</p>');
+  });
+
   it('should wrap orphaned text nodes in paragraph tag', () => {
     const newEditorValue = generateContent(5, true);
     controller.editorTarget.innerHTML = newEditorValue;
