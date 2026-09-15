@@ -1,11 +1,10 @@
 class LandingPageLinkGroupComponent < ApplicationComponent
   include FailSafe
 
-  def initialize(use_locations: false, subgroup: false)
+  def initialize(use_locations:)
     super()
 
     @use_locations = use_locations
-    @subgroup = subgroup
   end
 
   renders_one :title_landing_page, ->(*args, **kwargs) { build_landing_page(*args, **kwargs) }
