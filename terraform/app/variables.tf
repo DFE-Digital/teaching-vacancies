@@ -132,6 +132,17 @@ variable "postgres_enable_high_availability" {
   default     = false
   description = "Deploy postgres as a cluster across multiple availability zones"
 }
+
+variable "postgres_server_version" {
+  type    = string
+  default = "17"
+}
+
+variable "postgres_server_docker_image" {
+  type    = string
+  default = "postgis/postgis:17-3.5"
+}
+
 variable "azure_storage_mb" {
   type    = number
   default = 32768

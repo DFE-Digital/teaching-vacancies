@@ -73,6 +73,16 @@ variable "enable_postgres_ssl" {
   description = "Enforce SSL connection from the client side"
 }
 
+variable "postgres_server_version" {
+  type    = string
+  default = "17"
+}
+
+variable "postgres_server_docker_image" {
+  type    = string
+  default = "postgis/postgis:17-3.5"
+}
+
 variable "postgres_flexible_server_sku" {}
 variable "postgres_enable_high_availability" {}
 variable "azure_storage_mb" {}
