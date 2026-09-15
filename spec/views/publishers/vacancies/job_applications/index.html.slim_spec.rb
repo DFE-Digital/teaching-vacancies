@@ -157,7 +157,7 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
       it "shows job offered tag" do
         expect(rendered).to have_css(".application-#{status}")
 
-        expect(application_status).to have_css(".govuk-tag--purple", text: "job offered")
+        expect(application_status).to have_css(".govuk-tag--green", text: "job offered")
       end
     end
 

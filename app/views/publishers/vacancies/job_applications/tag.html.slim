@@ -21,7 +21,11 @@ h1.govuk-heading-l class="govuk-!-display-inline"
   = f.govuk_radio_buttons_fieldset :status, legend: nil do
     - options = tag_status_options(@form.origin)
     - options[..-2].each do |status|
-      = f.govuk_radio_button :status, status
+      - if %w[unsuccessful unsuccessful_interview].include?(status)
+        = f.govuk_radio_button :status, status
+          p = t(".unsuccessful_hint")
+      - else
+        = f.govuk_radio_button :status, status
     = f.govuk_radio_divider
     = f.govuk_radio_button :status, options.last
 
