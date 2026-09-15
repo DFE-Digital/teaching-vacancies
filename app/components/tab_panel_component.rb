@@ -1,3 +1,8 @@
+# This looks like 2 components - it rendered differently if the 'form' parameter
+# is provided. It also has a slightly strange relationship with the model it
+# renders - if it has a method candidate_<method> then it calls that, else
+# it calls candidate.public_send(method) (where candidate is actually a JobApplication)
+# This class also knows how to sort applications
 class TabPanelComponent < ApplicationComponent
   include JobApplicationsHelper
 
@@ -7,7 +12,7 @@ class TabPanelComponent < ApplicationComponent
                  displayed_fields: %i[name email_address status],
                  button_group: %i[download update_status],
                  form: nil)
-    super(classes: [], html_attributes: { class: "tab-#{tab_name}" })
+    super(html_attributes: { class: "tab-#{tab_name}" })
     @tab_name = tab_name
     @vacancy = vacancy
     @form = form

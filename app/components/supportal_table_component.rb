@@ -1,3 +1,7 @@
+#  This is really complicated given what it is trying to do.
+# There are better solutions, but possibly the best one to explore
+# might be active_admin or administrate
+# https://www.ruby-toolbox.com/search?display=compact&order=score&q=Admin&show_forks=false
 class SupportalTableComponent < ApplicationComponent
   SUPPORTED_TYPES = %i[
     boolean

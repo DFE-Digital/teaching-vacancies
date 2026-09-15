@@ -1,11 +1,13 @@
+#  Only used in publishers/vacancies/index.html.slim
+# could probably be converted into a simple template
 class DashboardComponent < ApplicationComponent
   include DatesHelper
   include VacanciesHelper
 
   # rubocop:disable Metrics/ParameterLists
-  def initialize(organisation:, sort:, selected_type:, publisher_preference:, vacancies:, count:, vacancy_types:, filter_form:, selected_organisation_ids: [], selected_job_roles: [])
-    # rubocop:enable Metrics/ParameterLists
-    super(classes: [], html_attributes: {})
+  def initialize(organisation:, sort:, selected_type:, publisher_preference:, vacancies:, count:, vacancy_types:,
+                 filter_form:, selected_organisation_ids:, selected_job_roles:)
+    super()
     @organisation = organisation
     @sort = sort
     @publisher_preference = publisher_preference
@@ -21,6 +23,7 @@ class DashboardComponent < ApplicationComponent
     set_job_role_options
     @count = count
   end
+  # rubocop:enable Metrics/ParameterLists
 
   def grid_column_class
     organisation.school_group? ? "govuk-grid-column-two-thirds-at-desktop" : "govuk-grid-column-three-quarters"
