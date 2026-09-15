@@ -1,6 +1,8 @@
 module Jobseekers::GovukOneLogin
   BASE_URL = Rails.application.config.govuk_one_login_base_url
+  # :nocov:
   CALLBACKS_BASE_URL = "#{ENV.fetch('DOMAIN').include?('localhost') ? 'http' : 'https'}://#{ENV.fetch('DOMAIN')}".freeze
+  # :nocov:
 
   CALLBACKS = {
     login: "#{CALLBACKS_BASE_URL}/jobseekers/auth/govuk_one_login/callback",

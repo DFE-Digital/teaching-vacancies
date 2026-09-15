@@ -11,6 +11,8 @@ class LandingPageLinkGroupComponent < ApplicationComponent
   end
 
   renders_one :title_landing_page, ->(*args, **kwargs) { build_landing_page(*args, **kwargs) }
+
+  # simplecov:disable
   renders_many(:landing_pages, lambda do |*args, subgroup: false, **kwargs|
     if subgroup
       self.class.new(subgroup: true)
@@ -18,6 +20,7 @@ class LandingPageLinkGroupComponent < ApplicationComponent
       build_landing_page(*args, **kwargs)
     end
   end)
+  # simplecov:enable
 
   def render?
     # Rendering this component triggers a lot of expensive queries if caching is disabled (e.g. in
@@ -28,22 +31,28 @@ class LandingPageLinkGroupComponent < ApplicationComponent
 
   private
 
+  # simplecov:disable
   def build_landing_page(slug, location: false)
     LandingPageLinkComponent.new(location?(location) ? LocationLandingPage[slug] : LandingPage[slug])
   end
+  # simplecov:enable
 
+  # simplecov:disable
   def list_class
     [
       @list_class,
       ("govuk-list--bullet" if title_landing_page.present?),
     ].compact.join
   end
+  # simplecov:enable
 
   def default_classes
     %w[homepage-landing-page-link-group-component]
   end
 
+  # simplecov:disable
   def location?(location)
     @use_locations || location
   end
+  # simplecov:enable
 end

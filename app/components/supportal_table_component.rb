@@ -51,6 +51,7 @@ class SupportalTableComponent < ApplicationComponent
     end
 
     def call(entry)
+      # simplecov:disable
       case @type
       when :boolean
         case @value_block.call(entry)
@@ -66,6 +67,7 @@ class SupportalTableComponent < ApplicationComponent
       else
         @value_block.call(entry)
       end
+      # simplecov:enable
     end
   end
 

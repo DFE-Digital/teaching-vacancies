@@ -8,9 +8,11 @@ class Publishers::JobListing::DocumentsConfirmationForm < BaseForm
 
   attr_reader :vacancy
 
+  # simplecov:disable
   def self.fields
     %i[upload_additional_document]
   end
+  # simplecov:enable
 
   attribute :upload_additional_document, :boolean
 

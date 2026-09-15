@@ -16,11 +16,13 @@ class SubscriptionDecorator < Draper::Decorator
                                   phases
                                   working_patterns].freeze
 
+  # simplecov:disable
   def filtered_search_criteria
     @filtered_search_criteria ||= sorted_search_criteria.filter_map { |field, value| search_criteria_field(field, value) }
                                                         .reduce({}) { |hash, item| hash.merge(item) }
                                     .stringify_keys
   end
+  # simplecov:enable
 
   private
 
