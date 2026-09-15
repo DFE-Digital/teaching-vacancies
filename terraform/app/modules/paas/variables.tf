@@ -73,6 +73,16 @@ variable "enable_postgres_ssl" {
   description = "Enforce SSL connection from the client side"
 }
 
+variable "postgres_server_version" {
+  type        = string
+  description = "Version of PostgreSQL to use for PostgreSQL server"
+}
+
+variable "postgres_server_docker_image" {
+  type        = string
+  description = "Docker image to use for PostgreSQL Kubernetes deployment"
+}
+
 variable "postgres_flexible_server_sku" {}
 variable "postgres_enable_high_availability" {}
 variable "azure_storage_mb" {}
