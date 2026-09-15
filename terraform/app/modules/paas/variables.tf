@@ -73,6 +73,11 @@ variable "enable_postgres_ssl" {
   description = "Enforce SSL connection from the client side"
 }
 
+variable "postgres_server_version" {
+  type    = string
+  default = "17"
+}
+
 variable "postgres_flexible_server_sku" {}
 variable "postgres_enable_high_availability" {}
 variable "azure_storage_mb" {}

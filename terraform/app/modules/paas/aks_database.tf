@@ -16,7 +16,7 @@ module "postgres" {
   azure_sku_name                 = var.postgres_flexible_server_sku
   azure_enable_high_availability = var.postgres_enable_high_availability
   azure_storage_mb               = var.azure_storage_mb
-  server_version                 = 14
+  server_version                 = var.postgres_server_version
   azure_maintenance_window       = var.azure_maintenance_window
   server_docker_image            = "postgis/postgis:14-3.5"
 }
