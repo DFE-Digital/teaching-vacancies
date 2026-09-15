@@ -1,6 +1,6 @@
 class LandingPage
-  COUNT_CACHE_DURATION = 3.hours
-  COUNT_CACHE_VARIATION_SECONDS = 300
+  COUNT_CACHE_DURATION = 1.minute
+  COUNT_CACHE_VARIATION_SECONDS = 2
 
   attr_reader :slug, :criteria, :banner_image, :hidden_filters
 

@@ -86,16 +86,17 @@ end
 
 active_publishers = Publisher.where(email: active_users.map { |u| u.fetch(:email) })
 
-schools.each do |school|
+#  One vacancy per school for geogarphic testing
+School.find_each do |school|
   attrs = { organisations: [school],
-            phases: (school.phase == "not_applicable" ? %w[secondary] : [school.phase]),
+            phases: (school.phase == "not_applicable" || school.phase.include?("middle") ? %w[secondary] : [school.phase]),
             publisher_organisation: school,
             publisher: active_publishers.sample }
-  75.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
-  FactoryBot.create(:vacancy, :for_seed_data, :apply_via_website, **attrs)
-  FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs)
-  FactoryBot.create(:draft_vacancy, :for_seed_data, **attrs)
-  FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false)
+  FactoryBot.create(:vacancy, :for_seed_data, **attrs)
+  # FactoryBot.create(:vacancy, :for_seed_data, :apply_via_website, **attrs)
+  # FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs)
+  # FactoryBot.create(:draft_vacancy, :for_seed_data, **attrs)
+  # FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false)
 end
 
 # Vacancies at Weydon trust central office
