@@ -7,7 +7,7 @@ class TabPanelComponent < ApplicationComponent
                  displayed_fields: %i[name email_address status],
                  button_group: %i[download update_status],
                  form: nil)
-    super(classes: [], html_attributes: { class: "tab-#{tab_name}" })
+    super(html_attributes: { class: "tab-#{tab_name}" })
     @tab_name = tab_name
     @vacancy = vacancy
     @form = form
