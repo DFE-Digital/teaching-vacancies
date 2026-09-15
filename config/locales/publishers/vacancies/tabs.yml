@@ -10,6 +10,7 @@ en:
       interviewing_at: Interview date
     buttons:
       download: Download selected
+      share_shortlisted: Share selected applications
       message_shortlisted: Send a message
       message_interviewing: Send a message
       update_status: Update application status
