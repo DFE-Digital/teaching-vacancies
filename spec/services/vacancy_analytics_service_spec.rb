@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe VacancyAnalyticsService do
   let(:vacancy) { create(:vacancy) }
   let(:referrer_url) { "https://www.example.com/some/path?utm=source" }
+  let(:another_url) { "https://www.another.co.uk/some/path?utm=source" }
   let(:hostname) { "www.tvs.service.gov.uk" }
 
   describe ".track_visit" do
@@ -16,6 +17,21 @@ RSpec.describe VacancyAnalyticsService do
       expect {
         described_class.track_visit(vacancy_id: nil, referrer_url: referrer_url, hostname: hostname, params: {})
       }.not_to(change(VacancyAnalytics, :count))
+    end
+
+    it "upserts the correct stat into the database" do
+      described_class.track_visit(vacancy_id: vacancy.id, referrer_url: referrer_url, hostname: hostname, params: {})
+      described_class.track_visit(vacancy_id: vacancy.id, referrer_url: referrer_url, hostname: hostname, params: {})
+      described_class.track_visit(vacancy_id: vacancy.id, referrer_url: referrer_url, hostname: hostname, params: {})
+      described_class.track_visit(vacancy_id: vacancy.id, referrer_url: referrer_url, hostname: hostname, params: {})
+      described_class.track_visit(vacancy_id: vacancy.id, referrer_url: referrer_url, hostname: hostname, params: {})
+      described_class.track_visit(vacancy_id: vacancy.id, referrer_url: another_url, hostname: hostname, params: {})
+      described_class.track_visit(vacancy_id: vacancy.id, referrer_url: another_url, hostname: hostname, params: {})
+      described_class.track_visit(vacancy_id: vacancy.id, referrer_url: another_url, hostname: hostname, params: {})
+
+      vacancy_analytics_1 = VacancyAnalytics.find_by!(vacancy_id: vacancy.id)
+
+      expect(vacancy_analytics_1.referrer_counts).to eq({ "example" => 5, "another" => 3 })
     end
   end
 

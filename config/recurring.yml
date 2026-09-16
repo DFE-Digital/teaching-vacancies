@@ -1,7 +1,7 @@
 production:
-#
-# SET DATE CRON JOBS
-#
+  #
+  # SET DATE CRON JOBS
+  #
   send_peak_times_email_reminder_march:
     schedule: '0 15 26 3 *' # "At 15:00 on 26 of March."
     class: 'SendPeakTimesEmailReminderJob'
@@ -205,6 +205,11 @@ production:
     schedule: '55 6-21 * * *' # "Every hour between 06:55 and 21:55."
     class: 'ImportFromVacancySourcesJob'
     queue: default
+
+  aggregate_vacancy_referrer_stats:
+    schedule: "*/15 * * * *" # Every 15 minutes
+    class: 'AggregateVacancyReferrerStatsJob'
+    queue: low
 
   clear_solid_queue_finished_jobs:
     command: "SolidQueue::Job.clear_finished_in_batches(sleep_between_batches: 0.3)"
