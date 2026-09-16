@@ -410,7 +410,7 @@ RSpec.describe VacancyDecorator do
       context "when is_parental_leave_cover is true" do
         let(:is_parental_leave_cover) { true }
 
-        it "returns Fixed term (duration)" do
+        it "returns Fixed term (duration) and the leave cover suffix" do
           expect(decorated.readable_contract_information).to eq "Fixed term - 6 months - Maternity or parental leave cover"
         end
       end
