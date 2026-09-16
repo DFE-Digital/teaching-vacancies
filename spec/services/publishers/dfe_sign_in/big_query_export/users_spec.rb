@@ -4,7 +4,7 @@ require "dfe_sign_in/api/request"
 RSpec.describe Publishers::DfeSignIn::BigQueryExport::Users do
   before do
     expect(bigquery_stub).to receive(:dataset).with("test_dataset").and_return(dataset_stub)
-    expect(dataset_stub).to receive(:table).and_return(table_stub)
+    allow(dataset_stub).to receive(:table).and_return(table_stub)
 
     expect(DfeSignIn::API::Request).to receive(:new).at_least(:once).and_return(api_request)
     expect(api_request).to receive(:perform).at_least(:once).and_return(api_response)
@@ -77,6 +77,39 @@ RSpec.describe Publishers::DfeSignIn::BigQueryExport::Users do
       expect(dataset_stub).to receive(:insert)
 
       subject.call
+    end
+
+    context "when DSI API fails" do
+      let(:api_response) { unsuccessful_api_response }
+
+      it "does not touch the existing table, so it is not left empty" do
+        expect { subject.call }.to raise_error(RuntimeError)
+
+        expect(dataset_stub).not_to have_received(:table)
+      end
+    end
+
+    context "when there is more than one page" do
+      let(:number_of_pages) { 2 }
+      let(:second_page_request) { instance_double(DfeSignIn::API::Request) }
+      let(:second_page_response) do
+        json_response(users: [user.merge("userId" => SecureRandom.uuid)], numberOfPages: number_of_pages)
+      end
+
+      before do
+        allow(DfeSignIn::API::Request).to receive(:new)
+          .with(DfeSignIn::API::USERS_ENDPOINT, 2, DfeSignIn::API::USERS_PAGE_SIZE)
+          .and_return(second_page_request)
+        allow(second_page_request).to receive(:perform).and_return(second_page_response)
+      end
+
+      it "only deletes the table once, before the first page, then inserts every page" do
+        expect(table_stub).to receive(:delete).once.and_return(true)
+        allow(dataset_stub).to receive(:reload!)
+        expect(dataset_stub).to receive(:insert).twice
+
+        subject.call
+      end
     end
   end
 
