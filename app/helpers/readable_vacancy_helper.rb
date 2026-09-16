@@ -1,40 +1,6 @@
 # frozen_string_literal: true
 
 module ReadableVacancyHelper
-  # simplecov:disable
-  def vacancy_contract_type_with_duration(model)
-    return nil if model.contract_type.blank?
-
-    return I18n.t("publishers.vacancies.build.contract_type.#{model.contract_type}") if model.fixed_term_contract_duration.blank?
-
-    if model.is_parental_leave_cover
-      [I18n.t("publishers.vacancies.build.contract_type.#{model.contract_type}"),  model.fixed_term_contract_duration, I18n.t("publishers.vacancies.build.contract_type.parental_leave")].compact.join(" - ")
-    else
-      [I18n.t("publishers.vacancies.build.contract_type.#{model.contract_type}"),  model.fixed_term_contract_duration].compact.join(" - ")
-    end
-  end
-  # simplecov:enable
-
-  # simplecov:disable
-  def vacancy_readable_job_roles(model)
-    model.job_roles&.map { |job_role|
-      I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{job_role}")
-    }&.join(", ")
-  end
-  # simplecov:enable
-
-  # simplecov:disable
-  def vacancy_readable_key_stages(model)
-    model.key_stages&.map { |key_stage|
-      I18n.t("helpers.label.publishers_job_listing_key_stages_form.key_stages_options.#{key_stage}")
-    }&.join(", ")
-  end
-  # simplecov:enable
-
-  def vacancy_readable_subjects(model)
-    model.subjects.join(", ")
-  end
-
   def vacancy_readable_visa_sponsorship_availability(model)
     ["visa sponsorship"] if model.visa_sponsorship_available
   end

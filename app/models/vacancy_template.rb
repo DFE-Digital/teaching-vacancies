@@ -95,4 +95,8 @@ class VacancyTemplate < ApplicationRecord
                                                  key_stages: key_stages,
                                                  phases: phases)
   end
+
+  def for_an_fe_college?
+    organisation.fe_college?
+  end
 end
