@@ -5,6 +5,7 @@ AUTHENTICATION_FALLBACK_FOR_JOBSEEKERS = ENV.fetch("AUTHENTICATION_FALLBACK_FOR_
 DISABLE_EMAIL_NOTIFICATIONS = ENV.fetch("DISABLE_EMAIL_NOTIFICATIONS", nil)
 DISABLE_EXPENSIVE_JOBS = ENV.fetch("DISABLE_EXPENSIVE_JOBS", nil)
 DISABLE_INTEGRATIONS = ENV.fetch("DISABLE_INTEGRATIONS", nil)
+FAUAPI_PUBLISHING = ENV.fetch("FAUAPI_PUBLISHING", nil)
 
 AuthenticationFallback = Flag.new("authentication_fallback", is_feature: false)
 AuthenticationFallbackForJobseekers = Flag.new("authentication_fallback_for_jobseekers", is_feature: false)
@@ -17,3 +18,6 @@ DisableExpensiveJobs = Flag.new("disable_expensive_jobs", is_feature: false)
 
 # Avoid executing any job that integrates with external systems, such as Google Index updates, ATS imports, etc.
 DisableIntegrations = Flag.new("disable_integrations", is_feature: false)
+
+# Publish the ATS API OpenAPI document to the DfE "Find and Use an API" catalogue after deploys.
+FauapiPublishing = Flag.new("fauapi_publishing", is_feature: false)

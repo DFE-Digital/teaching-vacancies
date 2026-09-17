@@ -13,6 +13,8 @@ DISABLE_EXPENSIVE_JOBS: true
 DISABLE_INTEGRATIONS: true
 DOMAIN: qa.teaching-vacancies.service.gov.uk
 ENFORCE_LOCAL_AUTHORITY_ALLOWLIST: false
+FAUAPI_BASE_URL: https://pp-apimanagement.education.gov.uk
+FAUAPI_PUBLISHING: false
 RAILS_ENV: production
 RAILS_LOG_TO_STDOUT: true
 RAILS_MAX_THREADS: 5
