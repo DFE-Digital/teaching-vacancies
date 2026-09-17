@@ -236,6 +236,21 @@ RSpec.describe Organisation do
     end
   end
 
+  describe ".without_publishers_accepted_terms" do
+    let!(:college_without_publishers) { create(:college) }
+    let!(:college_with_unaccepted_publisher) { create(:college) }
+    let!(:college_with_accepted_publisher) { create(:college) }
+
+    before do
+      create(:publisher, accepted_terms_at: nil, organisations: [college_with_unaccepted_publisher])
+      create(:publisher, accepted_terms_at: Time.current, organisations: [college_with_accepted_publisher])
+    end
+
+    it "returns organisations with no publisher who has accepted the terms and conditions" do
+      expect(Organisation.without_publishers_accepted_terms).to contain_exactly(college_without_publishers, college_with_unaccepted_publisher)
+    end
+  end
+
   describe ".eligible_for_external_publishing" do
     let!(:school) { create(:school) }
     let!(:trust) { create(:trust) }

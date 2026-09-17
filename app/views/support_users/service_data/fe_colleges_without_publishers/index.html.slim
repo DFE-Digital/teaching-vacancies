@@ -1,0 +1,15 @@
+- content_for :page_title_prefix, t(".title")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: support_users_service_data_path
+
+h1.govuk-heading-l = t(".title")
+
+p.govuk-body = t(".count", count: @colleges.size)
+
+- if @colleges.any?
+  = supportal_table(entries: @colleges) do |t|
+    - t.string "Name", :name
+    - t.string "URN", :urn
+- else
+  p.govuk-body = t(".no_results")

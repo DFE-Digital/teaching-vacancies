@@ -81,7 +81,15 @@ en:
       index:
         heading: Service data
         jobseeker_profiles_link: Jobseeker profiles
+        fe_colleges_without_publishers_link: FE colleges without a publisher who has accepted the terms and conditions
         title: Service data
+      fe_colleges_without_publishers:
+        index:
+          title: FE colleges without a publisher who has accepted the terms and conditions
+          count:
+            one: "%{count} FE college with no publisher who has accepted the terms and conditions"
+            other: "%{count} FE colleges with no publisher who has accepted the terms and conditions"
+          no_results: All FE colleges updated by GIAS in the last week have a publisher who has accepted the terms and conditions.
       jobseeker_profiles:
         index:
           title: Service Jobseeker Profiles
