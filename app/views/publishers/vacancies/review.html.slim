@@ -8,7 +8,16 @@ h1.govuk-heading-l = t(".heading", status: (vacancy.publish_on&.future? ? "sched
 
 p.govuk-body = t(".hint")
 
-= render "sections", step_process: @step_process
+= render "publishers/vacancies/vacancy_review_sections/job_details", vacancy: vacancy, current_organisation: current_organisation, step_process: @step_process
+
+- if vacancy.section_begun?(:about_the_role, @step_process)
+  = render "publishers/vacancies/vacancy_review_sections/about_the_role", vacancy: vacancy
+
+- if vacancy.section_begun?(:important_dates, @step_process)
+  = render "publishers/vacancies/vacancy_review_sections/important_dates", vacancy: vacancy
+
+- if vacancy.section_begun?(:application_process, @step_process)
+  = render "publishers/vacancies/vacancy_review_sections/application_process", vacancy: vacancy, current_organisation: current_organisation, step_process: @step_process
 
 p
   = open_in_new_tab_link_to(t("buttons.preview_job_listing"), organisation_job_preview_path(vacancy.id), class: "govuk-!-margin-bottom-0")
