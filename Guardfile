@@ -185,6 +185,12 @@ SUPPORT_MAPPINGS = {
   publisher_ats_api_clients: %w[can_manage_api_clients],
   feedbacks: %w[],
   fallback_sessions: %w[can_sign_in_using_fallback],
+  service_data: %w[],
+}.freeze
+
+SERVICE_DATA_MAPPINGS = {
+  fe_colleges: %w[],
+  fe_colleges_without_publishers: %w[],
 }.freeze
 
 MASTER_MAPPINGS = {
@@ -198,6 +204,7 @@ MASTER_MAPPINGS = {
   %w[publishers] => [:publishers, PUBLISHER_MAPPINGS],
   %w[publishers organisations] => [:publishers, PUBLISHER_ORG_MAPPINGS],
   %w[support_users] => [:support_users, SUPPORT_MAPPINGS],
+  %w[support_users service_data] => [:support_users, SERVICE_DATA_MAPPINGS],
   %w[vacancies] => [:jobseekers, VACANCY_MAPPINGS],
   %w[api] => [:publishers, API_MAPPINGS],
 }.freeze
