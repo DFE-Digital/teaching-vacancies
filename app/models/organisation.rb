@@ -75,6 +75,10 @@ class Organisation < ApplicationRecord
   # FE colleges may only publish vacancies manually during the private beta; discarded organisations must never match.
   scope :eligible_for_external_publishing, -> { kept.not_fe_colleges }
 
+  scope :without_publishers_accepted_terms, lambda {
+    where.not(id: OrganisationPublisher.joins(:publisher).where.not(publishers: { accepted_terms_at: nil }).select(:organisation_id))
+  }
+
   scope :in_scope_schools, -> { schools.kept.not_out_of_scope.where.not(school_type: COLLEGE_SCHOOL_TYPE).or(Organisation.trusts) }
 
   scope :faith_schools, -> { where.not(religious_character: NON_FAITH_RELIGIOUS_CHARACTER_TYPES) }
