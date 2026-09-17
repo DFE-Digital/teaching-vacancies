@@ -12,9 +12,8 @@ module Publishers
       @to = recipient_email
 
       vacancy = Vacancy.find(vacancy_id)
-      job_applications = vacancy.job_applications.where(id: job_application_ids)
+      job_applications = vacancy.job_applications.find(job_application_ids)
 
-      raise ActiveRecord::RecordNotFound if job_applications.size != job_application_ids.size
       raise ArgumentError, "Uploaded application forms are not supported" if vacancy.uploaded_form?
       unless valid_selection?(job_applications)
         raise ArgumentError, "Select between 1 and #{Publishers::JobApplication::ShortlistShareForm::MAX_APPLICATIONS} shortlisted applications"
