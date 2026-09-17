@@ -1,10 +1,6 @@
 - button_group = %i[update_status download message_shortlisted]
-- custom_actions = {}
-- unless vacancy.uploaded_form?
-  - button_group.insert(1, :share_shortlisted)
-  - custom_actions[:share_shortlisted] = new_organisation_job_shortlist_share_path(vacancy.id)
+- button_group.insert(1, :share_shortlisted) unless vacancy.uploaded_form?
 
 = render TabPanelComponent.new(tab_name:, vacancy:, form:,
   candidates: candidates.values.flatten,
-  button_group:,
-  custom_actions:)
+  button_group:)
