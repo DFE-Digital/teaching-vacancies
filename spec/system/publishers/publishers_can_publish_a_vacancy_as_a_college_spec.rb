@@ -51,6 +51,7 @@ RSpec.describe "Creating a vacancy as an FE college" do
     publisher_pay_package_page.fill_in_and_submit_form(vacancy)
 
     expect(publisher_about_the_role_page).to be_displayed
+    expect(page).to have_content("Tell jobseekers about your learners and the culture of your college", count: 1)
     click_on I18n.t("buttons.save_and_continue")
 
     expect(publisher_about_the_role_page).to be_displayed
