@@ -182,6 +182,7 @@ en:
 
     ect_status: Is this role suitable for an early career teacher (ECT)?
     further_details: Further details about the role
+    further_details_hint: Tell jobseekers about your learners and the culture of your %{organisation_type}
     location: Location
     location_find_more_html:
       one: Find more %{school_type} jobs in %{location_link}
