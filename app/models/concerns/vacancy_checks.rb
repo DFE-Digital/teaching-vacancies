@@ -1,27 +1,20 @@
 # frozen_string_literal: true
 
 module VacancyChecks
-  include KeyStagesChecks
+  PHASES_TO_KEY_STAGES_MAPPINGS = {
+    nursery: %i[early_years],
+    primary: %i[early_years ks1 ks2],
+    secondary: %i[ks3 ks4 ks5],
+    sixth_form_or_college: %i[ks5],
+    through: %i[early_years ks1 ks2 ks3 ks4 ks5],
+  }.freeze
 
-  def allow_key_stages?
-    allowed_phases = %w[primary secondary through]
-    allowed_roles = %w[teacher
-                       headteacher
-                       deputy_headteacher
-                       assistant_headteacher
-                       head_of_year_or_phase
-                       head_of_department_or_curriculum
-                       teaching_assistant]
-
-    phases.intersect?(allowed_phases) && job_roles.intersect?(allowed_roles)
+  def key_stages_for_phases
+    phases.map { |phase| PHASES_TO_KEY_STAGES_MAPPINGS[phase.to_sym] }.flatten.uniq.sort
   end
 
   def for_an_fe_college?
     organisation&.fe_college?
-  end
-
-  def allow_subjects?
-    phases.any? { |phase| phase.in? %w[secondary sixth_form_or_college through] }
   end
 
   def salary_types

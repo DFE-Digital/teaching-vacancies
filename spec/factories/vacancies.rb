@@ -99,6 +99,7 @@ FactoryBot.define do
 
     trait :it_support do
       job_roles { %w[it_support] }
+      key_stages { %w[] }
     end
 
     trait :secondary do
