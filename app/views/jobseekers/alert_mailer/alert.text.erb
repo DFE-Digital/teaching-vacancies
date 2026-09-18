@@ -2,10 +2,10 @@
 
 ---
 <%- @vacancies.each do |vacancy| %>
-  <%= vacancy.job_title %>
+  <%= job_title_link(vacancy) %>
   <%= vacancy_organisation_and_location(vacancy) %>
   <%= t(".working_pattern", working_pattern: vacancy.readable_working_patterns_with_details) %>
-  <%= show_link(vacancy) %>
+
   ---
 <% end %>
 

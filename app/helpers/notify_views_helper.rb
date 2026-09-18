@@ -69,13 +69,9 @@ module NotifyViewsHelper
     notify_link(url, "View your messages")
   end
 
-  def show_link(vacancy)
+  def job_title_link(vacancy)
     url = job_url(vacancy, **utm_params)
-    if vacancy.organisations.many?
-      notify_link(url, t("jobseekers.alert_mailer.alert.show_job_link", job_title: vacancy.job_title))
-    else
-      notify_link(url, t("jobseekers.alert_mailer.alert.show_job_link_with_organisation", job_title: vacancy.job_title, organisation_name: vacancy.organisations.first.name))
-    end
+    notify_link(url, vacancy.job_title)
   end
 
   def sign_in_link
