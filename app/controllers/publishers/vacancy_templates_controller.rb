@@ -49,7 +49,7 @@ module Publishers
     end
 
     def load_template
-      @template = current_organisation.vacancy_templates.find(params[:id])
+      @template = current_organisation.vacancy_templates.find(params[:id]).decorate
     end
   end
 end

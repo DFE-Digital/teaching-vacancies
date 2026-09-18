@@ -25,6 +25,8 @@ class VacancyDecorator < Draper::Decorator
 
   include ActionView::Helpers::TextHelper
 
+  include ReadableVacancy
+
   HTML_STRIP_REGEX = %r{(&nbsp;|<div>|</div>|<!--block-->)+}
 
   # simplecov:disable
@@ -61,16 +63,6 @@ class VacancyDecorator < Draper::Decorator
 
   def working_patterns_any?
     model.working_patterns.any?
-  end
-
-  def readable_working_patterns
-    working_patterns = model.working_patterns.map { |working_pattern|
-      Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
-    }.join(", ").capitalize
-
-    return working_patterns unless model.is_job_share
-
-    "#{working_patterns} (Can be done as a job share)"
   end
 
   def readable_working_patterns_with_details

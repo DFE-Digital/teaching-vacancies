@@ -7,7 +7,7 @@ RSpec.describe "publishers/vacancy_templates/show" do
   end
 
   context "with a website type" do
-    let(:vacancy_template) { build_stubbed(:vacancy_template, :website) }
+    let(:vacancy_template) { build_stubbed(:vacancy_template, :website).decorate }
 
     it "shows the 'other' type" do
       expect(rendered).to have_content("Other")

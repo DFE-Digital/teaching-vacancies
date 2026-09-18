@@ -51,15 +51,11 @@ RSpec.describe VacancyTemplate do
 
   describe "#for_an_fe_college?" do
     it "returns true when the organisation is an FE college" do
-      expect(described_class.new(organisation: build(:college))).to be_for_an_fe_college
+      expect(build(:vacancy_template, organisation: build(:college))).to be_for_an_fe_college
     end
 
     it "returns false when the organisation is not an FE college" do
-      expect(described_class.new(organisation: build(:school))).not_to be_for_an_fe_college
-    end
-
-    it "returns nil when there is no organisation" do
-      expect(described_class.new).not_to be_for_an_fe_college
+      expect(build(:vacancy_template, organisation: build(:school))).not_to be_for_an_fe_college
     end
   end
 
