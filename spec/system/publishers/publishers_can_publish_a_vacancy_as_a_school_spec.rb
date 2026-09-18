@@ -97,6 +97,7 @@ RSpec.describe "Creating a vacancy" do
         publisher_pay_package_page.fill_in_and_submit_form(vacancy)
 
         expect(publisher_about_the_role_page).to be_displayed
+        expect(page).to have_content("Tell jobseekers about your learners and the culture of your school")
         submit_empty_form
         expect(publisher_about_the_role_page).to be_displayed
         expect(publisher_about_the_role_page.errors.map(&:text)).to contain_exactly(
