@@ -69,6 +69,9 @@ class VacancyTemplate < ApplicationRecord
 
   enum :religion_type, Vacancy::RELIGION_TYPES
 
+  # validates :benefit_details, absence: true, unless: -> { benefits? }
+  # validates :benefit_details, presence: true, if: -> { benefits? }
+
   def central_office?
     false
   end

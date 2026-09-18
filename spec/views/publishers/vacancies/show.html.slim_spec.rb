@@ -14,7 +14,8 @@ RSpec.describe "publishers/vacancies/show" do
   end
 
   context "when published" do
-    let(:vacancy) { build_stubbed(:vacancy, :secondary) }
+    # This is needed as full-time vacancies don't have an actual salary
+    let(:vacancy) { build_stubbed(:vacancy, :secondary, working_patterns: %w[part_time]) }
     let(:next_invalid_step) { nil }
 
     it "has blank application download button" do
