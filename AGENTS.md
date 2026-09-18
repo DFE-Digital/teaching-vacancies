@@ -117,6 +117,7 @@ yarn run sass:lint
 ```bash
 bundle exec rake                               # lint + spec
 bundle exec rake rswag:specs:swaggerize        # regenerate the ATS API OpenAPI docs
+bundle exec rake fauapi:publish                # publish the ATS API docs to the DfE API catalogue
 bin/rails db:migrate:status
 ```
 
@@ -195,7 +196,7 @@ There is **no Flipper and no `FeatureFlag` model**. Two separate mechanisms:
 - **`Flag`** (`lib/flag.rb`) — environment-variable backed, instantiated in
   `config/initializers/flags.rb`: `DisableExpensiveJobs`, `DisableIntegrations`,
   `DisableEmailNotifications`, `AuthenticationFallback`,
-  `AuthenticationFallbackForJobseekers`. Values are read once at boot.
+  `AuthenticationFallbackForJobseekers`, `FauapiPublishing`. Values are read once at boot.
 - **`field_test`** — A/B experiments defined in `config/field_test.yml`, dashboard at
   `/field_test`.
 
@@ -213,8 +214,9 @@ tested service object or model method — see
 
 DfE Sign In, GOV.UK One Login, GOV.UK Notify, GIAS (school data), DWP Find a Job (SFTP export),
 DfE Analytics / BigQuery, Google Indexing API, Google Places, Microsoft Defender for Cloud
-(upload virus scanning), Sentry, Zendesk, Skylight, and the Publisher ATS API (REST, OpenAPI
-via RSwag).
+(upload virus scanning), Sentry, Zendesk, Skylight, the Publisher ATS API (REST, OpenAPI
+via RSwag), and [Find and Use an API](documentation/service/integrations/find-and-use-an-api.md),
+the DfE API catalogue the ATS API's OpenAPI document is published to on each deploy.
 
 ## Code style
 
