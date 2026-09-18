@@ -1,3 +1,4 @@
+#  Not sure why we use this rather than govuk_tabs
 class TabsComponent < ApplicationComponent
   renders_many :navigation_items, lambda { |text:, link:, active: false|
     tag.li class: "tabs-component-navigation__item" do
