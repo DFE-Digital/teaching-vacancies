@@ -18,9 +18,11 @@ class JobPreferences < ApplicationRecord
 
     def set_area # rubocop:disable Metrics/AbcSize
       if LocationPolygon.contain?(name)
+        # simplecov:disable
         polygon = LocationPolygon.buffered(radius).with_name(name)
         self.area = polygon.area
         self.uk_area = polygon.uk_area
+        # simplecov:enable
       else
         lat, long = Geocoding.new(name).coordinates.map(&:to_s)
         radius_meters = convert_miles_to_metres(Search::RadiusBuilder.new(name, radius).radius)

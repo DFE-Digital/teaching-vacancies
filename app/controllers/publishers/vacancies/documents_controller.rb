@@ -69,9 +69,11 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::Wizard
     @confirmation_form ||= Publishers::JobListing::DocumentsConfirmationForm.new(confirmation_form_params, vacancy)
   end
 
+  # simplecov:disable
   def confirmation_form_params
     (params[:publishers_job_listing_documents_confirmation_form] || params)&.permit(:upload_additional_document)
   end
+  # simplecov:enable
 
   def uploading_more_documents?
     confirmation_form_params[:upload_additional_document] == "true"

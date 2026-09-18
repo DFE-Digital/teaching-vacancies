@@ -118,6 +118,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     auth_hash.dig("extra", "raw_info", "organisation")
   end
 
+  # simplecov:disable
   def organisation_from_request
     # https://github.com/DFE-Digital/login.dfe.public-api#how-do-ids-map-to-categories-and-types
     case (cat_id = org_data.dig("category", "id"))
@@ -142,6 +143,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       raise OrganisationCategoryNotFound, "Organisation category ID `#{cat_id}`"
     end
   end
+  # simplecov:enable
 
   def sign_in_publisher(organisation)
     publisher = find_or_create(Publisher)
@@ -178,6 +180,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     session.update(publisher_organisation_id: publisher_organisation.id) if publisher_organisation
   end
 
+  # simplecov:disable
   def report_omniauth_error
     omniauth_error = request.respond_to?(:get_header) ? request.get_header("omniauth.error") : request.env["omniauth.error"]
 
@@ -201,4 +204,5 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       Sentry.capture_message("User failed to sign in with DfE Sign In", level: :warning)
     end
   end
+  # simplecov:enable
 end

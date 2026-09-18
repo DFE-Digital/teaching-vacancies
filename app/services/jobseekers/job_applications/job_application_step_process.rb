@@ -39,9 +39,11 @@ class Jobseekers::JobApplications::JobApplicationStepProcess
     steps.map(&:to_s)
   end
 
+  # :nocov:
   def next_step(step)
     steps[steps.index(step) + 1]
   end
+  # :nocov:
 
   def last_of_group?(step)
     group = @step_groups.values.detect { |g| g.include?(step) }

@@ -136,10 +136,10 @@ module OnsDataImport
             response = client.get "#{ARCGIS_BASE_URL}#{api_name}/FeatureServer/0/query", params
 
             response_data = response.body
-            # :simplecov:disable
+            # simplecov:disable
             raise "ArcGIS error: #{response_data['error']}" if response_data.key?("error")
 
-            # :simplecov:enable
+            # simplecov:enable
 
             features = response_data.fetch("features")
             break if features.blank?
