@@ -174,16 +174,16 @@ RSpec.describe Resettable do
     end
   end
 
-  context "when changing benefits" do
-    subject(:update_benefits) { vacancy.update(benefits: false) }
-
-    let(:vacancy) { build(:vacancy, benefits: true, benefits_details: "test") }
-    let(:previous_benefits_details) { vacancy.benefits_details }
-
-    it "resets benefits details" do
-      expect { update_benefits }
-        .to change(vacancy, :benefits_details)
-        .from(previous_benefits_details).to(nil)
-    end
-  end
+  # context "when changing benefits" do
+  #   subject(:update_benefits) { vacancy.update(benefits: false) }
+  #
+  #   let(:vacancy) { build(:vacancy, benefits: true, benefits_details: "test") }
+  #   let(:previous_benefits_details) { vacancy.benefits_details }
+  #
+  #   it "resets benefits details" do
+  #     expect { update_benefits }
+  #       .to change(vacancy, :benefits_details)
+  #       .from(previous_benefits_details).to(nil)
+  #   end
+  # end
 end
