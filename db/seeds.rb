@@ -49,6 +49,7 @@ passive_users = [
   { email: "alisa.ali@education.gov.uk", family_name: "Ali", given_name: "Alisa" },
   { email: "david.thacker@education.gov.uk", family_name: "Thacker", given_name: "David" },
   { email: "jonathan.chambers@education.gov.uk", family_name: "Chambers", given_name: "Jonathan" },
+  { email: "maureen.ekwugha@education.gov.uk", family_name: "Ekwugha", given_name: "Maureen" },
   { email: "michaela.chirgwin@education.gov.uk", family_name: "Chirgwin", given_name: "Michaela" },
   { email: "olu.amure@education.gov.uk", family_name: "Amure", given_name: "Olu" },
   { email: "patrick.cootes@education.gov.uk", family_name: "Cootes", given_name: "Patrick" },
