@@ -1,9 +1,7 @@
 = tag.div(**html_attributes) do
-  - if title
-    h2.govuk-heading-m = title
+  h2.govuk-heading-m = title
 
-  - if anchors.any?
-    .navigation-list-component__anchors
-      ul.govuk-list
-        - anchors.each do |anchor|
-          = anchor
+  .navigation-list-component__anchors
+    ul.govuk-list
+      - anchors.each do |anchor|
+        = anchor

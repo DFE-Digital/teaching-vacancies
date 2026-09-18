@@ -1,3 +1,4 @@
+# Only used by LandingPageLinkGroupComponent
 class LandingPageLinkComponent < ApplicationComponent
   include LinksHelper
 

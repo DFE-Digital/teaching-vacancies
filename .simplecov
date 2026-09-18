@@ -57,6 +57,9 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # doesn't appear to be used
     skip "app/services/email_event.rb"
 
+    # Doesn't render during tests, so has to be excluded from coverage
+    skip "app/components/landing_page_group_component.rb"
+
     # Each group will be displayed in the report as its own Tab.
     group "Components", "app/components"
     group "Queries", "app/queries"
