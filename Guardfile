@@ -151,6 +151,7 @@ PUBLISHER_VACANCY_MAPPINGS = {
 
 PUBLISHER_MAPPINGS = {
   vacancies: %w[],
+  vacancy_templates: %w[],
   sessions: %w[],
   publisher_preferences: %w[],
   organisations: %w[],
