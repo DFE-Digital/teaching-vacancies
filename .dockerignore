@@ -43,6 +43,7 @@ config/localhost/https/*.crt
 /pkg/
 /spec/*
 !/spec/factories
+!/spec/fixtures/files/*.pdf
 /test/tmp/
 /test/version_tmp/
 /tmp/
