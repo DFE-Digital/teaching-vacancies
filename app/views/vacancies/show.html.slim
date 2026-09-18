@@ -13,7 +13,7 @@
   job_application: @job_application,
   similar_jobs: @similar_jobs,
   invented_job_alert_search_criteria: @invented_job_alert_search_criteria
-= render "vacancies/show", vacancy: @vacancy, similar_jobs: @similar_jobs, invented_job_alert_search_criteria: @invented_job_alert_search_criteria
+= render "vacancies/show", vacancy: @vacancy, similar_jobs: @similar_jobs, invented_job_alert_search_criteria: @invented_job_alert_search_criteria, search_location: @search_location
 
 script.jobref type="application/ld+json"
   == render(partial: "api/vacancies/show", formats: [:json], locals: { vacancy: @vacancy })

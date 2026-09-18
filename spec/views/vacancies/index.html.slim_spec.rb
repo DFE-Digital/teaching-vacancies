@@ -42,4 +42,20 @@ RSpec.describe "vacancies/index" do
       expect(index_view).to have_css("p", text: school.name)
     end
   end
+
+  context "when searching from a full postcode" do
+    let(:search_criteria) { { location: "SW1A 1AA" } }
+
+    it "carries the location into vacancy links" do
+      expect(index_view).to have_link(vacancy.job_title, href: job_path(vacancy, search_location: "SW1A 1AA"))
+    end
+  end
+
+  context "when searching from a town or city" do
+    let(:search_criteria) { { location: "Birmingham" } }
+
+    it "does not carry the location into vacancy links" do
+      expect(index_view).to have_link(vacancy.job_title, href: job_path(vacancy))
+    end
+  end
 end
