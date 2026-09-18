@@ -137,7 +137,13 @@ RSpec.describe VacancyDecorator do
   describe "#benefits_details" do
     subject { decorated }
 
+    let(:vacancy) { build_stubbed(:vacancy, benefits: false, benefits_details: "test") }
+
     it_behaves_like "a fields that outputs the correct HTML", :benefits_details
+
+    it "resets benefits details" do
+      expect(decorated.benefits_details).to be_nil
+    end
   end
 
   describe "#working_patterns_for_job_schema" do
