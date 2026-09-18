@@ -44,6 +44,14 @@ class TabPanelComponent < ApplicationComponent
     end
   end
 
+  def button_attributes(value)
+    if value == :share_shortlisted
+      { formaction: new_organisation_job_shortlist_share_path(@vacancy.id), formmethod: :get }
+    else
+      { name: "tag_action", value: }
+    end
+  end
+
   def displayed_value(application, field)
     helper_method = :"candidate_#{field}"
     if respond_to?(helper_method)
