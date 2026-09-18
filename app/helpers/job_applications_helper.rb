@@ -190,12 +190,4 @@ module JobApplicationsHelper
       JobApplication.human_attribute_name("working_patterns.#{working_pattern}").downcase
     }.join(", ").capitalize
   end
-
-  def new_application_path(vacancy)
-    if vacancy.uploaded_form?
-      jobseekers_job_job_application_path(vacancy.id)
-    else
-      new_jobseekers_job_job_application_path(vacancy.id)
-    end
-  end
 end
