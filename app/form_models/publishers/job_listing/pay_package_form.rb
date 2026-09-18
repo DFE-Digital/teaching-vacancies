@@ -35,13 +35,18 @@ class Publishers::JobListing::PayPackageForm < Publishers::JobListing::VacancyFo
   attribute :benefits, :boolean
 
   def params_to_save
-    SALARIES.each { |salary, salary_type| params[salary] = nil unless params[:salary_types]&.include? salary_type }
-    super.except(:salary_types)
+    salaries = slice(*SALARIES.select { |_salary, salary_type| salary_types.include? salary_type }.map(&:first))
+    benefits_values = if benefits
+                        slice(:benefits, :benefits_details)
+                      else
+                        slice(:benefits).merge(benefits_details: nil)
+                      end
+    salaries.merge(benefits_values)
   end
 
   private
 
   def salary_presence
-    errors.add(:salary_types) if params[:salary_types].blank? || salary_types.none?
+    errors.add(:salary_types) if salary_types.blank? || salary_types.none?
   end
 end
