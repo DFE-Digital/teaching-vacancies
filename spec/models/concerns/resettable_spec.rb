@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Resettable do
-  context "inclusion" do
+  context "when included" do
     let(:vacancy) { build(:vacancy) }
 
     it { expect(vacancy).to respond_to(:reset_dependent_fields) }
@@ -26,7 +26,7 @@ RSpec.describe Resettable do
     let(:vacancy) { build(:vacancy, contract_type: contract_type) }
     let(:previous_fixed_term_contract_duration) { vacancy.fixed_term_contract_duration }
 
-    context "from fixed term" do
+    context "when from fixed term" do
       let(:contract_type) { "fixed_term" }
 
       it "resets fixed term contract duration" do
@@ -57,7 +57,7 @@ RSpec.describe Resettable do
     let(:previous_subjects) { vacancy.subjects }
     let(:previous_key_stages) { vacancy.key_stages }
 
-    context "to primary school" do
+    context "when changing to primary school" do
       let(:updated_phases) { %w[primary] }
 
       it "resets subjects" do
@@ -67,7 +67,7 @@ RSpec.describe Resettable do
       end
     end
 
-    context "to nursery" do
+    context "when changing to nursery" do
       let(:updated_phases) { %w[nursery] }
 
       it "resets key stages" do
@@ -106,7 +106,7 @@ RSpec.describe Resettable do
   context "when changing receive application" do
     subject(:update_receive_application) { vacancy.update!(receive_applications: new_receive_applications, application_link: Faker::Internet.url) }
 
-    context "from email to website" do
+    context "when changing from email to website" do
       let(:vacancy) { build(:vacancy, enable_job_applications: false, receive_applications: "email", application_email: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)) }
       let(:new_receive_applications) { "website" }
       let(:previous_application_email) { vacancy.application_email }
@@ -118,7 +118,7 @@ RSpec.describe Resettable do
       end
     end
 
-    context "from website to email" do
+    context "when changing from website to email" do
       let(:vacancy) { build(:vacancy, enable_job_applications: false, receive_applications: "website", application_link: "www.test.com") }
       let(:new_receive_applications) { "email" }
       let(:previous_application_link) { vacancy.application_link }
@@ -131,6 +131,7 @@ RSpec.describe Resettable do
     end
   end
 
+  # rubocop:disable RSpec/VerifiedDoubles
   context "when changing additional documents" do
     let(:vacancy) { build(:vacancy, :with_supporting_documents) }
     let(:previous_supporting_documents) { vacancy.supporting_documents }
@@ -145,6 +146,7 @@ RSpec.describe Resettable do
       expect(vacancy.supporting_documents).to all(have_received(:purge_later))
     end
   end
+  # rubocop:enable RSpec/VerifiedDoubles
 
   context "when changing contact number provided" do
     subject(:update_contact_number_provided) { vacancy.update(contact_number_provided: false) }

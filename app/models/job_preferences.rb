@@ -1,6 +1,5 @@
 class JobPreferences < ApplicationRecord
   include ProfileSection
-  include KeyStagesChecks
 
   belongs_to :jobseeker_profile
   has_many :locations, dependent: :destroy
