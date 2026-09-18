@@ -24,8 +24,8 @@ module Resettable
     # performing this on a before_save hook (during backfills) can be problematic
     before_save :reset_dependent_fields, if: -> { resettable? }
 
-    validates :benefits_details, absence: true, unless: -> { benefits? }
-    validates :benefits_details, presence: true, if: -> { benefits? }
+    validates :benefits_details, absence: true, if: -> { benefits == false }
+    validates :benefits_details, presence: true, if: -> { benefits == true }
   end
 
   def reset_dependent_fields
