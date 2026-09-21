@@ -55,6 +55,11 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # Doesn't render during tests, so has to be excluded from coverage
     skip "app/components/landing_page_group_component.rb"
 
+    # These might just need to be hang-overs from the Notify clean-up some time ago
+    skip "app/views/jobseekers/message_mailer/message_received.text.erb"
+    skip "app/views/jobseekers/vacancy_mailer/unapplied_saved_vacancy.text.erb"
+    skip "app/views/jobseekers/vacancy_mailer/draft_application_only.text.erb"
+
     # Each group will be displayed in the report as its own Tab.
     group "Components", "app/components"
     group "Queries", "app/queries"
@@ -71,9 +76,9 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # However (possibly due to some residual random behaviour in test factories)
     # the line coverage needs to be set 0.02 below the reported value.
     # Nornmally this value needs to be 0.01 below the reported value due to rounding issues.
-    minimum_coverage line: 95.81, branch: 84.01
+    minimum_coverage line: 96.09, branch: 84.13
     # Values from test run 21st September 2026
-    # Line Coverage: 95.96% (20517 / 21380) -> 483 + 380 = 863 lines uncovered
-    # Branch Coverage: 84.02% (4212 / 5013) -> 788 + 13 = 801 branches uncovered
+    # Line Coverage: 96.11% (20521 / 21350) -> 479 + 350 = 829 lines uncovered
+    # Branch Coverage: 84.15% (4212 / 5005) -> 788 + 5 = 793 branches uncovered
   end
 end
