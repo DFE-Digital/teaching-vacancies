@@ -13,7 +13,7 @@
 # vacancy import feature - so more progress could possibly be made once that feature has been removed.
 #
 # Ideally these 'shapes' would be validated, but it's quite difficult to do
-# as e.g. hidden content behind de-selected radio buttons is still transmitted, so somnething simple
+# as e.g. hidden content behind de-selected radio buttons is still transmitted, so something simple
 # like benefit_details is still on the form even when the content is invisible due to benefits - 'No'
 
 module Resettable
