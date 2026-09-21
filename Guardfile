@@ -235,6 +235,7 @@ def map_type_to_spec(type, system_spec)
 end
 
 def system_specs_to_run(controller_name)
+  puts "controller #{controller_name}"
   if controller_name.size > 1
     mapping_key = if controller_name.size > 3
                     controller_name.first(3)
