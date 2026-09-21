@@ -21,7 +21,9 @@ class VacancyDecorator < Draper::Decorator
            :external?, :job_advert, :external_advert_url,
            :supporting_documents_in_order,
            :other_start_date_details, :earliest_start_date, :latest_start_date, :starts_on, :start_date_type,
-           :teaching_or_middle_leader_role?, :email?, :ect_suitable?, :ect_status
+           :teaching_or_middle_leader_role?, :email?, :ect_suitable?, :ect_status,
+           :key_stages, :subjects,
+           :receive_applications, :application_link, :further_details, :fixed_term_contract_duration, :contact_number, :application_email, :actual_salary
 
   include ActionView::Helpers::TextHelper
 
@@ -76,10 +78,6 @@ class VacancyDecorator < Draper::Decorator
   def fe_role_qts_required
     I18n.t("helpers.label.publishers_job_listing_about_the_role_form.fe_role_qts_required_options.#{model.fe_role_qts_required}")
   end
-
-  delegate :key_stages, :subjects
-
-  delegate :receive_applications, :application_link, :further_details, :fixed_term_contract_duration, :contact_number, :application_email, :actual_salary
 
   private
 
