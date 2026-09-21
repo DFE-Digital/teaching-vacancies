@@ -120,7 +120,7 @@ PUBLISHER_VACANCY_MAPPINGS = {
   activity_log: %w[can_view_vacancy_activity_log],
   application_forms: %w[],
   base: %w[],
-  build: %w[],
+  build: %w[can_publish_a_vacancy_as_a_college can_publish_a_vacancy_as_a_trust can_publish_a_vacancy_as_a_school can_publish_a_vacancy_as_a_local_authority],
   bulk_messages: %w[],
   bulk_rejection_messages: %w[],
   bulk_shortlisting_messages: %w[],
