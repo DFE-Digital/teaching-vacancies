@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # rubocop:disable Rails/ApplicationMailer
-# :nocov:
+# simplecov:disable
 class AmazonSesMailer < ActionMailer::Base
   include MailerAnalyticsEvents
 
@@ -36,5 +36,5 @@ class AmazonSesMailer < ActionMailer::Base
     NOTIFY_PRODUCTION_TEMPLATE
   end
 end
-# :nocov:
+# simplecov:enable
 # rubocop:enable Rails/ApplicationMailer

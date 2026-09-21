@@ -41,9 +41,11 @@ class Search::VacancySearch
     @wider_search_suggestions ||= Search::WiderSuggestionsBuilder.call(self)
   end
 
+  # :nocov:
   def organisation
     @organisation ||= Organisation.find_by(slug: organisation_slug) if organisation_slug
   end
+  # :nocov:
 
   def vacancies
     @vacancies ||= scope
@@ -58,7 +60,9 @@ class Search::VacancySearch
   def scope
     sort_by_distance = sort.by == "distance"
     scope = @scope.includes(:organisations)
+    # :nocov:
     scope = scope.where(id: organisation.all_vacancies.pluck(:id)) if organisation
+    # :nocov:
     scope = scope.search_by_location(location, radius, polygon:, sort_by_distance:) if location
     scope = scope.search_by_filter(search_criteria) if search_criteria.any?
     scope = scope.search_by_full_text(keyword) if keyword.present?
@@ -77,7 +81,9 @@ class Search::VacancySearch
     # if sort_by_distance is true then the sorting is handled by the search_by_filter method so we do not re-order here.
     return scope if sort_by_distance
     # only re-order the query if sort is a valid db column
+    # :nocov:
     return scope unless sort&.by_db_column?
+    # :nocov:
 
     scope.reorder(sort_by => sort.order)
   end

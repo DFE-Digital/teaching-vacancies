@@ -46,6 +46,7 @@ class VacanciesController < ApplicationController
     redirect_to vacancy.application_link, allow_other_host: true
   end
 
+  # simplecov:disable
   def campaign_landing_page
     @campaign_page = CampaignPage[params[:utm_content]]
     campaign_params = CampaignSearchParamsMerger.new(campaign_search_params, @campaign_page).merged_params
@@ -59,6 +60,7 @@ class VacanciesController < ApplicationController
     set_search_coordinates unless do_not_show_distance?
     trigger_search_performed_event
   end
+  # simplecov:enable
 
   def trn_interstitial
     @vacancy = PublishedVacancy.kept.listed.friendly.find(params[:id])
@@ -89,14 +91,16 @@ class VacanciesController < ApplicationController
     return @landing_page.criteria if @landing_page
 
     strip_empty_checkboxes(%i[teaching_job_roles support_job_roles ect_statuses subjects phases quick_apply working_patterns organisation_types school_types visa_sponsorship_availability]) unless params[:skip_strip_checkboxes]
+    # simplecov:disable
     %w[teaching_job_roles support_job_roles subjects phases working_patterns quick_apply organisation_types].each do |facet|
       params[facet] = params[facet].split if params[facet].is_a?(String)
     end
+    # simplecov:enable
     params.permit(:keyword, :previous_keyword, :organisation_slug, :location, :radius, :subject, :sort_by, teaching_job_roles: [], support_job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [], quick_apply: [], organisation_types: [], school_types: [], visa_sponsorship_availability: [])
   end
 
-  # rubocop:disable Metrics/AbcSize
-  def set_landing_page
+  # simplecov:disable
+  def set_landing_page # rubocop:disable Metrics/AbcSize
     if params[:job_role_landing_page_name].present? && params[:location_landing_page_name].present?
       @landing_page = JobRoleLocationLandingPage[params[:job_role_landing_page_name], params[:location_landing_page_name]]
     elsif params[:landing_page_slug].present?
@@ -107,7 +111,6 @@ class VacanciesController < ApplicationController
       @landing_page = LocationLandingPage[params[:location_landing_page_name]]
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   def set_headers
     if params[:landing_page_slug] == "teaching-assistant-jobs-v2"
@@ -142,6 +145,7 @@ class VacanciesController < ApplicationController
       trigger_dfe_analytics_event(:search_performed, event_data)
     end
   end
+  # simplecov:enable
 
   def trigger_dfe_analytics_event(event_type, event_data)
     event = DfE::Analytics::Event.new

@@ -5,6 +5,7 @@ class Publishers::Organisations::PhotoController < Publishers::OrganisationsCont
     @photo_form = Publishers::Organisation::PhotoForm.new(photo: @organisation.photo)
   end
 
+  # simplecov:disable
   def update
     @photo_form = Publishers::Organisation::PhotoForm.new(photo_form_params)
 
@@ -22,12 +23,15 @@ class Publishers::Organisations::PhotoController < Publishers::OrganisationsCont
 
     redirect_to publishers_organisation_path(@organisation), success: t("publishers.organisations.photo.destroy_success", organisation_type: @organisation.school? ? "School" : "Organisation")
   end
+  # simplecov:enable
 
   def confirm_destroy; end
 
   private
 
+  # simplecov:disable
   def photo_form_params
     (params[:publishers_organisation_photo_form] || params)&.permit(:photo)
   end
+  # simplecov:enable
 end

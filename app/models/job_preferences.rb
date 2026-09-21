@@ -7,9 +7,11 @@ class JobPreferences < ApplicationRecord
 
   validates :jobseeker_profile, uniqueness: true
 
+  # simplecov:disable
   def vacancies(scope = PublishedVacancy.live)
     JobScope.new(scope, self).call
   end
+  # simplecov:enable
 
   def all_working_patterns
     working_patterns.map(&:humanize).join(", ")

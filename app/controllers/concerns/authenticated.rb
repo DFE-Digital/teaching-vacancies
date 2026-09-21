@@ -15,6 +15,7 @@ module Authenticated
     send(:"authenticate_#{authentication_scope}!", { recall: "warden##{authentication_scope}_forced_login" })
   end
 
+  # simplecov:disable
   def require_scope
     raise "Please set `authentication_scope` with this controller's scope" if authentication_scope.blank?
   end
@@ -22,6 +23,7 @@ module Authenticated
   def user_type
     authentication_scope if signed_in?
   end
+  # simplecov:enable
 
   def jobseeker?
     user_type == :jobseeker

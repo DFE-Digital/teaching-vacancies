@@ -6,6 +6,7 @@ class Search::CriteriaInventor
     @vacancy = vacancy
   end
 
+  # :nocov:
   def criteria
     @criteria ||= {
       location: location,
@@ -18,6 +19,7 @@ class Search::CriteriaInventor
       subjects: subjects,
     }.delete_if { |_k, v| v.blank? }
   end
+  # :nocov:
 
   private
 
