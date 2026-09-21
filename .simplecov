@@ -57,11 +57,11 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     skip "app/components/landing_page_link_group_component/landing_page_link_group_component.html.slim"
 
     # These files appear tp be unreachable and unused
-    skip "app/views/design_system/index.html"
-    skip "app/views/design_system/_header.html.slim"
-    skip "app/views/design_system/_nav_side.html.slim"
-    skip "app/views/design_system/_nav_top.html.slim"
-    skip "app/views/design_system/_option_controls.html.slim"
+    design_system = %w[index _header _nav_side _nav_top _option_controls]
+
+    design_system.each do |l|
+      skip "app/views/design_system/#{l}.html.slim"
+    end
 
     # These don't have tests, and aren't really reachable from a test setup
     skip "app/components/environment_banner_component/environment_banner_component.html.slim"
