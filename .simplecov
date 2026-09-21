@@ -89,6 +89,7 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
       skip "app/views/publishers/#{l}.text.erb"
     end
 
+    # These will only render after user has accepted cookies
     cookie_layouts = %w[clarity_head
                         facebook_pixel_body
                         facebook_pixel_head
