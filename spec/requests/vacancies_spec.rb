@@ -21,6 +21,26 @@ RSpec.describe "Vacancies" do
   describe "GET #show" do
     let(:vacancy) { create(:vacancy) }
 
+    context "with a postcode carried from search results" do
+      it "renders a lazy commute-time Turbo Frame" do
+        get job_path(vacancy, search_location: "SW1A 1AA")
+
+        page = Capybara.string(response.body)
+        frame_id = "commute_time_vacancy_#{vacancy.id}"
+        expected_path = job_commute_time_path(vacancy, search_location: "SW1A 1AA")
+        expect(page).to have_css("turbo-frame##{frame_id}.commute-time[src='#{expected_path}'][loading='lazy']")
+        expect(response.body).to include("Calculating commute times from SW1A 1AA…")
+      end
+    end
+
+    context "with a non-postcode location carried from search results" do
+      it "does not render the commute-time section" do
+        get job_path(vacancy, search_location: "Birmingham")
+
+        expect(Capybara.string(response.body)).to have_no_css("section.commute-time")
+      end
+    end
+
     context "with referrer" do
       let(:referrer_url) {  "https://example.com/some/path?utm=123" }
 

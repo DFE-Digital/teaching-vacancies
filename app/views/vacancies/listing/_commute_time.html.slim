@@ -1,0 +1,5 @@
+- section_id = "commute_time_vacancy_#{vacancy.id}"
+= turbo_frame_tag section_id, src: job_commute_time_path(vacancy, search_location: search_location), loading: :lazy, class: "commute-time", aria: { live: "polite" } do
+  section class="govuk-!-margin-bottom-6" aria-labelledby="#{section_id}_heading"
+    h2.govuk-heading-m id="#{section_id}_heading" = t("jobs.commute_time")
+    p.govuk-body = t("jobs.commute_time_loading_all", location: search_location)

@@ -17,7 +17,7 @@ class VacancyDecorator < Draper::Decorator
            :completed_steps, :phases, :further_details_provided, :school_visits, :contact_number_provided, :contact_number_provided?,
            :receive_applications, :allow_job_applications?, :can_receive_job_applications?, :enable_job_applications,
            :catholic?, :religious_character, :other_religion?, :anonymise_applications?, :is_parental_leave_cover, :email?,
-           :application_form, :application_email, :website?, :vacancy_address,
+           :application_form, :application_email, :website?, :vacancy_address, :geolocation,
            :external?, :job_advert, :external_advert_url,
            :supporting_documents_in_order,
            :other_start_date_details, :earliest_start_date, :latest_start_date, :starts_on, :start_date_type,
