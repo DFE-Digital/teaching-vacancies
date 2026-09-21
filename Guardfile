@@ -120,7 +120,10 @@ PUBLISHER_VACANCY_MAPPINGS = {
   activity_log: %w[can_view_vacancy_activity_log],
   application_forms: %w[],
   base: %w[],
-  build: %w[can_publish_a_vacancy_as_a_college can_publish_a_vacancy_as_a_trust can_publish_a_vacancy_as_a_school can_publish_a_vacancy_as_a_local_authority],
+  build: %w[can_publish_a_vacancy_as_a_college
+            can_publish_a_vacancy_as_a_trust
+            can_publish_a_vacancy_as_a_school
+            can_publish_a_vacancy_as_a_local_authority],
   bulk_messages: %w[],
   bulk_rejection_messages: %w[],
   bulk_shortlisting_messages: %w[],
@@ -138,6 +141,7 @@ PUBLISHER_VACANCY_MAPPINGS = {
                        can_set_interview_data_and_time
                        can_end_a_job_listing_early],
   publish: %w[can_publish_a_vacancy_as_as_trust
+              can_publish_a_vacancy_as_a_college
               can_publish_a_vacancy_as_a_local_authority
               can_publish_a_vacancy_as_a_school],
   references_and_self_disclosure_base: %w[can_manage_self_disclosure],
@@ -235,7 +239,6 @@ def map_type_to_spec(type, system_spec)
 end
 
 def system_specs_to_run(controller_name)
-  puts "controller #{controller_name}"
   if controller_name.size > 1
     mapping_key = if controller_name.size > 3
                     controller_name.first(3)
