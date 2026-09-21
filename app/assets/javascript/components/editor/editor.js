@@ -116,7 +116,10 @@ const EditorController = class extends Controller {
   }
 
   removeNbsp() {
-    this.editorTarget.innerHTML = this.editorTarget.innerHTML.replace(/&nbsp;/g, '');
+    // Replace rather than strip: pasted content (e.g. from Google Docs) often uses
+    // &nbsp; as a genuine word-boundary space, and removing it outright fuses the
+    // words on either side together.
+    this.editorTarget.innerHTML = this.editorTarget.innerHTML.replace(/&nbsp;/g, ' ');
   }
 
   replaceBullets() {
@@ -183,7 +186,7 @@ const EditorController = class extends Controller {
   }
 
   update() {
-    this.formInput.value = this.editorTarget.innerHTML.replace(/&nbsp;/g, '');
+    this.formInput.value = this.editorTarget.innerHTML.replace(/&nbsp;/g, ' ');
 
     if (this.formInputTarget.querySelector('div.govuk-character-count__message')) {
       this.wordCount(this.editorTarget.innerHTML);
