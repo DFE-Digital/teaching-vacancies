@@ -70,21 +70,20 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # Hasn't changed for a long time - doesn't have a test
     skip "app/views/robots/show.text.erb"
 
-
     # These might just need to be hang-overs from the Notify clean-up some time ago
     js_mailers = %w[message_mailer/message_received
-                 vacancy_mailer/unapplied_saved_vacancy
-                 account_mailer/email_changed
-                 vacancy_mailer/draft_application_only
-                 authentication_fallback_mailer/sign_in_fallback
-                 subscription_mailer/jobseeker_missing]
+                    vacancy_mailer/unapplied_saved_vacancy
+                    account_mailer/email_changed
+                    vacancy_mailer/draft_application_only
+                    authentication_fallback_mailer/sign_in_fallback
+                    subscription_mailer/jobseeker_missing]
 
     js_mailers.each do |l|
       skip "app/views/jobseekers/#{l}.text.erb"
     end
 
     hs_mailers = %w[expired_vacancy_feedback_prompt_mailer/prompt_for_feedback
-                 job_application_mailer/applications_received]
+                    job_application_mailer/applications_received]
 
     hs_mailers.each do |l|
       skip "app/views/publishers/#{l}.text.erb"
