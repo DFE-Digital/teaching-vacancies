@@ -1,5 +1,7 @@
 require "simplecov"
-SimpleCov.start :rails
+SimpleCov.start :rails do
+  cover_views
+end
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
