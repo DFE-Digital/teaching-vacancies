@@ -9,7 +9,7 @@
 # (array_enum is hand-rolled in this project)
 # and the vacancy_template doesn't have all the fields e.g. application_link
 #
-# Refactroing of this is also hindered by it being called directly by the legacy
+# Refactoring of this is also hindered by it being called directly by the legacy
 # vacancy import feature - so more progress could possibly be made once that feature has been removed.
 #
 # Ideally these 'shapes' would be validated, but it's quite difficult to do
