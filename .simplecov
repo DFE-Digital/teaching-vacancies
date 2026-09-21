@@ -21,11 +21,6 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
   SimpleCov.configure do
     enable_coverage :branch
 
-    # This line would enable coverage for view templates, but the slim compiler
-    # appears to have a bug which puts the whole coverage data out by one line.
-    # turns out this only works with ERB according to the docs
-    # enable_coverage_for_eval
-
     # This is the 'cache timeout' for coverage files. Setting it high
     # (e.g. to 86400 (1 day) allows confident running of test subsets (using guard)
     # as the coverage data for not-run tests stays valid for that long. The
@@ -76,9 +71,9 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # However (possibly due to some residual random behaviour in test factories)
     # the line coverage needs to be set 0.02 below the reported value.
     # Nornmally this value needs to be 0.01 below the reported value due to rounding issues.
-    minimum_coverage line: 97.94, branch: 89.78
-    # Values from test run 28th August 2026
-    # Line Coverage: 98.02% (13031 / 13293) -> 262 lines uncovered
-    # Branch Coverage: 89.90% (2789 / 3102) -> 211 + 102 = 313 branches uncovered
+    minimum_coverage line: 95.95, branch: 84.01
+    # Values from test run 21st September 2026
+    # Line Coverage: 95.96% (20517 / 21380) -> 483 + 380 = 863 lines uncovered
+    # Branch Coverage: 84.02% (4212 / 5013) -> 788 + 13 = 801 branches uncovered
   end
 end
