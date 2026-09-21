@@ -1,3 +1,21 @@
+# This module is used to keep the vacancy/vacancy_template shape 'correct'
+# in the light of various changes - so e.g. when the vacancy doesn't have benefits,
+# then the 'details' field doesn't make sense.
+# This was originally done in a before_save hook, but that it not ideal, as it is still
+# possible to create an invalid object in memory, so some rules have been moved
+# to attribute assignment overloads.
+# These have not all been done because the array_enums do not support this
+# (working_patterns, job_roles, key_stages)
+# (array_enum is hand-rolled in this project)
+# and the vacancy_template doesn't have all the fields e.g. application_link
+#
+# Refactoring of this is also hindered by it being called directly by the legacy
+# vacancy import feature - so more progress could possibly be made once that feature has been removed.
+#
+# Ideally these 'shapes' would be validated, but it's quite difficult to do
+# as e.g. hidden content behind de-selected radio buttons is still transmitted, so something simple
+# like benefit_details is still on the form even when the content is invisible due to benefits - 'No'
+
 module Resettable
   extend ActiveSupport::Concern
 
@@ -9,19 +27,14 @@ module Resettable
 
   def reset_dependent_fields
     reset_actual_salary
-    reset_fixed_term_contract_duration
     reset_keystages
     reset_subjects
     set_default_key_stage
     reset_ect_status
-    reset_receive_applications
     reset_application_email
     reset_application_form
     reset_application_link
     reset_documents
-    reset_contact_number
-    reset_further_details
-    reset_benefits_details
   end
 
   def reset_actual_salary
@@ -30,10 +43,9 @@ module Resettable
     self.actual_salary = ""
   end
 
-  def reset_fixed_term_contract_duration
-    return unless contract_type_changed? && contract_type != "fixed_term"
-
-    self.fixed_term_contract_duration = ""
+  def contract_type=(value)
+    self.fixed_term_contract_duration = "" if value != "fixed_term"
+    super
   end
 
   def reset_keystages
@@ -54,10 +66,9 @@ module Resettable
     self.ect_status = nil
   end
 
-  def reset_receive_applications
-    return unless enable_job_applications_changed? && enable_job_applications
-
-    self.receive_applications = nil
+  def enable_job_applications=(value)
+    self[:receive_applications] = nil if value
+    super
   end
 
   def reset_application_email
@@ -84,21 +95,18 @@ module Resettable
     supporting_documents.each(&:purge_later) unless include_additional_documents?
   end
 
-  def reset_contact_number
-    return unless contact_number_provided_changed? && !contact_number_provided
-
-    self.contact_number = nil
+  def contact_number_provided=(value)
+    self[:contact_number] = nil unless value
+    super
   end
 
-  def reset_further_details
-    return unless further_details_provided_changed? && !further_details_provided
-
-    self.further_details = nil
+  def further_details_provided=(value)
+    self[:further_details] = nil unless value
+    super
   end
 
-  def reset_benefits_details
-    return unless benefits_changed? && !benefits
-
-    self.benefits_details = nil
+  def benefits=(value)
+    self[:benefits_details] = nil unless value
+    super
   end
 end

@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :job_preferences do
     roles { Vacancy.job_roles.keys }
     phases { Vacancy.phases.keys }
-    key_stages { key_stages_for_phases }
+    key_stages { %w[ks1] }
     subjects { SUBJECT_OPTIONS.map(&:first) }
     working_patterns { Vacancy.working_patterns.keys }
     working_pattern_details { "Strictly no Mondays" }

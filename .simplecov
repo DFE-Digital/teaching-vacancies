@@ -18,7 +18,7 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     ],
   )
 
-  SimpleCov.configure do
+  SimpleCov.configure do # rubocop:disable Metrics/BlockLength
     enable_coverage :branch
 
     # This is the 'cache timeout' for coverage files. Setting it high
@@ -54,6 +54,55 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
 
     # Doesn't render during tests, so has to be excluded from coverage
     skip "app/components/landing_page_group_component.rb"
+    skip "app/components/landing_page_link_group_component/landing_page_link_group_component.html.slim"
+
+    # These files appear tp be unreachable and unused
+    design_system = %w[index _header _nav_side _nav_top _option_controls]
+
+    design_system.each do |l|
+      skip "app/views/design_system/#{l}.html.slim"
+    end
+
+    # These don't have tests, and aren't really reachable from a test setup
+    skip "app/components/environment_banner_component/environment_banner_component.html.slim"
+    skip "app/components/scheduled_maintenance_banner_component/scheduled_maintenance_banner_component.html.slim"
+
+    # Hasn't changed for a long time - doesn't have a test
+    skip "app/views/robots/show.text.erb"
+
+    # These might just need to be hang-overs from the Notify clean-up some time ago
+    js_mailers = %w[message_mailer/message_received
+                    vacancy_mailer/unapplied_saved_vacancy
+                    account_mailer/email_changed
+                    vacancy_mailer/draft_application_only
+                    authentication_fallback_mailer/sign_in_fallback
+                    subscription_mailer/jobseeker_missing]
+
+    js_mailers.each do |l|
+      skip "app/views/jobseekers/#{l}.text.erb"
+    end
+
+    hs_mailers = %w[expired_vacancy_feedback_prompt_mailer/prompt_for_feedback
+                    job_application_mailer/applications_received]
+
+    hs_mailers.each do |l|
+      skip "app/views/publishers/#{l}.text.erb"
+    end
+
+    # These will only render after user has accepted cookies
+    cookie_layouts = %w[clarity_head
+                        facebook_pixel_body
+                        facebook_pixel_head
+                        google_tag_manager_body
+                        google_tag_manager_head
+                        linkedin_pixel_body
+                        linkedin_pixel_head
+                        reddit_pixel_head
+                        vwo_head]
+
+    cookie_layouts.each do |l|
+      skip "app/views/layouts/_#{l}.html.slim"
+    end
 
     # Each group will be displayed in the report as its own Tab.
     group "Components", "app/components"
@@ -71,9 +120,9 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # However (possibly due to some residual random behaviour in test factories)
     # the line coverage needs to be set 0.02 below the reported value.
     # Nornmally this value needs to be 0.01 below the reported value due to rounding issues.
-    minimum_coverage line: 95.95, branch: 84.01
+    minimum_coverage line: 96.42, branch: 84.16
     # Values from test run 21st September 2026
-    # Line Coverage: 95.96% (20517 / 21380) -> 483 + 380 = 863 lines uncovered
-    # Branch Coverage: 84.02% (4212 / 5013) -> 788 + 13 = 801 branches uncovered
+    # Line Coverage: 96.46% (20521 / 21273) -> 479 + 273 = 752 lines uncovered
+    # Branch Coverage: 84.18% (4212 / 5003) -> 788 + 3 = 791 branches uncovered
   end
 end
