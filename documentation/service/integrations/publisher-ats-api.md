@@ -75,6 +75,10 @@ The following command generates the 'swagger.yml' file which is used to generate
 
 `bundle exec rake rswag:specs:swaggerize`
 
+The generated document is also published to the DfE API catalogue on every deploy of staging and
+production — see [Find and Use an API](find-and-use-an-api.md). That catalogue entry is a
+departmental requirement; `/ats-api-docs` remains the documentation we give clients.
+
 ## End-to-End Testing
 
 Changes on the API must be manually tested end-to-end (ideally on a review app) before being released.

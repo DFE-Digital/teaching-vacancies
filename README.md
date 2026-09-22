@@ -82,6 +82,7 @@ tech lead to do that and also [complete the other onboarding steps](documentatio
 * [Integrations with other job posting services](/documentation/service/integrations/integrations.md)
 * [Publisher ATS API](/documentation/service/integrations/publisher-ats-api.md)
 * [DWP Find a Job](/documentation/service/integrations/dwp-find-a-job.md)
+* [Find and Use an API (FaUAPI)](/documentation/service/integrations/find-and-use-an-api.md)
 
 #### Technical approaches
 * [Searching by location](/documentation/service/technical/searching-by-location.md)

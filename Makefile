@@ -249,6 +249,14 @@ rake: get-cluster-credentials
 	$(if $(task), , $(error Missing <task>. Usage: "make <env> rake task=<namespace:task>"))
 	kubectl -n $(azure_namespace) exec -ti deployment/teaching-vacancies-$(env) -- bundle exec rake $(task)
 
+# Non-interactive variant of `rake`, for CI where there is no TTY.
+# make staging ci ci-rake task=fauapi:publish
+.PHONY: ci-rake
+ci-rake: get-cluster-credentials
+	$(if $(env), , $(error Missing <env>. Usage: "make <env> ci ci-rake task=<namespace:task>"))
+	$(if $(task), , $(error Missing <task>. Usage: "make <env> ci ci-rake task=<namespace:task>"))
+	kubectl -n $(azure_namespace) exec deployment/teaching-vacancies-$(env) -- bundle exec rake $(task)
+
 # make qa logs
 # make review pr_id=5432 logs
 .PHONY: logs

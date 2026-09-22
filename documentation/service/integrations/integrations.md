@@ -37,3 +37,8 @@ A new way to allow ATS to publish vacancies in Teaching Vacancies has been devel
 ## Integrations to export our internal vacancies to other job posting services
 
 - [DWP Find a Job service](dwp-find-a-job.md)
+
+## Publishing our API documentation to the DfE API catalogue
+
+- [Find and Use an API (FaUAPI)](find-and-use-an-api.md) — the Publisher ATS API's catalogue
+  entry, republished automatically on every deploy of staging and production.
