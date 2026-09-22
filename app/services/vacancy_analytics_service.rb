@@ -6,11 +6,11 @@ class VacancyAnalyticsService
       referrer = normalize_referrer(referrer_url, hostname, params)
 
       VacancyAnalytics.transaction do
-        analytics = VacancyAnalytics.where(vacancy_id: vacancy_id).lock(true).first_or_initialize
-
-        new_count = analytics.referrer_counts.fetch(referrer, 0) + 1
-        analytics.referrer_counts[referrer] = new_count
-        analytics.save!
+        VacancyAnalytics.upsert(
+          { vacancy_id: vacancy_id, referrer_counts: { referrer => 1 } },
+          unique_by: :vacancy_id,
+          on_duplicate: increment_referrer_count(referrer),
+        )
       end
     end
 
@@ -25,6 +25,21 @@ class VacancyAnalyticsService
     end
 
     private
+
+    # jsonb has no native "increment a key", so the SET clause has to be SQL.
+    # Bound, never interpolated: `referrer` derives from the Referer header.
+    def increment_referrer_count(referrer)
+      Arel.sql(
+        VacancyAnalytics.sanitize_sql_array([<<~SQL.squish, referrer, referrer]),
+          referrer_counts = jsonb_set(
+            vacancy_analytics.referrer_counts,
+            ARRAY[?::text],
+            to_jsonb(COALESCE((vacancy_analytics.referrer_counts ->> ?)::bigint, 0) + 1)
+          ),
+          updated_at = now()
+        SQL
+      )
+    end
 
     def normalize_referrer_url(referrer, hostname)
       referrer_uri = Addressable::URI.parse(referrer)
