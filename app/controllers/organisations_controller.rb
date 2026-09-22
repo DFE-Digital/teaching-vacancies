@@ -13,6 +13,7 @@ class OrganisationsController < ApplicationController
 
   def index
     @school_search = Search::SchoolSearch.new(@search_form.to_h, scope: Organisation.visible_to_jobseekers.where.not(detailed_school_type: School::FE_DETAILED_SCHOOL_TYPE))
+    @wider_search_suggestions = Search::WiderSuggestionsBuilder.call(@school_search)
     @pagy, @schools = pagy(@school_search.organisations.order(:name))
   end
 

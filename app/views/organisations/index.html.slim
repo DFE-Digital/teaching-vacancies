@@ -15,7 +15,7 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
         - if @schools.any?
           = render "organisations/search/results", schools: @schools
         - else
-          = render "organisations/search/wider_search"
+          = render "organisations/search/wider_search", school_search: @school_search, wider_search_suggestions: @wider_search_suggestions
 
       = govuk_pagination(pagy: @pagy)
 

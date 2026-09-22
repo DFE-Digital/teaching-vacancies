@@ -138,7 +138,7 @@ class Vacancy < ApplicationRecord
 
   scope :search_by_filter, ->(filters) { VacancyFilterQuery.call(all, filters) }
 
-  scope :search_by_location, lambda { |location_query, radius_in_miles, polygon:, sort_by_distance:|
+  scope :search_by_location, lambda { |location_query, radius_in_miles, polygon: nil, sort_by_distance: false|
     VacancyLocationQuery.new(all).call(location_query, radius_in_miles, polygon: polygon, sort_by_distance: sort_by_distance)
   }
 

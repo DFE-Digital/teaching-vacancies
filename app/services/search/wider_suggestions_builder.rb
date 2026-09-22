@@ -1,36 +1,26 @@
 class Search::WiderSuggestionsBuilder
-  include DistanceHelper
-  include VacanciesOptionsHelper
+  RADIUS_OPTIONS = [0, 1, 5, 10, 15, 20, 25, 50, 100, 200].freeze
 
-  attr_reader :search_criteria, :initial_radius, :initial_search
+  class << self
+    def call(initial_search)
+      return if initial_search.location.blank?
+      return if initial_search.total_count >= 1
 
-  def self.call(search_instance)
-    builder = new(search_instance)
-    return if builder.search_criteria[:location].blank?
-    return if builder.initial_search.total_count >= 1
+      suggestions initial_search
+    end
 
-    builder.suggestions
-  end
+    def suggestions(initial_search)
+      initial_radius = initial_search.radius.to_i
+      RADIUS_OPTIONS.select { |r| r > initial_radius }
+                                     .map { |radius| [radius.to_s, wider_results_count(initial_search, radius)] }
+                                     .uniq(&:second)
+                                     .reject { |options| options.second.zero? }
+    end
 
-  def initialize(initial_search)
-    @initial_search = initial_search
-    @search_criteria = initial_search.search_criteria
-    @initial_radius = initial_search.search_criteria[:radius].to_i
-  end
+    private
 
-  def suggestions
-    @suggestions ||= RADIUS_OPTIONS.select { |r| r > initial_radius }
-                                   .map { |radius| [radius.to_s, wider_results_count(radius)] }
-                                   .uniq(&:second)
-                                   .reject { |options| options.second.zero? }
-  end
-
-  private
-
-  def wider_results_count(radius)
-    initial_search.class.new(
-      search_criteria.merge(radius: radius),
-      scope: initial_search.original_scope,
-    ).total_count
+    def wider_results_count(initial_search, radius)
+      initial_search.scope_without_location.search_by_location(initial_search.location, radius, polygon: initial_search.polygon).count
+    end
   end
 end
