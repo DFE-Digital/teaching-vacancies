@@ -19,5 +19,19 @@ RSpec.describe "Jobseekers::FormPreviewController" do
       expect(response.body).to include("%PDF")
       expect(response.headers["Content-Disposition"]).to include(/job_application_\d+\.pdf/)
     end
+
+    %i[plain religious catholic self_disclosure job_reference].each do |preview|
+      it "returns not found for the #{preview} preview" do
+        get jobseekers_job_application_form_preview_path(job_application, preview)
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    it "returns not found for an unknown preview" do
+      get jobseekers_job_application_form_preview_path(job_application, :unknown)
+
+      expect(response).to have_http_status(:not_found)
+    end
   end
 end
