@@ -50,7 +50,7 @@
         - elsif @vacancies_search.organisation_slug
           = render "vacancies/search/no_results_organisation", organisation_name: @vacancies_search.organisation.name
         - elsif @vacancies_search.active_criteria?
-          = render "vacancies/search/no_results_suggestions", vacancies_search: @vacancies_search
+          = render "vacancies/search/no_results_suggestions", vacancies_search: @vacancies_search, wider_search_suggestions: @wider_search_suggestions
         - else
           = render "vacancies/search/no_results"
       = govuk_pagination(pagy: @pagy)
