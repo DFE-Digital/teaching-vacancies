@@ -94,3 +94,70 @@ describe('when coordinates are not available from browser geolocation API', () =
     expect(document.getElementById('location-finder__error')).toBe(null);
   });
 });
+
+describe('automatically finding the location', () => {
+  beforeEach(() => {
+    controller = application.getControllerForElementAndIdentifier(document.querySelector('[data-controller="location-finder"]'), 'location-finder');
+    controller.input.value = '';
+    global.navigator.geolocation = currentPosition({
+      coords: {
+        latitude: 51.1,
+        longitude: 45.3,
+      },
+    });
+    Object.defineProperty(controller.element, 'offsetParent', {
+      configurable: true,
+      value: controller.element.parentElement,
+    });
+  });
+
+  afterEach(() => {
+    delete global.navigator.permissions;
+    jest.restoreAllMocks();
+  });
+
+  it('finds the location when permission has already been granted', async () => {
+    global.navigator.permissions = {
+      query: jest.fn().mockResolvedValue({ state: 'granted' }),
+    };
+    const findLocation = jest.spyOn(controller, 'findLocation').mockImplementation();
+
+    controller.autoFindLocationIfPermitted();
+    await Promise.resolve();
+
+    expect(global.navigator.permissions.query).toHaveBeenCalledWith({ name: 'geolocation' });
+    expect(findLocation).toHaveBeenCalledTimes(1);
+  });
+
+  it.each(['prompt', 'denied'])('does not find the location when permission is %s', async (state) => {
+    global.navigator.permissions = {
+      query: jest.fn().mockResolvedValue({ state }),
+    };
+    const findLocation = jest.spyOn(controller, 'findLocation').mockImplementation();
+
+    controller.autoFindLocationIfPermitted();
+    await Promise.resolve();
+
+    expect(findLocation).not.toHaveBeenCalled();
+  });
+
+  it('does not find the location when the permissions API is unavailable', () => {
+    const findLocation = jest.spyOn(controller, 'findLocation').mockImplementation();
+
+    controller.autoFindLocationIfPermitted();
+
+    expect(findLocation).not.toHaveBeenCalled();
+  });
+
+  it('does not find the location when checking permission fails', async () => {
+    global.navigator.permissions = {
+      query: jest.fn().mockRejectedValue(new Error('Unable to check permission')),
+    };
+    const findLocation = jest.spyOn(controller, 'findLocation').mockImplementation();
+
+    controller.autoFindLocationIfPermitted();
+    await Promise.resolve();
+
+    expect(findLocation).not.toHaveBeenCalled();
+  });
+});
