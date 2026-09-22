@@ -66,8 +66,10 @@ make production rake task=fauapi:publish CONFIRM_PRODUCTION=YES
 ```
 
 The deploy workflow uses `make <env> ci ci-rake task=fauapi:publish` instead: `ci-rake` works
-without a TTY, and `ci` relies on the Azure login the workflow has already done. Don't use that
-form from a laptop.
+without a TTY, and `ci` skips the `az account set` that the interactive target does for you. The
+deploy job authenticates terraform with `ARM_*` environment variables rather than an az CLI
+session, so the workflow runs its own `azure/login` and installs kubectl and kubelogin before
+that step. Don't use the `ci` form from a laptop.
 
 To inspect the manifest without publishing anything:
 
