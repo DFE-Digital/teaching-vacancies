@@ -56,14 +56,16 @@ production:
     class: 'UpdateDSIUsersInDbJob'
     queue: low
 
-  export_users:
+  sync_dsi_users:
     schedule: '0 01 * * *' # "At 01:00."
-    class: 'ExportDSIUsersToBigQueryJob'
+    class: 'SyncDSIToBigQueryJob'
+    args: ['users']
     queue: low
 
-  export_approvers:
-    schedule: '0 01 * * *' # "At 01:00." Runs alongside export_users; they're independent.
-    class: 'ExportDSIApproversToBigQueryJob'
+  sync_dsi_approvers:
+    schedule: '0 01 * * *' # "At 01:00." Runs alongside sync_dsi_users; they're independent.
+    class: 'SyncDSIToBigQueryJob'
+    args: ['approvers']
     queue: low
 
   send_entity_table_checks_to_bigquery:

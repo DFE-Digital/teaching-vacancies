@@ -1,9 +1,7 @@
-require "dfe_sign_in/api"
+require "dfe_sign_in/user_rows"
 
 module Publishers::DfeSignIn
   class UpdateUsersInDb
-    extend Publishers::DfeSignIn::Parsing
-
     class << self
       def convert_to_user(dsi_user)
         Publisher.transaction do
@@ -17,7 +15,7 @@ module Publishers::DfeSignIn
           # Each of these user objects has the same userId.
           urn = dsi_user.dig("organisation", "URN")
           uid = dsi_user.dig("organisation", "UID")
-          la_code = la_code(dsi_user)
+          la_code = ::DfeSignIn::UserRows.la_code(dsi_user)
 
           create_organisation_publisher(user, urn, uid, la_code)
         end
