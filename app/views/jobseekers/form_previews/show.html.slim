@@ -1,0 +1,10 @@
+- content_for :page_title_prefix, t(".page_title")
+- content_for :meta_no_index do
+  meta name="robots" content="noindex,nofollow"
+
+header.print-header
+  .print-header__text
+    p.print-header__caption = t("jobseekers.job_applications.caption", job_title: @vacancy.job_title, organisation: @vacancy.organisation_name)
+    h1.print-header__applicant-name
+      span.govuk-visually-hidden = t(".title")
+  = image_tag "TVS-logo.png", class: "print-header__logo", alt: t("app.title")
