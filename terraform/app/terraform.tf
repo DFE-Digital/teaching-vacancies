@@ -78,6 +78,8 @@ module "paas" {
   enable_postgres_ssl                 = var.enable_postgres_ssl
   postgres_flexible_server_sku        = var.postgres_flexible_server_sku
   postgres_enable_high_availability   = var.postgres_enable_high_availability
+  postgres_server_version             = var.postgres_server_version
+  postgres_server_docker_image        = var.postgres_server_docker_image
   azure_storage_mb                    = var.azure_storage_mb
   redis_cache_capacity                = var.redis_cache_capacity
   redis_cache_family                  = var.redis_cache_family
