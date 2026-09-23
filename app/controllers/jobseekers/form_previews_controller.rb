@@ -2,9 +2,10 @@
 
 module Jobseekers
   class FormPreviewsController < Jobseekers::JobApplications::BaseController
+    layout "print"
+
     def show
-      document = ::DocumentPreviewService.call(params[:id], job_application.vacancy)
-      send_data(document.data, filename: document.filename, disposition: "inline")
+      @vacancy = job_application.vacancy
     end
   end
 end

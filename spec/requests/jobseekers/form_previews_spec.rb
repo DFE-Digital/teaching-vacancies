@@ -11,13 +11,17 @@ RSpec.describe "Jobseekers::FormPreviewController" do
   after { sign_out(jobseeker) }
 
   describe "GET #show" do
-    it "sends a blank job application PDF file" do
+    it "renders the blank application title as HTML" do
       get jobseekers_job_application_form_preview_path(job_application, :blank)
 
       expect(response).to have_http_status(:ok)
-      expect(response.content_type).to eq("application/pdf")
-      expect(response.body).to include("%PDF")
-      expect(response.headers["Content-Disposition"]).to include(/job_application_\d+\.pdf/)
+      expect(response.media_type).to eq("text/html")
+      expect(response).to render_template(layout: "print")
+      expect(response.body).to include("Blank application form")
+      expect(response.body).to include(job_application.vacancy.job_title)
+      expect(response.body).to include(job_application.vacancy.organisation_name)
+      expect(response.body).to include("print-header__applicant-name")
+      expect(response.body).to include("TVS-logo")
     end
   end
 end

@@ -1,0 +1,55 @@
+$print-dark-grey: #333;
+$print-light-blue: #f0f8ff;
+
+@page {
+  margin: 10mm;
+  size: A4;
+}
+
+.print-layout {
+  margin: 0 auto;
+  max-width: 190mm;
+  padding: 10mm;
+}
+
+.print-header {
+  align-items: flex-start;
+  background: $print-light-blue;
+  box-sizing: border-box;
+  color: $print-dark-grey;
+  display: flex;
+  font-family: arial, sans-serif;
+  height: 30mm;
+  justify-content: space-between;
+  padding: 7mm 10mm;
+
+  &__caption {
+    font-size: 12pt;
+    font-style: italic;
+    margin: 0 0 5mm;
+  }
+
+  &__applicant-name {
+    border-bottom: 2px solid $print-dark-grey;
+    height: 8mm;
+    margin: 0;
+    width: 70mm;
+  }
+
+  &__logo {
+    height: auto;
+    width: 40mm;
+  }
+}
+
+@media print {
+  .print-layout {
+    max-width: none;
+    padding: 0;
+  }
+
+  .print-header {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
