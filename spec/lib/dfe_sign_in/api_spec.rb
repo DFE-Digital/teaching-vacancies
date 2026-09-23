@@ -2,81 +2,92 @@ require "rails_helper"
 require "dfe_sign_in/api"
 
 RSpec.describe DfeSignIn::API do
-  let(:stubbed_request) { instance_double(DfeSignIn::API::Request) }
-  let(:stubbed_response) { instance_double(DfeSignIn::API::Response, number_of_pages: 2) }
+  let(:dsi_url) { "https://dsi-api.contoso.com" }
+  let(:dsi_password) { "dsi-signing-secret" }
+  let(:first_page) { build(:dsi_users_page, users: build_list(:dsi_user, 2), page: 1, number_of_pages: 2).to_json }
+  let(:second_page) { build(:dsi_users_page, users: build_list(:dsi_user, 1), page: 2, number_of_pages: 2).to_json }
+  let(:json_headers) { { "Content-Type" => "application/json" } }
 
-  before do
-    allow(stubbed_response).to receive(:users).and_return(JSON.parse(response_file(1))["users"],
-                                                          JSON.parse(response_file(2))["users"])
-    allow(DfeSignIn::API::Request).to receive(:new).and_return(stubbed_request)
-    allow(DfeSignIn::API::Response).to receive(:new).with(stubbed_request).and_return(stubbed_response)
+  around do |example|
+    ClimateControl.modify(DFE_SIGN_IN_URL: dsi_url, DFE_SIGN_IN_PASSWORD: dsi_password) { example.run }
   end
 
-  subject { extend(described_class) }
+  describe ".users" do
+    context "when there is more than one page" do
+      before do
+        stub_request(:get, "#{dsi_url}/users?page=1&pageSize=275")
+          .to_return(body: first_page, status: 200, headers: json_headers)
+        stub_request(:get, "#{dsi_url}/users?page=2&pageSize=275")
+          .to_return(body: second_page, status: 200, headers: json_headers)
+      end
 
-  describe "#dsi_users" do
-    let(:fixture_filename) { "users" }
-
-    it "returns a lazy enumerator of users" do
-      expect(subject.dsi_users).to be_a(Enumerator::Lazy)
+      it "yields every user across every page, as individual hashes rather than pages" do
+        expect(described_class.users.to_a).to eq(
+          JSON.parse(first_page)["users"] + JSON.parse(second_page)["users"],
+        )
+      end
     end
 
-    it "the enumerated collection contains all users from the API as pages" do
-      expect(subject.dsi_users.to_a).to eq [JSON.parse(response_file(1))["users"],
-                                            JSON.parse(response_file(2))["users"]]
-    end
-  end
+    context "when the source has no users at all" do
+      before do
+        stub_request(:get, "#{dsi_url}/users?page=1&pageSize=275")
+          .to_return(body: build(:dsi_users_page).to_json, status: 200, headers: json_headers)
+      end
 
-  describe "#dsi_users_page_count" do
-    let(:fixture_filename) { "users" }
-
-    it "returns the total number of pages without fetching every page" do
-      expect(subject.dsi_users_page_count).to eq(2)
-    end
-  end
-
-  describe "#dsi_users_page" do
-    let(:fixture_filename) { "users" }
-
-    it "returns just the requested page of users" do
-      expect(subject.dsi_users_page(1)).to eq JSON.parse(response_file(1))["users"]
-    end
-  end
-
-  describe "#dsi_approvers" do
-    let(:fixture_filename) { "approvers" }
-
-    it "returns a lazy enumerator of approvers" do
-      expect(subject.dsi_approvers).to be_a(Enumerator::Lazy)
+      it "yields nothing, without raising" do
+        expect(described_class.users.to_a).to eq([])
+      end
     end
 
-    it "the enumerated collection contains all approvers from the API as pages" do
-      expect(subject.dsi_approvers.to_a).to eq [JSON.parse(response_file(1))["users"],
-                                                JSON.parse(response_file(2))["users"]]
+    context "when the request fails" do
+      before do
+        stub_request(:get, "#{dsi_url}/users?page=1&pageSize=275")
+          .to_return(body: '{"success":false,"message":"jwt expired"}', status: 403)
+      end
+
+      it "raises rather than yielding a partial set of users" do
+        expect { described_class.users.to_a }.to raise_error(Faraday::ForbiddenError)
+      end
     end
-  end
 
-  describe "#dsi_approvers_page_count" do
-    let(:fixture_filename) { "approvers" }
+    it "authenticates each request with a freshly signed bearer token" do
+      freeze_time do
+        authenticated_request = stub_request(:get, "#{dsi_url}/users?page=1&pageSize=275")
+          .with(headers: { "Authorization" => "Bearer #{expected_jwt}" })
+          .to_return(body: build(:dsi_users_page).to_json, status: 200, headers: json_headers)
 
-    it "returns the total number of pages without fetching every page" do
-      expect(subject.dsi_approvers_page_count).to eq(2)
-    end
-  end
+        described_class.users.to_a
 
-  describe "#dsi_approvers_page" do
-    let(:fixture_filename) { "approvers" }
-
-    it "returns just the requested page of approvers" do
-      expect(subject.dsi_approvers_page(1)).to eq JSON.parse(response_file(1))["users"]
+        expect(authenticated_request).to have_been_requested
+      end
     end
   end
 
-  def response_file(page)
-    File.read(Rails.root.join(
-                "spec",
-                "fixtures",
-                "dfe_sign_in_service_#{fixture_filename}_response_page_#{page}.json",
-              ))
+  # .approvers shares the paging logic with .users; only the endpoint and the user shape differ.
+  describe ".approvers" do
+    let(:first_approvers_page) do
+      build(:dsi_users_page, users: build_list(:dsi_approver, 2), page: 1, number_of_pages: 2).to_json
+    end
+    let(:second_approvers_page) do
+      build(:dsi_users_page, users: build_list(:dsi_approver, 1), page: 2, number_of_pages: 2).to_json
+    end
+
+    before do
+      stub_request(:get, "#{dsi_url}/users/approvers?page=1&pageSize=275")
+        .to_return(body: first_approvers_page, status: 200, headers: json_headers)
+      stub_request(:get, "#{dsi_url}/users/approvers?page=2&pageSize=275")
+        .to_return(body: second_approvers_page, status: 200, headers: json_headers)
+    end
+
+    it "yields every approver across every page of the approvers endpoint" do
+      expect(described_class.approvers.to_a).to eq(
+        JSON.parse(first_approvers_page)["users"] + JSON.parse(second_approvers_page)["users"],
+      )
+    end
+  end
+
+  def expected_jwt
+    payload = { iss: "schooljobs", exp: (Time.current.getlocal + 60).to_i, aud: "signin.education.gov.uk" }
+    JWT.encode(payload, dsi_password, "HS256")
   end
 end
