@@ -1,9 +1,9 @@
 # Imports the ATS API manifest into the DfE "Find and Use an API" catalogue and publishes the
-# resulting entry. Run after each deploy of staging and production; see
+# resulting entry. Run daily by FindAndUseAnApi::PublishCatalogueJob; see
 # documentation/service/integrations/find-and-use-an-api.md.
 #
 # The import is an upsert keyed on name + majorVersion, so republishing an unchanged manifest on
-# every deploy is harmless.
+# every run is harmless.
 module FindAndUseAnApi
   class PublishCatalogue
     class Error < StandardError; end

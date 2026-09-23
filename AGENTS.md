@@ -216,7 +216,7 @@ DfE Sign In, GOV.UK One Login, GOV.UK Notify, GIAS (school data), DWP Find a Job
 DfE Analytics / BigQuery, Google Indexing API, Google Places, Microsoft Defender for Cloud
 (upload virus scanning), Sentry, Zendesk, Skylight, the Publisher ATS API (REST, OpenAPI
 via RSwag), and [Find and Use an API](documentation/service/integrations/find-and-use-an-api.md),
-the DfE API catalogue the ATS API's OpenAPI document is published to on each deploy.
+the DfE API catalogue the ATS API's OpenAPI document is published to by a daily scheduled job.
 
 ## Code style
 

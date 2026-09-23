@@ -10,27 +10,28 @@ discoverable across DfE.
 
 ## How it works
 
-On every deploy of `main`, after the smoke test passes, the
-[build and deploy workflow](/.github/workflows/build_and_deploy.yml) runs
-`bundle exec rake fauapi:publish` inside the deployed web pod, for staging and production only.
-That task:
+[`FindAndUseAnApi::PublishCatalogueJob`](/app/jobs/find_and_use_an_api/publish_catalogue_job.rb)
+runs daily, scheduled in `config/recurring.yml`. It calls
+[`FindAndUseAnApi::PublishCatalogue`](/app/services/find_and_use_an_api/publish_catalogue.rb),
+which:
 
 1. Reads the OpenAPI document at `swagger/v1/swagger.yaml`
    ([`FindAndUseAnApi::BuildManifest`](/app/services/find_and_use_an_api/build_manifest.rb)) and
    base64-encodes it into a manifest describing the API.
-2. Imports the manifest into FaUAPI and publishes the resulting catalogue entry
-   ([`FindAndUseAnApi::PublishCatalogue`](/app/services/find_and_use_an_api/publish_catalogue.rb),
-   [`FindAndUseAnApi::Client`](/app/lib/find_and_use_an_api/client.rb)).
+2. Imports the manifest into FaUAPI and publishes the resulting catalogue entry, via
+   [`FindAndUseAnApi::Client`](/app/lib/find_and_use_an_api/client.rb).
 
 The OpenAPI document is gitignored — it is generated in CI by the `swagger-gen` job and baked
-into the Docker image. Publishing from inside the pod is what guarantees the catalogue describes
-the code that is actually deployed.
+into the Docker image. The job runs on the worker pod, which runs the same image as the web pod,
+so the catalogue always describes the code that is currently deployed.
 
 The import is an upsert keyed on name plus major version, so republishing an unchanged manifest
-on every deploy is harmless.
+on every run is harmless.
 
-**A failure here never fails a deploy.** The step is `continue-on-error` and notifies the
-`twd_tv_dev` Teams channel instead. The next deploy republishes.
+**A failure here never fails a deploy or blocks anything else.** The job is not guarded by
+`DisableIntegrations` (see the comment on the job), and a failed run retries with `ApplicationJob`'s
+standard backoff, then surfaces in Sentry and as a failed job in Mission Control
+(`/solid_queue_jobs`) rather than in the deploy log. The next scheduled run tries again regardless.
 
 ## Environments
 
@@ -64,10 +65,6 @@ Use the interactive `rake` target, which selects the right Azure subscription fo
 make staging rake task=fauapi:publish
 make production rake task=fauapi:publish CONFIRM_PRODUCTION=YES
 ```
-
-The deploy workflow uses `make <env> ci ci-rake task=fauapi:publish` instead: `ci-rake` works
-without a TTY, and `ci` relies on the Azure login the workflow has already done. Don't use that
-form from a laptop.
 
 To inspect the manifest without publishing anything:
 

@@ -40,8 +40,8 @@ module FindAndUseAnApi
       end
 
       # `HttpClient` only retries GETs by default, which is what we want here: a retried import
-      # or publish could race with the one that appeared to fail. A failed publish is reported
-      # and picked up by the next deploy instead.
+      # or publish could race with the one that appeared to fail. `ApplicationJob` retries the
+      # whole job with backoff instead, and the next day's scheduled run picks it up regardless.
       def connection
         HttpClient.connection(url: ENV.fetch("FAUAPI_BASE_URL", nil)) do |conn|
           conn.headers["Accept"] = "application/json"

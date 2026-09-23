@@ -96,6 +96,11 @@ production:
     class: 'RemoveVacanciesThatExpiredYesterdayFromGoogleIndexJob'
     queue: low
 
+  publish_api_docs_to_find_and_use_an_api:
+    schedule: '15 04 * * *' # "At 04:15."
+    class: 'FindAndUseAnApi::PublishCatalogueJob'
+    queue: low
+
   remove_invalid_subscriptions:
     schedule: '0 05 * * *' # "At 05:00."
     class: 'RemoveInvalidSubscriptionsJob'
