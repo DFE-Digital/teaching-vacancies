@@ -43,6 +43,10 @@ RSpec.describe "Jobseekers::FormPreviewController" do
       expect(response.body).to include("Professional body memberships")
       expect(response.body).to include("Membership or registration number:")
       expect(Capybara.string(response.body)).to have_css(".print-membership-record", count: 2)
+      expect(response.body).to include("Work history")
+      expect(response.body).to include("Employment currently held:")
+      expect(response.body).to include("Reason for leaving:")
+      expect(Capybara.string(response.body)).to have_css(".print-employment-record", count: 5)
     end
   end
 end
