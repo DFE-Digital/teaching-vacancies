@@ -41,4 +41,4 @@ A new way to allow ATS to publish vacancies in Teaching Vacancies has been devel
 ## Publishing our API documentation to the DfE API catalogue
 
 - [Find and Use an API (FaUAPI)](find-and-use-an-api.md) — the Publisher ATS API's catalogue
-  entry, republished automatically on every deploy of staging and production.
+  entry, republished automatically by a daily scheduled job.

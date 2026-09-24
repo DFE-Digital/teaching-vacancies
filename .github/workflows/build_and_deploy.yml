@@ -317,28 +317,6 @@ jobs:
       if: steps.smoke-test.conclusion != 'success'
       run: exit 1
 
-    - name: Publish ATS API docs to Find and Use an API
-      id: publish_fauapi
-      if: github.event_name == 'push' && contains(fromJSON('["staging","production"]'), matrix.environment)
-      # Find and Use an API is a catalogue listing, not something the service depends on, and
-      # /ats-api-docs remains the documentation we give clients. A failure here must never fail
-      # a deploy; the next deploy republishes, and the manifest import is an upsert.
-      continue-on-error: true
-      env:
-        CONFIRM_PRODUCTION: "YES"
-      run: make ${{ matrix.environment }} ci ci-rake task=fauapi:publish
-
-    - name: Notify twd_tv_dev channel if the Find and Use an API publish failed
-      if: steps.publish_fauapi.outcome == 'failure'
-      uses: DFE-Digital/github-actions/send-to-teams-channel@master
-      with:
-        teams-webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
-        title: Find and Use an API publish failed
-        service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
-        message: |
-          The ATS API catalogue entry was not updated in Find and Use an API for ${{ matrix.environment }}.
-          The deploy itself succeeded and the /ats-api-docs documentation is unaffected.
-
     - name: Post sticky pull request comment
       if: github.event_name == 'pull_request'
       uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # Pinned at v3.0.5
