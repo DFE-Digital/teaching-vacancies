@@ -62,10 +62,12 @@ class Search::VacancySearch
   private
 
   def scope
-    sort_by_distance = sort.by == "distance"
     scope = scope_without_location
+    sort_by_distance = sort.by == "distance"
     scope = scope.search_by_location(location, radius, polygon:, sort_by_distance:) if location
-    order_scope(scope, sort_by_distance)
+    # if sort_by_distance is true then the sorting is handled by the search_by_filter method so we do not re-order here.
+    scope = order_scope(scope) unless sort_by_distance
+    scope
   end
 
   def sort_by
@@ -76,9 +78,7 @@ class Search::VacancySearch
     end
   end
 
-  def order_scope(scope, sort_by_distance)
-    # if sort_by_distance is true then the sorting is handled by the search_by_filter method so we do not re-order here.
-    return scope if sort_by_distance
+  def order_scope(scope)
     # only re-order the query if sort is a valid db column
     return scope unless sort&.by_db_column?
 
