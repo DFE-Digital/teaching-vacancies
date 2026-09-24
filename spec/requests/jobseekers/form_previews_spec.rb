@@ -49,6 +49,13 @@ RSpec.describe "Jobseekers::FormPreviewController" do
       expect(Capybara.string(response.body)).to have_css(".print-employment-record", count: 5)
       expect(response.body).to include("Personal statement")
       expect(Capybara.string(response.body)).to have_css(".print-personal-statement__writing-space", count: 1)
+      expect(response.body).to include("References")
+      expect(response.body).to include("Relationship:")
+      expect(Capybara.string(response.body)).to have_css(".print-reference-record", count: 2)
+      expect(response.body).to include("Do you need support or adjustments for your interview?")
+      expect(response.body).to include("Declarations")
+      expect(response.body).to include("Do you need to declare any safeguarding issues")
+      expect(response.body).to include("Do you have a family or close relationship with anyone who works at #{job_application.vacancy.organisation_name}")
     end
   end
 end
