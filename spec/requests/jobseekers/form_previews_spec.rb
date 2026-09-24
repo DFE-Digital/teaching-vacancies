@@ -37,6 +37,12 @@ RSpec.describe "Jobseekers::FormPreviewController" do
       expect(response.body).to include("A levels")
       expect(response.body).to include("GCSEs")
       expect(Capybara.string(response.body)).to have_css(".print-qualification", count: 10)
+      expect(response.body).to include("Training and continuing professional development (CPD)")
+      expect(response.body).to include("Course length")
+      expect(Capybara.string(response.body)).to have_css(".print-training-record", count: 2)
+      expect(response.body).to include("Professional body memberships")
+      expect(response.body).to include("Membership or registration number:")
+      expect(Capybara.string(response.body)).to have_css(".print-membership-record", count: 2)
     end
   end
 end
