@@ -65,6 +65,19 @@ ruby:
     t(".employment_fields.end_date"),
     t(".employment_fields.start_date"),
   ]
+  reference_labels = [
+    t(".reference_fields.name"),
+    t(".reference_fields.job_title"),
+    t(".reference_fields.organisation"),
+    t(".reference_fields.relationship"),
+    t(".reference_fields.email"),
+    t(".reference_fields.phone_number"),
+  ]
+  organisation_type = organisation_label_type(@vacancy.organisation)
+  declaration_labels = [
+    t("helpers.legend.jobseekers_job_application_declarations_form.has_safeguarding_issue"),
+    t("helpers.legend.jobseekers_job_application_declarations_form.has_close_relationships.#{organisation_type}", organisation: @vacancy.organisation_name),
+  ]
 
 header.print-header
   .print-header__text
@@ -137,3 +150,28 @@ section.print-section
 section.print-section.print-personal-statement
   h2.print-section__heading = t("jobseekers.job_applications.show.personal_statement.heading")
   .print-personal-statement__writing-space aria-hidden="true"
+
+section.print-section
+  h2.print-section__heading = t("jobseekers.job_applications.show.referees.heading")
+  - 2.times do
+    article.print-record.print-reference-record
+      .print-table
+        - reference_labels.each do |label|
+          .print-table__row
+            p.print-table__label = label
+            .print-table__writing-space aria-hidden="true"
+
+section.print-section
+  h2.print-section__heading = t("jobseekers.job_applications.show.ask_for_support.heading")
+  .print-table
+    .print-table__row
+      p.print-table__label = t("helpers.legend.jobseekers_job_application_ask_for_support_form.is_support_needed")
+      .print-table__writing-space aria-hidden="true"
+
+section.print-section
+  h2.print-section__heading = t("jobseekers.job_applications.show.declarations.heading")
+  .print-table
+    - declaration_labels.each do |label|
+      .print-table__row
+        p.print-table__label = label
+        .print-table__writing-space aria-hidden="true"

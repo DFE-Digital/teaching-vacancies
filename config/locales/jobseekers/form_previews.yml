@@ -33,3 +33,10 @@ en:
           reason_for_leaving: "Reason for leaving:"
           end_date: "End date:"
           start_date: "Start date:"
+        reference_fields:
+          name: "Name:"
+          job_title: "Job Title:"
+          organisation: "Organisation:"
+          relationship: "Relationship:"
+          email: "Email:"
+          phone_number: "Phone Number:"
