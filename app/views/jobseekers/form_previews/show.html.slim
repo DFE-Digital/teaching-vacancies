@@ -2,9 +2,33 @@
 - content_for :meta_no_index do
   meta name="robots" content="noindex,nofollow"
 
+ruby:
+  personal_detail_labels = [
+    t("helpers.label.jobseekers_job_application_personal_details_form.first_name"),
+    t("helpers.label.jobseekers_job_application_personal_details_form.last_name"),
+    t("helpers.label.jobseekers_job_application_personal_details_form.previous_names_optional"),
+    t("helpers.legend.jobseekers_job_application_personal_details_form.your_address"),
+    t("helpers.label.jobseekers_job_application_personal_details_form.phone_number"),
+    t("helpers.label.jobseekers_job_application_personal_details_form.email_address"),
+    t("helpers.legend.jobseekers_job_application_declarations_form.has_right_to_work_in_uk"),
+    t("helpers.label.jobseekers_job_application_personal_details_form.working_patterns"),
+    t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number_review"),
+    t("helpers.legend.jobseekers_job_application_personal_details_form.working_pattern_details"),
+  ]
+
 header.print-header
   .print-header__text
     p.print-header__caption = t("jobseekers.job_applications.caption", job_title: @vacancy.job_title, organisation: @vacancy.organisation_name)
     h1.print-header__applicant-name
       span.govuk-visually-hidden = t(".title")
   = image_tag "TVS-logo.png", class: "print-header__logo", alt: t("app.title")
+
+p.print-introduction = t("jobseekers.job_applications.show.consent_text")
+
+section.print-section
+  h2.print-section__heading = t("jobseekers.job_applications.show.personal_details.heading")
+  .print-table
+    - personal_detail_labels.each do |label|
+      .print-table__row
+        p.print-table__label = label
+        .print-table__writing-space aria-hidden="true"
