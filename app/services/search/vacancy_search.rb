@@ -63,7 +63,8 @@ class Search::VacancySearch
 
   def scope
     sort_by_distance = sort.by == "distance"
-    scope = scope_without_location.search_by_location(location, radius, polygon:, sort_by_distance:) if location
+    scope = scope_without_location
+    scope = scope.search_by_location(location, radius, polygon:, sort_by_distance:) if location
     order_scope(scope, sort_by_distance)
   end
 
