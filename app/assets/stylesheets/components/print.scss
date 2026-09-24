@@ -53,6 +53,7 @@ $print-light-blue: #f0f8ff;
 .print-section {
   color: $print-dark-grey;
   font-family: arial, sans-serif;
+  margin-bottom: 10mm;
 
   &__heading {
     align-items: center;

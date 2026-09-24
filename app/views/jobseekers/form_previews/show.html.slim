@@ -15,6 +15,12 @@ ruby:
     t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number_review"),
     t("helpers.legend.jobseekers_job_application_personal_details_form.working_pattern_details"),
   ]
+  professional_status_labels = [
+    t("helpers.legend.jobseekers_job_application_professional_status_form.qualified_teacher_status"),
+    t("jobseekers.job_application.age_range_and_subject"),
+    t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number_review"),
+    t("helpers.legend.jobseekers_job_application_professional_status_form.is_statutory_induction_complete"),
+  ]
 
 header.print-header
   .print-header__text
@@ -29,6 +35,14 @@ section.print-section
   h2.print-section__heading = t("jobseekers.job_applications.show.personal_details.heading")
   .print-table
     - personal_detail_labels.each do |label|
+      .print-table__row
+        p.print-table__label = label
+        .print-table__writing-space aria-hidden="true"
+
+section.print-section
+  h2.print-section__heading = t("jobseekers.job_applications.show.professional_status.heading")
+  .print-table
+    - professional_status_labels.each do |label|
       .print-table__row
         p.print-table__label = label
         .print-table__writing-space aria-hidden="true"
