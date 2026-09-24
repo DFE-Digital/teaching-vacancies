@@ -26,7 +26,12 @@ RSpec.describe "Jobseekers::FormPreviewController" do
       expect(response.body).to include("Personal details")
       expect(response.body).to include("First name")
       expect(response.body).to include("Working pattern preference details")
-      expect(response.body.scan("print-table__writing-space").count).to eq(10)
+      expect(response.body).to include("Professional status")
+      expect(response.body).to include("Do you have qualified teacher status (QTS)?")
+      expect(response.body).to include("Age range and subject")
+      expect(response.body).to include("Teacher reference number (TRN)")
+      expect(response.body).to include("Have you completed your induction period?")
+      expect(response.body.scan("print-table__writing-space").count).to eq(14)
     end
   end
 end
