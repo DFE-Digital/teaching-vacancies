@@ -1,5 +1,6 @@
 $print-dark-grey: #333;
 $print-light-blue: #f0f8ff;
+$print-white: #fff;
 
 @page {
   margin: 10mm;
@@ -10,6 +11,11 @@ $print-light-blue: #f0f8ff;
   margin: 0 auto;
   max-width: 190mm;
   padding: 10mm;
+}
+
+.print-actions {
+  margin: 0 auto 10mm;
+  max-width: 190mm;
 }
 
 .print-header {
@@ -58,6 +64,8 @@ $print-light-blue: #f0f8ff;
   &__heading {
     align-items: center;
     background: #ddd;
+    break-after: avoid;
+    page-break-after: avoid;
     display: flex;
     font-size: 18pt;
     font-weight: bold;
@@ -70,6 +78,8 @@ $print-light-blue: #f0f8ff;
 .print-table {
   &__row {
     border-top: 1px solid #ddd;
+    break-inside: avoid;
+    page-break-inside: avoid;
     display: grid;
     grid-template-columns: 53mm 1fr;
     min-height: 10mm;
@@ -95,6 +105,8 @@ $print-light-blue: #f0f8ff;
   &__heading {
     align-items: center;
     background: #ececec;
+    break-after: avoid;
+    page-break-after: avoid;
     color: $print-dark-grey;
     display: flex;
     font-family: arial, sans-serif;
@@ -109,20 +121,91 @@ $print-light-blue: #f0f8ff;
 .print-record {
   break-inside: avoid;
   margin-bottom: 10mm;
+  page-break-inside: avoid;
 }
 
 .print-personal-statement {
+  break-after: page;
+  break-before: page;
   break-inside: avoid;
+  page-break-after: always;
+  page-break-before: always;
+  page-break-inside: avoid;
 
   &__writing-space {
     min-height: 190mm;
   }
 }
 
+.print-checkbox-row {
+  align-items: flex-start;
+  break-inside: avoid;
+  display: flex;
+  gap: 5mm;
+  margin: 5mm;
+}
+
+.print-checkbox {
+  border: 1mm solid $print-dark-grey;
+  box-sizing: border-box;
+  flex: 0 0 8mm;
+  height: 8mm;
+
+  &__label {
+    font-family: arial, sans-serif;
+    font-size: 12pt;
+    margin: 0;
+  }
+}
+
+.print-consent {
+  font-family: arial, sans-serif;
+  font-size: 12pt;
+  padding: 3mm 5mm 0;
+
+  p,
+  ul {
+    font-family: inherit;
+    font-size: inherit;
+  }
+}
+
+.print-confirmation,
+.print-data-use {
+  break-inside: avoid;
+}
+
 @media print {
+  html,
+  body {
+    background: $print-white;
+  }
+
+  .govuk-header,
+  .govuk-breadcrumbs,
+  .govuk-footer {
+    display: none !important;
+  }
+
+  .review-component__section__heading__title .govuk-heading-m {
+    font-size: x-large !important;
+  }
+
+  .review-component__sections {
+    margin: 0;
+
+    * {
+      font-size: medium !important;
+    }
+  }
+
   .print-layout {
     max-width: none;
     padding: 0;
+  }
+
+  .print-actions {
+    display: none !important;
   }
 
   .print-header {

@@ -31,11 +31,6 @@
           margin-right: govuk-spacing(2);
         }
 
-        @media print {
-          .govuk-heading-m {
-            font-size: x-large !important;
-          }
-        }
       }
 
       &__status {
@@ -54,12 +49,5 @@
       margin-bottom: govuk-spacing(6);
     }
 
-    @media print {
-      margin: 0;
-  
-      * {
-        font-size: medium !important;
-      }
-    }
   }
 }
