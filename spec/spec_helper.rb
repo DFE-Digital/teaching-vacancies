@@ -1,6 +1,9 @@
-require "simplecov"
-SimpleCov.start :rails do
-  cover_views
+# Coverage is only collected on request (see .simplecov): instrumenting every line and view slows down local runs.
+if ENV.fetch("COVERAGE", 0).to_i.positive?
+  require "simplecov"
+  SimpleCov.start :rails do
+    cover_views
+  end
 end
 
 RSpec.configure do |config|
