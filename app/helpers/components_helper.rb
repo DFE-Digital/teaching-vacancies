@@ -1,6 +1,5 @@
 module ComponentsHelper
   {
-    banner_button: "BannerButtonComponent",
     tvs_card: "CardComponent",
     dashboard: "DashboardComponent",
     tvs_summary_card: "DetailComponent",

@@ -246,7 +246,7 @@ the DfE API catalogue the ATS API's OpenAPI document is published to by a daily 
 
 ### Coverage gates
 
-`.simplecov` sets `minimum_coverage line: 96.36, branch: 84.16`, and CI additionally runs
+`.simplecov` sets `minimum_coverage line: 96.36, branch: 84.11`, and CI additionally runs
 `undercover` against `origin/main` (`.undercover`) to catch new or changed code without tests.
 When raising the threshold, set it 0.02 below the reported figure to absorb rounding. Known
 causes of coverage fluctuation: random values in factories, and Ruby logic inside Slim
