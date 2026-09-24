@@ -5,13 +5,11 @@ class VacancyAnalyticsService
 
       referrer = normalize_referrer(referrer_url, hostname, params)
 
-      VacancyAnalytics.transaction do
-        VacancyAnalytics.upsert(
-          { vacancy_id: vacancy_id, referrer_counts: { referrer => 1 } },
-          unique_by: :vacancy_id,
-          on_duplicate: increment_referrer_count(referrer),
-        )
-      end
+      VacancyAnalytics.upsert(
+        { vacancy_id: vacancy_id, referrer_counts: { referrer => 1 } },
+        unique_by: :vacancy_id,
+        on_duplicate: increment_referrer_count(referrer),
+      )
     end
 
     def normalize_referrer(referrer, hostname, params)
