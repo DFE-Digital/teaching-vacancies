@@ -18,13 +18,12 @@ RSpec.describe JobApplicationPdfGenerator do
 
     let(:pdf) { PDF::Inspector::Text.analyze(document.render).strings }
 
-    it { is_expected.to be_a(Prawn::Document) }
+    # One example for everything read from the default document: rendering the PDF is the slow part.
+    it "renders the header, every section, the footer and the page number", :aggregate_failures do
+      expect(document).to be_a(Prawn::Document)
 
-    it "includes page header" do
       expect(pdf).to include(I18n.t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.organisation_name))
-    end
 
-    it "includes section titles" do
       expect(pdf).to include("Personal details")
       expect(pdf).to include("Professional status")
       expect(pdf).to include("Qualifications")
@@ -35,21 +34,15 @@ RSpec.describe JobApplicationPdfGenerator do
       expect(pdf).to include("References")
       expect(pdf).to include("Do you need support or adjustments for your interview?")
       expect(pdf).to include("Declarations")
-    end
 
-    it "includes page footer" do
       expect(pdf).to include("#{job_application.name} | #{vacancy.organisation_name}")
-    end
-
-    it "includes page number" do
       expect(pdf).to include("1 of 5")
+
+      # only a blank job application asks for a confirmation
+      expect(pdf).not_to include("I confirm that the above information is accurate and complete")
     end
 
     describe "render_confirmation" do
-      context "when job application presenter" do
-        it { expect(pdf).not_to include("I confirm that the above information is accurate and complete") }
-      end
-
       context "when blank job application presenter" do
         let(:presenter) { BlankJobApplicationPdf.new(job_application) }
 

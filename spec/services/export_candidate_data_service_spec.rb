@@ -80,11 +80,11 @@ RSpec.describe ExportCandidateDataService do
                       ])
       end
 
-      it { expect(documents.count).to eq(2) }
-      it { expect(documents.first.filename).to eq("references/john_e__smith.pdf") }
-      it { expect(documents.first.data).to include("%PDF-") }
-      it { expect(documents.last.filename).to eq("references/etha_may.pdf") }
-      it { expect(documents.last.data).to include("%PDF-") }
+      # One example: each document is a rendered PDF, which is the slow part.
+      it "exports a PDF for each reference given or declined", :aggregate_failures do
+        expect(documents.map(&:filename)).to eq(%w[references/john_e__smith.pdf references/etha_may.pdf])
+        expect(documents.map(&:data)).to all(include("%PDF-"))
+      end
     end
 
     context "when request has not been sent to referee" do
@@ -111,8 +111,10 @@ RSpec.describe ExportCandidateDataService do
     context "when job application has self disclosure" do
       let(:self_disclosure_request) { build(:self_disclosure_request, :received, self_disclosure: build(:self_disclosure)) }
 
-      it { expect(document.filename).to eq("self_disclosure.pdf") }
-      it { expect(document.data).to include("%PDF-") }
+      it "exports the self disclosure as a PDF", :aggregate_failures do
+        expect(document.filename).to eq("self_disclosure.pdf")
+        expect(document.data).to include("%PDF-")
+      end
     end
 
     context "when self disclosure not received" do

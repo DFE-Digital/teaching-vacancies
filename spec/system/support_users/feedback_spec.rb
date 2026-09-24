@@ -77,18 +77,8 @@ RSpec.describe "Feedback supportal section" do
   let(:csv) { CSV.parse(page.body) }
 
   before do
-    OmniAuth.config.test_mode = true
-
-    stub_support_user_authentication_step
-    stub_support_user_authorisation_step
-
-    sign_in_support_user(navigate: true)
-  end
-
-  after do
-    OmniAuth.config.mock_auth[:default] = nil
-    OmniAuth.config.mock_auth[:dfe] = nil
-    OmniAuth.config.test_mode = false
+    login_as(create(:support_user), scope: :support_user)
+    visit support_user_root_path
   end
 
   describe "General" do
@@ -237,18 +227,17 @@ RSpec.describe "Feedback supportal section" do
         close_account: { close_account_reason: %i[too_many_emails not_getting_any_value not_looking_for_job other_close_account_reason] },
       }
 
-      feedback_types.each do |feedback_type, groupings|
-        groupings.each do |grouping_key, feedback_responses|
-          feedback_responses.each do |feedback_response|
-            create_list(
+      # Around 250 rows: inserted in one query, as creating them one by one dominates the run time of each example.
+      feedbacks = feedback_types.flat_map do |feedback_type, groupings|
+        groupings.flat_map do |grouping_key, feedback_responses|
+          feedback_responses.flat_map do |feedback_response|
+            build_list(
               :feedback,
               feedback_responses.index(feedback_response) + 1,
               feedback_type: feedback_type,
               created_at: 1.months.ago,
               grouping_key => feedback_response,
-            )
-
-            create_list(
+            ) + build_list(
               :feedback,
               feedback_responses.index(feedback_response) + feedback_responses.count + 1,
               feedback_type: feedback_type,
@@ -258,6 +247,7 @@ RSpec.describe "Feedback supportal section" do
           end
         end
       end
+      Feedback.insert_all(feedbacks.map { it.attributes.except("id", "updated_at") })
 
       click_on "View user feedback"
       click_on "Satisfaction ratings"
