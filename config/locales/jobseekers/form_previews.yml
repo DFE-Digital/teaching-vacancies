@@ -23,3 +23,13 @@ en:
           number: "Membership or registration number:"
           date_obtained: "Date obtained:"
           exam: "Exam taken for this membership:"
+        employment_fields:
+          employment: Employment
+          job_title: "Job Title:"
+          organisation: "School or other:"
+          main_duties: "Main duties:"
+          subjects: "Subjects:"
+          current_role: "Employment currently held:"
+          reason_for_leaving: "Reason for leaving:"
+          end_date: "End date:"
+          start_date: "Start date:"
