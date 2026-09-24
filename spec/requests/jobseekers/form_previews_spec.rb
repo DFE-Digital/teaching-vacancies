@@ -22,6 +22,11 @@ RSpec.describe "Jobseekers::FormPreviewController" do
       expect(response.body).to include(job_application.vacancy.organisation_name)
       expect(response.body).to include("print-header__applicant-name")
       expect(response.body).to include("TVS-logo")
+      expect(response.body).to include("In submitting this application, the candidate has consented")
+      expect(response.body).to include("Personal details")
+      expect(response.body).to include("First name")
+      expect(response.body).to include("Working pattern preference details")
+      expect(response.body.scan("print-table__writing-space").count).to eq(10)
     end
   end
 end

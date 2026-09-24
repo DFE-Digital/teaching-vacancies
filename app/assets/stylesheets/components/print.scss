@@ -42,6 +42,52 @@ $print-light-blue: #f0f8ff;
   }
 }
 
+.print-introduction {
+  color: $print-dark-grey;
+  font-family: arial, sans-serif;
+  font-size: 10pt;
+  font-style: italic;
+  margin: 5mm 0 7mm;
+}
+
+.print-section {
+  color: $print-dark-grey;
+  font-family: arial, sans-serif;
+
+  &__heading {
+    align-items: center;
+    background: #ddd;
+    display: flex;
+    font-size: 18pt;
+    font-weight: bold;
+    height: 10mm;
+    margin: 0;
+    padding: 0 5mm;
+  }
+}
+
+.print-table {
+  &__row {
+    border-top: 1px solid #ddd;
+    display: grid;
+    grid-template-columns: 53mm 1fr;
+    min-height: 10mm;
+
+    &:last-child {
+      border-bottom: 1px solid #ddd;
+    }
+  }
+
+  &__label {
+    align-self: center;
+    font-size: 12pt;
+    font-weight: bold;
+    line-height: 1.05;
+    margin: 0;
+    padding: 2mm;
+  }
+}
+
 @media print {
   .print-layout {
     max-width: none;
@@ -49,6 +95,11 @@ $print-light-blue: #f0f8ff;
   }
 
   .print-header {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .print-section__heading {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
