@@ -89,6 +89,28 @@ $print-light-blue: #f0f8ff;
   }
 }
 
+.print-subsection {
+  margin-top: 3mm;
+
+  &__heading {
+    align-items: center;
+    background: #ececec;
+    color: $print-dark-grey;
+    display: flex;
+    font-family: arial, sans-serif;
+    font-size: 14pt;
+    font-weight: bold;
+    height: 10mm;
+    margin: 0 0 4mm;
+    padding: 0 10mm;
+  }
+}
+
+.print-qualification {
+  break-inside: avoid;
+  margin-bottom: 10mm;
+}
+
 @media print {
   .print-layout {
     max-width: none;
@@ -100,7 +122,8 @@ $print-light-blue: #f0f8ff;
     print-color-adjust: exact;
   }
 
-  .print-section__heading {
+  .print-section__heading,
+  .print-subsection__heading {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
