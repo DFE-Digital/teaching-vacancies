@@ -5,6 +5,7 @@ html.govuk-template.app-html-class lang="en"
     = render "layouts/head_links"
     title #{content_for :page_title_prefix} - #{t("app.title")} - GOV.UK
     = stylesheet_link_tag "application", media: "all"
+    = javascript_include_tag "print", defer: true
 
   body.govuk-template__body
     main#print-content.print-layout role="main"
