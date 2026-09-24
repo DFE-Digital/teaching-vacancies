@@ -111,6 +111,14 @@ $print-light-blue: #f0f8ff;
   margin-bottom: 10mm;
 }
 
+.print-personal-statement {
+  break-inside: avoid;
+
+  &__writing-space {
+    min-height: 190mm;
+  }
+}
+
 @media print {
   .print-layout {
     max-width: none;

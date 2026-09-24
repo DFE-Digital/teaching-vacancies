@@ -47,6 +47,8 @@ RSpec.describe "Jobseekers::FormPreviewController" do
       expect(response.body).to include("Employment currently held:")
       expect(response.body).to include("Reason for leaving:")
       expect(Capybara.string(response.body)).to have_css(".print-employment-record", count: 5)
+      expect(response.body).to include("Personal statement")
+      expect(Capybara.string(response.body)).to have_css(".print-personal-statement__writing-space", count: 1)
     end
   end
 end
