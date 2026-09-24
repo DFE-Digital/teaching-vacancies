@@ -40,6 +40,20 @@ ruby:
     { heading: t("helpers.label.jobseekers_qualifications_category_form.category_options.a_level"), count: 3, labels: secondary_qualification_labels },
     { heading: t("helpers.label.jobseekers_qualifications_category_form.category_options.gcse"), count: 5, labels: secondary_qualification_labels },
   ]
+  training_labels = [
+    t(".training_fields.name"),
+    t(".training_fields.grade"),
+    t(".training_fields.provider"),
+    t(".training_fields.course_length"),
+    t(".training_fields.awarded_year"),
+  ]
+  membership_labels = [
+    t(".membership_fields.name"),
+    t(".membership_fields.type"),
+    t(".membership_fields.number"),
+    t(".membership_fields.date_obtained"),
+    t(".membership_fields.exam"),
+  ]
 
 header.print-header
   .print-header__text
@@ -72,9 +86,29 @@ section.print-section
     .print-subsection
       h3.print-subsection__heading = group[:heading]
       - group[:count].times do
-        article.print-qualification
+        article.print-record.print-qualification
           .print-table
             - group[:labels].each do |label|
               .print-table__row
                 p.print-table__label = label
                 .print-table__writing-space aria-hidden="true"
+
+section.print-section
+  h2.print-section__heading = t("jobseekers.job_applications.show.training_and_cpds.heading")
+  - 2.times do
+    article.print-record.print-training-record
+      .print-table
+        - training_labels.each do |label|
+          .print-table__row
+            p.print-table__label = label
+            .print-table__writing-space aria-hidden="true"
+
+section.print-section
+  h2.print-section__heading = t("jobseekers.job_applications.show.professional_body_memberships.heading")
+  - 2.times do
+    article.print-record.print-membership-record
+      .print-table
+        - membership_labels.each do |label|
+          .print-table__row
+            p.print-table__label = label
+            .print-table__writing-space aria-hidden="true"

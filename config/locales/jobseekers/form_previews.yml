@@ -11,3 +11,15 @@ en:
           institution: Institution
           grade: Grade
           date_completed: Date completed
+        training_fields:
+          name: Name
+          grade: Grade
+          provider: Provider
+          course_length: Course length
+          awarded_year: Awarded Year
+        membership_fields:
+          name: "Name of professional body:"
+          type: "Membership type or level:"
+          number: "Membership or registration number:"
+          date_obtained: "Date obtained:"
+          exam: "Exam taken for this membership:"
