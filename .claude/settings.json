@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "HEADLESS": "1"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(bundle exec rspec)",
+      "Bash(bundle exec rspec *)",
+      "Bash(bundle exec rake parallel:spec)",
+      "Bash(bundle exec rake parallel:spec*)",
+      "Bash(bundle exec rake lint)",
+      "Bash(bundle exec rubocop)",
+      "Bash(bundle exec rubocop *)",
+      "Bash(bundle exec slim-lint *)",
+      "Bash(bundle exec brakeman)",
+      "Bash(bundle exec brakeman *)",
+      "Bash(bundle exec database_consistency)",
+      "Bash(bundle exec undercover)",
+      "Bash(bundle exec undercover *)",
+      "Bash(bin/rails db:migrate:status)",
+      "Bash(bin/rails routes)",
+      "Bash(bin/rails routes *)",
+      "Bash(yarn run js:lint)",
+      "Bash(yarn run js:test)",
+      "Bash(yarn run js:test *)",
+      "Bash(yarn run sass:lint)",
+      "Bash(git status)",
+      "Bash(git status *)",
+      "Bash(git diff)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git show *)"
+    ],
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.local)",
+      "Read(**/.env.*.local)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(**/*.crt)",
+      "Read(**/serviceAccount.json)",
+      "Read(**/*.sql)",
+      "Read(**/*dump*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/guard-bash.rb"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/lint-edited-file.sh",
+            "timeout": 120
+          }
+        ]
+      }
+    ]
+  }
+}
