@@ -4,6 +4,7 @@ en:
       show:
         page_title: Blank application form
         title: Blank application form
+        print: Print or save as PDF
         qualification_fields:
           secondary_qualification: Secondary Qualification
           qualification_name: Qualification Name
@@ -40,3 +41,44 @@ en:
           relationship: "Relationship:"
           email: "Email:"
           phone_number: "Phone Number:"
+        religion:
+          catholic:
+            following: Are you currently following a religion or faith?
+            faith: What is your religious denomination or faith?
+            place_of_worship: Address of place of worship (optional)
+            religious_referee: Can you provide a religious referee?
+            religious_referee_details: If yes, provide the information below for your religious referee
+            name: Name
+            address: Address
+            role: Role
+            email: Email
+            phone: Phone number (optional)
+            baptism_certificate: If you cannot provide a religious referee, can you provide a baptism certificate?
+            baptism_details: If you cannot provide a religious referee or baptism certificate, can you provide the date and address of your baptism?
+            baptism_information: If yes, provide the information below
+            baptism_address: Address of baptism location
+            baptism_date: Date of your baptism
+            no_evidence: Tick here if you cannot provide a religious referee, baptism certificate, or the date and address of your baptism
+          other:
+            ethos: How will you support the school's ethos and aims?
+            following: Are you currently following a religion or faith?
+            faith: What is your religious denomination or faith?
+            place_of_worship: Address of place of worship (optional)
+            religious_referee: Can you provide a religious referee?
+            religious_referee_details: If yes, provide the information below for your religious referee
+            name: Name
+            address: Address
+            role: Role
+            email: Email
+            phone: Phone number (optional)
+        confirmation:
+          heading: Confirmation
+          checkbox: I confirm that the above information is accurate and complete
+        data_use:
+          heading: How your data is used
+          lead: "When you submit your application, your data will shared with:"
+          department_for_education: the Department for Education
+          listing_organisation: the school, trust or local authority which posted the job listing
+          employing_schools: the school or schools the job is at
+          privacy: Please read the Teaching Vacancies Privacy Policy for more information on how your data is used.
+          checkbox: I consent to my data being shared with and processed by these organisations for recruitment purposes (for example, background and qualification checks)

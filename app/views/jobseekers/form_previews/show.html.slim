@@ -78,6 +78,40 @@ ruby:
     t("helpers.legend.jobseekers_job_application_declarations_form.has_safeguarding_issue"),
     t("helpers.legend.jobseekers_job_application_declarations_form.has_close_relationships.#{organisation_type}", organisation: @vacancy.organisation_name),
   ]
+  catholic_religion_labels = [
+    t(".religion.catholic.following"),
+    t(".religion.catholic.faith"),
+    t(".religion.catholic.place_of_worship"),
+    t(".religion.catholic.religious_referee"),
+    t(".religion.catholic.religious_referee_details"),
+    t(".religion.catholic.name"),
+    t(".religion.catholic.address"),
+    t(".religion.catholic.role"),
+    t(".religion.catholic.email"),
+    t(".religion.catholic.phone"),
+    t(".religion.catholic.baptism_certificate"),
+    t(".religion.catholic.baptism_details"),
+    t(".religion.catholic.baptism_information"),
+    t(".religion.catholic.baptism_address"),
+    t(".religion.catholic.baptism_date"),
+    t(".religion.catholic.no_evidence"),
+  ]
+  other_religion_labels = [
+    t(".religion.other.ethos"),
+    t(".religion.other.following"),
+    t(".religion.other.faith"),
+    t(".religion.other.place_of_worship"),
+    t(".religion.other.religious_referee"),
+    t(".religion.other.religious_referee_details"),
+    t(".religion.other.name"),
+    t(".religion.other.address"),
+    t(".religion.other.role"),
+    t(".religion.other.email"),
+    t(".religion.other.phone"),
+  ]
+
+.print-actions class="govuk-!-display-none-print"
+  button.govuk-button type="button" data-print-button="true" = t(".print")
 
 header.print-header
   .print-header__text
@@ -151,6 +185,15 @@ section.print-section.print-personal-statement
   h2.print-section__heading = t("jobseekers.job_applications.show.personal_statement.heading")
   .print-personal-statement__writing-space aria-hidden="true"
 
+- if @vacancy.catholic? || @vacancy.other_religion?
+  section.print-section
+    h2.print-section__heading = t("jobseekers.job_applications.show.religious_information.heading")
+    .print-table
+      - (@vacancy.catholic? ? catholic_religion_labels : other_religion_labels).each do |label|
+        .print-table__row
+          p.print-table__label = label
+          .print-table__writing-space aria-hidden="true"
+
 section.print-section
   h2.print-section__heading = t("jobseekers.job_applications.show.referees.heading")
   - 2.times do
@@ -175,3 +218,22 @@ section.print-section
       .print-table__row
         p.print-table__label = label
         .print-table__writing-space aria-hidden="true"
+
+section.print-section.print-confirmation
+  h2.print-section__heading = t(".confirmation.heading")
+  .print-checkbox-row
+    span.print-checkbox aria-hidden="true"
+    p.print-checkbox__label = t(".confirmation.checkbox")
+
+section.print-section.print-data-use
+  h2.print-section__heading = t(".data_use.heading")
+  .print-consent
+    p = t(".data_use.lead")
+    ul
+      li = t(".data_use.department_for_education")
+      li = t(".data_use.listing_organisation")
+      li = t(".data_use.employing_schools")
+    p = t(".data_use.privacy")
+    .print-checkbox-row
+      span.print-checkbox aria-hidden="true"
+      p.print-checkbox__label = t(".data_use.checkbox")
