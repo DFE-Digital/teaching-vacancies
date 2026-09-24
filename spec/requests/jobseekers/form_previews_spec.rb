@@ -31,7 +31,12 @@ RSpec.describe "Jobseekers::FormPreviewController" do
       expect(response.body).to include("Age range and subject")
       expect(response.body).to include("Teacher reference number (TRN)")
       expect(response.body).to include("Have you completed your induction period?")
-      expect(response.body.scan("print-table__writing-space").count).to eq(14)
+      expect(response.body).to include("Qualifications")
+      expect(response.body).to include("Postgraduate qualification")
+      expect(response.body).to include("Undergraduate degree")
+      expect(response.body).to include("A levels")
+      expect(response.body).to include("GCSEs")
+      expect(Capybara.string(response.body)).to have_css(".print-qualification", count: 10)
     end
   end
 end

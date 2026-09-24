@@ -4,3 +4,10 @@ en:
       show:
         page_title: Blank application form
         title: Blank application form
+        qualification_fields:
+          secondary_qualification: Secondary Qualification
+          qualification_name: Qualification Name
+          subject: Subject
+          institution: Institution
+          grade: Grade
+          date_completed: Date completed
