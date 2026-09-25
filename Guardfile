@@ -175,6 +175,7 @@ PUBLISHER_ORG_MAPPINGS = {
   logo: %w[],
   email: %w[],
   description: %w[],
+  schools: %w[],
 }.freeze
 
 API_MAPPINGS = {
@@ -198,6 +199,9 @@ SERVICE_DATA_MAPPINGS = {
   fe_colleges_without_publishers: %w[],
 }.freeze
 
+ORG_MAPPINGS = {}.freeze
+STATS_MAPPINGS = {}.freeze
+
 MASTER_MAPPINGS = {
   %w[jobseekers job_applications] => [:jobseekers, JOBSEEKER_JOB_APPLICATION_SYSTEM_SPEC_MAPPINGS],
   %w[jobseekers profiles] => [:jobseekers, JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS],
@@ -212,6 +216,7 @@ MASTER_MAPPINGS = {
   %w[support_users service_data] => [:support_users, SERVICE_DATA_MAPPINGS],
   %w[vacancies] => [:jobseekers, VACANCY_MAPPINGS],
   %w[api] => [:publishers, API_MAPPINGS],
+  # %w[current_year_statistics] => [:publishers, STATS_MAPPINGS],
 }.freeze
 
 SIMPLE_MAPPINGS = {
@@ -225,6 +230,7 @@ SIMPLE_MAPPINGS = {
   posts: [:jobseekers, %w[]],
   pages: [:jobseekers, %w[]],
   vacancies: [:jobseekers, %w[]],
+  organisations: [:jobseekers, %w[]],
 }.freeze
 
 def map_type_to_spec(type, system_spec)
