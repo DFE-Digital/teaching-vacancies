@@ -65,6 +65,35 @@ debugging browser-based tests (with the JS flag set true)
   > ```
 </details>
 
+<details>
+  <summary>Optional: Running natively on your machine (e.g. for coding agents like Claude Code)</summary>
+
+  You can run the app, tests and linters directly on your machine while still using the devcontainer's
+  database and Redis containers. This is handy for tools that run in a host terminal, such as Claude Code.
+
+  1. Install the Ruby and Node.js versions from [.tool-versions](/.tool-versions) (for example with
+     `mise install` or `asdf install`), Chrome or Chromium, and [git-secrets](/documentation/development/tooling/secrets-detection.md).
+     Then run `corepack enable`, `bundle install` and `yarn install`.
+  2. Start only the database and Redis. Using the devcontainer's project name reuses its data volumes,
+     so both setups share the same databases (don't run the devcontainer's app and `bin/dev` at the same time, as both need port 3000):
+     ```bash
+     docker compose -p teaching-vacancies_devcontainer -f .devcontainer/docker-compose.yml up -d db redis
+     ```
+  3. Point Rails at the container. Put this line in both `.env.development.local` and `.env.test.local`
+     (they are git-ignored, and the devcontainer ignores them because it sets `DATABASE_URL` itself):
+     ```
+     DATABASE_URL=postgis://postgres:postgres@localhost:5432
+     ```
+  4. Prepare the databases (skip if the devcontainer has already created them):
+     ```bash
+     bin/rails db:prepare
+     RAILS_ENV=test bin/rails db:create parallel:create parallel:load_schema
+     ```
+  5. Set `PARALLEL_TEST_PROCESSORS` in your shell to control the number of parallel test processes. Set `HEADLESS=1`
+     to run JavaScript specs without opening browser windows. The shared Claude Code settings in
+     `.claude/settings.json` already set `HEADLESS=1`.
+</details>
+
 ---
 
 ## Additional setup

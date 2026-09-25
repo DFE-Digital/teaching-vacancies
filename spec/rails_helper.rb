@@ -204,8 +204,8 @@ RSpec.configure do |config|
 
   # allow developers to see JS backed tests by default
   config.before(:each, type: :system, js: true) do
-    # In CI or devcontainers (without X11), use headless mode
-    if ENV.key?("CI") || ENV["DEVCONTAINER"] == "true"
+    # In CI, devcontainers (without X11) or when HEADLESS is set (e.g. by coding agents), use headless mode
+    if ENV.key?("CI") || ENV.key?("HEADLESS") || ENV["DEVCONTAINER"] == "true"
       driven_by :cuprite_headless
     else
       driven_by :cuprite_full
@@ -215,8 +215,8 @@ RSpec.configure do |config|
   #  Neither Cuprite nor playwright are supported by axe-rspec
   # https://github.com/dequelabs/axe-core-gems/issues/418
   config.before(:each, type: :system, a11y: true) do
-    # In CI or devcontainers (without X11), use headless mode
-    if ENV.key?("CI") || ENV["DEVCONTAINER"] == "true"
+    # In CI, devcontainers (without X11) or when HEADLESS is set (e.g. by coding agents), use headless mode
+    if ENV.key?("CI") || ENV.key?("HEADLESS") || ENV["DEVCONTAINER"] == "true"
       driven_by :chrome_headless
     else
       driven_by :chrome

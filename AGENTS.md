@@ -10,12 +10,13 @@ Different tools look for different filenames. Keep this file authoritative and t
 | Tool | File it reads | How it reaches this file |
 | --- | --- | --- |
 | OpenAI Codex / ChatGPT | `AGENTS.md` | Reads this file directly — nothing else needed |
-| Claude Code | `CLAUDE.md` | Imports it with `@AGENTS.md`; content is inlined at load time |
+| Claude Code | `CLAUDE.md` | Imports it with `@AGENTS.md` (content is inlined at load time), then adds notes on Claude Code's own configuration |
 | Gemini CLI | `GEMINI.md` | Imports it with `@./AGENTS.md`; content is inlined at load time |
 | GitHub Copilot | `.github/copilot-instructions.md` | Links here. Copilot has no include mechanism, so the pointer tells it to open this file. The Copilot coding agent also reads a root `AGENTS.md` directly, and VS Code will too with `chat.useAgentsMdFile` enabled |
 
-**No rule is duplicated in those files** — they are pointers, so this file is the only copy to
-keep current. Add guidance here, never there.
+**Project rules are never duplicated in those files** — this file is the only copy to keep
+current. Add rules here. A tool's own file may describe that tool's configuration (for example
+`CLAUDE.md` covers the `.claude/` settings and hooks), but never project rules.
 
 ## Overview
 
@@ -79,8 +80,9 @@ bin/jobs    # Solid Queue worker on its own
 ```
 
 The app is tied to port 3000; no other port works. Outside the devcontainer, run
-`corepack enable` first for Yarn 4. Ports in use: 3000 (Rails), 3035 (assets), 5432
-(Postgres), 6379 (Redis).
+`corepack enable` first for Yarn 4, and see "Running natively" in the quick start guide to use
+the devcontainer's Postgres and Redis from your machine. Ports in use: 3000 (Rails), 3035
+(assets), 5432 (Postgres), 6379 (Redis).
 
 ## Commands
 
@@ -89,7 +91,7 @@ The app is tied to port 3000; no other port works. Outside the devcontainer, run
 ```bash
 bundle exec rspec                                 # all specs
 bundle exec rspec spec/models/vacancy_spec.rb:42  # one example
-CI=1 bundle exec rake parallel:spec               # parallel; without CI=1, js specs open a browser
+CI=1 bundle exec rake parallel:spec               # parallel; without CI=1 or HEADLESS=1, js specs open a browser
 RAILS_ENV=test bin/rails parallel:create          # one-off parallel DB setup (tvs_test1, tvs_test2, ...)
 COVERAGE=1 bundle exec rspec                      # writes coverage/ and the undercover lcov report
 bundle exec undercover                            # fails on new/changed code without coverage
@@ -244,7 +246,7 @@ the DfE API catalogue the ATS API's OpenAPI document is published to by a daily 
 
 ### Coverage gates
 
-`.simplecov` sets `minimum_coverage line: 97.94, branch: 89.78`, and CI additionally runs
+`.simplecov` sets `minimum_coverage line: 96.36, branch: 84.11`, and CI additionally runs
 `undercover` against `origin/main` (`.undercover`) to catch new or changed code without tests.
 When raising the threshold, set it 0.02 below the reported figure to absorb rounding. Known
 causes of coverage fluctuation: random values in factories, and Ruby logic inside Slim
@@ -273,7 +275,8 @@ templates. Adding `#nocov` to pre-existing uncovered code you had to touch is ac
   `disable_expensive_jobs`, `disable_integrations`.
 - **Geocoder is stubbed by default and `Geocoder.search` raises** unless the example is tagged
   `:geocode`.
-- System specs default to `rack_test`; `js: true` switches to headless Cuprite; `a11y: true`
+- System specs default to `rack_test`; `js: true` switches to Cuprite (headless under `CI`,
+  `HEADLESS` or the devcontainer, headed otherwise); `a11y: true`
   uses Chrome with axe. `CAPYBARA_DRIVER=chrome` gives a headed browser for debugging.
 - Page objects use `site_prism`, under `spec/page_objects/`. Also available:
   `shoulda-matchers`, `webmock`, `vcr`, `mock_redis`, `climate_control`, `rspec-rebound`.
@@ -315,9 +318,9 @@ Also:
 - **If you find this file wrong, incomplete, or misleading while working, fix it in the same
   PR.** That is expected, not scope creep. Noticing that the guidance is stale and leaving it
   stale is the failure mode to avoid.
-- **Rules live only in this file.** `CLAUDE.md`, `GEMINI.md` and
-  `.github/copilot-instructions.md` are pointers and carry no guidance of their own — never add
-  a rule to them.
+- **Project rules live only in this file.** `CLAUDE.md`, `GEMINI.md` and
+  `.github/copilot-instructions.md` point here and may only describe their own tool's
+  configuration — never add a project rule to them.
 
 ## Before you call a task done
 
