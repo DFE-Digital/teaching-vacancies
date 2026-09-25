@@ -20,7 +20,6 @@ RSpec.describe VacancyTemplate do
                            application_email
                            completed_steps
                            contact_number
-                           contact_number_provided
                            readable_phases
                            searchable_content
                            start_date_type
