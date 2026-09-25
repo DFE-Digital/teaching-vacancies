@@ -5,22 +5,15 @@ RSpec.describe "check job application after status transition" do
   let(:organisations) { publisher.organisations }
   let(:vacancy) { create(:vacancy, organisations:) }
   let(:jobseeker) { create(:jobseeker) }
-  let(:job_application) { jobseeker.reload.job_applications.where(status:).first }
   let(:status) { "" }
-
-  before do
-    JobApplication.statuses.transform_keys(&:to_sym).except(:reviewed).each_key do |status|
-      create(:job_application, :"status_#{status}", jobseeker:)
-    end
-
-    if job_application.present?
-      job_application.vacancy = vacancy
-      job_application.save!
-    end
-  end
+  let!(:job_application) { create(:job_application, :"status_#{status}", jobseeker:, vacancy:) if status.present? }
 
   describe "job applications listing" do
     it "jobseeker can view all its applications" do
+      JobApplication.statuses.transform_keys(&:to_sym).except(:reviewed).each_key do |application_status|
+        create(:job_application, :"status_#{application_status}", jobseeker:)
+      end
+
       run_with_jobseeker(jobseeker) do
         jobseeker_applications_page.load
 

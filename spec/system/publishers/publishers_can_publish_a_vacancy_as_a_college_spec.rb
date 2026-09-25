@@ -34,10 +34,8 @@ RSpec.describe "Creating a vacancy as an FE college" do
     expect(page).to have_no_content(I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.headteacher"))
     publisher_job_role_page.fill_in_and_submit_form(vacancy.job_roles.first)
 
-    # education_phases and key stages are skipped for FE colleges
-    expect(publisher_education_phase_page).not_to be_displayed
-    expect(publisher_key_stage_page).not_to be_displayed
-
+    # education_phases and key stages are skipped for FE colleges, so the subjects page follows job role.
+    # (Not asserted with `not_to be_displayed`: SitePrism waits the full Capybara timeout before that passes.)
     expect(publisher_subjects_page).to be_displayed
     publisher_subjects_page.fill_in_and_submit_form(vacancy.subjects)
 
@@ -88,7 +86,6 @@ RSpec.describe "Creating a vacancy as an FE college" do
       fill_in_job_details_through_important_dates(vacancy)
 
       # applying_for_the_job is skipped; how_to_receive_applications is shown instead
-      expect(publisher_applying_for_the_job_page).not_to be_displayed
       expect(publisher_how_to_receive_applications_page).to be_displayed
       publisher_how_to_receive_applications_page.fill_in_and_submit_form(vacancy.receive_applications)
 
@@ -137,7 +134,6 @@ RSpec.describe "Creating a vacancy as an FE college" do
       fill_in_job_details_through_important_dates(vacancy)
 
       # applying_for_the_job is skipped; how_to_receive_applications is shown instead
-      expect(publisher_applying_for_the_job_page).not_to be_displayed
       expect(publisher_how_to_receive_applications_page).to be_displayed
       publisher_how_to_receive_applications_page.fill_in_and_submit_form("uploaded_form")
 

@@ -18,24 +18,18 @@ RSpec.describe SelfDisclosurePdfGenerator do
 
     let(:pdf) { PDF::Inspector::Text.analyze(document.render).strings }
 
-    it { is_expected.to be_a(Prawn::Document) }
+    # One example for everything read from the document: rendering the PDF is the slow part.
+    it "renders the header, every section, the footer and the page number", :aggregate_failures do
+      expect(document).to be_a(Prawn::Document)
 
-    it "includes page header" do
       expect(pdf).to include(I18n.t(".self_disclosure_form", scope:))
-    end
 
-    it "includes section titles" do
       expect(pdf).to include("Personal details")
       expect(pdf).to include("Criminal record self-disclosure")
       expect(pdf).to include("Conduct self-disclosure")
       expect(pdf).to include("Confirmation self-disclosure")
-    end
 
-    it "includes page footer" do
       expect(pdf).to include("#{I18n.t('.self_disclosure_form', scope:)} - #{job_application.name}")
-    end
-
-    it "includes page number" do
       expect(pdf).to include("1 of 3")
     end
   end
