@@ -69,5 +69,24 @@ RSpec.describe Publishers::ShortlistShareMailer do
 
       expect(:publisher_shortlist).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
     end
+
+    context "when the vacancy uses an uploaded application form" do
+      let(:vacancy) { create(:vacancy, :with_uploaded_application_form) }
+
+      it "raises an error" do
+        expect { mail.message }.to raise_error(ArgumentError, "Uploaded application forms are not supported")
+      end
+    end
+
+    context "when the selection includes an application that is not shortlisted" do
+      let(:job_applications) { create_list(:job_application, 2, :status_submitted, vacancy:) }
+
+      it "raises an error" do
+        expect { mail.message }.to raise_error(
+          ArgumentError,
+          "Select between 1 and #{Publishers::JobApplication::ShortlistShareForm::MAX_APPLICATIONS} shortlisted applications",
+        )
+      end
+    end
   end
 end
