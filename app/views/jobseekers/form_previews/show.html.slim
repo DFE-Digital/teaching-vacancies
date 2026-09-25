@@ -1,0 +1,239 @@
+- content_for :page_title_prefix, t(".page_title")
+- content_for :meta_no_index do
+  meta name="robots" content="noindex,nofollow"
+
+ruby:
+  personal_detail_labels = [
+    t("helpers.label.jobseekers_job_application_personal_details_form.first_name"),
+    t("helpers.label.jobseekers_job_application_personal_details_form.last_name"),
+    t("helpers.label.jobseekers_job_application_personal_details_form.previous_names_optional"),
+    t("helpers.legend.jobseekers_job_application_personal_details_form.your_address"),
+    t("helpers.label.jobseekers_job_application_personal_details_form.phone_number"),
+    t("helpers.label.jobseekers_job_application_personal_details_form.email_address"),
+    t("helpers.legend.jobseekers_job_application_declarations_form.has_right_to_work_in_uk"),
+    t("helpers.label.jobseekers_job_application_personal_details_form.working_patterns"),
+    t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number_review"),
+    t("helpers.legend.jobseekers_job_application_personal_details_form.working_pattern_details"),
+  ]
+  professional_status_labels = [
+    t("helpers.legend.jobseekers_job_application_professional_status_form.qualified_teacher_status"),
+    t("jobseekers.job_application.age_range_and_subject"),
+    t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number_review"),
+    t("helpers.legend.jobseekers_job_application_professional_status_form.is_statutory_induction_complete"),
+  ]
+  secondary_qualification_labels = [
+    t(".qualification_fields.secondary_qualification"),
+    t(".qualification_fields.subject"),
+    t(".qualification_fields.grade"),
+    t(".qualification_fields.date_completed"),
+  ]
+  degree_qualification_labels = [
+    t(".qualification_fields.qualification_name"),
+    t(".qualification_fields.subject"),
+    t(".qualification_fields.institution"),
+    t(".qualification_fields.grade"),
+    t(".qualification_fields.date_completed"),
+  ]
+  qualification_groups = [
+    { heading: t("helpers.label.jobseekers_qualifications_category_form.category_options.postgraduate"), count: 1, labels: degree_qualification_labels },
+    { heading: t("helpers.label.jobseekers_qualifications_category_form.category_options.undergraduate"), count: 1, labels: degree_qualification_labels },
+    { heading: t("helpers.label.jobseekers_qualifications_category_form.category_options.a_level"), count: 3, labels: secondary_qualification_labels },
+    { heading: t("helpers.label.jobseekers_qualifications_category_form.category_options.gcse"), count: 5, labels: secondary_qualification_labels },
+  ]
+  training_labels = [
+    t(".training_fields.name"),
+    t(".training_fields.grade"),
+    t(".training_fields.provider"),
+    t(".training_fields.course_length"),
+    t(".training_fields.awarded_year"),
+  ]
+  membership_labels = [
+    t(".membership_fields.name"),
+    t(".membership_fields.type"),
+    t(".membership_fields.number"),
+    t(".membership_fields.date_obtained"),
+    t(".membership_fields.exam"),
+  ]
+  employment_labels = [
+    t(".employment_fields.employment"),
+    t(".employment_fields.job_title"),
+    t(".employment_fields.organisation"),
+    t(".employment_fields.main_duties"),
+    t(".employment_fields.subjects"),
+    t(".employment_fields.current_role"),
+    t(".employment_fields.reason_for_leaving"),
+    t(".employment_fields.end_date"),
+    t(".employment_fields.start_date"),
+  ]
+  reference_labels = [
+    t(".reference_fields.name"),
+    t(".reference_fields.job_title"),
+    t(".reference_fields.organisation"),
+    t(".reference_fields.relationship"),
+    t(".reference_fields.email"),
+    t(".reference_fields.phone_number"),
+  ]
+  organisation_type = organisation_label_type(@vacancy.organisation)
+  declaration_labels = [
+    t("helpers.legend.jobseekers_job_application_declarations_form.has_safeguarding_issue"),
+    t("helpers.legend.jobseekers_job_application_declarations_form.has_close_relationships.#{organisation_type}", organisation: @vacancy.organisation_name),
+  ]
+  catholic_religion_labels = [
+    t(".religion.catholic.following"),
+    t(".religion.catholic.faith"),
+    t(".religion.catholic.place_of_worship"),
+    t(".religion.catholic.religious_referee"),
+    t(".religion.catholic.religious_referee_details"),
+    t(".religion.catholic.name"),
+    t(".religion.catholic.address"),
+    t(".religion.catholic.role"),
+    t(".religion.catholic.email"),
+    t(".religion.catholic.phone"),
+    t(".religion.catholic.baptism_certificate"),
+    t(".religion.catholic.baptism_details"),
+    t(".religion.catholic.baptism_information"),
+    t(".religion.catholic.baptism_address"),
+    t(".religion.catholic.baptism_date"),
+    t(".religion.catholic.no_evidence"),
+  ]
+  other_religion_labels = [
+    t(".religion.other.ethos"),
+    t(".religion.other.following"),
+    t(".religion.other.faith"),
+    t(".religion.other.place_of_worship"),
+    t(".religion.other.religious_referee"),
+    t(".religion.other.religious_referee_details"),
+    t(".religion.other.name"),
+    t(".religion.other.address"),
+    t(".religion.other.role"),
+    t(".religion.other.email"),
+    t(".religion.other.phone"),
+  ]
+
+.print-actions class="govuk-!-display-none-print"
+  button.govuk-button type="button" data-print-button="true" = t(".print")
+
+header.print-header
+  .print-header__text
+    p.print-header__caption = t("jobseekers.job_applications.caption", job_title: @vacancy.job_title, organisation: @vacancy.organisation_name)
+    h1.print-header__applicant-name
+      span.govuk-visually-hidden = t(".title")
+  = image_tag "TVS-logo.png", class: "print-header__logo", alt: t("app.title")
+
+p.print-introduction = t("jobseekers.job_applications.show.consent_text")
+
+section.print-section
+  h2.print-section__heading = t("jobseekers.job_applications.show.personal_details.heading")
+  .print-table
+    - personal_detail_labels.each do |label|
+      .print-table__row
+        p.print-table__label = label
+        .print-table__writing-space aria-hidden="true"
+
+section.print-section
+  h2.print-section__heading = t("jobseekers.job_applications.show.professional_status.heading")
+  .print-table
+    - professional_status_labels.each do |label|
+      .print-table__row
+        p.print-table__label = label
+        .print-table__writing-space aria-hidden="true"
+
+section.print-section
+  h2.print-section__heading = t("jobseekers.job_applications.show.qualifications.heading")
+  - qualification_groups.each do |group|
+    .print-subsection
+      h3.print-subsection__heading = group[:heading]
+      - group[:count].times do
+        article.print-record.print-qualification
+          .print-table
+            - group[:labels].each do |label|
+              .print-table__row
+                p.print-table__label = label
+                .print-table__writing-space aria-hidden="true"
+
+section.print-section
+  h2.print-section__heading = t("jobseekers.job_applications.show.training_and_cpds.heading")
+  - 2.times do
+    article.print-record.print-training-record
+      .print-table
+        - training_labels.each do |label|
+          .print-table__row
+            p.print-table__label = label
+            .print-table__writing-space aria-hidden="true"
+
+section.print-section
+  h2.print-section__heading = t("jobseekers.job_applications.show.professional_body_memberships.heading")
+  - 2.times do
+    article.print-record.print-membership-record
+      .print-table
+        - membership_labels.each do |label|
+          .print-table__row
+            p.print-table__label = label
+            .print-table__writing-space aria-hidden="true"
+
+section.print-section
+  h2.print-section__heading = t("jobseekers.job_applications.show.employment_history.heading")
+  - 5.times do
+    article.print-record.print-employment-record
+      .print-table
+        - employment_labels.each do |label|
+          .print-table__row
+            p.print-table__label = label
+            .print-table__writing-space aria-hidden="true"
+
+section.print-section.print-personal-statement
+  h2.print-section__heading = t("jobseekers.job_applications.show.personal_statement.heading")
+  .print-personal-statement__writing-space aria-hidden="true"
+
+- if @vacancy.catholic? || @vacancy.other_religion?
+  section.print-section
+    h2.print-section__heading = t("jobseekers.job_applications.show.religious_information.heading")
+    .print-table
+      - (@vacancy.catholic? ? catholic_religion_labels : other_religion_labels).each do |label|
+        .print-table__row
+          p.print-table__label = label
+          .print-table__writing-space aria-hidden="true"
+
+section.print-section
+  h2.print-section__heading = t("jobseekers.job_applications.show.referees.heading")
+  - 2.times do
+    article.print-record.print-reference-record
+      .print-table
+        - reference_labels.each do |label|
+          .print-table__row
+            p.print-table__label = label
+            .print-table__writing-space aria-hidden="true"
+
+section.print-section
+  h2.print-section__heading = t("jobseekers.job_applications.show.ask_for_support.heading")
+  .print-table
+    .print-table__row
+      p.print-table__label = t("helpers.legend.jobseekers_job_application_ask_for_support_form.is_support_needed")
+      .print-table__writing-space aria-hidden="true"
+
+section.print-section
+  h2.print-section__heading = t("jobseekers.job_applications.show.declarations.heading")
+  .print-table
+    - declaration_labels.each do |label|
+      .print-table__row
+        p.print-table__label = label
+        .print-table__writing-space aria-hidden="true"
+
+section.print-section.print-confirmation
+  h2.print-section__heading = t(".confirmation.heading")
+  .print-checkbox-row
+    span.print-checkbox aria-hidden="true"
+    p.print-checkbox__label = t(".confirmation.checkbox")
+
+section.print-section.print-data-use
+  h2.print-section__heading = t(".data_use.heading")
+  .print-consent
+    p = t(".data_use.lead")
+    ul
+      li = t(".data_use.department_for_education")
+      li = t(".data_use.listing_organisation")
+      li = t(".data_use.employing_schools")
+    p = t(".data_use.privacy")
+    .print-checkbox-row
+      span.print-checkbox aria-hidden="true"
+      p.print-checkbox__label = t(".data_use.checkbox")

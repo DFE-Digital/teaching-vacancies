@@ -1,0 +1,221 @@
+$print-dark-grey: #333;
+$print-light-blue: #f0f8ff;
+$print-white: #fff;
+
+@page {
+  margin: 10mm;
+  size: A4;
+}
+
+.print-layout {
+  margin: 0 auto;
+  max-width: 190mm;
+  padding: 10mm;
+}
+
+.print-actions {
+  margin: 0 auto 10mm;
+  max-width: 190mm;
+}
+
+.print-header {
+  align-items: flex-start;
+  background: $print-light-blue;
+  box-sizing: border-box;
+  color: $print-dark-grey;
+  display: flex;
+  font-family: arial, sans-serif;
+  height: 30mm;
+  justify-content: space-between;
+  padding: 7mm 10mm;
+
+  &__caption {
+    font-size: 12pt;
+    font-style: italic;
+    margin: 0 0 5mm;
+  }
+
+  &__applicant-name {
+    border-bottom: 2px solid $print-dark-grey;
+    height: 8mm;
+    margin: 0;
+    width: 70mm;
+  }
+
+  &__logo {
+    height: auto;
+    width: 40mm;
+  }
+}
+
+.print-introduction {
+  color: $print-dark-grey;
+  font-family: arial, sans-serif;
+  font-size: 10pt;
+  font-style: italic;
+  margin: 5mm 0 7mm;
+}
+
+.print-section {
+  color: $print-dark-grey;
+  font-family: arial, sans-serif;
+  margin-bottom: 10mm;
+
+  &__heading {
+    align-items: center;
+    background: #ddd;
+    break-after: avoid;
+    page-break-after: avoid;
+    display: flex;
+    font-size: 18pt;
+    font-weight: bold;
+    height: 10mm;
+    margin: 0;
+    padding: 0 5mm;
+  }
+}
+
+.print-table {
+  &__row {
+    border-top: 1px solid #ddd;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    display: grid;
+    grid-template-columns: 53mm 1fr;
+    min-height: 10mm;
+
+    &:last-child {
+      border-bottom: 1px solid #ddd;
+    }
+  }
+
+  &__label {
+    align-self: center;
+    font-size: 12pt;
+    font-weight: bold;
+    line-height: 1.05;
+    margin: 0;
+    padding: 2mm;
+  }
+}
+
+.print-subsection {
+  margin-top: 3mm;
+
+  &__heading {
+    align-items: center;
+    background: #ececec;
+    break-after: avoid;
+    page-break-after: avoid;
+    color: $print-dark-grey;
+    display: flex;
+    font-family: arial, sans-serif;
+    font-size: 14pt;
+    font-weight: bold;
+    height: 10mm;
+    margin: 0 0 4mm;
+    padding: 0 10mm;
+  }
+}
+
+.print-record {
+  break-inside: avoid;
+  margin-bottom: 10mm;
+  page-break-inside: avoid;
+}
+
+.print-personal-statement {
+  break-after: page;
+  break-before: page;
+  break-inside: avoid;
+  page-break-after: always;
+  page-break-before: always;
+  page-break-inside: avoid;
+
+  &__writing-space {
+    min-height: 190mm;
+  }
+}
+
+.print-checkbox-row {
+  align-items: flex-start;
+  break-inside: avoid;
+  display: flex;
+  gap: 5mm;
+  margin: 5mm;
+}
+
+.print-checkbox {
+  border: 1mm solid $print-dark-grey;
+  box-sizing: border-box;
+  flex: 0 0 8mm;
+  height: 8mm;
+
+  &__label {
+    font-family: arial, sans-serif;
+    font-size: 12pt;
+    margin: 0;
+  }
+}
+
+.print-consent {
+  font-family: arial, sans-serif;
+  font-size: 12pt;
+  padding: 3mm 5mm 0;
+
+  p,
+  ul {
+    font-family: inherit;
+    font-size: inherit;
+  }
+}
+
+.print-confirmation,
+.print-data-use {
+  break-inside: avoid;
+}
+
+@media print {
+  html,
+  body {
+    background: $print-white;
+  }
+
+  .govuk-header,
+  .govuk-breadcrumbs,
+  .govuk-footer {
+    display: none !important;
+  }
+
+  .review-component__section__heading__title .govuk-heading-m {
+    font-size: x-large !important;
+  }
+
+  .review-component__sections {
+    margin: 0;
+
+    * {
+      font-size: medium !important;
+    }
+  }
+
+  .print-layout {
+    max-width: none;
+    padding: 0;
+  }
+
+  .print-actions {
+    display: none !important;
+  }
+
+  .print-header {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .print-section__heading,
+  .print-subsection__heading {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
