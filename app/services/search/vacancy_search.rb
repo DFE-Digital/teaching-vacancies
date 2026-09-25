@@ -3,26 +3,26 @@ class Search::VacancySearch
 
   def_delegators :location_search, :point_coordinates, :polygon
 
-  attr_reader :search_criteria, :keyword, :location, :radius, :organisation_slug, :sort, :original_scope
+  attr_reader :search_criteria, :keyword, :location, :radius, :organisation_slug, :sort
 
   def initialize(search_criteria, sort: nil, scope: PublishedVacancy.live)
-    @search_criteria = search_criteria.except(:keyword)
+    @search_criteria = search_criteria.except(:keyword, :location, :radius)
     @keyword = search_criteria[:keyword]
     @location = search_criteria[:location]
     @radius = search_criteria[:radius]
     @organisation_slug = search_criteria[:organisation_slug]
     @sort = sort || Search::VacancySort.new(keyword: keyword, location: location)
-    @original_scope = scope.where(scope.where_values_hash)
     @scope = scope
   end
 
   def active_criteria
-    search_criteria.merge(keyword: @keyword)
-      .reject { |k, v| v.blank? || (k == :radius && search_criteria[:location].blank?) }
+    search_criteria.merge(keyword: @keyword, location: @location, radius: @radius)
+      .reject { |k, v| v.blank? || (k == :radius && @location.blank?) }
   end
 
   def clear_filters_params
-    active_criteria.merge(teaching_job_roles: [], support_job_roles: [], ect_statuses: [], phases: [], working_patterns: [], quick_apply: [], subjects: [], organisation_types: [], school_types: [], previous_keyword: keyword, visa_sponsorship_availability: [], skip_strip_checkboxes: true)
+    active_criteria.merge(teaching_job_roles: [], support_job_roles: [], ect_statuses: [], phases: [], working_patterns: [],
+                          quick_apply: [], subjects: [], organisation_types: [], school_types: [], previous_keyword: keyword, visa_sponsorship_availability: [], skip_strip_checkboxes: true)
   end
 
   def remove_filter_params
@@ -34,11 +34,7 @@ class Search::VacancySearch
   end
 
   def location_search
-    @location_search ||= Search::LocationBuilder.new(search_criteria[:location], search_criteria[:radius])
-  end
-
-  def wider_search_suggestions
-    @wider_search_suggestions ||= Search::WiderSuggestionsBuilder.call(self)
+    @location_search ||= Search::LocationBuilder.new(@location, @radius)
   end
 
   def organisation
@@ -53,16 +49,25 @@ class Search::VacancySearch
     @total_count ||= vacancies.size
   end
 
+  def scope_without_location
+    scope = @scope.includes(:organisations)
+    # simplecov:disable
+    scope = scope.where(id: organisation.all_vacancies.pluck(:id)) if organisation
+    # simplecov:enable
+    scope = scope.search_by_filter(search_criteria) if search_criteria.any?
+    scope = scope.search_by_full_text(keyword) if keyword.present?
+    scope
+  end
+
   private
 
   def scope
+    scope = scope_without_location
     sort_by_distance = sort.by == "distance"
-    scope = @scope.includes(:organisations)
-    scope = scope.where(id: organisation.all_vacancies.pluck(:id)) if organisation
     scope = scope.search_by_location(location, radius, polygon:, sort_by_distance:) if location
-    scope = scope.search_by_filter(search_criteria) if search_criteria.any?
-    scope = scope.search_by_full_text(keyword) if keyword.present?
-    order_scope(scope, sort_by_distance)
+    # if sort_by_distance is true then the sorting is handled by the search_by_filter method so we do not re-order here.
+    scope = order_scope(scope) unless sort_by_distance
+    scope
   end
 
   def sort_by
@@ -73,9 +78,7 @@ class Search::VacancySearch
     end
   end
 
-  def order_scope(scope, sort_by_distance)
-    # if sort_by_distance is true then the sorting is handled by the search_by_filter method so we do not re-order here.
-    return scope if sort_by_distance
+  def order_scope(scope)
     # only re-order the query if sort is a valid db column
     return scope unless sort&.by_db_column?
 
