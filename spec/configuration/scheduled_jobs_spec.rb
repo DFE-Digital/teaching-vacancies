@@ -7,30 +7,27 @@ RSpec.describe "Scheduled jobs configuration" do
 
     ApplicationJob.descendants.map(&:name)
   end
-  let(:gem_jobs) { %w[DfE::Analytics::Jobs::EntityTableCheckJob] }
+  let(:gem_jobs) { [DfE::Analytics::Jobs::EntityTableCheckJob].map(&:to_s) }
   let(:scheduled_jobs) { YAML.load_file("./config/recurring.yml").fetch("production").values.pluck("class").uniq.compact }
   let(:unscheduled_jobs) do
-    %w[
-      AlertEmail::Base
-      RemoveGoogleIndexQueueJob
-      SeedDatabaseJob
-      SendJobListingEndedEarlyNotificationJob
-      UpdateGoogleIndexQueueJob
-      Noticed::DeliveryMethods::Base
-      Noticed::DeliveryMethods::Database
-      Noticed::DeliveryMethods::Email
-      Sentry::SendEventJob
-      SetOrganisationSlugsJob
-      SetOrganisationSlugsOfBatchJob
-      ImportFromVacancySourceJob
-      TrackVacancyViewJob
-      EqualOpportunitiesReportUpdateJob
-      SetSubscriptionLocationDataJob
-      UpdateSingleDSIUserInDbJob
-      FetchMalwareScanResultJob
-      SendJobAlertsJob
-      TestApplicationJob
-    ]
+    [
+      AlertEmail::Base,
+      RemoveGoogleIndexQueueJob,
+      SeedDatabaseJob,
+      SendJobListingEndedEarlyNotificationJob,
+      UpdateGoogleIndexQueueJob,
+      Noticed::DeliveryMethods::Email,
+      Sentry::SendEventJob,
+      SetOrganisationSlugsJob,
+      SetOrganisationSlugsOfBatchJob,
+      ImportFromVacancySourceJob,
+      TrackVacancyViewJob,
+      EqualOpportunitiesReportUpdateJob,
+      SetSubscriptionLocationDataJob,
+      UpdateSingleDSIUserInDbJob,
+      FetchMalwareScanResultJob,
+      SendJobAlertsJob,
+    ].map(&:to_s)
   end
 
   it "includes all scheduled jobs in the schedule" do
