@@ -21,7 +21,6 @@ RSpec.describe "Scheduled jobs configuration" do
       SetOrganisationSlugsJob,
       SetOrganisationSlugsOfBatchJob,
       ImportFromVacancySourceJob,
-      TrackVacancyViewJob,
       EqualOpportunitiesReportUpdateJob,
       SetSubscriptionLocationDataJob,
       UpdateSingleDSIUserInDbJob,
