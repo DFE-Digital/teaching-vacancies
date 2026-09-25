@@ -95,7 +95,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
     vacancy.refresh_slug
     update_google_index(vacancy) if vacancy.live?
 
-    vacancy.save
+    vacancy.save!
   end
 
   def set_steps

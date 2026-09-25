@@ -23,6 +23,9 @@ module Resettable
     # expired vacancies often have fields that no longer validate, so
     # performing this on a before_save hook (during backfills) can be problematic
     before_save :reset_dependent_fields, if: -> { resettable? }
+
+    validates :benefits_details, absence: true, if: -> { benefits == false }
+    validates :benefits_details, presence: true, if: -> { benefits == true }
   end
 
   def reset_dependent_fields
@@ -102,11 +105,6 @@ module Resettable
 
   def further_details_provided=(value)
     self[:further_details] = nil unless value
-    super
-  end
-
-  def benefits=(value)
-    self[:benefits_details] = nil unless value
     super
   end
 end

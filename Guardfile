@@ -175,6 +175,7 @@ PUBLISHER_ORG_MAPPINGS = {
   logo: %w[],
   email: %w[],
   description: %w[],
+  schools: %w[],
 }.freeze
 
 API_MAPPINGS = {
@@ -225,6 +226,7 @@ SIMPLE_MAPPINGS = {
   posts: [:jobseekers, %w[]],
   pages: [:jobseekers, %w[]],
   vacancies: [:jobseekers, %w[]],
+  organisations: [:jobseekers, %w[]],
 }.freeze
 
 def map_type_to_spec(type, system_spec)
