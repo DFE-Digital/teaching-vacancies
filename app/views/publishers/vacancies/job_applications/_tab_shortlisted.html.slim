@@ -1,2 +1,6 @@
+- button_group = %i[update_status download message_shortlisted]
+- button_group.insert(1, :share_shortlisted) unless vacancy.uploaded_form?
+
 = render TabPanelComponent.new(tab_name:, vacancy:, form:,
-  candidates: candidates.values.flatten, button_group: %i[update_status download message_shortlisted])
+  candidates: candidates.values.flatten,
+  button_group:)

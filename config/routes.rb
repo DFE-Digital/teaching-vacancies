@@ -442,6 +442,9 @@ Rails.application.routes.draw do
       resource :relist, only: %i[create edit update], controller: "publishers/vacancies/relist"
       resource :end_listing, only: %i[show update], controller: "publishers/vacancies/end_listing"
       resource :extend_deadline, only: %i[show update], controller: "publishers/vacancies/extend_deadline"
+      resource :shortlist_share, only: %i[new create], controller: "publishers/vacancies/shortlist_shares" do
+        post :review
+      end
 
       resources :job_applications, only: %i[index show], controller: "publishers/vacancies/job_applications" do
         resources :notes, only: %i[create destroy], controller: "publishers/vacancies/job_applications/notes"
