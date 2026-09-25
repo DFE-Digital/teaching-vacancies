@@ -518,7 +518,6 @@ shared:
     - pay_scale
     - receive_applications
     - application_email
-    - contact_number_provided
     - skills_and_experience
     - school_offer
     - further_details_provided
