@@ -110,10 +110,8 @@ module TeachingVacancies
     if ENV["VCAP_SERVICES"].present?
       vcap_services = VcapServices.new(ENV.fetch("VCAP_SERVICES", nil))
 
-      config.redis_queue_url = vcap_services.named_service_url(:redis, "queue")
       config.redis_cache_url = vcap_services.named_service_url(:redis, "cache")
     else
-      config.redis_queue_url = ENV.fetch("REDIS_QUEUE_URL", "redis://localhost:6379/0")
       config.redis_cache_url = ENV.fetch("REDIS_CACHE_URL", "redis://localhost:6379/1")
     end
 
