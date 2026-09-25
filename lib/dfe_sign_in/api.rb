@@ -1,78 +1,75 @@
-require "dfe_sign_in/api/request"
-require "dfe_sign_in/api/response"
+require "jwt"
 
 module DfeSignIn
+  # A thin client for the DfE Sign In users API. It hands back lazy Enumerators of raw DSI
+  # user hashes, so callers can just loop (`DfeSignIn::API.users.each { |user| ... }`)
+  # without knowing the API is paginated underneath.
   module API
-    APPROVERS_ENDPOINT = "/users/approvers".freeze
-    APPROVERS_PAGE_SIZE = 275
+    class ForbiddenRequestError < StandardError; end
+    class ExternalServerError < StandardError; end
+    class UnknownResponseError < StandardError; end
+
     USERS_ENDPOINT = "/users".freeze
     USERS_PAGE_SIZE = 275
+    APPROVERS_ENDPOINT = "/users/approvers".freeze
+    APPROVERS_PAGE_SIZE = 275
 
-    def dsi_users
-      users_pagination.results
-    end
+    class << self
+      def users(&)
+        return enum_for(:users) unless block_given?
 
-    # The total number of pages of users, so a caller can step through them one at a time
-    # (e.g. to checkpoint progress between pages) rather than only via #dsi_users.
-    def dsi_users_page_count
-      users_pagination.number_of_pages
-    end
-
-    def dsi_users_page(page)
-      users_pagination.page(page)
-    end
-
-    def dsi_approvers
-      approvers_pagination.results
-    end
-
-    def dsi_approvers_page_count
-      approvers_pagination.number_of_pages
-    end
-
-    def dsi_approvers_page(page)
-      approvers_pagination.page(page)
-    end
-
-    private
-
-    def users_pagination
-      PaginatedUsers.new(USERS_ENDPOINT, USERS_PAGE_SIZE)
-    end
-
-    def approvers_pagination
-      PaginatedUsers.new(APPROVERS_ENDPOINT, APPROVERS_PAGE_SIZE)
-    end
-
-    class PaginatedUsers
-      attr_reader :endpoint, :page_size
-
-      def initialize(endpoint, page_size)
-        @endpoint = endpoint
-        @page_size = page_size
+        paginate(USERS_ENDPOINT, USERS_PAGE_SIZE, &)
       end
 
-      def results
-        # First page request to get the total number of pages
-        first_page = fetch(1)
+      def approvers(&)
+        return enum_for(:approvers) unless block_given?
 
-        (1..first_page.number_of_pages).lazy.map do |page|
-          page == 1 ? first_page.users : fetch(page).users # We already have the response for page 1
-        end
-      end
-
-      def number_of_pages
-        fetch(1).number_of_pages
-      end
-
-      def page(page_number)
-        fetch(page_number).users
+        paginate(APPROVERS_ENDPOINT, APPROVERS_PAGE_SIZE, &)
       end
 
       private
 
-      def fetch(page_number)
-        DfeSignIn::API::Response.new(DfeSignIn::API::Request.new(endpoint, page_number, page_size))
+      def paginate(endpoint, page_size, &)
+        page = 1
+
+        loop do
+          body = fetch(endpoint, page, page_size)
+          Array(body["users"]).each(&)
+
+          break if page >= body.fetch("numberOfPages", page)
+
+          page += 1
+        end
+      end
+
+      def fetch(endpoint, page, page_size)
+        response = connection.get(endpoint, page: page, pageSize: page_size)
+
+        raise ExternalServerError if response.status == 500
+        raise ForbiddenRequestError if response.status == 403
+        raise UnknownResponseError unless response.status == 200
+
+        response.body
+      end
+
+      # The status checks stay in #fetch rather than using the :raise_error middleware, which
+      # would raise inside HttpClient's retry middleware and stop 5xx responses being retried.
+      # The token is a proc so every request, including each retry, is signed afresh.
+      def connection
+        HttpClient.connection(url: ENV.fetch("DFE_SIGN_IN_URL", nil)) do |conn|
+          conn.request :authorization, "Bearer", -> { jwt_token }
+          conn.response :json
+        end
+      end
+
+      def jwt_token
+        payload = {
+          iss: "schooljobs",
+          exp: (Time.current.getlocal + 60).to_i,
+          aud: "signin.education.gov.uk",
+        }
+
+        JWT.encode(payload, ENV.fetch("DFE_SIGN_IN_PASSWORD", nil), "HS256")
       end
     end
   end
