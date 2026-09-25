@@ -5,7 +5,7 @@ Date: 10/10/2019
 approved
 
 ## Context
-We need to get a postcode from the coordinates we get from the browser.
+We need to get a post code from the coordinates we get from the browser.
 
 ## Decision
 To use postcodes.io instead of geocoder gem and just make a simple AJAX call from the browser.
