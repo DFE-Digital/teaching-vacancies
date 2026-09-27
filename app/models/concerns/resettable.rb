@@ -26,6 +26,9 @@ module Resettable
 
     validates :benefits_details, absence: true, if: -> { benefits == false }
     validates :benefits_details, presence: true, if: -> { benefits == true }
+
+    validates :fixed_term_contract_duration, absence: true, unless: -> { contract_type == "fixed_term" }
+    validates :fixed_term_contract_duration, presence: true, if: -> { contract_type == "fixed_term" }
   end
 
   def reset_dependent_fields
@@ -44,11 +47,6 @@ module Resettable
     return unless working_patterns_changed? && working_patterns == ["full_time"]
 
     self.actual_salary = ""
-  end
-
-  def contract_type=(value)
-    self.fixed_term_contract_duration = "" if value != "fixed_term"
-    super
   end
 
   def reset_keystages

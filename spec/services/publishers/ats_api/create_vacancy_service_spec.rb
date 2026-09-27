@@ -21,7 +21,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       job_advert: job_advert,
       external_advert_url: "https://example.com",
       job_roles: job_roles,
-      contract_type: "fixed_term",
+      contract_type: "permanent",
       phases: %w[primary],
       working_patterns: working_patterns,
       expires_at: expires_at,

@@ -129,7 +129,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "external_application_clicks" => 0,
           "external_reference" => "invalid_vac_ref",
           "external_source" => "may_the_feed_be_with_you",
-          "fixed_term_contract_duration" => "",
+          "fixed_term_contract_duration" => nil,
           "flexi_working" => "Debitis id voluptate cumque iusto quod ut libero facere repellendus est perspiciatis rem labore voluptatibus",
           "further_details" => "details",
           "further_details_provided" => true,

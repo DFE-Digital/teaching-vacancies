@@ -54,6 +54,7 @@ class Vacancies::Import::Sources::Fusion
       subjects: item["subjects"].presence&.split(",") || [],
       working_patterns: working_patterns_for(item),
       contract_type: contract_type_for(item),
+      fixed_term_contract_duration: fixed_term_contract_duration_for(item),
       is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phases_for(item, schools.first),
       key_stages: item["keyStages"].presence&.split(","),
@@ -166,6 +167,14 @@ class Vacancies::Import::Sources::Fusion
     return "fixed_term" if item["contractType"] == "parental_leave_cover"
 
     item["contractType"].presence
+  end
+
+  def fixed_term_contract_duration_for(item)
+    if item["contractType"] == "parental_leave_cover"
+      "Parental Leave Cover"
+    elsif item["contractType"] == "fixed_term"
+      "Unknown"
+    end
   end
 
   def parental_leave_cover_for?(item)

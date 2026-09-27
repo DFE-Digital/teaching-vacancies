@@ -148,7 +148,7 @@ RSpec.describe VacancyDecorator do
 
   describe "#working_patterns_for_job_schema" do
     context "when FULL_TIME" do
-      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time], fixed_term_contract_duration: nil) }
+      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time]) }
 
       it "returns an array containing FULL_TIME" do
         expect(decorated.working_patterns_for_job_schema).to eq %w[FULL_TIME]
@@ -156,7 +156,7 @@ RSpec.describe VacancyDecorator do
     end
 
     context "when PART_TIME" do
-      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[part_time], fixed_term_contract_duration: nil) }
+      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[part_time]) }
 
       it "returns an array containing PART_TIME" do
         expect(decorated.working_patterns_for_job_schema).to eq %w[PART_TIME]
@@ -385,16 +385,8 @@ RSpec.describe VacancyDecorator do
   end
 
   describe "#readable_contract_information" do
-    let(:vacancy) do
-      build_stubbed(:vacancy, contract_type: contract_type,
-                              fixed_term_contract_duration: fixed_term_contract_duration,
-                              is_parental_leave_cover: is_parental_leave_cover)
-    end
-
     context "when permanent" do
-      let(:contract_type) { :permanent }
-      let(:fixed_term_contract_duration) { "" }
-      let(:is_parental_leave_cover) { nil }
+      let(:vacancy) { build_stubbed(:vacancy, contract_type: :permanent) }
 
       it "returns Permanent" do
         expect(decorated.readable_contract_information).to eq "Permanent"
@@ -402,8 +394,7 @@ RSpec.describe VacancyDecorator do
     end
 
     context "when fixed term" do
-      let(:contract_type) { :fixed_term }
-      let(:fixed_term_contract_duration) { "6 months" }
+      let(:vacancy) { build_stubbed(:vacancy, :fixed_term, is_parental_leave_cover: is_parental_leave_cover) }
 
       context "when is_parental_leave_cover is false" do
         let(:is_parental_leave_cover) { false }

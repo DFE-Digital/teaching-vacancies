@@ -38,6 +38,7 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated do
     end
     let(:vacancy_updated) do
       create(:vacancy,
+             :fixed_term,
              id: "0ee558c1-3587-4f7a-a0c2-d40a2289c7fe",
              publish_on: 2.days.ago,
              updated_at: 1.hour.ago,
@@ -49,7 +50,6 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated do
              expires_at: Time.zone.local(2024, 5, 20, 9, 0, 0),
              working_patterns: ["part_time"],
              job_roles: ["it_support"],
-             contract_type: "fixed_term",
              slug: "it-technician",
              organisations: [org])
     end

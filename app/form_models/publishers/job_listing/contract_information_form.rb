@@ -30,7 +30,12 @@ class Publishers::JobListing::ContractInformationForm < Publishers::JobListing::
   end
 
   def params_to_save
-    { working_patterns:, working_patterns_details:, is_job_share:, contract_type:, fixed_term_contract_duration:, is_parental_leave_cover: }
+    { working_patterns:,
+      working_patterns_details:,
+      is_job_share:,
+      contract_type:,
+      fixed_term_contract_duration: contract_type == "fixed_term" ? fixed_term_contract_duration : "",
+      is_parental_leave_cover: }
   end
 
   private

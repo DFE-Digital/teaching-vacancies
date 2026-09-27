@@ -62,6 +62,7 @@ class Vacancies::Import::Sources::Broadbean
       subjects: item["subjects"].presence&.split(",") || [],
       working_patterns: working_patterns_for(item),
       contract_type: contract_type_for(item),
+      fixed_term_contract_duration: fixed_term_contract_duration_for(item),
       is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phases_for(item, schools.first),
       visa_sponsorship_available: visa_sponsorship_available_for?(item),
@@ -144,6 +145,10 @@ class Vacancies::Import::Sources::Broadbean
     return "fixed_term" if item["contractType"] == "parental_leave_cover"
 
     item["contractType"].presence
+  end
+
+  def fixed_term_contract_duration_for(item)
+    "Parental Leave Cover" if item["contractType"] == "parental_leave_cover"
   end
 
   def parental_leave_cover_for?(item)
