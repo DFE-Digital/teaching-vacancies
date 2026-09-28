@@ -1,8 +1,0 @@
-= tvs_summary_card title: title do |detail|
-  - detail.with_body do
-    = govuk_summary_list do |summary_list|
-      - object.attributes.each_key do |column_name|
-        - next if column_name.match?(/password|token/) || column_name.ends_with?("_ciphertext")
-        - summary_list.with_row do |row|
-          - row.with_key text: column_name.humanize
-          - row.with_value text: object.public_send(column_name).to_s

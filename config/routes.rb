@@ -302,7 +302,6 @@ Rails.application.routes.draw do
 
     get "service-data", to: "service_data#index"
     namespace :service_data, path: "service-data" do
-      resources :jobseeker_profiles, only: %i[index show]
       resources :fe_colleges_without_publishers, only: %i[index]
     end
 
