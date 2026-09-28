@@ -4,7 +4,7 @@ en:
       show:
         page_title: Blank application form
         title: Blank application form
-        print: Print or save as PDF
+        print_instructions: Use your browser's print option to print this blank application form or save it as a PDF.
         qualification_fields:
           secondary_qualification: Secondary Qualification
           qualification_name: Qualification Name

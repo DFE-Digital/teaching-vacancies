@@ -38,10 +38,12 @@ RSpec.describe "Jobseekers::FormPreviewController" do
       expect(page).to have_text("Do you have a family or close relationship with anyone who works at #{organisation.name}")
     end
 
-    it "renders the print control" do
-      expect(page).to have_button("Print or save as PDF")
-      expect(page).to have_css("[class~='govuk-!-display-none-print']", text: "Print or save as PDF")
-      expect(page).to have_css("script[src*='print']", visible: :all)
+    it "renders browser print instructions" do
+      expect(page).to have_css(
+        "[class~='govuk-!-display-none-print']",
+        text: "Use your browser's print option to print this blank application form or save it as a PDF.",
+      )
+      expect(page).to have_no_css("[data-print-button], script[src*='print']", visible: :all)
     end
 
     it "does not render analytics or application chrome" do
