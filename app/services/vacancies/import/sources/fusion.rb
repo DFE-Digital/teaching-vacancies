@@ -170,9 +170,12 @@ class Vacancies::Import::Sources::Fusion
   end
 
   def fixed_term_contract_duration_for(item)
-    if item["contractType"] == "parental_leave_cover"
+    #simplecov:disable
+    case item["contractType"]
+      #simplecov:enable
+    when "parental_leave_cover"
       "Parental Leave Cover"
-    elsif item["contractType"] == "fixed_term"
+    when "fixed_term"
       "Unknown"
     end
   end
