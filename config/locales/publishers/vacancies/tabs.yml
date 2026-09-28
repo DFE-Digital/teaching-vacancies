@@ -26,7 +26,7 @@ en:
       heading: Applications not progressing
       none: No applications have been marked for rejection
       hint: >-
-        This section includes people that your school are not considering for this role,
+        This section includes people that your organisation are not considering for this role,
         as well as those who have withdrawn their applications.
     shortlisted:
       label: "Shortlisted (%{count})"
