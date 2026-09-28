@@ -13,11 +13,6 @@ $print-white: #fff;
   padding: 10mm;
 }
 
-.print-actions {
-  margin: 0 auto 10mm;
-  max-width: 190mm;
-}
-
 .print-header {
   align-items: flex-start;
   background: $print-light-blue;
@@ -202,10 +197,6 @@ $print-white: #fff;
   .print-layout {
     max-width: none;
     padding: 0;
-  }
-
-  .print-actions {
-    display: none !important;
   }
 
   .print-header {
