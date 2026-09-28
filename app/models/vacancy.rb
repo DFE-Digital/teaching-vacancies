@@ -382,7 +382,7 @@ class Vacancy < ApplicationRecord
                             uk_points = organisations.filter_map(&:uk_geopoint)
                             uk_points.presence && uk_points.first.factory.multi_point(uk_points)
                           end
-    # simplecov:disable
+    # simplecov:enable
   end
 
   def resettable?
