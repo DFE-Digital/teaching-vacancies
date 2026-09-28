@@ -114,12 +114,10 @@ ruby:
 
 p.govuk-body class="govuk-!-display-none-print" = t(".print_instructions")
 
-header.print-header
-  .print-header__text
-    p.print-header__caption = t("jobseekers.job_applications.caption", job_title: @vacancy.job_title, organisation: @vacancy.organisation_name)
-    h1.print-header__applicant-name
-      span.govuk-visually-hidden = t(".title")
-  = image_tag "TVS-logo.png", class: "print-header__logo", alt: t("app.title")
+= render "jobseekers/job_applications/print_header",
+  applicant_name: nil,
+  caption: t("jobseekers.job_applications.caption", job_title: @vacancy.job_title, organisation: @vacancy.organisation_name),
+  title: t(".title")
 
 p.print-introduction = t("jobseekers.job_applications.show.consent_text")
 

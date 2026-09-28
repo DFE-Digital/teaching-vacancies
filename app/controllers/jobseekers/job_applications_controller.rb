@@ -3,7 +3,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   include Jobseekers::QualificationFormConcerns
   include JobApplicationsPdfHelper
 
-  before_action :set_job_application, only: %i[review apply pre_submit submit post_submit show confirm_destroy destroy confirm_withdraw withdraw download]
+  before_action :set_job_application, only: %i[review apply pre_submit submit post_submit show confirm_destroy destroy confirm_withdraw withdraw download print]
 
   before_action :raise_cannot_apply, unless: -> { vacancy.allow_job_applications? }, only: %i[new create]
   before_action :redirect_if_job_application_exists, only: %i[new create]
@@ -130,6 +130,15 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def download
     document = submitted_application_form(job_application)
     send_data(document.data, filename: document.filename, disposition: "inline")
+  end
+
+  def print
+    raise ActionController::RoutingError, "Cannot print draft application" if job_application.draft?
+
+    return download if vacancy.uploaded_form?
+
+    @job_application_pdf = JobApplicationPdf.new(job_application)
+    render layout: "print"
   end
 
   def confirm_destroy
