@@ -86,7 +86,7 @@ Rails.application.routes.draw do
     end
 
     resources :job_applications, only: %i[index show destroy] do
-      resources :form_previews, only: %i[show]
+      resources :form_previews, only: %i[show], constraints: { id: /blank/ }
       resources :build, only: %i[show update], controller: "job_applications/build"
       resource :baptism_certificate, only: %i[destroy], controller: "job_applications/baptism_certificates"
       resources :employments, only: %i[new create edit update destroy], controller: "job_applications/employments"
