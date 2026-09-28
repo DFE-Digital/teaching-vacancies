@@ -256,7 +256,7 @@ GEM
       logger
     faraday-follow_redirects (0.5.0)
       faraday (>= 1, < 3)
-    faraday-http-cache (2.7.0)
+    faraday-http-cache (3.0.0)
       faraday (>= 0.8)
     faraday-multipart (1.2.0)
       multipart-post (~> 2.0)
@@ -1229,7 +1229,7 @@ CHECKSUMS
   fantaskspec (1.2.0) sha256=4465cf17f2e52eddccf1cd43d790c5cf80b170082f605f8f85a14ae401e3be79
   faraday (2.14.4) sha256=9bb4408c44621b0dbaaaa39e5dbfc4dbe58cc6751b6eb94d16ae9e1f2f2fab6e
   faraday-follow_redirects (0.5.0) sha256=5cde93c894b30943a5d2b93c2fe9284216a6b756f7af406a1e55f211d97d10ad
-  faraday-http-cache (2.7.0) sha256=cd7ac4bbe6c08592ea7af6655f98b2f76c4db0bad31bf40340df5aad719f0d89
+  faraday-http-cache (3.0.0) sha256=44e0b5441825b80aa59446fdb0ceb5a1cf83e9f58fc89752b336d87a991c7994
   faraday-multipart (1.2.0) sha256=7d89a949693714176f612323ca13746a2ded204031a6ba528adee788694ef757
   faraday-net_http (3.4.4) sha256=0e78af151747ed1b00f33e25973b4bc220d7f16c00c39676817c8b12331eb588
   faraday-retry (2.4.0) sha256=7b79c48fb7e56526faf247b12d94a680071ff40c9fda7cf1ec1549439ad11ebe
