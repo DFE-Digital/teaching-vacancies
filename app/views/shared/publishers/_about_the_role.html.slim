@@ -30,5 +30,6 @@
     = editor(form_input: f.govuk_text_area(:further_details),
       value: f.object.further_details,
       field_name: "publishers_job_listing_about_the_role_form[further_details]",
+      hint: t("jobs.further_details_hint", organisation_type: vacancy.for_an_fe_college? ? "college" : "school"),
       label: { text: t("helpers.label.publishers_job_listing_about_the_role_form.further_details"), classes: ["govuk-label", "govuk-label--s", "govuk-!-margin-bottom-2", "govuk-!-font-weight-bold"], id: "further-details-label" })
   = f.govuk_radio_button :further_details_provided, "false"
