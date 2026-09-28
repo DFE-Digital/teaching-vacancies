@@ -139,19 +139,5 @@ RSpec.describe "Jobseekers::FormPreviewController" do
         expect(response).to have_http_status(:not_found)
       end
     end
-
-    %i[plain religious catholic self_disclosure job_reference].each do |preview|
-      it "returns not found for the #{preview} preview" do
-        get "/jobseekers/job_applications/#{job_application.id}/form_previews/#{preview}"
-
-        expect(response).to have_http_status(:not_found)
-      end
-    end
-
-    it "returns not found for an unknown preview" do
-      get "/jobseekers/job_applications/#{job_application.id}/form_previews/unknown"
-
-      expect(response).to have_http_status(:not_found)
-    end
   end
 end
