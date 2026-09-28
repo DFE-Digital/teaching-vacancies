@@ -170,9 +170,9 @@ class Vacancies::Import::Sources::Fusion
   end
 
   def fixed_term_contract_duration_for(item)
-    #simplecov:disable
+    # simplecov:disable
     case item["contractType"]
-      #simplecov:enable
+      # simplecov:enable
     when "parental_leave_cover"
       "Parental Leave Cover"
     when "fixed_term"
