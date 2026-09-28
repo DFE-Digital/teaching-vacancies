@@ -1,0 +1,20 @@
+- content_for :page_title_prefix, t(".page_title")
+- content_for :meta_no_index do
+  meta name="robots" content="noindex,nofollow"
+
+p.govuk-body class="govuk-!-display-none-print" = t(".print_instructions")
+
+= render "print_header",
+  applicant_name: @job_application_pdf.applicant_name,
+  caption: @job_application_pdf.header_text,
+  title: t(".page_title")
+
+p.print-introduction = t("jobseekers.job_applications.show.consent_text")
+
+section.print-section
+  h2.print-section__heading = t("jobseekers.job_applications.show.personal_details.heading")
+  .print-table
+    - @job_application_pdf.personal_details.each do |label, value|
+      .print-table__row
+        p.print-table__label = label
+        p.print-table__value = value

@@ -1,0 +1,6 @@
+en:
+  jobseekers:
+    job_applications:
+      print:
+        page_title: Print application
+        print_instructions: Use your browser's print option to print this application or save it as a PDF.
