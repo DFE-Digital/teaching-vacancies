@@ -5,7 +5,8 @@ RSpec.describe "Scheduled jobs configuration" do
     # Require all jobs in case autoloading didn't get there
     Rails.root.join("app/jobs").glob("**/*.rb").map { |file| require file }
 
-    ApplicationJob.descendants.map(&:name)
+    # one test defines this on-the-fly, so we might need to exclude this sometimes
+    ApplicationJob.descendants.map(&:name) - %w[TestApplicationJob]
   end
   let(:gem_jobs) { [DfE::Analytics::Jobs::EntityTableCheckJob].map(&:to_s) }
   let(:scheduled_jobs) { YAML.load_file("./config/recurring.yml").fetch("production").values.pluck("class").uniq.compact }

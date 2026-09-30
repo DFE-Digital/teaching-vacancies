@@ -2,7 +2,9 @@ class ResetSessionsJob < ApplicationJob
   queue_as :low
 
   def perform
-    Rails.application.load_tasks
+    # simplecov:disable
+    Rails.application.load_tasks unless Rails.env.test? # This is pre-called in test mode
+    # simplecov:enable
     Rake::Task["db:sessions:trim"].invoke
   end
 end
