@@ -5,7 +5,7 @@ RSpec.describe "A visitor to the website can access the support links" do
     visit root_path
   end
 
-  scenario "the privacy policy and accesibility statement external links" do
+  scenario "the privacy policy and accesibility statement external links", :aggregate_failures do
     expect(page).to have_link("Privacy policy", href: "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers")
     expect(page).to have_link("Accessibility", href: "https://accessibility-statements.education.gov.uk/statement/45")
   end
