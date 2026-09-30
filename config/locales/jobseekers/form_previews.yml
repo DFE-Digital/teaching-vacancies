@@ -55,7 +55,8 @@ en:
             phone: Phone number (optional)
             baptism_certificate: If you cannot provide a religious referee, can you provide a baptism certificate?
             baptism_certificate_guidance: If yes, please enclose a copy of your certificate.
-            baptism_details: If you cannot provide a religious referee or baptism certificate, can you provide the date and address of your baptism?
+            baptism_details: If you cannot provide a religious referee or a baptism certificate, can you provide the date and address of your baptism?
+            baptism_details_options: Yes / No / Not applicable
             baptism_information: If yes, provide the information below
             baptism_address: Address of baptism location
             baptism_date: Date of your baptism

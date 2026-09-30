@@ -75,14 +75,14 @@ RSpec.describe "Jobseekers::FormPreviewController" do
       qualification_groups = page.all(".print-subsection")
 
       expect(qualification_groups[0]).to have_css(".print-subsection__heading", text: "Postgraduate qualification")
-      expect(qualification_groups[0]).to have_css(".print-qualification", count: 1)
+      expect(qualification_groups[0]).to have_css(".print-qualification", count: 2)
       expect(qualification_groups[1]).to have_css(".print-subsection__heading", text: "Undergraduate degree")
-      expect(qualification_groups[1]).to have_css(".print-qualification", count: 1)
+      expect(qualification_groups[1]).to have_css(".print-qualification", count: 2)
       expect(qualification_groups[2]).to have_css(".print-subsection__heading", text: "A levels")
-      expect(qualification_groups[2]).to have_css(".print-qualification", count: 3)
+      expect(qualification_groups[2]).to have_css(".print-qualification", count: 5)
       expect(qualification_groups[3]).to have_css(".print-subsection__heading", text: "GCSEs")
       expect(qualification_groups[3]).to have_css(".print-qualification", count: 5)
-      expect(page).to have_css(".print-training-record", count: 2)
+      expect(page).to have_css(".print-training-record", count: 3)
       expect(page).to have_css(".print-membership-record", count: 2)
       expect(page).to have_css(".print-employment-record", count: 5)
       expect(page).to have_css(".print-reference-record", count: 2)
@@ -117,7 +117,9 @@ RSpec.describe "Jobseekers::FormPreviewController" do
         expect(page).to have_css(".print-section__heading", text: "Religious information")
         expect(page).to have_text("Can you provide a religious referee?")
         expect(page).to have_text("can you provide a baptism certificate?")
+        expect(page).to have_text("If you cannot provide a religious referee or a baptism certificate, can you provide the date and address of your baptism?")
         expect(page).to have_css(".print-table__value", text: "If yes, please enclose a copy of your certificate.")
+        expect(page).to have_css(".print-table__value", text: "Yes / No / Not applicable")
       end
     end
 

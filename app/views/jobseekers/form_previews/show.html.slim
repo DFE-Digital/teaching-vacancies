@@ -36,9 +36,9 @@ ruby:
     t(".qualification_fields.date_completed"),
   ]
   qualification_groups = [
-    { heading: t("helpers.label.jobseekers_qualifications_category_form.category_options.postgraduate"), count: 1, labels: degree_qualification_labels },
-    { heading: t("helpers.label.jobseekers_qualifications_category_form.category_options.undergraduate"), count: 1, labels: degree_qualification_labels },
-    { heading: t("helpers.label.jobseekers_qualifications_category_form.category_options.a_level"), count: 3, labels: secondary_qualification_labels },
+    { heading: t("helpers.label.jobseekers_qualifications_category_form.category_options.postgraduate"), count: 2, labels: degree_qualification_labels },
+    { heading: t("helpers.label.jobseekers_qualifications_category_form.category_options.undergraduate"), count: 2, labels: degree_qualification_labels },
+    { heading: t("helpers.label.jobseekers_qualifications_category_form.category_options.a_level"), count: 5, labels: secondary_qualification_labels },
     { heading: t("helpers.label.jobseekers_qualifications_category_form.category_options.gcse"), count: 5, labels: secondary_qualification_labels },
   ]
   training_labels = [
@@ -91,7 +91,7 @@ ruby:
     [t(".religion.catholic.email"), nil],
     [t(".religion.catholic.phone"), nil],
     [t(".religion.catholic.baptism_certificate"), t(".religion.catholic.baptism_certificate_guidance")],
-    [t(".religion.catholic.baptism_details"), nil],
+    [t(".religion.catholic.baptism_details"), t(".religion.catholic.baptism_details_options")],
     [t(".religion.catholic.baptism_information"), nil],
     [t(".religion.catholic.baptism_address"), nil],
     [t(".religion.catholic.baptism_date"), nil],
@@ -154,7 +154,7 @@ section.print-section
 
 section.print-section
   h2.print-section__heading = t("jobseekers.job_applications.show.training_and_cpds.heading")
-  - 2.times do
+  - 3.times do
     article.print-record.print-training-record
       .print-table
         - training_labels.each do |label|
