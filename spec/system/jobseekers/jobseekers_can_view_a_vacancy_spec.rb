@@ -47,18 +47,13 @@ RSpec.describe "Viewing a single published vacancy" do
     context "meta tags" do
       include ActionView::Helpers::SanitizeHelper
 
-      scenario "the vacancy's meta data are rendered correctly" do
-        expect(page.find('meta[name="description"]', visible: false)["content"])
-          .to eq(I18n.t("vacancies.vacancy_banner.page_description", job_title: vacancy.job_title,
-                                                                     organisation: vacancy.organisation_name,
-                                                                     deadline: format_date(vacancy.expires_at, :date_only_shorthand)))
-      end
+      scenario "the vacancy's meta description and open graph description are rendered correctly", :aggregate_failures do
+        page_description = I18n.t("vacancies.vacancy_banner.page_description", job_title: vacancy.job_title,
+                                                                               organisation: vacancy.organisation_name,
+                                                                               deadline: format_date(vacancy.expires_at, :date_only_shorthand))
 
-      scenario "the vacancy's open graph meta data are rendered correctly" do
-        expect(page.find('meta[property="og:description"]', visible: false)["content"])
-          .to eq(I18n.t("vacancies.vacancy_banner.page_description", job_title: vacancy.job_title,
-                                                                     organisation: vacancy.organisation_name,
-                                                                     deadline: format_date(vacancy.expires_at, :date_only_shorthand)))
+        expect(page.find('meta[name="description"]', visible: false)["content"]).to eq(page_description)
+        expect(page.find('meta[property="og:description"]', visible: false)["content"]).to eq(page_description)
       end
     end
 
@@ -74,15 +69,11 @@ RSpec.describe "Viewing a single published vacancy" do
         visit current_path
       end
 
-      scenario "jobseeker sees similar jobs to the vacancy listing" do
+      scenario "jobseeker sees similar jobs, tagged when they allow applying through Teaching Vacancies", :aggregate_failures do
         within(".similar-jobs") do
           expect(page).to have_link(similar_job_tv_application.job_title, href: job_path(similar_job_tv_application))
           expect(page).to have_link(similar_job_no_tv_application.job_title, href: job_path(similar_job_no_tv_application))
-        end
-      end
 
-      scenario "jobseeker sees a tag on similar jobs that allow to apply through Teaching Vacancies" do
-        within(".similar-jobs") do
           expect(page.find("p", text: similar_job_tv_application.job_title))
             .to have_sibling("p", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
           expect(page.find("p", text: similar_job_no_tv_application.job_title))
