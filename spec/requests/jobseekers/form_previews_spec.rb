@@ -117,6 +117,7 @@ RSpec.describe "Jobseekers::FormPreviewController" do
         expect(page).to have_css(".print-section__heading", text: "Religious information")
         expect(page).to have_text("Can you provide a religious referee?")
         expect(page).to have_text("can you provide a baptism certificate?")
+        expect(page).to have_css(".print-table__value", text: "If yes, please enclose a copy of your certificate.")
       end
     end
 

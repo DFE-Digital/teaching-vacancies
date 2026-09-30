@@ -78,23 +78,23 @@ ruby:
     t("helpers.legend.jobseekers_job_application_declarations_form.has_safeguarding_issue"),
     t("helpers.legend.jobseekers_job_application_declarations_form.has_close_relationships.#{organisation_type}", organisation: @vacancy.organisation_name),
   ]
-  catholic_religion_labels = [
-    t(".religion.catholic.following"),
-    t(".religion.catholic.faith"),
-    t(".religion.catholic.place_of_worship"),
-    t(".religion.catholic.religious_referee"),
-    t(".religion.catholic.religious_referee_details"),
-    t(".religion.catholic.name"),
-    t(".religion.catholic.address"),
-    t(".religion.catholic.role"),
-    t(".religion.catholic.email"),
-    t(".religion.catholic.phone"),
-    t(".religion.catholic.baptism_certificate"),
-    t(".religion.catholic.baptism_details"),
-    t(".religion.catholic.baptism_information"),
-    t(".religion.catholic.baptism_address"),
-    t(".religion.catholic.baptism_date"),
-    t(".religion.catholic.no_evidence"),
+  catholic_religion_rows = [
+    [t(".religion.catholic.following"), nil],
+    [t(".religion.catholic.faith"), nil],
+    [t(".religion.catholic.place_of_worship"), nil],
+    [t(".religion.catholic.religious_referee"), nil],
+    [t(".religion.catholic.religious_referee_details"), nil],
+    [t(".religion.catholic.name"), nil],
+    [t(".religion.catholic.address"), nil],
+    [t(".religion.catholic.role"), nil],
+    [t(".religion.catholic.email"), nil],
+    [t(".religion.catholic.phone"), nil],
+    [t(".religion.catholic.baptism_certificate"), t(".religion.catholic.baptism_certificate_guidance")],
+    [t(".religion.catholic.baptism_details"), nil],
+    [t(".religion.catholic.baptism_information"), nil],
+    [t(".religion.catholic.baptism_address"), nil],
+    [t(".religion.catholic.baptism_date"), nil],
+    [t(".religion.catholic.no_evidence"), nil],
   ]
   other_religion_labels = [
     t(".religion.other.ethos"),
@@ -188,10 +188,13 @@ section.print-section.print-personal-statement
   section.print-section
     h2.print-section__heading = t("jobseekers.job_applications.show.religious_information.heading")
     .print-table
-      - (@vacancy.catholic? ? catholic_religion_labels : other_religion_labels).each do |label|
+      - (@vacancy.catholic? ? catholic_religion_rows : other_religion_labels.map { [it, nil] }).each do |label, value|
         .print-table__row
           p.print-table__label = label
-          .print-table__writing-space aria-hidden="true"
+          - if value
+            p.print-table__value = value
+          - else
+            .print-table__writing-space aria-hidden="true"
 
 section.print-section
   h2.print-section__heading = t("jobseekers.job_applications.show.referees.heading")
