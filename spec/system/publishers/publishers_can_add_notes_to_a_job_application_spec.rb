@@ -27,12 +27,9 @@ RSpec.describe "Publishers can add notes to a job application" do
         expect(page).to be_axe_clean
       end
 
-      it "shows the current notes" do
-        expect(page).to have_content(note.content)
-      end
-
-      it "allows notes to be deleted and show discarded at" do
+      scenario "shows the current notes and allows them to be deleted", :aggregate_failures do
         expect(publisher_application_page).to be_displayed
+        expect(page).to have_content(note.content)
 
         click_on I18n.t("buttons.delete")
         # wait for action to complete
@@ -85,14 +82,9 @@ RSpec.describe "Publishers can add notes to a job application" do
         publisher_ats_reference_request_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id, reference_request_id: reference_request.id)
       end
 
-      it "shows the current notes" do
+      scenario "shows the current notes and allows them to be deleted, returning to the reference request page", :aggregate_failures do
         expect(publisher_ats_reference_request_page).to be_displayed
-
         expect(page).to have_content(note.content)
-      end
-
-      it "allows notes to be deleted and redirects back to reference request page" do
-        expect(publisher_ats_reference_request_page).to be_displayed
 
         click_on I18n.t("buttons.delete")
 
@@ -113,14 +105,9 @@ RSpec.describe "Publishers can add notes to a job application" do
           publisher_ats_self_disclosure_page.load(vacancy_id: vacancy.id, job_application_id: job_application.id)
         end
 
-        it "shows the current notes" do
+        scenario "shows the current notes and allows them to be deleted, returning to the self disclosure page", :aggregate_failures do
           expect(publisher_ats_self_disclosure_page).to be_displayed
-
           expect(page).to have_content(note.content)
-        end
-
-        it "allows notes to be deleted and redirects back to self disclosure page" do
-          expect(publisher_ats_self_disclosure_page).to be_displayed
 
           click_on I18n.t("buttons.delete")
 
