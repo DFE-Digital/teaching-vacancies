@@ -1,5 +1,6 @@
 class VacanciesController < ApplicationController
   include ReturnPathTracking::Helpers
+  include TrnOnApplyAbTest
 
   before_action :set_landing_page, only: %i[index]
 
@@ -43,6 +44,7 @@ class VacanciesController < ApplicationController
   def apply
     vacancy = PublishedVacancy.live.friendly.find(params[:id])
     raise ActiveRecord::RecordNotFound if vacancy.application_link.blank?
+    return redirect_to(trn_interstitial_job_path(vacancy.id)) if vacancy.website? && !params[:trn_prompted] && trn_prompt_required?(vacancy)
 
     vacancy.increment!(:external_application_clicks)
     redirect_to vacancy.application_link, allow_other_host: true
@@ -65,6 +67,7 @@ class VacanciesController < ApplicationController
   def trn_interstitial
     @vacancy = PublishedVacancy.kept.listed.friendly.find(params[:id])
     @job_application = @vacancy.job_applications.build
+    @skip_trn_path = after_trn_path(@vacancy)
   end
 
   def send_trn
@@ -74,14 +77,14 @@ class VacanciesController < ApplicationController
     if trn.present?
       field_test_converted(:trn_on_apply)
     end
-    if vacancy.website?
-      redirect_to vacancy.application_link, allow_other_host: true
-    else
-      redirect_to new_jobseekers_job_job_application_path(vacancy.id)
-    end
+    redirect_to after_trn_path(vacancy)
   end
 
   private
+
+  def after_trn_path(vacancy)
+    vacancy.website? ? apply_job_path(vacancy, trn_prompted: true) : new_jobseekers_job_job_application_path(vacancy.id)
+  end
 
   def form
     @form ||= Jobseekers::SearchForm.new(search_params.merge(landing_page: @landing_page))

@@ -288,29 +288,6 @@
       "note": ""
     },
     {
-      "warning_type": "Redirect",
-      "warning_code": 18,
-      "fingerprint": "8bbf637ca569c3f8ed8d785cefe0c483fff129d723ca86fa901598a1aff0a69a",
-      "check_name": "Redirect",
-      "message": "Possible unprotected redirect",
-      "file": "app/controllers/vacancies_controller.rb",
-      "line": 68,
-      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
-      "code": "redirect_to(PublishedVacancy.kept.listed.friendly.find(params[:id]).application_link, :allow_other_host => true)",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "VacanciesController",
-        "method": "send_trn"
-      },
-      "user_input": "PublishedVacancy.kept.listed.friendly.find(params[:id]).application_link",
-      "confidence": "Weak",
-      "cwe_id": [
-        601
-      ],
-      "note": ""
-    },
-    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "bdb6e5e218cff279e924b58b25fb8cbadd3161da685319b6725256b791286670",

@@ -5,4 +5,4 @@
 
   .govuk-button-group
     = f.govuk_submit t("buttons.continue")
-    = govuk_button_link_to "Skip", @vacancy.website? ? @vacancy.application_link : new_jobseekers_job_job_application_path(@vacancy.id), secondary: true
+    = govuk_button_link_to "Skip", @skip_trn_path, secondary: true
