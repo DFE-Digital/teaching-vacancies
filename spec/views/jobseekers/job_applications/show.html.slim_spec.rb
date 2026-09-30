@@ -8,7 +8,8 @@ RSpec.describe "jobseekers/job_applications/show" do
   let(:current_jobseeker) { jobseeker }
 
   before do
-    allow(view).to receive_messages(current_jobseeker:, job_application:, vacancy:)
+    allow(view).to receive_messages(current_jobseeker:, vacancy:)
+    assign(:job_application, job_application)
 
     render
   end

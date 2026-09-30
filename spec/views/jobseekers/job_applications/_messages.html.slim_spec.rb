@@ -37,15 +37,10 @@ RSpec.describe "jobseekers/job_applications/_messages.html.slim" do
 
     context "with existing messages" do
       let(:conversation) { create(:conversation, job_application: job_application) }
-      let(:messages) { [create(:publisher_message, conversation: conversation)] }
-
-      before do
-        allow(view).to receive(:render).and_call_original
-        allow(view).to receive(:render).with(partial: messages, locals: { current_user: jobseeker }).and_return("Message content")
-      end
+      let(:messages) { [create(:publisher_message, conversation: conversation, content: "Message content")] }
 
       it "shows messages list and no 'no messages' text" do
-        render partial: "jobseekers/job_applications/messages", locals: { messages: messages }
+        render partial: "jobseekers/job_applications/messages", locals: { messages: messages, vacancy: job_application.vacancy }
 
         expect(rendered).to have_css("#messages-list")
         expect(rendered).to have_text("Message content")
@@ -65,7 +60,7 @@ RSpec.describe "jobseekers/job_applications/_messages.html.slim" do
       end
 
       it "shows withdrawn warning" do
-        render partial: "jobseekers/job_applications/messages", locals: { messages: messages }
+        render partial: "jobseekers/job_applications/messages", locals: { messages: messages, vacancy: job_application.vacancy }
 
         expect(rendered).to have_css(".govuk-warning-text")
         expect(rendered).to have_text(I18n.t("jobseekers.job_applications.messages.messaging_not_available.withdrawn"))
@@ -78,7 +73,7 @@ RSpec.describe "jobseekers/job_applications/_messages.html.slim" do
       end
 
       it "shows cannot initiate warning" do
-        render partial: "jobseekers/job_applications/messages", locals: { messages: messages }
+        render partial: "jobseekers/job_applications/messages", locals: { messages: messages, vacancy: job_application.vacancy }
 
         expect(rendered).to have_css(".govuk-warning-text")
         expect(rendered).to have_text(I18n.t("jobseekers.job_applications.messages.messaging_not_available.cannot_initiate"))
@@ -91,7 +86,7 @@ RSpec.describe "jobseekers/job_applications/_messages.html.slim" do
       end
 
       it "shows cannot message at all warning" do
-        render partial: "jobseekers/job_applications/messages", locals: { messages: messages }
+        render partial: "jobseekers/job_applications/messages", locals: { messages: messages, vacancy: job_application.vacancy }
 
         expect(rendered).to have_css(".govuk-warning-text")
         expect(rendered).to have_text(I18n.t("jobseekers.job_applications.messages.messaging_not_available.cannot_message_at_all"))
@@ -99,22 +94,17 @@ RSpec.describe "jobseekers/job_applications/_messages.html.slim" do
     end
 
     it "shows disabled messaging message and no 'Send message to hiring staff' button with no messages" do
-      render partial: "jobseekers/job_applications/messages", locals: { messages: messages }
+      render partial: "jobseekers/job_applications/messages", locals: { messages: messages, vacancy: job_application.vacancy }
 
       expect(rendered).to have_text(I18n.t("jobseekers.job_applications.messages.no_messages_yet"))
     end
 
     context "with existing messages" do
       let(:conversation) { create(:conversation, job_application: job_application) }
-      let(:messages) { [create(:publisher_message, conversation: conversation)] }
-
-      before do
-        allow(view).to receive(:render).and_call_original
-        allow(view).to receive(:render).with(partial: messages, locals: { current_user: jobseeker }).and_return("Previous message content")
-      end
+      let(:messages) { [create(:publisher_message, conversation: conversation, content: "Previous message content")] }
 
       it "shows existing messages, disabled messaging message and no 'Send message to hiring staff' button" do
-        render partial: "jobseekers/job_applications/messages", locals: { messages: messages }
+        render partial: "jobseekers/job_applications/messages", locals: { messages: messages, vacancy: job_application.vacancy }
 
         expect(rendered).to have_text("You cannot contact the school at this stage in your application")
         expect(rendered).to have_css("#messages-list")
