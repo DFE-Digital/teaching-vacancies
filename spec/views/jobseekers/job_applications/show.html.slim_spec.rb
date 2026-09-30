@@ -47,10 +47,11 @@ RSpec.describe "jobseekers/job_applications/show" do
 
       it "shows download blank application form button" do
         expect(show_view).to have_link(
-          "Download a blank application form",
+          "Download a blank application form (opens in new tab)",
           href: jobseekers_job_application_form_preview_path(job_application, :blank),
           class: "govuk-button--secondary",
         )
+        expect(show_view).to have_css("a.blank-application[target='_blank'][rel='noopener']")
       end
 
       it "shows withdrawn inset text" do
