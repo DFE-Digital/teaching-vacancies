@@ -3,7 +3,7 @@
   meta name="robots" content="noindex,nofollow"
 
 ruby:
-  # :nocov:
+  # simplecov:disable
   personal_detail_labels = [
     t("helpers.label.jobseekers_job_application_personal_details_form.first_name"),
     t("helpers.label.jobseekers_job_application_personal_details_form.last_name"),
@@ -110,7 +110,7 @@ ruby:
     t(".religion.other.email"),
     t(".religion.other.phone"),
   ]
-  # :nocov:
+  # simplecov:enable
 
 p.govuk-body class="govuk-!-display-none-print" = t(".print_instructions")
 
