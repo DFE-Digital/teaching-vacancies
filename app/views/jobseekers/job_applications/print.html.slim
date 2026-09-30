@@ -11,10 +11,26 @@ p.govuk-body class="govuk-!-display-none-print" = t(".print_instructions")
 
 p.print-introduction = t("jobseekers.job_applications.show.consent_text")
 
-section.print-section
-  h2.print-section__heading = t("jobseekers.job_applications.show.personal_details.heading")
-  .print-table
-    - @job_application_pdf.personal_details.each do |label, value|
-      .print-table__row
-        p.print-table__label = label
-        p.print-table__value = value
+= render "print_table_section",
+  heading: t("jobseekers.job_applications.show.personal_details.heading"),
+  rows: @job_application_pdf.personal_details
+
+= render "print_table_section",
+  heading: t("jobseekers.job_applications.show.professional_status.heading"),
+  rows: @job_application_pdf.professional_status
+
+= render "print_nested_section",
+  groups: @job_application_pdf.qualifications,
+  heading: t("jobseekers.job_applications.show.qualifications.heading")
+
+= render "print_nested_section",
+  groups: @job_application_pdf.training_and_cpds,
+  heading: t("jobseekers.job_applications.show.training_and_cpds.heading")
+
+= render "print_nested_section",
+  groups: @job_application_pdf.professional_body_memberships,
+  heading: t("jobseekers.job_applications.show.professional_body_memberships.heading")
+
+= render "print_nested_section",
+  groups: @job_application_pdf.employment_history,
+  heading: t("jobseekers.job_applications.show.employment_history.heading")

@@ -1,0 +1,12 @@
+section.print-section
+  h2.print-section__heading = heading
+  - groups.each do |subheading, tables|
+    - if tables.present?
+      .print-subsection
+        - if subheading.present?
+          h3.print-subsection__heading = subheading
+        - tables.each do |table|
+          article.print-record
+            = render "print_table", rows: table
+    - else
+      p.print-section__empty = subheading
