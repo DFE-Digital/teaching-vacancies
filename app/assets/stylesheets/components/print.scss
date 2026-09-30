@@ -92,6 +92,14 @@ $print-white: #fff;
     margin: 0;
     padding: 2mm;
   }
+
+  &__value {
+    align-self: center;
+    font-size: 12pt;
+    line-height: 1.05;
+    margin: 0;
+    padding: 2mm;
+  }
 }
 
 .print-subsection {
