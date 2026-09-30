@@ -18,6 +18,15 @@ RSpec.describe "Job applications" do
     end
   end
 
+  describe "POST #start" do
+    context "when the jobseeker is not signed in" do
+      it "redirects to the 'new' page so that sign in can return there" do
+        expect(post(start_jobseekers_job_job_application_path(vacancy.id)))
+          .to redirect_to(new_jobseekers_job_job_application_path(vacancy.id))
+      end
+    end
+  end
+
   context "when signed in" do
     before { sign_in(jobseeker, scope: :jobseeker) }
 
@@ -71,6 +80,79 @@ RSpec.describe "Job applications" do
 
           expect(response)
             .to redirect_to(jobseekers_job_application_apply_path(jobseeker.job_applications.draft.first.id))
+          expect(flash[:notice]).to eq(I18n.t("jobseekers.job_applications.new.import_from_previous_application"))
+        end
+
+        context "when the vacancy has an uploaded application form" do
+          let(:vacancy) { create(:vacancy, :with_uploaded_application_form, organisations: [build(:school)]) }
+
+          it "creates an uploaded job application without the import notice" do
+            expect { post(jobseekers_job_job_application_path(vacancy.id)) }
+              .to change { jobseeker.uploaded_job_applications.count }.by(1)
+
+            expect(flash[:notice]).to be_nil
+          end
+        end
+      end
+    end
+
+    describe "POST #start" do
+      let(:trn_variant) { :apply }
+
+      before { use_ab_test jobseeker, :trn_on_apply, trn_variant }
+
+      it "redirects to the 'new' page without creating a job application" do
+        expect { post(start_jobseekers_job_job_application_path(vacancy.id)) }.not_to(change { JobApplication.count })
+
+        expect(response).to redirect_to(new_jobseekers_job_job_application_path(vacancy.id))
+      end
+
+      context "when the vacancy has an uploaded application form" do
+        let(:vacancy) { create(:vacancy, :with_uploaded_application_form, organisations: [build(:school)]) }
+
+        it "creates an uploaded job application and redirects to the apply path" do
+          expect { post(start_jobseekers_job_job_application_path(vacancy.id)) }
+            .to change { jobseeker.uploaded_job_applications.count }.by(1)
+
+          expect(response).to redirect_to(jobseekers_job_application_apply_path(jobseeker.job_applications.first))
+        end
+      end
+
+      context "when the jobseeker is in the TRN variant" do
+        let(:trn_variant) { :trn }
+
+        it "redirects to the TRN interstitial" do
+          post(start_jobseekers_job_job_application_path(vacancy.id))
+
+          expect(response).to redirect_to(trn_interstitial_job_path(vacancy.id))
+        end
+
+        context "when the vacancy is not for a teaching or middle leader role" do
+          let(:vacancy) { create(:vacancy, :it_support, organisations: [build(:school)]) }
+
+          it "redirects to the 'new' page" do
+            post(start_jobseekers_job_job_application_path(vacancy.id))
+
+            expect(response).to redirect_to(new_jobseekers_job_job_application_path(vacancy.id))
+          end
+        end
+      end
+
+      context "when a job application for the job already exists" do
+        let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+
+        it "redirects to `jobseekers_job_applications_path`" do
+          expect(post(start_jobseekers_job_job_application_path(vacancy.id)))
+            .to redirect_to(jobseekers_job_applications_path)
+        end
+      end
+
+      context "when the vacancy does not enable job applications" do
+        let(:vacancy) { create(:vacancy, enable_job_applications: false, organisations: [build(:school)]) }
+
+        it "raises an error" do
+          expect { post(start_jobseekers_job_job_application_path(vacancy.id)) }
+            .to raise_error(ActionController::RoutingError, /Cannot apply for this vacancy/)
         end
       end
     end
@@ -110,6 +192,16 @@ RSpec.describe "Job applications" do
           get new_jobseekers_job_job_application_path(vacancy.id)
 
           expect(response).to render_template(:new)
+        end
+      end
+
+      context "when the vacancy has an uploaded application form" do
+        let(:vacancy) { create(:vacancy, :with_uploaded_application_form, organisations: [build(:school)]) }
+
+        it "renders the uploaded form start page" do
+          get new_jobseekers_job_job_application_path(vacancy.id)
+
+          expect(response).to render_template(:new_uploaded_form)
         end
       end
     end

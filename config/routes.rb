@@ -122,8 +122,9 @@ Rails.application.routes.draw do
     end
 
     scope as: :job, path: ":job_id" do
-      resource :job_application, only: %i[new create]
-      resource :uploaded_job_application, only: %i[create], controller: "uploaded_job_applications"
+      resource :job_application, only: %i[new create] do
+        post :start
+      end
     end
 
     resource :profile, only: %i[show] do
