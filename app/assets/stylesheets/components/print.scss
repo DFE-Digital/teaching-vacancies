@@ -73,6 +73,11 @@ $print-white: #fff;
     margin: 0;
     padding: 0 5mm;
   }
+
+  &__empty {
+    font-size: 12pt;
+    margin: 3mm 2mm;
+  }
 }
 
 .print-table {
