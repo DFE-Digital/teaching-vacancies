@@ -38,13 +38,14 @@ FactoryBot.define do
     trait :completed do
       personal_details { build(:personal_details, jobseeker_profile: instance) }
       job_preferences { build(:job_preferences, :with_locations, jobseeker_profile: instance) }
-      qualifications { build_list(:qualification, 1, :with_random_category, job_application: nil, jobseeker_profile: instance) }
+      qualifications { build_list(:qualification, 1, job_application: nil, jobseeker_profile: instance) }
       employments { build_list(:profile_employment, 1, :current_role, jobseeker_profile: instance) }
     end
 
     trait :for_seed_data do
       qualified_teacher_status { factory_sample(JobseekerProfile.qualified_teacher_statuses.keys) }
       qualified_teacher_status_year { "2000" if qualified_teacher_status == "yes" }
+      qualifications { build_list(:qualification, 1, :with_random_category, job_application: nil, jobseeker_profile: instance) }
     end
   end
 end

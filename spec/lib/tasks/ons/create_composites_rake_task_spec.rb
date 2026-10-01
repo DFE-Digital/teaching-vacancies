@@ -7,7 +7,7 @@ RSpec.describe "ons:create_composites" do
   it "calls create composites" do
     allow(OnsDataImport::CreateComposites).to receive(:call)
     subject.execute
-    expect(OnsDataImport::CreateComposites).to have_received(:call).at_least(:once)
+    expect(OnsDataImport::CreateComposites).to have_received(:call)
   end
   # rubocop:enable RSpec/NamedSubject
 end

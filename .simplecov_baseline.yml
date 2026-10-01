@@ -1,0 +1,8172 @@
+# Per-file coverage floors. A file that drops below its floor fails the run,
+# and files with no entry fall through to the global per-file minimum.
+# Regenerate with `simplecov ratchet`. Floors only ever tighten.
+app/components/application_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/card_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/card_component/card_component.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/concerns/component_helper_delegation.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/cookies_banner_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/cookies_banner_component/cookies_banner_component.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/dashboard_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/dashboard_component/dashboard_component.html.slim:
+  lines:
+    percent: 94.49
+    missed: 6
+  branches:
+    percent: 87.23
+    missed: 6
+app/components/detail_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/detail_component/detail_component.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 1
+app/components/editor_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/editor_component/editor_component.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 2
+app/components/empty_section_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/empty_section_component/empty_section_component.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/environment_banner_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/fail_safe.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/filters_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/filters_component/filters_component.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/filters_component/remove_filter_links.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/job_application_review_section_component.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/job_application_review_section_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/landing_page_link_component.rb:
+  lines:
+    percent: 92.3
+    missed: 1
+  branches:
+    percent: 33.33
+    missed: 2
+app/components/landing_page_link_component/landing_page_link_component.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/landing_page_link_group_component.rb:
+  lines:
+    percent: 71.42
+    missed: 6
+  branches:
+    percent: 0.0
+    missed: 6
+app/components/map_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/components/map_component/map_component.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 63.63
+    missed: 8
+app/components/navigation_list_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/navigation_list_component/navigation_list_component.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/publisher_notes_on_job_application_component.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/publisher_notes_on_job_application_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/scheduled_maintenance_banner_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/searchable_collection_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/searchable_collection_component/searchable_collection_component.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 63.63
+    missed: 8
+app/components/sort_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/sort_component/sort_component.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 83.33
+    missed: 1
+app/components/supportal_table_component.rb:
+  lines:
+    percent: 97.14
+    missed: 1
+  branches:
+    percent: 88.88
+    missed: 1
+app/components/supportal_table_component/supportal_table_component.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/supporting_document_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 0.0
+    missed: 2
+app/components/supporting_document_component/supporting_document_component.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/tab_panel_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/tab_panel_component/tab_panel_component.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/tabs_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/tabs_component/tabs_component.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/timeline_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/timeline_component/timeline_component.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/tvs_classes_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/vacancy_form_page_heading_component.rb:
+  lines:
+    percent: 90.9
+    missed: 2
+  branches:
+    percent: 30.0
+    missed: 7
+app/components/vacancy_form_page_heading_component/vacancy_form_page_heading_component.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 66.66
+    missed: 4
+app/controllers/api/application_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/api/events_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/api/location_suggestion_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/api/markers_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/api/organisations_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 2
+app/controllers/api/vacancies_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/application_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 94.44
+    missed: 1
+app/controllers/authentication_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 66.66
+    missed: 4
+app/controllers/colleges_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/concerns/authenticated.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 2
+app/controllers/concerns/jobseekers/login_required.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/concerns/jobseekers/qualification_form_concerns.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 1
+app/controllers/concerns/publishers/login_required.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/concerns/publishers/vacancy_copy.rb:
+  lines:
+    percent: 53.84
+    missed: 6
+  branches:
+    percent: 50.0
+    missed: 2
+app/controllers/concerns/publishers/wizardable.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/concerns/recaptcha_checking.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 66.66
+    missed: 2
+app/controllers/concerns/return_path_tracking.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 83.33
+    missed: 1
+app/controllers/concerns/support_users/satisfaction_rating_types.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/cookies_preferences_controller.rb:
+  lines:
+    percent: 94.73
+    missed: 1
+  branches:
+    percent: 85.71
+    missed: 2
+app/controllers/documents_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/errors_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/general_feedbacks_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 70.0
+    missed: 3
+app/controllers/home_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/account_feedbacks_controller.rb:
+  lines:
+    percent: 92.85
+    missed: 1
+  branches:
+    percent: 50.0
+    missed: 1
+app/controllers/jobseekers/account_transfers_controller.rb:
+  lines:
+    percent: 69.23
+    missed: 8
+  branches:
+    percent: 50.0
+    missed: 3
+app/controllers/jobseekers/accounts_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/base_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/email_preferences_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/form_previews_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/govuk_one_login_callbacks_controller.rb:
+  lines:
+    percent: 96.36
+    missed: 2
+  branches:
+    percent: 88.46
+    missed: 3
+app/controllers/jobseekers/job_applications/baptism_certificates_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/job_applications/base_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/job_applications/breaks_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/job_applications/build_controller.rb:
+  lines:
+    percent: 96.22
+    missed: 2
+  branches:
+    percent: 91.66
+    missed: 1
+app/controllers/jobseekers/job_applications/education_gaps_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/job_applications/employments_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/job_applications/feedbacks_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/job_applications/messages_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/job_applications/professional_body_memberships_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/job_applications/qualifications_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/job_applications/referees_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/job_applications/self_disclosure_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/job_applications/training_and_cpds_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/job_applications_controller.rb:
+  lines:
+    percent: 97.7
+    missed: 3
+  branches:
+    percent: 95.23
+    missed: 2
+app/controllers/jobseekers/login_keys_controller.rb:
+  lines:
+    percent: 88.88
+    missed: 4
+  branches:
+    percent: 71.42
+    missed: 4
+app/controllers/jobseekers/notifications_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/profiles/about_you_controller.rb:
+  lines:
+    percent: 90.0
+    missed: 1
+  branches:
+    percent: 50.0
+    missed: 1
+app/controllers/jobseekers/profiles/breaks_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/profiles/employments_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/profiles/hide_profile_controller.rb:
+  lines:
+    percent: 93.75
+    missed: 3
+  branches:
+    percent: 75.0
+    missed: 3
+app/controllers/jobseekers/profiles/job_preferences_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/profiles/job_preferences_locations_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/profiles/personal_details_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/profiles/preview_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/profiles/qualifications_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/profiles/qualified_teacher_status_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/profiles_controller.rb:
+  lines:
+    percent: 94.59
+    missed: 2
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/registrations_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/request_account_transfer_emails_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/saved_jobs_controller.rb:
+  lines:
+    percent: 90.32
+    missed: 3
+  branches:
+    percent: 50.0
+    missed: 5
+app/controllers/jobseekers/sessions_controller.rb:
+  lines:
+    percent: 79.31
+    missed: 6
+  branches:
+    percent: 80.0
+    missed: 2
+app/controllers/jobseekers/subscriptions/feedbacks/further_feedbacks_controller.rb:
+  lines:
+    percent: 95.65
+    missed: 1
+  branches:
+    percent: 50.0
+    missed: 1
+app/controllers/jobseekers/subscriptions/feedbacks/relevance_feedbacks_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 2
+app/controllers/jobseekers/subscriptions_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/unsubscribe_feedbacks_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/uploaded_job_applications/personal_details_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/jobseekers/uploaded_job_applications/upload_application_forms_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/notifications_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/omniauth_callbacks_controller.rb:
+  lines:
+    percent: 95.74
+    missed: 4
+  branches:
+    percent: 85.18
+    missed: 4
+app/controllers/organisations/schools_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/organisations_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/pages_controller.rb:
+  lines:
+    percent: 92.3
+    missed: 1
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/posts_controller.rb:
+  lines:
+    percent: 88.23
+    missed: 2
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/accounts_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/all_time_statistics_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/ats_api/v1/vacancies_controller.rb:
+  lines:
+    percent: 96.92
+    missed: 2
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/base_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/build_vacancy_templates_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/candidate_messages_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/current_year_statistics_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/jobseeker_profiles_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 3
+app/controllers/publishers/login_keys_controller.rb:
+  lines:
+    percent: 93.33
+    missed: 3
+  branches:
+    percent: 81.25
+    missed: 3
+app/controllers/publishers/message_templates_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/new_features_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/notifications_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/organisations/description_controller.rb:
+  lines:
+    percent: 81.25
+    missed: 3
+  branches:
+    percent: 66.66
+    missed: 2
+app/controllers/publishers/organisations/email_controller.rb:
+  lines:
+    percent: 85.71
+    missed: 2
+  branches:
+    percent: 75.0
+    missed: 1
+app/controllers/publishers/organisations/logo_controller.rb:
+  lines:
+    percent: 94.44
+    missed: 1
+  branches:
+    percent: 50.0
+    missed: 4
+app/controllers/publishers/organisations/photo_controller.rb:
+  lines:
+    percent: 94.11
+    missed: 1
+  branches:
+    percent: 50.0
+    missed: 4
+app/controllers/publishers/organisations/safeguarding_information_controller.rb:
+  lines:
+    percent: 81.25
+    missed: 3
+  branches:
+    percent: 66.66
+    missed: 2
+app/controllers/publishers/organisations/schools_controller.rb:
+  lines:
+    percent: 66.66
+    missed: 1
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/organisations/url_override_controller.rb:
+  lines:
+    percent: 85.71
+    missed: 2
+  branches:
+    percent: 75.0
+    missed: 1
+app/controllers/publishers/organisations_controller.rb:
+  lines:
+    percent: 95.45
+    missed: 1
+  branches:
+    percent: 60.0
+    missed: 4
+app/controllers/publishers/publisher_preferences_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 70.0
+    missed: 3
+app/controllers/publishers/sessions_controller.rb:
+  lines:
+    percent: 91.3
+    missed: 2
+  branches:
+    percent: 87.5
+    missed: 1
+app/controllers/publishers/statistics_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/terms_and_conditions_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/activity_log_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/application_forms_controller.rb:
+  lines:
+    percent: 89.18
+    missed: 4
+  branches:
+    percent: 60.0
+    missed: 4
+app/controllers/publishers/vacancies/base_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/build_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/bulk_interviewing_messages_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/bulk_messages_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/bulk_rejection_messages_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/bulk_shortlisting_messages_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/collect_reference_flags_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/collect_self_disclosure_flags_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/copy_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/documents_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 91.66
+    missed: 1
+app/controllers/publishers/vacancies/end_listing_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/expired_feedbacks_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/extend_deadline_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/feedbacks_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 1
+app/controllers/publishers/vacancies/form_previews_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/job_applications/base_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/job_applications/messages_controller.rb:
+  lines:
+    percent: 94.73
+    missed: 1
+  branches:
+    percent: 66.66
+    missed: 2
+app/controllers/publishers/vacancies/job_applications/notes_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/job_applications/online_checks_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/job_applications/pre_employment_checks_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/job_applications/reference_requests_controller.rb:
+  lines:
+    percent: 97.67
+    missed: 1
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/job_applications/references_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/job_applications/religious_references_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/job_applications/self_disclosure_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/job_applications_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/publish_controller.rb:
+  lines:
+    percent: 88.23
+    missed: 2
+  branches:
+    percent: 83.33
+    missed: 2
+app/controllers/publishers/vacancies/references_and_self_disclosure_base_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/references_and_self_disclosure_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 94.44
+    missed: 1
+app/controllers/publishers/vacancies/relist_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/statistics_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies/wizard_base_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 71.42
+    missed: 4
+app/controllers/publishers/vacancies/wizard_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancies_controller.rb:
+  lines:
+    percent: 98.86
+    missed: 1
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/publishers/vacancy_templates_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/referees/build_references_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/robots_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/sha_controller.rb:
+  lines:
+    percent: 66.66
+    missed: 1
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/sitemap_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/subscriptions_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 94.11
+    missed: 2
+app/controllers/support_requests_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/support_users/base_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/support_users/dashboard_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/support_users/fallback_sessions_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 1
+app/controllers/support_users/feedbacks_controller.rb:
+  lines:
+    percent: 89.74
+    missed: 8
+  branches:
+    percent: 65.38
+    missed: 9
+app/controllers/support_users/publisher_ats_api_clients/conflict_attempts_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/support_users/publisher_ats_api_clients_controller.rb:
+  lines:
+    percent: 91.3
+    missed: 2
+  branches:
+    percent: 50.0
+    missed: 1
+app/controllers/support_users/service_data/base_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/support_users/service_data/fe_colleges_without_publishers_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/support_users/service_data_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/controllers/support_users/sessions_controller.rb:
+  lines:
+    percent: 85.71
+    missed: 1
+  branches:
+    percent: 75.0
+    missed: 1
+app/controllers/vacancies_controller.rb:
+  lines:
+    percent: 85.05
+    missed: 13
+  branches:
+    percent: 81.57
+    missed: 7
+app/controllers/warden_controller.rb:
+  lines:
+    percent: 93.54
+    missed: 2
+  branches:
+    percent: 87.5
+    missed: 1
+app/form_models/base_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/college_search_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/cookies_preferences_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/date_attribute_assignment.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/general_feedback_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/account_feedback_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/account_transfer_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/close_account_feedback_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_alert_further_feedback_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_application/ask_for_support_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_application/base_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_application/catholic_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_application/completed_form_attribute.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_application/declarations_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_application/details/referee_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_application/employment_history_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_application/equal_opportunities_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_application/feedback_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_application/non_catholic_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_application/personal_details_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_application/personal_statement_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_application/pre_submit_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_application/professional_body_memberships_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_application/professional_status_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_application/qualifications_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_application/referees_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_application/religious_information_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_application/review_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_application/training_and_cpds_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_application/withdraw_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_applications/self_disclosure/barred_list_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_applications/self_disclosure/base_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_applications/self_disclosure/conduct_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_applications/self_disclosure/confirmation_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_applications/self_disclosure/personal_details_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/job_preferences_form.rb:
+  lines:
+    percent: 97.59
+    missed: 2
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/profile/add_another_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/profile/choose_school_or_trust_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/profile/hide_profile_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/profile/qualifications_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/profile/select_organisation_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/form_models/jobseekers/profiles/delete_location_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/profiles/locations_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/profiles/qualified_teacher_status_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/qualifications/category_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/qualifications/degree_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/qualifications/delete_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/qualifications/other_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/qualifications/qualification_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/qualifications/secondary/common_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/qualifications/secondary/qualification_result_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/request_account_transfer_email_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/search_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 80.0
+    missed: 2
+app/form_models/jobseekers/subscription_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 96.15
+    missed: 1
+app/form_models/jobseekers/unsubscribe_feedback_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/uploaded_job_application/personal_details_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/jobseekers/uploaded_job_application/upload_application_form_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/organisation_search_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/candidate_messages_search_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_application/collect_references_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_application/collect_self_disclosure_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_application/declined_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_application/feedback_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_application/interview_datetime_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_application/offered_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_application/references_contact_applicant_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_application/tag_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/about_the_role_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 86.36
+    missed: 3
+app/form_models/publishers/job_listing/anonymise_applications_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/application_form_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/application_link_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/applying_for_the_job_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/confirm_contact_details_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/confirm_job_address_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/contact_details_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 84.37
+    missed: 5
+app/form_models/publishers/job_listing/contract_information_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/documents_confirmation_form.rb:
+  lines:
+    percent: 94.11
+    missed: 1
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/documents_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/education_phases_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/end_listing_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/expired_feedback_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/expiry_date_time_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/extend_deadline_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 4
+app/form_models/publishers/job_listing/feedback_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/how_to_receive_applications_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/important_dates_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/include_additional_documents_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/job_listing_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/job_location_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/job_role_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/job_title_form.rb:
+  lines:
+    percent: 91.66
+    missed: 1
+  branches:
+    percent: 50.0
+    missed: 1
+app/form_models/publishers/job_listing/key_stages_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 83.33
+    missed: 1
+app/form_models/publishers/job_listing/pay_package_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/relist_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/school_visits_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/select_a_job_for_copying_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/start_date_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 4
+app/form_models/publishers/job_listing/subjects_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/vacancy_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_listing/visa_sponsorship_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/jobseeker_profile_search_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/login_keys/choose_organisation_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/organisation/description_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/organisation/email_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/organisation/logo_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/organisation/photo_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/organisation/safeguarding_information_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/organisation/url_override_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/terms_and_conditions_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/vacancies/job_applications/change_email_address_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/vacancies/job_applications/referee_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/vacancy_filter_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/vacancy_form_sequence.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/vacancy_statistics_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/referees/can_give_reference_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/referees/can_share_reference_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/referees/employment_reference_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/referees/fit_and_proper_persons_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/referees/how_would_you_rate_form1.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/referees/how_would_you_rate_form2.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/referees/how_would_you_rate_form3.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/referees/referee_details_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/referees/reference_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/referees/reference_information_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/school_search_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 1
+app/form_models/support_request_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/helpers/address_helper.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/helpers/application_helper.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/helpers/components_helper.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/helpers/dates_helper.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/helpers/distance_helper.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/helpers/documents_helper.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/helpers/feedbacks_helper.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 83.33
+    missed: 1
+app/helpers/guiding_pages_helper.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 1
+app/helpers/job_applications_helper.rb:
+  lines:
+    percent: 95.52
+    missed: 3
+  branches:
+    percent: 92.3
+    missed: 2
+app/helpers/job_applications_pdf_helper.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/helpers/job_preferences_helper.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/helpers/job_references_helper.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/helpers/jobseekers_login_helper.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/helpers/landing_page_lists_helper.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/helpers/landing_pages_helper.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 80.0
+    missed: 2
+app/helpers/links_helper.rb:
+  lines:
+    percent: 91.66
+    missed: 4
+  branches:
+    percent: 66.66
+    missed: 2
+app/helpers/maps_helper.rb:
+  lines:
+    percent: 88.88
+    missed: 1
+  branches:
+    percent: 66.66
+    missed: 2
+app/helpers/messages_helper.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/helpers/navigations_helper.rb:
+  lines:
+    percent: 94.11
+    missed: 1
+  branches:
+    percent: 100.0
+    missed: 0
+app/helpers/notify_views_helper.rb:
+  lines:
+    percent: 71.21
+    missed: 19
+  branches:
+    percent: 100.0
+    missed: 0
+app/helpers/organisations_helper.rb:
+  lines:
+    percent: 91.02
+    missed: 7
+  branches:
+    percent: 76.19
+    missed: 10
+app/helpers/pagination_helper.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/helpers/pdf_ui_helper.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 90.0
+    missed: 1
+app/helpers/profiles_helper.rb:
+  lines:
+    percent: 93.33
+    missed: 1
+  branches:
+    percent: 75.0
+    missed: 3
+app/helpers/qualifications_helper.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/helpers/readable_vacancy_helper.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/helpers/status_tag_helper.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/helpers/vacancies_helper.rb:
+  lines:
+    percent: 94.32
+    missed: 8
+  branches:
+    percent: 90.78
+    missed: 7
+app/helpers/vacancies_options_helper.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/helpers/vacancy_forms_helper.rb:
+  lines:
+    percent: 90.74
+    missed: 5
+  branches:
+    percent: 69.56
+    missed: 7
+app/jobs/alert_email/base.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/alert_mailer_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/application_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/application_mail_delivery_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/clear_emergency_login_keys_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/delete_old_alert_runs_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/delete_old_draft_applications_for_expired_vacancies_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/delete_old_feedback_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/delete_old_non_draft_job_applications_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/delete_old_vacancy_conflict_attempts_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/delete_unconfirmed_subscriptions_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/destroy_inactive_accounts_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/jobs/disable_inactive_profiles_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/equal_opportunities_report_update_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/export_dsi_approvers_to_big_query_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/export_dsi_users_to_big_query_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/export_vacancies_closed_early_since_yesterday_to_dwp_find_a_job_service_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/export_vacancies_published_and_updated_since_yesterday_to_dwp_find_a_job_service_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/fetch_malware_scan_result_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/find_and_use_an_api/publish_catalogue_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/import_from_vacancy_source_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/import_from_vacancy_sources_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/import_organisation_data_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/import_polygon_data_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/inactive_profile_warnings_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/index_newly_published_vacancies_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/refresh_organisations_gias_data_hash_job.rb:
+  lines:
+    percent: 66.66
+    missed: 1
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/remove_google_index_queue_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/remove_invalid_subscriptions_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/remove_stale_vacancies_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/remove_vacancies_that_expired_yesterday_from_google_index_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/reset_sessions_job.rb:
+  lines:
+    percent: 75.0
+    missed: 1
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/seed_database_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/send_applications_received_yesterday_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/send_daily_alert_email_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/send_email_for_draft_job_applications_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/send_email_for_unapplied_saved_vacancies_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/send_expired_vacancy_feedback_prompt_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/send_inactive_account_email_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/send_job_alerts_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/send_job_application_data_expiry_notifier_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/send_job_listing_ended_early_notification_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/send_messages_received_yesterday_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/send_peak_times_email_reminder_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/send_subscription_governance_emails_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/send_weekly_alert_email_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/set_organisation_slugs_job.rb:
+  lines:
+    percent: 60.0
+    missed: 2
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/set_organisation_slugs_of_batch_job.rb:
+  lines:
+    percent: 75.0
+    missed: 1
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/set_subscription_location_data_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/update_dsi_users_in_db_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/update_google_index_queue_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/jobs/update_single_dsi_user_in_db_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/lib/find_and_use_an_api/client.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/lib/http_client.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/mailers/govuk_notify_mailer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/mailers/jobseekers/account_mailer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/mailers/jobseekers/alert_mailer.rb:
+  lines:
+    percent: 93.93
+    missed: 2
+  branches:
+    percent: 75.0
+    missed: 2
+app/mailers/jobseekers/base_mailer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/mailers/jobseekers/job_application_mailer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/mailers/jobseekers/message_mailer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/mailers/jobseekers/peak_times_mailer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/mailers/jobseekers/profiles_mailer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/mailers/jobseekers/subscription_mailer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/mailers/jobseekers/vacancy_mailer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/mailers/mailer_analytics_events.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/mailers/publishers/account_invitation_mailer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/mailers/publishers/authentication_fallback_mailer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/mailers/publishers/base_mailer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/mailers/publishers/collect_references_mailer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/mailers/publishers/expired_vacancy_feedback_prompt_mailer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/mailers/publishers/job_application_data_expiry_mailer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/mailers/publishers/job_application_mailer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/mailers/publishers/mailer_dfe_analytics.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/mailers/publishers/message_notification_mailer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/mailers/publishers/reference_document_malware_scan_mailer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/mailers/support_users/authentication_fallback_mailer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/mailers/support_users/base_mailer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/alert_run.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/application_record.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/batchable_job_application.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/blank_job_application_pdf.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/concerns/application_and_profile_associated_record.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/concerns/database_indexable.rb:
+  lines:
+    percent: 88.23
+    missed: 2
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/concerns/malware_scannable.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/concerns/profile_section.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/concerns/resettable.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/concerns/vacancy_checks.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/conversation.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/draft_vacancy.rb:
+  lines:
+    percent: 88.88
+    missed: 1
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/education_gap.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/emergency_login_key.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/employment.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/employment_break.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/employment_record.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/equal_opportunities_report.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/event_context.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/failed_imported_vacancy.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/feedback.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/feedback_reporting_period.rb:
+  lines:
+    percent: 96.87
+    missed: 1
+  branches:
+    percent: 83.33
+    missed: 1
+app/models/job_application.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 93.75
+    missed: 1
+app/models/job_application_batch.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/job_application_pdf.rb:
+  lines:
+    percent: 99.49
+    missed: 1
+  branches:
+    percent: 93.67
+    missed: 5
+app/models/job_preferences.rb:
+  lines:
+    percent: 91.66
+    missed: 1
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/job_preferences/job_scope.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/job_preferences/location.rb:
+  lines:
+    percent: 85.71
+    missed: 3
+  branches:
+    percent: 50.0
+    missed: 1
+app/models/job_reference.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/job_role_location_landing_page.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/jobseeker.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/jobseeker_message.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/jobseeker_profile.rb:
+  lines:
+    percent: 95.08
+    missed: 3
+  branches:
+    percent: 73.68
+    missed: 5
+app/models/jobseeker_profile_excluded_organisation.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/jobseekers/message_received_notifier.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/landing_page.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/local_authority_publisher_school.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/location_landing_page.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/location_polygon.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 2
+app/models/message.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/message_template.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/native_job_application.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/note.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/option.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/organisation.rb:
+  lines:
+    percent: 98.18
+    missed: 2
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/organisation_landing_page.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/organisation_publisher.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/organisation_publisher_preference.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/organisation_vacancy.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/personal_details.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/pre_employment_check_set.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/professional_body_membership.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/profile_employment.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/profile_employment_gap.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/published_vacancy.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/publisher.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/publisher_ats_api_client.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/publisher_message.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/publisher_preference.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/qualification.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/qualification_result.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/referee.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/reference_request.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/religious_reference_request.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/saved_job.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/school.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 66.66
+    missed: 2
+app/models/school_group.rb:
+  lines:
+    percent: 94.44
+    missed: 1
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/school_group_membership.rb:
+  lines:
+    percent: 92.85
+    missed: 1
+  branches:
+    percent: 75.0
+    missed: 1
+app/models/self_disclosure.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/self_disclosure_request.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/subscription.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/support_user.rb:
+  lines:
+    percent: 80.0
+    missed: 1
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/training_and_cpd.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/uploaded_job_application.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/vacancy.rb:
+  lines:
+    percent: 99.45
+    missed: 1
+  branches:
+    percent: 98.0
+    missed: 1
+app/models/vacancy_analytics.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/vacancy_conflict_attempt.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/vacancy_template.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/notifiers/application_notifier.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/notifiers/jobseekers/self_disclosure_request_received_notifier.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/notifiers/publishers/job_application_data_expiry_notifier.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 0.0
+    missed: 2
+app/notifiers/publishers/job_application_received_notifier.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/notifiers/publishers/message_received_notifier.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/notifiers/publishers/organisation_logo_malware_scan_notifier.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/notifiers/publishers/organisation_photo_malware_scan_notifier.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/notifiers/publishers/reference_document_malware_scan_notifier.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/notifiers/publishers/reference_received_notifier.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/notifiers/publishers/self_disclosure_received_notifier.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/presenters/base_presenter.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/presenters/error_summary_presenter.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/presenters/job_application_decorator.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/presenters/readable_vacancy.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/presenters/referee_presenter.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 85.71
+    missed: 2
+app/presenters/self_disclosure_presenter.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/presenters/subscription_decorator.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/presenters/vacancy_decorator.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/presenters/vacancy_statistics_presenter.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/presenters/vacancy_template_decorator.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/presenters/work_history_error_summary_presenter.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/queries/location_query.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 78.57
+    missed: 3
+app/queries/organisation_location_query.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/queries/subscription_vacancies_matching_query.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/queries/vacancy_filter_query.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/queries/vacancy_full_text_search_query.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/queries/vacancy_location_query.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/campaign_page.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/campaign_search_params_merger.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 82.14
+    missed: 5
+app/services/copy_vacancy_asa_template.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/dfe_analytics_request_event.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/document_preview_service.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/document_preview_service/job_application_sample.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/email_address_audit.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/event.rb:
+  lines:
+    percent: 66.66
+    missed: 7
+  branches:
+    percent: 20.0
+    missed: 8
+app/services/export_candidate_data_service.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/filtered_mail_payload.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/find_and_use_an_api/build_manifest.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/find_and_use_an_api/publish_catalogue.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/geo_factories.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/gias/data.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/gias/import_schools_and_local_authorities.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/gias/import_trusts.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 57.14
+    missed: 6
+app/services/gov_uk_notify_status_client.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/image_manipulator.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/job_application_pdf_generator.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/job_application_zip_builder.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/jobseekers/account_transfer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 90.0
+    missed: 1
+app/services/jobseekers/close_account.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/jobseekers/create_subscription.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/jobseekers/govuk_one_login.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/services/jobseekers/govuk_one_login/client.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/jobseekers/govuk_one_login/errors.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/jobseekers/govuk_one_login/helper.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/jobseekers/govuk_one_login/user_from_auth_response.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/jobseekers/job_applications/employment_gap_finder.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 94.44
+    missed: 1
+app/services/jobseekers/job_applications/job_application_step_process.rb:
+  lines:
+    percent: 95.65
+    missed: 1
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/jobseekers/job_applications/prefill_job_application_from_previous_application.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/jobseekers/job_applications/quick_apply.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/jobseekers/job_applications/uploaded_job_application_step_process.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/jobseekers/reactivate_account.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/jobseekers/saved_job_sort.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/jobseekers/subscription_sort.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/location_suggestion.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/markdown_document.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 80.0
+    missed: 2
+app/services/messages_pdf_generator.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/ons_data_import/create_composites.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/ons_data_import/import.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 1
+app/services/ons_data_import/import_cities.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/ons_data_import/import_counties.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/ons_data_import/import_regions.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/publish_vacancy.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/publishers/ats_api/create_vacancy_service.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/publishers/ats_api/organisation_fetcher.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 93.75
+    missed: 1
+app/services/publishers/ats_api/update_vacancy_service.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/publishers/candidate_messages_sort.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/publishers/dfe_sign_in/authorisation.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/publishers/dfe_sign_in/big_query_export/approvers.rb:
+  lines:
+    percent: 64.0
+    missed: 9
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/publishers/dfe_sign_in/big_query_export/base.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 1
+app/services/publishers/dfe_sign_in/big_query_export/users.rb:
+  lines:
+    percent: 61.53
+    missed: 10
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/publishers/dfe_sign_in/fetch_dsi_users.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/publishers/dfe_sign_in/org_id_mappings.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/publishers/dfe_sign_in/parsing.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/publishers/dfe_sign_in/update_users_in_db.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/publishers/export_vacancy_to_csv.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/publishers/job_application_sort.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/publishers/vacancies/vacancy_step_process.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/publishers/vacancy_sort.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 80.0
+    missed: 1
+app/services/publishers/vacancy_templates/vacancy_template_step_process.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/record_sort.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 2
+app/services/reference_pdf_generator.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/request_event.rb:
+  lines:
+    percent: 77.27
+    missed: 5
+  branches:
+    percent: 0.0
+    missed: 6
+app/services/search/candidate_messages_search.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/search/college_search.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/search/criteria_inventor.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 83.33
+    missed: 1
+app/services/search/jobseeker_profile_search.rb:
+  lines:
+    percent: 97.82
+    missed: 1
+  branches:
+    percent: 95.45
+    missed: 1
+app/services/search/keyword_filter_generation/query_parser.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/search/keyword_filter_generation/query_transformer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/services/search/location_builder.rb:
+  lines:
+    percent: 95.65
+    missed: 1
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/search/organisation_search.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/search/postgres/query_parser.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/search/postgres/query_transformer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/search/postgres/tsvector_generator.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/search/radius_builder.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/search/school_search.rb:
+  lines:
+    percent: 88.63
+    missed: 5
+  branches:
+    percent: 79.16
+    missed: 5
+app/services/search/similar_jobs.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/search/vacancy_search.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 77.77
+    missed: 4
+app/services/search/vacancy_sort.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/search/wider_suggestions_builder.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/self_disclosure_pdf_generator.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/step_process.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/string_anonymiser.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/vacancies/export/dwp_find_a_job/closed_early.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/vacancies/export/dwp_find_a_job/closed_early_vacancies/query.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/vacancies/export/dwp_find_a_job/closed_early_vacancies/xml.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/vacancies/export/dwp_find_a_job/published_and_updated.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/vacancies/export/dwp_find_a_job/published_and_updated_vacancies/parsed_vacancy.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 80.0
+    missed: 4
+app/services/vacancies/export/dwp_find_a_job/published_and_updated_vacancies/query.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/vacancies/export/dwp_find_a_job/published_and_updated_vacancies/xml.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 92.85
+    missed: 1
+app/services/vacancies/export/dwp_find_a_job/upload.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/vacancies/export/dwp_find_a_job/versioning.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/vacancies/import/parser/start_date.rb:
+  lines:
+    percent: 94.59
+    missed: 2
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/vacancies/import/shared.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 80.0
+    missed: 1
+app/services/vacancies/import/sources/broadbean.rb:
+  lines:
+    percent: 97.46
+    missed: 2
+  branches:
+    percent: 78.57
+    missed: 12
+app/services/vacancies/import/sources/fusion.rb:
+  lines:
+    percent: 98.75
+    missed: 1
+  branches:
+    percent: 82.25
+    missed: 11
+app/services/vacancies/import/sources/vacancy_poster.rb:
+  lines:
+    percent: 97.26
+    missed: 2
+  branches:
+    percent: 72.22
+    missed: 15
+app/services/vacancies/import/sources/ventrus.rb:
+  lines:
+    percent: 96.0
+    missed: 3
+  branches:
+    percent: 81.48
+    missed: 10
+app/services/vacancy_analytics_service.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/services/vacancy_counter.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/validators/date_validator.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 85.71
+    missed: 2
+app/validators/email_address_validator.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/validators/external_vacancy_validator.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/validators/form_file_validator.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/validators/json_swagger_validator.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/validators/phone_number_validator.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/validators/time_validator.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/validators/within_united_kingdom_validator.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/active_storage/blobs/_blob.html.slim:
+  lines:
+    percent: 0.0
+    missed: 8
+  branches:
+    percent: 0.0
+    missed: 8
+app/views/api/vacancies/index.json.jbuilder:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 83.33
+    missed: 1
+app/views/api/vacancies/show.jbuilder:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/colleges/_filters.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/colleges/_form.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/colleges/_wider_search.html.slim:
+  lines:
+    percent: 0.0
+    missed: 11
+  branches:
+    percent: 0.0
+    missed: 2
+app/views/colleges/index.html.slim:
+  lines:
+    percent: 93.75
+    missed: 1
+  branches:
+    percent: 50.0
+    missed: 2
+app/views/cookies_preferences/_cookies_consent_form.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/cookies_preferences/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/errors/internal_server_error.html.slim:
+  lines:
+    percent: 75.0
+    missed: 2
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/errors/not_found.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/errors/unauthorised.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/errors/unprocessable_entity.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/general_feedbacks/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 1
+app/views/home/_landing_page_links.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/home/_phases_section.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/home/_regional_counts_section.html.slim:
+  lines:
+    percent: 18.18
+    missed: 54
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/home/_search.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/home/_subjects_section.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/home/_support_roles_section.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/home/_teaching_roles_section.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/home/_working_patterns_section.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/home/index.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/account_feedbacks/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/account_transfers/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/accounts/account_found.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/accounts/account_not_found.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/accounts/confirmation.html.slim:
+  lines:
+    percent: 0.0
+    missed: 12
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/accounts/show.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/alert_mailer/alert.text.erb:
+  lines:
+    percent: 94.73
+    missed: 1
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/jobseekers/base/_employment_fields.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/base/_qts_fields.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/email_preferences/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/employments/_employments.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 85.71
+    missed: 2
+app/views/jobseekers/job_applications/_explained_employment_break.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/_job_application.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/_show.html.slim:
+  lines:
+    percent: 93.47
+    missed: 3
+  branches:
+    percent: 83.33
+    missed: 4
+app/views/jobseekers/job_applications/_unexplained_employment_break.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/jobseekers/job_applications/about_your_application.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/apply.html.slim:
+  lines:
+    percent: 91.89
+    missed: 3
+  branches:
+    percent: 83.33
+    missed: 3
+app/views/jobseekers/job_applications/breaks/_fields.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/breaks/confirm_destroy.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/breaks/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/breaks/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/build/_banner.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/build/_employment_summary_card.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/build/ask_for_support.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/build/catholic.html.slim:
+  lines:
+    percent: 97.5
+    missed: 1
+  branches:
+    percent: 75.0
+    missed: 1
+app/views/jobseekers/job_applications/build/declarations.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/build/employment_history.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/build/equal_opportunities.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/build/non_catholic.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/build/personal_details.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/jobseekers/job_applications/build/personal_statement.html.slim:
+  lines:
+    percent: 80.0
+    missed: 8
+  branches:
+    percent: 50.0
+    missed: 8
+app/views/jobseekers/job_applications/build/professional_body_memberships.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 1
+app/views/jobseekers/job_applications/build/professional_status.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/build/qualifications.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/build/referees.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 66.66
+    missed: 2
+app/views/jobseekers/job_applications/build/training_and_cpds.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 1
+app/views/jobseekers/job_applications/confirm_destroy.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/confirm_withdraw.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/education_gaps/_fields.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/education_gaps/confirm_destroy.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/education_gaps/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/education_gaps/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/employments/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/employments/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/index.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/jobseeker_messages/_jobseeker_message.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/new.html.slim:
+  lines:
+    percent: 80.76
+    missed: 5
+  branches:
+    percent: 75.0
+    missed: 2
+app/views/jobseekers/job_applications/post_submit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/professional_body_memberships/_fields.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/professional_body_memberships/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/professional_body_memberships/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/publisher_messages/_publisher_message.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/qualifications/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/qualifications/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/qualifications/select_category.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/referees/_fields.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/referees/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/referees/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/review.html.slim:
+  lines:
+    percent: 90.9
+    missed: 3
+  branches:
+    percent: 70.0
+    missed: 3
+app/views/jobseekers/job_applications/review/_ask_for_support.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/review/_catholic_religious_information.html.slim:
+  lines:
+    percent: 97.82
+    missed: 1
+  branches:
+    percent: 87.5
+    missed: 2
+app/views/jobseekers/job_applications/review/_declarations.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/review/_employment_history.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 77.77
+    missed: 4
+app/views/jobseekers/job_applications/review/_equal_opportunities.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/review/_non_catholic_religious_information.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 83.33
+    missed: 1
+app/views/jobseekers/job_applications/review/_personal_details.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 66.66
+    missed: 2
+app/views/jobseekers/job_applications/review/_personal_statement.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/review/_professional_body_memberships.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 3
+app/views/jobseekers/job_applications/review/_professional_status.html.slim:
+  lines:
+    percent: 83.33
+    missed: 3
+  branches:
+    percent: 75.0
+    missed: 1
+app/views/jobseekers/job_applications/review/_qualifications.html.slim:
+  lines:
+    percent: 88.23
+    missed: 2
+  branches:
+    percent: 80.0
+    missed: 2
+app/views/jobseekers/job_applications/review/_references.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 85.71
+    missed: 2
+app/views/jobseekers/job_applications/review/_training_and_cpds.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 87.5
+    missed: 1
+app/views/jobseekers/job_applications/review/qualifications/_qualification.html.slim:
+  lines:
+    percent: 80.0
+    missed: 3
+  branches:
+    percent: 37.5
+    missed: 5
+app/views/jobseekers/job_applications/review/qualifications/_secondary_qualification.html.slim:
+  lines:
+    percent: 0.0
+    missed: 6
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/self_disclosure/barred_list.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/self_disclosure/completed.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/self_disclosure/conduct.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/self_disclosure/confirmation.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/self_disclosure/personal_details.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/show.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/training_and_cpds/_fields.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/training_and_cpds/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/training_and_cpds/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/uploaded_job_applications/review/_personal_details.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/uploaded_job_applications/review/_upload_application_form.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/jobseeker_messages/_jobseeker_message.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/login_keys/create.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/login_keys/error.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/login_keys/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/peak_times_mailer/reminder.text.erb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/professional_body_memberships/_professional_body_memberships.html.slim:
+  lines:
+    percent: 0.0
+    missed: 25
+  branches:
+    percent: 0.0
+    missed: 8
+app/views/jobseekers/profiles/_summary.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 62.5
+    missed: 9
+app/views/jobseekers/profiles/about_you/_summary.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/about_you/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/about_you/show.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/breaks/_fields.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/breaks/confirm_destroy.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/breaks/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/breaks/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/confirm_toggle.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/employments/_employment_fields.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/employments/_summary.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/employments/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/employments/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/employments/review.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/hide_profile/_summary.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 2
+app/views/jobseekers/profiles/hide_profile/add.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/hide_profile/cannot_find_school.html.slim:
+  lines:
+    percent: 0.0
+    missed: 13
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/hide_profile/choose_school_or_trust.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/hide_profile/delete.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/hide_profile/review.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/hide_profile/schools.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/hide_profile/show.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/job_preferences/_job_preferences.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/job_preferences/_summary.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/job_preferences/key_stages.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/job_preferences/locations.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/job_preferences/phases.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/job_preferences/review.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/job_preferences/roles.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/job_preferences/subjects.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/job_preferences/working_patterns.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/job_preferences_locations/delete_location.html.slim:
+  lines:
+    percent: 76.92
+    missed: 3
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/jobseekers/profiles/job_preferences_locations/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/job_preferences_locations/index.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/job_preferences_locations/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/personal_details/_summary.html.slim:
+  lines:
+    percent: 80.76
+    missed: 5
+  branches:
+    percent: 50.0
+    missed: 3
+app/views/jobseekers/profiles/personal_details/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/preview/show.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/qualifications/_summary.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/qualifications/confirm_destroy.html.slim:
+  lines:
+    percent: 57.89
+    missed: 16
+  branches:
+    percent: 50.0
+    missed: 3
+app/views/jobseekers/profiles/qualifications/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/qualifications/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/qualifications/review.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/qualifications/select_category.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/qualified_teacher_status/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/qualified_teacher_status/show.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/profiles/show.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/publisher_messages/_publisher_message.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/qualifications/_fields.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 1
+app/views/jobseekers/qualifications/_preview_qualifications.html.slim:
+  lines:
+    percent: 70.58
+    missed: 5
+  branches:
+    percent: 50.0
+    missed: 6
+app/views/jobseekers/qualifications/_qualifications.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/qualifications/fields/_degree.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/jobseekers/qualifications/fields/_other.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/qualifications/fields/_secondary_school.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 1
+app/views/jobseekers/qualifications/review/_qualification.html.slim:
+  lines:
+    percent: 0.0
+    missed: 13
+  branches:
+    percent: 0.0
+    missed: 8
+app/views/jobseekers/qualifications/review/_secondary_qualification.html.slim:
+  lines:
+    percent: 0.0
+    missed: 6
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/registrations/confirm_destroy.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/request_account_transfer_emails/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/saved_jobs/index.html.slim:
+  lines:
+    percent: 94.59
+    missed: 2
+  branches:
+    percent: 85.71
+    missed: 2
+app/views/jobseekers/sessions/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/shared/_side_navigation.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/subscriptions/feedbacks/further_feedbacks/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 1
+app/views/jobseekers/subscriptions/index.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/unsubscribe_feedbacks/confirmation.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/unsubscribe_feedbacks/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/uploaded_job_applications/personal_details/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/jobseekers/uploaded_job_applications/upload_application_forms/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/layouts/_add_js_enabled_class_to_body.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/layouts/_cookies_banner.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/layouts/_flash_messages.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/layouts/_footer.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/layouts/_head_links.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 8
+app/views/layouts/_head_meta.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 60.52
+    missed: 15
+app/views/layouts/_header.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 92.85
+    missed: 1
+app/views/layouts/_phase_banner.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/layouts/_publisher_secondary_nav.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/layouts/_sentry_js_config.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/layouts/_skip_links.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/layouts/_sub_navigation.html.slim:
+  lines:
+    percent: 66.66
+    missed: 3
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/layouts/action_text/contents/_content.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/layouts/application.html.slim:
+  lines:
+    percent: 75.67
+    missed: 9
+  branches:
+    percent: 60.0
+    missed: 4
+app/views/layouts/application_intermediary.html.slim:
+  lines:
+    percent: 73.52
+    missed: 9
+  branches:
+    percent: 50.0
+    missed: 4
+app/views/layouts/application_supportal.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 66.66
+    missed: 2
+app/views/layouts/mailer.html.slim:
+  lines:
+    percent: 0.0
+    missed: 4
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/layouts/mailer.text.erb:
+  lines:
+    percent: 0.0
+    missed: 1
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/layouts/subscription_campaign.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 4
+app/views/notifications/_notification.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/notifications/index.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 83.33
+    missed: 1
+app/views/omniauth_callbacks/not_authorised.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/omniauth_callbacks/pending_approval.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/omniauth_callbacks/unknown_organisation_category.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/omniauth_callbacks/unregistered_establishment.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/omniauth_callbacks/unsupported_establishment_type.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/organisations/_organisation.html.slim:
+  lines:
+    percent: 93.81
+    missed: 6
+  branches:
+    percent: 82.5
+    missed: 7
+app/views/organisations/_vacancy_field.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/organisations/index.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/organisations/schools/_schools.html.slim:
+  lines:
+    percent: 83.33
+    missed: 1
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/organisations/schools/index.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/organisations/search/_filters.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/organisations/search/_form.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/organisations/search/_open_filters_button.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/organisations/search/_results.html.slim:
+  lines:
+    percent: 85.71
+    missed: 3
+  branches:
+    percent: 50.0
+    missed: 3
+app/views/organisations/search/_stats.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/organisations/search/_wider_search.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/organisations/show.html.slim:
+  lines:
+    percent: 78.57
+    missed: 3
+  branches:
+    percent: 75.0
+    missed: 1
+app/views/pages/accessibility.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/pages/dsi-account-request.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/pages/job-application-preview.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/pages/leadership-roles.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 2
+app/views/pages/list-school-job.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 12
+app/views/pages/savings-methodology.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/pages/sign-in.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/pages/terms-and-conditions.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/pages/vision-statement.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/posts/index.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 2
+app/views/posts/show.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 57.14
+    missed: 6
+app/views/posts/subcategory.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 2
+app/views/publishers/accounts/confirm_email_opt_out.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/accounts/confirm_unsubscribe.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/accounts/email_opt_out.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/accounts/unsubscribe.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/ats_api/v1/vacancies/_show.json.jbuilder:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 83.33
+    missed: 1
+app/views/publishers/ats_api/v1/vacancies/index.json.jbuilder:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/publishers/ats_api/v1/vacancies/show.jbuilder:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/publishers/authentication_fallback_mailer/sign_in_fallback.text.erb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/build_vacancy_templates/_button_group.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/build_vacancy_templates/about_the_role.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/build_vacancy_templates/anonymise_applications.html.slim:
+  lines:
+    percent: 88.88
+    missed: 1
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/publishers/build_vacancy_templates/applying_for_the_job.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/build_vacancy_templates/contract_information.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/build_vacancy_templates/education_phases.html.slim:
+  lines:
+    percent: 83.33
+    missed: 1
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/publishers/build_vacancy_templates/how_to_receive_applications.html.slim:
+  lines:
+    percent: 87.5
+    missed: 1
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/publishers/build_vacancy_templates/job_role.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/build_vacancy_templates/key_stages.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/build_vacancy_templates/pay_package.html.slim:
+  lines:
+    percent: 85.71
+    missed: 3
+  branches:
+    percent: 66.66
+    missed: 2
+app/views/publishers/build_vacancy_templates/school_visits.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/build_vacancy_templates/subjects.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/build_vacancy_templates/visa_sponsorship.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/candidate_messages/index.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/current_year_statistics/_bar_chart.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/current_year_statistics/_donut_chart.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/current_year_statistics/_page_header.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/current_year_statistics/equal_opportunities.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/current_year_statistics/index.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/jobseeker_profiles/_layout.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/jobseeker_profiles/index.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/jobseeker_profiles/search/_filters.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/jobseeker_profiles/search/_job_roles_filters.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/jobseeker_profiles/search/_results.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 62.5
+    missed: 3
+app/views/publishers/jobseeker_profiles/show.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/login_keys/create.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/login_keys/error.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/login_keys/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/login_keys/show.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/message_notification_mailer/messages_received.text.erb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/message_templates/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/message_templates/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/new_features/reminder.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/organisations/_organisation.html.slim:
+  lines:
+    percent: 95.16
+    missed: 3
+  branches:
+    percent: 83.33
+    missed: 3
+app/views/publishers/organisations/description/edit.html.slim:
+  lines:
+    percent: 94.44
+    missed: 1
+  branches:
+    percent: 83.33
+    missed: 1
+app/views/publishers/organisations/edit.html.slim:
+  lines:
+    percent: 0.0
+    missed: 9
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/organisations/email/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/organisations/logo/confirm_destroy.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/publishers/organisations/logo/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 2
+app/views/publishers/organisations/photo/confirm_destroy.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/publishers/organisations/photo/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 2
+app/views/publishers/organisations/preview.html.slim:
+  lines:
+    percent: 81.25
+    missed: 3
+  branches:
+    percent: 75.0
+    missed: 1
+app/views/publishers/organisations/profile_incomplete.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/organisations/safeguarding_information/edit.html.slim:
+  lines:
+    percent: 90.9
+    missed: 1
+  branches:
+    percent: 75.0
+    missed: 1
+app/views/publishers/organisations/schools/preview.html.slim:
+  lines:
+    percent: 0.0
+    missed: 10
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/organisations/show.html.slim:
+  lines:
+    percent: 88.46
+    missed: 3
+  branches:
+    percent: 87.5
+    missed: 1
+app/views/publishers/organisations/url_override/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/publisher_preferences/_form.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/publisher_preferences/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/publisher_preferences/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/sessions/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/terms_and_conditions/show.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/_about_the_role.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 10
+app/views/publishers/vacancies/_application_process.html.slim:
+  lines:
+    percent: 91.02
+    missed: 7
+  branches:
+    percent: 79.41
+    missed: 7
+app/views/publishers/vacancies/_documents.html.slim:
+  lines:
+    percent: 0.0
+    missed: 13
+  branches:
+    percent: 0.0
+    missed: 2
+app/views/publishers/vacancies/_heading.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/_important_dates.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 66.66
+    missed: 2
+app/views/publishers/vacancies/_job_details.html.slim:
+  lines:
+    percent: 97.8
+    missed: 2
+  branches:
+    percent: 82.92
+    missed: 7
+app/views/publishers/vacancies/_review_banner.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/publishers/vacancies/_review_breadcrumbs.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/_tabs.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 83.33
+    missed: 1
+app/views/publishers/vacancies/_vacancies_awaiting_feedback.html.slim:
+  lines:
+    percent: 86.66
+    missed: 2
+  branches:
+    percent: 50.0
+    missed: 3
+app/views/publishers/vacancies/activity_log/show.html.slim:
+  lines:
+    percent: 83.33
+    missed: 2
+  branches:
+    percent: 50.0
+    missed: 2
+app/views/publishers/vacancies/base/_facebook_link.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/base/_publish_date.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/base/_twitter_x_link.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/build/about_the_role.html.slim:
+  lines:
+    percent: 85.71
+    missed: 3
+  branches:
+    percent: 60.0
+    missed: 4
+app/views/publishers/vacancies/build/anonymise_applications.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/build/application_form.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 70.0
+    missed: 3
+app/views/publishers/vacancies/build/application_link.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/build/applying_for_the_job.html.slim:
+  lines:
+    percent: 95.83
+    missed: 1
+  branches:
+    percent: 75.0
+    missed: 1
+app/views/publishers/vacancies/build/confirm_contact_details.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/build/confirm_job_address.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/build/contact_details.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/build/contract_information.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/build/education_phases.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/build/how_to_receive_applications.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/build/important_dates.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/build/include_additional_documents.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/build/job_location.html.slim:
+  lines:
+    percent: 75.0
+    missed: 3
+  branches:
+    percent: 62.5
+    missed: 3
+app/views/publishers/vacancies/build/job_role.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/build/job_title.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/build/key_stages.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/publishers/vacancies/build/pay_package.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 1
+app/views/publishers/vacancies/build/school_visits.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/build/start_date.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/build/subjects.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/build/visa_sponsorship.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/bulk_messages/select_template.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/bulk_messages/send_messages.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/bulk_rejection_messages/select_template.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/bulk_rejection_messages/send_messages.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/confirm_destroy.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/copy/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/documents/_documents.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/documents/index.html.slim:
+  lines:
+    percent: 93.33
+    missed: 1
+  branches:
+    percent: 50.0
+    missed: 4
+app/views/publishers/vacancies/documents/new.html.slim:
+  lines:
+    percent: 87.5
+    missed: 1
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/publishers/vacancies/edit_vacancy_sections/_edit_applying_for_the_job.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/end_listing/show.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/expired_feedbacks/new.html.slim:
+  lines:
+    percent: 87.5
+    missed: 4
+  branches:
+    percent: 50.0
+    missed: 2
+app/views/publishers/vacancies/expired_feedbacks/submitted.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/extend_deadline/show.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/publishers/vacancies/index.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/job_applications/_header.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/job_applications/_rejected.html.slim:
+  lines:
+    percent: 0.0
+    missed: 18
+  branches:
+    percent: 0.0
+    missed: 2
+app/views/publishers/vacancies/job_applications/_tab_interviewing.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/job_applications/_tab_offered.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/job_applications/_tab_shortlisted.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/job_applications/_tab_submitted.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/job_applications/_tab_unsuccessful.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/job_applications/base/ask_references_email.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/job_applications/base/collect_references.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/job_applications/base/collect_self_disclosure.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/job_applications/declined_date.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/job_applications/feedback_date.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/job_applications/index.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/job_applications/interview_datetime.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/job_applications/jobseeker_messages/_jobseeker_message.html.slim:
+  lines:
+    percent: 0.0
+    missed: 1
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/job_applications/messages.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 91.66
+    missed: 1
+app/views/publishers/vacancies/job_applications/offered_date.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/job_applications/online_checks/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/job_applications/pre_employment_checks.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/publishers/vacancies/job_applications/pre_interview_checks.html.slim:
+  lines:
+    percent: 96.66
+    missed: 2
+  branches:
+    percent: 85.71
+    missed: 2
+app/views/publishers/vacancies/job_applications/publisher_messages/_publisher_message.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/job_applications/reference_requests/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/job_applications/reference_requests/show.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 94.59
+    missed: 2
+app/views/publishers/vacancies/job_applications/references/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/job_applications/religious_references/edit.html.slim:
+  lines:
+    percent: 75.86
+    missed: 7
+  branches:
+    percent: 33.33
+    missed: 8
+app/views/publishers/vacancies/job_applications/self_disclosure/show.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 91.66
+    missed: 2
+app/views/publishers/vacancies/job_applications/show.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/job_applications/tag.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/job_applications/terminal.html.slim:
+  lines:
+    percent: 0.0
+    missed: 6
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/jobseeker_messages/_jobseeker_message.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/preview.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/publisher_messages/_publisher_message.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/relist/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/review.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 64.28
+    missed: 5
+app/views/publishers/vacancies/review_banners/_closed.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/review_banners/_draft.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/review_banners/_published.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/review_banners/_scheduled.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/show.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/start.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/statistics/_vacancy_view_stats.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/statistics/show.html.slim:
+  lines:
+    percent: 90.32
+    missed: 3
+  branches:
+    percent: 62.5
+    missed: 3
+app/views/publishers/vacancies/summary.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 80.0
+    missed: 2
+app/views/publishers/vacancies/vacancy_form_partials/_submit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancy_templates/_anonymise_applications.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/publishers/vacancy_templates/_application_form_type.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancy_templates/_contract_type.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancy_templates/_ect_suitable.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancy_templates/_flexi_working.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancy_templates/_further_details.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancy_templates/_job_role.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancy_templates/_key_stages.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancy_templates/_name.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancy_templates/_school_offer.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancy_templates/_school_visits.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancy_templates/_skills_and_experience.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancy_templates/_subjects.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancy_templates/_uploaded_form.html.slim:
+  lines:
+    percent: 0.0
+    missed: 6
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancy_templates/_visa_sponsorship.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancy_templates/_website.html.slim:
+  lines:
+    percent: 0.0
+    missed: 6
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancy_templates/_working_patterns.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancy_templates/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancy_templates/index.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 80.0
+    missed: 2
+app/views/publishers/vacancy_templates/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancy_templates/show.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 80.0
+    missed: 2
+app/views/referees/build_references/can_give.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/referees/build_references/can_share.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/referees/build_references/completed.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/referees/build_references/employment_reference.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/referees/build_references/fit_and_proper_persons.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/referees/build_references/how_would_you_rate_part_1.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/referees/build_references/how_would_you_rate_part_2.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/referees/build_references/how_would_you_rate_part_3.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/referees/build_references/no_longer_available.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/referees/build_references/no_reference.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/referees/build_references/referee_details.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/referees/build_references/reference_information.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/shared/_category_fieldset.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/shared/_error_messages.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/shared/_jobseeker_message.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 2
+app/views/shared/_message_form.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/shared/_recaptcha.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 62.5
+    missed: 3
+app/views/shared/_subjects_filter.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/shared/jobseekers/_publisher_message.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 2
+app/views/shared/publishers/_about_the_role.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/shared/publishers/_note.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/shared/publishers/_publisher_message.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 2
+app/views/subscriptions/_fields.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 66.66
+    missed: 2
+app/views/subscriptions/_form.html.slim:
+  lines:
+    percent: 83.33
+    missed: 2
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/subscriptions/_job_roles_fields.slim:
+  lines:
+    percent: 0.0
+    missed: 12
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/subscriptions/_jobseeker_account_prompt.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/subscriptions/_subscription_details.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 1
+app/views/subscriptions/campaign/_fields.html.slim:
+  lines:
+    percent: 95.0
+    missed: 1
+  branches:
+    percent: 50.0
+    missed: 3
+app/views/subscriptions/campaign/_form.html.slim:
+  lines:
+    percent: 81.81
+    missed: 2
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/subscriptions/campaign/_job_roles_fields.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/subscriptions/campaign/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/subscriptions/confirm.html.slim:
+  lines:
+    percent: 92.3
+    missed: 1
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/subscriptions/edit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/subscriptions/new.html.slim:
+  lines:
+    percent: 85.71
+    missed: 3
+  branches:
+    percent: 50.0
+    missed: 2
+app/views/subscriptions/unsubscribe.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/support_requests/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/support_users/authentication_fallback_mailer/sign_in_fallback.text.erb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/support_users/dashboard/dashboard.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/support_users/fallback_sessions/create.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/support_users/feedbacks/_feedback_table.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 2
+app/views/support_users/feedbacks/_job_alerts_feedback_table.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/support_users/feedbacks/_reporting_period_control.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/support_users/feedbacks/_tables.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/support_users/feedbacks/_tabs.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/support_users/feedbacks/general.csv.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/support_users/feedbacks/general.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/support_users/feedbacks/job_alerts.csv.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/support_users/feedbacks/job_alerts.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/support_users/feedbacks/satisfaction_ratings.csv.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/support_users/feedbacks/satisfaction_ratings.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/support_users/publisher_ats_api_clients/confirm_rotate_key.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/support_users/publisher_ats_api_clients/conflict_attempts/index.html.slim:
+  lines:
+    percent: 93.75
+    missed: 2
+  branches:
+    percent: 50.0
+    missed: 2
+app/views/support_users/publisher_ats_api_clients/index.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/support_users/publisher_ats_api_clients/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/support_users/publisher_ats_api_clients/show.html.slim:
+  lines:
+    percent: 89.28
+    missed: 3
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/support_users/service_data/fe_colleges_without_publishers/index.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/support_users/sessions/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/vacancies/_show.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/vacancies/_vacancy_banner.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/vacancies/campaign_landing_page.html.slim:
+  lines:
+    percent: 82.92
+    missed: 7
+  branches:
+    percent: 40.0
+    missed: 12
+app/views/vacancies/index.html.slim:
+  lines:
+    percent: 97.5
+    missed: 1
+  branches:
+    percent: 90.0
+    missed: 2
+app/views/vacancies/listing/_banner.html.slim:
+  lines:
+    percent: 76.92
+    missed: 3
+  branches:
+    percent: 83.33
+    missed: 1
+app/views/vacancies/listing/_banner_buttons.html.slim:
+  lines:
+    percent: 84.61
+    missed: 4
+  branches:
+    percent: 81.81
+    missed: 4
+app/views/vacancies/listing/_contact_details.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 2
+app/views/vacancies/listing/_job_details.html.slim:
+  lines:
+    percent: 93.33
+    missed: 8
+  branches:
+    percent: 83.92
+    missed: 9
+app/views/vacancies/listing/_key_dates_sidebar.html.slim:
+  lines:
+    percent: 71.42
+    missed: 4
+  branches:
+    percent: 55.55
+    missed: 4
+app/views/vacancies/listing/_multi_school_banner.html.slim:
+  lines:
+    percent: 33.33
+    missed: 2
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/vacancies/listing/_organisation_details.html.slim:
+  lines:
+    percent: 63.33
+    missed: 11
+  branches:
+    percent: 55.0
+    missed: 9
+app/views/vacancies/listing/_personal_statement_help.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/vacancies/listing/_school.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 4
+app/views/vacancies/listing/_school_group.html.slim:
+  lines:
+    percent: 0.0
+    missed: 13
+  branches:
+    percent: 0.0
+    missed: 4
+app/views/vacancies/listing/_similar_jobs.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/vacancies/search/_banner.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 2
+app/views/vacancies/search/_current_location.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 2
+app/views/vacancies/search/_fields_and_button.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 1
+app/views/vacancies/search/_filters.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 7
+app/views/vacancies/search/_job_roles_filters.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 83.33
+    missed: 2
+app/views/vacancies/search/_keyword.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/vacancies/search/_location.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/vacancies/search/_no_results.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/vacancies/search/_no_results_organisation.html.slim:
+  lines:
+    percent: 0.0
+    missed: 5
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/vacancies/search/_no_results_suggestions.html.slim:
+  lines:
+    percent: 60.86
+    missed: 9
+  branches:
+    percent: 25.0
+    missed: 3
+app/views/vacancies/search/_open_filters_button.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/vacancies/search/_page_title_and_description.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/vacancies/search/_radius.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/vacancies/search/_results.html.slim:
+  lines:
+    percent: 93.02
+    missed: 3
+  branches:
+    percent: 75.0
+    missed: 4
+app/views/vacancies/search/_sort.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/vacancies/search/_stats.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/vacancies/show.html.slim:
+  lines:
+    percent: 91.66
+    missed: 1
+  branches:
+    percent: 75.0
+    missed: 1
+app/views/vacancies/trn_interstitial.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+lib/dfe_sign_in/api.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+lib/dfe_sign_in/api/request.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+lib/dfe_sign_in/api/response.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+lib/dsi_client.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 40.0
+    missed: 6
+lib/fail_safe.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+lib/flag.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+lib/geocoding.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 91.66
+    missed: 1
+lib/google_api_client.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+lib/google_indexing.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+lib/hash_shape.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+lib/log_benchmark.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+lib/modules/aws_ip_ranges.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+lib/rubocop/cop/custom/rake_task_invoke.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+lib/tasks/backfill_about_you.rake:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+lib/tasks/backfill_fe_role_qts_required.rake:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+lib/tasks/backfill_vacancy_geolocation.rake:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+lib/tasks/backfill_vacancy_searchable_content.rake:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+lib/tasks/data.rake:
+  lines:
+    percent: 70.83
+    missed: 14
+  branches:
+    percent: 100.0
+    missed: 0
+lib/tasks/discard_invalid_subscriptions.rake:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+lib/tasks/fauapi.rake:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+lib/tasks/migrate_legacy_job_preferences.rake:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+lib/vcap_services.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+lib/zendesk.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0

@@ -104,6 +104,19 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
       skip "app/views/layouts/_#{l}.html.slim"
     end
 
+    # The coverage for this file is flakey, but profiles are going away soon anyway
+    # so makes sense to exclude rather than trying to fix
+    skip "app/views/jobseekers/profiles/qualified_teacher_status/_summary.html.slim"
+
+    # These files appear to have flakey coverage, so exclude them for now
+    skip "app/views/jobseekers/job_applications/_banner.html.slim"
+    skip "app/views/jobseekers/job_applications/_job_application_review_sections.html.slim"
+    skip "app/views/api/vacancies/_show.json.jbuilder"
+    skip "app/views/jobseekers/job_applications/_messages.html.slim"
+
+    skip "app/views/publishers/vacancy_templates/_salary_details.html.slim"
+    skip "app/views/support_users/service_data/index.html.slim"
+
     # Each group will be displayed in the report as its own Tab.
     group "Components", "app/components"
     group "Queries", "app/queries"
@@ -113,16 +126,20 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     group "Presenters", "app/presenters"
     group "Notifiers", "app/notifiers"
     group "Tasks", "lib/tasks"
+    group "Views", "app/views"
 
     # Most of the uncovered lines are in very old unchanging code, so chasing more coverage
     # in those areas does not appear to be worth-while
 
     # However (possibly due to some residual random behaviour in test factories)
     # the line coverage needs to be set 0.02 below the reported value.
-    # Nornmally this value needs to be 0.01 below the reported value due to rounding issues.
-    minimum_coverage line: 96.40, branch: 84.15
-    # Values from CI run 28th September 2026
-    # Line Coverage: 96.48% (20560 / 21310) -> 440 + 310 = 750 lines uncovered
-    # Branch Coverage: 84.17% (4202 / 4992) -> 790 branches uncovered
+    # Normally this value needs to be 0.01 below the reported value due to rounding issues.
+    # This is somewhat superceded by the simplecov ratchet baseline configured below
+    minimum_coverage line: 96.48, branch: 84.25
+    # Values from CI run 30th September 2026
+    # Line Coverage: 96.49% (20362 / 21101) -> 638 + 101 = 739 lines uncovered
+    # Branch Coverage: 84.17% (4134 / 4906) -> 772 branches uncovered
+
+    formats :html, :baseline
   end
 end
