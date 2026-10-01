@@ -55,8 +55,8 @@ app/components/dashboard_component/dashboard_component.html.slim:
     percent: 94.49
     missed: 6
   branches:
-    percent: 87.23
-    missed: 6
+    percent: 100.0
+    missed: 0
 app/components/detail_component.rb:
   lines:
     percent: 100.0
@@ -69,8 +69,8 @@ app/components/detail_component/detail_component.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/components/editor_component.rb:
   lines:
     percent: 100.0
@@ -83,8 +83,8 @@ app/components/editor_component/editor_component.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/components/empty_section_component.rb:
   lines:
     percent: 100.0
@@ -335,8 +335,8 @@ app/components/vacancy_form_page_heading_component/vacancy_form_page_heading_com
     percent: 100.0
     missed: 0
   branches:
-    percent: 66.66
-    missed: 4
+    percent: 100.0
+    missed: 0
 app/controllers/api/application_controller.rb:
   lines:
     percent: 100.0
@@ -4542,15 +4542,15 @@ app/views/api/vacancies/index.json.jbuilder:
     percent: 100.0
     missed: 0
   branches:
-    percent: 83.33
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/api/vacancies/show.jbuilder:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/colleges/_filters.html.slim:
   lines:
     percent: 100.0
@@ -4598,8 +4598,8 @@ app/views/errors/internal_server_error.html.slim:
     percent: 75.0
     missed: 2
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/errors/not_found.html.slim:
   lines:
     percent: 100.0
@@ -4626,8 +4626,8 @@ app/views/general_feedbacks/new.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/home/_landing_page_links.html.slim:
   lines:
     percent: 100.0
@@ -4738,8 +4738,8 @@ app/views/jobseekers/alert_mailer/alert.text.erb:
     percent: 94.73
     missed: 1
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/base/_employment_fields.html.slim:
   lines:
     percent: 100.0
@@ -4766,8 +4766,8 @@ app/views/jobseekers/employments/_employments.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 85.71
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/_explained_employment_break.html.slim:
   lines:
     percent: 100.0
@@ -4787,15 +4787,15 @@ app/views/jobseekers/job_applications/_show.html.slim:
     percent: 93.47
     missed: 3
   branches:
-    percent: 83.33
-    missed: 4
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/_unexplained_employment_break.html.slim:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/about_your_application.html.slim:
   lines:
     percent: 100.0
@@ -4808,8 +4808,8 @@ app/views/jobseekers/job_applications/apply.html.slim:
     percent: 91.89
     missed: 3
   branches:
-    percent: 83.33
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/breaks/_fields.html.slim:
   lines:
     percent: 100.0
@@ -4864,8 +4864,8 @@ app/views/jobseekers/job_applications/build/catholic.html.slim:
     percent: 97.5
     missed: 1
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/build/declarations.html.slim:
   lines:
     percent: 100.0
@@ -4899,22 +4899,22 @@ app/views/jobseekers/job_applications/build/personal_details.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/build/personal_statement.html.slim:
   lines:
     percent: 80.0
     missed: 8
   branches:
-    percent: 50.0
-    missed: 8
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/build/professional_body_memberships.html.slim:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/build/professional_status.html.slim:
   lines:
     percent: 100.0
@@ -4934,15 +4934,15 @@ app/views/jobseekers/job_applications/build/referees.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 66.66
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/build/training_and_cpds.html.slim:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/confirm_destroy.html.slim:
   lines:
     percent: 100.0
@@ -5018,8 +5018,8 @@ app/views/jobseekers/job_applications/new.html.slim:
     percent: 80.76
     missed: 5
   branches:
-    percent: 75.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/post_submit.html.slim:
   lines:
     percent: 100.0
@@ -5102,8 +5102,8 @@ app/views/jobseekers/job_applications/review.html.slim:
     percent: 90.9
     missed: 3
   branches:
-    percent: 70.0
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/review/_ask_for_support.html.slim:
   lines:
     percent: 100.0
@@ -5116,8 +5116,8 @@ app/views/jobseekers/job_applications/review/_catholic_religious_information.htm
     percent: 97.82
     missed: 1
   branches:
-    percent: 87.5
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/review/_declarations.html.slim:
   lines:
     percent: 100.0
@@ -5130,8 +5130,8 @@ app/views/jobseekers/job_applications/review/_employment_history.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 77.77
-    missed: 4
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/review/_equal_opportunities.html.slim:
   lines:
     percent: 100.0
@@ -5144,15 +5144,15 @@ app/views/jobseekers/job_applications/review/_non_catholic_religious_information
     percent: 100.0
     missed: 0
   branches:
-    percent: 83.33
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/review/_personal_details.html.slim:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 66.66
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/review/_personal_statement.html.slim:
   lines:
     percent: 100.0
@@ -5165,43 +5165,43 @@ app/views/jobseekers/job_applications/review/_professional_body_memberships.html
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/review/_professional_status.html.slim:
   lines:
     percent: 83.33
     missed: 3
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/review/_qualifications.html.slim:
   lines:
     percent: 88.23
     missed: 2
   branches:
-    percent: 80.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/review/_references.html.slim:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 85.71
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/review/_training_and_cpds.html.slim:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 87.5
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/review/qualifications/_qualification.html.slim:
   lines:
     percent: 80.0
     missed: 3
   branches:
-    percent: 37.5
-    missed: 5
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/review/qualifications/_secondary_qualification.html.slim:
   lines:
     percent: 0.0
@@ -5333,8 +5333,8 @@ app/views/jobseekers/profiles/_summary.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 62.5
-    missed: 9
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/profiles/about_you/_summary.html.slim:
   lines:
     percent: 100.0
@@ -5431,8 +5431,8 @@ app/views/jobseekers/profiles/hide_profile/_summary.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/profiles/hide_profile/add.html.slim:
   lines:
     percent: 100.0
@@ -5550,8 +5550,8 @@ app/views/jobseekers/profiles/job_preferences_locations/delete_location.html.sli
     percent: 76.92
     missed: 3
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/profiles/job_preferences_locations/edit.html.slim:
   lines:
     percent: 100.0
@@ -5578,8 +5578,8 @@ app/views/jobseekers/profiles/personal_details/_summary.html.slim:
     percent: 80.76
     missed: 5
   branches:
-    percent: 50.0
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/profiles/personal_details/edit.html.slim:
   lines:
     percent: 100.0
@@ -5606,8 +5606,8 @@ app/views/jobseekers/profiles/qualifications/confirm_destroy.html.slim:
     percent: 57.89
     missed: 16
   branches:
-    percent: 50.0
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/profiles/qualifications/edit.html.slim:
   lines:
     percent: 100.0
@@ -5669,15 +5669,15 @@ app/views/jobseekers/qualifications/_fields.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/qualifications/_preview_qualifications.html.slim:
   lines:
     percent: 70.58
     missed: 5
   branches:
-    percent: 50.0
-    missed: 6
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/qualifications/_qualifications.html.slim:
   lines:
     percent: 100.0
@@ -5690,8 +5690,8 @@ app/views/jobseekers/qualifications/fields/_degree.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/qualifications/fields/_other.html.slim:
   lines:
     percent: 100.0
@@ -5704,8 +5704,8 @@ app/views/jobseekers/qualifications/fields/_secondary_school.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/qualifications/review/_qualification.html.slim:
   lines:
     percent: 0.0
@@ -5739,8 +5739,8 @@ app/views/jobseekers/saved_jobs/index.html.slim:
     percent: 94.59
     missed: 2
   branches:
-    percent: 85.71
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/sessions/new.html.slim:
   lines:
     percent: 100.0
@@ -5760,8 +5760,8 @@ app/views/jobseekers/subscriptions/feedbacks/further_feedbacks/new.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/subscriptions/index.html.slim:
   lines:
     percent: 100.0
@@ -5788,8 +5788,8 @@ app/views/jobseekers/uploaded_job_applications/personal_details/edit.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/uploaded_job_applications/upload_application_forms/edit.html.slim:
   lines:
     percent: 100.0
@@ -5879,8 +5879,8 @@ app/views/layouts/_sub_navigation.html.slim:
     percent: 66.66
     missed: 3
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/layouts/action_text/contents/_content.html.slim:
   lines:
     percent: 100.0
@@ -5900,15 +5900,15 @@ app/views/layouts/application_intermediary.html.slim:
     percent: 73.52
     missed: 9
   branches:
-    percent: 50.0
-    missed: 4
+    percent: 100.0
+    missed: 0
 app/views/layouts/application_supportal.html.slim:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 66.66
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/layouts/mailer.html.slim:
   lines:
     percent: 0.0
@@ -5928,8 +5928,8 @@ app/views/layouts/subscription_campaign.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 4
+    percent: 100.0
+    missed: 0
 app/views/notifications/_notification.html.slim:
   lines:
     percent: 100.0
@@ -5942,8 +5942,8 @@ app/views/notifications/index.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 83.33
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/omniauth_callbacks/not_authorised.html.slim:
   lines:
     percent: 100.0
@@ -6005,8 +6005,8 @@ app/views/organisations/schools/_schools.html.slim:
     percent: 83.33
     missed: 1
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/organisations/schools/index.html.slim:
   lines:
     percent: 100.0
@@ -6089,15 +6089,15 @@ app/views/pages/leadership-roles.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/pages/list-school-job.html.slim:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 12
+    percent: 100.0
+    missed: 0
 app/views/pages/savings-methodology.html.slim:
   lines:
     percent: 100.0
@@ -6159,22 +6159,22 @@ app/views/publishers/ats_api/v1/vacancies/_show.json.jbuilder:
     percent: 100.0
     missed: 0
   branches:
-    percent: 83.33
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/publishers/ats_api/v1/vacancies/index.json.jbuilder:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/publishers/ats_api/v1/vacancies/show.jbuilder:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/publishers/authentication_fallback_mailer/sign_in_fallback.text.erb:
   lines:
     percent: 100.0
@@ -6201,8 +6201,8 @@ app/views/publishers/build_vacancy_templates/anonymise_applications.html.slim:
     percent: 88.88
     missed: 1
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/publishers/build_vacancy_templates/applying_for_the_job.html.slim:
   lines:
     percent: 100.0
@@ -6222,15 +6222,15 @@ app/views/publishers/build_vacancy_templates/education_phases.html.slim:
     percent: 83.33
     missed: 1
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/publishers/build_vacancy_templates/how_to_receive_applications.html.slim:
   lines:
     percent: 87.5
     missed: 1
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/publishers/build_vacancy_templates/job_role.html.slim:
   lines:
     percent: 100.0
@@ -6250,8 +6250,8 @@ app/views/publishers/build_vacancy_templates/pay_package.html.slim:
     percent: 85.71
     missed: 3
   branches:
-    percent: 66.66
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/publishers/build_vacancy_templates/school_visits.html.slim:
   lines:
     percent: 100.0
@@ -6348,8 +6348,8 @@ app/views/publishers/jobseeker_profiles/search/_results.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 62.5
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/views/publishers/jobseeker_profiles/show.html.slim:
   lines:
     percent: 100.0
@@ -6418,15 +6418,15 @@ app/views/publishers/organisations/_organisation.html.slim:
     percent: 95.16
     missed: 3
   branches:
-    percent: 83.33
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/views/publishers/organisations/description/edit.html.slim:
   lines:
     percent: 94.44
     missed: 1
   branches:
-    percent: 83.33
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/publishers/organisations/edit.html.slim:
   lines:
     percent: 0.0
@@ -6446,36 +6446,36 @@ app/views/publishers/organisations/logo/confirm_destroy.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/publishers/organisations/logo/edit.html.slim:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/publishers/organisations/photo/confirm_destroy.html.slim:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/publishers/organisations/photo/edit.html.slim:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/publishers/organisations/preview.html.slim:
   lines:
     percent: 81.25
     missed: 3
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/publishers/organisations/profile_incomplete.html.slim:
   lines:
     percent: 100.0
@@ -6488,8 +6488,8 @@ app/views/publishers/organisations/safeguarding_information/edit.html.slim:
     percent: 90.9
     missed: 1
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/publishers/organisations/schools/preview.html.slim:
   lines:
     percent: 0.0
@@ -6502,8 +6502,8 @@ app/views/publishers/organisations/show.html.slim:
     percent: 88.46
     missed: 3
   branches:
-    percent: 87.5
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/publishers/organisations/url_override/edit.html.slim:
   lines:
     percent: 100.0
@@ -6551,15 +6551,15 @@ app/views/publishers/vacancies/_about_the_role.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 10
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/_application_process.html.slim:
   lines:
     percent: 91.02
     missed: 7
   branches:
-    percent: 79.41
-    missed: 7
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/_documents.html.slim:
   lines:
     percent: 0.0
@@ -6579,22 +6579,22 @@ app/views/publishers/vacancies/_important_dates.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 66.66
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/_job_details.html.slim:
   lines:
     percent: 97.8
     missed: 2
   branches:
-    percent: 82.92
-    missed: 7
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/_review_banner.html.slim:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/_review_breadcrumbs.html.slim:
   lines:
     percent: 100.0
@@ -6607,22 +6607,22 @@ app/views/publishers/vacancies/_tabs.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 83.33
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/_vacancies_awaiting_feedback.html.slim:
   lines:
     percent: 86.66
     missed: 2
   branches:
-    percent: 50.0
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/activity_log/show.html.slim:
   lines:
     percent: 83.33
     missed: 2
   branches:
-    percent: 50.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/base/_facebook_link.html.slim:
   lines:
     percent: 100.0
@@ -6649,8 +6649,8 @@ app/views/publishers/vacancies/build/about_the_role.html.slim:
     percent: 85.71
     missed: 3
   branches:
-    percent: 60.0
-    missed: 4
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/build/anonymise_applications.html.slim:
   lines:
     percent: 100.0
@@ -6663,8 +6663,8 @@ app/views/publishers/vacancies/build/application_form.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 70.0
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/build/application_link.html.slim:
   lines:
     percent: 100.0
@@ -6677,8 +6677,8 @@ app/views/publishers/vacancies/build/applying_for_the_job.html.slim:
     percent: 95.83
     missed: 1
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/build/confirm_contact_details.html.slim:
   lines:
     percent: 100.0
@@ -6740,8 +6740,8 @@ app/views/publishers/vacancies/build/job_location.html.slim:
     percent: 75.0
     missed: 3
   branches:
-    percent: 62.5
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/build/job_role.html.slim:
   lines:
     percent: 100.0
@@ -6761,15 +6761,15 @@ app/views/publishers/vacancies/build/key_stages.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/build/pay_package.html.slim:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/build/school_visits.html.slim:
   lines:
     percent: 100.0
@@ -6852,15 +6852,15 @@ app/views/publishers/vacancies/documents/index.html.slim:
     percent: 93.33
     missed: 1
   branches:
-    percent: 50.0
-    missed: 4
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/documents/new.html.slim:
   lines:
     percent: 87.5
     missed: 1
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/edit_vacancy_sections/_edit_applying_for_the_job.html.slim:
   lines:
     percent: 100.0
@@ -6880,8 +6880,8 @@ app/views/publishers/vacancies/expired_feedbacks/new.html.slim:
     percent: 87.5
     missed: 4
   branches:
-    percent: 50.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/expired_feedbacks/submitted.html.slim:
   lines:
     percent: 100.0
@@ -6894,8 +6894,8 @@ app/views/publishers/vacancies/extend_deadline/show.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/index.html.slim:
   lines:
     percent: 100.0
@@ -7013,8 +7013,8 @@ app/views/publishers/vacancies/job_applications/messages.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 91.66
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/job_applications/offered_date.html.slim:
   lines:
     percent: 100.0
@@ -7034,15 +7034,15 @@ app/views/publishers/vacancies/job_applications/pre_employment_checks.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/job_applications/pre_interview_checks.html.slim:
   lines:
     percent: 96.66
     missed: 2
   branches:
-    percent: 85.71
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/job_applications/publisher_messages/_publisher_message.html.slim:
   lines:
     percent: 100.0
@@ -7062,8 +7062,8 @@ app/views/publishers/vacancies/job_applications/reference_requests/show.html.sli
     percent: 100.0
     missed: 0
   branches:
-    percent: 94.59
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/job_applications/references/new.html.slim:
   lines:
     percent: 100.0
@@ -7076,15 +7076,15 @@ app/views/publishers/vacancies/job_applications/religious_references/edit.html.s
     percent: 75.86
     missed: 7
   branches:
-    percent: 33.33
-    missed: 8
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/job_applications/self_disclosure/show.html.slim:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 91.66
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/job_applications/show.html.slim:
   lines:
     percent: 100.0
@@ -7139,8 +7139,8 @@ app/views/publishers/vacancies/review.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 64.28
-    missed: 5
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/review_banners/_closed.html.slim:
   lines:
     percent: 100.0
@@ -7195,15 +7195,15 @@ app/views/publishers/vacancies/statistics/show.html.slim:
     percent: 90.32
     missed: 3
   branches:
-    percent: 62.5
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/summary.html.slim:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 80.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/vacancy_form_partials/_submit.html.slim:
   lines:
     percent: 100.0
@@ -7216,8 +7216,8 @@ app/views/publishers/vacancy_templates/_anonymise_applications.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancy_templates/_application_form_type.html.slim:
   lines:
     percent: 100.0
@@ -7342,8 +7342,8 @@ app/views/publishers/vacancy_templates/index.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 80.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancy_templates/new.html.slim:
   lines:
     percent: 100.0
@@ -7356,8 +7356,8 @@ app/views/publishers/vacancy_templates/show.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 80.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/referees/build_references/can_give.html.slim:
   lines:
     percent: 100.0
@@ -7461,8 +7461,8 @@ app/views/shared/_jobseeker_message.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/shared/_message_form.html.slim:
   lines:
     percent: 100.0
@@ -7489,8 +7489,8 @@ app/views/shared/jobseekers/_publisher_message.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/shared/publishers/_about_the_role.html.slim:
   lines:
     percent: 100.0
@@ -7510,8 +7510,8 @@ app/views/shared/publishers/_publisher_message.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/subscriptions/_fields.html.slim:
   lines:
     percent: 100.0
@@ -7524,8 +7524,8 @@ app/views/subscriptions/_form.html.slim:
     percent: 83.33
     missed: 2
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/subscriptions/_job_roles_fields.slim:
   lines:
     percent: 0.0
@@ -7552,15 +7552,15 @@ app/views/subscriptions/campaign/_fields.html.slim:
     percent: 95.0
     missed: 1
   branches:
-    percent: 50.0
-    missed: 3
+    percent: 100.0
+    missed: 0
 app/views/subscriptions/campaign/_form.html.slim:
   lines:
     percent: 81.81
     missed: 2
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/subscriptions/campaign/_job_roles_fields.slim:
   lines:
     percent: 100.0
@@ -7636,15 +7636,15 @@ app/views/support_users/feedbacks/_feedback_table.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/support_users/feedbacks/_job_alerts_feedback_table.html.slim:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/support_users/feedbacks/_reporting_period_control.html.slim:
   lines:
     percent: 100.0
@@ -7720,8 +7720,8 @@ app/views/support_users/publisher_ats_api_clients/conflict_attempts/index.html.s
     percent: 93.75
     missed: 2
   branches:
-    percent: 50.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/support_users/publisher_ats_api_clients/index.html.slim:
   lines:
     percent: 100.0
