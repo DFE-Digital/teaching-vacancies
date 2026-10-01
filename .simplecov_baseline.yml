@@ -1382,7 +1382,7 @@ app/controllers/support_users/sessions_controller.rb:
     missed: 1
 app/controllers/vacancies_controller.rb:
   lines:
-    percent: 95.53
+    percent: 94.87
     missed: 4
   branches:
     percent: 86.11
@@ -4565,6 +4565,13 @@ app/views/colleges/_form.html.slim:
   branches:
     percent: 100.0
     missed: 0
+app/views/colleges/_wider_search.html.slim:
+  lines:
+    percent: 0.0
+    missed: 11
+  branches:
+    percent: 0.0
+    missed: 2
 app/views/colleges/index.html.slim:
   lines:
     percent: 93.75
@@ -7776,7 +7783,7 @@ app/views/vacancies/index.html.slim:
     percent: 97.5
     missed: 1
   branches:
-    percent: 90.47
+    percent: 90.0
     missed: 2
 app/views/vacancies/listing/_banner.html.slim:
   lines:
