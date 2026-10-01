@@ -1382,11 +1382,11 @@ app/controllers/support_users/sessions_controller.rb:
     missed: 1
 app/controllers/vacancies_controller.rb:
   lines:
-    percent: 85.05
-    missed: 13
+    percent: 94.87
+    missed: 4
   branches:
-    percent: 81.57
-    missed: 7
+    percent: 86.11
+    missed: 5
 app/controllers/warden_controller.rb:
   lines:
     percent: 93.54
@@ -3335,7 +3335,7 @@ app/models/option.rb:
     missed: 0
 app/models/organisation.rb:
   lines:
-    percent: 98.18
+    percent: 98.19
     missed: 2
   branches:
     percent: 100.0
@@ -4318,8 +4318,8 @@ app/services/search/vacancy_search.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 77.77
-    missed: 4
+    percent: 81.25
+    missed: 3
 app/services/search/vacancy_sort.rb:
   lines:
     percent: 100.0
