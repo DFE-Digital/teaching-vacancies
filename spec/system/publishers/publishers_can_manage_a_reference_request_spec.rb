@@ -92,12 +92,10 @@ RSpec.describe "Publishers can manage a reference request", :perform_enqueued do
       let(:job_reference) { build(:job_reference, :reference_given) }
 
       context "when marking reference as complete" do
-        it "displays the page correctly" do
+        scenario "offers to mark the reference as completed and accepts it", :aggregate_failures, :versioning do
           expect(page).to have_content "Mark as completed"
           expect(page).to have_no_content "Mark as received"
-        end
 
-        scenario "accept reference", :versioning do
           click_on "Mark as completed"
           expect(reference_request.reload).to be_marked_as_complete
           expect(page).to have_content "completed"

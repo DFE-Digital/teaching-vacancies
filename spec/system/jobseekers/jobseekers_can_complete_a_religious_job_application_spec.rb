@@ -89,25 +89,17 @@ RSpec.describe "Jobseekers can complete a religious job application" do
                 expect(page).to be_axe_clean
               end
 
-              it "has a correct change link" do
+              scenario "the review page shows the religious referee details with a change link, and the application can be submitted", :aggregate_failures do
+                expect(job_application.reload).to have_attributes(religious_reference_type: "religious_referee")
                 expect(page).to have_link(href: jobseekers_job_application_build_path(job_application, :catholic))
-              end
 
-              it "shows the referee details" do
                 expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
-
                 expect(page).to have_content(referee_name)
                 expect(page).to have_content(referee_address)
                 expect(page).to have_content(referee_role)
                 expect(page).to have_content(referee_email)
                 expect(page).to have_content(referee_phone)
-              end
 
-              it "contains the entered information" do
-                expect(job_application.reload).to have_attributes(religious_reference_type: "religious_referee")
-              end
-
-              it "can submit application" do
                 check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
                 check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
                 click_on I18n.t("buttons.submit_application")
@@ -294,24 +286,20 @@ RSpec.describe "Jobseekers can complete a religious job application" do
             complete_from_references_page
           end
 
-          it "completes the religious journey" do
+          scenario "the review page links back to the religion step and the application can be submitted", :aggregate_failures do
+            expect(page).to have_link(href: jobseekers_job_application_build_path(job_application, :non_catholic))
+
             submit_application_from_review
             expect(page).to have_content(I18n.t("jobseekers.job_applications.post_submit.panel.title"))
-          end
-
-          it "has a correct change link" do
-            expect(page).to have_link(href: jobseekers_job_application_build_path(job_application, :non_catholic))
           end
         end
 
         context "when following a religion" do
           let(:following_religion) { true }
 
-          it "displays the non catholic details form" do
+          scenario "the faith details form is shown and validates missing answers", :aggregate_failures do
             expect(page).to have_content(I18n.t("helpers.label.jobseekers_job_application_non_catholic_form.faith"))
-          end
 
-          it "errors correctly" do
             validates_step_complete
             expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/non_catholic_form.attributes.faith.blank"))
             expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/non_catholic_form.attributes.religious_reference_type.inclusion"))

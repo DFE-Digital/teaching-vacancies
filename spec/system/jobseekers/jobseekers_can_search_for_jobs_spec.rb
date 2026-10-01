@@ -4,24 +4,17 @@ RSpec.shared_examples "a successful search" do
   context "when searching for teacher jobs" do
     let(:keyword) { "Teacher" }
 
-    it "adds the expected filters" do
+    scenario "shows the keyword filter and paginates the results", :aggregate_failures do
       expect(page).to have_css("a", text: "Remove this filter Teacher")
-    end
-
-    it "displays page 1 jobs" do
       expect(page).to have_css(".search-results > .search-results__item", count: 2)
       expect(page).to have_content strip_tags(I18n.t("app.pagy_stats_html", from: 1, to: 2, total: 6, type: "results"))
-    end
 
-    context "when navigating between pages" do
-      it "displays page 3 jobs" do
-        within ".govuk-pagination" do
-          click_on "3"
-        end
-
-        expect(page).to have_css(".search-results > .search-results__item", count: 2)
-        expect(page).to have_content strip_tags(I18n.t("app.pagy_stats_html", from: 5, to: 6, total: 6, type: "results"))
+      within ".govuk-pagination" do
+        click_on "3"
       end
+
+      expect(page).to have_css(".search-results > .search-results__item", count: 2)
+      expect(page).to have_content strip_tags(I18n.t("app.pagy_stats_html", from: 5, to: 6, total: 6, type: "results"))
     end
   end
 
@@ -29,18 +22,10 @@ RSpec.shared_examples "a successful search" do
     let(:per_page) { 100 }
     let(:keyword) { "Maths Teacher" }
 
-    it "adds the expected filters" do
+    scenario "shows the keyword filter and only the Maths jobs, most recently published first", :aggregate_failures do
       expect(page).to have_css("a", text: "Remove this filter Teacher")
-    end
-
-    it "displays only the Maths jobs" do
       expect(page).to have_content strip_tags(I18n.t("app.pagy_stats_html", from: 1, to: 2, total: 2, type: "results"))
-    end
-
-    context "when sorting the jobs by most recently published" do
-      it "displays the Maths jobs that were published most recently first" do
-        expect("Maths 1").to appear_before("Maths Teacher 2")
-      end
+      expect("Maths 1").to appear_before("Maths Teacher 2")
     end
 
     context "when clearing all applied filters" do
