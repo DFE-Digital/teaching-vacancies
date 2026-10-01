@@ -194,7 +194,6 @@ group :development, :test do
   gem "rspec-rails"
   gem "rswag-specs"
   gem "slim_lint", require: false
-  gem "undercover", require: false
 end
 
 group :test do

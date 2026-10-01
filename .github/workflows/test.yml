@@ -99,7 +99,7 @@ jobs:
 
       - name: Check if any new or changed code is not covered by tests
         if: always()
-        run: bundle exec undercover
+        run: bundle exec simplecov patch --base origin/main
 
       - name: Upload Capybara failures screenshots
         if: failure()
