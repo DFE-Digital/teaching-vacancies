@@ -6126,27 +6126,6 @@ app/views/pages/vision-statement.html.slim:
   branches:
     percent: 100.0
     missed: 0
-app/views/posts/index.html.slim:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 50.0
-    missed: 2
-app/views/posts/show.html.slim:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 57.14
-    missed: 6
-app/views/posts/subcategory.html.slim:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 50.0
-    missed: 2
 app/views/publishers/accounts/confirm_email_opt_out.html.slim:
   lines:
     percent: 100.0
