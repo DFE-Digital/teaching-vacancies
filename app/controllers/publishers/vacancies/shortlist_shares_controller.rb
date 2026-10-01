@@ -47,8 +47,10 @@ module Publishers
       def set_job_applications
         @job_application_ids = selected_job_application_ids
 
-        if (message = selection_error)
-          redirect_with_selection_error(message)
+        error_message = selection_error
+
+        if error_message
+          redirect_with_selection_error(error_message)
         else
           @job_applications = @selected_job_applications.decorate.sort_by { |application| [application.last_name, application.first_name] }
         end
