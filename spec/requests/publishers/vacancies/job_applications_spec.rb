@@ -146,6 +146,19 @@ RSpec.describe "Job applications" do
       end
     end
 
+    context "when sharing shortlisted applications" do
+      let(:target) { "share_shortlisted" }
+      let(:origin) { "shortlisted" }
+      let(:job_application) { create(:job_application, :status_shortlisted, vacancy:) }
+      let(:job_applications) { [job_application.id] }
+
+      it "redirects to the shortlist share form with the selection" do
+        expect(response).to redirect_to(
+          new_organisation_job_shortlist_share_path(vacancy.id, job_application_ids: job_applications),
+        )
+      end
+    end
+
     context "when declining job offer" do
       let(:target) { "declined" }
 

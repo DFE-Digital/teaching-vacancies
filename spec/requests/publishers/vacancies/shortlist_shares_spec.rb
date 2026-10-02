@@ -16,9 +16,7 @@ RSpec.describe "Shortlist shares" do
 
   describe "GET #new" do
     subject(:request) do
-      get new_organisation_job_shortlist_share_path(vacancy.id), params: {
-        publishers_job_application_tag_form: { job_applications: job_application_ids },
-      }
+      get new_organisation_job_shortlist_share_path(vacancy.id), params: { job_application_ids: }
     end
 
     it "shows the recipient email form and selected applications" do

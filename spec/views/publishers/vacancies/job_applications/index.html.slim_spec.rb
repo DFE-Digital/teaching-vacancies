@@ -131,9 +131,8 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
       it "shows an action to share selected applications" do
         button = page.find(".tab-shortlisted").find_button("Share selected applications")
 
-        expect(button["formaction"]).to eq(new_organisation_job_shortlist_share_path(vacancy.id))
-        expect(button["formmethod"]).to eq("get")
-        expect(button["name"]).to be_nil
+        expect(button["name"]).to eq("tag_action")
+        expect(button["value"]).to eq("share_shortlisted")
       end
 
       context "when applications use an uploaded form" do

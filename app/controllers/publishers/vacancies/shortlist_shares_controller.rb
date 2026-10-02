@@ -4,7 +4,8 @@ module Publishers
   module Vacancies
     class ShortlistSharesController < BaseController
       before_action :set_vacancy
-      before_action :set_job_applications, only: %i[new review create]
+      before_action :set_job_applications_from_selection, only: :new
+      before_action :set_job_applications_from_form, only: %i[review create]
 
       def new
         @form = Publishers::JobApplication::ShortlistShareForm.new(
@@ -44,8 +45,16 @@ module Publishers
 
       private
 
-      def set_job_applications
-        @job_application_ids = selected_job_application_ids
+      def set_job_applications_from_selection
+        set_job_applications(job_application_selection_params[:job_application_ids])
+      end
+
+      def set_job_applications_from_form
+        set_job_applications(shortlist_share_params[:job_application_ids])
+      end
+
+      def set_job_applications(job_application_ids)
+        @job_application_ids = Array(job_application_ids).compact_blank.uniq
 
         error_message = selection_error
 
@@ -73,14 +82,6 @@ module Publishers
         I18n.t("publishers.vacancies.shortlist_shares.errors.not_shortlisted")
       end
 
-      def selected_job_application_ids
-        ids = params.dig(:publishers_job_application_shortlist_share_form, :job_application_ids) ||
-          params.dig(:publishers_job_application_tag_form, :job_applications) ||
-          params[:job_application_ids]
-
-        Array(ids).compact_blank.uniq
-      end
-
       def redirect_with_selection_error(message)
         flash[:shortlisted] = message
         redirect_to organisation_job_job_applications_path(vacancy.id, anchor: :shortlisted)
@@ -88,6 +89,10 @@ module Publishers
 
       def shortlist_share_params
         params.expect(publishers_job_application_shortlist_share_form: [:email, { job_application_ids: [] }])
+      end
+
+      def job_application_selection_params
+        params.permit(job_application_ids: [])
       end
     end
   end
