@@ -3,20 +3,24 @@ require "rails_helper"
 RSpec.describe ExportDSIApproversToBigQueryJob do
   subject(:job) { described_class.perform_later }
 
-  context "when DisableIntegrations is not enabled" do
-    it "invokes the lib to export approvers to big query" do
-      export_dsi_approvers_to_big_query = instance_double(Publishers::DfeSignIn::BigQueryExport::Approvers, call: nil)
-      allow(Publishers::DfeSignIn::BigQueryExport::Approvers).to receive(:new).and_return(export_dsi_approvers_to_big_query)
+  let(:dsi_approver) { build(:dsi_approver, user_id: "2") }
 
-      perform_enqueued_jobs { job }
+  before { allow(DfeSignIn::API).to receive(:approvers).and_return([dsi_approver].each) }
 
-      expect(export_dsi_approvers_to_big_query).to have_received(:call)
+  it "syncs the DSI approvers into dsi_approvers" do
+    expect(BigQuery::TableSync).to receive(:call) do |table:, key:, rows:|
+      expect(table).to eq("dsi_approvers")
+      expect(key).to eq(%i[user_id school_urn trust_uid la_code role_id])
+      expect(rows.to_a).to eq([DfeSignIn::UserRows.new(dsi_approver).approver_row])
     end
+
+    perform_enqueued_jobs { job }
   end
 
   context "when DisableIntegrations is enabled", :disable_integrations do
-    it "does not perform the job" do
-      expect(Publishers::DfeSignIn::BigQueryExport::Approvers).not_to receive(:new)
+    it "does not call the DSI API or BigQuery" do
+      expect(DfeSignIn::API).not_to receive(:approvers)
+      expect(BigQuery::TableSync).not_to receive(:call)
 
       perform_enqueued_jobs { job }
     end
