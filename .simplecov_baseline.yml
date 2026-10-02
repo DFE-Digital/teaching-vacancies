@@ -4567,7 +4567,7 @@ app/views/colleges/_form.html.slim:
     missed: 0
 app/views/colleges/index.html.slim:
   lines:
-    percent: 93.75
+    percent: 94.11
     missed: 1
   branches:
     percent: 50.0

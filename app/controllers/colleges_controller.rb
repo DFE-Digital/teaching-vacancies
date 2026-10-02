@@ -8,7 +8,8 @@ class CollegesController < ApplicationController
 
   private
 
+  # we accept params directly from the URL, not in a form scope
   def search_params
-    params.fetch(:college_search_form, {}).permit(:name, :location, :radius, job_availability: [])
+    params.permit(:name, :location, :radius, job_availability: [])
   end
 end
