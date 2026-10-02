@@ -77,6 +77,7 @@ module Publishers
         end
 
         @selected_job_applications = vacancy.job_applications.where(id: @job_application_ids)
+        # Application statuses can change between steps if a jobseeker withdraws or another publisher updates an application.
         return if @selected_job_applications.size == @job_application_ids.size && @selected_job_applications.all?(&:shortlisted?)
 
         I18n.t("publishers.vacancies.shortlist_shares.errors.not_shortlisted")
