@@ -1763,8 +1763,8 @@ app/form_models/jobseekers/search_form.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 80.0
-    missed: 2
+    percent: 90.0
+    missed: 1
 app/form_models/jobseekers/subscription_form.rb:
   lines:
     percent: 100.0
@@ -4262,8 +4262,8 @@ app/services/search/keyword_filter_generation/query_transformer.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/services/search/location_builder.rb:
   lines:
     percent: 95.65
@@ -7920,11 +7920,11 @@ app/views/vacancies/search/_no_results_organisation.html.slim:
     missed: 0
 app/views/vacancies/search/_no_results_suggestions.html.slim:
   lines:
-    percent: 60.86
-    missed: 9
+    percent: 91.3
+    missed: 2
   branches:
-    percent: 25.0
-    missed: 3
+    percent: 75.0
+    missed: 1
 app/views/vacancies/search/_open_filters_button.html.slim:
   lines:
     percent: 100.0
