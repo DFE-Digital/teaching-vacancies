@@ -14,9 +14,9 @@ RSpec.describe Publishers::ShortlistShareMailer do
     allow(JobApplicationPdfGenerator).to receive(:new).and_return(generator)
   end
 
-  describe "#shortlist" do
+  describe "#share" do
     subject(:mail) do
-      described_class.shortlist(vacancy.id, job_applications.map(&:id), recipient_email, publisher.id)
+      described_class.share(vacancy.id, job_applications.map(&:id), recipient_email, publisher.id)
     end
 
     it "prepares each application as a secure Notify file" do
@@ -64,28 +64,18 @@ RSpec.describe Publishers::ShortlistShareMailer do
       )
     end
 
-    it "triggers a `publisher_shortlist` email event", :dfe_analytics do
+    it "triggers a `publisher_shortlist_share` email event", :dfe_analytics do
       mail.deliver_now
 
-      expect(:publisher_shortlist).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
+      expect(:publisher_shortlist_share).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
     end
 
-    context "when the vacancy uses an uploaded application form" do
-      let(:vacancy) { create(:vacancy, :with_uploaded_application_form) }
+    context "when an application is no longer shortlisted by delivery time" do
+      before { job_applications.first.update!(status: :unsuccessful) }
 
-      it "raises an error" do
-        expect { mail.message }.to raise_error(ArgumentError, "Uploaded application forms are not supported")
-      end
-    end
-
-    context "when the selection includes an application that is not shortlisted" do
-      let(:job_applications) { create_list(:job_application, 2, :status_submitted, vacancy:) }
-
-      it "raises an error" do
-        expect { mail.message }.to raise_error(
-          ArgumentError,
-          "Select between 1 and #{Publishers::JobApplication::ShortlistShareForm::MAX_APPLICATIONS} shortlisted applications",
-        )
+      it "still prepares every application selected by the publisher" do
+        expect(mail.personalisation.values_at(:applicant_name_1, :applicant_name_2))
+          .to match_array(job_applications.map(&:name))
       end
     end
   end
