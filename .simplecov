@@ -7,16 +7,6 @@
 # for this to be valuable so that only changed files have tests run
 if ENV.fetch("COVERAGE", 0).to_i.positive?
   require "simplecov"
-  require "undercover/simplecov_formatter"
-
-  # This allows both LCOV and HTML formatting -
-  # lcov for undercover gem, HTML for humans
-  SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new(
-    [
-      SimpleCov::Formatter::Undercover,
-      SimpleCov::Formatter::HTMLFormatter,
-    ],
-  )
 
   SimpleCov.configure do # rubocop:disable Metrics/BlockLength
     enable_coverage :branch
