@@ -1,2 +1,2 @@
 -c origin/main
--f '*.rb,*.rake,*.slim,*.erb'
+-f *.rb,*.rake,*.slim,*.erb
