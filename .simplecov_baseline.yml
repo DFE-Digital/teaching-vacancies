@@ -3053,6 +3053,13 @@ app/models/blank_job_application_pdf.rb:
   branches:
     percent: 100.0
     missed: 0
+app/models/college.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
 app/models/concerns/application_and_profile_associated_record.rb:
   lines:
     percent: 100.0
@@ -7764,13 +7771,6 @@ app/views/vacancies/_vacancy_banner.html.slim:
   branches:
     percent: 100.0
     missed: 0
-app/views/vacancies/campaign_landing_page.html.slim:
-  lines:
-    percent: 82.92
-    missed: 7
-  branches:
-    percent: 40.0
-    missed: 12
 app/views/vacancies/index.html.slim:
   lines:
     percent: 97.5

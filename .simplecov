@@ -121,6 +121,9 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     skip "app/views/posts/show.html.slim"
     skip "app/views/posts/subcategory.html.slim"
 
+    # This whole page (and controller action) is untested
+    skip "app/views/vacancies/campaign_landing_page.html.slim"
+
     # Each group will be displayed in the report as its own Tab.
     group "Components", "app/components"
     group "Queries", "app/queries"
