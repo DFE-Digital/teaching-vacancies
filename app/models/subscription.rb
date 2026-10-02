@@ -60,8 +60,8 @@ class Subscription < ApplicationRecord
   end
 
   # Returns the ids of the vacancies matching this subscription's criteria, using DB filtering.
-  def vacancies_matching(scope, limit: nil)
-    SubscriptionVacanciesMatchingQuery.new(scope: scope, subscription: self, limit: limit).call
+  def vacancies_matching(scope, limit:)
+    SubscriptionVacanciesMatchingQuery.call(scope: scope, subscription: self, limit: limit)
   end
 
   def update_with_search_criteria(new_attributes)
