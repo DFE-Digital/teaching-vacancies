@@ -16,7 +16,7 @@ class Jobseekers::PeakTimesMailer < Jobseekers::BaseMailer
   }.freeze
 
   def reminder(jobseeker_id)
-    @jobseeker = Jobseeker.includes(jobseeker_profile: :personal_details).find_by(id: jobseeker_id)
+    @jobseeker = Jobseeker.find_by(id: jobseeker_id)
 
     if %w[march may].include?(current_month)
       send_notify_template_email
@@ -39,12 +39,8 @@ class Jobseekers::PeakTimesMailer < Jobseekers::BaseMailer
   end
 
   def send_standard_email
-    first_name = @jobseeker.jobseeker_profile&.personal_details&.first_name
-    subject = if first_name.present?
-                I18n.t("jobseekers.peak_times_mailer.#{campaign_key}.subject", first_name: first_name)
-              else
-                I18n.t("jobseekers.peak_times_mailer.#{campaign_key}.nameless_subject")
-              end
+    subject = I18n.t("jobseekers.peak_times_mailer.#{campaign_key}.nameless_subject")
+
     send_email(to: @jobseeker.email, subject:)
   end
 

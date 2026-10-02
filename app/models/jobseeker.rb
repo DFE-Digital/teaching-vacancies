@@ -13,7 +13,6 @@ class Jobseeker < ApplicationRecord
   has_many :saved_jobs, dependent: :destroy
   has_many :emergency_login_keys, as: :owner
   has_many :jobseeker_messages, foreign_key: :sender_id, dependent: :destroy
-  has_one :jobseeker_profile, dependent: :destroy
   has_many :notifications, as: :recipient, dependent: :destroy, class_name: "Noticed::Notification"
 
   scope :active, -> { where(account_closed_on: nil) }
@@ -59,7 +58,7 @@ class Jobseeker < ApplicationRecord
   end
 
   def papertrail_display_name
-    jobseeker_profile&.full_name || "Jobseeker"
+    "Jobseeker"
   end
   #
   # GovUK OneLogin methods
@@ -125,6 +124,6 @@ class Jobseeker < ApplicationRecord
   end
 
   def saved_data_preventing_transfer?
-    job_applications.any? || jobseeker_profile&.qualifications&.any? || jobseeker_profile&.employments&.any?
+    job_applications.any?
   end
 end

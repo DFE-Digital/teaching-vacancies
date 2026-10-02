@@ -7,8 +7,6 @@ RSpec.describe "Job applications" do
   let(:visa_sponsorship) { false }
 
   describe "GET #new" do
-    before { create(:jobseeker_profile, jobseeker: jobseeker) }
-
     context "when the jobseeker is not signed in" do
       before { get(new_jobseekers_job_job_application_path(vacancy.id)) }
 
@@ -24,8 +22,6 @@ RSpec.describe "Job applications" do
     after { sign_out(jobseeker) }
 
     describe "POST #create" do
-      let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
-
       context "when the job is not live" do
         let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
 
@@ -152,7 +148,6 @@ RSpec.describe "Job applications" do
 
       context "when `Submit application`" do
         context "when the review form is invalid" do
-          let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
           let(:confirm_data_usage) { 0 }
 
           it "does not submit the job application or send email and renders the review template" do
@@ -166,8 +161,6 @@ RSpec.describe "Job applications" do
         end
 
         context "when the review form is valid" do
-          let!(:jobseeker_profile) { create(:jobseeker_profile, :with_trn, jobseeker: jobseeker) }
-
           it "submits the job application and sends email" do
             assert_emails 1 do
               expect { post jobseekers_job_application_submit_path(job_application.id), params: params }
@@ -179,8 +172,6 @@ RSpec.describe "Job applications" do
     end
 
     describe "GET #show" do
-      let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
-
       context "when the application is not a draft" do
         let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
@@ -236,8 +227,6 @@ RSpec.describe "Job applications" do
     end
 
     describe "GET #review" do
-      let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
-
       context "when the application is not a draft" do
         let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
@@ -317,67 +306,6 @@ RSpec.describe "Job applications" do
         it "raises an error" do
           expect { get(jobseekers_job_application_confirm_withdraw_path(job_application.id)) }
             .to raise_error(ActionController::RoutingError, "Cannot withdraw application in this state")
-        end
-      end
-    end
-
-    describe "GET #about_your_application" do
-      before do
-        create(:job_application, :status_submitted, jobseeker: jobseeker)
-      end
-
-      context "without a profile" do
-        it "renders 'new'" do
-          expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
-            .to  render_template(:new)
-        end
-      end
-
-      context "with an empty profile" do
-        before do
-          create(:jobseeker_profile, jobseeker: jobseeker)
-        end
-
-        it "renders 'new'" do
-          expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
-            .to  render_template(:new)
-        end
-      end
-
-      context "with a non-visa-seeking profile" do
-        before do
-          create(:jobseeker_profile, jobseeker: jobseeker, personal_details: build(:personal_details, has_right_to_work_in_uk: true))
-        end
-
-        it "renders 'new'" do
-          expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
-            .to  render_template(:new)
-        end
-      end
-
-      context "with a visa-seeking profile but vacancy is sponsored" do
-        before do
-          create(:jobseeker_profile, jobseeker: jobseeker, personal_details: build(:personal_details, has_right_to_work_in_uk: false))
-        end
-
-        let(:visa_sponsorship) { true }
-
-        it "renders 'new'" do
-          expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
-            .to  render_template(:new)
-        end
-      end
-
-      context "with a visa-seeking profile" do
-        before do
-          create(:jobseeker_profile, jobseeker: jobseeker, personal_details: build(:personal_details, has_right_to_work_in_uk: false))
-        end
-
-        let(:visa_sponsorship) { false }
-
-        it "shows the page" do
-          expect(get(new_jobseekers_job_job_application_path(vacancy.id)))
-            .to render_template(:about_your_application)
         end
       end
     end

@@ -14,7 +14,6 @@ class Jobseekers::AccountTransfer
     raise CannotDeleteCurrentAccountError, "Cannot delete the currently logged in account" if current_jobseeker == account_to_transfer
 
     ActiveRecord::Base.transaction do
-      transfer_profile
       transfer_feedbacks
       transfer_job_applications
       transfer_saved_jobs
@@ -24,14 +23,6 @@ class Jobseekers::AccountTransfer
   end
 
   private
-
-  def transfer_profile
-    profile = account_to_transfer.jobseeker_profile
-    return unless profile
-
-    current_jobseeker.jobseeker_profile&.destroy!
-    profile.update!(jobseeker_id: current_jobseeker.id)
-  end
 
   def transfer_feedbacks
     account_to_transfer.feedbacks.each do |feedback|

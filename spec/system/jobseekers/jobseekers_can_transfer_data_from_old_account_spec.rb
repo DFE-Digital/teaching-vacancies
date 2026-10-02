@@ -5,7 +5,6 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
 
   let(:jobseeker) { create(:jobseeker) }
   let(:old_jobseeker_account) { create(:jobseeker) }
-  let!(:profile) { create(:jobseeker_profile, :completed, jobseeker: old_jobseeker_account) }
   let!(:old_submitted_application) { create(:job_application, :status_submitted, jobseeker: old_jobseeker_account) }
   let!(:old_draft_application) { create(:job_application, jobseeker: old_jobseeker_account) }
   let(:organisation) { create(:school) }
@@ -23,10 +22,6 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
 
   context "when user requests transfer from an email which matches a jobseeker in our app" do
     it "allows user to request an account transfer" do
-      visit jobseekers_profile_path
-
-      expect_account_to_have_no_data
-
       visit new_jobseekers_request_account_transfer_email_path
       click_on "Send verification email"
       expect(page).to have_css("ul.govuk-list.govuk-error-summary__list")
@@ -80,10 +75,6 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
 
   context "when the user tries to transfer data to their own account" do
     it "does not allow the account transfer" do
-      visit jobseekers_profile_path
-
-      expect_account_to_have_no_data
-
       visit new_jobseekers_request_account_transfer_email_path
 
       fill_in "jobseekers_request_account_transfer_email_form[email]", with: jobseeker.email

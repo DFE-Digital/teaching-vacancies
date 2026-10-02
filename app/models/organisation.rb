@@ -46,9 +46,6 @@ class Organisation < ApplicationRecord
   has_many :publisher_preferences, dependent: :destroy
   has_many :organisation_publisher_preferences, dependent: :destroy
 
-  has_many :jobseeker_profile_exclusions, class_name: "JobseekerProfileExcludedOrganisation", dependent: :destroy
-  has_many :hidden_jobseeker_profiles, through: :jobseeker_profile_exclusions, source: :jobseeker_profile
-
   has_many :vacancy_templates, dependent: :destroy
 
   scope :not_closed, -> { where.not(establishment_status: CLOSED_ESTABLISHMENT_STATUSES) }

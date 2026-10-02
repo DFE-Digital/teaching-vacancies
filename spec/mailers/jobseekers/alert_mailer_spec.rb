@@ -199,17 +199,6 @@ RSpec.describe Jobseekers::AlertMailer do
       end
     end
 
-    context "when the subscriber has a jobseeker account that has a profile" do
-      let(:jobseeker) { create(:jobseeker, email: email) }
-      let!(:profile) { create(:jobseeker_profile, :completed, jobseeker_id: jobseeker.id) }
-
-      it "does not display the section encouraging them to create a profile" do
-        expect(body).to_not include(jobseekers_profile_url(**utm_params))
-        expect(body).to_not include(I18n.t("jobseekers.alert_mailer.alert.create_a_profile.heading"))
-        expect(body).to_not include(I18n.t("jobseekers.alert_mailer.alert.create_a_profile.link_text"))
-      end
-    end
-
     context "when the subscription has no email address" do
       before do
         subscription.update(email: "")
