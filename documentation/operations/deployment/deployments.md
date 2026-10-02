@@ -140,7 +140,3 @@ In those cases, we will need to manually delete the review app by:
   ```bash
    kubectl -n tv-development delete deployment teaching-vacancies-review-pr-6488-redis-cache
   ```
-- Dekete the Redis queue:
-  ```bash
-   kubectl -n tv-development delete deployment teaching-vacancies-review-pr-6488-redis-queue
-  ```
