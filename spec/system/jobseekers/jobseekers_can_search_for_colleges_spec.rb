@@ -32,6 +32,14 @@ RSpec.describe "Searching on the colleges page" do
     end
   end
 
+  describe "filtering by name" do
+    it "tells the user when there are no hits" do
+      fill_in("name-field", with: "whgy")
+      click_on "Search"
+      expect(page).to have_content("Try another search")
+    end
+  end
+
   def expect_page_to_show_schools(schools)
     schools.each do |school|
       expect(page).to have_link school.name

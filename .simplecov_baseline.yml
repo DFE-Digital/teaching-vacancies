@@ -4574,11 +4574,11 @@ app/views/colleges/_form.html.slim:
     missed: 0
 app/views/colleges/index.html.slim:
   lines:
-    percent: 94.11
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 50.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/views/cookies_preferences/_cookies_consent_form.html.slim:
   lines:
     percent: 100.0
