@@ -7,17 +7,12 @@ module Publishers
     FILE_RETENTION_PERIOD = "1 week"
     TEMPLATE_ID = "d3bf210d-4cb4-4239-aaea-803435a7a4c2"
 
-    def shortlist(vacancy_id, job_application_ids, recipient_email, publisher_id)
+    def share(vacancy_id, job_application_ids, recipient_email, publisher_id)
       @publisher = Publisher.find(publisher_id)
       @to = recipient_email
 
       vacancy = Vacancy.find(vacancy_id)
       job_applications = vacancy.job_applications.find(job_application_ids)
-
-      raise ArgumentError, "Uploaded application forms are not supported" if vacancy.uploaded_form?
-      unless valid_selection?(job_applications)
-        raise ArgumentError, "Select between 1 and #{Publishers::JobApplication::ShortlistShareForm::MAX_APPLICATIONS} shortlisted applications"
-      end
 
       template_mail(
         TEMPLATE_ID,
@@ -31,9 +26,8 @@ module Publishers
 
     private
 
-    def valid_selection?(job_applications)
-      job_applications.size.between?(1, Publishers::JobApplication::ShortlistShareForm::MAX_APPLICATIONS) &&
-        job_applications.all?(&:shortlisted?)
+    def email_event_type
+      :publisher_shortlist_share
     end
 
     def application_personalisation(job_applications)

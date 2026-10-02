@@ -34,7 +34,7 @@ module Publishers
 
         if @form.valid?
           Publishers::ShortlistShareMailer
-            .shortlist(vacancy.id, @job_application_ids, @form.email, current_publisher.id)
+            .share(vacancy.id, @job_application_ids, @form.email, current_publisher.id)
             .deliver_later
 
           redirect_to organisation_job_job_applications_path(vacancy.id, anchor: :shortlisted), success: t(".success")

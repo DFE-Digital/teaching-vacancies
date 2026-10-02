@@ -123,14 +123,14 @@ RSpec.describe "Shortlist shares" do
     let(:delivery) { instance_double(ActionMailer::MessageDelivery, deliver_later: true) }
 
     before do
-      allow(Publishers::ShortlistShareMailer).to receive(:shortlist).and_return(delivery)
+      allow(Publishers::ShortlistShareMailer).to receive(:share).and_return(delivery)
     end
 
     it "queues the shortlist email and redirects to the shortlisted tab" do
       request
 
       expect(Publishers::ShortlistShareMailer)
-        .to have_received(:shortlist)
+        .to have_received(:share)
         .with(vacancy.id, job_application_ids, email, publisher.id)
       expect(delivery).to have_received(:deliver_later)
       expect(response).to redirect_to(organisation_job_job_applications_path(vacancy.id, anchor: :shortlisted))
@@ -143,7 +143,7 @@ RSpec.describe "Shortlist shares" do
       it "does not queue the shortlist email" do
         request
 
-        expect(Publishers::ShortlistShareMailer).not_to have_received(:shortlist)
+        expect(Publishers::ShortlistShareMailer).not_to have_received(:share)
         expect(response).to have_http_status(:unprocessable_content)
         expect(response).to render_template(:new)
       end
