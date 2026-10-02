@@ -168,7 +168,7 @@ FactoryBot.define do
       contract_type { rand_contract_type }
       # if contract type comes out as fixed term, then parental_leave_cover and fixed_term_contract_duration become mandatory
       if rand_contract_type.to_sym == :fixed_term
-        is_parental_leave_cover { true }
+        is_parental_leave_cover { [false, true].sample }
         fixed_term_contract_duration { "6 months" }
       end
       anonymise_applications { [false, true].sample }

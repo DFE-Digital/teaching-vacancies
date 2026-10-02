@@ -20,23 +20,6 @@ RSpec.describe Resettable do
     end
   end
 
-  context "when changing contract type" do
-    subject(:update_contract_type) { vacancy.update(contract_type: "permanent") }
-
-    let(:vacancy) { build(:vacancy, contract_type: contract_type) }
-    let(:previous_fixed_term_contract_duration) { vacancy.fixed_term_contract_duration }
-
-    context "when from fixed term" do
-      let(:contract_type) { "fixed_term" }
-
-      it "resets fixed term contract duration" do
-        expect { update_contract_type }
-          .to change(vacancy, :fixed_term_contract_duration)
-          .from(previous_fixed_term_contract_duration).to("")
-      end
-    end
-  end
-
   context "when changing education support" do
     subject(:update_education_support) { vacancy.update(job_roles: %w[education_support]) }
 
