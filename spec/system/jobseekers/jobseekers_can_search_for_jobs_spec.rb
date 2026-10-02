@@ -82,16 +82,37 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
       stub_const("Pagy::DEFAULT", Pagy::DEFAULT.merge(limit: per_page))
       visit jobs_path
       fill_in "Keyword", with: keyword
-      click_on I18n.t("buttons.search")
     end
-
-    it_behaves_like "a successful search"
 
     context "with keyword search" do
       let(:keyword) { "Teacher" }
 
+      before do
+        click_on I18n.t("buttons.search")
+      end
+
+      it_behaves_like "a successful search"
+
       it "passes a11y", :a11y do
         expect(page).to be_axe_clean
+      end
+    end
+
+    context "when invoking wider search", :geocode, :vcr do
+      before do
+        YAML.unsafe_load_file(Rails.root.join("spec/fixtures/polygons.yml")).map(&:attributes).each { |s| LocationPolygon.create!(s) }
+        YAML.unsafe_load_file(Rails.root.join("spec/fixtures/liverpool_schools.yml")).map(&:attributes).each { |s| School.create!(s) }
+        liverpool_org = School.find_by!(town: "Liverpool")
+
+        create(:vacancy, :past_publish, job_title: "Dark Arts Expert", organisations: [liverpool_org])
+        fill_in "location-field", with: "St Albans"
+        click_on I18n.t("buttons.search")
+      end
+
+      let(:keyword) { "dark" }
+
+      it "shows a wider search" do
+        expect(page).to have_content("wider location search")
       end
     end
   end

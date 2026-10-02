@@ -59,7 +59,9 @@ class Organisation < ApplicationRecord
   scope :local_authorities, -> { school_groups.where.not(local_authority_code: nil) }
   scope :in_vacancy_ids, ->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { vacancy_id: ids }).distinct }
 
-  scope :search_by_location, ->(location_query, radius_in_miles, **options) { OrganisationLocationQuery.new(current_scope).call(location_query, radius_in_miles, **options) }
+  scope :search_by_location, lambda { |location_query, radius_in_miles, polygon: nil, sort_by_distance: false|
+    OrganisationLocationQuery.new(current_scope).call(location_query, radius_in_miles, polygon: polygon, sort_by_distance: sort_by_distance)
+  }
 
   pg_search_scope :search_by_name,
                   against: :name,

@@ -202,6 +202,8 @@ SERVICE_DATA_MAPPINGS = {
 
 PUBLISHER_SHARED_MAPPINGS = {}.freeze
 
+ORGANISATION_MAPPINGS = {}.freeze
+
 MASTER_MAPPINGS = {
   %w[jobseekers job_applications] => [:jobseekers, JOBSEEKER_JOB_APPLICATION_SYSTEM_SPEC_MAPPINGS],
   %w[jobseekers profiles] => [:jobseekers, JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS],
@@ -217,6 +219,7 @@ MASTER_MAPPINGS = {
   %w[vacancies] => [:jobseekers, VACANCY_MAPPINGS],
   %w[api] => [:publishers, API_MAPPINGS],
   %w[shared] => [:publishers, PUBLISHER_SHARED_MAPPINGS],
+  %w[organisations] => [:jobseekers, ORGANISATION_MAPPINGS],
 }.freeze
 
 SIMPLE_MAPPINGS = {
@@ -231,6 +234,7 @@ SIMPLE_MAPPINGS = {
   pages: [:jobseekers, %w[]],
   vacancies: [:jobseekers, %w[]],
   organisations: [:jobseekers, %w[]],
+  colleges: [:jobseekers, %w[]],
 }.freeze
 
 def map_type_to_spec(type, system_spec)
