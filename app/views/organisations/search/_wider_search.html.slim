@@ -10,8 +10,13 @@
   .divider-bottom
     ul.govuk-list.govuk-list--bullet
       - wider_search_suggestions.each do |wider_radius|
+        / li = t(".wider_search_suggestions.suggestion_html",
+        /        search_link: govuk_link_to(t(".wider_search_suggestions.radius_distance", radius: wider_radius.first),
+        /          organisations_path(school_search.search_criteria.merge(radius: wider_radius.first)),
+        /          visually_hidden_suffix: t(".wider_search_suggestions.hidden", location: school_search.location)),
+        /        count: t(".wider_search_suggestions.results", count: wider_radius.last))
         li = t(".wider_search_suggestions.suggestion_html",
                search_link: govuk_link_to(t(".wider_search_suggestions.radius_distance", radius: wider_radius.first),
-                 organisations_path(school_search.search_criteria.merge(radius: wider_radius.first)),
+                 polymorphic_path(path_type, school_search.search_criteria.merge(radius: wider_radius.first)),
                  visually_hidden_suffix: t(".wider_search_suggestions.hidden", location: school_search.location)),
                count: t(".wider_search_suggestions.results", count: wider_radius.last))
