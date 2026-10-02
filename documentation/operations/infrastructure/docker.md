@@ -8,7 +8,7 @@ It's worth a quick reminder that Containers are created from Images. [Docker's o
 
 ## A multi-stage [Dockerfile](/Dockerfile)
 
-- We use multi-stage builds to create significantly smaller images.
+- We use multi-stage builds to create significantly smaller images
 - Docker's [blog entry on multistage builds](https://www.docker.com/blog/advanced-dockerfiles-faster-builds-and-smaller-images-using-buildkit-and-multistage-builds/) helpfully starts:
 > Multistage builds added a couple of new syntax concepts.
 >
