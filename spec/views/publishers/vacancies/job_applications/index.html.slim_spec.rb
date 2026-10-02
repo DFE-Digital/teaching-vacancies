@@ -127,6 +127,23 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
         expect(application_status).to have_css(".govuk-tag--orange", text: "shortlisted")
         expect(application_status).to have_link("#{candidate.first_name} #{candidate.last_name}", href: organisation_job_job_application_path(vacancy.id, candidate.id))
       end
+
+      it "shows an action to share selected applications" do
+        button = page.find(".tab-shortlisted").find_button("Share selected applications")
+
+        expect(button["name"]).to eq("tag_action")
+        expect(button["value"]).to eq("share_shortlisted")
+      end
+
+      context "when applications use an uploaded form" do
+        let(:vacancy) do
+          build_stubbed(:vacancy, publisher: publisher, organisations: [organisation], receive_applications: :uploaded_form)
+        end
+
+        it "does not show the sharing action" do
+          expect(page.find(".tab-shortlisted")).to have_no_button("Share selected applications")
+        end
+      end
     end
 
     describe "unsuccessful application" do

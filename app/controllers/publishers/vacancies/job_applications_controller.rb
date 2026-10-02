@@ -47,6 +47,7 @@ module Publishers
                                                                :organisation_job_job_application_batch_bulk_shortlisting_message_path)
           when "message_interviewing" then prepare_to_bulk_send(form.job_applications,
                                                                 :organisation_job_job_application_batch_bulk_interviewing_message_path)
+          when "share_shortlisted" then redirect_to_shortlist_share(form.job_applications)
           else # when "update_status"
             render "tag"
           end
@@ -157,6 +158,13 @@ module Publishers
           batch.batchable_job_applications.create!(job_application: ja)
         end
         redirect_to method(redirect_path).call(@vacancy.id, batch.id, Wicked::FIRST_STEP)
+      end
+
+      def redirect_to_shortlist_share(job_applications)
+        redirect_to new_organisation_job_shortlist_share_path(
+          @vacancy.id,
+          job_application_ids: job_applications.map(&:id),
+        )
       end
 
       def download_selected(job_applications)
