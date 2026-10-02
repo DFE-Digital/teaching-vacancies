@@ -97,9 +97,9 @@ jobs:
           name: coverage report
           path: coverage
 
-      - name: Check if any new or changed code is not covered by tests
+      - name: Check coverage on branch with annotations where missing
         if: always()
-        run: bundle exec undercover
+        run: bundle exec simplecov patch --base origin/main --annotate github
 
       - name: Upload Capybara failures screenshots
         if: failure()
