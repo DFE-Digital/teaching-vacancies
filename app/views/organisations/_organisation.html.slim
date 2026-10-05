@@ -114,7 +114,7 @@ h2.govuk-heading-m = t("organisations.show.vacancies.heading")
 
     hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 - else
-  p = t(".no_active_jobs")
+  p = t(".no_active_jobs.#{school_or_college_type(organisation)}")
 
 - live_group_vacancies_count = organisation.live_group_vacancies.count
 - if live_group_vacancies_count.positive? && live_group_vacancies_count != vacancies.count

@@ -82,7 +82,9 @@ en:
           through: All through school
     organisation:
       see_trust_jobs: View %{count} jobs across %{name}
-      no_active_jobs: There are currently no jobs at this school
+      no_active_jobs:
+        school: There are currently no jobs at this school
+        college: There are currently no jobs at this college
     show:
       job_alert:
         button: Set up job alert
