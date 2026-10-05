@@ -18,7 +18,7 @@ RSpec.describe SendDailyAlertEmailJob do
 
         let!(:subscription) { create(:daily_subscription) }
 
-        it "onlt includes yesterdays jobs" do
+        it "only includes yesterdays jobs" do
           expect(Jobseekers::AlertMailer).to receive(:alert).with(subscription.id, [yesterday].map(&:id)) { mail }
           expect(mail).to receive(:deliver_later) { ActionMailer::MailDeliveryJob.new }
           perform_enqueued_jobs { job }

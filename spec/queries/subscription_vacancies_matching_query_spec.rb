@@ -1,13 +1,39 @@
 require "rails_helper"
 
 RSpec.describe SubscriptionVacanciesMatchingQuery do
-  subject(:query_results) { described_class.call(scope: scope, subscription: subscription, limit: limit).pluck(:job_title) }
+  subject(:query_results) { described_class.call(scope: scope, subscription: subscription).pluck(:id, :job_title).map(&:last) }
 
   let(:scope) { Vacancy.all }
   let(:limit) { nil }
 
   describe "#call" do
     let(:headteacher_job) { Vacancy.find_by!(job_title: "Headteacher job") }
+    let(:all_job_titles) do
+      [french_job,
+       primary_and_secondary_job,
+       secondary_job,
+       teacher_and_other_support_job,
+       german_job,
+       nursery_job,
+       through_job,
+       nice_job,
+       really_nice_job,
+       visa_sponsorship_job,
+       great_job,
+       fantastic_job,
+       headteacher_job,
+       it_support_job,
+       no_subject_job,
+       ect_job,
+       non_visa_sponsorship_job,
+       maths_and_english_job,
+       college_job_not_qts,
+       college_job_qts,
+       full_time_job,
+       part_time_job,
+       full_and_part_time_job,
+       job_share_job].map(&:job_title)
+    end
     let(:it_support_job) { Vacancy.find_by!(job_title: "IT Support job") }
     let(:teacher_and_other_support_job) { Vacancy.find_by!(job_title: "Teacher and other support job") }
     let(:visa_sponsorship_job) { Vacancy.find_by(job_title: "Visa sponsorship job") }
@@ -73,7 +99,6 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
       Publisher.destroy_all
       Subscription.destroy_all
     end
-    # rubocop:enable RSpec/BeforeAfterAll
 
     describe "job roles matching" do
       let(:subscription) { build_stubbed(:daily_subscription, teaching_job_roles: subscription_teaching_job_roles) }
@@ -98,7 +123,7 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
         let(:subscription_teaching_job_roles) { [] }
 
         it "finds no vacancies" do
-          pending("Is this correct behaviour?")
+          # pending("Is this correct behaviour?")
 
           expect(query_results).to be_empty
         end
@@ -309,7 +334,7 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
         let(:subscription_phases) { [] }
 
         it "finds no vacancies" do
-          pending("Is this correct behaviour?")
+          # pending("Is this correct behaviour?")
 
           expect(query_results).to be_empty
         end
@@ -352,31 +377,7 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
         let(:subscription_working_patterns) { %w[full_time part_time] }
 
         it "finds all the vacancies matching any of the subscription working patterns" do
-          expect(query_results)
-            .to match_array([french_job,
-                             primary_and_secondary_job,
-                             secondary_job,
-                             teacher_and_other_support_job,
-                             german_job,
-                             nursery_job,
-                             through_job,
-                             nice_job,
-                             really_nice_job,
-                             visa_sponsorship_job,
-                             great_job,
-                             fantastic_job,
-                             headteacher_job,
-                             it_support_job,
-                             no_subject_job,
-                             ect_job,
-                             non_visa_sponsorship_job,
-                             maths_and_english_job,
-                             college_job_not_qts,
-                             college_job_qts,
-                             full_time_job,
-                             part_time_job,
-                             full_and_part_time_job,
-                             job_share_job].map(&:job_title))
+          expect(query_results).to match_array(all_job_titles)
         end
       end
 
@@ -401,7 +402,7 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
         let(:subscription_working_patterns) { [] }
 
         it "finds no vacancies" do
-          pending("Is this correct behaviour?")
+          # pending("Is this correct behaviour?")
           expect(query_results).to be_empty
         end
       end
@@ -457,10 +458,8 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
       context "with no keywords" do
         let(:keyword) { "" }
 
-        it "finds no vacancies" do
-          pending("Is this correct behaviour?")
-
-          expect(query_results).to be_empty
+        it "finds all vacancies" do
+          expect(query_results).to match_array(all_job_titles)
         end
       end
     end
@@ -474,7 +473,6 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
     let(:st_albans_vacancy) { Vacancy.find_by!(job_title: "sta") }
     let(:basildon_stalbans_vacancy) { Vacancy.find_by!(job_title: "bas-sta") }
 
-    # rubocop:disable RSpec/BeforeAfterAll
     before(:all) do
       YAML.unsafe_load_file(Rails.root.join("spec/fixtures/polygons.yml")).map(&:attributes).each { |s| LocationPolygon.create!(s) }
       YAML.unsafe_load_file(Rails.root.join("spec/fixtures/liverpool_schools.yml")).map(&:attributes).each { |s| School.create!(s) }
@@ -616,7 +614,7 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
       let(:radius) { 50 }
 
       it "finds no vacancies" do
-        pending("Is this correct behaviour?")
+        # pending("Is this correct behaviour?")
 
         expect(query_results).to be_empty
       end
@@ -634,7 +632,7 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
       let(:subscription) { create(:daily_subscription, location: "", radius: 10) }
 
       it "filters out all the vacancies" do
-        pending("Is this correct behaviour?")
+        # pending("Is this correct behaviour?")
 
         expect(query_results).to be_empty
       end
@@ -667,38 +665,6 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
 
     it "only returns the vacancies matching all the criteria" do
       expect(query_results).to contain_exactly(matching_job.job_title)
-    end
-  end
-
-  describe "limiting and ordering results" do
-    let(:subscription) { build_stubbed(:daily_subscription, keyword: "Job") }
-
-    let!(:new_job) { create(:vacancy, :published_slugged, job_title: "New Job", publish_on: 3.days.ago) }
-    let!(:newer_job) { create(:vacancy, :published_slugged, job_title: "Newer Job", publish_on: 2.days.ago) }
-    let!(:older_job) { create(:vacancy, :published_slugged, job_title: "Older Job", publish_on: 4.days.ago) }
-
-    context "when a limit is specified" do
-      let(:limit) { 2 }
-
-      it "returns only up to the specified number of matching vacancies keeping the most recent ones" do
-        expect(query_results).to eq([newer_job.job_title, new_job.job_title])
-      end
-    end
-
-    context "when a limit greater than the number of matching vacancies is specified" do
-      let(:limit) { 5 }
-
-      it "returns all the matching vacanciesordered by publish_on descending" do
-        expect(query_results).to eq([newer_job.job_title, new_job.job_title, older_job.job_title])
-      end
-    end
-
-    context "when no limit is specified" do
-      let(:limit) { nil }
-
-      it "returns all the matching vacanciesordered by publish_on descending" do
-        expect(query_results).to eq([newer_job.job_title, new_job.job_title, older_job.job_title])
-      end
     end
   end
 end
