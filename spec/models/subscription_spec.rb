@@ -111,10 +111,9 @@ RSpec.describe Subscription do
   end
 
   describe "#vacancies_matching" do
-    subject(:vacancies) { subscription.vacancies_matching(scope, limit:).map(&:job_title) }
+    subject(:vacancies) { subscription.vacancies_matching(scope).map(&:job_title).map(&:job_title) }
 
     let(:subscription) { build_stubbed(:subscription) }
-    let(:limit) { 500 }
     let(:scope) { PublishedVacancy.all }
 
     context "when multiple vacancies match the subscription criteria" do
@@ -127,15 +126,6 @@ RSpec.describe Subscription do
 
       it "returns the ids for all matching vacancies" do
         expect(vacancies).to contain_exactly(first_vacancy.job_title, second_vacancy.job_title)
-      end
-
-      context "when a limit is specified" do
-        let(:limit) { 1 }
-
-        it "returns only up to the specified limit of vacancy ids" do
-          expect(vacancies.size).to eq(1)
-          expect(vacancies.first).to be_in([first_vacancy.job_title, second_vacancy.job_title])
-        end
       end
     end
 
