@@ -16,6 +16,7 @@ en:
           full_time: Full time
           job_share: Job share
           part_time: Part time
+          term_time: Term time
         contract_type_options:
           fixed_term: Fixed term (including maternity or parental leave cover)
           parental_leave_cover: Maternity or parental leave cover

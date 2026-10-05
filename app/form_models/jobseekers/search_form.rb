@@ -2,6 +2,8 @@ class Jobseekers::SearchForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
+  WORKING_PATTERN_FILTER_OPTIONS = %w[full_time part_time job_share].freeze
+
   attribute :radius, :integer
   attribute :location
   attribute :previous_keyword
@@ -114,7 +116,7 @@ class Jobseekers::SearchForm
     @phase_options = Vacancy.phases.keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_education_phases_form.phases_options.#{option}")] }
     @ect_status_options = %w[ect_suitable qts_not_needed].map { |ect_type| [ect_type, I18n.t("jobs.filters.#{ect_type}")] }
     set_quick_apply_options
-    @working_pattern_options = Vacancy.working_patterns.keys.map do |option|
+    @working_pattern_options = WORKING_PATTERN_FILTER_OPTIONS.map do |option|
       [option, I18n.t("helpers.label.publishers_job_listing_contract_information_form.working_patterns_options.#{option}")]
     end
     set_organisation_type_options

@@ -376,6 +376,26 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
         end
       end
 
+      context "with a term time vacancy" do
+        let!(:term_time_job) { create(:vacancy, job_title: "Term time job", working_patterns: %w[term_time]) }
+
+        context "with full time in the subscription filter" do
+          let(:subscription_working_patterns) { %w[full_time] }
+
+          it "finds the term time vacancy" do
+            expect(query_results).to include(term_time_job.job_title)
+          end
+        end
+
+        context "with part time in the subscription filter" do
+          let(:subscription_working_patterns) { %w[part_time] }
+
+          it "finds the term time vacancy" do
+            expect(query_results).to include(term_time_job.job_title)
+          end
+        end
+      end
+
       context "with job_share as the only working pattern in the subscription filter" do
         let(:subscription_working_patterns) { %w[job_share] }
 

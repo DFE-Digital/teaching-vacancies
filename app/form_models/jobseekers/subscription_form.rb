@@ -1,4 +1,6 @@
 class Jobseekers::SubscriptionForm < BaseForm
+  WORKING_PATTERN_FILTER_OPTIONS = %w[full_time part_time job_share].freeze
+  
   attr_accessor :email,
                 :frequency,
                 :keyword,
@@ -82,7 +84,7 @@ class Jobseekers::SubscriptionForm < BaseForm
     @support_job_role_options = Vacancy::SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.support_job_role_options.#{option}")] }
     @phase_options = Vacancy.phases.keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_education_phases_form.phases_options.#{option}")] }
     @ect_status_options = %w[ect_suitable qts_not_needed].map { |ect_type| [ect_type, I18n.t("jobs.filters.#{ect_type}")] }
-    @working_pattern_options = Vacancy.working_patterns.keys.map do |option|
+    @working_pattern_options = WORKING_PATTERN_FILTER_OPTIONS.map do |option|
       [option, I18n.t("helpers.label.publishers_job_listing_contract_information_form.working_patterns_options.#{option}")]
     end
   end

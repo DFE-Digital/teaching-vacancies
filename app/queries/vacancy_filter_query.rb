@@ -104,6 +104,9 @@ class VacancyFilterQuery
       # Watch out: any legacy non-enum defined working patterns mapping must be done before this call.
       working_patterns &= Vacancy.working_patterns.keys
       return nil if working_patterns.empty?
+      
+      # term_time jobs should appear when jobseeker searches for either full time or part time as it could be interpeted either way.
+      working_patterns << "term_time" if working_patterns.intersect?(%w[full_time part_time])
 
       # ALERT: "job_share" is still defined in Vacancy.working_patterns enum. If removed from there these mappings need to
       # happen BEFORE to the cleanup above.
