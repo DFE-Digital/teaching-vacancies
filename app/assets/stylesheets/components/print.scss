@@ -19,10 +19,15 @@ $print-white: #fff;
   box-sizing: border-box;
   color: $print-dark-grey;
   display: flex;
+  gap: 10mm;
   font-family: arial, sans-serif;
-  height: 30mm;
-  justify-content: space-between;
+  min-height: 30mm;
   padding: 7mm 10mm;
+
+  &__text {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
 
   &__caption {
     font-size: 12pt;
@@ -38,6 +43,7 @@ $print-white: #fff;
   }
 
   &__logo {
+    flex: 0 0 40mm;
     height: auto;
     width: 40mm;
   }
