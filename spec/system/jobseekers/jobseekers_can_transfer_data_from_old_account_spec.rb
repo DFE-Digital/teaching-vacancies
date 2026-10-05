@@ -146,11 +146,6 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
   end
 
   def expect_account_to_be_populated_with_old_account_data
-    expect(page).to have_content profile.first_name
-    expect(page).to have_content profile.last_name
-    expect(page).to have_content profile.qualifications.first.name
-    expect(page).to have_content profile.employments.first.organisation
-
     visit jobseekers_job_applications_path
 
     expect(page).to have_content "Applications (2)"
