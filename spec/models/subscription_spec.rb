@@ -111,7 +111,7 @@ RSpec.describe Subscription do
   end
 
   describe "#vacancies_matching" do
-    subject(:vacancies) { subscription.vacancies_matching(scope).map(&:job_title).map(&:job_title) }
+    subject(:vacancies) { subscription.vacancies_matching(scope).map(&:job_title) }
 
     let(:subscription) { build_stubbed(:subscription) }
     let(:scope) { PublishedVacancy.all }

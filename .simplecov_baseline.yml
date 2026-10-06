@@ -4768,6 +4768,13 @@ app/views/jobseekers/employments/_employments.html.slim:
   branches:
     percent: 85.71
     missed: 2
+app/views/jobseekers/form_previews/show.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/_explained_employment_break.html.slim:
   lines:
     percent: 100.0
@@ -5920,6 +5927,13 @@ app/views/layouts/mailer.text.erb:
   lines:
     percent: 0.0
     missed: 1
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/layouts/print.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
   branches:
     percent: 100.0
     missed: 0
