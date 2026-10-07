@@ -23,20 +23,6 @@ RSpec.describe Search::SchoolSearch do
 
   let(:scope) { Organisation.all }
 
-  describe "#wider_search_suggestions" do
-    let(:school_search) { described_class.new(form_hash, scope: scope) }
-    let(:builder) { Search::WiderSuggestionsBuilder }
-
-    before do
-      allow(builder).to receive(:call)
-    end
-
-    it "uses Search::WiderSuggestionsBuilder to provide suggestions" do
-      school_search.wider_search_suggestions
-      expect(builder).to have_received(:call).with(school_search)
-    end
-  end
-
   describe "#location_search" do
     subject { described_class.new(form_hash, scope: scope) }
 

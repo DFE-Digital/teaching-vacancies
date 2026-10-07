@@ -40,19 +40,19 @@ RSpec.describe RemoveInvalidSubscriptionsJob do
 
   describe "removing discards" do
     let(:notify_client_mock) { instance_double(Notifications::Client, get_notifications: double(collection: [])) }
-    let(:active_jobseeker) { create(:jobseeker) }
-    let(:inactive_jobseeker) { create(:jobseeker, :with_closed_account) }
+    let(:active_jobseeker) { create(:jobseeker, email: "active@contoso.com") }
+    let(:inactive_jobseeker) { create(:jobseeker, :with_closed_account, email: "closed@contoso.com") }
     let!(:inactive_for_closed) { create(:subscription, :inactive, email: inactive_jobseeker.email) }
     let!(:inactive_for_open) { create(:subscription, :inactive, email: active_jobseeker.email) }
     let!(:active_subscription) { create(:subscription, email: active_jobseeker.email) }
 
     before do
-      create(:subscription, :inactive)
+      create(:subscription, :inactive, email: "inactive@contoso.com")
       described_class.perform_now
     end
 
     it "destroys inactive subscriptions for active jobseekers and those without accounts" do
-      expect(Subscription.all).to contain_exactly(active_subscription, inactive_for_closed)
+      expect(Subscription.pluck(:email)).to contain_exactly(active_subscription.email, inactive_for_closed.email)
     end
   end
 
