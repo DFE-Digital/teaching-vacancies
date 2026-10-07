@@ -35,10 +35,11 @@ class KeywordLocationLandingPage
   def initialize(keyword, location)
     @keyword = keyword
     @location = location
+    @location_name = MAPPED_LOCATIONS.fetch(location)
   end
 
   def criteria
-    { keyword: @keyword, location: @location, radius: 25 }
+    { keyword: @keyword, location: @location_name, radius: 25 }
   end
 
   def has_banner_image?
