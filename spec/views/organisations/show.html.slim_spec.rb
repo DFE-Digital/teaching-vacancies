@@ -9,6 +9,26 @@ RSpec.describe "organisations/show", type: :view do
     render
   end
 
+  describe "no jobs" do
+    let(:vacancies) { [] }
+
+    context "with a school" do
+      let(:organisation) { build_stubbed(:school) }
+
+      it "shows school message" do
+        expect(rendered).to have_content("There are currently no jobs at this school")
+      end
+    end
+
+    context "with a college" do
+      let(:organisation) { build_stubbed(:college) }
+
+      it "shows college message" do
+        expect(rendered).to have_content("There are currently no jobs at this college")
+      end
+    end
+  end
+
   describe "displaying salaries" do
     let(:vacancies) { [vacancy] }
     let(:organisation) { build_stubbed(:school, vacancies: vacancies) }
@@ -17,7 +37,7 @@ RSpec.describe "organisations/show", type: :view do
       let(:vacancy) { build_stubbed(:vacancy, :without_any_money, salary: Faker::Alphanumeric.alpha(number: 7)) }
 
       it "shows salary" do
-        expect(show_view).to have_content(vacancy.salary)
+        expect(rendered).to have_content(vacancy.salary)
       end
     end
 
@@ -25,7 +45,7 @@ RSpec.describe "organisations/show", type: :view do
       let(:vacancy) { build_stubbed(:vacancy, :without_any_money, actual_salary: Faker::Number.number(digits: 5)) }
 
       it "shows actual salary" do
-        expect(show_view).to have_content(vacancy.actual_salary)
+        expect(rendered).to have_content(vacancy.actual_salary)
       end
     end
 
@@ -33,7 +53,7 @@ RSpec.describe "organisations/show", type: :view do
       let(:vacancy) { build_stubbed(:vacancy, :without_any_money, hourly_rate: Faker::Alphanumeric.alpha(number: 7)) }
 
       it "shows hourly rate" do
-        expect(show_view).to have_content(vacancy.hourly_rate)
+        expect(rendered).to have_content(vacancy.hourly_rate)
       end
     end
 
@@ -41,7 +61,7 @@ RSpec.describe "organisations/show", type: :view do
       let(:vacancy) { build_stubbed(:vacancy, :without_any_money, pay_scale: Faker::Alphanumeric.alpha(number: 7)) }
 
       it "shows pay scale" do
-        expect(show_view).to have_content(vacancy.pay_scale)
+        expect(rendered).to have_content(vacancy.pay_scale)
       end
     end
 
@@ -49,19 +69,19 @@ RSpec.describe "organisations/show", type: :view do
       let(:vacancy) { build_stubbed(:vacancy) }
 
       it "shows salary" do
-        expect(show_view).to have_content(vacancy.salary)
+        expect(rendered).to have_content(vacancy.salary)
       end
 
       it "shows actual salary" do
-        expect(show_view).to have_content(vacancy.actual_salary)
+        expect(rendered).to have_content(vacancy.actual_salary)
       end
 
       it "shows hourly rate" do
-        expect(show_view).to have_content(vacancy.hourly_rate)
+        expect(rendered).to have_content(vacancy.hourly_rate)
       end
 
       it "shows pay scale" do
-        expect(show_view).to have_content(vacancy.pay_scale)
+        expect(rendered).to have_content(vacancy.pay_scale)
       end
     end
   end
@@ -78,7 +98,7 @@ RSpec.describe "organisations/show", type: :view do
     end
 
     it "displays the organisation's description" do
-      expect(show_view).to have_content(organisation.description.to_plain_text)
+      expect(rendered).to have_content(organisation.description.to_plain_text)
     end
 
     context "when the description contains rich text formatting" do
