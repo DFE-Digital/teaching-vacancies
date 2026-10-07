@@ -2,6 +2,12 @@ class SitemapController < ApplicationController
   STATIC_PAGES = %w[terms-and-conditions savings-methodology accessibility vision-statement].freeze
   POST_SECTION_NAMES = %w[get-help-hiring jobseeker-guides].freeze
 
+  # Vacancies are added regularily, but publish_on is a date, so tell crawlers to refresh any
+  # vacancy pages once per day seems appropriate
+  VACANCY_REFRESH_PERIOD = :daily
+  # static content (posts) are refreshed much less often - even weekly seems too high
+  STATIC_CONTENT_REFRESH_PERIOD = :weekly
+
   def show
     map = XmlSitemap::Map.new(service_domain, secure: !Rails.env.development?) do |sitemap|
       add_live_vacancies(sitemap)
@@ -11,6 +17,8 @@ class SitemapController < ApplicationController
       add_location_landing_pages(sitemap)
 
       add_job_role_location_landing_pages(sitemap)
+
+      add_keyword_location_landing_pages(sitemap)
 
       STATIC_PAGES.each { |static_page| sitemap.add page_path(static_page), period: "weekly" }
 
@@ -25,37 +33,43 @@ class SitemapController < ApplicationController
 
   def add_live_vacancies(sitemap)
     PublishedVacancy.live.applicable.find_each do |vacancy|
-      sitemap.add job_path(vacancy), updated: vacancy.updated_at, expires: vacancy.expires_at, period: "hourly", priority: 0.7
+      sitemap.add job_path(vacancy), updated: vacancy.updated_at, expires: vacancy.expires_at, period: VACANCY_REFRESH_PERIOD, priority: 0.7
     end
   end
 
   def add_static_landing_pages(sitemap)
     Rails.application.config.landing_pages.each_key do |landing_page|
-      sitemap.add landing_page_path(landing_page), period: "hourly"
+      sitemap.add landing_page_path(landing_page), period: VACANCY_REFRESH_PERIOD
     end
   end
 
   def add_location_landing_pages(sitemap)
     (ALL_IMPORTED_LOCATIONS + REDIRECTED_LOCATION_LANDING_PAGES.values - REDIRECTED_LOCATION_LANDING_PAGES.keys).map(&:parameterize).uniq.each do |location|
-      sitemap.add location_landing_page_path(location.parameterize), period: "hourly"
+      sitemap.add location_landing_page_path(location.parameterize), period: VACANCY_REFRESH_PERIOD
     end
   end
 
   def add_job_role_location_landing_pages(sitemap)
-    JobRoleLocationLandingPage::TARGETED_PAGES.each do |job_role, location|
-      sitemap.add job_role_location_landing_page_path(job_role.tr("_", "-"), location), period: "daily"
+    JobRoleLocationLandingPage::TARGETED_ROLE_PAGES.each do |job_role, location|
+      sitemap.add job_role_location_landing_page_path(job_role.tr("_", "-"), location), period: VACANCY_REFRESH_PERIOD
+    end
+  end
+
+  def add_keyword_location_landing_pages(sitemap)
+    KeywordLocationLandingPage::TARGETED_KEYWORD_PAGES.each do |keyword, location|
+      sitemap.add keyword_location_landing_page_path(keyword, location), period: VACANCY_REFRESH_PERIOD
     end
   end
 
   def add_all_posts(sitenap)
     POST_SECTION_NAMES.each do |section|
-      sitenap.add posts_path(section), period: "weekly"
+      sitenap.add posts_path(section), period: STATIC_CONTENT_REFRESH_PERIOD
 
       MarkdownDocument.all_subcategories(section).each do |sub_category|
-        sitenap.add subcategory_path(section, sub_category.post_name), period: "weekly"
+        sitenap.add subcategory_path(section, sub_category.post_name), period: STATIC_CONTENT_REFRESH_PERIOD
         posts = MarkdownDocument.all(section, sub_category.post_name)
         posts.each do |post|
-          sitenap.add post_path(section, sub_category.post_name, post.post_name), period: "weekly"
+          sitenap.add post_path(section, sub_category.post_name, post.post_name), period: STATIC_CONTENT_REFRESH_PERIOD
         end
       end
     end
