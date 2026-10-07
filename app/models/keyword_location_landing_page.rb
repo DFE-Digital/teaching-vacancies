@@ -36,8 +36,8 @@ class KeywordLocationLandingPage
     @keyword = keyword.tr("-", " ")
     @location = location
 
-    mapped_location = MAPPED_LOCATIONS.fetch(location)
-    @location_name = CIIIES_AND_REGIONS.fetch(mapped_location)
+    # None of our locations are unusual, so can just go straight to the mapping of downcase -> actual
+    @location_name = CIIIES_AND_REGIONS.fetch(location)
   end
 
   def criteria

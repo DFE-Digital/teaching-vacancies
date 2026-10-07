@@ -20,6 +20,7 @@ city_names = ons_cities.keys.to_h { |city| [city.downcase, city] }
 region_names = ons_regions.keys.to_h { |city| [city.downcase, city] }
 county_names = ons_counties_and_unitary_authorities.keys.to_h { |city| [city.downcase, city] }
 
+# hash of lower-case place names to actual place names
 CIIIES_AND_REGIONS = city_names.merge(region_names).merge(county_names).freeze
 # Map from a user-inputted search term to a location polygon's name.
 # We also need to map landing page location params to the location polygon's name, since these are `#parameterize`d in
