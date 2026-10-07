@@ -3236,14 +3236,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rails/actiontext@npm:^8.1.301":
-  version: 8.1.301
-  resolution: "@rails/actiontext@npm:8.1.301"
+"@rails/actiontext@npm:^8.1.400":
+  version: 8.1.400
+  resolution: "@rails/actiontext@npm:8.1.400"
   dependencies:
     "@rails/activestorage": "npm:>= 8.1.0-alpha"
   peerDependencies:
     trix: ^2.0.0
-  checksum: 10c0/ff7a5e64f8e1f985e5f77ddc944ec533fb7eb6f56838d2304bd22bc450918fdc8bd7e0e84c16f280e56f158ca2743e738ea37905d3fed1e528f5f8d6d457f24d
+  checksum: 10c0/cc165d5582e5064d15488beaf79ad9a50a97978e6256a99e61be7f05ba11751cd4d14aaf905bf6dd1e74a6a04eface6a5f17c80ad512ec194e806eb260d13235
   languageName: node
   linkType: hard
 
@@ -3256,12 +3256,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rails/activestorage@npm:^8.1.301":
-  version: 8.1.301
-  resolution: "@rails/activestorage@npm:8.1.301"
+"@rails/activestorage@npm:^8.1.400":
+  version: 8.1.400
+  resolution: "@rails/activestorage@npm:8.1.400"
   dependencies:
     spark-md5: "npm:^3.0.1"
-  checksum: 10c0/4bbbf7918b9a92c51a5b8f5a1d38be260bb4a27b651bb90232a11ba8c867b7d1c1ad6a82ca68c31c9f5c9aeffce5a21f0adf01427e2b172d8b61716b2a3cc006
+  checksum: 10c0/1716ac0162250c8ff509be75f20771dba4d97dd76da5bfeab8a24db971e9b73aeacb35a1e12f02d7f6505d036b1405aafdda2480882a05b5bb1835ebe56aea9e
   languageName: node
   linkType: hard
 
@@ -3741,15 +3741,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"accessible-autocomplete@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "accessible-autocomplete@npm:3.0.1"
+"accessible-autocomplete@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "accessible-autocomplete@npm:3.0.2"
   peerDependencies:
     preact: ^8.0.0
   peerDependenciesMeta:
     preact:
       optional: true
-  checksum: 10c0/a90d76f29940cd7c5cb0795f2062d32f8f4904bae3acfc89eab717c56f2b18ce3fd07a4035ec5e30643119cdfe56be3a4bc260eb80e39eeb4009ea5dc09b163c
+  checksum: 10c0/23be53e61c1fde637cc04a1e842ff01ad8a76e6137473fcce975f5350ab23b075003b3f0544745b822e01de3f919cca83859e68a84e8119ae2567aa3b3c2e6b6
   languageName: node
   linkType: hard
 
@@ -8270,9 +8270,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.105.0":
-  version: 1.105.0
-  resolution: "sass@npm:1.105.0"
+"sass@npm:^1.105.1":
+  version: 1.105.1
+  resolution: "sass@npm:1.105.1"
   dependencies:
     "@parcel/watcher": "npm:^2.4.1"
     chokidar: "npm:^5.0.0"
@@ -8283,7 +8283,7 @@ __metadata:
       optional: true
   bin:
     sass: sass.js
-  checksum: 10c0/ddd6a8cc70d325fe7465036de32cb3506b578e131719c8bcfd4c225e051b7e8f5b231c3be450e293043876db58a247b9c354ecc1ca466a8274e2d9a8d4bc1ae1
+  checksum: 10c0/07246d9a9cc3c7974d28e03b394791c65d6a8f701d4ed2f130f5cb72ff3ef5626e5e66afb067348b2ae87011c52e18cd29f294025a6430851ee8617ef8c94f38
   languageName: node
   linkType: hard
 
@@ -8889,11 +8889,11 @@ __metadata:
     "@eslint/js": "npm:^10.0.1"
     "@hotwired/stimulus": "npm:^3.2.2"
     "@hotwired/turbo-rails": "npm:^8.0.23"
-    "@rails/actiontext": "npm:^8.1.301"
-    "@rails/activestorage": "npm:^8.1.301"
+    "@rails/actiontext": "npm:^8.1.400"
+    "@rails/activestorage": "npm:^8.1.400"
     "@sentry/browser": "npm:10.75.2"
     "@stimulus/polyfills": "npm:^2.0.0"
-    accessible-autocomplete: "npm:^3.0.1"
+    accessible-autocomplete: "npm:^3.0.2"
     axios: "npm:^1.20.0"
     chartkick: "npm:^5.0.1"
     classlist-polyfill: "npm:^1.2.0"
@@ -8918,7 +8918,7 @@ __metadata:
     postcss: "npm:^8.5.28"
     postcss-scss: "npm:^4.0.9"
     rails-ujs: "npm:^5.2.8"
-    sass: "npm:^1.105.0"
+    sass: "npm:^1.105.1"
     stylelint: "npm:^17.15.0"
     stylelint-config-sass-guidelines: "npm:^13.0.0"
     stylelint-config-standard: "npm:^40.0.0"
