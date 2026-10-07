@@ -3,12 +3,13 @@ class JobRoleLocationLandingPage < LandingPage
 
   # Targeted roles and locations recommended by SEO agency
   TARGETED_JOB_ROLES = %w[sendco teaching_assistant assistant_headteacher head_of_year_or_phase].freeze
-  TARGETED_LOCATIONS = %w[london manchester bristol birmingham nottingham].freeze
-  TARGETED_PAGES = TARGETED_JOB_ROLES.product(TARGETED_LOCATIONS).freeze
+  TARGETED_LOCATIONS = %w[london manchester bristol birmingham leeds sheffield manchester bradford liverpool bristol coventry leicester].freeze
+
+  TARGETED_ROLE_PAGES = TARGETED_JOB_ROLES.product(TARGETED_LOCATIONS).freeze
 
   def self.exists?(job_role, location)
     normalized_job_role = job_role.downcase.tr("-", "_")
-    TARGETED_PAGES.include?([normalized_job_role, location.downcase])
+    TARGETED_ROLE_PAGES.include?([normalized_job_role, location.downcase])
   end
 
   def self.[](job_role, location)
