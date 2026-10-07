@@ -4,7 +4,7 @@ RSpec.describe "Publishers manage online checks" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
   let(:vacancy) { create(:vacancy, :expired, organisations: [organisation], publisher: publisher) }
-  let(:jobseeker) { create(:jobseeker, :with_personal_details) }
+  let(:jobseeker) { create(:jobseeker) }
   let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy, jobseeker: jobseeker) }
 
   before do

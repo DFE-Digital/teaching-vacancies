@@ -28,6 +28,6 @@ module NavigationsHelper
   end
 
   def your_account_active?
-    !current_page?(jobseekers_profile_path) && request.path.start_with?("/jobseekers")
+    request.path.start_with?("/jobseekers")
   end
 end

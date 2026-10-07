@@ -1,8 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can complete a religious job application" do
-  let(:jobseeker) { create(:jobseeker, jobseeker_profile: jobseeker_profile) }
-  let(:jobseeker_profile) { create(:jobseeker_profile, :with_trn) }
+  let(:jobseeker) { create(:jobseeker) }
   let(:organisation) { create(:school) }
   let(:job_application) do
     create(:job_application, :status_draft, :with_personal_details, :with_professional_status, :with_personal_statement,

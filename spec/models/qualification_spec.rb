@@ -105,10 +105,6 @@ RSpec.describe Qualification do
     it "does not copy job application associations" do
       expect(duplicate.job_application).to be_nil
     end
-
-    it "does not copy jobseeker profile associations" do
-      expect(duplicate.jobseeker_profile).to be_nil
-    end
   end
 
   describe "#display_attributes" do

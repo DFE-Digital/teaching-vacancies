@@ -50,11 +50,11 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
       # If we don't know the user's status, or they have the right perform the role
       # then we can send them straight to the 'quick apply' screen, otherwise we display the
       # (badly named) about_your_application screen which suggests they might not be qualified for the role.
-      if !vacancy.visa_sponsorship_available? && profile.present? && profile.needs_visa_for_uk?
-        render "about_your_application"
-      else
-        @has_previous_application = current_jobseeker.has_submitted_native_job_application?
-      end
+      # if !vacancy.visa_sponsorship_available? && profile.present? && profile.needs_visa_for_uk?
+      #   render "about_your_application"
+      # else
+      @has_previous_application = current_jobseeker.has_submitted_native_job_application?
+      # end
     end
     if session[:user_exists_first_log_in]
       @user_exists_first_log_in = true
@@ -249,11 +249,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
       DfE::Analytics::SendEvents.do([event])
     end
   end
-
-  def profile
-    @profile ||= current_jobseeker.jobseeker_profile
-  end
-  helper_method :profile
 
   def quick_apply?
     current_jobseeker.has_submitted_native_job_application?

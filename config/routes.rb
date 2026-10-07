@@ -126,68 +126,6 @@ Rails.application.routes.draw do
       resource :uploaded_job_application, only: %i[create], controller: "uploaded_job_applications"
     end
 
-    resource :profile, only: %i[show] do
-      resource :preview, only: :show, controller: "profiles/preview"
-      resource :about_you, only: %i[edit update show], controller: "profiles/about_you"
-      resources :work_history, only: %i[new create edit update destroy], controller: "profiles/employments" do
-        get :review, on: :collection, to: "profiles/employments#review"
-      end
-      resource :qualified_teacher_status, only: %i[edit update show], controller: "profiles/qualified_teacher_status"
-      resource :personal_details, only: %i[edit update], controller: "profiles/personal_details", path: "personal-details"
-
-      resources :qualifications, only: %i[new create edit update destroy], controller: "profiles/qualifications" do
-        get :review, on: :collection, to: "profiles/qualifications#review"
-        collection do
-          get :select_category
-          post :submit_category
-        end
-        get :confirm_destroy
-      end
-
-      resources :breaks, only: %i[new create edit update destroy], controller: "profiles/breaks" do
-        get :confirm_destroy
-      end
-
-      resource :hide_profile, only: %i[show], controller: "profiles/hide_profile" do
-        post :confirm_hide
-        get :add
-        post :add_school
-        get :choose_school_or_trust
-        post :add_school_or_trust
-        get :cannot_find_school
-        get :schools
-        post :add_another
-        get :review
-
-        get ":exclusion_id/delete", action: :delete, as: :delete
-        delete ":exclusion_id/delete", action: :destroy
-      end
-
-      get "confirm_toggle", to: "profiles#confirm_toggle"
-      post "toggle", to: "profiles#toggle"
-    end
-
-    resources :job_preferences_steps, only: %i[show update], controller: "profiles/job_preferences", path: "profile/job-preferences" do
-      collection do
-        get "review", action: :review
-      end
-
-      get "location(/:id)", action: :edit_location, as: nil
-      post "location(/:id)", action: :update_location, as: nil
-
-      get "location/:id/delete", action: :delete_location, as: nil
-      post "location/:id/delete", action: :process_delete_location, as: nil
-    end
-
-    resources :job_preferences_locations, only: %i[index new create edit update destroy], controller: "profiles/job_preferences_locations" do
-      member do
-        get "delete_location"
-      end
-      collection do
-        post "add_new"
-      end
-    end
-
     resources :saved_jobs, only: %i[index]
 
     scope path: ":job_id" do

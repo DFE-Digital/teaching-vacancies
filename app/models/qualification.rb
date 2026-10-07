@@ -1,5 +1,6 @@
 class Qualification < ApplicationRecord
-  include ApplicationAndProfileAssociatedRecord
+  belongs_to :job_application
+
   include ActionView::Helpers::SanitizeHelper
 
   has_many :qualification_results, dependent: :delete_all, autosave: true
@@ -13,8 +14,8 @@ class Qualification < ApplicationRecord
   before_validation :remove_inapplicable_data, :mark_emptied_qualification_results_for_destruction
 
   def duplicate
-    super.tap do |qualification|
-      qualification.assign_attributes(qualification_results: qualification_results.map(&:duplicate))
+    dup.tap do |qualification|
+      qualification.assign_attributes(job_application: nil, qualification_results: qualification_results.map(&:duplicate))
     end
   end
 

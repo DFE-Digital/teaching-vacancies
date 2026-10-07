@@ -7,21 +7,9 @@ FactoryBot.define do
       current_sign_in_at { 5.months.ago + rand(7).days }
     end
 
-    trait :with_profile do
-      after(:create) do |jobseeker|
-        create(:jobseeker_profile, jobseeker: jobseeker)
-      end
-    end
-
     trait :email_opted_out do
       email_opt_out { true }
       email_opt_out_reason { 0 }
-    end
-
-    trait :with_personal_details do
-      after(:create) do |jobseeker|
-        create(:jobseeker_profile, :with_personal_details, jobseeker: jobseeker)
-      end
     end
 
     trait :with_closed_account do

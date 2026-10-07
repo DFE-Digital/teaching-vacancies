@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe SendPeakTimesEmailReminderJob do
   subject(:job) { described_class.perform_later }
 
-  let(:jobseeker) { create(:jobseeker, :with_personal_details) }
+  let(:jobseeker) { create(:jobseeker) }
 
   describe "#perform" do
     let(:mail) { instance_double(ActionMailer::MessageDelivery) }

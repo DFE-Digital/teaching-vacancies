@@ -186,11 +186,6 @@ RSpec.describe Jobseeker do
           expect(jobseeker.update_email_from_govuk_one_login!(legacy_jobseeker.email)).to be(false)
         end
 
-        it "doesn't transfer the legacy jobseeker's data to the current jobseeker" do
-          expect { jobseeker.update_email_from_govuk_one_login!(legacy_jobseeker.email) }
-            .to(not_change { jobseeker.reload.jobseeker_profile })
-        end
-
         it "doesn't update the jobseeker email" do
           expect { jobseeker.update_email_from_govuk_one_login!(legacy_jobseeker.email) }
             .not_to(change(jobseeker, :email))
@@ -206,9 +201,6 @@ RSpec.describe Jobseeker do
         it "transfers the legacy jobseeker's data to the current jobseeker" do
           expect { jobseeker.update_email_from_govuk_one_login!(legacy_jobseeker.email) }
             .to change { jobseeker.reload.job_applications }.from([]).to([job_application])
-            .and change { jobseeker.reload.jobseeker_profile }.from(nil).to(profile)
-          expect(jobseeker.jobseeker_profile.qualifications).to match_array(qualifications)
-          expect(jobseeker.jobseeker_profile.employments).to match_array(employments)
         end
 
         it "sets the jobseeker email the legacy jobseeker's email matching the GovUK OneLogin change" do
@@ -228,18 +220,6 @@ RSpec.describe Jobseeker do
 
         it_behaves_like "new jobseeker account already saved data"
       end
-
-      context "when the current jobseeker already recorded qualifications" do
-        before { create(:jobseeker_profile, :with_qualifications, jobseeker: jobseeker) }
-
-        it_behaves_like "new jobseeker account already saved data"
-      end
-
-      context "when the current jobseeker already recorded employment history" do
-        before { create(:jobseeker_profile, :with_employment_history, jobseeker: jobseeker) }
-
-        it_behaves_like "new jobseeker account already saved data"
-      end
     end
   end
 
@@ -250,18 +230,6 @@ RSpec.describe Jobseeker do
       let(:jobseeker) { build_stubbed(:jobseeker) }
 
       it { is_expected.to eq("Jobseeker") }
-    end
-
-    context("with details") do
-      let(:first) { "First" }
-      let(:last) { "Last" }
-      let(:jobseeker) do
-        build_stubbed(:jobseeker,
-                      jobseeker_profile: build_stubbed(:jobseeker_profile,
-                                                       personal_details: build_stubbed(:personal_details, first_name: first, last_name: last)))
-      end
-
-      it { is_expected.to eq("First Last") }
     end
   end
 
