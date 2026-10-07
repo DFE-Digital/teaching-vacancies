@@ -3,7 +3,9 @@ require "rails_helper"
 RSpec.describe "publishers/vacancies/show" do
   let(:school) { build_stubbed(:school, phase: :secondary) }
   let(:vacancy_presenter) { vacancy.decorate }
-  let(:blank_application_text) { t("buttons.download_blank_application") }
+  let(:blank_application_text) do
+    t("app.opens_in_new_tab", link_text: t("buttons.download_blank_application"))
+  end
 
   before do
     assign :vacancy, vacancy_presenter
@@ -20,6 +22,7 @@ RSpec.describe "publishers/vacancies/show" do
 
     it "has blank application download button" do
       expect(rendered).to have_link(blank_application_text, href: organisation_job_form_preview_path(vacancy.id, :blank))
+      expect(rendered).to have_css("a.blank-application[target='_blank'][rel='noopener']")
     end
 
     it "doesn't have publish buttons" do
