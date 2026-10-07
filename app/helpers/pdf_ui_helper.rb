@@ -12,6 +12,11 @@ module PdfUiHelper
     white: "FFFFFF",
   }.freeze
 
+  HEADER_HEIGHT = 4.cm
+  HEADER_HORIZONTAL_PADDING = 1.cm
+  HEADER_LOGO_WIDTH = 4.cm
+  HEADER_COLUMN_GAP = 1.cm
+
   def page_style
     update_font_family
     line_width 3.cm
@@ -37,18 +42,22 @@ module PdfUiHelper
   # rubocop:enable Rails/SaveBang
 
   # rubocop:disable Metrics/AbcSize
-  def page_header
+  def page_header(&)
+    header_top = cursor
+
     # Create a header box with background color
     fill_color COLOR_PALETTE[:light_blue]
-    fill_rectangle [bounds.left, bounds.top], bounds.width, 3.cm
+    fill_rectangle [bounds.left, header_top], bounds.width, HEADER_HEIGHT
     fill_color COLOR_PALETTE[:dark_grey]
 
-    # Add vacancy caption
-    bounding_box([bounds.left + 1.cm, bounds.top - 0.7.cm], width: bounds.width) do
-      yield
-      image tvs_logo_path, at: [bounds.right - 6.cm, bounds.top + 0.5.cm], width: 4.cm
-    end
+    text_width = bounds.width - (HEADER_HORIZONTAL_PADDING * 2) - HEADER_LOGO_WIDTH - HEADER_COLUMN_GAP
+    bounding_box([bounds.left + HEADER_HORIZONTAL_PADDING, header_top - 0.7.cm], width: text_width, &)
 
+    image tvs_logo_path,
+          at: [bounds.right - HEADER_HORIZONTAL_PADDING - HEADER_LOGO_WIDTH, header_top - 0.2.cm],
+          width: HEADER_LOGO_WIDTH
+
+    move_cursor_to(header_top - HEADER_HEIGHT)
     move_down 1.cm
   end
   # rubocop:enable Metrics/AbcSize
