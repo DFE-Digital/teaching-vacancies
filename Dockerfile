@@ -9,7 +9,7 @@ ARG EXTRA_PACKAGES="imagemagick libpng=1.6.59-r0 libjpeg libxml2 libxslt tzdata 
 # These are security patches to the base image
 ARG PROD_PACKAGES="libexpat=2.8.5-r0 nghttp2-libs=1.70.0-r0 pcre2=10.49-r0 zlib-dev=1.3.2-r1"
 
-FROM ruby:4.0.6-alpine3.24 AS builder
+FROM ruby:4.0.7-alpine3.24 AS builder
 
 WORKDIR /app
 
@@ -59,7 +59,7 @@ RUN rm -rf node_modules log tmp yarn.lock && \
 
 
 # this stage reduces the image size.
-FROM ruby:4.0.6-alpine3.24 AS production
+FROM ruby:4.0.7-alpine3.24 AS production
 
 RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
 WORKDIR /app
