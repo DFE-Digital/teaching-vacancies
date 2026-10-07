@@ -15,7 +15,7 @@
     "@hotwired/turbo-rails": "^8.0.23",
     "@rails/actiontext": "^8.1.400",
     "@rails/activestorage": "^8.1.400",
-    "@sentry/browser": "10.75.2",
+    "@sentry/browser": "11.1.0",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^3.0.2",
     "axios": "^1.20.0",
