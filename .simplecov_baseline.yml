@@ -1382,7 +1382,7 @@ app/controllers/support_users/sessions_controller.rb:
     missed: 1
 app/controllers/vacancies_controller.rb:
   lines:
-    percent: 87.73
+    percent: 85.05
     missed: 13
   branches:
     percent: 81.57
@@ -1763,8 +1763,8 @@ app/form_models/jobseekers/search_form.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 90.0
-    missed: 1
+    percent: 80.0
+    missed: 2
 app/form_models/jobseekers/subscription_form.rb:
   lines:
     percent: 100.0
@@ -4255,8 +4255,8 @@ app/services/search/keyword_filter_generation/query_transformer.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 100.0
-    missed: 0
+    percent: 50.0
+    missed: 1
 app/services/search/location_builder.rb:
   lines:
     percent: 95.65
@@ -4537,6 +4537,20 @@ app/views/active_storage/blobs/_blob.html.slim:
   branches:
     percent: 0.0
     missed: 8
+app/views/api/vacancies/index.json.jbuilder:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 83.33
+    missed: 1
+app/views/api/vacancies/show.jbuilder:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
 app/views/colleges/_filters.html.slim:
   lines:
     percent: 100.0
@@ -4563,8 +4577,8 @@ app/views/colleges/index.html.slim:
     percent: 93.75
     missed: 1
   branches:
-    percent: 100.0
-    missed: 0
+    percent: 50.0
+    missed: 2
 app/views/cookies_preferences/_cookies_consent_form.html.slim:
   lines:
     percent: 100.0
@@ -7934,11 +7948,11 @@ app/views/vacancies/search/_no_results_organisation.html.slim:
     missed: 0
 app/views/vacancies/search/_no_results_suggestions.html.slim:
   lines:
-    percent: 91.3
-    missed: 2
+    percent: 60.86
+    missed: 9
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 25.0
+    missed: 3
 app/views/vacancies/search/_open_filters_button.html.slim:
   lines:
     percent: 100.0
