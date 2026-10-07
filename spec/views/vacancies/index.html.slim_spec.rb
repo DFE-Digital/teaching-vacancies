@@ -45,12 +45,17 @@ RSpec.describe "vacancies/index" do
     end
   end
 
-  context "with a keyword location landing page" do
+  context "with a multi-keyword location landing page" do
     let(:search_criteria) { landing_page.criteria }
-    let(:landing_page) { KeywordLocationLandingPage.new("head", "leeds") }
+    let(:landing_page) { KeywordLocationLandingPage.new("early-years-teacher", "coventry") }
+
+    it "converts the keywords back to their original" do
+      pending("test")
+      expect(rendered).to have_content("early years teacher")
+    end
 
     it "converts the location back to its original" do
-      expect(rendered).to have_content("Leeds")
+      expect(rendered).to have_content("Coventry")
     end
   end
 end

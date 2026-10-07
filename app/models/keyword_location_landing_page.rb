@@ -27,13 +27,13 @@ class KeywordLocationLandingPage
   TARGETED_KEYWORD_PAGES = TARGETED_KEYWORDS.product(JobRoleLocationLandingPage::TARGETED_LOCATIONS).freeze
 
   def self.exists?(keyword, location)
-    normalized_keyword = keyword.downcase.tr(" ", "-")
+    normalized_keyword = keyword.tr(" ", "-")
 
     TARGETED_KEYWORD_PAGES.include?([normalized_keyword, location.downcase])
   end
 
   def initialize(keyword, location)
-    @keyword = keyword
+    @keyword = keyword.tr("-", " ")
     @location = location
 
     mapped_location = MAPPED_LOCATIONS.fetch(location)
