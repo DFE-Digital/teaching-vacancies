@@ -50,8 +50,7 @@ RSpec.describe "vacancies/index" do
     let(:landing_page) { KeywordLocationLandingPage.new("early-years-teacher", "coventry") }
 
     it "converts the keywords back to their original" do
-      pending("test")
-      expect(rendered).to have_content("early years teacher")
+      expect(index_view.find_by_id("keyword-field")["value"]).to eq("early years teacher")
     end
 
     it "converts the location back to its original" do
