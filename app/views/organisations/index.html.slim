@@ -3,6 +3,7 @@
 h1 class="govuk-heading-l" role="heading" aria-level="1"
   = "Schools (#{number_with_delimiter(@pagy.count)})"
 
+/ Send params into the controller params directly, as they can also come from URL params (e.g. from wider search)
 = form_for @search_form, as: "", url: url_for, method: :get, html: { data: { controller: "form" }, role: "search" } do |f|
   .govuk-grid-row
     .govuk-grid-column-one-third-at-desktop
@@ -15,7 +16,7 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
         - if @schools.any?
           = render "organisations/search/results", schools: @schools
         - else
-          = render "organisations/search/wider_search"
+          = render "organisations/search/wider_search", path_type: Organisation, school_search: @school_search, wider_search_suggestions: @wider_search_suggestions
 
       = govuk_pagination(pagy: @pagy)
 
