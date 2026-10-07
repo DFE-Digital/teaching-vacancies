@@ -1382,7 +1382,7 @@ app/controllers/support_users/sessions_controller.rb:
     missed: 1
 app/controllers/vacancies_controller.rb:
   lines:
-    percent: 85.05
+    percent: 87.73
     missed: 13
   branches:
     percent: 81.57
@@ -4537,20 +4537,6 @@ app/views/active_storage/blobs/_blob.html.slim:
   branches:
     percent: 0.0
     missed: 8
-app/views/api/vacancies/index.json.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 83.33
-    missed: 1
-app/views/api/vacancies/show.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 50.0
-    missed: 1
 app/views/colleges/_filters.html.slim:
   lines:
     percent: 100.0
