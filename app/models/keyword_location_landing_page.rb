@@ -35,7 +35,9 @@ class KeywordLocationLandingPage
   def initialize(keyword, location)
     @keyword = keyword
     @location = location
-    @location_name = MAPPED_LOCATIONS.fetch(location)
+
+    mapped_location = MAPPED_LOCATIONS.fetch(location)
+    @location_name = CIIIES_AND_REGIONS.fetch(mapped_location)
   end
 
   def criteria

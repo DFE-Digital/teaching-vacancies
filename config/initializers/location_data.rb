@@ -1,6 +1,7 @@
 base_path = Rails.root.join("config/data/ons_mappings")
 
 # ONS API config
+# These files are not what they seem - counties and uninitary authorities contain quite a lot of cities (e.g. Leeds)
 ons_cities = YAML.load_file(base_path.join("ons_cities.yml"))
 ons_counties_and_unitary_authorities = YAML.load_file(base_path.join("ons_counties_and_unitary_authorities.yml"))
 ons_regions = YAML.load_file(base_path.join("ons_regions.yml"))
@@ -15,6 +16,11 @@ DOWNCASE_COMPOSITE_LOCATIONS = composite_locations.transform_keys(&:downcase).fr
 ALL_IMPORTED_LOCATIONS =
   (DOWNCASE_ONS_REGIONS + DOWNCASE_COMPOSITE_LOCATIONS.keys + DOWNCASE_ONS_COUNTIES_AND_UNITARY_AUTHORITIES + DOWNCASE_ONS_CITIES).uniq.freeze
 
+city_names = ons_cities.keys.to_h { |city| [city.downcase, city] }
+region_names = ons_regions.keys.to_h { |city| [city.downcase, city] }
+county_names = ons_counties_and_unitary_authorities.keys.to_h { |city| [city.downcase, city] }
+
+CIIIES_AND_REGIONS = city_names.merge(region_names).merge(county_names).freeze
 # Map from a user-inputted search term to a location polygon's name.
 # We also need to map landing page location params to the location polygon's name, since these are `#parameterize`d in
 # the routes and `#titleize`d in VacanciesController, but those operations are not symmetrical.
