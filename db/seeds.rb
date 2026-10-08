@@ -90,7 +90,7 @@ active_publishers = Publisher.where(email: active_users.map { |u| u.fetch(:email
 # avoid users turning up in waaay to many orgs in review apps
 dummy_publisher = FactoryBot.create(:publisher)
 
-Organisation.schools_visible_to_jobseekers.find_each(batch_size: 100) do |school|
+School.schools_visible_to_jobseekers.find_each(batch_size: 100) do |school|
   phases = if school.phase.in?(%w[not_applicable middle_deemed_secondary])
              %w[secondary]
            elsif school.phase == "middle_deemed_primary"
