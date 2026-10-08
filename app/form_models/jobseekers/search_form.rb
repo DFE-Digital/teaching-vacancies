@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class Jobseekers::SearchForm
   include ActiveModel::Model
   include ActiveModel::Attributes
@@ -176,3 +177,4 @@ class Jobseekers::SearchForm
     ]
   end
 end
+# rubocop:enable Metrics/ClassLength
