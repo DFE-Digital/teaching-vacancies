@@ -13,7 +13,7 @@ RSpec.describe "Events API" do
     end
 
     it "triggers an event", :dfe_analytics do
-      expect(:tracked_link_clicked).to have_been_enqueued_as_analytics_event(with_data: event_data) # rubocop:disable RSpec/ExpectActual
+      expect(:tracked_link_clicked).to have_been_enqueued_as_tvs_analytics_events_with_data(event_data) # rubocop:disable RSpec/ExpectActual
     end
 
     it "requires a CSRF token", with_csrf_protection: true do

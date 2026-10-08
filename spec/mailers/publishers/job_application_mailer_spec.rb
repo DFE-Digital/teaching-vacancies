@@ -32,7 +32,7 @@ RSpec.describe Publishers::JobApplicationMailer do
 
     it "triggers a `publisher_applications_received` email event", :dfe_analytics do
       mail.deliver_now
-      expect(:publisher_applications_received).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
+      expect(:publisher_applications_received).to have_been_enqueued_as_tvs_analytics_events_with_data(%i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
     end
   end
 end

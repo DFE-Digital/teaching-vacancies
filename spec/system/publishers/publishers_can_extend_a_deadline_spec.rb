@@ -88,8 +88,8 @@ RSpec.describe "Publishers can extend a deadline" do
       end
 
       it "sends an event to analytics", :dfe_analytics do
-        expect(:publisher_vacancy_relisted).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
-          with_data: {
+        expect(:publisher_vacancy_relisted).to have_been_enqueued_as_tvs_analytics_events_with_data( # rubocop:disable RSpec/ExpectActual
+          {
             relist_form: "{\"publish_on\":\"#{Date.today}\",\"expires_at\":\"#{expires_at.strftime('%FT%T.%L%:z')}\",\"extension_reason\":\"didnt_find_right_candidate\",\"other_extension_reason_details\":\"\"}",
           },
         )

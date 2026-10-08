@@ -28,7 +28,7 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
     end
 
     scenario "can click on the first link to create a job alert using data from the vacancy", :dfe_analytics do
-      expect(:vacancy_create_job_alert_clicked).to have_been_enqueued_as_analytics_event(with_data: { vacancy_id: vacancy.id }) # rubocop:disable RSpec/ExpectActual
+      expect(:vacancy_create_job_alert_clicked).to have_been_enqueued_as_tvs_analytics_events_with_data( { vacancy_id: vacancy.id }) # rubocop:disable RSpec/ExpectActual
 
       expect(page).to have_content(I18n.t("subscriptions.new.title"))
       expect_search_criteria_to_be_populated
@@ -47,7 +47,7 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
   scenario "can click on the second link to create a job alert using data from the vacancy", :dfe_analytics do
     click_on I18n.t("jobs.alert.similar.verbose.link_text")
 
-    expect(:vacancy_create_job_alert_clicked).to have_been_enqueued_as_analytics_event(with_data: { vacancy_id: vacancy.id }) # rubocop:disable RSpec/ExpectActual
+    expect(:vacancy_create_job_alert_clicked).to have_been_enqueued_as_tvs_analytics_events_with_data( { vacancy_id: vacancy.id }) # rubocop:disable RSpec/ExpectActual
     expect_search_criteria_to_be_populated
   end
 

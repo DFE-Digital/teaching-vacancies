@@ -44,7 +44,7 @@ RSpec.describe "Jobseekers can sign in with fallback email authentication" do
           expect(page).to have_content("Saved jobs")
           expect(page).to have_current_path(jobseeker_root_path)
 
-          expect(:jobseeker_sign_in_attempt).to have_been_enqueued_as_analytics_event(with_data: { success: "true", errors: nil }) # rubocop:disable RSpec/ExpectActual
+          expect(:jobseeker_sign_in_attempt).to have_been_enqueued_as_tvs_analytics_events_with_data({ success: "true", errors: nil }) # rubocop:disable RSpec/ExpectActual
 
           # Can sign out
           click_on(I18n.t("nav.sign_out"))

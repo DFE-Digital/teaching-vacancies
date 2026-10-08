@@ -28,7 +28,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
 
     it "triggers a `jobseeker_application_submitted` email event", :dfe_analytics do
       mail.deliver_now
-      expect(:jobseeker_application_submitted).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
+      expect(:jobseeker_application_submitted).to have_been_enqueued_as_tvs_analytics_events_with_data(%i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
     end
   end
 
@@ -43,7 +43,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
 
     it "triggers a `jobseeker_job_listing_ended_early` email event", :dfe_analytics do
       mail.deliver_now
-      expect(:jobseeker_job_listing_ended_early).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
+      expect(:jobseeker_job_listing_ended_early).to have_been_enqueued_as_tvs_analytics_events_with_data(%i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
     end
   end
 
