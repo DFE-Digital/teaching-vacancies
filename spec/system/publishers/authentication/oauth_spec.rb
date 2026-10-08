@@ -8,7 +8,7 @@ RSpec.shared_examples "a successful Publisher sign in" do
 
   scenario "it signs in the user successfully", :dfe_analytics do
     sign_in_publisher
-    expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_tvs_analytics_events_with_data( { sign_in_type: "dsi" }) # rubocop:disable RSpec/ExpectActual
+    expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_tvs_analytics_events_with_data({ sign_in_type: "dsi" }) # rubocop:disable RSpec/ExpectActual
 
     expect(page).to have_selector(:link_or_button, I18n.t("nav.sign_out"))
     expect(page).to have_selector(:link_or_button, I18n.t("nav.manage_jobs"))
