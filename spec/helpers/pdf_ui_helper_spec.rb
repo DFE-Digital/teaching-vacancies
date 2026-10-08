@@ -19,12 +19,22 @@ RSpec.describe PdfUiHelper do
 
   describe ".page_header" do
     let(:some_text) { "mighty page header" }
+    let(:header_content_right) { [] }
 
     before do
-      instance.page_header { instance.text(some_text) }
+      instance.page_header do
+        header_content_right << instance.bounds.absolute_right
+        instance.text(some_text)
+      end
     end
 
     it { is_expected.to include(some_text) }
+
+    it "keeps header content clear of the logo" do
+      logo_left = instance.document.bounds.absolute_right - described_class::HEADER_HORIZONTAL_PADDING - described_class::HEADER_LOGO_WIDTH
+
+      expect(header_content_right.first).to eq(logo_left - described_class::HEADER_COLUMN_GAP)
+    end
   end
 
   describe ".page_footer" do

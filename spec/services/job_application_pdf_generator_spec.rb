@@ -2,7 +2,13 @@ require "rails_helper"
 require "pdf/inspector"
 
 RSpec.describe JobApplicationPdfGenerator do
-  let(:vacancy) { build_stubbed(:vacancy, :at_one_school) }
+  let(:vacancy) do
+    build_stubbed(
+      :vacancy,
+      job_title: "PROGRESS LEADER (HEAD OF DEPARTMENT)",
+      organisations: [build_stubbed(:school, name: "Icelyn High School")],
+    )
+  end
   let(:job_application) do
     build_stubbed(:job_application, :status_submitted,
                   vacancy: vacancy,
@@ -22,7 +28,7 @@ RSpec.describe JobApplicationPdfGenerator do
     it "renders the header, every section, the footer and the page number", :aggregate_failures do
       expect(document).to be_a(Prawn::Document)
 
-      expect(pdf).to include(I18n.t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.organisation_name))
+      expect(pdf.join(" ")).to include(I18n.t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.organisation_name))
 
       expect(pdf).to include("Personal details")
       expect(pdf).to include("Professional status")
