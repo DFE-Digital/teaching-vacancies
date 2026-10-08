@@ -472,7 +472,6 @@ GEM
       railties (>= 7.1)
       stimulus-rails
       turbo-rails
-    mock_redis (0.48.1)
     multi_json (1.21.2)
     multi_xml (0.6.0)
     multipart-post (2.4.1)
@@ -688,8 +687,6 @@ GEM
       tsort
     recaptcha (5.21.2)
     redis (4.8.1)
-    redis-client (0.30.1)
-      connection_pool
     regexp_parser (2.12.0)
     reline (0.7.0)
       io-console (~> 0.5)
@@ -1052,7 +1049,6 @@ DEPENDENCIES
   mimemagic
   mini_magick
   mission_control-jobs
-  mock_redis
   mutex_m
   net-sftp
   nokogiri
@@ -1086,7 +1082,6 @@ DEPENDENCIES
   railties (< 8.2)
   recaptcha
   redis (~> 4.8.1)
-  redis-client
   rgeo-geojson
   rgeo-proj4
   rspec-rails
@@ -1295,7 +1290,6 @@ CHECKSUMS
   mini_mime (1.1.5) sha256=8681b7e2e4215f2a159f9400b5816d85e9d8c6c6b491e96a12797e798f8bccef
   minitest (6.0.6) sha256=153ea36d1d987a62942382b61075745042a2b3123b1cd48f4c3675af9cc7d6f1
   mission_control-jobs (1.3.1) sha256=3230be224069b39fee2893eecd27c1c334fb5467290bf575e88b5c9121287b26
-  mock_redis (0.48.1) sha256=0f3734e83a4534740b2bdd97c727fb81e7587bb05932a6b114fb69c232b217b3
   multi_json (1.21.2) sha256=245531eaf54bdba57aba515ff08b4503505c5e09911daa89c5a561e2f85bea8e
   multi_xml (0.6.0) sha256=d24393cf958adb226db884b976b007914a89c53ad88718e25679d7008823ad52
   multipart-post (2.4.1) sha256=9872d03a8e552020ca096adadbf5e3cb1cd1cdd6acd3c161136b8a5737cdb4a8
@@ -1381,7 +1375,6 @@ CHECKSUMS
   rdoc (7.2.0) sha256=8650f76cd4009c3b54955eb5d7e3a075c60a57276766ebf36f9085e8c9f23192
   recaptcha (5.21.2) sha256=8f7bb6cc9f04c523fff3f38126b7c5f1314c35fcb3691fc8e70d2b464533c12a
   redis (4.8.1) sha256=387ee086694fffc9632aaeb1efe4a7b1627ca783bf373320346a8a20cd93333a
-  redis-client (0.30.1) sha256=5151bc5c7bbfe48623732cdae3b900d8a22dc691cc7cdfacfb351ac55116522d
   regexp_parser (2.12.0) sha256=35a916a1d63190ab5c9009457136ae5f3c0c7512d60291d0d1378ba18ce08ebb
   reline (0.7.0) sha256=5b012d8e55dbf9d450f12bde2cf7d15ff546ae80b3f8f3b30e570d431815583d
   representable (3.3.0) sha256=22beca7d07104d8dfe30667eb267756c764c8bdc6c0f1481922502ecc4f0d8cf
