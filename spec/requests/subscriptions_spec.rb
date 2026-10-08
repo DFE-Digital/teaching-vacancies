@@ -101,7 +101,7 @@ RSpec.describe "Subscriptions" do
       subject
 
       expect(:job_alert_subscription_created).to have_been_enqueued_as_tvs_analytics_events_with_data( # rubocop:disable RSpec/ExpectActual
-         %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier],
+        %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier],
       )
     end
 
@@ -369,7 +369,7 @@ RSpec.describe "Subscriptions" do
       delete subscription_path(subscription.token, utm_campaign: "subscription_governance")
 
       expect(:job_alert_subscription_unsubscribed).to have_been_enqueued_as_tvs_analytics_events_with_data( # rubocop:disable RSpec/ExpectActual
-         %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier utm_campaign],
+        %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier utm_campaign],
       )
     end
   end
@@ -399,7 +399,7 @@ RSpec.describe "Subscriptions" do
       expect(response).to redirect_to(root_path)
       expect(flash[:success]).to be_present
       expect(:job_alert_subscription_kept).to have_been_enqueued_as_tvs_analytics_events_with_data( # rubocop:disable RSpec/ExpectActual
-         %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier],
+        %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier],
       )
     end
   end
