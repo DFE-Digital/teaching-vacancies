@@ -1,6 +1,6 @@
 class Jobseekers::SubscriptionForm < BaseForm
   WORKING_PATTERN_FILTER_OPTIONS = %w[full_time part_time job_share].freeze
-  
+
   attr_accessor :email,
                 :frequency,
                 :keyword,

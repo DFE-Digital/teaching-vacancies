@@ -109,7 +109,7 @@ class Jobseekers::SearchForm
     @visa_sponsorship_availability -= previous_filters["visa_sponsorship_availability"]
   end
 
-  def set_facet_options # rubocop:disable Metrics/AbcSize
+  def set_facet_options
     @visa_sponsorship_availability_options = [["true", I18n.t("jobs.filters.visa_sponsorship_availability.option")]]
     @teaching_job_role_options = Vacancy::TEACHING_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.#{option}")] }
     @support_job_role_options = Vacancy::SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.support_job_role_options.#{option}")] }
