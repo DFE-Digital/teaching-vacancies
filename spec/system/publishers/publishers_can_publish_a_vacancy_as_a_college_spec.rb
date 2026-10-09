@@ -86,7 +86,11 @@ RSpec.describe "Creating a vacancy as an FE college" do
     it "shows the confirm job address step after job title, restricts job roles, and shows the address on the review page" do
       fill_in_job_details_through_important_dates(vacancy)
 
-      # applying_for_the_job is skipped; how_to_receive_applications is shown instead
+      expect(publisher_applying_for_the_job_page).to be_displayed
+      # No religious options when not a faith school
+      expect(all(".govuk-radios__item").count).to eq(2)
+      publisher_applying_for_the_job_page.fill_in_and_submit_form
+
       expect(publisher_how_to_receive_applications_page).to be_displayed
       publisher_how_to_receive_applications_page.fill_in_and_submit_form(vacancy.receive_applications)
 
@@ -134,7 +138,11 @@ RSpec.describe "Creating a vacancy as an FE college" do
     it "routes through application_form and anonymise_applications steps" do
       fill_in_job_details_through_important_dates(vacancy)
 
-      # applying_for_the_job is skipped; how_to_receive_applications is shown instead
+      expect(publisher_applying_for_the_job_page).to be_displayed
+      # No religious options when not a faith school
+      expect(all(".govuk-radios__item").count).to eq(2)
+      publisher_applying_for_the_job_page.fill_in_and_submit_form
+
       expect(publisher_how_to_receive_applications_page).to be_displayed
       publisher_how_to_receive_applications_page.fill_in_and_submit_form("uploaded_form")
 
