@@ -141,11 +141,12 @@ FactoryBot.define do
     end
 
     trait :for_seed_data do
-      job_roles { factory_rand_sample(Vacancy.job_roles.keys, 2..4) }
+      #  use a single job role for seed data - job title only depends on first role anyway
+      job_roles { [Vacancy.job_roles.keys.sample] }
       ect_status { factory_sample(Vacancy.ect_statuses.keys) if job_roles.include?("teacher") }
       is_job_share { [true, false].sample }
       visa_sponsorship_available { [true, false].sample }
-      working_patterns { factory_rand_sample(%w[full_time part_time], 1..2) }
+      working_patterns { factory_rand_sample(Vacancy::WORKING_PATTERNS, 1..2) }
       working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
       phases { factory_rand_sample(Vacancy::PHASES.keys, 1..3) }
 
@@ -154,7 +155,7 @@ FactoryBot.define do
       subjects { factory_sample(VACANCY_SEARCH_SUBJECT_OPTIONS.map(&:first), 3).sort }
 
       job_title do
-        role_name = I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{job_roles.first}", default: "Teacher")
+        role_name = I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{job_roles.first}")
         base = if subjects.present? && Vacancy::TEACHING_JOB_ROLES.include?(job_roles.first)
                  "#{role_name} (#{subjects.join(', ')})"
                else

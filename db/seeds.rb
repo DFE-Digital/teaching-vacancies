@@ -87,16 +87,30 @@ end
 
 active_publishers = Publisher.where(email: active_users.map { |u| u.fetch(:email) })
 
-schools.each do |school|
+# avoid users turning up in waaay to many orgs in review apps
+dummy_publisher = FactoryBot.create(:publisher)
+
+School.schools_visible_to_jobseekers.find_each(batch_size: 100) do |school|
+  phases = if school.phase.in?(%w[not_applicable middle_deemed_secondary])
+             %w[secondary]
+           elsif school.phase == "middle_deemed_primary"
+             %w[primary]
+           else
+             [school.phase]
+           end
   attrs = { organisations: [school],
-            phases: (school.phase == "not_applicable" ? %w[secondary] : [school.phase]),
+            phases: phases,
             publisher_organisation: school,
             publisher: active_publishers.sample }
-  75.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
-  FactoryBot.create(:vacancy, :for_seed_data, :apply_via_website, **attrs)
-  FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs)
-  FactoryBot.create(:draft_vacancy, :for_seed_data, **attrs)
-  FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false)
+  if schools.include?(school)
+    75.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+    FactoryBot.create(:vacancy, :for_seed_data, :apply_via_website, **attrs)
+    FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs)
+    FactoryBot.create(:draft_vacancy, :for_seed_data, **attrs)
+    FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false)
+  else
+    FactoryBot.create(:vacancy, :for_seed_data, **attrs, publisher: dummy_publisher)
+  end
 end
 
 # Vacancies at Weydon trust central office
