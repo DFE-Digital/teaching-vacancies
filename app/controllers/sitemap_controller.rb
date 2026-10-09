@@ -43,9 +43,10 @@ class SitemapController < ApplicationController
     end
   end
 
+  # Even weekly seems too short for this and thw next one - they are unlikely to change in months
   def add_job_role_location_landing_pages(sitemap)
     JobRoleLocationLandingPage::TARGETED_ROLE_PAGES.each do |job_role, location|
-      sitemap.add job_role_location_landing_page_path(job_role.tr("_", "-"), location), period: "daily"
+      sitemap.add job_role_location_landing_page_path(job_role.tr("_", "-"), location), period: "weekly"
     end
   end
 
