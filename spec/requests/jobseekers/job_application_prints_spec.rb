@@ -4,7 +4,20 @@ RSpec.describe "Job application prints" do
   let(:jobseeker) { create(:jobseeker) }
   let(:organisation) { create(:school) }
   let(:vacancy) { create(:vacancy, organisations: [organisation]) }
-  let(:job_application) { create(:job_application, :status_submitted, jobseeker:, vacancy:) }
+  let(:job_application) do
+    create(
+      :job_application,
+      :status_submitted,
+      close_relationships_details: "My sibling works at the school",
+      has_close_relationships: true,
+      has_safeguarding_issue: true,
+      is_support_needed: true,
+      jobseeker:,
+      safeguarding_issue_details: "Safeguarding declaration details",
+      support_needed_details: "Step-free interview access",
+      vacancy:,
+    )
+  end
 
   before do
     sign_in(jobseeker, scope: :jobseeker)
@@ -70,6 +83,19 @@ RSpec.describe "Job application prints" do
         started_on: Date.new(2021, 9, 1),
       )
     end
+    let(:referee) do
+      create(
+        :referee,
+        email: "referee@contoso.com",
+        is_most_recent_employer: true,
+        job_application:,
+        job_title: "Headteacher",
+        name: "Morgan Example",
+        organisation: "Example Secondary School",
+        phone_number: "01234 987654",
+        relationship: "Line manager",
+      )
+    end
 
     before do
       qualification
@@ -77,6 +103,7 @@ RSpec.describe "Job application prints" do
       professional_body_membership
       employment
       employment_break
+      referee
       get jobseekers_job_application_print_path(job_application)
     end
 
@@ -168,6 +195,31 @@ RSpec.describe "Job application prints" do
       expect(page).to have_css(".print-table__row", text: /Employment currently held:Yes/)
       expect(page).to have_css(".print-table__row", text: /End date:present/)
       expect(page).to have_css(".print-table__row", text: /Reason:Caring responsibilities/)
+    end
+
+    it "renders referees" do
+      expect(page).to have_css(".print-section__heading", text: "References")
+      expect(page).to have_css(".print-table__row", text: /Name:Morgan Example/)
+      expect(page).to have_css(".print-table__row", text: /Job Title:Headteacher/)
+      expect(page).to have_css(".print-table__row", text: /Organisation:Example Secondary School/)
+      expect(page).to have_css(".print-table__row", text: /Relationship:Line manager/)
+      expect(page).to have_css(".print-table__row", text: /Email:referee@contoso\.com/)
+      expect(page).to have_css(".print-table__row", text: /Phone Number:01234 987654/)
+      expect(page).to have_css(".print-table__row", text: /Current or most recent employer:Yes/)
+    end
+
+    it "renders interview support or adjustments" do
+      expect(page).to have_css(
+        ".print-section__heading",
+        text: "Do you need support or adjustments for your interview?",
+      )
+      expect(page).to have_css(".print-table__row", text: /Yes\s*Details: Step-free interview access/)
+    end
+
+    it "renders declarations" do
+      expect(page).to have_css(".print-section__heading", text: "Declarations")
+      expect(page).to have_css(".print-table__row", text: /Yes\s*Details: Safeguarding declaration details/)
+      expect(page).to have_css(".print-table__row", text: /Yes\s*Details: My sibling works at the school/)
     end
   end
 

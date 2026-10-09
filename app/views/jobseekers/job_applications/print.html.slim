@@ -34,3 +34,15 @@ p.print-introduction = t("jobseekers.job_applications.show.consent_text")
 = render "print_nested_section",
   groups: @job_application_pdf.employment_history,
   heading: t("jobseekers.job_applications.show.employment_history.heading")
+
+= render "print_nested_section",
+  groups: @job_application_pdf.referees,
+  heading: t("jobseekers.job_applications.show.referees.heading")
+
+= render "print_table_section",
+  heading: t("jobseekers.job_applications.show.ask_for_support.heading"),
+  rows: @job_application_pdf.ask_for_support
+
+= render "print_table_section",
+  heading: t("jobseekers.job_applications.show.declarations.heading"),
+  rows: @job_application_pdf.declarations
