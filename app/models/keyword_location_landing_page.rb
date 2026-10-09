@@ -37,7 +37,7 @@ class KeywordLocationLandingPage
     @location = location
 
     # None of our locations are unusual, so can just go straight to the mapping of downcase -> actual
-    @location_name = CIIIES_AND_REGIONS.fetch(location)
+    @location_name = CITIES_AND_REGIONS.fetch(location)
   end
 
   def criteria
