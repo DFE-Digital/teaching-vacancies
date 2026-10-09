@@ -5,7 +5,6 @@ RSpec.shared_examples "a successful search" do
     let(:keyword) { "Teacher" }
 
     scenario "shows the keyword filter and paginates the results", :aggregate_failures do
-      expect(page).to have_css("a", text: "Remove this filter Teacher")
       expect(page).to have_css(".search-results > .search-results__item", count: 2)
       expect(page).to have_content strip_tags(I18n.t("app.pagy_stats_html", from: 1, to: 2, total: 6, type: "results"))
 
@@ -23,27 +22,12 @@ RSpec.shared_examples "a successful search" do
     let(:keyword) { "Maths Teacher" }
 
     scenario "shows the keyword filter and only the Maths jobs, most recently published first", :aggregate_failures do
-      expect(page).to have_css("a", text: "Remove this filter Teacher")
       expect(page).to have_content strip_tags(I18n.t("app.pagy_stats_html", from: 1, to: 2, total: 2, type: "results"))
       expect("Maths 1").to appear_before("Maths Teacher 2")
     end
 
     context "when clearing all applied filters" do
-      before { click_on I18n.t("shared.filter_group.clear_all_filters") }
-
       it "displays no remove filter links" do
-        expect(page).to_not have_css("a", text: "Remove this filter Teacher")
-      end
-    end
-
-    context "when removing a filter" do
-      before do
-        within("#filters-component") do
-          click_on "Remove this filter Teacher"
-        end
-      end
-
-      it "removes the filter" do
         expect(page).to_not have_css("a", text: "Remove this filter Teacher")
       end
     end
@@ -305,25 +289,6 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
         expect_page_not_to_show_jobs([maths_job1, maths_job2])
       end
     end
-
-    context "when used in conjunction with a search term" do
-      # testing this unusual edge case around removing auto-populated search terms because it was raising exceptions for us in the past.
-      it "returns the correct vacancies even after removing auto-populated search terms" do
-        visit jobs_path
-        fill_in "Keyword", with: "Physics teacher"
-        check "Academy"
-
-        click_on I18n.t("buttons.search")
-
-        within("#filters-component") do
-          click_link "Remove this filter Teacher"
-        end
-        click_on I18n.t("buttons.search")
-
-        expect_page_to_show_jobs([job1])
-        expect_page_not_to_show_jobs([job2, job3, job4, job5, maths_job1, maths_job2])
-      end
-    end
   end
 
   context "when filtering by school type" do
@@ -376,27 +341,6 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
       expect_page_to_show_jobs([special_job1, special_job2, special_job3, special_job4, special_job5, special_job6, faith_job])
       expect_page_not_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2])
-    end
-
-    context "when used in conjunction with a search term" do
-      # testing this unusual edge case around removing auto-populated search terms because it was raising exceptions for us in the past.
-      it "returns the correct vacancies even after removing auto-populated search terms" do
-        visit jobs_path
-        fill_in "Keyword", with: "Physics teacher"
-        fill_in "location-field", with: "Birmingham"
-        select "200 miles", from: "radius-field"
-        check I18n.t("organisations.filters.faith_school")
-
-        click_on I18n.t("buttons.search")
-
-        within("#filters-component") do
-          click_link "Remove this filter Teacher"
-        end
-        click_on I18n.t("buttons.search")
-
-        expect_page_to_show_jobs([faith_job])
-        expect_page_not_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2, special_job1, special_job2, special_job3, special_job4, special_job5, special_job6])
-      end
     end
   end
 

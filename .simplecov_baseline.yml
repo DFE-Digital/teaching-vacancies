@@ -1763,7 +1763,7 @@ app/form_models/jobseekers/search_form.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 90.0
+    percent: 91.66
     missed: 1
 app/form_models/jobseekers/subscription_form.rb:
   lines:
@@ -4250,20 +4250,6 @@ app/services/search/jobseeker_profile_search.rb:
   branches:
     percent: 95.45
     missed: 1
-app/services/search/keyword_filter_generation/query_parser.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
-app/services/search/keyword_filter_generation/query_transformer.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
 app/services/search/location_builder.rb:
   lines:
     percent: 95.65
