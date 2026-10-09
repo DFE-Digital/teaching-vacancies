@@ -53,8 +53,8 @@ RSpec.describe Publishers::DfeSignIn::Parsing do
     context "when the organisation key is missing" do
       let(:user) { {} }
 
-      it "returns nil" do
-        expect(parser.la_code(user)).to be_nil
+      it "raises, as the user can't be tied to a publisher" do
+        expect { parser.la_code(user) }.to raise_error(KeyError)
       end
     end
   end
