@@ -95,20 +95,16 @@ section#job-details class="govuk-!-margin-bottom-5"
     - if vacancy.uploaded_form?
       p.govuk-body = t("jobseekers.job_applications.requires_application_form_download")
       p.govuk-body = t("jobseekers.job_applications.no_cvs")
-      = govuk_button_to t("jobseekers.job_applications.apply.apply"), jobseekers_job_job_application_path(vacancy.id)
+      = govuk_button_to t("jobseekers.job_applications.apply.apply"), start_jobseekers_job_job_application_path(vacancy.id)
 
     - elsif vacancy.enable_job_applications?
       p.govuk-body = t("jobseekers.job_applications.applying_for_the_job_paragraph")
       p.govuk-body = t("jobseekers.job_applications.no_cvs")
-      = govuk_button_link_to t("jobseekers.job_applications.apply.apply"), new_jobseekers_job_job_application_path(vacancy.id)
+      = govuk_button_to t("jobseekers.job_applications.apply.apply"), start_jobseekers_job_job_application_path(vacancy.id)
     - elsif vacancy.receive_applications == "website"
       p.govuk-body = t("jobs.apply_via_website")
       p.govuk-body = t("jobseekers.job_applications.no_cvs")
-      - ab_test = current_jobseeker.present? ? field_test(:trn_on_apply, participant: current_jobseeker) : "apply"
-      - if ab_test == "apply"
-        = apply_link(vacancy, class: "govuk-!-margin-bottom-5")
-      - else
-        = govuk_button_link_to t("jobs.view_advert.school"), trn_interstitial_job_path(vacancy.id)
+      = apply_link(vacancy, class: "govuk-!-margin-bottom-5")
 
     - elsif vacancy.receive_applications == "email"
       p.govuk-body = t("jobs.apply_via_email_html", email: application_email_link(vacancy))

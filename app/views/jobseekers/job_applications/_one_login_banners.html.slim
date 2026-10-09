@@ -1,0 +1,11 @@
+- if @user_exists_first_log_in
+  = govuk_notification_banner title_text: t("banners.success"), classes: "govuk-notification-banner--success" do |notification_banner|
+    - notification_banner.with_heading(text: t("jobseekers.job_applications.new.one_login_banner.account_found.title"))
+    p.govuk-body = t("jobseekers.job_applications.new.one_login_banner.account_found.paragraph1")
+    p.govuk-body = t("jobseekers.job_applications.new.one_login_banner.account_found.paragraph2")
+
+- if @newly_created_user
+  = govuk_notification_banner title_text: t("banners.success"), classes: "govuk-notification-banner--success" do |notification_banner|
+    - notification_banner.with_heading(text: t("jobseekers.job_applications.new.one_login_banner.account_not_found.title"))
+    p.govuk-body = t("jobseekers.job_applications.new.one_login_banner.account_not_found.paragraph1")
+    p.govuk-body = t("jobseekers.job_applications.new.one_login_banner.account_not_found.paragraph2", link: govuk_link_to(t("jobseekers.job_applications.new.one_login_banner.account_not_found.transfer_account_link_text"), new_jobseekers_request_account_transfer_email_path)).html_safe
