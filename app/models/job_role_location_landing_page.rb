@@ -1,4 +1,4 @@
-class JobRoleLocationLandingPage < LandingPage
+class JobRoleLocationLandingPage
   attr_reader :job_role, :location
 
   # Targeted roles and locations recommended by SEO agency
@@ -21,15 +21,7 @@ class JobRoleLocationLandingPage < LandingPage
   def initialize(job_role, location)
     @job_role = job_role
     @location = location
-    super(slug, build_criteria)
-  end
-
-  def slug
-    "#{job_role.tr('_', '-')}-jobs-in-#{location}"
-  end
-
-  def location_name
-    (MAPPED_LOCATIONS[location.tr("-", " ")] || location).titleize.gsub(/\bAnd\b/, "and")
+    @location_name = CITIES_AND_REGIONS.fetch(location)
   end
 
   def job_role_name
@@ -37,13 +29,15 @@ class JobRoleLocationLandingPage < LandingPage
   end
 
   def title
-    I18n.t("landing_pages._job_role_location.title", job_role: job_role_name, location: location_name)
+    I18n.t("landing_pages._job_role_location.title", job_role: job_role_name, location: @location_name)
   end
 
-  private
+  def meta_description
+    I18n.t("landing_pages._job_role_location.meta_description", job_role: job_role_name.downcase, location: @location_name)
+  end
 
-  def build_criteria
-    { location: location_name }.tap do |criteria|
+  def criteria
+    { location: @location_name }.tap do |criteria|
       if Vacancy::TEACHING_JOB_ROLES.include?(job_role)
         criteria[:teaching_job_roles] = [job_role]
       end
@@ -54,15 +48,11 @@ class JobRoleLocationLandingPage < LandingPage
     end
   end
 
-  def cache_key
-    [:job_role_location_landing_page_count, job_role, location]
+  def has_banner_image?
+    false
   end
 
-  def translation_args
-    super.merge(
-      scope: [:landing_pages, "_job_role_location"],
-      job_role: job_role_name.downcase,
-      location: location_name,
-    )
+  def hidden_filters
+    []
   end
 end

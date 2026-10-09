@@ -60,39 +60,15 @@ RSpec.describe JobRoleLocationLandingPage do
     end
   end
 
-  describe "#slug" do
-    it "returns the correct slug format" do
-      expect(landing_page.slug).to eq("teaching-assistant-jobs-in-london")
-    end
-  end
-
-  describe "#location_name" do
-    it "returns the titleized location name" do
-      expect(landing_page.location_name).to eq("London")
-    end
-
-    it "handles mapped locations" do
-      stub_const("MAPPED_LOCATIONS", { "london" => "Greater London" })
-      expect(landing_page.location_name).to eq("Greater London")
-    end
-  end
-
   describe "#job_role_name" do
     it "returns the translated job role name" do
       expect(landing_page.job_role_name).to eq(I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.teaching_assistant"))
     end
   end
 
-  describe "#count" do
-    it "performs a search and returns its total count" do
-      expect(landing_page.count).to eq(42)
-    end
-  end
-
   describe "i18n methods" do
     let(:job_role_name) { I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.teaching_assistant") }
 
-    specify { expect(landing_page.heading).to eq(I18n.t("landing_pages._job_role_location.heading", location: "London", job_role: job_role_name.downcase, count: "<span class=\"govuk-!-font-weight-bold\">42</span>")) }
     specify { expect(landing_page.meta_description).to eq(I18n.t("landing_pages._job_role_location.meta_description", location: "London", job_role: job_role_name.downcase)) }
     specify { expect(landing_page.title).to eq(I18n.t("landing_pages._job_role_location.title", location: "London", job_role: job_role_name)) }
   end

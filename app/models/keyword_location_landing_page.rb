@@ -36,7 +36,6 @@ class KeywordLocationLandingPage
     @keyword = keyword.tr("-", " ")
     @location = location
 
-    # None of our locations are unusual, so can just go straight to the mapping of downcase -> actual
     @location_name = CITIES_AND_REGIONS.fetch(location)
   end
 
