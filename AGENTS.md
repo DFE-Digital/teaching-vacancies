@@ -24,7 +24,7 @@ Teaching Vacancies is a free job-listing service from the Department for Educati
 Teachers search and apply for jobs at schools, trusts and colleges in England; hiring staff
 list and manage those vacancies.
 
-Ruby 4.0.6, Rails 8.x, PostgreSQL with PostGIS, Redis, Solid Queue.
+Ruby 4.0.7, Rails 8.x, PostgreSQL with PostGIS, Redis, Solid Queue.
 
 Two things shape every rule below:
 
