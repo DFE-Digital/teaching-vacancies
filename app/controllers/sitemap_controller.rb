@@ -52,7 +52,7 @@ class SitemapController < ApplicationController
 
   def add_keyword_location_landing_pages(sitemap)
     KeywordLocationLandingPage::TARGETED_KEYWORD_PAGES.each do |keyword, location|
-      sitemap.add keyword_location_landing_page_path(keyword, location), period:  :monthly
+      sitemap.add keyword_location_landing_page_path(keyword, location), period: :monthly
     end
   end
 
