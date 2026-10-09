@@ -70,7 +70,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
           choose school.name
           click_button I18n.t("buttons.sign_in")
 
-          expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_event(with_data: { sign_in_type: "email" }) # rubocop:disable RSpec/ExpectActual
+          expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_tvs_analytics_events_with_data({ sign_in_type: "email" }) # rubocop:disable RSpec/ExpectActual
 
           expect(page).to have_content(school.name)
           expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
@@ -149,7 +149,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
             choose school.name
             click_button I18n.t("buttons.sign_in")
 
-            expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_event(with_data: { sign_in_type: "email" }) # rubocop:disable RSpec/ExpectActual
+            expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_tvs_analytics_events_with_data({ sign_in_type: "email" }) # rubocop:disable RSpec/ExpectActual
             expect(page).to have_no_content("Which organisation do you want to sign in with?")
             expect(page).to have_content(school.name)
             expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
@@ -184,7 +184,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
             choose trust.name
             click_button I18n.t("buttons.sign_in")
 
-            expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_event(with_data: { sign_in_type: "email" }) # rubocop:disable RSpec/ExpectActual
+            expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_tvs_analytics_events_with_data({ sign_in_type: "email" }) # rubocop:disable RSpec/ExpectActual
 
             expect(page).to have_no_content("Which organisation do you want to sign in with?")
             expect(page).to have_content(trust.name)
@@ -222,7 +222,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
             choose local_authority.name
             click_button I18n.t("buttons.sign_in")
 
-            expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_event(with_data: { sign_in_type: "email" }) # rubocop:disable RSpec/ExpectActual
+            expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_tvs_analytics_events_with_data({ sign_in_type: "email" }) # rubocop:disable RSpec/ExpectActual
 
             expect(page).to have_no_content("Which organisation do you want to sign in with?")
             expect(page).to have_content(local_authority.name)

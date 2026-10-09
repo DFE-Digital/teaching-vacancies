@@ -13,7 +13,7 @@ RSpec.describe Jobseekers::AccountMailer do
 
     it "triggers a `jobseeker_account_closed` email event", :dfe_analytics do
       mail.deliver_now
-      expect(:jobseeker_account_closed).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
+      expect(:jobseeker_account_closed).to have_been_enqueued_as_tvs_analytics_events_with_data(%i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
     end
   end
 
@@ -27,7 +27,7 @@ RSpec.describe Jobseekers::AccountMailer do
 
     it "triggers a `jobseeker_inactive_account` email event", :dfe_analytics do
       mail.deliver_now
-      expect(:jobseeker_inactive_account).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
+      expect(:jobseeker_inactive_account).to have_been_enqueued_as_tvs_analytics_events_with_data(%i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
     end
   end
 end

@@ -100,8 +100,8 @@ RSpec.describe "Subscriptions" do
     it "triggers a `job_alert_subscription_created` event", :dfe_analytics do
       subject
 
-      expect(:job_alert_subscription_created).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
-        with_data: %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier],
+      expect(:job_alert_subscription_created).to have_been_enqueued_as_tvs_analytics_events_with_data( # rubocop:disable RSpec/ExpectActual
+        %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier],
       )
     end
 
@@ -229,8 +229,8 @@ RSpec.describe "Subscriptions" do
     it "triggers a `job_alert_subscription_updated` event", :dfe_analytics do
       subject
 
-      expect(:job_alert_subscription_updated).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
-        with_data: %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier],
+      expect(:job_alert_subscription_updated).to have_been_enqueued_as_tvs_analytics_events_with_data( # rubocop:disable RSpec/ExpectActual
+        %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier],
       )
     end
 
@@ -360,16 +360,16 @@ RSpec.describe "Subscriptions" do
     it "triggers a `job_alert_subscription_unsubscribed` event", :dfe_analytics do
       subject
 
-      expect(:job_alert_subscription_unsubscribed).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
-        with_data: %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier],
+      expect(:job_alert_subscription_unsubscribed).to have_been_enqueued_as_tvs_analytics_events_with_data( # rubocop:disable RSpec/ExpectActual
+        %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier],
       )
     end
 
     it "includes utm_campaign in analytics event when present", :dfe_analytics do
       delete subscription_path(subscription.token, utm_campaign: "subscription_governance")
 
-      expect(:job_alert_subscription_unsubscribed).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
-        with_data: %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier utm_campaign],
+      expect(:job_alert_subscription_unsubscribed).to have_been_enqueued_as_tvs_analytics_events_with_data( # rubocop:disable RSpec/ExpectActual
+        %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier utm_campaign],
       )
     end
   end
@@ -398,8 +398,8 @@ RSpec.describe "Subscriptions" do
       subject
       expect(response).to redirect_to(root_path)
       expect(flash[:success]).to be_present
-      expect(:job_alert_subscription_kept).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
-        with_data: %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier],
+      expect(:job_alert_subscription_kept).to have_been_enqueued_as_tvs_analytics_events_with_data( # rubocop:disable RSpec/ExpectActual
+        %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier],
       )
     end
   end

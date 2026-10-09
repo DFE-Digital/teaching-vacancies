@@ -42,8 +42,8 @@ RSpec.describe Geocoding, geocode: true do
 
         it "triggers a Google Geocoding API hit event" do
           subject.coordinates
-          expect(:google_geocoding_api_hit).to have_been_enqueued_as_analytics_event(
-            with_data: { type: "coordinates", location: location, result: google_coordinates.to_s },
+          expect(:google_geocoding_api_hit).to have_been_enqueued_as_tvs_analytics_events_with_data(
+            { type: "coordinates", location: location, result: google_coordinates.to_s },
           )
         end
       end
@@ -55,8 +55,8 @@ RSpec.describe Geocoding, geocode: true do
 
         it "triggers a Google Geocoding API hit event" do
           subject.coordinates
-          expect(:google_geocoding_api_hit).to have_been_enqueued_as_analytics_event(
-            with_data: { type: "coordinates", location: location, result: nil },
+          expect(:google_geocoding_api_hit).to have_been_enqueued_as_tvs_analytics_events_with_data(
+            { type: "coordinates", location: location, result: nil },
           )
         end
       end
@@ -69,8 +69,8 @@ RSpec.describe Geocoding, geocode: true do
 
         it "triggers a Google Geocoding API hit event" do
           subject.coordinates
-          expect(:google_geocoding_api_hit).to have_been_enqueued_as_analytics_event(
-            with_data: { type: "coordinates", location: location, result: "OVER_QUERY_LIMIT" },
+          expect(:google_geocoding_api_hit).to have_been_enqueued_as_tvs_analytics_events_with_data(
+            { type: "coordinates", location: location, result: "OVER_QUERY_LIMIT" },
           )
         end
 
@@ -167,8 +167,8 @@ RSpec.describe Geocoding, geocode: true do
 
         it "triggers a Google Geocoding API hit event" do
           subject.postcode_from_coordinates
-          expect(:google_geocoding_api_hit).to have_been_enqueued_as_analytics_event(
-            with_data: { type: "postcode", location: google_coordinates.to_s, result: postcode },
+          expect(:google_geocoding_api_hit).to have_been_enqueued_as_tvs_analytics_events_with_data(
+            { type: "postcode", location: google_coordinates.to_s, result: postcode },
           )
         end
       end
@@ -180,8 +180,8 @@ RSpec.describe Geocoding, geocode: true do
 
         it "triggers a Google Geocoding API hit event" do
           subject.postcode_from_coordinates
-          expect(:google_geocoding_api_hit).to have_been_enqueued_as_analytics_event(
-            with_data: { type: "postcode", location: google_coordinates.to_s, result: nil },
+          expect(:google_geocoding_api_hit).to have_been_enqueued_as_tvs_analytics_events_with_data(
+            { type: "postcode", location: google_coordinates.to_s, result: nil },
           )
         end
       end
@@ -195,8 +195,8 @@ RSpec.describe Geocoding, geocode: true do
 
       it "triggers a Google Geocoding API hit event" do
         subject.postcode_from_coordinates
-        expect(:google_geocoding_api_hit).to have_been_enqueued_as_analytics_event(
-          with_data: { type: "postcode", location: google_coordinates.to_s, result: "OVER_QUERY_LIMIT" },
+        expect(:google_geocoding_api_hit).to have_been_enqueued_as_tvs_analytics_events_with_data(
+          { type: "postcode", location: google_coordinates.to_s, result: "OVER_QUERY_LIMIT" },
         )
       end
 

@@ -21,7 +21,7 @@ RSpec.describe Publishers::JobApplicationDataExpiryMailer do
 
     it "triggers a `publisher_job_application_data_expiry` email event", :dfe_analytics do
       mail.deliver_now
-      expect(:publisher_job_application_data_expiry).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
+      expect(:publisher_job_application_data_expiry).to have_been_enqueued_as_tvs_analytics_events_with_data(%i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
     end
   end
 end

@@ -128,7 +128,7 @@ RSpec.describe Jobseekers::AlertMailer do
 
       it "triggers a `jobseeker_subscription_alert` email event with the anonymised jobseeker id", :dfe_analytics do
         mail.deliver_now
-        expect(:jobseeker_subscription_alert).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
+        expect(:jobseeker_subscription_alert).to have_been_enqueued_as_tvs_analytics_events_with_data(%i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
       end
     end
 
@@ -137,7 +137,7 @@ RSpec.describe Jobseekers::AlertMailer do
 
       it "triggers a `jobseeker_subscription_alert` email event without the anonymised jobseeker id", :dfe_analytics do
         mail.deliver_now
-        expect(:jobseeker_subscription_alert).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
+        expect(:jobseeker_subscription_alert).to have_been_enqueued_as_tvs_analytics_events_with_data(%i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
       end
     end
 
@@ -186,7 +186,7 @@ RSpec.describe Jobseekers::AlertMailer do
 
       it "triggers a `jobseeker_subscription_alert` email event with the anonymised jobseeker id", :dfe_analytics do
         mail.deliver_now
-        expect(:jobseeker_subscription_alert).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
+        expect(:jobseeker_subscription_alert).to have_been_enqueued_as_tvs_analytics_events_with_data(%i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
       end
     end
 
@@ -195,7 +195,7 @@ RSpec.describe Jobseekers::AlertMailer do
 
       it "triggers a `jobseeker_subscription_alert` email event without the anonymised jobseeker id", :dfe_analytics do
         mail.deliver_now
-        expect(:jobseeker_subscription_alert).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
+        expect(:jobseeker_subscription_alert).to have_been_enqueued_as_tvs_analytics_events_with_data(%i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
       end
     end
 
