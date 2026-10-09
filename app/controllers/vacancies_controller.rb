@@ -104,7 +104,9 @@ class VacanciesController < ApplicationController
 
   # rubocop:disable Metrics/AbcSize
   def set_landing_page
-    if params[:job_role_landing_page_name].present? && params[:location_landing_page_name].present?
+    if params[:keyword_landing_page_name].present? && params[:location_landing_page_name].present?
+      @landing_page = KeywordLocationLandingPage.new(params[:keyword_landing_page_name], params[:location_landing_page_name])
+    elsif params[:job_role_landing_page_name].present? && params[:location_landing_page_name].present?
       @landing_page = JobRoleLocationLandingPage[params[:job_role_landing_page_name], params[:location_landing_page_name]]
     elsif params[:landing_page_slug].present?
       @landing_page = LandingPage[params[:landing_page_slug]]

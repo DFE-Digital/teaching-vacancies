@@ -520,6 +520,11 @@ Rails.application.routes.draw do
       as: :job_role_location_landing_page,
       constraints: ->(params, _) { JobRoleLocationLandingPage.exists?(params[:job_role_landing_page_name], params[:location_landing_page_name]) }
 
+  get ":keyword_landing_page_name-jobs/:location_landing_page_name",
+      to: "vacancies#index",
+      as: :keyword_location_landing_page,
+      constraints: ->(params, _) { KeywordLocationLandingPage.exists?(params[:keyword_landing_page_name], params[:location_landing_page_name]) }
+
   get ":landing_page_slug",
       to: "vacancies#index",
       as: :landing_page,

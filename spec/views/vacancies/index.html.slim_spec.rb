@@ -7,12 +7,9 @@ RSpec.describe "vacancies/index" do
 
   let(:form) { Jobseekers::SearchForm.new(search_criteria) }
   let(:vacancies_search) { Search::VacancySearch.new(form.to_hash, sort:) }
-  let(:landing_page) { LandingPage[landing_page_slug] }
-  let(:landing_page_slug) { "part-time-potions-and-sorcery-teacher-jobs" }
   let(:school) { build_stubbed(:school) }
   let(:vacancy) { build_stubbed(:vacancy, :secondary, job_title: "Head of Hogwarts", subjects: %w[Potions], working_patterns: %w[part_time], organisations: [school]) }
   let(:vacancies) { [vacancy] }
-  let(:search_criteria) { {} }
   let(:sort) { form.sort }
   let(:pagy) { pagy_array(build_stubbed_list(:vacancy, 2)).first }
 
@@ -28,18 +25,36 @@ RSpec.describe "vacancies/index" do
     render
   end
 
-  describe "mobile filters" do
-    it_behaves_like "a rendered mobile search filter component",
-                    { visa_sponsorship_availability: %w[true] },
-                    I18n.t("jobs.filters.visa_sponsorship_availability.option")
+  context "with a landing page" do
+    let(:landing_page) { LandingPage["part-time-potions-and-sorcery-teacher-jobs"] }
+    let(:search_criteria) { {} }
+
+    describe "mobile filters" do
+      it_behaves_like "a rendered mobile search filter component",
+                      { visa_sponsorship_availability: %w[true] },
+                      I18n.t("jobs.filters.visa_sponsorship_availability.option")
+    end
+
+    describe "landing pages" do
+      it "contains the expected content and vacancies" do
+        expect(rendered).to have_css("h1", text: "Jobs (1)")
+        expect(rendered).to have_link("Head of Hogwarts")
+        expect(rendered).to have_link(vacancy.job_title.to_s)
+        expect(rendered).to have_css("p", text: school.name)
+      end
+    end
   end
 
-  describe "landing pages" do
-    it "contains the expected content and vacancies" do
-      expect(index_view).to have_css("h1", text: "Jobs (1)")
-      expect(index_view).to have_link("Head of Hogwarts")
-      expect(index_view).to have_link(vacancy.job_title.to_s)
-      expect(index_view).to have_css("p", text: school.name)
+  context "with a multi-keyword location landing page" do
+    let(:search_criteria) { landing_page.criteria }
+    let(:landing_page) { KeywordLocationLandingPage.new("early-years-teacher", "coventry") }
+
+    it "converts the keywords back to their original" do
+      expect(index_view.find_by_id("keyword-field")["value"]).to eq("early years teacher")
+    end
+
+    it "converts the location back to its original" do
+      expect(rendered).to have_content("Coventry")
     end
   end
 end

@@ -1233,6 +1233,13 @@ app/controllers/publishers/vacancies/relist_controller.rb:
   branches:
     percent: 100.0
     missed: 0
+app/controllers/publishers/vacancies/shortlist_shares_controller.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
 app/controllers/publishers/vacancies/statistics_controller.rb:
   lines:
     percent: 100.0
@@ -1382,10 +1389,10 @@ app/controllers/support_users/sessions_controller.rb:
     missed: 1
 app/controllers/vacancies_controller.rb:
   lines:
-    percent: 94.87
+    percent: 95.0
     missed: 4
   branches:
-    percent: 86.11
+    percent: 86.84
     missed: 5
 app/controllers/warden_controller.rb:
   lines:
@@ -1850,6 +1857,13 @@ app/form_models/publishers/job_application/offered_form.rb:
     percent: 100.0
     missed: 0
 app/form_models/publishers/job_application/references_contact_applicant_form.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/form_models/publishers/job_application/shortlist_share_form.rb:
   lines:
     percent: 100.0
     missed: 0
@@ -3011,6 +3025,13 @@ app/mailers/publishers/reference_document_malware_scan_mailer.rb:
   branches:
     percent: 100.0
     missed: 0
+app/mailers/publishers/shortlist_share_mailer.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
 app/mailers/support_users/authentication_fallback_mailer.rb:
   lines:
     percent: 100.0
@@ -3271,6 +3292,13 @@ app/models/jobseeker_profile_excluded_organisation.rb:
     percent: 100.0
     missed: 0
 app/models/jobseekers/message_received_notifier.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/keyword_location_landing_page.rb:
   lines:
     percent: 100.0
     missed: 0
@@ -4768,6 +4796,13 @@ app/views/jobseekers/employments/_employments.html.slim:
   branches:
     percent: 85.71
     missed: 2
+app/views/jobseekers/form_previews/show.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/_explained_employment_break.html.slim:
   lines:
     percent: 100.0
@@ -5920,6 +5955,13 @@ app/views/layouts/mailer.text.erb:
   lines:
     percent: 0.0
     missed: 1
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/layouts/print.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
   branches:
     percent: 100.0
     missed: 0
@@ -7163,6 +7205,20 @@ app/views/publishers/vacancies/review_banners/_published.html.slim:
     percent: 100.0
     missed: 0
 app/views/publishers/vacancies/review_banners/_scheduled.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/shortlist_shares/new.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/publishers/vacancies/shortlist_shares/review.html.slim:
   lines:
     percent: 100.0
     missed: 0
