@@ -128,6 +128,8 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def download
+    return redirect_to jobseekers_job_application_print_path(job_application) unless vacancy.uploaded_form?
+
     document = submitted_application_form(job_application)
     send_data(document.data, filename: document.filename, disposition: "inline")
   end

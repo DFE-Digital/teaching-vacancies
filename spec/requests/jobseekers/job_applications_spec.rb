@@ -201,18 +201,15 @@ RSpec.describe "Job applications" do
     describe "GET #download" do
       let(:vacancy) { create(:vacancy, anonymise_applications: true) }
       let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
-      let(:pdf_text) { PDF::Inspector::Text.analyze(response.body).strings }
 
-      context "when the job application status is not draft or withdrawn" do
-        it "sends a PDF file" do
+      context "when the vacancy uses the native application form" do
+        it "redirects to the HTML print view without generating a PDF" do
+          allow(JobApplicationPdfGenerator).to receive(:new).and_call_original
+
           get jobseekers_job_application_download_path(job_application)
 
-          expect(response).to have_http_status(:ok)
-          expect(response.content_type).to eq("application/pdf")
-          expect(response.headers["Content-Disposition"]).to include("inline")
-          expect(response.headers["Content-Disposition"]).to include("application_form.pdf")
-
-          expect(pdf_text).to include(job_application.first_name)
+          expect(response).to redirect_to(jobseekers_job_application_print_path(job_application))
+          expect(JobApplicationPdfGenerator).not_to have_received(:new)
         end
       end
     end

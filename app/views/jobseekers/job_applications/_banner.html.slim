@@ -26,7 +26,7 @@
       = govuk_button_link_to t("buttons.withdraw_application"), jobseekers_job_application_confirm_withdraw_path(job_application), class: "govuk-button--warning govuk-!-margin-bottom-4 withdraw-application"
 
     - unless job_application.draft?
-      = govuk_button_link_to t("buttons.download_your_application"), jobseekers_job_application_download_path(job_application), class: "govuk-button--primary print-application"
+      = govuk_button_link_to t("buttons.print_or_save_application"), jobseekers_job_application_print_path(job_application), class: "govuk-button--primary print-application"
 
     - if job_application.withdrawn?
       = open_in_new_tab_button_link_to t("buttons.download_blank_application"), jobseekers_job_application_form_preview_path(job_application, :blank), class: "govuk-button--secondary blank-application"
