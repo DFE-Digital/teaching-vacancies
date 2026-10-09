@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/ClassLength
 class Jobseekers::SearchForm
   include ActiveModel::Model
   include ActiveModel::Attributes
@@ -7,11 +6,9 @@ class Jobseekers::SearchForm
 
   attribute :radius, :integer
   attribute :location
-  attribute :previous_keyword
 
   attr_reader :ect_status_options,
               :ect_statuses,
-              :filters_from_keyword,
               :keyword,
               :organisation_slug,
               :organisation_type_options,
@@ -37,11 +34,9 @@ class Jobseekers::SearchForm
 
   def initialize(input_params = {})
     params = strip_trailing_whitespaces_from_params(input_params)
-    super(params.slice(:location, :previous_keyword).merge(radius: Search::RadiusBuilder.new(params[:location], params[:radius]).radius))
+    super(params.slice(:location).merge(radius: Search::RadiusBuilder.new(params[:location], params[:radius]).radius))
     set_filter_variables(params)
     @sort = Search::VacancySort.new(keyword: keyword, location: location).update(sort_by: params[:sort_by])
-    set_filters_from_keyword
-    unset_filters_from_previous_keyword
     set_facet_options
     set_total_filters
     @filters_list = %i[visa_sponsorship_availability teaching_job_roles support_job_roles phases subjects ect_statuses organisation_types school_types working_patterns quick_apply]
@@ -50,7 +45,6 @@ class Jobseekers::SearchForm
   def to_hash
     {
       keyword: @keyword,
-      previous_keyword: previous_keyword,
       location: location,
       radius: radius,
       organisation_slug: @organisation_slug,
@@ -75,39 +69,6 @@ class Jobseekers::SearchForm
 
   def strip_trailing_whitespaces_from_params(params)
     params.transform_values { |value| value.respond_to?(:strip) ? value.strip : value }
-  end
-
-  # Determines additional filters to apply if the user's keyword(s) match certain phrases
-  # (to improve quality of results)
-  def set_filters_from_keyword
-    # Do not apply filters on landing pages, even if they have a keyword set (as landing pages
-    # should always be 100% manually configured) OR if the user changes the filters *without*
-    # changing their keywords, do not override their decision
-    return if @keyword.blank? || @landing_page.present? || previous_keyword == @keyword
-
-    @filters_from_keyword = Search::KeywordFilterGeneration::QueryParser.filters_from_query(@keyword)
-    return unless @filters_from_keyword
-
-    @teaching_job_roles += filters_from_keyword["teaching_job_roles"]
-    @support_job_roles += filters_from_keyword["support_job_roles"]
-    @ect_statuses += filters_from_keyword["ect_statuses"]
-    @phases += filters_from_keyword["phases"]
-    @working_patterns += filters_from_keyword["working_patterns"]
-    @visa_sponsorship_availability += filters_from_keyword["visa_sponsorship_availability"]
-  end
-
-  def unset_filters_from_previous_keyword
-    return unless @keyword.blank? && previous_keyword.present?
-
-    previous_filters = Search::KeywordFilterGeneration::QueryParser.filters_from_query(previous_keyword)
-    return unless previous_filters
-
-    @teaching_job_roles -= previous_filters["teaching_job_roles"]
-    @support_job_roles -= previous_filters["support_job_roles"]
-    @ect_statuses -= previous_filters["ect_statuses"]
-    @phases -= previous_filters["phases"]
-    @working_patterns -= previous_filters["working_patterns"]
-    @visa_sponsorship_availability -= previous_filters["visa_sponsorship_availability"]
   end
 
   def set_facet_options
@@ -177,4 +138,3 @@ class Jobseekers::SearchForm
     ]
   end
 end
-# rubocop:enable Metrics/ClassLength

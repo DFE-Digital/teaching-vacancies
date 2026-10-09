@@ -11,5 +11,5 @@
         - selected_method = :last
         - selected_method = :first if %i[subjects organisation_types].include?(key)
         - value_method = :first
-        - remove_filter_link = { url_helper: :jobs_path, params: vacancies_search.remove_filter_params }
+        - remove_filter_link = { url_helper: :jobs_path, params: vacancies_search.active_criteria }
         - component.with_group(legend:, key:, selected:, options:, value_method:, selected_method:, remove_filter_link:)

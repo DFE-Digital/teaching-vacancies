@@ -1389,11 +1389,11 @@ app/controllers/support_users/sessions_controller.rb:
     missed: 1
 app/controllers/vacancies_controller.rb:
   lines:
-    percent: 94.87
+    percent: 95.29
     missed: 4
   branches:
-    percent: 86.11
-    missed: 5
+    percent: 88.23
+    missed: 4
 app/controllers/warden_controller.rb:
   lines:
     percent: 93.54
@@ -1770,8 +1770,8 @@ app/form_models/jobseekers/search_form.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 90.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/form_models/jobseekers/subscription_form.rb:
   lines:
     percent: 100.0
@@ -4271,20 +4271,6 @@ app/services/search/jobseeker_profile_search.rb:
   branches:
     percent: 95.45
     missed: 1
-app/services/search/keyword_filter_generation/query_parser.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
-app/services/search/keyword_filter_generation/query_transformer.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
 app/services/search/location_builder.rb:
   lines:
     percent: 95.65
