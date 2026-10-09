@@ -43,16 +43,16 @@ class SitemapController < ApplicationController
     end
   end
 
-  # Even weekly seems too short for this and thw next one - they are unlikely to change in months
+  # These are unlikely to change in months - job role location pages didn't change between Apr 1st and Oct 1st 2026
   def add_job_role_location_landing_pages(sitemap)
     JobRoleLocationLandingPage::TARGETED_ROLE_PAGES.each do |job_role, location|
-      sitemap.add job_role_location_landing_page_path(job_role.tr("_", "-"), location), period: "weekly"
+      sitemap.add job_role_location_landing_page_path(job_role.tr("_", "-"), location), period: :monthly
     end
   end
 
   def add_keyword_location_landing_pages(sitemap)
     KeywordLocationLandingPage::TARGETED_KEYWORD_PAGES.each do |keyword, location|
-      sitemap.add keyword_location_landing_page_path(keyword, location), period: "weekly"
+      sitemap.add keyword_location_landing_page_path(keyword, location), period:  :monthly
     end
   end
 
