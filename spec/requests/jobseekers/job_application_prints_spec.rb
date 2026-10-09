@@ -4,10 +4,12 @@ RSpec.describe "Job application prints" do
   let(:jobseeker) { create(:jobseeker) }
   let(:organisation) { create(:school) }
   let(:vacancy) { create(:vacancy, organisations: [organisation]) }
+  let(:religious_attributes) { {} }
   let(:job_application) do
     create(
       :job_application,
       :status_submitted,
+      **religious_attributes,
       close_relationships_details: "My sibling works at the school",
       has_close_relationships: true,
       has_safeguarding_issue: true,
@@ -222,6 +224,75 @@ RSpec.describe "Job application prints" do
           ".print-personal-statement__content",
           text: I18n.t("jobseekers.job_applications.review.personal_statement.blank"),
         )
+      end
+    end
+
+    context "when the vacancy is Catholic" do
+      let(:vacancy) { create(:vacancy, :catholic, organisations: [organisation]) }
+      let(:religious_attributes) do
+        {
+          faith: "Catholic",
+          following_religion: true,
+          place_of_worship: "Example Catholic Church",
+          religious_reference_type: :religious_referee,
+          religious_referee_address: "1 Example Street, London",
+          religious_referee_email: "priest@contoso.com",
+          religious_referee_name: "Father Example",
+          religious_referee_phone: "01234 111222",
+          religious_referee_role: "Parish priest",
+        }
+      end
+
+      it "renders Catholic religious information" do
+        expect(page).to have_css(".print-section__heading", text: "Religious information")
+        expect(page).to have_css(".print-table__row", text: /Catholic/)
+        expect(page).to have_css(".print-table__row", text: /Example Catholic Church/)
+        expect(page).to have_css(".print-table__row", text: /Father Example/)
+        expect(page).to have_css(".print-table__row", text: /priest@contoso\.com/)
+      end
+
+      it "renders every section in the same order as the existing PDF" do
+        expect(page.all(".print-section__heading").map(&:text)).to eq(
+          [
+            "Personal details",
+            "Professional status",
+            "Qualifications",
+            "Training and continuing professional development (CPD)",
+            "Professional body memberships",
+            "Work history",
+            "Personal statement",
+            "Religious information",
+            "References",
+            "Do you need support or adjustments for your interview?",
+            "Declarations",
+          ],
+        )
+      end
+    end
+
+    context "when the vacancy has another religious character" do
+      let(:vacancy) { create(:vacancy, :other_religion, organisations: [organisation]) }
+      let(:religious_attributes) do
+        {
+          ethos_and_aims: "I support the school's inclusive religious ethos.",
+          faith: "Methodist",
+          following_religion: true,
+          place_of_worship: "Example Methodist Church",
+          religious_reference_type: nil,
+        }
+      end
+
+      it "renders the other-religion information" do
+        expect(page).to have_css(".print-section__heading", text: "Religious information")
+        expect(page).to have_css(".print-table__row", text: /I support the school's inclusive religious ethos\./)
+        expect(page).to have_css(".print-table__row", text: /Methodist/)
+        expect(page).to have_css(".print-table__row", text: /Example Methodist Church/)
+      end
+    end
+
+    context "when the vacancy has no religious character" do
+      it "does not render religious information" do
+        expect(page).to have_no_css(".print-section__heading", text: "Religious information")
       end
     end
 
