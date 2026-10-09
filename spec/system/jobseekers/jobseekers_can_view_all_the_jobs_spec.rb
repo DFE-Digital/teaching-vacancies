@@ -29,6 +29,41 @@ RSpec.describe "Jobseekers can view all the jobs" do
       .not_to have_sibling("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
   end
 
+  context "with a term time vacancy" do
+    let!(:term_time_vacancy) do
+      create(:vacancy,
+             :past_publish,
+             job_title: "Term time teaching assistant",
+             working_patterns: %w[term_time],
+             organisations: [school])
+    end
+
+    scenario "it appears in full time and part time searches" do
+      visit jobs_path
+
+      within("#filters-component") do
+        expect(page).to have_no_field("Term time")
+        check "Full time"
+        click_button I18n.t("buttons.apply_filters"), match: :first
+      end
+
+      expect(page).to have_link(term_time_vacancy.job_title)
+
+      within("#filters-component") do
+        uncheck "Full time"
+        check "Part time"
+        click_button I18n.t("buttons.apply_filters"), match: :first
+      end
+
+      click_on term_time_vacancy.job_title
+
+      within("#job-details") do
+        working_pattern_row = find(".govuk-summary-list__row", text: I18n.t("jobs.working_patterns"))
+        expect(working_pattern_row).to have_content("Term time")
+      end
+    end
+  end
+
   describe "pagination" do
     shared_examples "jobseekers can view jobs and navigate between pages" do
       scenario "jobseekers can view jobs and navigate between pages" do

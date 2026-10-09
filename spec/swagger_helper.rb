@@ -33,6 +33,7 @@ V1_CONTRACT_TYPES = %w[
 V1_WORKING_PATTERNS = %w[
   full_time
   part_time
+  term_time
 ].freeze
 
 V1_PHASES = %w[

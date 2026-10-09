@@ -1,6 +1,9 @@
+# rubocop:disable Metrics/ClassLength
 class Jobseekers::SearchForm
   include ActiveModel::Model
   include ActiveModel::Attributes
+
+  WORKING_PATTERN_FILTER_OPTIONS = %w[full_time part_time job_share].freeze
 
   attribute :radius, :integer
   attribute :location
@@ -107,14 +110,14 @@ class Jobseekers::SearchForm
     @visa_sponsorship_availability -= previous_filters["visa_sponsorship_availability"]
   end
 
-  def set_facet_options # rubocop:disable Metrics/AbcSize
+  def set_facet_options
     @visa_sponsorship_availability_options = [["true", I18n.t("jobs.filters.visa_sponsorship_availability.option")]]
     @teaching_job_role_options = Vacancy::TEACHING_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.#{option}")] }
     @support_job_role_options = Vacancy::SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.support_job_role_options.#{option}")] }
     @phase_options = Vacancy.phases.keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_education_phases_form.phases_options.#{option}")] }
     @ect_status_options = %w[ect_suitable qts_not_needed].map { |ect_type| [ect_type, I18n.t("jobs.filters.#{ect_type}")] }
     set_quick_apply_options
-    @working_pattern_options = Vacancy.working_patterns.keys.map do |option|
+    @working_pattern_options = WORKING_PATTERN_FILTER_OPTIONS.map do |option|
       [option, I18n.t("helpers.label.publishers_job_listing_contract_information_form.working_patterns_options.#{option}")]
     end
     set_organisation_type_options
@@ -174,3 +177,4 @@ class Jobseekers::SearchForm
     ]
   end
 end
+# rubocop:enable Metrics/ClassLength

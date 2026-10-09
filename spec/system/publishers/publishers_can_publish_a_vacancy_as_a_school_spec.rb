@@ -36,6 +36,7 @@ RSpec.describe "Creating a vacancy" do
               :ect_suitable,
               :secondary,
               :apply_via_website,
+              working_patterns: %w[full_time term_time],
               publish_on: Date.current)
       end
 

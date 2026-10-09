@@ -337,6 +337,26 @@ RSpec.describe VacancyFilterQuery do
         end
       end
 
+      context "with a term time vacancy" do
+        let!(:term_time_vacancy) { create(:vacancy, working_patterns: %w[term_time]) }
+
+        context "with full time filter" do
+          let(:filters) { { working_patterns: %w[full_time] } }
+
+          it "returns the term time vacancy" do
+            expect(subject.ids).to include(term_time_vacancy.id)
+          end
+        end
+
+        context "with part time filter" do
+          let(:filters) { { working_patterns: %w[part_time] } }
+
+          it "returns the term time vacancy" do
+            expect(subject.ids).to include(term_time_vacancy.id)
+          end
+        end
+      end
+
       context "with part time job share filter" do
         let(:filters) { { working_patterns: %w[part_time job_share] } }
 
