@@ -153,6 +153,27 @@ $print-white: #fff;
   page-break-before: always;
   page-break-inside: avoid;
 
+  &--completed {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  &__content {
+    color: $print-dark-grey;
+    font-family: arial, sans-serif;
+    font-size: 12pt;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+    padding: 3mm 2mm;
+
+    p,
+    ol,
+    ul {
+      font-family: inherit;
+      font-size: inherit;
+    }
+  }
+
   &__writing-space {
     min-height: 190mm;
   }

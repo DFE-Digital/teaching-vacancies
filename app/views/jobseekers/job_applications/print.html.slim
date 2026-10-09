@@ -35,6 +35,10 @@ p.print-introduction = t("jobseekers.job_applications.show.consent_text")
   groups: @job_application_pdf.employment_history,
   heading: t("jobseekers.job_applications.show.employment_history.heading")
 
+section.print-section.print-personal-statement.print-personal-statement--completed
+  h2.print-section__heading = t("jobseekers.job_applications.show.personal_statement.heading")
+  .print-personal-statement__content = @job_application_pdf.personal_statement_richtext
+
 = render "print_nested_section",
   groups: @job_application_pdf.referees,
   heading: t("jobseekers.job_applications.show.referees.heading")

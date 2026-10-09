@@ -13,6 +13,7 @@ RSpec.describe "Job application prints" do
       has_safeguarding_issue: true,
       is_support_needed: true,
       jobseeker:,
+      personal_statement_richtext: "<p>I am committed to helping <strong>every pupil</strong> succeed.</p>",
       safeguarding_issue_details: "Safeguarding declaration details",
       support_needed_details: "Step-free interview access",
       vacancy:,
@@ -195,6 +196,33 @@ RSpec.describe "Job application prints" do
       expect(page).to have_css(".print-table__row", text: /Employment currently held:Yes/)
       expect(page).to have_css(".print-table__row", text: /End date:present/)
       expect(page).to have_css(".print-table__row", text: /Reason:Caring responsibilities/)
+    end
+
+    it "renders the rich-text personal statement as its own print section" do
+      section = page.find("section.print-personal-statement.print-personal-statement--completed")
+
+      expect(section).to have_css(".print-section__heading", text: "Personal statement")
+      expect(section).to have_text("I am committed to helping every pupil succeed.")
+      expect(section).to have_css("strong", text: "every pupil")
+    end
+
+    context "without a personal statement" do
+      let(:job_application) do
+        create(
+          :job_application,
+          :status_submitted,
+          jobseeker:,
+          personal_statement_richtext: nil,
+          vacancy:,
+        )
+      end
+
+      it "renders the existing blank message" do
+        expect(page).to have_css(
+          ".print-personal-statement__content",
+          text: I18n.t("jobseekers.job_applications.review.personal_statement.blank"),
+        )
+      end
     end
 
     it "renders referees" do
