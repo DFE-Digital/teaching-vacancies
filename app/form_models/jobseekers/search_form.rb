@@ -37,8 +37,6 @@ class Jobseekers::SearchForm
     super(params.slice(:location, :previous_keyword).merge(radius: Search::RadiusBuilder.new(params[:location], params[:radius]).radius))
     set_filter_variables(params)
     @sort = Search::VacancySort.new(keyword: keyword, location: location).update(sort_by: params[:sort_by])
-    set_filters_from_keyword
-    unset_filters_from_previous_keyword
     set_facet_options
     set_total_filters
     @filters_list = %i[visa_sponsorship_availability teaching_job_roles support_job_roles phases subjects ect_statuses organisation_types school_types working_patterns quick_apply]
@@ -72,39 +70,6 @@ class Jobseekers::SearchForm
 
   def strip_trailing_whitespaces_from_params(params)
     params.transform_values { |value| value.respond_to?(:strip) ? value.strip : value }
-  end
-
-  # Determines additional filters to apply if the user's keyword(s) match certain phrases
-  # (to improve quality of results)
-  def set_filters_from_keyword
-    # Do not apply filters on landing pages, even if they have a keyword set (as landing pages
-    # should always be 100% manually configured) OR if the user changes the filters *without*
-    # changing their keywords, do not override their decision
-    return if @keyword.blank? || @landing_page.present? || previous_keyword == @keyword
-
-    @filters_from_keyword = Search::KeywordFilterGeneration::QueryParser.filters_from_query(@keyword)
-    return unless @filters_from_keyword
-
-    @teaching_job_roles += filters_from_keyword["teaching_job_roles"]
-    @support_job_roles += filters_from_keyword["support_job_roles"]
-    @ect_statuses += filters_from_keyword["ect_statuses"]
-    @phases += filters_from_keyword["phases"]
-    @working_patterns += filters_from_keyword["working_patterns"]
-    @visa_sponsorship_availability += filters_from_keyword["visa_sponsorship_availability"]
-  end
-
-  def unset_filters_from_previous_keyword
-    return unless @keyword.blank? && previous_keyword.present?
-
-    previous_filters = Search::KeywordFilterGeneration::QueryParser.filters_from_query(previous_keyword)
-    return unless previous_filters
-
-    @teaching_job_roles -= previous_filters["teaching_job_roles"]
-    @support_job_roles -= previous_filters["support_job_roles"]
-    @ect_statuses -= previous_filters["ect_statuses"]
-    @phases -= previous_filters["phases"]
-    @working_patterns -= previous_filters["working_patterns"]
-    @visa_sponsorship_availability -= previous_filters["visa_sponsorship_availability"]
   end
 
   def set_facet_options # rubocop:disable Metrics/AbcSize
